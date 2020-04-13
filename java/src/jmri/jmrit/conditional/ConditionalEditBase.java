@@ -228,7 +228,7 @@ public class ConditionalEditBase {
     String makeAntecedent(List<ConditionalVariable> variableList) {
         StringBuilder antecedent = new StringBuilder(64);
         if (variableList.size() != 0) {
-            String row = "R"; //NOI18N
+            String row = "R"; // NOI18N
             if (variableList.get(0).isNegated()) {
                 antecedent.append("not ");
             }
@@ -1409,7 +1409,7 @@ public class ConditionalEditBase {
             l = InstanceManager.lightManagerInstance().getBySystemName(name);
         }
         if (l == null) {
-            messageInvalidActionItemName(name, "Light"); //NOI18N
+            messageInvalidActionItemName(name, "Light"); // NOI18N
         }
         return l;
     }

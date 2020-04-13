@@ -77,7 +77,7 @@ public class ColorDialog extends JDialog implements ChangeListener {
                     _saveUtil = p.getPopupUtility();
                     p.remove();
                 }
-           } else {
+            } else {
                 _util = null;
             }
             _saveOpaque = t.isOpaque();

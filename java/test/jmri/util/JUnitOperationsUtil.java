@@ -669,6 +669,7 @@ public class JUnitOperationsUtil {
         Assert.assertTrue(InstanceManager.containsDefault(ShutDownManager.class));
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         List<ShutDownTask> list = sm.tasks();
+        // only one operations shut down task, the other can be NCE shutdown
         Assert.assertTrue("Two shut down tasks max", list.size() < 3);
         ShutDownTask operationShutdownTask = null;
         for (ShutDownTask task : list) {

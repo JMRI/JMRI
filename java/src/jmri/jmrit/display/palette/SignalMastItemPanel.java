@@ -27,6 +27,7 @@ import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.PreviewPanel;
 import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.ImagePanel;
@@ -36,7 +37,7 @@ import org.slf4j.LoggerFactory;
 /**
  * TableItemPanel extension for placing of SignalMast items with a fixed set of icons.
  *
- * @author Pete Cressman Copyright (c) 2010, 2011
+ * @author Pete Cressman Copyright (c) 2010, 2011, 2020
  * @author Egbert Broerse 2017
  */
 public class SignalMastItemPanel extends TableItemPanel<SignalMast> {
@@ -47,8 +48,8 @@ public class SignalMastItemPanel extends TableItemPanel<SignalMast> {
     private JPanel _blurb;
     private final NamedIcon _defaultIcon;
 
-    public SignalMastItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.SignalMast> model, Editor editor) {
-        super(parentFrame, type, family, model, editor);
+    public SignalMastItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.SignalMast> model) {
+        super(parentFrame, type, family, model);
         try {
             _mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0003)");
         } catch (IllegalArgumentException ex) {
@@ -59,8 +60,7 @@ public class SignalMastItemPanel extends TableItemPanel<SignalMast> {
         if (icon != null ) {
             _defaultIcon = icon;
         } else {
-            String name = "resources/icons/misc/X-red.gif";
-            _defaultIcon =  new NamedIcon(name, name);
+            _defaultIcon =  new NamedIcon(ItemPalette.RED_X, ItemPalette.RED_X);
         }
         _iconMastMap = null;
         _mast = null;
@@ -128,9 +128,9 @@ public class SignalMastItemPanel extends TableItemPanel<SignalMast> {
             panel.add(_promptLabel);
             _iconFamilyPanel.add(panel);
             if (!_update) {
-                _previewPanel = makePreviewPanel(_iconPanel, _dragIconPanel);
+                _previewPanel = new PreviewPanel(_frame, _iconPanel, _dragIconPanel, true);
             } else {
-                _previewPanel = makePreviewPanel(_iconPanel, null);
+                _previewPanel = new PreviewPanel(_frame, _iconPanel, null, false);
             }
             _iconFamilyPanel.add(_previewPanel);
         }
@@ -267,12 +267,12 @@ public class SignalMastItemPanel extends TableItemPanel<SignalMast> {
         if (log.isDebugEnabled()) {
             log.debug("showIcons for= {}, {}", _itemType, _family);
         }
-        boolean isPalette = (_paletteFrame instanceof ItemPalette);
+        boolean isPalette = (_frame instanceof ItemPalette);
         Dimension totalDim;
         if (isPalette) {
             totalDim = ItemPalette._tabPane.getSize();
         } else {
-            totalDim = _paletteFrame.getSize();
+            totalDim = _frame.getSize();
         }
         Dimension oldDim = getSize();
         _iconPanel.setVisible(true);
@@ -296,12 +296,12 @@ public class SignalMastItemPanel extends TableItemPanel<SignalMast> {
         if (log.isDebugEnabled()) {
             log.debug("hideIcons for= {}, {}", _itemType, _family);
         }
-        boolean isPalette = (_paletteFrame instanceof ItemPalette);
+        boolean isPalette = (_frame instanceof ItemPalette);
         Dimension totalDim;
         if (isPalette) {
             totalDim = ItemPalette._tabPane.getSize();
         } else {
-            totalDim = _paletteFrame.getSize();
+            totalDim = _frame.getSize();
         }
         Dimension oldDim = getSize();
         _iconPanel.setVisible(false);
@@ -387,7 +387,7 @@ public class SignalMastItemPanel extends TableItemPanel<SignalMast> {
             }
 
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
-                SignalMastIcon sm = new SignalMastIcon(_editor);
+                SignalMastIcon sm = new SignalMastIcon(_frame.getEditor());
                 sm.setSignalMast(bean.getDisplayName());
                 sm.setLevel(Editor.SIGNALS);
                 return sm;

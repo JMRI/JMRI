@@ -775,9 +775,9 @@ public class LayoutTrackEditors {
         }
 
         // set the continuing route Turnout State
-        if ((layoutTurnout.getTurnoutType() == LayoutTurnout.RH_TURNOUT)
-                || (layoutTurnout.getTurnoutType() == LayoutTurnout.LH_TURNOUT)
-                || (layoutTurnout.getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
+        if ((layoutTurnout.getTurnoutType() == LayoutTurnout.TurnoutType.RH_TURNOUT)
+                || (layoutTurnout.getTurnoutType() == LayoutTurnout.TurnoutType.LH_TURNOUT)
+                || (layoutTurnout.getTurnoutType() == LayoutTurnout.TurnoutType.WYE_TURNOUT)) {
             layoutTurnout.setContinuingSense(Turnout.CLOSED);
             if (editLayoutTurnoutStateComboBox.getSelectedIndex() == editLayoutTurnoutThrownIndex) {
                 layoutTurnout.setContinuingSense(Turnout.THROWN);
@@ -1043,7 +1043,7 @@ public class LayoutTrackEditors {
             g2.draw(new Line2D.Double(A, MathUtil.oneThirdPoint(A, D)));
             g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, A)));
 
-            if (layoutSlip.getSlipType() == LayoutTurnout.DOUBLE_SLIP) {
+            if (layoutSlip.getSlipType() == LayoutTurnout.TurnoutType.DOUBLE_SLIP) {
                 g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, C)));
                 g2.draw(new Line2D.Double(C, MathUtil.oneThirdPoint(C, B)));
             }
@@ -1052,7 +1052,7 @@ public class LayoutTrackEditors {
             g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
         }
 
-        if (layoutSlip.getSlipType() == LayoutTurnout.DOUBLE_SLIP) {
+        if (layoutSlip.getSlipType() == LayoutTurnout.TurnoutType.DOUBLE_SLIP) {
             if (state == LayoutTurnout.STATE_AC) {
                 g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
                 g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
@@ -1137,7 +1137,7 @@ public class LayoutTrackEditors {
             }
 
             case LayoutTurnout.STATE_BD: {
-                if (layoutSlip.getSlipType() == LayoutTurnout.SINGLE_SLIP) {
+                if (layoutSlip.getSlipType() == LayoutTurnout.TurnoutType.SINGLE_SLIP) {
                     testState = LayoutTurnout.STATE_AC;
                 } else {
                     testState = LayoutTurnout.STATE_BC;

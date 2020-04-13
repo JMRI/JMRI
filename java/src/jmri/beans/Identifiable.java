@@ -3,12 +3,13 @@ package jmri.beans;
 import javax.annotation.Nonnull;
 
 /**
- * A Bean that has an identity property that is not publicly mutable (it may be
- * indirectly mutated) and provides support for listening to property changes.
+ * An Object that has an identity property that is not publicly mutable (it may be
+ * indirectly mutated).
  * 
  * @author Randall Wood Copyright 2020
+ * @see MutableIdentifiable
  */
-public abstract class IdentifiedBean extends PropertyChangeProviderImpl {
+public interface Identifiable {
 
     /**
      * Get the identity of the object.

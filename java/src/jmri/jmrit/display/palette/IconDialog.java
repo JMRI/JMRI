@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,9 +93,9 @@ public class IconDialog extends ItemDialog {
         catalog.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         ImagePanel panel = catalog.getPreviewPanel();
         if (!_parent.isUpdate()) {
-            panel.setImage(_parent._backgrounds[_parent.getParentFrame().getPreviewBg()]);
+            panel.setImage(_parent._frame.getPreviewBackground());
         } else {
-            panel.setImage(_parent._backgrounds[0]);   //update always should be the panel background
+            panel.setImage(_parent._frame.getBackground(0));   //update always should be the panel background
         }
         return catalog;
     }
@@ -127,7 +128,7 @@ public class IconDialog extends ItemDialog {
             ItemPalette.removeIconMap(_type, _family);
             return _parent.addFamily(_type, _family, _iconMap);
         } else if (!_parent.isUnstoredMap()) {
-            JOptionPane.showMessageDialog(_parent._paletteFrame,
+            JOptionPane.showMessageDialog(_parent._frame,
                     Bundle.getMessage("DuplicateFamilyName", _family, _type),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
@@ -199,9 +200,9 @@ public class IconDialog extends ItemDialog {
         iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
         if (!_parent.isUpdate()) {
-            iconPanel.setImage(_parent._backgrounds[_parent.getParentFrame().getPreviewBg()]);
+            iconPanel.setImage(_parent._frame.getPreviewBackground());
         } else {
-            iconPanel.setImage(_parent._backgrounds[0]);   //update always should be the panel background
+            iconPanel.setImage(_parent._frame.getBackground(0));   //update always should be the panel background
         }
         log.debug("iconMap size = {}", _iconMap.size());
         _parent.addIconsToPanel(iconMap, iconPanel, true);

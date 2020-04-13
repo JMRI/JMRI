@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.beans.IdentifiedBean;
+import jmri.beans.Identifiable;
 import jmri.beans.PropertyChangeProvider;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -196,7 +196,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(trainsListener);
     }
 
-    protected abstract class BeanListener<B extends IdentifiedBean> implements PropertyChangeListener {
+    protected abstract class BeanListener<B extends Identifiable & PropertyChangeProvider> implements PropertyChangeListener {
         
         protected final B bean;
         

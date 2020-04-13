@@ -77,7 +77,7 @@ public class DebugThrottle extends AbstractThrottle {
     }
 
     /**
-     * Set the speed {@literal &} direction
+     * Set the speed and direction
      * <p>
      * This intentionally skips the emergency stop value of 1.
      *
@@ -92,9 +92,7 @@ public class DebugThrottle extends AbstractThrottle {
             log.warn("Speed was set too high: " + speed);
         }
         this.speedSetting = speed;
-        if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
-        }
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
     }
 
@@ -104,9 +102,7 @@ public class DebugThrottle extends AbstractThrottle {
         boolean old = this.isForward;
         this.isForward = forward;
         sendFunctionGroup1();  // send the command
-        if (old != this.isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, this.isForward);
-        }
+        firePropertyChange(ISFORWARD, old, this.isForward);
     }
 
     @Override

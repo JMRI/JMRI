@@ -71,7 +71,7 @@ public class IndicatorTOIconDialog extends IconDialog {
                 }
             }
             Object[] selections = options.toArray();
-            String key = (String) JOptionPane.showInputDialog(_parent._paletteFrame,
+            String key = (String) JOptionPane.showInputDialog(_parent._frame,
                     Bundle.getMessage("PickStatus"), Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE, null,
                     selections, selections[0]);
             if (key != null) {
@@ -80,7 +80,7 @@ public class IndicatorTOIconDialog extends IconDialog {
 //                new IndicatorTOIconDialog(_type, null, parent, _key, _iconMap);
             }
         } else {
-            JOptionPane.showMessageDialog(_parent._paletteFrame,
+            JOptionPane.showMessageDialog(_parent._frame,
                     Bundle.getMessage("AllStatus"),
                     Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
         }

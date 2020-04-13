@@ -35,6 +35,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
+import jmri.jmrit.display.PreviewPanel;
 import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.palette.TextItemPanel.DragDecoratorLabel;
 import jmri.util.swing.ImagePanel;
@@ -68,8 +69,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener {
     private AJSpinner _heightSpin;
 
     private JColorChooser _chooser;
-    ImagePanel _previewPanel;
-    private final JPanel _samplePanel;
+    private PreviewPanel _previewPanel;
+    private ImagePanel _samplePanel;
     private PositionablePopupUtil _util;
     private HashMap<String, PositionableLabel> _samples = null;    
     private int _selectedButton;
@@ -79,32 +80,22 @@ public class DecoratorPanel extends JPanel implements ChangeListener {
     private AJRadioButton _fontButton;
     private AJRadioButton _borderButton;
     private AJRadioButton _backgroundButton;
-
-    protected BufferedImage[] _backgrounds; // array of Image backgrounds
-    protected JComboBox<String> _bgColorBox;
+    private boolean addBgCombo;
 
     Editor _editor;
-    protected DisplayFrame _paletteFrame;
+    protected DisplayFrame _frame;
 
-    public DecoratorPanel(Editor editor, DisplayFrame paletteFrame) {
-        _editor = editor;
-        _paletteFrame = paletteFrame;
+    public DecoratorPanel(DisplayFrame frame) {
+        _editor = frame.getEditor();
+        _frame = frame;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         Color panelBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
-        // create array of backgrounds, _currentBackground already set and used
-        _backgrounds = ItemPanel.makeBackgrounds(null,  panelBackground);
         _chooser = new JColorChooser(panelBackground);
         _samples = new HashMap<>();
 
-        _previewPanel = new ImagePanel();
-        _previewPanel.setLayout(new BorderLayout());
-        _previewPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
-                Bundle.getMessage("PreviewBorderTitle")));
-        _previewPanel.add(Box.createVerticalStrut(STRUT), BorderLayout.PAGE_START);
-        _previewPanel.add(Box.createVerticalStrut(STRUT), BorderLayout.PAGE_END);
-
-        _samplePanel = new JPanel();
-        _samplePanel.add(Box.createHorizontalStrut(STRUT));
+        _samplePanel = new ImagePanel();
+        _samplePanel.add(Box.createVerticalStrut(50));
+        _samplePanel.setBorder(BorderFactory.createLineBorder(Color.black));
         _samplePanel.setOpaque(false);
     }
 
@@ -143,6 +134,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener {
 
     /* Called by Palette's TextItemPanel i.e. make a new panel item to drag */
     protected void initDecoratorPanel(DragDecoratorLabel sample) {
+        addBgCombo = true;
         sample.setDisplayLevel(Editor.LABELS);
         sample.setBackground(_editor.getTargetPanel().getBackground());
         _util = sample.getPopupUtility();
@@ -158,6 +150,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener {
 
     /* Called by Editor's TextAttrDialog - i.e. update a panel item from menu */
     public void initDecoratorPanel(Positionable pos) {
+        addBgCombo = false;
         Positionable item = pos.deepClone(); // need copy of PositionableJPanel in PopupUtility
         _util = item.getPopupUtility();
         item.remove();      // don't need copy any more. Removes ghost image of PositionableJPanels
@@ -245,16 +238,6 @@ public class DecoratorPanel extends JPanel implements ChangeListener {
         _chooser.getSelectionModel().addChangeListener(this);
         _chooser.setPreviewPanel(new JPanel());
         add(_chooser);
-        _previewPanel.add(_samplePanel, BorderLayout.CENTER);
-
-        // add a SetBackground combo
-        if (addBgCombo) {
-            add(add(makeBgButtonPanel(_previewPanel, null, _backgrounds))); // no listener on this variant
-        }
-        add(_previewPanel);
-        _previewPanel.setImage(_backgrounds[0]);
-        _previewPanel.revalidate();        // force redraw
-        // after everything created, set selections
         _fontPanel.setFontSelections();
         updateSamples();
     }
@@ -331,7 +314,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener {
         } else {
             bundleCaption = state;
         }
-        panel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage(bundleCaption)));
+        panel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(Color.black, 1),
+                Bundle.getMessage(bundleCaption)));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
         if (addTextField) {
@@ -362,6 +347,13 @@ public class DecoratorPanel extends JPanel implements ChangeListener {
             p.add(textField);
         }
         panel.add(p);
+
+        if (addBgCombo) {
+            _previewPanel = new PreviewPanel(_frame, _samplePanel, null, true);
+        } else {
+            _previewPanel = new PreviewPanel(_frame, _samplePanel, null, false);
+        }
+        add(_previewPanel);
 
         p = new JPanel();
         _fontButton = makeColorRadioButton("FontColor", FOREGROUND_BUTTON, state);
@@ -418,6 +410,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener {
         return button;
     }
 
+    protected void setPreviewIndex(int idx) {
+        
+    }
     protected void updateSamples() {
         if (_previewPanel == null) {
             return;
@@ -475,66 +470,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener {
         _samplePanel.repaint();
     }
 
-    /**
-     * Create panel element containing [Set background:] drop down list.
-     * Special version for Decorator, no access to shared variable previewBgSet.
-     * @see ItemPanel
-     *
-     * @param preview1 ImagePanel containing icon set
-     * @param preview2 not used, matches method in ItemPanel
-     * @param imgArray array of colored background images
-     * @return a JPanel with label and drop down
-     */
-    private JPanel makeBgButtonPanel(@Nonnull ImagePanel preview1, ImagePanel preview2, BufferedImage[] imgArray) {
-        _bgColorBox = new JComboBox<>();
-        _bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, too long for combo
-        _bgColorBox.addItem(Bundle.getMessage("White"));
-        _bgColorBox.addItem(Bundle.getMessage("LightGray"));
-        _bgColorBox.addItem(Bundle.getMessage("DarkGray"));
-        _bgColorBox.addItem(Bundle.getMessage("Checkers"));
-        int index;
-        if (_paletteFrame != null) {
-            index = _paletteFrame.getPreviewBg();
-        } else {
-            index = 0;
-        }
-        _bgColorBox.setSelectedIndex(index);
-        _bgColorBox.addActionListener((ActionEvent e) -> {
-            if (imgArray != null) {
-                // index may repeat
-                int previewBgSet = _bgColorBox.getSelectedIndex(); // store user choice
-                if (_paletteFrame != null) {
-                    _paletteFrame.setPreviewBg(previewBgSet);
-                }
-                // load background image
-                log.debug("Palette Decorator setImage called {}", previewBgSet);
-                preview1.setImage(imgArray[previewBgSet]);
-                // preview.setOpaque(false); // needed?
-                preview1.revalidate();        // force redraw
-            } else {
-                log.debug("imgArray is empty");
-            }
-        });
-        JPanel backgroundPanel = new JPanel();
-        backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
-        JPanel pp = new JPanel();
-        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-        pp.add(new JLabel(Bundle.getMessage("setBackground")));
-        pp.add(_bgColorBox);
-        backgroundPanel.add(pp);
-        backgroundPanel.setMaximumSize(backgroundPanel.getPreferredSize());
-        return backgroundPanel;
-    }
-
     // called when editor changed
-    protected BufferedImage[] getBackgrounds() {
-        return _backgrounds;
-    }
-    // called when editor changed
-    protected void setBackgrounds(BufferedImage[] imgArray) {
-        _backgrounds = imgArray;
-        _previewPanel.setImage(imgArray[0]);
-        _previewPanel.revalidate();        // force redraw
+    protected void sampleBgColorChange() {
+        _previewPanel.setBackgroundSelection(_frame.getPreviewBg());
     }
 
     @Override

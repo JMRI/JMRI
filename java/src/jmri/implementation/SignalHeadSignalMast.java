@@ -301,7 +301,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
-        if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
+        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
             if (nb instanceof SignalHead) {
                 for (NamedBeanHandle<SignalHead> bean : getHeadsUsed()) {
                     if (bean.getBean().equals(nb)) {

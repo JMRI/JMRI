@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend an ImageIcon to remember the name from which it was created and
- * provide rotation {@literal &} scaling services.
+ * provide rotation and scaling services.
  * <p>
  * We store both a "URL" for finding the file this was made from (so we can load
  * this later), plus a shorter (localized) "name" for display in GUI.

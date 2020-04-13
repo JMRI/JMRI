@@ -60,7 +60,7 @@ public class LayoutSlip extends LayoutTurnout {
     /**
      * constructor method
      */
-    public LayoutSlip(String id, Point2D c, double rot, LayoutEditor layoutEditor, int type) {
+    public LayoutSlip(String id, Point2D c, double rot, LayoutEditor layoutEditor, TurnoutType type) {
         super(id, c, layoutEditor);
 
         dispA = new Point2D.Double(-20.0, 0.0);
@@ -80,19 +80,19 @@ public class LayoutSlip extends LayoutTurnout {
         return String.format("LayoutSlip %s (%s)", getId(), getSlipStateString(getSlipState()));
     }
 
-    public void setTurnoutType(int slipType) {
+    public void setTurnoutType(LayoutTurnout.TurnoutType slipType) {
         setSlipType(slipType);
     }
 
-    public void setSlipType(int slipType) {
+    public void setSlipType(TurnoutType slipType) {
         if (type != slipType) {
             type = slipType;
             turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
             turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
             turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
-            if (type == SINGLE_SLIP) {
+            if (type == TurnoutType.SINGLE_SLIP) {
                 turnoutStates.remove(STATE_BC);
-            } else if (type == DOUBLE_SLIP) {
+            } else if (type == TurnoutType.DOUBLE_SLIP) {
                 turnoutStates.put(STATE_BC, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
             } else {
                 log.error("{}.setSlipType({}); invalid slip type", getName(), slipType); //I18IN
@@ -100,7 +100,7 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
-    public int getSlipType() {
+    public TurnoutType getSlipType() {
         return type;
     }
 
@@ -265,7 +265,7 @@ public class LayoutSlip extends LayoutTurnout {
                 case SLIP_LEFT: {
                     switch (newSlipState) {
                         case STATE_AC: {
-                            if (type == SINGLE_SLIP) {
+                            if (type == TurnoutType.SINGLE_SLIP) {
                                 newSlipState = STATE_BD;
                             } else {
                                 newSlipState = STATE_BC;
@@ -304,7 +304,7 @@ public class LayoutSlip extends LayoutTurnout {
                             break;
                         }
                         case STATE_BD: {
-                            if (type == SINGLE_SLIP) {
+                            if (type == TurnoutType.SINGLE_SLIP) {
                                 newSlipState = STATE_AC;
                             } else {
                                 newSlipState = STATE_BC;
@@ -1192,7 +1192,7 @@ public class LayoutSlip extends LayoutTurnout {
                 g2.draw(new Line2D.Double(twoThirdsPointBD, pD));
             }
         } else if (slipState == STATE_BC) {
-            if (getTurnoutType() == DOUBLE_SLIP) {
+            if (getTurnoutType() == TurnoutType.DOUBLE_SLIP) {
                 // draw B<===>C
                 if (drawMain == mainlineB) {
                     g2.setColor(colorB);
@@ -1360,7 +1360,7 @@ public class LayoutSlip extends LayoutTurnout {
         if (drawMain == mainlineB) {
             g2.draw(new Line2D.Double(pBL, pVL));
             g2.draw(new Line2D.Double(pVLtC, pKRtA));
-            if (getTurnoutType() == DOUBLE_SLIP) {
+            if (getTurnoutType() == TurnoutType.DOUBLE_SLIP) {
                 GeneralPath path = new GeneralPath();
                 path.moveTo(pBR.getX(), pBR.getY());
                 path.lineTo(pBPR.getX(), pBPR.getY());
@@ -1373,7 +1373,7 @@ public class LayoutSlip extends LayoutTurnout {
         if (drawMain == mainlineC) {
             g2.draw(new Line2D.Double(pCL, pVR));
             g2.draw(new Line2D.Double(pVRtB, pKRtD));
-            if (getTurnoutType() == DOUBLE_SLIP) {
+            if (getTurnoutType() == TurnoutType.DOUBLE_SLIP) {
                 GeneralPath path = new GeneralPath();
                 path.moveTo(pCR.getX(), pCR.getY());
                 path.lineTo(pCPR.getX(), pCPR.getY());
@@ -1445,7 +1445,7 @@ public class LayoutSlip extends LayoutTurnout {
                 g2.draw(new Line2D.Double(pDPL, pKL));
                 g2.draw(new Line2D.Double(pVRtA, pKLH));
             }
-        } else if ((getTurnoutType() == DOUBLE_SLIP)
+        } else if ((getTurnoutType() == TurnoutType.DOUBLE_SLIP)
                 && (slipState == STATE_BC)) {
             if (drawMain == mainlineA) {
                 g2.draw(new Line2D.Double(pAPL, pKL));
@@ -1687,7 +1687,7 @@ public class LayoutSlip extends LayoutTurnout {
                 result = LayoutSlip.STATE_AD;
             }
         } else if (layoutBlockB == thisLayoutBlock) {
-            if (getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+            if (getTurnoutType() == TurnoutType.DOUBLE_SLIP) {
                 if (layoutBlockD == nextLayoutBlock || layoutBlockD == prevLayoutBlock) {
                     result = LayoutSlip.STATE_BD;
                 } else if (layoutBlockC == nextLayoutBlock || layoutBlockC == prevLayoutBlock) {
@@ -1705,7 +1705,7 @@ public class LayoutSlip extends LayoutTurnout {
                 }
             }
         } else if (layoutBlockC == thisLayoutBlock) {
-            if (getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+            if (getTurnoutType() == TurnoutType.DOUBLE_SLIP) {
                 if (layoutBlockA == nextLayoutBlock || layoutBlockA == prevLayoutBlock) {
                     result = LayoutSlip.STATE_AC;
                 } else if (layoutBlockB == nextLayoutBlock || layoutBlockB == prevLayoutBlock) {
@@ -1858,7 +1858,7 @@ public class LayoutSlip extends LayoutTurnout {
                 lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsD()));
                 results.add(lc);
             }
-            if ((type == DOUBLE_SLIP) && (lbB != lbC)) {
+            if ((type == TurnoutType.DOUBLE_SLIP) && (lbB != lbC)) {
                 // have a BC block boundary, create a LayoutConnectivity
                 log.debug("Block boundary  ('{}'<->'{}') found at {}", lbB, lbC, this);
                 lc = new LayoutConnectivity(lbB, lbC);

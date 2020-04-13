@@ -58,7 +58,7 @@ class ConvertDialog extends JDialog {
             ActionListener updateAction;
             if (pos instanceof TurnoutIcon) {
                 title = "IndicatorTO";
-                _panel = new IndicatorTOItemPanel(_filler, title, null, null, cb._editor) {
+                _panel = new IndicatorTOItemPanel(_filler, title, null, null) {
                     @Override
                     protected void showIcons() {
                          super.showIcons();
@@ -73,7 +73,7 @@ class ConvertDialog extends JDialog {
                 updateAction = (ActionEvent a) -> convertTO(block);
             } else {
                 title = "IndicatorTrack";
-                _panel = new IndicatorItemPanel(_filler, title, null, cb._editor) {
+                _panel = new IndicatorItemPanel(_filler, title, null) {
                     @Override
                     protected void showIcons() {
                         super.showIcons();
@@ -89,12 +89,6 @@ class ConvertDialog extends JDialog {
             }
             _panel.init(updateAction);
             
-/*            JPanel content = new JPanel();
-            content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
-            content.add(new JLabel(Bundle.getMessage("notIndicatorIcon")));
-            content.add(_panel);
-            Dimension dim = content.getPreferredSize();
-            */
             JPanel buttonPanel = _panel.getBottomPanel();
             _panel.getUpdateButton().setText(Bundle.getMessage("convert"));
             JButton button = new JButton(Bundle.getMessage("skip"));

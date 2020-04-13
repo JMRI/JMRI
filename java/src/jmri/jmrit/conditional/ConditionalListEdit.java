@@ -4365,7 +4365,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             ConditionalVariable variable = _variableList.get(row);
             switch (col) {
                 case ROWNUM_COLUMN:
-                    return ("R" + (row + 1)); //NOI18N
+                    return ("R" + (row + 1)); // NOI18N
                 case AND_COLUMN:
                     if (row == 0) { //removed: || _logicType == Conditional.MIXED
                         return "";

@@ -60,8 +60,8 @@ public class LayoutSlipTest {
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
 
-        Assert.assertTrue("lts.getSlipType() is SINGLE_SLIP", lts.getSlipType() == LayoutTurnout.SINGLE_SLIP);
-        Assert.assertTrue("ltd.getSlipType() is DOUBLE_SLIP", ltd.getSlipType() == LayoutTurnout.DOUBLE_SLIP);
+        Assert.assertTrue("lts.getSlipType() is SINGLE_SLIP", lts.getSlipType() == LayoutTurnout.TurnoutType.SINGLE_SLIP);
+        Assert.assertTrue("ltd.getSlipType() is DOUBLE_SLIP", ltd.getSlipType() == LayoutTurnout.TurnoutType.DOUBLE_SLIP);
     }
 
     @Test
@@ -71,13 +71,13 @@ public class LayoutSlipTest {
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
 
-        lts.setSlipType(LayoutTurnout.NONE); // invalid type
-        JUnitAppender.assertErrorMessage("single.setSlipType(0); invalid slip type");
+        lts.setSlipType(LayoutTurnout.TurnoutType.NONE); // invalid type
+        JUnitAppender.assertErrorMessage("single.setSlipType(NONE); invalid slip type");
 
-        lts.setSlipType(LayoutTurnout.DOUBLE_SLIP);
-        Assert.assertTrue("lts.getSlipType() is DOUBLE_SLIP", lts.getSlipType() == LayoutTurnout.DOUBLE_SLIP);
-        ltd.setSlipType(LayoutTurnout.SINGLE_SLIP);
-        Assert.assertTrue("ltd.getSlipType() is SINGLE_SLIP", ltd.getSlipType() == LayoutTurnout.SINGLE_SLIP);
+        lts.setSlipType(LayoutTurnout.TurnoutType.DOUBLE_SLIP);
+        Assert.assertTrue("lts.getSlipType() is DOUBLE_SLIP", lts.getSlipType() == LayoutTurnout.TurnoutType.DOUBLE_SLIP);
+        ltd.setSlipType(LayoutTurnout.TurnoutType.SINGLE_SLIP);
+        Assert.assertTrue("ltd.getSlipType() is SINGLE_SLIP", ltd.getSlipType() == LayoutTurnout.TurnoutType.SINGLE_SLIP);
     }
 
     @Test
@@ -87,13 +87,13 @@ public class LayoutSlipTest {
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
 
-        lts.setTurnoutType(LayoutTurnout.NONE); // invalid type
-        JUnitAppender.assertErrorMessage("single.setSlipType(0); invalid slip type");
+        lts.setTurnoutType(LayoutTurnout.TurnoutType.NONE); // invalid type
+        JUnitAppender.assertErrorMessage("single.setSlipType(NONE); invalid slip type");
 
-        lts.setTurnoutType(LayoutTurnout.DOUBLE_SLIP);
-        Assert.assertTrue("lts.getSlipType() is DOUBLE_SLIP", lts.getSlipType() == LayoutTurnout.DOUBLE_SLIP);
-        ltd.setTurnoutType(LayoutTurnout.SINGLE_SLIP);
-        Assert.assertTrue("ltd.getSlipType() is SINGLE_SLIP", ltd.getSlipType() == LayoutTurnout.SINGLE_SLIP);
+        lts.setTurnoutType(LayoutTurnout.TurnoutType.DOUBLE_SLIP);
+        Assert.assertTrue("lts.getSlipType() is DOUBLE_SLIP", lts.getSlipType() == LayoutTurnout.TurnoutType.DOUBLE_SLIP);
+        ltd.setTurnoutType(LayoutTurnout.TurnoutType.SINGLE_SLIP);
+        Assert.assertTrue("ltd.getSlipType() is SINGLE_SLIP", ltd.getSlipType() == LayoutTurnout.TurnoutType.SINGLE_SLIP);
     }
 
     @Test
@@ -721,8 +721,8 @@ public class LayoutSlipTest {
     public void setUp() {
         jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            lts = new LayoutSlip("single", new Point2D.Double(50.0, 100.0), +45.0, layoutEditor, LayoutTurnout.SINGLE_SLIP);
-            ltd = new LayoutSlip("double", new Point2D.Double(100.0, 50.0), -45.0, layoutEditor, LayoutTurnout.DOUBLE_SLIP);
+            lts = new LayoutSlip("single", new Point2D.Double(50.0, 100.0), +45.0, layoutEditor, LayoutTurnout.TurnoutType.SINGLE_SLIP);
+            ltd = new LayoutSlip("double", new Point2D.Double(100.0, 50.0), -45.0, layoutEditor, LayoutTurnout.TurnoutType.DOUBLE_SLIP);
         }
     }
 

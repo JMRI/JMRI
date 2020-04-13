@@ -20,8 +20,7 @@ public class PortalItemPanelTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DisplayFrame df = new DisplayFrame();
-        EditorScaffold es = new EditorScaffold();
-        PortalItemPanel t = new PortalItemPanel(df,"test1","test2",es);
+        PortalItemPanel t = new PortalItemPanel(df,"test1","test2");
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(df);
     }

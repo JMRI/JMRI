@@ -27,11 +27,11 @@ public class IndicatorItemPanel extends FamilyItemPanel {
 
     private DetectionPanel _detectPanel;
 
-    /**
-     * Constructor for plain icons and backgrounds.
+    /*
+     * Constructor for track icons.
      */
-    public IndicatorItemPanel(DisplayFrame parentFrame, String type, String family, Editor editor) {
-        super(parentFrame, type, family, editor);
+    public IndicatorItemPanel(DisplayFrame parentFrame, String type, String family) {
+        super(parentFrame, type, family);
     }
 
     /**
@@ -157,7 +157,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
                 log.debug("IndicatorDragJLabel.getTransferData");
             }
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
-                IndicatorTrackIcon t = new IndicatorTrackIcon(_editor);
+                IndicatorTrackIcon t = new IndicatorTrackIcon(_frame.getEditor());
 
                 t.setOccBlock(_detectPanel.getOccBlock());
                 t.setOccSensor(_detectPanel.getOccSensor());

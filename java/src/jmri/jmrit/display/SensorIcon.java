@@ -336,7 +336,9 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
             popup.add(momentaryItem);
             momentaryItem.setSelected(getMomentary());
-            momentaryItem.addActionListener((java.awt.event.ActionEvent e) -> setMomentary(momentaryItem.isSelected()));
+            momentaryItem.addActionListener((java.awt.event.ActionEvent e) -> {
+                setMomentary(momentaryItem.isSelected());
+            });
         } else if (getPopupUtility() != null) {
             getPopupUtility().setAdditionalViewPopUpMenu(popup);
         }
@@ -447,11 +449,15 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     protected void editItem() {
         _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSensor")));
         _itemPanel = new TableItemPanel<>(_paletteFrame, "Sensor", _iconFamily,
-                PickListModel.sensorPickModelInstance(), _editor); // NOI18N
-        ActionListener updateAction = (ActionEvent a) -> updateItem();
+                PickListModel.sensorPickModelInstance()); // NOI18N
+        ActionListener updateAction = (ActionEvent a) -> {
+            updateItem();
+        };
         // duplicate _iconMap map with unscaled and unrotated icons
         HashMap<String, NamedIcon> map = new HashMap<>();
-        for (Entry<String, NamedIcon> entry : _iconMap.entrySet()) {
+        Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, NamedIcon> entry = it.next();
             NamedIcon oldIcon = entry.getValue();
             NamedIcon newIcon = cloneIcon(oldIcon, this);
             newIcon.rotate(0, this);
@@ -473,7 +479,9 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         _iconFamily = _itemPanel.getFamilyName();
         HashMap<String, NamedIcon> iconMap = _itemPanel.getIconMap();
         if (iconMap != null) {
-            for (Entry<String, NamedIcon> entry : iconMap.entrySet()) {
+            Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<String, NamedIcon> entry = it.next();
                 if (log.isDebugEnabled()) {
                     log.debug("key= {}", entry.getKey());
                 }
@@ -510,7 +518,9 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         _iconEditor.makeIconPanel(false);
 
         // set default icons, then override with this turnout's icons
-        ActionListener addIconAction = (ActionEvent a) -> updateSensor();
+        ActionListener addIconAction = (ActionEvent a) -> {
+            updateSensor();
+        };
         _iconEditor.complete(addIconAction, true, true, true);
         _iconEditor.setSelection(getSensor());
     }
@@ -638,7 +648,9 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             SensorIcon pos) {
         HashMap<Integer, NamedIcon> clone = new HashMap<>();
         if (map != null) {
-            for (Entry<Integer, NamedIcon> entry : map.entrySet()) {
+            Iterator<Entry<Integer, NamedIcon>> it = map.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<Integer, NamedIcon> entry = it.next();
                 clone.put(entry.getKey(), cloneIcon(entry.getValue(), pos));
                 if (pos != null) {
                     pos.setIcon(pos._state2nameMap.get(entry.getKey()), _iconMap.get(entry.getKey().toString()));

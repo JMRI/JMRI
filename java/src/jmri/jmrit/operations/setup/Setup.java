@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import jmri.Disposable;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.trains.TrainLogger;
@@ -28,7 +29,7 @@ import jmri.web.server.WebServerPreferences;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010, 2012, 2014
  */
-public class Setup implements InstanceManagerAutoDefault, Disposable {
+public class Setup extends PropertyChangeSupport implements InstanceManagerAutoDefault, Disposable {
 
     public static final String NONE = "";
 
@@ -325,12 +326,12 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     private boolean showTrackMoves = false; // when true show track moves in table
 
     // property changes
-    public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange"; //  NOI18N
-    public static final String MANIFEST_CSV_PROPERTY_CHANGE = "setupManifestCSVChange"; //  NOI18N
-    public static final String REAL_TIME_PROPERTY_CHANGE = "setupSwitchListRealTime"; //  NOI18N
-    public static final String SHOW_TRACK_MOVES_PROPERTY_CHANGE = "setupShowTrackMoves"; //  NOI18N
-    public static final String SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE = "saveTrainManifestChange"; //  NOI18N
-    public static final String ALLOW_CARS_TO_RETURN_PROPERTY_CHANGE = "allowCarsToReturnChange"; //  NOI18N
+    public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange"; // NOI18N
+    public static final String MANIFEST_CSV_PROPERTY_CHANGE = "setupManifestCSVChange"; // NOI18N
+    public static final String REAL_TIME_PROPERTY_CHANGE = "setupSwitchListRealTime"; // NOI18N
+    public static final String SHOW_TRACK_MOVES_PROPERTY_CHANGE = "setupShowTrackMoves"; // NOI18N
+    public static final String SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE = "saveTrainManifestChange"; // NOI18N
+    public static final String ALLOW_CARS_TO_RETURN_PROPERTY_CHANGE = "allowCarsToReturnChange"; // NOI18N
 
     public static boolean isMainMenuEnabled() {
         InstanceManager.getDefault(OperationsSetupXml.class); // load file
@@ -2916,19 +2917,9 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         }
     }
 
-    static java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(Setup.class);
-
-    public static synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public static synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     protected static void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         InstanceManager.getDefault(OperationsSetupXml.class).setDirty(true);
-        pcs.firePropertyChange(p, old, n);
+        getDefault().firePropertyChange(p, old, n);
     }
 
     public static Setup getDefault() {

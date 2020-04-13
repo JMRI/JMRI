@@ -86,11 +86,11 @@ public class MultiSensorIconDialog extends IconDialog {
             log.debug("addNewIcon Action: iconMap.size()= " + _iconMap.size());
         }
         if (name == null || name.length() == 0) {
-            JOptionPane.showMessageDialog(_parent._paletteFrame, Bundle.getMessage("NoIconName"),
+            JOptionPane.showMessageDialog(_parent._frame, Bundle.getMessage("NoIconName"),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         } else if (_iconMap.get(name) != null) {
-            JOptionPane.showMessageDialog(_parent._paletteFrame,
+            JOptionPane.showMessageDialog(_parent._frame,
                     Bundle.getMessage("DuplicateIconName", name),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return false;

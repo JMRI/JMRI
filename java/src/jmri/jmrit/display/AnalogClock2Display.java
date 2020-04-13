@@ -201,17 +201,21 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
             return;
         }
         AffineTransform t = AffineTransform.getScaleInstance(scale, scale);
+        clockIcon = new NamedIcon("resources/clock2.gif", "resources/clock2.gif");
         int w = (int) Math.ceil(scale * clockIcon.getIconWidth());
         int h = (int) Math.ceil(scale * clockIcon.getIconHeight());
         clockIcon.transformImage(w, h, t, null);
+        scaledIcon = new NamedIcon("resources/logo.gif", "resources/logo.gif");
         w = (int) Math.ceil(scale * scaledIcon.getIconWidth());
         h = (int) Math.ceil(scale * scaledIcon.getIconHeight());
         scaledIcon.transformImage(w, h, t, null);
+        jmriIcon = new NamedIcon("resources/logo.gif", "resources/logo.gif");
         w = (int) Math.ceil(scale * jmriIcon.getIconWidth());
         h = (int) Math.ceil(scale * jmriIcon.getIconHeight());
         jmriIcon.transformImage(w, h, t, null);
+        logo = jmriIcon.getImage();
+        clockFace = clockIcon.getImage();
         setSize(clockIcon.getIconHeight());
-        scale *= getScale();
         super.setScale(scale);
     }
 
@@ -324,8 +328,8 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
             size = Math.min(panelHeight, panelWidth);
         }
         faceSize = size;
-        if (faceSize == 0) {
-            faceSize = 1;
+        if (faceSize <= 12) {
+            return;
         }
 
         // Had trouble getting the proper sizes when using Images by themselves so

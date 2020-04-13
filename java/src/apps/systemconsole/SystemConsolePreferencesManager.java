@@ -38,7 +38,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     private int scheme = 0; // Green on Black
     private int fontSize = 12;
     private int fontStyle = Font.PLAIN;
-    private String fontFamily = "Monospaced";  //NOI18N
+    private String fontFamily = "Monospaced";  // NOI18N
     private int wrapStyle = SystemConsole.WRAP_STYLE_WORD;
 
     /*

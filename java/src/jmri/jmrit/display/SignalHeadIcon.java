@@ -189,7 +189,12 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             ButtonGroup clickButtonGroup = new ButtonGroup();
             JRadioButtonMenuItem r;
             r = new JRadioButtonMenuItem(Bundle.getMessage("ChangeAspect"));
-            r.addActionListener(e -> setClickMode(3));
+            r.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setClickMode(3);
+                }
+            });
             clickButtonGroup.add(r);
             if (clickMode == 3) {
                 r.setSelected(true);
@@ -198,7 +203,12 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             }
             clickMenu.add(r);
             r = new JRadioButtonMenuItem(Bundle.getMessage("Cycle3Aspects"));
-            r.addActionListener(e -> setClickMode(0));
+            r.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setClickMode(0);
+                }
+            });
             clickButtonGroup.add(r);
             if (clickMode == 0) {
                 r.setSelected(true);
@@ -207,7 +217,12 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             }
             clickMenu.add(r);
             r = new JRadioButtonMenuItem(Bundle.getMessage("AlternateLit"));
-            r.addActionListener(e -> setClickMode(1));
+            r.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setClickMode(1);
+                }
+            });
             clickButtonGroup.add(r);
             if (clickMode == 1) {
                 r.setSelected(true);
@@ -216,7 +231,12 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             }
             clickMenu.add(r);
             r = new JRadioButtonMenuItem(Bundle.getMessage("AlternateHeld"));
-            r.addActionListener(e -> setClickMode(2));
+            r.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setClickMode(2);
+                }
+            });
             clickButtonGroup.add(r);
             if (clickMode == 2) {
                 r.setSelected(true);
@@ -231,7 +251,12 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             litButtonGroup = new ButtonGroup();
             r = new JRadioButtonMenuItem(Bundle.getMessage("ShowAppearance"));
             r.setIconTextGap(10);
-            r.addActionListener(e -> setLitMode(false));
+            r.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setLitMode(false);
+                }
+            });
             litButtonGroup.add(r);
             if (!litMode) {
                 r.setSelected(true);
@@ -241,7 +266,12 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             litMenu.add(r);
             r = new JRadioButtonMenuItem(Bundle.getMessage("ShowDarkIcon"));
             r.setIconTextGap(10);
-            r.addActionListener(e -> setLitMode(true));
+            r.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setLitMode(true);
+                }
+            });
             litButtonGroup.add(r);
             if (litMode) {
                 r.setSelected(true);
@@ -352,8 +382,13 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"),
                 Bundle.getMessage("BeanNameSignalHead")));
         _itemPanel = new SignalHeadItemPanel(_paletteFrame, "SignalHead", getFamily(),
-                PickListModel.signalHeadPickModelInstance(), _editor); // NOI18N
-        ActionListener updateAction = a -> updateItem();
+                PickListModel.signalHeadPickModelInstance()); // NOI18N
+        ActionListener updateAction = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                updateItem();
+            }
+        };
         // _iconMap keys with non-localized keys
         // duplicate _iconMap map with unscaled and unrotated icons
         HashMap<String, NamedIcon> map = new HashMap<>();
@@ -412,7 +447,12 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         }
         _iconEditor.makeIconPanel(false);
 
-        ActionListener addIconAction = a -> updateSignal();
+        ActionListener addIconAction = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                updateSignal();
+            }
+        };
         _iconEditor.complete(addIconAction, true, false, true);
         _iconEditor.setSelection(getSignalHead());
     }
@@ -423,7 +463,9 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
      */
     private void setIcons(Hashtable<String, NamedIcon> map) {
         HashMap<String, NamedIcon> tempMap = new HashMap<>();
-        for (Entry<String, NamedIcon> entry : map.entrySet()) {
+        Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, NamedIcon> entry = it.next();
             String name = entry.getKey();
             NamedIcon icon = entry.getValue();
             NamedIcon oldIcon = _saveMap.get(name); // setSignalHead() has cleared _iconMap
