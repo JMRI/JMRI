@@ -175,7 +175,7 @@ public class XNetTrafficControllerIT {
      * the same order as they were posted.
      * PENDING: this should be tested for all subclasses of XNetTrafficController.
      */
-//    @Test
+    @Test
     public void testNormalMessages() throws Exception {
         XNetTestSimulator simul = new XNetTestSimulator.LZV100();
         initializeLayout(simul);
@@ -295,7 +295,7 @@ public class XNetTrafficControllerIT {
      * Checks that a sole OK response to a Turnout command is sufficient
      * to acknowledge the command message.
      */
-//    @Test
+    @Test
     public void testInterfaceOKOnlyAccepted() throws Exception {
         XNetTestSimulator simul = new XNetTestSimulator.LZV100();
         initializeLayout(simul);
@@ -326,7 +326,7 @@ public class XNetTrafficControllerIT {
     /**
      * Check that feedback+ok is processed before the command is acknowledged.
      */
-//    @Test
+    @Test
     public void testFeedbackAndOKProcessedBeforeNextCommand() throws Exception {
         
         XNetTestSimulator simul = new XNetTestSimulator.LZV100_USB();
