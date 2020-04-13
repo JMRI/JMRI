@@ -1,5 +1,6 @@
 package jmri.util;
 
+import apps.SystemConsole;
 import java.awt.Container;
 import java.awt.Frame;
 import java.awt.Window;
@@ -25,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import apps.gui.GuiLafPreferencesManager;
+import java.awt.GraphicsEnvironment;
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.Editor;
@@ -187,7 +189,11 @@ public class JUnitUtil {
             FailOnThreadViolationRepaintManager.install();
             isFailOnThreadViolationRepaintManagerInstalled = true;
         }
-        
+
+        if (SystemConsole.isCreated()) {
+            SystemConsole.getInstance().open();
+        }
+
         // need to do this each time
         try {
             JUnitAppender.start();
@@ -346,6 +352,10 @@ public class JUnitUtil {
         // Optionally, check that the Swing queue is idle
         //new org.netbeans.jemmy.QueueTool().waitEmpty(250);
 
+        // remove SystemConsole log appenders so test framework output is not included
+        if (!GraphicsEnvironment.isHeadless()) {
+            SystemConsole.getInstance().close();
+        }
     }
 
     /**
