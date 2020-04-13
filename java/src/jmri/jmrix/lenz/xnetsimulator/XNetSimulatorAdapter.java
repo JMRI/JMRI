@@ -502,17 +502,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         return 0;
     }
 
-    /**
-     * Add trailer to the outgoing byte stream.
-     *
-     * @param msg    the output byte stream
-     * @param offset the first byte not yet used
-     */
-    protected void addTrailerToOutput(byte[] msg, int offset, XNetReply m) {
-        if (!m.isBinary()) {
-            msg[offset] = 0x0d;
-        }
-    }
     private void writeReply(XNetReply r) {
         int i;
         int len = lengthOfByteStream(r);  // opCode+Nbytes+ECC
