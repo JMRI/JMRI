@@ -72,6 +72,124 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
+    public void testEnums() {
+        Assert.assertTrue("HitPointTypes.NONE.getValue() == 0", LayoutEditor.HitPointTypes.NONE.getValue() == 0);
+        Assert.assertTrue("HitPointTypes.POS_POINT.getValue() == 1", LayoutEditor.HitPointTypes.POS_POINT.getValue() == 1);
+        Assert.assertTrue("HitPointTypes.TURNOUT_A.getValue() == 2", LayoutEditor.HitPointTypes.TURNOUT_A.getValue() == 2);
+        Assert.assertTrue("HitPointTypes.TURNOUT_B.getValue() == 3", LayoutEditor.HitPointTypes.TURNOUT_B.getValue() == 3);
+        Assert.assertTrue("HitPointTypes.TURNOUT_C.getValue() == 4", LayoutEditor.HitPointTypes.TURNOUT_C.getValue() == 4);
+        Assert.assertTrue("HitPointTypes.TURNOUT_D.getValue() == 5", LayoutEditor.HitPointTypes.TURNOUT_D.getValue() == 5);
+        Assert.assertTrue("HitPointTypes.LEVEL_XING_A.getValue() == 6", LayoutEditor.HitPointTypes.LEVEL_XING_A.getValue() == 6);
+        Assert.assertTrue("HitPointTypes.LEVEL_XING_B.getValue() == 7", LayoutEditor.HitPointTypes.LEVEL_XING_B.getValue() == 7);
+        Assert.assertTrue("HitPointTypes.LEVEL_XING_C.getValue() == 8", LayoutEditor.HitPointTypes.LEVEL_XING_C.getValue() == 8);
+        Assert.assertTrue("HitPointTypes.LEVEL_XING_D.getValue() == 9", LayoutEditor.HitPointTypes.LEVEL_XING_D.getValue() == 9);
+        Assert.assertTrue("HitPointTypes.TRACK.getValue() == 10", LayoutEditor.HitPointTypes.TRACK.getValue() == 10);
+        Assert.assertTrue("HitPointTypes.TURNOUT_CENTER.getValue() == 11", LayoutEditor.HitPointTypes.TURNOUT_CENTER.getValue() == 11);
+        Assert.assertTrue("HitPointTypes.LEVEL_XING_CENTER.getValue() == 12", LayoutEditor.HitPointTypes.LEVEL_XING_CENTER.getValue() == 12);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_CENTER.getValue() == 13", LayoutEditor.HitPointTypes.TURNTABLE_CENTER.getValue() == 13);
+        Assert.assertTrue("HitPointTypes.LAYOUT_POS_LABEL.getValue() == 14", LayoutEditor.HitPointTypes.LAYOUT_POS_LABEL.getValue() == 14);
+        Assert.assertTrue("HitPointTypes.LAYOUT_POS_JCOMP.getValue() == 15", LayoutEditor.HitPointTypes.LAYOUT_POS_JCOMP.getValue() == 15);
+        Assert.assertTrue("HitPointTypes.MULTI_SENSOR.getValue() == 16", LayoutEditor.HitPointTypes.MULTI_SENSOR.getValue() == 16);
+        Assert.assertTrue("HitPointTypes.MARKER.getValue() == 17", LayoutEditor.HitPointTypes.MARKER.getValue() == 17);
+        Assert.assertTrue("HitPointTypes.TRACK_CIRCLE_CENTRE.getValue() == 18", LayoutEditor.HitPointTypes.TRACK_CIRCLE_CENTRE.getValue() == 18);
+        Assert.assertTrue("HitPointTypes.UNUSED_19.getValue() == 19", LayoutEditor.HitPointTypes.UNUSED_19.getValue() == 19);
+        Assert.assertTrue("HitPointTypes.SLIP_CENTER.getValue() == 20", LayoutEditor.HitPointTypes.SLIP_CENTER.getValue() == 20);
+        Assert.assertTrue("HitPointTypes.SLIP_A.getValue() == 21", LayoutEditor.HitPointTypes.SLIP_A.getValue() == 21);
+        Assert.assertTrue("HitPointTypes.SLIP_B.getValue() == 22", LayoutEditor.HitPointTypes.SLIP_B.getValue() == 22);
+        Assert.assertTrue("HitPointTypes.SLIP_C.getValue() == 23", LayoutEditor.HitPointTypes.SLIP_C.getValue() == 23);
+        Assert.assertTrue("HitPointTypes.SLIP_D.getValue() == 24", LayoutEditor.HitPointTypes.SLIP_D.getValue() == 24);
+        Assert.assertTrue("HitPointTypes.SLIP_LEFT.getValue() == 25", LayoutEditor.HitPointTypes.SLIP_LEFT.getValue() == 25);
+        Assert.assertTrue("HitPointTypes.SLIP_RIGHT.getValue() == 26", LayoutEditor.HitPointTypes.SLIP_RIGHT.getValue() == 26);
+        Assert.assertTrue("HitPointTypes.UNUSED_27.getValue() == 27", LayoutEditor.HitPointTypes.UNUSED_27.getValue() == 27);
+        Assert.assertTrue("HitPointTypes.UNUSED_28.getValue() == 28", LayoutEditor.HitPointTypes.UNUSED_28.getValue() == 28);
+        Assert.assertTrue("HitPointTypes.UNUSED_29.getValue() == 29", LayoutEditor.HitPointTypes.UNUSED_29.getValue() == 29);
+        Assert.assertTrue("HitPointTypes.BEZIER_CONTROL_POINT_0.getValue() == 30", LayoutEditor.HitPointTypes.BEZIER_CONTROL_POINT_0.getValue() == 30);
+        Assert.assertTrue("HitPointTypes.BEZIER_CONTROL_POINT_1.getValue() == 31", LayoutEditor.HitPointTypes.BEZIER_CONTROL_POINT_1.getValue() == 31);
+        Assert.assertTrue("HitPointTypes.BEZIER_CONTROL_POINT_2.getValue() == 32", LayoutEditor.HitPointTypes.BEZIER_CONTROL_POINT_2.getValue() == 32);
+        Assert.assertTrue("HitPointTypes.BEZIER_CONTROL_POINT_3.getValue() == 33", LayoutEditor.HitPointTypes.BEZIER_CONTROL_POINT_3.getValue() == 33);
+        Assert.assertTrue("HitPointTypes.BEZIER_CONTROL_POINT_4.getValue() == 34", LayoutEditor.HitPointTypes.BEZIER_CONTROL_POINT_4.getValue() == 34);
+        Assert.assertTrue("HitPointTypes.BEZIER_CONTROL_POINT_5.getValue() == 35", LayoutEditor.HitPointTypes.BEZIER_CONTROL_POINT_5.getValue() == 35);
+        Assert.assertTrue("HitPointTypes.BEZIER_CONTROL_POINT_6.getValue() == 36", LayoutEditor.HitPointTypes.BEZIER_CONTROL_POINT_6.getValue() == 36);
+        Assert.assertTrue("HitPointTypes.BEZIER_CONTROL_POINT_7.getValue() == 37", LayoutEditor.HitPointTypes.BEZIER_CONTROL_POINT_7.getValue() == 37);
+        Assert.assertTrue("HitPointTypes.BEZIER_CONTROL_POINT_8.getValue() == 38", LayoutEditor.HitPointTypes.BEZIER_CONTROL_POINT_8.getValue() == 38);
+        Assert.assertTrue("HitPointTypes.SHAPE_CENTER.getValue() == 39", LayoutEditor.HitPointTypes.SHAPE_CENTER.getValue() == 39);
+        Assert.assertTrue("HitPointTypes.SHAPE_POINT_0.getValue() == 40", LayoutEditor.HitPointTypes.SHAPE_POINT_0.getValue() == 40);
+        Assert.assertTrue("HitPointTypes.SHAPE_POINT_1.getValue() == 41", LayoutEditor.HitPointTypes.SHAPE_POINT_1.getValue() == 41);
+        Assert.assertTrue("HitPointTypes.SHAPE_POINT_2.getValue() == 42", LayoutEditor.HitPointTypes.SHAPE_POINT_2.getValue() == 42);
+        Assert.assertTrue("HitPointTypes.SHAPE_POINT_3.getValue() == 43", LayoutEditor.HitPointTypes.SHAPE_POINT_3.getValue() == 43);
+        Assert.assertTrue("HitPointTypes.SHAPE_POINT_4.getValue() == 44", LayoutEditor.HitPointTypes.SHAPE_POINT_4.getValue() == 44);
+        Assert.assertTrue("HitPointTypes.SHAPE_POINT_5.getValue() == 45", LayoutEditor.HitPointTypes.SHAPE_POINT_5.getValue() == 45);
+        Assert.assertTrue("HitPointTypes.SHAPE_POINT_6.getValue() == 46", LayoutEditor.HitPointTypes.SHAPE_POINT_6.getValue() == 46);
+        Assert.assertTrue("HitPointTypes.SHAPE_POINT_7.getValue() == 47", LayoutEditor.HitPointTypes.SHAPE_POINT_7.getValue() == 47);
+        Assert.assertTrue("HitPointTypes.SHAPE_POINT_8.getValue() == 48", LayoutEditor.HitPointTypes.SHAPE_POINT_8.getValue() == 48);
+        Assert.assertTrue("HitPointTypes.SHAPE_POINT_9.getValue() == 49", LayoutEditor.HitPointTypes.SHAPE_POINT_9.getValue() == 49);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_0.getValue() == 50", LayoutEditor.HitPointTypes.TURNTABLE_RAY_0.getValue() == 50);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_1.getValue() == 51", LayoutEditor.HitPointTypes.TURNTABLE_RAY_1.getValue() == 51);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_2.getValue() == 52", LayoutEditor.HitPointTypes.TURNTABLE_RAY_2.getValue() == 52);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_3.getValue() == 53", LayoutEditor.HitPointTypes.TURNTABLE_RAY_3.getValue() == 53);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_4.getValue() == 54", LayoutEditor.HitPointTypes.TURNTABLE_RAY_4.getValue() == 54);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_5.getValue() == 55", LayoutEditor.HitPointTypes.TURNTABLE_RAY_5.getValue() == 55);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_6.getValue() == 56", LayoutEditor.HitPointTypes.TURNTABLE_RAY_5.getValue() == 56);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_7.getValue() == 57", LayoutEditor.HitPointTypes.TURNTABLE_RAY_7.getValue() == 57);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_8.getValue() == 58", LayoutEditor.HitPointTypes.TURNTABLE_RAY_8.getValue() == 58);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_9.getValue() == 59", LayoutEditor.HitPointTypes.TURNTABLE_RAY_9.getValue() == 59);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_10.getValue() == 50", LayoutEditor.HitPointTypes.TURNTABLE_RAY_10.getValue() == 50);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_11.getValue() == 51", LayoutEditor.HitPointTypes.TURNTABLE_RAY_11.getValue() == 51);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_12.getValue() == 52", LayoutEditor.HitPointTypes.TURNTABLE_RAY_12.getValue() == 52);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_13.getValue() == 53", LayoutEditor.HitPointTypes.TURNTABLE_RAY_13.getValue() == 53);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_14.getValue() == 54", LayoutEditor.HitPointTypes.TURNTABLE_RAY_14.getValue() == 54);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_15.getValue() == 55", LayoutEditor.HitPointTypes.TURNTABLE_RAY_15.getValue() == 55);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_16.getValue() == 56", LayoutEditor.HitPointTypes.TURNTABLE_RAY_15.getValue() == 56);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_17.getValue() == 57", LayoutEditor.HitPointTypes.TURNTABLE_RAY_17.getValue() == 57);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_18.getValue() == 58", LayoutEditor.HitPointTypes.TURNTABLE_RAY_18.getValue() == 58);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_19.getValue() == 59", LayoutEditor.HitPointTypes.TURNTABLE_RAY_19.getValue() == 59);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_20.getValue() == 50", LayoutEditor.HitPointTypes.TURNTABLE_RAY_20.getValue() == 50);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_21.getValue() == 51", LayoutEditor.HitPointTypes.TURNTABLE_RAY_21.getValue() == 51);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_22.getValue() == 52", LayoutEditor.HitPointTypes.TURNTABLE_RAY_22.getValue() == 52);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_23.getValue() == 53", LayoutEditor.HitPointTypes.TURNTABLE_RAY_23.getValue() == 53);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_24.getValue() == 54", LayoutEditor.HitPointTypes.TURNTABLE_RAY_24.getValue() == 54);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_25.getValue() == 55", LayoutEditor.HitPointTypes.TURNTABLE_RAY_25.getValue() == 55);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_26.getValue() == 56", LayoutEditor.HitPointTypes.TURNTABLE_RAY_25.getValue() == 56);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_27.getValue() == 57", LayoutEditor.HitPointTypes.TURNTABLE_RAY_27.getValue() == 57);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_28.getValue() == 58", LayoutEditor.HitPointTypes.TURNTABLE_RAY_28.getValue() == 58);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_29.getValue() == 59", LayoutEditor.HitPointTypes.TURNTABLE_RAY_29.getValue() == 59);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_30.getValue() == 50", LayoutEditor.HitPointTypes.TURNTABLE_RAY_30.getValue() == 50);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_31.getValue() == 51", LayoutEditor.HitPointTypes.TURNTABLE_RAY_31.getValue() == 51);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_32.getValue() == 52", LayoutEditor.HitPointTypes.TURNTABLE_RAY_32.getValue() == 52);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_33.getValue() == 53", LayoutEditor.HitPointTypes.TURNTABLE_RAY_33.getValue() == 53);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_34.getValue() == 54", LayoutEditor.HitPointTypes.TURNTABLE_RAY_34.getValue() == 54);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_35.getValue() == 55", LayoutEditor.HitPointTypes.TURNTABLE_RAY_35.getValue() == 55);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_36.getValue() == 56", LayoutEditor.HitPointTypes.TURNTABLE_RAY_35.getValue() == 56);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_37.getValue() == 57", LayoutEditor.HitPointTypes.TURNTABLE_RAY_37.getValue() == 57);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_38.getValue() == 58", LayoutEditor.HitPointTypes.TURNTABLE_RAY_38.getValue() == 58);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_39.getValue() == 59", LayoutEditor.HitPointTypes.TURNTABLE_RAY_39.getValue() == 59);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_40.getValue() == 50", LayoutEditor.HitPointTypes.TURNTABLE_RAY_40.getValue() == 50);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_41.getValue() == 51", LayoutEditor.HitPointTypes.TURNTABLE_RAY_41.getValue() == 51);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_42.getValue() == 52", LayoutEditor.HitPointTypes.TURNTABLE_RAY_42.getValue() == 52);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_43.getValue() == 53", LayoutEditor.HitPointTypes.TURNTABLE_RAY_43.getValue() == 53);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_44.getValue() == 54", LayoutEditor.HitPointTypes.TURNTABLE_RAY_44.getValue() == 54);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_45.getValue() == 55", LayoutEditor.HitPointTypes.TURNTABLE_RAY_45.getValue() == 55);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_46.getValue() == 56", LayoutEditor.HitPointTypes.TURNTABLE_RAY_45.getValue() == 56);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_47.getValue() == 57", LayoutEditor.HitPointTypes.TURNTABLE_RAY_47.getValue() == 57);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_48.getValue() == 58", LayoutEditor.HitPointTypes.TURNTABLE_RAY_48.getValue() == 58);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_49.getValue() == 59", LayoutEditor.HitPointTypes.TURNTABLE_RAY_49.getValue() == 59);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_50.getValue() == 50", LayoutEditor.HitPointTypes.TURNTABLE_RAY_50.getValue() == 50);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_51.getValue() == 51", LayoutEditor.HitPointTypes.TURNTABLE_RAY_51.getValue() == 51);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_52.getValue() == 52", LayoutEditor.HitPointTypes.TURNTABLE_RAY_52.getValue() == 52);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_53.getValue() == 53", LayoutEditor.HitPointTypes.TURNTABLE_RAY_53.getValue() == 53);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_54.getValue() == 54", LayoutEditor.HitPointTypes.TURNTABLE_RAY_54.getValue() == 54);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_55.getValue() == 55", LayoutEditor.HitPointTypes.TURNTABLE_RAY_55.getValue() == 55);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_56.getValue() == 56", LayoutEditor.HitPointTypes.TURNTABLE_RAY_55.getValue() == 56);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_57.getValue() == 57", LayoutEditor.HitPointTypes.TURNTABLE_RAY_57.getValue() == 57);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_58.getValue() == 58", LayoutEditor.HitPointTypes.TURNTABLE_RAY_58.getValue() == 58);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_59.getValue() == 59", LayoutEditor.HitPointTypes.TURNTABLE_RAY_59.getValue() == 59);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_60.getValue() == 50", LayoutEditor.HitPointTypes.TURNTABLE_RAY_60.getValue() == 60);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_61.getValue() == 51", LayoutEditor.HitPointTypes.TURNTABLE_RAY_61.getValue() == 61);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_62.getValue() == 52", LayoutEditor.HitPointTypes.TURNTABLE_RAY_62.getValue() == 62);
+        Assert.assertTrue("HitPointTypes.TURNTABLE_RAY_63.getValue() == 53", LayoutEditor.HitPointTypes.TURNTABLE_RAY_63.getValue() == 63);
+    }
+
+    @Test
     @Ignore("Test fails to find and close dialog on Jenkins")
     public void testSavePanel() {
 
@@ -111,7 +229,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
             return !(misc1.isAlive());
         }, "misc1 finished");
         JUnitUtil.dispose(e);
-        e=null; // prevent closing the window using the operator in shutDown.
+        e = null; // prevent closing the window using the operator in shutDown.
     }
 
     @Test
@@ -136,7 +254,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Failing to set second zoom") 
+    @Ignore("Failing to set second zoom")
     public void testGetSetZoom() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((m) -> {
@@ -391,22 +509,22 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
         LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock("ILB999", "Test Block");
         Assert.assertNotNull("layoutBlock created", layoutBlock);
-        
+
         Assert.assertEquals("BlockTrackColor default", e.getDefaultTrackColorColor(), layoutBlock.getBlockTrackColor());
         layoutBlock.setBlockTrackColor(Color.pink);
         Assert.assertEquals("BlockTrackColor set to pink", Color.pink, layoutBlock.getBlockTrackColor());
-        
+
         Assert.assertEquals("BlockOccupiedColor default", e.getDefaultOccupiedTrackColorColor(), layoutBlock.getBlockOccupiedColor());
         layoutBlock.setBlockOccupiedColor(Color.pink);
         Assert.assertEquals("BlockOccupiedColor set to pink", Color.pink, layoutBlock.getBlockOccupiedColor());
-        
+
         Assert.assertEquals("BlockExtraColor default", e.getDefaultAlternativeTrackColorColor(), layoutBlock.getBlockExtraColor());
         layoutBlock.setBlockExtraColor(Color.pink);
         Assert.assertEquals("BlockExtraColor set to pink", Color.pink, layoutBlock.getBlockExtraColor());
 
         int changed = e.setAllTracksToDefaultColors();
         Assert.assertEquals("setAllTracksToDefaultColors changed one block", 1, changed);
-        
+
         Assert.assertEquals("BlockTrackColor back to default", e.getDefaultTrackColorColor(), layoutBlock.getBlockTrackColor());
         Assert.assertEquals("BlockOccupiedColor back to default", e.getDefaultOccupiedTrackColorColor(), layoutBlock.getBlockOccupiedColor());
         Assert.assertEquals("BlockExtraColor back to default", e.getDefaultAlternativeTrackColorColor(), layoutBlock.getBlockExtraColor());

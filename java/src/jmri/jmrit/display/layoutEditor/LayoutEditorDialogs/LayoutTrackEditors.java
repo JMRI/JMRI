@@ -127,8 +127,8 @@ public class LayoutTrackEditors {
     }
 
     /*==================*\
-    | Edit Track Segment |
-    \*==================*/
+                    | Edit Track Segment |
+                    \*==================*/
     // variables for Edit Track Segment pane
     private TrackSegment trackSegment;
 
@@ -390,8 +390,8 @@ public class LayoutTrackEditors {
     }
 
     /*===================*\
-    | Edit Layout Turnout |
-    \*===================*/
+                    | Edit Layout Turnout |
+                    \*===================*/
     // variables for Edit Layout Turnout pane
     private LayoutTurnout layoutTurnout = null;
 
@@ -880,8 +880,8 @@ public class LayoutTrackEditors {
     }
 
     /*================*\
-    | Edit Layout Slip |
-    \*================*/
+                    | Edit Layout Slip |
+                    \*================*/
     // variables for Edit slip Crossing pane
     private LayoutSlip layoutSlip = null;
 
@@ -1303,8 +1303,8 @@ public class LayoutTrackEditors {
     }
 
     /*===============*\
-    | Edit Level Xing |
-    \*===============*/
+                    | Edit Level Xing |
+                    \*===============*/
     // variables for Edit Track Segment pane
     private LevelXing levelXing;
 
@@ -1527,8 +1527,8 @@ public class LayoutTrackEditors {
     }
 
     /*==============*\
-    | Edit Turntable |
-    \*==============*/
+                    | Edit Turntable |
+                    \*==============*/
     // variables for Edit Turntable pane
     private LayoutTurntable layoutTurntable = null;
 
@@ -1729,8 +1729,8 @@ public class LayoutTrackEditors {
     }
 
     /*===================*\
-    | Turntable Ray Panel |
-    \*===================*/
+                    | Turntable Ray Panel |
+                    \*===================*/
     public class TurntableRayPanel extends JPanel {
 
         // variables for Edit Turntable ray pane

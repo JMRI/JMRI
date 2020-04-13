@@ -832,7 +832,8 @@ public class LayoutTrackEditorsTest {
             PositionablePoint pp1 = new PositionablePoint("a", PositionablePoint.ANCHOR, point, layoutEditor);
             point = MathUtil.add(point, delta);
             PositionablePoint pp2 = new PositionablePoint("b", PositionablePoint.ANCHOR, point, layoutEditor);
-            trackSegment = new TrackSegment("Segment", pp1, LayoutTrack.POS_POINT, pp2, LayoutTrack.POS_POINT, false, false, layoutEditor);
+            trackSegment = new TrackSegment("Segment", pp1, LayoutEditor.HitPointTypes.POS_POINT, pp2, LayoutEditor.HitPointTypes.POS_POINT, false, false, layoutEditor
+            );
 
             // RH Turnout
             point = MathUtil.add(point, delta);

@@ -89,6 +89,7 @@ public class LevelXing extends LayoutTrack {
     public enum Geometry {
         POINTA, POINTB, POINTC, POINTD
     }
+
     /**
      * Constructor method
      */
@@ -103,7 +104,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     /*
-     * Accessor methods
+    * Accessor methods
      */
     @Nonnull
     public String getBlockNameAC() {
@@ -570,7 +571,7 @@ public class LevelXing extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(LayoutEditor.HitPointTypes connectionType) throws jmri.JmriException {
         switch (connectionType) {
             case LEVEL_XING_A:
                 return connectA;
@@ -592,9 +593,9 @@ public class LevelXing extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
-        if ((type != TRACK) && (type != NONE)) {
-            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); invalid type", 
+    public void setConnection(LayoutEditor.HitPointTypes connectionType, LayoutTrack o, LayoutEditor.HitPointTypes type) throws jmri.JmriException {
+        if ((type != LayoutEditor.HitPointTypes.TRACK) && (type != LayoutEditor.HitPointTypes.NONE)) {
+            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); invalid type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type);
             log.error(errString);
             throw new jmri.JmriException(errString);
@@ -613,8 +614,8 @@ public class LevelXing extends LayoutTrack {
                 connectD = o;
                 break;
             default:
-            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); invalid connection type", 
-                    getName(), connectionType, (o == null) ? "null" : o.getName(), type);
+                String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); invalid connection type",
+                        getName(), connectionType, (o == null) ? "null" : o.getName(), type);
                 log.error(errString);
                 throw new jmri.JmriException(errString);
         }
@@ -636,34 +637,34 @@ public class LevelXing extends LayoutTrack {
         return connectD;
     }
 
-    public void setConnectA(LayoutTrack o, int type) {
+    public void setConnectA(LayoutTrack o, LayoutEditor.HitPointTypes type) {
         connectA = o;
-        if ((connectA != null) && (type != TRACK)) {
-            log.error("{}.setConnectA(({}, {}); invalid type", 
+        if ((connectA != null) && (type != LayoutEditor.HitPointTypes.TRACK)) {
+            log.error("{}.setConnectA(({}, {}); invalid type",
                     getName(), o.getName(), type);
         }
     }
 
-    public void setConnectB(LayoutTrack o, int type) {
+    public void setConnectB(LayoutTrack o, LayoutEditor.HitPointTypes type) {
         connectB = o;
-        if ((connectB != null) && (type != TRACK)) {
-            log.error("{}.setConnectB(({}, {}); invalid type", 
+        if ((connectB != null) && (type != LayoutEditor.HitPointTypes.TRACK)) {
+            log.error("{}.setConnectB(({}, {}); invalid type",
                     getName(), o.getName(), type);
         }
     }
 
-    public void setConnectC(LayoutTrack o, int type) {
+    public void setConnectC(LayoutTrack o, LayoutEditor.HitPointTypes type) {
         connectC = o;
-        if ((connectC != null) && (type != TRACK)) {
-            log.error("{}.setConnectC(({}, {}); invalid type", 
+        if ((connectC != null) && (type != LayoutEditor.HitPointTypes.TRACK)) {
+            log.error("{}.setConnectC(({}, {}); invalid type",
                     getName(), o.getName(), type);
         }
     }
 
-    public void setConnectD(LayoutTrack o, int type) {
+    public void setConnectD(LayoutTrack o, LayoutEditor.HitPointTypes type) {
         connectD = o;
-        if ((connectD != null) && (type != TRACK)) {
-            log.error("{}.setConnectD(({}, {}); invalid type", 
+        if ((connectD != null) && (type != LayoutEditor.HitPointTypes.TRACK)) {
+            log.error("{}.setConnectD(({}, {}); invalid type",
                     getName(), o.getName(), type);
         }
     }
@@ -699,7 +700,7 @@ public class LevelXing extends LayoutTrack {
      * @return the coordinates for the specified connection type
      */
     @Override
-    public Point2D getCoordsForConnectionType(int connectionType) {
+    public Point2D getCoordsForConnectionType(LayoutEditor.HitPointTypes connectionType) {
         Point2D result = center;
         switch (connectionType) {
             case LEVEL_XING_CENTER:
@@ -864,7 +865,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     /*
-     * Modify coordinates methods.
+    * Modify coordinates methods.
      */
     public void setCoordsA(Point2D p) {
         dispA = MathUtil.subtract(p, center);
@@ -925,8 +926,8 @@ public class LevelXing extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        int result = NONE;  // assume point not on connection
+    protected LayoutEditor.HitPointTypes findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
+        LayoutEditor.HitPointTypes result = LayoutEditor.HitPointTypes.NONE;  // assume point not on connection
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
@@ -943,7 +944,7 @@ public class LevelXing extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = LEVEL_XING_CENTER;
+                result = LayoutEditor.HitPointTypes.LEVEL_XING_CENTER;
             }
         }
 
@@ -954,7 +955,7 @@ public class LevelXing extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = LEVEL_XING_A;
+                result = LayoutEditor.HitPointTypes.LEVEL_XING_A;
             }
         }
 
@@ -965,7 +966,7 @@ public class LevelXing extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = LEVEL_XING_B;
+                result = LayoutEditor.HitPointTypes.LEVEL_XING_B;
             }
         }
 
@@ -976,7 +977,7 @@ public class LevelXing extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = LEVEL_XING_C;
+                result = LayoutEditor.HitPointTypes.LEVEL_XING_C;
             }
         }
 
@@ -987,12 +988,12 @@ public class LevelXing extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = LEVEL_XING_D;
+                result = LayoutEditor.HitPointTypes.LEVEL_XING_D;
             }
         }
         if ((useRectangles && !r.contains(minPoint))
                 || (!useRectangles && (minDistance > circleRadius))) {
-            result = NONE;
+            result = LayoutEditor.HitPointTypes.NONE;
         }
         return result;
     }   // findHitPointType
@@ -1596,23 +1597,23 @@ public class LevelXing extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void highlightUnconnected(Graphics2D g2, int specificType) {
-        if (((specificType == NONE) || (specificType == LEVEL_XING_A))
+    protected void highlightUnconnected(Graphics2D g2, LayoutEditor.HitPointTypes specificType) {
+        if (((specificType == LayoutEditor.HitPointTypes.NONE) || (specificType == LayoutEditor.HitPointTypes.LEVEL_XING_A))
                 && (getConnectA() == null)) {
             g2.fill(trackControlCircleAt(getCoordsA()));
         }
 
-        if (((specificType == NONE) || (specificType == LEVEL_XING_B))
+        if (((specificType == LayoutEditor.HitPointTypes.NONE) || (specificType == LayoutEditor.HitPointTypes.LEVEL_XING_B))
                 && (getConnectB() == null)) {
             g2.fill(trackControlCircleAt(getCoordsB()));
         }
 
-        if (((specificType == NONE) || (specificType == LEVEL_XING_C))
+        if (((specificType == LayoutEditor.HitPointTypes.NONE) || (specificType == LayoutEditor.HitPointTypes.LEVEL_XING_C))
                 && (getConnectC() == null)) {
             g2.fill(trackControlCircleAt(getCoordsC()));
         }
 
-        if (((specificType == NONE) || (specificType == LEVEL_XING_D))
+        if (((specificType == LayoutEditor.HitPointTypes.NONE) || (specificType == LayoutEditor.HitPointTypes.LEVEL_XING_D))
                 && (getConnectD() == null)) {
             g2.fill(trackControlCircleAt(getCoordsD()));
         }
@@ -1659,7 +1660,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     /*
-     * {@inheritDoc}
+    * {@inheritDoc}
      */
     @Override
     public void reCheckBlockBoundary() {
@@ -1667,7 +1668,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     /*
-     * {@inheritDoc}
+    * {@inheritDoc}
      */
     @Override
     protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
@@ -1679,27 +1680,27 @@ public class LevelXing extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public List<Integer> checkForFreeConnections() {
-        List<Integer> result = new ArrayList<>();
+    public List<LayoutEditor.HitPointTypes> checkForFreeConnections() {
+        List<LayoutEditor.HitPointTypes> result = new ArrayList<>();
 
         //check the A connection point
         if (getConnectA() == null) {
-            result.add(Integer.valueOf(LEVEL_XING_A));
+            result.add(LayoutEditor.HitPointTypes.LEVEL_XING_A);
         }
 
         //check the B connection point
         if (getConnectB() == null) {
-            result.add(Integer.valueOf(LEVEL_XING_B));
+            result.add(LayoutEditor.HitPointTypes.LEVEL_XING_B);
         }
 
         //check the C connection point
         if (getConnectC() == null) {
-            result.add(Integer.valueOf(LEVEL_XING_C));
+            result.add(LayoutEditor.HitPointTypes.LEVEL_XING_C);
         }
 
         //check the D connection point
         if (getConnectD() == null) {
-            result.add(Integer.valueOf(LEVEL_XING_D));
+            result.add(LayoutEditor.HitPointTypes.LEVEL_XING_D);
         }
         return result;
     }
@@ -1719,16 +1720,16 @@ public class LevelXing extends LayoutTrack {
     public void checkForNonContiguousBlocks(
             @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetsMap) {
         /*
-         * For each (non-null) blocks of this track do:
-         * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
-         * #2) If this track is already in the TrackNameSet for this block
-         *     then return (done!)
-         * #3) else add a new set (with this block/track) to
-         *     blockNamesToTrackNameSetMap and check all the connections in this
-         *     block (by calling the 2nd method below)
-         * <p>
-         *     Basically, we're maintaining contiguous track sets for each block found
-         *     (in blockNamesToTrackNameSetMap)
+        * For each (non-null) blocks of this track do:
+        * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
+        * #2) If this track is already in the TrackNameSet for this block
+        *     then return (done!)
+        * #3) else add a new set (with this block/track) to
+        *     blockNamesToTrackNameSetMap and check all the connections in this
+        *     block (by calling the 2nd method below)
+        * <p>
+        *     Basically, we're maintaining contiguous track sets for each block found
+        *     (in blockNamesToTrackNameSetMap)
          */
 
         // We're only using a map here because it's convient to
@@ -1829,5 +1830,4 @@ public class LevelXing extends LayoutTrack {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LevelXing.class);
-
 }

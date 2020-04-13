@@ -24,11 +24,11 @@ public class TrackNodeTest {
         LayoutTurnout lt = new LayoutTurnout("T", MathUtil.zeroPoint2D, le);
         PositionablePoint p1 = new PositionablePoint("a", PositionablePoint.ANCHOR, new Point2D.Double(0.0, 0.0), le);
         PositionablePoint p2 = new PositionablePoint("b", PositionablePoint.ANCHOR, new Point2D.Double(1.0, 1.0), le);
-        TrackSegment ts = new TrackSegment("test", p1, LayoutTrack.POS_POINT, p2, LayoutTrack.POS_POINT, false, true, le);
-        TrackNode tn = new TrackNode(lt, LayoutTrack.TURNOUT_A, ts, false, 0);
+        TrackSegment ts = new TrackSegment("test", p1, LayoutEditor.HitPointTypes.POS_POINT, p2, LayoutEditor.HitPointTypes.POS_POINT, false, true, le);
+        TrackNode tn = new TrackNode(lt, LayoutEditor.HitPointTypes.TURNOUT_A, ts, false, 0);
         Assert.assertNotNull("exists", tn);
-        JUnitUtil.dispose(le); 
-   }
+        JUnitUtil.dispose(le);
+    }
 
     // from here down is testing infrastructure
     @Before

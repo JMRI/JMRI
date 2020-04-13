@@ -33,7 +33,7 @@ import jmri.Block;
  */
 public class TrackNode {
 
-    public TrackNode(LayoutTrack node, int nodeType, TrackSegment segment, boolean endBumper,
+    public TrackNode(LayoutTrack node, LayoutEditor.HitPointTypes nodeType, TrackSegment segment, boolean endBumper,
             int nodeState) {
         _Node = node;
         _NodeType = nodeType;
@@ -44,7 +44,7 @@ public class TrackNode {
 
     // instance variables
     LayoutTrack _Node = null;
-    int _NodeType = LayoutTrack.NONE;
+    LayoutEditor.HitPointTypes _NodeType = LayoutEditor.HitPointTypes.NONE;
     TrackSegment _TrackSegment = null;
     boolean _ReachedEndBumper = false;
     int _NodeState = 0;
@@ -61,11 +61,11 @@ public class TrackNode {
         return _Node;
     }
 
-    public void setNodeType(int type) {
+    public void setNodeType(LayoutEditor.HitPointTypes type) {
         _NodeType = type;
     }
 
-    public int getNodeType() {
+    public LayoutEditor.HitPointTypes getNodeType() {
         return _NodeType;
     }
 
@@ -96,21 +96,21 @@ public class TrackNode {
      * Returns the Block of the node Object at the nodeType position
      */
     public Block getNodeBlock() {
-        if (LayoutTrack.POS_POINT == _NodeType) {
+        if (LayoutEditor.HitPointTypes.POS_POINT == _NodeType) {
             return _TrackSegment.getLayoutBlock().getBlock();
-        } else if (LayoutTrack.TURNOUT_A == _NodeType) {
+        } else if (LayoutEditor.HitPointTypes.TURNOUT_A == _NodeType) {
             return ((LayoutTurnout) _Node).getLayoutBlock().getBlock();
-        } else if (LayoutTrack.TURNOUT_B == _NodeType) {
+        } else if (LayoutEditor.HitPointTypes.TURNOUT_B == _NodeType) {
             return ((LayoutTurnout) _Node).getLayoutBlockB().getBlock();
-        } else if (LayoutTrack.TURNOUT_C == _NodeType) {
+        } else if (LayoutEditor.HitPointTypes.TURNOUT_C == _NodeType) {
             return ((LayoutTurnout) _Node).getLayoutBlockC().getBlock();
-        } else if (LayoutTrack.TURNOUT_D == _NodeType) {
+        } else if (LayoutEditor.HitPointTypes.TURNOUT_D == _NodeType) {
             return ((LayoutTurnout) _Node).getLayoutBlockD().getBlock();
-        } else if ((LayoutTrack.LEVEL_XING_A == _NodeType)
-                || (LayoutTrack.LEVEL_XING_C == _NodeType)) {
+        } else if ((LayoutEditor.HitPointTypes.LEVEL_XING_A == _NodeType)
+                || (LayoutEditor.HitPointTypes.LEVEL_XING_C == _NodeType)) {
             return ((LevelXing) _Node).getLayoutBlockAC().getBlock();
-        } else if ((LayoutTrack.LEVEL_XING_B == _NodeType)
-                || (LayoutTrack.LEVEL_XING_D == _NodeType)) {
+        } else if ((LayoutEditor.HitPointTypes.LEVEL_XING_B == _NodeType)
+                || (LayoutEditor.HitPointTypes.LEVEL_XING_D == _NodeType)) {
             return ((LevelXing) _Node).getLayoutBlockBD().getBlock();
         }
         return null;

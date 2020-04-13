@@ -129,7 +129,6 @@ public class LayoutTurnout extends LayoutTrack {
     //public static final int LH_XOVER = 6;
     //public static final int SINGLE_SLIP = 7;    // used for LayoutSlip which extends this class
     //public static final int DOUBLE_SLIP = 8;    // used for LayoutSlip which extends this class
-
     public enum TurnoutType {
         NONE,
         RH_TURNOUT,
@@ -138,45 +137,40 @@ public class LayoutTurnout extends LayoutTrack {
         DOUBLE_XOVER,
         RH_XOVER,
         LH_XOVER,
-        SINGLE_SLIP,    // used for LayoutSlip which extends this class
+        SINGLE_SLIP, // used for LayoutSlip which extends this class
         DOUBLE_SLIP     // used for LayoutSlip which extends this class
     }
-    
+
     /**
-     * Returns true if this is a turnout or wye, i.e.
-     * has a single-track entrance end.
+     * Returns true if this is a turnout or wye, i.e. has a single-track
+     * entrance end.
      */
     public static boolean hasEnteringSingleTrack(TurnoutType type) {
-        return (
-            type == TurnoutType.RH_TURNOUT ||
-            type == TurnoutType.LH_TURNOUT ||
-            type == TurnoutType.WYE_TURNOUT
-                );
+        return (type == TurnoutType.RH_TURNOUT
+                || type == TurnoutType.LH_TURNOUT
+                || type == TurnoutType.WYE_TURNOUT);
     }
-    
+
     public boolean hasEnteringSingleTrack() {
         return hasEnteringSingleTrack(getTurnoutType());
     }
-    
+
     /**
-     * Returns true if this is a slip or crossover, i.e.
-     * has double track on the entrance end
+     * Returns true if this is a slip or crossover, i.e. has double track on the
+     * entrance end
      */
     public static boolean hasEnteringDoubleTrack(TurnoutType type) {
-        return (
-            type == TurnoutType.DOUBLE_XOVER ||
-            type == TurnoutType.RH_XOVER ||
-            type == TurnoutType.LH_XOVER ||
-            type == TurnoutType.SINGLE_SLIP ||
-            type == TurnoutType.DOUBLE_SLIP
-                );
+        return (type == TurnoutType.DOUBLE_XOVER
+                || type == TurnoutType.RH_XOVER
+                || type == TurnoutType.LH_XOVER
+                || type == TurnoutType.SINGLE_SLIP
+                || type == TurnoutType.DOUBLE_SLIP);
     }
 
     public boolean hasEnteringDoubleTrack() {
         return hasEnteringDoubleTrack(getTurnoutType());
     }
-    
-    
+
     // defined constants - link types
     //public static final int NO_LINK = 0;
     //public static final int FIRST_3_WAY = 1;       // this turnout is the first turnout of a 3-way
@@ -185,15 +179,14 @@ public class LayoutTurnout extends LayoutTrack {
     // turnout pair (furthest from the throat)
     //public static final int THROAT_TO_THROAT = 3;  // this turnout is one of two throat-to-throat
     // turnouts - no signals at throat
-
     public enum LinkType {
         NO_LINK,
-        FIRST_3_WAY,    // this turnout is the first turnout of a 3-way
-                        // turnout pair (closest to the throat)
-        SECOND_3_WAY,   // this turnout is the second turnout of a 3-way
-                        // turnout pair (furthest from the throat)
+        FIRST_3_WAY, // this turnout is the first turnout of a 3-way
+        // turnout pair (closest to the throat)
+        SECOND_3_WAY, // this turnout is the second turnout of a 3-way
+        // turnout pair (furthest from the throat)
         THROAT_TO_THROAT  // this turnout is one of two throat-to-throat
-                        // turnouts - no signals at throat
+        // turnouts - no signals at throat
     }
     // operational instance variables (not saved between sessions)
     public static final int UNKNOWN = Turnout.UNKNOWN;
@@ -249,7 +242,6 @@ public class LayoutTurnout extends LayoutTrack {
     // public static final int POINTC2 = 0x22;
     // public static final int POINTD1 = 0x30;
     // public static final int POINTD2 = 0x32;
-
     public enum Geometry {
         NONE,
         POINTA1,
@@ -262,7 +254,7 @@ public class LayoutTurnout extends LayoutTrack {
         POINTD1,
         POINTD2
     }
-    
+
     protected NamedBeanHandle<SignalMast> signalAMastNamed = null; // Throat
     protected NamedBeanHandle<SignalMast> signalBMastNamed = null; // Continuing
     protected NamedBeanHandle<SignalMast> signalCMastNamed = null; // diverging
@@ -1312,7 +1304,7 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(LayoutEditor.HitPointTypes connectionType) throws jmri.JmriException {
         LayoutTrack result = null;
         switch (connectionType) {
             case TURNOUT_A: {
@@ -1345,8 +1337,8 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
-        if ((type != TRACK) && (type != NONE)) {
+    public void setConnection(LayoutEditor.HitPointTypes connectionType, LayoutTrack o, LayoutEditor.HitPointTypes type) throws jmri.JmriException {
+        if ((type != LayoutEditor.HitPointTypes.TRACK) && (type != LayoutEditor.HitPointTypes.NONE)) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); unexpected type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
             log.error(errString);
@@ -1373,33 +1365,33 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    public void setConnectA(LayoutTrack o, int type) {
+    public void setConnectA(LayoutTrack o, LayoutEditor.HitPointTypes type) {
         connectA = o;
-        if ((type != TRACK) && (type != NONE)) {
+        if ((type != LayoutEditor.HitPointTypes.TRACK) && (type != LayoutEditor.HitPointTypes.NONE)) {
             log.error("{}.setConnectA({}, {}); unexpected type",
                     getName(), (o == null) ? "null" : o.getName(), type);
         }
     }
 
-    public void setConnectB(LayoutTrack o, int type) {
+    public void setConnectB(LayoutTrack o, LayoutEditor.HitPointTypes type) {
         connectB = o;
-        if ((type != TRACK) && (type != NONE)) {
+        if ((type != LayoutEditor.HitPointTypes.TRACK) && (type != LayoutEditor.HitPointTypes.NONE)) {
             log.error("{}.setConnectB({}, {}); unexpected type",
                     getName(), (o == null) ? "null" : o.getName(), type);
         }
     }
 
-    public void setConnectC(LayoutTrack o, int type) {
+    public void setConnectC(LayoutTrack o, LayoutEditor.HitPointTypes type) {
         connectC = o;
-        if ((type != TRACK) && (type != NONE)) {
+        if ((type != LayoutEditor.HitPointTypes.TRACK) && (type != LayoutEditor.HitPointTypes.NONE)) {
             log.error("{}.setConnectC({}, {}); unexpected type",
                     getName(), (o == null) ? "null" : o.getName(), type);
         }
     }
 
-    public void setConnectD(LayoutTrack o, int type) {
+    public void setConnectD(LayoutTrack o, LayoutEditor.HitPointTypes type) {
         connectD = o;
-        if ((type != TRACK) && (type != NONE)) {
+        if ((type != LayoutEditor.HitPointTypes.TRACK) && (type != LayoutEditor.HitPointTypes.NONE)) {
             log.error("{}.setConnectD({}, {}); unexpected type",
                     getName(), (o == null) ? "null" : o.getName(), type);
         }
@@ -1468,7 +1460,7 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public Point2D getCoordsForConnectionType(int connectionType) {
+    public Point2D getCoordsForConnectionType(LayoutEditor.HitPointTypes connectionType) {
         Point2D result = center;
         switch (connectionType) {
             case TURNOUT_CENTER:
@@ -1839,11 +1831,11 @@ public class LayoutTurnout extends LayoutTrack {
      * @since 4.11.6
      */
     void setTrackSegmentBlocks() {
-        setTrackSegmentBlock(TURNOUT_A, false);
-        setTrackSegmentBlock(TURNOUT_B, false);
-        setTrackSegmentBlock(TURNOUT_C, false);
-        if (hasEnteringDoubleTrack())  {
-            setTrackSegmentBlock(TURNOUT_D, false);
+        setTrackSegmentBlock(LayoutEditor.HitPointTypes.TURNOUT_A, false);
+        setTrackSegmentBlock(LayoutEditor.HitPointTypes.TURNOUT_B, false);
+        setTrackSegmentBlock(LayoutEditor.HitPointTypes.TURNOUT_C, false);
+        if (hasEnteringDoubleTrack()) {
+            setTrackSegmentBlock(LayoutEditor.HitPointTypes.TURNOUT_D, false);
         }
     }
 
@@ -1864,7 +1856,7 @@ public class LayoutTurnout extends LayoutTrack {
      *                    connections which require a track segment length
      *                    calculation.
      */
-    void setTrackSegmentBlock(int pointType, boolean isAutomatic) {
+    void setTrackSegmentBlock(LayoutEditor.HitPointTypes pointType, boolean isAutomatic) {
         TrackSegment trkSeg;
         Point2D pointCoord;
         LayoutBlock blockA = getLayoutBlock();
@@ -2090,8 +2082,8 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected int findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        int result = NONE;  // assume point not on connection
+    protected LayoutEditor.HitPointTypes findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
+        LayoutEditor.HitPointTypes result = LayoutEditor.HitPointTypes.NONE;  // assume point not on connection
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
@@ -2108,7 +2100,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = TURNOUT_CENTER;
+                result = LayoutEditor.HitPointTypes.TURNOUT_CENTER;
             }
         }
 
@@ -2119,7 +2111,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = TURNOUT_A;
+                result = LayoutEditor.HitPointTypes.TURNOUT_A;
             }
         }
 
@@ -2130,7 +2122,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = TURNOUT_B;
+                result = LayoutEditor.HitPointTypes.TURNOUT_B;
             }
         }
 
@@ -2141,7 +2133,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = TURNOUT_C;
+                result = LayoutEditor.HitPointTypes.TURNOUT_C;
             }
         }
 
@@ -2153,19 +2145,19 @@ public class LayoutTurnout extends LayoutTrack {
                 if (distance < minDistance) {
                     minDistance = distance;
                     minPoint = p;
-                    result = TURNOUT_D;
+                    result = LayoutEditor.HitPointTypes.TURNOUT_D;
                 }
             }
         }
         if ((useRectangles && !r.contains(minPoint))
                 || (!useRectangles && (minDistance > circleRadius))) {
-            result = NONE;
+            result = LayoutEditor.HitPointTypes.NONE;
         }
         return result;
     }   // findHitPointType
 
     /*
-     * Modify coordinates methods
+    * Modify coordinates methods
      */
     /**
      * {@inheritDoc}
@@ -4405,23 +4397,23 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void highlightUnconnected(Graphics2D g2, int specificType) {
-        if (((specificType == NONE) || (specificType == TURNOUT_A))
+    protected void highlightUnconnected(Graphics2D g2, LayoutEditor.HitPointTypes specificType) {
+        if (((specificType == LayoutEditor.HitPointTypes.NONE) || (specificType == LayoutEditor.HitPointTypes.TURNOUT_A))
                 && (getConnectA() == null)) {
             g2.fill(trackControlCircleAt(getCoordsA()));
         }
 
-        if (((specificType == NONE) || (specificType == TURNOUT_B))
+        if (((specificType == LayoutEditor.HitPointTypes.NONE) || (specificType == LayoutEditor.HitPointTypes.TURNOUT_B))
                 && (getConnectB() == null)) {
             g2.fill(trackControlCircleAt(getCoordsB()));
         }
 
-        if (((specificType == NONE) || (specificType == TURNOUT_C))
+        if (((specificType == LayoutEditor.HitPointTypes.NONE) || (specificType == LayoutEditor.HitPointTypes.TURNOUT_C))
                 && (getConnectC() == null)) {
             g2.fill(trackControlCircleAt(getCoordsC()));
         }
         if (isTurnoutTypeXover()) {
-            if (((specificType == NONE) || (specificType == TURNOUT_D))
+            if (((specificType == LayoutEditor.HitPointTypes.NONE) || (specificType == LayoutEditor.HitPointTypes.TURNOUT_D))
                     && (getConnectD() == null)) {
                 g2.fill(trackControlCircleAt(getCoordsD()));
             }
@@ -4502,8 +4494,8 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /*
-     * Used by ConnectivityUtil to determine the turnout state necessary to get
-     * from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
+    * Used by ConnectivityUtil to determine the turnout state necessary to get
+    * from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
      */
     protected int getConnectivityStateForLayoutBlocks(
             LayoutBlock currLayoutBlock,
@@ -4800,28 +4792,28 @@ public class LayoutTurnout extends LayoutTrack {
      */
     @Override
     public @Nonnull
-    List<Integer> checkForFreeConnections() {
-        List<Integer> result = new ArrayList<>();
+    List<LayoutEditor.HitPointTypes> checkForFreeConnections() {
+        List<LayoutEditor.HitPointTypes> result = new ArrayList<>();
 
         //check the A connection point
         if (getConnectA() == null) {
-            result.add(TURNOUT_A);
+            result.add(LayoutEditor.HitPointTypes.TURNOUT_A);
         }
 
         //check the B connection point
         if (getConnectB() == null) {
-            result.add(TURNOUT_B);
+            result.add(LayoutEditor.HitPointTypes.TURNOUT_B);
         }
 
         //check the C connection point
         if (getConnectC() == null) {
-            result.add(TURNOUT_C);
+            result.add(LayoutEditor.HitPointTypes.TURNOUT_C);
         }
 
         //check the D connection point
         if (isTurnoutTypeXover()) {
             if (getConnectD() == null) {
-                result.add(TURNOUT_D);
+                result.add(LayoutEditor.HitPointTypes.TURNOUT_D);
             }
         }
         return result;
@@ -4844,16 +4836,16 @@ public class LayoutTurnout extends LayoutTrack {
     public void checkForNonContiguousBlocks(
             @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetsMap) {
         /*
-         * For each (non-null) blocks of this track do:
-         * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
-         * #2) If this track is already in the TrackNameSet for this block
-         *     then return (done!)
-         * #3) else add a new set (with this block/track) to
-         *     blockNamesToTrackNameSetMap and check all the connections in this
-         *     block (by calling the 2nd method below)
-         * <p>
-         *     Basically, we're maintaining contiguous track sets for each block found
-         *     (in blockNamesToTrackNameSetMap)
+                * For each (non-null) blocks of this track do:
+                * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
+                * #2) If this track is already in the TrackNameSet for this block
+                *     then return (done!)
+                * #3) else add a new set (with this block/track) to
+                *     blockNamesToTrackNameSetMap and check all the connections in this
+                *     block (by calling the 2nd method below)
+                * <p>
+                *     Basically, we're maintaining contiguous track sets for each block found
+                *     (in blockNamesToTrackNameSetMap)
          */
 
         // We're only using a map here because it's convient to

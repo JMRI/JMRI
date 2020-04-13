@@ -6,9 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import jmri.configurexml.AbstractXmlAdapter;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.display.layoutEditor.LayoutTrack;
-import jmri.jmrit.display.layoutEditor.TrackSegment;
+import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -47,9 +45,9 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             element.setAttribute("blockname", p.getBlockName());
         }
         element.setAttribute("connect1name", p.getConnect1Name());
-        element.setAttribute("type1", "" + p.getType1());
+        element.setAttribute("type1", "" + p.getType1().name());
         element.setAttribute("connect2name", p.getConnect2Name());
-        element.setAttribute("type2", "" + p.getType2());
+        element.setAttribute("type2", "" + p.getType2().name());
         element.setAttribute("dashed", "" + (p.isDashed() ? "yes" : "no"));
         element.setAttribute("mainline", "" + (p.isMainline() ? "yes" : "no"));
         element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
@@ -210,16 +208,10 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         // create the objects
         LayoutEditor p = (LayoutEditor) o;
 
+        Attribute attribute = null;
+
         // get attributes
         String name = element.getAttribute("ident").getValue();
-        int type1 = LayoutTrack.NONE;
-        int type2 = LayoutTrack.NONE;
-        try {
-            type1 = element.getAttribute("type1").getIntValue();
-            type2 = element.getAttribute("type2").getIntValue();
-        } catch (DataConversionException e) {
-            log.error("failed to convert tracksegment attribute");
-        }
 
         boolean dash = true;
         try {
@@ -247,6 +239,32 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
 
         String con1Name = element.getAttribute("connect1name").getValue();
         String con2Name = element.getAttribute("connect2name").getValue();
+
+        LayoutEditor.HitPointTypes type1 = LayoutEditor.HitPointTypes.NONE;
+        try {
+            attribute = element.getAttribute("type1");
+            type1 = LayoutEditor.HitPointTypes.valueOf(attribute.getValue());
+        } catch (IllegalArgumentException e) {
+            try {
+                int t1 = attribute.getIntValue();
+                type1 = LayoutEditor.HitPointTypes.getValue(t1);
+            } catch (DataConversionException e1) {
+                log.error("failed to convert tracksegment type1 attribute");
+            }
+        }
+
+        LayoutEditor.HitPointTypes type2 = LayoutEditor.HitPointTypes.NONE;
+        try {
+            attribute = element.getAttribute("type2");
+            type2 = LayoutEditor.HitPointTypes.valueOf(attribute.getValue());
+        } catch (IllegalArgumentException e) {
+            try {
+                int t2 = attribute.getIntValue();
+                type2 = LayoutEditor.HitPointTypes.getValue(t2);
+            } catch (DataConversionException e1) {
+                log.error("failed to convert tracksegment type2 attribute");
+            }
+        }
 
         // create the new TrackSegment
         TrackSegment l = new TrackSegment(name,
@@ -601,6 +619,5 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         p.getLayoutTracks().add(l);
     }
 
-    private final static Logger log
-            = LoggerFactory.getLogger(TrackSegmentXml.class);
+    private final static Logger log = LoggerFactory.getLogger(TrackSegmentXml.class);
 }

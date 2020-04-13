@@ -1434,10 +1434,10 @@ public class LayoutEditorTools {
     }
 
     /*
-	 * Initializes a BlockBossLogic for creation of a signal logic for the signal
-	 *	head named in "signalHeadName".
-	 * Should not be called until enough informmation has been gathered to allow
-	 *	configuration of the Simple Signal Logic.
+    * Initializes a BlockBossLogic for creation of a signal logic for the signal
+    *	head named in "signalHeadName".
+    * Should not be called until enough informmation has been gathered to allow
+    *	configuration of the Simple Signal Logic.
      */
     public boolean initializeBlockBossLogic(@Nonnull String signalHeadName) {
         logic = BlockBossLogic.getStoppedObject(signalHeadName);
@@ -1445,7 +1445,7 @@ public class LayoutEditorTools {
     }
 
     /*
-	 * Finalizes a successfully created signal logic
+    * Finalizes a successfully created signal logic
      */
     public void finalizeBlockBossLogic() {
         if (logic == null) {
@@ -1457,19 +1457,19 @@ public class LayoutEditorTools {
     }
 
     /*
-	 * Returns the signal head at the end of the block "track" is assigned to.
-	 *	"track" is the Track Segment leaving "object".
-	 *	"object" must be either an anchor point or one of the connecting
-	 *	 points of a turnout or level crossing.
-	 * Note: returns 'null' is signal is not present where it is expected, or
-	 *	if an End Bumper is reached. To test for end bumper, use the
-	 *		associated routine "reachedEndBumper()". Reaching a turntable ray
-	 *	track connection is considered reaching an end bumper.
-	 * Note: Normally this routine requires a signal at any turnout it finds.
-	 *	However, if 'skipIncludedTurnout' is true, this routine will skip
-	 *	over an absent signal at an included turnout, that is a turnout
-	 *	with its throat track segment and its continuing track segment in
-	 *	the same block. When this happens, the user is warned.
+    * Returns the signal head at the end of the block "track" is assigned to.
+    *	"track" is the Track Segment leaving "object".
+    *	"object" must be either an anchor point or one of the connecting
+    *	 points of a turnout or level crossing.
+    * Note: returns 'null' is signal is not present where it is expected, or
+    *	if an End Bumper is reached. To test for end bumper, use the
+    *		associated routine "reachedEndBumper()". Reaching a turntable ray
+    *	track connection is considered reaching an end bumper.
+    * Note: Normally this routine requires a signal at any turnout it finds.
+    *	However, if 'skipIncludedTurnout' is true, this routine will skip
+    *	over an absent signal at an included turnout, that is a turnout
+    *	with its throat track segment and its continuing track segment in
+    *	the same block. When this happens, the user is warned.
      */
     @CheckReturnValue
     public SignalHead getNextSignalFromObject(@Nonnull TrackSegment track,
@@ -1480,7 +1480,7 @@ public class LayoutEditorTools {
         TrackSegment t = track;
         Object obj = object;
         boolean inBlock = true;
-        int type = 0;
+        LayoutEditor.HitPointTypes type = LayoutEditor.HitPointTypes.NONE;
         Object connect = null;
         while (inBlock) {
             if (t.getConnect1() == obj) {
@@ -1490,7 +1490,7 @@ public class LayoutEditorTools {
                 type = t.getType1();
                 connect = t.getConnect1();
             }
-            if (type == LayoutTrack.POS_POINT) {
+            if (type == LayoutEditor.HitPointTypes.POS_POINT) {
                 PositionablePoint p = (PositionablePoint) connect;
                 if (p.getType() == PositionablePoint.END_BUMPER) {
                     hitEndBumper = true;
@@ -1518,7 +1518,7 @@ public class LayoutEditorTools {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
                 obj = p;
-            } else if (type == LayoutTrack.TURNOUT_A) {
+            } else if (type == LayoutEditor.HitPointTypes.TURNOUT_A) {
                 //Reached turnout throat, should be signalled
                 LayoutTurnout to = (LayoutTurnout) connect;
                 String signalName = to.getSignalA2Name();
@@ -1539,7 +1539,7 @@ public class LayoutEditorTools {
                 } else {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
-            } else if (type == LayoutTrack.TURNOUT_B) {
+            } else if (type == LayoutEditor.HitPointTypes.TURNOUT_B) {
                 //Reached turnout continuing, should be signalled
                 LayoutTurnout to = (LayoutTurnout) connect;
                 String signalName = to.getSignalB2Name();
@@ -1567,7 +1567,7 @@ public class LayoutEditorTools {
                 } else {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
-            } else if (type == LayoutTrack.TURNOUT_C) {
+            } else if (type == LayoutEditor.HitPointTypes.TURNOUT_C) {
                 //Reached turnout diverging, should be signalled
                 LayoutTurnout to = (LayoutTurnout) connect;
                 String signalName = to.getSignalC2Name();
@@ -1595,7 +1595,7 @@ public class LayoutEditorTools {
                 } else {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
-            } else if (type == LayoutTrack.TURNOUT_D) {
+            } else if (type == LayoutEditor.HitPointTypes.TURNOUT_D) {
                 //Reached turnout xover 4, should be signalled
                 LayoutTurnout to = (LayoutTurnout) connect;
                 String signalName = to.getSignalD2Name();
@@ -1616,7 +1616,7 @@ public class LayoutEditorTools {
                 } else {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
-            } else if (type == LayoutTrack.LEVEL_XING_A) {
+            } else if (type == LayoutEditor.HitPointTypes.LEVEL_XING_A) {
                 //Reached level crossing that may or may not be a block boundary
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalAName();
@@ -1631,7 +1631,7 @@ public class LayoutEditorTools {
                     return null;
                 }
                 obj = x;
-            } else if (type == LayoutTrack.LEVEL_XING_B) {
+            } else if (type == LayoutEditor.HitPointTypes.LEVEL_XING_B) {
                 //Reached level crossing that may or may not be a block boundary
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalBName();
@@ -1646,7 +1646,7 @@ public class LayoutEditorTools {
                     return null;
                 }
                 obj = x;
-            } else if (type == LayoutTrack.LEVEL_XING_C) {
+            } else if (type == LayoutEditor.HitPointTypes.LEVEL_XING_C) {
                 //Reached level crossing that may or may not be a block boundary
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalCName();
@@ -1661,7 +1661,7 @@ public class LayoutEditorTools {
                     return null;
                 }
                 obj = x;
-            } else if (type == LayoutTrack.LEVEL_XING_D) {
+            } else if (type == LayoutEditor.HitPointTypes.LEVEL_XING_D) {
                 //Reached level crossing that may or may not be a block boundary
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalDName();
@@ -1676,7 +1676,7 @@ public class LayoutEditorTools {
                     return null;
                 }
                 obj = x;
-            } else if (type == LayoutTrack.SLIP_A) {
+            } else if (type == LayoutEditor.HitPointTypes.SLIP_A) {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName = sl.getSignalA2Name();
                 if (!signalName.isEmpty()) {
@@ -1696,7 +1696,7 @@ public class LayoutEditorTools {
                 } else {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
-            } else if (type == LayoutTrack.SLIP_B) {
+            } else if (type == LayoutEditor.HitPointTypes.SLIP_B) {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName;
                 if (sl.getTurnoutType() == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
@@ -1719,7 +1719,7 @@ public class LayoutEditorTools {
                 } else {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
-            } else if (type == LayoutTrack.SLIP_C) {
+            } else if (type == LayoutEditor.HitPointTypes.SLIP_C) {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName;
                 if (sl.getTurnoutType() == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
@@ -1742,7 +1742,7 @@ public class LayoutEditorTools {
                 } else {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
-            } else if (type == LayoutTrack.SLIP_D) {
+            } else if (type == LayoutEditor.HitPointTypes.SLIP_D) {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName = sl.getSignalD2Name();
                 if (!signalName.isEmpty()) {
@@ -1762,7 +1762,7 @@ public class LayoutEditorTools {
                 } else {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
-            } else if (type >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
+            } else if (LayoutEditor.HitPointTypes.isTurntableRayHitType(type)) {
                 hitEndBumper = true;
                 return null;
             }
@@ -1784,10 +1784,10 @@ public class LayoutEditorTools {
     }
 
     @CheckReturnValue
-    private TrackSegment getContinuingTrack(@Nonnull LayoutTurnout to, int type) {
+    private TrackSegment getContinuingTrack(@Nonnull LayoutTurnout to, LayoutEditor.HitPointTypes type) {
         LayoutTurnout.TurnoutType ty = to.getTurnoutType();
         if ((ty == LayoutTurnout.TurnoutType.RH_TURNOUT) || (ty == LayoutTurnout.TurnoutType.LH_TURNOUT)) {
-            if (type == LayoutTrack.TURNOUT_A) {
+            if (type == LayoutEditor.HitPointTypes.TURNOUT_A) {
                 if (to.getContinuingSense() == Turnout.CLOSED) {
                     return (TrackSegment) to.getConnectB();
                 } else {
@@ -1798,13 +1798,13 @@ public class LayoutEditorTools {
             }
         } else if ((ty == LayoutTurnout.TurnoutType.DOUBLE_XOVER) || (ty == LayoutTurnout.TurnoutType.RH_XOVER)
                 || (ty == LayoutTurnout.TurnoutType.LH_XOVER)) {
-            if (type == LayoutTrack.TURNOUT_A) {
+            if (type == LayoutEditor.HitPointTypes.TURNOUT_A) {
                 return (TrackSegment) to.getConnectB();
-            } else if (type == LayoutTrack.TURNOUT_B) {
+            } else if (type == LayoutEditor.HitPointTypes.TURNOUT_B) {
                 return (TrackSegment) to.getConnectA();
-            } else if (type == LayoutTrack.TURNOUT_C) {
+            } else if (type == LayoutEditor.HitPointTypes.TURNOUT_C) {
                 return (TrackSegment) to.getConnectD();
-            } else if (type == LayoutTrack.TURNOUT_D) {
+            } else if (type == LayoutEditor.HitPointTypes.TURNOUT_D) {
                 return (TrackSegment) to.getConnectC();
             }
         }
@@ -1813,21 +1813,21 @@ public class LayoutEditorTools {
     }
 
     /*
-	 * Returns 'true' if an end bumper was reached during the last call to
-	 *	GetNextSignalFromObject. Also used in the odd case of reaching a
-	 *	turntable ray track connection, which is treated as an end
-	 *	bumper here.
+    * Returns 'true' if an end bumper was reached during the last call to
+    *	GetNextSignalFromObject. Also used in the odd case of reaching a
+    *	turntable ray track connection, which is treated as an end
+    *	bumper here.
      */
     public boolean reachedEndBumper() {
         return hitEndBumper;
     }
 
     /*
-	 * Returns 'true' if "track" enters a block boundary at the west(north) end of
-	 *	"point". Returns "false" otherwise. If track is neither horizontal or
-	 *		vertical, assumes horizontal, as done when setting signals at block boundary.
-	 * "track" is a TrackSegment connected to "point".
-	 *	"point" is an anchor point serving as a block boundary.
+    * Returns 'true' if "track" enters a block boundary at the west(north) end of
+    *	"point". Returns "false" otherwise. If track is neither horizontal or
+    *		vertical, assumes horizontal, as done when setting signals at block boundary.
+    * "track" is a TrackSegment connected to "point".
+    *	"point" is an anchor point serving as a block boundary.
      */
     public static boolean isAtWestEndOfAnchor(TrackSegment t, PositionablePoint p) {
         if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {
@@ -2245,7 +2245,7 @@ public class LayoutEditorTools {
     }   //setSignalsAtBlockBoundaryDonePressed
 
     /*
-     * Do some thing here for end bumpers.
+    * Do some thing here for end bumpers.
      */
     private boolean getBlockInformation() {
         //might have to do something to trick it with an end bumper
@@ -4961,7 +4961,7 @@ public class LayoutEditorTools {
     }
 
     private boolean getTToTTurnoutInformation() {
-        int type = 0;
+        LayoutEditor.HitPointTypes type = LayoutEditor.HitPointTypes.NONE;
         Object connect = null;
 
         turnout1 = null;
@@ -5023,7 +5023,7 @@ public class LayoutEditorTools {
                 type = connectorTrack.getType2();
                 connect = connectorTrack.getConnect2();
             }
-            if ((type != LayoutTrack.TURNOUT_A) || (connect == null)) {
+            if ((type != LayoutEditor.HitPointTypes.TURNOUT_A) || (connect == null)) {
                 //Not two turnouts connected throat-to-throat by a single Track Segment
                 //Inform user of error and terminate
                 JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
@@ -5084,7 +5084,7 @@ public class LayoutEditorTools {
                     type = connectorTrack.getType2();
                     connect = connectorTrack.getConnect2();
                 }
-                if ((type != LayoutTrack.TURNOUT_A) || (connect == null)) {
+                if ((type != LayoutEditor.HitPointTypes.TURNOUT_A) || (connect == null)) {
                     //Not two turnouts connected throat-to-throat by a single Track Segment
                     //Inform user of error and terminate
                     JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
@@ -5924,13 +5924,13 @@ public class LayoutEditorTools {
     }   //setLogicTToT
 
     /*
-	 * Sets up a Logix to set a sensor active if a turnout is set against
-	 *		a track.  This routine creates an internal sensor for the purpose.
-	 * Note: The sensor and logix are named IS or IX followed by TTT_X_HHH where
-	 *	TTT is the system name of the turnout, X is either C or T depending
-	 *		on "continuing", and HHH is the system name of the signal head.
-	 * Note: If there is any problem, a string of "" is returned, and a warning
-	 *	message is issued.
+    * Sets up a Logix to set a sensor active if a turnout is set against
+    *		a track.  This routine creates an internal sensor for the purpose.
+    * Note: The sensor and logix are named IS or IX followed by TTT_X_HHH where
+    *	TTT is the system name of the turnout, X is either C or T depending
+    *		on "continuing", and HHH is the system name of the signal head.
+    * Note: If there is any problem, a string of "" is returned, and a warning
+    *	message is issued.
      */
     private String setupNearLogix(LayoutTurnout nearTurnout, boolean continuing,
             SignalHead head) {
@@ -5988,8 +5988,8 @@ public class LayoutEditorTools {
     }   //setupNearLogix
 
     /*
-	 * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
-	 *	provided there is an open slot. If 'name' is null or empty, returns without doing anything.
+    * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
+    *	provided there is an open slot. If 'name' is null or empty, returns without doing anything.
      */
     private void addNearSensorToLogic(String name) {
         if ((name != null) && !name.isEmpty()) {
@@ -6411,7 +6411,7 @@ public class LayoutEditorTools {
     }
 
     private boolean get3WayTurnoutInformation() {
-        int type = 0;
+        LayoutEditor.HitPointTypes type = LayoutEditor.HitPointTypes.NONE;
         Object connect = null;
         turnoutA = null;
         turnoutB = null;
@@ -6463,7 +6463,7 @@ public class LayoutEditorTools {
                 type = connectorTrack.getType2();
                 connect = connectorTrack.getConnect2();
             }
-            if ((type != LayoutTrack.TURNOUT_B) || (connect == null)) {
+            if ((type != LayoutEditor.HitPointTypes.TURNOUT_B) || (connect == null)) {
                 //Not two turnouts connected as required by a single Track Segment
                 //Inform user of error and terminate
                 JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
@@ -6522,7 +6522,7 @@ public class LayoutEditorTools {
                     type = connectorTrack.getType2();
                     connect = connectorTrack.getConnect2();
                 }
-                if ((type != LayoutTrack.TURNOUT_A) || (connect == null)) {
+                if ((type != LayoutEditor.HitPointTypes.TURNOUT_A) || (connect == null)) {
                     //Not two turnouts connected with the throat of B connected to the continuing of A
                     //	  by a single Track Segment.  Inform user of error and terminat.e
                     JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
@@ -7539,7 +7539,7 @@ public class LayoutEditorTools {
             setSensorsAtBlockBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6, BorderLayout.SOUTH);
 
-            //make this button the default button (return or enter activates)
+//make this button the default button (return or enter activates)
             JRootPane rootPane = SwingUtilities.getRootPane(setSensorsAtBlockBoundaryDone);
             if (rootPane != null) {
                 rootPane.setDefaultButton(setSensorsAtBlockBoundaryDone);
@@ -9096,10 +9096,10 @@ public class LayoutEditorTools {
             log.debug(Double.toString((bpo - ta) - (l.maxHeight() - iconAdjOpp)));
             log.debug(Double.toString(bpo - (iconAdj + ta)));
             /*if(angleDeg<45){
-			 y_dist_to_Icon = (bpo-ta)-(l.maxHeight()-iconAdjOpp);
-			 } else {
-			 y_dist_to_Icon = bpo-(iconAdj+ta);
-			 }*/
+    y_dist_to_Icon = (bpo-ta)-(l.maxHeight()-iconAdjOpp);
+    } else {
+    y_dist_to_Icon = bpo-(iconAdj+ta);
+    }*/
             //double y_dist_to_Icon = (l.maxHeight()-iconAdj)+(bpo-ta);
             xpos = (int) (p.getX() + x_dist_to_Icon);
             ypos = (int) (p.getY() + y_dist_to_Icon);
@@ -9242,7 +9242,7 @@ public class LayoutEditorTools {
             setSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
 
-            //make this button the default button (return or enter activates)
+//make this button the default button (return or enter activates)
             JRootPane rootPane = SwingUtilities.getRootPane(setSignalMastsDone);
             if (rootPane != null) {
                 rootPane.setDefaultButton(setSignalMastsDone);
@@ -9816,7 +9816,7 @@ public class LayoutEditorTools {
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel11A = new JPanel(new FlowLayout());
-            //note: this is just placeholder text; real text is set below
+//note: this is just placeholder text; real text is set below
             slipSignalBlockANameLabel = new JLabel(" A ");
             panel11A.add(slipSignalBlockANameLabel);
             panel11A.add(slipSignalBlockAComboBox);
@@ -9824,7 +9824,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel11A);
 
             JPanel panel11B = new JPanel(new FlowLayout());
-            //note: this is just placeholder text; real text is set below
+//note: this is just placeholder text; real text is set below
             slipSignalBlockBNameLabel = new JLabel(" B ");
             panel11B.add(slipSignalBlockBNameLabel);
             panel11B.add(slipSignalBlockBComboBox);
@@ -9832,7 +9832,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel11B);
 
             JPanel panel11C = new JPanel(new FlowLayout());
-            //note: this is just placeholder text; real text is set below
+//note: this is just placeholder text; real text is set below
             slipSignalBlockCNameLabel = new JLabel(" C ");
             panel11C.add(slipSignalBlockCNameLabel);
             panel11C.add(slipSignalBlockCComboBox);
@@ -9840,7 +9840,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel11C);
 
             JPanel panel11D = new JPanel(new FlowLayout());
-            //note: this is just placeholder text; real text is set below
+//note: this is just placeholder text; real text is set below
             slipSignalBlockDNameLabel = new JLabel(" D ");
             panel11D.add(slipSignalBlockDNameLabel);
             panel11D.add(slipSignalBlockDComboBox);
@@ -13673,8 +13673,8 @@ public class LayoutEditorTools {
     }   //setupNearLogixSlip
 
     /*
-	 * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
-	 *	provided there is an open slot. If 'name' is null or empty, returns without doing anything.
+    * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
+    *	provided there is an open slot. If 'name' is null or empty, returns without doing anything.
      */
     private void addNearSensorToSlipLogic(String name) {
         if ((name != null) && !name.isEmpty()) {
