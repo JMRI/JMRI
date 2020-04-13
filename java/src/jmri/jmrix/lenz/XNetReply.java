@@ -26,6 +26,18 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     private boolean reallyUnsolicited = true;  // used to override automatic
     // unsolicited by message type.
 
+    /**
+     * An action has been already taken based on this message.
+     */
+    public static final int CONSUMED_ACTION = 0x01;
+    
+    /**
+     * Records that a message was already processed. Individual bits
+     * represent various message parts.
+     */
+    // TBD: there will be other parts, for feedbacks, feedback broadcasts
+    private int consumed;
+    
     // Create a new reply.
     public XNetReply() {
         super();
@@ -349,6 +361,69 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
+    /**
+     * Returns the number of feedback items in the messages.
+     * For accessory info replies, always returns 1. For broadcast, it returns the
+     * number of feedback pairs. Returns 0 for non-feedback messages.
+     * 
+     * @return number of feedback pair items.
+     */
+    public final int getFeedbackMessageItems() {
+        if (isFeedbackMessage()) {
+            return 1;
+        } else if (isFeedbackBroadcastMessage()) {
+            return (this.getElement(0) & 0x0F);
+        }
+        return 0;
+    }
+
+    /**
+     * Determines if the message has been already processed / consumed. Consumed messages
+     * should be processed only with a great care. They should be mostly ignored,
+     * or used just for informative purposes.
+     * @return true, if the message was consumed.
+     */
+    public boolean isConsumed() {
+        return consumed > 0;
+    }
+    
+    /**
+     * Checks what part of the message were consumed. The selector values are
+     * message and operation specific. Currently used to mark replies to
+     * accessory request output off commands, so they do not produce multiple
+     * outgoing messages.
+     * <p>
+     * Might be used to selectively ignore state bis in feedback messages as well.
+     * @param mask selector
+     * @return true, if the message part was consumed.
+     */
+    public boolean isConsumed(int mask) {
+        return (consumed & mask) > 0;
+    }
+
+    /**
+     * Marks the reply as fully consumed.
+     */
+    public void markConsumed() {
+        this.consumed = 0xff;
+    }
+    
+    /**
+     * Marks certain parts of message as consumed. The selector values are
+     * message-specific, must be within range 0..255. If the message consumed
+     * state did not change (it was already consumed), returns true. Can be
+     * used in {@link code} if condition to check whether to proceed with an
+     * action, and mark the reply consumed by a single call.
+     * @param selector  bits to check/test.
+     * @return true, if all aspects were already consumed.
+     */
+    public boolean markConsumed(int selector) {
+        int c = this.consumed;
+        assert selector >= 0 && selector < 0x100;
+        this.consumed |= selector;
+        return c == consumed;
+    }
+    
     /**
      * If this is a feedback broadcast message and the specified startByte is
      * the address byte of an address byte/data byte pair for a feedback
