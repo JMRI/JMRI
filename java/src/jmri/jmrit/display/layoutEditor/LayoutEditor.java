@@ -74,9 +74,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient JScrollPane editToolBarScrollPane = null;
 
     private transient JPanel helpBarPanel = null;
-    private transient JPanel helpBar = new JPanel();
+    private final transient JPanel helpBar = new JPanel();
 
-    private transient boolean editorUseOldLocSize;
+    private final transient boolean editorUseOldLocSize;
 
     private transient LayoutEditorToolBarPanel leToolBarPanel = null;
 
@@ -131,7 +131,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient JRadioButtonMenuItem toolBarSideRightButton = null;
     private transient JRadioButtonMenuItem toolBarSideFloatButton = null;
 
-    private transient JCheckBoxMenuItem wideToolBarCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ToolBarWide"));
+    private final transient JCheckBoxMenuItem wideToolBarCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ToolBarWide"));
 
     private transient JCheckBoxMenuItem positionableCheckBoxMenuItem = null;
     private transient JCheckBoxMenuItem controlCheckBoxMenuItem = null;
@@ -164,25 +164,25 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient boolean autoAssignBlocks = false;
 
     //Tools menu items
-    private transient JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
-    private transient JRadioButtonMenuItem zoom025Item = new JRadioButtonMenuItem("x 0.25");
-    private transient JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
-    private transient JRadioButtonMenuItem zoom075Item = new JRadioButtonMenuItem("x 0.75");
-    private transient JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(Bundle.getMessage("NoZoom"));
-    private transient JRadioButtonMenuItem zoom15Item = new JRadioButtonMenuItem("x 1.5");
-    private transient JRadioButtonMenuItem zoom20Item = new JRadioButtonMenuItem("x 2.0");
-    private transient JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
-    private transient JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
-    private transient JRadioButtonMenuItem zoom50Item = new JRadioButtonMenuItem("x 5.0");
-    private transient JRadioButtonMenuItem zoom60Item = new JRadioButtonMenuItem("x 6.0");
-    private transient JRadioButtonMenuItem zoom70Item = new JRadioButtonMenuItem("x 7.0");
-    private transient JRadioButtonMenuItem zoom80Item = new JRadioButtonMenuItem("x 8.0");
+    private final transient JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
+    private final transient JRadioButtonMenuItem zoom025Item = new JRadioButtonMenuItem("x 0.25");
+    private final transient JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
+    private final transient JRadioButtonMenuItem zoom075Item = new JRadioButtonMenuItem("x 0.75");
+    private final transient JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(Bundle.getMessage("NoZoom"));
+    private final transient JRadioButtonMenuItem zoom15Item = new JRadioButtonMenuItem("x 1.5");
+    private final transient JRadioButtonMenuItem zoom20Item = new JRadioButtonMenuItem("x 2.0");
+    private final transient JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
+    private final transient JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
+    private final transient JRadioButtonMenuItem zoom50Item = new JRadioButtonMenuItem("x 5.0");
+    private final transient JRadioButtonMenuItem zoom60Item = new JRadioButtonMenuItem("x 6.0");
+    private final transient JRadioButtonMenuItem zoom70Item = new JRadioButtonMenuItem("x 7.0");
+    private final transient JRadioButtonMenuItem zoom80Item = new JRadioButtonMenuItem("x 8.0");
 
-    private transient JMenuItem undoTranslateSelectionMenuItem = new JMenuItem(Bundle.getMessage("UndoTranslateSelection"));
-    private transient JMenuItem assignBlockToSelectionMenuItem = new JMenuItem(Bundle.getMessage("AssignBlockToSelectionTitle") + "...");
+    private final transient JMenuItem undoTranslateSelectionMenuItem = new JMenuItem(Bundle.getMessage("UndoTranslateSelection"));
+    private final transient JMenuItem assignBlockToSelectionMenuItem = new JMenuItem(Bundle.getMessage("AssignBlockToSelectionTitle") + "...");
 
     //Selected point information
-    private transient Point2D startDelta = new Point2D.Double(0.0, 0.0); //starting delta coordinates
+    private final transient Point2D startDelta = new Point2D.Double(0.0, 0.0); //starting delta coordinates
     protected transient Object selectedObject = null;       //selected object, null if nothing selected
     protected transient Object prevSelectedObject = null;   //previous selected object, for undo
     private transient int selectedHitPointType = 0;         //hit point type within the selected object
@@ -208,7 +208,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public transient List<SensorIcon> sensorImage = new ArrayList<>();               //sensor images
     public transient List<SignalHeadIcon> signalHeadImage = new ArrayList<>();       //signal head images
 
-    private transient List<LayoutTrack> layoutTrackList = new ArrayList<>();         // LayoutTrack list
+    private final transient List<LayoutTrack> layoutTrackList = new ArrayList<>();         // LayoutTrack list
 
     // PositionableLabel's
     public transient List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); //BlockContentsIcon Label List
@@ -217,7 +217,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public transient List<SignalHeadIcon> signalList = new ArrayList<>();                //Signal Head Icons
     public transient List<SignalMastIcon> signalMastList = new ArrayList<>();            //Signal Mast Icons
 
-    private transient List<LayoutShape> layoutShapes = new ArrayList<>();               // LayoutShap list
+    private final transient List<LayoutShape> layoutShapes = new ArrayList<>();               // LayoutShap list
 
     // counts used to determine unique internal names
     private transient int numAnchors = 0;
@@ -293,7 +293,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     //zoom
     private transient double minZoom = 0.25;
-    private transient double maxZoom = 8.0;
+    private final transient double maxZoom = 8.0;
 
     //A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
     protected transient HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
@@ -810,41 +810,31 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //create toolbar side menu items: (top, left, bottom, right)
         //
         toolBarSideTopButton = new JRadioButtonMenuItem(Bundle.getMessage("ToolBarSideTop"));
-        toolBarSideTopButton.addActionListener((ActionEvent event) -> {
-            setToolBarSide(ToolBarSide.eTOP);
-        });
+        toolBarSideTopButton.addActionListener((ActionEvent event) -> setToolBarSide(ToolBarSide.eTOP));
         toolBarSideTopButton.setSelected(toolBarSide.equals(ToolBarSide.eTOP));
         toolBarSideMenu.add(toolBarSideTopButton);
         toolBarSideGroup.add(toolBarSideTopButton);
 
         toolBarSideLeftButton = new JRadioButtonMenuItem(Bundle.getMessage("ToolBarSideLeft"));
-        toolBarSideLeftButton.addActionListener((ActionEvent event) -> {
-            setToolBarSide(ToolBarSide.eLEFT);
-        });
+        toolBarSideLeftButton.addActionListener((ActionEvent event) -> setToolBarSide(ToolBarSide.eLEFT));
         toolBarSideLeftButton.setSelected(toolBarSide.equals(ToolBarSide.eLEFT));
         toolBarSideMenu.add(toolBarSideLeftButton);
         toolBarSideGroup.add(toolBarSideLeftButton);
 
         toolBarSideBottomButton = new JRadioButtonMenuItem(Bundle.getMessage("ToolBarSideBottom"));
-        toolBarSideBottomButton.addActionListener((ActionEvent event) -> {
-            setToolBarSide(ToolBarSide.eBOTTOM);
-        });
+        toolBarSideBottomButton.addActionListener((ActionEvent event) -> setToolBarSide(ToolBarSide.eBOTTOM));
         toolBarSideBottomButton.setSelected(toolBarSide.equals(ToolBarSide.eBOTTOM));
         toolBarSideMenu.add(toolBarSideBottomButton);
         toolBarSideGroup.add(toolBarSideBottomButton);
 
         toolBarSideRightButton = new JRadioButtonMenuItem(Bundle.getMessage("ToolBarSideRight"));
-        toolBarSideRightButton.addActionListener((ActionEvent event) -> {
-            setToolBarSide(ToolBarSide.eRIGHT);
-        });
+        toolBarSideRightButton.addActionListener((ActionEvent event) -> setToolBarSide(ToolBarSide.eRIGHT));
         toolBarSideRightButton.setSelected(toolBarSide.equals(ToolBarSide.eRIGHT));
         toolBarSideMenu.add(toolBarSideRightButton);
         toolBarSideGroup.add(toolBarSideRightButton);
 
         toolBarSideFloatButton = new JRadioButtonMenuItem(Bundle.getMessage("ToolBarSideFloat"));
-        toolBarSideFloatButton.addActionListener((ActionEvent event) -> {
-            setToolBarSide(ToolBarSide.eFLOAT);
-        });
+        toolBarSideFloatButton.addActionListener((ActionEvent event) -> setToolBarSide(ToolBarSide.eFLOAT));
         toolBarSideFloatButton.setSelected(toolBarSide.equals(ToolBarSide.eFLOAT));
         toolBarSideMenu.add(toolBarSideFloatButton);
         toolBarSideGroup.add(toolBarSideFloatButton);
@@ -855,9 +845,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //toolbar wide menu
         //
         toolBarMenu.add(wideToolBarCheckBoxMenuItem);
-        wideToolBarCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            setToolBarWide(wideToolBarCheckBoxMenuItem.isSelected());
-        });
+        wideToolBarCheckBoxMenuItem.addActionListener((ActionEvent event) -> setToolBarWide(wideToolBarCheckBoxMenuItem.isSelected()));
         wideToolBarCheckBoxMenuItem.setSelected(leToolBarPanel.toolBarIsWide);
         wideToolBarCheckBoxMenuItem.setEnabled(toolBarSide.equals(ToolBarSide.eTOP) || toolBarSide.equals(ToolBarSide.eBOTTOM));
 
@@ -963,9 +951,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //
         positionableCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AllowRepositioning"));
         optionMenu.add(positionableCheckBoxMenuItem);
-        positionableCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            setAllPositionable(positionableCheckBoxMenuItem.isSelected());
-        });
+        positionableCheckBoxMenuItem.addActionListener((ActionEvent event) -> setAllPositionable(positionableCheckBoxMenuItem.isSelected()));
         positionableCheckBoxMenuItem.setSelected(allPositionable());
 
         //
@@ -984,9 +970,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //
         useDirectTurnoutControlCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("UseDirectTurnoutControl")); //IN18N
         optionMenu.add(useDirectTurnoutControlCheckBoxMenuItem);
-        useDirectTurnoutControlCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            setDirectTurnoutControl(useDirectTurnoutControlCheckBoxMenuItem.isSelected());
-        });
+        useDirectTurnoutControlCheckBoxMenuItem.addActionListener((ActionEvent event) -> setDirectTurnoutControl(useDirectTurnoutControlCheckBoxMenuItem.isSelected()));
         useDirectTurnoutControlCheckBoxMenuItem.setSelected(useDirectTurnoutControl);
 
         //
@@ -1258,9 +1242,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //Automatically Assign Blocks to Track
         autoAssignBlocksCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AutoAssignBlock"));
         trackMenu.add(autoAssignBlocksCheckBoxMenuItem);
-        autoAssignBlocksCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            autoAssignBlocks = autoAssignBlocksCheckBoxMenuItem.isSelected();
-        });
+        autoAssignBlocksCheckBoxMenuItem.addActionListener((ActionEvent event) -> autoAssignBlocks = autoAssignBlocksCheckBoxMenuItem.isSelected());
         autoAssignBlocksCheckBoxMenuItem.setSelected(autoAssignBlocks);
 
         //add hideTrackSegmentConstructionLines menu item
@@ -1482,33 +1464,25 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         jmi = new JMenuItem(Bundle.getMessage("RotateSelection90MenuItemTitle"));
         jmi.setToolTipText(Bundle.getMessage("RotateSelection90MenuItemToolTip"));
         toolsMenu.add(jmi);
-        jmi.addActionListener((ActionEvent event) -> {
-            rotateSelection90();
-        });
+        jmi.addActionListener((ActionEvent event) -> rotateSelection90());
 
         //rotate entire layout
         jmi = new JMenuItem(Bundle.getMessage("RotateLayout90MenuItemTitle"));
         jmi.setToolTipText(Bundle.getMessage("RotateLayout90MenuItemToolTip"));
         toolsMenu.add(jmi);
-        jmi.addActionListener((ActionEvent event) -> {
-            rotateLayout90();
-        });
+        jmi.addActionListener((ActionEvent event) -> rotateLayout90());
 
         //align layout to grid
         jmi = new JMenuItem(Bundle.getMessage("AlignLayoutToGridMenuItemTitle") + "...");
         jmi.setToolTipText(Bundle.getMessage("AlignLayoutToGridMenuItemToolTip"));
         toolsMenu.add(jmi);
-        jmi.addActionListener((ActionEvent event) -> {
-            alignLayoutToGrid();
-        });
+        jmi.addActionListener((ActionEvent event) -> alignLayoutToGrid());
 
         //align selection to grid
         jmi = new JMenuItem(Bundle.getMessage("AlignSelectionToGridMenuItemTitle") + "...");
         jmi.setToolTipText(Bundle.getMessage("AlignSelectionToGridMenuItemToolTip"));
         toolsMenu.add(jmi);
-        jmi.addActionListener((ActionEvent event) -> {
-            alignSelectionToGrid();
-        });
+        jmi.addActionListener((ActionEvent event) -> alignSelectionToGrid());
 
         //reset turnout size to program defaults
         jmi = new JMenuItem(Bundle.getMessage("ResetTurnoutSize"));
@@ -1524,9 +1498,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         skipTurnoutCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("SkipInternalTurnout"));
         skipTurnoutCheckBoxMenuItem.setToolTipText(Bundle.getMessage("SkipInternalTurnoutToolTip"));
         toolsMenu.add(skipTurnoutCheckBoxMenuItem);
-        skipTurnoutCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            setIncludedTurnoutSkipped(skipTurnoutCheckBoxMenuItem.isSelected());
-        });
+        skipTurnoutCheckBoxMenuItem.addActionListener((ActionEvent event) -> setIncludedTurnoutSkipped(skipTurnoutCheckBoxMenuItem.isSelected()));
         skipTurnoutCheckBoxMenuItem.setSelected(isIncludedTurnoutSkipped());
 
         //set signals at turnout
@@ -1627,9 +1599,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         // null if edit toolbar is not setup yet...
         if (!newToolBarSide.equals(toolBarSide)) {
             toolBarSide = newToolBarSide;
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-                prefsMgr.setProperty(getWindowFrameRef(), "toolBarSide", toolBarSide.getName());
-            });
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setProperty(getWindowFrameRef(), "toolBarSide", toolBarSide.getName()));
             toolBarSideTopButton.setSelected(toolBarSide.equals(ToolBarSide.eTOP));
             toolBarSideLeftButton.setSelected(toolBarSide.equals(ToolBarSide.eLEFT));
             toolBarSideBottomButton.setSelected(toolBarSide.equals(ToolBarSide.eBOTTOM));
@@ -1714,9 +1684,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //log.debug("zoomInAccelerator: " + zoomInAccelerator);
         zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(zoomInAccelerator), primary_modifier));
         zoomMenu.add(zoomInItem);
-        zoomInItem.addActionListener((ActionEvent event) -> {
-            setZoom(getZoom() * 1.1);
-        });
+        zoomInItem.addActionListener((ActionEvent event) -> setZoom(getZoom() * 1.1));
 
         JMenuItem zoomOutItem = new JMenuItem(Bundle.getMessage("ZoomOut"));
         zoomOutItem.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("zoomOutMnemonic")));
@@ -1724,34 +1692,24 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //log.debug("zoomOutAccelerator: " + zoomOutAccelerator);
         zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(zoomOutAccelerator), primary_modifier));
         zoomMenu.add(zoomOutItem);
-        zoomOutItem.addActionListener((ActionEvent event) -> {
-            setZoom(getZoom() / 1.1);
-        });
+        zoomOutItem.addActionListener((ActionEvent event) -> setZoom(getZoom() / 1.1));
 
         JMenuItem zoomFitItem = new JMenuItem(Bundle.getMessage("ZoomToFit"));
         zoomMenu.add(zoomFitItem);
-        zoomFitItem.addActionListener((ActionEvent event) -> {
-            zoomToFit();
-        });
+        zoomFitItem.addActionListener((ActionEvent event) -> zoomToFit());
         zoomMenu.addSeparator();
 
         //add zoom choices to menu
         zoomMenu.add(zoom025Item);
-        zoom025Item.addActionListener((ActionEvent event) -> {
-            setZoom(0.25);
-        });
+        zoom025Item.addActionListener((ActionEvent event) -> setZoom(0.25));
         zoomButtonGroup.add(zoom025Item);
 
         zoomMenu.add(zoom05Item);
-        zoom05Item.addActionListener((ActionEvent event) -> {
-            setZoom(0.5);
-        });
+        zoom05Item.addActionListener((ActionEvent event) -> setZoom(0.5));
         zoomButtonGroup.add(zoom05Item);
 
         zoomMenu.add(zoom075Item);
-        zoom075Item.addActionListener((ActionEvent event) -> {
-            setZoom(0.75);
-        });
+        zoom075Item.addActionListener((ActionEvent event) -> setZoom(0.75));
         zoomButtonGroup.add(zoom075Item);
 
         String zoomNoneAccelerator = Bundle.getMessage("zoomNoneAccelerator");
@@ -1759,57 +1717,39 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         noZoomItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(zoomNoneAccelerator), primary_modifier));
 
         zoomMenu.add(noZoomItem);
-        noZoomItem.addActionListener((ActionEvent event) -> {
-            setZoom(1.0);
-        });
+        noZoomItem.addActionListener((ActionEvent event) -> setZoom(1.0));
         zoomButtonGroup.add(noZoomItem);
 
         zoomMenu.add(zoom15Item);
-        zoom15Item.addActionListener((ActionEvent event) -> {
-            setZoom(1.5);
-        });
+        zoom15Item.addActionListener((ActionEvent event) -> setZoom(1.5));
         zoomButtonGroup.add(zoom15Item);
 
         zoomMenu.add(zoom20Item);
-        zoom20Item.addActionListener((ActionEvent event) -> {
-            setZoom(2.0);
-        });
+        zoom20Item.addActionListener((ActionEvent event) -> setZoom(2.0));
         zoomButtonGroup.add(zoom20Item);
 
         zoomMenu.add(zoom30Item);
-        zoom30Item.addActionListener((ActionEvent event) -> {
-            setZoom(3.0);
-        });
+        zoom30Item.addActionListener((ActionEvent event) -> setZoom(3.0));
         zoomButtonGroup.add(zoom30Item);
 
         zoomMenu.add(zoom40Item);
-        zoom40Item.addActionListener((ActionEvent event) -> {
-            setZoom(4.0);
-        });
+        zoom40Item.addActionListener((ActionEvent event) -> setZoom(4.0));
         zoomButtonGroup.add(zoom40Item);
 
         zoomMenu.add(zoom50Item);
-        zoom50Item.addActionListener((ActionEvent event) -> {
-            setZoom(5.0);
-        });
+        zoom50Item.addActionListener((ActionEvent event) -> setZoom(5.0));
         zoomButtonGroup.add(zoom50Item);
 
         zoomMenu.add(zoom60Item);
-        zoom60Item.addActionListener((ActionEvent event) -> {
-            setZoom(6.0);
-        });
+        zoom60Item.addActionListener((ActionEvent event) -> setZoom(6.0));
         zoomButtonGroup.add(zoom60Item);
 
         zoomMenu.add(zoom70Item);
-        zoom70Item.addActionListener((ActionEvent event) -> {
-            setZoom(7.0);
-        });
+        zoom70Item.addActionListener((ActionEvent event) -> setZoom(7.0));
         zoomButtonGroup.add(zoom70Item);
 
         zoomMenu.add(zoom80Item);
-        zoom80Item.addActionListener((ActionEvent event) -> {
-            setZoom(8.0);
-        });
+        zoom80Item.addActionListener((ActionEvent event) -> setZoom(8.0));
         zoomButtonGroup.add(zoom80Item);
 
         //note: because this LayoutEditor object was just instantiated its
@@ -1842,12 +1782,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 hsb.setUnitIncrement(gridSize1st);
 
                 // add scroll bar adjustment listeners
-                vsb.addAdjustmentListener((AdjustmentEvent event) -> {
-                    scrollBarAdjusted(event);
-                });
-                hsb.addAdjustmentListener((AdjustmentEvent event) -> {
-                    scrollBarAdjusted(event);
-                });
+                vsb.addAdjustmentListener(this::scrollBarAdjusted);
+                hsb.addAdjustmentListener(this::scrollBarAdjusted);
 
                 // remove all mouse wheel listeners
                 mouseWheelListeners = scrollPane.getMouseWheelListeners();
@@ -2114,9 +2050,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             leToolBarPanel.zoomLabel.setText(String.format("x%1$,.2f", newZoom));
 
             //save the window specific saved zoom user preference
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-                prefsMgr.setProperty(getWindowFrameRef(), "zoom", zoomFactor);
-            });
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setProperty(getWindowFrameRef(), "zoom", zoomFactor));
         }
         return getPaintScale();
     }
@@ -2372,16 +2306,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             newName = "";
         }
         LayoutBlock b = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(newName);
-        _layoutTrackSelection.forEach((lt) -> {
-            lt.setAllLayoutBlocks(b);
-        });
+        _layoutTrackSelection.forEach((lt) -> lt.setAllLayoutBlocks(b));
     }
 
     public boolean translateTrack(float xDel, float yDel) {
         Point2D delta = new Point2D.Double(xDel, yDel);
-        layoutTrackList.forEach((lt) -> {
-            lt.setCoordsCenter(MathUtil.add(lt.getCoordsCenter(), delta));
-        });
+        layoutTrackList.forEach((lt) -> lt.setCoordsCenter(MathUtil.add(lt.getCoordsCenter(), delta)));
         resizePanelBounds(true);
         return true;
     }
@@ -2393,9 +2323,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param yFactor the amount to scale Y coordinates
      */
     public boolean scaleTrack(float xFactor, float yFactor) {
-        layoutTrackList.forEach((lt) -> {
-            lt.scaleCoords(xFactor, yFactor);
-        });
+        layoutTrackList.forEach((lt) -> lt.scaleCoords(xFactor, yFactor));
 
         //update the overall scale factors
         xScale *= xFactor;
@@ -2479,13 +2407,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 c.setLocation((int) newPoint.getX(), (int) newPoint.getY());
             });
 
-            _layoutTrackSelection.forEach((lt) -> {
-                lt.setCoordsCenter(MathUtil.add(lt.getCoordsCenter(), undoDelta));
-            });
+            _layoutTrackSelection.forEach((lt) -> lt.setCoordsCenter(MathUtil.add(lt.getCoordsCenter(), undoDelta)));
 
-            _layoutShapeSelection.forEach((ls) -> {
-                ls.setCoordsCenter(MathUtil.add(ls.getCoordsCenter(), undoDelta));
-            });
+            _layoutShapeSelection.forEach((ls) -> ls.setCoordsCenter(MathUtil.add(ls.getCoordsCenter(), undoDelta)));
 
             undoRect = MathUtil.offset(undoRect, undoDelta);
             selectionX = undoRect.getX();
@@ -2544,7 +2468,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Rotate the entire layout by 90 degrees clockwise.
      */
     public void rotateLayout90() {
-        List<Positionable> positionables = new ArrayList<Positionable>(_contents);
+        List<Positionable> positionables = new ArrayList<>(_contents);
         positionables.addAll(backgroundImage);
         positionables.addAll(blockContentsLabelList);
         positionables.addAll(labelImage);
@@ -2610,7 +2534,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void alignLayoutToGrid() {
         //align to grid
-        List<Positionable> positionables = new ArrayList<Positionable>(_contents);
+        List<Positionable> positionables = new ArrayList<>(_contents);
         positionables.addAll(backgroundImage);
         positionables.addAll(blockContentsLabelList);
         positionables.addAll(labelImage);
@@ -4183,9 +4107,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         }
 
-        _positionableSelection.forEach((comp) -> {
-            remove(comp);
-        });
+        _positionableSelection.forEach(this::remove);
 
         _layoutTrackSelection.forEach((lt) -> {
             if (lt instanceof PositionablePoint) {
@@ -5062,8 +4984,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             //There is no turnout corresponding to this name
             if (inOpenPane != null) {
                 JOptionPane.showMessageDialog(inOpenPane,
-                        MessageFormat.format(Bundle.getMessage("Error8"),
-                                new Object[]{inTurnoutName}),
+                        MessageFormat.format(Bundle.getMessage("Error8"), inTurnoutName),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
             return false;
@@ -5154,8 +5075,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         if (!result && (inOpenPane != null)) {
             JOptionPane.showMessageDialog(inOpenPane,
-                    MessageFormat.format(Bundle.getMessage("Error4"),
-                            new Object[]{inTurnoutName}),
+                    MessageFormat.format(Bundle.getMessage("Error4"), inTurnoutName),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
         }
         return result;
@@ -6229,8 +6149,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (mHead == null) {
             // There is no signal head corresponding to this name
             JOptionPane.showMessageDialog(this,
-                    MessageFormat.format(Bundle.getMessage("Error9"),
-                            new Object[]{newName}),
+                    MessageFormat.format(Bundle.getMessage("Error9"), newName),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -6316,8 +6235,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (mMast == null) {
             //There is no signal head corresponding to this name
             JOptionPane.showMessageDialog(this,
-                    MessageFormat.format(Bundle.getMessage("Error9"),
-                            new Object[]{newName}),
+                    MessageFormat.format(Bundle.getMessage("Error9"), newName),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
 
             return;
@@ -6779,9 +6697,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public void setAllPositionable(boolean state) {
         super.setAllPositionable(state);
 
-        markerImage.forEach((p) -> {
-            p.setPositionable(true);
-        });
+        markerImage.forEach((p) -> p.setPositionable(true));
     }
 
     /**
@@ -7211,9 +7127,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
                 }
             }
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-                prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".showHelpBar", showHelpBar);
-            });
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".showHelpBar", showHelpBar));
         }
     }
 
@@ -7263,9 +7177,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 antialiasingOnCheckBoxMenuItem.setSelected(antialiasingOn);
 
             }
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-                prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".antialiasingOn", antialiasingOn);
-            });
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".antialiasingOn", antialiasingOn));
         }
     }
 
@@ -7280,9 +7192,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             }
 
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-                prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".highlightSelectedBlock", highlightSelectedBlockFlag);
-            });
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".highlightSelectedBlock", highlightSelectedBlockFlag));
 
             // thread this so it won't break the AppVeyor checks
             new Thread(() -> {
@@ -7463,9 +7373,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     //final initialization routine for loading a LayoutEditor
     public void setConnections() {
-        layoutTrackList.forEach((lt) -> {
-            lt.setObjects(this);
-        });
+        layoutTrackList.forEach((lt) -> lt.setObjects(this));
         getLEAuxTools().initializeBlockConnectivity();
         log.debug("Initializing Block Connectivity for {}", getLayoutName());
 
@@ -7588,21 +7496,21 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     List<PositionablePoint> getPositionablePoints() {
         return getLayoutTracksOfClass(PositionablePoint.class)
                 .map(PositionablePoint.class::cast)
-                .collect(Collectors.toCollection(ArrayList<PositionablePoint>::new));
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public @Nonnull
     List<LayoutSlip> getLayoutSlips() {
         return getLayoutTracksOfClass(LayoutSlip.class)
                 .map(LayoutSlip.class::cast)
-                .collect(Collectors.toCollection(ArrayList<LayoutSlip>::new));
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public @Nonnull
     List<TrackSegment> getTrackSegments() {
         return getLayoutTracksOfClass(TrackSegment.class)
                 .map(TrackSegment.class::cast)
-                .collect(Collectors.toCollection(ArrayList<TrackSegment>::new));
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public @Nonnull
@@ -7610,21 +7518,21 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return layoutTrackList.stream() // next line excludes LayoutSlips
                 .filter((o) -> (!(o instanceof LayoutSlip) && (o instanceof LayoutTurnout)))
                 .map(LayoutTurnout.class::cast)
-                .collect(Collectors.toCollection(ArrayList<LayoutTurnout>::new));
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public @Nonnull
     List<LayoutTurntable> getLayoutTurntables() {
         return getLayoutTracksOfClass(LayoutTurntable.class)
                 .map(LayoutTurntable.class::cast)
-                .collect(Collectors.toCollection(ArrayList<LayoutTurntable>::new));
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public @Nonnull
     List<LevelXing> getLevelXings() {
         return getLayoutTracksOfClass(LevelXing.class)
                 .map(LevelXing.class::cast)
-                .collect(Collectors.toCollection(ArrayList<LevelXing>::new));
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public @Nonnull
@@ -7636,7 +7544,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
         return getLayoutTracksOfClass(LayoutTurnout.class)
                 .map(LayoutTurnout.class::cast)
-                .collect(Collectors.toCollection(ArrayList<LayoutTurnout>::new));
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public @Nonnull
@@ -7645,12 +7553,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     public void sortLayoutShapesByLevel() {
-        Collections.sort(layoutShapes, new Comparator<LayoutShape>() {
-            @Override
-            public int compare(LayoutShape lhs, LayoutShape rhs) {
-                // -1 == less than, 0 == equal, +1 == greater than
-                return Integer.signum(lhs.getLevel() - rhs.getLevel());
-            }
+        layoutShapes.sort((lhs, rhs) -> {
+            // -1 == less than, 0 == equal, +1 == greater than
+            return Integer.signum(lhs.getLevel() - rhs.getLevel());
         });
     }
 
@@ -8046,7 +7951,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @return A PopupMenuListener
      */
     public TurnoutComboBoxPopupMenuListener newTurnoutComboBoxPopupMenuListener(NamedBeanComboBox<Turnout> comboBox) {
-        return new TurnoutComboBoxPopupMenuListener(comboBox, new ArrayList<Turnout>());
+        return new TurnoutComboBoxPopupMenuListener(comboBox, new ArrayList<>());
     }
 
     /**

@@ -233,9 +233,8 @@ public class IndicatorTrackIcon extends PositionableIcon
     @Override
     public int maxHeight() {
         int max = 0;
-        Iterator<NamedIcon> iter = _iconMap.values().iterator();
-        while (iter.hasNext()) {
-            max = Math.max(iter.next().getIconHeight(), max);
+        for (NamedIcon namedIcon : _iconMap.values()) {
+            max = Math.max(namedIcon.getIconHeight(), max);
         }
         return max;
     }
@@ -243,9 +242,8 @@ public class IndicatorTrackIcon extends PositionableIcon
     @Override
     public int maxWidth() {
         int max = 0;
-        Iterator<NamedIcon> iter = _iconMap.values().iterator();
-        while (iter.hasNext()) {
-            max = Math.max(iter.next().getIconWidth(), max);
+        for (NamedIcon namedIcon : _iconMap.values()) {
+            max = Math.max(namedIcon.getIconWidth(), max);
         }
         return max;
     }
@@ -352,12 +350,7 @@ public class IndicatorTrackIcon extends PositionableIcon
                 Bundle.getMessage("IndicatorTrack")));
         _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _iconFamily, _editor);
 
-        ActionListener updateAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                updateItem();
-            }
-        };
+        ActionListener updateAction = a -> updateItem();
         // duplicate _iconMap map with unscaled and unrotated icons
         HashMap<String, NamedIcon> map = new HashMap<>();
 

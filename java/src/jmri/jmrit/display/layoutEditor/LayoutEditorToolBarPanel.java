@@ -372,9 +372,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         blockIDComboBox.setToolTipText(Bundle.getMessage("BlockIDToolTip"));
 
         highlightBlockCheckBox.setToolTipText(Bundle.getMessage("HighlightSelectedBlockToolTip"));
-        highlightBlockCheckBox.addActionListener((ActionEvent event) -> {
-            layoutEditor.setHighlightSelectedBlock(highlightBlockCheckBox.isSelected());
-        });
+        highlightBlockCheckBox.addActionListener((ActionEvent event) -> layoutEditor.setHighlightSelectedBlock(highlightBlockCheckBox.isSelected()));
         highlightBlockCheckBox.setSelected(layoutEditor.getHighlightSelectedBlock());
 
         //change the block name

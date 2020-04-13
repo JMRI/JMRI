@@ -85,7 +85,7 @@ public class FontPanel extends JPanel implements ItemListener {
 
         Font defaultFont = _util.getFont();
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        String fontFamilyNames[] = ge.getAvailableFontFamilyNames();
+        String[] fontFamilyNames = ge.getAvailableFontFamilyNames();
         Font[] fonts = new Font[fontFamilyNames.length];
         int k = 0;
         for (String fontFamilyName : fontFamilyNames) {
@@ -125,12 +125,10 @@ public class FontPanel extends JPanel implements ItemListener {
             case PositionablePopupUtil.LEFT:
                 row = 0;
                 break;
-            case PositionablePopupUtil.RIGHT:
-                row = 2;
-                break;
             case PositionablePopupUtil.CENTRE:
                 row = 1;
                 break;
+            case PositionablePopupUtil.RIGHT:
             default:
                 row = 2;
         }
@@ -145,7 +143,7 @@ public class FontPanel extends JPanel implements ItemListener {
         switch (comboBox._which) {
             case SIZE:
                 String size = (String) comboBox.getSelectedItem();
-                _util.setFontSize(Float.valueOf(size));
+                _util.setFontSize(Float.parseFloat(size));
                 break;
             case STYLE:
                 int style = 0;

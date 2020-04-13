@@ -298,11 +298,11 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                     List<Element> elementList = controlpointsElement.getChildren("controlpoint");
                     if (elementList != null) {
                         if (elementList.size() >= 2) {
-                            for (int i = 0; i < elementList.size(); i++) {
+                            for (Element value : elementList) {
                                 double x = 0.0;
                                 double y = 0.0;
                                 int index = 0;
-                                Element relem = elementList.get(i);
+                                Element relem = value;
                                 try {
                                     index = (relem.getAttribute("index")).getIntValue();
                                     x = (relem.getAttribute("x")).getFloatValue();
@@ -584,7 +584,6 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                             String eValue = (a != null) ? a.getValue() : "";
                             decorations.put(eName, eValue);
                         } catch (NullPointerException e) {  // considered normal if the attribute is not present
-                            continue;
                         }
                     }
                 }

@@ -230,9 +230,8 @@ public class PositionablePolygon extends PositionableShape {
     }
 
     private boolean isLeftMost(int x) {
-        Iterator<Rectangle> it = _vertexHandles.iterator();
-        while (it.hasNext()) {
-            if (it.next().x < x) {
+        for (Rectangle vertexHandle : _vertexHandles) {
+            if (vertexHandle.x < x) {
                 return false;
             }
         }
@@ -240,9 +239,8 @@ public class PositionablePolygon extends PositionableShape {
     }
 
     private boolean isTopMost(int y) {
-        Iterator<Rectangle> it = _vertexHandles.iterator();
-        while (it.hasNext()) {
-            if (it.next().y < y) {
+        for (Rectangle vertexHandle : _vertexHandles) {
+            if (vertexHandle.y < y) {
                 return false;
             }
         }
@@ -287,9 +285,7 @@ public class PositionablePolygon extends PositionableShape {
         if (_editing) {
             if (_vertexHandles != null) {
                 g2d.setStroke(new java.awt.BasicStroke(2.0f));
-                Iterator<Rectangle> iter = _vertexHandles.iterator();
-                while (iter.hasNext()) {
-                    Rectangle rect = iter.next();
+                for (Rectangle rect : _vertexHandles) {
                     g2d.setColor(Color.BLUE);
                     g2d.fill(rect);
                     g2d.setColor(Editor.HIGHLIGHT_COLOR);

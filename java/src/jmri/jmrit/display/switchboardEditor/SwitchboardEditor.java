@@ -117,7 +117,7 @@ public class SwitchboardEditor extends Editor {
         Bundle.getMessage("Symbols")
     };
     private JComboBox<String> switchShapeList;
-    private List<String> beanManuPrefixes = new ArrayList<>();
+    private final List<String> beanManuPrefixes = new ArrayList<>();
     private JComboBox<String> beanManuNames;
     private TitledBorder border;
     private final String interact = Bundle.getMessage("SwitchboardInteractHint");
@@ -145,9 +145,9 @@ public class SwitchboardEditor extends Editor {
     private final JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
 
     // Action commands
-    private static String LAYER_COMMAND = "layer";
-    private static String MANU_COMMAND = "manufacturer";
-    private static String SWITCHTYPE_COMMAND = "switchshape";
+    private static final String LAYER_COMMAND = "layer";
+    private static final String MANU_COMMAND = "manufacturer";
+    private static final String SWITCHTYPE_COMMAND = "switchshape";
 
     /**
      * List of names/labels of all switches currently displayed. Refreshed
@@ -501,15 +501,12 @@ public class SwitchboardEditor extends Editor {
         // enlarge minSpinner editor text field width
         JFormattedTextField minTf = ((JSpinner.DefaultEditor) minEditor).getTextField();
         minTf.setColumns(5);
-        minSpinner.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                JSpinner spinner = (JSpinner) e.getSource();
-                int value = (int)spinner.getValue();
-                // stop if value >= maxSpinner -1 (range <= 0)
-                if (value >= (Integer) maxSpinner.getValue() - 1) {
-                    maxSpinner.setValue(value + 1);
-                }
+        minSpinner.addChangeListener(e -> {
+            JSpinner spinner = (JSpinner) e.getSource();
+            int value = (int)spinner.getValue();
+            // stop if value >= maxSpinner -1 (range <= 0)
+            if (value >= (Integer) maxSpinner.getValue() - 1) {
+                maxSpinner.setValue(value + 1);
             }
         });
         navBarPanel.add(minSpinner);
@@ -518,15 +515,12 @@ public class SwitchboardEditor extends Editor {
         JComponent maxEditor = maxSpinner.getEditor();
         JFormattedTextField maxTf = ((JSpinner.DefaultEditor) maxEditor).getTextField();
         maxTf.setColumns(5);
-        maxSpinner.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                JSpinner spinner = (JSpinner) e.getSource();
-                int value = (int)spinner.getValue();
-                // stop if value <= minSpinner + 1 (range <= 0)
-                if (value <= (Integer) minSpinner.getValue() + 1) {
-                    minSpinner.setValue(value - 1);
-                }
+        maxSpinner.addChangeListener(e -> {
+            JSpinner spinner = (JSpinner) e.getSource();
+            int value = (int)spinner.getValue();
+            // stop if value <= minSpinner + 1 (range <= 0)
+            if (value <= (Integer) minSpinner.getValue() + 1) {
+                minSpinner.setValue(value - 1);
             }
         });
         navBarPanel.add(maxSpinner);
@@ -624,9 +618,7 @@ public class SwitchboardEditor extends Editor {
         autoItemRangeBox.setSelected(autoItemRange());
         // show tooltip item
         _optionMenu.add(showToolTipBox);
-        showToolTipBox.addActionListener((ActionEvent e) -> {
-            setAllShowToolTip(showToolTipBox.isSelected());
-        });
+        showToolTipBox.addActionListener((ActionEvent e) -> setAllShowToolTip(showToolTipBox.isSelected()));
         showToolTipBox.setSelected(showToolTip());
 
         // Show/Hide Scroll Bars
@@ -635,24 +627,16 @@ public class SwitchboardEditor extends Editor {
         ButtonGroup scrollGroup = new ButtonGroup();
         scrollGroup.add(scrollBoth);
         scrollMenu.add(scrollBoth);
-        scrollBoth.addActionListener((ActionEvent event) -> {
-            setScroll(SCROLL_BOTH);
-        });
+        scrollBoth.addActionListener((ActionEvent event) -> setScroll(SCROLL_BOTH));
         scrollGroup.add(scrollNone);
         scrollMenu.add(scrollNone);
-        scrollNone.addActionListener((ActionEvent event) -> {
-            setScroll(SCROLL_NONE);
-        });
+        scrollNone.addActionListener((ActionEvent event) -> setScroll(SCROLL_NONE));
         scrollGroup.add(scrollHorizontal);
         scrollMenu.add(scrollHorizontal);
-        scrollHorizontal.addActionListener((ActionEvent event) -> {
-            setScroll(SCROLL_HORIZONTAL);
-        });
+        scrollHorizontal.addActionListener((ActionEvent event) -> setScroll(SCROLL_HORIZONTAL));
         scrollGroup.add(scrollVertical);
         scrollMenu.add(scrollVertical);
-        scrollVertical.addActionListener((ActionEvent event) -> {
-            setScroll(SCROLL_VERTICAL);
-        });
+        scrollVertical.addActionListener((ActionEvent event) -> setScroll(SCROLL_VERTICAL));
         // add background color menu item
         JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor", "..."));
         _optionMenu.add(backgroundColorMenuItem);

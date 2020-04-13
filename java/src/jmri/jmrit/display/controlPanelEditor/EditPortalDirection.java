@@ -30,7 +30,6 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
     private PortalIcon _icon;
     private JRadioButton _toButton;
     private JRadioButton _fromButton;
-    private JRadioButton _noButton;
 
     private PortalList _portalList;
 
@@ -60,7 +59,7 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
         group.add(_fromButton);
         panel.add(_fromButton);
 
-        _noButton = new JRadioButton(Bundle.getMessage("noIcon"), _parent._editor.getPortalIcon(PortalIcon.HIDDEN));
+        JRadioButton _noButton = new JRadioButton(Bundle.getMessage("noIcon"), _parent._editor.getPortalIcon(PortalIcon.HIDDEN));
         _noButton.setVerticalTextPosition(AbstractButton.CENTER);
         _noButton.setHorizontalTextPosition(AbstractButton.CENTER);
         _noButton.setActionCommand(PortalIcon.HIDDEN);

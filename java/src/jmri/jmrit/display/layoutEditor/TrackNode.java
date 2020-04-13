@@ -89,8 +89,8 @@ public class TrackNode {
         return _NodeState;
     }
 
-    /**
-     * Operational methods
+    /*
+      Operational methods
      */
     /**
      * Returns the Block of the node Object at the nodeType position

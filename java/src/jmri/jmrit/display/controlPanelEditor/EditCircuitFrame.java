@@ -45,7 +45,6 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
     private JTextField _numTurnouts;
     private LengthPanel _lengthPanel;
     private JPanel _namePanel;
-    private JPanel _buttonPanel;
     private boolean _create;
 
     // Sensor list
@@ -87,7 +86,7 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        _buttonPanel = new JPanel();
+        JPanel _buttonPanel = new JPanel();
         _buttonPanel.setLayout(new FlowLayout());
         panel.add(_buttonPanel);
         contentPane.add(panel);
@@ -130,7 +129,7 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
 
         String[] blurbLines = { Bundle.getMessage("DragOccupancySensor", Bundle.getMessage("DetectionSensor")),
                                 Bundle.getMessage("DragErrorName", Bundle.getMessage("ErrorSensor"))};
-        _pickTable = new OpenPickListButton<Sensor>(blurbLines, PickListModel.sensorPickModelInstance(), this);
+        _pickTable = new OpenPickListButton<>(blurbLines, PickListModel.sensorPickModelInstance(), this);
         contentPane.add(_pickTable.getButtonPanel());
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
@@ -159,9 +158,7 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
         JButton createButton = new JButton(Bundle.getMessage("buttonCreate"));
-        createButton.addActionListener((ActionEvent a) -> {
-            createBlock();
-        });
+        createButton.addActionListener((ActionEvent a) -> createBlock());
         createButton.setToolTipText(Bundle.getMessage("createOBlock"));
         buttonPanel.add(createButton);
         
@@ -182,16 +179,12 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
         buttonPanel.setLayout(new FlowLayout());
 
         JButton changeButton = new JButton(Bundle.getMessage("buttonChangeName"));
-        changeButton.addActionListener((ActionEvent a) -> {
-            changeBlockName();
-        });
+        changeButton.addActionListener((ActionEvent a) -> changeBlockName());
         changeButton.setToolTipText(Bundle.getMessage("ToolTipChangeName"));
         buttonPanel.add(changeButton);
 
         JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
-        deleteButton.addActionListener((ActionEvent a) -> {
-            deleteCircuit();
-        });
+        deleteButton.addActionListener((ActionEvent a) -> deleteCircuit());
         deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeleteCircuit"));
         buttonPanel.add(deleteButton);
 
@@ -208,9 +201,7 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
         panel.setLayout(new FlowLayout());
 
         JButton convertButton = new JButton(Bundle.getMessage("ButtonConvertIcon"));
-        convertButton.addActionListener((ActionEvent a) -> {
-            convertIcons();
-        });
+        convertButton.addActionListener((ActionEvent a) -> convertIcons());
         convertButton.setToolTipText(Bundle.getMessage("ToolTipConvertIcon"));
         panel.add(convertButton);
 
@@ -494,8 +485,7 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
             if (log.isDebugEnabled()) {
                 log.debug("updateIconList: icons.size()= {}", icons.size());
             }
-            for (int i = 0; i < icons.size(); i++) {
-                Positionable pos = icons.get(i);
+            for (Positionable pos : icons) {
                 if (pos instanceof IndicatorTurnoutIcon) {
                     turnouts++;
                 } else if (pos instanceof IndicatorTrackIcon) {

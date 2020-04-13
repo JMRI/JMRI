@@ -382,39 +382,36 @@ public class DecoratorPanel extends JPanel implements ChangeListener {
 
     private AJRadioButton makeColorRadioButton(String caption, int which, String state) {
         AJRadioButton button = new AJRadioButton(Bundle.getMessage(caption), which, state);
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                if (button.isSelected()) {
-                    _selectedButton =button._which;
-                    _selectedState = button._state;
-                    PositionableLabel pos =_samples.get(_selectedState);
-                    PositionablePopupUtil util = pos.getPopupUtility();
-                    switch (button._which) {
-                        case FOREGROUND_BUTTON:
-                            _chooser.setColor(util.getForeground());
-                            break;
-                        case BACKGROUND_BUTTON:
-                            if (util.hasBackground()) {
-                                _chooser.setColor(util.getBackground());
-                            }
-                            util.setHasBackground(true);
-                            pos.setOpaque(true);
-                            break;
-                        case BORDERCOLOR_BUTTON:
-                            _chooser.setColor(util.getBorderColor());
-                            break;
-                        case TRANSPARENT_BUTTON:
-                            util.setHasBackground(false);
-                            _util.setHasBackground(false);
-                            pos.setOpaque(false);
-                            break;
-                        default:    // TRANSPARENT_BUTTON
-                   }
-                    log.debug("Button actionPerformed Colors opaque= {} _state= {} _which= {}",
-                            pos.isOpaque(), button._state, button._which);
-                    updateSamples();
-                }
+        button.addActionListener(a -> {
+            if (button.isSelected()) {
+                _selectedButton =button._which;
+                _selectedState = button._state;
+                PositionableLabel pos =_samples.get(_selectedState);
+                PositionablePopupUtil util = pos.getPopupUtility();
+                switch (button._which) {
+                    case FOREGROUND_BUTTON:
+                        _chooser.setColor(util.getForeground());
+                        break;
+                    case BACKGROUND_BUTTON:
+                        if (util.hasBackground()) {
+                            _chooser.setColor(util.getBackground());
+                        }
+                        util.setHasBackground(true);
+                        pos.setOpaque(true);
+                        break;
+                    case BORDERCOLOR_BUTTON:
+                        _chooser.setColor(util.getBorderColor());
+                        break;
+                    case TRANSPARENT_BUTTON:
+                        util.setHasBackground(false);
+                        _util.setHasBackground(false);
+                        pos.setOpaque(false);
+                        break;
+                    default:    // TRANSPARENT_BUTTON
+               }
+                log.debug("Button actionPerformed Colors opaque= {} _state= {} _which= {}",
+                        pos.isOpaque(), button._state, button._which);
+                updateSamples();
             }
         });
         _buttonGroup.add(button);            
@@ -437,17 +434,15 @@ public class DecoratorPanel extends JPanel implements ChangeListener {
         Font font = _util.getFont();
         int just = _util.getJustification();
 
-        Iterator<PositionableLabel> it = _samples.values().iterator();
-        while (it.hasNext()) {
-            PositionableLabel sam = it.next();
+        for (PositionableLabel sam : _samples.values()) {
             PositionablePopupUtil util = sam.getPopupUtility();
             sam.setFont(font);
             if (_isPositionableLabel) {
                 util.setFixedWidth(_util.getFixedWidth());
                 util.setFixedHeight(_util.getFixedHeight());
             } else {
-                util.setFixedWidth(util.getFixedWidth() + 2*(mar - util.getMargin()) /*+ bor - util.getBorderSize()*/);
-                util.setFixedHeight(util.getFixedHeight() + 2*(mar - util.getMargin()) /*+ bor - util.getBorderSize()*/);
+                util.setFixedWidth(util.getFixedWidth() + 2 * (mar - util.getMargin()) /*+ bor - util.getBorderSize()*/);
+                util.setFixedHeight(util.getFixedHeight() + 2 * (mar - util.getMargin()) /*+ bor - util.getBorderSize()*/);
             }
             util.setMargin(mar);
             util.setBorderSize(bor);
@@ -473,9 +468,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener {
             sam.setPreferredSize(sam.getSize());
             sam.invalidate();
             if (log.isDebugEnabled()) {
-//                log.debug("updateSamples opaque= {} background= {}", sam.isOpaque(), util.getBackground());
-                log.debug("util width= {} height= {} SAM width= {} height= {}",
-                        util.getFixedWidth(), util.getFixedHeight(), sam.getWidth(), sam.getHeight());
+                //                log.debug("updateSamples opaque= {} background= {}", sam.isOpaque(), util.getBackground());
+                log.debug("util width= {} height= {} SAM width= {} height= {}", util.getFixedWidth(), util.getFixedHeight(), sam.getWidth(), sam.getHeight());
             }
         }
         _samplePanel.repaint();
@@ -704,9 +698,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener {
     }
     
     public void setSuppressRecentColor(boolean bool) {
-        Iterator<PositionableLabel> iter = _samples.values().iterator();
-        while (iter.hasNext()) {
-            iter.next().getPopupUtility().setSuppressRecentColor(bool);
+        for (PositionableLabel positionableLabel : _samples.values()) {
+            positionableLabel.getPopupUtility().setSuppressRecentColor(bool);
         }
         _util.setSuppressRecentColor(bool);        
     }

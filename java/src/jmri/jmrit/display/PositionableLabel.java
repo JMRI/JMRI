@@ -590,9 +590,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _iconEditor.setIcon(0, "plainIcon", icon);
         _iconEditor.makeIconPanel(false);
 
-        ActionListener addIconAction = (ActionEvent a) -> {
-            editIcon();
-        };
+        ActionListener addIconAction = (ActionEvent a) -> editIcon();
         _iconEditor.complete(addIconAction, true, false, true);
 
     }
@@ -668,9 +666,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _paletteFrame = makePaletteFrame(
                 java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameTurnout")));
         _iconItemPanel = new IconItemPanel(_paletteFrame, "Icon", _editor); // NOI18N
-        ActionListener updateAction = (ActionEvent a) -> {
-                updateIconItem();
-         };
+        ActionListener updateAction = (ActionEvent a) -> updateIconItem();
         _iconItemPanel.init(updateAction);
         initPaletteFrame(_paletteFrame, _iconItemPanel);
     }
@@ -763,9 +759,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             disableItem = new JCheckBoxMenuItem(Bundle.getMessage("Disable"));
             disableItem.setSelected(!_controlling);
             popup.add(disableItem);
-            disableItem.addActionListener((java.awt.event.ActionEvent e) -> {
-                setControlling(!disableItem.isSelected());
-            });
+            disableItem.addActionListener((java.awt.event.ActionEvent e) -> setControlling(!disableItem.isSelected()));
             return true;
         }
         return false;

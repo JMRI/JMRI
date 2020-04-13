@@ -178,32 +178,19 @@ public class IconDialog extends ItemDialog {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         JButton doneButton = new JButton(Bundle.getMessage(text));
-        doneButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                if (doDoneAction()) {
-                    dispose();
-                }
+        doneButton.addActionListener(a -> {
+            if (doDoneAction()) {
+                dispose();
             }
         });
         panel.add(doneButton);
 
         JButton renameButton = new JButton(Bundle.getMessage("renameFamily"));
-        renameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                renameFamily();
-            }
-        });
+        renameButton.addActionListener(a -> renameFamily());
         panel.add(renameButton);
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                dispose();
-            }
-        });
+        cancelButton.addActionListener(a -> dispose());
         panel.add(cancelButton);
         buttonPanel.add(panel);
     }
@@ -224,9 +211,7 @@ public class IconDialog extends ItemDialog {
         HashMap<String, NamedIcon> clone = null;
         if (map != null) {
             clone = new HashMap<>();
-            Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
+            for (Entry<String, NamedIcon> entry : map.entrySet()) {
                 clone.put(entry.getKey(), new NamedIcon(entry.getValue()));
             }
         }

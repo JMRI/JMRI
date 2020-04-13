@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SlipIconAdder extends IconAdder {
 
-    HashMap<String, NamedBeanHandle<Turnout>> _turnoutMap = new HashMap<String, NamedBeanHandle<Turnout>>();
+    HashMap<String, NamedBeanHandle<Turnout>> _turnoutMap = new HashMap<>();
     int _lastIndex = 0;
 
     public static final String NamedBeanFlavorMime = DataFlavor.javaJVMLocalObjectMimeType
@@ -94,7 +94,7 @@ public class SlipIconAdder extends IconAdder {
     /** {@inheritDoc} */
     @Override
     public void reset() {
-        _turnoutMap = new HashMap<String, NamedBeanHandle<Turnout>>();
+        _turnoutMap = new HashMap<>();
         _lastIndex = 0;
         super.reset();
     }
@@ -133,30 +133,10 @@ public class SlipIconAdder extends IconAdder {
         _typePanel.add(threeWayButton);
         _typePanel.add(scissorButton);
         _iconPanel.add(_typePanel);
-        doubleSlipButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                slipUpdate(0x00);
-            }
-        });
-        singleSlipButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                slipUpdate(0x02);
-            }
-        });
-        threeWayButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                slipUpdate(0x04);
-            }
-        });
-        scissorButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                slipUpdate(0x08);
-            }
-        });
+        doubleSlipButton.addActionListener(actionEvent -> slipUpdate(0x00));
+        singleSlipButton.addActionListener(actionEvent -> slipUpdate(0x02));
+        threeWayButton.addActionListener(actionEvent -> slipUpdate(0x04));
+        scissorButton.addActionListener(actionEvent -> slipUpdate(0x08));
 
         if (lowerWestToLowerEastButton.getActionListeners().length > 0) {
             lowerWestToLowerEastButton.removeActionListener(lowerWestToLowerEastButton.getActionListeners()[0]);
@@ -174,18 +154,8 @@ public class SlipIconAdder extends IconAdder {
             _buttonSlipPanel.add(lowerWestToLowerEastButton);
             _buttonSlipPanel.add(upperWestToUpperEastButton);
             _iconPanel.add(_buttonSlipPanel);
-            lowerWestToLowerEastButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    updateSingleSlipRoute(false);
-                }
-            });
-            upperWestToUpperEastButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    updateSingleSlipRoute(true);
-                }
-            });
+            lowerWestToLowerEastButton.addActionListener(actionEvent -> updateSingleSlipRoute(false));
+            upperWestToUpperEastButton.addActionListener(actionEvent -> updateSingleSlipRoute(true));
         } else if (getTurnoutType() == 0x04) {
             ButtonGroup group = new ButtonGroup();
             lowerWestToLowerEastButton.setText(Bundle.getMessage("ToLower"));
@@ -206,18 +176,8 @@ public class SlipIconAdder extends IconAdder {
             _buttonSlipPanel.add(lowerWestToLowerEastButton);
             _buttonSlipPanel.add(upperWestToUpperEastButton);
             _iconPanel.add(_buttonSlipPanel);
-            lowerWestToLowerEastButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    changeNumScissorTurnouts();
-                }
-            });
-            upperWestToUpperEastButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    changeNumScissorTurnouts();
-                }
-            });
+            lowerWestToLowerEastButton.addActionListener(actionEvent -> changeNumScissorTurnouts());
+            upperWestToUpperEastButton.addActionListener(actionEvent -> changeNumScissorTurnouts());
         }
 
         JPanel rowPanel = null;
@@ -610,14 +570,9 @@ public class SlipIconAdder extends IconAdder {
         if (name == null) {
             name = turnout.getSystemName();
         }
-        Iterator<NamedBeanHandle<Turnout>> iter = _turnoutMap.values().iterator();
-        while (iter.hasNext()) {
-            if (name.equals(iter.next().getName())) {
-                JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
-                        Bundle.getMessage("DupTurnoutName"),
-                        new Object[]{name}),
-                        Bundle.getMessage("ErrorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+        for (NamedBeanHandle<Turnout> turnoutNamedBeanHandle : _turnoutMap.values()) {
+            if (name.equals(turnoutNamedBeanHandle.getName())) {
+                JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(Bundle.getMessage("DupTurnoutName"), name), Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -682,7 +637,6 @@ public class SlipIconAdder extends IconAdder {
                             log.debug("DropPanel.drop COMPLETED for "
                                     + comp.getName());
                         }
-                        return;
                     } else {
                         if (log.isDebugEnabled()) {
                             log.debug("DropPanel.drop REJECTED!");
@@ -690,12 +644,7 @@ public class SlipIconAdder extends IconAdder {
                         e.rejectDrop();
                     }
                 }
-            } catch (IOException ioe) {
-                if (log.isDebugEnabled()) {
-                    log.debug("DropPanel.drop REJECTED!");
-                }
-                e.rejectDrop();
-            } catch (UnsupportedFlavorException ufe) {
+            } catch (IOException | UnsupportedFlavorException ioe) {
                 if (log.isDebugEnabled()) {
                     log.debug("DropPanel.drop REJECTED!");
                 }

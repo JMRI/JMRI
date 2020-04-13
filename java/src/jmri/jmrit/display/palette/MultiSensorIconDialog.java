@@ -41,30 +41,24 @@ public class MultiSensorIconDialog extends IconDialog {
         JPanel panel2 = new JPanel();
         panel2.setLayout(new FlowLayout());
         JButton addSensor = new JButton(Bundle.getMessage("addIcon"));
-        addSensor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                if (addNewIcon(getIconName())) {
-                    InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
-                    _iconEditPanel.removeAll();
-                    makeIconPanel(_iconMap, _iconEditPanel);
-                    pack();
-                }
+        addSensor.addActionListener(a -> {
+            if (addNewIcon(getIconName())) {
+                InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
+                _iconEditPanel.removeAll();
+                makeIconPanel(_iconMap, _iconEditPanel);
+                pack();
             }
         });
         addSensor.setToolTipText(Bundle.getMessage(addTip));
         panel2.add(addSensor);
 
         JButton deleteSensor = new JButton(Bundle.getMessage("deleteIcon"));
-        deleteSensor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                if (deleteIcon()) {
-                    InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
-                    _iconEditPanel.removeAll();
-                    makeIconPanel(_iconMap, _iconEditPanel);
-                    pack();
-                }
+        deleteSensor.addActionListener(a -> {
+            if (deleteIcon()) {
+                InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
+                _iconEditPanel.removeAll();
+                makeIconPanel(_iconMap, _iconEditPanel);
+                pack();
             }
         });
         deleteSensor.setToolTipText(Bundle.getMessage(deleteTip));

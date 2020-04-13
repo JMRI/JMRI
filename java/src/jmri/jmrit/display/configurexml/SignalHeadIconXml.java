@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
-    static final HashMap<String, String> _nameMap = new HashMap<String, String>();
+    static final HashMap<String, String> _nameMap = new HashMap<>();
 
     public SignalHeadIconXml() {
         // map previous store names to property key names
@@ -155,8 +155,8 @@ public class SignalHeadIconXml extends PositionableLabelXml {
                 aspects = c;
                 elem = icons;
             }
-            for (int i = 0; i < aspects.size(); i++) {
-                String aspect = aspects.get(i).getName();
+            for (Element value : aspects) {
+                String aspect = value.getName();
                 NamedIcon icon = loadIcon(l, aspect, elem, "SignalHead \"" + name + "\": icon \"" + aspect + "\" ", ed);
                 if (icon != null) {
                     l.setIcon(_nameMap.get(aspect), icon);

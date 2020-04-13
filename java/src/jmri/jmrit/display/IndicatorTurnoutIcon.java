@@ -62,25 +62,21 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
 
     static HashMap<String, HashMap<Integer, NamedIcon>> initMaps() {
         HashMap<String, HashMap<Integer, NamedIcon>> iconMaps = new HashMap<>();
-        iconMaps.put("ClearTrack", new HashMap<Integer, NamedIcon>());
-        iconMaps.put("OccupiedTrack", new HashMap<Integer, NamedIcon>());
-        iconMaps.put("PositionTrack", new HashMap<Integer, NamedIcon>());
-        iconMaps.put("AllocatedTrack", new HashMap<Integer, NamedIcon>());
-        iconMaps.put("DontUseTrack", new HashMap<Integer, NamedIcon>());
-        iconMaps.put("ErrorTrack", new HashMap<Integer, NamedIcon>());
+        iconMaps.put("ClearTrack", new HashMap<>());
+        iconMaps.put("OccupiedTrack", new HashMap<>());
+        iconMaps.put("PositionTrack", new HashMap<>());
+        iconMaps.put("AllocatedTrack", new HashMap<>());
+        iconMaps.put("DontUseTrack", new HashMap<>());
+        iconMaps.put("ErrorTrack", new HashMap<>());
         return iconMaps;
     }
 
     HashMap<String, HashMap<Integer, NamedIcon>> cloneMaps(IndicatorTurnoutIcon pos) {
         HashMap<String, HashMap<Integer, NamedIcon>> iconMaps = initMaps();
-        Iterator<Entry<String, HashMap<Integer, NamedIcon>>> it = _iconMaps.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, HashMap<Integer, NamedIcon>> entry = it.next();
+        for (Entry<String, HashMap<Integer, NamedIcon>> entry : _iconMaps.entrySet()) {
             HashMap<Integer, NamedIcon> clone = iconMaps.get(entry.getKey());
-            Iterator<Entry<Integer, NamedIcon>> iter = entry.getValue().entrySet().iterator();
-            while (iter.hasNext()) {
-                Entry<Integer, NamedIcon> ent = iter.next();
-//                if (log.isDebugEnabled()) log.debug("key= "+ent.getKey());
+            for (Entry<Integer, NamedIcon> ent : entry.getValue().entrySet()) {
+                //                if (log.isDebugEnabled()) log.debug("key= "+ent.getKey());
                 clone.put(ent.getKey(), cloneIcon(ent.getValue(), pos));
             }
         }
@@ -277,7 +273,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         if (map == null) {
             return null;
         }
-        return map.get(Integer.valueOf(state));
+        return map.get(state);
     }
 
     public String getStateName(Integer state) {
@@ -292,11 +288,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     public int maxHeight() {
         int max = 0;
         if (_iconMaps != null) {
-            Iterator<HashMap<Integer, NamedIcon>> it = _iconMaps.values().iterator();
-            while (it.hasNext()) {
-                Iterator<NamedIcon> iter = it.next().values().iterator();
-                while (iter.hasNext()) {
-                    max = Math.max(iter.next().getIconHeight(), max);
+            for (HashMap<Integer, NamedIcon> integerNamedIconHashMap : _iconMaps.values()) {
+                for (NamedIcon namedIcon : integerNamedIconHashMap.values()) {
+                    max = Math.max(namedIcon.getIconHeight(), max);
                 }
             }
         }
@@ -307,11 +301,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     public int maxWidth() {
         int max = 0;
         if (_iconMaps != null) {
-            Iterator<HashMap<Integer, NamedIcon>> it = _iconMaps.values().iterator();
-            while (it.hasNext()) {
-                Iterator<NamedIcon> iter = it.next().values().iterator();
-                while (iter.hasNext()) {
-                    max = Math.max(iter.next().getIconWidth(), max);
+            for (HashMap<Integer, NamedIcon> integerNamedIconHashMap : _iconMaps.values()) {
+                for (NamedIcon namedIcon : integerNamedIconHashMap.values()) {
+                    max = Math.max(namedIcon.getIconWidth(), max);
                 }
             }
         }
@@ -324,11 +316,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     @Override
     protected void rotateOrthogonal() {
         if (_iconMaps != null) {
-            Iterator<HashMap<Integer, NamedIcon>> it = _iconMaps.values().iterator();
-            while (it.hasNext()) {
-                Iterator<NamedIcon> iter = it.next().values().iterator();
-                while (iter.hasNext()) {
-                    NamedIcon icon = iter.next();
+            for (HashMap<Integer, NamedIcon> integerNamedIconHashMap : _iconMaps.values()) {
+                for (NamedIcon icon : integerNamedIconHashMap.values()) {
                     icon.setRotation(icon.getRotation() + 1, this);
                 }
             }
@@ -340,11 +329,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     public void setScale(double s) {
         _scale = s;
         if (_iconMaps != null) {
-            Iterator<HashMap<Integer, NamedIcon>> it = _iconMaps.values().iterator();
-            while (it.hasNext()) {
-                Iterator<NamedIcon> iter = it.next().values().iterator();
-                while (iter.hasNext()) {
-                    iter.next().scale(s, this);
+            for (HashMap<Integer, NamedIcon> integerNamedIconHashMap : _iconMaps.values()) {
+                for (NamedIcon namedIcon : integerNamedIconHashMap.values()) {
+                    namedIcon.scale(s, this);
                 }
             }
         }
@@ -354,11 +341,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     @Override
     public void rotate(int deg) {
         if (_iconMaps != null) {
-            Iterator<HashMap<Integer, NamedIcon>> it = _iconMaps.values().iterator();
-            while (it.hasNext()) {
-                Iterator<NamedIcon> iter = it.next().values().iterator();
-                while (iter.hasNext()) {
-                    iter.next().rotate(deg, this);
+            for (HashMap<Integer, NamedIcon> integerNamedIconHashMap : _iconMaps.values()) {
+                for (NamedIcon namedIcon : integerNamedIconHashMap.values()) {
+                    namedIcon.rotate(deg, this);
                 }
             }
         }
@@ -412,7 +397,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         } else if (source instanceof OBlock) {
             String property = evt.getPropertyName();
             if ("state".equals(property) || "pathState".equals(property)) {
-                int now = ((Integer) evt.getNewValue()).intValue();
+                int now = (Integer) evt.getNewValue();
                 setStatus((OBlock) source, now);
             } else if ("pathName".equals(property)) {
                 _pathUtil.removePath((String) evt.getOldValue());
@@ -420,7 +405,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             }
         } else if (source instanceof Sensor) {
             if (evt.getPropertyName().equals("KnownState")) {
-                int now = ((Integer) evt.getNewValue()).intValue();
+                int now = (Integer) evt.getNewValue();
                 if (source.equals(getOccSensor())) {
                     _status = _pathUtil.getStatus(now);
                 }
@@ -447,28 +432,19 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("IndicatorTO")));
         _itemPanel = new IndicatorTOItemPanel(_paletteFrame, "IndicatorTO", _iconFamily,
                 PickListModel.turnoutPickModelInstance(), _editor);
-        ActionListener updateAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                updateItem();
-            }
-        };
+        ActionListener updateAction = a -> updateItem();
         // Convert _iconMaps state (ints) to Palette's bean names
         HashMap<String, HashMap<String, NamedIcon>> iconMaps
                 = new HashMap<>();
-        iconMaps.put("ClearTrack", new HashMap<String, NamedIcon>());
-        iconMaps.put("OccupiedTrack", new HashMap<String, NamedIcon>());
-        iconMaps.put("PositionTrack", new HashMap<String, NamedIcon>());
-        iconMaps.put("AllocatedTrack", new HashMap<String, NamedIcon>());
-        iconMaps.put("DontUseTrack", new HashMap<String, NamedIcon>());
-        iconMaps.put("ErrorTrack", new HashMap<String, NamedIcon>());
-        Iterator<Entry<String, HashMap<Integer, NamedIcon>>> it = _iconMaps.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, HashMap<Integer, NamedIcon>> entry = it.next();
+        iconMaps.put("ClearTrack", new HashMap<>());
+        iconMaps.put("OccupiedTrack", new HashMap<>());
+        iconMaps.put("PositionTrack", new HashMap<>());
+        iconMaps.put("AllocatedTrack", new HashMap<>());
+        iconMaps.put("DontUseTrack", new HashMap<>());
+        iconMaps.put("ErrorTrack", new HashMap<>());
+        for (Entry<String, HashMap<Integer, NamedIcon>> entry : _iconMaps.entrySet()) {
             HashMap<String, NamedIcon> clone = iconMaps.get(entry.getKey());
-            Iterator<Entry<Integer, NamedIcon>> iter = entry.getValue().entrySet().iterator();
-            while (iter.hasNext()) {
-                Entry<Integer, NamedIcon> ent = iter.next();
+            for (Entry<Integer, NamedIcon> ent : entry.getValue().entrySet()) {
                 NamedIcon oldIcon = ent.getValue();
                 NamedIcon newIcon = cloneIcon(oldIcon, this);
                 newIcon.rotate(0, this);
@@ -505,14 +481,10 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         _pathUtil.setPaths(_itemPanel.getPaths());
         HashMap<String, HashMap<String, NamedIcon>> iconMap = _itemPanel.getIconMaps();
         if (iconMap != null) {
-            Iterator<Entry<String, HashMap<String, NamedIcon>>> it = iconMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, HashMap<String, NamedIcon>> entry = it.next();
+            for (Entry<String, HashMap<String, NamedIcon>> entry : iconMap.entrySet()) {
                 String status = entry.getKey();
                 HashMap<Integer, NamedIcon> oldMap = _iconMaps.get(entry.getKey());
-                Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
-                while (iter.hasNext()) {
-                    Entry<String, NamedIcon> ent = iter.next();
+                for (Entry<String, NamedIcon> ent : entry.getValue().entrySet()) {
                     if (log.isDebugEnabled()) {
                         log.debug("key= " + ent.getKey());
                     }

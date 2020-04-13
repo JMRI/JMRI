@@ -117,14 +117,14 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
         // load ray tracks
         List<Element> rayTrackList = element.getChildren("raytrack");
         if (rayTrackList.size() > 0) {
-            for (int i = 0; i < rayTrackList.size(); i++) {
+            for (Element value : rayTrackList) {
                 double angle = 0.0;
                 int index = 0;
-                Element relem = rayTrackList.get(i);
+                Element relem = value;
                 try {
                     angle = (relem.getAttribute("angle")).getFloatValue();
                     index = (relem.getAttribute("index")).getIntValue();
-                } catch (org.jdom2.DataConversionException e) {
+                } catch (DataConversionException e) {
                     log.error("failed to convert ray track angle or index attributes");
                 }
                 String connectName = "";

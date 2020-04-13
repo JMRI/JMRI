@@ -212,9 +212,7 @@ public class ColorDialog extends JDialog implements ChangeListener {
             panel.add(doneButton);
 
             JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-            cancelButton.addActionListener((ActionEvent event) -> {
-                    cancel();
-                });
+            cancelButton.addActionListener((ActionEvent event) -> cancel());
 
             panel.add(cancelButton);
 

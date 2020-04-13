@@ -51,22 +51,22 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
     NamedIcon scaledIcon;
     NamedIcon clockIcon;
 
-    int hourX[] = {
+    int[] hourX = {
         -12, -11, -25, -10, -10, 0, 10, 10, 25, 11, 12};
-    int hourY[] = {
+    int[] hourY = {
         -31, -163, -170, -211, -276, -285, -276, -211, -170, -163, -31};
-    int minuteX[] = {
+    int[] minuteX = {
         -12, -11, -24, -11, -11, 0, 11, 11, 24, 11, 12};
-    int minuteY[] = {
+    int[] minuteY = {
         -31, -261, -266, -314, -381, -391, -381, -314, -266, -261, -31};
-    int scaledHourX[] = new int[hourX.length];
-    int scaledHourY[] = new int[hourY.length];
-    int scaledMinuteX[] = new int[minuteX.length];
-    int scaledMinuteY[] = new int[minuteY.length];
-    int rotatedHourX[] = new int[hourX.length];
-    int rotatedHourY[] = new int[hourY.length];
-    int rotatedMinuteX[] = new int[minuteX.length];
-    int rotatedMinuteY[] = new int[minuteY.length];
+    int[] scaledHourX = new int[hourX.length];
+    int[] scaledHourY = new int[hourY.length];
+    int[] scaledMinuteX = new int[minuteX.length];
+    int[] scaledMinuteY = new int[minuteY.length];
+    int[] rotatedHourX = new int[hourX.length];
+    int[] rotatedHourY = new int[hourY.length];
+    int[] rotatedMinuteX = new int[minuteX.length];
+    int[] rotatedMinuteY = new int[minuteY.length];
 
     Polygon hourHand;
     Polygon scaledHourHand;
@@ -138,19 +138,9 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         amPm = "AM";
 
         // request callback to update time
-        clock.addMinuteChangeListener(new java.beans.PropertyChangeListener() {
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                update();
-            }
-        });
+        clock.addMinuteChangeListener(e -> update());
         // request callback to update changes in properties
-        clock.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                update();
-            }
-        });
+        clock.addPropertyChangeListener(e -> update());
         setSize(clockIcon.getIconHeight()); // set to default size
     }
 
@@ -178,12 +168,9 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         addRateMenuEntry(rateMenu, 8);
         popup.add(rateMenu);
         runMenu = new JMenuItem(getRun() ? "Stop" : "Start");
-        runMenu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setRun(!getRun());
-                update();
-            }
+        runMenu.addActionListener(e -> {
+            setRun(!getRun());
+            update();
         });
         popup.add(runMenu);
         popup.add(CoordinateEdit.getScaleEditAction(this));
@@ -458,19 +445,14 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
                 // locate JmriJFrame and push to front
                 String frame = _url.substring(6);
                 final jmri.util.JmriJFrame jframe = jmri.util.JmriJFrame.getFrame(frame);
-                java.awt.EventQueue.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        jframe.toFront();
-                        jframe.repaint();
-                    }
+                java.awt.EventQueue.invokeLater(() -> {
+                    jframe.toFront();
+                    jframe.repaint();
                 });
             } else {
                 jmri.util.ExternalLinkContentViewerUI.activateURL(new java.net.URL(_url));
             }
-        } catch (IOException t) {
-            log.error("Error handling link", t);
-        } catch (URISyntaxException t) {
+        } catch (IOException | URISyntaxException t) {
             log.error("Error handling link", t);
         }
         super.doMouseClicked(event);

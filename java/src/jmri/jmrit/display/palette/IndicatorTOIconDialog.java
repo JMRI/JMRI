@@ -37,23 +37,17 @@ public class IndicatorTOIconDialog extends IconDialog {
         JPanel panel1 = new JPanel();
         panel1.setLayout(new FlowLayout());
         JButton addFamilyButton = new JButton(Bundle.getMessage("addMissingStatus"));
-        addFamilyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                addFamilySet();
-                dispose();
-            }
+        addFamilyButton.addActionListener(a -> {
+            addFamilySet();
+            dispose();
         });
         addFamilyButton.setToolTipText(Bundle.getMessage("ToolTipMissingStatus"));
         panel1.add(addFamilyButton);
 
         JButton deleteButton = new JButton(Bundle.getMessage("deleteStatus"));
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                deleteFamilySet();
-                dispose();
-            }
+        deleteButton.addActionListener(a -> {
+            deleteFamilySet();
+            dispose();
         });
         deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeleteStatus"));
         panel1.add(deleteButton);

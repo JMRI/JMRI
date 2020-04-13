@@ -59,7 +59,7 @@ public class LayoutTurntable extends LayoutTrack {
     // persistent instance variables (saved between sessions)
     private boolean turnoutControlled = false;
     private double radius = 25.0;
-    private ArrayList<RayTrack> rayList = new ArrayList<>(); // list of Ray Track objects.
+    private final ArrayList<RayTrack> rayList = new ArrayList<>(); // list of Ray Track objects.
     private int lastKnownIndex = -1;
 
     /**
@@ -1291,7 +1291,7 @@ public class LayoutTurntable extends LayoutTrack {
 
         for (int k = 0; k < getNumberRays(); k++) {
             if (getRayConnectOrdered(k) == null) {
-                result.add(Integer.valueOf(TURNTABLE_RAY_OFFSET + getRayIndex(k)));
+                result.add(TURNTABLE_RAY_OFFSET + getRayIndex(k));
             }
         }
         return result;

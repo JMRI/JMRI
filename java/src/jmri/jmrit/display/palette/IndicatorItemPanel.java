@@ -164,9 +164,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
                 t.setShowTrain(_detectPanel.getShowTrainName());
                 t.setFamily(_family);
 
-                Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-                while (it.hasNext()) {
-                    Entry<String, NamedIcon> entry = it.next();
+                for (Entry<String, NamedIcon> entry : iconMap.entrySet()) {
                     t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
                 }
                 t.setLevel(Editor.TURNOUTS);

@@ -61,7 +61,6 @@ public class ConnectivityUtil {
     private LayoutTrack prevConnectTrack = null;
     private LayoutBlock currLayoutBlock = null;
     private LayoutBlock nextLayoutBlock = null;
-    private LayoutBlock prevLayoutBlock = null;
 
     /**
      * Provide a list of LayoutTurnouts in the specified Block, in order,
@@ -123,7 +122,7 @@ public class ConnectivityUtil {
             }
         }
 
-        prevLayoutBlock = null;
+        LayoutBlock prevLayoutBlock = null;
         if (prevBlock != null) {
             String prevUserName = prevBlock.getUserName();
             if ((prevUserName != null) && !prevUserName.isEmpty()) {
@@ -524,8 +523,7 @@ public class ConnectivityUtil {
         //    lBlock = layoutBlockManager.getByUserName(userName);
         //}
         List<LayoutConnectivity> cList = auxTools.getConnectivityList(currLayoutBlock);
-        for (int i = 0; i < cList.size(); i++) {
-            LayoutConnectivity lc = cList.get(i);
+        for (LayoutConnectivity lc : cList) {
             if (lc.getBlock1().getBlock() == block) {
                 result.add((lc.getBlock2()).getBlock());
             } else if (lc.getBlock2().getBlock() == block) {
@@ -1176,8 +1174,7 @@ public class ConnectivityUtil {
         }
         BlockBossLogic bbLogic = BlockBossLogic.getStoppedObject(sh.getSystemName());
 
-        for (int i = 0; i < names.size(); i++) {
-            String name = names.get(i);
+        for (String name : names) {
             if ((bbLogic.getSensor1() != null) && (bbLogic.getSensor1()).equals(name)) {
                 bbLogic.setSensor1(null);
             }
@@ -2828,7 +2825,7 @@ public class ConnectivityUtil {
                 || (lt.getLayoutBlockC() == currLayoutBlock)
                 || (lt.getLayoutBlockD() == currLayoutBlock)))
                 .map(LayoutTurnout.class::cast)
-                .collect(Collectors.toCollection(ArrayList<LayoutTurnout>::new));
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     // initialize logging

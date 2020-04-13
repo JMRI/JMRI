@@ -85,9 +85,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         panel.setLayout(new FlowLayout());
 
         JButton clearButton = new JButton(Bundle.getMessage("buttonClearSelection"));
-        clearButton.addActionListener((ActionEvent a) -> {
-            clearListSelection();
-        });
+        clearButton.addActionListener((ActionEvent a) -> clearListSelection());
         clearButton.setToolTipText(Bundle.getMessage("ToolTipClearList"));
         panel.add(clearButton);
         pathPanel.add(panel);
@@ -102,23 +100,17 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
 
         panel = new JPanel();
         JButton addButton = new JButton(Bundle.getMessage("buttonAddPath"));
-        addButton.addActionListener((ActionEvent a) -> {
-            addNewPath(true);
-        });
+        addButton.addActionListener((ActionEvent a) -> addNewPath(true));
         addButton.setToolTipText(Bundle.getMessage("ToolTipAddPath"));
         panel.add(addButton);
 
         JButton changeButton = new JButton(Bundle.getMessage("buttonChangeName"));
-        changeButton.addActionListener((ActionEvent a) -> {
-            changePathName();
-        });
+        changeButton.addActionListener((ActionEvent a) -> changePathName());
         changeButton.setToolTipText(Bundle.getMessage("ToolTipChangeName"));
         panel.add(changeButton);
 
         JButton deleteButton = new JButton(Bundle.getMessage("buttonDeletePath"));
-        deleteButton.addActionListener((ActionEvent a) -> {
-            deletePath();
-        });
+        deleteButton.addActionListener((ActionEvent a) -> deletePath());
         deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeletePath"));
         panel.add(deleteButton);
 
@@ -279,13 +271,12 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
 
         java.util.List<Positionable> list = _parent.getCircuitIcons(_homeBlock);
         ArrayList<Positionable> pathGroup = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            Positionable pos = list.get(i);
+        for (Positionable pos : list) {
             if (pos instanceof IndicatorTrack) {
                 ArrayList<String> paths = ((IndicatorTrack) pos).getPaths();
                 if (paths != null) {
-                    for (int j = 0; j < paths.size(); j++) {
-                        if (name.equals(paths.get(j))) {
+                    for (String s : paths) {
+                        if (name.equals(s)) {
                             ((IndicatorTrack) pos).setControlling(true);
                             pathGroup.add(pos);
                         }
@@ -379,9 +370,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
      */
     private void updatePath() {
         // to avoid ConcurrentModificationException now set data
-        Iterator<Positionable> iter = _pathGroup.iterator();
-        while (iter.hasNext()) {
-            Positionable pos = iter.next();
+        for (Positionable pos : _pathGroup) {
             if (pos instanceof IndicatorTrack) {
                 ((IndicatorTrack) pos).addPath(TEST_PATH);
             } else {
@@ -401,8 +390,8 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         if (list.isEmpty()) {
             sb.append(Bundle.getMessage("noPaths", _homeBlock.getDisplayName()));
         } else {
-            for (int i = 0; i < list.size(); i++) {
-                OPath path = (OPath) list.get(i);
+            for (Path value : list) {
+                OPath path = (OPath) value;
                 ArrayList<Positionable> pathGp = makePathGroup(path);
                 if (pathGp.isEmpty()) {
                     sb.append(Bundle.getMessage("noPathIcons", path.getName()));
@@ -581,9 +570,8 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
             return;
         }
         // is this path already defined? OPath equality is equal turnout settings and portals, not icons
-        Iterator<Path> iter = _homeBlock.getPaths().iterator();
-        while (iter.hasNext()) {
-            OPath path = (OPath) iter.next();
+        for (Path value : _homeBlock.getPaths()) {
+            OPath path = (OPath) value;
             if (newPath.equals(path)) {
                 otherPath = path;
                 break;
@@ -640,9 +628,8 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
             _currentPath.setFromPortal(fromPortal);
             _currentPath.setLength(_lengthPanel.getLength());
             _currentPath.clearSettings();
-            Iterator<BeanSetting> it = newPath.getSettings().iterator();
-            while (it.hasNext()) {
-                _currentPath.addSetting(it.next());
+            for (BeanSetting beanSetting : newPath.getSettings()) {
+                _currentPath.addSetting(beanSetting);
             }
             log.debug("update _currentPath");
         } else {
@@ -698,9 +685,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
     private void changePathNameInIcons(String name, ArrayList<Positionable> pathGp) {
         log.debug("changePathNameInIcons for {}.  {} icons", name, pathGp.size());
         // add or remove path name from IndicatorTrack icons
-        Iterator<Positionable> iter = _parent.getCircuitIcons(_homeBlock).iterator();
-        while (iter.hasNext()) {
-            Positionable pos = iter.next();
+        for (Positionable pos : _parent.getCircuitIcons(_homeBlock)) {
             if (pathGp.contains(pos)) {
                 if (pos instanceof IndicatorTrack) {
                     ((IndicatorTrack) pos).addPath(name);

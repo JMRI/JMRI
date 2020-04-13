@@ -62,12 +62,7 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
 
         JPanel panel = new JPanel();
         _addTableButton = new JButton(Bundle.getMessage("CreateNewItem"));
-        _addTableButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                makeAddToTableWindow();
-            }
-        });
+        _addTableButton.addActionListener(a -> makeAddToTableWindow());
         _addTableButton.setToolTipText(Bundle.getMessage("ToolTipAddToTable"));
         panel.add(_addTableButton);
 
@@ -80,12 +75,7 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
         }
         _selectionModel.setPositionRange(size - 3);
         JButton clearSelectionButton = new JButton(Bundle.getMessage("ClearSelection"));
-        clearSelectionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                clearSelections();
-            }
-        });
+        clearSelectionButton.addActionListener(a -> clearSelections());
         clearSelectionButton.setToolTipText(Bundle.getMessage("ToolTipClearSelection"));
         panel.add(clearSelectionButton);
         topPanel.add(panel, BorderLayout.SOUTH);
@@ -129,22 +119,12 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
         JPanel panel2 = new JPanel();
         ButtonGroup group2 = new ButtonGroup();
         JRadioButton button = new JRadioButton(Bundle.getMessage("LeftRight"));
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                _upDown = false;
-            }
-        });
+        button.addActionListener(e -> _upDown = false);
         group2.add(button);
         panel2.add(button);
         button.setSelected(true);
         button = new JRadioButton(Bundle.getMessage("UpDown"));
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                _upDown = true;
-            }
-        });
+        button.addActionListener(e -> _upDown = true);
         group2.add(button);
         panel2.add(button);
         _multiSensorPanel.add(panel2);
@@ -268,8 +248,8 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
          */
         @Override
         public boolean isSelectedIndex(int index) {
-            for (int i = 0; i < _positions.length; i++) {
-                if (_positions[i] == index) {
+            for (int position : _positions) {
+                if (position == index) {
                     log.debug("isSelectedIndex({}) returned true", index);
                     return true;
                 }
@@ -314,8 +294,7 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
             String position = (String) _tableModel.getValueAt(row, PickListModel.POSITION_COL);
             if (position != null && position.length() > 0) {
                 JOptionPane.showMessageDialog(_paletteFrame,
-                        Bundle.getMessage("DuplicatePosition",
-                                new Object[]{bean.getDisplayName(), position}),
+                        Bundle.getMessage("DuplicatePosition", bean.getDisplayName(), position),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             } else {
                 _table.setValueAt(Bundle.getMessage(POSITION[_nextPosition]), row, PickListModel.POSITION_COL);

@@ -80,12 +80,7 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
         panel.setLayout(new FlowLayout());
 
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
-        doneButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                closingEvent(false);
-            }
-        });
+        doneButton.addActionListener(a -> closingEvent(false));
         panel.add(doneButton);
         buttonPanel.add(panel);
 

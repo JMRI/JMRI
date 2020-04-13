@@ -72,13 +72,10 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         signalPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         JButton clearButton = new JButton(Bundle.getMessage("buttonClearSelection"));
-        clearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                _portalList.clearSelection();
-                _parent._editor.highlight(null);
-                _mastName.setText(null);
-            }
+        clearButton.addActionListener(a -> {
+            _portalList.clearSelection();
+            _parent._editor.highlight(null);
+            _mastName.setText(null);
         });
         panel = new JPanel();
         panel.add(clearButton);
@@ -123,9 +120,7 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         panel.add(addButton);
 
         JButton removeButton = new JButton(Bundle.getMessage("ButtonRemoveMast"));
-        removeButton.addActionListener((ActionEvent a) -> {
-            removeMast();
-        });
+        removeButton.addActionListener((ActionEvent a) -> removeMast());
         removeButton.setToolTipText(Bundle.getMessage("ToolTipRemoveMast", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
         panel.add(removeButton);
         signalPanel.add(panel);
@@ -134,8 +129,8 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         String[] blurbLines = {Bundle.getMessage("DragMast", Bundle.getMessage("mastName"))};
         
         
-        _pickMast = new OpenPickListButton<SignalMast>(blurbLines, PickListModel.signalMastPickModelInstance(), this);
-        _pickHead = new OpenPickListButton<SignalHead>(blurbLines, PickListModel.signalHeadPickModelInstance(), this);
+        _pickMast = new OpenPickListButton<>(blurbLines, PickListModel.signalMastPickModelInstance(), this);
+        _pickHead = new OpenPickListButton<>(blurbLines, PickListModel.signalHeadPickModelInstance(), this);
         panel = new JPanel();
         panel.add(_pickMast.getButtonPanel());
         panel.add(_pickHead.getButtonPanel());

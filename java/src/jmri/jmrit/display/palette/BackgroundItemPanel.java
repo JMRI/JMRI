@@ -46,15 +46,12 @@ public class BackgroundItemPanel extends IconItemPanel {
     protected void initLinkPanel() {
         JPanel bottomPanel = new JPanel();
         JButton backgroundButton = new JButton(Bundle.getMessage("ButtonBackgroundColor"));
-        backgroundButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                hideCatalog();
-                ActionListener colorAction = ((ActionEvent event) -> {
-                    colorChanged(); // callback
-                });
-                new ColorDialog(_editor, _editor.getTargetPanel(), ColorDialog.ONLY, colorAction);
-            }
+        backgroundButton.addActionListener(a -> {
+            hideCatalog();
+            ActionListener colorAction = ((ActionEvent event) -> {
+                colorChanged(); // callback
+            });
+            new ColorDialog(_editor, _editor.getTargetPanel(), ColorDialog.ONLY, colorAction);
         });
         backgroundButton.setToolTipText(Bundle.getMessage("ToolTipEditColor"));
         bottomPanel.add(backgroundButton);

@@ -335,7 +335,6 @@ public class LevelXing extends LayoutTrack {
             }
             if (nb.equals(getSignalHead(POINTD))) {
                 setSignalDName(null);
-                return;
             }
         }
     }
@@ -1219,9 +1218,7 @@ public class LevelXing extends LayoutTrack {
             JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
             hiddenCheckBoxMenuItem.setSelected(hidden);
             popup.add(hiddenCheckBoxMenuItem);
-            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setHidden(hiddenCheckBoxMenuItem.isSelected());
-            });
+            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setHidden(hiddenCheckBoxMenuItem.isSelected()));
 
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
@@ -1426,12 +1423,12 @@ public class LevelXing extends LayoutTrack {
             return;
         }
         SignalMastLogic sl = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sm);
-        for (int i = 0; i < sml.size(); i++) {
-            SignalMastLogic s = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sml.get(i));
+        for (SignalMast signalMast : sml) {
+            SignalMastLogic s = InstanceManager.getDefault(SignalMastLogicManager.class).getSignalMastLogic(signalMast);
             if (s != null) {
                 s.setConflictingLogic(sm, this);
             }
-            sl.setConflictingLogic(sml.get(i), this);
+            sl.setConflictingLogic(signalMast, this);
         }
         sml.add(sm);
     }
@@ -1682,22 +1679,22 @@ public class LevelXing extends LayoutTrack {
 
         //check the A connection point
         if (getConnectA() == null) {
-            result.add(Integer.valueOf(LEVEL_XING_A));
+            result.add(LEVEL_XING_A);
         }
 
         //check the B connection point
         if (getConnectB() == null) {
-            result.add(Integer.valueOf(LEVEL_XING_B));
+            result.add(LEVEL_XING_B);
         }
 
         //check the C connection point
         if (getConnectC() == null) {
-            result.add(Integer.valueOf(LEVEL_XING_C));
+            result.add(LEVEL_XING_C);
         }
 
         //check the D connection point
         if (getConnectD() == null) {
-            result.add(Integer.valueOf(LEVEL_XING_D));
+            result.add(LEVEL_XING_D);
         }
         return result;
     }

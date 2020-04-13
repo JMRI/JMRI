@@ -134,19 +134,13 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
             setText(Bundle.getMessage("NoReport"));
         }
         updateSize();
-        return;
     }
 
     @Override
     protected void edit() {
         makeIconEditorFrame(this, "Reporter", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.reporterPickModelInstance());
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                editReporter();
-            }
-        };
+        ActionListener addIconAction = a -> editReporter();
         _iconEditor.complete(addIconAction, false, true, true);
         _iconEditor.setSelection(reporter);
 

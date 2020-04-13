@@ -80,12 +80,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         if (showIdItem == null) {
             showIdItem = new JCheckBoxMenuItem("Show ID");
             showIdItem.setSelected(false);
-            showIdItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    toggleID(showIdItem.isSelected());
-                }
-            });
+            showIdItem.addActionListener(e -> toggleID(showIdItem.isSelected()));
         }
         popup.add(showIdItem);
 
@@ -214,7 +209,6 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
 
         updateSize();
         revalidate();
-        return;
     }
 
     @Override

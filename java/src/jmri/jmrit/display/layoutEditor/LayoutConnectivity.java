@@ -179,7 +179,7 @@ public class LayoutConnectivity {
     @Override
     public boolean equals(Object o) {
         boolean result = false; // assume failure (pessimist!)
-        if ((o != null) && o instanceof LayoutConnectivity) {
+        if (o instanceof LayoutConnectivity) {
             LayoutConnectivity lc = (LayoutConnectivity) o;
             do {    // poor mans throw block
                 if (((block1 == null) != (lc.getBlock1() == null))

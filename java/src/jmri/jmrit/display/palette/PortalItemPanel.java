@@ -48,12 +48,7 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         JButton setDefaultsButton = new JButton(Bundle.getMessage("setDefaultIcons"));
-        setDefaultsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                setDefaults();
-            }
-        });
+        setDefaultsButton.addActionListener(a -> setDefaults());
         setDefaultsButton.setToolTipText(Bundle.getMessage("ToolTipSetDefaultIcons"));
         panel.add(setDefaultsButton);
         return panel;

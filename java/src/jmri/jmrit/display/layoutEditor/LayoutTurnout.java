@@ -228,7 +228,7 @@ public class LayoutTurnout extends LayoutTrack {
     public String linkedTurnoutName = ""; // name of the linked Turnout (as entered in tool)
     public int linkType = NO_LINK;
 
-    private boolean useBlockSpeed = false;
+    private final boolean useBlockSpeed = false;
 
     protected LayoutTurnout(@Nonnull String id,
             @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {

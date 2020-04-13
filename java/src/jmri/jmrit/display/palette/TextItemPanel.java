@@ -107,12 +107,7 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
         panel.add(updateButton);
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                closeDialogs();
-            }
-        });
+        cancelButton.addActionListener(a -> closeDialogs());
         panel.add(cancelButton);
         return panel;
     }

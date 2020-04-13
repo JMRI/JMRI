@@ -476,9 +476,7 @@ class LayoutEditorComponent extends JComponent {
 
     // draw decorations
     private void drawDecorations(Graphics2D g2) {
-        layoutEditor.getLayoutTracks().forEach((tr) -> {
-            tr.drawDecorations(g2);
-        });
+        layoutEditor.getLayoutTracks().forEach((tr) -> tr.drawDecorations(g2));
     }
 
     // draw shapes
@@ -535,16 +533,12 @@ class LayoutEditorComponent extends JComponent {
     private void drawLayoutTrackEditControls(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
-        layoutEditor.getLayoutTracks().forEach((tr) -> {
-            tr.drawEditControls(g2);
-        });
+        layoutEditor.getLayoutTracks().forEach((tr) -> tr.drawEditControls(g2));
     }
 
     private void drawShapeEditControls(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-        layoutEditor.getLayoutShapes().forEach((s) -> {
-            s.drawEditControls(g2);
-        });
+        layoutEditor.getLayoutShapes().forEach((s) -> s.drawEditControls(g2));
     }
 
     // draw layout turnout controls
@@ -594,18 +588,14 @@ class LayoutEditorComponent extends JComponent {
         g2.setColor(layoutEditor.defaultTrackColor);
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
-        layoutEditor.memoryLabelList.forEach((l) -> {
-            g2.draw(new Rectangle2D.Double(l.getX(), l.getY(), l.getSize().width, l.getSize().height));
-        });
+        layoutEditor.memoryLabelList.forEach((l) -> g2.draw(new Rectangle2D.Double(l.getX(), l.getY(), l.getSize().width, l.getSize().height)));
     }
 
     private void drawBlockContentsRects(Graphics2D g2) {
         g2.setColor(layoutEditor.defaultTrackColor);
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
-        layoutEditor.blockContentsLabelList.forEach((l) -> {
-            g2.draw(new Rectangle2D.Double(l.getX(), l.getY(), l.getSize().width, l.getSize().height));
-        });
+        layoutEditor.blockContentsLabelList.forEach((l) -> g2.draw(new Rectangle2D.Double(l.getX(), l.getY(), l.getSize().width, l.getSize().height)));
     }
 
     private void highLightSelection(Graphics2D g) {
@@ -614,9 +604,7 @@ class LayoutEditorComponent extends JComponent {
         g.setColor(new Color(204, 207, 88));
         g.setStroke(new BasicStroke(2.0f));
 
-        layoutEditor._positionableSelection.forEach((c) -> {
-            g.drawRect(c.getX(), c.getY(), c.maxWidth(), c.maxHeight());
-        });
+        layoutEditor._positionableSelection.forEach((c) -> g.drawRect(c.getX(), c.getY(), c.maxWidth(), c.maxHeight()));
 
         layoutEditor._layoutTrackSelection.stream().map((lt) -> {
             Rectangle2D r = lt.getBounds();
@@ -625,9 +613,7 @@ class LayoutEditorComponent extends JComponent {
             }
             r = MathUtil.centerRectangleOnPoint(r, lt.getCoordsCenter());
             return r;
-        }).forEachOrdered((r) -> {
-            g.draw(r);
-        });
+        }).forEachOrdered(g::draw);
 
         layoutEditor._layoutShapeSelection.stream().map((ls) -> {
             Rectangle2D r = ls.getBounds();
@@ -636,9 +622,7 @@ class LayoutEditorComponent extends JComponent {
             }
             r = MathUtil.centerRectangleOnPoint(r, ls.getCoordsCenter());
             return r;
-        }).forEachOrdered((r) -> {
-            g.draw(r);
-        });
+        }).forEachOrdered(g::draw);
 
         g.setColor(color);
         g.setStroke(stroke);
