@@ -1642,21 +1642,24 @@ public class TrackSegment extends LayoutTrack {
         if (LayoutEditor.HitPointTypes.isTurnoutHitType(type) && conn instanceof LayoutTurnout) {
             LayoutTurnout lt = (LayoutTurnout) conn;
             switch (type) {
-                case LEVEL_XING_A: {
+                case TURNOUT_A: {
                     result = lt.getBeanReferences("A");  // NOI18N
                     break;
                 }
-                case LEVEL_XING_B: {
+                case TURNOUT_B: {
                     result = lt.getBeanReferences("B");  // NOI18N
                     break;
                 }
-                case LEVEL_XING_C: {
+                case TURNOUT_C: {
                     result = lt.getBeanReferences("C");  // NOI18N
                     break;
                 }
-                case LEVEL_XING_D: {
+                case TURNOUT_D: {
                     result = lt.getBeanReferences("D");  // NOI18N
                     break;
+                }
+                default: {
+                    log.error("Unexpected HitPointType: {}", type);
                 }
             }
         }
@@ -1680,27 +1683,33 @@ public class TrackSegment extends LayoutTrack {
                     result = lx.getBeanReferences("D");  // NOI18N
                     break;
                 }
+                default: {
+                    log.error("Unexpected HitPointType: {}", type);
+                }
             }
         }
 
         if (LayoutEditor.HitPointTypes.isSlipHitType(type) && conn instanceof LayoutSlip) {
             LayoutSlip ls = (LayoutSlip) conn;
             switch (type) {
-                case LEVEL_XING_A: {
+                case SLIP_A: {
                     result = ls.getBeanReferences("A");  // NOI18N
                     break;
                 }
-                case LEVEL_XING_B: {
+                case SLIP_B: {
                     result = ls.getBeanReferences("B");  // NOI18N
                     break;
                 }
-                case LEVEL_XING_C: {
+                case SLIP_C: {
                     result = ls.getBeanReferences("C");  // NOI18N
                     break;
                 }
-                case LEVEL_XING_D: {
+                case SLIP_D: {
                     result = ls.getBeanReferences("D");  // NOI18N
                     break;
+                }
+                default: {
+                    log.error("Unexpected HitPointType: {}", type);
                 }
             }
         }
