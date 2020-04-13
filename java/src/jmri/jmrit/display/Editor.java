@@ -26,7 +26,6 @@ import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.lang.reflect.InvocationTargetException;
@@ -3341,11 +3340,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     String getUsageData(Positionable pos) {
         Point point = pos.getLocation();
-        String data = String.format("%s :: x=%d, y=%d",
+        return String.format("%s :: x=%d, y=%d",
                 pos.getClass().getSimpleName(),
                 Math.round(point.getX()),
                 Math.round(point.getY()));
-        return data;
     }
 
     // initialize logging

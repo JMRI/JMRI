@@ -212,8 +212,7 @@ public class LocoIcon extends PositionableLabel {
     }
 
     public static String[] getLocoColors() {
-        String[] colors = {WHITE, GREEN, GRAY, RED, BLUE, YELLOW};
-        return colors;
+        return new String[]{WHITE, GREEN, GRAY, RED, BLUE, YELLOW};
     }
     
     public Color getLocoColor() {

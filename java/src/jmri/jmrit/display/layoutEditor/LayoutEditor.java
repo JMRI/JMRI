@@ -7416,9 +7416,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     Rectangle2D getSelectionRect() {
         double selX = Math.min(selectionX, selectionX + selectionWidth);
         double selY = Math.min(selectionY, selectionY + selectionHeight);
-        Rectangle2D result = new Rectangle2D.Double(selX, selY,
+        return new Rectangle2D.Double(selX, selY,
                 Math.abs(selectionWidth), Math.abs(selectionHeight));
-        return result;
     }
 
     // set selection rectangle
@@ -8135,11 +8134,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             TrackSegment segment = (TrackSegment) track;
             point = new Point2D.Double(segment.getCentreSegX(), segment.getCentreSegY());
         }
-        String data = String.format("%s :: x=%d, y=%d",
+        return String.format("%s :: x=%d, y=%d",
                 track.getClass().getSimpleName(),
                 Math.round(point.getX()),
                 Math.round(point.getY()));
-        return data;
     }
 
     boolean isLBLockUsed(NamedBean bean, LayoutBlock lblock) {

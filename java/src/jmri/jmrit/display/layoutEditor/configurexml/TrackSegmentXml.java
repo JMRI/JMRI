@@ -302,11 +302,10 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                                 double x = 0.0;
                                 double y = 0.0;
                                 int index = 0;
-                                Element relem = value;
                                 try {
-                                    index = (relem.getAttribute("index")).getIntValue();
-                                    x = (relem.getAttribute("x")).getFloatValue();
-                                    y = (relem.getAttribute("y")).getFloatValue();
+                                    index = (value.getAttribute("index")).getIntValue();
+                                    x = (value.getAttribute("x")).getFloatValue();
+                                    y = (value.getAttribute("y")).getFloatValue();
                                 } catch (DataConversionException e) {
                                     log.error("failed to convert controlpoint coordinates or index attributes");
                                 }

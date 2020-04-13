@@ -1,17 +1,12 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
-import java.util.Iterator;
-import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -70,7 +65,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener {
 
     private JColorChooser _chooser;
     private PreviewPanel _previewPanel;
-    private ImagePanel _samplePanel;
+    private final ImagePanel _samplePanel;
     private PositionablePopupUtil _util;
     private HashMap<String, PositionableLabel> _samples = null;    
     private int _selectedButton;

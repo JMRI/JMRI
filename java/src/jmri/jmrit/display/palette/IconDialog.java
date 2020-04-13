@@ -2,10 +2,7 @@ package jmri.jmrit.display.palette;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -17,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

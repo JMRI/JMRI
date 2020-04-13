@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.PathIterator;
 import java.util.ArrayList;
-import java.util.Iterator;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;

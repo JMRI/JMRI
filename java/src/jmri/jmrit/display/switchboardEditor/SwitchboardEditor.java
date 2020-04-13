@@ -38,8 +38,7 @@ import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
@@ -425,24 +424,23 @@ public class SwitchboardEditor extends Editor {
         String name;
         BeanSwitch _switch;
         NamedBean nb;
-        String _manu = manuPrefix; // cannot use All group as in Tables
-        log.debug("_manu = {}", _manu);
+        log.debug("_manu = {}", manuPrefix);
         String _insert = "";
-        if (_manu.startsWith("M")) {
+        if (manuPrefix.startsWith("M")) {
             _insert = "+"; // for CANbus.MERG On event
         }
         for (int i = min; i <= max; i++) {
             switch (beanType) {
                 case 0:
-                    name = _manu + "T" + _insert + i;
+                    name = manuPrefix + "T" + _insert + i;
                     nb = jmri.InstanceManager.turnoutManagerInstance().getTurnout(name);
                     break;
                 case 1:
-                    name = _manu + "S" + _insert + i;
+                    name = manuPrefix + "S" + _insert + i;
                     nb = jmri.InstanceManager.sensorManagerInstance().getSensor(name);
                     break;
                 case 2:
-                    name = _manu + "L" + _insert + i;
+                    name = manuPrefix + "L" + _insert + i;
                     nb = jmri.InstanceManager.lightManagerInstance().getLight(name);
                     break;
                 default:

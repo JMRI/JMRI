@@ -118,8 +118,7 @@ public class TurnoutIconXml extends PositionableLabelXml {
             Element elem = element;     // the element containing the icons
             Element icons = element.getChild("icons");
             if (icons != null) {
-                List<Element> s = icons.getChildren();
-                states = s;
+                states = icons.getChildren();
                 elem = icons;          // the element containing the icons
                 if (log.isDebugEnabled()) {
                     log.debug("icons element has" + states.size() + " items");

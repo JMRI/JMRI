@@ -151,8 +151,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
             Element icons = element.getChild("icons");
             Element elem = element;
             if (icons != null) {
-                List<Element> c = icons.getChildren();
-                aspects = c;
+                aspects = icons.getChildren();
                 elem = icons;
             }
             for (Element value : aspects) {

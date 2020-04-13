@@ -3,8 +3,6 @@ package jmri.jmrit.display.controlPanelEditor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;

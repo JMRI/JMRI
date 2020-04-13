@@ -3970,10 +3970,9 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public List<Integer> checkForFreeConnections() {
-        List<Integer> result = new ArrayList<>();
         //Track Segments always have all their connections so...
         //(nothing to see here... move along)
-        return result;
+        return new ArrayList<>();
     }
 
     /**

@@ -47,7 +47,7 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
-import javax.swing.SwingWorker;
+
 import jmri.CatalogTreeManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -1028,12 +1028,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (event.isControlDown() && (event.isPopupTrigger() || event.isMetaDown() || event.isAltDown())) {
                 ActionListener ca = null;
                 Editor ed = this;
-                ca = new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (_itemPalette != null) {
-                            _itemPalette.setEditor(ed);
-                        }
+                ca = e -> {
+                    if (_itemPalette != null) {
+                        _itemPalette.setEditor(ed);
                     }
                 };
                 new ColorDialog(this, getTargetPanel(), ColorDialog.ONLY, ca);

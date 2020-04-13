@@ -1,8 +1,6 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;

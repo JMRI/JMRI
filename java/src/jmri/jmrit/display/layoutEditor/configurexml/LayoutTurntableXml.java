@@ -120,33 +120,32 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
             for (Element value : rayTrackList) {
                 double angle = 0.0;
                 int index = 0;
-                Element relem = value;
                 try {
-                    angle = (relem.getAttribute("angle")).getFloatValue();
-                    index = (relem.getAttribute("index")).getIntValue();
+                    angle = (value.getAttribute("angle")).getFloatValue();
+                    index = (value.getAttribute("index")).getIntValue();
                 } catch (DataConversionException e) {
                     log.error("failed to convert ray track angle or index attributes");
                 }
                 String connectName = "";
-                Attribute a = relem.getAttribute("connectname");
+                Attribute a = value.getAttribute("connectname");
                 if (a != null) {
                     connectName = a.getValue();
                 }
                 l.addRayTrack(angle, index, connectName);
-                if (l.isTurnoutControlled() && relem.getAttribute("turnout") != null) {
-                    if (relem.getAttribute("turnoutstate").getValue().equals("thrown")) {
-                        l.setRayTurnout(index, relem.getAttribute("turnout").getValue(), Turnout.THROWN);
+                if (l.isTurnoutControlled() && value.getAttribute("turnout") != null) {
+                    if (value.getAttribute("turnoutstate").getValue().equals("thrown")) {
+                        l.setRayTurnout(index, value.getAttribute("turnout").getValue(), Turnout.THROWN);
                     } else {
-                        l.setRayTurnout(index, relem.getAttribute("turnout").getValue(), Turnout.CLOSED);
+                        l.setRayTurnout(index, value.getAttribute("turnout").getValue(), Turnout.CLOSED);
                     }
                     try {
-                        l.setRayDisabled(index, relem.getAttribute("disabled").getBooleanValue());
+                        l.setRayDisabled(index, value.getAttribute("disabled").getBooleanValue());
                     } catch (DataConversionException e1) {
                         log.warn("unable to convert layout turnout disabled attribute");
                     } catch (NullPointerException e) {  // considered normal if the attribute is not present
                     }
                     try {
-                        l.setRayDisabledWhenOccupied(index, relem.getAttribute("disableWhenOccupied").getBooleanValue());
+                        l.setRayDisabledWhenOccupied(index, value.getAttribute("disableWhenOccupied").getBooleanValue());
                     } catch (DataConversionException e1) {
                         log.warn("unable to convert layout turnout disableWhenOccupied attribute");
                     } catch (NullPointerException e) {  // considered normal if the attribute is not present
