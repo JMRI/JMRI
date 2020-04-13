@@ -1,7 +1,6 @@
 package jmri.progdebugger;
 
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
@@ -11,6 +10,7 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
+import jmri.beans.PropertyChangeSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2007, 2013
  */
-public class ProgDebugger implements AddressedProgrammer {
+public class ProgDebugger extends PropertyChangeSupport implements AddressedProgrammer {
 
     public ProgDebugger() {
         mode = ProgrammingMode.PAGEMODE;
@@ -249,7 +249,7 @@ public class ProgDebugger implements AddressedProgrammer {
         if (getSupportedModes().contains(m)) {
             ProgrammingMode oldMode = mode;
             mode = m;
-            notifyPropertyChange("Mode", oldMode, m);
+            firePropertyChange("Mode", oldMode, m);
         } else {
             throw new IllegalArgumentException("Invalid requested mode: " + m);
         }
@@ -337,30 +337,6 @@ public class ProgDebugger implements AddressedProgrammer {
     @Nonnull
     @Override
     public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) { return WriteConfirmMode.NotVerified; }
-
-    /**
-     * Provide a {@link java.beans.PropertyChangeSupport} helper.
-     */
-    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
-
-    /**
-     * Add a PropertyChangeListener to the listener list.
-     *
-     * @param listener The PropertyChangeListener to be added
-     */
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
-    }
-
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(listener);
-    }
-
-    protected void notifyPropertyChange(String key, Object oldValue, Object value) {
-        propertyChangeSupport.firePropertyChange(key, oldValue, value);
-    }
 
     boolean longAddr = true;
 

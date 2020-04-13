@@ -100,7 +100,7 @@ public class SRCPThrottle extends AbstractThrottle {
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Set the speed and direction.
      * <p>
      * This intentionally skips the emergency stop value of 1.
      *
@@ -112,9 +112,7 @@ public class SRCPThrottle extends AbstractThrottle {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         sendUpdate();
-        if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
-        }
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
     }
 
     @Override
@@ -122,9 +120,7 @@ public class SRCPThrottle extends AbstractThrottle {
         boolean old = isForward;
         isForward = forward;
         sendUpdate();
-        if (old != isForward) {
-            notifyPropertyChangeListener(Throttle.ISFORWARD, old, isForward);
-        }
+        firePropertyChange(Throttle.ISFORWARD, old, isForward);
     }
 
     private DccLocoAddress address;

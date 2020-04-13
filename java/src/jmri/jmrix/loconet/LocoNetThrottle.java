@@ -744,9 +744,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             mRefreshTimer.start();
             log.debug("Initially starting refresh timer for slot {} address {}", slot.getSlot(), slot.locoAddr());
         }
-        if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting); // NOI18N
-        }
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
     }
 
@@ -769,7 +767,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             sendExpSpeedAndDirection();
         }
         if (old != this.isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, this.isForward); // NOI18N
+            notifyPropertyChangeListener(ISFORWARD, old, this.isForward);
         }
     }
 
@@ -907,27 +905,20 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         // handle change in each state
         if (this.speedSetting != floatSpeed(slot.speed())) {
-            Float newSpeed = Float.valueOf(floatSpeed(slot.speed()));
-            log.debug("notifyChangedSlot: old speed: " + this.speedSetting + " new Speed: " + newSpeed); // NOI18N
-            notifyPropertyChangeListener(SPEEDSETTING, Float.valueOf(this.speedSetting), newSpeed); // NOI18N
-            this.speedSetting = newSpeed.floatValue();
+            float old = this.speedSetting;
+            this.speedSetting = floatSpeed(slot.speed());
+            log.debug("notifyChangedSlot: old speed: {} new speed: {}", old, this.speedSetting); // NOI18N
+            firePropertyChange(SPEEDSETTING, old, this.speedSetting);
         }
 
-        boolean temp;
-        if (this.isForward != slot.isForward()) {
-            temp = this.isForward;
-            this.isForward = slot.isForward();
-            notifyPropertyChangeListener(ISFORWARD, Boolean.valueOf(temp), Boolean.valueOf(slot.isForward())); // NOI18N
-        }
+        firePropertyChange(ISFORWARD, this.isForward, this.isForward = slot.isForward());
 
         // Slot status
         if (slotStatus != slot.slotStatus()) {
             int newStat = slot.slotStatus();
-            if (log.isDebugEnabled()) {
-                log.debug("Slot status changed from " + LnConstants.LOCO_STAT(slotStatus) + " to " + LnConstants.LOCO_STAT(newStat)); // NOI18N
-            }
+            log.debug("Slot status changed from {} to {}", LnConstants.LOCO_STAT(slotStatus), LnConstants.LOCO_STAT(newStat)); // NOI18N
             // PropertyChangeListeners notification: ThrottleConnected from True to False when disconnected
-            notifyPropertyChangeListener("ThrottleConnected", (slotStatus & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_IN_USE, // NOI18N
+            firePropertyChange("ThrottleConnected", (slotStatus & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_IN_USE, // NOI18N
                     !((slotStatus & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_IN_USE));
             slotStatus = newStat;
         }
@@ -979,15 +970,9 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     @Override
     public void setSpeedStepMode(SpeedStepMode Mode) {
         int status = slot.slotStatus();
-        if (log.isDebugEnabled()) {
-            log.debug("Speed Step Mode Change to Mode: " + Mode // NOI18N
-                    + " Current mode is: " + this.speedStepMode); // NOI18N
-            log.debug("Current Slot Mode: " + LnConstants.DEC_MODE(status)); // NOI18N
-        }
-        if (speedStepMode != Mode) {
-            notifyPropertyChangeListener(SPEEDSTEPS, this.speedStepMode, // NOI18N
-                    this.speedStepMode = Mode);
-        }
+        log.debug("Speed Step Mode Change to Mode: {} Current mode is: {}", Mode, this.speedStepMode); // NOI18N
+        log.debug("Current Slot Mode: {}", LnConstants.DEC_MODE(status)); // NOI18N
+        firePropertyChange(SPEEDSTEPS, this.speedStepMode, this.speedStepMode = Mode);
         if (Mode == SpeedStepMode.NMRA_DCC_14) {
             log.debug("14 speed step change"); // NOI18N
             status = status & ((~LnConstants.DEC_MODE_MASK)
@@ -1011,9 +996,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                     | LnConstants.STAT1_SL_SPDEX)
                     | LnConstants.DEC_MODE_128;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("New Slot Mode: " + LnConstants.DEC_MODE(status));
-        }
+        log.debug("New Slot Mode: {}", LnConstants.DEC_MODE(status));
         if (mRefreshTimer != null) // the refresh timer isn't created until
         // after initilization.  We only want to
         // modify the slot after the initilization

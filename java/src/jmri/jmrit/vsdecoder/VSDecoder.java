@@ -432,7 +432,7 @@ public class VSDecoder implements PropertyChangeListener {
         String property = evt.getPropertyName();
         // Respond to events from the new GUI.
         if (evt.getSource() instanceof VSDControl) {
-            if (property.equals(VSDControl.PCIdMap.get(VSDControl.PropertyChangeId.OPTION_CHANGE))) {
+            if (property.equals(VSDControl.OPTION_CHANGE)) {
                 Train selected_train = jmri.InstanceManager.getDefault(TrainManager.class).getTrainByName((String) evt.getNewValue());
                 if (selected_train != null) {
                     selected_train.addPropertyChangeListener(this);

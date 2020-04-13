@@ -11,8 +11,8 @@
  * implementations implement the basic methods allowing a listener to be added
  * or removed and for a listener to listen to all changes or only to specific
  * changes. Subclasses of PropertyChangeProvider in this package, principally
- * {@link jmri.beans.Bean} and {@link jmri.beans.PropertyChangeProviderImpl},
- * provide simple concrete implementations of that interface that can be built
+ * {@link jmri.beans.Bean} and {@link jmri.beans.PropertyChangeSupport}, provide
+ * simple concrete implementations of that interface that can be built
  * upon.</dd>
  * <dt>Implementing the {@link java.beans.VetoableChangeSupport} listener
  * management API</dt>
@@ -23,8 +23,8 @@
  * implementations implement the basic methods allowing a listener to be added
  * or removed and for a listener to listen to all changes or only to specific
  * changes. Subclasses of VetoableChangeProvider in this package, principally
- * {@link jmri.beans.ConstrainedBean} and
- * {@link jmri.beans.ConstrainedArbitraryBean}, provide simple concrete
+ * {@link jmri.beans.ConstrainedBean}, {@link jmri.beans.ConstrainedArbitraryBean},
+ * and {@link jmri.beans.VetoableChangeSupport} provide simple concrete
  * implementations of that interface that can be built upon.</dd>
  * <dt>Implementing support for arbitrary properties</dt>
  * <dd>A number of JMRI objects support the addition of user-defined properties
@@ -39,18 +39,18 @@
  * <dt>Provide basic implementations of specific types of Beans</dt>
  * <dd>
  * <ul>
- * <li>{@link jmri.beans.IdentifiedBean} and
- * {@link jmri.beans.MutableIdentifiedBean} provide a bean with an identity
+ * <li>{@link jmri.beans.Identifiable} and
+ * {@link jmri.beans.MutableIdentifiable} provide interfaces for a identity
  * property.</li>
  * <li>{@link jmri.beans.PreferencesBean} provides a bean with methods for
  * handling properties related to the JMRI preferences mechanisms.</li>
  * </ul>
  * </dd>
  * <dt>Extend {@link java.beans.Beans} introspection tools</dt>
- * <dd>{@link jmri.beans.BeanUtil} provides support for setting, getting,
- * and discovering JMRI arbitrary properties.</dd>
+ * <dd>{@link jmri.beans.BeanUtil} provides support for setting, getting, and
+ * discovering JMRI arbitrary properties.</dd>
  * </dl>
  */
 // include empty DefaultAnnotation to avoid excessive recompilation
-@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
+@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value = {})
 package jmri.beans;

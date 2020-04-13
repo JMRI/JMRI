@@ -63,7 +63,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
     /**
      * Allows device to decide how to handle consisting. Just selection or
-     * selection and Make {@literal &} Break. .size() indicates how many
+     * selection and Make and Break. .size() indicates how many
      * consists are being sent so the device can wait before displaying them
      */
     public void sendConsistListType() {
