@@ -15,6 +15,11 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractMRMessage extends AbstractMessage {
     /**
+     * True, if the message is a priority one.
+     */
+    private boolean priorityMessage;
+
+    /**
      * Tracks the message from the layout.
      */
     private final AbstractMRReply inReplyTo;
@@ -109,7 +114,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     final public int getNeededMode() {
         return mNeededMode;
     }
-
+    
     /**
      * Is a reply expected to this message?
      * <p>
@@ -262,6 +267,27 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         setElement(offset + 3, s.charAt(3));
     }
 
+    /**
+     * Determines, if this message is a priority one.
+     * @return true, if the message should be delivered at a priority.
+     */
+    public boolean isPriorityMessage() {
+        return priorityMessage;
+    }
+
+    /**
+     * Sets the priority message flag. A priority message is enqueued for transmission before all
+     * other non-priority messages. If there are more priority messages in the queue,
+     * this one will be added after all existing ones.
+     * @param priorityMessage 
+     */
+    public <T extends AbstractMRMessage> T asPriority(boolean priorityMessage) {
+        this.priorityMessage = priorityMessage;
+        @SuppressWarnings("unchecked")
+        T result = (T)this;
+        return result;
+    }
+    
     @Override
     public String toString() {
         String s = "";
@@ -276,6 +302,9 @@ abstract public class AbstractMRMessage extends AbstractMessage {
             }
         }
         if (log.isDebugEnabled()) {
+            if (isPriorityMessage()) {
+                s += " [priority]";
+            }
             s += ", msg-id:" + Integer.toHexString(System.identityHashCode(this));
         }
         return s;

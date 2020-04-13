@@ -320,8 +320,22 @@ public abstract class AbstractMRTrafficController {
         if (m == null) {
             return;
         }
-        msgQueue.addLast(m);
-        listenerQueue.addLast(reply);
+        // priority message is always inserted at start, after all already
+        // queued priority messages.
+        if (m.isPriorityMessage()) {
+            int i;
+            for (i = 0; i < msgQueue.size(); i++) {
+                AbstractMRMessage check = msgQueue.get(i);
+                if (!check.isPriorityMessage()) {
+                    break;
+                }
+            }
+            msgQueue.add(i, m);
+            listenerQueue.add(i, reply);
+        } else {
+            msgQueue.addLast(m);
+            listenerQueue.addLast(reply);
+        }
         synchronized (xmtRunnable) {
             if (mCurrentState == IDLESTATE) {
                 mCurrentState = NOTIFIEDSTATE;
