@@ -1,7 +1,6 @@
 package jmri.jmrix.lenz;
 
 import java.util.HashMap;
-import java.util.concurrent.LinkedBlockingQueue;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -36,8 +35,6 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         mCommandStation = pCommandStation;
         setAllowUnexpectedReply(true);
         mListenerMasks = new HashMap<>();
-        highPriorityQueue = new LinkedBlockingQueue<>();
-        highPriorityListeners = new LinkedBlockingQueue<>();
     }
 
     static XNetTrafficController self = null;
@@ -116,6 +113,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
                     || ((XNetReply) m).getElement(0)
                     == XNetConstants.BC_EMERGENCY_STOP)) {
                 ((XNetListener) client).message((XNetReply) m);
+            // FIXME: XNetInterface.PROGRAMMING not handled.
             } else if ((mask & XNetInterface.FEEDBACK)
                     == XNetInterface.FEEDBACK
                     && (((XNetReply) m).isFeedbackMessage()
@@ -140,45 +138,17 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         }
     }
 
-    // We use the pollMessage routines for high priority messages.
-    // This means responses to time critical messages (turnout off messages).
-    // PENDING: these fields should be probably made private w/ accessor to force proper synchronization for reading.
-    final LinkedBlockingQueue<XNetMessage> highPriorityQueue;
-    final LinkedBlockingQueue<XNetListener> highPriorityListeners;
-
     public synchronized void sendHighPriorityXNetMessage(XNetMessage m, XNetListener reply) {
-        // using offer as the queue is unbounded and should never block on write.
-        // Note: the message should be inserted LAST, as the message is tested/acquired first
-        // by the reader; serves a a guard for next item processing.
-        highPriorityListeners.add(reply);
-        highPriorityQueue.add(m);
+        super.sendMessage(m.asPriority(true), reply);
     }
-
+    
     @Override
     protected AbstractMRMessage pollMessage() {
-        try {
-            if (highPriorityQueue.peek() == null) {
-                return null;
-            } else {
-                return highPriorityQueue.take();
-            }
-        } catch (java.lang.InterruptedException ie) {
-            log.error("Interrupted while removing High Priority Message from Queue");
-        }
         return null;
     }
-
+    
     @Override
     protected AbstractMRListener pollReplyHandler() {
-        try {
-            if (highPriorityListeners.peek() == null) {
-                return null;
-            } else {
-                return highPriorityListeners.take();
-            }
-        } catch (java.lang.InterruptedException ie) {
-            log.error("Interrupted while removing High Priority Message Listener from Queue");
-        }
         return null;
     }
 
@@ -262,6 +232,9 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     protected void loadChars(AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
         for (i = 0; i < msg.maxSize(); i++) {
+            if (i == 0) {
+                notifyMessageStart(msg);
+            }
             byte char1 = readByteProtected(istream);
             if (i == 0) {
                 notifyMessageStart(msg);
