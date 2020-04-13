@@ -749,7 +749,7 @@
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
-            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags --tags 'not @webtest'"/>
+            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
 
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
