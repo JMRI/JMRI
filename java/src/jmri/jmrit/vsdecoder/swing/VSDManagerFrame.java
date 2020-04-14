@@ -301,7 +301,7 @@ public class VSDManagerFrame extends JmriJFrame {
             this.pack();
             //this.setVisible(true);
             // Do we need to make newControl a listener to newDecoder?
-            //firePropertyChange(ADD_DECODER, null, newDecoder);
+            //firePropertyChange(ADD_DECODER, newDecoder, null);
         }
     }
 
@@ -312,14 +312,13 @@ public class VSDManagerFrame extends JmriJFrame {
         String property = event.getPropertyName();
         if (property.equals(VSDControl.DELETE)) {
             String ov = (String) event.getOldValue();
-            String nv = (String) event.getNewValue();
-            VSDecoder vsd = VSDecoderManager.instance().getVSDecoderByAddress(nv);
+            VSDecoder vsd = VSDecoderManager.instance().getVSDecoderByAddress(ov);
             if (vsd == null) {
                 log.debug("VSD is null.");
             }
             this.removePropertyChangeListener(vsd);
-            log.debug("vsdControlPropertyChange. ID: {}, old: {}, new: {}", REMOVE_DECODER, ov, nv);
-            firePropertyChange(REMOVE_DECODER, ov, nv);
+            log.debug("vsdControlPropertyChange. ID: {}, old: {}", REMOVE_DECODER, ov);
+            firePropertyChange(REMOVE_DECODER, ov, null);
             decoderPane.remove((VSDControl) event.getSource());
             if (decoderPane.getComponentCount() == 0) {
                 decoderPane.add(decoderBlank);
@@ -347,7 +346,7 @@ public class VSDManagerFrame extends JmriJFrame {
     protected void volumeChange(ChangeEvent e) {
         JSlider v = (JSlider) e.getSource();
         log.debug("Volume slider moved. value: {}", v.getValue());
-        firePropertyChange(VOLUME_CHANGE, null, v.getValue());
+        firePropertyChange(VOLUME_CHANGE, v.getValue(), null);
     }
 
     private void buildMenu() {

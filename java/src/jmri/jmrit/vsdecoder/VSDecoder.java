@@ -468,11 +468,11 @@ public class VSDecoder implements PropertyChangeListener {
             this.mute(b.booleanValue());
         } else if (property.equals(VSDManagerFrame.VOLUME_CHANGE)) {
             // GUI Volume slider
-            log.debug("VSD: Volume change. value: {}", evt.getNewValue());
+            log.debug("VSD: Volume change. value: {}", evt.getOldValue());
             // Slider gives integer 0-100. Need to change that to a float 0.0-1.0
-            this.setMasterVolume((1.0f * (Integer) evt.getNewValue()) / 100.0f);
+            this.setMasterVolume((1.0f * (Integer) evt.getOldValue()) / 100.0f);
         } else if (property.equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
-            // Train Location Move (either GUI)
+            // Train Location Move
             PhysicalLocation p = getTrainPosition((Train) evt.getSource());
             if (p != null) {
                 this.setPosition(getTrainPosition((Train) evt.getSource()));
@@ -481,8 +481,8 @@ public class VSDecoder implements PropertyChangeListener {
                 this.setPosition(new PhysicalLocation());
             }
         } else if (property.equals(Train.STATUS_CHANGED_PROPERTY)) {
-            // Train Status change (either GUI)
-            String status = (String) evt.getNewValue();
+            // Train Status change
+            String status = (String) evt.getOldValue();
             log.debug("Train status changed: {}", status);
             log.debug("New Location: {}", getTrainPosition((Train) evt.getSource()));
             if ((status.startsWith(Train.BUILT)) || (status.startsWith(Train.PARTIAL_BUILT))) {
