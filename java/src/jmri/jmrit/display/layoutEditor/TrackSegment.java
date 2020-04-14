@@ -1605,7 +1605,7 @@ public class TrackSegment extends LayoutTrack {
         itemList.addAll(getPointReferences(type2, conn2));
 
         if (!itemList.isEmpty()) {
-            displayRemoveWarningDialog(itemList, "TrackSegment");  //NOI18N
+            displayRemoveWarningDialog(itemList, "TrackSegment");  // NOI18N
         }
         return itemList.isEmpty();
     }
@@ -1634,55 +1634,55 @@ public class TrackSegment extends LayoutTrack {
                 result.add(pt.getWestBoundSensorName());
             }
             if (pt.getType() == PositionablePoint.EDGE_CONNECTOR && pt.getLinkedPoint() != null) {
-                result.add(Bundle.getMessage("DeleteECisActive"));   //NOI18N
+                result.add(Bundle.getMessage("DeleteECisActive"));   // NOI18N
             }
         }
 
         if ((type == TURNOUT_A || type == TURNOUT_B || type == TURNOUT_C || type == TURNOUT_D) && conn instanceof LayoutTurnout) {
             LayoutTurnout lt = (LayoutTurnout) conn;
             if (type == TURNOUT_A) {
-                result = lt.getBeanReferences("A");  //NOI18N
+                result = lt.getBeanReferences("A");  // NOI18N
             }
             if (type == TURNOUT_B) {
-                result = lt.getBeanReferences("B");  //NOI18N
+                result = lt.getBeanReferences("B");  // NOI18N
             }
             if (type == TURNOUT_C) {
-                result = lt.getBeanReferences("C");  //NOI18N
+                result = lt.getBeanReferences("C");  // NOI18N
             }
             if (type == TURNOUT_D) {
-                result = lt.getBeanReferences("D");  //NOI18N
+                result = lt.getBeanReferences("D");  // NOI18N
             }
         }
 
         if ((type == LEVEL_XING_A || type == LEVEL_XING_B || type == LEVEL_XING_C || type == LEVEL_XING_D) && conn instanceof LevelXing) {
             LevelXing lx = (LevelXing) conn;
             if (type == LEVEL_XING_A) {
-                result = lx.getBeanReferences("A");  //NOI18N
+                result = lx.getBeanReferences("A");  // NOI18N
             }
             if (type == LEVEL_XING_B) {
-                result = lx.getBeanReferences("B");  //NOI18N
+                result = lx.getBeanReferences("B");  // NOI18N
             }
             if (type == LEVEL_XING_C) {
-                result = lx.getBeanReferences("C");  //NOI18N
+                result = lx.getBeanReferences("C");  // NOI18N
             }
             if (type == LEVEL_XING_D) {
-                result = lx.getBeanReferences("D");  //NOI18N
+                result = lx.getBeanReferences("D");  // NOI18N
             }
         }
 
         if ((type == SLIP_A || type == SLIP_B || type == SLIP_C || type == SLIP_D) && conn instanceof LayoutSlip) {
             LayoutSlip ls = (LayoutSlip) conn;
             if (type == SLIP_A) {
-                result = ls.getBeanReferences("A");  //NOI18N
+                result = ls.getBeanReferences("A");  // NOI18N
             }
             if (type == SLIP_B) {
-                result = ls.getBeanReferences("B");  //NOI18N
+                result = ls.getBeanReferences("B");  // NOI18N
             }
             if (type == SLIP_C) {
-                result = ls.getBeanReferences("C");  //NOI18N
+                result = ls.getBeanReferences("C");  // NOI18N
             }
             if (type == SLIP_D) {
-                result = ls.getBeanReferences("D");  //NOI18N
+                result = ls.getBeanReferences("D");  // NOI18N
             }
         }
 
@@ -3859,7 +3859,7 @@ public class TrackSegment extends LayoutTrack {
                     //have connection to a turnout, is block different
                     LayoutTurnout lt = (LayoutTurnout) getConnect1();
                     lb2 = lt.getLayoutBlock();
-                    if (lt.getTurnoutType() > LayoutTurnout.WYE_TURNOUT) {
+                    if (lt.hasEnteringDoubleTrack() ) {
                         //not RH, LH, or WYE turnout - other blocks possible
                         if ((type1 == TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
                             lb2 = lt.getLayoutBlockB();
@@ -3921,7 +3921,7 @@ public class TrackSegment extends LayoutTrack {
                     //have connection to a turnout
                     LayoutTurnout lt = (LayoutTurnout) getConnect2();
                     lb2 = lt.getLayoutBlock();
-                    if (lt.getTurnoutType() > LayoutTurnout.WYE_TURNOUT) {
+                    if (lt.hasEnteringDoubleTrack()) {
                         //not RH, LH, or WYE turnout - other blocks possible
                         if ((type2 == TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
                             lb2 = lt.getLayoutBlockB();

@@ -20,8 +20,7 @@ public class RPSItemPanelTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DisplayFrame df = new DisplayFrame();
-        EditorScaffold es = new EditorScaffold();
-        RPSItemPanel t = new RPSItemPanel(df,"test1","test2",es);
+        RPSItemPanel t = new RPSItemPanel(df,"test1","test2");
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(df);
     }

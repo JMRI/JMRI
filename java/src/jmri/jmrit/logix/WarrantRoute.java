@@ -92,6 +92,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     private final JButton _viewProfile = new JButton(Bundle.getMessage("ViewProfile"));
     private JmriJFrame _spTable = null;
     private JmriJFrame _pickListFrame;
+    protected boolean _dirty = false;
 
 
     /**
@@ -319,6 +320,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
                 setTrainName(_speedUtil.getAddress()); 
             }
         }
+        _dirty = true;
         return null;
     }
     
@@ -345,6 +347,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     
     protected void setAddress() {
         _speedUtil.setDccAddress(_dccNumBox.getText());
+        _dirty = true;
         setRosterBox();
     }
 
@@ -1059,6 +1062,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         for (TreeNode node : nodes) {
             _orders.add((BlockOrder) ((DefaultMutableTreeNode) node).getUserObject());
         }
+//        _dirty = true;
         _routeModel.fireTableDataChanged();
         if (log.isDebugEnabled()) {
             log.debug("showRoute: Route has " + _orders.size() + " orders.");

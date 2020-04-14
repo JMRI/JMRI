@@ -19,6 +19,12 @@ public class SimpleServerManagerTest {
         assertThat(a).isNotNull();
     }
 
+    @Test
+    public void testGetPreferences(){
+        SimpleServerManager a = SimpleServerManager.getInstance();
+        assertThat(a.getPreferences()).isNotNull().withFailMessage("preferences not created");
+    }
+
     @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();

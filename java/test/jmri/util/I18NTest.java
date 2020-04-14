@@ -6,7 +6,7 @@ import org.junit.*;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class I18NTest {
 

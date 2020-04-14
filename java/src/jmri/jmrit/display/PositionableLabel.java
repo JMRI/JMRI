@@ -621,11 +621,9 @@ public class PositionableLabel extends JLabel implements Positionable {
      * @return DisplayFrame for palette item
      */
     public DisplayFrame makePaletteFrame(String title) {
-        jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
+        jmri.jmrit.display.palette.ItemPalette.loadIcons();
 
-        DisplayFrame paletteFrame = new DisplayFrame(title, false, false);
-//        paletteFrame.setLocationRelativeTo(this);
-//        paletteFrame.toFront();
+        DisplayFrame paletteFrame = new DisplayFrame(title, _editor);
         return paletteFrame;
     }
 
@@ -667,7 +665,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected void editIconItem() {
         _paletteFrame = makePaletteFrame(
                 java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameTurnout")));
-        _iconItemPanel = new IconItemPanel(_paletteFrame, "Icon", _editor); // NOI18N
+        _iconItemPanel = new IconItemPanel(_paletteFrame, "Icon"); // NOI18N
         ActionListener updateAction = (ActionEvent a) -> {
                 updateIconItem();
          };

@@ -139,7 +139,6 @@ public class PanelEditor extends Editor implements ItemListener {
 
     @Override
     protected void init(String name) {
-        initCatalogTree();
         java.awt.Container contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         // common items
@@ -428,25 +427,6 @@ public class PanelEditor extends Editor implements ItemListener {
         getTargetFrame().setVisible(true);
         log.debug("PanelEditor ctor done.");
     }  // end ctor
-
-    protected void initCatalogTree() {
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // Build resource catalog and load CatalogTree.xml now
-                    CatalogPanel catalog = CatalogPanel.makeDefaultCatalog();
-                    catalog.createNewBranch("IFJAR", "Program Directory", "resources");
-                    // log.debug("init run created (var=catalog)"); // where's this used, just a test run?
-                } catch (Exception ex) {
-                    log.error("Error trying to set up preferences {}", ex);
-                }
-            }
-        };
-        Thread thr = new Thread(r);
-        thr.setName("PanelEditor init");
-        thr.start();
-    }
 
     /**
      * Initializes the hiddencheckbox and its listener. This has been taken out

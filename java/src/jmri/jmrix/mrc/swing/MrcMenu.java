@@ -43,8 +43,8 @@ public class MrcMenu extends JMenu {
     }
 
     private Item[] panelItems = new Item[]{
-        new Item("MenuItemCommandMonitor", "jmri.jmrix.mrc.swing.monitor.MrcMonPanel"), //IN18N
-        new Item("MenuItemSendCommand", "jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel"), //IN18N
+        new Item("MenuItemCommandMonitor", "jmri.jmrix.mrc.swing.monitor.MrcMonPanel"), // NOI18N
+        new Item("MenuItemSendCommand", "jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel"), // NOI18N
     };
 
     static class Item {

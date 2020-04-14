@@ -17,5 +17,6 @@
  *
  * @see java.util.ServiceLoader
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
+// include empty DefaultAnnotation to avoid excessive recompilation
+@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
 package jmri.spi;

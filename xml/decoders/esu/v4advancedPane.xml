@@ -14,17 +14,11 @@
             <text xml:lang="de">Protokolle Aktivieren</text>
             <text xml:lang="ca">Protocols Habilitats</text>
         </label>
-        <label>
-            <text> </text>
-        </label>
         <display item="ESU V4 Advanced Protocols DCC" format="checkbox"/>
         <display item="ESU V4 Advanced Protocols Motorola®" format="checkbox"/>
         <display item="ESU V4 Advanced Protocols Selectrix®" format="checkbox"/>
         <display item="ESU V4 Advanced Protocols M4" format="checkbox"/>
         <display item="ESU V4 Advanced Protocols Additional Addresses" layout="above"/>
-        <label>
-            <text> </text>
-        </label>
         <separator/>
         <label>
             <text>Command Station Compatibility</text>
@@ -32,17 +26,11 @@
             <text xml:lang="de">Steuerungskompatibilität</text>
             <text xml:lang="ca">Compatibilitat amb la central</text>
         </label>
-        <label>
-            <text> </text>
-        </label>
         <display item="ESU V4 Compatibility LGB" format="checkbox"/>
         <display item="ESU V4 Compatibility Marklin Delta" format="checkbox"/>
         <display item="ESU V4 Compatibility ZIMO MF" format="checkbox"/>
         <display item="ESU V4 Compatibility SUSI" format="checkbox"/>
         <display item="Analog Control check 1" format="checkbox"/>
-        <label>
-            <text> </text>
-        </label>
         <separator/>
         <label>
             <text>RailCom® Settings</text>
@@ -50,106 +38,52 @@
             <text xml:lang="de">RailCom®</text>
             <text xml:lang="ca">Configuració Railcom</text>
         </label>
-        <label>
-            <text> </text>
-        </label>
         <display item="ESU V4 RailCom Enable" format="checkbox"/>
         <display item="ESU V4 RailCom Auto" format="checkbox"/>
         <display item="ESU V4 RailCom Channel 1" format="checkbox"/>
         <display item="ESU V4 RailCom Channel 2" format="checkbox"/>
-        <label>
-            <text> </text>
-        </label>
         <separator/>
         <label>
-            <text>Speed Step Mode</text>
-            <text xml:lang="it">Modalità Passaggio Velocità</text>
-            <text xml:lang="de">Fahrstufenmodus</text>
-            <text xml:lang="ca">Mode de Passos de Velocitat</text>
+            <text>RailComPlus® &amp; M4 Master Decoder Synchronization</text>
+            <text xml:lang="it">RailComPlus® &amp; M4 Master Decoder Synchronization</text>
+            <text xml:lang="de">RailComPlus® &amp; M4 Master Decoder Synchronization</text>
+            <text xml:lang="ca">RailComPlus® &amp; M4 Master Decoder Synchronization</text>
         </label>
-        <label>
-            <text> </text>
-        </label>
-        <display item="ESU V4 Auto Speed Step" format="checkbox"/>
-        <label>
-            <text> </text>
-        </label>
+        <row>
+            <column>
+                <display item="M4MfgId" layout="left">
+                </display>
+                <display item="M4SerNo" layout="left">
+                </display>
+            </column>
+        </row>
         <separator/>
         <label>
             <text>Memory Settings</text>
             <text xml:lang="de">Speichereinstellungen</text>
             <text xml:lang="ca">Propietats de memòria</text>
         </label>
-        <label>
-            <text> </text>
-        </label>
         <display item="ESU V4 Memory Settings Functions" format="checkbox"/>
         <display item="ESU V4 Memory Settings Speed" format="checkbox"/>
-        <label>
-            <text> </text>
-        </label>
-        <separator/>
-        <label>
-            <text>Power Pack</text>
-        </label>
-        <label>
-            <text> </text>
-        </label>
         <row>
             <display item="ESU V4 Power Fail Bypass" layout="right" label=""/>
             <display item="ESU V4 Power Fail Bypass" layout="right" format="hslider"/>
         </row>
-        <label>
-            <text> </text>
-        </label>
         <separator/>
         <label>
-            <text>Preserve Direction</text>
-            <text xml:lang="de">Fahrtrichtung</text>
-            <text xml:lang="ca">Preserva el sentit</text>
+            <text>Miscellaneous</text>
         </label>
-        <label>
-            <text> </text>
-        </label>
+        <display item="ESU V4 Auto Speed Step" format="checkbox"/>
         <display item="ESU V4 Preserve Direction" format="checkbox"/>
-        <label>
-            <text> </text>
-        </label>
-        <separator/>
-        <label>
-            <text>Starting Delay</text>
-            <text xml:lang="de">Verzögerter Start</text>
-            <text xml:lang="ca">Inici del retard</text>
-        </label>
-        <label>
-            <text> </text>
-        </label>
+        <display item="ESU V4 E-Stop on Speed Step 0" format="checkbox"/>
         <display item="ESU V4 Starting Delay" format="checkbox"/>
         <row>
             <display item="ESU V4 Starting Delay Time" layout="right" label=""/>
             <display item="ESU V4 Starting Delay Time" layout="right" format="hslider"/>
         </row>
-        <label>
-            <text> </text>
-        </label>
-        <!--         <group exclude="Essential Sound Unit,ESU LokSound 5"> -->
-        <separator/>
-        <label>
-            <text>Stop Behaviour</text>
-            <text xml:lang="de">Stop Verhalten</text>
-            <text xml:lang="ca">Comportament de parada</text>
-        </label>
-        <label>
-            <text> </text>
-        </label>
-        <display item="ESU V4 E-Stop on Seed Step 0" format="checkbox"/>
-        <!--         </group> -->
         <separator/>
         <label>
             <text>Decoder Lock</text>
-        </label>
-        <label>
-            <text> </text>
         </label>
         <display item="ESU V4 Decoder Lock Enable" format="checkbox"/>
         <display item="ESU V4 Decoder Lock CV15" format="checkbox"/>
@@ -178,16 +112,10 @@
             <display item="ESU V5 ABC Shuttle Train" layout="right" label=""/>
             <display item="ESU V5 ABC Shuttle Train" layout="right" format="hslider"/>
         </row>
-        <label>
-            <text> </text>
-        </label>
         <separator/>
         <label>
             <text>HLU Brake Sections</text>
             <text xml:lang="de">HLU Bremskonfiguration</text>
-        </label>
-        <label>
-            <text> </text>
         </label>
         <display item="ESU V4 HLU" format="checkbox"/>
         <row>
@@ -210,43 +138,25 @@
             <display item="ESU V5 HLU Speed Limit 5" layout="right" label=""/>
             <display item="ESU V5 HLU Speed Limit 5" layout="right" format="hslider"/>
         </row>
-        <label>
-            <text> </text>
-        </label>
         <separator/>
         <label>
             <text>DC Brake Sections</text>
             <text xml:lang="de">DC Bremskonfiguration</text>
         </label>
-        <label>
-            <text> </text>
-        </label>
         <display item="ESU V4 DC Brake Forward" format="checkbox"/>
         <display item="ESU V4 DC Brake Reverse" format="checkbox"/>
-        <label>
-            <text> </text>
-        </label>
         <separator/>
         <label>
             <text>Selectrix® Brake Sections</text>
             <text xml:lang="de">Selectrix® Bremskonfiguration</text>
         </label>
-        <label>
-            <text> </text>
-        </label>
         <display item="ESU V4 Selectrix Brake Forward" format="checkbox"/>
         <display item="ESU V4 Selectrix Brake Reverse" format="checkbox"/>
-        <label>
-            <text> </text>
-        </label>
         <separator/>
         <label>
             <text>Constant Brake Distance</text>
             <text xml:lang="de">Konstanter Bremsweg</text>
             <text xml:lang="ca">Distància de frenada constant</text>
-        </label>
-        <label>
-            <text> </text>
         </label>
         <row>
             <display item="ESU V4 Constant Brake Forward" layout="right" label=""/>
@@ -261,31 +171,19 @@
             <display item="ESU V4 Constant Brake Time" layout="right" format="hslider"/>
         </row>
         <display item="ESU V4 Constant Brake" format="checkbox"/>
-        <label>
-            <text> </text>
-        </label>
         <separator/>
         <label>
             <text>Brake Section Settings</text>
             <text xml:lang="de">Bremsstrecken Einstellungen</text>
         </label>
-        <label>
-            <text> </text>
-        </label>
         <row>
             <display item="ESU V5 Brake Mode Exit Delay" layout="right" label=""/>
             <display item="ESU V5 Brake Mode Exit Delay" layout="right" format="hslider"/>
         </row>
-        <label>
-            <text> </text>
-        </label>
         <separator/>
         <label>
             <text>Brake Functions</text>
             <text xml:lang="de">Bremsfunktion</text>
-        </label>
-        <label>
-            <text> </text>
         </label>
         <row>
             <display item="ESU V4 Brake Function 1 Deceleration" layout="right" label=""/>
@@ -311,8 +209,5 @@
             <display item="ESU V4 Brake Function 3 max Speed" layout="right" label=""/>
             <display item="ESU V4 Brake Function 3 max Speed" layout="right" format="hslider"/>
         </row>
-        <label>
-            <text> </text>
-        </label>
     </column>
 </pane>

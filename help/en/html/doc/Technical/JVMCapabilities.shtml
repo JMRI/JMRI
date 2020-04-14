@@ -194,6 +194,38 @@
           <td>&gt; 11</td>
 
           <td>&gt; 11</td>
+
+        </tr>
+
+        <tr>
+
+          <td>The <a href="https://www.baeldung.com/jvm-zgc-garbage-collector">Z Garbage Collector</a>
+            may provide better performance because of reduced garbage collection
+            pauses.</td>
+
+          <td>11</td>
+
+          <td>11</td>
+
+        </tr>
+
+        <tr>
+
+          <td>The <a href="https://www.infoworld.com/article/2888189/red-hat-shenandoah-boosts-java-garbage-collection.html">Shenandoah garbage collector</a> might be another source of 
+            better performance.</td>
+
+          <td>12</td>
+
+          <td>12</td>
+
+        <tr>
+          <td>The Nashorn interpreter will likely be removed in Java 15.
+          Some adaptation will be needed, perhaps
+          <a href="https://medium.com/graalvm/nashorn-removal-graalvm-to-the-rescue-d4da3605b6cb">GraaVM</a></td>
+
+          <td>15</td>
+
+          <td>15</td>
         </tr>
 
       </table>(* indicates that a compatibility library is used in

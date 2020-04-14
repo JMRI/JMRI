@@ -121,7 +121,7 @@
             <text> </text>
         </label>
     </column>
-    <group exclude="ESU LokSound 5,Essential Sound Unit">
+    <group exclude="ESU LokSound 5,Essential Sound Unit,ESU LokPilot 5">
         <column>
             <separator/>
             <label>

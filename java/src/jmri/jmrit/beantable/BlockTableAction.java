@@ -905,7 +905,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddBlock"), false, true);
-            addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); //NOI18N
+            addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); // NOI18N
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             ActionListener oklistener = new ActionListener() {
                 @Override

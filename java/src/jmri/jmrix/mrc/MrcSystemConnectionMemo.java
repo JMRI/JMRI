@@ -21,7 +21,7 @@ import jmri.util.NamedBeanComparator;
 public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public MrcSystemConnectionMemo() {
-        super("M", "MRC"); //IN18N
+        super("M", "MRC"); // NOI18N
         register(); // registers general type
         InstanceManager.store(this, MrcSystemConnectionMemo.class); // also register as specific type
 

@@ -11,5 +11,6 @@
  * <li><a href="http://openlcb.org/">OpenLCB project overview page</a>
  * </ul>
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
+// include empty DefaultAnnotation to avoid excessive recompilation
+@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
 package jmri.jmrix.openlcb.swing.tie;
