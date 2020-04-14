@@ -3377,6 +3377,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             }
             _trainIcon.getToolTip().setText(txt);
             _trainIcon.getToolTip().setBackgroundColor(Color.white);
+            // rl can be null when train is terminated.
             if (rl != null) {
                 if (rl.getTrainIconX() != 0 || rl.getTrainIconY() != 0) {
                     if (animation) {
