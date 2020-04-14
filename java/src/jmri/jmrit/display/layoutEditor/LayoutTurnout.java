@@ -156,7 +156,6 @@ public class LayoutTurnout extends LayoutTrack {
     /**
      * Returns true if this is a turnout (not a crossover or slip)
      *
-     * @param type the turnout type
      * @return boolean true if this is a turnout
      */
     public boolean isTurnoutTypeTurnout() {

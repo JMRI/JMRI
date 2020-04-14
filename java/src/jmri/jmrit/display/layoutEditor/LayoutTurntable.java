@@ -466,8 +466,8 @@ public class LayoutTurntable extends LayoutTrack {
             // nothing to see here, move along...
             // (results are already correct)
         } else if (LayoutEditor.HitPointType.isTurntableRayHitType(connectionType)) {
-            result = getRayCoordsIndexed(connectionType.getValue()
-                    - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getValue());
+            result = getRayCoordsIndexed(connectionType.getXmlValue()
+                    - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue());
         } else {
             log.error("{}.getCoordsForConnectionType({}); Invalid connection type",
                     getName(), connectionType); // NOI18N
@@ -482,7 +482,7 @@ public class LayoutTurntable extends LayoutTrack {
     public LayoutTrack getConnection(LayoutEditor.HitPointType connectionType) throws jmri.JmriException {
         LayoutTrack result = null;
         if (LayoutEditor.HitPointType.isTurntableRayHitType(connectionType)) {
-            result = getRayConnectIndexed(connectionType.getValue() - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getValue());
+            result = getRayConnectIndexed(connectionType.getXmlValue() - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue());
         } else {
             String errString = MessageFormat.format("{0}.getCoordsForConnectionType({1}); Invalid connection type",
                     getName(), connectionType); // NOI18N
@@ -505,7 +505,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
         if (LayoutEditor.HitPointType.isTurntableRayHitType(connectionType)) {
             if ((o == null) || (o instanceof TrackSegment)) {
-                setRayConnect((TrackSegment) o, connectionType.getValue() - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getValue());
+                setRayConnect((TrackSegment) o, connectionType.getXmlValue() - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue());
             } else {
                 String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid object: {4}",
                         getName(), connectionType, o.getName(),
@@ -643,7 +643,7 @@ public class LayoutTurntable extends LayoutTrack {
                 if (distance < minDistance) {
                     minDistance = distance;
                     minPoint = p;
-                    result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.TURNTABLE_RAY_0.getValue() + getRayIndex(k));
+                    result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue() + getRayIndex(k));
                 }
             }
         }
@@ -1212,10 +1212,10 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     protected void highlightUnconnected(Graphics2D g2, LayoutEditor.HitPointType specificType) {
-        int specificTypeValue = specificType.getValue();
+        int specificTypeValue = specificType.getXmlValue();
         for (int j = 0; j < getNumberRays(); j++) {
             if ((specificType == LayoutEditor.HitPointType.NONE)
-                    || (specificTypeValue == (LayoutEditor.HitPointType.TURNTABLE_RAY_0.getValue() + j))) {
+                    || (specificTypeValue == (LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue() + j))) {
                 if (getRayConnectOrdered(j) == null) {
                     Point2D pt = getRayCoordsOrdered(j);
                     g2.fill(trackControlCircleAt(pt));
@@ -1294,7 +1294,7 @@ public class LayoutTurntable extends LayoutTrack {
 
         for (int k = 0; k < getNumberRays(); k++) {
             if (getRayConnectOrdered(k) == null) {
-                result.add(LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.TURNTABLE_RAY_0.getValue() + getRayIndex(k)));
+                result.add(LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue() + getRayIndex(k)));
             }
         }
         return result;

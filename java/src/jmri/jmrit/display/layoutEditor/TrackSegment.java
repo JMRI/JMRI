@@ -695,7 +695,7 @@ public class TrackSegment extends LayoutTrack {
                     if (distance < minDistance) {
                         minDistance = distance;
                         minPoint = p;
-                        result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getValue() + index);
+                        result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue() + index);
                     }
                 }
             }
@@ -727,9 +727,18 @@ public class TrackSegment extends LayoutTrack {
         if (connectionType == LayoutEditor.HitPointType.TRACK_CIRCLE_CENTRE) {
             result = getCoordsCenterCircle();
         } else if (LayoutEditor.HitPointType.isBezierHitType(connectionType)) {
-            result = getBezierControlPoint(connectionType.getValue() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getValue());
+            result = getBezierControlPoint(connectionType.getXmlValue() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue());
         }
         return result;
+    }
+
+    /**
+     * get the maximum number of bezier points
+     *
+     * @return the maximum number of points
+     */
+    public int getMaxNumberBezierPoints() {
+        return LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_8.getXmlValue() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue() + 1;
     }
 
     /**
@@ -1799,7 +1808,7 @@ public class TrackSegment extends LayoutTrack {
      * Display popup menu for information and editing.
      */
     protected void showBezierPopUp(MouseEvent e, LayoutEditor.HitPointType hitPointType) {
-        int bezierControlPointIndex = hitPointType.getValue() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getValue();
+        int bezierControlPointIndex = hitPointType.getXmlValue() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue();
         if (popupMenu != null) {
             popupMenu.removeAll();
         } else {
@@ -1810,9 +1819,7 @@ public class TrackSegment extends LayoutTrack {
         jmi.setEnabled(false);
         popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
 
-        if (bezierControlPoints.size()
-                <= LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_8.getValue()
-                - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getValue()) {
+        if (bezierControlPoints.size() <= getMaxNumberBezierPoints()) {
             popupMenu.add(new AbstractAction(Bundle.getMessage("AddBezierControlPointAfter")) {
 
                 @Override

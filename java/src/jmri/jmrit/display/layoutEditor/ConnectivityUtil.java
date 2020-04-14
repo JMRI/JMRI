@@ -283,9 +283,9 @@ public class ConnectivityUtil {
                 if (!suppress) {
                     log.error("Connectivity error when searching turnouts in Block " + currLayoutBlock.getDisplayName());
                     log.warn("Track segment connected to {{}, {}} and {{}, {}} but previous object was {{}, {}}",
-                            trackSegment.getConnect1(), connectionTypeToString(trackSegment.getType1()),
-                            trackSegment.getConnect2(), connectionTypeToString(trackSegment.getType2()),
-                            prevConnectTrack, connectionTypeToString(prevConnectType));
+                            trackSegment.getConnect1(), trackSegment.getType1().name(),
+                            trackSegment.getConnect2(), trackSegment.getType2().name(),
+                            prevConnectTrack, prevConnectType);
                 }
                 trackSegment = null;
                 break;
@@ -2441,7 +2441,7 @@ public class ConnectivityUtil {
                             conLayoutTrack.getName(),
                             curTrackSegment.getName(),
                             curLayoutTrack.getName(),
-                            connectionTypeToString(conType),
+                            conType.name(),
                             nextLayoutBlock.getId());
                 }
 
@@ -2770,32 +2770,6 @@ public class ConnectivityUtil {
 
         // searched all possible paths in this block, 'currLayoutBlock', without finding the desired exit block, 'nextLayoutBlock'
         return false;
-    }
-
-    @Nonnull
-    private String connectionTypeToString(LayoutEditor.HitPointType conType) {
-        int conTypeValue = conType.getValue();
-        String result = "<" + conType + ">";
-        String[] con_types = {"NONE", "POS_POINT",
-            "TURNOUT_A", "TURNOUT_B", "TURNOUT_C", "TURNOUT_D",
-            "LEVEL_XING_A", "LEVEL_XING_B", "LEVEL_XING_C", "LEVEL_XING_D",
-            "TRACK", "TURNOUT_CENTER", "LEVEL_XING_CENTER", "TURNTABLE_CENTER",
-            "LAYOUT_POS_LABEL", "LAYOUT_POS_JCOMP", "MULTI_SENSOR", "MARKER",
-            "TRACK_CIRCLE_CENTRE", "UNUSED_19", "SLIP_CENTER",
-            "SLIP_A", "SLIP_B", "SLIP_C", "SLIP_D",
-            "SLIP_LEFT", "SLIP_RIGHT"};
-        if (conTypeValue < con_types.length) {
-            result = con_types[conTypeValue];
-        } else if (LayoutEditor.HitPointType.isBezierHitType(conType)) {
-            result = "BEZIER_CONTROL_POINT #" + (conTypeValue - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getValue());
-        } else if (conType == LayoutEditor.HitPointType.SHAPE_CENTER) {
-            result = "SHAPE_CENTER";
-        } else if (LayoutShape.isShapePointOffsetHitPointType(conType)) {
-            result = "SHAPE_POINT #" + (conTypeValue - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getValue());
-        } else if (LayoutEditor.HitPointType.isTurntableRayHitType(conType)) {
-            result = "TURNTABLE_RAY #" + (conTypeValue - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getValue());
-        }
-        return result;
     }
 
     private boolean turnoutConnectivity = true;

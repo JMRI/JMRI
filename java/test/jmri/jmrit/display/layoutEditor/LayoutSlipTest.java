@@ -236,7 +236,7 @@ public class LayoutSlipTest {
         Assert.assertEquals("lts.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(50.0, 100.0),
                 lts.getCoordsForConnectionType(LayoutEditor.HitPointType.NONE));
-        JUnitAppender.assertErrorMessage("single.getCoordsForConnectionType(0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("single.getCoordsForConnectionType(NONE); Invalid Connection Type");
 
         Assert.assertEquals("lts.getCoordsForConnectionType(SLIP_A) is equal to...",
                 new Point2D.Double(35.85786437626905, 85.85786437626905),
@@ -269,7 +269,7 @@ public class LayoutSlipTest {
         Assert.assertEquals("ltd.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(100.0, 50.0),
                 ltd.getCoordsForConnectionType(LayoutEditor.HitPointType.NONE));
-        JUnitAppender.assertErrorMessage("double.getCoordsForConnectionType(0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("double.getCoordsForConnectionType(NONE); Invalid Connection Type");
 
         Assert.assertEquals("ltd.getCoordsForConnectionType(SLIP_A) is equal to...",
                 new Point2D.Double(85.85786437626905, 64.14213562373095),
@@ -624,14 +624,14 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on lts.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("single.setConnection(0, null, 0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("single.setConnection(NONE, null, NONE); Invalid Connection Type");
         try {
             // test Invalid Connection Type
             ltd.setConnection(LayoutEditor.HitPointType.NONE, null, LayoutEditor.HitPointType.NONE);
             Assert.fail("No exception thrown on ltd.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("double.setConnection(0, null, 0); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("double.setConnection(NONE, null, NONE); Invalid Connection Type");
 
         try {
             // test invalid object type
@@ -639,14 +639,14 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on lts.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("single.setConnection(21, null, 1); Invalid type");
+        JUnitAppender.assertErrorMessage("single.setConnection(SLIP_A, null, POS_POINT); Invalid type");
         try {
             // test invalid object type
             ltd.setConnection(LayoutEditor.HitPointType.SLIP_B, null, LayoutEditor.HitPointType.POS_POINT);
             Assert.fail("No exception thrown on ltd.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("double.setConnection(22, null, 1); Invalid type");
+        JUnitAppender.assertErrorMessage("double.setConnection(SLIP_B, null, POS_POINT); Invalid type");
 
         try {
             // test valid types

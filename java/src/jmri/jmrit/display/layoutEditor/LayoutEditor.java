@@ -183,39 +183,35 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         TURNTABLE_RAY_62(72), // /
         TURNTABLE_RAY_63(73); // offset for turntable connection points (maximum)
 
-        private final transient Integer value;
-        private transient static final Map<Integer, HitPointType> ENUM_MAP;
+        private final transient Integer xmlValue;
 
-        HitPointType(Integer value) {
-            this.value = value;
+        HitPointType(Integer xmlValue) {
+            this.xmlValue = xmlValue;
         }
 
-        //Build an immutable map of String name to enum pairs.
-        static {
-            Map<Integer, HitPointType> map = new ConcurrentHashMap<>();
-
+        public static HitPointType getValue(Integer xmlValue) {
+            HitPointType result = null;
             for (HitPointType instance : HitPointType.values()) {
-                map.put(instance.getValue(), instance);
+                if (instance.xmlValue == xmlValue) {
+                    result = instance;
+                    break;
+                }
             }
-            ENUM_MAP = Collections.unmodifiableMap(map);
+            return result;
         }
 
-        public static HitPointType getValue(Integer value) {
-            return ENUM_MAP.get(value);
-        }
-
-        public Integer getValue() {
-            return value;
-        }
-
-        //private static HitPointTypeComparator hitPointTypeComparator = new HitPointTypeComparator();
-        // public so that this can be used for sorting if need be
-        public static class HitPointTypeComparator implements Comparator<HitPointType> {
-
-            @Override
-            public int compare(HitPointType hpt1, HitPointType hpt2) {
-                return hpt1.getValue() - hpt2.getValue();
+        public static HitPointType getValue(String name) {
+            HitPointType result = null;
+            for (HitPointType instance : HitPointType.values()) {
+                if (instance.name().equals(name)) {
+                    result = instance;
+                }
             }
+            return result;
+        }
+
+        public Integer getXmlValue() {
+            return xmlValue;
         }
 
         /**
@@ -313,28 +309,28 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }   // isControlHitType
 
         protected static boolean isTurnoutHitType(HitPointType hitType) {
-            return (hitType.getValue() >= HitPointType.TURNOUT_A.getValue())
-                    && (hitType.getValue() <= HitPointType.TURNOUT_D.getValue());
+            return ((hitType.compareTo(HitPointType.TURNOUT_A) >= 0)
+                    && (hitType.compareTo(HitPointType.TURNOUT_D) <= 0));
         }
 
         protected static boolean isSlipHitType(HitPointType hitType) {
-            return (hitType.getValue() >= HitPointType.SLIP_A.getValue())
-                    && (hitType.getValue() <= HitPointType.SLIP_D.getValue());
+            return ((hitType.compareTo(HitPointType.SLIP_A) >= 0)
+                    && (hitType.compareTo(HitPointType.SLIP_D) <= 0));
         }
 
         protected static boolean isBezierHitType(HitPointType hitType) {
-            return (hitType.getValue() >= HitPointType.BEZIER_CONTROL_POINT_0.getValue())
-                    && (hitType.getValue() <= HitPointType.BEZIER_CONTROL_POINT_8.getValue());
+            return ((hitType.compareTo(HitPointType.BEZIER_CONTROL_POINT_0) >= 0)
+                    && (hitType.compareTo(HitPointType.BEZIER_CONTROL_POINT_8) <= 0));
         }
 
         protected static boolean isLevelXingHitType(HitPointType hitType) {
-            return (hitType.getValue() >= HitPointType.LEVEL_XING_A.getValue())
-                    && (hitType.getValue() <= HitPointType.LEVEL_XING_D.getValue());
+            return ((hitType.compareTo(HitPointType.LEVEL_XING_A) >= 0)
+                    && (hitType.compareTo(HitPointType.LEVEL_XING_D) <= 0));
         }
 
         protected static boolean isTurntableRayHitType(HitPointType hitType) {
-            return (hitType.getValue() >= HitPointType.TURNTABLE_RAY_0.getValue())
-                    && (hitType.getValue() <= HitPointType.TURNTABLE_RAY_63.getValue());
+            return ((hitType.compareTo(HitPointType.TURNTABLE_RAY_0) >= 0)
+                    && (hitType.compareTo(HitPointType.TURNTABLE_RAY_63) <= 0));
         }
 
         /**
@@ -3708,7 +3704,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         setCursor(Cursor.getDefaultCursor());
                     } else {
                         LayoutShape ls = (LayoutShape) selectedObject;
-                        ls.addPoint(currentPoint, selectedHitPointType.getValue() - HitPointType.SHAPE_POINT_0.getValue());
+                        ls.addPoint(currentPoint, selectedHitPointType.getXmlValue() - HitPointType.SHAPE_POINT_0.getXmlValue());
                     }
                 } else if (leToolBarPanel.signalMastButton.isSelected()) {
                     addSignalMast();
@@ -3741,7 +3737,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     && !event.isShiftDown() && !event.isControlDown()) {
                 //controlling turntable, in edit mode
                 LayoutTurntable t = (LayoutTurntable) selectedObject;
-                t.setPosition(selectedHitPointType.getValue() - HitPointType.TURNTABLE_RAY_0.getValue());
+                t.setPosition(selectedHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
             } else if ((selectedObject != null) && ((selectedHitPointType == HitPointType.TURNOUT_CENTER)
                     || (selectedHitPointType == HitPointType.SLIP_CENTER)
                     || (selectedHitPointType == HitPointType.SLIP_LEFT)
@@ -3790,7 +3786,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling turntable out of edit mode
             LayoutTurntable t = (LayoutTurntable) selectedObject;
-            t.setPosition(selectedHitPointType.getValue() - HitPointType.TURNTABLE_RAY_0.getValue());
+            t.setPosition(selectedHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
         } else if ((event.isPopupTrigger() || delayedPopupTrigger) && (!isDragging)) {
             // requesting marker popup out of edit mode
             LocoIcon lo = checkMarkerPopUps(dLoc);
@@ -3882,7 +3878,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             } else if (HitPointType.isTurntableRayHitType(foundHitPointType)) {
                 LayoutTurntable t = (LayoutTurntable) foundTrack;
                 if (t.isTurnoutControlled()) {
-                    ((LayoutTurntable) foundTrack).showRayPopUp(event, foundHitPointType.getValue() - HitPointType.TURNTABLE_RAY_0.getValue());
+                    ((LayoutTurntable) foundTrack).showRayPopUp(event, foundHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
                 }
             } else if (HitPointType.isPopupHitType(foundHitPointType)) {
                 foundTrack.showPopup(event);
@@ -4212,7 +4208,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 default: {
                     if (HitPointType.isTurntableRayHitType(foundHitPointType)) {
                         LayoutTurntable tt = (LayoutTurntable) foundTrack;
-                        int ray = foundHitPointType.getValue() - HitPointType.TURNTABLE_RAY_0.getValue();
+                        int ray = foundHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue();
 
                         if (tt.getRayConnectIndexed(ray) == null) {
                             tt.setRayConnect(t, ray);
@@ -5017,17 +5013,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
                         default: {
                             if (HitPointType.isBezierHitType(foundHitPointType)) {
-                                int index = selectedHitPointType.getValue() - HitPointType.BEZIER_CONTROL_POINT_0.getValue();
+                                int index = selectedHitPointType.getXmlValue() - HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue();
                                 ((TrackSegment) selectedObject).setBezierControlPoint(currentPoint, index);
                             } else if ((selectedHitPointType == HitPointType.SHAPE_CENTER)) {
                                 ((LayoutShape) selectedObject).setCoordsCenter(currentPoint);
                             } else if (LayoutShape.isShapePointOffsetHitPointType(selectedHitPointType)) {
-                                int index = selectedHitPointType.getValue() - HitPointType.SHAPE_POINT_0.getValue();
+                                int index = selectedHitPointType.getXmlValue() - HitPointType.SHAPE_POINT_0.getXmlValue();
                                 ((LayoutShape) selectedObject).setPoint(index, currentPoint);
                             } else if (HitPointType.isTurntableRayHitType(selectedHitPointType)) {
                                 LayoutTurntable turn = (LayoutTurntable) selectedObject;
                                 turn.setRayCoordsIndexed(currentPoint.getX(), currentPoint.getY(),
-                                        selectedHitPointType.getValue() - HitPointType.TURNTABLE_RAY_0.getValue());
+                                        selectedHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
                             }
                             break;
                         }
@@ -5551,7 +5547,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             default: {
                 if (HitPointType.isTurntableRayHitType(fromPointType)) {
                     ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
-                            fromPointType.getValue() - HitPointType.TURNTABLE_RAY_0.getValue());
+                            fromPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
                 }
                 break;
             }
@@ -6432,7 +6428,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             default: {
                 if (HitPointType.isTurntableRayHitType(type)) {
-                    ((LayoutTurntable) o).setRayConnect(null, type.getValue() - HitPointType.TURNTABLE_RAY_0.getValue());
+                    ((LayoutTurntable) o).setRayConnect(null, type.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
                 }
                 break;
             }
@@ -7894,30 +7890,30 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /*
-            //TODO: This compiles but I can't get the syntax correct to pass the (sub-)class
-            public List<LayoutTrack> getLayoutTracksOfClass(@Nonnull Class<LayoutTrack> layoutTrackClass) {
-            return layoutTrackList.stream()
-            .filter(item -> item instanceof PositionablePoint)
-            .filter(layoutTrackClass::isInstance)
-            //.map(layoutTrackClass::cast)  // TODO: Do we need this? if not dead-code-strip
-            .collect(Collectors.toList());
-            }
+    //TODO: This compiles but I can't get the syntax correct to pass the (sub-)class
+    public List<LayoutTrack> getLayoutTracksOfClass(@Nonnull Class<LayoutTrack> layoutTrackClass) {
+    return layoutTrackList.stream()
+    .filter(item -> item instanceof PositionablePoint)
+    .filter(layoutTrackClass::isInstance)
+    //.map(layoutTrackClass::cast)  // TODO: Do we need this? if not dead-code-strip
+    .collect(Collectors.toList());
+    }
 
-            //TODO: This compiles but I can't get the syntax correct to pass the array of (sub-)classes
-            public List<LayoutTrack> getLayoutTracksOfClasses(@Nonnull List<Class<? extends LayoutTrack>> layoutTrackClasses) {
-            return layoutTrackList.stream()
-            .filter(o -> layoutTrackClasses.contains(o.getClass()))
-            .collect(Collectors.toList());
-            }
+    //TODO: This compiles but I can't get the syntax correct to pass the array of (sub-)classes
+    public List<LayoutTrack> getLayoutTracksOfClasses(@Nonnull List<Class<? extends LayoutTrack>> layoutTrackClasses) {
+    return layoutTrackList.stream()
+    .filter(o -> layoutTrackClasses.contains(o.getClass()))
+    .collect(Collectors.toList());
+    }
 
-            //TODO: This compiles but I can't get the syntax correct to pass the (sub-)class
-            public List<LayoutTrack> getLayoutTracksOfClass(@Nonnull Class<? extends LayoutTrack> layoutTrackClass) {
-            return getLayoutTracksOfClasses(new ArrayList<>(Arrays.asList(layoutTrackClass)));
-            }
+    //TODO: This compiles but I can't get the syntax correct to pass the (sub-)class
+    public List<LayoutTrack> getLayoutTracksOfClass(@Nonnull Class<? extends LayoutTrack> layoutTrackClass) {
+    return getLayoutTracksOfClasses(new ArrayList<>(Arrays.asList(layoutTrackClass)));
+    }
 
-            public List<PositionablePoint> getPositionablePoints() {
-            return getLayoutTracksOfClass(PositionablePoint);
-            }
+    public List<PositionablePoint> getPositionablePoints() {
+    return getLayoutTracksOfClass(PositionablePoint);
+    }
      */
     private @Nonnull
     Stream<LayoutTrack> getLayoutTracksOfClass(Class<? extends LayoutTrack> layoutTrackClass) {

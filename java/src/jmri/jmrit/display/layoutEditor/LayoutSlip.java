@@ -467,8 +467,6 @@ public class LayoutSlip extends LayoutTurnout {
             case SLIP_D:
                 result = getCoordsD();
                 break;
-            case SLIP_CENTER:
-                break;
             case SLIP_LEFT:
                 result = getCoordsLeft();
                 break;

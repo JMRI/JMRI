@@ -293,7 +293,7 @@ public class LayoutShape {
      * @return the maximum number of points
      */
     public int getMaxNumberPoints() {
-        return LayoutEditor.HitPointType.SHAPE_POINT_9.getValue() - LayoutEditor.HitPointType.SHAPE_POINT_0.getValue() + 1;
+        return LayoutEditor.HitPointType.SHAPE_POINT_9.getXmlValue() - LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue() + 1;
     }
 
     /**
@@ -333,7 +333,7 @@ public class LayoutShape {
             }
             for (int idx = 0; idx < shapePoints.size(); idx++) {
                 if (r.contains(shapePoints.get(idx).getPoint())) {
-                    result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.SHAPE_POINT_0.getValue() + idx);
+                    result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue() + idx);
                     break;
                 }
             }
@@ -343,7 +343,7 @@ public class LayoutShape {
                 distance = MathUtil.distance(shapePoints.get(idx).getPoint(), hitPoint);
                 if (distance < minDistance) {
                     minDistance = distance;
-                    result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.SHAPE_POINT_0.getValue() + idx);
+                    result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue() + idx);
                 }
             }
         }
@@ -356,8 +356,8 @@ public class LayoutShape {
     }
 
     public static boolean isShapePointOffsetHitPointType(LayoutEditor.HitPointType t) {
-        return ((t.getValue() >= LayoutEditor.HitPointType.SHAPE_POINT_0.getValue())
-                && (t.getValue() <= LayoutEditor.HitPointType.SHAPE_POINT_9.getValue()));
+        return ((t.compareTo(LayoutEditor.HitPointType.SHAPE_POINT_0) >= 0)
+                && (t.compareTo(LayoutEditor.HitPointType.SHAPE_POINT_9) <= 0));
     }
 
     /**
@@ -439,7 +439,7 @@ public class LayoutShape {
             popup = new JPopupMenu();
         }
         if (layoutEditor.isEditable()) {
-            int pointIndex = hitPointType.getValue() - LayoutEditor.HitPointType.SHAPE_POINT_0.getValue();
+            int pointIndex = hitPointType.getXmlValue() - LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue();
 
             //JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutShape")) + getName());
             JMenuItem jmi = popup.add(Bundle.getMessage("ShapeNameMenuItemTitle", getName()));
