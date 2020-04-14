@@ -138,7 +138,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         }
     }
 
-    public synchronized void sendHighPriorityXNetMessage(XNetMessage m, XNetListener reply) {
+    public void sendHighPriorityXNetMessage(XNetMessage m, XNetListener reply) {
         super.sendMessage(m.asPriority(true), reply);
     }
     

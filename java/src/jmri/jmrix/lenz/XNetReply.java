@@ -1,5 +1,8 @@
 package jmri.jmrix.lenz;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Represents a single response from the XpressNet.
  *
@@ -30,6 +33,11 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * An action has been already taken based on this message.
      */
     public static final int CONSUMED_ACTION = 0x01;
+    
+    /**
+     * Special case for actions provoked by feedbacks, on their even turnouts.
+     */
+    public static final int CONSUMED_ACTION_EVEN = 0x02;
     
     /**
      * Records that a message was already processed. Individual bits
@@ -400,6 +408,21 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     public boolean isConsumed(int mask) {
         return (consumed & mask) > 0;
     }
+    
+    /**
+     * Returns an appropriate 'action consumed' bit. For other than single feedbacks,
+     * it always returns {@link #CONSUMED_ACTION}. For single item feedbacks, it returns
+     * {@link #CONSUMED_ACTION_EVEN} for even accessory addresses.
+     * 
+     * @param accessoryAddr accessory address.
+     * @return bit for {@link #isConsumed} or {@link #markConsumed(int)}.
+     */
+    public int getFeedbackConsumedBit(int accessoryAddr) {
+        if (!isFeedbackMessage()) {
+            return CONSUMED_ACTION;
+        }
+        return (accessoryAddr & 0x01) > 0 ? CONSUMED_ACTION : CONSUMED_ACTION_EVEN;
+    }
 
     /**
      * Marks the reply as fully consumed.
@@ -414,16 +437,42 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * state did not change (it was already consumed), returns true. Can be
      * used in {@link code} if condition to check whether to proceed with an
      * action, and mark the reply consumed by a single call.
+     * <p>
+     * <b>Note:</b> If processing a feedback, consider using {@link #markFeedbackActionConsumed}.
+     * Feedback is delivered to both devices in the feedback pair equally, using the
+     * specialized method ensures that one device does not lock out the other.
      * @param selector  bits to check/test.
      * @return true, if all aspects were already consumed.
      */
     public boolean markConsumed(int selector) {
         int c = this.consumed;
-        assert selector >= 0 && selector < 0x100;
+        assert selector > 0 && selector < 0x100;
         this.consumed |= selector;
         return c == consumed;
     }
     
+    /**
+     * Special variant, which works better with feedback messages.
+     * Feedbacks are processed by both turnouts in the pair; each of them eventually
+     * takes an action, and they should not block each other. This method will
+     * use {@link #CONSUMED_ACTION} or {@link #CONSUMED_ACTION_EVEN} depending
+     * on accessory address. It will do nothing and return {@code false} on
+     * feedback broadcasts with more items - this may change in the future.
+     * <p/>
+     * For general description, see {@link #markConsumed(int)}.
+     * @param accessoryAddr the turnout number.
+     * @return true, if consumed.
+     */
+    public boolean markFeedbackActionConsumed(int accessoryAddr) {
+        if (!isFeedbackBroadcastMessage()) {
+            return markConsumed(CONSUMED_ACTION);
+        } else if (isFeedbackMessage()) {
+            return markConsumed(getFeedbackConsumedBit(accessoryAddr));
+        }
+        log.warn("Actions for multiple-entry feedback broadcasts not supported.");
+        return false;
+    }
+
     /**
      * If this is a feedback broadcast message and the specified startByte is
      * the address byte of an address byte/data byte pair for a feedback
@@ -761,6 +810,12 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 || (this.isFeedbackMessage() && reallyUnsolicited));
     }
 
+    /**
+     * Resets the unsolicited feedback flag. If the feedback was received
+     * as a broadcast - unsolicited, this method <b>will not cause</b> the
+     * {@link #isUnsolicited()} to return {@code false}.  Messages sent
+     * as unsolicited by the command station can not be turned to solicited.
+     */
     public final void resetUnsolicited() {
         reallyUnsolicited = false;
     }
@@ -1622,4 +1677,5 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         return (text);
     }
 
+    private static final Logger log = LoggerFactory.getLogger(XNetReply.class);
 }
