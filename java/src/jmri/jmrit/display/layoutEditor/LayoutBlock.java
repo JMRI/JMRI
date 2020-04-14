@@ -757,7 +757,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     p.setToBlockDirection(lc.getReverseDirection());
                     p.setFromBlockDirection(lc.getDirection());
                 }
-                List<BeanSetting> beans = p.getSettings();
+                List<BeanSetting> beans = new ArrayList<>(p.getSettings());
                 for (BeanSetting bean : beans) {
                     p.removeSetting(bean);
                 }
