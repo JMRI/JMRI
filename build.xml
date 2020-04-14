@@ -761,7 +761,7 @@
             <jvmarg value="-Xmx1536m"/>
 	    <jvmarg line="${test-single.jvmargs}"/>
         </java>    
-	<fail>
+        <fail>
             <condition>
                 <istrue value="${test.failed}" />
             </condition>
@@ -807,7 +807,48 @@
         </fail>
     </target>
 
+    <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test non headless." name="test-single-coverage-head">
+        <mkdir dir="${tempdir}"/>
+        <mkdir dir="${testreport}"/>
+        <jacoco:agent property="jacocoagent" destfile="${jacocoexec}" excludes="org.slf4j.*" />
+        <property name="test-single.jvmargs" value=""/>
+        <java classpathref="test.class.path" classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true"  >
+            <sysproperty key="wdm.forceCache" value="true"/>
+            <!-- wdm.targetPath specifies the locaion of the web drivers on appveyor. -->
+            <sysproperty key="wdm.targetPath" value="C:\Tools\WebDriver"/>
+
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
+            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="user.language" value="en"/>
+            <sysproperty key="user.country" value="US"/>
+            <sysproperty key="java.awt.headless" value="false"/>
+            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
+
+            <arg value="--scan-classpath"/>
+            <arg value="--details=none"/>
+            <arg value="--include-engine=junit-jupiter"/>
+            <arg value="--include-engine=junit-vintage"/>
+            <arg line="-n ${test.includes}"/>
+            <arg line="--reports-dir ${testreport}" />
+            <jvmarg value="-Xmx1536m"/>
+            <jvmarg value="${jacocoagent}"/>
+	    <jvmarg line="${test-single.jvmargs}"/>
+        </java>    
+        <fail>
+            <condition>
+                <istrue value="${test.failed}" />
+            </condition>
+        </fail>
+    </target>
+
     <target name="single-test-coveragereport" depends="test-single-coverage, coveragereport" description="Generate Test Coverage Report from a single test" />
+
+    <target name="single-test-coveragereport-head" depends="test-single-coverage-head, coveragereport" description="Generate Test Coverage Report from a single test non-headless" />
 
     <target name="single-test-coveragecheck" depends="test-single-coverage, coveragecheck" description="Generate Test Coverage check from a single test" />
 

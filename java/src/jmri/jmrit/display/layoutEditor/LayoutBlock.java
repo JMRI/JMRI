@@ -2624,7 +2624,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 boolean allowAddition = false;
                 for (int i = 0; i < maxt.size(); i++) {
                     LayoutTurnout turn = maxt.get(i).getObject();
-                    if (turn.type == LayoutTurnout.DOUBLE_XOVER) {
+                    if (turn.type == LayoutTurnout.TurnoutType.DOUBLE_XOVER) {
                         allowAddition = true;
                         //The double crossover gets reported in the opposite setting.
                         if (maxt.get(i).getExpectedState() == 2) {

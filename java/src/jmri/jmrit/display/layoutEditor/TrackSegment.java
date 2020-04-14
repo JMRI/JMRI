@@ -3859,7 +3859,7 @@ public class TrackSegment extends LayoutTrack {
                     //have connection to a turnout, is block different
                     LayoutTurnout lt = (LayoutTurnout) getConnect1();
                     lb2 = lt.getLayoutBlock();
-                    if (lt.getTurnoutType() > LayoutTurnout.WYE_TURNOUT) {
+                    if (lt.hasEnteringDoubleTrack() ) {
                         //not RH, LH, or WYE turnout - other blocks possible
                         if ((type1 == TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
                             lb2 = lt.getLayoutBlockB();
@@ -3921,7 +3921,7 @@ public class TrackSegment extends LayoutTrack {
                     //have connection to a turnout
                     LayoutTurnout lt = (LayoutTurnout) getConnect2();
                     lb2 = lt.getLayoutBlock();
-                    if (lt.getTurnoutType() > LayoutTurnout.WYE_TURNOUT) {
+                    if (lt.hasEnteringDoubleTrack()) {
                         //not RH, LH, or WYE turnout - other blocks possible
                         if ((type2 == TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
                             lb2 = lt.getLayoutBlockB();

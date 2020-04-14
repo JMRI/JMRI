@@ -82,11 +82,13 @@ public class LevelXing extends LayoutTrack {
     private Point2D dispA = new Point2D.Double(-20.0, 0.0);
     private Point2D dispB = new Point2D.Double(-14.0, 14.0);
 
-    public static final int POINTA = 0x01;
-    public static final int POINTB = 0x10;
-    public static final int POINTC = 0x20;
-    public static final int POINTD = 0x30;
-
+    // public static final int POINTA = 0x01;
+    // public static final int POINTB = 0x10;
+    // public static final int POINTC = 0x20;
+    // public static final int POINTD = 0x30;
+    public enum Geometry {
+        POINTA, POINTB, POINTC, POINTD
+    }
     /**
      * Constructor method
      */
@@ -121,7 +123,7 @@ public class LevelXing extends LayoutTrack {
         return result;
     }
 
-    public SignalHead getSignalHead(int loc) {
+    public SignalHead getSignalHead(Geometry loc) {
         NamedBeanHandle<SignalHead> namedBean = null;
         switch (loc) {
             case POINTA:
@@ -146,7 +148,7 @@ public class LevelXing extends LayoutTrack {
         return null;
     }
 
-    public SignalMast getSignalMast(int loc) {
+    public SignalMast getSignalMast(Geometry loc) {
         NamedBeanHandle<SignalMast> namedBean = null;
         switch (loc) {
             case POINTA:
@@ -171,7 +173,7 @@ public class LevelXing extends LayoutTrack {
         return null;
     }
 
-    public Sensor getSensor(int loc) {
+    public Sensor getSensor(Geometry loc) {
         NamedBeanHandle<Sensor> namedBean = null;
         switch (loc) {
             case POINTA:
@@ -321,19 +323,19 @@ public class LevelXing extends LayoutTrack {
             }
         }
         if (nb instanceof SignalHead) {
-            if (nb.equals(getSignalHead(POINTA))) {
+            if (nb.equals(getSignalHead(Geometry.POINTA))) {
                 setSignalAName(null);
                 return;
             }
-            if (nb.equals(getSignalHead(POINTB))) {
+            if (nb.equals(getSignalHead(Geometry.POINTB))) {
                 setSignalBName(null);
                 return;
             }
-            if (nb.equals(getSignalHead(POINTC))) {
+            if (nb.equals(getSignalHead(Geometry.POINTC))) {
                 setSignalCName(null);
                 return;
             }
-            if (nb.equals(getSignalHead(POINTD))) {
+            if (nb.equals(getSignalHead(Geometry.POINTD))) {
                 setSignalDName(null);
                 return;
             }
