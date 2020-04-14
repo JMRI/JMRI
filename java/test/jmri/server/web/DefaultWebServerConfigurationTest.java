@@ -1,14 +1,13 @@
 package jmri.server.web;
 
-import java.lang.reflect.InvocationTargetException;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.List;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -20,13 +19,13 @@ public class DefaultWebServerConfigurationTest {
 
     private DefaultWebServerConfiguration instance;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         instance = new DefaultWebServerConfiguration();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         instance = null;
         JUnitUtil.tearDown();
@@ -34,7 +33,7 @@ public class DefaultWebServerConfigurationTest {
 
     @Test
     public void testConstructor() {
-        Assert.assertNotNull("Default constructor", instance);
+        assertThat(instance).as("Default constructor").isNotNull();
     }
 
     /**
@@ -42,9 +41,12 @@ public class DefaultWebServerConfigurationTest {
      */
     @Test
     public void testGetFilePaths() {
-        HashMap<String, String> result = instance.getFilePaths();
-        Assert.assertNotNull("Default file paths", result);
-        Assert.assertEquals("Default file paths", 15, result.size());
+        assertThat(instance.getFilePaths())
+                .as("Default file paths")
+                .satisfies(paths -> {
+                    assertThat(paths).isNotNull();
+                    assertThat(paths.size()).isEqualTo(15);
+                });
     }
 
     /**
@@ -53,9 +55,12 @@ public class DefaultWebServerConfigurationTest {
      */
     @Test
     public void testGetRedirectedPaths() {
-        HashMap<String, String> result = instance.getRedirectedPaths();
-        Assert.assertNotNull("Default redirections", result);
-        Assert.assertTrue("Default redirections", result.isEmpty());
+        assertThat(instance.getRedirectedPaths())
+                .as("Default redirections")
+                .satisfies(paths -> {
+                    assertThat(paths).isNotNull();
+                    assertThat(paths).isEmpty();
+                });
     }
 
     /**
@@ -63,28 +68,25 @@ public class DefaultWebServerConfigurationTest {
      */
     @Test
     public void testGetForbiddenPaths() {
-        List<String> result = instance.getForbiddenPaths();
-        Assert.assertNotNull("Default forbidden paths", result);
-        Assert.assertTrue("Default forbidden paths", result.isEmpty());
+        assertThat(instance.getForbiddenPaths())
+                .as("Default forbidden paths")
+                .satisfies(paths -> {
+                    assertThat(paths).isNotNull();
+                    assertThat(paths).isEmpty();
+                });
     }
 
     /**
      * Test of load method with missing/non-existent resource.
      * 
-     * @throws SecurityException         if unable to use reflection
-     * @throws NoSuchMethodException     if unable to use reflection
-     * @throws InvocationTargetException if unable to use reflection
-     * @throws IllegalArgumentException  if unable to use reflection
-     * @throws IllegalAccessException    if unable to use reflection
+     * @throws Exception if unable to use reflection
      */
     @Test
-    public void testLoadWithMissingResource() throws NoSuchMethodException, SecurityException, IllegalAccessException,
-            IllegalArgumentException, InvocationTargetException {
-        Class<?>[] classes = {HashMap.class, String.class};
-        Object[] params = {new HashMap<String, String>(), "no.such.resource"};
-        Method method = instance.getClass().getDeclaredMethod("loadMap", classes);
+    public void testLoadWithMissingResource() throws Exception {
+        Method method = instance.getClass()
+                .getDeclaredMethod("loadMap", HashMap.class, String.class);
         method.setAccessible(true);
-        method.invoke(instance, params);
+        method.invoke(instance, new HashMap<String, String>(), "no.such.resource");
         JUnitAppender.assertErrorMessage("Unable to load no.such.resource");
     }
 }
