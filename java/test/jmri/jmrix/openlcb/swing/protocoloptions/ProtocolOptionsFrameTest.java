@@ -8,7 +8,6 @@ import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import jmri.jmrix.openlcb.OlcbSystemConnectionMemo;
 
-import static org.junit.Assert.*;
 
 /**
  * @author Balazs Racz, (C) 2018.
@@ -31,6 +30,7 @@ public class ProtocolOptionsFrameTest extends jmri.util.JmriJFrameTestBase {
     @Override
     public void tearDown() {
         scm.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
 }

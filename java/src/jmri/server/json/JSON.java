@@ -1,5 +1,9 @@
 package jmri.server.json;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Common and utility constants used in the JMRI JSON protocol.
  * <p>
@@ -12,11 +16,37 @@ package jmri.server.json;
 public final class JSON {
 
     /**
+     * JSON protocol version for requesting version 5.x.y protocol. {@value #V5}
+     */
+    public static final String V5 = "v5";
+
+    /**
+     * List of supported versions, as used in the HTTP URL paths.
+     * <p>
+     * <strong>Note:</strong> this being a List&lt;String&gt; is not stable API
+     * and is subject to change without notice.
+     */
+    public static final List<String> VERSIONS = Collections.unmodifiableList(Arrays.asList(V5));
+
+    /**
+     * JMRI JSON protocol version 5 complete version. See
+     * {@link jmri.server.json} for the version history. Starting with 5.0.0,
+     * this is a semantic version string; prior to that, it is just an X.Y
+     * version string.
+     */
+    public static final String V5_PROTOCOL_VERSION = "5.4.0"; // NOI18N
+
+    /**
      * JMRI JSON protocol version. See {@link jmri.server.json} for the version
      * history. Starting with 5.0.0, this is a semantic version string; prior to
      * that, it is just an X.Y version string.
      */
-    public static final String JSON_PROTOCOL_VERSION = "5.1.0"; // NOI18N
+    public static final String JSON_PROTOCOL_VERSION = V5_PROTOCOL_VERSION; // NOI18N
+
+    /**
+     * {@value #VERSION}
+     */
+    public static final String VERSION = "version"; // NOI18N
 
     /* JSON structure */
     /**
@@ -205,6 +235,10 @@ public final class JSON {
      * {@value #IS_AUTO_START}
      */
     public static final String IS_AUTO_START = "isAutoStart"; // NOI18N
+    /**
+     * {@value #IS_NEXT_PROFILE}
+     */
+    public static final String IS_NEXT_PROFILE = "isNextProfile"; // NOI18N
 
     /* JSON data types */
     /**

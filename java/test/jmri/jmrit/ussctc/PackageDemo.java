@@ -21,8 +21,8 @@ public class PackageDemo {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initMemoryManager();  
-        JUnitUtil.initShutDownManager();
         JUnitUtil.resetProfileManager();
 
         // load file that defines various NamedBeans and pops a demo panel

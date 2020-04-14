@@ -10,6 +10,7 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -18,7 +19,7 @@ import org.junit.Test;
  * this forms the base for test classes, including providing some common tests
  *
  * @author	Bob Jacobsen 2003, 2006, 2008, 2016
- * @author      Paul Bender Copyright(C) 2016
+ * @author  Paul Bender Copyright(C) 2016
  */
 public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManagerTestBase<SensorManager, Sensor> {
 
@@ -90,7 +91,6 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
         Assert.assertEquals(0, l.getNamedBeanList().size());
         Assert.assertEquals(0, l.getNamedBeanSet().size());
         Assert.assertEquals(0, l.getSystemNameList().size());
-        Assert.assertEquals(0, l.getSystemNameArray().length);
         jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
         Assert.assertEquals(0, l.getObjectCount());
     }
@@ -182,6 +182,12 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
     @Test
     public void testPullResistanceConfigurable(){
        Assert.assertFalse("Pull Resistance Configurable", l.isPullResistanceConfigurable());
+    }
+
+    @Ignore("Sensor managers doesn't support auto system names")
+    @Test
+    @Override
+    public void testAutoSystemNames() {
     }
 
     /**

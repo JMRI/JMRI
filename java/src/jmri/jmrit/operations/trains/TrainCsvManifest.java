@@ -5,24 +5,25 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.InstanceManager;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 /**
  * Builds a train's manifest using Comma Separated Values (csv).
@@ -32,207 +33,192 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainCsvManifest extends TrainCsvCommon {
 
-    EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
-    CarManager carManager = InstanceManager.getDefault(CarManager.class);
-    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
-
-    private final static Logger log = LoggerFactory.getLogger(TrainCsvManifest.class);
-
     public TrainCsvManifest(Train train) {
         // create comma separated value manifest file
         File file = InstanceManager.getDefault(TrainManagerXml.class).createTrainCsvManifestFile(train.getName());
 
-        PrintWriter fileOut;
-
-        try {
-            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")),// NOI18N
-            true); // NOI18N
-        } catch (IOException e) {
-            log.error("Can not open CSV manifest file: {}", file.getName());
-            return;
-        }
-        // build header
-        addLine(fileOut, HEADER);
-        addLine(fileOut, RN + ESC + Setup.getRailroadName() + ESC);
-        addLine(fileOut, TN + ESC + train.getName() + ESC);
-        addLine(fileOut, TM + ESC + train.getDescription() + ESC);
-        addLine(fileOut, PRNTR + ESC
-                + locationManager.getLocationByName(train.getTrainDepartsName()).getDefaultPrinterName() + ESC);
-        // add logo
-        String logoURL = FileUtil.getExternalFilename(Setup.getManifestLogoURL());
-        if (!train.getManifestLogoPathName().equals(Train.NONE)) {
-            logoURL = FileUtil.getExternalFilename(train.getManifestLogoPathName());
-        }
-        if (!logoURL.equals("")) {
-            addLine(fileOut, LOGO + logoURL);
-        }
-        addLine(fileOut, VT + getDate(true));
-        // train comment can have multiple lines
-        if (!train.getComment().equals(Train.NONE)) {
-            String[] comments = train.getComment().split(NEW_LINE); // NOI18N
-            for (String comment : comments) {
-                addLine(fileOut, TC + ESC + comment + ESC);
+        try (CSVPrinter fileOut = new CSVPrinter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),
+                CSVFormat.DEFAULT)) {
+            // build header
+            printHeader(fileOut);
+            printRailroadName(fileOut, Setup.getRailroadName());
+            printTrainName(fileOut, train.getName());
+            printTrainDescription(fileOut, train.getDescription());
+            printPrinterName(fileOut, locationManager.getLocationByName(train.getTrainDepartsName()).getDefaultPrinterName());
+            // add logo
+            String logoURL = FileUtil.getExternalFilename(Setup.getManifestLogoURL());
+            if (!train.getManifestLogoPathName().equals(Train.NONE)) {
+                logoURL = FileUtil.getExternalFilename(train.getManifestLogoPathName());
             }
-        }
-        if (Setup.isPrintRouteCommentsEnabled()) {
-            addLine(fileOut, RC + ESC + train.getRoute().getComment() + ESC);
-        }
-
-        // get engine and car lists
-        List<Engine> engineList = engineManager.getByTrainBlockingList(train);
-        List<Car> carList = carManager.getByTrainDestinationList(train);
-
-        int cars = 0;
-        int emptyCars = 0;
-        boolean newWork = false;
-        String previousRouteLocationName = null;
-        List<RouteLocation> routeList = train.getRoute().getLocationsBySequenceList();
-        for (RouteLocation rl : routeList) {
-            // print info only if new location
-            String routeLocationName = splitString(rl.getName());
-            String locationName = routeLocationName;
-            if (locationName.contains(DEL)) {
-                log.debug("location name has delimiter: " + locationName);
-                locationName = ESC + routeLocationName + ESC;
+            if (!logoURL.isEmpty()) {
+                fileOut.printRecord("LOGO", Bundle.getMessage("csvLogoFilePath"), logoURL);
             }
-            if (!routeLocationName.equals(previousRouteLocationName)) {
-                addLine(fileOut, LN + locationName);
-                if (rl != train.getRoute().getDepartsRouteLocation()) {
-                    addLine(fileOut, AT + train.getExpectedArrivalTime(rl));
+            printValidity(fileOut, getDate(true));
+            // train comment can have multiple lines
+            if (!train.getComment().equals(Train.NONE)) {
+                String[] comments = train.getComment().split(NEW_LINE);
+                for (String comment : comments) {
+                    fileOut.printRecord("TC", Bundle.getMessage("csvTrainComment"), comment); // NOI18N
                 }
-                if (rl == train.getRoute().getDepartsRouteLocation()) {
-                    addLine(fileOut, DT + train.getFormatedDepartureTime());
-                } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
-                    addLine(fileOut, DTR + rl.getFormatedDepartureTime());
-                } else {
-                    addLine(fileOut, EDT + train.getExpectedDepartureTime(rl));
-                }
+            }
+            if (Setup.isPrintRouteCommentsEnabled()) {
+                fileOut.printRecord("RC", Bundle.getMessage("csvRouteComment"), train.getRoute().getComment()); // NOI18N
+            }
 
-                Location location = rl.getLocation();
-                // add location comment
-                if (Setup.isPrintLocationCommentsEnabled() && !location.getComment().equals(Location.NONE)) {
-                    // location comment can have multiple lines
-                    String[] comments = location.getComment().split(NEW_LINE); // NOI18N
-                    for (String comment : comments) {
-                        addLine(fileOut, LC + ESC + comment + ESC);
+            // get engine and car lists
+            List<Engine> engineList = engineManager.getByTrainBlockingList(train);
+            List<Car> carList = carManager.getByTrainDestinationList(train);
+
+            boolean newWork = false;
+            String previousRouteLocationName = null;
+            List<RouteLocation> routeList = train.getRoute().getLocationsBySequenceList();
+            for (RouteLocation rl : routeList) {
+                // print info only if new location
+                String routeLocationName = splitString(rl.getName());
+                String locationName = routeLocationName;
+                if (!routeLocationName.equals(previousRouteLocationName)) {
+                    printLocationName(fileOut, locationName);
+                    if (rl != train.getRoute().getDepartsRouteLocation()) {
+                        fileOut.printRecord("AT", Bundle.getMessage("csvArrivalTime"), train.getExpectedArrivalTime(rl)); // NOI18N
+                    }
+                    if (rl == train.getRoute().getDepartsRouteLocation()) {
+                        fileOut.printRecord("DT", Bundle.getMessage("csvDepartureTime"), train.getFormatedDepartureTime()); // NOI18N
+                    } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
+                        fileOut.printRecord("DTR", Bundle.getMessage("csvDepartureTimeRoute"), rl.getFormatedDepartureTime()); // NOI18N
+                    } else {
+                        fileOut.printRecord("EDT", Bundle.getMessage("csvEstimatedDepartureTime"), train.getExpectedDepartureTime(rl)); // NOI18N
+                    }
+
+                    Location location = rl.getLocation();
+                    // add location comment
+                    if (Setup.isPrintLocationCommentsEnabled() && !location.getComment().equals(Location.NONE)) {
+                        // location comment can have multiple lines
+                        String[] comments = location.getComment().split(NEW_LINE); // NOI18N
+                        for (String comment : comments) {
+                            printLocationComment(fileOut, comment);
+                        }
+                    }
+                    if (Setup.isTruncateManifestEnabled() && location.isSwitchListEnabled()) {
+                        fileOut.printRecord("TRUN", Bundle.getMessage("csvTruncate"));
                     }
                 }
-                if (Setup.isTruncateManifestEnabled() && location.isSwitchListEnabled()) {
-                    addLine(fileOut, TRUN);
+                // add route comment
+                if (!rl.getComment().equals(RouteLocation.NONE)) {
+                    printRouteLocationComment(fileOut, rl.getComment());
                 }
-            }
-            // add route comment
-            if (!rl.getComment().equals(RouteLocation.NONE)) {
-                addLine(fileOut, RLC + ESC + rl.getComment() + ESC);
-            }
 
-            printTrackComments(fileOut, rl, carList);
+                printTrackComments(fileOut, rl, carList);
 
-            // engine change or helper service?
-            checkForEngineOrCabooseChange(fileOut, train, rl);
+                // engine change or helper service?
+                checkForEngineOrCabooseChange(fileOut, train, rl);
 
-            for (Engine engine : engineList) {
-                if (engine.getRouteLocation() == rl) {
-                    fileOutCsvEngine(fileOut, engine, PL);
+                for (Engine engine : engineList) {
+                    if (engine.getRouteLocation() == rl) {
+                        printEngine(fileOut, engine, "PL", Bundle.getMessage("csvPickUpLoco"));
+                    }
                 }
-            }
-            for (Engine engine : engineList) {
-                if (engine.getRouteDestination() == rl) {
-                    fileOutCsvEngine(fileOut, engine, SL);
+                for (Engine engine : engineList) {
+                    if (engine.getRouteDestination() == rl) {
+                        printEngine(fileOut, engine, "SL", Bundle.getMessage("csvSetOutLoco"));
+                    }
                 }
-            }
 
-            // block pick up cars by destination
-            boolean found = false; // begin blocking at rl
-            for (RouteLocation rld : routeList) {
-                if (rld != rl && !found) {
-                    continue;
+                // block pick up cars by destination
+                boolean found = false; // begin blocking at rl
+                for (RouteLocation rld : routeList) {
+                    if (rld != rl && !found) {
+                        continue;
+                    }
+                    found = true;
+                    for (Car car : carList) {
+                        if (car.getRouteLocation() == rl && car.getRouteDestination() == rld) {
+                            cars++;
+                            newWork = true;
+                            if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
+                                emptyCars++;
+                            }
+                            int count = 0;
+                            if (car.isUtility()) {
+                                count = countPickupUtilityCars(carList, car, IS_MANIFEST);
+                                if (count == 0) {
+                                    continue; // already done this set of utility cars
+                                }
+                            }
+                            printCar(fileOut, car, "PC", Bundle.getMessage("csvPickUpCar"), count);
+                        }
+                    }
                 }
-                found = true;
+                // car set outs
                 for (Car car : carList) {
-                    if (car.getRouteLocation() == rl && car.getRouteDestination() == rld) {
-                        cars++;
+                    if (car.getRouteDestination() == rl) {
+                        cars--;
                         newWork = true;
-                        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
-                            emptyCars++;
+                        if (InstanceManager.getDefault(CarLoads.class).getLoadType(car.getTypeName(), car.getLoadName()).equals(
+                                CarLoad.LOAD_TYPE_EMPTY)) {
+                            emptyCars--;
                         }
                         int count = 0;
                         if (car.isUtility()) {
-                            count = countPickupUtilityCars(carList, car, IS_MANIFEST);
+                            count = countSetoutUtilityCars(carList, car, false, IS_MANIFEST);
                             if (count == 0) {
                                 continue; // already done this set of utility cars
                             }
                         }
-                        fileOutCsvCar(fileOut, car, PC, count);
+                        printCar(fileOut, car, "SC", Bundle.getMessage("csvSetOutCar"), count);
                     }
                 }
-            }
-            // car set outs
-            for (Car car : carList) {
-                if (car.getRouteDestination() == rl) {
-                    cars--;
-                    newWork = true;
-                    if (InstanceManager.getDefault(CarLoads.class).getLoadType(car.getTypeName(), car.getLoadName()).equals(
-                            CarLoad.LOAD_TYPE_EMPTY)) {
-                        emptyCars--;
+                // car holds
+                List<Car> rsByLocation = carManager.getByLocationList();
+                List<Car> cList = new ArrayList<>();
+                for (Car rs : rsByLocation) {
+                    if (rs.getLocation() == rl.getLocation() && rs.getRouteLocation() == null && rs.getTrack() != null) {
+                        cList.add(rs);
                     }
-                    int count = 0;
-                    if (car.isUtility()) {
-                        count = countSetoutUtilityCars(carList, car, false, IS_MANIFEST);
-                        if (count == 0) {
-                            continue; // already done this set of utility cars
+                }
+                clearUtilityCarTypes(); // list utility cars by quantity
+                for (Car car : cList) {
+                    // list cars on tracks that only this train can service
+                    if (!car.getTrack().getLocation().isStaging()
+                            && car.getTrack().acceptsPickupTrain(train) && car.getTrack().getPickupIds().length == 1
+                            && car.getTrack().getPickupOption().equals(Track.TRAINS)) {
+                        int count = 0;
+                        if (car.isUtility()) {
+                            count = countPickupUtilityCars(cList, car, !IS_MANIFEST);
+                            if (count == 0) {
+                                continue; // already done this set of utility cars
+                            }
+                        }
+                        printCar(fileOut, car, "HOLD", Bundle.getMessage("csvHoldCar"), count);
+                    }
+                }
+                if (rl != train.getRoute().getTerminatesRouteLocation()) {
+                    // Is the next location the same as the previous?
+                    RouteLocation rlNext = train.getRoute().getNextRouteLocation(rl);
+                    String nextRouteLocationName = splitString(rlNext.getName());
+                    if (!routeLocationName.equals(nextRouteLocationName)) {
+                        if (newWork) {
+                            printTrainDeparts(fileOut, locationName, rl.getTrainDirectionString());
+                            printTrainLength(fileOut, train.getTrainLength(rl), emptyCars, cars);
+                            printTrainWeight(fileOut, train.getTrainWeight(rl));
+                            newWork = false;
+                        } else {
+                            fileOut.printRecord("NW", Bundle.getMessage("csvNoWork"));
                         }
                     }
-                    fileOutCsvCar(fileOut, car, SC, count);
+                } else {
+                    printTrainTerminates(fileOut, locationName);
                 }
+                previousRouteLocationName = routeLocationName;
             }
-            // car holds
-            List<Car> rsByLocation = InstanceManager.getDefault(CarManager.class).getByLocationList();
-            List<Car> cList = new ArrayList<>();
-            for (Car rs : rsByLocation) {
-                if (rs.getLocation() == rl.getLocation() && rs.getRouteLocation() == null && rs.getTrack() != null) {
-                    cList.add(rs);
-                }
-            }
-            clearUtilityCarTypes(); // list utility cars by quantity
-            for (Car car : cList) {
-                // list cars on tracks that only this train can service
-                if (!car.getTrack().getLocation().isStaging()
-                        && car.getTrack().acceptsPickupTrain(train) && car.getTrack().getPickupIds().length == 1
-                        && car.getTrack().getPickupOption().equals(Track.TRAINS)) {
-                    int count = 0;
-                    if (car.isUtility()) {
-                        count = countPickupUtilityCars(cList, car, !IS_MANIFEST);
-                        if (count == 0) {
-                            continue; // already done this set of utility cars
-                        }
-                    }
-                    fileOutCsvCar(fileOut, car, HOLD, count);
-                }
-            }
-            if (rl != train.getRoute().getTerminatesRouteLocation()) {
-                // Is the next location the same as the previous?
-                RouteLocation rlNext = train.getRoute().getNextRouteLocation(rl);
-                String nextRouteLocationName = splitString(rlNext.getName());
-                if (!routeLocationName.equals(nextRouteLocationName)) {
-                    if (newWork) {
-                        addLine(fileOut, TD + locationName + DEL + rl.getTrainDirectionString());
-                        addLine(fileOut, TL + train.getTrainLength(rl) + DEL + emptyCars + DEL + cars);
-                        addLine(fileOut, TW + train.getTrainWeight(rl));
-                        newWork = false;
-                    } else {
-                        addLine(fileOut, NW);
-                    }
-                }
-            } else {
-                addLine(fileOut, TT + locationName);
-            }
-            previousRouteLocationName = routeLocationName;
-        }
-        // Are there any cars that need to be found?
-        listCarsLocationUnknown(fileOut);
+            // Are there any cars that need to be found?
+            listCarsLocationUnknown(fileOut);
 
-        fileOut.flush();
-        fileOut.close();
+            fileOut.flush();
+            fileOut.close();
+        } catch (IOException e) {
+            log.error("Can not open CSV manifest file: {}", file.getName());
+        }
     }
+
+    private final static Logger log = LoggerFactory.getLogger(TrainCsvManifest.class);
 }

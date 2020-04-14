@@ -3,7 +3,7 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>7</minor>
+    <minor>17</minor>
     <test>4</test>
     <modifier>ish</modifier>
   </jmriversion>
@@ -21,13 +21,65 @@
       <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
-  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
-  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Jan 16 19:26:50 PST 2010" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />
-  <filehistory/>
-  <!--Written by JMRI version 4.7.4ish+jake+20170508T0631Z+R31e3f566ff on Sun May 07 23:31:56 PDT 2017 $Id$-->
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Jan 17 04:26:50 CET 2010" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Sun Sep 08 20:51:03 CEST 2019</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Sun Sep 08 20:51:22 CEST 2019</date>
+      <filename>/Users/egbertbroerse/Documents/Egbert/Computers/IntelliJ%20local/JMRI/java/test/jmri/configurexml/load/RevHistTest.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Sat Jan 16 21:09:24 PST 2010</date>
+          <filename>DecoderPro version 2.9.2 starts under Java 1.5.0_22 at Sat Jan 16 21:09:23 PST 2010</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sat Jan 16 21:09:25 PST 2010</date>
+          <filename>DecoderProConfig2.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sat Jan 16 21:09:43 PST 2010</date>
+          <filename>000rev.xml</filename>
+          <filehistory>
+            <operation>
+              <type>start</type>
+              <date>Sat Jan 16 19:26:50 PST 2010</date>
+              <filename>DecoderPro version 2.9.2 starts under Java 1.5.0_22 at Sat Jan 16 19:26:49 PST 2010</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Sat Jan 16 19:26:50 PST 2010</date>
+              <filename>DecoderProConfig2.xml</filename>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Sat Jan 16 19:27:12 PST 2010</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Sat Jan 16 21:10:15 PST 2010</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Sun Sep 08 20:51:33 CEST 2019</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.17.4ish+egbertbroerse+20190908T1850Z+R59b5cbdf37 on Sun Sep 08 20:51:33 CEST 2019-->
 </layout-config>

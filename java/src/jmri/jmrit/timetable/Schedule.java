@@ -12,9 +12,9 @@ public class Schedule {
      * @param layoutId The parent layout id.
      * @throws IllegalArgumentException SCHEDULE_ADD_FAIL
      */
-    public Schedule(int layoutId) throws IllegalArgumentException {
+    public Schedule(int layoutId) {
         if (_dm.getLayout(layoutId) == null) {
-            throw new IllegalArgumentException(_dm.SCHEDULE_ADD_FAIL);
+            throw new IllegalArgumentException(TimeTableDataManager.SCHEDULE_ADD_FAIL);
         }
         _scheduleId = _dm.getNextId("Schedule");  // NOI18N
         _layoutId = layoutId;
@@ -72,9 +72,9 @@ public class Schedule {
      * @param newStartHour The start hour in the range of 0 to 23.
      * @throws IllegalArgumentException (START_HOUR_RANGE).
      */
-    public void setStartHour(int newStartHour) throws IllegalArgumentException {
+    public void setStartHour(int newStartHour) {
         if (newStartHour < 0 || newStartHour > 23) {
-            throw new IllegalArgumentException(_dm.START_HOUR_RANGE);
+            throw new IllegalArgumentException(TimeTableDataManager.START_HOUR_RANGE);
         }
         int oldStartHour = _startHour;
         _startHour = newStartHour;
@@ -97,9 +97,9 @@ public class Schedule {
      * @param newDuration The duration in the range of 1 to 24.
      * @throws IllegalArgumentException (DURATION_RANGE).
      */
-    public void setDuration(int newDuration) throws IllegalArgumentException {
+    public void setDuration(int newDuration) {
         if (newDuration < 1 || newDuration > 24) {
-            throw new IllegalArgumentException(_dm.DURATION_RANGE);
+            throw new IllegalArgumentException(TimeTableDataManager.DURATION_RANGE);
         }
         int oldDuration = _duration;
         _duration = newDuration;

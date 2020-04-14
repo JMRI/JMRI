@@ -3,8 +3,8 @@
 
 <html lang="fr">
 <head>
-<!-- UpDated  by Blorec Herv&#233;  2017-01-19-->
-<title>JMRI Hardware Support - MERG CBUS</title>
+<!-- Updated by Blorec Herv&#233;  2017-01-19-->
+<title>JMRI Mat&#233;riel - MERG CBUS</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -16,9 +16,11 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>Structure Mat&#233;riel: CBUS MERG</h1>
 
@@ -27,9 +29,9 @@
  la documentation un jour donn&#233;.
 </em>
 <ul class="snav"><!-- TOC -->
-<li><a href="#connecting">Connexion</a>
-<li><a href="#tools">Outils JMRI CBUS MERG</a>
-<li><a href="#documentation">Documentation</a>
+	<li><a href="#connecting">Connexion</a></li>
+	<li><a href="#tools">Outils JMRI CBUS MERG</a></li>
+	<li><a href="#documentation">Documentation</a></li>
 </ul>
 
 <h2>Connexion</h2>
@@ -141,28 +143,27 @@ la lettre type est "T"au lieu de "S", par exemple, <code> MT-18; +21</code>)
 <p>Pourrait &#234;tre &#233;crit, mais le sch&#233;ma est similaire aux Aiguillages ci-dessus,
 sauf que  la lettre type est "L"au lieu de "T", par exemple, <code>ML-18;+21</code>
 
-<a name="tools"></a><h2>Outils CBUS MERG JMRI</h2></a>
+<a name="tools"></a><h2>Outils CBUS MERG JMRI</h2>
 <img src="../images/MERG_Menu.png" alt="MERG menu" align="right" height="132" width="227">
 <p>Le menu MERG contient 5 outils:
 <ul>
-  <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console</a>
- 	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#cbusSend">Envoyer Trame</a></li>
-	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Outil de Capture d'&#201;v&#233;nement</a>
+  	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console</a></li>
+	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#cbusSend">Envoyer Trame</a></li>
+	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Outil de Capture d'&#201;v&#233;nement</a></li>
 	<li>Tableau &#201;v&#233;neme</li>
 	<li><a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Outil de Configuration de N&#339;ud</a></li>
-	</ul>
+</ul>
 
 <a name="documentation"></a><h2>Documentation</h2>
 <h3>Aide JMRI</h3>
 	<ul>
-	<li>La d&#233;nomination des Entr&#233;es et des Sorties CBUS est d&#233;crites <a href="Names.shtml">ici</a>.
-	<li><a href="Details.shtml">D&#233;tails technique du support CBUS</a>
-	<li><a href="../index.shtml">Page d'AidePrincipale du support CAN</a> includant des liens pour obtenir plus d'outils.
+	<li>La d&#233;nomination des Entr&#233;es et des Sorties CBUS est d&#233;crites <a href="Names.shtml">ici</a>.</li>
+	<li><a href="Details.shtml">D&#233;tails technique du support CBUS</a></li>
+	<li><a href="../index.shtml">Page d'AidePrincipale du support CAN</a> includant des liens pour obtenir plus d'outils.</li>
 	</ul>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>
-</html>
 </html>

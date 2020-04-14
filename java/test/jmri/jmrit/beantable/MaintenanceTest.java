@@ -18,7 +18,7 @@ import org.netbeans.jemmy.operators.JDialogOperator;
 public class MaintenanceTest {
 
     @Rule
-    public Timeout globalTimeout = Timeout.seconds(1000);
+    public Timeout globalTimeout = Timeout.seconds(10);
 
     @Rule
     public RetryRule retryRule = new RetryRule(1); // allow 1 retry
@@ -98,10 +98,12 @@ public class MaintenanceTest {
 	    });
         t.setName("Cross Reference Dialog Close Thread");
         t.start();
+        JmriJFrame parent = new jmri.util.JmriJFrame("DeviceReportParent");
         ThreadingUtil.runOnGUI(() -> {
-            Maintenance.deviceReportPressed("IS1",new jmri.util.JmriJFrame("DeviceReportParent"));
+            Maintenance.deviceReportPressed("IS1",parent);
         });
         t.join(); // only proceed when all done
+        JUnitUtil.dispose(parent);
     }
 
     @Test
@@ -114,10 +116,12 @@ public class MaintenanceTest {
 	    });
         t.setName("Find Orphan Dialog Close Thread");
         t.start();
+        JmriJFrame parent = new jmri.util.JmriJFrame("FindOrphansParent");
         ThreadingUtil.runOnGUI(() -> {
-            Maintenance.findOrphansPressed(new jmri.util.JmriJFrame("FindOrphansParent"));
+            Maintenance.findOrphansPressed(parent);
         });
         t.join(); // only proceed when all done
+        JUnitUtil.dispose(parent);
     }
 
     //@Test
@@ -130,10 +134,12 @@ public class MaintenanceTest {
 	    });
         t.setName("Find Empty Dialog Close Thread");
         t.start();
+        JmriJFrame parent = new jmri.util.JmriJFrame("FindEmptyParent");
         ThreadingUtil.runOnGUI(() -> {
-            Maintenance.findEmptyPressed(new jmri.util.JmriJFrame("FindEmptyParent"));
+            Maintenance.findEmptyPressed(parent);
         });
         t.join(); // only proceed when all done
+        JUnitUtil.dispose(parent);
     }
 
 
@@ -149,6 +155,7 @@ public class MaintenanceTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

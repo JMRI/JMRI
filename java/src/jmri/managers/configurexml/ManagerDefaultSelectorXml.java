@@ -81,4 +81,6 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
     public void load(Element element, Object o) {
     }
 
+    //private final static Logger log = LoggerFactory.getLogger(ManagerDefaultSelectorXml.class);
+
 }

@@ -110,6 +110,12 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
      * @return true, if initialisation successful
      */
     private boolean init() {
+        // Check that the JoalAudioFactory exists
+        if (al == null) {
+            log.warn("Al Factory not yet initialised");
+            return false;
+        }
+
         // Try to create an empty buffer that will hold the actual sound data
         al.alGenBuffers(1, dataStorageBuffer, 0);
         if (JoalAudioFactory.checkALError()) {
@@ -133,15 +139,6 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
      */
     protected int[] getDataStorageBuffer() {
         return dataStorageBuffer;
-    }
-
-    @Override
-    public String toString() {
-        if (this.getState() != STATE_LOADED) {
-            return "Empty buffer";
-        } else {
-            return this.getURL() + " (" + parseFormat() + ", " + this.freq[0] + " Hz)";
-        }
     }
 
     /**

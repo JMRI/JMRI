@@ -32,6 +32,7 @@ public class HtmlTrainCommonTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

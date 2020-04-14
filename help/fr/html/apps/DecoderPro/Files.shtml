@@ -4,7 +4,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!-- Translated by Herv&#233. BLOREC <bzh56420@yahoo.fr> on 2016-06-24 -->
 <title>JMRI: DecoderPro User Guide - Configuration Files</title>
 
@@ -18,23 +17,23 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<h1>JMRI: Guide Utilisateur DecoderPro</h1>
 
-
-<H1>JMRI: Guide Utilisateur DecoderPro</H1> 
-<H2>Fichiers de Configuration</H2>
+<h2>Fichiers de Configuration</h2>
 
 <p>Cette section tente de r&#233;pondre &#224; la question de savoir ce que contiennent les fichiers de configuration et 
 o&#249; sont-ils localis&#233;s?
 </p>
 
 <dl>
-	<A name="location">
-	<dt class=left>Localisation des Fichiers de Configuration</dt></a>
-	<dd class=first>
+	<dt class="left"><a name="location"></a>Localisation des Fichiers de Configuration</dt>
+	<dd class="first">
 	Il y a deux endroits o&#249; les fichiers de configuration peuvent &#234;tre trouv&#233;s:
 		<ol>
 		<li>Les versions initialement distribu&#233;es des Fichiers de Configuration de JMRI sont dans un 
@@ -78,9 +77,9 @@ o&#249; sont-ils localis&#233;s?
 			Preferences... -&gt; File Locations</a> . Notez que le changement de "User Files Location"
 			changera aussi l'emplacement par d&#233;faut pour Panels, Rosters, etc.
 			</li>
-			</0l>
-
+			</ol>
 		</dd>
+
 		<dt class="left">Types de fichiers de Configuration</dt>
 		<dd>
 		&#192; l'int&#233;rieur de votre dossier Preferences JMRI il y a un nombre de types de fichiers
@@ -115,8 +114,10 @@ o&#249; sont-ils localis&#233;s?
 </dl>			
 
 Plus d'information au sujet des Fichiers de Configuration JMRI <a href="../../setup/Files.shtml">Fichiers de Configuration 
-JMRI</a>      
-<!--#include virtual="/Footer" -->
-</div>
+JMRI</a>
+
+		<!--#include virtual="/Footer.shtml" -->
+		</div>
+	</div>
 </body>
 </html>

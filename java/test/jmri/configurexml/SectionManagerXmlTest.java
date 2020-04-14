@@ -41,7 +41,7 @@ public class SectionManagerXmlTest {
         // Note: This test assumes that BlockManagerXMLTest passes and more importantly (weakly)
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
-        // check existance of sections
+        // check existence of sections
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("IY:AUTO:0001"));
         Assert.assertNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("no section"));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("IY:AUTO:0002"));
@@ -68,7 +68,7 @@ public class SectionManagerXmlTest {
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("West"));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("WestSiding"));
 
-        // check existance of a couple of blocks just to be sure 
+        // check existence of a couple of blocks just to be sure
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
         Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB1"));
@@ -81,7 +81,7 @@ public class SectionManagerXmlTest {
         //Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocknorthwest"));
         //Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blockwestsiding"));
 
-        // check existance of a couple of turmouts just to be sure
+        // check existence of a couple of turmouts just to be sure
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
@@ -89,7 +89,7 @@ public class SectionManagerXmlTest {
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT2"));
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT8"));
 
-        // check existance of a couple of memories just to be sure        
+        // check existence of a couple of memories just to be sure
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0001"));
@@ -99,7 +99,7 @@ public class SectionManagerXmlTest {
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocknorthwestmemory"));
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blockwestsidingmemory"));
 
-        // check existance of a couple of sensors just to be sure
+        // check existence of a couple of sensors just to be sure
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
         Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO1"));
@@ -109,7 +109,7 @@ public class SectionManagerXmlTest {
         Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocknorthwestoccupied"));
         Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blockwestsidingoccupied"));
 
-        // check existance of a couple of paths between blocks just to be sure
+        // check existence of a couple of paths between blocks just to be sure
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
         Block[] blockstotest;
@@ -481,7 +481,7 @@ public class SectionManagerXmlTest {
         expectedReverseStoppingSensors[11] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPR12");
 
         for (int testsectionfocus = 0; testsectionfocus < 12; testsectionfocus++) {  // Set to one greater than above
-            // check existance of sections
+            // check existence of sections
             Section testsection = sectionstotest[testsectionfocus];
             List<Block> blockList = testsection.getBlockList();
             Assert.assertEquals("Section size where Focus was: " + testsectionfocus, expectedsectionblocklistsize[testsectionfocus], blockList.size());

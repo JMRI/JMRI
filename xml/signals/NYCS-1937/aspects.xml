@@ -32,6 +32,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Typo Correction</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2020-01-03</date>
+        <authorinitials>BJ</authorinitials>
+        <revremark>Duplicate Stop aspect corrected</revremark>
+    </revision>    
   </revhistory>
 
   <aspects>
@@ -191,7 +197,7 @@
     </aspect>
 
     <aspect>
-      <name>Stop</name>
+      <name>Stop; Manual Block</name><!-- to avoid duplicating Stop below -->
       <rule>Rule 289B</rule>
       <indication>Stop; Manual Block</indication>
       <reference>Page 102</reference>

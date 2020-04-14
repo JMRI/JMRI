@@ -2,6 +2,12 @@ package jmri.jmrit.operations.trains;
 
 import java.io.BufferedReader;
 import java.io.File;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -18,10 +24,6 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -89,6 +91,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 29, in.lines().count());
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -162,6 +165,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 18, inC.lines().count());
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
@@ -359,6 +363,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 4, inD.lines().count());
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -387,6 +392,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 29, inA.lines().count());
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -414,6 +420,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 38, inA.lines().count());
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -452,6 +459,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 22, inA.lines().count());
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -480,6 +488,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 28, inA.lines().count());
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /**
@@ -507,43 +516,18 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         yardAA.setLength(400);
 
         // place 6 cars
-        Car c1 = cmanager.newRS("AA", "1");
-        c1.setLength("40");
-        c1.setTypeName("Boxcar");
-        Assert.assertEquals("Place car on track", Track.OKAY, c1.setLocation(locationA, spurA));
-
-        Car c2 = cmanager.newRS("AA", "2");
-        c2.setLength("40");
-        c2.setTypeName("Boxcar");
-        Assert.assertEquals("Place car on track", Track.OKAY, c2.setLocation(locationA, spurA));
-
-        Car c3 = cmanager.newRS("AA", "3");
-        c3.setLength("40");
-        c3.setTypeName("Boxcar");
-        Assert.assertEquals("Place car on track", Track.OKAY, c3.setLocation(locationA, spurA));
-
+        JUnitOperationsUtil.createAndPlaceCar("AA", "1", "Boxcar", "40", "DAB", "1984", spurA, 0);
+        JUnitOperationsUtil.createAndPlaceCar("AA", "2", "Boxcar", "40", "DAB", "1984", spurA, 0);
+        JUnitOperationsUtil.createAndPlaceCar("AA", "3", "Boxcar", "40", "DAB", "1984", spurA, 0);
         // 3 on yard tracks
-        Car c4 = cmanager.newRS("AA", "4");
-        c4.setLength("40");
-        c4.setTypeName("Boxcar");
-        Assert.assertEquals("Place car on track", Track.OKAY, c4.setLocation(locationA, yardA));
-
-        Car c5 = cmanager.newRS("AA", "5");
-        c5.setLength("40");
-        c5.setTypeName("Boxcar");
-        Assert.assertEquals("Place car on track", Track.OKAY, c5.setLocation(locationA, yardA));
-
-        Car c6 = cmanager.newRS("AA", "6");
-        c6.setLength("40");
-        c6.setTypeName("Boxcar");
+        JUnitOperationsUtil.createAndPlaceCar("AA", "4", "Boxcar", "40", "DAB", "1984", yardA, 0);
+        JUnitOperationsUtil.createAndPlaceCar("AA", "5", "Boxcar", "40", "DAB", "1984", yardA, 0);
+        Car c6 = JUnitOperationsUtil.createAndPlaceCar("AA", "6", "Boxcar", "40", "DAB", "1984", yardA, 20);
         c6.setUtility(true); // make this car a utility car for better test coverage
-        c6.setMoves(20); // make the last car to get pulled
-        Assert.assertEquals("Place car on track", Track.OKAY, c6.setLocation(locationA, yardA));
 
         Engine e1 = emanager.newRS("NYC", "1");
         e1.setModel("E8");
         Assert.assertEquals("Place engine on track", Track.OKAY, e1.setLocation(locationA, yardA));
-
     }
 
     // The minimal setup for log4J

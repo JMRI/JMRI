@@ -1,6 +1,5 @@
 package jmri.jmrix.dccpp.network;
 
-import java.util.ResourceBundle;
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppNetworkPortController;

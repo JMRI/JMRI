@@ -66,6 +66,7 @@ public class OBlockTest {
         OBlock b = blkMgr.createNewOBlock("OB100", "a");
         Assert.assertFalse("setSensor", b.setSensor("foo"));
         Assert.assertNull("getSensor", b.getSensor());
+        jmri.util.JUnitAppender.assertErrorMessage("No sensor named 'foo' exists.");        
         
         SensorManager sensorMgr = InstanceManager.getDefault(SensorManager.class);
         Sensor s1 = sensorMgr.newSensor("IS1", "sensor1");
@@ -94,7 +95,8 @@ public class OBlockTest {
         OBlock b = blkMgr.createNewOBlock("OB101", "b");
         Assert.assertFalse("setErrorSensor foo", b.setErrorSensor("foo"));
         Assert.assertNull("getErrorSensor foo", b.getErrorSensor());
-        
+        jmri.util.JUnitAppender.assertErrorMessage("No sensor named 'foo' exists.");        
+
         SensorManager sensorMgr = InstanceManager.getDefault(SensorManager.class);
         Sensor se = sensorMgr.newSensor("ISE1", "error1");
         se.setState(Sensor.ACTIVE);
@@ -233,8 +235,8 @@ public class OBlockTest {
         Assert.assertTrue("path2 in block", b.addPath(path2));
         Assert.assertEquals("get \"path1\"", path1, b.getPathByName("path1"));
         
-        b.removePath(path1);
-        b.removePath(path2);
+        b.removeOPath(path1);
+        b.removeOPath(path2);
         Assert.assertEquals("no paths", 0, b.getPaths().size());
         portalMgr = null;
     }
@@ -242,6 +244,7 @@ public class OBlockTest {
     @Test
     public void testAddUserName() {
         OBlock b = blkMgr.provideOBlock("OB99");
+        Assert.assertNotNull("Block OB99 is null", b);
         b.setUserName("99user");
         b = blkMgr.getBySystemName("OB99");
         Assert.assertEquals("UserName not kept", "99user", b.getUserName());
@@ -257,8 +260,8 @@ public class OBlockTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         blkMgr = null;
+        JUnitUtil.tearDown();
     }
 
 }

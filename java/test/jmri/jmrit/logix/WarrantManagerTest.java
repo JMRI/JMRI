@@ -23,10 +23,12 @@ public class WarrantManagerTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

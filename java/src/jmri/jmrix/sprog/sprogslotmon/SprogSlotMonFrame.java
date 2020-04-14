@@ -14,7 +14,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.TableRowSorter;
-import jmri.jmrix.sprog.sprogslotmon.SprogSlotMonDataModel;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
@@ -253,7 +252,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
     }
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts
+     * Internal routine to handle timer starts and restarts
      * 
      * @param delay timer delay
      */

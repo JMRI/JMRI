@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,6 +18,7 @@ import jmri.jmrix.dccpp.DCCppPacketizer;
 import jmri.jmrix.dccpp.DCCppReply;
 import jmri.jmrix.dccpp.DCCppSimulatorPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
+import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,10 +56,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     public DCCppSimulatorAdapter() {
         setPort(Bundle.getMessage("None"));
         try {
-            PipedOutputStream tempPipeI = new PipedOutputStream();
+            PipedOutputStream tempPipeI = new ImmediatePipedOutputStream();
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
-            PipedOutputStream tempPipeO = new PipedOutputStream();
+            PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {

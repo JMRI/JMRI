@@ -133,8 +133,8 @@ public class Path {
             return true;
         }
         // check the status of all BeanSettings
-        for (int i = 0; i < _beans.size(); i++) {
-            if (!(_beans.get(i)).check()) {
+        for (BeanSetting bean : _beans) {
+            if (!bean.check()) {
                 return false;
             }
         }

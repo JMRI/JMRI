@@ -2,15 +2,12 @@ package jmri.jmrit.consisttool;
 
 import java.awt.Component;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import jmri.DccLocoAddress;
 import jmri.jmrit.DccLocoAddressSelector;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
 import org.netbeans.jemmy.operators.JMenuBarOperator;
 import org.netbeans.jemmy.operators.JMenuOperator;
@@ -46,11 +43,11 @@ public class ConsistToolScaffold extends JFrameOperator {
 
    // push loco specific buttons at the top.
    public void pushAddButton(){
-        new JButtonOperator(this,Bundle.getMessage("AddButtonText")).push();
+        new JButtonOperator(this, Bundle.getMessage("ButtonAddText")).push();
    }
 
    public void pushResetButton(){
-        new JButtonOperator(this,Bundle.getMessage("ButtonReset")).push();
+        new JButtonOperator(this, Bundle.getMessage("ButtonReset")).push();
    }
 
    // fill out the loco address field

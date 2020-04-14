@@ -361,7 +361,8 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertEquals("+N45E23", "+N45E23", l.getNextValidAddress("+N45E22", "M"));
 
         try {
-            l.getNextValidAddress(null, "M");
+            String val = l.getNextValidAddress(null, "M");
+            Assert.assertNull(val);
         } catch (JmriException ex) {
             Assert.assertEquals("java.lang.IllegalArgumentException: No address Passed ", ex.getMessage());
         }
@@ -414,6 +415,12 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.assertEquals("java.lang.IllegalArgumentException: Wrong number of events in address: S", ex.getMessage());
         }
     }
+    
+    @Test
+    @Override
+    public void testAutoSystemNames() {
+        Assert.assertEquals("No auto system names",0,tcis.numListeners());
+    }
 
     // The minimal setup for log4J
     @Override
@@ -430,7 +437,9 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     public void tearDown() {
         l.dispose();
         memo.dispose();
+        tcis.terminateThreads();
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusSensorManagerTest.class);

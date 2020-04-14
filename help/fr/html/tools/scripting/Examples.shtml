@@ -6,28 +6,24 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
-  <!-- UpDated by Blorec Herv&#233; le 2013-09-26 -->
+  <!-- Updated by Blorec Herv&#233; le 2013-09-26 -->
 
-  <title>JMRI: Scripting Examples</title><!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <title>JMRI: Scripting Examples</title>
+  <!-- Style -->
+  <meta http-equiv="content-type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
-    <div id="mainContent">
-      <!-- Page Body -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar" -->
+  <div id="mainContent">
+    <!-- Page Body -->
 
       <h2>JMRI: Exemples de scripts</h2>
 
@@ -514,7 +510,9 @@
       <p>Ce r&eacute;pertoire contient les scripts qui ont d'abord
       &eacute;t&eacute; cr&eacute;&eacute;s pour les tests JavaOne
       du r&eacute;seau.</p>
-    </div><!--#include virtual="/Footer" -->
+    </div>
+
+  <!--#include virtual="/Footer.shtml" -->
   </div>
 </body>
 </html>

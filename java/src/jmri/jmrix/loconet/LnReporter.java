@@ -7,7 +7,6 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.IdTag;
 import jmri.LocoAddress;
-import jmri.Reporter;
 import jmri.CollectingReporter;
 import jmri.PhysicalLocationReporter;
 import jmri.implementation.AbstractIdTagReporter;
@@ -179,9 +178,9 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
         // get loco address
         IdTag idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag(""+loco);
         if(north) {
-           idTag.setProperty("seen","seen northbound");
+           idTag.setProperty("seen", "seen northbound");
         } else {
-           idTag.setProperty("seen","seen southbound");
+           idTag.setProperty("seen", "seen southbound");
         }
         log.debug("Tag: " + idTag);
         notify(idTag);

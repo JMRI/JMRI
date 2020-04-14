@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated  by Blorec Herv&#233;  2017-01-29-->
+<!-- Updated by Blorec Herv&#233;  2017-01-29-->
 <html lang="fr">
 <head>
  <title>JMRI Hardware Support - Uhlenbrock Intellibox</title>
@@ -17,9 +17,11 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+	<div id="mainContent">
+
       <h1>Guide Installation JMRI: Uhlenbrock Intellibox via Port
       S&eacute;rie</h1>
 
@@ -96,6 +98,8 @@
 <a name="limitations"></a><h2>Limitations</h2>
 	<ul>
 		<li>La prise en charge compl&#232;te de l'Intellibox-II a &#233;t&#233; ajout&#233;e &#224; partir de la version 3.11.1.
+		</li>
+	</ul>
 
 <a name="connecting"></a><h2>Connexion</h2>
 
@@ -110,7 +114,7 @@
 		qui ont un port s&#233;rie RS232 pour la connexion.
 		<p>
 		Configurer les options de votre centrale Intellibox-I pour &#234;tre:
-		<UL>
+		<ul>
 				<li>SO 2 de valeur 4 (S&#233;lectionner LocoNet protocole dans l'interface)
 				<li>SO 5 valeur 1 	  (Utilisation 1 bit d'arr&#234;t sur le port s&#233;rie)
 				<li>SO 6 valeur 255  (CTS jamais mis erreurs dues &#224; un appui sur un bouton d'arr&#234;t)
@@ -182,11 +186,10 @@
 		</ul>
 		Enregistrez et re&#233;marrez.
 
-<a name="tools"></a><h2>Outils JMRI Uhlenbrock</h2>
-N/A
+		<a name="tools"></a><h2>Outils JMRI Uhlenbrock</h2>
+		N/A
 
-<hr class="hide">
-<!--#include virtual="/Footer" -->
+	<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

@@ -1,8 +1,11 @@
 package jmri.jmrix.can.cbus;
 
+import jmri.Block;
+import jmri.BlockManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -11,11 +14,39 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * Unit Tests for CBus Cab Signals
  *
  * @author Paul Bender Copyright (C) 2017
  * @author Steve Young Copyright (C) 2019
  */
 public class CbusCabSignalTest extends jmri.implementation.DefaultCabSignalTest {
+
+    private CanSystemConnectionMemo memo;
+    private TrafficController tc;
+
+    @Test
+    @Override
+    public void testSetBlock() {
+        CbusCabSignal acs = new CbusCabSignal(memo,new DccLocoAddress(1234,true)){
+            @Override
+            public jmri.SignalMast getNextMast(){
+                // don't check for signal masts, they aren't setup for this
+                // test.
+                return null;
+            }
+        };
+
+        Block b1 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB12");
+        // set the block contents to our locomotive address.
+        b1.setValue(new DccLocoAddress(1234,true));
+        // call setBlock() for the cab signal.
+        acs.setBlock();
+        // and verify getBlock returns the block we set.
+        Assert.assertEquals("Block set",b1,acs.getBlock());
+
+        acs.dispose(); // verify no exceptions
+    }
+
 
     // The minimal setup for log4J
     @Before
@@ -24,19 +55,13 @@ public class CbusCabSignalTest extends jmri.implementation.DefaultCabSignalTest 
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalSensorManager();
         JUnitUtil.initMemoryManager();
         InstanceManager.setDefault(jmri.BlockManager.class,new jmri.BlockManager());
         JUnitUtil.initLayoutBlockManager();
-        JUnitUtil.initDefaultSignalMastManager();
-        JUnitUtil.initSignalMastLogicManager();
-        InstanceManager.setDefault(jmri.jmrit.display.PanelMenu.class,new jmri.jmrit.display.PanelMenu());
-        JUnitUtil.initShutDownManager();
 
         // prepare the cab signal
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tc = new TrafficControllerScaffold();
+        memo = new CanSystemConnectionMemo();
+        tc = new TrafficControllerScaffold();
         memo.setTrafficController(tc);
         
         cs = new CbusCabSignal(memo,new DccLocoAddress(1234,true));
@@ -45,6 +70,12 @@ public class CbusCabSignalTest extends jmri.implementation.DefaultCabSignalTest 
     @After
     @Override
     public void tearDown() {
+        memo.dispose();
+        tc.terminateThreads();
+        memo = null;
+        tc = null;
+        cs.dispose();
+        cs = null;
         JUnitUtil.tearDown();
     }
 

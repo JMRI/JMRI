@@ -6,26 +6,25 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
-  <!-- Translated by Blorec Hervé le 2011-09-28-->
+  <!-- Translated by Blorec Herv&#233; le 2011-09-28-->
 
-  <title>JMRI: Speed Matching</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <title>JMRI: Speed Matching</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
-      <h2>Correspondance de Vitesse</h2>
+        <!-- Page Body -->
+<h2>Correspondance de Vitesse</h2>
 
       <h3>Couplage de Machines de Diff&Atilde;&copy;rents
       Fabricants Utilisant DCC/DecoderPro</h3>(Fourni par Keith
@@ -175,7 +174,9 @@
         crans de vitesse , vous aurez besoin d'utiliser la
         m&Atilde;&copy;thode d&Atilde;&copy;crite dans l'autre
         "Tutoriel".</li>
-      </ol><!--#include virtual="/Footer" -->
+      </ol>
+
+    <!--#include virtual="/Footer.shtml" -->
       insi
     </div>
   </div>

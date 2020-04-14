@@ -423,8 +423,8 @@ public class DccConsist implements Consist, ProgListener {
            return;
         }
         CvTableModel  cvTable = new CvTableModel(null, null);  // will hold CV objects
-        VariableTableModel varTable = new VariableTableModel(null,new String[]{"Name","Value"},cvTable);
-        entry.readFile();  // read, but don’t yet process
+        VariableTableModel varTable = new VariableTableModel(null, new String[]{"Name", "Value"}, cvTable); // NOI18N
+        entry.readFile();  // read, but don't yet process
 
         // load from decoder file
         loadDecoderFromLoco(entry,varTable);
@@ -626,4 +626,5 @@ public class DccConsist implements Consist, ProgListener {
     }
 
     private static final  Logger log = LoggerFactory.getLogger(DccConsist.class);
+
 }

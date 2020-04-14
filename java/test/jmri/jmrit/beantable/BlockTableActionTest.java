@@ -3,8 +3,6 @@ package jmri.jmrit.beantable;
 import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import jmri.Block;
@@ -12,7 +10,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.*;
 import jmri.util.swing.JemmyUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
@@ -24,7 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2004, 2007, 2008
  */
-public class BlockTableActionTest extends AbstractTableActionBase {
+public class BlockTableActionTest extends AbstractTableActionBase<Block> {
 
     @Test
     public void testCreate() {
@@ -92,9 +89,11 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         _b1Table.cancelPressed(null);
 
         // clean up
+        (new JFrameOperator(af)).requestClose();
         JUnitUtil.dispose(af);
         _bTable.dispose();
         _b1Table.dispose();
+        (new JFrameOperator(f)).requestClose();
         JUnitUtil.dispose(f);
     }
 
@@ -118,6 +117,7 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         Assert.assertNotNull("Verify IB105 Added", chk105);  // NOI18N
         Assert.assertEquals("Verify system name prefix", "IB105", chk105.getSystemName());  // NOI18N
 
+        (new JFrameOperator(f)).requestClose();
         JUnitUtil.dispose(f);
     }
 
@@ -174,6 +174,7 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         Assert.assertEquals("New Block Name", layoutBlock.getUserName());
 
         jmri.util.JUnitAppender.assertWarnMessage("Cannot remove user name for block Block Name");  // NOI18N
+        jfo.requestClose();
     }
 
     @Override
@@ -201,6 +202,7 @@ public class BlockTableActionTest extends AbstractTableActionBase {
 	    jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
         jf.requestClose();
         JUnitUtil.dispose(f1);
+        (new JFrameOperator(f)).requestClose();
         JUnitUtil.dispose(f);
     }
 
@@ -252,6 +254,7 @@ public class BlockTableActionTest extends AbstractTableActionBase {
 
         // clean up
         JUnitUtil.dispose(f1);
+        (new JFrameOperator(f)).requestClose();
         JUnitUtil.dispose(f);
     }
 
@@ -283,6 +286,7 @@ public class BlockTableActionTest extends AbstractTableActionBase {
 	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f2);
 	JUnitUtil.dispose(f1);
+        (new JFrameOperator(f)).requestClose();
         JUnitUtil.dispose(f);
     }
 
@@ -312,6 +316,7 @@ public class BlockTableActionTest extends AbstractTableActionBase {
     @Override
     public void tearDown() {
         a = null;
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

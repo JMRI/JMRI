@@ -9,26 +9,24 @@
 
   <title>JMRI: Plug-in mechanisms</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI technical code plugins extension plug-in"><!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="keywords" content="JMRI technical code plugins extension plug-in">
+  <!-- Style -->
+  <meta http-equiv="content-type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-      <h1>JMRI: M&eacute;canismes Plug-in</h1>
+        <!-- Page Body -->
+
+<h1>JMRI: M&eacute;canismes Plug-in</h1>
         L'objectif initial du
       projet &eacute;tait de produire une biblioth&egrave;que que
       les gens pourraient utiliser pour cr&eacute;er leurs propres
@@ -133,7 +131,7 @@ articles, ajouter des boutons sur le panneau principal, etc
       est un exemple encore plus avanc&eacute;s qui modifie
       l'apparence des &eacute;l&eacute;ments sur les &eacute;crans
       du panneau.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

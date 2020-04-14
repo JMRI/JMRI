@@ -26,7 +26,8 @@ public class XNetTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContr
     @After
     @Override
     public void tearDown(){
-       tc = null;
+        tc = null;
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

@@ -25,74 +25,72 @@ public class ConnectionStatusTest {
         Assert.assertNotNull("exists", cs);
     }
 
-
     @Test
-    public void test2ParamterGetState(){
+    public void test2ParamterGetState() {
         ConnectionStatus cs = new ConnectionStatus();
-        Assert.assertEquals("connection status",ConnectionStatus.CONNECTION_UNKNOWN,cs.getConnectionState("Foo","Bar"));
+        Assert.assertEquals("connection status", ConnectionStatus.CONNECTION_UNKNOWN, cs.getConnectionState("Foo", "Bar"));
     }
 
     @Test
-    public void testAddAnd2ParameterGetState(){
+    public void testAddAnd2ParameterGetState() {
         ConnectionStatus cs = new ConnectionStatus();
-        cs.addConnection("Foo","Bar");
+        cs.addConnection("Foo", "Bar");
         // set the status of the new connection so we know we are not 
         // retreiving a new value.
-        cs.setConnectionState("Foo","Bar",ConnectionStatus.CONNECTION_UP);
-        Assert.assertEquals("connection status",ConnectionStatus.CONNECTION_UP,cs.getConnectionState("Foo","Bar"));
+        cs.setConnectionState("Foo", "Bar", ConnectionStatus.CONNECTION_UP);
+        Assert.assertEquals("connection status", ConnectionStatus.CONNECTION_UP, cs.getConnectionState("Foo", "Bar"));
     }
 
     @Test
-    public void test2ParameterSetAndGetState(){
+    public void test2ParameterSetAndGetState() {
         ConnectionStatus cs = new ConnectionStatus();
-        cs.setConnectionState("Foo","Bar",ConnectionStatus.CONNECTION_UP);
-        Assert.assertEquals("connection status",ConnectionStatus.CONNECTION_UP,cs.getConnectionState("Foo","Bar"));
+        cs.setConnectionState("Foo", "Bar", ConnectionStatus.CONNECTION_UP);
+        Assert.assertEquals("connection status", ConnectionStatus.CONNECTION_UP, cs.getConnectionState("Foo", "Bar"));
     }
 
     @Test
-    public void test2ParamterIsConnectionOk(){
+    public void test2ParamterIsConnectionOk() {
         ConnectionStatus cs = new ConnectionStatus();
-        cs.setConnectionState("Foo","Bar",ConnectionStatus.CONNECTION_UP);
-        Assert.assertTrue("connection OK",cs.isConnectionOk("Foo","Bar"));
-        cs.setConnectionState("Foo","Bar",ConnectionStatus.CONNECTION_DOWN);
-        Assert.assertFalse("connection OK",cs.isConnectionOk("Foo","Bar"));
+        cs.setConnectionState("Foo", "Bar", ConnectionStatus.CONNECTION_UP);
+        Assert.assertTrue("connection OK", cs.isConnectionOk("Foo", "Bar"));
+        cs.setConnectionState("Foo", "Bar", ConnectionStatus.CONNECTION_DOWN);
+        Assert.assertFalse("connection OK", cs.isConnectionOk("Foo", "Bar"));
     }
 
     @Test
-    public void testIsSystemOk(){
+    public void testIsSystemOk() {
         ConnectionStatus cs = new ConnectionStatus();
-        cs.setConnectionState("Foo","Bar",ConnectionStatus.CONNECTION_UP);
-        Assert.assertTrue("connection OK",cs.isSystemOk("Foo"));
-        cs.setConnectionState("Foo","Bar",ConnectionStatus.CONNECTION_DOWN);
-        Assert.assertFalse("connection OK",cs.isSystemOk("Foo"));
+        cs.setConnectionState("Foo", "Bar", ConnectionStatus.CONNECTION_UP);
+        Assert.assertTrue("connection OK", cs.isSystemOk("Foo"));
+        cs.setConnectionState("Foo", "Bar", ConnectionStatus.CONNECTION_DOWN);
+        Assert.assertFalse("connection OK", cs.isSystemOk("Foo"));
     }
 
     @Test
-    public void testIsUnrecognizedSystemOk(){
+    public void testIsUnrecognizedSystemOk() {
         ConnectionStatus cs = new ConnectionStatus();
-        Assert.assertTrue("connection OK",cs.isConnectionOk("Foo"));
-        Assert.assertTrue("connection OK",cs.isConnectionOk("Foo", "Bar"));
-        Assert.assertTrue("connection OK",cs.isConnectionOk(null, "Bar"));
+        Assert.assertTrue("connection OK", cs.isConnectionOk("Foo", "Bar"));
+        Assert.assertTrue("connection OK", cs.isConnectionOk(null, "Bar"));
     }
 
     @Test
-    public void testGetSateForSystemName(){
+    public void testGetSateForSystemName() {
         ConnectionStatus cs = new ConnectionStatus();
-        cs.addConnection("Foo","Bar");
+        cs.addConnection("Foo", "Bar");
         // set the status of the new connection so we know we are not 
         // retreiving a new value.
-        cs.setConnectionState("Foo","Bar",ConnectionStatus.CONNECTION_UP);
-        Assert.assertTrue("connection OK",cs.isConnectionOk("Foo", "Bar"));
-        Assert.assertEquals("connection status",ConnectionStatus.CONNECTION_UP,cs.getSystemState("Foo"));
+        cs.setConnectionState("Foo", "Bar", ConnectionStatus.CONNECTION_UP);
+        Assert.assertTrue("connection OK", cs.isConnectionOk("Foo", "Bar"));
+        Assert.assertEquals("connection status", ConnectionStatus.CONNECTION_UP, cs.getSystemState("Foo"));
     }
 
     @Test
-    public void testIsConnectionOkWNull(){
+    public void testIsConnectionOkWNull() {
         ConnectionStatus cs = new ConnectionStatus();
-        cs.setConnectionState(null, "Bar",ConnectionStatus.CONNECTION_UP);
-        Assert.assertTrue("connection OK",cs.isConnectionOk("Bar"));
-        cs.setConnectionState(null, "Bar",ConnectionStatus.CONNECTION_DOWN);
-        Assert.assertFalse("connection OK",cs.isConnectionOk("Bar"));
+        cs.setConnectionState(null, "Bar", ConnectionStatus.CONNECTION_UP);
+        Assert.assertTrue("connection OK", cs.isConnectionOk(null, "Bar"));
+        cs.setConnectionState(null, "Bar", ConnectionStatus.CONNECTION_DOWN);
+        Assert.assertFalse("connection OK", cs.isConnectionOk(null, "Bar"));
     }
 
     @Before
@@ -101,6 +99,8 @@ public class ConnectionStatusTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
 }

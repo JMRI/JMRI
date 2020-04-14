@@ -1,6 +1,7 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.NamedBean;
 import jmri.managers.AbstractLightManager;
@@ -26,6 +27,7 @@ public class XBeeLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public XBeeConnectionMemo getMemo() {
         return (XBeeConnectionMemo) memo;
     }
@@ -33,12 +35,12 @@ public class XBeeLightManager extends AbstractLightManager {
     // Multiple additions currently works partially, but not for all possible cases;
     // for now, return 'false'.
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
     @Override
-    public Light createNewLight(String systemName, String userName) {
+    public Light createNewLight(@Nonnull String systemName, @Nonnull String userName) {
         XBeeNode curNode = null;
         String name = addressFromSystemName(systemName);
         if ((curNode = (XBeeNode) tc.getNodeFromName(name)) == null) {
@@ -69,7 +71,8 @@ public class XBeeLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         super.validateSystemNameFormat(name, locale);
         int pin = pinFromSystemName(name);
         if (pin < 0 || pin > 7) {
@@ -84,7 +87,7 @@ public class XBeeLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         if (tc.getNodeFromName(addressFromSystemName(systemName)) == null
                 && tc.getNodeFromAddress(addressFromSystemName(systemName)) == null) {
             try {
@@ -106,7 +109,7 @@ public class XBeeLightManager extends AbstractLightManager {
         }
     }
 
-    private String addressFromSystemName(String systemName) {
+    private String addressFromSystemName(@Nonnull String systemName) {
         String encoderAddress;
 
         if (systemName.contains(":")) {
@@ -124,7 +127,7 @@ public class XBeeLightManager extends AbstractLightManager {
         return encoderAddress;
     }
 
-    private int pinFromSystemName(String systemName) {
+    private int pinFromSystemName(@Nonnull String systemName) {
         int input = 0;
         int iName = 0;
 
@@ -158,15 +161,15 @@ public class XBeeLightManager extends AbstractLightManager {
      * Abstract Light class
      */
     @Override
-    public boolean validSystemNameConfig(String systemName) {
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
         return (true);
     }
 
     @Override
-    public void deregister(jmri.Light s) {
-        super.deregister(s);
+    public void deregister(@Nonnull jmri.Light l) {
+        super.deregister(l);
         // remove the specified sensor from the associated XBee pin.
-        String systemName = s.getSystemName();
+        String systemName = l.getSystemName();
         String name = addressFromSystemName(systemName);
         int pin = pinFromSystemName(systemName);
         XBeeNode curNode;
@@ -182,10 +185,10 @@ public class XBeeLightManager extends AbstractLightManager {
             }
         }
         if (curNode != null) {
-            if (curNode.removePinBean(pin, s)) {
-                log.debug("Removing sensor from pin " + pin);
+            if (curNode.removePinBean(pin, l)) {
+                log.debug("Removing sensor from pin {}", pin);
             } else {
-                log.debug("Failed to removing sensor from pin " + pin);
+                log.debug("Failed to removing sensor from pin {}", pin);
             }
         }
 

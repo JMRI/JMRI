@@ -22,6 +22,7 @@ public class ThrottleFramePropertyEditorTest {
         frame.setVisible(true);
         ThrottleFramePropertyEditor dialog = new ThrottleFramePropertyEditor(frame);
         Assert.assertNotNull("exists", dialog);
+        JUnitUtil.dispose(dialog);
         JUnitUtil.dispose(frame);
      }
 
@@ -30,10 +31,12 @@ public class ThrottleFramePropertyEditorTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initDebugThrottleManager();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 }

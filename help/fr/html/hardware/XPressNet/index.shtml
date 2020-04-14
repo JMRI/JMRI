@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated  by Blorec Herv&#233; le 2017-01-13-->
+<!-- Updated by Blorec Herv&#233; le 2017-01-13-->
 <html lang="fr">
 <head>
 <title>JMRI Hardware Support - XPressNet</title>
@@ -17,10 +17,12 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+      <!-- Page Body -->
+
       <h1>Guide Mat&eacute;riel JMRI: XPressNet</h1>
 
       <h2>Aper&ccedil;u</h2>XPressNet est un bus de commande
@@ -377,23 +379,23 @@
 		<li><a href="#hardware">Mat&#233;riel</a></li>
 		<li><a href="#limitations">Limitations</a></li>
 		<li><a href="#connecting">Connexion avec:</a>
-				<ul>
-				<li><a href="#connectLi100">LI100, LI100, LI101 or LI101F</a>
-				<li><a href="#connectLiusb">LIUSB</a>
-				<li><a href="#connectLiusbServer">Serveur LIUSB</a>
-				<li><a href="#connectLiusbEthernet">LIUSB Ethernet</a>
-				<li><a href="#connectSim">Simulateur XPressNet</a>
-				<li><a href="#connectZtc">ZTC 640</a>
-				<li><a href="#connectElite">Hornby Elite USB</a>
-				<li><a href="#connectXtncp">Adaptateur XnTcp</a>
-				<li><a href="#connectXpa">Modem et XPA </a>
-				</ul>
+        <ul>
+            <li><a href="#connectLi100">LI100, LI100, LI101 or LI101F</a></li>
+            <li><a href="#connectLiusb">LIUSB</a></li>
+            <li><a href="#connectLiusbServer">Serveur LIUSB</a></li>
+            <li><a href="#connectLiusbEthernet">LIUSB Ethernet</a></li>
+            <li><a href="#connectSim">Simulateur XPressNet</a></li>
+            <li><a href="#connectZtc">ZTC 640</a></li>
+            <li><a href="#connectElite">Hornby Elite USB</a></li>
+            <li><a href="#connectXtncp">Adaptateur XnTcp</a></li>
+            <li><a href="#connectXpa">Modem et XPA </a></li>
+        </ul></li>
 		<li><a href="#tools">Outils JMRI XPressNet</a></li>
 		<li><a href="#documentation">Documentation</a></li>
 </ul>
 
-<a name="hardware"></a><h2>Mat&#233;riel support&#233;</H2>
-<H3>Centrales</H3>
+<a name="hardware"></a><h2>Mat&#233;riel support&#233;</h2>
+<h3>Centrales</h3>
 
 <p>Le protocole XPressNet permet aux fabricants de DCC qui l'utilisent de
 s&#233;lectionner les fonctionnalit&#233;s qu'ils souhaitent fournir dans leurs centrales.
@@ -416,8 +418,8 @@ sont &#233;galement exprim&#233;es dans la section <a href=#Limitations>limitati
 cette page
 <div class=list>
     <dl>
-    <dt class=left>Compl&#232;te</dt>
-    <dd class=first>
+    <dt class="left">Compl&#232;te</dt>
+    <dd class="first">
 		<h4>Exploitation &nbsp; Programmation &nbsp; R&#233;tro-Signalisation</h4>
 		<ul>
 	   	 	<li>Lenz bas&#233; sur les syst&#232;mes LZ100 (logiciel version 3.x)</li>
@@ -426,7 +428,7 @@ cette page
         <li>NanoX-S88 de Paco Canada </li>
 		</ul>
 	</dd>
-  	<dt class=left>Partielle</dt>
+  	<dt class="left">Partielle</dt>
 	<dd>
 
 		<h4>Exploitation &nbsp; Programmation &nbsp; 
@@ -439,7 +441,7 @@ cette page
         <li>NanoX de Paco Canada </li>
 		</ul>
 		</dd>
-		  <dt class=left>Minimale</dt>
+		  <dt class="left">Minimale</dt>
     		<dd>
 		<h4>Exploitation &nbsp;  
 		<font color="#FF0000"><strike>Programmation</strike></font> &nbsp; 
@@ -467,7 +469,7 @@ cette page
         	<li>RS2PC de Paco Canada (ajoute un bus RS bas&#233; sur la R&#233;tro-Signalisation sans XPressNet)</li>
     		</ul>
   		</dd>
-    	<dt class=left>Inconnue</dt>
+    	<dt class="left">Inconnue</dt>
 		<dd> 
 		<h4>Les syst&#232;mes suivant ne sont pas test&#233;s, mais pourrait &#234;tre partiellement pris en charge</h4>
 	<ul>
@@ -480,16 +482,16 @@ cette page
     </dl>
 </div>
 
-<H3> Interfaces Ordinateur</H3>
+<h3> Interfaces Ordinateur</h3>
 
-     <p> Il y a actuellement 14 interfaces XPressNet informatiques prises en charge par JMRI:
-     <ul>
+  <p> Il y a actuellement 14 interfaces XPressNet informatiques prises en charge par JMRI:
+  <ul>
 	<li> La LI100 Lenz est l'interface d'ordinateur d'origine de Lenz. Elle est
-	limit&#233;e  une vitesse de port s&#233;rie de 9600 bauds.
+    limit&#233;e  une vitesse de port s&#233;rie de 9600 bauds.</li>
 
 	<li> La LI100F Lenz est une version am&#233;lior&#233;e de la LI100. Elle supporte des
 	vitesses de port s&#233;rie de 9600 et 19200 bauds. Le r&#233;glage par d&#233;faut est
-	9600 bauds.
+    9600 bauds.</li>
 
 	<li>La LI101F Lenz est la derni&#232;res interface d'ordinateur bas&#233;e sur le port s&#233;rie de Lenz. 
 	Elle est significativement diff&#233;rente de la LI100 et
@@ -499,7 +501,7 @@ cette page
 	avec JMRI qui permettra ainsi aux utilisateurs d'autres syst&#232;mes d'exploitation de
 	configurer leurs LI101F. Le LI101F supporte sur le port s&#233;rie
 	des vitesses de 19200, 38400, 57600 et 115200 bauds. Le r&#233;glage d'usine
-	par d&#233;faut est 19 200 bauds.
+    par d&#233;faut est 19 200 bauds.</li>
 	
  	<li>La Lenz LI-USB est la premi&#232;re interface USB pour ordinateur  .
 	Interieurement, l'appareil est compos&#233; d'un adaptateur USB/s&#233;rie RS232, et
@@ -512,16 +514,17 @@ cette page
 	s'ex&#233;cute sur Windows uniquement. Nous avons fourni un outil qui permettra ainsi aux utilisateurs
     d'autres syst&#232;mes d'exploitation de configurer leur LIUSB. Sur
     Windows,  commencer par la version 2.7.2, JMRI prend en charge l'interfa&#231;age avec
-    la LIUSB  travers le Serveur LIUSB Lenz.
+    la LIUSB  travers le Serveur LIUSB Lenz.</li>
 
 	<li> La Lenz LI-USB-Ethernet (Lenz r&#233;f&#233;rence 23151) est une version r&#233;vis&#233;e de la LIUSB qui comprend un adaptateur Ethernet int&#233;gr&#233;. La connexion USB de l'appareil est assur&#233;e par un 
 	chipset Microchip et s'inscrit lui-m&#234;me comme un p&#233;riph&#233;rique USB CDC-ACM (Abstract Control Model). 
 	Pour les utilisateurs Windows, la connexion via le port USB sera identique  la version pr&#233;c&#233;dente 
 	de la LIUSB. 
 	Pour les utilisateurs de Linux, il appara&#238;tra comme un p&#233;riph&#233;rique /dev/ttyACMx (o&#249; x est remplac&#233; par un num&#233;ro.)
-	Pour les utilisateurs de Mac OS X, le nom du p&#233;riph&#233;rique sera /dev/tty.usbmodemXXX (o&#249; XXX est remplac&#233; par un 3 chiffres)<br />
-	Le protocole utilis&#233; pour se connecter  l'appareil via USB est identique au dispositif LIUSB pr&#233;c&#233;dent, de sorte que la connexion USB est prise en charge par n'importe quelle version de JMRI avec le soutien de la LIUSB. Lors de la configuration pour communiquer avec l'appareil via l'USB, assurez-vous que le <b>contr&#244;le de flux</b> est d&#233;sactiv&#233;.<br />
-	La connexion via la connexion Ethernet est disponible via la connexion type LIUSB Ethernet, qui a d'abord &#233;t&#233; mise  disposition dans la version 2.13.7.</p>
+	Pour les utilisateurs de Mac OS X, le nom du p&#233;riph&#233;rique sera /dev/tty.usbmodemXXX (o&#249; XXX est remplac&#233; par un 3 chiffres)<br>
+	Le protocole utilis&#233; pour se connecter  l'appareil via USB est identique au dispositif LIUSB pr&#233;c&#233;dent, de sorte que la connexion USB est prise en charge par n'importe quelle version de JMRI avec le soutien de la LIUSB. Lors de la configuration pour communiquer avec l'appareil via l'USB, assurez-vous que le <b>contr&#244;le de flux</b> est d&#233;sactiv&#233;.<br>
+	La connexion via la connexion Ethernet est disponible via la connexion type LIUSB Ethernet, qui a d'abord
+    &#233;t&#233; mise  disposition dans la version 2.13.7.</li>
 
 	<li> En plus de l'objectif de Lenz de construire des interfaces informatiques, nous avons
 	inclut  &#233;galement un support pour l'utilisation d'un adaptateur t&#233;l&#233;phonique XPressNet (XPA) comme une
@@ -532,73 +535,75 @@ cette page
 	compl&#232;te. Notez qu'<b>un XPA ne peut pas &#234;tre utilis&#233; pour programmer
 	les d&#233;codeurs</b>
 	
-        <li>L'interface ZTC 640 de chez ZTC est l'interface USBZTC Contr&#244;ls ZTC640 est l'interface USB de ZTC. Nous avons
-     une exp&#233;rience  limit&#233;e avec cet appareil, m&#234;me si les pilotes JMRI actuels
+    <li>L'interface ZTC 640 de chez ZTC est l'interface USBZTC Contr&#244;ls ZTC640 est l'interface USB de ZTC. Nous avons
+    une exp&#233;rience  limit&#233;e avec cet appareil, m&#234;me si les pilotes JMRI actuels
     paraissent stables. Sur le plan op&#233;rationnel, le dispositif semble &#234;tre similaire
-      la LIUSB Lenz.
+    la LIUSB Lenz.</li>
     
-     <li>L'Elite Hornby  l'interface USB int&#233;gr&#233;e et peut &#233;galement &#234;tre utilis&#233;e.
-     Hornby a fourni des informations 
-	 limit&#233;es sur la fa&#231;on dont l'appareil fonctionne, et actuellement a seulement
-     fournit un pilote USB pour Windows, donc nous ne savons pas qu'elle est la compatibilit&#233;
-     avec les autres syst&#232;mes d'exploitation. Comme avec le ZTC640, nous avons une
-     exp&#233;rience  limit&#233;e avec cet appareil, m&#234;me si les pilotes  JMRI actuels sont 
-     stables. REMARQUE <b>: La premi&#232;re version JMRI a g&#233;rer la connexion USB
-     Hornby Elite est la version 2.1.2</b>
+    <li>L'Elite Hornby  l'interface USB int&#233;gr&#233;e et peut &#233;galement &#234;tre utilis&#233;e.
+    Hornby a fourni des informations
+	limit&#233;es sur la fa&#231;on dont l'appareil fonctionne, et actuellement a seulement
+    fournit un pilote USB pour Windows, donc nous ne savons pas qu'elle est la compatibilit&#233;
+    avec les autres syst&#232;mes d'exploitation. Comme avec le ZTC640, nous avons une
+    exp&#233;rience  limit&#233;e avec cet appareil, m&#234;me si les pilotes  JMRI actuels sont
+    stables. REMARQUE <b>: La premi&#232;re version JMRI a g&#233;rer la connexion USB
+    Hornby Elite est la version 2.1.2</b></li>
 	
-	 <li>L'interface <A HREF="http://www.terdina.net/rails/"> XnTcp</a>
- 	 permet de vous connecter  votre r&#233;seau XPressNet
-	 via un r&#233;seau bas&#233; Ethernet  partir des programmes JMRI.
-	 REMARQUE <b>: La premi&#232;re version JMRI  g&#233;rer l'adaptateur
-     XnTcp est la 2.1.5</b>
+	<li>L'interface <a href="http://www.terdina.net/rails/"> XnTcp</a>
+ 	permet de vous connecter  votre r&#233;seau XPressNet
+	via un r&#233;seau bas&#233; Ethernet  partir des programmes JMRI.
+	REMARQUE <b>: La premi&#232;re version JMRI  g&#233;rer l'adaptateur
+    XnTcp est la 2.1.5</b></li>
 
-     <li>La 
-     <a href="http://www.tinet.org/~fmco/lokmaus_en.html#genli"> GenLi</a> 
-	 de Paco Canada est une interface XPressNet en kit qui &#233;mule une LI100. Elle
-     est &#233;galement une version USB de ce p&#233;riph&#233;rique. Pour configurer ces dispositifs dans JMRI,
-     S'il vous pla&#238;t voir les instructions pour la configuration du LI100 Lenz.
+    <li>La
+    <a href="http://www.tinet.org/~fmco/lokmaus_en.html#genli"> GenLi</a>
+	de Paco Canada est une interface XPressNet en kit qui &#233;mule une LI100. Elle
+    est &#233;galement une version USB de ce p&#233;riph&#233;rique. Pour configurer ces dispositifs dans JMRI,
+    S'il vous pla&#238;t voir les instructions pour la configuration du LI100 Lenz.</li>
 
-     <li> Paco Canada
-     <a href="http://www.tinet.org/~fmco/lokmaus_en.html#genlis88"> Gen-LI-S88</a> 
-	 a la m&#234;me fonctionnalit&#233; qu'un GenLI, ajoute en plus un module S88 de R&#233;trosignalisation. 
-	 Il peut &#234;tre utilis&#233; pour ajouter des r&#233;tro-signalisations sur un r&#233;seau existant &#233;quip&#233; XPressNet. 
-	 Pour configurer ce p&#233;riph&#233;rique dans JMRI, s'il vous pla&#238;t voir les instructions pour la configuration 
-	 du LI100 Lenz.
+    <li>Paco Canada
+    <a href="http://www.tinet.org/~fmco/lokmaus_en.html#genlis88"> Gen-LI-S88</a>
+	a la m&#234;me fonctionnalit&#233; qu'un GenLI, ajoute en plus un module S88 de R&#233;trosignalisation.
+	Il peut &#234;tre utilis&#233; pour ajouter des r&#233;tro-signalisations sur un r&#233;seau existant &#233;quip&#233; XPressNet.
+	Pour configurer ce p&#233;riph&#233;rique dans JMRI, s'il vous pla&#238;t voir les instructions pour la configuration
+    du LI100 Lenz.</li>
 
-     <li>  L'interface Paco Canada
-     <a href="http://www.tinet.org/~fmco/rs_en.html#RS2PC"> RS2PC</a> 
-     permet d'ajouter des modules de bus RS R&#233;tro-signalisations Lenz (et compatible)  un syst&#232;me
-     qui ne supporte pas le bus r&#233;tro-signalisation RS. Pour configurer cet &#233;quipement dans
-     JMRI, s'il vous pla&#238;t voir les instructions pour la configuration du LI100 Lenz.
+    <li>L'interface Paco Canada
+    <a href="http://www.tinet.org/~fmco/rs_en.html#RS2PC"> RS2PC</a>
+    permet d'ajouter des modules de bus RS R&#233;tro-signalisations Lenz (et compatible)  un syst&#232;me
+    qui ne supporte pas le bus r&#233;tro-signalisation RS. Pour configurer cet &#233;quipement dans
+    JMRI, s'il vous pla&#238;t voir les instructions pour la configuration du LI100 Lenz.</li>
     
-      <li> Comme le projet Genli de Paco Canada, il y a une interface appel&#233;e		
+    <li>Comme le projet Genli de Paco Canada, il y a une interface appel&#233;e
     <a href="http://www.sleutelspoor.nl/technieken/S88XPressNetLI-V0.2.pdf">S88XpressNetLi</a> 
-     qui est concue et fabriqu&#233;e par Karst Drenth et <a href="http://people.zeelandnet.nl/rosoft/">Wim Ros</a>, 
+    qui est concue et fabriqu&#233;e par Karst Drenth et <a href="http://people.zeelandnet.nl/rosoft/">Wim Ros</a>,
 	et est constitu&#233; d'un petit circuit (disponible en kit ou mont&#233;,ave 2 connecteurs XpressNet, 
 	une interface s&#233;rie (9600 bauds  l'heure actuelle) et une connection S88 
-	(avec ses connecteurs la fois traditionnels et connecteurs S88-N)  
+    (avec ses connecteurs la fois traditionnels et connecteurs S88-N)</li>
 
-    <li> Le projet OpenDCC a deux interfaces pour une utilisation avec JMRI. 
+    <li>Le projet OpenDCC a deux interfaces pour une utilisation avec JMRI.
 	La  <a href="http://www.opendcc.de/elektronik/opendcc/opendcc_e.html"> Centrale OpenDCC</a> et 
-	la <a href="http://www.opendcc.de/elektronik/gateway/gateway.html">Passerelle OpenDCC</a>. Ces interfaces doivent &#234;tre configur&#233;es comme les &#233;quipement LI100F avec une vitesse de 19200 bps.La Centrale OpenDCC fournit la r&#233;tro-signalisation via une connexion S88.
+	la <a href="http://www.opendcc.de/elektronik/gateway/gateway.html">Passerelle OpenDCC</a>. Ces interfaces doivent
+    &#234;tre configur&#233;es comme les &#233;quipement LI100F avec une vitesse de 19200 bps.La Centrale OpenDCC
+    fournit la r&#233;tro-signalisation via une connexion S88.</li>
 	</ul>
   
-<a name="Limitations"><h2>Limitations</h2></a>
+<a name="Limitations"></a><h2>Limitations</h2>
 
-<div class=list>
+<div class="list">
 <dl>    
-<dt class=left>JMRI</dt>
-	<dd class=first>
+<dt class="left">JMRI</dt>
+	<dd class="first">
 	<p>JMRI prend en charge la version actuelle (XBus/XPressNet version 3.0). Nous
 	pouvons ajouter les versions 1.0 et 2.0 xBus prises en charge  l'avenir qui permettront 
 	tous les syst&#232;mes bas&#233;s XBus de travailler avec JMRI.
  	</dd>
 
-	<dt class=left>Atlas</dt>
+	<dt class="left">Atlas</dt>
 	<dd>
 	<p>Le Commander Atlas ne fournit une prise en charge que pour l'exploitation des
 	&#233;quipements sur un r&#233;seau (l'exploitation des trains et le basculement des commutateurs)
-	 partir de JMRI. Vous ne pouvez pas programmer les d&#233;codeurs  partir d'un ordinateur avec le 
+	partir de JMRI. Vous ne pouvez pas programmer les d&#233;codeurs  partir d'un ordinateur avec le
 	Commander.
 
 	<p> Si vous avez un Commander Atlas, et que vous voudriez l'utiliser
@@ -606,7 +611,7 @@ cette page
     peut &#234;tre une solution plus rentable que la LI100, LI100F, LI101F ou LIUSB
 	</dd>
 
-    <dt class  = left> Hornby</dt>
+    <dt class="left"> Hornby</dt>
     <dd>
     <p> Nous fournissons une prise en charge pour l'Elite Hornby utilisant une connexion USB do-it-yourself. 
 	L'Elite peut &#234;tre utilis&#233;e pour des &#233;quipements fonctionnant sur un r&#233;seau
@@ -618,7 +623,7 @@ cette page
 	nous nous attendons donc  des incompatibilit&#233;s dans ce domaine.
 	</dd>
 
-	<dt class=left>Lenz</dt>
+	<dt class="left">Lenz</dt>
 	<dd>
 	<p>Nous avons une assez bonne id&#233;e sur ce que les instructions de chaque centrale Lenz
  	devrait prendre en charge. Si vous trouvez que vous ne pouvez pas ex&#233;cuter une fonction que vous
@@ -650,9 +655,9 @@ cette page
 	instructions pour la cr&#233;ation de ce c&#226;ble dans le manuel LZV100.
 	La BlackBox ne fait que la programmation, et ne peut donc pas faire fonctionner soit
 	les locomotives ou les d&#233;codeurs d'accessoires (aiguillages) sur le r&#233;seau.
-
 	</dd>
-	<dt class=left> Roco</dt>
+
+	<dt class="left">Roco</dt>
 	<dd>
     <p>REMARQUE : Roco appelle leur mise en oeuvre de XPressNet "RocoNet".
 
@@ -682,7 +687,7 @@ cette page
          cette connexion.
 		</dd>
      
-         <dt class=left> OpenDCC</dt>
+         <dt class="left">OpenDCC</dt>
          <dd>
 
          <p> La <a href="http://www.opendcc.de/elektronik/opendcc/opendcc_e.html">Centrale OpenDCC</a>devrait &#234;tre prise en charge par JMRI  travers
@@ -691,7 +696,7 @@ cette page
          <p>Cet &#233;quipement devrzit te configur&#233; comme un &#233;quipement LT100F avec une vitesse configur&#233;e &#224; 19200 bauds.
 	     </dd>
  
-         <dt class=left> Paco Canada</DT>
+         <dt class="left">Paco Canada</dt>
          <dd>
          <p>Paco Canada a deux versions disponibles de son syst&#232;me  Nanox DCC  faire soi-m&#234;me, 
 		 les deux compatibles avec JMRI.
@@ -711,11 +716,11 @@ cette page
 		 un r&#233;seau &#233;quip&#233; XPressNet 
        
          <p> L'interface RS2PC permet d'ajouter des modules Lenz (et compatible) RS de r&#233;tro-signalisation
-          un syst&#232;me  qui ne prend pas en charge le bus r&#233;tro-signalisation RS.
-         Cet appareil ne n&#233;cessite pas de connexion XpressNet.
-           
+         un syst&#232;me  qui ne prend pas en charge le bus r&#233;tro-signalisation RS.
+         Cet appareil ne n&#233;cessite pas de connexion XpressNet.</p>
      	</dd>
-        <dt class=left>Viessemann</dt>
+
+        <dt class="left">Viessemann</dt>
         <dd>
         <p> Le Viessemann Commander avec le Port Bus Basse Vitesse prend en charge le
          protocole XPressNet. Nous devrions &#234;tre capable d'utiliser ceci pour se connecter
@@ -725,9 +730,9 @@ cette page
         <p> Viessemann a indiqu&#233; que le port USB int&#233;gr&#233; dans le Commander peut
         seulement &#234;tre utilis&#233;s pour mettre  jour le firmware et l'envoi des donn&#233;es au 
         Commander, pas pour l'exploitation des &#233;quipements.
-     	</Dd>
+     	</dd>
 
-		<dt class=left> ZTC</dt>
+		<dt class="left">ZTC</dt>
 		<dd>
 		<p> La Commande ZTC511 (avec le logiciel centrale
 		version 4.0) a &#233;t&#233; montr&#233;e pour g&#233;rer l'exploitation sur un
@@ -746,8 +751,7 @@ cette page
     	&#234;tre une solution plus rentable que l'une des interfaces construites.    
 		</dd>
 
-	 	<dd>
-     	<dt class=left> XPA et modem compatible Hayes</DT>
+     	<dt class="left">XPA et modem compatible Hayes</dt>
 		<dd>
 		<p> Si vous choisissez d'utiliser un XPA et un modem compatible Hayes pour
 		commander votre syst&#232;me bas&#233; sur XPressNet, vous serez limit&#233; au
@@ -766,7 +770,7 @@ Bien que les stations de commande mentionn&#233;es sur cette page prennent en ch
 connexion XPressNet, Elles n'utilisent pas le m&#234;me connecteur mat&#233;riel. Il peut &#234;tre n&#233;cessaire de 
 construire un adaptateur pour raccorder un accessoire XPressNet &#224; un Centrale d'un autre fabricant</p> 
 
-<a name="connectLi100"></a><H3>Connexion Connexion utilisant un Lenz LI100, LI101F ou LI101F</H3>
+<a name="connectLi100"></a><h3>Connexion Connexion utilisant un Lenz LI100, LI101F ou LI101F</h3>
 <ol>
     <li>Branchez votre  Lenz LI100, LI100F ou LI101F  votre centrale DCC
      via leurs connexions XPressNet. Puis connectez le
@@ -807,22 +811,22 @@ construire un adaptateur pour raccorder un accessoire XPressNet &#224; un Centra
      <li> Red&#233;marrez le programme. Vous devriez &#234;tre en place et op&#233;rationnel.
   	 </ol>
 
-<a name="connectLiusb"><H3>Connexion utilisant une LIUSB Lenz.</H3>
+     <a name="connectLiusb"></a><h3>Connexion utilisant une LIUSB Lenz.</h3>
             
-<ol> 
+    <ol>
     <li>Pour connecter votre ordinateur  l'une de ces XPressNet bas&#233;s sur un syst&#232;me DCC
     , vous pouvez utiliser une unit&#233; d'interface Lenz LIUSB. Branchez la LIUSB
       votre centrale de commande DCC via leurs connexions XPressNet. Puis
      connecter la LIUSB au port USB de votre ordinateur en utilisant le c&#226;ble.
 	
 	<li>Installer les pilotes appropri&#233;s.
-			<ul>
+        <ul>
 			<li>Pour la LIUSB ( r&#233;f Lenz:23150 ) avec JMRI, vous devez d'abord installer un
      		pilote logiciel sur votre ordinateur. En interne, l'appareil contient un
       		convertisseur USB/s&#233;rie FTDI FT232BM USB pour un convertisseur S&#233;rie. Il ya deux pilotes disponibles
-     		pour cet appareil, assurez-vous d'obtenir le pilote Virtual Port Comm (PCV).<br />
-    		Les pilotes pour Windows sont inclus sur le CD fournit avec l'&#233;quipement.<br />
- 			Les pilotes pour Linux sont inclus avec les versions r&#233;centes du noyau Linux. <br />
+     		pour cet appareil, assurez-vous d'obtenir le pilote Virtual Port Comm (PCV).<br>
+    		Les pilotes pour Windows sont inclus sur le CD fournit avec l'&#233;quipement.<br>
+ 			Les pilotes pour Linux sont inclus avec les versions r&#233;centes du noyau Linux. <br>
 			Les pilotes pour Linux, MacOS (8, 9 et X) et Windows sont
 			disponible dur le <a href="http://www.ftdichip.com/">sit web FTDI</a>
 			( lien direct vers les pilotes actuels comme &#233;crit <a 
@@ -836,45 +840,47 @@ construire un adaptateur pour raccorder un accessoire XPressNet &#224; un Centra
 			si l'ordinateur est reli&#233; &#224; internet. Pour Linux les pilotes font parties du noyau standard.
 			</li>
 			</ul>
-
-     <P> Lorsque les pilotes sont install&#233;s, et que la LIUSB est connect&#233;e
-      la fois  votre PC et votre syst&#232;me DCC, la LIUSB devrait avoir une LED rouge allum&#233;e,
-     indiquant que la connexion XPressNet est OK , et une LED verte allum&#233;e,
-     indiquant que la connexion USB est OK.
-    <p><b>REMARQUE : Si vous avez install&#233; le logiciel Lenz, s'assurer qu'aucun de
-     ceux-ci ne soit en en marche. Cela comprend la LI-Server, qui peut &#234;tre ex&#233;cut&#233;e
-     en t&#226;che de fond.</b>
+        <p> Lorsque les pilotes sont install&#233;s, et que la LIUSB est connect&#233;e
+        la fois  votre PC et votre syst&#232;me DCC, la LIUSB devrait avoir une LED rouge allum&#233;e,
+        indiquant que la connexion XPressNet est OK , et une LED verte allum&#233;e,
+        indiquant que la connexion USB est OK.
+        <p><b>REMARQUE : Si vous avez install&#233; le logiciel Lenz, s'assurer qu'aucun de
+        ceux-ci ne soit en en marche. Cela comprend la LI-Server, qui peut &#234;tre ex&#233;cut&#233;e
+        en t&#226;che de fond.</b></p></li>
 
      <li>Une fois les pilotes install&#233;s, vous &#234;tes pr&#234;t  configurer
      JMRI. D&#233;marrez l'un des programmes bas&#233;s sur JMRI, puis passez au
      panneau de pr&#233;f&#233;rences. Celui-ci s'ouvre automatiquement la premi&#232;re fois qu'un programme
-     est ex&#233;cut&#233;, ou vous pouvez le s&#233;lectionner dans le menu "&#233;dition".
+     est ex&#233;cut&#233;, ou vous pouvez le s&#233;lectionner dans le menu "&#233;dition".</li>
 
      <li>S&#233;lectionnez "Lenz LIUSB" dans la bo&#238;te de s&#233;lection en haut. 
-     Puis vous pouvez s&#233;lectionner le port s&#233;rie appropri&#233; dans la second bo&#238;te de s&#233;lection.
+     Puis vous pouvez s&#233;lectionner le port s&#233;rie appropri&#233; dans la second bo&#238;te de s&#233;lection.</li>
         
-    <li>La bo&#238;te de s&#233;lection de la vitesse de transmission  doit &#234;tre r&#233;gl&#233;e  57600 bauds.
+     <li>La bo&#238;te de s&#233;lection de la vitesse de transmission  doit &#234;tre r&#233;gl&#233;e  57600 bauds.</li>
    
-    <li>La quatri&#232;me case doit &#234;tre 
-	<ol>
+     <li>La quatri&#232;me case doit &#234;tre
+	    <ol>
 			<li>( <b> pour la LIUSB Lenz r&#233;f:23150</b> ) laiss&#233;e sur le "contr&#244;le de flux mat&#233;riel"
      		sauf si plus tard vous obtenez constamment un message disant que le lien de la LIUSB
     		est mal configur&#233;, auquel cas vous pourriez vouloir essayer de court circuiter le probl&#232;me
-     		en s&#233;lectionnant "aucun contr&#244;le de flux".
-			<li>(<b> Pour la LIUSB Lenz r&#233;f 23151</b> ) mettre "pas de contr&#244;le de flux(la LIUSB-Ethernet ne prend pas en charge le contr&#244;le de flux.</li>
-	 </ol>
+            en s&#233;lectionnant "aucun contr&#244;le de flux".</li>
+			<li>(<b> Pour la LIUSB Lenz r&#233;f 23151</b> ) mettre "pas de contr&#244;le de flux(la LIUSB-Ethernet
+            ne prend pas en charge le contr&#244;le de flux.</li>
+        </ol>
+     </li>
+
      <li><b> Cette option a &#233;t&#233; supprim&#233;e  partir de la version 2.9.5</b>
      V&#233;rifier l'&#233;tat du tampon lors de l'envoi? Par d&#233;faut  "Yes" sur
      Windows et Linux, et "No" sur MacOS 8 / 9 et Mac OS X.
-     Sauf lors de d&#233;bogage des probl&#232;mes, vous devriez laisser cela  la valeur par d&#233;faut.
+     Sauf lors de d&#233;bogage des probl&#232;mes, vous devriez laisser cela  la valeur par d&#233;faut.</li>
 
 	 <li>Cliquez "Enregistrer". Le programme vous demande si vous voulez quitter,
-     cliquez "Oui".
+     cliquez "Oui".</li>
 
-	 <li> Red&#233;marrez le programme. Vous devriez &#234;tre en place et op&#233;rationnel.
-	 </ol>
+     <li> Red&#233;marrez le programme. Vous devriez &#234;tre en place et op&#233;rationnel.</li>
+	</ol>
 
-<h3>Connexion  un XPressNet bas&#233; sur un syst&#232;me DCC en utilisant un LIUSB Lenz et le serveur Lenz LIUSB. (Windows uniquement)</H3>
+<h3>Connexion  un XPressNet bas&#233; sur un syst&#232;me DCC en utilisant un LIUSB Lenz et le serveur Lenz LIUSB. (Windows uniquement)</h3>
 
 <b>REMARQUE : La premi&#232;re version de JMRI sprenant en charge la connexion Lenz Server LIUSB est la version 2.7.2</b>
 <ol>
@@ -888,7 +894,7 @@ construire un adaptateur pour raccorder un accessoire XPressNet &#224; un Centra
 	les pilotes et les logiciels de Lenz. Ces informations sont fournies sur le CD qui est fourni
 	avec la LIUSB.
 
-	<P>Lorsque les pilotes sont install&#233;s, et la LIUSB est connect&#233;e
+	<p>Lorsque les pilotes sont install&#233;s, et la LIUSB est connect&#233;e
 	 la fois  votre PC et votre syst&#232;me DCC, la LIUSB devrait avoir une LED rouge allum&#233;e,
  	indiquant que la connexion XPressNetXPressNet est OK , et une LED verte allum&#233;e,
  	indiquant que la connexion USB est OK.
@@ -914,7 +920,7 @@ construire un adaptateur pour raccorder un accessoire XPressNet &#224; un Centra
 
 <b>REMARQUE : La premi&#232;re version de JMRI sprenant en charge la connexion Lenz Server LIUSB est la version 2.13.7</b>
 <ol>
-     <li>Pour connecter votre ordinateur &#224; l'un de ces XPressNet bas&#233;s sur DCC, 
+    <li>Pour connecter votre ordinateur &#224; l'un de ces XPressNet bas&#233;s sur DCC,
 	vous pouvez utiliser une interface Ethernet Lenz LIUSB en mode Ethernet.<br>
 	Connecter le LIUSB &#224; votre Centrale DCC via sa connexion XPressNet, 
 	puis connecter le LIUSB Ethernet &#224; votre r&#233;seau informatique en utilisant 
@@ -923,43 +929,44 @@ construire un adaptateur pour raccorder un accessoire XPressNet &#224; un Centra
 	devra s'allumer.<br>
 	Quand l'Ethernet est proprement connect&#233;, une Led d'&#233;tat Verte devra s'allumer. 
     Ces leds sont localis&#233;es sur le port ethernet lui-m&#234;me. Ceci signale que 
-	les drivers sont install&#233;s et que le LIUSB est connect&#233;.</p></li>
+	les drivers sont install&#233;s et que le LIUSB est connect&#233;.</li>
 
-	<li> Une fois l'&#233;quipement raccorder, se r&#233;f&#233;rer au &#224; la documentation de l'&#233;quipement
+	<li>Une fois l'&#233;quipement raccorder, se r&#233;f&#233;rer au &#224; la documentation de l'&#233;quipement
 	pour les information de configuration des adresses IP. L'adresse IP par d&#233;faut 
 	est 192.168.0.200. Prenez note de l'adresse IP pour l'utiliser lors de la configuration 
 	de l'&#233;quipement. Si l'adresse IP est inconnue, et que votre syst&#232;me prend en charge 
 	l'auto-configuration via le protocol MDNS ( connu aussi comme Bonjour ), vous pouvez ouvrir un navigateur &#224; <a href="http://XPressNet.local./">http://XPressNet.local./</a>.<br>
 	Dans l'interface de Configuration LIUSB-Ethernet, l'adresse IP apparait dans
 	le champ cercl&#233; dans l'image ci-dessous:<br>
-			<a href="images/LIUSBEthernetIPAddressField.PNG"><img src="images/LIUSBEthernetIPAddressField.PNG" width="400" height="427" alt="LIUSB-Ethernet Configuration web interface with IP Address circled."></a>
+	<a href="images/LIUSBEthernetIPAddressField.PNG"><img src="images/LIUSBEthernetIPAddressField.PNG" width="400" height="427" alt="LIUSB-Ethernet Configuration web interface with IP Address circled."></a>
 	</li>
 	
 	<li>D&#233;marrer un des programmes JMRI,puis allez au panneau des pr&#233;f&#233;rences.
 	Celui-ci s'ouvre automatiquement lors de la premi&#232;re ex&#233;cution du programme, 
 	ou vous le s&#233;lectionnez dans le menu "&#201;dition".
 	
-	<li>S&#233;lectionnez "Lenz LIUSB Ethernet" dans la fen&#234;tre de s&#233;lection du haut, Il y a deux options de configuration disponible pour la LIUSB-Ethernet. Vous devez choisir entre la configuration Manuelle ( par d&#233;faut) et la configuration Automatique:
-   	<ul>
-				<li>Pour utiliser<strong>configuration Manuelle</strong>entrez l'adresse IP 
-				que vous avez sauvegard&#233; plus t&#244;t dans le champ lib&#233;l&#233; "IP adress", comme montr&#233; dans l'image ci-desous:<br>
-				<a href="images/ConfigurationIPFields.PNG"><img src="images/ConfigurationIPFields.PNG" width="606" height="210" alt="JMRI Configuration screen and LIUSB-Ethernet Configuration screen demonstrating the IP address to be copied."></a>
-				</li>
-				<li><strong>configuration Automatique</strong> est optionnel si vous configurez l'adresse IP de votre LIUSB-Ethernet &#224; une valeur fix&#233;e. Si vous utilis&#233; DHCP pour configurer l'adresse IP de la LIUSB-Ethernet, il est hautement recommand&#233; que vous utilisiez la Configuration Automatique.br>
-				Pour utiliser la Configuration Automatique, cochez la case Automatic Configuration, comme montr&#233; dans l'image ci-dessous:<br>
-				<a href="images/LIUSBEthernetAutoConfigureCheckboxes.PNG"><img src="images/LIUSBEthernetAutoConfigureCheckboxes.PNG" width="595" height="216" alt="JMRI Configuration screen and LIUSB-Ethernet Configuration screen demonstrating automatic configuration."></a>
-				</li>
-	</ul></li>
+	<li>S&#233;lectionnez "Lenz LIUSB Ethernet" dans la fen&#234;tre de s&#233;lection du haut. Il y a deux options
+    de configuration disponible pour la LIUSB-Ethernet. Vous devez choisir entre la configuration Manuelle (par d&#233;faut) et la configuration Automatique:
+   	    <ul>
+            <li>Pour utiliser<strong>configuration Manuelle</strong>entrez l'adresse IP
+            que vous avez sauvegard&#233; plus t&#244;t dans le champ lib&#233;l&#233; "IP adress", comme montr&#233; dans l'image ci-desous:<br>
+            <a href="images/ConfigurationIPFields.PNG"><img src="images/ConfigurationIPFields.PNG" width="606" height="210" alt="JMRI Configuration screen and LIUSB-Ethernet Configuration screen demonstrating the IP address to be copied."></a>
+            </li>
+            <li><strong>configuration Automatique</strong> est optionnel si vous configurez l'adresse IP de votre LIUSB-Ethernet &#224; une valeur fix&#233;e. Si vous utilis&#233; DHCP pour configurer l'adresse IP de la LIUSB-Ethernet, il est hautement recommand&#233; que vous utilisiez la Configuration Automatique.br>
+            Pour utiliser la Configuration Automatique, cochez la case Automatic Configuration, comme montr&#233; dans l'image ci-dessous:<br>
+            <a href="images/LIUSBEthernetAutoConfigureCheckboxes.PNG"><img src="images/LIUSBEthernetAutoConfigureCheckboxes.PNG" width="595" height="216" alt="JMRI Configuration screen and LIUSB-Ethernet Configuration screen demonstrating automatic configuration."></a>
+            </li>
+	    </ul>
+    </li>
 
  	<li>Cliquez "Enregistrer". Le programme vous demande si vous voulez quitter,
-     cliquez "Oui".
+    cliquez "Oui".
 
  	<li> Red&#233;marrez le programme. Vous devriez &#234;tre en place et op&#233;rationnel.
 	</ol>
 
-
-	<a name="connectsim"></a><H3> Connexion au simulateur XPressNet</H3>
-<ol>
+	<a name="connectsim"></a><h3> Connexion au simulateur XPressNet</h3>
+    <ol>
      <li> D&#233;marrer un des programmes JMRI, puis allez dans le panneau des pr&#233;f&#233;rences. Celui-ci
       s'ouvre automatiquement la premi&#232;re fois qu'un programme est ex&#233;cut&#233;, ou vous pouvez le s&#233;lectionner
       partir du menu "&#233;dition".
@@ -973,13 +980,9 @@ construire un adaptateur pour raccorder un accessoire XPressNet &#224; un Centra
 	 <li> Red&#233;marrez le programme. Vous devriez &#234;tre en place et fonctionnel.
 	</ol>
 
+    <a name="connectZtc"></a><h3>Connexion  un XPressNet bas&#233; sur un syst&#232;me DCC utilisant un ZTC640 de ZTC.</h3>
 
-
-
-
-	<a name="connectZtc"><H3>Connexion  un XPressNet bas&#233; sur un syst&#232;me DCC utilisant un ZTC640 de ZTC.</H3>
-
-<ol>
+    <ol>
      <li> Pour connecter votre ordinateur  l'un de ces XPressNet bas&#233;s sur DCC
     , vous pouvez utiliser une unit&#233; d'interface ZTC ZTC640. Branchez la ZTC640
       votre centrale DCC via leurs connexions XPressNet. Puis
@@ -992,7 +995,7 @@ construire un adaptateur pour raccorder un accessoire XPressNet &#224; un Centra
      pour cet appareil, assurez-vous d'obtenir le Pilote Virtual Port Comm (PCV).
      
 
-     <P>Les pilotes de p&#233;riph&#233;riques pour Windows sont fournis sur le CD qui est
+     <p>Les pilotes de p&#233;riph&#233;riques pour Windows sont fournis sur le CD qui est
      livr&#233; avec l'appareil.
 
      <p>Les pilotes de p&#233;riph&#233;riques pour Linux sont fournies avec les versions r&#233;centes du
@@ -1003,7 +1006,7 @@ construire un adaptateur pour raccorder un accessoire XPressNet &#224; un Centra
      (Un lien direct vers les pilotes   jour sont sur le site  <a
      href= "http://www.ftdichip.com/Drivers/VCP.htm"> http://www.ftdichip.com/Drivers/VCP.htm</a>)
     
-    <P>Quand les pilotes sont install&#233;s, et le ZTC640 est connect&#233;
+    <p>Quand les pilotes sont install&#233;s, et le ZTC640 est connect&#233;
       la fois  votre PC et &#224; votre syst&#232;me DCC, le ZTC640 devrait avoir une  LED rouge allum&#233;e, 
      indiquant que la connexion XPressNet est OK, et une LED verte allum&#233;e, 
 	 indiquant que la connexion USB est OK.
@@ -1020,7 +1023,7 @@ construire un adaptateur pour raccorder un accessoire XPressNet &#224; un Centra
     
      <li>La quatri&#232;me case doit &#234;tre laiss&#233; sur "no flow control"..
 
-      <li><b>Cette option a &#233;t&#233; supprim&#233;e  partir de la version 2.9.5</b>
+     <li><b>Cette option a &#233;t&#233; supprim&#233;e  partir de la version 2.9.5</b>
      V&#233;rifier l'&#233;tat du tampon lors de l'envoi? Par d&#233;faut  "Yes" sur 
      Windows et Linux, et "No" sur MacOS 8/9 et Mac OS X.
      Sauf lors de d&#233;bogage des probl&#232;mes, vous devriez laisser cela  la valeur par d&#233;faut.
@@ -1031,7 +1034,7 @@ construire un adaptateur pour raccorder un accessoire XPressNet &#224; un Centra
 	<li> Red&#233;marrez le programme. Vous devriez &#234;tre en place et op&#233;rationnel.
 	</ol>
     
-<a name="connectElite"></a><H33> Connexion en utilisant la connexion USB int&#233;gr&#233; de l'Elite Hornby</H3>
+<a name="connectElite"></a><h3> Connexion en utilisant la connexion USB int&#233;gr&#233; de l'Elite Hornby</h3>
 
 <b> NOTE: La premi&#232;re version JMRI supportant la connexion USB int&#233;gr&#233; de 
 l'Elite Hornby est la 2.1.2</b>
@@ -1044,7 +1047,7 @@ l'Elite Hornby est la 2.1.2</b>
      <li> Pour utiliser la connexion USB int&#233;gr&#233;e de l'Hornby Elite, vous devez
      d'abord installer un pilote logiciel sur votre ordinateur.
 
-     <P> Les pilotes des p&#233;riph&#233;riques pour Windows sont fournis sur le CD qui est
+     <p> Les pilotes des p&#233;riph&#233;riques pour Windows sont fournis sur le CD qui est
      livr&#233; avec l'appareil et sur le <a href="http://www.hornby.com/customer-support/downloads/elite-driver-download-and-installation,110,HAR.html"> site Hornby</a>.
 
      <p>A ce jour nous ne savons pas s'il y a des pilotes de p&#233;riph&#233;riques disponibles pour
@@ -1067,17 +1070,17 @@ l'Elite Hornby est la 2.1.2</b>
 
   
     <li><b>Cette option a &#233;t&#233; supprim&#233;e  partir de la version 2.9.5</b>
-     V&#233;rifier l'&#233;tat du tampon lors de l'envoi? Par d&#233;faut  "Yes" sur le
-     Windows et Linux, et "No" sur MacOS 8/9 et Mac OS X.
-     Sauf lors de d&#233;bogage des probl&#232;mes, vous devriez laisser cela  la valeur par d&#233;faut.
+    V&#233;rifier l'&#233;tat du tampon lors de l'envoi? Par d&#233;faut  "Yes" sur le
+    Windows et Linux, et "No" sur MacOS 8/9 et Mac OS X.
+    Sauf lors de d&#233;bogage des probl&#232;mes, vous devriez laisser cela  la valeur par d&#233;faut.
     
-	 <li> Cliquez "Enregistrer".  Le programme vous demande si vous voulez quitter,
-     cliquez "Oui.
+	<li>Cliquez "Enregistrer".  Le programme vous demande si vous voulez quitter,
+    cliquez "Oui.</li>
 
-	 <li> Red&#233;marrez le programme. Vous devriez &#234;tre en place et op&#233;rationnel.
-	 </ol>
+    <li>Red&#233;marrez le programme. Vous devriez &#234;tre en place et op&#233;rationnel.</li>
+	</ol>
 
-  	<a name="connectXntcp"><H3>Connexion  un XPressNet via un adaptateur XnTcp.</H3>
+    <a name="connectXntcp"></a><h3>Connexion  un XPressNet via un adaptateur XnTcp.</h3>
 
 	<p><b>REMARQUE: La premi&#232;re version JMRI supportant l'adaptateur
 	XnTcp est la 2.1.5</b> 
@@ -1100,7 +1103,7 @@ l'Elite Hornby est la 2.1.2</b>
 	plut&#244;t que de m&#233;moriser les chiffres des adresse IP,
 	car l'adresse IP peut changer  cause de l'adressage DHCP.
 
-	<a name="connectXpa"><H3>Connexion utilisant le XPA et un modem</H3>
+    <a name="connectXpa"></a><h3>Connexion utilisant le XPA et un modem</h3>
 
     <p>Nous avons d&#233;velopp&#233; une m&#233;thode alternative pour la connexion  un syst&#232;me bas&#233; sur XPressNet
     qui devrait se r&#233;v&#233;ler plus rentable sur les syst&#232;mes XPressNet de base
@@ -1157,14 +1160,15 @@ l'Elite Hornby est la 2.1.2</b>
 
 	<a name="documentation"></a><h2>Documentation</h2>
 	
-<H3>Aide JMRI</H3>
+<h3>Aide JMRI</h3>
 	<ul>
     		<li><a href=XNetAddressing.shtml> Noms des adresses Adresses du bus de R&#233;trosignalisation Lenz</a> 
     		<li><a href=CreateXNetLogFile.shtml>Comment cr&#233;er un fichier journal XPressNet</a>
 	</ul>
+
 <h3>Autre Info</h3>
 
-		<ul>
+	<ul>
 		<li><a href="http://www.atlasrr.com/dcc/CommanderManual1.pdf">Manuel Atlas Commander</a>
             (fichier pdf; 363 kb)</li>
 
@@ -1179,7 +1183,7 @@ l'Elite Hornby est la 2.1.2</b>
 <h3>Credits</h3>
 <p>Merci &#224; Paul Bender et autres pour la mise en place d'XPressNet
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

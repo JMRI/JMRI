@@ -19,6 +19,7 @@ coveragereport
 tests.log
 cucumber-results.xml
 cucumber-results.json
+failed_files.txt
 
 # runtime artifacts
 messages.log*
@@ -35,6 +36,7 @@ session.log
 /temp
 .pydevproject
 *.swp
+*.swo
 /lib/cachedir
 /xml/XSLT/DTD
 /xml/XSLT/properties
@@ -57,6 +59,7 @@ local.properties
 .metadata
 RemoteSystemsTempFiles
 .idea/libraries/**
+.idea/sonarlint/issuestore
 
 # user-installed components
 /web/TrainCrew

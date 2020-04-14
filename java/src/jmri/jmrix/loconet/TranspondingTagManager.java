@@ -32,6 +32,7 @@ public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
     }
     
     @Override
+    @Nonnull
     public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) {
         if (log.isDebugEnabled()) {
             log.debug("new IdTag:"
@@ -73,7 +74,7 @@ public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
     @Override
     public void writeIdTagDetails() throws java.io.IOException {
         if (this.dirty) {
-            new DefaultIdTagManagerXml(this,"TranspondingIdTags.xml").store();  //NOI18N
+            new DefaultIdTagManagerXml(this,"TranspondingIdTags.xml").store();  // NOI18N
             this.dirty = false;
             log.debug("...done writing IdTag details");
         }
@@ -82,7 +83,7 @@ public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
     @Override
     public void readIdTagDetails() {
         log.debug("reading idTag Details");
-        new DefaultIdTagManagerXml(this,"TranspondingIdTags.xml").load();  //NOI18N
+        new DefaultIdTagManagerXml(this,"TranspondingIdTags.xml").load();  // NOI18N
         this.dirty = false;
         log.debug("...done reading IdTag details");
     }

@@ -1,11 +1,13 @@
 package jmri.jmrix.can.cbus;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class to lookup CBUS event names via the event table
@@ -15,10 +17,23 @@ import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
  */
 public class CbusNameService {
     
-    private CbusEventTableDataModel eventModel;
-    private CbusNodeTableDataModel nodeModel;
-
+    private final CanSystemConnectionMemo _memo;
+    
+    /**
+     * Create a new instance for the default connection
+     */
     public CbusNameService(){
+        super();
+        _memo = null;
+    }
+    
+    /**
+     * Create a new instance for a given connection
+     * @param memo System Connection
+     */
+    public CbusNameService(CanSystemConnectionMemo memo){
+        super();
+        _memo=memo;
     }
 
     /**
@@ -35,20 +50,18 @@ public class CbusNameService {
      */
     @Nonnull
     public String getEventNodeString( int nn, int en ){
-        // log.debug("looking up node {} event {}",nn,en);
-        try {
-            eventModel = jmri.InstanceManager.getDefault(CbusEventTableDataModel.class);
-            String addevbuf = eventModel.getEventString(nn,en);
+        CbusEventTableDataModel evMod = getEventModel();
+        if (evMod!=null) {
+            String addevbuf = evMod.getEventString(nn,en);
             if ( !addevbuf.isEmpty() ) {
                 return addevbuf;
             }
-        } catch (NullPointerException e) {
         }
         return new CbusEvent(nn,en).toString();
     }
 
     /**
-     * Return a formatted String attempting locate the event name
+     * Return a formatted String attempting to locate the event name.
      * <p>
      * get the event name, empty string if event not on event table, or if event name is empty
      *
@@ -58,16 +71,16 @@ public class CbusNameService {
      */
     @Nonnull
     public String getEventName( int nn, int en ){
-        try {
-            eventModel = jmri.InstanceManager.getDefault(CbusEventTableDataModel.class);
-            return eventModel.getEventName(nn,en);
-        } catch (NullPointerException e) {
+        CbusEventTableDataModel evMod = getEventModel();
+        if (evMod!=null) {
+            return evMod.getEventName(nn,en);
+        } else {
             return ("");
         }
     }
 
     /**
-     * Return a formatted String attempting locate the node name
+     * Return a formatted String after attempting to locate the node name.
      * <p> 1st attempt - Node Username in node table ( eg. Control Panel West )
      * <p> 2nd attempt - Node Type Name ( eg. CANPAN )
      * <p> fallback empty string
@@ -77,13 +90,23 @@ public class CbusNameService {
      */
     @Nonnull
     public String getNodeName( int nn ){
-        try {
-            nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
-            return nodeModel.getNodeName(nn);
-        } catch (NullPointerException e) {
-            return ("");
+        CbusNodeTableDataModel model = getNodeModel();
+        if (model!=null) {
+            return model.getNodeName(nn);
         }
+        return "";
+    }
+    
+    @CheckForNull
+    private CbusNodeTableDataModel getNodeModel(){
+        log.debug("memo: {}",_memo);
+        return jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
+    }
+    
+    @CheckForNull
+    private CbusEventTableDataModel getEventModel(){
+        return jmri.InstanceManager.getNullableDefault(CbusEventTableDataModel.class);
     }
 
-    // private static final Logger log = LoggerFactory.getLogger(CbusNameService.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusNameService.class);
 }

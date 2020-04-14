@@ -12,7 +12,8 @@
   <meta name="Description" content=
   "Throttle documentation for JMRI project">
   <meta name="Author" content="Paul Fraker (paul@frakers.com)">
-  <meta name="Language" content="EN"><!-- Style -->
+  <meta name="Language" content="EN">
+  <!-- Style -->
   <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -20,16 +21,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Throttle Documentation</h1>
 
       <p>Please note that the Throttles Help was updated. Current
@@ -193,7 +194,7 @@
         <dt>C. <a href="ThrottleChapter4.shtml#CloseThrottle"
         title="Closing A Throttle Window">Closing a Throttle
         Window</a></dt>
-      </dl><!--#include virtual="/Footer" -->
+      </dl><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

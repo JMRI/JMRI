@@ -17,14 +17,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Power Control</h1>
 
       <p>The On/Off buttons on this pane do the same thing the
@@ -36,7 +37,7 @@
           means is DCC system-dependent.  An example is shown in the image below.</p>
       <p><img src="images/PowerControlWithIdleButton.png" alt="Power control panel showing Idle pushbutton"></p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

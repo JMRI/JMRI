@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import jmri.InstanceManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
@@ -76,7 +77,7 @@ public class ColorDialog extends JDialog implements ChangeListener {
                     _saveUtil = p.getPopupUtility();
                     p.remove();
                 }
-           } else {
+            } else {
                 _util = null;
             }
             _saveOpaque = t.isOpaque();
@@ -149,7 +150,7 @@ public class ColorDialog extends JDialog implements ChangeListener {
             
             
             setContentPane(panel);
-            setLocation(jmri.util.PlaceWindow.nextTo(client, t, this));
+            InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(client, t, this);
 
             pack();
             setVisible(true);

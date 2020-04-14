@@ -11,13 +11,11 @@ import jmri.CabSignal;
 import jmri.CabSignalListListener;
 import jmri.CabSignalManager;
 import jmri.LocoAddress;
-import jmri.DccLocoAddress;
-import jmri.implementation.DefaultCabSignal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * abstract implementation of the {@link jmri.CabSignalManager} interface.
+ * Abstract implementation of the {@link jmri.CabSignalManager} interface.
  *
  * <hr>
  * This file is part of JMRI.
@@ -34,7 +32,7 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractCabSignalManager implements CabSignalManager {
 
-    protected HashMap<LocoAddress,CabSignal> signalList;
+    protected HashMap<LocoAddress, CabSignal> signalList;
     protected ArrayList<CabSignalListListener> listListeners;
 
     // keep a list of listeners for block objects.
@@ -42,7 +40,7 @@ abstract public class AbstractCabSignalManager implements CabSignalManager {
     private boolean blockInit = false;
 
     public AbstractCabSignalManager(){
-         signalList = new HashMap<LocoAddress,CabSignal>();
+         signalList = new HashMap<LocoAddress, CabSignal>();
          listListeners = new ArrayList<CabSignalListListener>();
          mBlockListeners = new ArrayList<PropertyChangeListener>();
     }
@@ -60,7 +58,7 @@ abstract public class AbstractCabSignalManager implements CabSignalManager {
            initBlocks();
         }
         if(!signalList.containsKey(address)){
-           signalList.put(address,createCabSignal(address));
+           signalList.put(address, createCabSignal(address));
            notifyCabSignalListChanged();
         }
         return signalList.get(address); 
@@ -161,18 +159,18 @@ abstract public class AbstractCabSignalManager implements CabSignalManager {
      * @param e propChgEvent
      */
   private void handleBlockChange(PropertyChangeEvent e) {	
-        log.debug("property {} new value {} old value {}",e.getPropertyName(),e.getNewValue(),e.getOldValue());
+        log.debug("property {} new value {} old value {}",e.getPropertyName(), e.getNewValue(), e.getOldValue());
         if (e.getPropertyName().equals("value")){	
-           if(e.getOldValue()==null && e.getNewValue()!=null){
-              for(CabSignal c: signalList.values()){
-                 if(c.getBlock()==null){
+           if(e.getOldValue() == null && e.getNewValue() != null){
+              for(CabSignal c : signalList.values()){
+                 if(c.getBlock() == null){
                     c.setBlock(); // cause this cab signal to look for a block.
                  }
               } 
            }
-           return;	
         }
    }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractCabSignalManager.class);
+
 }

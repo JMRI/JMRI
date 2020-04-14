@@ -6,29 +6,25 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- UpDated  by Blorec Herv&#233; 2013-09-27-->
+  <!-- Updated by Blorec Herv&#233; 2013-09-27-->
 
-  <title>JMRI: Getting Started with Scripting</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <title>JMRI: Getting Started with Scripting</title>
+    <!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-      <!-- Page Body -->
-
-      <h2>JMRI: Mise en Route avec des Scripts</h2>
+        <!-- Page Body -->
+<h2>JMRI: Mise en Route avec des Scripts</h2>
 
       <h3>Ex&eacute;cuter "Bonjour le monde"</h3>Il y a plusieurs
       fa&ccedil;ons d'utiliser des scripts Python avec JMRI. Le
@@ -266,7 +262,8 @@ retourne &agrave; la ligne de commande.
       ind&eacute;pendante &agrave; l'int&eacute;rieur du programme.
       Mais ne vous souciez pas de cela jusqu'&agrave; ce que vous
       ayez eu plus d'exp&eacute;rience avec les scripts.</p>
-      <!--#include virtual="/Footer" -->
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

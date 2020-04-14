@@ -16,40 +16,41 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+     <!-- Page Body -->
 
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
-
-<H1> Outil de Configuration XPressNet LI101F </H1>
+    <h1> Outil de Configuration XPressNet LI101F </h1>
 
 <img src="images/LI101ConfigurationUtility.jpg" alt="LI101 Configuration Tool Image">>
-<P>
+<p>
 L'outil de configuration LI101 est utilis&#233; pour configurer le LI101F.
-<P>
+<p>
 En partant du haut:
-<P>
+<p>
 La premi&#232;re liste d&#233;roulante permet de s&#233;lectionner l''adresse que l'appareil 
 utilisera sur le XPressNet. Cette adresse doit &#234;tre diff&#233;rente de celle de tous les autres
 p&#233;riph&#233;riques sur votre XpressNet.
-<P>
+<p>
 La seconde liste d&#233;roulante affiche les boites fixant la vitesse du port LI101F. Cette vitesse devrait
 correspondre &#224; ce que vous avez utilis&#233; pour le  param&#232;tre "Port Speed" dans le volet Pr&#233;f&#233;rences
 
-		<h4>Boutons</h4>
+	<h4>Boutons</h4>
 
-<P>
+<p>
 A partir du c&#244;t&#233; gauche de l'&#233;cran, le bouton "Read from 
 LI101" (Lire depuis LI101), va lire les param&#232;tres actuels de LI101F.
-<P>
+<p>
 Le bouton "Write to LI101"(&#233;crire dans LI101), &#233;crira les param&#232;tres sur l'&#233;cran
 de LI101F. Si vous avez chang&#233; le r&#233;glage de la vitesse LI101, vous aurez &#233;galement besoin
 de changer le r&#233;glage de la vitesse dans vos Pr&#233;f&#233;rences.
-<P>
+<p>
 Le bouton "Reset to Factory Defaults" (Remettre aux param&#232;tres par d&#233;faut) r&#233;initialise  <b>l'&#233;cran</b>
 aux r&#233;glages d'usine par d&#233;faut. Ceci n'envoie pas d'instruction de r&#233;initialisation &#224; LI101F &#224; ce
 moment.
-<P>
+<p>
 Le dernier bouton, &#233;tiquet&#233; "Close" va fermer l'&#233;cran, sans envoyer
 d'information &#224; LI101F.
 
@@ -59,7 +60,7 @@ d'information &#224; LI101F.
 Paul Bender<br>
 paul.bender@acm.org
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

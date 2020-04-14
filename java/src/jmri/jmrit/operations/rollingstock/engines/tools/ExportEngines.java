@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -15,6 +15,8 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,15 +30,20 @@ import org.slf4j.LoggerFactory;
  */
 public class ExportEngines extends XmlFile {
 
-    static final String ESC = "\""; // escape character NOI18N
-    private String del = ","; // delimiter
-
     public ExportEngines() {
-
+        // nothing to do
     }
 
+    /**
+     * Sets the delimiter for the CSV export. Does nothing, left in place to
+     * avoid API breakage during deprecation period.
+     *
+     * @param delimiter ignored
+     * @deprecated since 4.19.4 without replacement
+     */
+    @Deprecated
     public void setDeliminter(String delimiter) {
-        del = delimiter;
+        // nothing to do
     }
 
     /**
@@ -60,7 +67,7 @@ public class ExportEngines extends XmlFile {
                 }
             }
             writeFile(defaultOperationsFilename());
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("Exception while writing the new CSV operations file, may not be complete: " + e);
         }
     }
@@ -73,133 +80,73 @@ public class ExportEngines extends XmlFile {
             file = new File(name);
         }
 
-        PrintWriter fileOut = null;
+        try (CSVPrinter fileOut = new CSVPrinter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),
+                CSVFormat.DEFAULT)) {
 
-        try {
-            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
-                    true);
+            EngineManager manager = InstanceManager.getDefault(EngineManager.class);
+            List<Engine> engineList = manager.getByNumberList();
+
+            // create header
+            fileOut.printRecord(Bundle.getMessage("Number"),
+                    Bundle.getMessage("Road"),
+                    Bundle.getMessage("Model"),
+                    Bundle.getMessage("Length"),
+                    Bundle.getMessage("Owner"),
+                    Bundle.getMessage("Built"),
+                    Bundle.getMessage("Location"),
+                    "-",
+                    Bundle.getMessage("Track"),
+                    Bundle.getMessage("Consist"),
+                    Bundle.getMessage("Moves"),
+                    Bundle.getMessage("Last"),
+                    Setup.getValueLabel(),
+                    Bundle.getMessage("HP"),
+                    Bundle.getMessage("WeightTons"),
+                    Bundle.getMessage("Type"),
+                    Bundle.getMessage("Comment"),
+                    Bundle.getMessage("Miscellaneous"));
+
+            // store engine number, road, model, length, owner, built date, location - track
+            for (Engine engine : engineList) {
+                fileOut.printRecord(engine.getNumber(),
+                        engine.getRoadName(),
+                        engine.getModel(),
+                        engine.getLength(),
+                        engine.getOwner(),
+                        engine.getBuilt(),
+                        engine.getLocationName(),
+                        "-",
+                        engine.getTrackName(),
+                        engine.getConsistName(),
+                        engine.getMoves(),
+                        engine.getLastDate(),
+                        engine.getValue(),
+                        engine.getHp(),
+                        engine.getWeightTons(),
+                        engine.getTypeName(),
+                        engine.getComment(),
+                        engine.isOutOfService() ? Bundle.getMessage("OutOfService") : "");
+            }
+            fileOut.flush();
+            fileOut.close();
+            log.info("Exported " + engineList.size() + " engines to file " + defaultOperationsFilename());
+            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedEnginesToFile"),
+                    new Object[]{engineList.size(), defaultOperationsFilename()}), Bundle.getMessage("ExportComplete"),
+                    JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             log.error("Can not open export engines CSV file: " + file.getName());
             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedEnginesToFile"),
                     new Object[]{0, defaultOperationsFilename()}), Bundle.getMessage("ExportFailed"),
                     JOptionPane.ERROR_MESSAGE);
-            return;
         }
-
-        EngineManager manager = InstanceManager.getDefault(EngineManager.class);
-        List<Engine> engineList = manager.getByNumberList();
-
-        // create header
-        String header = Bundle.getMessage("Number") +
-                del +
-                Bundle.getMessage("Road") +
-                del +
-                Bundle.getMessage("Model") +
-                del +
-                Bundle.getMessage("Length") +
-                del +
-                Bundle.getMessage("Owner") +
-                del +
-                Bundle.getMessage("Built") +
-                del +
-                Bundle.getMessage("Location") +
-                del +
-                "-" +
-                del +
-                Bundle.getMessage("Track") +
-                del +
-                Bundle.getMessage("Consist") +
-                del +
-                Bundle.getMessage("Moves") +
-                del +
-                Bundle.getMessage("Last") +
-                del +
-                Setup.getValueLabel() +
-                del +
-                Bundle.getMessage("HP") +
-                del +
-                Bundle.getMessage("WeightTons") +
-                del +
-                Bundle.getMessage("Type") +
-                del +
-                Bundle.getMessage("Comment") +
-                del +
-                Bundle.getMessage("Miscellaneous");
-        fileOut.println(header);
-
-        // store engine number, road, model, length, owner, built date, location - track
-        for (Engine engine : engineList) {
-            String line = ESC +
-                    engine.getNumber() +
-                    ESC +
-                    del +
-                    ESC +
-                    engine.getRoadName() +
-                    ESC +
-                    del +
-                    ESC +
-                    engine.getModel() +
-                    ESC +
-                    del +
-                    engine.getLength() +
-                    del +
-                    ESC +
-                    engine.getOwner() +
-                    ESC +
-                    del +
-                    ESC +
-                    engine.getBuilt() +
-                    ESC +
-                    del +
-                    ESC +
-                    engine.getLocationName() +
-                    ESC +
-                    del +
-                    "-" +
-                    del +
-                    ESC +
-                    engine.getTrackName() +
-                    ESC +
-                    del +
-                    ESC +
-                    engine.getConsistName() +
-                    ESC +
-                    del +
-                    engine.getMoves() +
-                    del +
-                    engine.getLastDate() +
-                    del +
-                    engine.getValue() +
-                    del +
-                    engine.getHp() +
-                    del +
-                    engine.getWeightTons() +
-                    del +
-                    ESC +
-                    engine.getTypeName() +
-                    ESC +
-                    del +
-                    ESC +
-                    engine.getComment() +
-                    ESC +
-                    del +
-                    (engine.isOutOfService() ? Bundle.getMessage("OutOfService") : "");
-            fileOut.println(line);
-        }
-        fileOut.flush();
-        fileOut.close();
-        log.info("Exported " + engineList.size() + " engines to file " + defaultOperationsFilename());
-        JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedEnginesToFile"),
-                new Object[]{engineList.size(), defaultOperationsFilename()}), Bundle.getMessage("ExportComplete"),
-                JOptionPane.INFORMATION_MESSAGE);
     }
 
     // Operation files always use the same directory
     public static String defaultOperationsFilename() {
-        return OperationsSetupXml.getFileLocation() +
-                OperationsSetupXml.getOperationsDirectoryName() +
-                File.separator +
-                getOperationsFileName();
+        return OperationsSetupXml.getFileLocation()
+                + OperationsSetupXml.getOperationsDirectoryName()
+                + File.separator
+                + getOperationsFileName();
     }
 
     public static void setOperationsFileName(String name) {

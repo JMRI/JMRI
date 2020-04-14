@@ -46,6 +46,7 @@ public class EliteXNetInitializationManagerTest {
 
     @After
     public void tearDown() throws Exception {
+	    jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
     }
 

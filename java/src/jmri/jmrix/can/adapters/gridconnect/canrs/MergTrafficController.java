@@ -48,6 +48,7 @@ public class MergTrafficController extends GcTrafficController {
             log.error("{} is not a MergReply",m);
         }
         CanReply ret = gc.createReply();
+        log.debug("CanReply created {} from MergReply {}", ret, gc);
         return ret;
     }
 

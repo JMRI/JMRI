@@ -1,14 +1,14 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import java.util.SortedSet;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.configurexml.ConfigXmlManager;
-import jmri.configurexml.JmriConfigureXmlException;
-import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractSignalHeadManager;
 import org.jdom2.Element;
@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * *Xml classes for each specific SignalHead or AbstractSignalHead subclass at
  * store time.
  * <p>
- * Based on AbstractTurnoutManagerConfigXML
+ * Based on {@link AbstractTurnoutManagerConfigXML}
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  */
@@ -45,30 +45,21 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * @return Element containing the complete info
      */
     @Override
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
         Element signalheads = new Element("signalheads");
         setStoreElementClass(signalheads);
-        SignalHeadManager sm = (SignalHeadManager) o;
-        if (sm != null) {
-            java.util.Iterator<String> iter
-                    = sm.getSystemNameList().iterator();
-
-            // don't return an element if there are not signalheads to include
-            if (!iter.hasNext()) {
+        SignalHeadManager shm = (SignalHeadManager) o;
+        if (shm != null) {
+            SortedSet<SignalHead> shList = shm.getNamedBeanSet();
+            // don't return an element if there are no signalheads to include
+            if (shList.isEmpty()) {
                 return null;
             }
-
-            // store the signalheads
-            while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
-                    log.error("System name null during store, skipped");
-                    continue;
-                }
-                log.debug("system name is " + sname);
-                SignalHead sub = sm.getBySystemName(sname);
-                Element e = ConfigXmlManager.elementFromObject(sub);
+            for (SignalHead sh : shList) {
+                // store the signalheads
+                String shName = sh.getSystemName();
+                log.debug("system name is {}", shName);
+                Element e = ConfigXmlManager.elementFromObject(sh);
                 if (e != null) {
                     signalheads.addContent(e);
                 }
@@ -122,26 +113,12 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      */
     public void loadSignalHeads(Element shared, Element perNode) {
         InstanceManager.getDefault(SignalHeadManager.class);
-
+        List<Element> headClassList = shared.getChildren();
+        log.debug("Found {} signal heads", headClassList.size());
         // load the contents
-        List<Element> items = shared.getChildren();
-        if (log.isDebugEnabled()) {
-            log.debug("Found " + items.size() + " signal heads");
-        }
-        for (int i = 0; i < items.size(); i++) {
-            // get the class, hence the adapter object to do loading
-            Element item = items.get(i);
-            String adapterName = item.getAttribute("class").getValue();
-            log.debug("load via " + adapterName);
-            try {
-                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
-                // and do it
-                adapter.load(item, null);
-            } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
-                        | IllegalAccessException | java.lang.reflect.InvocationTargetException
-                        | JmriConfigureXmlException e) {
-                log.error("Exception while loading {}: {}", item.getName(), e, e);
-            }
+        boolean result = loadInAdapter(headClassList, null);
+        if (!result) {
+            log.warn("error loading signalheads");
         }
     }
 

@@ -1,25 +1,28 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated Herv&#233; Blorec le 2016-06-12-->
+
 <html lang="fr">
 <head>
 <title>JMRI: Adding/Editing SignalMast Logic</title>
 	<!-- copy from jmrit/beantable/ to  jmrit/signalling/ to keep identical-->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-Translated by Herv&#233; BLOREC on 2016-06-12
 <meta name="Date.Modified" content="20150523"/>
 <meta name="author" content="Kevin Dickerson, Egbert Broerse">
 <meta name="keywords" content="JMRI help SignalMast Logic Add Edit">
 
 <!--#include virtual="/Style" -->
 </head>
-
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1><a name="Ajout/Modification Itin&#233;raires"></a>Ajout/Modification Itin&#233;raires Logique M&#226;t de Signalisation</h1>
+<h1><a name="AjoutModificationItineraires"></a>Ajout/Modification Itin&#233;raires Logique M&#226;t de
+    Signalisation</h1>
 
-		<p>Apr&#232;s avoir cliquer sur le bouton "Ajouter.." au-dessous du <a href="../beantable/SignalMastLogicTable.shtml">Tableau Logique M&#226;t de Signalisation </a>, la fen&#234;tre suivante apparait:</p>
+		<p>Apr&#232;s avoir cliquer sur le bouton "Ajouter..." au-dessous du <a
+                href="../beantable/SignalMastLogicTable.shtml">Tableau Logique M&#226;t de Signalisation </a>, la fen&#234;tre suivante apparait:</p>
 		
 	<a href="../beantable/SignalMastLogicAdd.png">
  <img src="../beantable/SignalMastLogicAdd.png" align="right" width="340" height="300" hspace="0" vspace="0" ALT="Signal Head Logic Add window">
@@ -88,7 +91,7 @@ tableaux contenant les donn&#233;es g&#233;n&#233;r&#233;es automatiquement sero
 	
 	     <p>Retour &#224; la page d'aide <a href="../beantable/SignalMastLogicTable.shtml">Tableau Logique M&#226;t de Signalisation</a>.
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
 </body>

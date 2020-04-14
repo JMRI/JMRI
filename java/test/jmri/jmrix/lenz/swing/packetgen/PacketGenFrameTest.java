@@ -1,7 +1,6 @@
 package jmri.jmrix.lenz.swing.packetgen;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.lenz.XNetMessage;
 import org.junit.*;
 
@@ -46,6 +45,7 @@ public class PacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
 }

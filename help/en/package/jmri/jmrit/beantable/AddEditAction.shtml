@@ -16,10 +16,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Transit: Add/Edit Action</h1>
 
       <h2>The Add/Edit Action Window</h2>
@@ -158,7 +158,7 @@
 
       <p>Back to the <a href="ViewSpecialActions.shtml">Special
       Actions help</a>.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

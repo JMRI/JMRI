@@ -23,14 +23,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
 <body>
-  <div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
+  <div id="mainContent">
 
-    <div id="mainContent">
       <h1>JMRI Code: Continuous Integration</h1>
       <p>"Continuous Integration" is the process of rebuilding a
       system every time it changes, so that you rapidly learn of
@@ -59,11 +61,22 @@
       <a href=
       "https://travis-ci.org/JMRI/JMRI">https://travis-ci.org/JMRI/JMRI</a>.</p>
 
-      <p>Travis normally runs the checks for valid line-ends, the
-      check for proper ASCII characters, followed by building the
-      code and running the "AllTest" test routine. A screen buffer
-      (not a real screen) is used for all the GUI tests.</p>
-
+      <p>Travis normally runs several jobs in parallel:
+      <ul>
+        <li>The "graphical" one, which just runs AllTest
+            with schema checks and intermittent tests disabled
+            to reduce runtime; this also does coverage checks.
+            A screen buffer
+            (not a real screen) is used for all the GUI tests.
+        <li>The "static" one, which runs various static code checks
+            such as he checks for valid line-ends, the
+            check for proper ASCII characters, SpotBugs, etc,
+        <li>The "headless" one, which runs HeadlessTest with
+            schema tests enabled
+        <li>And one that separately and individual runs the 
+            tests that are marked as requiring separate runnning.
+      </ul>
+      
       <p>You can enable Travis CI for your fork (personal GitHub
       repository) as well. After merging JMRI/master into your own
       fork, allow Travis CI to monitor your fork, and it will begin
@@ -129,7 +142,7 @@
         Builds</a> page, showing status of the builds done after
         every series of commits. Successful builds are followed by
         builds installers via the <a href=
-        "http://builds.jmri.org/jenkins/view/All/job/Development/job/Packages">
+        "http://builds.jmri.org/jenkins/job/Development/job/Packages">
         Packages</a> job.</li>
 
         <li>

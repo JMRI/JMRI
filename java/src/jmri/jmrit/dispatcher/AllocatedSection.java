@@ -107,11 +107,7 @@ public class AllocatedSection {
     }
 
     public String getSectionName() {
-        String s = mSection.getSystemName();
-        String u = mSection.getUserName();
-        if ((u != null) && (!u.equals("") && (!u.equals(s)))) {
-            return (s + "(" + u + ")");
-        }
+        String s = mSection.getDisplayName();
         return s;
     }
 

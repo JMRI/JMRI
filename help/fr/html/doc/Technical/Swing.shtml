@@ -11,28 +11,24 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code standards recommendation Swing">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header" -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
 <body>
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-      <h1>JMRI: utilisation de Swing</h1>Nous utilisons Java Swing
+        <!-- Page Body -->
+
+<h1>JMRI: utilisation de Swing</h1>Nous utilisons Java Swing
       pour notre d&eacute;veloppement Interface Graphique
       Utilisateur (GUI). Il est beaucoup plus puissant que l'AWT
       d'origine, et le prix est juste. En particulier, nous
@@ -125,7 +121,7 @@
         <li>WindowMenu</li>
       </ul>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

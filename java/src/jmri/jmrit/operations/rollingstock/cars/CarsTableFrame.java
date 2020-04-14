@@ -2,36 +2,27 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import java.text.MessageFormat;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+
+import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumnModel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.locations.tools.ModifyLocationsAction;
+import jmri.jmrit.operations.rollingstock.cars.tools.PrintCarLoadsAction;
 import jmri.jmrit.operations.rollingstock.cars.tools.ResetCheckboxesCarsTableAction;
 import jmri.jmrit.operations.rollingstock.cars.tools.ShowCheckboxesCarsTableAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.tools.TrainsByCarTypeAction;
 import jmri.swing.JTablePersistenceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for adding and editing the car roster for operations.
@@ -252,6 +243,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         toolMenu.add(new ResetCheckboxesCarsTableAction(carsTableModel));
         toolMenu.add(new ModifyLocationsAction());
         toolMenu.add(new TrainsByCarTypeAction());
+        toolMenu.add(new PrintCarLoadsAction(true, this));
+        toolMenu.add(new PrintCarLoadsAction(false, this));
         toolMenu.add(new CarsSetFrameAction(carsTable));
         menuBar.add(toolMenu);
         menuBar.add(new jmri.jmrit.operations.OperationsMenu());

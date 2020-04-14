@@ -4,7 +4,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!--  $Id: Debug.shtml 21896 2012-12-19 12:12:05Z rhwood  -->
  <!-- Translated by Herv&#233. BLOREC <bzh56420@yahoo.fr> on 2017-10-10 -->
 <title>JMRI: DecoderPro User Guide - Debugging</title>
 
@@ -18,24 +17,18 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-      <h1>Guide Utilisateur DecoderPro - D&eacute;bogage</h1>
+        <!-- Page Body -->
+<h1>Guide Utilisateur DecoderPro</h1>
 
-      <dl>
-        <dt class="left">Pendant que le programme
-        s'ex&eacute;cute</dt>
+<h2>D&#233;bogage</h2>
 
-<H1>Guide Utilisateur DecoderPro </H1>
-<H2>D&#233;bogage</H2>
-
-<DL>
-<dt class=left>Pendant que le programme s'ex&#233;cute</dt>
-<dd class=first>
+<dl>
+<dt class="left">Pendant que le programme s'ex&#233;cute</dt>
+<dd class="first">
 <p>Pendant que le programme s'ex&#233;cute,
 l'information de d&#233;bogage est imprim&#233;e sur une "sortie standard", qui est &#225; diff&#233;rents
 endroits suivant le syst&#232;me d'exploitation que vous utilisez et comment vous d&#233;marrez le programme.
@@ -48,11 +41,11 @@ recherchez-les dans le r&#233;pertoire de l'application. </p>
 sur ce que signifient les termes. Si vous n'aimez pas les messages reli&#233;s &#225; un fichier,
 changer la ligne.</p>
 
-<p class=example>
+<p class="example">
 log4j.rootCategory= WARN, A1
 </p>
 <p>Pour inclure la destination enregistrement suppl&#233;mentaire "R":
-<p class=example>
+<p class="example">
 log4j.rootCategory= WARN, A1,R
 </p>
 <p>R est d&#233;fini plus tard dans default.lcf comme connexion pour le fichier "example.log" .
@@ -67,7 +60,7 @@ juste sur des parties du programme, mais dans l'optique que cela vous soit utile
 devrez passer du temps &#225; apprendre au sujet des parties internes.</p>
 </dd>
 
-<dt class=left>D&#233;bogage des probl&#232;mes avec les fichiers XML</dt>
+<dt class="left">D&#233;bogage des probl&#232;mes avec les fichiers XML</dt>
 <dd>
 <p>Quand un fichier XML ne peut pas &#234;tre analyser, vous obtiendrez des messages d'erreur 
 difficiles &#225; comprendre. La partie la plus importante de ceux-ci est le num&#233;ro de ligne.
@@ -84,13 +77,11 @@ informations de d&#233;finitions dans le fichier .dtd. Si vous obtenez un messag
 associ&#233; ( exemple decoder-config.dtd ) dans le r&#233;pertoire avec votre nouveau 
 fichier. DTD peut &#234;tre trouv&#233; dans le sous-r&#233;pertoire dtd du r&#233;pertoire xml.
 </p>
+</dd>
+</dl>
 
-          
-        </dd>
-      </dl><!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>
 </html>
-
-

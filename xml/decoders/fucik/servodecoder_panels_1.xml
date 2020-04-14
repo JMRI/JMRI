@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2020 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <name>Servos</name>
+    <name xml:lang="cs">Serva</name>
+    <column>
+        <display item="Servo1_PosA"/>
+        <display item="Servo1_PosB"/>
+        <display item="Servo1_PosC"/>
+        <display item="Servo1_PosD"/>
+        <label>
+            <text>
+            </text>
+        </label>
+        <display item="Servo1_PosE"/>
+        <display item="Servo1_PosF"/>
+        <display item="Servo1_PosG"/>
+        <display item="Servo1_PosH"/>
+    </column>
+    <column>
+        <display item="Servo1_Speed">
+            <label>Speed:</label>
+            <label xml:lang="cs">Rychlost:</label>
+        </display>
+    </column>
+</pane>

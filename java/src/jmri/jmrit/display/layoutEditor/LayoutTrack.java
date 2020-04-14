@@ -3,19 +3,12 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
+import java.awt.geom.*;
+import java.util.*;
+import javax.annotation.*;
 import javax.swing.JPopupMenu;
-import jmri.JmriException;
-import jmri.Turnout;
-import jmri.util.ColorUtil;
-import jmri.util.MathUtil;
+import jmri.*;
+import jmri.util.*;
 
 /**
  * Abstract base class for all layout track objects (PositionablePoint,
@@ -134,6 +127,36 @@ public abstract class LayoutTrack {
     }
     protected Map<String, String> decorations = null;
 
+    /**
+     * convenience method for accessing...
+     * @return the layout editor's toolbar panel
+     */
+    @Nonnull
+    public LayoutEditorToolBarPanel getLayoutEditorToolBarPanel() {
+        return layoutEditor.getLayoutEditorToolBarPanel();
+    }
+
+    //these are convenience methods to return circles & rectangle used to draw onscreen
+    //
+    //compute the control point rect at inPoint; use the turnout circle size
+    public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
+        return trackControlCircleAt(inPoint);
+    }
+
+    //compute the turnout circle at inPoint (used for drawing)
+    public Ellipse2D trackControlCircleAt(@Nonnull Point2D inPoint) {
+        return new Ellipse2D.Double(inPoint.getX() - layoutEditor.circleRadius,
+                inPoint.getY() - layoutEditor.circleRadius, 
+                layoutEditor.circleDiameter, layoutEditor.circleDiameter);
+    }
+
+    //compute the turnout circle control rect at inPoint
+    public Rectangle2D trackControlCircleRectAt(@Nonnull Point2D inPoint) {
+        return new Rectangle2D.Double(inPoint.getX() - layoutEditor.circleRadius,
+                inPoint.getY() - layoutEditor.circleRadius, 
+                layoutEditor.circleDiameter, layoutEditor.circleDiameter);
+    }
+
     protected Color getColorForTrackBlock(
             @CheckForNull LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
         Color result = ColorUtil.CLEAR;  // transparent
@@ -244,17 +267,6 @@ public abstract class LayoutTrack {
         return hidden;
     }
 
-    /**
-     * Get the hidden state of the track element.
-     *
-     * @return true if hidden; false otherwise
-     * @deprecated since 4.7.2; use {@link #isHidden()} instead
-     */
-    @Deprecated // Java standard pattern for boolean getters is "isHidden()"
-    public boolean getHidden() {
-        return hidden;
-    }
-
     public void setHidden(boolean hide) {
         if (hidden != hide) {
             hidden = hide;
@@ -327,7 +339,7 @@ public abstract class LayoutTrack {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
-    public abstract void scaleCoords(float xFactor, float yFactor);
+    public abstract void scaleCoords(double xFactor, double yFactor);
 
     /**
      * translate this LayoutTrack's coordinates by the x and y factors
@@ -335,7 +347,14 @@ public abstract class LayoutTrack {
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
-    public abstract void translateCoords(float xFactor, float yFactor);
+    public abstract void translateCoords(double xFactor, double yFactor);
+
+    /**
+     * rotate this LayoutTrack's coordinates by angleDEG's
+     *
+     * @param angleDEG the amount to rotate in degrees
+     */
+    public abstract void rotateCoords(double angleDEG);
 
     protected Point2D rotatePoint(@Nonnull Point2D p, double sineRot, double cosineRot) {
         double cX = center.getX();
@@ -681,6 +700,5 @@ public abstract class LayoutTrack {
      */
     public abstract void setAllLayoutBlocks(LayoutBlock layoutBlock);
 
-    //private final static Logger log
-    // = LoggerFactory.getLogger(LayoutTrack.class);
+    //private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class);
 }

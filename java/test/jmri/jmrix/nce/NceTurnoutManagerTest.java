@@ -47,6 +47,7 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
     @After
     public void tearDown() {
         nis = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

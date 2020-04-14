@@ -4,7 +4,7 @@ import java.awt.GraphicsEnvironment;
 import org.junit.*;
 
 /**
- * Test simple functioning of PositionableIcon
+ * Test simple functioning of PositionableIcon.
  * 
  * @author Paul Bender Copyright (C) 2016
  */

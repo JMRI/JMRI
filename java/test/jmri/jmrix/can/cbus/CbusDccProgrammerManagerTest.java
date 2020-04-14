@@ -16,22 +16,30 @@ public class CbusDccProgrammerManagerTest {
 
     @Test
     public void testCTor() {
-        TrafficControllerScaffold tc = new TrafficControllerScaffold();
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        memo.setTrafficController(tc);
         CbusDccProgrammerManager t = new CbusDccProgrammerManager(new CbusDccProgrammer(tc),memo);
         Assert.assertNotNull("exists",t);
     }
+    
+    private TrafficControllerScaffold tc;
+    private CanSystemConnectionMemo memo;
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        tc = new TrafficControllerScaffold();
+        memo = new CanSystemConnectionMemo();
+        memo.setTrafficController(tc);
     }
 
     @After
     public void tearDown() {
+        tc.terminateThreads();
+        tc = null;
+        memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammerManagerTest.class);

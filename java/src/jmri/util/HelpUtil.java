@@ -1,6 +1,6 @@
 package jmri.util;
 
-import apps.AboutAction;
+import jmri.swing.AboutAction;
 import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.EventObject;
@@ -31,6 +31,10 @@ import org.slf4j.LoggerFactory;
  */
 public class HelpUtil {
 
+    private HelpUtil(){
+        // this is a class of static methods
+    }
+
     /**
      * Append a help menu to the menu bar.
      *
@@ -41,7 +45,7 @@ public class HelpUtil {
      * @return new Help menu, in case user wants to add more items or null if
      *         unable to create the help menu
      */
-    static public JMenu helpMenu(JMenuBar menuBar, String ref, boolean direct) {
+    public static JMenu helpMenu(JMenuBar menuBar, String ref, boolean direct) {
         JMenu helpMenu = makeHelpMenu(ref, direct);
         if (helpMenu != null) {
             menuBar.add(helpMenu);
@@ -49,7 +53,7 @@ public class HelpUtil {
         return helpMenu;
     }
 
-    static public JMenu makeHelpMenu(String ref, boolean direct) {
+    public static JMenu makeHelpMenu(String ref, boolean direct) {
         if (!initOK()) {
             log.warn("help initialization not completed");
             return null;  // initialization failed
@@ -111,7 +115,7 @@ public class HelpUtil {
         return helpMenu;
     }
 
-    static public JMenuItem makeHelpMenuItem(String ref) {
+    public static JMenuItem makeHelpMenuItem(String ref) {
         if (!initOK()) {
             return null;  // initialization failed
         }
@@ -124,7 +128,7 @@ public class HelpUtil {
         return menuItem;
     }
 
-    static public void addHelpToComponent(java.awt.Component component, String ref) {
+    public static void addHelpToComponent(java.awt.Component component, String ref) {
         if (globalHelpBroker != null) {
             globalHelpBroker.enableHelpOnButton(component, ref, null);
             log.debug("Help added for {}", ref);
@@ -133,7 +137,7 @@ public class HelpUtil {
         }
     }
 
-    static public void displayHelpRef(String ref) {
+    public static void displayHelpRef(String ref) {
         if (globalHelpBroker == null) {
             log.debug("can't display {} help page because help system reference is null", ref);
             return;
@@ -149,7 +153,7 @@ public class HelpUtil {
     static boolean init = false;
     static boolean failed = true;
 
-    static public boolean initOK() {
+    public static boolean initOK() {
         if (!init) {
             init = true;
             try {
@@ -186,14 +190,14 @@ public class HelpUtil {
         return !failed;
     }
 
-    static public HelpBroker getGlobalHelpBroker() {
+    public static HelpBroker getGlobalHelpBroker() {
         if (globalHelpBroker == null) {
             HelpUtil.initOK();
         }
         return globalHelpBroker;
     }
 
-    static public Action getHelpAction(final String name, final Icon icon, final String id) {
+    public static Action getHelpAction(final String name, final Icon icon, final String id) {
         return new AbstractAction(name, icon) {
 
             String helpID = id;
@@ -210,6 +214,6 @@ public class HelpUtil {
     static HelpBroker globalHelpBroker;
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(HelpUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(HelpUtil.class);
 
 }

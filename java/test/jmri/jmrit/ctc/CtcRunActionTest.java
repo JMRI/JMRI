@@ -11,7 +11,7 @@ import org.junit.rules.ExpectedException;
 import org.netbeans.jemmy.EventTool;
 
 /**
- * Tests for the CtcRunAction Class
+ * Tests for the CtcRunAction Class.
  *
  * @author Dave Sand Copyright (C) 2019
  */
@@ -40,13 +40,13 @@ public class CtcRunActionTest {
             sm.getSensor("IS2:CB").setKnownState(Sensor.ACTIVE);
             sm.getSensor("IS2:CB").setKnownState(Sensor.INACTIVE);
         } catch (JmriException ex) {
-            log.error("sensor exeptions: ", ex);
+            log.error("sensor exceptions: ", ex);
         }
         new EventTool().waitNoEvent(1000);
         jmri.SignalHead sh = hm.getSignalHead("Left-U");
         Assert.assertFalse(sh.getHeld());  // NOI18N
 
-        // Clear Right turnout left on sideing using Call On.
+        // Clear Right turnout left on siding using Call On.
         try {
             sm.getSensor("B-Side").setKnownState(Sensor.ACTIVE);
             sm.getSensor("IS5:LEVER").setKnownState(Sensor.INACTIVE);
@@ -62,7 +62,7 @@ public class CtcRunActionTest {
             sm.getSensor("IS6:CB").setKnownState(Sensor.ACTIVE);
             sm.getSensor("IS6:CB").setKnownState(Sensor.INACTIVE);
         } catch (JmriException ex) {
-            log.error("sensor exeptions: ", ex);
+            log.error("sensor exceptions: ", ex);
         }
         new EventTool().waitNoEvent(1000);
         sh = hm.getSignalHead("Right-L");
@@ -105,6 +105,10 @@ public class CtcRunActionTest {
 
     @After
     public void tearDown() {
+
+        // stop any BlockBossLogic threads created
+        JUnitUtil.clearBlockBossLogic();
+
         JUnitUtil.tearDown();
     }
 

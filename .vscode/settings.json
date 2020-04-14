@@ -15,5 +15,11 @@
     ],
     "java.test.defaultConfig": "JMRI",
     "java.format.settings.profile": "JMRI",
-    "java.format.settings.url": ".settings/org.eclipse.jdt.core.prefs"
+    "java.format.settings.url": ".settings/org.eclipse.jdt.core.prefs",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    }
 }

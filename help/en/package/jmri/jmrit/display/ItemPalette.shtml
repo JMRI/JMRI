@@ -17,14 +17,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Item Palette</h1>
       <b>The Item Palette</b> is used to
       place icons and text onto <b>Control Panel Editor</b> panels.
@@ -291,7 +292,7 @@
       Also the entire status row can be removed by the <b>Delete
       Status</b> button - or restored by the <b>Add Missing
       Status</b> button.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

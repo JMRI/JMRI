@@ -1,7 +1,6 @@
 package jmri.jmrix.can.cbus.eventtable;
 
 import java.util.Date;
-import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusEvent;
 
 /**
@@ -25,11 +24,12 @@ public class CbusTableEvent extends CbusEvent {
     private String _stloffstring;
     private Date _timestamp;
     
-    public CbusTableEvent( int nn, int en, 
+    public CbusTableEvent( jmri.jmrix.can.CanSystemConnectionMemo memo,
+            int nn, int en, 
         EvState state, int canid, String name, String comment, 
         int sesson, int sessoff, int sessin, int sessout, Date timestamp ){
         
-        super(nn,en);
+        super(memo,nn,en);
         _state = state;
         _canid = canid;
         _name = name;
@@ -43,9 +43,10 @@ public class CbusTableEvent extends CbusEvent {
         _timestamp = timestamp;
         
     }
-    
+
     /**
-     * Get the last-seen date time
+     * Get the last-seen date time.
+     * @return The last time the event was heard on the network
      */    
     protected Date getDate(){
         return _timestamp;
@@ -53,6 +54,7 @@ public class CbusTableEvent extends CbusEvent {
 
     /**
      * Set the last-seen date time
+     * @param newval the last-seen date time
      */       
     protected void setDate(Date newval) {
         _timestamp = newval;
@@ -60,6 +62,7 @@ public class CbusTableEvent extends CbusEvent {
     
     /**
      * Get the Sensor Turnout and Light user names associated with event on
+     * @return Sensor Turnout and Light user names
      */   
     protected String getStlOn(){
         return _stlonstring;
@@ -67,6 +70,7 @@ public class CbusTableEvent extends CbusEvent {
 
     /**
      * Get the Sensor Turnout and Light user names associated with event off
+     * @return Sensor Turnout and Light user names
      */   
     protected String getStlOff(){
         return _stloffstring;
@@ -74,13 +78,15 @@ public class CbusTableEvent extends CbusEvent {
     
     /**
      * Set the Sensor Turnout and Light user names associated with event on
+     * @param newval Sensor Turnout and Light string
      */   
     protected void setStlOn(String newval){
         _stlonstring = newval;
     }
 
     /**
-     * Set the Sensor Turnout and Light user names associated with event on
+     * Set the Sensor Turnout and Light user names associated with event off
+     * @param newval Sensor Turnout and Light string
      */   
     protected void setStlOff(String newval){
         _stloffstring = newval;
@@ -88,6 +94,7 @@ public class CbusTableEvent extends CbusEvent {
 
     /**
      * Get the CAN ID to last send the event
+     * @return CAN ID
      */
     protected int getEventCanId(){
         return _canid;
@@ -95,6 +102,7 @@ public class CbusTableEvent extends CbusEvent {
 
     /**
      * Set the event comment
+     * @param newval Comment String
      */    
     protected void setComment(String newval){
         _comment = newval;
@@ -102,6 +110,7 @@ public class CbusTableEvent extends CbusEvent {
 
     /**
      * Get the event comment
+     * @return Comment String
      */
     protected String getComment(){
         return _comment;
@@ -109,6 +118,7 @@ public class CbusTableEvent extends CbusEvent {
 
     /**
      * Set the CAN ID to last send the event
+     * @param newval CAN ID
      */
     protected void setCanId(int newval){
         _canid = newval;
@@ -116,6 +126,7 @@ public class CbusTableEvent extends CbusEvent {
 
     /**
      * Number of times event on for current session
+     * @return Number of times event on for current session
      */
     protected int getSessionOn(){
         return _sesson;
@@ -123,6 +134,7 @@ public class CbusTableEvent extends CbusEvent {
     
     /**
      * Number of times event on all sessions
+     * @return Number of times event on all sessions
      */
     protected int getTotalOn(){
         return _toton;
@@ -130,6 +142,7 @@ public class CbusTableEvent extends CbusEvent {
 
     /**
      * Number of times event off for current session
+     * @return Number of times event off for current session
      */
     protected int getSessionOff(){
         return _sessoff;
@@ -137,6 +150,7 @@ public class CbusTableEvent extends CbusEvent {
     
     /**
      * Number of times event off all sessions
+     * @return Number of times event off all sessions
      */
     protected int getTotalOff(){
         return _totoff;
@@ -144,6 +158,7 @@ public class CbusTableEvent extends CbusEvent {
     
     /**
      * Number of times event heard coming in to JMRI this session
+     * @return Number of times event heard coming in to JMRI this session
      */
     protected int getSessionIn(){
         return _sessin;
@@ -151,6 +166,7 @@ public class CbusTableEvent extends CbusEvent {
     
     /**
      * Number of times event heard coming in to JMRI all sessions
+     * @return Number of times event heard coming in to JMRI all sessions
      */
     protected int getTotalIn(){
         return _totin;
@@ -158,6 +174,7 @@ public class CbusTableEvent extends CbusEvent {
 
     /**
      * Number of times event heard being sent from JMRI this session
+     * @return Number of times event heard being sent from JMRI this session
      */
     protected int getSessionOut(){
         return _sessout;
@@ -165,6 +182,7 @@ public class CbusTableEvent extends CbusEvent {
     
     /**
      * Number of times event heard being sent from JMRI all sessions
+     * @return Number of times event heard being sent from JMRI all sessions
      */
     protected int getTotalOut(){
         return _totout;
@@ -172,6 +190,7 @@ public class CbusTableEvent extends CbusEvent {
     
     /**
      * Set Total On Events
+     * @param newVal Total On Events
      */
     protected void setTotalOn(int newVal) {
         _toton = newVal;
@@ -179,6 +198,7 @@ public class CbusTableEvent extends CbusEvent {
     
     /**
      * Set Total Off Events
+     * @param newVal Total Off Events
      */
     protected void setTotalOff(int newVal) {
         _totoff = newVal;
@@ -186,6 +206,7 @@ public class CbusTableEvent extends CbusEvent {
     
     /**
      * Set Total Inward Events
+     * @param newVal Total Inward Events
      */
     protected void setTotalIn( int newVal) {
         _totin = newVal;
@@ -193,6 +214,7 @@ public class CbusTableEvent extends CbusEvent {
     
     /**
      * Set Total Outward Events
+     * @param newVal Total Outward Events
      */
     protected void setTotalOut( int newVal ){
         _totout = newVal;

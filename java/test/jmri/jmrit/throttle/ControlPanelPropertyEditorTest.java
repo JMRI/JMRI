@@ -27,10 +27,12 @@ public class ControlPanelPropertyEditorTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initDebugThrottleManager();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 }

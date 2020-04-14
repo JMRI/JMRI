@@ -1,10 +1,5 @@
 package jmri.jmrix.nce;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
-import java.util.Vector;
 import jmri.JmriException;
 import jmri.ProgrammingMode;
 import org.junit.*;
@@ -54,7 +49,8 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     public void tearDown() {
         tc = null;
         programmer = p = null;
-	jmri.util.JUnitUtil.tearDown();
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+	    jmri.util.JUnitUtil.tearDown();
     }
 
     // infrastructure objects

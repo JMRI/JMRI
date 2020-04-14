@@ -10,6 +10,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SortOrder;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
@@ -17,6 +18,7 @@ import jmri.*;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.entryexit.*;
 import jmri.jmrit.logix.*;
+import jmri.swing.RowSorterUtil;
 import jmri.util.*;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
@@ -156,14 +158,14 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
     @Override
     @CheckForNull
     public E getBySystemName(@Nonnull String name) {
-        return getManager().getBeanBySystemName(name);
+        return getManager().getBySystemName(name);
     }
 
     /** {@inheritDoc} */
     @Override
     @CheckForNull
     protected E getByUserName(@Nonnull String name) {
-        return getManager().getBeanByUserName(name);
+        return getManager().getByUserName(name);
     }
 
     /** {@inheritDoc} */
@@ -320,6 +322,9 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
                 }
             }
         };
+        _sorter.setComparator(SNAME_COLUMN, new jmri.util.AlphanumComparator());
+        _sorter.setComparator(UNAME_COLUMN, new jmri.util.AlphanumComparator());
+        RowSorterUtil.setSortOrder(_sorter, SNAME_COLUMN, SortOrder.ASCENDING);
         _table.setRowSorter(_sorter);
 
         _table.setRowSelectionAllowed(true);
@@ -351,6 +356,9 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
     public void makeSorter(@Nonnull JTable table) {
         _sorter = new TableRowSorter<>(this);
+        _sorter.setComparator(SNAME_COLUMN, new jmri.util.AlphanumComparator());
+        _sorter.setComparator(UNAME_COLUMN, new jmri.util.AlphanumComparator());
+        RowSorterUtil.setSortOrder(_sorter, SNAME_COLUMN, SortOrder.ASCENDING);
         table.setRowSorter(_sorter);
     }
 

@@ -1,15 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Kevin Dickerson 2011 -->
-  <!-- $Id$ -->
   <!-- Translated by Blorec Herv&#233; 2013-09-27 -->
 
-  <title>JMRI: Interlocking</title><!-- Style -->
+  <title>JMRI: Enclenchement</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -17,21 +15,24 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  signal <!--#include virtual="/Header" -->
-   <!--#include virtual="/help/en/html/tools/signaling/Sidebar" -->
-
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar" -->
   <div id="mainContent">
-    <h1>Entr&eacute;e Sortie Enclenchement</h1>Ce bref tutoriel est
+
+    <h1>Entr&eacute;e Sortie Enclenchement</h1>
+    <p>Ce bref tutoriel est
     destin&eacute; &agrave; expliquer comment les Entr&eacute;e
     Sortie et Enclenchement sont d&eacute;finis et fonctionnent
     dans JMRI. C'est bas&eacute; sur la <a href=
     "http://www.jmri.org/community/clinics/UK2011/">normalisation
     logique M&acirc;t</a> qui s'est tenue au Royaume-Uni et fait
-    suite &agrave; cela.
+      suite &agrave; cela.</p>
 
     <p>Le fichier panneau pour ce tutoriel a &eacute;t&eacute; fait
     &agrave; partir de la section "Logix et Formes" du tutoriel
@@ -121,7 +122,7 @@
     l'exemple de la logique du m&acirc;t signal m&acirc;t. Faire
     appara&icirc;tre le menu contextuel (clic droit) sur la limite
     de canton et s&eacute;lectionnez "Set Capteurs", &agrave;
-    partir de la fen&ecirc;tre suivante ,</p>
+    partir de la fen&ecirc;tre suivante:</p>
 
     <p><img src="images/assignsensors.png" width="331" height=
     "539"></p>
@@ -263,8 +264,7 @@
     configur&eacute; et il y a des m&acirc;ts de signalisation
     plac&eacute;s &agrave; des emplacements NX, on placera le
     m&acirc;t de signalisation &agrave; l'emplacement de la source
-    dans un &eacute;tat
-    &acirc;&euro;&lsaquo;&acirc;&euro;&lsaquo;maintenu
+    dans un &eacute;tat maintenu
     jusqu'&agrave; ce qu'un itin&eacute;raire soit &eacute;tabli,
     ce qui lib&egrave;re &agrave; son tour le signal. Cela
     fonctionne sur la base que ces signaux sont d&eacute;sormais
@@ -279,7 +279,8 @@
     des cantons pour utiliser la couleur altenative, et les touches
     sensitives NX resteront dans un &eacute;tat actif solide.</p>
 
-    <p><img width="498" height="229"></p>
+    <p><img src="images/interlockfull.png" width="498" height=
+    "229"></p>
 
     <p>Si vous essayez de d&eacute;finir un chemin en conflit,
     alors un message d'erreur sera affich&eacute; et le chemin ne
@@ -294,7 +295,7 @@
     <p>Si vous re-s&eacute;lectionner un verrouillage actif, les
     capteurs NX se mettent &agrave; clignoter, et vous obtenez la
     possibilit&eacute; soit d'"Annuler" l'itin&eacute;raire, "Clear
-    Down" ou "Sortie"..</p>
+    Down" ou "Sortie".</p>
 
     <p><img src="images/interlockcancelclear.png" width="318"
     height="116"></p>
@@ -357,6 +358,9 @@
 
     <p><img src="images/blockrouting.png" width="542" height=
     "460"></p>
-  </div><!--#include virtual="/Footer" -->
+
+    <!--#include virtual="/Footer.shtml" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

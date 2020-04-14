@@ -16,10 +16,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Conditional State Variables and Actions List</h1>
 
       <dl>
@@ -506,7 +506,7 @@
           </ul>
         </dd>
       </dl>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -1,4 +1,4 @@
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN"
  <!--Updated by Herv&#233; Blorec  2016-08-05 -->
 <html lang="fr">
 <head>
@@ -15,12 +15,13 @@
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-<body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Acc&#232;s de Jython aux outils JMRI</h1>
 
@@ -29,7 +30,7 @@ de Python. L'accent est mis sur l'utilisation des capacit&#233;s de JMRI depuis 
 ligne de commmande d'un interpr&#234;teur Jython. 
 <b>cette page n'est pas sur les scripts avec Jython &#224; l'int&#233;rieur de JMRI. </b> 
 Voir les
-<A HREF="../../tools/scripting/index.shtml">pages de script</A> Si vous 
+<a href="../../tools/scripting/index.shtml">pages de script</a> Si vous
 &#234;tes plus int&#233;resser par les scripts Jython au sein de JMRI.
 
 <p>
@@ -38,31 +39,31 @@ peuvent ne plus &#234;tre actuels
 
 <h2>Introduction</h2>
 
-<A HREF="http://www.python.org">Python</a> est un langage script couramment utilis&#233; qui est 
+<a href="http://www.python.org">Python</a> est un langage script couramment utilis&#233; qui est
 disponible sur de nombreux types d'ordinateurs.  Une version bas&#233;e Java, appel&#233;e
-<A HREF="http://www.jython.org">Jython</a>,
+<a href="http://www.jython.org">Jython</a>,
 a &#233;t&#233; int&#233;gr&#233;e avec JMRI pour rendre la commande d'un r&#233;seau de chemin de fer 
 ais&#233;e depuis les lignes de commandes de l'ordinateur.
 
-<P>
+<p>
 Pour utiliser la biblioth&#232;que JMRI &#224; partir de Jython, vous devez vous assurer que Jython 
 recherchera les fichiers jar corrects quand il d&#233;marre. Nous fournissons un 
 script "jmrithon" de d&#233;marrage qui le fera pour vous.
 
-<PRE>
+<code>
 % ./jmrithon
 execFileJython 2.1 on java1.4.1_01 (JIT: null)
 (Taper "copyright", "credits" ou "license" pour plus d'informations.
->>>
-</PRE>
+&gt;&gt;&gt;
+</code>
 
-Une fois obtenu l'invite Jython ">>>", vous pouvez 
+Une fois obtenu l'invite Jython "&gt;&gt;&gt;", vous pouvez
 taper des instructions Python.
 
-<P>
+<p>
 Nous avons fourni quelques fichiers de commandes Python pour rendre 
 plus facile le d&#233;marrage. 
-<P>
+<p>
     Par exemple, vous pouvez d&#233;marrer les applications PanelPro depuis des
     lignes de commandes Jython, qui sont ensuite disponibles pour la manipulation 
 des objets comme les aiguillages et les capteurs:
@@ -98,7 +99,7 @@ toutes les fen&#234;tres et les menus sont pr&#233;sent&#233;s de la m&#234;me f
 se fait par le panneau de pr&#233;f&#233;rences, etc. Ce que la connexion Jython ajoute est une 
 ligne de commande &#224; partir de laquelle vous pouvez manipuler directement les choses.
 
-<BR/>Cela montre aussi certaines des simplifications que 
+<br>Cela montre aussi certaines des simplifications que
 Jython et le langage Python apportent &#224; l'utilisation du code JMRI. La 
 fonction de membre de Java:
 <PRE>
@@ -109,27 +110,27 @@ peut aussi &#234;tre exprim&#233;e en Jython comme:
 	turnout.commandedState = CLOSED (Droit)
 
 </PRE>
-<BR/>
+<br>
 Ce r&#233;sultats est dans un code plus facile &#224; lire.
-<P>
+<p>
 Il y beaucoup de livres Python utiles ainsi 
 que des tutoriels en ligne.
 Pour plus d'informations sur le langage Jython et ces 
 relations avec Java, la meilleure r&#233;f&#233;rence est le 
-<A HREF="http://www.oreilly.com/catalog/jythoness/"> Jython Essentials</a>
+<a href="http://www.oreilly.com/catalog/jythoness/"> Jython Essentials</a>
 livre publi&#233; par O'Reilly. Le 
-<A HREF="http://www.jython.org/">site web jython.org</a> est aussi tr&#232;s utile
+<a href="http://www.jython.org/">site web jython.org</a> est aussi tr&#232;s utile
 
-<H2>Installation</H2>
+<h2>Installation</h2>
 
 Le support Jython n'est pas (encore) standard dans JMRI. Pour utiliser ceci:
-<OL>
-<LI>Vous devez avoir une installation JMRI utilisable. En particulier, d&#233;marrez 
+<ol>
+<li>Vous devez avoir une installation JMRI utilisable. En particulier, d&#233;marrez
 l'application JMRI et la configurer pour se connecter &#224; votre mat&#233;riel de 
 DCC, puis enregistrer, quitter et red&#233;marrer le programme. Assurez-vous que le
 connexion fonctionne pour les menus bas&#233;s sur les outils  avant d'essayer d'utiliser Jython. 
-<LI>T&#233;l&#233;charger et installer Jython depuis
-<A HREF="http://www.jython.org">http://www.jython.org</a>.  
+<li>T&#233;l&#233;charger et installer Jython depuis
+<a href="http://www.jython.org">http://www.jython.org</a>.
 Le d&#233;veloppement utilise la version 2.1, donc vous 
 pouvez commencer avec ceci. Sur Mac OS X, l'installateur ne s'ex&#233;cute pas, vous 
 devez donc appeler manuellement le fichier jython_21.class; voir la note Mac OS X 
@@ -143,7 +144,7 @@ en appelant Jython depuis la ligne de commande:
 </PRE>
 Si celui ci travaille, votre installation est OK. Si non, vous devez 
 corriger votre syst&#232;me avant de pouvoir passer &#224; l'&#233;tape suivante.
-<P>
+<p>
 Si l'installateur ne fonctionne pas, 
 T&#233;l&#233;chargez le fichier jython_21.class depuis SourceForge, et 
 entrez &#224; une invite de commande:
@@ -151,20 +152,20 @@ entrez &#224; une invite de commande:
   java -cp . jython_21
 </PRE>
 puis suivre les invites &#224; travers l'installateur.
-<P>
+<p>
 Si le programme d'installation ne fonctionne pas, mais la commande jython n'est pas trouv&#233;e:
-<UL>
-<LI>Windows: Trouver le fichier jython.bat que l'installateur a cr&#233;&#233;, 
+<ul>
+<li>Windows: Trouver le fichier jython.bat que l'installateur a cr&#233;&#233;,
 et copiez-le dans votre r&#233;pertoire C: \WINDOWS .
-<LI>Linux:  Assurez-vous que le r&#233;pertoire d'installation de Jython est sur votre chemin.
-</UL>
-<LI>
+<li>Linux:  Assurez-vous que le r&#233;pertoire d'installation de Jython est sur votre chemin.
+</ul>
+<li>
 Maintenant vous avez juste &#224; avoir les classes n&#233;cessaires dans le CLASSPATH 
 utilis&#233; lorsque jython d&#233;marre. La liste impos&#233;e dans la syntaxe Unix est:
 <PRE>
   setenv CLASSPATH .:jmri.jar:lib/log4j.jar:lib/collections.jar:lib/crimson.jar:lib/jdom-jdk11.jar
 </PRE>
-<BR/>
+<br>
 Pour enregistrer la saisie, le script "jmrithon"  est disponible pour une utilisation sur les syst&#232;mes Linux et Mac OS X:
 <PRE>
   % ./jmrithon
@@ -172,15 +173,15 @@ Pour enregistrer la saisie, le script "jmrithon"  est disponible pour une utilis
   Taper "copyright", "credits" ou "license" pour plus d'information
   >>> ^D
 </PRE>
-<BR/>La premi&#232;re fois que vous ex&#233;cutez ceci, vous obtiendrez un certain nombre de messages 
+<br>La premi&#232;re fois que vous ex&#233;cutez ceci, vous obtiendrez un certain nombre de messages
 sur "les traitement modifi&#233;es jar"; ceux-ci peuvent &#234;tre ignor&#233;s, car ils sont normaux.
-</OL>
+</ol>
 
-<H2>Utilisation directe de Jython </h2>
+<h2>Utilisation directe de Jython </h2>
 
 Cette section de la page est un tas d'informations utiles sur 
 le contr&#244;le de JMRI depuis Jython directement.
-<P>
+<p>
 Notez que vous n'avez pas plus besoin de ceci lors de l'ex&#233;cution 
 des scripts PanelPro.py ou similaire, car ils g&#232;rent le d&#233;marrage
 d'une application compl&#232;te. 
@@ -197,7 +198,7 @@ Jython, vous devez faire:
 avant de commencer l'une des classes JMRI. Le "default.lcf"
 est le nom du fichier de contr&#244;le connect&#233; qui sera utilis&#233;, il peut
 &#234;tre omis.
-<P>
+<p>
 Pour rendre les classes JMRI disponible, vous avez &#224; faire: 
 <PRE>
   import jmri
@@ -218,17 +219,17 @@ le programme PanelPro; vous pouvez utiliser un autre nom si vous le souhaitez.
 Le fichier de configuration contr&#244;le la connexion au r&#233;seau, et toute autre 
 option qui peut avoir &#233;t&#233; mise quand il a &#233;t&#233; cr&#233;&#233;.
 
-<P>
+<p>
     Alternativement, si vous voulez d&#233;marrer l'application PanelPro compl&#232;te,
     y compris la barre de menu, l'&#233;cran d'accueil, etc, vous pouvez faire::
 <PRE>
  import apps
  apps.PanelPro.PanelPro.main([])
 </PRE>
-<P>
+<p>
 Cela va d&#233;marrer le programme, y compris sa configuration de d&#233;marrage, etc
 
-<P>
+<p>
 Pour simplifier ce d&#233;marrage encore plus, vous pouvez faire:
 <PRE>
  execfile("PanelPro.py")
@@ -245,21 +246,21 @@ En Java il en r&#233;sulte du code verbeux comme
 </PRE>
 Jython simplifie ceci, en nous permettant de fournir des variables utiles, 
 et par le raccourcissement des appels &#224; certaines m&#233;thodes.
-<P>
+<p>
 Pour avoir acc&#232;s &#224; des gestionnaires de feux de signalisation, capteur et aiguillage 
 et l'objet CommandStation, 
 les variables de plusieurs raccourcis sont d&#233;finies dans les scripts .py &#233;num&#233;r&#233;s ci-dessus
-<UL>
-<LI>sensors
-<LI>signals
-<LI>turnouts
-<LI>lights
-<LI>reporters
-<LI>memories
-<LI>dcc
-<LI>audio
+<ul>
+<li>sensors
+<li>signals
+<li>turnouts
+<li>lights
+<li>reporters
+<li>memories
+<li>dcc
+<li>audio
 
-</UL>
+</ul>
 Celles-ci peuvent ensuite &#234;tre r&#233;f&#233;renc&#233;es directement dans Jython comme
 <PRE>
    t2 = turnouts.provideTurnout("12");
@@ -267,7 +268,7 @@ Celles-ci peuvent ensuite &#234;tre r&#233;f&#233;renc&#233;es directement dans 
    dcc.
 </PRE>
 Notez que la variable t2 n'a pas besoin d'&#234;tre d&#233;clar&#233;e.
-<P>
+<p>
 Jython fournit un raccourci pour les param&#232;tres qui ont
 &#233;t&#233; d&#233;finis avec Java-Bean-like les  m&#233;thodes get et set:
 <PRE>
@@ -283,7 +284,7 @@ Notez &#233;galement que THROWN(D&#233;vi&#233;)
  a &#233;t&#233; d&#233;fini lors de l'ex&#233;cution du script Python 
 au d&#233;marrage; CLOSED(Direct), ACTIVE(Actif, INACTIVE(Inactif), RED, YELLOW et GREENVERT sont
 &#233;galement d&#233;fini.
-<P>
+<p>
 Un m&#233;canisme similaire peut &#234;tre utilis&#233; pour v&#233;rifier l'&#233;tat de chose:
 <PRE>
 >>> print sensors.provideSensor("3").knownState == ACTIVE
@@ -293,7 +294,7 @@ Un m&#233;canisme similaire peut &#234;tre utilis&#233; pour v&#233;rifier l'&#2
 </PRE>
 Notez que Jython utilise "1" pour indiquer vrai, et "0" pour indiquer
 faux, de sorte que le capteur 3 est actuellement actif dans cet exemple
-<P>
+<p>
 Vous pouvez aussi appeler directement les m&#233;thodes, par exemple d'envoyer un paquet DCC
 vers les rails, vous tapez:
 <PRE>   
@@ -301,22 +302,15 @@ vers les rails, vous tapez:
 </PRE>
 Cela envoie ce paquet de trois octets quatre fois, puis retourne &#224; 
 la ligne de commande.
-<P>
+<p>
 Pour quitter, soit ^ C &#224; partir de la ligne de commande ou utilisez la 
 commande sortie dans le menu.  
 
-<H2>Utilisation de Python pour signal logique et automatisation</h2>
+<h2>Utilisation de Python pour signal logique et automatisation</h2>
 
-Les classes "<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/package-summary.html">Automate</a>"
+Les classes "<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/package-summary.html">Automate</a>"
 existantes de JMRI fournissent des crochets pour l'automatisation du r&#233;seau utilisateur, y compris la signalisation.
 Mais ils exigent que vous &#233;criviez du code Java et de le compiler en fichiers .class.
-<P>
-La classe 
-<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/JythonAutomaton.html">JythonAutomaton</a>
- est destin&#233;e &#224; faciliter la mise en page personnalis&#233;e du code d'automatisation, car 
-elle vous permettra d'appeler un script Jython. Une fois qu'il est int&#233;gr&#233; dans 
-le processus de configuration, vous serez capable de coder votre automatisation dans un 
-ou plusieurs fichiers .py, et ont le programme de d&#233;marrage pour les ex&#233;cuter au d&#233;marrage.
 
 <h2>Etapes suivantes</h2>
 Nous sommes seulement &#224; apprendre comment int&#233;grer au mieux JMRI et Python, donc il y a 
@@ -326,60 +320,61 @@ encore quelques myst&#232;res fondamentaux.
 L'id&#233;e de "modules" Python  n'est pas encore 
 clairement compris. Il y a trois fa&#231;ons de d&#233;marrer le programme via 
 un fichier .py:
-<OL>
-<LI>
-<PRE>
-  % ./jmrithon
-  Jython 2.1 on java1.4.1_01 (JIT: null)
-  Taper "copyright", "credits" ou "license" pour plus d'informations
-  >>> import PanelPro
-</PRE>
-Cela fonctionne, en ce sens que le programme d&#233;marre. Mais 
-les m&#233;thodes commodes sont toutes dans le namespace PanelPro:
-<PRE>
-  >>> turnouts.newTurnout("LT1","")
-  Traceback (innermost last):
-    File "<console>", line 1, in ?
-  NameError: turnouts
+<ol>
+    <li>
+    <PRE>
+      % ./jmrithon
+      Jython 2.1 on java1.4.1_01 (JIT: null)
+      Taper "copyright", "credits" ou "license" pour plus d'informations
+      >>> import PanelPro
+    </PRE>
+    Cela fonctionne, en ce sens que le programme d&#233;marre. Mais
+    les m&#233;thodes commodes sont toutes dans le namespace PanelPro:
+    <PRE>
+      >>> turnouts.newTurnout("LT1","")
+      Traceback (innermost last):
+        File "&lt;console&gt;", line 1, in ?
+      NameError: turnouts
 
-  >>> PanelPro.turnouts.newTurnout("LT1","")
-  jmri.jmrix.loconet.LnTurnout@36b91b
-</PRE>
-ce qui fait nettement plus &#224; taper plus tard..
-Et il est d&#233;routant, car selon que vous ayez commenc&#233;
-PanelPro, DecoderPro ou une autre application, les noms seront
-diff&#233;rents.
-<LI>
-<PRE>
-  % ./jmrithon
-  >>>  execfile("PanelPro.py")
-</PRE>
-
+      >>> PanelPro.turnouts.newTurnout("LT1","")
+      jmri.jmrix.loconet.LnTurnout@36b91b
+    </PRE>
+    ce qui fait nettement plus &#224; taper plus tard.
+    Et il est d&#233;routant, car selon que vous ayez commenc&#233;
+    PanelPro, DecoderPro ou une autre application, les noms seront
+        diff&#233;rents.</li>
+    <li>
+    <PRE>
+      % ./jmrithon
+      >>>  execfile("PanelPro.py")
+    </PRE>
+    <PRE>
     % ./jmrithon -PanelPro.py
     </PRE>
 
-Cela semble un peu moche, car ce n'est pas en utilisant les modules techniques normaux de Python
-. Mais les m&#233;thodes commodes sont
-dans le namespace de niveau sup&#233;rieur:
-<PRE>
-  turnouts.newTurnout("LT1", "")
-</PRE>
-<BR>
-Nous avons besoin de comprendre si c'est un vrai probl&#232;me. La plupart des programmes 
-Python n'utilisent pas cet namespace de haut niveau, et il y a probablement
-une bonne raison!
-</OL>
+    Cela semble un peu moche, car ce n'est pas en utilisant les modules techniques normaux de Python.
+    Mais les m&#233;thodes commodes sont
+    dans le namespace de niveau sup&#233;rieur:
+    <PRE>
+      turnouts.newTurnout("LT1", "")
+    </PRE>
+    <br>
+    Nous avons besoin de comprendre si c'est un vrai probl&#232;me. La plupart des programmes
+    Python n'utilisent pas cet namespace de haut niveau, et il y a probablement
+        une bonne raison!</li>
+</ol>
+
 Nous avons besoin de comprendre comment les d&#233;veloppeurs de Jython ont pr&#233;vu de faire ceci.
 
 <h3> R&#233;siliation </h3>
 Une fois que la t&#226;che principale JMRI (ou t&#226;che Swing GUI ?) a commenc&#233;e,
 ^ D ne suffit pas pour faire quitter le programme. Vous devez s&#233;lectionner
 "Quit" dans le menu fichier actuel, ou ^ C du programme.
-<P>
+<p>
 Il serait bon de comprendre ce qui emp&#234;cher le programme
 d'arr&#234;ter quand il obtient l'^D. 
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
         </div>
         </div>
 </body>

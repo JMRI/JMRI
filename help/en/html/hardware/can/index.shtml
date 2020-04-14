@@ -1,12 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI Hardware Support - CAN Network</title><!-- Style -->
+  <title>JMRI Hardware Support - CAN Network</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,14 +14,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: CAN: Controller Area Networks</h1>
 
       <ul class="snav">
@@ -65,8 +67,6 @@
       "http://www.nmra.org/index-nmra-standards-and-recommended-practices#node-171">
       Layout Command Control (LCC, formerly
       NMRAnet)</a>.</p>
-      
-
 
       <h3><a href="cbus/index.shtml">MERG CBUS</a></h3>
 
@@ -76,11 +76,7 @@
         <img src=
       "https://www.merg.org.uk/merg_images/merg_logo.png" align=
       "right" alt="MERG logo" height="50" width="106">
-      
 
-
-
-      
       <p>
       MERG CBUS is an 'open source' or public domain project hosted by the
       Model Electronic Railway Group (<a href=
@@ -96,7 +92,8 @@
       <br>The header is always HEX bytes and maps directly to the PIC CAN registers, left justified.</p>
       
       <p>
-      <a href="cbus/index.shtml">JMRI MERG CBUS</a> support is available for linking JMRI with MERGCBUS, aimed at users.
+      JMRI <a href="cbus/index.shtml">MERG CBUS</a> support is available for linking JMRI with MERG CBUS, aimed at
+          users.
       <br>Extensive details of the MERG CBUS protocol are available to developers, see the <a href="cbus/index.shtml#thirdparty">MERG CBUS Wiki</a>.
       
       <p>There are many MERG module kits available to help running a layout.
@@ -116,10 +113,7 @@
       events on servo start moving, servo mid-point, also sending an 
       event when completing moving the servo to its final position.</li>
       </ul>      
-      
-      
-      
-      
+
       <p>
       The 3,000+ MERG members are encouraged to to build and design their 
       own modules, and with MERG being over 50 years old, 
@@ -132,23 +126,21 @@
       <a href="cbus/index.shtml#cbusevents">MERG CBUS events</a>, also <a 
       href="cbus/index.shtml#dcc">DCC 
       over MERG CBUS</a> via a CANCMD kit 
-      ( a fully featured DCC Command Station, mini booster and 
-      track programmer ).  This interfaces to JMRI and / or MERG 
+      (a fully featured DCC Command Station, mini booster and
+      track programmer). This interfaces to JMRI and / or MERG
       handheld controllers over a MERG CBUS network.
       </p>
       
       <p>MERG CBUS events are sent as one-to-many, enabling multiple modules to listen and change status on 1 single event. eg.</p>
-<ul>
-<li>Event sent from a turnout ( UK - point ) switch monitoring module, sending an "off event" when the point is thrown, an "on event" when closed.</li>
-<li>This event is received by a Relay module, switching the frog polarity of the physical point.</li>
-<li>Event also received by a LED module, changing the LEDs on a mimic panel representing the point position.</li>
-<li>Event also received by JMRI to use in Layout Panels et al.</li>
-</ul>
+      <ul>
+        <li>Event sent from a turnout ( UK - point ) switch monitoring module, sending an "off event" when the point is thrown, an "on event" when closed.</li>
+        <li>This event is received by a Relay module, switching the frog polarity of the physical point.</li>
+        <li>Event also received by a LED module, changing the LEDs on a mimic panel representing the point position.</li>
+        <li>Event also received by JMRI to use in Layout Panels et al.</li>
+      </ul>
 
-<p>JMRI can send and receive events for any module node and any module event.</p>
-      
-      
-      
+      <p>JMRI can send and receive events for any module node and any module event.</p>
+
       <h2><a name="hardware" id="hardware">Supported Hardware</a></h2>
       <h3>Computer Interfaces</h3>
 
@@ -157,10 +149,8 @@
       <dl>
         <dt>TCH Technology</dt>
 
-        <dd><a href=
-        "http://www.tchtechnology.com/products/can_usb/">TCH
-        Technology CAN/USB</a> which provides a high-speed
-        connection for model railroad use</dd>
+        <dd>TCH Technology CAN/USB provides a high-speed
+        connection for model railroad use (site not accessible as of 2019)</dd>
 
         <dt>grid connect</dt>
 
@@ -196,20 +186,20 @@
             </dl>
             
             <dl>
-            <dt>MERG CANPiWi </dt>
-            <dd>The CANPiWi is based on the Raspberry Pi Zero W, and is an interface 
+            <dt>MERG CANPiWi/CANPiZero</dt>
+            <dd>The <a href="https://www.merg.org.uk/kits.php">CANPiWi</a> is based
+            on the Raspberry Pi Zero W, and is an interface
             between Engine Driver / WiThrottle and MERG CBUS.</dd>
             </dl>
 
       <h2><a name="connect" id="connect">Connecting</a></h2>
-      
 
       <p>JMRI can provide the usual Sensor and Turnout features,
       once configured for <a href=
       "../openlcb/index.shtml">OpenLCB</a> or <a href=
       "cbus/index.shtml">CBUS</a> "Events".</p>
       
-      <p>Example System Naming : </p>
+      <p>Example System Naming: </p>
       
       <table border="1">
       <tr>
@@ -234,12 +224,6 @@
       <br> ( Event 18 On / Off )</td>
       </tr>
       </table>
-      
-      
-      
-      
-      
-      
 
       <p>JMRI can connect to CAN networks in several ways:</p>
 
@@ -253,9 +237,7 @@
       baud rate under Advanced Preferences.<br>
       The TCH Technology adapter does this automatically, so no
       setting is required.
-      <br>
-      
-       </p>
+      </p>
       
       <p>
       To <a href="cbus/Details.shtml#c1">connect to a CANUSB4</a>, select "MERG" as system manufacturer,
@@ -359,8 +341,6 @@
 
       <h3>JMRI Help</h3>
 
-
-
       <p><a href="../openlcb/index.shtml">OpenLCB</a> Help</p>
 
       <p><a href="cbus/index.shtml">MERG CBUS</a> Support</p>
@@ -374,7 +354,7 @@
       <p><a href="https://www.merg.org.uk">merg.org.uk</a></p>
       <p><a href="https://en.wikipedia.org/wiki/CAN_bus">wikipedia.org/wiki/CAN_bus</a></p>
       
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

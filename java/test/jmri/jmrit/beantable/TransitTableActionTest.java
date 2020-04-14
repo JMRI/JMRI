@@ -2,7 +2,6 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 import jmri.Block;
 import jmri.BlockManager;
@@ -11,9 +10,7 @@ import jmri.Section;
 import jmri.SectionManager;
 import jmri.Transit;
 import jmri.TransitSection;
-import jmri.TransitManager;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.*;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
 
@@ -21,7 +18,7 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TransitTableActionTest extends AbstractTableActionBase {
+public class TransitTableActionTest extends AbstractTableActionBase<Transit> {
 
     @Test
     public void testCTor() {
@@ -82,8 +79,8 @@ public class TransitTableActionTest extends AbstractTableActionBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
         Transit t1 = InstanceManager.getDefault(jmri.TransitManager.class).createNewTransit("t1","test transit");
-        TransitSection ts1 = new TransitSection(InstanceManager.getDefault(SectionManager.class).getBeanBySystemName("TS1"),0,0);
-        TransitSection ts2 = new TransitSection(InstanceManager.getDefault(SectionManager.class).getBeanBySystemName("TS2"),0,0);
+        TransitSection ts1 = new TransitSection(InstanceManager.getDefault(SectionManager.class).getBySystemName("TS1"),0,0);
+        TransitSection ts2 = new TransitSection(InstanceManager.getDefault(SectionManager.class).getBySystemName("TS2"),0,0);
         t1.addTransitSection(ts1);
         t1.addTransitSection(ts2);
 

@@ -10,7 +10,9 @@
   <title>JMRI: Signaling introduction</title>
   <meta name="Author" content="Bob Jacobsen">
   <meta name="Author" content="Egbert Broerse">
-  <meta name="Date.Modified" content="20151214"><!-- Style -->
+  <meta name="Author" content="B. MIlhaupt">
+  <meta name="Date.Modified" content="20200106">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -18,15 +20,14 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
@@ -163,7 +164,15 @@
         <li><b>Virtual</b> Virtual signals are JMRI internal
         signals with no actual hardware attached. Virtual Signals
         may represent theoretical Aspects at buffer stops or in
-        staging that are used by prior signals.</li>
+        staging that are used by prior signals.  They may also be useful with 
+        <a href="../../../package/jmri/jmrit/beantable/SignalMastRepeater.shtml">Signal Mast Repeaters</a>.<br>
+        <ul>
+            <li>When using JMRI Signal Heads, the list of signal head types includes 
+        the option "Virtual".</li>
+            <li>When using JMRI Signal Masts, the list of "Mast 
+        Driver" types includes a "Virtual Mast" driver type.</li>
+        </ul>
+        </li>
 
         <li><b>Protected Sensor</b> The next block occupancy
         sensor(s) following the signal you are controlling in the
@@ -389,6 +398,14 @@
       be dynamically built, with little user intervention. For
       panels created with Control Panel Editor some of this
       information is to be entered manually.</p>
+
+      <p>5. The <b><a href="../../../package/jmri/jmrit/beantable/SignalMastRepeater.shtml">
+      Signal Mast Repeater</a></b> tool allows one signal mast to
+      follow another signal mast's aspect, or for two signal masts to follow each 
+      other (i.e. the most-recent aspect change is reflected by the other mast).
+      This can be convenient for providing a duplicate of a signal's aspect via
+      different hardware, and may also be useful when creating "Signal Mast Logic"
+      for complicated track arrangements.</p>
 
       <p>All the information in the Tables is saved with the
       configuration in an XML file, along with control panel setup,
@@ -635,7 +652,7 @@ signals.getSignalHead("IH1").setAppearance(YELLOW)
         conflicts and strange Signal Aspects, do not attempt to
         combine the use of the SSL Tool and the newer Signal Mast
         Logic tools for the same signals.</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

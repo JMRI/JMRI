@@ -221,7 +221,7 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
     public void actionPerformed(ActionEvent e) {
         if (bean == null) {
             // display message in status bar TODO
-            log.error("No bean set so unable to edit a null bean");  //NOI18N
+            log.error("No bean set so unable to edit a null bean");  // NOI18N
             return;
         }
         if (f == null) {
@@ -380,7 +380,7 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
     }
 
     public void save() {
-        String feedback = Bundle.getMessage("ItemUpdateFeedback", Bundle.getMessage("BeanNameTurnout"))
+        String feedback = Bundle.getMessage("ItemUpdateFeedback", getBeanType())
                 + " " + bean.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         // provide feedback to user, can be overwritten by save action error handler
         statusBar.setText(feedback);

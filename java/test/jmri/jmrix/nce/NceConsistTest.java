@@ -114,6 +114,7 @@ public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase 
     public void tearDown() {
         c.dispose();
         c = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

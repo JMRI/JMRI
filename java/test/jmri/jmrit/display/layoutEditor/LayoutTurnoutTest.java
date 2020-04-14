@@ -1,24 +1,13 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Sensor;
-import jmri.Turnout;
-import jmri.util.JUnitUtil;
-import jmri.util.MathUtil;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import java.awt.geom.*;
+import jmri.*;
+import jmri.util.*;
+import org.junit.*;
 
 /**
- * Test simple functioning of LayoutTurnout
+ * Test simple functioning of LayoutTurnout.
  *
  * @author	Paul Bender Copyright (C) 2016
  */
@@ -32,6 +21,29 @@ public class LayoutTurnoutTest {
     private LayoutTurnout ltRX = null;
     private LayoutTurnout ltLX = null;
 
+    @Test
+    public void testEnums() {
+        // Check that enum ordinal values used for I/O don't 
+        // change.  Want to remove this once I/O is done 
+        // via enum names instead of numbers.
+        
+        Assert.assertEquals(0, LayoutTurnout.TurnoutType.NONE.ordinal());
+        Assert.assertEquals(1, LayoutTurnout.TurnoutType.RH_TURNOUT.ordinal());
+        Assert.assertEquals(2, LayoutTurnout.TurnoutType.LH_TURNOUT.ordinal());
+        Assert.assertEquals(3, LayoutTurnout.TurnoutType.WYE_TURNOUT.ordinal());
+        Assert.assertEquals(4, LayoutTurnout.TurnoutType.DOUBLE_XOVER.ordinal());
+        Assert.assertEquals(5, LayoutTurnout.TurnoutType.RH_XOVER.ordinal());
+        Assert.assertEquals(6, LayoutTurnout.TurnoutType.LH_XOVER.ordinal());
+        Assert.assertEquals(7, LayoutTurnout.TurnoutType.SINGLE_SLIP.ordinal());
+        Assert.assertEquals(8, LayoutTurnout.TurnoutType.DOUBLE_SLIP.ordinal());
+        
+        Assert.assertEquals(0, LayoutTurnout.LinkType.NO_LINK.ordinal());
+        Assert.assertEquals(1, LayoutTurnout.LinkType.FIRST_3_WAY.ordinal());
+        Assert.assertEquals(2, LayoutTurnout.LinkType.SECOND_3_WAY.ordinal());
+        Assert.assertEquals(3, LayoutTurnout.LinkType.THROAT_TO_THROAT.ordinal());
+    }
+    
+    
     @Test
     public void testNew() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -180,18 +192,18 @@ public class LayoutTurnoutTest {
     @Test
     public void testGetSignalHead() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.NONE));
-        jmri.util.JUnitAppender.assertWarnMessage("Unhandled point type: 0");
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.NONE));
+        JUnitAppender.assertWarnMessage("Right Hand.getSignalHead(NONE); Unhandled point type");
 
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTA));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTA2));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTA3));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTB));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTB2));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTC));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTC2));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTD));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTD2));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTA1));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTA2));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTA3));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTB1));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTB2));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTC1));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTC2));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTD1));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTD2));
     }
 
     @Test
@@ -230,53 +242,53 @@ public class LayoutTurnoutTest {
     @Test
     public void testGetLinkType() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals(ltRH.getLinkType(), LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltLH.getLinkType(), LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltWY.getLinkType(), LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltDX.getLinkType(), LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltRX.getLinkType(), LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltLX.getLinkType(), LayoutTurnout.NO_LINK);
+        Assert.assertEquals(ltRH.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltLH.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltWY.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltDX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltRX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltLX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
     }
 
     @Test
     public void testSetLinkType() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ltRH.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
-        Assert.assertEquals(ltRH.getLinkType(), LayoutTurnout.THROAT_TO_THROAT);
-        ltLH.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
-        Assert.assertEquals(ltLH.getLinkType(), LayoutTurnout.THROAT_TO_THROAT);
-        ltWY.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
-        Assert.assertEquals(ltWY.getLinkType(), LayoutTurnout.THROAT_TO_THROAT);
-        ltDX.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
-        Assert.assertEquals(ltDX.getLinkType(), LayoutTurnout.THROAT_TO_THROAT);
-        ltRX.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
-        Assert.assertEquals(ltRX.getLinkType(), LayoutTurnout.THROAT_TO_THROAT);
-        ltLX.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
-        Assert.assertEquals(ltLX.getLinkType(), LayoutTurnout.THROAT_TO_THROAT);
+        ltRH.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        Assert.assertEquals(ltRH.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        ltLH.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        Assert.assertEquals(ltLH.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        ltWY.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        Assert.assertEquals(ltWY.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        ltDX.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        Assert.assertEquals(ltDX.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        ltRX.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        Assert.assertEquals(ltRX.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        ltLX.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        Assert.assertEquals(ltLX.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
 
-        ltRH.setLinkType(LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltRH.getLinkType(), LayoutTurnout.NO_LINK);
-        ltLH.setLinkType(LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltLH.getLinkType(), LayoutTurnout.NO_LINK);
-        ltWY.setLinkType(LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltWY.getLinkType(), LayoutTurnout.NO_LINK);
-        ltDX.setLinkType(LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltDX.getLinkType(), LayoutTurnout.NO_LINK);
-        ltRX.setLinkType(LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltRX.getLinkType(), LayoutTurnout.NO_LINK);
-        ltLX.setLinkType(LayoutTurnout.NO_LINK);
-        Assert.assertEquals(ltLX.getLinkType(), LayoutTurnout.NO_LINK);
+        ltRH.setLinkType(LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltRH.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        ltLH.setLinkType(LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltLH.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        ltWY.setLinkType(LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltWY.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        ltDX.setLinkType(LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltDX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        ltRX.setLinkType(LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltRX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        ltLX.setLinkType(LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals(ltLX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
     }
 
     @Test
     public void testGetTurnoutType() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals(ltRH.getTurnoutType(), LayoutTurnout.RH_TURNOUT);
-        Assert.assertEquals(ltLH.getTurnoutType(), LayoutTurnout.LH_TURNOUT);
-        Assert.assertEquals(ltWY.getTurnoutType(), LayoutTurnout.WYE_TURNOUT);
-        Assert.assertEquals(ltDX.getTurnoutType(), LayoutTurnout.DOUBLE_XOVER);
-        Assert.assertEquals(ltRX.getTurnoutType(), LayoutTurnout.RH_XOVER);
-        Assert.assertEquals(ltLX.getTurnoutType(), LayoutTurnout.LH_XOVER);
+        Assert.assertEquals(ltRH.getTurnoutType(), LayoutTurnout.TurnoutType.RH_TURNOUT);
+        Assert.assertEquals(ltLH.getTurnoutType(), LayoutTurnout.TurnoutType.LH_TURNOUT);
+        Assert.assertEquals(ltWY.getTurnoutType(), LayoutTurnout.TurnoutType.WYE_TURNOUT);
+        Assert.assertEquals(ltDX.getTurnoutType(), LayoutTurnout.TurnoutType.DOUBLE_XOVER);
+        Assert.assertEquals(ltRX.getTurnoutType(), LayoutTurnout.TurnoutType.RH_XOVER);
+        Assert.assertEquals(ltLX.getTurnoutType(), LayoutTurnout.TurnoutType.LH_XOVER);
     }
 
     @Test
@@ -351,7 +363,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltRH.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(150.0, 100.0),
                 ltRH.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        JUnitAppender.assertErrorMessage("Right Hand.getCoordsForConnectionType(0); Invalid Connection Type");
         Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(132.0, 87.0),
                 ltRH.getCoordsForConnectionType(LayoutTrack.TURNOUT_A));
@@ -371,7 +383,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltLH.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(200.0, 175.0),
                 ltLH.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        JUnitAppender.assertErrorMessage("Left Hand.getCoordsForConnectionType(0); Invalid Connection Type");
         Assert.assertEquals("ltLH.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(189.0, 149.0),
                 ltLH.getCoordsForConnectionType(LayoutTrack.TURNOUT_A));
@@ -391,7 +403,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltWY.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(250.0, 250.0),
                 ltWY.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        JUnitAppender.assertErrorMessage("Wye.getCoordsForConnectionType(0); Invalid Connection Type");
         Assert.assertEquals("ltWY.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(254.5, 218.5),
                 ltWY.getCoordsForConnectionType(LayoutTrack.TURNOUT_A));
@@ -411,7 +423,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltDX.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(300.0, 325.0),
                 ltDX.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        JUnitAppender.assertErrorMessage("Double XOver.getCoordsForConnectionType(0); Invalid Connection Type");
         Assert.assertEquals("ltDX.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(347.0, 297.0),
                 ltDX.getCoordsForConnectionType(LayoutTrack.TURNOUT_A));
@@ -431,7 +443,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltRX.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(350.0, 400.0),
                 ltRX.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        JUnitAppender.assertErrorMessage("Right Hand XOver.getCoordsForConnectionType(0); Invalid Connection Type");
         Assert.assertEquals("ltRX.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(410.0, 404.0),
                 ltRX.getCoordsForConnectionType(LayoutTrack.TURNOUT_A));
@@ -451,7 +463,7 @@ public class LayoutTurnoutTest {
         Assert.assertEquals("ltLX.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(400.0, 475.0),
                 ltLX.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        JUnitAppender.assertErrorMessage("Left Hand XOver.getCoordsForConnectionType(0); Invalid Connection Type");
         Assert.assertEquals("ltLX.getCoordsForConnectionType(TURNOUT_A) is equal to...",
                 new Point2D.Double(413.0, 503.0),
                 ltLX.getCoordsForConnectionType(LayoutTrack.TURNOUT_A));
@@ -563,7 +575,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltRH.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        JUnitAppender.assertErrorMessage("Right Hand.getConnection(0); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltLH.getConnection(invalid type) is null",
@@ -571,7 +583,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltLH.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        JUnitAppender.assertErrorMessage("Left Hand.getConnection(0); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltWY.getConnection(invalid type) is null",
@@ -579,7 +591,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltWY.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        JUnitAppender.assertErrorMessage("Wye.getConnection(0); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltDX.getConnection(invalid type) is null",
@@ -587,7 +599,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltDX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        JUnitAppender.assertErrorMessage("Double XOver.getConnection(0); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltRX.getConnection(invalid type) is null",
@@ -595,7 +607,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltRX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        JUnitAppender.assertErrorMessage("Right Hand XOver.getConnection(0); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltLX.getConnection(invalid type) is null",
@@ -603,7 +615,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltLX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        JUnitAppender.assertErrorMessage("Left Hand XOver.getConnection(0); Invalid Connection Type");
     }
 
     @Test
@@ -660,20 +672,20 @@ public class LayoutTurnoutTest {
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         try {
-            // test invalid connection type
+            // test Invalid Connection Type
             ltRH.setConnection(LayoutTrack.NONE, null, LayoutTrack.NONE);
-            Assert.fail("No exception thrown on ltRH.setConnection(invalid connection type)");
+            Assert.fail("No exception thrown on ltRH.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        JUnitAppender.assertErrorMessage("Right Hand.setConnection(0, null, 0); Invalid Connection Type");
 
         try {
-            // test invalid object type
+            // test unexpected type
             ltRH.setConnection(LayoutTrack.POS_POINT, null, LayoutTrack.POS_POINT);
-            Assert.fail("No exception thrown on ltRH.setConnection(invalid object type)");
+            Assert.fail("No exception thrown on ltRH.setConnection(unexpected type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("unexpected type of connection to layoutturnout - 1");
+        JUnitAppender.assertErrorMessage("Right Hand.setConnection(1, null, 1); unexpected type");
 
         try {
             // test valid types
@@ -689,13 +701,40 @@ public class LayoutTurnoutTest {
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         ltRH.setConnectA(null, LayoutTrack.POS_POINT);
-        jmri.util.JUnitAppender.assertErrorMessage("unexpected type of A connection to layoutturnout - 1");
+        JUnitAppender.assertErrorMessage("Right Hand.setConnectA(null, 1); unexpected type");
+        ltRH.setConnectB(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Right Hand.setConnectB(null, 1); unexpected type");
+        ltRH.setConnectC(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Right Hand.setConnectC(null, 1); unexpected type");
+        ltRH.setConnectD(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Right Hand.setConnectD(null, 1); unexpected type");
+
+        ltLH.setConnectA(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Left Hand.setConnectA(null, 1); unexpected type");
         ltLH.setConnectB(null, LayoutTrack.POS_POINT);
-        jmri.util.JUnitAppender.assertErrorMessage("unexpected type of B connection to layoutturnout - 1");
+        JUnitAppender.assertErrorMessage("Left Hand.setConnectB(null, 1); unexpected type");
+        ltLH.setConnectC(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Left Hand.setConnectC(null, 1); unexpected type");
+        ltLH.setConnectD(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Left Hand.setConnectD(null, 1); unexpected type");
+
+        ltWY.setConnectA(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Wye.setConnectA(null, 1); unexpected type");
+        ltWY.setConnectB(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Wye.setConnectB(null, 1); unexpected type");
         ltWY.setConnectC(null, LayoutTrack.POS_POINT);
-        jmri.util.JUnitAppender.assertErrorMessage("unexpected type of C connection to layoutturnout - 1");
+        JUnitAppender.assertErrorMessage("Wye.setConnectC(null, 1); unexpected type");
+        ltWY.setConnectD(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Wye.setConnectD(null, 1); unexpected type");
+
+        ltDX.setConnectA(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Double XOver.setConnectA(null, 1); unexpected type");
+        ltDX.setConnectB(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Double XOver.setConnectB(null, 1); unexpected type");
+        ltDX.setConnectC(null, LayoutTrack.POS_POINT);
+        JUnitAppender.assertErrorMessage("Double XOver.setConnectC(null, 1); unexpected type");
         ltDX.setConnectD(null, LayoutTrack.POS_POINT);
-        jmri.util.JUnitAppender.assertErrorMessage("unexpected type of D connection to layoutturnout - 1");
+        JUnitAppender.assertErrorMessage("Double XOver.setConnectD(null, 1); unexpected type");
     }
 
     @Test
@@ -729,12 +768,12 @@ public class LayoutTurnoutTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
-        Assert.assertTrue("ltRH.getState() is UNKNOWN", ltRH.getState() == Turnout.UNKNOWN);
-        Assert.assertTrue("ltLH.getState() is UNKNOWN", ltLH.getState() == Turnout.UNKNOWN);
-        Assert.assertTrue("ltWY.getState() is UNKNOWN", ltWY.getState() == Turnout.UNKNOWN);
-        Assert.assertTrue("ltDX.getState() is UNKNOWN", ltDX.getState() == Turnout.UNKNOWN);
-        Assert.assertTrue("ltRX.getState() is UNKNOWN", ltRX.getState() == Turnout.UNKNOWN);
-        Assert.assertTrue("ltLX.getState() is UNKNOWN", ltLX.getState() == Turnout.UNKNOWN);
+        Assert.assertEquals("ltRH.getState() is UNKNOWN", ltRH.getState(), Turnout.UNKNOWN);
+        Assert.assertEquals("ltLH.getState() is UNKNOWN", ltLH.getState(), Turnout.UNKNOWN);
+        Assert.assertEquals("ltWY.getState() is UNKNOWN", ltWY.getState(), Turnout.UNKNOWN);
+        Assert.assertEquals("ltDX.getState() is UNKNOWN", ltDX.getState(), Turnout.UNKNOWN);
+        Assert.assertEquals("ltRX.getState() is UNKNOWN", ltRX.getState(), Turnout.UNKNOWN);
+        Assert.assertEquals("ltLX.getState() is UNKNOWN", ltLX.getState(), Turnout.UNKNOWN);
     }
 
     @Test
@@ -772,29 +811,29 @@ public class LayoutTurnoutTest {
         // not a test on the actual bean name, just that one is retrievable
         Assert.assertEquals("tOne name fetchable",tOne.getDisplayName(),ltRX.getTurnoutName());
         Assert.assertEquals("tTwo name fetchable",tTwo.getDisplayName(),ltRX.getSecondTurnoutName());
-        
-        Assert.assertTrue("0 sensor states known getState UNKNOWN", ltRX.getState() == Turnout.UNKNOWN);
+
+        Assert.assertEquals("0 sensor states known getState UNKNOWN", ltRX.getState(), Turnout.UNKNOWN);
         
         t1Closed.setKnownState(Sensor.ACTIVE);
-        Assert.assertTrue("only 1 sensor known INCONSISTENT", ltRX.getState() == Turnout.INCONSISTENT);
+        Assert.assertEquals("only 1 sensor known INCONSISTENT", ltRX.getState(), Turnout.INCONSISTENT);
         
         t1Thrown.setKnownState(Sensor.INACTIVE);
-        Assert.assertTrue("only 2 sensor known INCONSISTENT", ltRX.getState() == Turnout.INCONSISTENT);
-        Assert.assertTrue("main turnout known ", tOne.getState() == Turnout.CLOSED);
+        Assert.assertEquals("only 2 sensor known INCONSISTENT", ltRX.getState(), Turnout.INCONSISTENT);
+        Assert.assertEquals("main turnout known ", tOne.getState(), Turnout.CLOSED);
         
         t2Closed.setKnownState(Sensor.ACTIVE);
-        Assert.assertTrue("only 3 sensor known INCONSISTENT", ltRX.getState() == Turnout.INCONSISTENT);
+        Assert.assertEquals("only 3 sensor known INCONSISTENT", ltRX.getState(), Turnout.INCONSISTENT);
         
         t2Thrown.setKnownState(Sensor.INACTIVE);
-        Assert.assertTrue("t1 CLOSED", Turnout.CLOSED == tOne.getState());
-        Assert.assertTrue("t2 CLOSED", Turnout.CLOSED == tTwo.getState());
-        Assert.assertTrue("both turnouts CLOSED", Turnout.CLOSED == ltRX.getState());
+        Assert.assertEquals("t1 CLOSED", Turnout.CLOSED, tOne.getState());
+        Assert.assertEquals("t2 CLOSED", Turnout.CLOSED, tTwo.getState());
+        Assert.assertEquals("both turnouts CLOSED", Turnout.CLOSED, ltRX.getState());
         
         t2Closed.setKnownState(Sensor.INACTIVE);
-        Assert.assertTrue("t2 leg status INCONSISTENT", ltRX.getState() == Turnout.INCONSISTENT);
+        Assert.assertEquals("t2 leg status INCONSISTENT", ltRX.getState(), Turnout.INCONSISTENT);
         t2Thrown.setKnownState(Sensor.ACTIVE);
-        Assert.assertTrue("t2 THROWN", Turnout.THROWN == tTwo.getState());
-        Assert.assertTrue("t2 THROWN t1 CLOSED INCONSISTENT", ltRX.getState() == Turnout.INCONSISTENT);
+        Assert.assertEquals("t2 THROWN", Turnout.THROWN, tTwo.getState());
+        Assert.assertEquals("t2 THROWN t1 CLOSED INCONSISTENT", ltRX.getState(), Turnout.INCONSISTENT);
         
         // remove turnouts and check num listeners
         ltRX.setSecondTurnout(null);
@@ -839,33 +878,33 @@ public class LayoutTurnoutTest {
         
         // Here we're testing the commanded state logic that joins the Turnouts when operated,
         // the actual LayoutTurnout status is dependent on the feedback status.
-        
-        Assert.assertTrue("t2 inverted CLOSED when t1 THROWN", Turnout.UNKNOWN == stTwo.getCommandedState());
+
+        Assert.assertEquals("t2 inverted CLOSED when t1 THROWN", Turnout.UNKNOWN, stTwo.getCommandedState());
         
         stOne.setCommandedState(Turnout.UNKNOWN);
         stTwo.setCommandedState(Turnout.UNKNOWN);
-        Assert.assertTrue("ltRX UNKNOWN", Turnout.UNKNOWN == ltRX.getState());
+        Assert.assertEquals("ltRX UNKNOWN", Turnout.UNKNOWN, ltRX.getState());
         stOne.setCommandedState(Turnout.THROWN);
-        Assert.assertTrue("t2 inverted CLOSED when t1 THROWN", Turnout.CLOSED == stTwo.getCommandedState());
-        Assert.assertTrue("ltRX THROWN", Turnout.THROWN == ltRX.getState());
+        Assert.assertEquals("t2 inverted CLOSED when t1 THROWN", Turnout.CLOSED, stTwo.getCommandedState());
+        Assert.assertEquals("ltRX THROWN", Turnout.THROWN, ltRX.getState());
         
         stOne.setCommandedState(Turnout.UNKNOWN);
         stTwo.setCommandedState(Turnout.UNKNOWN);
         stOne.setCommandedState(Turnout.CLOSED);
-        Assert.assertTrue("t2 inverted THROWN when t1 CLOSED", Turnout.THROWN == stTwo.getCommandedState());
-        Assert.assertTrue("ltRX CLOSED", Turnout.CLOSED == ltRX.getState());
+        Assert.assertEquals("t2 inverted THROWN when t1 CLOSED", Turnout.THROWN, stTwo.getCommandedState());
+        Assert.assertEquals("ltRX CLOSED", Turnout.CLOSED, ltRX.getState());
         
         stTwo.setCommandedState(Turnout.UNKNOWN);
         stOne.setCommandedState(Turnout.UNKNOWN);
         stTwo.setCommandedState(Turnout.THROWN);
-        Assert.assertTrue("t1 inverted CLOSED when t2 THROWN", Turnout.CLOSED == stOne.getCommandedState());
-        Assert.assertTrue("ltRX CLOSED", Turnout.CLOSED == ltRX.getState());
+        Assert.assertEquals("t1 inverted CLOSED when t2 THROWN", Turnout.CLOSED, stOne.getCommandedState());
+        Assert.assertEquals("ltRX CLOSED", Turnout.CLOSED, ltRX.getState());
         
         stTwo.setCommandedState(Turnout.UNKNOWN);
         stOne.setCommandedState(Turnout.UNKNOWN);
         stTwo.setCommandedState(Turnout.CLOSED);
-        Assert.assertTrue("t1 inverted THROWN when t2 CLOSED", Turnout.THROWN == stOne.getCommandedState());
-        Assert.assertTrue("ltRX THROWN", Turnout.THROWN == ltRX.getState());
+        Assert.assertEquals("t1 inverted THROWN when t2 CLOSED", Turnout.THROWN, stOne.getCommandedState());
+        Assert.assertEquals("ltRX THROWN", Turnout.THROWN, ltRX.getState());
         
         ltRX.setSecondTurnoutInverted(false);
         Assert.assertFalse(ltRX.isSecondTurnoutInverted());
@@ -873,59 +912,58 @@ public class LayoutTurnoutTest {
         stOne.setCommandedState(Turnout.UNKNOWN);
         stTwo.setCommandedState(Turnout.UNKNOWN);
         stOne.setCommandedState(Turnout.THROWN);
-        Assert.assertTrue("t2 THROWN when t1 THROWN", Turnout.THROWN == stTwo.getCommandedState());
+        Assert.assertEquals("t2 THROWN when t1 THROWN", Turnout.THROWN, stTwo.getCommandedState());
         
         stOne.setCommandedState(Turnout.UNKNOWN);
         stTwo.setCommandedState(Turnout.UNKNOWN);
         stOne.setCommandedState(Turnout.CLOSED);
-        Assert.assertTrue("t2 CLOSED when t1 CLOSED", Turnout.CLOSED == stTwo.getCommandedState());
+        Assert.assertEquals("t2 CLOSED when t1 CLOSED", Turnout.CLOSED, stTwo.getCommandedState());
         
         stTwo.setCommandedState(Turnout.UNKNOWN);
         stOne.setCommandedState(Turnout.UNKNOWN);
         stTwo.setCommandedState(Turnout.THROWN);
-        Assert.assertTrue("t1 THROWN when t2 THROWN", Turnout.THROWN == stOne.getCommandedState());
+        Assert.assertEquals("t1 THROWN when t2 THROWN", Turnout.THROWN, stOne.getCommandedState());
         
         stTwo.setCommandedState(Turnout.UNKNOWN);
         stOne.setCommandedState(Turnout.UNKNOWN);
         stTwo.setCommandedState(Turnout.CLOSED);
-        Assert.assertTrue("t1 CLOSED when t2 CLOSED", Turnout.CLOSED == stOne.getCommandedState());
+        Assert.assertEquals("t1 CLOSED when t2 CLOSED", Turnout.CLOSED, stOne.getCommandedState());
         
         stOne.dispose();
         stOne = null;
         
         stTwo.dispose();
         stTwo = null;
-        
     }
     
     @Test
     public void testThrowWhenOccupiedOneTurnout()  throws JmriException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
-        Assert.assertTrue("ltRH starts unknown state", Turnout.UNKNOWN == ltRH.getState());
+
+        Assert.assertEquals("ltRH starts unknown state", Turnout.UNKNOWN, ltRH.getState());
         ltRH.setState(Turnout.CLOSED);
-        Assert.assertTrue("no change null Turnout", Turnout.UNKNOWN == ltRH.getState());
+        Assert.assertEquals("no change null Turnout", Turnout.UNKNOWN, ltRH.getState());
         
         ltRH.setDisabled(true);
         ltRH.setState(Turnout.CLOSED);
-        Assert.assertTrue("no change null Turnout and disabled", Turnout.UNKNOWN == ltRH.getState());
+        Assert.assertEquals("no change null Turnout and disabled", Turnout.UNKNOWN, ltRH.getState());
         
         Turnout otOne = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("ITS1");
         ltRH.setTurnout("ITS1");
         otOne.setCommandedState(Turnout.UNKNOWN);
-        Assert.assertTrue("turnout set ", Turnout.UNKNOWN == otOne.getState());
-        Assert.assertTrue("turnout set ", Turnout.UNKNOWN == ltRH.getState());
+        Assert.assertEquals("turnout set ", Turnout.UNKNOWN, otOne.getState());
+        Assert.assertEquals("turnout set ", Turnout.UNKNOWN, ltRH.getState());
         
         ltRH.setDisabled(true);
         ltRH.setState(Turnout.CLOSED);
-        Assert.assertTrue("turnout still UNKNOWN after set CLOSE disabled", Turnout.UNKNOWN == ltRH.getState());
+        Assert.assertEquals("turnout still UNKNOWN after set CLOSE disabled", Turnout.UNKNOWN, ltRH.getState());
         ltRH.setDisabled(false);
         
         LayoutBlock layoutBlock = new LayoutBlock("ILB1", "Test Block");
         Sensor occSensor = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("ISOccupancy1");
         occSensor.setKnownState(Sensor.ACTIVE);
         layoutBlock.setOccupancySensorName("ISOccupancy1");
-        Assert.assertTrue("Occupied when sensor active", layoutBlock.getOccupancy() == LayoutBlock.OCCUPIED);
+        Assert.assertEquals("Occupied when sensor active", layoutBlock.getOccupancy(), LayoutBlock.OCCUPIED);
         
         ltRH.setLayoutBlock(layoutBlock);
         
@@ -934,38 +972,37 @@ public class LayoutTurnoutTest {
         occSensor.setKnownState(Sensor.ACTIVE);
         otOne.setCommandedState(Turnout.UNKNOWN);
         ltRH.setState(Turnout.CLOSED);
-        Assert.assertTrue("ltRH CLOSED when occupied, occ when active not disabled", Turnout.CLOSED == otOne.getCommandedState());
+        Assert.assertEquals("ltRH CLOSED when occupied, occ when active not disabled", Turnout.CLOSED, otOne.getCommandedState());
         ltRH.setState(Turnout.THROWN);
-        Assert.assertTrue("ltRH THROWN when occupied, occ when active not disabled", Turnout.THROWN == otOne.getCommandedState());
+        Assert.assertEquals("ltRH THROWN when occupied, occ when active not disabled", Turnout.THROWN, otOne.getCommandedState());
         
         // occupied, occ. active enabled
         ltRH.setDisableWhenOccupied(true);
         occSensor.setKnownState(Sensor.ACTIVE);
         otOne.setCommandedState(Turnout.UNKNOWN);
         ltRH.setState(Turnout.THROWN);
-        Assert.assertTrue("ltRH unchanged when occupied, occ when active enabled", Turnout.UNKNOWN == ltRH.getState());
+        Assert.assertEquals("ltRH unchanged when occupied, occ when active enabled", Turnout.UNKNOWN, ltRH.getState());
         ltRH.setState(Turnout.CLOSED);
-        Assert.assertTrue("ltRH unchanged when occupied, occ when active enabled", Turnout.UNKNOWN == ltRH.getState());
+        Assert.assertEquals("ltRH unchanged when occupied, occ when active enabled", Turnout.UNKNOWN, ltRH.getState());
         
         // not occupied, occ. active disabled
         ltRH.setDisableWhenOccupied(false);
         occSensor.setKnownState(Sensor.INACTIVE);
         otOne.setCommandedState(Turnout.UNKNOWN);
         ltRH.setState(Turnout.CLOSED);
-        Assert.assertTrue("ltRH CLOSED when occupied, occ when active not disabled", Turnout.CLOSED == otOne.getCommandedState());
+        Assert.assertEquals("ltRH CLOSED when occupied, occ when active not disabled", Turnout.CLOSED, otOne.getCommandedState());
         ltRH.setState(Turnout.THROWN);
-        Assert.assertTrue("ltRH THROWN when occupied, occ when active not disabled", Turnout.THROWN == otOne.getCommandedState());
+        Assert.assertEquals("ltRH THROWN when occupied, occ when active not disabled", Turnout.THROWN, otOne.getCommandedState());
         
         // not occupied, occ. active enabled
         ltRH.setDisableWhenOccupied(true);
         occSensor.setKnownState(Sensor.INACTIVE);
         otOne.setCommandedState(Turnout.UNKNOWN);
         ltRH.setState(Turnout.CLOSED);
-        Assert.assertTrue("ltRH CLOSED when occupied, occ when active not disabled", Turnout.CLOSED == otOne.getCommandedState());
+        Assert.assertEquals("ltRH CLOSED when occupied, occ when active not disabled", Turnout.CLOSED, otOne.getCommandedState());
         ltRH.setState(Turnout.THROWN);
-        Assert.assertTrue("ltRH THROWN when occupied, occ when active not disabled", Turnout.THROWN == otOne.getCommandedState());
-        
-        
+        Assert.assertEquals("ltRH THROWN when occupied, occ when active not disabled", Turnout.THROWN, otOne.getCommandedState());
+
         layoutBlock.dispose();
         layoutBlock = null;
         
@@ -991,31 +1028,30 @@ public class LayoutTurnoutTest {
         stOne.setCommandedState(Turnout.UNKNOWN);
         stTwo.setCommandedState(Turnout.UNKNOWN);
         ltRX.setState(Turnout.THROWN);
-        Assert.assertTrue("StOne THROWN", Turnout.THROWN == stOne.getCommandedState());
-        Assert.assertTrue("StTwo THROWN", Turnout.THROWN == stTwo.getCommandedState());
+        Assert.assertEquals("StOne THROWN", Turnout.THROWN, stOne.getCommandedState());
+        Assert.assertEquals("StTwo THROWN", Turnout.THROWN, stTwo.getCommandedState());
         
         ltRX.setSecondTurnoutInverted(false);
         stOne.setCommandedState(Turnout.UNKNOWN);
         stTwo.setCommandedState(Turnout.UNKNOWN);
         ltRX.setState(Turnout.THROWN);
-        Assert.assertTrue("StOne THROWN", Turnout.THROWN == stOne.getCommandedState());
-        Assert.assertTrue("StTwo THROWN", Turnout.THROWN == stTwo.getCommandedState());
+        Assert.assertEquals("StOne THROWN", Turnout.THROWN, stOne.getCommandedState());
+        Assert.assertEquals("StTwo THROWN", Turnout.THROWN, stTwo.getCommandedState());
         
         ltRX.setState(Turnout.CLOSED);
-        Assert.assertTrue("StOne CLOSED", Turnout.CLOSED == stOne.getCommandedState());
-        Assert.assertTrue("StTwo CLOSED", Turnout.CLOSED == stTwo.getCommandedState());
+        Assert.assertEquals("StOne CLOSED", Turnout.CLOSED, stOne.getCommandedState());
+        Assert.assertEquals("StTwo CLOSED", Turnout.CLOSED, stTwo.getCommandedState());
         
         ltRX.setSecondTurnoutInverted(true);
         stOne.setCommandedState(Turnout.UNKNOWN);
         stTwo.setCommandedState(Turnout.UNKNOWN);
         ltRX.setState(Turnout.THROWN);
-        Assert.assertTrue("StOne THROWN", Turnout.THROWN == stOne.getCommandedState());
-        Assert.assertTrue("StTwo CLOSED", Turnout.CLOSED == stTwo.getCommandedState());
+        Assert.assertEquals("StOne THROWN", Turnout.THROWN, stOne.getCommandedState());
+        Assert.assertEquals("StTwo CLOSED", Turnout.CLOSED, stTwo.getCommandedState());
         
         ltRX.setState(Turnout.CLOSED);
-        Assert.assertTrue("StOne CLOSED", Turnout.CLOSED == stOne.getCommandedState());
-        Assert.assertTrue("StTwo THROWN", Turnout.THROWN == stTwo.getCommandedState());
-        
+        Assert.assertEquals("StOne CLOSED", Turnout.CLOSED, stOne.getCommandedState());
+        Assert.assertEquals("StTwo THROWN", Turnout.THROWN, stTwo.getCommandedState());
     }
     
     @Test
@@ -1023,25 +1059,23 @@ public class LayoutTurnoutTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         // null Turnout
-        Assert.assertTrue("starts UNKNOWN", Turnout.UNKNOWN == ltRH.getState());
+        Assert.assertEquals("starts UNKNOWN", Turnout.UNKNOWN, ltRH.getState());
         ltRH.toggleTurnout();
-        Assert.assertTrue("still UNKNOWN no Turnout to toggle", Turnout.UNKNOWN == ltRH.getState());
+        Assert.assertEquals("still UNKNOWN no Turnout to toggle", Turnout.UNKNOWN, ltRH.getState());
         
         Turnout ptOne = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("ITP1");
         ltRH.setTurnout("ITP1");
         
         ptOne.setCommandedState(Turnout.UNKNOWN);
         ltRH.toggleTurnout();
-        Assert.assertTrue("UNKNOWN to CLOSED when toggled", Turnout.CLOSED == ptOne.getCommandedState());
+        Assert.assertEquals("UNKNOWN to CLOSED when toggled", Turnout.CLOSED, ptOne.getCommandedState());
         
         ltRH.toggleTurnout();
-        Assert.assertTrue("CLOSED to THROWN when toggled", Turnout.THROWN == ptOne.getCommandedState());
+        Assert.assertEquals("CLOSED to THROWN when toggled", Turnout.THROWN, ptOne.getCommandedState());
         
         ltRH.toggleTurnout();
-        Assert.assertTrue("THROWN to CLOSED when toggled", Turnout.CLOSED == ptOne.getCommandedState());
-        
+        Assert.assertEquals("THROWN to CLOSED when toggled", Turnout.CLOSED, ptOne.getCommandedState());
     }
-    
 
     // from here down is testing infrastructure
     @BeforeClass
@@ -1049,9 +1083,10 @@ public class LayoutTurnoutTest {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
-            jmri.util.JUnitUtil.resetInstanceManager();
-            jmri.util.JUnitUtil.initInternalTurnoutManager();
-            jmri.util.JUnitUtil.initInternalSensorManager();
+            JUnitUtil.resetInstanceManager();
+            JUnitUtil.initInternalTurnoutManager();
+            JUnitUtil.initInternalSensorManager();
+            JUnitUtil.initInternalSignalHeadManager();
             layoutEditor = new LayoutEditor();
         }
     }
@@ -1073,27 +1108,27 @@ public class LayoutTurnoutTest {
             Point2D delta = new Point2D.Double(50.0, 75.0);
 
             ltRH = new LayoutTurnout("Right Hand",
-                    LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
+                    LayoutTurnout.TurnoutType.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
 
             point = MathUtil.add(point, delta);
             ltLH = new LayoutTurnout("Left Hand",
-                    LayoutTurnout.LH_TURNOUT, point, 66.0, 1.3, 1.4, layoutEditor);
+                    LayoutTurnout.TurnoutType.LH_TURNOUT, point, 66.0, 1.3, 1.4, layoutEditor);
 
             point = MathUtil.add(point, delta);
             ltWY = new LayoutTurnout("Wye",
-                    LayoutTurnout.WYE_TURNOUT, point, 99.0, 1.5, 1.6, layoutEditor);
+                    LayoutTurnout.TurnoutType.WYE_TURNOUT, point, 99.0, 1.5, 1.6, layoutEditor);
 
             point = MathUtil.add(point, delta);
             ltDX = new LayoutTurnout("Double XOver",
-                    LayoutTurnout.DOUBLE_XOVER, point, 132.0, 1.7, 1.8, layoutEditor);
+                    LayoutTurnout.TurnoutType.DOUBLE_XOVER, point, 132.0, 1.7, 1.8, layoutEditor);
 
             point = MathUtil.add(point, delta);
             ltRX = new LayoutTurnout("Right Hand XOver",
-                    LayoutTurnout.RH_XOVER, point, 165.0, 1.9, 2.0, layoutEditor);
+                    LayoutTurnout.TurnoutType.RH_XOVER, point, 165.0, 1.9, 2.0, layoutEditor);
 
             point = MathUtil.add(point, delta);
             ltLX = new LayoutTurnout("Left Hand XOver",
-                    LayoutTurnout.LH_XOVER, point, 198.0, 2.1, 2.2, layoutEditor);
+                    LayoutTurnout.TurnoutType.LH_XOVER, point, 198.0, 2.1, 2.2, layoutEditor);
         }
     }
 
@@ -1130,5 +1165,7 @@ public class LayoutTurnoutTest {
            ltLX = null;
         }
     }
+
     // private final static Logger log = LoggerFactory.getLogger(LayoutSlipTest.class);
+
 }

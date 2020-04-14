@@ -17,10 +17,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Signal Mast Logic Table</h1>
 
       <p>A Signal Mast Logic for a certain Source Signal Mast
@@ -120,7 +120,7 @@
       <p>Back to the <a href=
       "../../../../html/tools/signaling/SignalMastLogic.shtml">Signal
       Mast Logic help page</a>.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

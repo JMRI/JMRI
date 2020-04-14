@@ -1,9 +1,10 @@
 package jmri.jmris.simpleserver;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleServerManager class 
@@ -15,16 +16,22 @@ public class SimpleServerManagerTest {
     @Test
     public void testGetInstance() {
         SimpleServerManager a = SimpleServerManager.getInstance();
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
-    @Before
+    @Test
+    public void testGetPreferences(){
+        SimpleServerManager a = SimpleServerManager.getInstance();
+        assertThat(a.getPreferences()).isNotNull().withFailMessage("preferences not created");
+    }
+
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
 

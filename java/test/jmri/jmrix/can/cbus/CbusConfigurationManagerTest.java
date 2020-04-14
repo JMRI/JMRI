@@ -18,17 +18,15 @@ public class CbusConfigurationManagerTest {
 
     @Test
     public void testCTor() {
-        CbusConfigurationManager t = new CbusConfigurationManager(new CanSystemConnectionMemo());
+        t = new CbusConfigurationManager(memo);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testDisabled() {
 
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         memo.setDisabled(true);
         
-        CbusConfigurationManager t = new CbusConfigurationManager(memo);
         Assert.assertNotNull("exists",t);
         
         Assert.assertFalse( t.provides(jmri.PowerManager.class) );
@@ -44,20 +42,12 @@ public class CbusConfigurationManagerTest {
         Assert.assertNull( t.getCommandStation() );
         Assert.assertNull( t.getMultiMeter() );
         Assert.assertNull( t.getCbusPreferences() );
-        Assert.assertNull( t.getCbusNodeTableDataModel() );
         Assert.assertNull( t.getCabSignalManager() );
         
-        t.dispose();
-        t = null;
     }
     
     @Test
     public void testProvides() {
-        
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
-        CbusConfigurationManager t = new CbusConfigurationManager(memo);
         
         Assert.assertTrue( t.provides(jmri.AddressedProgrammerManager.class) );
         Assert.assertTrue( t.provides(jmri.GlobalProgrammerManager.class) );
@@ -70,25 +60,14 @@ public class CbusConfigurationManagerTest {
         Assert.assertTrue( t.provides(jmri.CommandStation.class) );
         Assert.assertTrue( t.provides(jmri.MultiMeter.class) );
         Assert.assertTrue( t.provides(CbusPreferences.class) );
-        Assert.assertTrue( t.provides(CbusNodeTableDataModel.class) );
         Assert.assertTrue( t.provides(jmri.CabSignalManager.class) );
         
         Assert.assertFalse( t.provides(jmri.jmrix.can.cbus.CbusSensor.class) );
-        
-        tcis = null;
-        memo = null;
-        t.dispose();
-        t = null;
         
     }    
     
     @Test
     public void testGet() {
-        
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
-        CbusConfigurationManager t = new CbusConfigurationManager(memo);        
         
         Assert.assertNull( t.get(jmri.jmrix.can.cbus.CbusSensor.class) );
 
@@ -104,25 +83,12 @@ public class CbusConfigurationManagerTest {
         Assert.assertNotNull( t.get(jmri.MultiMeter.class) );
         Assert.assertNotNull( t.get(CbusPreferences.class) );
         Assert.assertNotNull( t.get(jmri.CabSignalManager.class) );
-        t.configureManagers();
-        Assert.assertNotNull( t.get(CbusNodeTableDataModel.class) );
-        
-        tcis = null;
-        memo = null;
-        t.dispose();
-        t = null;        
         
     }    
     
     @Test
     public void testgetClasses() {
         
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
-        CbusConfigurationManager t = new CbusConfigurationManager(memo); 
-        
-
         CbusDccProgrammerManager prm = new CbusDccProgrammerManager( new CbusDccProgrammer(tcis), memo);
         t.setProgrammerManager(prm);
         Assert.assertTrue("programme manager",prm == t.get(jmri.GlobalProgrammerManager.class) );
@@ -155,54 +121,39 @@ public class CbusConfigurationManagerTest {
         CbusPreferences cbpref = t.getCbusPreferences();
         Assert.assertTrue("CbusPreferences",cbpref == t.get(CbusPreferences.class) );
         
-        CbusNodeTableDataModel cbntm = t.getCbusNodeTableDataModel();
-        Assert.assertTrue("CbusNodeTableDataModel",cbntm == t.get(CbusNodeTableDataModel.class) );
-        
         CbusCabSignalManager csm = t.getCabSignalManager();
         Assert.assertTrue("CbusCabSignalManager",csm == t.get(jmri.CabSignalManager.class) );
         
-        tcis = null;
-        memo = null;
-        t.dispose();
-        t = null;
-        
-        prm = null;
-        pm = null;
-        tm = null;
-        tom = null;
-        sm = null;
-        rm = null;
-        lm = null;
-        cs = null;
-        cbmm = null;
-        cbpref = null;
-        cbntm = null;
-        csm = null;
-        
     }
-    
-    @Test
-    public void testenableMultiMeter() {
         
-        CbusConfigurationManager t = new CbusConfigurationManager( new CanSystemConnectionMemo() );
-        t.enableMultiMeter();
-        Assert.assertNotNull( t.get(jmri.MultiMeter.class) );
-        t.dispose();
-        t = null;
-        
-    }
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis; // needed for DCC programming mgr?
+    private CbusConfigurationManager t;
     
-
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.initShutDownManager();
+        JUnitUtil.resetInstanceManager();
+        memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
+        
+        t = new CbusConfigurationManager(memo);
     }
 
     @After
     public void tearDown() {
+        
+        t.dispose();
+        tcis.terminateThreads();
+        memo.dispose();
+        t = null;
+        tcis = null;
+        memo = null;
+        
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusConfigurationManagerTest.class);

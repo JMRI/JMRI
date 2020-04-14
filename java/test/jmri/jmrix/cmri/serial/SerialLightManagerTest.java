@@ -34,10 +34,13 @@ public class SerialLightManagerTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         if (tcis != null) tcis.terminateThreads();
         tcis = null;
         memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
+
     }
 
 }

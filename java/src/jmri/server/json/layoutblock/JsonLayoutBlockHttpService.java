@@ -23,7 +23,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.awt.Color;
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,6 +36,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNonProvidedNamedBeanHttpService;
+import jmri.server.json.JsonRequest;
 import jmri.util.ColorUtil;
 
 /**
@@ -51,13 +51,13 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
     }
 
     @Override
-    public JsonNode doGet(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
-        return doGet(InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(name), name, type, locale, id);
+    public JsonNode doGet(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        return doGet(InstanceManager.getDefault(LayoutBlockManager.class).getBySystemName(name), name, type, request);
     }
 
     @Override
-    protected ObjectNode doGet(LayoutBlock layoutBlock, String name, String type, Locale locale, int id) throws JsonException {
-        ObjectNode root = super.getNamedBean(layoutBlock, name, type, locale, id); // throws JsonException if layoutBlock == null
+    protected ObjectNode doGet(LayoutBlock layoutBlock, String name, String type, JsonRequest request) throws JsonException {
+        ObjectNode root = super.getNamedBean(layoutBlock, name, type, request); // throws JsonException if layoutBlock == null
         ObjectNode data = root.with(DATA);
         data.put(STATE, layoutBlock.getState());
         data.put(USE_EXTRA_COLOR, layoutBlock.getUseExtraColor());
@@ -85,47 +85,22 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
-        return doPost(InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(name), data, name, type, locale, id);
+    public JsonNode doPost(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        return doPost(InstanceManager.getDefault(LayoutBlockManager.class).getBySystemName(name), data, name, type, request);
     }
 
-    public JsonNode doPost(LayoutBlock layoutBlock, JsonNode data, String name, String type, Locale locale, int id) throws JsonException {
-        postNamedBean(layoutBlock, data, name, type, locale, id); // throws JsonException if layoutBlock == null
-        Color color;
+    public JsonNode doPost(LayoutBlock layoutBlock, JsonNode data, String name, String type, JsonRequest request) throws JsonException {
+        postNamedBean(layoutBlock, data, name, type, request); // throws JsonException if layoutBlock == null
+        setBlockTrackColor(layoutBlock, TRACK_COLOR, type, data, request);
+        setBlockTrackColor(layoutBlock, OCCUPIED_COLOR, type, data, request);
+        setBlockTrackColor(layoutBlock, EXTRA_COLOR, type, data, request);
         String string = "";
-        try {
-            string = data.path(TRACK_COLOR).asText();
-            color = (!data.path(TRACK_COLOR).isMissingNode() ? ColorUtil.stringToColor(string) : null);
-            if (color != null) {
-                layoutBlock.setBlockTrackColor(color);
-            }
-        } catch (IllegalArgumentException ex) {
-            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, JsonException.ERROR_BAD_PROPERTY_VALUE, string, TRACK_COLOR, type), id);
-        }
-        try {
-            string = data.path(OCCUPIED_COLOR).asText();
-            color = (!data.path(OCCUPIED_COLOR).isMissingNode() ? ColorUtil.stringToColor(string) : null);
-            if (color != null) {
-                layoutBlock.setBlockTrackColor(color);
-            }
-        } catch (IllegalArgumentException ex) {
-            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, JsonException.ERROR_BAD_PROPERTY_VALUE, string, OCCUPIED_COLOR, type), id);
-        }
-        try {
-            string = data.path(EXTRA_COLOR).asText();
-            color = (!data.path(EXTRA_COLOR).isMissingNode() ? ColorUtil.stringToColor(string) : null);
-            if (color != null) {
-                layoutBlock.setBlockTrackColor(color);
-            }
-        } catch (IllegalArgumentException ex) {
-            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, JsonException.ERROR_BAD_PROPERTY_VALUE, string, EXTRA_COLOR, type), id);
-        }
         if (!data.path(MEMORY).isMissingNode()) {
             string = !data.path(MEMORY).isNull() ? data.path(MEMORY).asText() : null;
             if (string != null) {
-                Memory memory = InstanceManager.getDefault(MemoryManager.class).getBeanBySystemName(string);
+                Memory memory = InstanceManager.getDefault(MemoryManager.class).getBySystemName(string);
                 if (memory == null) {
-                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, MEMORY, string), id);
+                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(request.locale, JsonException.ERROR_NOT_FOUND, MEMORY, string), request.id);
                 }
                 layoutBlock.setMemoryName(memory.getUserName());
             } else {
@@ -135,9 +110,9 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
         if (!data.path(OCCUPANCY_SENSOR).isMissingNode()) {
             string = !data.path(OCCUPANCY_SENSOR).isNull() ? data.path(OCCUPANCY_SENSOR).asText() : null;
             if (string != null) {
-                Sensor sensor = InstanceManager.getDefault(SensorManager.class).getBeanBySystemName(string);
+                Sensor sensor = InstanceManager.getDefault(SensorManager.class).getBySystemName(string);
                 if (sensor == null) {
-                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, SENSOR, string), id);
+                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(request.locale, JsonException.ERROR_NOT_FOUND, SENSOR, string), request.id);
                 }
                 layoutBlock.setOccupancySensorName(sensor.getUserName());
             } else {
@@ -145,11 +120,24 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
             }
         }
         layoutBlock.setUseExtraColor(data.path(USE_EXTRA_COLOR).asBoolean(layoutBlock.getUseExtraColor()));
-        return doGet(layoutBlock, name, type, locale, id);
+        return doGet(layoutBlock, name, type, request);
+    }
+
+    private void setBlockTrackColor(LayoutBlock layoutBlock, String key, String type, JsonNode data, JsonRequest request) throws JsonException {
+        String value = "";
+        try {
+            value = data.path(key).asText();
+            Color color = (!data.path(key).isMissingNode() ? ColorUtil.stringToColor(value) : null);
+            if (color != null) {
+                layoutBlock.setBlockTrackColor(color);
+            }
+        } catch (IllegalArgumentException ex) {
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, JsonException.ERROR_BAD_PROPERTY_VALUE, value, key, type), request.id);
+        }
     }
 
     @Override
-    public JsonNode doPut(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doPut(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
         LayoutBlock layoutBlock = null;
         String systemName = name;
         // an empty name should be null to create a LayoutBlock with a generated systemName
@@ -165,40 +153,40 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
             if (!userName.isEmpty()) {
                 layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(systemName, userName);
             } else {
-                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorEmptyAttribute", USERNAME, type), id);
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, "ErrorEmptyAttribute", USERNAME, type), request.id);
             }
         }
         if (layoutBlock == null) {
-            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorInternal", type), id);
+            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, "ErrorInternal", type), request.id);
         }
         layoutBlock.initializeLayoutBlock();
         layoutBlock.initializeLayoutBlockRouting();
-        return doPost(layoutBlock, data, name, type, locale, id);
+        return doPost(layoutBlock, data, name, type, request);
     }
 
     @Override
-    public void doDelete(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
-        LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(name);
+    public void doDelete(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).getBySystemName(name);
         if (layoutBlock == null) {
-            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, type, name), id);
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(request.locale, JsonException.ERROR_NOT_FOUND, type, name), request.id);
         }
         List<String> listeners = layoutBlock.getListenerRefs();
         if (!listeners.isEmpty() && !acceptForceDeleteToken(type, name, data.path(JSON.FORCE_DELETE).asText())) {
             ArrayNode conflicts = mapper.createArrayNode();
             listeners.forEach(conflicts::add);
-            throwDeleteConflictException(type, name, conflicts, locale, id);
+            throwDeleteConflictException(type, name, conflicts, request);
         } else {
             InstanceManager.getDefault(LayoutBlockManager.class).deregister(layoutBlock);
         }
     }
 
     @Override
-    public JsonNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
-        return doGetList(InstanceManager.getDefault(LayoutBlockManager.class), type, data, locale, id);
+    public JsonNode doGetList(String type, JsonNode data, JsonRequest request) throws JsonException {
+        return doGetList(InstanceManager.getDefault(LayoutBlockManager.class), type, data, request);
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
         switch (type) {
             case LAYOUTBLOCK:
             case LAYOUTBLOCKS:
@@ -206,9 +194,25 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
                         server,
                         "jmri/server/json/layoutblock/layoutBlock-server.json",
                         "jmri/server/json/layoutblock/layoutBlock-client.json",
-                        id);
+                        request.id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
+        }
+    }
+
+    @Override
+    public LayoutBlock getNamedBean(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        try {
+            if (!data.isEmpty() && !data.isNull()) {
+                if (JSON.PUT.equals(request.method)) {
+                    doPut(type, name, data, request);
+                } else if (JSON.POST.equals(request.method)) {
+                    doPost(type, name, data, request);
+                }
+            }
+            return InstanceManager.getDefault(LayoutBlockManager.class).getBySystemName(name);
+        } catch (IllegalArgumentException ex) {
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, "ErrorInvalidSystemName", name, type), request.id);
         }
     }
 }

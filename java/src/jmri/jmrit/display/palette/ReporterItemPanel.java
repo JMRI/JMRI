@@ -17,6 +17,7 @@ import jmri.Reporter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.PreviewPanel;
 import jmri.jmrit.display.ReporterIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.ImagePanel;
@@ -27,8 +28,8 @@ public class ReporterItemPanel extends TableItemPanel<Reporter> {
 
     ReporterIcon _reporter;
 
-    public ReporterItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.Reporter> model, Editor editor) {
-        super(parentFrame, type, family, model, editor);
+    public ReporterItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.Reporter> model) {
+        super(parentFrame, type, family, model);
     }
 
     protected JPanel instructions() {
@@ -62,7 +63,8 @@ public class ReporterItemPanel extends TableItemPanel<Reporter> {
         if (_iconPanel == null) { // keep an existing panel
             _iconPanel = new ImagePanel(); // never shown, so don't bother to configure, but element must exist
         }
-        _iconFamilyPanel.add(makePreviewPanel(null, _dragIconPanel));
+        _previewPanel = new PreviewPanel(_frame, null, _dragIconPanel, true);
+        _iconFamilyPanel.add(_previewPanel);
     }
 
     @Override
@@ -81,7 +83,7 @@ public class ReporterItemPanel extends TableItemPanel<Reporter> {
         if (_update) {
             return;
         }
-        _reporter = new ReporterIcon(_editor);
+        _reporter = new ReporterIcon(_frame.getEditor());
         JPanel panel = new JPanel();
         panel.setOpaque(false);
         JPanel comp;
@@ -127,7 +129,7 @@ public class ReporterItemPanel extends TableItemPanel<Reporter> {
             if (_updateButton != null) {
                 _updateButton.setEnabled(false);
                 _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
-                _reporter = new ReporterIcon(_editor);
+                _reporter = new ReporterIcon(_frame.getEditor());
             }
         }
         validate();
@@ -165,7 +167,7 @@ public class ReporterItemPanel extends TableItemPanel<Reporter> {
             }
 
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
-                ReporterIcon r = new ReporterIcon(_editor);
+                ReporterIcon r = new ReporterIcon(_frame.getEditor());
                 r.setReporter(bean.getDisplayName());
                 r.setLevel(Editor.REPORTERS);
                 return r;

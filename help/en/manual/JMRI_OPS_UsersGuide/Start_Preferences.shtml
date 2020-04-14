@@ -20,12 +20,11 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Using JMRI&#174; to Operate Trains</h1>
 
       <h2>OperationsPro: Setting your Preferences</h2>
@@ -329,7 +328,7 @@
         <p><a href="index.shtml#startOps">Back to Index</a></p>
       </div>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -22,10 +22,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Panel Editor</h1>
 
       <p><img src="images/PanelEditor.png" align="right"><br>
@@ -351,7 +351,7 @@
 
       <p>Back to the <a href="../../../../html/apps/PanelPro/index.shtml">
         PanelPro help page</a>.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

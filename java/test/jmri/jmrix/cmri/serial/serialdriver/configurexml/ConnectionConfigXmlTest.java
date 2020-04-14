@@ -1,10 +1,6 @@
 package jmri.jmrix.cmri.serial.serialdriver.configurexml;
 
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
-import jmri.jmrix.cmri.serial.SerialTrafficControlScaffold;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig;
-import jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -30,9 +26,10 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
     @After
     @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 }
 

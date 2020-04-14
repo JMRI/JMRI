@@ -25,4 +25,34 @@
         <fail unless="run.class">Must set property 'test.includes'</fail>
         <ant antfile="${ant.script}" inheritall="false" target="test-single"/>
     </target>
+
+    <target name="-debug-apply-fix">
+        <java-compile javac.source="${debug.fix.src}" javac.target="${debug.fix.target}"/>
+        <nbjpdareload>
+            <fileset dir="${debug.fix.target}">
+                <include name="${fix.file}*.class"/>
+            </fileset>
+        </nbjpdareload>
+    </target>
+    
+    <target name="debug-apply-fix-in-src">
+        <antcall target="-debug-apply-fix">
+            <param name="debug.fix.src" value="${source}"/>
+            <param name="debug.fix.target" value="${target}"/>
+        </antcall>
+    </target>
+    <target name="debug-apply-fix-in-test" depends="JMRI.tests">
+        <nbjpdareload>
+            <fileset dir="${testtarget}">
+                <include name="${fix.file}*.class"/>
+            </fileset>
+        </nbjpdareload>
+    </target>
+    <target name="debug-apply-fix-in-tmp" depends="JMRI.compile-generated-source">
+        <nbjpdareload>
+            <fileset dir="${target}">
+                <include name="${fix.file}*.class"/>
+            </fileset>
+        </nbjpdareload>
+    </target>
 </project>

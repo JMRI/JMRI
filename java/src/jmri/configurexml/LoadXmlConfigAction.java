@@ -54,7 +54,6 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                         // insure logix etc fire up
                         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
                         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-                        new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
                     }
                 }
             } catch (JmriException e) {
@@ -73,7 +72,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
 
     static public java.io.File getFileCustom(JFileChooser fileChooser) {
         fileChooser.rescanCurrentDirectory();
-        int retVal = fileChooser.showDialog(null, null);
+        int retVal = fileChooser.showDialog(null, Bundle.getMessage("MenuItemLoad"));
         if (retVal != JFileChooser.APPROVE_OPTION) {
             return null;  // give up if no file selected
         }

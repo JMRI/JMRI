@@ -2,10 +2,11 @@ package jmri.jmris;
 
 import java.io.IOException;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * tests for decendents of the jmri.jmris.AbstractRouteServer class
@@ -18,10 +19,10 @@ public class AbstractRouteServerTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull(rs);
+        assertThat(rs).isNotNull();
     }
 
-    @Before
+    @BeforeEach
     public void setUp(){
        jmri.util.JUnitUtil.setUp();
        rs = new AbstractRouteServer(){
@@ -38,7 +39,7 @@ public class AbstractRouteServerTest {
        };
     }
 
-    @After
+    @AfterEach
     public void tearDown(){
        jmri.util.JUnitUtil.tearDown();
     }

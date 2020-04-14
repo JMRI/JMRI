@@ -1,11 +1,11 @@
 package jmri.jmrit.timetable.swing;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.geom.*;
 import java.awt.print.*;
 import java.util.*;
-import javax.swing.*;
+import java.util.List;
+
 import jmri.jmrit.timetable.*;
 
 /**
@@ -78,9 +78,9 @@ public class TimeTableGraphCommon {
     int _startHour;
     int _duration;
 
-    ArrayList<Station> _stations;
-    ArrayList<Train> _trains;
-    ArrayList<Stop> _stops;
+    List<Station> _stations;
+    List<Train> _trains;
+    List<Stop> _stops;
 
     // ------------ global variables ------------
     HashMap<Integer, Double> _stationGrid = new HashMap<>();
@@ -396,7 +396,7 @@ public class TimeTableGraphCommon {
                 y = y + ((_direction.equals("down")) ? 0 : 0);  // NOI18N
                 break;
             default:
-                log.error("drawTrainTime mode {} is unknown");  // NOI18N
+                log.error("drawTrainTime mode {} is unknown",mode);  // NOI18N
                 return;
         }
 

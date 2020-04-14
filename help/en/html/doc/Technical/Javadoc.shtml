@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -17,17 +16,17 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
-      <h1>JMRI Code: Use of Javadoc and UML</h1>
+
+    <h1>JMRI Code: Use of Javadoc and UML</h1>
 
       <p>The JMRI library provides the majority of its API
       documentation via <a href=
@@ -63,15 +62,26 @@
       <code>package-info.java</code></a> file 
       to contain any needed
       package-level documentation. 
-      (It can also contain any 
+      It can also contain any 
       <a href="http://java.sun.com/docs/books/tutorial/java/javaOO/annotations.html">annotations</a>
-      you want to apply to all classes in the package)
+      you want to apply to all classes in the package.
+      If you don't have any annotations you want to include, please include
+
+<pre style="font-family: monospace;">      
+      @edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
+</pre>
+
+      which helps some of our build systems minimize recompilation.
+      (For more on that annotation, see 
+      <a href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/edu/umd/cs/findbugs/annotations/DefaultAnnotation.html">here</a>)
+      
+      <p>
       Previously, we used <code>package.html</code> files 
       for this. It's not a
       high priority to replace existing <code>package.html</code>
       files, but new packages should include a
       <code>package-info.java</code> copied from
-      <code>java/package-info.java</code>.</p>
+      <code>java/package-info.java</code> instead, see above.</p>
 
       <p>A nice discussion of how to use the "deprecated" label in
       documentation is available on the <a href=

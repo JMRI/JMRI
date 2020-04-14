@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.AddressedProgrammerManager;
@@ -12,6 +13,7 @@ import jmri.InstanceManager;
 import jmri.IdTagManager;
 import jmri.LightManager;
 import jmri.MultiMeter;
+import jmri.NamedBean;
 import jmri.PowerManager;
 import jmri.ReporterManager;
 import jmri.SensorManager;
@@ -19,10 +21,11 @@ import jmri.ThrottleManager;
 import jmri.TurnoutManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.loconet.swing.LnComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
 import jmri.managers.DefaultProgrammerManager;
+import jmri.util.NamedBeanComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -458,6 +461,11 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         return ResourceBundle.getBundle("jmri.jmrix.loconet.LocoNetActionListBundle");
     }
 
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
+    }
+
     // yes, tagManager is static.  Tags can move between system connections.
     // when readers are not all on the same LocoNet
     // this manager is loaded on demand.
@@ -487,26 +495,32 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         InstanceManager.deregister(this, LocoNetSystemConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, ComponentFactory.class);
+            cf = null;
         }
         if (powerManager != null) {
             powerManager.dispose();
             InstanceManager.deregister(powerManager, LnPowerManager.class);
+            powerManager = null;
         }
         if (turnoutManager != null) {
             turnoutManager.dispose();
             InstanceManager.deregister(turnoutManager, LnTurnoutManager.class);
+            turnoutManager = null;
         }
         if (lightManager != null) {
             lightManager.dispose();
             InstanceManager.deregister(lightManager, LnLightManager.class);
+            lightManager = null;
         }
         if (sensorManager != null) {
             sensorManager.dispose();
             InstanceManager.deregister(sensorManager, LnSensorManager.class);
+            sensorManager = null;
         }
         if (reporterManager != null) {
             reporterManager.dispose();
             InstanceManager.deregister(reporterManager, LnReporterManager.class);
+            reporterManager = null;
         }
         if (throttleManager != null) {
             if (throttleManager instanceof LnThrottleManager) {
@@ -514,18 +528,23 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             } else if (throttleManager instanceof DebugThrottleManager) {
                 InstanceManager.deregister(((DebugThrottleManager) throttleManager), DebugThrottleManager.class);
             }
+            throttleManager = null;
         }
         if (clockControl != null) {
             InstanceManager.deregister(clockControl, LnClockControl.class);
+            clockControl = null;
         }
         if (tm != null){
             tm.dispose();
+            tm = null;
         }
         if (sm != null){
             sm.dispose();
+            sm = null;
         }
         if (lt != null){
             lt.dispose();
+            lt = null;
         }
         super.dispose();
     }

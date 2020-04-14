@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import jmri.InstanceManager;
-import jmri.jmris.json.JsonServerPreferences;
 import org.eclipse.jetty.websocket.api.Session;
 import org.junit.Assert;
 
@@ -56,31 +54,44 @@ public class JsonMockConnection extends JsonConnection {
      * {@link #isThrowIOException()} will return false.
      */
     @Override
-    public void sendMessage(@Nullable JsonNode message, int id) throws IOException {
-        if (this.throwIOException) {
-            this.throwIOException = false;
+    public void sendMessage(@CheckForNull JsonNode message, JsonRequest request) throws IOException {
+        if (throwIOException) {
+            throwIOException = false;
             throw new IOException();
         }
         if (message != null) {
-            if (this.preferences.getValidateServerMessages()) {
+            if (preferences.getValidateServerMessages()) {
                 try {
-                    this.schemas.validateMessage(message, true, this.getLocale(), id);
+                    schemas.validateMessage(message, true, request);
                 } catch (JsonException ex) {
-                    this.messages.add(ex.getJsonMessage());
+                    messages.add(ex.getJsonMessage());
                     Assert.fail(ex.getMessage());
                 }
             }
-            this.messages.add(message);
+            messages.add(message);
         } else {
             // use a null message as the key to clear the list of messages
-            this.messages.clear();
+            messages.clear();
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation accepts a null message to reset the list of sent
+     * messages, and if {@link #isThrowIOException()} is true throws an
+     * {@link IOException}. Note that after throwing the IOException,
+     * {@link #isThrowIOException()} will return false.
+     */
+    @Override
+    public void sendMessage(@CheckForNull JsonNode message, int id) throws IOException {
+        sendMessage(message, new JsonRequest(getLocale(), getVersion(), JSON.GET, id));
     }
 
     @CheckForNull
     public JsonNode getMessage() {
-        int i = this.messages.size() - 1;
-        return (i < 0) ? null : this.messages.get(i);
+        int i = messages.size() - 1;
+        return (i < 0) ? null : messages.get(i);
     }
 
     /**
@@ -91,17 +102,17 @@ public class JsonMockConnection extends JsonConnection {
      */
     @Nonnull
     public ArrayNode getMessages() {
-        return this.getObjectMapper().createArrayNode().addAll(this.messages);
+        return getObjectMapper().createArrayNode().addAll(messages);
     }
 
     @Override
     public void close() throws IOException {
         super.close();
-        this.open = false;
+        open = false;
     }
 
     public boolean isOpen() {
-        return this.open;
+        return open;
     }
 
     /**
@@ -121,6 +132,6 @@ public class JsonMockConnection extends JsonConnection {
      * @return true to throw on next message; false otherwise
      */
     public boolean isThrowIOException() {
-        return this.throwIOException;
+        return throwIOException;
     }
 }

@@ -6,6 +6,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.ShutDownTask;
@@ -49,7 +50,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     Dcc4PcTrafficController tc;
 
     @Override
-    public Dcc4PcSensor getSensor(String name) {
+    public Dcc4PcSensor getSensor(@Nonnull String name) {
         return (Dcc4PcSensor) super.getSensor(name);
 
     }
@@ -58,12 +59,17 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public Dcc4PcSystemConnectionMemo getMemo() {
         return (Dcc4PcSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor s = new Dcc4PcSensor(systemName, userName);
         s.setUserName(userName);
         extractBoardID(systemName);
@@ -77,7 +83,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         if (systemName.contains(":")) {
             int indexOfSplit = systemName.indexOf(":");
             systemName = systemName.substring(0, indexOfSplit);
-            indexOfSplit = getSystemPrefix().length() + 1; //+1 includes the typeletter which is a char
+            indexOfSplit = getSystemPrefix().length() + 1; // +1 includes the typeletter which is a char
             systemName = systemName.substring(indexOfSplit);
             int boardNo;
             try {
@@ -91,13 +97,14 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
-    //we want the system name to be in the format of board:input
+    // we want the system name to be in the format of board:input
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         String iName;
         if (curAddress.contains(":")) {
             board = 0;
@@ -130,11 +137,11 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         return prefix + typeLetter() + iName;
     }
 
-    int board;
-    int channel;
+    private int board;
+    private int channel;
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
         String tmpSName = "";
 
@@ -275,7 +282,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
-    //This needs to be handled better possibly
+    // This possibly needs to be handled better
     void getInputState(int[] longArray, int board) {
         String sensorPrefix = getSystemPrefix() + typeLetter() + board + ":";
         String reporterPrefix = getSystemPrefix() + "R" + board + ":";
@@ -697,7 +704,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 if (log.isDebugEnabled()) {
                     StringBuilder buf = new StringBuilder();
                     for (int i = oldstart; i < currentByteLocation; i++) {
-                        buf.append(Integer.toHexString(r.getElement(i) & 0xff) + ",");
+                        buf.append(Integer.toHexString(r.getElement(i) & 0xff)).append(",");
                     }
                     log.debug(buf.toString());
                     log.debug("--- finish packet {} ---", (currentByteLocation - 1));
@@ -803,8 +810,8 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             }
 
             if (log.isDebugEnabled()) {
-                for (int i = 0; i < railCommDataForSensor.size(); i++) {
-                    log.debug("Data for sensor " + railCommDataForSensor.get(i).getDisplayName());
+                for (Dcc4PcReporter dcc4PcReporter : railCommDataForSensor) {
+                    log.debug("Data for sensor {}", dcc4PcReporter.getDisplayName());
                 }
             }
             // re-use the variable to gather the size of each railcom input data
@@ -862,7 +869,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
                 StringBuilder buf = new StringBuilder();
                 for (int i = 0; i < packet.length; ++i) {
-                    buf.append(Integer.toHexString(packet[i]) + ",");
+                    buf.append(Integer.toHexString(packet[i])).append(",");
                 }
                 String s = buf.toString();
                 log.debug("bytes to process " + s);
@@ -884,7 +891,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                     // basic Accessory Decoder packet one byte to follow
                 } else {
                     i++;
-                    // extended decoder packet two bytes to follow
+                    // TODO extended decoder packet two bytes
                 }
                 return;
             } else {

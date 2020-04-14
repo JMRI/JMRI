@@ -13,8 +13,7 @@ import jmri.implementation.VirtualSignalHead;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
-import jmri.server.json.signalmast.JsonSignalMast;
-import jmri.server.json.signalmast.JsonSignalMastSocketService;
+import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -45,7 +44,7 @@ public class JsonSignalMastSocketServiceTest {
             JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName);
             JsonSignalMastSocketService service = new JsonSignalMastSocketService(connection);
 
-            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, locale, 42);
+            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             // TODO: test that service is listener in SignalMastManager
             message = connection.getMessage();
             Assert.assertNotNull("Message is not null", message);
@@ -91,7 +90,7 @@ public class JsonSignalMastSocketServiceTest {
         try {
             // SignalMast Stop
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, "Stop");
-            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, locale, 42);
+            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.assertEquals("Stop", s.getAspect()); //aspect should be Stop
         } catch (IOException | JmriException | JsonException ex) {
             Assert.fail(ex.getMessage());
@@ -101,7 +100,7 @@ public class JsonSignalMastSocketServiceTest {
         Exception exception = null;
         try {
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, JSON.ASPECT_UNKNOWN);
-            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, locale, 42);
+            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.assertEquals("Stop", s.getAspect());
         } catch (IOException | JmriException | JsonException ex) {
             exception = ex;
@@ -112,7 +111,7 @@ public class JsonSignalMastSocketServiceTest {
         message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName);
         exception = null;
         try {
-            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, locale, 42);
+            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         } catch (JsonException ex) {
             exception = ex;
         } catch (IOException | JmriException ex) {

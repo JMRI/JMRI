@@ -1,22 +1,24 @@
 package jmri.jmrit.logix;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import javax.swing.Timer;
 import jmri.BeanSetting;
 import jmri.Block;
+import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.jmrit.display.Positionable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Extends jmri.Path. An OPath is a route that traverses a Block from one
- * boundary to another. The mBlock parameter of Path is used to reference the
- * Block to which this OPath belongs. (Not a destination Block as might be
- * inferred from the naming in Path.java)
+ * boundary to another. The dest parameter of Path (renamed to owner) is
+ * used to reference the Block to which this OPath belongs. (Not a
+ * destination Block as might be inferred from the naming in Path.java)
  * <p>
  * An OPath inherits the List of BeanSettings for all the turnouts needed to
  * traverse the Block. It also has references to the Portals (block boundary
@@ -56,14 +58,14 @@ public class OPath extends jmri.Path {
      * @param exit     Portal where path exits
      * @param settings array of turnout settings of the path
      */
-    public OPath(String name, OBlock owner, Portal entry, Portal exit, ArrayList<BeanSetting> settings) {
+    public OPath(String name, OBlock owner, Portal entry, Portal exit, List<BeanSetting> settings) {
         super(owner, 0, 0);
         _name = name;
         _fromPortal = entry;
         _toPortal = exit;
         if (settings != null) {
-            for (int i = 0; i < settings.size(); i++) {
-                addSetting(settings.get(i));
+            for (BeanSetting setting : settings) {
+                addSetting(setting);
             }
         }
         if (log.isDebugEnabled()) {
@@ -71,24 +73,6 @@ public class OPath extends jmri.Path {
                     name, owner.getDisplayName(), (_fromPortal == null ? "null" : _fromPortal.getName()),
                             (_toPortal == null ? "null" : _toPortal.getName()));
         }
-    }
-
-    @SuppressFBWarnings(value = "UR_UNINIT_READ_CALLED_FROM_SUPER_CONSTRUCTOR", justification="Adds logging not available in super implementation")
-    // OPath ctor invokes Path ctor via super(), which calls this, before the internal
-    // _block variable has been set so that Path.getPath() can work.  In this implementation,
-    // getPath() only controls whether log.debug(...) is fired, but this might change if/when
-    // super.setBlock(...) is changed, in which case this logic will fail.
-    @Override
-    public void setBlock(Block block) {
-        if (getBlock() == block) {
-            return;
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("OPath \"{}\" changing blocks from {} to {}",
-                    _name, (getBlock() != null ? getBlock().getDisplayName() : null),
-                    (block != null ? block.getDisplayName() : null) + ".");
-        }
-        super.setBlock(block);
     }
 
     protected String getOppositePortalName(String name) {
@@ -107,17 +91,15 @@ public class OPath extends jmri.Path {
 
     @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="OBlock extends Block")
     public void setName(String name) {
-        if (log.isDebugEnabled()) {
-            log.debug("OPath \"{}\" setName to \"{}\"", _name, name);
-        }
+        log.debug("OPath \"{}\" setName to \"{}\"", _name, name);
         if (name == null || name.length() == 0) {
             return;
         }
         String oldName = _name;
         _name = name;
         OBlock block = (OBlock) getBlock();
-        block.pseudoPropertyChange("pathName", oldName, _name);
-        WarrantTableAction.pathNameChange(block, oldName, _name);
+        block.pseudoPropertyChange("pathName", oldName, _name); // for IndicatorTrack icons
+        InstanceManager.getDefault(WarrantManager.class).pathNameChange(block, oldName, _name);
         if (_fromPortal != null) {
             if (_fromPortal.addPath(this)) {
                 return;
@@ -133,8 +115,8 @@ public class OPath extends jmri.Path {
     }
 
     public void setFromPortal(Portal p) {
-        if (log.isDebugEnabled() && p != null) {
-            log.debug("OPath \"{}\" setFromPortal= \"{}\"",_name, p.getName());
+        if (p != null) {
+            log.debug("OPath \"{}\" setFromPortal= \"{}\"", _name, p.getName());
         }
         _fromPortal = p;
     }
@@ -144,7 +126,7 @@ public class OPath extends jmri.Path {
     }
 
     public void setToPortal(Portal p) {
-        if (log.isDebugEnabled() && p != null) {
+        if (p != null) {
             log.debug("OPath \"{}\" setToPortal= \"{}\"", _name, p.getName());
         }
         _toPortal = p;
@@ -179,16 +161,15 @@ public class OPath extends jmri.Path {
                 _timer.start();
                 _timerActive = true;
             } else {
-                log.warn("timer already active for delayed turnout action on path {}", toString());
+                log.warn("timer already active for delayed turnout action on path {}", this);
             }
         } else {
             fireTurnouts(getSettings(), set, lockState, lock);
         }
     }
 
-    void fireTurnouts(List<BeanSetting> list, boolean set, int lockState, boolean lock) {
-        for (int i = 0; i < list.size(); i++) {
-            BeanSetting bs = list.get(i);
+    private void fireTurnouts(List<BeanSetting> list, boolean set, int lockState, boolean lock) {
+        for (BeanSetting bs : list) {
             Turnout t = (Turnout) bs.getBean();
             if (set) {
                 t.setCommandedState(bs.getSetting());
@@ -219,6 +200,7 @@ public class OPath extends jmri.Path {
         boolean lock;
 
         public TimeTurnout() {
+            // no actions required to construct
         }
 
         void setList(List<BeanSetting> l) {
@@ -274,9 +256,7 @@ public class OPath extends jmri.Path {
      */
     @Override
     public void addSetting(BeanSetting t) {
-        Iterator<BeanSetting> iter = getSettings().iterator();
-        while (iter.hasNext()) {
-            BeanSetting bs = iter.next();
+        for (BeanSetting bs : getSettings()) {
             if (bs.getBeanName().equals(t.getBeanName())) {
                 log.error("TO setting for \"{}\" already set to {}", t.getBeanName(), bs.getSetting());
                 return;
@@ -345,20 +325,25 @@ public class OPath extends jmri.Path {
         }
         Iterator<BeanSetting> iter = settings.iterator();
         Iterator<BeanSetting> it = getSettings().iterator();
+        boolean found = false;
         while (iter.hasNext()) {
             BeanSetting beanSetting = iter.next();
             while (it.hasNext()) {
+                found = false;
                 BeanSetting bs = it.next();
-                if (!bs.getBeanName().equals(beanSetting.getBeanName())) {
-                    return false;
+                if (bs.getBean().getSystemName().equals(beanSetting.getBean().getSystemName())
+                        && bs.getSetting() == beanSetting.getSetting()) {
+                    found = true;
+                    break;
                 }
-                if (bs.getSetting() != beanSetting.getSetting()) {
-                    return false;
-                }
+            }
+            if (!found) {
+                return false;
             }
         }
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OPath.class);
+    private static final Logger log = LoggerFactory.getLogger(OPath.class);
+
 }

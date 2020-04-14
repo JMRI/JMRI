@@ -15,9 +15,9 @@
  * <p>
  * The data object types supported in a running JMRI instance for both RESTful
  * and socket interfaces can be listed at <a href=
- * "http://localhost:12080/json/type">http://my-jmri-server:12080/json/type</a>
+ * "http://localhost:12080/json/v5/type">http://my-jmri-server:12080/json/<em>version</em>/type</a>
  * and individual schema for each data object type at <a href=
- * "http://localhost:12080/json/schema/type">http://my-jmri-server:12080/json/schema/<em>type</em></a>
+ * "http://localhost:12080/json/v5/schema/type">http://my-jmri-server:12080/json/<em>version</em>/schema/<em>type</em></a>
  * <h2 id="methods">Methods</h2> The JMRI JSON services accept four methods, all
  * of which directly correspond to HTTP 1.1 methods. The socket services accept
  * one non-HTTP 1.1 method <code>{@value jmri.server.json.JSON#LIST}</code> to
@@ -44,7 +44,8 @@
  * <dt>{@value jmri.server.json.JSON#LIST}</dt>
  * <dd>Used in the socket interfaces to get a list of the given
  * <code>type</code>. The equivalent form in the RESTful interface is a
- * <code>GET</code> request to <code>/json/&lt;type&gt;</code>.</dd>
+ * <code>GET</code> request to
+ * <code>/json/&lt;version&gt;/&lt;type&gt;</code>.</dd>
  * </dl>
  * <h2 id="messages">Messages</h2>
  * <p>
@@ -120,8 +121,33 @@
  * <strong>must</strong> be the system name, not the user name, of the requested
  * object (usually a {@link jmri.NamedBean}), except when creating an object
  * using a {@code put} method and the {@link jmri.Manager} for that class of
- * NamedBean supports creating a NamedBean without a system name. It is
- * generally safer to always use system names.
+ * NamedBean supports creating a NamedBean using an automatically generated
+ * system name. It is generally safer to always use system names.
+ * </p>
+ * <h2 id="versions">Versions</h2>
+ * <p>
+ * The running JMRI instance <em>may</em> support multiple major versions of the
+ * JSON protocol. A single JMRI instance will only support one
+ * {@code major.minor.patch} version of the JSON protocol (i.e. a JMRI instance
+ * may support JSON versions 5.3.1 and 6.0.2, but should not be expected to
+ * support JSON version 5.3.1 and 5.4.0). A JMRI instance that supports multiple
+ * versions of the JSON protocol will provide a JSON list of name/value pairs in
+ * response to the HTTP query {@code http://localhost:12080/json/version}. No
+ * Socket equivalent of this URL exists, since the first message (a
+ * {@code hello} message) in the socket stream specifies the version to be used.
+ * The names are the supported versions in {@code major.minor.patch} format and
+ * the values are the HTTP path component ({@code "v" + major} (i.e "v5" for
+ * version 5.3.1)) for using that version. (Web)Socket JSON clients should
+ * specify the required JSON version in the {@code hello} message or in the
+ * WebSocket URL. If a requested version is not specified, the JSON protocol
+ * 5.x.y will be used. If a JMRI instance does not support JSON protocol 5, an
+ * error will be returned if the client does not specify the JSON version to
+ * use.
+ * <p>
+ * <strong>Note</strong> until support for using protocol version 5 is dropped,
+ * requesting an unsupported version will result in an error with code 404 or
+ * 400. Once support for protocol version 5 is dropped all requests for an
+ * unsupported version will result in an error with code 400.
  * </p>
  * <h2 id="history">Version History</h2>
  * <p>
@@ -136,9 +162,48 @@
  * including JSON protocol version 5.0.0, not 6.0.0, since 4.15.4 and 4.15.6 are
  * both between JMRI production releases 4.14 and 4.16).
  * <p>
- * Starting with 5.0.0, the JSON protocol version follows semantic version
- * rules, prior to that the version is just a major.minor version.
+ * Starting with 5.0.0, the JSON protocol version follows
+ * <a href="https://semver.org">semantic version rules</a>,
+ * prior to that the version is just a major.minor version.
  * <dl>
+ * <dt>5.4.0 (JMRI 4.19.5)</dt>
+ * <dd>
+ * <ul>
+ * <li>Allows the feedback mode and feedback sensors to be manipulated for
+ * turnouts.</li>
+ * </ul>
+ * </dd>
+ * <dt>5.3.0 (JMRI 4.19.2)</dt>
+ * <dd>
+ * <ul>
+ * <li>Adds {@code /json/version} RESTful API endpoint to list JSON versions
+ * supported by the running JMRI instance. This endpoint is <em>not</em>
+ * versioned like other endpoints.</li>
+ * <li>Adds the {@code version} type the socket APIs to allow a client to query
+ * the protocol version currently in use on the socket over which the request
+ * was made.</li>
+ * <li>Adds the {@code version} property to {@code hello} objects to allow a
+ * client to specify a preferred version and the server to notify the client of
+ * the version in use.</li>
+ * <li>Allows RESTful API endpoints for version 5 to explicitly request a
+ * protocol version using {@code /json/v#/type/...} or implicitly expect the use
+ * of version 5 using {@code /json/type/...}. Versions 6 and newer will always
+ * require explicitly requiring the version in RESTful API endpoints.</li>
+ * </ul>
+ * </dd>
+ * <dt>5.2.0 (JMRI 4.17.7)</dt>
+ * <dd>
+ * <ul>
+ * <li>memory and block now return idTag and reporter values as json
+ * objects</li>
+ * <li>for networkService, add userName and change name to mDNS type</li>
+ * <li>Add configProfile.isNextProfile</li>
+ * <li>several schema fixes</li>
+ * <li>reporter.report now supports Reportable data</li>
+ * <li>fix systemConnection, configProfile, panel to return single item for
+ * name</li>
+ * </ul>
+ * </dd>
  * <dt>5.1.0 (JMRI 4.17.4)</dt>
  * <dd>
  * <ul>
@@ -225,7 +290,9 @@
  *
  * @since 4.3.4
  * @see jmri.web.servlet.json.JsonServlet
- * @see jmri.jmris.json.JsonServer
+ * @see jmri.server.json.JsonServer
  * @see jmri.spi.JsonServiceFactory
  */
+// include empty DefaultAnnotation to avoid excessive recompilation
+@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
 package jmri.server.json;

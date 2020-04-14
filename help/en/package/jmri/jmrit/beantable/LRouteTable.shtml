@@ -15,10 +15,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The LRoute Table</h1>
 
       <p>An LRoute is a more generalized version of a Route
@@ -83,7 +83,7 @@
         <dd>Push this button to add a new logix route. For more
         information see <a href=
         "LRouteAddEdit.shtml">Adding/Editing LRoutes</a>.</dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

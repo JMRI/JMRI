@@ -46,9 +46,24 @@ public class ZeroConfServiceManagerTest {
     public void tearDown() throws Exception {
         JUnitUtil.resetZeroConfServiceManager();
         manager = null;
+        
+        // wait for dns threads to end
+        Thread.getAllStackTraces().keySet().forEach((t) -> 
+            {
+                String name = t.getName();
+                if (! name.equals("dns.close in ZerConfServiceManager#stopAll")) return; // skip
+                
+                try {
+                    t.join(5000); // wait up to 35 seconds for that thread to end; 
+                } catch (InterruptedException e) {
+                    // nothing, just means that thread was terminated externally
+                }
+            }
+        );        
+        
         JUnitUtil.tearDown();
     }
-
+    
     /**
      * Test of create method, of class ZeroConfServiceManager.
      */

@@ -6,9 +6,10 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Me 2008 -->
-  <!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
+  <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
 
-  <title>JMRI: Single CV Programmer</title><!-- Style -->
+  <title>JMRI: Single CV Programmer</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -16,14 +17,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>Programmateur Simple CV</h2><a href=
       "SimpleProgFrame.jpg"><img src="SimpleProgFrame.jpg" align=
       "right" width="132" height="180"></a><br>
@@ -57,7 +59,7 @@
       vous pouvez s&eacute;lectionner le format des valeurs
       d'entr&eacute;es soit en valeur D&eacute;cimale (base 10) ou
       hexad&eacute;cimale (base 16).</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

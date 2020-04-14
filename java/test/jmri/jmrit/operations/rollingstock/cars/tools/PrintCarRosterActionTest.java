@@ -28,6 +28,7 @@ public class PrintCarRosterActionTest extends OperationsTestCase {
         PrintCarRosterAction t = new PrintCarRosterAction("Test Action", true, ctf);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(ctf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
@@ -54,6 +55,8 @@ public class PrintCarRosterActionTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
         JUnitUtil.dispose(printPreviewFrame);
         JUnitUtil.dispose(ctf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintCarRosterActionTest.class);

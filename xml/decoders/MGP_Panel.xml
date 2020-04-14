@@ -15,9 +15,11 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
   <version author="Anders Boström anders.bostrom@mollehem.se" version="1" lastUpdated="20151022"/>
+  <version author="Michael Mosher" version="2" lastUpdated="20200109"/>
+  <!-- Version 2 - change mfg to match name in NMRA.xml -->
   
   <decoder>
-    <family name="Panel" mfg="MGP" type="stationary" comment="Panel, a LocoNet decoder control panels">
+    <family name="Panel" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Panel, a LocoNet decoder control panels">
       <model model="Panel" lowVersionID="1">
 			</model>
     </family>

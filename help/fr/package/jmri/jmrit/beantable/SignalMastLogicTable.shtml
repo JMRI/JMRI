@@ -10,7 +10,8 @@
   <title>JMRI: SignalMast Logic Table Help</title>
   <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content=
-  "JMRI help Signal Mast Logic Table"><!-- Style -->
+  "JMRI help Signal Mast Logic Table">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -18,14 +19,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Le Tableau Logique M&acirc;tSignal</h1>
 
       <p>Une logique M&acirc;tSignal, se compose d'un M&acirc;t de
@@ -117,7 +119,7 @@
         l'ajout de Logique M&acirc;t de Signalisation voir <a href=
         "../signalling/AddEditSignallingLogic.shtml">Ajout/&eacute;dition
         Logique M&acirc;t de Signalisation</a>.</dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

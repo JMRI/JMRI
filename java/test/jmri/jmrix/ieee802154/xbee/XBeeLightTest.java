@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * XBeeLightTest.java
@@ -50,7 +49,9 @@ public class XBeeLightTest {
     @After
     public void tearDown() {
         tc.terminate();
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

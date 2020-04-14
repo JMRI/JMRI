@@ -5,13 +5,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.util.Arrays;
 import javax.swing.JOptionPane;
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialPortController; // no special xSimulatorController
 import jmri.jmrix.grapevine.SerialReply;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.SerialTrafficController;
+import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,12 +69,12 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
     @Override
     public String openPort(String portName, String appName) {
         try {
-            PipedOutputStream tempPipeI = new PipedOutputStream();
+            PipedOutputStream tempPipeI = new ImmediatePipedOutputStream();
             log.debug("tempPipeI created");
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
             log.debug("inpipe created {}", inpipe != null);
-            PipedOutputStream tempPipeO = new PipedOutputStream();
+            PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {

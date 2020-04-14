@@ -7,33 +7,25 @@
 
   <title>JMRI: Patterns and Structure</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI technical code patterns structure">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
+  <meta name="keywords" content="JMRI technical code patterns structure">
   <!-- Style -->
   <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
-	<!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-	<div id="mainContent">
-		<h1>JMRI: Mod&#232;les et Organisation</h1>
+<h1>JMRI: Mod&#232;les et Organisation</h1>
 <p>
 JMRI a grandi et &#233;volu&#233; avec le temps, et
 vous ne pouvez pas toujours voir les structures et les 
@@ -120,14 +112,14 @@ d'appliquer des outils diff&#233;rents pour les deux types de code, etc
 <dt>Sous-r&#233;pertoires configurexml 
 <dd>Ceux-ci contiennent le code pour le
 		<a href="XmlPersistance.shtml"> syst&#232;me de configuration XML</a>
- 		les paquets de haut niveau, esp util & dependancies, apps.
+ 		les paquets de haut niveau, esp util &amp; dependancies, apps.
 
 <dt>Sous-r&#233;pertoires swing
 <dd>Contient les outils Swing sp&#233;cifiques.
     En particulier &#224; l'ext&#233;rieur du paquet jmri.jmrit,
 		nous essayons de s&#233;parer le code Swing du
     code normal op&#233;rationnel.
-    Voir la <a href=""> page Swing</a>
+    Voir la <a href="Swing.shtml"> page Swing</a>
 		pour plus d'informations.
 
 <dt>Help files (fichiers d'aide)
@@ -156,7 +148,7 @@ d'appliquer des outils diff&#233;rents pour les deux types de code, etc
 		est destin&#233; &#224; v&#233;rifier certaines des d&#233;pendances par inadvertance,
 		mais nous sommes loin de l'effacer.</p>
 
-	<!--#include virtual="/Footer" -->
+	<!--#include virtual="/Footer.shtml" -->
 	</div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>

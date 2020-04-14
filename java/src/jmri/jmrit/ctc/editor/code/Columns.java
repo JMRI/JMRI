@@ -306,17 +306,17 @@ public class Columns {
         for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataArrayList) {
             if (currentCodeButtonHandlerData != codeButtonHandlerData) { // Don't check ourselves
                 int otherUniqueID = codeButtonHandlerData._mUniqueID;
-                checkThisSSVList(currentUniqueID, otherUniqueID, "L", codeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList, temp);    //NOI18N
-                checkThisSSVList(currentUniqueID, otherUniqueID, "R", codeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList, temp);   //NOI18N
+                checkThisSSVList(currentUniqueID, otherUniqueID, "L", codeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList, temp);    // NOI18N
+                checkThisSSVList(currentUniqueID, otherUniqueID, "R", codeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList, temp);   // NOI18N
             }
         }
         for (String result : temp) returnStringBuffer.append(result);
         if (returnStringBuffer.length() > 0) {
-            return "TrL: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2);    //NOI18N
+            return "TrL: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2);    // NOI18N
         } else {
             return "";
         }
-//      if (returnStringBuffer.length() > 0) returnStringBuffer.append("TrL: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2));       //NOI18N
+//      if (returnStringBuffer.length() > 0) returnStringBuffer.append("TrL: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2));       // NOI18N
 //      return returnStringBuffer.toString();
     }
 
@@ -354,11 +354,11 @@ public class Columns {
         }
         for (String result : temp)  returnStringBuffer.append(result);
         if (returnStringBuffer.length() > 0) {
-            return "Sw: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2);   //NOI18N
+            return "Sw: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2);   // NOI18N
         } else {
             return "";
         }
-//      if (returnStringBuffer.length() > 0)  returnStringBuffer.append("Sw: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2));   //NOI18N
+//      if (returnStringBuffer.length() > 0)  returnStringBuffer.append("Sw: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2));   // NOI18N
 //      return returnStringBuffer.toString();
     }
 

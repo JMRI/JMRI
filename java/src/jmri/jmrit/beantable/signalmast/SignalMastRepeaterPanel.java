@@ -100,7 +100,7 @@ public class SignalMastRepeaterPanel extends JmriPanel implements PropertyChange
         footer.add(_MasterBox);
         footer.add(new JLabel(Bundle.getMessage("Slave") + " : "));
         footer.add(_SlaveBox);
-        _addRepeater = new JButton(Bundle.getMessage("AddButtonText"));
+        _addRepeater = new JButton(Bundle.getMessage("ButtonAddText"));
         _addRepeater.setEnabled(false);
         _addRepeater.addActionListener(new ActionListener() {
             @Override

@@ -7,7 +7,6 @@ import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +23,8 @@ import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.vsdecoder.LoadVSDFileAction;
 import jmri.jmrit.vsdecoder.SoundEvent;
 import jmri.jmrit.vsdecoder.VSDConfig;
@@ -34,9 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * class VSDManagerFrame
- *
- * Main frame for the new GUI VSDecoder Manager Frame
+ * Main frame for the GUI VSDecoder Manager.
  *
  * <hr>
  * This file is part of JMRI.
@@ -55,23 +54,41 @@ import org.slf4j.LoggerFactory;
  */
 public class VSDManagerFrame extends JmriJFrame {
 
+    public static final String MUTE = "VSDMF:Mute"; // NOI18N
+    public static final String VOLUME_CHANGE = "VSDMF:VolumeChange"; // NOI18N
+    public static final String ADD_DECODER = "VSDMF:AddDecoder"; // NOI18N
+    public static final String REMOVE_DECODER = "VSDMF:RemoveDecoder"; // NOI18N
+    public static final String CLOSE_WINDOW = "VSDMF:CloseWindow"; // NOI18N
+
+    /**
+     * 
+     * @deprecated since 4.19.5; use {@link #MUTE}, {@link #VOLUME_CHANGE},
+     * {@link #ADD_DECODER}, {@link #REMOVE_DECODER}, {@link #CLOSE_WINDOW} instead
+     */
+    @Deprecated
     public static enum PropertyChangeID {
 
         MUTE, VOLUME_CHANGE, ADD_DECODER, REMOVE_DECODER, CLOSE_WINDOW
     }
 
+    /**
+     * 
+     * @deprecated since 4.19.5; use {@link #MUTE}, {@link #VOLUME_CHANGE},
+     * {@link #ADD_DECODER}, {@link #REMOVE_DECODER}, {@link #CLOSE_WINDOW} instead
+     */
+    @Deprecated
     public static final Map<PropertyChangeID, String> PCIDMap;
 
     static {
         Map<PropertyChangeID, String> aMap = new HashMap<>();
-        aMap.put(PropertyChangeID.MUTE, "VSDMF:Mute");
-        aMap.put(PropertyChangeID.VOLUME_CHANGE, "VSDMF:VolumeChange");
-        aMap.put(PropertyChangeID.ADD_DECODER, "VSDMF:AddDecoder");
-        aMap.put(PropertyChangeID.REMOVE_DECODER, "VSDMF:RemoveDecoder");
-        aMap.put(PropertyChangeID.CLOSE_WINDOW, "VSDMF:CloseWindow");
+        aMap.put(PropertyChangeID.MUTE, MUTE);
+        aMap.put(PropertyChangeID.VOLUME_CHANGE, VOLUME_CHANGE);
+        aMap.put(PropertyChangeID.ADD_DECODER, ADD_DECODER);
+        aMap.put(PropertyChangeID.REMOVE_DECODER, REMOVE_DECODER);
+        aMap.put(PropertyChangeID.CLOSE_WINDOW, CLOSE_WINDOW);
         PCIDMap = Collections.unmodifiableMap(aMap);
     }
-
+    
     // Map of Mnemonic KeyEvent values to GUI Components
     private static final Map<String, Integer> Mnemonics = new HashMap<>();
 
@@ -91,16 +108,17 @@ public class VSDManagerFrame extends JmriJFrame {
     JPanel decoderBlank;
 
     private VSDConfig config;
-
+    private VSDConfigDialog cd;
     private List<JMenu> menuList;
+    private boolean is_auto_loading;
 
     /**
      * Constructor
      */
     public VSDManagerFrame() {
         super(false, false);
-        config = new VSDConfig();
         this.addPropertyChangeListener(VSDecoderManager.instance());
+        is_auto_loading = VSDecoderManager.instance().getVSDecoderPreferences().isAutoLoadingDefaultVSDFile();
         initGUI();
     }
 
@@ -112,7 +130,7 @@ public class VSDManagerFrame extends JmriJFrame {
     /**
      * Build the GUI components
      */
-    public void initGUI() {
+    private void initGUI() {
         log.debug("initGUI");
         this.setTitle(Bundle.getMessage("VSDManagerFrameTitle"));
         this.buildMenu();
@@ -166,7 +184,7 @@ public class VSDManagerFrame extends JmriJFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                firePropertyChange(PropertyChangeID.CLOSE_WINDOW, null, null);
+                firePropertyChange(CLOSE_WINDOW, null, null);
             }
         });
 
@@ -175,6 +193,39 @@ public class VSDManagerFrame extends JmriJFrame {
         this.setVisible(true);
 
         log.debug("done...");
+
+        // Auto-Load
+        if (is_auto_loading) {
+            log.info("Auto-Loading VSDecoder");
+            String vsdRosterGroup = "VSD";
+            String msg = "";
+            if (Roster.getDefault().getRosterGroupList().contains(vsdRosterGroup)) {
+                List<RosterEntry> rosterList;
+                rosterList = Roster.getDefault().getEntriesInGroup(vsdRosterGroup);
+                if (!rosterList.isEmpty()) {
+                    // Allow <max_decoder> roster entries
+                    int entry_counter = 1;
+                    for (RosterEntry entry : rosterList) {
+                        if (entry_counter <= VSDecoderManager.max_decoder) { 
+                            addButton.doClick(); // simulate an Add-button-click
+                            cd.setRosterItem(entry); // forward the roster entry
+                            entry_counter++;
+                        } else {
+                            msg = "Only " + VSDecoderManager.max_decoder + " Roster Entries allowed. Discarded "
+                                    + (rosterList.size() - VSDecoderManager.max_decoder);
+                        }
+                    }
+                } else {
+                    msg = "No Roster Entry found in Roster Group " + vsdRosterGroup;
+                }
+            } else {
+                msg = "Roster Group \"" + vsdRosterGroup + "\" not found";
+            }
+            if (!msg.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Auto-Loading: " + msg);
+                log.warn("Auto-Loading VSDecoder aborted");
+            }
+        }
     }
 
     /**
@@ -183,7 +234,7 @@ public class VSDManagerFrame extends JmriJFrame {
     protected void muteButtonPressed(ActionEvent e) {
         JToggleButton b = (JToggleButton) e.getSource();
         log.debug("Mute button pressed. value: {}", b.isSelected());
-        firePropertyChange(PropertyChangeID.MUTE, !b.isSelected(), b.isSelected());
+        firePropertyChange(MUTE, !b.isSelected(), b.isSelected());
     }
 
     /**
@@ -193,15 +244,16 @@ public class VSDManagerFrame extends JmriJFrame {
         log.debug("Add button pressed");
         config = new VSDConfig(); // Create a new Config for the new VSDecoder.
         // Do something here.  Create a new VSDecoder and add it to the window.
-        VSDConfigDialog d = new VSDConfigDialog(decoderPane, Bundle.getMessage("NewDecoderConfigPaneTitle"), config);
-        d.addPropertyChangeListener(new PropertyChangeListener() {
+        cd = new VSDConfigDialog(decoderPane, Bundle.getMessage("NewDecoderConfigPaneTitle"), config, is_auto_loading);
+        cd.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent event) {
-                log.debug("property change name {}, old: {}, new: {}", event.getPropertyName(), event.getOldValue(), event.getNewValue());
+                log.debug("property change name {}, old: {}, new: {}", event.getPropertyName(),
+                        event.getOldValue(), event.getNewValue());
                 addButtonPropertyChange(event);
             }
         });
-        //firePropertyChange(PropertyChangeId.ADD_DECODER, null, null);
+        //firePropertyChange(ADD_DECODER, null, null);
     }
 
     /**
@@ -209,14 +261,19 @@ public class VSDManagerFrame extends JmriJFrame {
      */
     protected void addButtonPropertyChange(PropertyChangeEvent event) {
         log.debug("internal config dialog handler");
-        log.debug("New Config: {}", config);
         // If this decoder already exists, don't create a new Control
         if (VSDecoderManager.instance().getVSDecoderByAddress(config.getLocoAddress().toString()) != null) {
             JOptionPane.showMessageDialog(null, Bundle.getMessage("MgrAddDuplicateMessage"));
+        // If the maximum number of VSDecoders (Controls) is reached, don't create a new Control
+        } else if (VSDecoderManager.instance().getVSDecoderList().size() >= VSDecoderManager.max_decoder) {
+            JOptionPane.showMessageDialog(null, 
+                    "VSDecoder not created. Maximal number is " + String.valueOf(VSDecoderManager.max_decoder));
         } else {
             VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
             if (newDecoder == null) {
-                log.warn("no New Decoder constructed! Config: {}", config);
+                log.warn("No New Decoder constructed! Address: {}, profile: {}, ",
+                        config.getLocoAddress(), config.getProfileName());
+                JOptionPane.showMessageDialog(null, "VSDecoder not created");
                 return;
             }
             VSDControl newControl = new VSDControl(config);
@@ -227,7 +284,8 @@ public class VSDManagerFrame extends JmriJFrame {
             newControl.addPropertyChangeListener(new PropertyChangeListener() {
                 @Override
                 public void propertyChange(PropertyChangeEvent event) {
-                    log.debug("property change name {}, old: {}, new: {}", event.getPropertyName(), event.getOldValue(), event.getNewValue());
+                    log.debug("property change name {}, old: {}, new: {}",
+                            event.getPropertyName(), event.getOldValue(), event.getNewValue());
                     vsdControlPropertyChange(event);
                 }
             });
@@ -243,7 +301,7 @@ public class VSDManagerFrame extends JmriJFrame {
             this.pack();
             //this.setVisible(true);
             // Do we need to make newControl a listener to newDecoder?
-            //firePropertyChange(PropertyChangeId.ADD_DECODER, null, newDecoder);
+            //firePropertyChange(ADD_DECODER, newDecoder, null);
         }
     }
 
@@ -252,16 +310,15 @@ public class VSDManagerFrame extends JmriJFrame {
      */
     protected void vsdControlPropertyChange(PropertyChangeEvent event) {
         String property = event.getPropertyName();
-        if (property.equals(VSDControl.PCIdMap.get(VSDControl.PropertyChangeId.DELETE))) {
+        if (property.equals(VSDControl.DELETE)) {
             String ov = (String) event.getOldValue();
-            String nv = (String) event.getNewValue();
-            VSDecoder vsd = VSDecoderManager.instance().getVSDecoderByAddress(nv);
+            VSDecoder vsd = VSDecoderManager.instance().getVSDecoderByAddress(ov);
             if (vsd == null) {
                 log.debug("VSD is null.");
             }
             this.removePropertyChangeListener(vsd);
-            log.debug("vsdControlPropertyChange. ID: {}, old: {}, new: {}", PCIDMap.get(PropertyChangeID.REMOVE_DECODER), ov, nv);
-            firePropertyChange(PropertyChangeID.REMOVE_DECODER, ov, nv);
+            log.debug("vsdControlPropertyChange. ID: {}, old: {}", REMOVE_DECODER, ov);
+            firePropertyChange(REMOVE_DECODER, ov, null);
             decoderPane.remove((VSDControl) event.getSource());
             if (decoderPane.getComponentCount() == 0) {
                 decoderPane.add(decoderBlank);
@@ -289,7 +346,7 @@ public class VSDManagerFrame extends JmriJFrame {
     protected void volumeChange(ChangeEvent e) {
         JSlider v = (JSlider) e.getSource();
         log.debug("Volume slider moved. value: {}", v.getValue());
-        firePropertyChange(PropertyChangeID.VOLUME_CHANGE, v.getValue(), v.getValue());
+        firePropertyChange(VOLUME_CHANGE, v.getValue(), null);
     }
 
     private void buildMenu() {
@@ -308,59 +365,13 @@ public class VSDManagerFrame extends JmriJFrame {
         menuList.add(editMenu);
 
         this.setJMenuBar(new JMenuBar());
+
         this.getJMenuBar().add(fileMenu);
         this.getJMenuBar().add(editMenu);
+
         this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.VSDManagerFrame", true);
     }
 
-    // VSDecoderManager Events
-    /**
-     * Add a listener for this Pane's property change events
-     */
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        List<PropertyChangeListener> l = Arrays.asList(listenerList.getListeners(PropertyChangeListener.class));
-        if (!l.contains(listener)) {
-            listenerList.add(PropertyChangeListener.class, listener);
-        }
-    }
-
-    /**
-     * Remove a listener
-     */
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        if (listener == null) {
-            log.warn("No listener!");
-        }
-        listenerList.remove(PropertyChangeListener.class, listener);
-    }
-
-    /**
-     * Fire a property change from this object
-     */
-    // NOTE: should this be public???
-    public void firePropertyChange(PropertyChangeID id, Object oldProp, Object newProp) {
-        // map the property change ID
-        String pcname = PCIDMap.get(id);
-        PropertyChangeEvent pce = new PropertyChangeEvent(this, pcname, oldProp, newProp);
-        // Fire the actual PropertyChangeEvent
-        log.debug("Firing property change: " + pcname);
-        firePropertyChange(pce);
-    }
-
-    /**
-     * Fire a property change from this object
-     */
-    void firePropertyChange(PropertyChangeEvent evt) {
-        if (evt == null) {
-            log.warn("EVT is NULL!!");
-        }
-        for (PropertyChangeListener l : listenerList.getListeners(PropertyChangeListener.class)) {
-            l.propertyChange(evt);
-        }
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(VSDManagerFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(VSDManagerFrame.class);
 
 }

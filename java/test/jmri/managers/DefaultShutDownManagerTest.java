@@ -80,6 +80,13 @@ public class DefaultShutDownManagerTest {
         }
     }
 
+    @Test
+    public void testInstanceManagerCreates() {
+        jmri.ShutDownManager sdm = jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
+        Assert.assertNotNull(sdm);
+    }
+    
+    
     // The minimal setup for log4J
     @Before
     public void setUp() {

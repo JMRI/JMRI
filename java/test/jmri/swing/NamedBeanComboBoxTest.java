@@ -5,9 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeFalse;
 
-import java.awt.GraphicsEnvironment;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -39,7 +37,6 @@ public class NamedBeanComboBoxTest {
 
     @Test
     public void testSensorSimpleCtor() {
-        assumeFalse(GraphicsEnvironment.isHeadless());
         Manager<Sensor> m = InstanceManager.getDefault(jmri.SensorManager.class);
         NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m);
         assertNotNull("exists", t);
@@ -47,7 +44,6 @@ public class NamedBeanComboBoxTest {
 
     @Test
     public void testSensorFullCtor() {
-        assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         m.provideSensor("IS1").setUserName("Sensor 1");
         Sensor s = m.provideSensor("IS2");
@@ -61,11 +57,15 @@ public class NamedBeanComboBoxTest {
         assertEquals("Sensor 2", t.getSelectedItemUserName());
         assertEquals("IS2", t.getSelectedItemSystemName());
         assertEquals("Sensor 2", t.getSelectedItemDisplayName()); // Display name is user name if present
+        
+        t.setSelectedItem(null);
+        assertNull(t.getSelectedItemUserName());
+        assertNull(t.getSelectedItemSystemName());
+        assertNull(t.getSelectedItemDisplayName());
     }
 
     @Test
     public void testSensorSelectEntry() {
-        assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         Sensor s1 = m.provideSensor("IS1");
         s1.setUserName("Sensor 1");
@@ -87,7 +87,6 @@ public class NamedBeanComboBoxTest {
 
     @Test
     public void testSensorExcludeSome() {
-        assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         Sensor s1 = m.provideSensor("IS1");
         s1.setUserName("Sensor 1");
@@ -117,7 +116,6 @@ public class NamedBeanComboBoxTest {
 
     @Test
     public void testSensorChangeDisplayMode() {
-        assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         Sensor s1 = m.provideSensor("IS1");
         s1.setUserName("Sensor 1");
@@ -158,7 +156,6 @@ public class NamedBeanComboBoxTest {
 
     @Test
     public void testSensorAllowEdit() {
-        assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         assertTrue(m.getNamedBeanSet().isEmpty());
         NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m);
@@ -188,7 +185,6 @@ public class NamedBeanComboBoxTest {
     public void testSensorEditText()
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
             SecurityException {
-        assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         Sensor s1 = m.provideSensor("IS1");
         s1.setUserName("Sensor 1");
@@ -238,7 +234,7 @@ public class NamedBeanComboBoxTest {
         assertEquals("IS1", c.getText());
         assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
         Sensor s1 = t.getSelectedItem();
-        assertEquals(s1, m.getBeanBySystemName("IS1"));
+        assertEquals(s1, m.getBySystemName("IS1"));
 
         c.setText("K ");
         c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
@@ -264,7 +260,7 @@ public class NamedBeanComboBoxTest {
         assertEquals("IS1", c.getText());
         assertEquals(Validation.Type.INFORMATION, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
         s1 = t.getSelectedItem();
-        assertEquals(s1, m.getBeanBySystemName("IS1"));
+        assertEquals(s1, m.getBySystemName("IS1"));
 
         c.setText("K ");
         c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
@@ -290,7 +286,7 @@ public class NamedBeanComboBoxTest {
         assertEquals("IS1", c.getText());
         assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
         s1 = t.getSelectedItem();
-        assertEquals(s1, m.getBeanBySystemName("IS1"));
+        assertEquals(s1, m.getBySystemName("IS1"));
 
         c.setText("K ");
         c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
@@ -318,7 +314,7 @@ public class NamedBeanComboBoxTest {
         assertEquals("IS1", c.getText());
         assertEquals(Validation.Type.INFORMATION, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
         s1 = t.getSelectedItem();
-        assertEquals(s1, m.getBeanBySystemName("IS1"));
+        assertEquals(s1, m.getBySystemName("IS1"));
 
         c.setText("K ");
         c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
@@ -344,44 +340,50 @@ public class NamedBeanComboBoxTest {
         t.setValidatingInput(false);
 
         c.setText("");
-        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
-        assertEquals("", c.getText());
-        assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
-        assertNull(t.getSelectedItem());
+        Boolean v = c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("Empty text", "", c.getText());
+        assertEquals("Empty validates to NONE", Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+        assertNull("Empty is not selected", t.getSelectedItem());
+        assertTrue("Empty is valid", v);
 
         c.setText("IS1");
-        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
-        assertEquals("IS1", c.getText());
-        assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
-        assertNull(t.getSelectedItem());
+        v = c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("IS1 text", "IS1", c.getText());
+        assertEquals("IS1 validation is NONE (not existing/non-validating)", Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+        assertNull("IS1 is not selected (not existing/non-validating)", t.getSelectedItem());
+        assertTrue("IS1 is valid (not existing/non-validating)", v);
 
         c.setText("K ");
-        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
-        assertEquals("K ", c.getText());
-        assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
-        assertNull(t.getSelectedItem());
+        v = c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("K text", "K ", c.getText());
+        assertEquals("K validation is NONE (non-validating)", Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+        assertNull("No selection (no existing selection)", t.getSelectedItem());
+        assertTrue("K is valid (non-validating)", v);
 
         // test with no matching bean and isValidatingInput() == true
         // should match NONE when empty and WARNING otherwise
         t.setValidatingInput(true);
 
         c.setText("");
-        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
-        assertEquals("", c.getText());
-        assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
-        assertNull(t.getSelectedItem());
+        v = c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("Empty text", "", c.getText());
+        assertEquals("Empty validates to NONE", Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+        assertNull("Empty is not selected", t.getSelectedItem());
+        assertTrue("Empty is valid", v);
 
         c.setText("IS1");
-        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
-        assertEquals("IS1", c.getText());
-        assertEquals(Validation.Type.WARNING, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
-        assertNull(t.getSelectedItem());
+        v = c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("IS1 text", "IS1", c.getText());
+        assertEquals("IS1 validation is WARNING (not existing/validating)", Validation.Type.WARNING, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+        assertNull("IS1 is not selected (not existing/validating)", t.getSelectedItem());
+        assertTrue("IS1 is valid (not existing/validating)", v);
 
         c.setText("K ");
-        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
-        assertEquals("K ", c.getText());
-        assertEquals(Validation.Type.WARNING, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
-        assertNull(t.getSelectedItem());        
+        v = c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("K text", "K ", c.getText());
+        assertEquals("K validation is WARNING (validating)", Validation.Type.WARNING, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+        assertNull("No selection (no existing selection)", t.getSelectedItem());
+        assertTrue("K is valid (validating)", v);
 
         // test with a matching bean and isValidatingInput() == false
         // should always match NONE
@@ -389,52 +391,57 @@ public class NamedBeanComboBoxTest {
         Sensor s = m.provide("IS1");
 
         c.setText("");
-        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
-        assertEquals("", c.getText());
-        assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
-        assertNull(t.getSelectedItem());
+        v = c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("Empty text", "", c.getText());
+        assertEquals("Empty validates to NONE", Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+        assertNull("Empty is not selected", t.getSelectedItem());
+        assertTrue("Empty is valid", v);
 
         c.setText("IS1");
-        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
-        assertEquals("IS1", c.getText());
-        assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
-        assertEquals(s, t.getSelectedItem());
+        v = c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("IS1 text", "IS1", c.getText());
+        assertEquals("IS1 validation is NONE (pre-existing/non-validating)", Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+        assertEquals("IS1 is selected (pre-existing)", s, t.getSelectedItem());
+        assertTrue("IS1 is valid (pre-existing)", v);
 
         c.setText("K ");
-        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
-        assertEquals("K ", c.getText());
-        assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
-        assertEquals(s, t.getSelectedItem()); // selection did not change because of invalid input
+        v = c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("K text", "K ", c.getText());
+        assertEquals("K validation is NONE (non-validating)", Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+        assertEquals("IS1 is selected for K (pre-selected/non-validating)", s, t.getSelectedItem()); // selection did not change because of invalid input
+        assertTrue("K is valid (non-validating)", v);
 
         // test with a matching bean and isValidatingInput() == true
         // should match WARNING with text "K " and NONE otherwise
         t.setValidatingInput(true);
 
         c.setText("");
-        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
-        assertEquals("", c.getText());
-        assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
-        assertEquals(s, t.getSelectedItem()); // selection did not change because of invalid input
+        v = c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("Empty text", "", c.getText());
+        assertEquals("Empty validates to NONE", Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+        assertEquals("Empty is not selected", s, t.getSelectedItem()); // selection did not change because of invalid input
+        assertTrue("Empty is valid", v);
 
         t.setSelectedItem(null); // change selection to verify selection changes
         assertNull(t.getSelectedItem());
         c.setText("IS1");
-        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
-        assertEquals("IS1", c.getText());
-        assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
-        assertEquals(s, t.getSelectedItem());
+        v = c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("IS1 text", "IS1", c.getText());
+        assertEquals("IS1 validation is NONE (pre-existing/validating)", Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+        assertEquals("IS1 is selected (pre-existing)", s, t.getSelectedItem());
+        assertTrue("IS1 is valid (pre-existing)", v);
 
         c.setText("K ");
         JUnitUtil.waitFor(() -> "K ".equals(c.getText()));
-        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
-        assertEquals("K ", c.getText());
-        assertEquals(Validation.Type.WARNING, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
-        assertEquals(s, t.getSelectedItem()); // selection did not change because of invalid input
+        v = c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("K text", "K ", c.getText());
+        assertEquals("K validation is WARNING (validating)", Validation.Type.WARNING, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+        assertEquals("IS1 is selected for K (pre-selected/validating)", s, t.getSelectedItem()); // selection did not change because of invalid input
+        assertTrue("K is valid (validating)", v);
     }
 
     @Test
     public void testSensorSetBean() {
-        assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         Sensor s1 = m.provideSensor("IS1");
         s1.setUserName("Sensor 1");
@@ -467,7 +474,6 @@ public class NamedBeanComboBoxTest {
 
     @Test
     public void testSensorNameChange() {
-        assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         Sensor s1 = m.provideSensor("IS1");
 
@@ -484,7 +490,6 @@ public class NamedBeanComboBoxTest {
 
     @Test
     public void testSensorAddTracking() {
-        assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         Sensor s1 = m.provideSensor("IS1");
         s1.setUserName("Sensor 1");
@@ -499,6 +504,34 @@ public class NamedBeanComboBoxTest {
         Sensor s3 = m.provideSensor("IS3");
         s3.setUserName("Sensor 3");
         assertEquals(3, t.getItemCount());
+    }
+
+    @Test
+    public void testIsProviding() {
+        SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
+        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m);
+        assertTrue(t.isProviding());
+        t.setProviding(false);
+        assertFalse(t.isProviding());
+        t.setProviding(true);
+        assertTrue(t.isProviding());
+    }
+
+    @Test
+    public void testGetManager() {
+        SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
+        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m);
+        assertEquals("Manager is as expected", m, t.getManager());
+    }
+
+    @Test
+    public void testDispose() {
+        SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
+        assertEquals("Manager has no listeners", 0, m.getPropertyChangeListeners().length);
+        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m);
+        assertEquals("Manager has two listeners", 2, m.getPropertyChangeListeners().length);
+        t.dispose();
+        assertEquals("Manager has no listeners", 0, m.getPropertyChangeListeners().length);
     }
 
     // The minimal setup for log4J

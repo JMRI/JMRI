@@ -1,5 +1,4 @@
 <!-- Defines XML documenting operations configuration -->
-<!-- $Id$ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008, 2013       -->
 <!--                                                                        -->
@@ -227,7 +226,7 @@
 
 <!ELEMENT manifestHeaderTextStrings (road | number | engineNumber | type | model
 | length | load | color | track | destination | dest_Track | finalDest | fd_Track | location | consist
-| kernel | owner | rwe | comment | setOut_msg | pickUp_msg | hazardous)*>
+| kernel | owner | rwe | comment | setOut_msg | pickUp_msg | hazardous | weight)*>
 
 <!ELEMENT road EMPTY>
 <!ELEMENT number EMPTY>
@@ -248,6 +247,7 @@
 <!ELEMENT setOut_msg EMPTY>
 <!ELEMENT pickUp_msg EMPTY>
 <!ELEMENT hazardous EMPTY>
+<!ELEMENT weight EMPTY>
 
 <!ATTLIST road text				CDATA #IMPLIED>
 <!ATTLIST number text			CDATA #IMPLIED>
@@ -269,6 +269,7 @@
 <!ATTLIST setOut_msg text		CDATA #IMPLIED>
 <!ATTLIST pickUp_msg text		CDATA #IMPLIED>
 <!ATTLIST hazardous text		CDATA #IMPLIED>
+<!ATTLIST weight text			CDATA #IMPLIED>
 
 <!ELEMENT manifestTextStrings (manifestForTrain | valid | scheduledWork 
 | workDepartureTime | workArrivalTime | noScheduledWork | noScheduledWorkRouteComment | departTime 
@@ -358,7 +359,7 @@
 <!ATTLIST switchListTrack text			CDATA #IMPLIED>
 <!ATTLIST holdCar text					CDATA #IMPLIED>
 
-<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports | actions)*>
+<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports | actions | printOptions)*>
 
 <!ELEMENT backwardCompatibility EMPTY>
 <!ATTLIST backwardCompatibility saveUsingPre_2013_Format	(true | false ) "false">
@@ -400,3 +401,6 @@
 
 <!ELEMENT actions EMPTY>
 <!ATTLIST actions excelWaitTime CDATA #IMPLIED>
+
+<!ELEMENT printOptions EMPTY>
+<!ATTLIST printOptions disablePrintIfCustom (true | false ) "false">

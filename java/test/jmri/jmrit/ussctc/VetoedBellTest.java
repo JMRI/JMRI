@@ -61,7 +61,6 @@ public class VetoedBellTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initShutDownManager();
         
         veto = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1"); veto.setUserName("veto Sensor");
         bellTurnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1"); bellTurnout.setUserName("Bell output");
