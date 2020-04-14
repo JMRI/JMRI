@@ -13,21 +13,20 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Logix Add Edit">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Ajout/Modification de Logix</h1>
 
       <p>Dans la fen&ecirc;tre Ajouter Logix, entrer un nom
@@ -145,7 +144,7 @@
 
       <p>Pour plus d'informations, consultez la documentation Logix
       sur la page web JMRI http://jmri.org/.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

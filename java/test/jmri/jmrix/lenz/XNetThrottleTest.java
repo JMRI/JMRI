@@ -1662,8 +1662,12 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @After
     @Override
     public void tearDown() throws Exception {
-        ((XNetThrottle)instance).throttleDispose();
-        JUnitUtil.tearDown();
+        try {
+            ((XNetThrottle) instance).throttleDispose();
+        } finally {
+            JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+            JUnitUtil.tearDown();
+        }
     }
 
 }

@@ -350,7 +350,7 @@ public class IndicatorTrackIcon extends PositionableIcon
     protected void editItem() {
         _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"),
                 Bundle.getMessage("IndicatorTrack")));
-        _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _iconFamily, _editor);
+        _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _iconFamily);
 
         ActionListener updateAction = new ActionListener() {
             @Override

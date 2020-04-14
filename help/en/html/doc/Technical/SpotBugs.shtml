@@ -22,15 +22,17 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
 <body>
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
-        <h1>JMRI Code: Static Analysis with SpotBugs</h1>
+
+    <h1>JMRI Code: Static Analysis with SpotBugs</h1>
         SpotBugs is a
         tool that can examine code to find possible problems. It does
       a "static analysis", looking through the code to find certain
@@ -216,14 +218,15 @@ scanning through the code.
       <p>We do not use these annotations:</p>
 
       <ul>
-        <li><a href=
+        <li><a name="nullable" id="nullable"></a>
+            <a href=
                "http://findbugs.sourceforge.net/manual/annotations.html"><code>
                     javax.annotation.Nullable</code></a> - This doesn't really
-        mean what people think it does, as SpotBugs doesn't really
-        check anything when this is used. From the SpotBugs documentation:
-        <blockquote>
-              SpotBugs will treat the annotated items as though they had
-              no annotation. In practice this annotation is useful only
+                mean what people think it does, as SpotBugs doesn't really
+                check anything when this is used. From the SpotBugs documentation:
+          <blockquote>
+            SpotBugs will treat the annotated items as though they had
+            no annotation. In practice this annotation is useful only
             for overriding an overarching NonNull annotation. Use
             javax.annotation.ParametersAreNullableByDefault to set it
             for an entire class. Prefer the use of

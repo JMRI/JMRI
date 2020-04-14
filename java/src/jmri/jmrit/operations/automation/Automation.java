@@ -1,26 +1,30 @@
 package jmri.jmrit.operations.automation;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.swing.JComboBox;
+
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.automation.actions.Action;
 import jmri.jmrit.operations.automation.actions.HaltAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Automation for operations
  *
  * @author Daniel Boudreau Copyright (C) 2016
  */
-public class Automation implements java.beans.PropertyChangeListener {
+public class Automation extends PropertyChangeSupport implements java.beans.PropertyChangeListener {
 
     protected String _id = "";
     protected String _name = "";
@@ -211,7 +215,7 @@ public class Automation implements java.beans.PropertyChangeListener {
         resetAutomationItems(getCurrentAutomationItem());
     }
 
-    private void resetAutomationItems(AutomationItem item) {
+    protected void resetAutomationItems(AutomationItem item) {
         boolean found = false;
         for (AutomationItem automationItem : getItemsBySequenceList()) {
             if (!found && automationItem != item) {
@@ -643,24 +647,10 @@ public class Automation implements java.beans.PropertyChangeListener {
         checkForActionPropertyChange(e);
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // set dirty
         InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
-        pcs.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(Automation.class);

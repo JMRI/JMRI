@@ -2,6 +2,7 @@ package jmri.jmrit.display.switchboardEditor;
 
 import org.junit.*;
 import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -21,8 +22,8 @@ public class BeanSwitchTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             swe = new SwitchboardEditor("Bean Switch Test Layout");
         }
@@ -31,10 +32,11 @@ public class BeanSwitchTest {
     @After
     public void tearDown() {
         if (swe != null) {
-            jmri.util.JUnitUtil.dispose(swe);
+            JUnitUtil.dispose(swe);
             swe = null;
         }
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.tearDown();
     }
 
 }

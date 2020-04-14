@@ -254,8 +254,8 @@ public class JsonUtil {
         node.put(NAME, track.getId());
         node.put(COMMENT, track.getComment());
         node.put(LENGTH, track.getLength());
-        node.put(LOCATION, track.getLocation().getId()); // only includes ID to
-                                                         // avoid recursion
+        // only includes location ID to avoid recursion
+        node.put(LOCATION, track.getLocation().getId());
         Reporter reporter = track.getReporter();
         node.put(REPORTER, reporter != null ? reporter.getSystemName() : null);
         node.put(TYPE, track.getTrackType());

@@ -22,14 +22,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
 <body>
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>Jython access to JMRI Tools</h1>
       <p>This page discusses
       access to the JMRI libraries from Jython, a Java version of
@@ -50,57 +52,8 @@
       JMRI to make it easy to control a model railroad from the
       command line of a computer.
 
-      <p>To use the JMRI library from Jython, you have to ensure
-      that Jython will search the correct jar files when it starts
-      up. We provide a "jmrithon" startup script that will do that
-      for you:</p>
-      <pre>
-% ./jmrithon
-execFileJython 2.1 on java1.4.1_01 (JIT: null)
-(Type "copyright", "credits" or "license" for more information.
 
-&gt;&gt;&gt; 
-
-</pre>Once you get the Jython prompt of "&gt;&gt;&gt;", you can
-type Python statements.
-
-      <p>We've provided a few Python command files to make setup
-      easier.</p>
-
-      <p>For example, you can run the PanelPro application from the
-          Jython command line, which is then available for manipulating
-      objects like turnouts and sensors:</p>
-      <pre>
-execfile("PanelPro.py")
-     0 PanelPro.PanelPro                     INFO  - program starts [main]
- 11109 PanelPro.PanelPro                     INFO  - main initialization done [main]
-
-&gt;&gt;&gt; turnouts.newTurnout("LT1", "")
-jmri.jmrix.loconet.LnTurnout@1a8f49
-
-&gt;&gt;&gt; turnouts.getTurnout("LT1").getCommandedState()
-1
-
-&gt;&gt;&gt; lt1 = turnouts.getTurnout("LT1")
-
-&gt;&gt;&gt; lt1.setCommandedState(CLOSED)
-
-&gt;&gt;&gt; lt1.commandedState
-2
-
-&gt;&gt;&gt; lt1.commandedState = THROWN
-
-&gt;&gt;&gt; lt1.commandedState
-4
-
-&gt;&gt;&gt; 
-      </pre>Note that this is running a complete version of the PanelPro
-      application; all of the windows and menus are presented the same
-way, configuration is done by the preferences panel, etc. What the
-Jython connection adds is a command line from which you can
-directly manipulate things.<br>
-      This also shows some of the simplifications that Jython and
-      the Python language brings to using JMRI code. The Java
+      Jython and Python bring some simplifications to using JMRI code. The Java
       member function:
       <pre>
         turnout.setCommandedState(jmri.Turnout.CLOSED);
@@ -117,72 +70,6 @@ directly manipulate things.<br>
       Essentials</a> book published by O'Reilly. The <a href=
       "http://www.jython.org/">jython.org web site</a> is also very
       useful.</p>
-
-      <h2>Setup</h2>Jython support is not (yet) standard in JMRI.
-      To use this:
-
-      <ol>
-        <li>You must first have a working JMRI installation. In
-        particular, start the JMRI application and configure it to
-        connect to your DCC hardware, then save, quit and restart
-        the program. Make sure that the connection is working for
-        the menu-based tools before trying to use Jython.</li>
-
-        <li>Download and install Jython from <a href=
-        "http://www.jython.org">http://www.jython.org</a>.
-        Development is using the 2.1 version, so you might want to
-        start with that. On Mac OS X, the installer does not run,
-        so you have to manually invoke the jython_21.class file;
-        see the Mac OS X note on the jython web site. Make sure the
-        installation is complete by invoking jython from the
-        command line:
-          <pre>
-   % jython
-   Jython 2.1 on java1.4.1_01 (JIT: null)
-   Type "copyright", "credits" or "license" for more information.
-   &gt;&gt;&gt; ^D
-</pre>If that works, your installation is OK. If not, you'll have
-to fix the installation before you'll be able to do the next step.
-
-          <p>If the installer didn't run, download the
-          jython_21.class file from SourceForge, and enter at a
-          command prompt:</p>
-          <pre>
-  java -cp . jython_21
-</pre>then follow the prompts through the installer.
-
-          <p>If the installer did run, but the jython command isn't
-          found:</p>
-
-          <ul>
-            <li>Windows: Find the jython.bat file which the
-            installer created, and copy it to your C:\WINDOWS
-            directory.</li>
-
-            <li>Linux: Make sure that the jython install directory
-            is on your path.</li>
-          </ul>
-        </li>
-
-        <li>Now you just have to have the required classes in the
-        CLASSPATH used when jython starts up. The required list in
-        Unix syntax is:
-          <pre>
-  setenv CLASSPATH .:jmri.jar:lib/log4j.jar:lib/collections.jar:lib/crimson.jar:lib/jdom-jdk11.jar
-</pre><br>
-          To save typing, the "jmrithon" script is available for
-          use on Linux and Mac OS X systems:
-          <pre>
-  % ./jmrithon
-  Jython 2.1 on java1.4.1_01 (JIT: null)
-  Type "copyright", "credits" or "license" for more information.
-  &gt;&gt;&gt; ^D
-</pre><br>
-          The first time you run this, you'll get a number of
-          messages about "processing modified jar"; these can be
-          ignored, as they are normal.
-        </li>
-      </ol>
 
       <h2>Using Jython directly</h2>This section of the page is a
       pile of useful information on controlling JMRI from Jython
@@ -267,7 +154,7 @@ variables, and by shortening certain method calls.
       </ul>These can then be referenced directly in Jython as
       <pre>
    t2 = turnouts.provideTurnout("12");
-   
+
    dcc.
 </pre>Note that the variable t2 did not need to be declared.
 
@@ -286,7 +173,7 @@ defined.
       <p>A similar mechanism can be used to check the state of
       something:</p>
       <pre>
-&gt;&gt;&gt; print sensors.provideSensor("3").knownState == ACTIVE 
+&gt;&gt;&gt; print sensors.provideSensor("3").knownState == ACTIVE
 1
 &gt;&gt;&gt; print sensors.provideSensor("3").knownState == INACTIVE
 0
@@ -296,8 +183,8 @@ indicate false, so sensor 3 is currently active in this example
       <p>You can also directly invoke methods, e.g. to send a DCC
       packet to the rails you type:</p>
       <pre>
-   
-   dcc.sendPacket([0x01, 0x03, 0xbb], 4) 
+
+   dcc.sendPacket([0x01, 0x03, 0xbb], 4)
 </pre>This sends that three-byte packet four times, and then
 returns to the command line.
 
@@ -309,66 +196,7 @@ returns to the command line.
       "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/package-summary.html">Automat</a>"
       classes provide hooks for user layout automation, including
       signaling. But they require that you write Java code and
-      compile it into .class files.
-
-      <p>The <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/JythonAutomaton.html">
-      JythonAutomaton</a> class is intended to make it easier to
-      code custom layout automation, as it will allow you to invoke
-      a Jython script. Once it's integrated into the configuration
-      process, you'll be able to code your automation in one or
-      more .py files, and have the program start running them at
-      startup.</p>
-
-      <h2>Next steps</h2>We're just learning how to best to
-      integrate JMRI and Python, so there are still some basic
-      mysteries.
-
-      <h3>Initialization and modules</h3>The idea of Python
-      "modules" isn't yet clearly understood. There are three ways
-      to start the program via a .py file:
-
-      <ol>
-        <li>
-          <pre>
-  % ./jmrithon
-  Jython 2.1 on java1.4.1_01 (JIT: null)
-  Type "copyright", "credits" or "license" for more information.
-  &gt;&gt;&gt; import PanelPro
-          </pre>This works, in the sense that the program starts up. But the
-convenience methods are all in the PanelPro namespace:
-<pre>
-  &gt;&gt;&gt; turnouts.newTurnout("LT1","")
-  Traceback (innermost last):
-    File &amp;&lt;console&gt;&amp;, line 1, in ?
-  NameError: turnouts
-
-  &gt;&gt;&gt; PanelPro.turnouts.newTurnout("LT1","")
-  jmri.jmrix.loconet.LnTurnout@36b91b
-</pre>which makes for significantly more typing later. And it's
-confusing, because depending on whether you started PanelPro,
-DecoderPro or some other application, the names will be different.
-        </li>
-
-        <li>
-          <pre>
-  % ./jmrithon
-  &gt;&gt;&gt;  execfile("PanelPro.py")
-          </pre>or the simpler form
-          <pre>
-  % ./jmrithon -PanelPro.py
-          </pre>This looks somewhat ugly, as it's not using the normal Python
-modules technique. But the convenience methods are in the top-level
-name space:
-          <pre>
-  turnouts.newTurnout("LT1", "")
-</pre><br>
-          We need to understand whether this is a real issue. Most
-          Python programs don't use that top-level namespace, and
-          there's probably a good reason!
-        </li>
-      </ol>We need to understand how the developers of Jython
-      intended this to be done.
+      compile it into .class files, or write Jython code and import it.
 
     <h3>Termination</h3>
       <p>Once the JMRI main thread (or Swing GUI

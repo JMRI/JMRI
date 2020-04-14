@@ -119,7 +119,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
                     onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
                 } else {
                     onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
-                    log.error("Unexpected state value: {0}", selectMenu.getManager().getPower());
+                    log.error("Unexpected state value: {}", selectMenu.getManager().getPower());
                 }
             } catch (JmriException ex) {
                 onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
@@ -165,7 +165,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
             try {
                 selectMenu.getManager().setPower(PowerManager.ON);
             } catch (JmriException e) {
-                log.error("Exception trying to turn power on {0}", e);
+                log.error("Exception trying to turn power on {}", e);
             }
         }
     }
@@ -178,7 +178,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
             try {
                 selectMenu.getManager().setPower(PowerManager.OFF);
             } catch (JmriException e) {
-                log.error("Exception trying to turn power off {0}", e);
+                log.error("Exception trying to turn power off {}", e);
             }
         }
     }
@@ -194,7 +194,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
             try {
                 selectMenu.getManager().setPower(PowerManager.IDLE);
             } catch (JmriException e) {
-                log.error("Exception trying to set power to idle {0}", e);
+                log.error("Exception trying to set power to idle {}", e);
             }
         }
     }
@@ -213,7 +213,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
                 onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
             } else {
                 onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
-                log.error("Unexpected state value: {0}", listening.getPower());
+                log.error("Unexpected state value: {}", listening.getPower());
             }
         } catch (JmriException ex) {
             onOffStatus.setText(Bundle.getMessage("StatusUnknown"));

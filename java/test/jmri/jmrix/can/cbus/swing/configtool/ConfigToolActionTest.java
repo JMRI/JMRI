@@ -22,6 +22,9 @@ public class ConfigToolActionTest {
         //f.initComponents(memo);
         ConfigToolPane pane = new ConfigToolPane();
         Assert.assertNotNull("exists", pane);
+        
+        memo.dispose();
+        tcs.terminateThreads();
     }
 
     @Before
@@ -32,5 +35,6 @@ public class ConfigToolActionTest {
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
+
     }
 }

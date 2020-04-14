@@ -70,7 +70,9 @@ public class ZTC611XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutM
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     @Override

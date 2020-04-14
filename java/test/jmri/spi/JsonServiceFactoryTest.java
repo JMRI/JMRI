@@ -1,16 +1,20 @@
 package jmri.spi;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.io.DataOutputStream;
 import java.util.ServiceLoader;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonMockConnection;
 import jmri.server.json.JsonSocketService;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test that JsonServiceFactory classes adhere to contract.
@@ -25,32 +29,35 @@ public class JsonServiceFactoryTest {
     @Test
     public void testJsonServiceFactories() {
         JsonConnection connection = new JsonMockConnection((DataOutputStream) null);
+        @SuppressWarnings("rawtypes")
         ServiceLoader<JsonServiceFactory> loader = ServiceLoader.load(JsonServiceFactory.class);
-        Assert.assertTrue("Json Services exist", loader.iterator().hasNext());
+        assertThat(loader.iterator().hasNext()).isTrue();
         loader.forEach((factory) -> {
-            // verify factory is well behaved
-            JsonSocketService<?> socket = factory.getSocketService(connection);
-            JsonHttpService http = factory.getHttpService(connection.getObjectMapper());
-            Assert.assertNotNull("Create Socket service", socket);
-            Assert.assertNotNull("Create HTTP service", http);
-            Assert.assertNotNull("Responds to message types", factory.getTypes());
-            Assert.assertNotNull("Sends message types not responded to", factory.getSentTypes());
-            Assert.assertNotNull("Receives messages types not sent", factory.getReceivedTypes());
-            // verify socket service constructors are populating finals correctly
-            Assert.assertEquals("Socket has connection", connection, socket.getConnection());
-            Assert.assertTrue("Socket creates same HTTP service class as factory", http.getClass().equals(socket.getHttpService().getClass()));
-            // verify HTTP service constructors are populating finals correctly
-            Assert.assertEquals("HTTP object mapper matches connection", connection.getObjectMapper(), http.getObjectMapper());
+            JSON.VERSIONS.forEach(version -> {
+                // verify factory is well behaved
+                JsonSocketService<?> socket = factory.getSocketService(connection, version);
+                JsonHttpService http = factory.getHttpService(connection.getObjectMapper(), version);
+                assertThat(socket).isNotNull();
+                assertThat(http).isNotNull();
+                assertThat(factory.getTypes(version)).isNotNull();
+                assertThat(factory.getSentTypes(version)).isNotNull();
+                assertThat(factory.getReceivedTypes(version)).isNotNull();
+                // verify socket service constructors are populating finals correctly
+                assertThat(socket.getConnection()).isEqualTo(connection);
+                assertThat(socket.getHttpService()).isExactlyInstanceOf(http.getClass());
+                // verify HTTP service constructors are populating finals correctly
+                assertThat(http.getObjectMapper()).isEqualTo(connection.getObjectMapper());
+            });
         });
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

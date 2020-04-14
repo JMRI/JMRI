@@ -1,33 +1,24 @@
 package jmri.jmrit.operations.setup;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JColorChooser;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+
+import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.FileUtil;
 import jmri.util.swing.FontComboUtil;
 import jmri.util.swing.SplitButtonColorChooserPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of manifest and switch list print options
@@ -389,8 +380,6 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         pickupColorChooser.setColor(Setup.getPickupColor());
         localColorChooser.setColor(Setup.getLocalColor());
 
-        enableColorSelection(); // disable color selection if not standard format
-
         commentTextArea.setText(Setup.getMiaComment());
 
         // load font sizes 7 through 18
@@ -539,14 +528,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     public void comboBoxActionPerformed(ActionEvent ae) {
         if (ae.getSource() == manifestFormatComboBox) {
             loadFontComboBox();
-            enableColorSelection();
         }
-    }
-
-    private void enableColorSelection() {
-        pickupColorChooser.setEnabled(manifestFormatComboBox.getSelectedItem().equals(Setup.STANDARD_FORMAT));
-        dropColorChooser.setEnabled(manifestFormatComboBox.getSelectedItem().equals(Setup.STANDARD_FORMAT));
-        localColorChooser.setEnabled(manifestFormatComboBox.getSelectedItem().equals(Setup.STANDARD_FORMAT));
     }
 
     private void setSwitchListVisible(boolean b) {
@@ -572,8 +554,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             int retVal = fc.showOpenDialog(null);
             // handle selection or cancel
             if (retVal == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
-                return file;
+                return fc.getSelectedFile();
             }
         }
         return null;

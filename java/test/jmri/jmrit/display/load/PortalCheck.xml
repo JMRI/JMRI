@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>17</minor>
+    <test>5</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>inactive</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>IS101</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS102</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS103</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS104</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS105</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT201</systemName>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="10:04 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:DB-HV-1969:block_distant($0002)</systemName>
+      <userName>1-2</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:DB-HV-1969:block_distant($0003)</systemName>
+      <userName>2-3</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:DB-HV-1969:block_distant($0009)</systemName>
+      <userName>3-2</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:DB-HV-1969:block_distant($0010)</systemName>
+      <userName>2-1</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:DB-HV-1969:entry_distant($0004)</systemName>
+      <userName>3-4</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:DB-HV-1969:entry_distant($0007)</systemName>
+      <userName>1-4</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:DB-HV-1969:entry_distant($0011)</systemName>
+      <userName>5-4</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:DB-HV-1969:exit_distant($0005)</systemName>
+      <userName>4-1</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:DB-HV-1969:exit_distant($0006)</systemName>
+      <userName>4-5</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:DB-HV-1969:exit_distant($0008)</systemName>
+      <userName>4-3</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:DB-HV-1969:shunting_dwarf($0012)</systemName>
+      <userName>5-</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+  </signalmasts>
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml">
+    <oblock systemName="OB101" length="2000.0" units="true" curve="0" permissive="true" speedNotch="">
+      <sensor systemName="IS101" />
+      <path pathName="4P2" blockName="OB101" fromPortal="4-1" toPortal="1-2" fromDirection="0" toDirection="0" length="0.0" />
+      <portal portalName="1-2">
+        <fromBlock blockName="OB101">
+          <path pathName="4P2" blockName="OB101" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:block_distant($0002)" signalDelay="0.0" />
+        <toBlock blockName="OB102">
+          <path pathName="1P3" blockName="OB102" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:block_distant($0010)" signalDelay="0.0" />
+      </portal>
+      <portal portalName="4-1">
+        <fromBlock blockName="OB104">
+          <path pathName="3P1" blockName="OB104" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:exit_distant($0005)" signalDelay="0.0" />
+        <toBlock blockName="OB101">
+          <path pathName="4P2" blockName="OB101" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:entry_distant($0007)" signalDelay="0.0" />
+      </portal>
+    </oblock>
+    <oblock systemName="OB102" length="3000.0" units="true" curve="0" permissive="true" speedNotch="">
+      <sensor systemName="IS102" />
+      <path pathName="1P3" blockName="OB102" fromPortal="1-2" toPortal="2-3" fromDirection="0" toDirection="0" length="0.0" />
+      <portal portalName="1-2">
+        <fromBlock blockName="OB101">
+          <path pathName="4P2" blockName="OB101" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:block_distant($0002)" signalDelay="0.0" />
+        <toBlock blockName="OB102">
+          <path pathName="1P3" blockName="OB102" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:block_distant($0010)" signalDelay="0.0" />
+      </portal>
+      <portal portalName="2-3">
+        <fromBlock blockName="OB102">
+          <path pathName="1P3" blockName="OB102" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:block_distant($0003)" signalDelay="0.0" />
+        <toBlock blockName="OB103">
+          <path pathName="2P4" blockName="OB103" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:block_distant($0009)" signalDelay="0.0" />
+      </portal>
+    </oblock>
+    <oblock systemName="OB103" length="2000.0" units="true" curve="0" permissive="true" speedNotch="">
+      <sensor systemName="IS103" />
+      <path pathName="2P4" blockName="OB103" fromPortal="2-3" toPortal="3-4" fromDirection="0" toDirection="0" length="0.0" />
+      <portal portalName="2-3">
+        <fromBlock blockName="OB102">
+          <path pathName="1P3" blockName="OB102" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:block_distant($0003)" signalDelay="0.0" />
+        <toBlock blockName="OB103">
+          <path pathName="2P4" blockName="OB103" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:block_distant($0009)" signalDelay="0.0" />
+      </portal>
+      <portal portalName="3-4">
+        <fromBlock blockName="OB103">
+          <path pathName="2P4" blockName="OB103" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:entry_distant($0004)" signalDelay="0.0" />
+        <toBlock blockName="OB104">
+          <path pathName="3P1" blockName="OB104" />
+          <path pathName="3P5" blockName="OB104" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:exit_distant($0008)" signalDelay="0.0" />
+      </portal>
+    </oblock>
+    <oblock systemName="OB104" length="3000.0" units="true" curve="0" permissive="true" speedNotch="">
+      <sensor systemName="IS104" />
+      <path pathName="3P1" blockName="OB104" fromPortal="3-4" toPortal="4-1" fromDirection="0" toDirection="0" length="0.0">
+        <setting turnout="IT201" set="2" />
+      </path>
+      <path pathName="3P5" blockName="OB104" fromPortal="3-4" toPortal="4-5" fromDirection="0" toDirection="0" length="1000.0">
+        <setting turnout="IT201" set="4" />
+      </path>
+      <portal portalName="4-1">
+        <fromBlock blockName="OB104">
+          <path pathName="3P1" blockName="OB104" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:exit_distant($0005)" signalDelay="0.0" />
+        <toBlock blockName="OB101">
+          <path pathName="4P2" blockName="OB101" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:entry_distant($0007)" signalDelay="0.0" />
+      </portal>
+      <portal portalName="3-4">
+        <fromBlock blockName="OB103">
+          <path pathName="2P4" blockName="OB103" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:entry_distant($0004)" signalDelay="0.0" />
+        <toBlock blockName="OB104">
+          <path pathName="3P1" blockName="OB104" />
+          <path pathName="3P5" blockName="OB104" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:exit_distant($0008)" signalDelay="0.0" />
+      </portal>
+      <portal portalName="4-5">
+        <fromBlock blockName="OB104">
+          <path pathName="3P5" blockName="OB104" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:exit_distant($0006)" signalDelay="0.0" />
+        <toBlock blockName="OB105">
+          <path pathName="4P" blockName="OB105" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:entry_distant($0011)" signalDelay="0.0" />
+      </portal>
+    </oblock>
+    <oblock systemName="OB105" length="1000.0" units="true" curve="0" permissive="true" speedNotch="">
+      <sensor systemName="IS105" />
+      <path pathName="4P" blockName="OB105" fromPortal="4-5" fromDirection="0" toDirection="0" length="0.0" />
+      <portal portalName="4-5">
+        <fromBlock blockName="OB104">
+          <path pathName="3P5" blockName="OB104" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:exit_distant($0006)" signalDelay="0.0" />
+        <toBlock blockName="OB105">
+          <path pathName="4P" blockName="OB105" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:entry_distant($0011)" signalDelay="0.0" />
+      </portal>
+    </oblock>
+  </oblocks>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+    <signalmastlogic source="1-2">
+      <sourceSignalMast>1-2</sourceSignalMast>
+      <destinationMast destination="2-3">
+        <destinationSignalMast>2-3</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS102</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="2-3">
+      <sourceSignalMast>2-3</sourceSignalMast>
+      <destinationMast destination="3-4">
+        <destinationSignalMast>3-4</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS103</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="3-2">
+      <sourceSignalMast>3-2</sourceSignalMast>
+      <destinationMast destination="2-1">
+        <destinationSignalMast>2-1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS102</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="2-1">
+      <sourceSignalMast>2-1</sourceSignalMast>
+      <destinationMast destination="1-4">
+        <destinationSignalMast>1-4</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS101</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="3-4">
+      <sourceSignalMast>3-4</sourceSignalMast>
+      <destinationMast destination="4-1">
+        <destinationSignalMast>4-1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>IT201</turnoutName>
+            <turnoutState>closed</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS104</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+      <destinationMast destination="4-5">
+        <destinationSignalMast>4-5</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>IT201</turnoutName>
+            <turnoutState>thrown</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS104</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="1-4">
+      <sourceSignalMast>1-4</sourceSignalMast>
+      <destinationMast destination="4-3">
+        <destinationSignalMast>4-3</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>IT201</turnoutName>
+            <turnoutState>closed</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS104</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="5-4">
+      <sourceSignalMast>5-4</sourceSignalMast>
+      <destinationMast destination="4-3">
+        <destinationSignalMast>4-3</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>IT201</turnoutName>
+            <turnoutState>thrown</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS104</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="4-1">
+      <sourceSignalMast>4-1</sourceSignalMast>
+      <destinationMast destination="1-2">
+        <destinationSignalMast>1-2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS101</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="4-5">
+      <sourceSignalMast>4-5</sourceSignalMast>
+      <destinationMast destination="5-">
+        <destinationSignalMast>5-</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS105</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="4-3">
+      <sourceSignalMast>4-3</sourceSignalMast>
+      <destinationMast destination="3-2">
+        <destinationSignalMast>3-2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS103</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Jan 04 08:22:19 PST 2016" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <filehistory>
+    <operation>
+      <type>Load OK</type>
+      <date>Mon Oct 28 22:04:36 PDT 2019</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/load/PortalCheck.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Thu Feb 11 17:00:00 GMT 2016</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Thu Feb 11 17:04:28 GMT 2016</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Mon Oct 28 22:04:36 PDT 2019</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.17.5ish+jake+20191029T0350Z+R0e009a02d2 on Mon Oct 28 22:04:36 PDT 2019-->
+</layout-config>

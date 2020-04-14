@@ -33,5 +33,8 @@ public class StatusPanelTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
+    }
 }

@@ -4,41 +4,13 @@
 # Be sure to regex escape all . () [ $ characters, accept differing lines for lambdas, and end with .*
 
 # For checkStandardStreams
-Constructor <jmri\.jmris\.simpleserver\.parser\.JmriServerParserTokenManager\.<init>\(jmri\.jmris\.simpleserver\.parser\.SimpleCharStream\)> gets field <java\.lang\.System\.out>.*
-Constructor <jmri\.jmris\.simpleserver\.parser\.JmriServerParserTokenManager\.<init>\(jmri\.jmris\.simpleserver\.parser\.SimpleCharStream, int\)> gets field <java\.lang\.System\.out>.*
-Constructor <jmri\.jmris\.srcp\.parser\.SRCPParserTokenManager\.<init>\(jmri\.jmris\.srcp\.parser\.SimpleCharStream\)> gets field <java\.lang\.System\.out>.*
-Constructor <jmri\.jmris\.srcp\.parser\.SRCPParserTokenManager\.<init>\(jmri\.jmris\.srcp\.parser\.SimpleCharStream, int\)> gets field <java\.lang\.System\.out>.*
-Constructor <jmri\.jmrit\.Sound\$WavBuffer\.<init>\(\[B\)> gets field <java\.lang\.System\.out>.*
-Constructor <jmri\.jmrit\.ussctc\.TrafficRelay\.<init>\(jmri\.jmrit\.ussctc\.SignalHeadSection, jmri\.jmrit\.ussctc\.CodeGroupThreeBits, \[Ljmri\.BeanSetting;\)> gets field <java\.lang\.System\.out>.*
-Constructor <jmri\.jmrix\.srcp\.parser\.SRCPClientParserTokenManager\.<init>\(jmri\.jmrix\.srcp\.parser\.SimpleCharStream\)> gets field <java\.lang\.System\.out>.*
-Constructor <jmri\.jmrix\.srcp\.parser\.SRCPClientParserTokenManager\.<init>\(jmri\.jmrix\.srcp\.parser\.SimpleCharStream, int\)> gets field <java\.lang\.System\.out>.*
-Method <apps\.CheckerFrameworkCheck\.test\(\)> gets field <java\.lang\.System\.out>.*
-Method <apps\.FindBugsCheck\.test\(\)> gets field <java\.lang\.System\.out>.*
-Method <apps\.gui3\.paned\.QuitAction\.actionPerformed\(java\.awt\.event\.ActionEvent\)>.*
-Method <jmri\.Version\.main\(\[Ljava\.lang\.String;\)> gets field <java\.lang\.System\.out>.*
-Method <jmri\.jmris\.simpleserver\.parser\.SimpleNode\.dump\(java\.lang\.String\)> gets field <java\.lang\.System\.out>.*
-Method <jmri\.jmris\.srcp\.parser\.SimpleNode\.dump\(java\.lang\.String\)> gets field <java\.lang\.System\.out>.*
-Method <jmri\.jmrit\.Sound\$StreamingSound\.run\(\)> gets field <java\.lang\.System\.out>.*
 Method <jmri\.jmrit\.XmlFile\.lambda\$dumpElement\$.*\(org\.jdom2\.Element\)> gets field <java\.lang\.System\.out>.*
+Method <jmri\.jmrit\.XmlFile\.lambda\$0\(org\.jdom2\.Element\)> gets field <java\.lang\.System\.out>.*
 Method <jmri\.jmrit\.XmlFileValidateAction\$2\.showFailResults\(java\.awt\.Component, java\.lang\.String\)> gets field <java\.lang\.System\.out>.*
 Method <jmri\.jmrit\.automat\.JythonAutomaton\.handle\(\)> gets field <java\.lang\.System\.out>.*
 Method <jmri\.jmrit\.automat\.JythonSiglet\.defineIO\(\)> gets field <java\.lang\.System\.out>.*
-Method <jmri\.jmrit\.decoderdefn\.DecoderIndexBuilder\.main\(\[Ljava\.lang\.String;\)> gets field <java\.lang\.System\.out>.*
-Method <jmri\.jmrit\.dispatcher\.AutoActiveTrain\.setTargetSpeedByProfile\(float\)> calls method <java\.lang\.Exception\.printStackTrace\(\)>.*
-Method <jmri\.jmrit\.logix\.Warrant\$2\.run\(\)> calls method <java\.lang\.Exception\.printStackTrace\(\)>.*
-Method <jmri\.jmrit\.throttle\.WindowPreferences\.setPreferences\(java\.awt\.Container, org\.jdom2\.Element, boolean\)> gets field <java\.lang\.System\.out>.*
-Method <jmri\.jmrit\.throttle\.WindowPreferences\.setPreferences\(javax\.swing\.JInternalFrame, org\.jdom2\.Element\)> gets field <java\.lang\.System\.out>.*
-Method <jmri\.jmrix\.can\.cbus\.swing\.nodeconfig\.NodeConfigToolPane\$TransferHandler\.importData\(javax\.swing\.JComponent, java\.awt\.datatransfer\.Transferable\)> calls method <java\.lang\.Exception\.printStackTrace\(\)>.*
-Method <jmri\.jmrix\.cmri\.serial\.cmrinetmetrics\.CMRInetMetricsCollector\.init\(\)> gets field <java\.lang\.System\.out>.*
-Method <jmri\.jmrix\.mrc\.MrcSystemConnectionMemo\.getMrcTrafficController\(\)> calls method <java.lang.Exception.printStackTrace\(\)>.*
-Method <jmri\.jmrix\.openlcb\.swing\.downloader\.LoaderPane\.readFile\(java\.lang\.String\)> gets field <java\.lang\.System\.out>.*
-Method <jmri\.jmrix\.rps\.swing\.CsvExportAction\.startLogging\(java\.awt\.event\.ActionEvent\)> gets field <java\.lang\.System\.out>.*
-Method <jmri\.jmrix\.rps\.swing\.CsvExportMeasurementAction\.startLogging\(java\.awt\.event\.ActionEvent\)> gets field <java\.lang\.System\.out>.*
-Method <jmri\.jmrix\.srcp\.parser\.SimpleNode\.dump\(java\.lang\.String\)> gets field <java\.lang\.System\.out>.*
 Method <jmri\.managers\.DefaultShutDownManager\.runShutDownTasks\(boolean\)> gets field <java\.lang\.System\.err>.*
 Method <jmri\.util\.FileUtilSupport\.getPreferencesPath\(\)> gets field <java\.lang\.System\.err>.*
-Method <jmri\.util\.JTextPaneAppender\.append\(org\.apache\.log4j\.spi\.LoggingEvent\)> gets field <java\.lang\.System\.err>.*
-Method <jmri\.util\.JTextPaneAppender\.lambda\$append\$.*\(java\.lang\.String, org\.apache\.log4j\.spi\.LoggingEvent\)> gets field <java\.lang\.System\.err>.*
 Method <jmri\.util\.com\.dictiography\.collections\.IndexedTreeMap\.dbg\(\)> gets field <java\.lang\.System\.out>.*
 Method <jmri\.util\.com\.rbnb\.UDPOutputStream\.write\(\[B, int, int\)> gets field <java\.lang\.System\.err>.*
 
@@ -46,7 +18,8 @@ Method <jmri\.util\.com\.rbnb\.UDPOutputStream\.write\(\[B, int, int\)> gets fie
 Class <jmri\.jmrit\.symbolicprog\.SymbolicProgBundle> is not assignable to jmri\.Bundle.*
 
 # For checkBundleNames
-Class <apps\.ConfigBundle> does not have simple name 'Bundle'.*
+Class <apps\.ConfigBundle> does not have simple name \'Bundle\'.*
+Class <jmri\.web\.servlet\.json\.JsonBundle> does not have simple name \'Bundle\'.*
 
 # For checkJmriPackageAwt
 Method <jmri\.ConditionalAction\.getListener\(\)> has return type <java\.awt\.event\.ActionListener>.*

@@ -8,6 +8,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.annotation.Nonnull;
 import jmri.Conditional;
 import jmri.ConditionalManager;
 import jmri.InstanceManager;
@@ -299,12 +300,13 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * Get a list of all Conditional system names
      * Overrides the bean method
      * @since 4.7.4
-     * @deprecated 4.11.5 - use direct access via 
-     *                  {@link #getNamedBeanSet} 
+     * @deprecated 4.11.5 - use direct access via
+     *                  {@link #getNamedBeanSet}
      * @return a list of conditional system names regardless of parent Logix
      */
     @Deprecated // 4.11.5
     @Override
+    @Nonnull
     public List<String> getSystemNameList() {
         List<String> nameList = new ArrayList<>();
 
@@ -319,7 +321,32 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
     }
 
     /**
-     * 
+     * Create a named bean set for conditionals.  This requires special logic since conditional
+     * beans are not registered.
+     * @since 4.17.5
+     * @return a sorted named bean set of conditionals.
+     */
+    @Override
+    @Nonnull
+    public SortedSet<Conditional> getNamedBeanSet() {
+        TreeSet<Conditional> conditionals = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
+
+        jmri.LogixManager logixManager = InstanceManager.getDefault(jmri.LogixManager.class);
+        for (Logix lgx : logixManager.getNamedBeanSet()) {
+            for (int i = 0; i < lgx.getNumConditionals(); i++) {
+                Conditional cdl = getBySystemName(lgx.getConditionalByNumberOrder(i));
+                if (cdl == null) {
+                    log.error("Conditional not found for \"{}\"", lgx.getConditionalByNumberOrder(i));
+                } else {
+                    conditionals.add(cdl);
+                }
+            }
+        }
+        return Collections.unmodifiableSortedSet(conditionals);
+    }
+
+    /**
+     *
      * @return the default instance of the DefaultConditionalManager
      * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
@@ -329,8 +356,17 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
     }
 
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameConditionals" : "BeanNameConditional");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Conditional> getNamedBeanClass() {
+        return Conditional.class;
     }
 
     // --- Conditional Where Used processes ---

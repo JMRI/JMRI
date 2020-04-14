@@ -54,15 +54,11 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
-import jmri.util.JmriJFrame;
-import jmri.swing.NamedBeanComboBox;
-import jmri.util.swing.XTableColumnModel;
-
-import jmri.jmrix.SystemConnectionMemo;
-import jmri.jmrix.SystemConnectionMemoManager;
-import jmri.managers.ProxyTurnoutManager;
 import jmri.swing.ManagerComboBox;
+import jmri.swing.NamedBeanComboBox;
 import jmri.swing.SystemNameValidator;
+import jmri.util.JmriJFrame;
+import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,13 +82,13 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         super(actionName);
 
         // disable ourself if there is no primary turnout manager available
-        if (turnManager == null) {
+        if (turnoutManager == null) {
             setEnabled(false);
         }
 
         //This following must contain the word Global for a correct match in the abstract turnout
-        defaultThrownSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + turnManager.getDefaultThrownSpeed());
-        defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + turnManager.getDefaultClosedSpeed());
+        defaultThrownSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + turnoutManager.getDefaultThrownSpeed());
+        defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + turnoutManager.getDefaultClosedSpeed());
         //This following must contain the word Block for a correct match in the abstract turnout
         useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
 
@@ -128,7 +124,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
     private java.util.Vector<String> speedListClosed = new java.util.Vector<>();
     private java.util.Vector<String> speedListThrown = new java.util.Vector<>();
-    protected TurnoutManager turnManager = InstanceManager.getDefault(TurnoutManager.class);
+    protected TurnoutManager turnoutManager = InstanceManager.getDefault(TurnoutManager.class);
     protected JTable table;
     // for icon state col
     protected boolean _graphicState = false; // updated from prefs
@@ -139,7 +135,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     @Override
     public void setManager(@Nonnull Manager<Turnout> man) {
         if (man instanceof TurnoutManager) {
-            turnManager = (TurnoutManager) man;
+            turnoutManager = (TurnoutManager) man;
         }
     }
 
@@ -166,8 +162,8 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     @Override
     protected void createModel() {
         // store the terminology
-        closedText = turnManager.getClosedText();
-        thrownText = turnManager.getThrownText();
+        closedText = turnoutManager.getClosedText();
+        thrownText = turnoutManager.getThrownText();
 
         // load graphic state column display preference
         // from apps/GuiLafConfigPane.java
@@ -300,7 +296,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             @Override
             public boolean isCellEditable(int row, int col) {
                 String name = sysNameList.get(row);
-                TurnoutManager manager = turnManager;
+                TurnoutManager manager = turnoutManager;
                 Turnout t = manager.getBySystemName(name);
                 if (col == INVERTCOL) {
                     return t.canInvert();
@@ -348,7 +344,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     return "error";
                 }
                 String name = sysNameList.get(row);
-                TurnoutManager manager = turnManager;
+                TurnoutManager manager = turnoutManager;
                 Turnout t = manager.getBySystemName(name);
                 if (t == null) {
                     log.debug("error null turnout!");
@@ -474,7 +470,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             @Override
             public void setValueAt(Object value, int row, int col) {
                 String name = sysNameList.get(row);
-                Turnout t = turnManager.getBySystemName(name);
+                Turnout t = turnoutManager.getBySystemName(name);
                 if (t == null) {
                     NullPointerException ex = new NullPointerException("Unexpected null turnout in turnout table");
                     log.error(ex.getMessage(), ex); // log with stack trace
@@ -593,7 +589,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
             @Override
             public String getValue(@Nonnull String name) {
-                Turnout turn = turnManager.getBySystemName(name);
+                Turnout turn = turnoutManager.getBySystemName(name);
                 if (turn != null) {
                     int val = turn.getCommandedState();
                     switch (val) {
@@ -614,12 +610,12 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
             @Override
             public Manager<Turnout> getManager() {
-                return turnManager;
+                return turnoutManager;
             }
 
             @Override
             public Turnout getBySystemName(String name) {
-                return turnManager.getBySystemName(name);
+                return turnoutManager.getBySystemName(name);
             }
 
             @Override
@@ -993,14 +989,14 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
     private void updateClosedList() {
         speedListClosed.remove(defaultClosedSpeedText);
-        defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + turnManager.getDefaultClosedSpeed());
+        defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + turnoutManager.getDefaultClosedSpeed());
         speedListClosed.add(0, defaultClosedSpeedText);
         m.fireTableDataChanged();
     }
 
     private void updateThrownList() {
         speedListThrown.remove(defaultThrownSpeedText);
-        defaultThrownSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + turnManager.getDefaultThrownSpeed());
+        defaultThrownSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + turnoutManager.getDefaultThrownSpeed());
         speedListThrown.add(0, defaultThrownSpeedText);
         m.fireTableDataChanged();
     }
@@ -1067,18 +1063,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             };
             /* We use the proxy manager in this instance so that we can deal with
              duplicate usernames in multiple classes */
-            if (turnManager instanceof ProxyTurnoutManager) {
-                ProxyTurnoutManager proxy = (ProxyTurnoutManager) turnManager;
-                prefixBox.setManagers(proxy.getDisplayOrderManagerList());
-                if (pref.getComboBoxLastSelection(systemSelectionCombo) != null) { // pick up user pref
-                    SystemConnectionMemo memo = InstanceManager
-                            .getDefault(SystemConnectionMemoManager.class)
-                            .getSystemConnectionMemoForUserName(pref.getComboBoxLastSelection(systemSelectionCombo));
-                    prefixBox.setSelectedItem(memo.get(TurnoutManager.class));
-                }
-            } else {
-                prefixBox.setManagers(turnManager);
-            }
+            configureManagerComboBox(prefixBox, turnoutManager, TurnoutManager.class);
             userNameTextField.setName("userNameTextField"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
             // set up validation, zero text = false
@@ -1382,8 +1367,8 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         thrownCombo.removeItem(defaultThrownSpeedText);
         closedCombo.removeItem(defaultClosedSpeedText);
 
-        thrownCombo.setSelectedItem(turnManager.getDefaultThrownSpeed());
-        closedCombo.setSelectedItem(turnManager.getDefaultClosedSpeed());
+        thrownCombo.setSelectedItem(turnoutManager.getDefaultThrownSpeed());
+        closedCombo.setSelectedItem(turnoutManager.getDefaultClosedSpeed());
 
         // block of options above row of buttons; gleaned from Maintenance.makeDialog()
         // can be accessed by Jemmy in GUI test
@@ -1412,13 +1397,13 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
         // We will allow the turnout manager to handle checking whether the values have changed
         try {
-            turnManager.setDefaultThrownSpeed(thrownValue);
+            turnoutManager.setDefaultThrownSpeed(thrownValue);
         } catch (jmri.JmriException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + thrownValue);
         }
 
         try {
-            turnManager.setDefaultClosedSpeed(closedValue);
+            turnoutManager.setDefaultClosedSpeed(closedValue);
         } catch (jmri.JmriException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + closedValue);
         }
@@ -1440,7 +1425,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
      * @param f a Turnout table frame
      */
     @Override
-    public void addToFrame(BeanTableFrame f) {
+    public void addToFrame(BeanTableFrame<Turnout> f) {
         f.addToBottomBox(doAutomationBox, this.getClass().getName());
         doAutomationBox.setSelected(InstanceManager.getDefault(TurnoutOperationManager.class).getDoOperations());
         doAutomationBox.setToolTipText(Bundle.getMessage("TurnoutDoAutomationBoxTooltip"));
@@ -1495,8 +1480,8 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
      */
     @Override
     public void addToPanel(AbstractTableTabAction<Turnout> f) {
-        String connectionName = turnManager.getMemo().getUserName();
-        if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
+        String connectionName = turnoutManager.getMemo().getUserName();
+        if (turnoutManager.getClass().getName().contains("ProxyTurnoutManager")) {
             connectionName = "All"; // NOI18N
         }
 
@@ -1599,7 +1584,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
      * @param f the JFrame of this table
      */
     @Override
-    public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame<Turnout> f) {
         final jmri.util.JmriJFrame finalF = f;   // needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
         // check for menu
@@ -1648,6 +1633,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     }
 
     void cancelPressed(ActionEvent e) {
+        removePrefixBoxListener(prefixBox);
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
@@ -1707,8 +1693,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             try {
                 curAddress = InstanceManager.getDefault(TurnoutManager.class).getNextValidAddress(curAddress, prefix);
             } catch (jmri.JmriException ex) {
-                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertHW", curAddress), "" + ex, "", true, false);
+                displayHwError(curAddress, ex);
                 // directly add to statusBarLabel (but never called?)
                 statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
                 statusBarLabel.setForeground(Color.red);
@@ -1844,6 +1829,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         }
 
         pref.setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName()); // store user pref
+        removePrefixBoxListener(prefixBox);
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;

@@ -1,8 +1,11 @@
 package jmri.jmrix.mqtt;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.util.NamedBeanComparator;
 
 /**
  *
@@ -30,6 +33,11 @@ public class MqttSystemConnectionMemo extends SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return null;
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     /**

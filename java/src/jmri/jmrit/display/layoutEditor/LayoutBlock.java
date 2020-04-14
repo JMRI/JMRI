@@ -3,55 +3,19 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.JCheckBox;
-import javax.swing.JColorChooser;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import java.beans.*;
+import java.util.*;
+import javax.annotation.*;
+import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
-import jmri.BeanSetting;
-import jmri.Block;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.NamedBean;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
-import jmri.Path;
-import jmri.Reporter;
-import jmri.Reportable;
-import jmri.Sensor;
-import jmri.Turnout;
+import jmri.*;
 import jmri.implementation.AbstractNamedBean;
-import jmri.jmrit.beantable.beanedit.BeanEditItem;
-import jmri.jmrit.beantable.beanedit.BeanItemPanel;
-import jmri.jmrit.beantable.beanedit.BlockEditAction;
+import jmri.jmrit.beantable.beanedit.*;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.swing.NamedBeanComboBox;
-import jmri.util.JmriJFrame;
-import jmri.util.MathUtil;
-import jmri.util.swing.JmriColorChooser;
-import jmri.util.swing.SplitButtonColorChooserPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
+import jmri.util.*;
+import jmri.util.swing.*;
+import org.slf4j.*;
 
 /**
  * A LayoutBlock is a group of track segments and turnouts on a LayoutEditor
@@ -137,9 +101,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     private String occupancySensorName = "";
     private String memoryName = "";
     private int occupiedSense = Sensor.ACTIVE;
-    private Color blockTrackColor = Color.black;
-    private Color blockOccupiedColor = Color.black;
-    private Color blockExtraColor = Color.black;
+    private Color blockTrackColor = Color.darkGray;
+    private Color blockOccupiedColor = Color.red;
+    private Color blockExtraColor = Color.white;
 
     /*
      * Creates a LayoutBlock object.
@@ -344,9 +308,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * @return the validated sensor
      */
     public Sensor validateSensor(String sensorName, Component openFrame) {
-        String theSensorName = sensorName;
         //check if anything entered
-        if ((theSensorName == null) || theSensorName.isEmpty()) {
+        if ((sensorName == null) || sensorName.isEmpty()) {
             //no sensor name entered
             if (occupancyNamedSensor != null) {
                 setOccupancySensorName(null);
@@ -355,12 +318,12 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         }
 
         //get the sensor corresponding to this name
-        Sensor s = InstanceManager.sensorManagerInstance().getSensor(theSensorName);
+        Sensor s = InstanceManager.sensorManagerInstance().getSensor(sensorName);
         if (s == null) {
             //There is no sensor corresponding to this name
             JOptionPane.showMessageDialog(openFrame,
                     java.text.MessageFormat.format(Bundle.getMessage("Error7"),
-                            new Object[]{theSensorName}),
+                            new Object[]{sensorName}),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return null;
         }
@@ -371,29 +334,31 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         LayoutBlock b = InstanceManager.getDefault(LayoutBlockManager.class).
                 getBlockWithSensorAssigned(s);
 
-        if (b != null) {
-            if (b.getUseCount() > 0) {
-                //new sensor is not unique, return to the old one
-                occupancyNamedSensor = savedNamedSensor;
-                JOptionPane.showMessageDialog(openFrame,
-                        java.text.MessageFormat.format(Bundle.getMessage("Error6"),
-                                new Object[]{theSensorName, b.getId()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return null;
-            } else {
-                //the user is assigning a sensor which is already assigned to
-                //layout block b. Layout block b is no longer in use so this
-                //should be fine but it's technically possible to put
-                //this discarded layout block back into service (possibly
-                //by mistake) by entering its name in any edit layout block window.
-                //That would cause a problem with the sensor being in use in
-                //two active blocks, so as a precaution we remove the sensor
-                //from the discarded block here.
-                b.setOccupancySensorName(null);
+        if (b != this) {
+            if (b != null) {
+                if (b.getUseCount() > 0) {
+                    //new sensor is not unique, return to the old one
+                    occupancyNamedSensor = savedNamedSensor;
+                    JOptionPane.showMessageDialog(openFrame,
+                            java.text.MessageFormat.format(Bundle.getMessage("Error6"),
+                                    new Object[]{sensorName, b.getId()}),
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    return null;
+                } else {
+                    //the user is assigning a sensor which is already assigned to
+                    //layout block b. Layout block b is no longer in use so this
+                    //should be fine but it's technically possible to put
+                    //this discarded layout block back into service (possibly
+                    //by mistake) by entering its name in any edit layout block window.
+                    //That would cause a problem with the sensor being in use in
+                    //two active blocks, so as a precaution we remove the sensor
+                    //from the discarded block here.
+                    b.setOccupancySensorName(null);
+                }
             }
+            //sensor is unique, or was only in use on a layout block not in use
+            setOccupancySensorName(sensorName);
         }
-        //sensor is unique, or was only in use on a layout block not in use
-        setOccupancySensorName(theSensorName);
         return s;
     }
 
@@ -537,6 +502,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * @return name of occupancy sensor
      */
     public String getOccupancySensorName() {
+        if (occupancyNamedSensor == null) {
+            if (block != null) {
+                occupancyNamedSensor = block.getNamedSensor();
+            }
+        }
         if (occupancyNamedSensor != null) {
             return occupancyNamedSensor.getName();
         }
@@ -549,6 +519,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * @return occ sensor name
      */
     public Sensor getOccupancySensor() {
+        if (occupancyNamedSensor == null) {
+            if (block != null) {
+                occupancyNamedSensor = block.getNamedSensor();
+            }
+        }
         if (occupancyNamedSensor != null) {
             return occupancyNamedSensor.getBean();
         }
@@ -644,10 +619,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     public int getState() {
         return getOccupancy();
     }
-    
+
     /**
-     * Does nothing, do not use.
-     * Dummy for completion of NamedBean interface
+     * Does nothing, do not use. Dummy for completion of NamedBean interface
      */
     @Override
     public void setState(int i) {
@@ -871,6 +845,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     break;
                 }
             }
+        } else if (main.isEmpty() && test.isEmpty()) {
+            result = true;          // OK if both have no neighbors, common for turntable rays
         }
         return result;
     }
@@ -951,7 +927,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     private JColorChooser occupiedColorChooser = null;
     private JColorChooser extraColorChooser = null;
 
-    protected void editLayoutBlock(Component callingPane) {
+    public void editLayoutBlock(Component callingPane) {
         LayoutBlockEditAction beanEdit = new LayoutBlockEditAction();
         if (block == null) {
             //Block may not have been initialised due to an error so manually set it in the edit window
@@ -1054,7 +1030,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
         //check if Memory changed
         newName = memoryComboBox.getSelectedItemDisplayName();
-        if (newName == null) newName = "";
+        if (newName == null) {
+            newName = "";
+        }
         if (!memoryName.equals(newName)) {
             //memory has changed
             setMemory(validateMemory(newName, editLayoutBlockFrame), newName);
@@ -1124,7 +1102,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         @Override
         public String helpTarget() {
             return "package.jmri.jmrit.display.EditLayoutBlock";
-        }  //IN18N
+        }  // NOI18N
 
         @Override
         protected void initPanels() {
@@ -1140,7 +1118,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             BeanItemPanel layout = new BeanItemPanel();
             layout.setName(Bundle.getMessage("LayoutEditor"));
 
-            LayoutEditor.setupComboBox(memoryComboBox, false, true);
+            LayoutEditor.setupComboBox(memoryComboBox, false, true, false);
 
             layout.addItem(new BeanEditItem(new JLabel("" + useCount), Bundle.getMessage("UseCount"), null));
             layout.addItem(new BeanEditItem(memoryComboBox, Bundle.getMessage("BeanNameMemory"),
@@ -1211,7 +1189,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     }
                     //check if Memory changed
                     String newName = memoryComboBox.getSelectedItemDisplayName();
-                    if (newName == null) newName = "";
+                    if (newName == null) {
+                        newName = "";
+                    }
                     if (!memoryName.equals(newName)) {
                         //memory has changed
                         setMemory(validateMemory(newName, editLayoutBlockFrame), newName);
@@ -1351,10 +1331,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     /**
      * The code below relates to the layout block routing protocol
      */
-
     /**
-     * Set the block metric based upon the track segment that the block
-     * is associated with if the (200 if Side, 50 if Main). If the block is
+     * Set the block metric based upon the track segment that the block is
+     * associated with if the (200 if Side, 50 if Main). If the block is
      * assigned against multiple track segments all with different types then
      * the highest type will be used. In theory no reason why it couldn't be a
      * compromise.
@@ -2489,9 +2468,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     private boolean layoutConnectivity = true;
 
     /**
-     * Add a through path on this layout block, going from the
-     * source block to the destination block, using a specific panel. Note:
-     * If the reverse path is required, then this needs to be added seperately.
+     * Add a through path on this layout block, going from the source block to
+     * the destination block, using a specific panel. Note: If the reverse path
+     * is required, then this needs to be added seperately.
      */
     //Was public
     private void addThroughPath(Block srcBlock, Block dstBlock, LayoutEditor panel) {
@@ -2645,7 +2624,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 boolean allowAddition = false;
                 for (int i = 0; i < maxt.size(); i++) {
                     LayoutTurnout turn = maxt.get(i).getObject();
-                    if (turn.type == LayoutTurnout.DOUBLE_XOVER) {
+                    if (turn.type == LayoutTurnout.TurnoutType.DOUBLE_XOVER) {
                         allowAddition = true;
                         //The double crossover gets reported in the opposite setting.
                         if (maxt.get(i).getExpectedState() == 2) {
@@ -2941,8 +2920,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /**
-     * @param destBlock  is the destination of the block we are following
-     * @param direction  is the direction of travel from the previous block
+     * @param destBlock is the destination of the block we are following
+     * @param direction is the direction of travel from the previous block
      * @return next block
      */
     public Block getNextBlock(Block destBlock, int direction) {
@@ -4304,9 +4283,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /**
-     * Get the number of layout blocks to our desintation block going from
-     * the next directly connected block. If the destination block and nextblock
-     * are the same and the block is also registered as a neighbour then 1 is
+     * Get the number of layout blocks to our desintation block going from the
+     * next directly connected block. If the destination block and nextblock are
+     * the same and the block is also registered as a neighbour then 1 is
      * returned. If no valid route to the destination block can be found via the
      * next block then -1 is returned. If more than one route exists to the
      * destination then the route with the lowest count is returned.
@@ -4358,12 +4337,12 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /**
-     * Get the distance to our desintation block going from the next
-     * directly connected block. If the destination block and nextblock are the
-     * same and the block is also registered as a neighbour then 1 is returned.
-     * If no valid route to the destination block can be found via the next
-     * block then -1 is returned. If more than one route exists to the
-     * destination then the route with the lowest count is returned.
+     * Get the distance to our desintation block going from the next directly
+     * connected block. If the destination block and nextblock are the same and
+     * the block is also registered as a neighbour then 1 is returned. If no
+     * valid route to the destination block can be found via the next block then
+     * -1 is returned. If more than one route exists to the destination then the
+     * route with the lowest count is returned.
      *
      * @param destination final block
      * @param nextBlock   adjcent block
@@ -4681,8 +4660,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /**
-     * When a route is created, check to see if the through path that this
-     * route relates to is active.
+     * When a route is created, check to see if the through path that this route
+     * relates to is active.
      */
     boolean checkIsRouteOnValidThroughPath(Routes r) {
         for (ThroughPaths t : throughPaths) {
@@ -4773,7 +4752,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) {    //IN18N
+        if ("CanDelete".equals(evt.getPropertyName())) {    // NOI18N
             if (evt.getOldValue() instanceof Sensor) {
                 if (evt.getOldValue().equals(getOccupancySensor())) {
                     throw new PropertyVetoException(getDisplayName(), evt);
@@ -4785,7 +4764,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     throw new PropertyVetoException(getDisplayName(), evt);
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) {  //IN18N
+        } else if ("DoDelete".equals(evt.getPropertyName())) {  // NOI18N
             //Do nothing at this stage
             if (evt.getOldValue() instanceof Sensor) {
                 if (evt.getOldValue().equals(getOccupancySensor())) {
@@ -4799,6 +4778,28 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 }
             }
         }
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean.equals(getBlock())) {
+                report.add(new NamedBeanUsageReport("LayoutBlockBlock"));  // NOI18N
+            }
+            if (bean.equals(getMemory())) {
+                report.add(new NamedBeanUsageReport("LayoutBlockMemory"));  // NOI18N
+            }
+            if (bean.equals(getOccupancySensor())) {
+                report.add(new NamedBeanUsageReport("LayoutBlockSensor"));  // NOI18N
+            }
+            for (int i = 0; i < getNumberOfNeighbours(); i++) {
+                if (bean.equals(getNeighbourAtIndex(i))) {
+                    report.add(new NamedBeanUsageReport("LayoutBlockNeighbor", "Neighbor"));  // NOI18N
+                }
+            }
+        }
+        return report;
     }
 
     @Override

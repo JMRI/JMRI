@@ -1,18 +1,24 @@
 package jmri.managers.configurexml;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
+import java.util.SortedSet;
+
+import javax.swing.JOptionPane;
+
 import jmri.InstanceManager;
 import jmri.Route;
 import jmri.RouteManager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.managers.DefaultRouteManager;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides the functionality for configuring RouteManagers
+ * Provides the functionality for configuring RouteManagers.
  *
  * @author Dave Duchamp Copyright (c) 2004
  * @author Daniel Boudreau Copyright (c) 2007
@@ -30,40 +36,35 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
      * @return Element containing the complete info
      */
     @Override
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
         Element routes = new Element("routes");
         setStoreElementClass(routes);
-        RouteManager tm = (RouteManager) o;
-        if (tm != null) {
-            java.util.Iterator<String> iter
-                    = tm.getSystemNameList().iterator();
-
-            // don't return an element if there are not routes to include
-            if (!iter.hasNext()) {
+        RouteManager rm = (RouteManager) o;
+        if (rm != null) {
+            SortedSet<Route> routeList = rm.getNamedBeanSet();
+            // don't return an element if there are no routes to include
+            if (routeList.isEmpty()) {
                 return null;
             }
+            for (Route r : routeList) {
+                // store the routes
+                String rName = r.getSystemName();
+                log.debug("system name is {}", rName);
 
-            // store the routes
-            while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
-                    log.error("System name null during store");
-                    break;
-                }
-                log.debug("system name is {}", sname);
-                Route r = tm.getBySystemName(sname);
                 String cTurnout = r.getControlTurnout();
                 int addedDelay = r.getRouteCommandDelay();
                 boolean routeLocked = r.getLocked();
                 String cLockTurnout = r.getLockControlTurnout();
 
                 Element elem = new Element("route");
-                elem.addContent(new Element("systemName").addContent(sname));
+                elem.addContent(new Element("systemName").addContent(rName));
 
-                // As a work-around for backward compatibility, store systemName and username as attribute.
-                // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
-                if (r.getUserName()!=null && !r.getUserName().equals("")) elem.setAttribute("userName", r.getUserName());
+                // As a work-around for backward compatibility, store systemName and userName as attribute.
+                // TODO Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                String uName = r.getUserName();
+                if (uName != null && !uName.equals("")) {
+                    elem.setAttribute("userName", uName);
+                }
 
                 // store common parts
                 storeCommon(r, elem);
@@ -135,7 +136,6 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 }
                 // add route control Sensors, if any
                 index = 0;
-                //rSensor = null;	// previous while forces rSensor to null
                 while ((rSensor = r.getRouteSensorName(index)) != null) {
                     Element rsElem = new Element("routeSensor")
                             .setAttribute("systemName", rSensor);
@@ -191,7 +191,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                     elem.addContent(rsElem);
                 }
 
-                log.debug("store route {}", sname);
+                log.debug("store Route {}", rName);
                 routes.addContent(elem);
             }
         }
@@ -241,16 +241,31 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
         List<Element> routeList = routes.getChildren("route");
         log.debug("Found {} routes", routeList.size());
         RouteManager tm = InstanceManager.getDefault(jmri.RouteManager.class);
+        int namesChanged = 0;
 
-        for (int i = 0; i < routeList.size(); i++) {
+        for (Element el : routeList) {
 
-            String sysName = getSystemName(routeList.get(i));
+            String sysName = getSystemName(el);
             if (sysName == null) {
-                log.warn("unexpected null in systemName {}", routeList.get(i));
+                log.warn("unexpected null in systemName {}", el);
                 break;
             }
+            // convert typeLetter from R to tm.typeLetter()
+            if (sysName.startsWith(tm.getSystemPrefix() + 'R')) {
+                String old = sysName;
+                sysName = tm.getSystemNamePrefix() + sysName.substring(tm.getSystemNamePrefix().length());
+                log.warn("Converting route system name {} to {}", old, sysName);
+                namesChanged++;
+            }
+            // prepend systemNamePrefix if missing
+            if (!sysName.startsWith(tm.getSystemNamePrefix())) {
+                String old = sysName;
+                sysName = tm.getSystemNamePrefix() + sysName;
+                log.warn("Converting route system name {} to {}", old, sysName);
+                namesChanged++;
+            }
 
-            String userName = getUserName(routeList.get(i));
+            String userName = getUserName(el);
             String cTurnout = null;
             String cTurnoutState = null;
             String addedDelayTxt = null;
@@ -259,26 +274,26 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
             String cLockTurnoutState = null;
             int addedDelay = 0;
 
-            if (routeList.get(i).getAttribute("controlTurnout") != null) {
-                cTurnout = routeList.get(i).getAttribute("controlTurnout").getValue();
+            if (el.getAttribute("controlTurnout") != null) {
+                cTurnout = el.getAttribute("controlTurnout").getValue();
             }
-            if (routeList.get(i).getAttribute("controlTurnoutState") != null) {
-                cTurnoutState = routeList.get(i).getAttribute("controlTurnoutState").getValue();
+            if (el.getAttribute("controlTurnoutState") != null) {
+                cTurnoutState = el.getAttribute("controlTurnoutState").getValue();
             }
-            if (routeList.get(i).getAttribute("controlLockTurnout") != null) {
-                cLockTurnout = routeList.get(i).getAttribute("controlLockTurnout").getValue();
+            if (el.getAttribute("controlLockTurnout") != null) {
+                cLockTurnout = el.getAttribute("controlLockTurnout").getValue();
             }
-            if (routeList.get(i).getAttribute("controlLockTurnoutState") != null) {
-                cLockTurnoutState = routeList.get(i).getAttribute("controlLockTurnoutState").getValue();
+            if (el.getAttribute("controlLockTurnoutState") != null) {
+                cLockTurnoutState = el.getAttribute("controlLockTurnoutState").getValue();
             }
-            if (routeList.get(i).getAttribute("addedDelay") != null) {
-                addedDelayTxt = routeList.get(i).getAttribute("addedDelay").getValue();
+            if (el.getAttribute("addedDelay") != null) {
+                addedDelayTxt = el.getAttribute("addedDelay").getValue();
                 if (addedDelayTxt != null) {
                     addedDelay = Integer.parseInt(addedDelayTxt);
                 }
             }
-            if (routeList.get(i).getAttribute("routeLocked") != null) {
-                routeLockedTxt = routeList.get(i).getAttribute("routeLocked").getValue();
+            if (el.getAttribute("routeLocked") != null) {
+                routeLockedTxt = el.getAttribute("routeLocked").getValue();
             }
 
             log.debug("create route: ({})({})", sysName, (userName == null ? "<null>" : userName));
@@ -292,22 +307,27 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
             }
 
             // load common parts
-            loadCommon(r, routeList.get(i));
+            loadCommon(r, el);
 
             // add control turnout if there is one
             if (cTurnout != null) {
                 r.setControlTurnout(cTurnout);
                 if (cTurnoutState != null) {
-                    if (cTurnoutState.equals("THROWN")) {
-                        r.setControlTurnoutState(Route.ONTHROWN);
-                    } else if (cTurnoutState.equals("CHANGE")) {
-                        r.setControlTurnoutState(Route.ONCHANGE);
-                    } else if (cTurnoutState.equals("VETOCLOSED")) {
-                        r.setControlTurnoutState(Route.VETOCLOSED);
-                    } else if (cTurnoutState.equals("VETOTHROWN")) {
-                        r.setControlTurnoutState(Route.VETOTHROWN);
-                    } else {
-                        r.setControlTurnoutState(Route.ONCLOSED);
+                    switch (cTurnoutState) {
+                        case "THROWN":
+                            r.setControlTurnoutState(Route.ONTHROWN);
+                            break;
+                        case "CHANGE":
+                            r.setControlTurnoutState(Route.ONCHANGE);
+                            break;
+                        case "VETOCLOSED":
+                            r.setControlTurnoutState(Route.VETOCLOSED);
+                            break;
+                        case "VETOTHROWN":
+                            r.setControlTurnoutState(Route.VETOTHROWN);
+                            break;
+                        default:
+                            r.setControlTurnoutState(Route.ONCLOSED);
                     }
                 } else {
                     log.error("cTurnoutState was null!");
@@ -321,7 +341,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 r.setLocked(true);
             }
 
-            //add lock control turout if there is one
+            // add lock control turout if there is one
             if (cLockTurnout != null) {
                 r.setLockControlTurnout(cLockTurnout);
                 if (cLockTurnoutState != null) {
@@ -338,19 +358,16 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
             }
 
             // load output turnouts if there are any - old format first (1.7.6 and before)
-            List<Element> routeTurnoutList = routeList.get(i).getChildren("routeTurnout");
+            List<Element> routeTurnoutList = el.getChildren("routeTurnout");
             if (routeTurnoutList.size() > 0) {
                 // This route has turnouts
-                for (int k = 0; k < routeTurnoutList.size(); k++) {
-                    if (((routeTurnoutList.get(k))).getAttribute("systemName") == null) {
-                        log.warn("unexpected null in systemName {} {}", ((routeTurnoutList.get(k))),
-                                ((routeTurnoutList.get(k))).getAttributes());
+                for (Element element : routeTurnoutList) {
+                    if (element.getAttribute("systemName") == null) {
+                        log.warn("unexpected null in systemName {} {}", element, element.getAttributes());
                         break;
                     }
-                    String tSysName = ((routeTurnoutList.get(k)))
-                            .getAttribute("systemName").getValue();
-                    String rState = ((routeTurnoutList.get(k)))
-                            .getAttribute("state").getValue();
+                    String tSysName = element.getAttribute("systemName").getValue();
+                    String rState = element.getAttribute("state").getValue();
                     int tSetState = Turnout.CLOSED;
                     if (rState.equals("THROWN")) {
                         tSetState = Turnout.THROWN;
@@ -362,10 +379,10 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 }
             }
             // load output turnouts if there are any - new format
-            routeTurnoutList = routeList.get(i).getChildren("routeOutputTurnout");
+            routeTurnoutList = el.getChildren("routeOutputTurnout");
             if (routeTurnoutList.size() > 0) {
                 // This route has turnouts
-                for (int k = 0; k < routeTurnoutList.size(); k++) {
+                for (int k = 0; k < routeTurnoutList.size(); k++) { // index k is required later to get Locked state
                     if (routeTurnoutList.get(k).getAttribute("systemName") == null) {
                         log.warn("unexpected null in systemName {} {}", routeTurnoutList.get(k),
                                 routeTurnoutList.get(k).getAttributes());
@@ -397,90 +414,96 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 }
             }
             // load output sensors if there are any - new format
-            routeTurnoutList = routeList.get(i).getChildren("routeOutputSensor");
-            if (routeTurnoutList.size() > 0) {
-                // This route has turnouts
-                for (int k = 0; k < routeTurnoutList.size(); k++) {
-                    if (routeTurnoutList.get(k).getAttribute("systemName") == null) {
-                        log.warn("unexpected null in systemName {} {}", routeTurnoutList.get(k),
-                                routeTurnoutList.get(k).getAttributes());
-                        break;
-                    }
-                    String tSysName = routeTurnoutList.get(k)
-                            .getAttribute("systemName").getValue();
-                    String rState = routeTurnoutList.get(k)
-                            .getAttribute("state").getValue();
-                    int tSetState = Sensor.INACTIVE;
-                    if (rState.equals("ACTIVE")) {
-                        tSetState = Sensor.ACTIVE;
-                    } else if (rState.equals("TOGGLE")) {
-                        tSetState = Route.TOGGLE;
-                    }
-                    // If the Turnout has already been added to the route and is the same as that loaded, 
-                    // we will not re add the turnout.                        
-                    if (r.isOutputSensorIncluded(tSysName)) {
-                        break;
-                    }
-                    // Add turnout to route
-                    r.addOutputSensor(tSysName, tSetState);
+            List<Element> routeSensorList = el.getChildren("routeOutputSensor");
+            for (Element sen : routeSensorList) { // this route has output sensors
+                if (sen.getAttribute("systemName") == null) {
+                    log.warn("unexpected null in systemName {} {}", sen, sen.getAttributes());
+                    break;
                 }
+                String tSysName = sen.getAttribute("systemName").getValue();
+                String rState = sen.getAttribute("state").getValue();
+                int tSetState = Sensor.INACTIVE;
+                if (rState.equals("ACTIVE")) {
+                    tSetState = Sensor.ACTIVE;
+                } else if (rState.equals("TOGGLE")) {
+                    tSetState = Route.TOGGLE;
+                }
+                // If the Turnout has already been added to the route and is the same as that loaded,
+                // we will not re add the turnout.
+                if (r.isOutputSensorIncluded(tSysName)) {
+                    break;
+                }
+                // Add turnout to route
+                r.addOutputSensor(tSysName, tSetState);
             }
             // load sound, script files if present
-            Element fileElement = routeList.get(i).getChild("routeSoundFile");
+            Element fileElement = el.getChild("routeSoundFile");
             if (fileElement != null) {
                 // convert to absolute path name
                 r.setOutputSoundName(
                         jmri.util.FileUtil.getExternalFilename(fileElement.getAttribute("name").getValue())
                 );
             }
-            fileElement = routeList.get(i).getChild("routeScriptFile");
+            fileElement = el.getChild("routeScriptFile");
             if (fileElement != null) {
                 r.setOutputScriptName(
                         jmri.util.FileUtil.getExternalFilename(fileElement.getAttribute("name").getValue())
                 );
             }
             // load turnouts aligned sensor if there is one
-            fileElement = routeList.get(i).getChild("turnoutsAlignedSensor");
+            fileElement = el.getChild("turnoutsAlignedSensor");
             if (fileElement != null) {
                 r.setTurnoutsAlignedSensor(fileElement.getAttribute("name").getValue());
             }
 
             // load route control sensors, if there are any
-            List<Element> routeSensorList = routeList.get(i).getChildren("routeSensor");
-            if (routeSensorList.size() > 0) {
-                // This route has sensors
-                for (int k = 0; k < routeSensorList.size(); k++) {
-                    if (routeSensorList.get(k).getAttribute("systemName") == null) {
-                        log.warn("unexpected null in systemName {} {}", routeSensorList.get(k),
-                                routeSensorList.get(k).getAttributes());
-                        break;
-                    }
-                    int mode = Route.ONACTIVE;  // default mode
-                    if (routeSensorList.get(k).getAttribute("mode") != null) {
-                        String sm = routeSensorList.get(k).getAttribute("mode").getValue();
-                        if (sm.equals("onActive")) {
-                            mode = Route.ONACTIVE;
-                        } else if (sm.equals("onInactive")) {
-                            mode = Route.ONINACTIVE;
-                        } else if (sm.equals("onChange")) {
-                            mode = Route.ONCHANGE;
-                        } else if (sm.equals("vetoActive")) {
-                            mode = Route.VETOACTIVE;
-                        } else if (sm.equals("vetoInactive")) {
-                            mode = Route.VETOINACTIVE;
-                        } else {
-                            log.warn("unexpected sensor mode in route {} was {}", sysName, sm);
-                        }
-                    }
-
-                    // Add Sensor to route
-                    r.addSensorToRoute(routeSensorList.get(k)
-                            .getAttribute("systemName").getValue(), mode);
+            routeSensorList = el.getChildren("routeSensor");
+            for (Element sen : routeSensorList) { // this route has sensors
+                if (sen.getAttribute("systemName") == null) {
+                    log.warn("unexpected null in systemName {} {}", sen, sen.getAttributes());
+                    break;
                 }
+                int mode = Route.ONACTIVE;  // default mode
+                if (sen.getAttribute("mode") == null) {
+                    break;
+                }
+                String sm = sen.getAttribute("mode").getValue();
+                switch (sm) {
+                    case "onActive":
+                        mode = Route.ONACTIVE;
+                        break;
+                    case "onInactive":
+                        mode = Route.ONINACTIVE;
+                        break;
+                    case "onChange":
+                        mode = Route.ONCHANGE;
+                        break;
+                    case "vetoActive":
+                        mode = Route.VETOACTIVE;
+                        break;
+                    case "vetoInactive":
+                        mode = Route.VETOINACTIVE;
+                        break;
+                    default:
+                        log.warn("unexpected sensor mode in route {} was {}", sysName, sm);
+                }
+                // Add Sensor to route
+                r.addSensorToRoute(sen.getAttribute("systemName").getValue(), mode);
             }
-
             // and start it working
             r.activateRoute();
+        }
+        if (namesChanged > 0) {
+            // TODO: replace the System property check with an in-application mechanism
+            // for notifying users of multiple changes that can be silenced as part of
+            // normal operations
+            if (!GraphicsEnvironment.isHeadless() && !Boolean.getBoolean("jmri.test.no-dialogs")) {
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage(namesChanged > 1 ? "RouteManager.SystemNamesChanged.Message" : "RouteManager.SystemNameChanged.Message", namesChanged),
+                        Bundle.getMessage("Manager.SystemNamesChanged.Title", namesChanged, tm.getBeanTypeHandled(namesChanged > 1)),
+                        JOptionPane.WARNING_MESSAGE);
+            }
+            log.warn("System names for {} Routes changed; this may have operational impacts.", namesChanged); 
         }
     }
 
@@ -497,8 +520,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
         }
         // if old manager exists, remove it from configuration process
         if (current != null) {
-            InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(
-                    current);
+            InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(current);
             InstanceManager.deregister(current, RouteManager.class);
         }
 

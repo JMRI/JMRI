@@ -46,6 +46,7 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public List<Exception> getInitializationExceptions(Profile profile) {
         return new ArrayList<>(this.exceptions.getOrDefault(profile, new ArrayList<>()));
     }

@@ -30,6 +30,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
@@ -1507,7 +1508,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     /**
-     * Fetch valid appearances for a given Signal Head.
+     * Fetch valid localized appearances for a given Signal Head.
      * <p>
      * Warn if head is not found.
      *
@@ -3478,17 +3479,13 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 sndFileChooser = new JFileChooser(System.getProperty("user.dir") // NOI18N
                         + java.io.File.separator + "resources" // NOI18N
                         + java.io.File.separator + "sounds");  // NOI18N
-                jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("wav sound files");  // NOI18N
-                filt.addExtension("wav");  // NOI18N
-                sndFileChooser.setFileFilter(filt);
+                sndFileChooser.setFileFilter(new FileNameExtensionFilter("wav sound files", "wav")); // NOI18N
             }
             currentChooser = sndFileChooser;
         } else if (actionType == Conditional.Action.RUN_SCRIPT) {
             if (scriptFileChooser == null) {
                 scriptFileChooser = new JFileChooser(FileUtil.getScriptsPath());
-                jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");  // NOI18N
-                filt.addExtension("py");  // NOI18N
-                scriptFileChooser.setFileFilter(filt);
+                scriptFileChooser.setFileFilter(new FileNameExtensionFilter("Python script files", "py")); // NOI18N
             }
             currentChooser = scriptFileChooser;
         } else {
@@ -4368,7 +4365,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             ConditionalVariable variable = _variableList.get(row);
             switch (col) {
                 case ROWNUM_COLUMN:
-                    return ("R" + (row + 1)); //NOI18N
+                    return ("R" + (row + 1)); // NOI18N
                 case AND_COLUMN:
                     if (row == 0) { //removed: || _logicType == Conditional.MIXED
                         return "";

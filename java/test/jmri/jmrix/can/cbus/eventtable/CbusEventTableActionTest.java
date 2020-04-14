@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus.eventtable;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -23,7 +24,6 @@ public class CbusEventTableActionTest {
         
         CbusEventTableAction t = new CbusEventTableAction(null);
         Assert.assertNotNull("exists",t);
-        t = null;
     }
     
     @Test
@@ -151,15 +151,15 @@ public class CbusEventTableActionTest {
         event2.setTotalOut(4);
         event2.setComment("My Test Event 2 Comment");
         
-        Assert.assertTrue(model.getRowCount()==2);
+        Assert.assertTrue("Row Count after adding 2 events",model.getRowCount()==2);
         
         t.storeEventsToXml();
         
         model.clearAllEvents();
-        Assert.assertTrue(model.getRowCount()==0);
+        Assert.assertTrue("Row Count before restore 0",model.getRowCount()==0);
         
         t.restoreEventsFromXmlTablestart();
-        Assert.assertTrue(model.getRowCount()==2);
+        Assert.assertTrue("Row Count after restore 2",model.getRowCount()==2);
         
         CbusTableEvent te = model.provideEvent(111,222);
         Assert.assertNotNull("te 1 exists",te);
@@ -185,6 +185,8 @@ public class CbusEventTableActionTest {
     }
     
     private CbusEventTableDataModel model;
+    private TrafficControllerScaffold tcis;
+    private CanSystemConnectionMemo memo;
     
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -193,20 +195,29 @@ public class CbusEventTableActionTest {
     @Before
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
-        JUnitUtil.initShutDownManager();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
         
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcis);
+        jmri.InstanceManager.store(new CbusPreferences(),CbusPreferences.class );
         model = new CbusEventTableDataModel( memo,4,CbusEventTableDataModel.MAX_COLUMN);
       
     }
 
     @After
     public void tearDown() {
+        
+        model.skipSaveOnDispose();
         model.dispose();
+        memo.dispose();
+        memo = null;
+        tcis.terminateThreads();
+        tcis = null;
+        
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusEventTableActionTest.class);

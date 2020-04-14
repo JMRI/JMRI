@@ -12,16 +12,21 @@
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header" -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
+</head>
 
-	<div id="mainContent">
-	    <h1>JMRI: Liaison</h1>
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
+
+<h1>JMRI: Liaison</h1>
 
 La grande majorit&#233; des codeurs JMRI (et programmeurs) n'ont pas &#224; 
 se soucier des liaisons. Leur code se trouve invoqu&#233;, et appelle un autre code, 
@@ -35,9 +40,9 @@ Cette simplicit&#233; vient de l'utilisation d'un seul lien pour le traitement d
 Notez que ceci ne signifie <em>pas</em> que d'autres choses ne peuvent pas survenir. Par exemple, ce fragment de script:
 
 <pre><code>
-    state = sensors.provideSensor("mySensor").getState()<br/>
-    turnouts.provideTurnout("myTurnout").setState(THROWN)<br/>
-    print state == sensors.provideSensor("mySensor").getState()<br/>
+    state = sensors.provideSensor("mySensor").getState()<br>
+    turnouts.provideTurnout("myTurnout").setState(THROWN)<br>
+    print state == sensors.provideSensor("mySensor").getState()<br>
 </code></pre>  
 
 peut imprimer soit vrai ou faux, parce que car la modification de l'aiguillage <em>peut</em> changer instantan&#233;ment les capteurs associ&#233;s.
@@ -60,9 +65,9 @@ et puis cr&#233;er une fen&#234;tre pour le montrer, vous pouvez vouloir faire t
 un lien s&#233;par&#233;. &#192; la fin, quand il est temps de rendre visible votre travail, vous devez 
 le faire sur le lien Swing ( GUI ). Voici le code pour le faire:
 <pre>
-    frame = new JmriJFrame();  // frame declared as instance variable<br/>
-    // spend a long time reading data and configuring the frame<br/>
-    ThreadingUtil.runOnGUI( ()-&gt;{  frame.setVisible(); });<br/>
+    frame = new JmriJFrame();  // frame declared as instance variable<br>
+    // spend a long time reading data and configuring the frame<br>
+    ThreadingUtil.runOnGUI( ()-&gt;{  frame.setVisible(); });<br>
 </pre> 
 ThreadingUtil s&#233;pare les op&#233;rations sur le lien GUI ( par ex Java Swing )  et les op&#233;rations 
 sur le r&#233;seau ( ex: Capteurs, Aiguillages, etc ). Il n'y a pas de vrai diff&#233;rence maintenant,
@@ -73,7 +78,7 @@ les deux versions. SVP essayez de choisir la bonne la plupart du temps l'une lor
 ou javax.swing.SwingUtilities.invokeAndWait( r ); Ceux-ci seront migr&#233;s vers les nouvelles m&#233;thodes sp&#233;cifiques JMRI 
 &#224; l'avenir pour garder notre code juste un petit peu plus propre  et plus souple.)
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->

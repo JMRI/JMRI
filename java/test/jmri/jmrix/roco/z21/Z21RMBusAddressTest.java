@@ -63,6 +63,7 @@ public class Z21RMBusAddressTest {
         softly.assertThat(Z21RMBusAddress.validSystemNameFormat("ZS0b:a",'S',"Z")).isEqualTo(Manager.NameValidity.INVALID);
         softly.assertThat(Z21RMBusAddress.validSystemNameFormat("ZS999",'S',"Z")).isEqualTo(Manager.NameValidity.INVALID);
         softly.assertAll();
+        JUnitAppender.assertWarnMessage("Z21 RM Bus hardware address out of range in system name ZS999");
     }
 
     // The minimal setup for log4J
@@ -73,7 +74,9 @@ public class Z21RMBusAddressTest {
 
     @After
     public void tearDown() {
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

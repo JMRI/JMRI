@@ -1,15 +1,15 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
-import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -25,7 +25,6 @@ public class CbusNameServiceTest {
     public void testCTor() {
         CbusNameService t = new CbusNameService();
         Assert.assertNotNull("exists",t);
-        t = null;
     }
     
     @Test
@@ -39,18 +38,20 @@ public class CbusNameServiceTest {
         m.addEvent(123,456, 0, null, "Event Name", "Comment", 0, 0, 0, 0);
         Assert.assertEquals("Event and Node Name","Event Name",t.getEventName(123,456));
         
-        t = null;
+        m.skipSaveOnDispose();
+        m.dispose();
+        
     }
 
     @Test
     public void testgetEventNodeString() {
-        CbusNameService t = new CbusNameService();
+        
+        // memo.setTrafficController(tcis);
+        
+        CbusNameService t = new CbusNameService(memo);
+        
         Assert.assertEquals("EventNodeStr","NN:123 EN:456 ",t.getEventNodeString(123,456));
         Assert.assertEquals("EventNodeStr nd 0","EN:456 ",t.getEventNodeString(0,456));
-        
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        memo.setTrafficController(tcis);
         
         CbusEventTableDataModel m = new CbusEventTableDataModel(
             memo, 5, CbusEventTableDataModel.MAX_COLUMN);
@@ -70,33 +71,36 @@ public class CbusNameServiceTest {
         Assert.assertEquals("js evstr Event and Node Name","NN:69 My Node EN:741 John Smith ",t.getEventNodeString(69,741));
         Assert.assertEquals("alonso evstr Event Name","EN:357 Alonso ",t.getEventNodeString(0,357));
         
-        m = null;
-        nodeModel = null;
-        t = null;
+        m.skipSaveOnDispose();
+        m.dispose();
+        nodeModel.dispose();
     }
 
-    private TrafficControllerScaffold tcis;
     private CanSystemConnectionMemo memo;
+    private CbusPreferences pref;
+    
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
-        JUnitUtil.initShutDownManager();
-        
-        tcis = new TrafficControllerScaffold();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
         memo = new CanSystemConnectionMemo();
-        memo.setTrafficController(tcis);
+        pref = new CbusPreferences();
+        jmri.InstanceManager.store(pref,CbusPreferences.class );
         
     }
 
     @After
     public void tearDown() {
-        
-        tcis = null;
+        memo.dispose();
         memo = null;
         
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNameServiceTest.class);

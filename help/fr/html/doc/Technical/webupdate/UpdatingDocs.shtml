@@ -1,5 +1,4 @@
 <!DOCTYPE html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id$-->
 <html lang="fr">
 <head>
 <!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
@@ -13,7 +12,6 @@
   content="Updated instructions for GitHub instead of single file edit and ZIP">
   <title>How to Update the JMRI Documentation</title>
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -22,8 +20,9 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
 <h1>Actualisation Manuelle des Documents JMRI</h1>
@@ -69,7 +68,8 @@ Pour ajouter une pause entre les paragraphes, par exemple, pour ajouter
 un nouveau paragraphe, vous ins&#233;rez une "balise"
 qui indique au navigateur JMRI o&#249; ins&#233;rer une rupture de paragraphe:  &lt;p&gt;.
 
-<a name="screenshots"> <h2> Cr&#233;ation d'Images de Captures d'&#201;cran </h2>
+<a name="screenshots"></a><h2> Cr&#233;ation d'Images de Captures d'&#201;cran</h2>
+
 <h3>Pour Windows</h3>
 
 Pour capturer une photo d'&#233;cran dans Windows, commencez par mettre en place la fen&#234;tre qui d&#233;tient
@@ -79,8 +79,7 @@ photo de la fen&#234;tre active (au lieu du bureau entier de votre ordinateur ),
 temps. (Note: En fonction de votre clavier, vous pourriez avoir besoin d'appuyer sur le
 <code> &lt;Fn&gt; </code> ou <code> &lt;Function-Lock&gt; </code> cl&#233;.) Ceci
 met l'image sur votre "presse-papiers" et vous pouvez la coller dans un
-programme d'&#233;dition d'image comme Paint de Windows ou Photoshop. 
- 
+programme d'&#233;dition d'image comme Paint de Windows ou Photoshop.
 
 <h3>Pour Linux</h3>
 
@@ -91,8 +90,8 @@ pouvez installer <a href="http://www.kde.org/"> KSnapshot </a> ou votre applicat
 
 <h3>Pour Mac OS X</h3>
 
-Apr&#232;s avoir configur&#233; votre photo, maintenez la touche <span
-<style = "font-family: monospace"> &lt;Apple + Maj + 4&gt; </span> . Lorsque vous
+Apr&#232;s avoir configur&#233; votre photo, maintenez la touche
+<span style = "font-family: monospace"> &lt;Apple + Maj + 4&gt; </span> . Lorsque vous
 les lib&#233;rer en m&#234;me temps, le curseur devient un signe plus, et vous pouvez le faire glisser
  autour le zone que vous souhaitez. Quand vous relachez, vous avez un fichier image sur
 votre bureau.
@@ -106,8 +105,7 @@ diaporama avec elles. Vous pouvez lui indiquer le format de fichier que vous vou
 ET o&#249; vous voulez qu'elles soient sauv&#233;es avant de prendre la photo, ce qui rend
 plus facile de travailler avec elles dans un programme comme Paint ou Photoshop.
 
-
-<h2 name="sizing">Dimensionnement et Enregistrement des Images </h2>
+<h2><a name="sizing">Dimensionnement et Enregistrement des Images</a></h2>
 
 Toute modification que vous apportez &#224; votre image doit &#234;tre effectu&#233;e avant que vous utilisiez Amaya
 pour l'ins&#233;rer dans votre document. Rappelez vous que si vous la changer, elle doit &#234;tre
@@ -117,7 +115,7 @@ lettres majuscules dans le nom. En r&#232;gle g&#233;n&#233;rale, une bonne tail
 pixels ou moins, avec une r&#233;solution web de 72 pixels par pouce. Si vous savez comment
 redimensionner vos images, cela vous sera tr&#232;s utile.
 
-<h2 id="submitpage">Soumettre &#224; GitHub </h2>
+<h2><a id="submitpage">Soumettre &#224; GitHub</a></h2>
 
 <p> Si vous comprenez cela, vous &#234;tes pr&#234;t &#224; nous aider &#224; mettre &#224; jour de nombreux 
 documents JMRI que nous utilisons &#224; la fois pour le site JMRI et pour les fichiers d'aide dans le
@@ -131,18 +129,21 @@ fichier qui ont &#233;t&#233; modifi&#233;es.
 
 <h3>Pr&#233;parer les Fichiers </h3>
 
-Le type de fichier correct &#224; utiliser pour JMRI a l'extension. shtml. Si vous avez
+<p>Le type de fichier correct &#224; utiliser pour JMRI a l'extension. shtml. Si vous avez
 fait un .html ou .htm, vous pouvez changer l'extension de vous-m&#234;me en .shtml.
 Ne pas utiliser d'espaces ou de majuscules dans vos
 noms de fichiers. Si vous ne changez pas ou n'ajouter pas d'images, il suffit de sauvegarder le fichier avec
-son nom d'origine, exemple: <span style="font-family: monospace">&ldquo;index.shtml&rdquo;</span>,
-dans un emplacement o&#249; vous pouvez le trouver facilement quand vous &#234;tes pr&#234;t &#224; le copier sur GitHub </a> . </p>
+son nom d'origine, exemple: <span style="font-family: monospace">&lt;index.shtml&gt;</span>,
+dans un emplacement o&#249; vous pouvez le trouver facilement quand vous &#234;tes pr&#234;t &#224; le copier sur
+GitHub.</p>
 
 <h3>Envoyer &#224; GitHub </h3>
 
 <p>Vous pouvez voir  <a href="https://github.com/JMRI/JMRI">le r&#233;pertoire JMRI actuel sur GitHub</a>. Pour apprendre comment faire des 
-changements et se connecter &#224; GitHub, SVP Lire <a href="../getgitcode.shtml">Utilisation de Git</a>.
+changements et se connecter &#224; GitHub, SVP Lire <a href="../getgitcode.shtml">Utilisation de Git</a>.</p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
+    </div>
+</div>
 </body>
 </html>

@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -26,6 +27,8 @@ import jmri.TurnoutManager;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 /**
  *
@@ -48,7 +51,8 @@ public class CommonSubs {
 
     public static boolean allowClose(Component parentComponent, boolean dataChanged) {
         if (dataChanged) {
-            return JOptionPane.showConfirmDialog(parentComponent, Bundle.getMessage("CommonSubsDataModified"), Bundle.getMessage("Warning"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;  // NOI18N
+            return JOptionPane.showConfirmDialog(parentComponent, Bundle.getMessage("CommonSubsDataModified"),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;  // NOI18N
         }
         return true;    // NO change, ok to exit
     }
@@ -73,21 +77,23 @@ public class CommonSubs {
 //  If the table model value is null, that is the same as "".  This also "compacts"
 //  the entries also (i.e. blank line(s) between entries are removed):
     public static String getCSVStringFromDefaultTableModel(DefaultTableModel defaultTableModel) {
-        String returnString = "";
+        ArrayList<String> entries = new ArrayList<>();
         for (int sourceIndex = 0; sourceIndex < defaultTableModel.getRowCount(); sourceIndex++) {
             Object object = defaultTableModel.getValueAt(sourceIndex, 0);
             if (object != null) {
                 String entry = object.toString().trim();
                 if (!entry.isEmpty()) { // Do a "compact" on the fly:
-                    if (!returnString.isEmpty()) {
-                        returnString += ProjectsCommonSubs.CSV_SEPARATOR + entry;
-                    } else {
-                        returnString = entry;
-                    }
+                    entries.add(entry);
                 }
             }
         }
-        return returnString;
+        try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT)) {
+            printer.printRecord(entries);
+            return printer.getOut().toString();
+        } catch (IOException ex) {
+            log.error("Unable to create CSV", ex);
+            return "";
+        }
     }
 
     public static int compactDefaultTableModel(DefaultTableModel defaultTableModel) {
@@ -294,17 +300,15 @@ public class CommonSubs {
 //  If the passed errors array has entries, put up a dialog and return true, if not no dialog, and return false.
     public static boolean missingFieldsErrorDialogDisplayed(Component parentComponent, ArrayList<String> errors, boolean isCancel) {
         if (errors.isEmpty()) return false;
-        StringBuffer stringBuffer = new StringBuffer(errors.size() > 1 ? Bundle.getMessage("CommonSubsFieldsPlural") : Bundle.getMessage("CommonSubsFieldSingular"));     // NOI18N
-        for (String error : errors) {
-            stringBuffer.append(error);
-            stringBuffer.append("\n");    // NOI18N
-        }
+        StringBuilder stringBuffer = new StringBuilder(errors.size() > 1 ? Bundle.getMessage("CommonSubsFieldsPlural") : Bundle.getMessage("CommonSubsFieldSingular"));     // NOI18N
+        errors.forEach(error -> stringBuffer.append(error).append("\n")); // NOI18N
         if (!isCancel) {
             stringBuffer.append(Bundle.getMessage("CommonSubsPleaseFix1")); // NOI18N
         } else {
             stringBuffer.append(Bundle.getMessage("CommonSubsPleaseFix2")); // NOI18N
         }
-        JOptionPane.showMessageDialog(parentComponent, stringBuffer.toString(), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);   // NOI18N
+        JOptionPane.showMessageDialog(parentComponent, stringBuffer.toString(),
+                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);   // NOI18N
         return true;
     }
 

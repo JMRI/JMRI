@@ -15,10 +15,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Audio Table</h1>You can use the Audio Table to look
       at the contents of JMRI Audio objects.
 
@@ -34,7 +34,7 @@
 
       <p>For more information on Audio objects, see the <a href=
       "../../../../html/tools/Audio.shtml">Audio help page</a>.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

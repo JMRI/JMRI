@@ -139,15 +139,14 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         if (!InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
             jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
             if (prefsMgr != null) {
-                String windowFrameRef = name;
 
-                java.awt.Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+                java.awt.Point prefsWindowLocation = prefsMgr.getWindowLocation(name);
                 if (prefsWindowLocation != null) {
                     x = (int) prefsWindowLocation.getX();
                     y = (int) prefsWindowLocation.getY();
                 }
 
-                java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+                java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(name);
                 if (prefsWindowSize != null && prefsWindowSize.getHeight() != 0 && prefsWindowSize.getWidth() != 0) {
                     height = (int) prefsWindowSize.getHeight();
                     width = (int) prefsWindowSize.getWidth();
@@ -209,8 +208,8 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.setHideUnconnected(value);
 
         value = true;
-        if ((a = shared.getAttribute("autoitemrange")) != null && a.getValue().equals("yes")) {
-            value = true;
+        if ((a = shared.getAttribute("autoitemrange")) != null && a.getValue().equals("no")) {
+            value = false;
         }
         panel.setAutoItemRange(value);
 
@@ -267,10 +266,9 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.initView();
 
         // load the contents with their individual option settings
-        List<Element> items = shared.getChildren();
-        for (int i = 0; i < items.size(); i++) {
+        List<Element> panelItems = shared.getChildren();
+        for (Element item : panelItems) {
             // get the class, hence the adapter object to do loading
-            Element item = items.get(i);
             String adapterName = item.getAttribute("class").getValue();
             log.debug("load via {}", adapterName);
             try {

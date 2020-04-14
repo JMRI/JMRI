@@ -114,9 +114,9 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         
     }
     
-    CanSystemConnectionMemo memo;
-    CbusPowerManager pwr;
-    TrafficControllerScaffold controller;
+    private CanSystemConnectionMemo memo;
+    private CbusPowerManager pwr;
+    private TrafficControllerScaffold controller;
     
     // The minimal setup for log4J
     @Before
@@ -138,10 +138,13 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         } catch (jmri.JmriException ex) {}
         
         memo.dispose();
+        controller.terminateThreads();
         pwr = null;
         memo = null;
         controller = null;
+        
         JUnitUtil.tearDown();
+
         
     }
 

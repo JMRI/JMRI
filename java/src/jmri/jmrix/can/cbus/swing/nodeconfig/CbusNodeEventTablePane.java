@@ -1,37 +1,21 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
-import javax.swing.DropMode;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.TransferHandler;
+import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import jmri.jmrix.can.cbus.node.CbusNode;
-import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeEventTableDataModel;
-import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import jmri.jmrix.can.CanSystemConnectionMemo;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
- * Pane providing a Cbus Node Event table for a single node.
+ * Pane providing a CBUS Node Event table for a single node.
  *
  * @author Steve Young (C) 2019
  * @see CbusNodeEventTableDataModel
@@ -40,26 +24,29 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  */
 public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
-    public CbusNodeEventTableDataModel nodeEventModel;
-    public JScrollPane eventVarScroll;
-    protected JPanel pane1;
-    JTable nodeEventTable;
-    TableRowSorter<CbusNodeEventTableDataModel> sorter;
+    private final CbusNodeEventTableDataModel nodeEventModel;
+    private JScrollPane eventVarScroll;
+    private JPanel pane1;
+    private JTable nodeEventTable;
+    private TableRowSorter<CbusNodeEventTableDataModel> sorter;
     
+    /**
+     * Create a new CBUS Node Event Table Pane
+     * @param model the Table Model to use
+     */
     public CbusNodeEventTablePane( CbusNodeEventTableDataModel model ) {
         super();
         nodeEventModel = model;
         nodeEventTable = new JTable(nodeEventModel);
     }
-
-    @Override
-    public void initComponents(CanSystemConnectionMemo memo) {
-        super.initComponents(memo);
-    }
     
+    /**
+     * Set the Node
+     * @param node the CBUS Node Events to display
+     */
     public void setNode( CbusNode node) {
         
-        if (node == null ){ 
+        if (node == null && pane1!=null){ 
             pane1.setVisible(false);
             return;
         }
@@ -69,7 +56,6 @@ public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     }
 
     public void init() {
-        // log.info("init");
         
         if (pane1 != null ){ 
             pane1.setVisible(false);
@@ -89,7 +75,7 @@ public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         
         if (nodeEventModel.getRowCount() > 0 ) {
             nodeEventTable.setAutoCreateRowSorter(true);
-            sorter = new TableRowSorter<CbusNodeEventTableDataModel>(nodeEventModel);
+            sorter = new TableRowSorter<>(nodeEventModel);
             nodeEventTable.setRowSorter(sorter);
         }
         
@@ -140,7 +126,7 @@ public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         
     }
     
-    boolean hideEditButton = false;
+    private boolean hideEditButton = false;
     
     protected void setHideEditButton(){
         hideEditButton = true;
@@ -153,6 +139,8 @@ public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         return new TableCellRenderer() {
             
             JTextField f = new JTextField();
+            
+            /** {@inheritDoc} */
             @Override
             public Component getTableCellRendererComponent(
                 JTable table, Object arg1, boolean isSelected, boolean hasFocus, 
@@ -161,7 +149,7 @@ public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
                 f.setHorizontalAlignment(JTextField.CENTER);
                 f.setBorder( table.getBorder() );
                 
-                String string="";
+                String string;
                 if(arg1 != null){
                     string = arg1.toString();
                     try {
@@ -197,16 +185,17 @@ public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     }
 
     /**
+     * Only used for testing.
      * {@inheritDoc}
      */
     @Override
     public String getTitle() {
-        if (memo != null) {
-            return (memo.getUserName() + " " + Bundle.getMessage("MenuItemNodeTable"));
-        }
-        return Bundle.getMessage("MenuItemNodeTable");
+        return prependConnToString(Bundle.getMessage("MenuItemEventTable"));
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         //   nodeTable = null;
@@ -216,6 +205,9 @@ public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     public class CbusNodeEventTableRowDnDHandler extends TransferHandler {
     
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public int getSourceActions(JComponent c) {
             return COPY;

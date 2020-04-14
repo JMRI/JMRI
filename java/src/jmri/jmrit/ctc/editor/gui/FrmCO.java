@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CallOnEntry;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctc.ctcserialdata.OtherData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
@@ -65,17 +64,17 @@ public class FrmCO extends javax.swing.JFrame {
         super();
         initComponents();
         CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_frmCO", true);  // NOI18N
-        _mSignalFacingDirection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  Bundle.getMessage("InfoDlgCOLeftTraffic"),          // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCORightTraffic") }));     // NOI18N
-        _mSignalAspectToDisplay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  Bundle.getMessage("InfoDlgCODark"),                 // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCORed"),                  // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCOYellow"),               // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCOGreen"),                // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCOFlashingRed"),          // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCOFlashingYellow"),       // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCOFlashingGreen"),        // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCOLunar"),                // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCOFlashingLunar") }));    // NOI18N
+        _mSignalFacingDirection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  Bundle.getMessage("InfoDlgCOLeftTraffic"),
+                                                                                                Bundle.getMessage("InfoDlgCORightTraffic") }));
+        _mSignalAspectToDisplay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  Bundle.getMessage("SignalHeadStateDark"),
+                                                                                                Bundle.getMessage("SignalHeadStateRed"),
+                                                                                                Bundle.getMessage("SignalHeadStateYellow"),
+                                                                                                Bundle.getMessage("SignalHeadStateGreen"),
+                                                                                                Bundle.getMessage("SignalHeadStateFlashingRed"),
+                                                                                                Bundle.getMessage("SignalHeadStateFlashingYellow"),
+                                                                                                Bundle.getMessage("SignalHeadStateFlashingGreen"),
+                                                                                                Bundle.getMessage("SignalHeadStateLunar"),
+                                                                                                Bundle.getMessage("SignalHeadStateFlashingLunar") }));
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mProgramProperties = programProperties;
@@ -190,6 +189,7 @@ public class FrmCO extends javax.swing.JFrame {
 
         _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
             }
@@ -218,6 +218,7 @@ public class FrmCO extends javax.swing.JFrame {
         jLabel15.setText(Bundle.getMessage("InfoDlgCORow5B"));
 
         _mGroupingsList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 _mGroupingsListValueChanged(evt);
             }
@@ -226,6 +227,7 @@ public class FrmCO extends javax.swing.JFrame {
 
         _mDelete.setText(Bundle.getMessage("ButtonDelete"));
         _mDelete.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mDeleteActionPerformed(evt);
             }
@@ -233,6 +235,7 @@ public class FrmCO extends javax.swing.JFrame {
 
         _mEditBelow.setText(Bundle.getMessage("ButtonEditBelow"));
         _mEditBelow.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEditBelowActionPerformed(evt);
             }
@@ -241,6 +244,7 @@ public class FrmCO extends javax.swing.JFrame {
         _mAddNew.setText(Bundle.getMessage("ButtonAddNew")
         );
         _mAddNew.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mAddNewActionPerformed(evt);
             }
@@ -253,6 +257,7 @@ public class FrmCO extends javax.swing.JFrame {
         _mGroupingListAddReplace.setText("      ");
         _mGroupingListAddReplace.setEnabled(false);
         _mGroupingListAddReplace.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mGroupingListAddReplaceActionPerformed(evt);
             }
@@ -260,6 +265,7 @@ public class FrmCO extends javax.swing.JFrame {
 
         jButton2.setText(Bundle.getMessage("ButtonReapply"));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
@@ -267,6 +273,7 @@ public class FrmCO extends javax.swing.JFrame {
 
         _mCancel.setText(Bundle.getMessage("ButtonCancel"));
         _mCancel.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mCancelActionPerformed(evt);
             }
@@ -283,6 +290,7 @@ public class FrmCO extends javax.swing.JFrame {
         jLabel14.setText(Bundle.getMessage("InfoDlgCOSelect"));
 
         _mSwitchIndicator1.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSwitchIndicator1ActionPerformed(evt);
             }
@@ -537,34 +545,38 @@ public class FrmCO extends javax.swing.JFrame {
 
     private void _mGroupingListAddReplaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mGroupingListAddReplaceActionPerformed
         if (ProjectsCommonSubs.isNullOrEmptyString((String) _mExternalSignal.getSelectedItem())) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOSignalInvalid"), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE); // NOI18N
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOSignalInvalid"),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
             return;
         }
         if (_mSignalHeadSelected) {
             if (ProjectsCommonSubs.isNullOrEmptyString((String) _mCalledOnExternalSensor.getSelectedItem())) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOCalledOnSensorInvalid"), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE); // NOI18N
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOCalledOnSensorInvalid"),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
                 return;
             }
         } else {
             if (ProjectsCommonSubs.isNullOrEmptyString((String) _mExternalBlock.getSelectedItem())) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOBlockInvalid"), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE); // NOI18N
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOBlockInvalid"),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
                 return;
             }
         }
         CallOnEntry callOnEntry = new CallOnEntry(  (String) _mExternalSignal.getSelectedItem(),
-                                                    _mSignalFacingDirection.getSelectedItem().toString(),
-                                                    _mSignalAspectToDisplay.getSelectedItem().toString(),
-                                                    (String) _mCalledOnExternalSensor.getSelectedItem(),
-                                                    (String) _mExternalBlock.getSelectedItem(),
-                                                    (String)_mSwitchIndicator1.getSelectedItem(),
-                                                    (String)_mSwitchIndicator2.getSelectedItem(),
-                                                    (String)_mSwitchIndicator3.getSelectedItem(),
-                                                    (String)_mSwitchIndicator4.getSelectedItem(),
-                                                    (String)_mSwitchIndicator5.getSelectedItem(),
-                                                    (String)_mSwitchIndicator6.getSelectedItem());
+                (_mSignalFacingDirection.getSelectedItem() == null ? null : _mSignalFacingDirection.getSelectedItem().toString()),
+                (_mSignalAspectToDisplay.getSelectedItem() == null ? null : _mSignalAspectToDisplay.getSelectedItem().toString()),
+                (String) _mCalledOnExternalSensor.getSelectedItem(),
+                (String) _mExternalBlock.getSelectedItem(),
+                (String)_mSwitchIndicator1.getSelectedItem(),
+                (String)_mSwitchIndicator2.getSelectedItem(),
+                (String)_mSwitchIndicator3.getSelectedItem(),
+                (String)_mSwitchIndicator4.getSelectedItem(),
+                (String)_mSwitchIndicator5.getSelectedItem(),
+                (String)_mSwitchIndicator6.getSelectedItem());
         CheckJMRIObject.VerifyClassReturnValue verifyClassReturnValue = _mCheckJMRIObject.verifyClass(callOnEntry);
         if (verifyClassReturnValue != null) { // Error:
-            JOptionPane.showMessageDialog(this, verifyClassReturnValue.toString(), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);    // NOI18N
+            JOptionPane.showMessageDialog(this, verifyClassReturnValue.toString(),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);    // NOI18N
             return;
         }
 

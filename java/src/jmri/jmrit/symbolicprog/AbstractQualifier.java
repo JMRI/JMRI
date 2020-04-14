@@ -20,8 +20,8 @@ public abstract class AbstractQualifier implements Qualifier, java.beans.Propert
             watchedVal.addPropertyChangeListener(this);
         }
 
-        // subclass ctors are required to qualify on initial value of variable   
-        // to get initial qualification state right after listener was added.   
+        // subclass ctors are required to qualify on initial value of variable
+        // to get initial qualification state right after listener was added.
     }
 
     VariableValue watchedVal;
@@ -57,7 +57,7 @@ public abstract class AbstractQualifier implements Qualifier, java.beans.Propert
      * Object should be set Available or not.
      */
     protected boolean availableStateFromEvent(java.beans.PropertyChangeEvent e) {
-        return availableStateFromValue(((Integer) e.getNewValue()).intValue());
+        return availableStateFromValue(e.getNewValue());
     }
 
     /**
@@ -78,7 +78,7 @@ public abstract class AbstractQualifier implements Qualifier, java.beans.Propert
      *
      * @param value base for the calculation
      */
-    abstract protected boolean availableStateFromValue(int value);
+    abstract protected boolean availableStateFromValue(Object value);
 
     /**
      * Drive the available or not state of the qualified Object.

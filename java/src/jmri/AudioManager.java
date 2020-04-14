@@ -1,6 +1,7 @@
 package jmri;
 
 import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.jmrit.audio.AudioFactory;
@@ -87,6 +88,7 @@ public interface AudioManager extends Manager<Audio> {
      * @param systemName Audio object system name (such as IAS1 or IAB4)
      * @return requested Audio object or null if none exists
      */
+    @Override
     @CheckForNull
     public Audio getBySystemName(@Nonnull String systemName);
 
@@ -97,6 +99,7 @@ public interface AudioManager extends Manager<Audio> {
      * @param userName Audio object user name
      * @return requested Audio object or null if none exists
      */
+    @Override
     @CheckForNull
     public Audio getByUserName(@Nonnull String userName);
 
@@ -147,9 +150,22 @@ public interface AudioManager extends Manager<Audio> {
      *
      * @param subType sub-type to retrieve
      * @return List of specified Audio sub-type objects' system names.
+     * @deprecated 4.17.6 use direct access via {@link #getNamedBeanSet(char)}
      */
     @Nonnull
+    @Deprecated
     public List<String> getSystemNameList(char subType);
+
+    /**
+     * Get the specified Audio sub-type NamedBeans.
+     *
+     * @param subType sub-type to retrieve
+     * @return Unmodifiable access to a SortedSet of NamedBeans for the specified Audio sub-type .
+     * 
+     * @since 4.17.6
+     */
+    @Nonnull
+    public SortedSet<Audio> getNamedBeanSet(char subType);
 
     /**
      * Perform any initialisation operations
@@ -160,5 +176,11 @@ public interface AudioManager extends Manager<Audio> {
      * Perform any clean-up operations
      */
     public void cleanup();
+
+    /**
+     * Determine if this AudioManager is initialised
+     * @return true if initialised
+     */
+    public boolean isInitialised();
 
 }

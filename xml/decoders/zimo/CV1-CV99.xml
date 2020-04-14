@@ -177,7 +177,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>DC Regulation</label>
     <label xml:lang="it">Regolazioni in DC</label>
-    <label xml:lang="cs">Regilace v DC</label>
+    <label xml:lang="cs">Regulace v DC</label>
     <label xml:lang="de">Motorregelung aktiv</label>
   </variable>
 

@@ -7,21 +7,23 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Updated by Blorec Herv&#233; 2013-09-20-->
 
-  <title>JMRI: Audio</title><!-- Style -->
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <title>JMRI: Audio</title>
+  <!-- Style -->
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
-      <h2>JMRI: Audio</h2>Les objets audio JMRI d&eacute;tiennent
+        <!-- Page Body -->
+
+<h2>JMRI: Audio</h2>Les objets audio JMRI d&eacute;tiennent
       des informations sur les sons qui peuvent &ecirc;tre
       reproduits par l' ordinateur.
 
@@ -247,7 +249,8 @@
 </pre>
 
       <p>Pour Ubuntu 12-04, logith&egrave;que ---&gt;OpenAl.</p>
-      <!--#include virtual="/Footer" -->
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

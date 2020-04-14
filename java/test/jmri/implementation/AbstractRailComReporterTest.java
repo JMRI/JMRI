@@ -49,6 +49,7 @@ public class AbstractRailComReporterTest extends AbstractReporterTestBase {
     @Override
     public void tearDown() {
         r = null;
+        JUnitUtil.clearShutDownManager(); // would be better to check and clean up specifics in tests
         JUnitUtil.tearDown();
     }
 

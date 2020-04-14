@@ -15,10 +15,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Sensor Table</h1>
 
       <p>The Sensor Table contains a list of the Sensors that exist
@@ -145,7 +145,7 @@
       You can set different delays for a change to Inactive and a
       change to Active.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

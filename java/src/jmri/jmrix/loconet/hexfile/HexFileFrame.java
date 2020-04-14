@@ -175,11 +175,13 @@ public class HexFileFrame extends JmriJFrame {
         port.getSystemConnectionMemo().configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, // full featured by default
                 false, false, false);
         port.getSystemConnectionMemo().configureManagers();
-        if (port.getSystemConnectionMemo().getSensorManager() instanceof LnSensorManager) {
-            LnSensorManager LnSensorManager = (LnSensorManager) port.getSystemConnectionMemo().getSensorManager();
-            LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState")); // NOI18N
-        } else {
-            log.info("SensorManager referenced by port is not an LnSensorManager. Have not set the default sensor state.");
+        jmri.SensorManager sm = port.getSystemConnectionMemo().getSensorManager();
+        if (sm != null) {
+            if ( sm instanceof LnSensorManager) {
+                ((LnSensorManager) sm).setDefaultSensorState(port.getOptionState("SensorDefaultState")); // NOI18N
+            } else {
+                log.info("SensorManager referenced by port is not an LnSensorManager. Have not set the default sensor state.");
+            }
         }
 
         // Install a debug programmer, replacing the existing LocoNet one
@@ -212,22 +214,25 @@ public class HexFileFrame extends JmriJFrame {
                     failedThrottleRequest(a, "LocoAddress " + a + " is not a DccLocoAddress");
                     return;
                 }
-                connectedAddresses++;
                 DccLocoAddress address = (DccLocoAddress) a;
                 //create some testing situations
-                if (connectedAddresses > 5) {
-                    log.warn("SLOT MAX of 5 exceeded");
-                    failedThrottleRequest(address, "SLOT MAX of 5 exceeded");
+                if (connectedAddresses >= 5) {
+                    log.warn("SLOT MAX of 5 reached. Current={}", connectedAddresses);
+                    failedThrottleRequest(address, "SLOT MAX of 5 reached");
                     return;
                 }
                 // otherwise, continue with setup
                 super.requestThrottleSetup(a, control);
+                connectedAddresses++;
             }
 
             @Override
             public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
-                connectedAddresses--;
-                return super.disposeThrottle(t, l);
+                if (super.disposeThrottle(t, l)) {
+                    connectedAddresses--;
+                    return true;
+                }
+                return false;
             }    
         };
 

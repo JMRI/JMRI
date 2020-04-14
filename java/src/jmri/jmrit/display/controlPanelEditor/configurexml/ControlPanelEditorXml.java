@@ -269,20 +269,20 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
         // load the contents
         List<Element> items = shared.getChildren();
-        for (Element item : items) {
-            String adapterName = item.getAttribute("class").getValue();
+        for (Element panelItem : items) {
+            String adapterName = panelItem.getAttribute("class").getValue();
             log.debug("load via {}", adapterName);
             try {
                 XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                 // and do it
-                adapter.load(item, panel);
+                adapter.load(panelItem, panel);
                 if (!panel.loadOK()) {
                     result = false;
                 }
             } catch (ClassNotFoundException | InstantiationException
                     | jmri.configurexml.JmriConfigureXmlException | IllegalAccessException
                     | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
-                log.error("Exception while loading {}: {}", item.getName(), e.getMessage(), e);
+                log.error("Exception while loading {}: {}", panelItem.getName(), e.getMessage(), e);
                 result = false;
             }
         }

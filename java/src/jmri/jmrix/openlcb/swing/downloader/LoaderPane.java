@@ -1,7 +1,6 @@
 package jmri.jmrix.openlcb.swing.downloader;
 
 import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -195,7 +194,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         File file = new File(filename);
         try (FileInputStream fis = new FileInputStream(file)) {
 
-            System.out.println("Total file size to read (in bytes) : "
+            log.info("Total file size to read (in bytes) : "
                     + fis.available());
             fdata = new byte[fis.available()];
             int i = 0;

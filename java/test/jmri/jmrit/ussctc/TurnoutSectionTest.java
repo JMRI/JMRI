@@ -202,7 +202,6 @@ public class TurnoutSectionTest {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initMemoryManager();  
-        JUnitUtil.initShutDownManager();
         
         layoutTurnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1"); layoutTurnout.setUserName("Sec 1 Layout TO");
         normIndicator = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT2"); normIndicator.setUserName("Sec1 TO 1 N");

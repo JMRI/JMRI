@@ -1,11 +1,11 @@
 package jmri.jmrit.operations.setup;
 
-import apps.Apps;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.util.swing.ExceptionContext;
@@ -57,7 +57,7 @@ public class LoadDemoAction extends AbstractAction {
             JOptionPane.showMessageDialog(null, Bundle.getMessage("YouMustRestartAfterLoadDemo"),
                     Bundle.getMessage("LoadDemoSuccessful"), JOptionPane.INFORMATION_MESSAGE);
 
-            Apps.handleRestart();
+            InstanceManager.getDefault(ShutDownManager.class).restart();
 
         } catch (IOException ex) {
             ExceptionContext context = new ExceptionContext(ex, Bundle.getMessage("LoadingDemoFiles"),

@@ -14,7 +14,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.roster.swing.RosterFrameAction;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction;
-import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

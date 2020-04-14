@@ -20,11 +20,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <div align="center">
         <a name="Top" id="Top"></a> <img src="images/Logo.gif" alt=
@@ -228,7 +226,7 @@
         Index</a><a href="index.shtml#Basic%20Programmer"></a></p>
       </div>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

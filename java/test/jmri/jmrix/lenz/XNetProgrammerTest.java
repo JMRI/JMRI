@@ -583,9 +583,10 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Override
     @After
     public void tearDown() {
-	t = null;
-	l = null;
-	programmer=p=null;
+        t = null;
+        l = null;
+        programmer=p=null;
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

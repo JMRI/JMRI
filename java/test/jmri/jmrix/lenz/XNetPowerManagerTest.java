@@ -293,6 +293,7 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     @After
     public void tearDown() {
         p = pm = null;
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

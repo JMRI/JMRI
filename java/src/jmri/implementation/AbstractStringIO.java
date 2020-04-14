@@ -54,7 +54,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
     protected void setString(@Nonnull String newValue) {
         Object _old = this._knownString;
         this._knownString = newValue;
-        firePropertyChange("State", _old, _knownString); //NOI18N
+        firePropertyChange("State", _old, _knownString); // NOI18N
     }
 
     /** {@inheritDoc} */
@@ -125,13 +125,6 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
     @Override
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
         return suffix1.compareTo(suffix2);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
-    public String toString() {
-        return this.getClass().getName() + " (" + this.getSystemName() + ")"; //NOI18N
     }
 
 }

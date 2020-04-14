@@ -2,11 +2,7 @@ package jmri.jmrit.ctc;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
 import jmri.Turnout;
-import jmri.TurnoutManager;
 import jmri.jmrit.ctc.setup.CreateTestObjects;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -84,6 +80,9 @@ public class NBHTurnoutTest {
 
     @After
     public void tearDown() {
+        // stop any BlockBossLogic threads created
+        JUnitUtil.clearBlockBossLogic();
+
         jmri.util.JUnitUtil.tearDown();
     }
 }

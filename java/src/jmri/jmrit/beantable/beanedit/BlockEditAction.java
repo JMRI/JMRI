@@ -45,7 +45,7 @@ public class BlockEditAction extends BeanEditAction<Block> {
     @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.BlockEdit";
-    } //IN18N
+    } // NOI18N
 
     @Override
     protected void initPanels() {
@@ -273,7 +273,7 @@ public class BlockEditAction extends BeanEditAction<Block> {
         sensorComboBox.setAllowNull(true);
         basic.addItem(new BeanEditItem(sensorComboBox, Bundle.getMessage("BeanNameSensor"), Bundle.getMessage("BlockAssignSensorText")));
 
-      final SensorDebounceEditAction debounce = new SensorDebounceEditAction();
+        final SensorDebounceEditAction debounce = new SensorDebounceEditAction();
         //debounce.setBean(bean);
         debounce.sensorDebounce(basic);
 

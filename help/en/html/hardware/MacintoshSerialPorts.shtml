@@ -13,7 +13,8 @@
   <meta name="author" content="Walter Thompson">
   <meta name="author" content="John Plocher">
   <meta name="keywords" content=
-  "java model railroad JMRI install windows"><!-- Style -->
+  "java model railroad JMRI install windows">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -21,14 +22,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Setup Support: MacOS Serial Port
       connections</h1><a name="limitations" id="limitations"></a>
 
@@ -97,7 +100,7 @@
       <p>The information on this page was provided by Dick Bronson
       and Walter Thompson.</p>
       <hr class="hide">
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

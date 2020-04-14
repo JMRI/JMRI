@@ -16,9 +16,10 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+	<div id="mainContent">
 
 <h1>Support Mat&#233;riel: connexion a travers un Adaptateur Bluetooth LocoBridge</h1>
 
@@ -60,7 +61,7 @@ utilises pour acc&#233;der &#224; Bluetooth.
 	<li>Cliquez "Enregistrer" au bas de la fen&#234;tre Pr&#233;f&#233;rences, quittez JMRI et red&#233;marrez.
 </ol>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

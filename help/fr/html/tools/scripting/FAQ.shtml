@@ -6,30 +6,25 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
-  <!-- UpDated  by Blorec Herv&#233;  2013-09-26-->
+  <!-- Updated by Blorec Herv&#233;  2013-09-26-->
 
-  <title>JMRI: Scripting FAQ</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <title>JMRI: Scripting FAQ</title>
+    <!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-      <!-- Page Body -->
-
-      <h1>JMRI: FAQ Scripts</h1>
+        <!-- Page Body -->
+<h1>JMRI: FAQ Scripts</h1>
 
       <p class="subtitle">Foire aux questions sur les scripts JMRI
       avec Jython</p>
@@ -170,11 +165,12 @@
             verrez ceci occasionnellement, mais c'est quelque chose
             de diff&eacute;rent de celui des noms de variables dans
             un fichier de script.</p>
-          </div><a name="windows" id="windows"></a>
+          </div>
 
-          <h2><a name="windows" id="windows">Un Script Peut-il
+          <a name="windows" id="windows"></a>
+          <h2>Un Script Peut-il
           acc&eacute;der &agrave; une application fen&ecirc;tres de
-          JMRI ?</a></h2><a name="windows" id="windows"></a>
+          JMRI ?</h2>
 
           <div class="para">
             Vos scripts peuvent modifier les
@@ -570,11 +566,15 @@ Classe SensndExample (jmri.jmrit.automat.Siglet):
 
 # Lancer une de ceux ci-dessus
 SensndExample (). Start ()
-</pre><!--#include virtual="/Footer" -->
+</pre>
+
+
             </div>
           </div>
         </div>
       </div>
+
+        <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

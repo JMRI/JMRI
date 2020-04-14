@@ -58,6 +58,8 @@ public class YardmasterByTrackFrameTest extends OperationsTestCase {
         
         JemmyUtil.enterClickAndLeave(yp.nextButton);
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(YardmasterByTrackFrameTest.class);

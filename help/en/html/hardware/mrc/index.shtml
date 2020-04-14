@@ -11,10 +11,11 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: MRC/GaugeMaster Prodigy
       Advanced<sup>2</sup></h1>
 
@@ -109,7 +110,7 @@
         "http://www.modelrectifier.com/train-controls/dcc-prodigy.asp">
         Model Rectifier Corp. Prodigy website</a></li>
       </ul>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

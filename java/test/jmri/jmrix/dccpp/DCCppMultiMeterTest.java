@@ -31,6 +31,12 @@ public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterT
         mm = new DCCppMultiMeter(memo);
     }
 
+    @Override
+    @After
+    public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
+        super.tearDown();
+    }
 
     // private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeterTest.class);
 

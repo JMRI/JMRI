@@ -9,11 +9,10 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This provides just the basic interface, plus the "" static method for
  * locating the local implementation.
- *
+ * <p>
+ * Adapted by Sip Bosch for use with zimo Mx-1.
+ * 
  * @author	Bob Jacobsen Copyright (C) 2002
- *
- * Adapted by Sip Bosch for use with zimo Mx-1
- *
  */
 public abstract class Mx1TrafficController implements Mx1Interface {
 
@@ -132,7 +131,7 @@ public abstract class Mx1TrafficController implements Mx1Interface {
 
     public String getUserName() {
         if (adaptermemo == null) {
-            return "Zimo"; //IN18N
+            return "Zimo"; // NOI18N
         }
         return adaptermemo.getUserName();
     }

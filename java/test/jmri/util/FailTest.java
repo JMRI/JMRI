@@ -1,10 +1,12 @@
 package jmri.util;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test that always fails
@@ -14,11 +16,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2015
  */
+@Disabled("Tests test failure, should never be a part of a normal test suite")
 public class FailTest {
 
     @Test
     public void testAlwaysFails() {
-        Assert.fail("This test always fails");
+        assertThat(false).isTrue().withFailMessage("This test always fails");
     }
 
     @Test
@@ -27,12 +30,12 @@ public class FailTest {
     }
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

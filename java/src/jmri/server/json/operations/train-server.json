@@ -8,7 +8,7 @@
             "type": "string",
             "description": "Operations name for train"
         },
-        "icon_name": {
+        "iconName": {
             "type": "string",
             "description": "Name of icon for train in panels"
         },
@@ -33,22 +33,70 @@
             "description": "Human readable train status"
         },
         "statusCode": {
-            "type": "int",
+            "type": "integer",
             "description": "Machine readable train status"
         },
         "length": {
-            "type": "int",
+            "type": "integer",
             "description": "Current train length"
         },
         "weight": {
-            "type": "int",
+            "type": "integer",
             "description": "Current train weight"
         },
         "caboose": {
             "type": "string",
             "description": "Caboose's road and number"
-        }
+        },
+		"route": {
+			"type": "string",
+			"description": "Name of the route assigned to the train"
+		},
+		"routeId": {
+			"type": "string",
+			"description": "ID of the route assigned to the train"			
+		},
+		"locations": {
+			"type": "array",
+			"description": "Sorted list of locations in the route assigned to the train",
+			"items": {
+				"type": "object",
+				"description": "JSON object for each location on the route"
+			}
+		},
+		"engines": {
+			"type": "array",
+			"description": "Sorted list of engines in train",
+			"items": {
+				"type": "object",
+				"description": "JSON object for each engine"
+			}
+		},
+		"cars": {
+			"type": "array",
+			"description": "Sorted list of cars in train",
+			"items": {
+				"type": "object",
+				"description": "JSON object for each car"
+			}
+		},
+		"trainDepartsName": {
+			"type": "string",
+			"description": "Name of the location where train originates or an empty string"
+		},
+		"trainTerminatesName": {
+			"type": "string",
+			"description": "Name of the location where train terminates or an empty string"
+		},
+		"location": {
+			"type": "string",
+			"description": "Name of the current location of the train or an empty string"
+		},
+		"locationId": {
+			"type": "string",
+			"description": "Id of the current location of the train if present"
+		}
     },
-    "additionalProperties": true,
+    "additionalProperties": false,
     "required": ["name", "userName"]
 }

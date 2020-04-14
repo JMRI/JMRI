@@ -18,14 +18,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>D&eacute;finir des signaux aux Aiguillages Triples</h1>
 
       <h2>Introduction</h2>
@@ -51,8 +52,9 @@
 
       <p>Six signaux peuvent &ecirc;tre plac&eacute;s autour de
       l'aiguillage triple, comme indiqu&eacute;
-      ci-dessous:</p><a href="./images/DoubleXover8.gif"><img src=
-      "3_WayTurnout.jpg" align="center" width="469" height="180"
+      ci-dessous:</p>
+      <a href="./images/DoubleXover8.gif"><img src=
+      "3_WayTurnout.jpg" width="469" height="180"
       hspace="0" vspace="0"></a>
 
       <p>L'aiguillage &agrave; la pointe, est d&eacute;sign&eacute;
@@ -429,7 +431,8 @@
 
       <p><b>S'il vous pla&icirc;t n'oubliez pas d'enregistrer votre
       panneau apr&egrave;s l'utilisation de cet outil.</b></p>
-      <!--#include virtual="/Footer" -->
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

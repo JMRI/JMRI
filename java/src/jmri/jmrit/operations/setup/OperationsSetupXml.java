@@ -1,18 +1,19 @@
 package jmri.jmrit.operations.setup;
 
 import java.io.File;
-import jmri.InstanceManager;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.ProcessingInstruction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 import jmri.jmrit.operations.trains.TrainManifestText;
 import jmri.jmrit.operations.trains.TrainSwitchListText;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.ProcessingInstruction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Loads and stores the operation setup using xml files.
@@ -22,18 +23,6 @@ import org.slf4j.LoggerFactory;
 public class OperationsSetupXml extends OperationsXml implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     public OperationsSetupXml() {
-    }
-
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized OperationsSetupXml instance() {
-        return InstanceManager.getDefault(OperationsSetupXml.class);
     }
 
     @Override

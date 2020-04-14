@@ -16,10 +16,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Adding/Editing Turnouts</h1>
 
       <p>When adding a Turnout, from the "System connection:"
@@ -60,7 +60,7 @@
       <p>Back to the <a href="TurnoutTable.shtml">Turnout Table
       help page</a>.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

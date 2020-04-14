@@ -15,7 +15,6 @@ import org.junit.rules.*;
 
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 
@@ -25,7 +24,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 * Re-created using JUnit4 with support for the new conditional editors
 * @author Dave Sand Copyright (C) 2017
  */
-public class LogixTableActionTest extends AbstractTableActionBase {
+public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
 
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.

@@ -24,6 +24,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
@@ -34,9 +35,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -75,6 +74,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.NamedBean;
+import jmri.NamedBeanUsageReport;
 import jmri.Reporter;
 import jmri.ShutDownManager;
 import jmri.SignalHeadManager;
@@ -159,8 +159,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     final public static int SCROLL_VERTICAL = 3;
 
     final public static Color HIGHLIGHT_COLOR = new Color(204, 207, 88);
-
-    public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     public static final String POSITIONABLE_FLAVOR = DataFlavor.javaJVMLocalObjectMimeType
             + ";class=jmri.jmrit.display.Positionable";
@@ -610,7 +608,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             int hnew = Math.max(this.h, c.getLocation().y + c.getSize().height);
             int wnew = Math.max(this.w, c.getLocation().x + c.getSize().width);
             if (hnew > h || wnew > w) {
-//                log.debug("size was {},{} - i =", w, h, i);
+//                log.debug("size was {},{} - i ={}", w, h, i);
                 setSize(wnew, hnew);
             }
             return super.add(c, i);
@@ -671,7 +669,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 log.error("paint failed in thread "+
                     Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": ", e);
             }
-            
+
             Stroke stroke = new BasicStroke();
             if (g2d != null) {
                 stroke = g2d.getStroke();
@@ -691,11 +689,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     g2d.setStroke(new BasicStroke(2.0f));
                 }
                 for (Positionable p : _selectionGroup) {
-                    if (!(p instanceof PositionableShape)) {
-                        g.drawRect(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());
-                    } else {
-                        PositionableShape s = (PositionableShape) p;
-                        s.drawHandles();
+                    if (p != null) {
+                        if (!(p instanceof PositionableShape)) {
+                            g.drawRect(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());
+                        } else {
+                            PositionableShape s = (PositionableShape) p;
+                            s.drawHandles();
+                        }
                     }
                 }
             }
@@ -755,7 +755,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         vertScroll.setValue(vScroll);
     }
 
-    /**
+    /*
      * ********************** Options setup *********************
      */
     /**
@@ -934,7 +934,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Control whether target panel items will show their coordinates in their
      * popup menu.
      *
-     * @param state true for show coodinates.
+     * @param state true for show coordinates.
      */
  /*
      public void setShowCoordinates(boolean state) {
@@ -1035,10 +1035,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         return value;
     }
-
     /*
      * *********************** end Options setup **********************
      */
+
     /**
      * Handle closing the target window.
      * <p>
@@ -1100,7 +1100,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     protected Editor changeView(String className) {
-
         JFrame frame = getTargetFrame();
 
         try {
@@ -1145,11 +1144,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /*
      * *********************** Popup Item Methods **********************
      *
-     *
      * These methods are to be called from the editor view's showPopUp method
      */
     /**
-     * Add a checkbox to lock the position of the Positionable item
+     * Add a checkbox to lock the position of the Positionable item.
      *
      * @param p     the item
      * @param popup the menu to add the lock menu item to
@@ -1916,31 +1914,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
 
-    protected IconAdder getSignalHeadEditor() {
-        IconAdder editor = new IconAdder("SignalHead");
-        editor.setIcon(0, rbean.getString("SignalHeadStateRed"),
-                "resources/icons/smallschematics/searchlights/left-red-marker.gif");
-        editor.setIcon(1, rbean.getString("SignalHeadStateYellow"),
-                "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
-        editor.setIcon(2, rbean.getString("SignalHeadStateGreen"),
-                "resources/icons/smallschematics/searchlights/left-green-marker.gif");
-        editor.setIcon(3, rbean.getString("SignalHeadStateDark"),
-                "resources/icons/smallschematics/searchlights/left-dark-marker.gif");
-        editor.setIcon(4, rbean.getString("SignalHeadStateHeld"),
-                "resources/icons/smallschematics/searchlights/left-held-marker.gif");
-        editor.setIcon(5, rbean.getString("SignalHeadStateLunar"),
-                "resources/icons/smallschematics/searchlights/left-lunar-marker.gif");
-        editor.setIcon(6, rbean.getString("SignalHeadStateFlashingRed"),
-                "resources/icons/smallschematics/searchlights/left-flashred-marker.gif");
-        editor.setIcon(7, rbean.getString("SignalHeadStateFlashingYellow"),
-                "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
-        editor.setIcon(8, rbean.getString("SignalHeadStateFlashingGreen"),
-                "resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
-        editor.setIcon(9, rbean.getString("SignalHeadStateFlashingLunar"),
-                "resources/icons/smallschematics/searchlights/left-flashlunar-marker.gif");
-        return editor;
-    }
-
     protected void addSignalHeadEditor() {
         IconAdder editor = getSignalHeadEditor();
         JFrameItem frame = makeAddIconFrame("SignalHead", true, true, editor);
@@ -1956,6 +1929,32 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         editor.makeIconPanel(true);
         editor.complete(addIconAction, true, false, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
+    }
+
+    protected IconAdder getSignalHeadEditor() {
+        // note that all these icons will be refreshed when user clicks a specific signal head in the table
+        IconAdder editor = new IconAdder("SignalHead");
+        editor.setIcon(0, "SignalHeadStateRed",
+                "resources/icons/smallschematics/searchlights/left-red-marker.gif");
+        editor.setIcon(1, "SignalHeadStateYellow",
+                "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
+        editor.setIcon(2, "SignalHeadStateGreen",
+                "resources/icons/smallschematics/searchlights/left-green-marker.gif");
+        editor.setIcon(3, "SignalHeadStateDark",
+                "resources/icons/smallschematics/searchlights/left-dark-marker.gif");
+        editor.setIcon(4, "SignalHeadStateHeld",
+                "resources/icons/smallschematics/searchlights/left-held-marker.gif");
+        editor.setIcon(5, "SignalHeadStateLunar",
+                "resources/icons/smallschematics/searchlights/left-lunar-marker.gif");
+        editor.setIcon(6, "SignalHeadStateFlashingRed",
+                "resources/icons/smallschematics/searchlights/left-flashred-marker.gif");
+        editor.setIcon(7, "SignalHeadStateFlashingYellow",
+                "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
+        editor.setIcon(8, "SignalHeadStateFlashingGreen",
+                "resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
+        editor.setIcon(9, "SignalHeadStateFlashingLunar",
+                "resources/icons/smallschematics/searchlights/left-flashlunar-marker.gif");
+        return editor;
     }
 
     protected void addSignalMastEditor() {
@@ -1976,7 +1975,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
 
-    SpinnerNumberModel _spinCols = new SpinnerNumberModel(3, 1, 100, 1);
+    private SpinnerNumberModel _spinCols = new SpinnerNumberModel(3, 1, 100, 1);
 
     protected void addMemoryEditor() {
         IconAdder editor = new IconAdder("Memory") {
@@ -2490,14 +2489,23 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         } else {
             super.setTitle(name + " " + Bundle.getMessage("LabelEditor"));
         }
-        Iterator<JFrameItem> iter = _iconEditorFrame.values().iterator();
-        while (iter.hasNext()) {
-            JFrameItem frame = iter.next();
+        for (JFrameItem frame : _iconEditorFrame.values()) {
             frame.setTitle(frame.getName() + " (" + name + ")");
         }
         setName(name);
     }
 
+    /**
+     * Create a frame showing all images in the set used for an icon.
+     * Opened when editItemInPanel button is clicked in the Edit Icon Panel,
+     * shown after icon's context menu Edit Icon... item is selected.
+     *
+     * @param name bean type name
+     * @param add true when used to add a new item on panel, false when used to edit an item already on the panel
+     * @param table true for bean types presented as table instead of icons
+     * @param editor parent frame of the image frame
+     * @return JFrame connected to the editor,  to be filled with icons
+     */
     protected JFrameItem makeAddIconFrame(String name, boolean add, boolean table, IconAdder editor) {
         log.debug("makeAddIconFrame for {}, add= {}, table= {}", name, add, table);
         String txt;
@@ -2597,7 +2605,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 });
             }
         } else {
-            log.error("No icon editor specified for {}", name); //NOI18N
+            log.error("No icon editor specified for {}", name); // NOI18N
         }
         if (add) {
             txt = MessageFormat.format(Bundle.getMessage("AddItem"), Bundle.getMessage(BundleName));
@@ -2652,26 +2660,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     /**
      * Dispose of the editor.
-     *
-     * @param clear true to discard Positionables; false to retain Positionables
-     *              for future use
-     * @deprecated since 4.11.5. use {@link #dispose()} instead.
-     */
-    @Deprecated // 4.11.5
-    public void dispose(boolean clear) {
-        log.debug("Editor delete and dispose done. clear= {}", clear);
-        jmri.util.Log4JUtil.deprecationWarning(log, "dispose(boolean )");        
-        dispose();
-    }
-
-    /**
-     * Dispose of the editor.
      */
     @Override
     public void dispose() {
-        Iterator<JFrameItem> iter = _iconEditorFrame.values().iterator();
-        while (iter.hasNext()) {
-            JFrameItem frame = iter.next();
+        for (JFrameItem frame : _iconEditorFrame.values()) {
             frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
             frame.dispose();
         }
@@ -2948,31 +2940,34 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         popup.add(new AbstractAction(Bundle.getMessage("TextAttributes")) {
             Positionable comp;
+            Editor ed;
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                (new TextAttrDialog(comp)).setVisible(true);
+                (new TextAttrDialog(comp, ed)).setVisible(true);
             }
 
             AbstractAction init(Positionable pos, Editor e) { // e unused?
                 comp = pos;
+                ed = e;
                 return this;
             }
         }.init(p, this));
         return true;
     }
 
-    public class TextAttrDialog extends JDialog {
+    public class TextAttrDialog extends DisplayFrame {
 
         Positionable _pos;
         DecoratorPanel _decorator;
+        BufferedImage[] _backgrounds;
 
-        TextAttrDialog(Positionable p) {
-            super(_targetFrame, Bundle.getMessage("TextAttributes"), true);
+        TextAttrDialog(Positionable p, Editor ed) {
+            super(Bundle.getMessage("TextAttributes"), ed);
             _pos = p;
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            _decorator = new DecoratorPanel(_pos.getEditor(), null);
+            _decorator = new DecoratorPanel(this);
             _decorator.initDecoratorPanel(_pos);
             panel.add(_decorator);
             panel.add(makeDoneButtonPanel());
@@ -2981,7 +2976,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             dim = new Dimension(dim.width +10, dim.height + 10);
             sp.setPreferredSize(dim);
             setContentPane(sp);
-            setLocation(jmri.util.PlaceWindow.nextTo(_pos.getEditor(), (Component)_pos, this));
+            InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_pos.getEditor(), (Component)_pos, this);
             pack();
         }
 
@@ -3247,9 +3242,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
-        if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
+        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
             StringBuilder message = new StringBuilder();
-            message.append(Bundle.getMessage("VetoInUseEditorHeader", getName())); //IN18N
+            message.append(Bundle.getMessage("VetoInUseEditorHeader", getName())); // NOI18N
             message.append("<br>");
             boolean found = false;
             int count = 0;
@@ -3262,11 +3257,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             if (found) {
                 message.append(Bundle.getMessage("VetoFoundInPanel", count));
                 message.append("<br>");
-                message.append(Bundle.getMessage("VetoReferencesWillBeRemoved")); //IN18N
+                message.append(Bundle.getMessage("VetoReferencesWillBeRemoved")); // NOI18N
                 message.append("<br>");
                 throw new PropertyVetoException(message.toString(), evt);
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
+        } else if ("DoDelete".equals(evt.getPropertyName())) { // NOI18N
             ArrayList<Positionable> toDelete = new ArrayList<>();
             for (Positionable p : _contents) {
                 if (nb.equals(p.getNamedBean())) {
@@ -3395,6 +3390,63 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public static Editor getEditor(String name) {
         return InstanceManager.getDefault(EditorManager.class).getEditor(name);
+    }
+
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            getContents().forEach((pos) -> {
+                String data = getUsageData(pos);
+                if (pos instanceof MultiSensorIcon) {
+                    MultiSensorIcon multi = (MultiSensorIcon) pos;
+                    multi.getSensors().forEach((sensor) -> {
+                        if (bean.equals(sensor)) {
+                            report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                        }
+                    });
+
+                } else if (pos instanceof SlipTurnoutIcon) {
+                    SlipTurnoutIcon slip3Scissor = (SlipTurnoutIcon) pos;
+                    if (bean.equals(slip3Scissor.getTurnout(SlipTurnoutIcon.EAST))) {
+                        report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                    }
+                    if (bean.equals(slip3Scissor.getTurnout(SlipTurnoutIcon.WEST))) {
+                        report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                    }
+                    if (slip3Scissor.getNamedTurnout(SlipTurnoutIcon.LOWEREAST) != null) {
+                        if (bean.equals(slip3Scissor.getTurnout(SlipTurnoutIcon.LOWEREAST))) {
+                            report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                        }
+                    }
+                    if (slip3Scissor.getNamedTurnout(SlipTurnoutIcon.LOWERWEST) != null) {
+                        if (bean.equals(slip3Scissor.getTurnout(SlipTurnoutIcon.LOWERWEST))) {
+                            report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                        }
+                    }
+
+                } else if (pos instanceof LightIcon) {
+                    LightIcon icon = (LightIcon) pos;
+                    if (bean.equals(icon.getLight())) {
+                        report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                    }
+
+                } else {
+                    if (bean.equals(pos.getNamedBean())) {
+                        report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                    }
+               }
+            });
+        }
+        return report;
+    }
+
+    String getUsageData(Positionable pos) {
+        Point point = pos.getLocation();
+        String data = String.format("%s :: x=%d, y=%d",
+                pos.getClass().getSimpleName(),
+                Math.round(point.getX()),
+                Math.round(point.getY()));
+        return data;
     }
 
     // initialize logging

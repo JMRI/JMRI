@@ -1,7 +1,5 @@
 package jmri;
 
-import java.util.List;
-
 /**
  * Interface for obtaining Logixs
  * <p>

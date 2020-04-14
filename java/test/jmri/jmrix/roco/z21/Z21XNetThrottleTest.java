@@ -280,7 +280,9 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
     @Override
     public void tearDown() throws Exception {
         ((Z21XNetThrottle)instance).throttleDispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

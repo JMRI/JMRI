@@ -1,6 +1,7 @@
 package jmri.jmrix.grapevine;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
@@ -25,12 +26,13 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public GrapevineSystemConnectionMemo getMemo() {
         return (GrapevineSystemConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         String prefix = getSystemPrefix();
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName, prefix);
@@ -62,13 +64,13 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false; // Turnout address format is more than a simple number.
     }
 
     /** {@inheritDoc} */
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         String tmpSName = prefix + "T" + curAddress;
 
         if (curAddress.contains(":")) {
@@ -99,15 +101,15 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return (tmpSName);
     }
 
-    int nCard = 0;
-    int bitNum = 0;
-    int nNode = 0;
+    private int nCard = 0;
+    private int bitNum = 0;
+    private int nNode = 0;
 
     /**
      * Return the next valid free turnout hardware address.
      */
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
 
         String tmpSName = "";
         try {
@@ -150,7 +152,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return SerialAddress.validateSystemNameFormat(name, this, locale);
     }
 
@@ -158,7 +161,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix());
     }
 

@@ -93,7 +93,6 @@ public class TrackCircuitSectionTest {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initShutDownManager();
         
         indicator = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1"); indicator.setUserName("Sec 1 track output");
 

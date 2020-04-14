@@ -1,12 +1,14 @@
 package jmri.jmrit.operations.trains;
 
 import java.io.File;
+
+import org.junit.Assert;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  *
@@ -40,6 +42,9 @@ public class TrainLoggerTest extends OperationsTestCase {
         Assert.assertTrue("Confirm file creation", file.exists()); 
         
         Setup.setTrainLoggerEnabled(false);
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainLoggerTest.class);

@@ -87,6 +87,8 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         }
 
         jmri.util.JUnitAppender.assertErrorMessage("Tag 12345 Not Found");
+        
+
     }
 
     // test creation
@@ -127,6 +129,8 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         Assert.assertEquals("Car Comment", "TESTCOMMENT", rs1.getComment());
         Assert.assertEquals("Car Rfid", "TESTRFID", rs1.getRfid());
         Assert.assertEquals("Car Moves", 5, rs1.getMoves());
+        
+
     }
 
     // test Car weight and weighttons

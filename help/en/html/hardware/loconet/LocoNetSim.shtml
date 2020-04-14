@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -15,17 +14,20 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <div id="container">
     <p class="skipLink"><a href="#mainContent" accesskey="2">Skip
-    to main content</a></p><!--#include virtual="/Header" -->
-
-    <div class="nomenu" id="mBody">
+    to main content</a></p>
+    <!--#include virtual="/Header.shtml" -->
+    <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
       <div id="mainContent">
-        <h1>Hardware Support: LocoNet&reg; Simulator</h1>
+
+      <h1>Hardware Support: LocoNet&reg; Simulator</h1>
 
         <p>If JMRI is configured to use a Digitrax LocoNet&reg;
         connection, but the connection isn't available, several
@@ -52,7 +54,8 @@
         e.g. a LocoBuffer-USB, and use the panel you've
         created.</p>
 
-        <h2>Hex files</h2>The simulator can also read and playback
+        <h2>Hex files</h2>
+        <p>The simulator can also read and playback
         hex traces of LocoNet activity to see how the program will
         react to them. Each line in the trace is a single LocoNet
         packet in hexadecimal characters. You can create one of
@@ -61,7 +64,7 @@
         to a log file. You'll have to edit the resulting file to
         remove the human readable lines, leaving just the hex raw
         data.<br>
-        An example hex file is shown here:
+        An example hex file is shown here:</p>
 
         <p><code>A1 0B 00 55 &crarr;</code></p>
         <pre>
@@ -109,7 +112,8 @@ BB 10 00 54 &crarr;
 
         <p>LocoNet&reg; is a registered trademark of <a href=
         "http://www.digitrax.com">Digitrax, Inc.</a></p>
-        <!--#include virtual="/Footer" -->
+
+        <!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
   </div>

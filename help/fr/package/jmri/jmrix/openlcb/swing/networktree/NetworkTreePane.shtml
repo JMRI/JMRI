@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14 -->
+<!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14 -->
 <!-- Copyright Bob Jacobsen 2008 -->
 
 <html lang="en">
@@ -10,7 +10,8 @@
 
   <title>JMRI OpenLCB: Browse Configuration</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI OpenLCB"><!-- Style -->
+  <meta name="keywords" content="JMRI OpenLCB">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -18,14 +19,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>OpenLCB: Parcourir la Configuration</h1>L'outil
       "Configurer Noeuds" OpenLCB vous permet de voir directement
       les noeuds de votre r&#233;seau OpenLCB et de faire quelques
@@ -43,7 +45,7 @@
           l'interm&#233;diaire d'un adaptateur CAN.</td>
 
           <td><a href="StartWindow.png"><img src="StartWindow.png"
-          href="113" alt="image de d&#233;part"></a></td>
+          alt="image de d&#233;part"></a></td>
         </tr>
 
         <tr>
@@ -51,7 +53,7 @@
           savoir plus sur lui.</td>
 
           <td><a href="OpenNodeInfo.png"><img src=
-          "OpenNodeInfo.png" href="112" alt=
+          "OpenNodeInfo.png" alt=
           "Apr&#232;s avoir cliquer pour ouvrir"></a></td>
         </tr>
 
@@ -61,8 +63,7 @@
           n&#197;"ud particulier.</td>
 
           <td><a href="OpenProtocol.png"><img src=
-          "%20OpenProtocol.png" href="%20159" protocoles=""
-          ouverts=""></a></td>
+          "OpenProtocol.png"></a></td>
         </tr>
 
         <tr>
@@ -76,8 +77,7 @@
           etc</td>
 
           <td><a href="StartConfigWindow.png"><img src=
-          "%20StartConfigWindow.png" href="%20254" de=""
-          configuration="" initiale=""></a></td>
+          "StartConfigWindow.png"></a></td>
         </tr>
 
         <tr>
@@ -92,8 +92,7 @@
           stock&#233; en permanence dans le noeud.</td>
 
           <td><a href="FilledOutConfigWindow.png"><img src=
-          "%20FilledOutConfigWindow.png" href="%20254" de=""
-          configuration="" filled=""></a></td>
+          "FilledOutConfigWindow.png"></a></td>
         </tr>
 
         <tr>
@@ -101,11 +100,13 @@
           alors montree puis dans l'arbre de configuration pour
           vous aider &#224; reconna&#238;tre vos noeuds.</td>
 
-          <td><a href="NodeWithID.png"><img src="%20NodeWithID.png"
-          href="128" alt=
-          " fen&#234;tre de configuration Filled -out "></a></td>
+          <td><a href="NodeWithID.png"><img src="NodeWithID.png"
+          alt=
+          "fen&#234;tre de configuration Filled-out "></a></td>
         </tr>
-      </table><!--#include virtual="/Footer" -->
+      </table>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

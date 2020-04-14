@@ -17,14 +17,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Warrants: When Warrant Speeds Are Modified</h1>
 
       <p>Regardless of the throttle setting and intended track
@@ -335,7 +336,7 @@
 
       <p>Back to <a href="Warrant.shtml">Warrants Help</a>.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

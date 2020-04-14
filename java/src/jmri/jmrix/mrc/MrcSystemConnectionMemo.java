@@ -1,8 +1,11 @@
 package jmri.jmrix.mrc;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.NamedBean;
+import jmri.util.NamedBeanComparator;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -18,7 +21,7 @@ import jmri.InstanceManager;
 public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public MrcSystemConnectionMemo() {
-        super("M", "MRC"); //IN18N
+        super("M", "MRC"); // NOI18N
         register(); // registers general type
         InstanceManager.store(this, MrcSystemConnectionMemo.class); // also register as specific type
 
@@ -35,7 +38,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * @return current traffic controller for this connection
      */
     public MrcTrafficController getMrcTrafficController() {
-        if (mrcTrafficController == null) new Exception("found tc null in request").printStackTrace();
+        if (mrcTrafficController == null) log.error("found tc null in request", new Exception("traceback"));
         return mrcTrafficController;
     }
     private MrcTrafficController mrcTrafficController;
@@ -188,6 +191,11 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
+    }
+
+    @Override
     public void dispose() {
         mrcTrafficController = null;
         InstanceManager.deregister(this, MrcSystemConnectionMemo.class);
@@ -209,5 +217,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         super.dispose();
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MrcSystemConnectionMemo.class.getName());
 
 }

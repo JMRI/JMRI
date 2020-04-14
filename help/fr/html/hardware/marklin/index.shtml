@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <!-- translated by Herv&#233; Blorec 2017-02-05 -->
-<<title>JMRI Hardware Support - M&auml;rklin Command Station 2</title>
+<title>JMRI Hardware Support - M&auml;rklin Command Station 2</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -14,9 +14,11 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Documentation Mat&#233;riel : Marklin Centrale CS 2</h1>
 <p>
@@ -54,7 +56,8 @@ Le Couplage et la Programmation ne sont pas encore support&#233;s.
 La mise en oeuvre pour les Aiguillages, Capteurs, R&#233;gulateurs et Alimentation est disponible pour
 une unit&#233; CS2 connect&#233;e &#224; JMRI 
 <p>
-La prise en charge des r&#233;gulateurs inclut la possibilit&#233; de s&#233;lectionner un protocole sp&#233;cifique (M&auml;rklin, DCC & MFX)
+La prise en charge des r&#233;gulateurs inclut la possibilit&#233; de s&#233;lectionner un protocole sp&#233;cifique
+	(M&auml;rklin, DCC &amp; MFX)
 
 <img src="images/MarklinMenu416.png" width="251" height="74" align="right" alt="Menu">
 <a name="tools"></a><h2>Outils JMRI</h2>
@@ -63,7 +66,7 @@ La prise en charge des r&#233;gulateurs inclut la possibilit&#233; de s&#233;lec
 <h4>Envoi Commandes Marklin</h4>
 <img src="images/MarklinCS2SendCommand.png" width="252" height="137" alt="Menu">
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

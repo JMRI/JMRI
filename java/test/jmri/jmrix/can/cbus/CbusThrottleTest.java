@@ -423,7 +423,11 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @After
     @Override
     public void tearDown() {
+        memo.dispose();
+        memo = null;
+        tc.terminateThreads();
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusThrottleTest.class);

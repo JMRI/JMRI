@@ -719,6 +719,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @After
     public void tearDown() {
 	m = msg = null;
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

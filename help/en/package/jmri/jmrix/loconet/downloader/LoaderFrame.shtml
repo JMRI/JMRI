@@ -13,21 +13,20 @@
   <meta name="author" content="B. Milhaupt">
   <meta name="keywords" content="JMRI help digitrax downloader">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>LocoNet&reg; "Download Firmware" Tool</h1>
 
       <table border="0">
@@ -78,8 +77,8 @@
                   <li><a href="#ContentNotUnderstood">"Firmware
                   content in the file is not understood" Status
                   message</a></li>
-                  
-                  <li><a href="#InvalidParameterInFile">"Invalid Prog Blk 
+
+                  <li><a href="#InvalidParameterInFile">"Invalid Prog Blk
                   Size parameter in file" dialog box message</a></li>
                 </ul>
               </li>
@@ -395,13 +394,13 @@
       the bottom of the tool window. Consult the device
       manufacturer for support - usually this means that the
       manufacturer must provide a new firmware file.</p>
-      
+
       <h3 id="InvalidParameterInFile">"Invalid Prog Blk Size parameter in file" dialog box message</h3>
       <p>When the tool reads a firmware file and can determine that the file
       requires a process which the tool cannot support, the tool will pop-up a dialog
-      box saying "Invalid Prog Blk Size parameter ...".  The tool will prevent 
-      itself from attempting to update the device.  This applies to firmware 
-      updates for some newer Digitrax hardware which requires a different firmware 
+      box saying "Invalid Prog Blk Size parameter ...".  The tool will prevent
+      itself from attempting to update the device.  This applies to firmware
+      updates for some newer Digitrax hardware which requires a different firmware
       update process.  For these devices, the Digitrax <em>DigiIPLII</em> software
       should be used.</p><br clear="all">
 
@@ -599,12 +598,12 @@
       <h2 id="NotUpdatableDevices">Devices which are not supported by this tool</h2>
 
       <p>The table below lists some devices which are known to be <em>unsupported
-          </em> by this tool.  The tool will not attempt to update these devices 
-          because this tool does not implement the correct protocol.  <em>Using the 
-          protocol implemented in this tool when a newer protocol is required 
-          would result in a corrupted firmware image in the device.</em>  Use 
+          </em> by this tool.  The tool will not attempt to update these devices
+          because this tool does not implement the correct protocol.  <em>Using the
+          protocol implemented in this tool when a newer protocol is required
+          would result in a corrupted firmware image in the device.</em>  Use
           the Digitrax program <em>DigitIPLII.exe</em> to update these devices.</p>
-      
+
       <table border="2">
         <thead>
           <tr>
@@ -650,8 +649,8 @@
 
       <ul>
         <li>The LocoNet Firmware Download tool is similar to the
-        "DigiIPL.exe" and "DigiIPLII.exe" which have been released 
-        by Digitrax.  "DigiIPLII.exe" is available from their web site as 
+        "DigiIPL.exe" and "DigiIPLII.exe" which have been released
+        by Digitrax.  "DigiIPLII.exe" is available from their web site as
         part of the SoundLoader2 package. Support for the DigiIPLII.exe
         program is provided by Digitrax. Note that DigiIPLII.exe is
         intended for use with Digitrax products and is not able to
@@ -683,7 +682,7 @@
         LocoNet, properly powered, and properly configured before
         activating the "Download" button. The developers of this
         tool do not recommend this as any failure of the process
-        could result in all of the hardware being updated becoming 
+        could result in all of the hardware being updated becoming
         unusable.</li>
 
         <li>Do not open multiple LocoNet Firmware Download tools at
@@ -720,6 +719,6 @@
       package/jmri/jmrix/loconet/downloader/LoaderFrame help
       page)</p>
     </div>
-  </div><!--#include virtual="/Footer" -->
+  </div><!--#include virtual="/Footer.shtml" -->
 </body>
 </html>

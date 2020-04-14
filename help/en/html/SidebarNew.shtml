@@ -1,0 +1,32 @@
+<!-- SidebarNew.shtml -->
+<!-- THIS VERSION OF SIDEBAR FOR EXPERIMENTING WITH NEW FORMATS.  LINK TO BE DISTRIBUTED ON JMRI-DEVELOPERS FOR REVIEW @jerryg2003 01/27/2020 -->
+<!-- This is the common sidebar definition for Help system pages -->
+	<hr class="hide">
+	
+    <div id="side"> <!-- Block of text on left side of page -->
+        <div style="text-align: center">JMRI&reg; is...</div>
+        <dl>
+
+            <!--#include virtual="/help/en/parts/SidebarApplicationsNew.shtml" -->
+
+            <!--#include virtual="/help/en/parts/SidebarToolsNew.shtml" -->
+
+            <!--#include virtual="/help/en/parts/SidebarLayoutAutomationNew.shtml" -->
+	    
+	    <!--#include virtual="/help/en/parts/SidebarSupportedHardwareNew.shtml" -->    
+
+	    <!--#include virtual="/help/en/parts/SidebarInstallNew.shtml" -->    
+
+
+         </dl>
+
+    <!--#include virtual="/help/en/parts/SidebarTailNew.shtml" -->    
+
+    </div>  <!-- ends side -->
+
+<!-- /Sidebar.shtml -->
+
+<!-- ============================================================================ -->
+
+<!-- Help pages should use Sidebar in help/en/html unless something unique to add -->
+<!-- [pound sign]include virtual="/help/en/html/Sidebar.shtml" -->

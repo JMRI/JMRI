@@ -223,7 +223,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
         addHorizontalScrollBarKludgeFix(controlPane, controlPanel);
 
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
         trainManager.addPropertyChangeListener(this);
         trainScheduleManager.addPropertyChangeListener(this);
         addPropertyChangeLocations();
@@ -472,7 +472,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
     @Override
     public void dispose() {
-        Setup.removePropertyChangeListener(this);
+        Setup.getDefault().removePropertyChangeListener(this);
         trainManager.removePropertyChangeListener(this);
         trainScheduleManager.removePropertyChangeListener(this);
         removePropertyChangeTrainSchedules();

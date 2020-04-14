@@ -6,7 +6,7 @@ import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**
- * Test simple functioning of MemoryIcon
+ * Test simple functioning of MemoryIcon.
  *
  * @author Paul Bender Copyright (C) 2016
  */
@@ -25,8 +25,6 @@ public class MemoryIconTest extends jmri.jmrit.display.MemoryIconTest {
     @ToDo("rewrite superclass test so it works in this case.")
     public void testGetAndSetScale(){
     }
-    
-
 
     @Before
     @Override
@@ -43,11 +41,12 @@ public class MemoryIconTest extends jmri.jmrit.display.MemoryIconTest {
     @After
     @Override
     public void tearDown() {
-        if(to!=null) {
+        if (to != null) {
            to.getEditor().dispose();
            to = null;
            p = null;
         }
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

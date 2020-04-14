@@ -25,7 +25,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-import apps.ConfigBundle;
 import apps.gui3.tabbedpreferences.TabbedPreferences;
 import jmri.InstanceManager;
 import jmri.jmrix.ConnectionConfigManager;
@@ -236,7 +235,7 @@ public class ProtocolOptionsFrame extends JmriJFrame {
         contentPane.add(bottomPanel);
 
         JButton saveButton = new JButton(
-                ConfigBundle.getMessage("ButtonSave"),
+                Bundle.getMessage("ButtonSave"),
                 new ImageIcon(FileUtil.findURL("program:resources/icons/misc/gui3/SaveIcon.png",
                         FileUtil.Location.INSTALLED)));
         bottomPanel.add(saveButton);

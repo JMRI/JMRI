@@ -23,8 +23,7 @@ public class IndicatorTOItemPanelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel<jmri.Turnout> tableModel = PickListModel.turnoutPickModelInstance();
         DisplayFrame df = new DisplayFrame("Indicator TO Item Panel Test");
-        Editor editor = new EditorScaffold();
-        IndicatorTOItemPanel t = new IndicatorTOItemPanel(df,"IT01","",tableModel,editor);
+        IndicatorTOItemPanel t = new IndicatorTOItemPanel(df,"IT01","",tableModel);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(df);
     }

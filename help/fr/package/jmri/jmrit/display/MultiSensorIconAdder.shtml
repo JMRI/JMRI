@@ -23,10 +23,10 @@
 <body>
   charset=iso-8859-1"&gt; <!-- Style -->
    <!-- /Style -->
-   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+   <!--#include virtual="/Header.shtml" -->
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>L'&Eacute;diteurd'Ic&ocirc;ne Multicapteurs</h1>
 
       <p>La fa&ccedil;on dont les ic&ocirc;nes sont
@@ -69,7 +69,7 @@
       affect&eacute;es" aux capteurs, le bouton <b>Ajouter au
       Panneau</b> devient actif et il peut &ecirc;tre appuy&eacute;
       pour installer le multicapteurs dans le panneau.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -2,9 +2,7 @@ package jmri.jmrix.dccpp.simulator;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for ConnectionConfig class.
@@ -26,6 +24,7 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
    @Override
    public void tearDown(){
         cc = null;
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
    }
 

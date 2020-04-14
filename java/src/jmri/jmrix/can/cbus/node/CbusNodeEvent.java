@@ -2,8 +2,6 @@ package jmri.jmrix.can.cbus.node;
 
 import java.util.Arrays;
 import java.util.Objects;
-import javax.annotation.Nonnull;
-import jmri.jmrix.can.cbus.CbusEvent;
 import jmri.util.StringUtil;
 
 import org.slf4j.Logger;
@@ -16,60 +14,39 @@ import org.slf4j.LoggerFactory;
  *
  * @author Steve Young Copyright (C) 2019
  */
-public class CbusNodeEvent extends CbusEvent implements Comparable<CbusNodeEvent> {
-    private int _thisnode;
-    private int _index;
-    public int[] _evVarArr;
-    private String _fcuNodeName;
-    private CbusNodeSingleEventTableDataModel eventDataModel;
+public class CbusNodeEvent extends CbusBasicNodeEvent implements Comparable<CbusNodeEvent> {
+    
+    private int[] _evVarArr;
     
     /**
      * Set the value of the event variable array by index
      *
+     * @param memo CAN System Connection
      * @param nn Event node Number
      * @param en Event event or device number
      * @param thisnode Host node number
      * @param index number assigned by node, -1 if unknown
      * @param maxEvVar Maximum event variables for the event
      */
-    public CbusNodeEvent( int nn, int en, int thisnode, int index, int maxEvVar){
-        super(nn,en);
-        _thisnode = thisnode;
-        _index = index;
+    public CbusNodeEvent( jmri.jmrix.can.CanSystemConnectionMemo memo, int nn, int en, int thisnode, int index, int maxEvVar){
+        super(memo,nn,en,thisnode,index);
         _evVarArr = new int[maxEvVar];
         java.util.Arrays.fill(_evVarArr,-1);
-        _fcuNodeName = "";
     }
     
     protected CbusNodeEvent( int nn, int en, int thisnode, String eventString ){
-        super(nn,en);
-        _thisnode = thisnode;
-        _index = -1;
+        super(null,nn,en,thisnode,-1);
         _evVarArr = StringUtil.intBytesWithTotalFromNonSpacedHexString(eventString,false);
-        _fcuNodeName = "";
+        setTempFcuNodeName(null);
     }
     
     protected CbusNodeEvent( CbusNodeEvent existing ) {
-        super(existing.getNn(),existing.getEn());
-        _thisnode = existing.getParentNn();
-        _index = existing.getIndex();
+        super(null,existing.getNn(),existing.getEn(),existing.getParentNn(),existing.getIndex());
         setEvArr( Arrays.copyOf(
             existing.getEvVarArray(),
             existing.getEvVarArray().length) );
-        _fcuNodeName = existing.getTempFcuNodeName();
+        setTempFcuNodeName ( existing.getTempFcuNodeName());
         
-    }
-    
-    protected void setEditTableModel( CbusNodeSingleEventTableDataModel model ) {
-        eventDataModel = model;
-    }
-    
-    private void notifyModel(){
-        if ( eventDataModel != null ) {
-            jmri.util.ThreadingUtil.runOnGUI( ()->{
-                eventDataModel.fireTableDataChanged();
-        });
-        }
     }
 
     /**
@@ -97,7 +74,7 @@ public class CbusNodeEvent extends CbusEvent implements Comparable<CbusNodeEvent
      *
      * @param newArray event variable array, 1st value index 0 should be 1st event value, NOT total
      */    
-    public void setEvArr( int[] newArray ){
+    public final void setEvArr( int[] newArray ){
         _evVarArr = newArray;
         notifyModel();
     }
@@ -149,8 +126,8 @@ public class CbusNodeEvent extends CbusEvent implements Comparable<CbusNodeEvent
      * @return the hex string for of the array
      */ 
     public String getHexEvVarString() {
-        if (getEvVarArray()!=null){
-            return StringUtil.hexStringFromInts(getEvVarArray()).replaceAll("\\s","");
+        if (getEvVarArray() != null) {
+            return StringUtil.hexStringFromInts(getEvVarArray()).replaceAll("\\s", "");
         }
         return "";
     }
@@ -187,57 +164,13 @@ public class CbusNodeEvent extends CbusEvent implements Comparable<CbusNodeEvent
     }
 
     /**
-     * Returns the parent host node of the node event
-     *
-     * @return decimal node number
-     */     
-    public int getParentNn(){
-        return _thisnode;
-    }
-
-    /**
-     * Set the index number of this event on a node
-     * <p>
-     * Index number not valid after any event has been written to or deleted from the node
-     * 
-     * @param index number, -1 if unset
-     */  
-    public void setIndex(int index){
-        _index = index;
-    }
-
-    /**
-     * Get the index number of this event on a node
-     * 
-     * @return index number, -1 if unset
-     */  
-    public int getIndex(){
-        return _index;
-    }
-
-    /**
      * Get the number of event variables
      * by Array Length
      * 
+     * @return number of event variables
      */      
     public int getNumEvVars() {
         return _evVarArr.length;
-    }
-    
-    /**
-     * Set a temporary node name
-     * 
-     */
-    public void setTempFcuNodeName( String tempName){
-        _fcuNodeName = tempName;
-    }
-    
-    /**
-     * Get a temporary node name
-     * 
-     */
-    public String getTempFcuNodeName(){
-        return _fcuNodeName;
     }
     
     /**
@@ -253,28 +186,12 @@ public class CbusNodeEvent extends CbusEvent implements Comparable<CbusNodeEvent
     }
     
     /** 
-     * {@inheritDoc} 
-     * Compares to the Node / Event numbers of the Event
-     */
-    @Override
-    public int compareTo(CbusNodeEvent o) {
-        return Integer.compare(this.listOrder(),o.listOrder());
-    }
-    
-    private int listOrder(){
-        return (getNn()*65535+getEn())+100+(Objects.hash(getHexEvVarString())%100);
-    }
-    
-    /** 
     * {@inheritDoc} 
     * <p>
     * Custom method to compare Node Num, Ev Num, Parent Node Num, Event Variables
     */
     @Override
     public boolean equals(Object o) {
-        if (o == null) {
-            return false;   // basic contract
-        }
         if (!(o instanceof CbusNodeEvent)) {
             return false;
         }
@@ -285,15 +202,26 @@ public class CbusNodeEvent extends CbusEvent implements Comparable<CbusNodeEvent
         if ( this.getParentNn()!=t.getParentNn() ) {
             return false;
         }
-        if (! this.getHexEvVarString().equals(t.getHexEvVarString()) ) {
-            return false;
-        }
-        return true;
+        return this.getHexEvVarString().equals(t.getHexEvVarString());
     }
     
     /** {@inheritDoc} */
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return Objects.hash(getEn(), getNn(), getParentNn(), getHexEvVarString());
+    }
+    
+    /** 
+     * {@inheritDoc} 
+     * Compares to the Node / Event numbers of the Event
+     */
+    @Override
+    public int compareTo(CbusNodeEvent o) {
+        return Integer.compare(this.listOrder(),o.listOrder());
+    }
+    
+    private int listOrder(){
+        return (getNn()*65535+getEn())+100+(Objects.hash(getHexEvVarString())%100);
     }
     
     private static final Logger log = LoggerFactory.getLogger(CbusNodeEvent.class);

@@ -336,32 +336,73 @@ public class FunctionButton extends JToggleButton implements ActionListener {
     class PopupListener extends MouseAdapter {
 
         /**
-         * If the event is the popup trigger, which is dependent on the
-         * platform, present the popup menu. Otherwise change the state of the
+         * change the state of the
          * function depending on the locking state of the button.
+         */
+        @Override
+        public void mouseClicked(MouseEvent e) {
+
+            log.debug("{}: button1 down = {}, modifier mask = {}, isPopup {}, count = {} raw modifiers = {} masks ={}/{}/{}/{}",
+                " clicked",
+                e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK,
+                e.getModifiersEx() & (MouseEvent.ALT_DOWN_MASK | MouseEvent.META_DOWN_MASK | MouseEvent.CTRL_DOWN_MASK),
+                e.isPopupTrigger(),
+                e.getClickCount(),
+                e.getModifiersEx(),
+                MouseEvent.ALT_DOWN_MASK, MouseEvent.META_DOWN_MASK, MouseEvent.CTRL_DOWN_MASK, MouseEvent.SHIFT_DOWN_MASK
+            );
+
+            if (e.isPopupTrigger()) {
+                popup.show(e.getComponent(),
+                        e.getX(), e.getY());
+                return;
+            } 
+
+            JToggleButton button = (JToggleButton) e.getSource();
+
+            // is this an enabled, locking button?
+            if (button.isEnabled() && isLockable) {
+                // yes, alternate state
+                changeState(!isOn);
+                // force button to desired state
+                button.setSelected(isOn);                
+            }
+        }
+        
+        /**
+         * If the event is the popup trigger, which is dependent on the
+         * platform, present the popup menu. 
          *
          * @param e The MouseEvent causing the action.
          */
         @Override
         public void mousePressed(MouseEvent e) {
-            if (log.isDebugEnabled()) {
-                log.debug("pressed " + (e.getModifiers() & MouseEvent.BUTTON1_MASK) + " " + e.isPopupTrigger()
-                        + " " + (e.getModifiers() & (MouseEvent.ALT_MASK + MouseEvent.META_MASK + MouseEvent.CTRL_MASK))
-                        + (" " + MouseEvent.ALT_MASK + "/" + MouseEvent.META_MASK + "/" + MouseEvent.CTRL_MASK));
-            }
-            JToggleButton button = (JToggleButton) e.getSource();
+
+            log.debug("{}: button1 down = {}, modifier mask = {}, isPopup {}, count = {} raw modifiers = {} masks ={}/{}/{}/{}",
+                " pressed",
+                e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK,
+                e.getModifiersEx() & (MouseEvent.ALT_DOWN_MASK | MouseEvent.META_DOWN_MASK | MouseEvent.CTRL_DOWN_MASK),
+                e.isPopupTrigger(),
+                e.getClickCount(),
+                e.getModifiersEx(),
+                MouseEvent.ALT_DOWN_MASK, MouseEvent.META_DOWN_MASK, MouseEvent.CTRL_DOWN_MASK, MouseEvent.SHIFT_DOWN_MASK
+            );
+            
             if (e.isPopupTrigger()) {
                 popup.show(e.getComponent(),
                         e.getX(), e.getY());
-            } /* Must check button mask since some platforms wait
-             for mouse release to do popup. */ else if (button.isEnabled()
-                    && ((e.getModifiers() & MouseEvent.BUTTON1_MASK) != 0)
-                    && ((e.getModifiers() & (MouseEvent.ALT_MASK + MouseEvent.META_MASK + MouseEvent.CTRL_MASK)) == 0)
-                    && !isLockable) {
+                return;
+            } 
+            
+            JToggleButton button = (JToggleButton) e.getSource();
+            
+            // is this an enabled, not locking button?
+            if (button.isEnabled() && !isLockable) {
+                // change state
                 changeState(true);
+                // force button to desired state
+                button.setSelected(isOn);
             }
-            // force button to desired state; click might have changed it
-            button.setSelected(isOn);
         }
 
         /**
@@ -373,27 +414,32 @@ public class FunctionButton extends JToggleButton implements ActionListener {
          */
         @Override
         public void mouseReleased(MouseEvent e) {
-            if (log.isDebugEnabled()) {
-                log.debug("released " + (e.getModifiers() & MouseEvent.BUTTON1_MASK) + " " + e.isPopupTrigger()
-                        + " " + (e.getModifiers() & (MouseEvent.ALT_MASK + MouseEvent.META_MASK + MouseEvent.CTRL_MASK)));
-            }
-            JToggleButton button = (JToggleButton) e.getSource();
+
+            log.debug("{}: button1 down = {}, modifier mask = {}, isPopup {}, count = {} raw modifiers = {} masks ={}/{}/{}/{}",
+                "released",
+                e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK,
+                e.getModifiersEx() & (MouseEvent.ALT_DOWN_MASK | MouseEvent.META_DOWN_MASK | MouseEvent.CTRL_DOWN_MASK),
+                e.isPopupTrigger(),
+                e.getClickCount(),
+                e.getModifiersEx(),
+                MouseEvent.ALT_DOWN_MASK, MouseEvent.META_DOWN_MASK, MouseEvent.CTRL_DOWN_MASK, MouseEvent.SHIFT_DOWN_MASK
+            );
+            
             if (e.isPopupTrigger()) {
                 popup.show(e.getComponent(),
                         e.getX(), e.getY());
-            } // mouse events have to be unmodified; to change function, so that
-            // we don't act on 1/2 of a popup request.
-            else if (button.isEnabled()
-                    && ((e.getModifiers() & MouseEvent.BUTTON1_MASK) != 0)
-                    && ((e.getModifiers() & (MouseEvent.ALT_MASK + MouseEvent.META_MASK + MouseEvent.CTRL_MASK)) == 0)) {
-                if (!isLockable) {
-                    changeState(false);
-                } else {
-                    changeState(!isOn);
-                }
+                return;
+            } 
+            
+            JToggleButton button = (JToggleButton) e.getSource();
+            
+            // is this an enabled, not locking button?
+            if (button.isEnabled() && !isLockable) {
+                // change state
+                changeState(false);
+                // force button to desired state
+                button.setSelected(isOn);
             }
-            // force button to desired state
-            button.setSelected(isOn);
         }
     }
 

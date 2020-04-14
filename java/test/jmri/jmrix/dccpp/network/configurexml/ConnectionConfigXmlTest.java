@@ -25,8 +25,9 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
     @After
     @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;
+        JUnitUtil.resetWindows(false,false); // shouldn't be necessary, can't see where windows are created
+        JUnitUtil.tearDown();
     }
 }

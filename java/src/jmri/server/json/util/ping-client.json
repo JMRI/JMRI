@@ -1,15 +1,9 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "jmri-json-metadata-client-message",
+    "title": "jmri-json-ping-client-message",
     "type": "object",
-    "description": "Schema data object in message from client to JMRI for type \"metadata\"",
+    "description": "Schema data object in message from client to JMRI for type \"ping\"",
     "properties": {
-        "name": {
-            "type": "string",
-            "description": "Name of the metadata element being requested",
-            "enum": ["JMRIVERSION", "JMRIVERCANON", "JMRIVERMAJOR", "JMRIVERMINOR", "JMRIVERTEST", "JVMVERSION", "JVMVENDOR", "activeProfile", "copyright"]
-        }
     },
-    "additionalProperties": false,
-    "required": ["name"]
+    "additionalProperties": false
 }

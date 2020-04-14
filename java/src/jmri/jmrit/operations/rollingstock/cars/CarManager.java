@@ -4,7 +4,14 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
+
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
@@ -14,10 +21,6 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manages the cars.
@@ -32,18 +35,6 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     public static final String KERNEL_LISTLENGTH_CHANGED_PROPERTY = "KernelListLength"; // NOI18N
 
     public CarManager() {
-    }
-
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized CarManager instance() {
-        return InstanceManager.getDefault(CarManager.class);
     }
 
     /**
@@ -414,8 +405,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         // now place cabooses, cars with FRED, and passenger cars at the rear of the train
         List<Car> out = new ArrayList<>();
         int lastCarsIndex = 0; // incremented each time a car is added to the end of the list
-        for (Car rs : byDestination) {
-            Car car = rs;
+        for (Car car : byDestination) {
             if (car.getKernel() != null && !car.isLead()) {
                 continue; // not the lead car, skip for now.
             }
@@ -423,6 +413,9 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
                 // sort order based on train direction when serving track, low to high if West or North bound trains
                 if (car.getDestinationTrack() != null && car.getDestinationTrack().getBlockingOrder() > 0) {
                     for (int j = 0; j < out.size(); j++) {
+                        if (out.get(j).getDestinationTrack() == null) {
+                            continue;
+                        }
                         if (car.getRouteDestination() != null
                                 && (car.getRouteDestination().getTrainDirectionString().equals(RouteLocation.WEST_DIR)
                                 || car.getRouteDestination().getTrainDirectionString()
@@ -580,7 +573,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         } // old format
         else if (root.getChild(Xml.KERNELS) != null) {
             String names = root.getChildText(Xml.KERNELS);
-            if (!names.equals("")) {
+            if (!names.isEmpty()) {
                 String[] kernelNames = names.split("%%"); // NOI18N
                 log.debug("kernels: {}", names);
                 for (String name : kernelNames) {

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2008 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -24,20 +23,22 @@
   <version author="Alain Le Marchand" version="8.1" lastUpdated="20180128"/>
   <version author="Michael Mosher" version="9" lastUpdated="20180817"/>
   <version author="Michael Mosher" version="10" lastUpdated="20190226"/>
-  <!-- This file contains the Tsunami definitions for Walthers OEM diesel locomotives                           -->
+  <version author="Marc N Fournier" version="11" lastUpdated="20200206"/>
+  <!-- This file contains the Tsunami definitions for Walthers OEM diesel locomotives                       -->
   <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file.                                    -->
   <!-- version 2	make more use of external includes                                                      -->
   <!-- version 3	Add F7, GP60, & SD9 models                                                              -->
   <!-- version 4	Add U28B/U30B models                                                                    -->
   <!-- version 5	Added Function Groups 2/3 exchange from Dave Heap (initially introduced for Genesis)    -->
   <!-- version 6	Add Budd Metroliner, E7A, GP20, GP30, SD7, SD45, U28B/U30B GN,MILW,NYC                  -->
-  <!--                  Function labels are a guess based on decoder config (missing Walthers documentation)    -->
+  <!--                  Function labels are a guess based on decoder config (missing Walthers documentation)  -->
   <!-- version 7  Specific UserID with tooltip indicating version number,
-                  from SoundTraxx Product Identification guide Rev.B                                      -->
-  <!-- version 8	Add GP35 model                                                                    -->
-  <!-- version 8.1	Minor Airhorm name correction for GP35 model                                                                    -->
-  <!-- version 9	Add GP35 models for EL, RI, SP                                                           -->
-  <!-- version 10	Fix bug in GP35 SP CV54                                                          -->
+                  from SoundTraxx Product Identification guide Rev.B                                      	-->
+  <!-- version 8	Add GP35 model                                                                    		-->
+  <!-- version 8.1	Minor Airhorm name correction for GP35 model                                            -->
+  <!-- version 9	Add GP35 models for EL, RI, SP                                                          -->
+  <!-- version 10	Fix bug in GP35 SP CV54                                                          		-->
+  <!-- version 11	Add GP7CNY model as per CV checklist doc provided by Soundtraxx 							-->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
@@ -163,6 +164,33 @@
           <functionlabel num="6" lockable="true"># Boards</functionlabel>
         </functionlabels>
       </model>
+	  
+	  <model model="GP7 NYC" numOuts="4" numFns="14" connector="other" productID="GP7NYC" comment="Diesel Prime Mover EMD567 Turbo">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+         <output name="4" label="  FX6  "/>
+         <output name="Dynamic" label="Brakes">
+          <label xml:lang="it">Freni</label>
+        </output>
+        <output name="Short" label="Horn">
+          <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
+        <output name="Fans" label="RPM +"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Compressor" label="RPM -"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+        <functionlabels>
+          <functionlabel num="5" lockable="true">Gyralite</functionlabel>
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
+        </functionlabels>
+      </model>
+	  
       <model model="GP20" numOuts="4" numFns="14" connector="other" productID="GP20" comment="Diesel Prime Mover EMD567 Turbo">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
@@ -656,7 +684,7 @@
         <label xml:lang="fr">Accelération (0-255)</label>
         <label xml:lang="de">Anfahrverzögerung (0-255)</label>
       </variable>
-      <variable CV="3" item="Accel" default="5" include="Metro,E7A,E8,F7,GP20,GP30CO,GP30SF,GP30MIL,GP35,GP35EL,GP35RI,GP35SP,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,SD45,U28B,U28BGN" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
+      <variable CV="3" item="Accel" default="5" include="Metro,E7A,E8,F7,GP7NYC,GP30CO,GP30SF,GP30MIL,GP35,GP35EL,GP35RI,GP35SP,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,SD45,U28B,U28BGN" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Acceleration Rate (0-255)</label>
         <label xml:lang="it">Accellerazione (0-255)</label>
@@ -670,7 +698,7 @@
         <label xml:lang="fr">Décélération (1-255)</label>
         <label xml:lang="de">Bremszeit (1-255)</label>
       </variable>
-      <variable CV="4" item="Decel" default="5" include="Metro,E7A,E8,F7,GP20,GP30CO,GP30SF,GP30MIL,GP35,GP35EL,GP35RI,GP35SP,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,SD45,U28B,U28BGN" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
+      <variable CV="4" item="Decel" default="5" include="Metro,E7A,E8,F7,GP7NYC,GP30CO,GP30SF,GP30MIL,GP35,GP35EL,GP35RI,GP35SP,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,SD45,U28B,U28BGN" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Braking Rate (0-255)</label>
         <label xml:lang="it">Decellerazione (1-255)</label>
@@ -706,15 +734,15 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F4</label>
       </variable>
-      <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0" tooltip="Check to enable function F5 when the unit is operating in analog power mode" exclude="Metro,E7A,E8,F7,GP30MIL,GP30SF,GP35,GP60,SD9BNSF,SD45,U28BGN">
+      <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0" tooltip="Check to enable function F5 when the unit is operating in analog power mode" exclude="Metro,E7A,E8,F7,GP7NYC,GP30MIL,GP30SF,GP35,GP60,SD9BNSF,SD45,U28BGN">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F5</label>
       </variable>
-      <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="1" tooltip="Check to enable function F5 when the unit is operating in analog power mode" include="Metro,E7A,E8,F7,GP30MIL,GP30SF,GP35,GP60,SD9BNSF,SD45,U28BGN">
+      <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="1" tooltip="Check to enable function F5 when the unit is operating in analog power mode" include="Metro,E7A,E8,F7,GP7NYC,GP30MIL,GP30SF,GP35,GP60,SD9BNSF,SD45,U28BGN">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F5</label>
       </variable>
-      <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="1" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
+      <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="1" tooltip="Check to enable function F6 when the unit is operating in analog power mode"> 
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F6</label>
       </variable>
@@ -1677,7 +1705,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Headlight F0(f) Light Type</label>
       </variable>
-      <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="1" tooltip="Provides special compensation for lighting effect contrast when using LEDs" include="Metro,GP20,GP35,GP35EL,GP35RI,GP35SP,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,U28BGN,U28BWP">
+      <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="1" tooltip="Provides special compensation for lighting effect contrast when using LEDs" include="Metro,GP7NYC,GP20,GP35,GP35EL,GP35RI,GP35SP,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,U28BGN,U28BWP">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Headlight F0(f) Light Type</label>
       </variable>
@@ -1705,7 +1733,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Backup Light F0(r) Light Type</label>
       </variable>
-      <variable item="Backup Light F0(r) Light Type" CV="50" default="1" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs" include="GP20,GP35,GP35EL,GP35RI,GP35SP,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,U28BGN,U28BWP">
+      <variable item="Backup Light F0(r) Light Type" CV="50" default="1" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs" include="GP7NYC,GP20,GP35,GP35EL,GP35RI,GP35SP,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,U28BGN,U28BWP">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Backup Light F0(r) Light Type</label>
       </variable>
@@ -1873,19 +1901,19 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX5 Reverse Directional Control</label>
       </variable>
-      <variable item="FX5B Forward Directional Control" CV="57" mask="XXXXXVXX" minOut="4" default="0" include="GP35,GP35EL,GP35RI,GP35SP" tooltip="Used to configure the directionality of FX5B function output">
+      <variable item="FX5B Forward Directional Control" CV="57" mask="XXXXXVXX" minOut="4" default="0" include="GP7NYC,GP35,GP35EL,GP35RI,GP35SP" tooltip="Used to configure the directionality of FX5B function output">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX5B Forward Directional Control</label>
       </variable>
-      <variable item="FX5B Forward Directional Control" CV="57" mask="XXXXXVXX" minOut="4" default="1" exclude="GP35,GP35EL,GP35RI,GP35SP" tooltip="Used to configure the directionality of FX5B function output">
+      <variable item="FX5B Forward Directional Control" CV="57" mask="XXXXXVXX" minOut="4" default="1" exclude="GP7NYC,GP35,GP35EL,GP35RI,GP35SP" tooltip="Used to configure the directionality of FX5B function output">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX5B Forward Directional Control</label>
       </variable>
-      <variable item="FX5B Reverse Directional Control" CV="57" mask="XXXXVXXX" minOut="4" default="0" include="GP35,GP35EL,GP35RI" tooltip="Used to configure the directionality of FX5B function output">
+      <variable item="FX5B Reverse Directional Control" CV="57" mask="XXXXVXXX" minOut="4" default="0" include="GP7NYC,GP35,GP35EL,GP35RI" tooltip="Used to configure the directionality of FX5B function output">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX5B Reverse Directional Control</label>
       </variable>
-      <variable item="FX5B Reverse Directional Control" CV="57" mask="XXXXVXXX" minOut="4" default="1" exclude="GP35,GP35EL,GP35RI" tooltip="Used to configure the directionality of FX5B function output">
+      <variable item="FX5B Reverse Directional Control" CV="57" mask="XXXXVXXX" minOut="4" default="1" exclude="GP7NYC,GP35,GP35EL,GP35RI" tooltip="Used to configure the directionality of FX5B function output">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX5B Reverse Directional Control</label>
       </variable>
@@ -1917,7 +1945,9 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX6B Reverse Directional Control</label>
       </variable>
-      <!--   CV58 is in Walthers GP35 factory file from Soundtraxx but default of 4, that bit not in TSU manual
+	  
+      <!-- CV58 is in Walthers GP35 factory file from Soundtraxx but default of 4, that bit not in TSU manual. This only shows
+	   in the GP35SP data. All other GP35 do not show default of 4  -->
       <variable label="FX5 Lighting Overide" CV="58" mask="XXXXXXXV" minOut="4" default="0" tooltip="When enabled, turning on FX5 will turn off all other lighting function outputs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumOverideFX5.xml"/>
         <label>FX5 Lighting Overide</label>
@@ -1926,7 +1956,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumOverideFX6.xml"/>
         <label>FX6 Lighting Overide</label>
       </variable>
--->
+
       <variable item="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="4" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects" exclude="Metro,E7A,SD9BNSF,SD45">
         <decVal max="15"/>
         <label>Hyperlight Flash Rate (0-15)</label>
@@ -1947,7 +1977,7 @@
         <label>F11 Braking Rate (0-127)</label>
         <comment>Additional braking when Fll activated (combined with CV4)</comment>
       </variable>
-      <variable CV="61" mask="XVVVVVVV" item="Advanced Group 1 Option 6" default="6" comment="Additional braking when Fll activated (combined with CV4)" tooltip="When F11 is pressed, locos baseline braking rate is modified by this amount" include="Metro,E7A,GP30CO,GP30MIL,GP30SF,GP35,GP35EL,GP35RI,GP35SP,SD9SOU,SD45,U28BGN">
+      <variable CV="61" mask="XVVVVVVV" item="Advanced Group 1 Option 6" default="6" comment="Additional braking when Fll activated (combined with CV4)" tooltip="When F11 is pressed, locos baseline braking rate is modified by this amount" include="Metro,E7A,GP7NYC,GP30CO,GP30MIL,GP30SF,GP35,GP35EL,GP35RI,GP35SP,SD9SOU,SD45,U28BGN">
         <decVal max="127"/>
         <label>F11 Braking Rate (0-127)</label>
         <comment>Additional braking when Fll activated (combined with CV4)</comment>
@@ -1964,7 +1994,7 @@
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
       </variable>
-      <variable CV="63" item="Radio Power Conversion" default="40" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move" include="Metro,GP35,GP35EL,GP35RI,GP35SP">
+      <variable CV="63" item="Radio Power Conversion" default="40" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move" include="Metro,GP7NYC,GP35,GP35EL,GP35RI,GP35SP">
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
       </variable>
@@ -2159,6 +2189,42 @@
         </enumVal>
         <label>Alternate Airhorn Select</label>
       </variable>
+	  
+	  <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" tooltip="Selects which airhorn to use" include="GP7NYC">
+        <enumVal>
+          <enumChoice choice="Wabco E2">
+            <choice>Wabco E2</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A200">
+            <choice>Leslie A200</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan M5">
+            <choice>Nathan M5</choice>
+          </enumChoice>
+		  <enumChoice choice="Nathan M3">
+            <choice>Nathan M3</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Airhorn Select</label>
+      </variable>
+      <variable CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn" include="GP7NYC">
+        <enumVal>
+          <enumChoice choice="Short Horn">
+            <choice>Short Horn</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A200">
+            <choice>Leslie A200</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan M5">
+            <choice>Nathan M5</choice>
+          </enumChoice>
+		  <enumChoice choice="Nathan M3">
+            <choice>Nathan M3</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Airhorn Select</label>
+      </variable>
+	  
       <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" tooltip="Selects which airhorn to use" include="GP20">
         <enumVal>
           <enumChoice choice="Leslie S3L">
@@ -2701,10 +2767,11 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumNotch.xml"/>
         <label>Engine Notch Rate</label>
       </variable>
-      <variable CV="118" item="Advanced Group 2 Option 6" default="204" include="GP30CO,GP30SF,GP30MIL,GP35,GP35EL,GP35RI,GP35SP" tooltip="&lt;html&gt;Adjust the motor response following a momentary power glitch&lt;br&gt;      0 or 128 = Disabled&lt;br&gt;      1-127 = Absolute Limiting (will return to this speed step)&lt;br&gt;      129-255 = Proportional Limiting (a percentage of set speed)&lt;br&gt;      Note: This feature is not available in early decoders&lt;/html&gt;">
+      <variable CV="118" item="Advanced Group 2 Option 6" default="204" include="GP7NYC,GP30CO,GP30SF,GP30MIL,GP35,GP35EL,GP35RI,GP35SP" tooltip="&lt;html&gt;Adjust the motor response following a momentary power glitch&lt;br&gt;      0 or 128 = Disabled&lt;br&gt;      1-127 = Absolute Limiting (will return to this speed step)&lt;br&gt;      129-255 = Proportional Limiting (a percentage of set speed)&lt;br&gt;      Note: This feature is not available in early decoders&lt;/html&gt;">
         <decVal/>
         <label>Motor Recovery Speed (0-255)</label>
       </variable>
+	  
       <!-- Volume Controls follow -->
       <variable CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="192" tooltip="Sets the overall volume of all sound channels" exclude="Metro">
         <decVal/>
@@ -2746,7 +2813,7 @@
         <decVal/>
         <label>Dynamic Brake Volume</label>
       </variable>
-      <variable CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="120" tooltip="Sets the volume of the dynamic brakes" include="GP20,GP35,GP35EL,GP35RI,GP35SP,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,U28B,U28BGN,U28BWP">
+      <variable CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="120" tooltip="Sets the volume of the dynamic brakes" include="GP7NYC,GP20,GP35,GP35EL,GP35RI,GP35SP,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,U28B,U28BGN,U28BWP">
         <decVal/>
         <label>Dynamic Brake Volume</label>
       </variable>
@@ -2798,7 +2865,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEQ.xml"/>
         <label>Equalizer Control</label>
       </variable>
-      <variable item="Equalizer Control" CV="153" mask="XXXXXVVV" default="7" tooltip="Selects one of six equalizer presets or selects a user adjustable profile" include="Metro,GP20,GP35EL,GP35RI,GP35SP,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,U28B,U28BGN,U28BWP">
+      <variable item="Equalizer Control" CV="153" mask="XXXXXVVV" default="7" tooltip="Selects one of six equalizer presets or selects a user adjustable profile" include="Metro,GP7NYC,GP20,GP35EL,GP35RI,GP35SP,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,U28B,U28BGN,U28BWP">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEQ.xml"/>
         <label>Equalizer Control</label>
       </variable>
@@ -2807,7 +2874,7 @@
         <decVal/>
         <label>62 Hz Cut/Boost</label>
       </variable>
-      <variable item="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" include="GP30MIL,GP30SF,GP30CO,GP35EL,GP35RI,GP35SP,E7A,E8,F7,SD45">
+      <variable item="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" include="GP7NYC,GP30MIL,GP30SF,GP30CO,GP35EL,GP35RI,GP35SP,E7A,E8,F7,SD45">
         <decVal/>
         <label>62 Hz Cut/Boost</label>
       </variable>
@@ -2815,7 +2882,7 @@
         <decVal/>
         <label>125 Hz Cut/Boost</label>
       </variable>
-      <variable item="125 Hz Cut/Boost" CV="155" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" exclude="Metro,GP35">
+      <variable item="125 Hz Cut/Boost" CV="155" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" exclude="Metro,GP7NYC,GP35">
         <decVal/>
         <label>125 Hz Cut/Boost</label>
       </variable>
@@ -2823,11 +2890,11 @@
         <decVal/>
         <label>250 Hz Cut/Boost</label>
       </variable>
-      <variable item="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" include="GP30MIL,GP30SF,GP30CO,GP35EL,GP35RI,GP35SP,E7A,E8,F7,SD45">
+      <variable item="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" include="GP7NYC,GP30MIL,GP30SF,GP30CO,GP35EL,GP35RI,GP35SP,E7A,E8,F7,SD45">
         <decVal/>
         <label>250 Hz Cut/Boost</label>
       </variable>
-      <variable item="500 Hz Cut/Boost" CV="157" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" include="Metro,GP30MIL,GP30SF,GP30CO,GP35EL,GP35RI,GP35SP,E7A,E8,F7,SD45">
+      <variable item="500 Hz Cut/Boost" CV="157" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" include="Metro,GP7NYC,GP30MIL,GP30SF,GP30CO,GP35EL,GP35RI,GP35SP,E7A,E8,F7,SD45">
         <decVal/>
         <label>500 Hz Cut/Boost</label>
       </variable>
@@ -2839,7 +2906,7 @@
         <decVal/>
         <label>1K Hz Cut/Boost</label>
       </variable>
-      <variable item="1K Hz Cut/Boost" CV="158" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" include="GP30MIL,GP30SF,GP30CO,GP35EL,GP35RI,GP35SP,E7A,E8,F7,SD45">
+      <variable item="1K Hz Cut/Boost" CV="158" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" include="GP7NYC,GP30MIL,GP30SF,GP30CO,GP35EL,GP35RI,GP35SP,E7A,E8,F7,SD45">
         <decVal/>
         <label>1K Hz Cut/Boost</label>
       </variable>
@@ -2847,7 +2914,7 @@
         <decVal/>
         <label>1K Hz Cut/Boost</label>
       </variable>
-      <variable item="2K Hz Cut/Boost" CV="159" mask="VVVVVVVV" default="150" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" include="Metro,GP35EL,GP35RI,GP35SP">
+      <variable item="2K Hz Cut/Boost" CV="159" mask="VVVVVVVV" default="150" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" include="Metro,GP7NYC,GP35EL,GP35RI,GP35SP">
         <decVal/>
         <label>2K Hz Cut/Boost</label>
       </variable>
@@ -2868,7 +2935,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumReverb.xml"/>
         <label>Reverb Control</label>
       </variable>
-      <variable item="Reverb Control" CV="161" mask="XXXXXVVV" default="7" include="GP35EL,GP35RI,GP35SP" tooltip="Selects one of four reverb presets or selects a user adjustable profile">
+      <variable item="Reverb Control" CV="161" mask="XXXXXVVV" default="7" include="GP7NYC,GP35EL,GP35RI,GP35SP" tooltip="Selects one of four reverb presets or selects a user adjustable profile">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumReverb.xml"/>
         <label>Reverb Control</label>
       </variable>
@@ -2877,15 +2944,15 @@
         <decVal/>
         <label>Reverb Output Level</label>
       </variable>
-      <variable item="Reverb Output Level" CV="162" mask="VVVVVVVV" default="255" include="GP35EL,GP35RI,GP35SP" tooltip="Specifies a percentage of the reverb output that is mixed back into the original audio signal">
+      <variable item="Reverb Output Level" CV="162" mask="VVVVVVVV" default="255" include="GP7NYC,GP35EL,GP35RI,GP35SP" tooltip="Specifies a percentage of the reverb output that is mixed back into the original audio signal">
         <decVal/>
         <label>Reverb Output Level</label>
       </variable>
-      <variable item="Reverb Delay" CV="163" mask="VVVVVVVV" default="0" include="GP35EL,GP35RI,GP35SP" tooltip="Specifies the total reverb delay time from 0 to 64mS">
+      <variable item="Reverb Delay" CV="163" mask="VVVVVVVV" default="0" include="GP7NYC,GP35EL,GP35RI,GP35SP" tooltip="Specifies the total reverb delay time from 0 to 64mS">
         <decVal/>
         <label>Reverb Delay</label>
       </variable>
-      <variable item="Reverb Delay" CV="163" mask="VVVVVVVV" default="255" exclude="GP35" tooltip="Specifies the total reverb delay time from 0 to 64mS">
+      <variable item="Reverb Delay" CV="163" mask="VVVVVVVV" default="255" exclude="GP7NYC,GP35" tooltip="Specifies the total reverb delay time from 0 to 64mS">
         <decVal/>
         <label>Reverb Delay</label>
       </variable>
@@ -2897,7 +2964,7 @@
         <decVal/>
         <label>Horn Reverb Level</label>
       </variable>
-      <variable CV="169" mask="VVVVVVVV" default="255" item="Whistle Reverb Level" include="GP35EL,GP35RI,GP35SP" tooltip="Sets the percentage of the horn signal level to mix into the reverb input">
+      <variable CV="169" mask="VVVVVVVV" default="255" item="Whistle Reverb Level" include="GP7NYC,GP35EL,GP35RI,GP35SP" tooltip="Sets the percentage of the horn signal level to mix into the reverb input">
         <decVal/>
         <label>Horn Reverb Level</label>
       </variable>
@@ -2968,7 +3035,7 @@
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
-      <variable CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="30" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation" include="GP20,GP35,GP35EL,GP35RI,GP35SP,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,U28B,U28BGN,U28BWP">
+      <variable CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="30" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation" include="GP7NYC,GP20,GP35,GP35EL,GP35RI,GP35SP,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,U28B,U28BGN,U28BWP">
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
@@ -2976,7 +3043,7 @@
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
-      <variable CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="25" tooltip="Specifies a gain factor for the integral part of the PID motor control equation" include="GP20,GP35,GP35EL,GP35RI,GP35SP,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,U28B,U28BGN,U28BWP">
+      <variable CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="25" tooltip="Specifies a gain factor for the integral part of the PID motor control equation" include="GP7NYC,GP20,GP35,GP35EL,GP35RI,GP35SP,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,U28B,U28BGN,U28BWP">
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
@@ -2988,7 +3055,7 @@
         <decVal max="31"/>
         <label>Motor Control Sample Period (0-31)</label>
       </variable>
-      <variable CV="213" mask="VVVVVVVV" item="Advanced Group 2 Option 4" default="24" tooltip="Specifies the time period in mS (milliseconds) between measurements" include="GP20,GP35,GP35EL,GP35RI,GP35SP,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,U28B,U28BGN,U28BWP">
+      <variable CV="213" mask="VVVVVVVV" item="Advanced Group 2 Option 4" default="24" tooltip="Specifies the time period in mS (milliseconds) between measurements" include="GP7NYC,GP20,GP35,GP35EL,GP35RI,GP35SP,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,U28B,U28BGN,U28BWP">
         <decVal max="31"/>
         <label>Motor Control Sample Period (0-31)</label>
       </variable>
@@ -2996,7 +3063,7 @@
         <decVal/>
         <label>Motor Control Sample Aperture Time (0-255)</label>
       </variable>
-      <variable CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="7" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation" include="GP20,GP35,GP35EL,GP35RI,GP35SP,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,U28B,U28BGN,U28BWP">
+      <variable CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="7" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation" include="GP7NYC,GP20,GP35,GP35EL,GP35RI,GP35SP,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,U28B,U28BGN,U28BWP">
         <decVal/>
         <label>Motor Control Sample Aperture Time (0-255)</label>
       </variable>

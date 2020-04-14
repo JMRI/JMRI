@@ -22,15 +22,17 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
 <body>
-  <div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
+  <div id="mainContent">
 
-    <div id="mainContent">
-      <h1>JMRI Code: Portable File Access</h1>
+  <h1>JMRI Code: Portable File Access</h1>
       <p>JMRI uses files for icons,
       images, panel files, scripts, and lots of other things.
       References to those are routinely used by various code, and

@@ -3,8 +3,8 @@
 
 <html lang="fr">
 <head>
-<!-- UpDated  by Blorec Herv&#233;  2017-01-19-->
-<title>JMRI Hardware Support - CBUS - Naming</title>
+<!-- Updated by Blorec Herv&#233;  2017-01-19-->
+<title>JMRI Mat&#233;riel - CBUS - D&#233;signation</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -16,9 +16,11 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Structure Mat&#233;riel: CBUS - D&#233;signation</h1>
 <p>
@@ -45,7 +47,7 @@ Et ceci est la forme la plus simple, il est utilis&#233; pour envoyer des "&#233
 <h3>Aide JMRI</h3>
 <p>Retour &#224; la page d'aide principale de <a href="index.shtml">CBUS</a>.
     
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

@@ -30,6 +30,10 @@ abstract public class PositionableTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initReporterManager();
     }
 
     /**
@@ -139,6 +143,7 @@ abstract public class PositionableTestBase {
         Editor es = new EditorScaffold();
         p.setEditor(es);
         Assert.assertEquals("Editor",es,p.getEditor());
+        JUnitUtil.dispose(es);
     }
 
     @Test

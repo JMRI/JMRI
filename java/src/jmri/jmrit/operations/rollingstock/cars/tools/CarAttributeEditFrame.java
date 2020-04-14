@@ -498,7 +498,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         InstanceManager.getDefault(CarLengths.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
         carManager.removePropertyChangeListener(this);
-        firePcs(DISPOSE, _comboboxName, null);
+        firePropertyChange(DISPOSE, _comboboxName, null);
         super.dispose();
     }
 
@@ -529,24 +529,6 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateCarQuanity();
         }
-    }
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    // note firePropertyChange occurs during frame creation
-    private void firePcs(String p, Object old, Object n) {
-        log.debug("CarAttribute firePropertyChange {}", p);
-        pcs.firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(CarAttributeEditFrame.class);

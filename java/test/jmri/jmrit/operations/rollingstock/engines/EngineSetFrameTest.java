@@ -1,6 +1,11 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -9,10 +14,6 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Operations EnginesSetFrame class
@@ -25,6 +26,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
     @Test
     public void testEngineSetFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        loadEngines();
         EngineSetFrame f = new EngineSetFrame();
         f.setTitle("Test Engine Set Frame");
         f.initComponents();
@@ -32,15 +34,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
         Engine e3 = cManager.getByRoadAndNumber("AA", "3");
         f.loadEngine(e3);
         JUnitUtil.dispose(f);
-    }
 
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-
-        loadEngines();
     }
 
     private void loadEngines() {

@@ -39,6 +39,11 @@ public class SlotManagerTest {
         Assert.assertEquals("short 3 sets F9", 3,
                 slotmanager.getDirectFunctionAddress(m1));
 
+        // test  top half of short 65
+        m1 = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x24, 0x02, 0x42, 0x21, 0x00, 0x00, 0x23});
+        Assert.assertEquals("long 65 sets F9", 66,
+                slotmanager.getDirectFunctionAddress(m1));
+
         m1 = new LocoNetMessage(11);
         m1.setElement(0, 0xED);  // long 513 sets F9
         m1.setElement(1, 0x0B);
@@ -53,7 +58,15 @@ public class SlotManagerTest {
         m1.setElement(10, 0x35);
         Assert.assertEquals("long 513 sets F9", 513,
                 slotmanager.getDirectFunctionAddress(m1));
-    }
+        //test mid high address 4097
+        m1 = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x34, 0x05, 0x50, 0x01, 0x21, 0x00, 0x00, 0x27});
+        Assert.assertEquals("long 4097 sets F9", 4097,
+                slotmanager.getDirectFunctionAddress(m1));
+        // test high high address 9983
+        m1 = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x34, 0x07, 0x66, 0x7F, 0x21, 0x00, 0x00, 0x6D});
+        Assert.assertEquals("long 9983 sets F9", 9983,
+                slotmanager.getDirectFunctionAddress(m1));
+   }
 
     @Test
     public void testGetDirectDccPacketOK() {
@@ -74,6 +87,11 @@ public class SlotManagerTest {
         Assert.assertEquals("short 3 sets F9", 0xA1,
                 slotmanager.getDirectDccPacket(m1));
 
+        // test  top half of short 65
+        m1 = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x24, 0x02, 0x42, 0x21, 0x00, 0x00, 0x23});
+        Assert.assertEquals("long 65 sets F9", 0xA1,
+                slotmanager.getDirectDccPacket(m1));
+
         m1 = new LocoNetMessage(11);
         m1.setElement(0, 0xED);  // long 513 sets F9
         m1.setElement(1, 0x0B);
@@ -88,6 +106,59 @@ public class SlotManagerTest {
         m1.setElement(10, 0x35);
         Assert.assertEquals("long 513 sets F9", 0xA1,
                 slotmanager.getDirectDccPacket(m1));
+        //test mid high address 4097
+        m1 = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x34, 0x05, 0x50, 0x01, 0x21, 0x00, 0x00, 0x27});
+        Assert.assertEquals("long 4097 sets F9", 0xA1,
+                slotmanager.getDirectDccPacket(m1));
+        // test high high address 9983
+        m1 = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x34, 0x07, 0x66, 0x7F, 0x21, 0x00, 0x00, 0x6D});
+        Assert.assertEquals("long 9983 sets F9", 0xA1,
+                slotmanager.getDirectDccPacket(m1));
+    }
+
+    @Test
+    public void testGetDirectFunctionAddressOK_F21_F28() {
+        LocoNetMessage m1;
+
+        m1 = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x34, 0x06, 0x03, 0x5F, 0x00, 0x00, 0x00, 0x08});
+        Assert.assertEquals("short 3 sets F28", 3,
+                slotmanager.getDirectFunctionAddress(m1));
+        // test  top half of short 66
+        m1 = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x24, 0x02, 0x42, 0x21, 0x00, 0x00, 0x23});
+        Assert.assertEquals("long 66 sets F28", 66,
+                slotmanager.getDirectFunctionAddress(m1));
+        // address 3
+        m1 = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x44, 0x0D, 0x42, 0x01, 0x5F, 0x00, 0x00, 0x33});
+        Assert.assertEquals("long 513 sets F28", 513,
+                slotmanager.getDirectFunctionAddress(m1));
+        //test mid high address 4097
+        m1 = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x44, 0x0D, 0x50, 0x01, 0x5F, 0x00, 0x00, 0x21});
+        Assert.assertEquals("long 4097 sets F28", 4097,
+                slotmanager.getDirectFunctionAddress(m1));
+        // test high high address 9983
+        m1 = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x44, 0x0F, 0x66, 0x7F, 0x5F, 0x00, 0x00, 0x6B});
+        Assert.assertEquals("long 9983 sets F9", 9983,
+                slotmanager.getDirectFunctionAddress(m1));
+   }
+
+    @Test
+    public void testisExtFunctionMessage_F21_F28() {
+        LocoNetMessage m1;
+
+        m1 = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x34, 0x06, 0x03, 0x5F, 0x00, 0x00, 0x00, 0x08});
+        Assert.assertTrue("short 3 sets F28",slotmanager.isExtFunctionMessage(m1));
+        // test  top half of short 66
+        m1 = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x24, 0x02, 0x42, 0x21, 0x00, 0x00, 0x23});
+        Assert.assertTrue("short 66 sets F28",slotmanager.isExtFunctionMessage(m1));
+        // address 3
+        m1 = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x44, 0x0D, 0x42, 0x01, 0x5F, 0x00, 0x00, 0x33});
+        Assert.assertTrue("short 513 sets F28",slotmanager.isExtFunctionMessage(m1));
+        //test mid high address 4097
+        m1 = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x44, 0x0D, 0x50, 0x01, 0x5F, 0x00, 0x00, 0x21});
+        Assert.assertTrue("short 4097 sets F28",slotmanager.isExtFunctionMessage(m1));
+        // test high high address 9983
+        m1 = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x44, 0x0F, 0x66, 0x7F, 0x5F, 0x7F, 0x00, 0x14});
+        Assert.assertTrue("short 9983 sets F28",slotmanager.isExtFunctionMessage(m1));
     }
 
     @Test
@@ -1131,11 +1202,6 @@ public class SlotManagerTest {
         JUnitUtil.waitFor(600);
         Assert.assertEquals("check no messages sent when DCS050", 0, lnis.outbound.size());
         
-        slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DCS052;
-        slotmanager.message(m);
-        JUnitUtil.waitFor(600);
-        Assert.assertEquals("check no messages sent when DCS052", 0, lnis.outbound.size());
-        
         slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DB150;
         slotmanager.message(m);
         JUnitUtil.waitFor(600);
@@ -1155,8 +1221,6 @@ public class SlotManagerTest {
     @Test
     public void testMoreOpCode8a() {
 
-        LocoNetMessage m = new LocoNetMessage(new int[] {0x8a, 0x75});
-        
         slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DCS210;
         slotmanager.message(new LocoNetMessage(new int[] {0x8a, 0x75}));
         JUnitUtil.waitFor(()->{return lnis.outbound.size() >126;},"testOpCode8a: slot managersent at least 127 LocoNet messages");
@@ -1164,6 +1228,20 @@ public class SlotManagerTest {
             Assert.assertEquals("testOpCode8a DCS210: loop "+i+" check sent opcode", 0xBB, lnis.outbound.get(i).getOpCode());
             Assert.assertEquals("testOpCode8a DCS210: loop "+i+" check sent byte 1", i, lnis.outbound.get(i).getElement(1));
             Assert.assertEquals("testOpCode8a DCS210: loop "+i+" check sent byte 2", 0, lnis.outbound.get(i).getElement(2));
+
+        }
+    }
+
+    @Test
+    public void testEvenMoreOpCode8a() {
+
+        slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DCS052;
+        slotmanager.message(new LocoNetMessage(new int[] {0x8a, 0x75}));
+        JUnitUtil.waitFor(()->{return lnis.outbound.size() >126;},"testOpCode8a: slot managersent at least 127 LocoNet messages");
+        for (int i = 0; i < 127; ++i) {
+            Assert.assertEquals("testOpCode8a DCS052: loop "+i+" check sent opcode", 0xBB, lnis.outbound.get(i).getOpCode());
+            Assert.assertEquals("testOpCode8a DCS052: loop "+i+" check sent byte 1", i, lnis.outbound.get(i).getElement(1));
+            Assert.assertEquals("testOpCode8a DCS052: loop "+i+" check sent byte 2", 0, lnis.outbound.get(i).getElement(2));
 
         }
     }
@@ -1222,6 +1300,7 @@ public class SlotManagerTest {
 
     @After
     public void tearDown() {
+        slotmanager.dispose();
         JUnitUtil.tearDown();
     }
 

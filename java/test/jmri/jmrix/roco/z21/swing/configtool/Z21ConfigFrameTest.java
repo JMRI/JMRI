@@ -40,6 +40,7 @@ public class Z21ConfigFrameTest extends jmri.util.JmriJFrameTestBase {
         memo = null;
         tc.terminateThreads();
         tc = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
 

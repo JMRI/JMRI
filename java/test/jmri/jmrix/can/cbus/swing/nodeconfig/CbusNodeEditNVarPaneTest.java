@@ -12,8 +12,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Test simple functioning of CbusNodeEditNVarFrame
@@ -28,11 +26,9 @@ public class CbusNodeEditNVarPaneTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NodeConfigToolPane mainpane = new NodeConfigToolPane();
         
-        CbusNodeEditNVarPane t = new CbusNodeEditNVarPane(mainpane);
+        t = new CbusNodeEditNVarPane(mainpane);
         Assert.assertNotNull("exists",t);
         
-        mainpane = null;
-        t = null;
     }
     
     @Test
@@ -47,26 +43,24 @@ public class CbusNodeEditNVarPaneTest {
         mainpane.initComponents(memo);
         
         
-        CbusNodeEditNVarPane t = new CbusNodeEditNVarPane(mainpane);
+        t = new CbusNodeEditNVarPane(mainpane);
         Assert.assertNotNull("exists",t);
         
         t.initComponents(memo);
         
         CbusNode nodeToEdit = nodeModel.provideNodeByNodeNum(256);
         // set node to 3 node vars , param6
-        nodeToEdit.setParameters(new int[]{8,1,2,3,4,5,3,7,8});
+        nodeToEdit.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,5,3,7,8});
         
         t.setNode( nodeToEdit );
         
         nodeToEdit.dispose();
-        nodeToEdit = null;
-        
-        mainpane = null;
-        t = null;
+
     }
 
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
+    private CbusNodeEditNVarPane t;
 
     @Before
     public void setUp() {
@@ -79,9 +73,12 @@ public class CbusNodeEditNVarPaneTest {
 
     @After
     public void tearDown() {
-
-        memo = null;
-        tcis = null;
+        t = null;
+        memo.dispose();
+        memo=null;
+        tcis.terminateThreads();
+        tcis=null;
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeEditNVarFrameTest.class);

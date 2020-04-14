@@ -3,7 +3,6 @@ package jmri.implementation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 import jmri.Conditional;
@@ -15,6 +14,7 @@ import jmri.Logix;
 import jmri.Memory;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanUsageReport;
 import jmri.SignalHead;
 import jmri.Timebase;
 import jmri.jmrit.beantable.LRouteTableAction;
@@ -1095,6 +1095,31 @@ public class DefaultLogix extends AbstractNamedBean
                 }
             }
         }
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            for (int i = 0; i < getNumConditionals(); i++) {
+                DefaultConditional cdl = (DefaultConditional) getConditional(getConditionalByNumberOrder(i));
+                cdl.getStateVariableList().forEach((variable) -> {
+                    if (bean.equals(variable.getBean())) {
+                        report.add(new NamedBeanUsageReport("ConditionalVariable", cdl, variable.toString()));
+                    }
+                    if (bean.equals(variable.getNamedBeanData())) {
+                        report.add(new NamedBeanUsageReport("ConditionalVariableData", cdl, variable.toString()));
+                    }
+                });
+                cdl.getActionList().forEach((action) -> {
+                    if (bean.equals(action.getBean())) {
+                        boolean triggerType = cdl.getTriggerOnChange();
+                        report.add(new NamedBeanUsageReport("ConditionalAction", cdl, action.description(triggerType)));
+                    }
+                });
+            }
+        }
+        return report;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultLogix.class);

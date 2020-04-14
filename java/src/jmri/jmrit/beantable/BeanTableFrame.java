@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
-import java.util.ResourceBundle;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JMenu;
@@ -81,7 +80,7 @@ public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
-        fileMenu.add(new jmri.configurexml.SaveMenu());
+        fileMenu.add(new jmri.configurexml.StoreMenu());
 
         JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintTable"));
         fileMenu.add(printItem);

@@ -1,13 +1,14 @@
 package jmri.jmrit.operations.automation.actions;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  *
@@ -61,6 +62,8 @@ public class SelectTrainActionTest extends OperationsTestCase {
         action.doAction();       
         Assert.assertTrue(train1.isBuildEnabled());
         Assert.assertTrue(automationItem.isActionSuccessful());
+        
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SelectTrainActionTest.class);

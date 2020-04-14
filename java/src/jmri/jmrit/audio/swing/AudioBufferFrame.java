@@ -16,13 +16,13 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.InstanceManager;
 import jmri.jmrit.audio.AudioBuffer;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
-import jmri.util.FileChooserFilter;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +65,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     JFileChooser fileChooser;
     // AudioWaveFormPanel waveForm = new AudioWaveFormPanel();
 
-    private final static String prefix = "IAB";
+    private final static String PREFIX = "IAB";
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioBufferFrame(String title, AudioTableDataModel model) {
@@ -190,7 +190,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     @SuppressWarnings("UnnecessaryBoxing")
     public void resetFrame() {
         synchronized (lock) {
-            sysName.setText(prefix + nextCounter()); // NOI18N
+            sysName.setText(PREFIX + nextCounter()); // NOI18N
         }
         userName.setText(null);
         url.setText(null);
@@ -229,10 +229,8 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 
     void browsePressed(ActionEvent e) {
         if (fileChooser == null) {
-            fileChooser = new JFileChooser("resources" + File.separator + "sounds" + File.separator);
-            FileChooserFilter audioFileFilter = new FileChooserFilter("Audio Files (*.wav)");
-            audioFileFilter.addExtension("wav");
-            fileChooser.setFileFilter(audioFileFilter);
+            fileChooser = new JFileChooser("resources" + File.separator + "sounds" + File.separator); // NOI18N
+            fileChooser.setFileFilter(new FileNameExtensionFilter("Audio Files (*.wav)", "wav")); // NOI18N
         }
 
         // Show dialog
@@ -257,7 +255,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 
     void applyPressed(ActionEvent e) {
         String sName = sysName.getText();
-        if (entryError(sName, prefix, "" + counter)) {
+        if (entryError(sName, PREFIX, "" + counter)) {
             return;
         }
         String user = userName.getText();

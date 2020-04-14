@@ -3,9 +3,6 @@ package jmri;
 import org.junit.*;
 import org.junit.runner.*;
 
-import com.tngtech.archunit.*;
-import com.tngtech.archunit.core.domain.JavaClasses;
-import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.lang.*;
 import com.tngtech.archunit.junit.*;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
@@ -24,6 +21,8 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
  * Note that this only checks the classes in target/classes, which come from java/src, not
  * the ones in target/test-classes, which come from java/test.  It's relying on the common
  * build procedure to make this distinction.
+ * 
+ * See examples in the <a href='https://github.com/TNG/ArchUnit-Examples/tree/master/example-plain/src/test/java/com/tngtech/archunit/exampletest">ArchUnit sample code</a>.
  *
  * @author Bob Jacobsen 2019
  */
@@ -35,6 +34,17 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 public class ArchitectureTest {
 
+    // want these statics first in class, to initialize
+    // logging before various static items are constructed
+    @BeforeClass  // tests are static
+    static public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+    @AfterClass
+    static public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
+
     /**
      * No access to System.err and System.out except as specified
      */
@@ -43,11 +53,18 @@ public class ArchitectureTest {
                                 // classes with permitted access
                                 .doNotHaveFullyQualifiedName("apps.SystemConsole").and()
                                 .doNotHaveFullyQualifiedName("apps.FindBugsCheck").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrix.loconet.cmdstnconfig.XmlConfig").and()
+                                .doNotHaveFullyQualifiedName("apps.CheckerFrameworkCheck").and()
+                                .doNotHaveFullyQualifiedName("apps.gui3.paned.QuitAction").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.decoderdefn.DecoderIndexBuilder").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetArgumentList").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetClassPath").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetJavaProperty").and()
-                                .doNotHaveFullyQualifiedName("jmri.Version")
+                                .doNotHaveFullyQualifiedName("jmri.Version").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.JTextPaneAppender").and()
+                                // generated code that we don't have enough control over
+                                .resideOutsideOfPackage("jmri.jmris.simpleserver..").and()
+                                .resideOutsideOfPackage("jmri.jmris.srcp..").and()
+                                .resideOutsideOfPackage("jmri.jmrix.srcp..")
                             .should(
                                 com.tngtech.archunit.library.GeneralCodingRules.
                                 ACCESS_STANDARD_STREAMS
@@ -62,6 +79,16 @@ public class ArchitectureTest {
                                 .haveNameNotMatching("jmri\\.util\\.TimerUtil")
                             .should()
                                 .dependOnClassesThat().haveFullyQualifiedName("java.util.Timer");
+     
+    /**
+     * No access to javax.annotation.Nullable except the FindBugsCheck test routine
+     */
+    @ArchTest 
+    public static final ArchRule checkNullableAnnotationRestricted = noClasses().that()
+                                // classes with permitted access
+                                .haveNameNotMatching("apps\\.FindBugsCheck")
+                            .should()
+                                .dependOnClassesThat().haveFullyQualifiedName("javax.annotation.Nullable");
      
    /**
      * No jmri.jmrix in basic interfaces.
@@ -153,11 +180,22 @@ public class ArchitectureTest {
     /**
      * (Try to) confine JDOM to configurexml packages.
      * (Is this working right? Seems to not flag anything)
+     *  Probably not working because the JDOM classes are not part of initially-read set
      */
     @ArchTest // Not complete
     public static final ArchRule checkJdomOutsideConfigurexml = classes()
             .that().resideInAPackage("org.jdom2..")
             .should().onlyBeAccessed().byAnyPackage("..configurexml..");
+
+    /**
+     * (Try to) confine purejavacomm to jmri.jmrix packages.
+     * (Is this working right? Seems to not flag anything; note jmri.jmrit as a test below)
+     *  Probably not working because the purejavacomm classes are not part of initially-read set
+     */
+    @ArchTest // Not complete
+    public static final ArchRule checkPurejavacoomOutsideConfigurexml = classes()
+            .that().resideInAPackage("purejavacomm..")
+            .should().onlyBeAccessed().byAnyPackage("jmri.jmrit");
 
     /**
      * Check that *Bundle classes inherit from their parent.

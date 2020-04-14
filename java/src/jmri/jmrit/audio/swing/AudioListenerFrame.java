@@ -48,7 +48,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
     JSpinner metersPerUnit = new JSpinner();
     JLabel metersPerUnitLabel = new JLabel(Bundle.getMessage("UnitM/U"));
 
-    private final static String prefix = "IAL";
+    private final static String PREFIX = "IAL";
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioListenerFrame(String title, AudioTableDataModel model) {
@@ -136,7 +136,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
 
     private void applyPressed(ActionEvent e) {
         String sName = sysName.getText();
-        if (entryError(sName, prefix, "$")) { // no index for AudioListener
+        if (entryError(sName, PREFIX, "$")) { // no index for AudioListener
             return;
         }
         String user = userName.getText();

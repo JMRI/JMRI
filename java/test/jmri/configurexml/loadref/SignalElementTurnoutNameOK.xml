@@ -70,8 +70,6 @@
       <turnoutname defines="high">324</turnoutname>
     </signalhead>
   </signalheads>
-  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
-  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
   <signalelements class="jmri.jmrit.blockboss.configurexml.BlockBossLogicXml">
     <signalelement signal="Sig2 T&amp;DR Up Distant" mode="2" watchedturnout="IT1" watchedsignal1="LH323" watchedsignal2="LH323" watchedsensor2="IS305" watchedsensor2alt="IS35" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IS305</sensorname>
@@ -83,37 +81,19 @@
       <comment />
     </signalelement>
   </signalelements>
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
   <filehistory>
     <operation>
-      <type>Load OK</type>
-      <date>Fri Sep 06 22:31:52 PDT 2019</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/SignalElementTurnoutNameOK.xml</filename>
-      <filehistory>
-        <operation>
-          <type>Load OK</type>
-          <date>Fri Mar 29 18:57:04 PDT 2019</date>
-          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/SignalElementTurnoutNameOK.xml</filename>
-        </operation>
-        <operation>
-          <type>Load OK</type>
-          <date>Fri Mar 29 18:57:04 PDT 2019</date>
-          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/SignalElementTurnoutNameOK.xml</filename>
-        </operation>
-        <operation>
-          <type>Store</type>
-          <date>Fri Mar 29 18:57:04 PDT 2019</date>
-          <filename />
-        </operation>
-      </filehistory>
+      <type>app</type>
+      <date>Sun Sep 08 22:04:00 CEST 2019</date>
+      <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Fri Sep 06 22:31:52 PDT 2019</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/SignalElementTurnoutNameOK.xml</filename>
+      <date>Sun Sep 08 22:04:34 CEST 2019</date>
+      <filename>/Users/egbertbroerse/Documents/Egbert/Computers/IntelliJ%20local/JMRI/java/test/jmri/configurexml/load/SignalElementTurnoutNameOK.xml</filename>
       <filehistory>
         <operation>
           <type>Load OK</type>
@@ -134,9 +114,9 @@
     </operation>
     <operation>
       <type>Store</type>
-      <date>Fri Sep 06 22:31:52 PDT 2019</date>
+      <date>Sun Sep 08 22:04:45 CEST 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.4ish+jake+20190906T1723Z+R38a2975465 on Fri Sep 06 22:31:52 PDT 2019-->
+  <!--Written by JMRI version 4.17.4ish+egbertbroerse+20190908T2003Z+R59b5cbdf37 on Sun Sep 08 22:04:45 CEST 2019-->
 </layout-config>

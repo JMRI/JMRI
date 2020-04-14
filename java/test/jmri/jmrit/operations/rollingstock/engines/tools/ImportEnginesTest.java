@@ -2,6 +2,13 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.Timeout;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OperationsXml;
@@ -11,11 +18,8 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.util.JUnitOperationsUtil;
-import jmri.util.junit.rules.*;
+import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.*;
-import org.junit.rules.*;
 
 /**
  *
@@ -38,6 +42,7 @@ public class ImportEnginesTest extends OperationsTestCase {
     @Test
     public void testReadFile() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
         JUnitOperationsUtil.initOperationsData();
@@ -115,11 +120,14 @@ public class ImportEnginesTest extends OperationsTestCase {
         }
         // confirm import successful
         Assert.assertEquals("engines", 4, emanager.getNumEntries());
+        
+
     }
 
     @Test
     public void testImportEnginesWithLocations() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+//        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
         JUnitOperationsUtil.initOperationsData();
@@ -179,6 +187,10 @@ public class ImportEnginesTest extends OperationsTestCase {
         };
         mb.setName("Test Import Engines"); // NOI18N
         mb.start();
+        
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for dialog");
 
         // dialog windows should now open asking to add 2 models
         JemmyUtil.pressDialogButton(Bundle.getMessage("engineAddModel"), Bundle.getMessage("ButtonYes"));
@@ -232,6 +244,8 @@ public class ImportEnginesTest extends OperationsTestCase {
 
         // confirm import successful
         Assert.assertEquals("engines", 4, emanager.getNumEntries());
+        
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ImportEnginesTest.class);

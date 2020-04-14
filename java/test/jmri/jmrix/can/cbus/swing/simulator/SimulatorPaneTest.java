@@ -30,7 +30,6 @@ public class SimulatorPaneTest extends jmri.util.swing.JmriPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.initShutDownManager();
         title = Bundle.getMessage("MenuItemNetworkSim");
         helpTarget = "package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane";
         memo = new CanSystemConnectionMemo();
@@ -43,8 +42,11 @@ public class SimulatorPaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     @After
     public void tearDown() {
+        tcis.terminateThreads();
+        memo.dispose();
         tcis = null;
         memo = null;
+        JUnitUtil.resetWindows(false,false);
         super.tearDown();
     }
     

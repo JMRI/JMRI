@@ -3,9 +3,7 @@ package jmri.jmrix.can.cbus;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -13,20 +11,26 @@ import org.junit.Test;
  */
 public class CbusDccOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
+    private TrafficControllerScaffold tcis;
+    
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        CbusDccOpsModeProgrammer t = new CbusDccOpsModeProgrammer(100,true,new TrafficControllerScaffold());
+        tcis = new TrafficControllerScaffold();
+        CbusDccOpsModeProgrammer t = new CbusDccOpsModeProgrammer(100,true,tcis);
         programmer = t;
     }
-
+    
     @After
     @Override
     public void tearDown() {
         programmer = null;
+        tcis.terminateThreads();
+        tcis = null;
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusDccOpsModeProgrammerTest.class);

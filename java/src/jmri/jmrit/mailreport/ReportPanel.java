@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -144,7 +145,7 @@ public class ReportPanel extends JPanel {
     }
     
     // made static, public, not final so can be changed via script
-    static public String requestURL = "http://jmri.org/problem-report.php";  //NOI18N
+    static public String requestURL = "http://jmri.org/problem-report.php";  // NOI18N
 
     @SuppressWarnings("unchecked")
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -156,9 +157,8 @@ public class ReportPanel extends JPanel {
             email.validate();
 
             log.debug("start send");
-            String charSet = "UTF-8";  //NO18N
 
-            MultipartMessage msg = new MultipartMessage(requestURL, charSet);
+            MultipartMessage msg = new MultipartMessage(requestURL, StandardCharsets.UTF_8.name());
 
             // add reporter email address
             log.debug("start creating message");
@@ -173,7 +173,7 @@ public class ReportPanel extends JPanel {
             // build detailed error report (include context if selected)
             String report = descField.getText() + "\r\n";
             if (checkContext.isSelected()) {
-                report += "=========================================================\r\n"; //NOI18N
+                report += "=========================================================\r\n"; // NOI18N
                 report += (new ReportContext()).getReport(checkNetwork.isSelected() && checkNetwork.isEnabled());
             }
             msg.addFormField("problem", report);

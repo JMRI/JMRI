@@ -121,7 +121,7 @@ public class SprogVersionQuery implements SprogListener {
                 listener.notifyVersion(ver);
                 versionListeners.remove(listener);
             } catch (Exception e) {
-                log.warn("notify: During dispatch to " + listener + "\nException " + e);
+                log.warn("notify: During dispatch to {}", listener, e);
             }
         }
     }
@@ -304,7 +304,7 @@ public class SprogVersionQuery implements SprogListener {
     }
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts.
+     * Internal routine to handle timer starts and restarts.
      * 
      * @param delay timer delay
      */

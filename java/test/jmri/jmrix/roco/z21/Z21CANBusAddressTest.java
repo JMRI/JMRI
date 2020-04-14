@@ -86,8 +86,12 @@ public class Z21CANBusAddressTest {
         softly.assertThat(Z21CanBusAddress.validSystemNameFormat("ZSABCD:5",'S',"Z")).isEqualTo(Manager.NameValidity.VALID);
         softly.assertThat(Z21CanBusAddress.validSystemNameFormat("ZSa1b2:3",'S',"Z")).isEqualTo(Manager.NameValidity.VALID);
         softly.assertThat(Z21CanBusAddress.validSystemNameFormat("ZSa235:0",'S',"Z")).isEqualTo(Manager.NameValidity.VALID);
+
         softly.assertThat(Z21CanBusAddress.validSystemNameFormat("ZSabcd:b",'S',"Z")).isEqualTo(Manager.NameValidity.INVALID);
+        JUnitAppender.suppressWarnMessage("invalid character in number field of system name: ZSabcd:b");
         softly.assertThat(Z21CanBusAddress.validSystemNameFormat("ZSabcd1",'S',"Z")).isEqualTo(Manager.NameValidity.INVALID);
+        JUnitAppender.suppressWarnMessage("system name ZSabcd1 is in the wrong format.  Should be mm:pp.");
+
         softly.assertAll();
     }
 
@@ -99,7 +103,9 @@ public class Z21CANBusAddressTest {
 
     @After
     public void tearDown() {
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

@@ -2,9 +2,7 @@ package jmri.jmrix.cmri.serial.sim;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for ConnectionConfig class.
@@ -26,6 +24,7 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
    @Override
    public void tearDown(){
         cc = null;
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
    }
 

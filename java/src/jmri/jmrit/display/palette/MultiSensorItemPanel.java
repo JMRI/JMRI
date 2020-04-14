@@ -37,13 +37,13 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
     MultiSensorSelectionModel _selectionModel;
     boolean _upDown = false;
 
-    public MultiSensorItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<Sensor> model, Editor editor) {
-        super(parentFrame, type, family, model, editor);
+    public MultiSensorItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<Sensor> model) {
+        super(parentFrame, type, family, model);
         setToolTipText(Bundle.getMessage("ToolTipDragSelection"));
     }
 
     @Override
-    protected JPanel initTablePanel(PickListModel<Sensor> model, Editor editor) {
+    protected JPanel initTablePanel(PickListModel<Sensor> model) {
         _table = model.makePickTable();
         TableColumn column = new TableColumn(PickListModel.POSITION_COL);
         column.setHeaderValue("Position");
@@ -98,10 +98,6 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
     public void clearSelections() {
         _selectionModel.clearSelection();
         int size = 6;
-        // if (_family!=null) {
-        //     HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
-        //     size = map.size();
-        // }
         HashMap<String, NamedIcon> map = getIconMap();
         if (map != null) {
             size = map.size();
@@ -302,7 +298,7 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
         @Override
         public void setSelectionInterval(int row, int index1) {
             if (_nextPosition >= _positions.length) {
-                JOptionPane.showMessageDialog(_paletteFrame,
+                JOptionPane.showMessageDialog(_frame,
                         Bundle.getMessage("NeedIcon", _selectionModel.getPositions().length),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return;
@@ -311,9 +307,12 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
                 log.debug("setSelectionInterval({}, {})", row, index1);
             }
             Sensor bean = _tableModel.getBySystemName((String) _table.getValueAt(row, 0));
+            if (bean == null) {
+                return;
+            }
             String position = (String) _tableModel.getValueAt(row, PickListModel.POSITION_COL);
             if (position != null && position.length() > 0) {
-                JOptionPane.showMessageDialog(_paletteFrame,
+                JOptionPane.showMessageDialog(_frame,
                         Bundle.getMessage("DuplicatePosition",
                                 new Object[]{bean.getDisplayName(), position}),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
@@ -383,7 +382,7 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
 
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
                 if (_itemType.equals("MultiSensor")) {
-                    MultiSensorIcon ms = new MultiSensorIcon(_editor);
+                    MultiSensorIcon ms = new MultiSensorIcon(_frame.getEditor());
                     ms.setInactiveIcon(new NamedIcon(iconMap.get("SensorStateInactive")));
                     ms.setInconsistentIcon(new NamedIcon(iconMap.get("BeanStateInconsistent")));
                     ms.setUnknownIcon(new NamedIcon(iconMap.get("BeanStateUnknown")));

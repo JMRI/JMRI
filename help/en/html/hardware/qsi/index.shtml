@@ -20,10 +20,11 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: QSI Quantum Programmer</h1>
 
       <p>JMRI can use a <a href=
@@ -158,7 +159,7 @@
       <p>DecoderPro is now configured. Restart it, and you should
       be ready to use the Quantum Programmer.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

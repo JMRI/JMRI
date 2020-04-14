@@ -1,9 +1,6 @@
 package jmri.jmrix.lenz.swing.lz100;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrix.lenz.LenzCommandStation;
-import jmri.jmrix.lenz.XNetInterfaceScaffold;
-import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -37,6 +34,7 @@ public class LZ100FrameTest extends jmri.util.JmriJFrameTestBase {
     public void tearDown() {
         memo = null;
         t = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
 

@@ -2,13 +2,21 @@ package jmri.jmrit.catalog;
 
 import java.awt.Container;
 import java.awt.GraphicsEnvironment;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import jmri.ShutDownManager;
+import jmri.ShutDownTask;
+import jmri.implementation.swing.SwingShutDownTask;
 import org.junit.*;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * ImageIndexEditorTest
@@ -31,6 +39,13 @@ public class ImageIndexEditorTest {
         Assert.assertNotNull("Select node prompt not found", pane);
         JUnitUtil.pressButton(pane, Bundle.getMessage("ButtonOK"));
         new JFrameOperator(indexEditor).dispose();
+        //verify there is a shutdown task in the shutdown manager
+        ShutDownManager sdm = InstanceManager.getDefault(ShutDownManager.class);
+        List<ShutDownTask> tasks = sdm.tasks().stream().collect(ArrayList::new,ArrayList::add,ArrayList::addAll);
+        List<SwingShutDownTask> swingTasks = tasks.stream().filter(t -> t instanceof SwingShutDownTask).map(t-> { return (SwingShutDownTask) t;}).collect(Collectors.toList());
+        assertThat(swingTasks).isNotEmpty();
+        // remove all the tasks from the shutdown manager
+        tasks.forEach(sdm::deregister);
     }
 
     @Before
@@ -38,7 +53,6 @@ public class ImageIndexEditorTest {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
-        JUnitUtil.initShutDownManager();
     }
 
     @After

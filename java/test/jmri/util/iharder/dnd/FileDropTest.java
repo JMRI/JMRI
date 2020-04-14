@@ -5,10 +5,9 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.swing.JPanel;
 import java.awt.GraphicsEnvironment;
+import java.net.URI;
 
 /**
  *
@@ -22,12 +21,12 @@ public class FileDropTest {
         // this came was modifed from the FileDrop website's example at
         // http://iharder.sourceforge.net/current/java/filedrop/ 
         JPanel myPanel = new JPanel();
-        FileDrop t = new FileDrop(myPanel, new FileDrop.Listener() {
+        URIDrop t = new URIDrop(myPanel, new URIDrop.Listener() {
             @Override
-            public void filesDropped(java.io.File[] files) {
+            public void URIsDropped(URI[] uris) {
                 // handle file drop
             }   // end filesDropped
-        }); // end FileDrop.Listener
+        }); // end URIDrop.Listener
 
         Assert.assertNotNull("exists", t);
     }

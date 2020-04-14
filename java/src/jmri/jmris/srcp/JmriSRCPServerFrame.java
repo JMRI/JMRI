@@ -7,6 +7,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
+import jmri.InstanceManager;
 import jmri.jmris.JmriServer;
 
 /**
@@ -15,6 +16,7 @@ import jmri.jmris.JmriServer;
  * @author Paul Bender Copyright (C) 2009
  */
 public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
+
 
     public JmriSRCPServerFrame() {
         this("Jmri SRCP Server Starter");
@@ -81,11 +83,11 @@ public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
     }
 
     public void startSRCPServer() {
-        jmri.InstanceManager.getDefault(JmriServer.class).start();
+        InstanceManager.getDefault(JmriServer.class).start();
     }
 
     public void stopSRCPServer() {
-        jmri.InstanceManager.getDefault(JmriServer.class).stop();
+        InstanceManager.getDefault(JmriServer.class).stop();
     }
 
 }

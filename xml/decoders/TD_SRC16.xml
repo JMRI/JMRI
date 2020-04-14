@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,6 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="1.10" lastUpdated="20200109"/>
   <version author="B. Milhaupt" version="1.9" lastUpdated="20180823"/>
   <version author="Michael Mosher" version="1.8" lastUpdated="20140513"/>
   <version author="Michael Mosher" version="1.7" lastUpdated="20111011"/>
@@ -29,8 +29,9 @@
   <!-- Version 1.7 corrected "Rte Num S8" CV (was 64 should be 63) -->
   <!-- Version 1.8 added power on state for 16 outputs -->
   <!-- Version 1.9 release, added "LOCONETOPSBOARD" programming token to allow LocoNet-connected boards to read CV values -->
+  <!-- Version 1.10 change mfg to match name in NMRA.xml -->
   <decoder>
-    <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
+    <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary">
       <model model="SRC16" lowVersionID="1" comment="SRC16 is a stationary decoder with serial bus"/>
     </family>
     <programming direct="yes" paged="yes" register="no" ops="yes">

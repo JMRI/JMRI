@@ -298,6 +298,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         pane1.add(alwaysOnTopCheckBox);
         pane1.add(autoScrollCheckBox);
         paneA.add(pane1);
+        addCustomControlPanes(paneA);
 
         JPanel pane2 = new JPanel();
         pane2.setLayout(new BoxLayout(pane2, BoxLayout.X_AXIS));
@@ -352,6 +353,13 @@ public abstract class AbstractMonPane extends JmriPanel {
 
     }
 
+    /**
+     * Expand the display with additional options specific to the hardware.
+     * @param parent a Panel (with vertical BoxLayout); overrides should add a new Panel with horizontal BoxLayout to hold the additional options.
+     */
+    protected void addCustomControlPanes(JPanel parent) {
+    }
+
     private int timerCount = 0;
     private javax.swing.Timer timer;
 
@@ -371,30 +379,30 @@ public abstract class AbstractMonPane extends JmriPanel {
     }
         
     /**
-     *  Log an Message derived message.
+     * Log an Message derived message.
      *
-     *  @param message message object to log.
+     * @param message message object to log.
      */
-    public void logMessage(Message message){
-	    logMessage("","",message);
+    public void logMessage(Message message) {
+        logMessage("", "", message);
     }
 
     /**
-     *  Log an Message derived message.
+     * Log an Message derived message.
      *
-     *  @param messagePrefix text to prefix the message with.
-     *  @param message message object to log.
+     * @param messagePrefix text to prefix the message with.
+     * @param message       message object to log.
      */
-    public void logMessage(String messagePrefix,Message message){
-	    logMessage(messagePrefix,"",message);
+    public void logMessage(String messagePrefix, Message message) {
+        logMessage(messagePrefix, "", message);
     }
 
     /**
-     *  Log an Message derived message with a prefixed label.
+     * Log an Message derived message with a prefixed label.
      *
-     *  @param messagePrefix text to prefix the message with.
-     *  @param rawPrefix label to add to the start of the message.
-     *  @param message message object to log.
+     * @param messagePrefix text to prefix the message with.
+     * @param rawPrefix     label to add to the start of the message.
+     * @param message       message object to log.
      */
     public void logMessage(String messagePrefix,String rawPrefix,Message message){
         // display the raw data if requested  

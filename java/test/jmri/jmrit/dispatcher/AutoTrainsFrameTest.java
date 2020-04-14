@@ -2,6 +2,7 @@ package jmri.jmrit.dispatcher;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
+import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -21,6 +22,7 @@ public class AutoTrainsFrameTest extends jmri.util.JmriJFrameTestBase {
         OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");  // exist?
         JUnitUtil.initDebugThrottleManager();
         if (!GraphicsEnvironment.isHeadless()) {
+            WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
             d = InstanceManager.getDefault(DispatcherFrame.class);
             frame = new AutoTrainsFrame(d);
         }
@@ -33,6 +35,7 @@ public class AutoTrainsFrameTest extends jmri.util.JmriJFrameTestBase {
             JUnitUtil.dispose(d);
             d = null;
         }
+        JUnitUtil.clearShutDownManager();
         super.tearDown(); // handles frame member
     }
 

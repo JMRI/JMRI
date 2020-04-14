@@ -52,6 +52,7 @@ public class Z21XNetInitializationManagerTest {
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.clearShutDownManager(); // drop ShutDownTask for jmri.jmrix.lenz.XNetInterfaceScaffold
         JUnitUtil.tearDown();
     }
 

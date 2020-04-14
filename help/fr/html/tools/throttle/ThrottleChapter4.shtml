@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- Translated by Blorec Herv&eegu; le 2011-18-07-->
+<!-- Updated by Blorec Herv&#233; 2017-18-07-->
 
 <html lang="fr">
 <head>
@@ -8,31 +8,28 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>Throttle: Opening/Saving a Throttle Layout</title>
-  <meta name="keywords" content=
-  "JMRI decoderpro dcc nmra throttlepro">
-  <meta name="Description" content=
-  "Throttle documentation for JMRI project">
+  <meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
+  <meta name="Description" content="Throttle documentation for JMRI project">
   <meta name="Author" content="Paul Fraker (paul@frakers.com)">
-  <meta name="Language" content="fr">
   <meta name="Robots" content="Index, Follow">
-  <meta name="Revisit-After" content="7 Days"><!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="Revisit-After" content="7 Days">
+    <!-- Style -->
+  <meta http-equiv="content-type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-<div id="mainContent">dossier (sous-r&eacute;pertoire)
-<h1 style="color:#ff0000">Mise &aacute; jour Version documentation du R&eacute;gulateur
-</span></h1>
+<h1>Mise &aacute; jour Version documentation du R&eacute;gulateur</h1>
 
 <p>S'il vous pla&icirc;t noter que cette documentation a &eacute;t&eacute; mise &aacute; jour, reportez-vous aux liens ci-dessous:</p>
 <ul>
@@ -43,7 +40,7 @@
   <li>La <a href="AdvancedThrottleControl.shtml">Fen&ecirc;tre contr&ocirc;les R&eacute;gulateur</a></li>
   <li>La <a href="ThrottlesListWindow.shtml">Liste des Fen&ecirc;tres R&eacute;gulateurs</a></li>
   <li>Le <a href="ThrottlesPreferencesPane.shtml">volet pr&eacute;f&eacute;rences R&eacute;gulateurs</a></li>
-  </ul>
+</ul>
 
 <h2>Enregistrement d'une Configuration de R&eacute;gulateur</h2>
 
@@ -52,7 +49,7 @@
 elle. Bien s&ucirc;r, cela perd la configuration que vous avez &eacute;tablie au cours de cette
 session r&eacute;gulateur. Et cela est tr&eacute;s bien si vous ex&eacute;cutez un test de toutes sortes sur une loco
 que vous n'avez pas l'intention de faire circuler &aacute; l'aide d'un de ces r&eacute;gulateurs informatiques .
-Par cons&eacute;quent, la fermeture de la Fen&ecirc;tre du r&eacute;gulateur pour l'&eacute;liminer suffirait. </P>
+Par cons&eacute;quent, la fermeture de la Fen&ecirc;tre du r&eacute;gulateur pour l'&eacute;liminer suffirait. </p>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
    <tbody>
@@ -66,7 +63,7 @@ Par cons&eacute;quent, la fermeture de la Fen&ecirc;tre du r&eacute;gulateur pou
          qui vient probablement de votre esprit est la suivante: "comment puis-je le sauvegarder?"</p>
 
         <p> suivant les instructions fournies dans le <a
-         href= " ThrottleChapter1.shtml "> Chapitre 1 </a> pour localiser le
+         href= "ThrottleChapter1.shtml"> Chapitre 1 </a> pour localiser le
          Menu R&eacute;gulateur, localisez l'option qui dit "<strong>Enregistrer
          Mise en page R&eacute;gulateur</strong>" (voir Figure 4-1 &aacute; droite). Cliquer sur cette option de menu
          permet d'afficher une bo&icirc;te de dialogue "<b>Enregistrer sous</b>" voir la figure 4-2
@@ -104,14 +101,13 @@ sauvegard&eacute; avec toutes les pr&eacute;f&eacute;rences, notamment la taille
 <a name="SaveMultiple"> </a>
 <h2>Sauvegarde de multiples Fen&ecirc;tres R&eacute;gulateurs</h2> 
 
-<dir>
-   <p> Les instructions ci-dessus sont assez simples quand on travaille avec une seule
+  <p>Les instructions ci-dessus sont assez simples quand on travaille avec une seule
   Fen&ecirc;tre r&eacute;gulateur.</p>
 
   <p> Mais ce qui arrive quand vous avez deux ou plusieurs Fen&ecirc;tres r&eacute;gulateurs ouvertes 
   en m&ecirc;me temps? Lorsque vous utilisez l'option de sauvegarde, <u> toutes </u> les Fen&ecirc;tres r&eacute;gulateurs
   seront sauvegard&eacute;es dans le m&ecirc;me fichier. Lorsque ce fichier est r&eacute;-ouvert, toutes les 
-Fen&ecirc;tres r&eacute;gulateurs identifi&eacute;es dans ce fichier seront ouvertes.</p>
+  Fen&ecirc;tres r&eacute;gulateurs identifi&eacute;es dans ce fichier seront ouvertes.</p>
 
   <p> Ceci est important &aacute; comprendre. En particulier lorsque l'on travaille 
   avec <a href="#Merging">plusieurs r&eacute;gulateurs fusionn&eacute;s</a>.</p>
@@ -119,19 +115,19 @@ Fen&ecirc;tres r&eacute;gulateurs identifi&eacute;es dans ce fichier seront ouve
   <table border="0" width="100%" cellpadding="0" cellspacing="0">
     <tbody>
       <tr>
-        <td valign="top"><p><p> Dans le chapitre pr&eacute;c&eacute;dent, une Fen&ecirc;tre r&eacute;gulateur simple
+        <td valign="top"><p>Dans le chapitre pr&eacute;c&eacute;dent, une Fen&ecirc;tre r&eacute;gulateur simple
           a &eacute;t&eacute; initi&eacute;e. Et un simple "sauver" aurait certainement sauv&eacute; juste
           la Fen&ecirc;tre r&eacute;gulateur unique dans un fichier de Mise en page unique. Lorsque le fichier
           est de nouveau ouvert, seule la Fen&ecirc;tre r&eacute;gulateur simple apparait.</p>
-        </Td>
+        </td>
         <td> <img width="20" height="20" src="images/spacer.gif"> </td>
         <td align="center" valign="top"> <p
           style = "text-align: center; font-size: xx-small">  <img width = "309"
           height = "187" src = "images/jmri036.jpg"
           title= "Exemple de deux Fen&ecirc;tres actives d'acc&eacute;l&eacute;rateur"> <br>
           Figure 4-3: Deux Fen&ecirc;tres R&eacute;gulateurs actives  </p>
-        </Td>
-      </Tr> 
+        </td>
+      </tr>
       <tr>
         <td colspan="3" align="left" valign="top"><p>  Mais que faire si nous avions ouvert
           et configur&eacute; une seconde Fen&ecirc;tre de r&eacute;gulateurs, alors que la premi&eacute;re
@@ -140,17 +136,15 @@ Fen&ecirc;tres r&eacute;gulateurs identifi&eacute;es dans ce fichier seront ouve
           figure 4-3). Non seulement la Mise en page du r&eacute;gulateur  est
           sauv&eacute;e, mais aussi les dimensionnement exactes de  l'&eacute;cran et l'emplacement des deux
           r&eacute;gulateurs.</p>
-                  <p> Lorsque le fichier de Configuration (layout) est r&eacute;ouvert, les deux Fen&ecirc;tres r&eacute;gulateur
-           ouvertes et positionn&eacute;es sur l'&eacute;cran d'ordinateur &aacute; l'endroit exact o&uacute; elles
-           &eacute;taient quand le fichier a &eacute;t&eacute; enregistr&eacute;. </p>
+          <p> Lorsque le fichier de Configuration (layout) est r&eacute;ouvert, les deux Fen&ecirc;tres r&eacute;gulateur
+          ouvertes et positionn&eacute;es sur l'&eacute;cran d'ordinateur &aacute; l'endroit exact o&uacute; elles
+          &eacute;taient quand le fichier a &eacute;t&eacute; enregistr&eacute;.</p>
         </td>
       </tr>
     </tbody>
   </table>
-</dir>
 
-<a name="LoadLayout"></a> 
-
+<a name="LoadLayout"></a>
 <h2>Ouvrir/Charger une Configuration R&eacute;gulateur</h2>
 
 <p> Apr&egrave;s avoir enregistr&eacute; une  configuration de r&eacute;gulateur , vous aurez envie d'ouvrir &aacute;
@@ -174,14 +168,14 @@ chapitre pr&eacute;c&eacute;dent (assurez-vous que vous l'avez enregistr&eacute;
         </strong>" (voir Figure 4-4 &aacute; droite). Cliquer sur cette  option de menu
         permet d'afficher une bo&eacute;te de dialogue "<b> Ouvrir </b>". Localisez le 
         fichier d'une configuration de r&eacute;gulateur que vous venez pr&eacute;c&eacute;demment de sauvegarder et ouvrez-le. </p>
-      </Td>
+      </td>
       <td> <img width="20" height="20" src="images/spacer.gif"> </td>
       <td align="center" valign="top"> <p
         style = "text-align: center; font-size: xx-small">  <img width = "163"
         height = "82" src = "images/jmri007.jpg" title= "Load throttle layout"> <br>
         Figure 4-4: Chargement d'une configuration de R&eacute;gulateur  </p>
-      </Td>
-    </Tr>
+      </td>
+    </tr>
   </Tbody>
 </Table>
 
@@ -190,7 +184,7 @@ o&ugrave; vous l'avez ferm&eacute;. Dans le m&ecirc;me temps que la Fen&ecirc;tr
 l'initialisation de l'adresse du d&eacute;codeur &aacute; la centrale de commande (un peu comme lorsque l'
 Adresse a d'abord &eacute;t&eacute; "D&eacute;fini"). Le r&eacute;gulateur tente de d&eacute;terminer la direction actuelle
  de la locomotive, ainsi que d'identifier les fonctions qui sont dans l'
-&eacute;tat "On". </P>
+&eacute;tat "On". </p>
 
 <p class="important"><b>Note: </b> Parce que les r&eacute;gulateurs sont toujours en 
 mode JMRI 'b&ecirc;ta' de d&eacute;veloppement, il y a encore quelques bizarreries qui ont besoin d'&ecirc;tre
@@ -204,14 +198,11 @@ ce que ces r&eacute;gulateurs soient pleinement applicables, m&eacute;fiez-vous 
 avec votre syst&egrave;me DCC en particulier avec cette fonction. Il est donc sugg&eacute;r&eacute;
 qu'<u>avant </u> d'ouvrir un fichier de configuration de r&eacute;gulateur sauvegard&eacute;e, l'adresse DCC
 soit v&eacute;rifi&eacute;e comme n'&eacute;tant pas utilis&eacute;e par un autre r&eacute;gulateur quelque part. </p>
-<br>
-<br>
-<br>
-<a name="Merging"></a> 
 
+<a name="Merging"></a>
 <h2>Fusion Fen&ecirc;tres de R&eacute;gulateurs </h2>
-<dir>
-   <p> Les fichiers de mise en page de R&eacute;gulateurs  peuvent consister en une Fen&ecirc;tre de r&eacute;gulateur unique (pour contr&ocirc;ler
+
+   <p>Les fichiers de mise en page de R&eacute;gulateurs  peuvent consister en une Fen&ecirc;tre de r&eacute;gulateur unique (pour contr&ocirc;ler
    une seule locomotive ou une adresse de couplage), ou elle peut contenir de multiples
    Fen&ecirc;tres de r&eacute;gulateurs (voir figure 4-3). Dans les deux cas, &aacute; chaque ouverture d'un fichier de configuration de r&eacute;gulateur
     le programme va v&eacute;rifier pour voir si des Fen&ecirc;tres actives de r&eacute;gulateurs  existants 
@@ -222,10 +213,10 @@ soit v&eacute;rifi&eacute;e comme n'&eacute;tant pas utilis&eacute;e par un autr
    height = "125" src = "images/jmri035.jpg" title= "Merge Dialog Box"> <br>
    Figure 4-5: Bo&icirc;te de dialogue Fusionner </p>
 
-   <p> Cependant, quand une ou plusieurs Fen&ecirc;tres de r&eacute;gulateurs sont d&eacute;j&agrave; ouvertes sur
+   <p>Cependant, quand une ou plusieurs Fen&ecirc;tres de r&eacute;gulateurs sont d&eacute;j&agrave; ouvertes sur
    l'&eacute;cran, le programme va ouvrir une bo&icirc;te de dialogue comme le montre la figure 4-5 sur
-   la droite. </p>
-</dir>
+   la droite.</p>
+
 <ul>
    <li> <strong> Fusion </strong>? Quitte les Fen&ecirc;tres r&eacute;gulateur actives ouvertes
       en place et ouvre le r&eacute;gulateur (s) contenu dans le fichier de configuration en
@@ -240,17 +231,11 @@ soit v&eacute;rifi&eacute;e comme n'&eacute;tant pas utilis&eacute;e par un autr
    <li> <strong> Annuler </strong>? Annule la demande d'"ouverture"  et ferme cette
      Fen&ecirc;tre de dialogue. </li>
 </ul>
-<br>
-<br>
 
-
-<p class="important"><b>Remarque: Ne confondez pas l'action qui se produit ici
+<p class="important">Remarque: Ne confondez pas l'action qui se produit ici
 avec toute tentative d'&eacute;craser votre configuration des fichiers de r&eacute;gulateurs sauvegard&eacute;s. Les actions ci-dessus
  n'ont aucun effet sur la r&eacute;elle mise configuration des fichiers de r&eacute;gulateurs sauvegard&eacute;s eux-m&ecirc;mes.
-La seule "fusion" et "remplacement" qui se produit se passe tout simplement sur votre &eacute;cran. </b>
-</p>
-<br>
-<br>
+La seule "fusion" et "remplacement" qui se produit se passe tout simplement sur votre &eacute;cran.</p>
 
 <table border="2" width="100%" cellpadding="4" cellspacing="2">
    <tbody>
@@ -282,7 +267,6 @@ La seule "fusion" et "remplacement" qui se produit se passe tout simplement sur 
 <br>
 
 <a name="SaveThrottlePreferences"></a>
-
 <h2>Enregistrer les pr&eacute;f&eacute;rences R&eacute;gulateurs</h2>
 
 <p> "Enregistrer les pr&eacute;f&eacute;rences R&eacute;gulateurs" vous permet de personnaliser la fa&ccedil;on dont de nouveaux
@@ -333,10 +317,8 @@ il suffit de cliquer sur le " <big>X</big>" dans le coin sup&eacute;rieur droit 
     </tr>
   </tbody>
 </table>
-<br>
 
-<!--#include virtual="/Footer" -->
-
+<!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
 </body>

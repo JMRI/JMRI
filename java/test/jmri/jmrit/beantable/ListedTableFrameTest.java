@@ -3,10 +3,7 @@ package jmri.jmrit.beantable;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.*;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -28,6 +25,7 @@ public class ListedTableFrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         super.tearDown();
     }
 

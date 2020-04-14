@@ -1,45 +1,31 @@
 package jmri.jmrit.timetable.swing;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import java.lang.StringBuilder;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.TreeExpansionEvent;
-import javax.swing.event.TreeExpansionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.DefaultTreeSelectionModel;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
+import javax.swing.tree.*;
+
 import jmri.InstanceManager;
 import jmri.Scale;
 import jmri.ScaleManager;
-import jmri.UserPreferencesManager;
+import jmri.jmrit.operations.trains.tools.ExportTimetable;
+import jmri.jmrit.timetable.*;
+import jmri.jmrit.timetable.configurexml.TimeTableXml;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.SplitButtonColorChooserPanel;
-
-import jmri.jmrit.timetable.*;
-import jmri.jmrit.timetable.configurexml.*;
 
 /**
  * Create and maintain timetables.
@@ -58,6 +44,8 @@ import jmri.jmrit.timetable.configurexml.*;
  * @author Dave Sand Copyright (c) 2018
  */
 public class TimeTableFrame extends jmri.util.JmriJFrame {
+
+    public static final String EMPTY_GRID = "EmptyGrid";
 
     public TimeTableFrame() {
     }
@@ -195,7 +183,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         detailPane.setLayout(new BoxLayout(detailPane, BoxLayout.Y_AXIS));
 
         // ------------ Edit Detail Panel ------------
-        makeDetailGrid("EmptyGrid");  // NOI18N
+        makeDetailGrid(EMPTY_GRID);  // NOI18N
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -203,23 +191,13 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         _cancelAction = new JButton(Bundle.getMessage("ButtonCancel"));  // NOI18N
         _cancelAction.setToolTipText(Bundle.getMessage("HintCancelButton"));  // NOI18N
         panel.add(_cancelAction);
-        _cancelAction.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cancelPressed();
-            }
-        });
+        _cancelAction.addActionListener((ActionEvent e) -> cancelPressed());
         panel.add(Box.createHorizontalStrut(10));
 
         _updateAction = new JButton(Bundle.getMessage("ButtonUpdate"));  // NOI18N
         _updateAction.setToolTipText(Bundle.getMessage("HintUpdateButton"));  // NOI18N
         panel.add(_updateAction);
-        _updateAction.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updatePressed();
-            }
-        });
+        _updateAction.addActionListener((ActionEvent e) -> updatePressed());
         _detailFooter.add(panel);
 
         JPanel detailEdit = new JPanel(new BorderLayout());
@@ -364,7 +342,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 donePressed();
             }
         });
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
         pack();
         _addButtonPanel.setVisible(false);
@@ -405,19 +383,16 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         });
 
         JMenuItem impsgn = new JMenuItem(Bundle.getMessage("MenuImportSgn"));  // NOI18N
-        impsgn.addActionListener((ActionEvent event) -> {
-            importPressed();
-        });
+        impsgn.addActionListener((ActionEvent event) -> importPressed());
 
         JMenuItem impcsv = new JMenuItem(Bundle.getMessage("MenuImportCsv"));  // NOI18N
-        impcsv.addActionListener((ActionEvent event) -> {
-            importCsvPressed();
-        });
+        impcsv.addActionListener((ActionEvent event) -> importCsvPressed());
+        
+        JMenuItem impopr = new JMenuItem(Bundle.getMessage("MenuImportOperations"));  // NOI18N
+        impopr.addActionListener((ActionEvent event) -> importFromOperationsPressed());
 
         JMenuItem expcsv = new JMenuItem(Bundle.getMessage("MenuExportCsv"));  // NOI18N
-        expcsv.addActionListener((ActionEvent event) -> {
-            exportCsvPressed();
-        });
+        expcsv.addActionListener((ActionEvent event) -> exportCsvPressed());
 
         JMenu ttMenu = new JMenu(Bundle.getMessage("MenuTimetable"));  // NOI18N
         ttMenu.add(trainTime);
@@ -426,6 +401,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         ttMenu.addSeparator();
         ttMenu.add(impsgn);
         ttMenu.add(impcsv);
+        ttMenu.add(impopr);
         ttMenu.add(expcsv);
 
         JMenuBar menuBar = new JMenuBar();
@@ -461,7 +437,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         _editTrainTypeName = new JTextField(20);
         _editTrainTypeColor = new JColorChooser(Color.BLACK);
         _editTrainTypeColor.setPreviewPanel(new JPanel()); // remove the preview panel
-        AbstractColorChooserPanel editTypeColorPanels[] = {new SplitButtonColorChooserPanel()};
+        AbstractColorChooserPanel[] editTypeColorPanels = {new SplitButtonColorChooserPanel()};
         _editTrainTypeColor.setChooserPanels(editTypeColorPanels);
 
         _editTrainTypeName.addFocusListener(detailFocusEvent);
@@ -633,7 +609,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         c.ipadx = 5;
 
         switch (gridType) {
-            case "EmptyGrid":  // NOI18N
+            case EMPTY_GRID:  // NOI18N
                 makeEmptyGrid(c);
                 _detailFooter.setVisible(false);
                 break;
@@ -1308,15 +1284,15 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         if (!exceptionList.isEmpty()) {
             StringBuilder msg = new StringBuilder(Bundle.getMessage("LayoutUpdateErrors"));  // NOI18N
             for (String keyWord : exceptionList) {
-                if (keyWord.startsWith(_dataMgr.TIME_OUT_OF_RANGE)) {
+                if (keyWord.startsWith(TimeTableDataManager.TIME_OUT_OF_RANGE)) {
                     String[] comps = keyWord.split("~");
                     msg.append(Bundle.getMessage(comps[0], comps[1], comps[2]));
-                } else if (keyWord.startsWith(_dataMgr.SCALE_NF)) {
+                } else if (keyWord.startsWith(TimeTableDataManager.SCALE_NF)) {
                     String[] scaleMsg = keyWord.split("~");
                     msg.append(Bundle.getMessage(scaleMsg[0], scaleMsg[1]));
                 } else {
                     msg.append(String.format("%n%s", Bundle.getMessage(keyWord)));
-                    if (keyWord.equals(_dataMgr.THROTTLES_IN_USE)) {
+                    if (keyWord.equals(TimeTableDataManager.THROTTLES_IN_USE)) {
                         // Add the affected trains
                         for (Schedule schedule : _dataMgr.getSchedules(_curNodeId, true)) {
                             for (Train train : _dataMgr.getTrains(schedule.getScheduleId(), 0, true)) {
@@ -1452,12 +1428,12 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         if (!exceptionList.isEmpty()) {
             StringBuilder msg = new StringBuilder(Bundle.getMessage("StationUpdateErrors"));  // NOI18N
             for (String keyWord : exceptionList) {
-                if (keyWord.startsWith(_dataMgr.TIME_OUT_OF_RANGE)) {
+                if (keyWord.startsWith(TimeTableDataManager.TIME_OUT_OF_RANGE)) {
                     String[] comps = keyWord.split("~");
                     msg.append(Bundle.getMessage(comps[0], comps[1], comps[2]));
                 } else {
                     msg.append(String.format("%n%s", Bundle.getMessage(keyWord)));
-                    if (keyWord.equals(_dataMgr.STAGING_IN_USE)) {
+                    if (keyWord.equals(TimeTableDataManager.STAGING_IN_USE)) {
                         // Add the affected stops
                         for (Stop stop : _dataMgr.getStops(0, _curNodeId, false)) {
                             if (stop.getStagingTrack() > newStaging) {
@@ -1540,7 +1516,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         if (!exceptionList.isEmpty()) {
             StringBuilder msg = new StringBuilder(Bundle.getMessage("ScheduleUpdateErrors"));  // NOI18N
             for (String keyWord : exceptionList) {
-                if (keyWord.startsWith(_dataMgr.TIME_OUT_OF_RANGE)) {
+                if (keyWord.startsWith(TimeTableDataManager.TIME_OUT_OF_RANGE)) {
                     String[] comps = keyWord.split("~");
                     msg.append(Bundle.getMessage(comps[0], comps[1], comps[2]));
                 } else {
@@ -1578,7 +1554,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             newTime = LocalTime.parse(_editTrainStartTime.getText().trim(), DateTimeFormatter.ofPattern("H:mm"));  // NOI18N
             newStart = newTime.getHour() * 60 + newTime.getMinute();
         } catch (java.time.format.DateTimeParseException ex) {
-            exceptionList.add(_dataMgr.START_TIME_FORMAT + "~" + ex.getParsedString());
+            exceptionList.add(TimeTableDataManager.START_TIME_FORMAT + "~" + ex.getParsedString());
             newStart = train.getStartTime();
         }
 
@@ -1649,13 +1625,13 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             StringBuilder msg = new StringBuilder(Bundle.getMessage("TrainUpdateErrors"));  // NOI18N
             for (String keyWord : exceptionList) {
                 log.info("kw = {}", keyWord);
-                if (keyWord.startsWith(_dataMgr.TIME_OUT_OF_RANGE)) {
+                if (keyWord.startsWith(TimeTableDataManager.TIME_OUT_OF_RANGE)) {
                     String[] comps = keyWord.split("~");
                     msg.append(Bundle.getMessage(comps[0], comps[1], comps[2]));
-                } else if (keyWord.startsWith(_dataMgr.START_TIME_FORMAT)) {
+                } else if (keyWord.startsWith(TimeTableDataManager.START_TIME_FORMAT)) {
                     String[] timeMsg = keyWord.split("~");
                     msg.append(Bundle.getMessage(timeMsg[0], timeMsg[1]));
-                } else if (keyWord.startsWith(_dataMgr.START_TIME_RANGE)) {
+                } else if (keyWord.startsWith(TimeTableDataManager.START_TIME_RANGE)) {
                     String[] schedMsg = keyWord.split("~");
                     msg.append(Bundle.getMessage(schedMsg[0], schedMsg[1], schedMsg[2]));
                 } else {
@@ -1741,7 +1717,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         if (!exceptionList.isEmpty()) {
             StringBuilder msg = new StringBuilder(Bundle.getMessage("StopUpdateErrors"));  // NOI18N
             for (String keyWord : exceptionList) {
-                if (keyWord.startsWith(_dataMgr.TIME_OUT_OF_RANGE)) {
+                if (keyWord.startsWith(TimeTableDataManager.TIME_OUT_OF_RANGE)) {
                     String[] comps = keyWord.split("~");
                     msg.append(Bundle.getMessage(comps[0], comps[1], comps[2]));
                 } else {
@@ -2095,7 +2071,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         setShowReminder(true);
 
         DefaultMutableTreeNode prevNode = _curNode.getPreviousSibling();
-        if (prevNode == null || !(prevNode instanceof TimeTableTreeNode)) {
+        if (!(prevNode instanceof TimeTableTreeNode)) {
             log.warn("At first node, cannot move up");  // NOI18N
             return;
         }
@@ -2114,7 +2090,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         setShowReminder(true);
 
         DefaultMutableTreeNode nextNode = _curNode.getNextSibling();
-        if (nextNode == null || !(nextNode instanceof TimeTableTreeNode)) {
+        if (!(nextNode instanceof TimeTableTreeNode)) {
             log.warn("At last node, cannot move down");  // NOI18N
             return;
         }
@@ -2284,33 +2260,43 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         int retVal = fileChooser.showOpenDialog(null);
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            try {
-                feedbackList = new TimeTableCsvImport().importCsv(file);
-            } catch (IOException ex) {
-                log.error("Import exception: {}", ex);  // NOI18N
-                JOptionPane.showMessageDialog(null,
-                        Bundle.getMessage("ImportCsvFailed", "CVS"),  // NOI18N
-                        Bundle.getMessage("ErrorTitle"),  // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if (feedbackList.size() > 0) {
-                StringBuilder msg = new StringBuilder(Bundle.getMessage("ImportCsvErrors"));  // NOI18N
-                for (String feedback : feedbackList) {
-                    msg.append(feedback + "\n");
-                }
-                JOptionPane.showMessageDialog(null,
-                        msg.toString(),
-                        Bundle.getMessage("ErrorTitle"),  // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            savePressed();
-            JOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("ImportCompleted", "CSV"),  // NOI18N
-                    Bundle.getMessage("MessageTitle"),  // NOI18N
-                    JOptionPane.INFORMATION_MESSAGE);
+            completeImport(file);
         }
+    }
+        
+    void completeImport(File file) {
+        try {
+            feedbackList = new TimeTableCsvImport().importCsv(file);
+        } catch (IOException ex) {
+            log.error("Import exception: {}", ex); // NOI18N
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("ImportCsvFailed", "CVS"), // NOI18N
+                    Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (feedbackList.size() > 0) {
+            StringBuilder msg = new StringBuilder(Bundle.getMessage("ImportCsvErrors")); // NOI18N
+            for (String feedback : feedbackList) {
+                msg.append(feedback + "\n");
+            }
+            JOptionPane.showMessageDialog(null,
+                    msg.toString(),
+                    Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        savePressed();
+        JOptionPane.showMessageDialog(null,
+                Bundle.getMessage("ImportCompleted", "CSV"), // NOI18N
+                Bundle.getMessage("MessageTitle"), // NOI18N
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    void importFromOperationsPressed() {
+        ExportTimetable ex = new ExportTimetable();
+        new ExportTimetable().writeOperationsTimetableFile();
+        completeImport(ex.getExportFile());
     }
 
     void exportCsvPressed() {
@@ -2417,9 +2403,6 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 return;
             }
 
-
-
-
             if (hasErrors) {
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("ExportFailed"),  // NOI18N
@@ -2482,7 +2465,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         _timetableTree.setShowsRootHandles(true);
         _timetableTree.setScrollsOnExpand(true);
         _timetableTree.setExpandsSelectedPaths(true);
-        _timetableTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
+        _timetableTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
         // tree listeners
         _timetableTree.addTreeSelectionListener(_timetableListener = new TreeSelectionListener() {
@@ -2620,7 +2603,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             case "TrainTypes":     // NOI18N
                 _addButton.setText(Bundle.getMessage("AddTrainTypeButtonText"));  // NOI18N
                 _addButtonPanel.setVisible(true);
-                makeDetailGrid("EmptyGrid");  // NOI18N
+                makeDetailGrid(EMPTY_GRID);  // NOI18N
                 break;
 
             case "TrainType":     // NOI18N
@@ -2632,7 +2615,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             case "Segments":     // NOI18N
                 _addButton.setText(Bundle.getMessage("AddSegmentButtonText"));  // NOI18N
                 _addButtonPanel.setVisible(true);
-                makeDetailGrid("EmptyGrid");  // NOI18N
+                makeDetailGrid(EMPTY_GRID);  // NOI18N
                 break;
 
             case "Segment":     // NOI18N
@@ -2653,7 +2636,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             case "Schedules":     // NOI18N
                 _addButton.setText(Bundle.getMessage("AddScheduleButtonText"));  // NOI18N
                 _addButtonPanel.setVisible(true);
-                makeDetailGrid("EmptyGrid");  // NOI18N
+                makeDetailGrid(EMPTY_GRID);  // NOI18N
                 break;
 
             case "Schedule":     // NOI18N
@@ -2777,5 +2760,5 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         return TimeTableFrame.class.getName();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableFrame.class);
 }

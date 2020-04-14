@@ -38,7 +38,9 @@ public class MonitorPaneTest {
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.resetWindows(false, false);
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(MonitorPaneTest.class);

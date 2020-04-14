@@ -15,7 +15,7 @@ import org.openide.util.lookup.ServiceProvider;
 public class TimeTableStartup extends AbstractStartupActionFactory {
 
     @Override
-    public String getTitle(Class<?> clazz, Locale locale) throws IllegalArgumentException {
+    public String getTitle(Class<?> clazz, Locale locale) {
         if (!clazz.equals(TimeTableAction.class)) {
             throw new IllegalArgumentException();
         }

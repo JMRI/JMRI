@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
@@ -38,8 +39,8 @@ import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
-import jmri.util.iharder.dnd.FileDrop;
-import jmri.util.iharder.dnd.FileDrop.Listener;
+import jmri.util.iharder.dnd.URIDrop;
+import jmri.util.iharder.dnd.URIDrop.Listener;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -82,6 +83,10 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
     private String title;
     private String lastUsedSaveFile = null;
+
+    private boolean isEditMode = true;
+    private boolean willSwitch = false;
+
     private static final String DEFAULT_THROTTLE_FILENAME = "JMRI_ThrottlePreference.xml";
 
     public static String getDefaultThrottleFolder() {
@@ -218,7 +223,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
         boolean switchAfter = false;
         if (!isEditMode) {
-            switchMode();
+            setEditMode(true);
             switchAfter = true;
         }
 
@@ -255,7 +260,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
 //     checkPosition();
         if (switchAfter) {
-            switchMode();
+            setEditMode(false);
         }
     }
 
@@ -270,6 +275,8 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
      * </ul>
      */
     private void initGUI() {
+        final ThrottlesPreferences preferences =
+            InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences();
         frameListener = new FrameListener();
 
         controlPanel = new ControlPanel();
@@ -294,8 +301,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         int width = 3 * (FunctionButton.BUT_WDTH) + 2 * 3 * 5 + 10;   // = 192
         int height = 6 * (FunctionButton.BUT_HGHT) + 2 * 6 * 5 + 20; // = 240 (but there seems to be another 10 needed for some LAFs)
 
-        if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
-                && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon()) {
+        if (preferences.isUsingIcons()) {
             width = FunctionButton.BUT_WDTH * 3 + 2 * 3 * 5 + 10;
             height = FunctionButton.BUT_IMG_SIZE * 2 + FunctionButton.BUT_HGHT * 4 + 2 * 6 * 5 + 20;
         }
@@ -333,14 +339,13 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         if (controlPanel.getHeight() > functionPanel.getHeight() + addressPanel.getHeight()) {
             addressPanel.setSize(addressPanel.getWidth(), controlPanel.getHeight() - functionPanel.getHeight());
         }
-        if (!(InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle() && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon())
+        if (!(preferences.isUsingIcons())
                 && (functionPanel.getWidth() < addressPanel.getWidth())) {
             functionPanel.setSize(addressPanel.getWidth(), functionPanel.getHeight());
         }
         // SpotBugs flagged the following (apparently correctly) as a
         // useless control statement, so it has been commented out.
-        //if (!(InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
-        //        && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon())
+        //if (!(preferences.isUsingIcons())
         //        && (functionPanel.getWidth() < addressPanel.getWidth())) {
         //}
 
@@ -358,13 +363,13 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         add(addressPanel, PANEL_LAYER_FRAME);
         add(speedPanel, PANEL_LAYER_FRAME);
 
-        if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()) {
-            /*         if ( InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingTransparentCtl() ) {
+        if (preferences.isUsingExThrottle()) {
+            /*         if ( preferences.isUsingTransparentCtl() ) {
              setTransparent(functionPanel);
              setTransparent(addressPanel);
              setTransparent(controlPanel);
              }*/
-            if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingRosterImage()) {
+            if (preferences.isUsingRosterImage()) {
                 backgroundPanel = new BackgroundPanel();
                 backgroundPanel.setAddressPanel(addressPanel); // reusing same way to do it than existing thing in functionPanel
                 addComponentListener(backgroundPanel); // backgroudPanel warned when desktop resized
@@ -386,11 +391,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                 Math.max(addressPanel.getHeight() + functionPanel.getHeight(), controlPanel.getHeight())));
 
         // #JYNSTRUMENT# Bellow prepare drag'n drop receptacle:
-        new FileDrop(this, new Listener() {
+        new URIDrop(this, new Listener() {
             @Override
-            public void filesDropped(File[] files) {
+            public void URIsDropped(java.net.URI[] files) {
                 if (isEditMode) {
-                    for (File file : files) {
+                    for (java.net.URI file : files) {
                         ynstrument(file.getPath());
                     }
                 }
@@ -545,22 +550,33 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
     }
 
-    private boolean isEditMode = true;
-    private boolean willSwitch = false;
-
-    public void switchMode() {
+    public void setEditMode(boolean mode) {
+        if (mode == isEditMode)
+            return;
         if (isVisible()) {
-            if (isEditMode) {
+            if (!mode) {
                 playRendering();
             } else {
                 editRendering();
             }
-            isEditMode = !isEditMode;
+            isEditMode = mode;
             willSwitch = false;
         } else {
-            willSwitch = !willSwitch;
+            willSwitch = true;
         }
         throttleWindow.updateGUI();
+    }
+
+    public boolean getEditMode() {
+        return isEditMode;
+    }
+
+    /**
+     * @deprecated since 4.19.5; use {@link #setEditMode(boolean)} instead
+     */
+    @Deprecated
+    public void switchMode() {
+        setEditMode(!isEditMode);
     }
 
     /**
@@ -679,7 +695,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     public Element getXml() {
         boolean switchAfter = false;
         if (!isEditMode) {
-            switchMode();
+            setEditMode(true);
             switchAfter = true;
         }
 
@@ -727,7 +743,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
         me.setContent(children);
         if (switchAfter) {
-            switchMode();
+            setEditMode(false);
         }
         return me;
     }
@@ -767,7 +783,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
         boolean switchAfter = false;
         if (!isEditMode) {
-            switchMode();
+            setEditMode(true);
             switchAfter = true;
         }
 
@@ -826,7 +842,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
         setFrameTitle();
         if (switchAfter) {
-            switchMode();
+            setEditMode(false);
         }
     }
 
@@ -873,7 +889,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     public void componentShown(ComponentEvent e) {
         throttleWindow.setCurrentThrottleFrame(this);
         if (willSwitch) {
-            switchMode();
+            setEditMode(this.throttleWindow.getEditMode());
             repaint();
         }
         throttleWindow.updateGUI();

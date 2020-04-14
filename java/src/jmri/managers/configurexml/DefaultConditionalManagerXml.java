@@ -1,7 +1,13 @@
 package jmri.managers.configurexml;
 
+import java.awt.GraphicsEnvironment;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+
+import javax.swing.JOptionPane;
+
 import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.ConditionalManager;
@@ -33,46 +39,36 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      * @return Element containing the complete info
      */
     @Override
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
-//    	long numCond = 0;
-//    	long numStateVars = 0;
+        // long numCond = 0;
+        // long numStateVars = 0;
         Element conditionals = new Element("conditionals");  // NOI18N
         setStoreElementClass(conditionals);
-        ConditionalManager tm = (ConditionalManager) o;
-        if (tm != null) {
-            java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
-
-            // don't return an element if there are not conditionals to include
-            if (!iter.hasNext()) {
+        ConditionalManager cm = (ConditionalManager) o;
+        if (cm != null) {
+            SortedSet<Conditional> condList = cm.getNamedBeanSet();
+            // don't return an element if there are no conditionals to include
+            if (condList.isEmpty()) {
                 return null;
             }
+            for (Conditional c : condList) {
+                // store the conditionals
+                // numCond++;
+                // long condTime = System.currentTimeMillis();
+                String cName = c.getSystemName();
+                log.debug("conditional system name is {}", cName);  // NOI18N
 
-            // store the conditionals
-            while (iter.hasNext()) {
-//            	numCond++;
-//            	long condTime = System.currentTimeMillis();
-                String sname = iter.next();
-                if (sname == null) {
-                    log.error("System name null during store");  // NOI18N
-                }
-                log.debug("conditional system name is " + sname);  // NOI18N
-                Conditional c = tm.getBySystemName(sname);
-                if (c == null) {
-                    log.error("Unable to save '{}' to the XML file", sname);  // NOI18N
-                    continue;
-                }
                 Element elem = new Element("conditional");  // NOI18N
 
-                // As a work-around for backward compatibility, store systemName and username as attribute.
-                // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
-                elem.setAttribute("systemName", sname);  // NOI18N
+                // As a work-around for backward compatibility, store systemName and userName as attributes.
+                // TODO Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                elem.setAttribute("systemName", cName);  // NOI18N
                 String uName = c.getUserName();
                 if (uName != null && !uName.isEmpty()) {
                     elem.setAttribute("userName", uName);  // NOI18N
                 }
 
-                elem.addContent(new Element("systemName").addContent(sname));
+                elem.addContent(new Element("systemName").addContent(cName));
 
                 // store common parts
                 storeCommon(c, elem);
@@ -89,14 +85,13 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 // creation time goes from less than 1ms to more than 5000ms.
                 // Don't need a clone for read-only use.
 //                List <ConditionalVariable> variableList = c.getCopyOfStateVariables();
-                List<ConditionalVariable> variableList = ((jmri.implementation.DefaultConditional) c).getStateVariableList();
+                List<ConditionalVariable> variableList = ((DefaultConditional) c).getStateVariableList();
                 /*                numStateVars += variableList.size();
                  if (numCond>1190) {
                  partTime = System.currentTimeMillis() - partTime;
                  System.out.println("time to for getCopyOfStateVariables "+partTime+"ms. total stateVariable= "+numStateVars);
                  }*/
-                for (int k = 0; k < variableList.size(); k++) {
-                    ConditionalVariable variable = variableList.get(k);
+                for (ConditionalVariable variable : variableList) {
                     Element vElem = new Element("conditionalStateVariable");  // NOI18N
                     int oper = variable.getOpern().getIntValue();
                     vElem.setAttribute("operator", Integer.toString(oper));  // NOI18N
@@ -123,8 +118,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                  partTime = System.currentTimeMillis() - partTime;
                  System.out.println("time to for getCopyOfActions "+partTime+"ms. numActions= "+actionList.size());
                  }*/
-                for (int k = 0; k < actionList.size(); k++) {
-                    ConditionalAction action = actionList.get(k);
+                for (ConditionalAction action : actionList) {
                     Element aElem = new Element("conditionalAction");  // NOI18N
                     aElem.setAttribute("option", Integer.toString(action.getOption()));  // NOI18N
                     aElem.setAttribute("type", Integer.toString(action.getType().getIntValue()));  // NOI18N
@@ -142,13 +136,13 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     elem.addContent(aElem);
                 }
                 conditionals.addContent(elem);
-                /*				condTime = System.currentTimeMillis() - condTime;
+                /* condTime = System.currentTimeMillis() - condTime;
                  if (condTime>1) {
-                 System.out.println(numCond+"th Conditional \""+sname+"\" took "+condTime+"ms to store.");
+                 System.out.println(numCond+"th Conditional \""+sName+"\" took "+condTime+"ms to store.");
                  }*/
             }
         }
-//        System.out.println("Elapsed time to store "+numCond+" Conditional "+(System.currentTimeMillis()-time)+"ms.");
+        // System.out.println("Elapsed time to store "+numCond+" Conditional "+(System.currentTimeMillis()-time)+"ms.");
         return (conditionals);
     }
 
@@ -187,24 +181,31 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
 
     /**
      * Utility method to load the individual Logix objects. If there's no
-     * additional info needed for a specific logix type, invoke this with the
+     * additional info needed for a specific Logix type, invoke this with the
      * parent of the set of Logix elements.
      *
      * @param conditionals Element containing the Logix elements to load.
      */
     public void loadConditionals(Element conditionals) {
         List<Element> conditionalList = conditionals.getChildren("conditional");  // NOI18N
-        if (log.isDebugEnabled()) {
-            log.debug("Found " + conditionalList.size() + " conditionals");  // NOI18N
-        }
-        ConditionalManager tm = InstanceManager.getDefault(jmri.ConditionalManager.class);
+        log.debug("Found {} conditionals", conditionalList.size());  // NOI18N
+        ConditionalManager cm = InstanceManager.getDefault(jmri.ConditionalManager.class);
 
-        for (int i = 0; i < conditionalList.size(); i++) {
-            Element condElem = conditionalList.get(i);
+        String systemNamePrefix = cm.getSystemNamePrefix();
+        int namesChanged = 0;
+
+        for (Element condElem : conditionalList) {
             String sysName = getSystemName(condElem);
             if (sysName == null) {
-                log.warn("unexpected null in systemName " + condElem);  // NOI18N
+                log.warn("unexpected null in systemName {}", condElem);  // NOI18N
                 break;
+            }
+
+            if (!sysName.startsWith(systemNamePrefix)) {
+                String old = sysName;
+                sysName = systemNamePrefix + ":" + sysName;
+                log.warn("Converting Conditional system name from {} to {}", old, sysName);
+                namesChanged++;
             }
 
             // omitted username is treated as empty, not null
@@ -213,15 +214,13 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 userName = "";
             }
 
-            if (log.isDebugEnabled()) {
-                log.debug("create conditional: ({})({})", sysName, userName);  // NOI18N
-            }
+            log.debug("create conditional: ({})({})", sysName, userName);  // NOI18N
 
             // Try getting the conditional.  This should fail
-            Conditional c = tm.getBySystemName(sysName);
+            Conditional c = cm.getBySystemName(sysName);
             if (c == null) {
                 // Check for parent Logix
-                Logix x = tm.getParentLogix(sysName);
+                Logix x = cm.getParentLogix(sysName);
                 if (x == null) {
                     log.warn("Conditional '{}' has no parent Logix", sysName);  // NOI18N
                     continue;
@@ -242,7 +241,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 }
 
                 // Create the condtional
-                c = tm.createNewConditional(sysName, userName);
+                c = cm.createNewConditional(sysName, userName);
             }
 
             if (c == null) {
@@ -275,16 +274,16 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             // we have to drop any existing ConditionalStateVariables and create a clean, new list.
 
             if (conditionalVarList.size() == 0) {
-                log.warn("No state variables found for conditional " + sysName);  // NOI18N
+                log.warn("No state variables found for conditional {}", sysName);  // NOI18N
             }
             ArrayList<ConditionalVariable> variableList = new ArrayList<>();
-            for (int n = 0; n < conditionalVarList.size(); n++) {
+            for (Element cvar : conditionalVarList) {
                 ConditionalVariable variable = new ConditionalVariable();
-                if (conditionalVarList.get(n).getAttribute("operator") == null) {  // NOI18N
-                    log.warn("unexpected null in operator " + conditionalVarList.get(n)  // NOI18N
-                            + " " + conditionalVarList.get(n).getAttributes());
+                if (cvar.getAttribute("operator") == null) {    // NOI18N
+                    log.warn("unexpected null in operator {} {}", cvar, // NOI18N
+                            cvar.getAttributes());
                 } else {
-                    int oper = Integer.parseInt(conditionalVarList.get(n)
+                    int oper = Integer.parseInt(cvar
                             .getAttribute("operator").getValue());  // NOI18N
                     // Adjust old, lt 4.13.4, xml content
                     if (oper == 2) oper = 4;
@@ -293,8 +292,8 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     Conditional.Operator operator = Conditional.Operator.getOperatorFromIntValue(oper);
                     variable.setOpern(operator);
                 }
-                if (conditionalVarList.get(n).getAttribute("negated") != null) {  // NOI18N
-                    if ("yes".equals(conditionalVarList.get(n)
+                if (cvar.getAttribute("negated") != null) {  // NOI18N
+                    if ("yes".equals(cvar
                             .getAttribute("negated").getValue())) {  // NOI18N
                         variable.setNegation(true);
                     } else {
@@ -302,24 +301,26 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     }
                 }
                 variable.setType(Conditional.Type.getOperatorFromIntValue(
-                        Integer.parseInt(conditionalVarList.get(n).getAttribute("type").getValue())));  // NOI18N
-                variable.setName(conditionalVarList.get(n)
-                        .getAttribute("systemName").getValue());  // NOI18N
-                if (conditionalVarList.get(n).getAttribute("dataString") != null) {  // NOI18N
-                    variable.setDataString(conditionalVarList.get(n)
+                        Integer.parseInt(cvar.getAttribute("type").getValue())));  // NOI18N
+
+                String tempName = cvar.getAttribute("systemName").getValue();  // NOI18N
+                variable.setName(tempName.equals("RTXINITIALIZER") ? systemNamePrefix + ":" + tempName : tempName);  // NOI18N
+
+                if (cvar.getAttribute("dataString") != null) {  // NOI18N
+                    variable.setDataString(cvar
                             .getAttribute("dataString").getValue());  // NOI18N
                 }
-                if (conditionalVarList.get(n).getAttribute("num1") != null) {  // NOI18N
-                    variable.setNum1(Integer.parseInt(conditionalVarList.get(n)
+                if (cvar.getAttribute("num1") != null) {  // NOI18N
+                    variable.setNum1(Integer.parseInt(cvar
                             .getAttribute("num1").getValue()));  // NOI18N
                 }
-                if (conditionalVarList.get(n).getAttribute("num2") != null) {  // NOI18N
-                    variable.setNum2(Integer.parseInt(conditionalVarList.get(n)
+                if (cvar.getAttribute("num2") != null) {  // NOI18N
+                    variable.setNum2(Integer.parseInt(cvar
                             .getAttribute("num2").getValue()));  // NOI18N
                 }
                 variable.setTriggerActions(true);
-                if (conditionalVarList.get(n).getAttribute("triggersCalc") != null) {  // NOI18N
-                    if ("no".equals(conditionalVarList.get(n)
+                if (cvar.getAttribute("triggersCalc") != null) {  // NOI18N
+                    if ("no".equals(cvar
                             .getAttribute("triggersCalc").getValue())) {  // NOI18N
                         variable.setTriggerActions(false);
                     }
@@ -335,53 +336,53 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             // expression of state variables.  These conditions are then used as a
             // state variable in other conditionals.  (pwc)
             //if (conditionalActionList.size() == 0) {
-            //    log.warn("No actions found for conditional "+sysName);
+            //    log.warn("No actions found for conditional {}", sysName);
             //}
             List<ConditionalAction> actionList = ((DefaultConditional)c).getActionList();
             org.jdom2.Attribute attr = null;
-            for (int n = 0; n < conditionalActionList.size(); n++) {
+            for (Element cact : conditionalActionList) {
                 ConditionalAction action = new DefaultConditionalAction();
-                attr = conditionalActionList.get(n).getAttribute("option");  // NOI18N
+                attr = cact.getAttribute("option");  // NOI18N
                 if (attr != null) {
                     action.setOption(Integer.parseInt(attr.getValue()));
                 } else {
-                    log.warn("unexpected null in option " + conditionalActionList.get(n)  // NOI18N
-                            + " " + conditionalActionList.get(n).getAttributes());
+                    log.warn("unexpected null in option {} {}", cact,  // NOI18N
+                            cact.getAttributes());
                 }
                 // actionDelay is removed.  delay data is stored as a String to allow
                 // such data be referenced by internal memory.
                 // For backward compatibility, set delay "int" as a string
-                attr = conditionalActionList.get(n).getAttribute("delay");  // NOI18N
+                attr = cact.getAttribute("delay");  // NOI18N
                 if (attr != null) {
                     action.setActionString(attr.getValue());
                 }
-                attr = conditionalActionList.get(n).getAttribute("type");  // NOI18N
+                attr = cact.getAttribute("type");  // NOI18N
                 if (attr != null) {
                     action.setType(Conditional.Action.getOperatorFromIntValue(Integer.parseInt(attr.getValue())));
                 } else {
-                    log.warn("unexpected null in type " + conditionalActionList.get(n)  // NOI18N
-                            + " " + conditionalActionList.get(n).getAttributes());
+                    log.warn("unexpected null in type {} {}", cact,
+                            cact.getAttributes()); // NOI18N
                 }
-                attr = conditionalActionList.get(n).getAttribute("systemName");  // NOI18N
+                attr = cact.getAttribute("systemName");  // NOI18N
                 if (attr != null) {
                     action.setDeviceName(attr.getValue());
                 } else {
-                    log.warn("unexpected null in systemName " + conditionalActionList.get(n)  // NOI18N
-                            + " " + conditionalActionList.get(n).getAttributes());
+                    log.warn("unexpected null in systemName {} {}", cact,  // NOI18N
+                            cact.getAttributes());
                 }
-                attr = conditionalActionList.get(n).getAttribute("data");  // NOI18N
+                attr = cact.getAttribute("data");  // NOI18N
                 if (attr != null) {
                     action.setActionData(Integer.parseInt(attr.getValue()));
                 } else {
-                    log.warn("unexpected null in action data " + conditionalActionList.get(n)  // NOI18N
-                            + " " + conditionalActionList.get(n).getAttributes());
+                    log.warn("unexpected null in action data {} {}", cact,  // NOI18N
+                            cact.getAttributes());
                 }
-                attr = conditionalActionList.get(n).getAttribute("string");  // NOI18N
+                attr = cact.getAttribute("string");  // NOI18N
                 if (attr != null) {
                     action.setActionString(attr.getValue());
                 } else {
-                    log.warn("unexpected null in action string " + conditionalActionList.get(n)  // NOI18N
-                            + " " + conditionalActionList.get(n).getAttributes());
+                    log.warn("unexpected null in action string {} {}", cact,  // NOI18N
+                            cact.getAttributes());
                 }
                 if (!actionList.contains(action)) actionList.add(action);
             }
@@ -410,6 +411,19 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 triggerOnChange = true;
             }
             c.setTriggerOnChange(triggerOnChange);
+        }
+
+        if (namesChanged > 0) {
+            // TODO: replace the System property check with an in-application mechanism
+            // for notifying users of multiple changes that can be silenced as part of
+            // normal operations
+            if (!GraphicsEnvironment.isHeadless() && !Boolean.getBoolean("jmri.test.no-dialogs")) {
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage(namesChanged > 1 ? "ConditionalManager.SystemNamesChanged.Message" : "ConditionalManager.SystemNameChanged.Message", namesChanged),
+                        Bundle.getMessage("Manager.SystemNamesChanged.Title", namesChanged, cm.getBeanTypeHandled(namesChanged > 1)),
+                        JOptionPane.WARNING_MESSAGE);
+            }
+            log.warn("System names for {} Conditionals changed; this may have operational impacts.", namesChanged);
         }
     }
 
@@ -442,4 +456,5 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultConditionalManagerXml.class);
+
 }

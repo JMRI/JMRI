@@ -35,7 +35,6 @@ public class TrafficRelay implements Lock {
         this.farSignal = signal;
         this.direction = direction;
         this.beans = beans;
-        System.out.println("bean count "+beans.length);
     }
 
     SignalHeadSection farSignal;

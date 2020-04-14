@@ -420,16 +420,22 @@
   <tocitem text="Scripting " target="html.tools.scripting.index">
    <tocitem text="Getting Started " target="html.tools.scripting.Start"/>
 
-   <tocitem text="Frequently Asked Questions " target="html.tools.scripting.FAQ"/>
+   <tocitem text="Python/Jython " target="html.tools.scripting.Python"/>
 
-   <tocitem text="Python " target="html.tools.scripting.Python"/>
+   <tocitem text="Example: Setting Turnouts " target="html.tools.scripting.ex_set_turnouts"/>
 
-   <tocitem text="AppleScript " target="html.tools.scripting.AppleScript"/>
+   <tocitem text="Examples (Links) " target="html.tools.scripting.Examples"/>
+
+   <tocitem text="Scripting How To... " target="html.tools.scripting.HowTo"/>
+
+   <tocitem text="Scripting What...Where " target="html.tools.scripting.WhatWhere"/>
 
    <tocitem text="Jynstruments " target="html.tools.scripting.Jynstruments"/>
 
+   <tocitem text="Open Scripting Arch (Apple) " target="html.tools.scripting.AppleScript"/>
+
   </tocitem>
-  <tocitem text="Sections ">
+  <tocitem text="Sections " target="html.tools.Sections">
    <tocitem text="Section Table " target="package.jmri.jmrit.beantable.SectionTable"/>
 
    <tocitem text="Add/Edit Sections " target="package.jmri.jmrit.beantable.SectionAddEdit"/>
@@ -491,12 +497,16 @@
   </tocitem>
   <tocitem text="Timetable " target="html.tools.TimeTable"/>
 
+  <tocitem text="Where Used " target="package.jmri.jmrit.whereused.WhereUsed"/>
+
   <tocitem text="Tracker (Blocks) " target="html.tools.tracker.index"/>
 
-  <tocitem text="Transits ">
+  <tocitem text="Transits " target="html.tools.Transits">
    <tocitem text="Transit Table " target="package.jmri.jmrit.beantable.TransitTable"/>
 
    <tocitem text="Add/Edit Transits " target="package.jmri.jmrit.beantable.TransitAddEdit"/>
+
+   <tocitem text="Transit Actions " target="package.jmri.jmrit.beantable.ViewSpecialActions"/>
 
   </tocitem>
   <tocitem text="Turnouts " target="html.tools.Turnouts">
@@ -519,6 +529,8 @@
    <tocitem text="The Warrant List " target="package.jmri.jmrit.logix.WarrantTable"/>
 
    <tocitem text="When Warrant Speeds Are Modified " target="package.jmri.jmrit.logix.SpeedChanges"/>
+
+   <tocitem text="Train Trackers " target="package.jmri.jmrit.logix.Tracker"/>
 
    <tocitem text="The Occupancy Block Tables " target="package.jmri.jmrit.logix.OBlockTable"/>
 

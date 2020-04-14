@@ -16,15 +16,15 @@
   <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
   <!-- or change them to reflect your alternative logo -->
   <!--#include virtual="/Style.shtml" -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
 
-      <h1>JMRI Code: XML Schema Examples</h1>
+    <h1>JMRI Code: XML Schema Examples</h1>
       <p>This page contains examples of various XML Schema fragments
       that you might find useful.<br>
       For discussion of JMRI's use of XML Schema, including info on

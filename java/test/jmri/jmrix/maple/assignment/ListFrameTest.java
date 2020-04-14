@@ -4,10 +4,7 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.*;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of ListFrame
@@ -31,7 +28,8 @@ public class ListFrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
-	_memo = null;
+	    _memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
     	super.tearDown();    
     }
 }

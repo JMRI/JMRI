@@ -6,8 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
-  <!-- Translated  by Blorec Hervé le 2011-10-28-->
+  <!-- Translated  by Blorec Herv&#233; le 2011-10-28-->
 
   <title>JMRI: Maple Input and Output Assignments</title>
   <!-- Style -->
@@ -23,10 +22,10 @@
 
 <body>
   charset=iso-8859-1"&gt; <!-- /Style -->
-   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+   <!--#include virtual="/Header.shtml" -->
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>JMRI: Entr&Atilde;&copy;e Maple et les Affectation des
       Sorties</h2>
 
@@ -88,7 +87,7 @@
       INACTIF.</p>
 
       <p>* Maple = &Atilde;&permil;cran Tactile ** HMI = Interface
-      Homme Machine</p><!--#include virtual="/Footer" -->
+      Homme Machine</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

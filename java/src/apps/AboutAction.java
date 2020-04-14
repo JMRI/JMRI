@@ -9,8 +9,10 @@ import jmri.util.swing.WindowInterface;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
+ * @deprecated since 4.17.5 use @link{jmri.swing.AboutAction} instead.
  */
+@Deprecated
 public class AboutAction extends JmriAbstractAction {
 
     public AboutAction(String s, WindowInterface wi) {

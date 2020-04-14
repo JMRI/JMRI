@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 import jmri.IdTag;
 import jmri.Reporter;
-import jmri.Reportable;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -111,6 +110,7 @@ public class DefaultIdTagTest {
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

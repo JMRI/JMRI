@@ -180,8 +180,6 @@ public class WarrantTest {
 
         warrant.getSpeedUtil().setDccAddress("999(L)");
         String msg = warrant.allocateRoute(false, orders);
-        SpeedUtil su = warrant.getSpeedUtil();
-        su.setOrders(orders);
 
         warrant.setTrainName("TestTrain");
         PropertyChangeListener listener = new WarrantListener(warrant);
@@ -248,7 +246,6 @@ public class WarrantTest {
 
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initDebugThrottleManager();
-        JUnitUtil.initShutDownManager();
         JUnitUtil.initRosterConfigManager();
 
         // setup the warrant preliminaries.
@@ -259,17 +256,17 @@ public class WarrantTest {
         bSouth = _OBlockMgr.createNewOBlock("OB4", "South");
 
         _portalMgr = InstanceManager.getDefault(PortalManager.class);
-        Portal pNorthWest = _portalMgr.createNewPortal(null, "NorthWest");
+        Portal pNorthWest = _portalMgr.createNewPortal("NorthWest");
         pNorthWest.setToBlock(bWest, false);
         pNorthWest.setFromBlock(bNorth, false);
-        Portal pSouthWest = _portalMgr.createNewPortal(null, "SouthWest");
+        Portal pSouthWest = _portalMgr.createNewPortal("SouthWest");
         pSouthWest.setToBlock(bWest, false);
         pSouthWest.setFromBlock(bSouth, false);
 
-        Portal pNorthEast = _portalMgr.createNewPortal(null, "NorthEast");
+        Portal pNorthEast = _portalMgr.createNewPortal("NorthEast");
         pNorthEast.setToBlock(_OBlockMgr.getOBlock("OB2"), false);
         pNorthEast.setFromBlock(_OBlockMgr.getOBlock("North"), false);
-        Portal pSouthEast = _portalMgr.createNewPortal(null, "SouthEast");
+        Portal pSouthEast = _portalMgr.createNewPortal("SouthEast");
         OBlock east = _OBlockMgr.getOBlock("OB2");
         pSouthEast.setToBlock(east, false);
         pSouthEast.setFromBlock(_OBlockMgr.getOBlock("South"), false);
@@ -320,6 +317,7 @@ public class WarrantTest {
         bNorth.setSensor("NorthSensor");
         bSouth.setSensor("IS4");
         warrant = new Warrant("IW0", "AllTestWarrant");
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
     }
 
     @After
@@ -338,6 +336,7 @@ public class WarrantTest {
         sNorth = null;
         sSouth = null;
         warrant = null;
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

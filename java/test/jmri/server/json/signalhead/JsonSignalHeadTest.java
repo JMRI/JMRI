@@ -3,7 +3,6 @@ package jmri.server.json.signalhead;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import jmri.server.json.signalhead.JsonSignalHead;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

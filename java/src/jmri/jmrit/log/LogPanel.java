@@ -15,7 +15,7 @@ public class LogPanel extends JPanel {
 
     // member declarations
     javax.swing.JLabel label = new javax.swing.JLabel(Bundle.getMessage("LogMessageLabel"));
-    javax.swing.JButton sendButton = new javax.swing.JButton(Bundle.getMessage("AddButtonText"));
+    javax.swing.JButton sendButton = new javax.swing.JButton(Bundle.getMessage("ButtonAddText"));
     javax.swing.JTextField textField = new javax.swing.JTextField(40);
 
     public LogPanel() {

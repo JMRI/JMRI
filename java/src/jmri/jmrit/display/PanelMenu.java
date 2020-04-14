@@ -10,7 +10,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import jmri.InstanceInitializer;
-import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import org.openide.util.lookup.ServiceProvider;
@@ -236,7 +235,7 @@ public class PanelMenu extends JMenu {
 
         @Override
         @Nonnull
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type.equals(PanelMenu.class)) {
                 return new PanelMenu();
             }

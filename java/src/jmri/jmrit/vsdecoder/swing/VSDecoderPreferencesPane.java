@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.VSDecoderPreferences;
 import jmri.util.FileUtil;
@@ -269,8 +270,6 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
             path = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
         }
         final JFileChooser fc = new JFileChooser(path);
-        jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter(Bundle.getMessage("LoadVSDDirectoryChooserFilterLabel"));
-        fc.setFileFilter(filt);
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int rv = fc.showOpenDialog(this);
         if (rv == JFileChooser.APPROVE_OPTION) {
@@ -291,10 +290,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
             path = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
         }
         final JFileChooser fc = new JFileChooser(path);
-        jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter(Bundle.getMessage("LoadVSDFileChooserFilterLabel"));
-        filt.addExtension("vsd");
-        filt.addExtension("zip");
-        fc.setFileFilter(filt);
+        fc.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("LoadVSDFileChooserFilterLabel"), "vsd", "zip")); // NOI18N
         fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int rv = fc.showOpenDialog(this);
         if (rv == JFileChooser.APPROVE_OPTION) {

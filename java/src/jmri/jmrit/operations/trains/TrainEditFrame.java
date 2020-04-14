@@ -1,30 +1,11 @@
 package jmri.jmrit.operations.trains;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,14 +28,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.tools.PrintSavedTrainManifestAction;
-import jmri.jmrit.operations.trains.tools.PrintTrainAction;
-import jmri.jmrit.operations.trains.tools.PrintTrainBuildReportAction;
-import jmri.jmrit.operations.trains.tools.PrintTrainManifestAction;
-import jmri.jmrit.operations.trains.tools.TrainByCarTypeAction;
-import jmri.jmrit.operations.trains.tools.TrainCopyAction;
-import jmri.jmrit.operations.trains.tools.TrainManifestOptionAction;
-import jmri.jmrit.operations.trains.tools.TrainScriptAction;
+import jmri.jmrit.operations.trains.tools.*;
 
 /**
  * Frame for user edit of a train
@@ -566,7 +540,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
      */
     private boolean checkName(String s) {
         String trainName = trainNameTextField.getText().trim();
-        if (trainName.equals("")) {
+        if (trainName.isEmpty()) {
             log.debug("Must enter a train name");
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
                     .getMessage("CanNot"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
@@ -910,8 +884,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         if (route != null) {
             List<RouteLocation> routeList = route.getLocationsBySequenceList();
-            for (int i = 0; i < routeList.size(); i++) {
-                RouteLocation rl = routeList.get(i);
+            for (RouteLocation rl : routeList) {
                 JCheckBox checkBox = new javax.swing.JCheckBox();
                 locationCheckBoxes.add(checkBox);
                 checkBox.setText(rl.toString());
@@ -928,7 +901,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                     if ((rl.getTrainDirection() & loc.getTrainDirections()) != 0) {
                         services = true;
                     } // train must service last location or single location
-                    else if (i == routeList.size() - 1) {
+                    else if (_train.isLocalSwitcher() || rl == _train.getTrainTerminatesRouteLocation()) {
                         services = true;
                     }
                     // check can drop and pick up, and moves > 0
@@ -1011,7 +984,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             // road options
             if (_train.getRoadOption().equals(Train.ALL_ROADS)) {
                 roadOptionButton.setText(Bundle.getMessage("AcceptAll"));
-            } else if (_train.getRoadOption().equals(Train.INCLUDE_LOADS)) {
+            } else if (_train.getRoadOption().equals(Train.INCLUDE_ROADS)) {
                 roadOptionButton.setText(Bundle.getMessage("AcceptOnly") + " " + _train.getRoadNames().length + " "
                         + Bundle.getMessage("Roads"));
             } else {
@@ -1019,7 +992,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                         + Bundle.getMessage("Roads"));
             }
             // load options
-            if (_train.getLoadOption().equals(Train.ALL_ROADS)) {
+            if (_train.getLoadOption().equals(Train.ALL_LOADS)) {
                 loadOptionButton.setText(Bundle.getMessage("AcceptAll"));
             } else if (_train.getLoadOption().equals(Train.INCLUDE_LOADS)) {
                 loadOptionButton.setText(Bundle.getMessage("AcceptOnly") + " " + _train.getLoadNames().length + " "

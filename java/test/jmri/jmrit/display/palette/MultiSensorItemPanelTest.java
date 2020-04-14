@@ -23,9 +23,9 @@ public class MultiSensorItemPanelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel<jmri.Sensor> tableModel = PickListModel.sensorPickModelInstance();
         DisplayFrame df = new DisplayFrame("MultiSensor Item Panel Test");
-        Editor editor = new EditorScaffold();
-        MultiSensorItemPanel t = new MultiSensorItemPanel(df,"IS01","",tableModel,editor);
+        MultiSensorItemPanel t = new MultiSensorItemPanel(df,"IS01","",tableModel);
         Assert.assertNotNull("exists",t);
+        JUnitUtil.dispose(df);
     }
 
     // The minimal setup for log4J

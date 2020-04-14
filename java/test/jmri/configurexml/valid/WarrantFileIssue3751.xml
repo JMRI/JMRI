@@ -2391,7 +2391,7 @@
       <userName>St Blazey Dn Dept</userName>
       <sensor systemName="LS1" />
       <path pathName="Dept" blockName="OB1" toPortal="Dept" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP1" portalName="Dept">
+      <portal portalName="Dept">
         <fromBlock blockName="OB1">
           <path pathName="Dept" blockName="OB1" />
         </fromBlock>
@@ -2403,7 +2403,7 @@
     <oblock systemName="OB10" length="381.0" units="false" curve="0" permissive="false" speedNotch="">
       <sensor systemName="LS2" />
       <path pathName="S27" blockName="OB10" fromPortal="S27-OB10" toPortal="S27 entry" fromDirection="0" toDirection="0" length="381.0" />
-      <portal systemName="IP2" portalName="S27 entry">
+      <portal portalName="S27 entry">
         <fromBlock blockName="OB10">
           <path pathName="S27" blockName="OB10" />
         </fromBlock>
@@ -2411,7 +2411,7 @@
           <path pathName="MIDTHRU" blockName="OBMID" />
         </toBlock>
       </portal>
-      <portal systemName="IP3" portalName="S27-OB10">
+      <portal portalName="S27-OB10">
         <fromBlock blockName="OBS27">
           <path pathName="S27 thru" blockName="OBS27" />
         </fromBlock>
@@ -2424,7 +2424,7 @@
     <oblock systemName="OBMID" length="5080.0" units="false" curve="0" permissive="false" speedNotch="">
       <sensor systemName="LS2" />
       <path pathName="MIDTHRU" blockName="OBMID" fromPortal="S27 entry" toPortal="Jct East" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP2" portalName="S27 entry">
+      <portal portalName="S27 entry">
         <fromBlock blockName="OB10">
           <path pathName="S27" blockName="OB10" />
         </fromBlock>
@@ -2432,7 +2432,7 @@
           <path pathName="MIDTHRU" blockName="OBMID" />
         </toBlock>
       </portal>
-      <portal systemName="IP4" portalName="Jct East">
+      <portal portalName="Jct East">
         <fromBlock blockName="OBSTB DN JCT">
           <path pathName="Dn" blockName="OBSTB DN JCT" />
         </fromBlock>
@@ -2444,7 +2444,7 @@
     <oblock systemName="OBMIDDLEWAY" length="7620.0" units="false" curve="0" permissive="false" speedNotch="">
       <sensor systemName="LS13" />
       <path pathName="Middleway" blockName="OBMIDDLEWAY" fromPortal="MiddlewayEast" toPortal="MiddlewayWest" fromDirection="0" toDirection="0" length="7620.0" />
-      <portal systemName="IP5" portalName="MiddlewayWest">
+      <portal portalName="MiddlewayWest">
         <fromBlock blockName="OBMIDDLEWAY">
           <path pathName="Middleway" blockName="OBMIDDLEWAY" />
         </fromBlock>
@@ -2452,7 +2452,7 @@
           <path pathName="S27 thru" blockName="OBS27" />
         </toBlock>
       </portal>
-      <portal systemName="IP6" portalName="MiddlewayEast">
+      <portal portalName="MiddlewayEast">
         <fromBlock blockName="OBMIDDLEWAY">
           <path pathName="Middleway" blockName="OBMIDDLEWAY" />
         </fromBlock>
@@ -2465,7 +2465,7 @@
     <oblock systemName="OBPMSDG" length="508.0" units="false" curve="0" permissive="false" speedNotch="">
       <sensor systemName="Pontsmill Arrival Siding PM2" />
       <path pathName="pm2" blockName="OBPMSDG" toPortal="PM Sdg" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP7" portalName="PM Sdg">
+      <portal portalName="PM Sdg">
         <fromBlock blockName="OBPMTHROAT">
           <path pathName="PM2" blockName="OBPMTHROAT" />
         </fromBlock>
@@ -2479,7 +2479,7 @@
       <path pathName="PM2" blockName="OBPMTHROAT" fromPortal="PM Sdg" toPortal="PM" fromDirection="0" toDirection="0" length="304.8">
         <setting turnout="IT999" set="2" />
       </path>
-      <portal systemName="IP7" portalName="PM Sdg">
+      <portal portalName="PM Sdg">
         <fromBlock blockName="OBPMTHROAT">
           <path pathName="PM2" blockName="OBPMTHROAT" />
         </fromBlock>
@@ -2487,7 +2487,7 @@
           <path pathName="pm2" blockName="OBPMSDG" />
         </toBlock>
       </portal>
-      <portal systemName="IP8" portalName="PM">
+      <portal portalName="PM">
         <fromBlock blockName="OBTOL645">
           <path pathName="PM" blockName="OBTOL645" />
         </fromBlock>
@@ -2499,7 +2499,7 @@
     <oblock systemName="OBS27" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
       <sensor systemName="ISLS1" />
       <path pathName="S27 thru" blockName="OBS27" fromPortal="MiddlewayWest" toPortal="S27-OB10" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP3" portalName="S27-OB10">
+      <portal portalName="S27-OB10">
         <fromBlock blockName="OBS27">
           <path pathName="S27 thru" blockName="OBS27" />
         </fromBlock>
@@ -2507,7 +2507,7 @@
           <path pathName="S27" blockName="OB10" />
         </toBlock>
       </portal>
-      <portal systemName="IP5" portalName="MiddlewayWest">
+      <portal portalName="MiddlewayWest">
         <fromBlock blockName="OBMIDDLEWAY">
           <path pathName="Middleway" blockName="OBMIDDLEWAY" />
         </fromBlock>
@@ -2519,7 +2519,7 @@
     <oblock systemName="OBST BLAZEY STN DN" length="1270.0" units="false" curve="0" permissive="false" speedNotch="">
       <sensor systemName="LS3" />
       <path pathName="ST Blazey St Dn" blockName="OBST BLAZEY STN DN" fromPortal="Jct" toPortal="Yard" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP9" portalName="Jct">
+      <portal portalName="Jct">
         <fromBlock blockName="OBST BLAZEY STN DN">
           <path pathName="ST Blazey St Dn" blockName="OBST BLAZEY STN DN" />
         </fromBlock>
@@ -2527,7 +2527,7 @@
           <path pathName="Dn" blockName="OBSTB DN JCT" />
         </toBlock>
       </portal>
-      <portal systemName="IP10" portalName="Yard">
+      <portal portalName="Yard">
         <fromBlock blockName="OBST BLAZEY STN DN">
           <path pathName="ST Blazey St Dn" blockName="OBST BLAZEY STN DN" />
         </fromBlock>
@@ -2541,7 +2541,7 @@
       <path pathName="Dn" blockName="OBSTB DN JCT" fromPortal="Jct East" toPortal="Jct" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT57" set="4" />
       </path>
-      <portal systemName="IP4" portalName="Jct East">
+      <portal portalName="Jct East">
         <fromBlock blockName="OBSTB DN JCT">
           <path pathName="Dn" blockName="OBSTB DN JCT" />
         </fromBlock>
@@ -2549,7 +2549,7 @@
           <path pathName="MIDTHRU" blockName="OBMID" />
         </toBlock>
       </portal>
-      <portal systemName="IP9" portalName="Jct">
+      <portal portalName="Jct">
         <fromBlock blockName="OBST BLAZEY STN DN">
           <path pathName="ST Blazey St Dn" blockName="OBST BLAZEY STN DN" />
         </fromBlock>
@@ -2565,7 +2565,7 @@
         <setting turnout="IT27" set="4" />
         <setting turnout="IT29" set="2" />
       </path>
-      <portal systemName="IP1" portalName="Dept">
+      <portal portalName="Dept">
         <fromBlock blockName="OB1">
           <path pathName="Dept" blockName="OB1" />
         </fromBlock>
@@ -2573,7 +2573,7 @@
           <path pathName="Down Yard Departure" blockName="OBTEST OBLOCK" />
         </toBlock>
       </portal>
-      <portal systemName="IP10" portalName="Yard">
+      <portal portalName="Yard">
         <fromBlock blockName="OBST BLAZEY STN DN">
           <path pathName="ST Blazey St Dn" blockName="OBST BLAZEY STN DN" />
         </fromBlock>
@@ -2587,7 +2587,7 @@
       <path pathName="PM" blockName="OBTOL645" fromPortal="MiddlewayEast" toPortal="PM" fromDirection="0" toDirection="0" length="381.0">
         <setting turnout="IT49" set="4" />
       </path>
-      <portal systemName="IP6" portalName="MiddlewayEast">
+      <portal portalName="MiddlewayEast">
         <fromBlock blockName="OBMIDDLEWAY">
           <path pathName="Middleway" blockName="OBMIDDLEWAY" />
         </fromBlock>
@@ -2595,7 +2595,7 @@
           <path pathName="PM" blockName="OBTOL645" />
         </toBlock>
       </portal>
-      <portal systemName="IP8" portalName="PM">
+      <portal portalName="PM">
         <fromBlock blockName="OBTOL645">
           <path pathName="PM" blockName="OBTOL645" />
         </fromBlock>

@@ -87,34 +87,6 @@ public class ConnectionStatus {
     }
 
     /**
-     * Get the status of a communication port, based on the port name only.
-     *
-     * @param portName the port name
-     * @return status
-     * @deprecated since 4.7.1 use
-     * {@link #getConnectionState(java.lang.String, java.lang.String)} instead.
-     */
-    @Deprecated
-    public synchronized String getConnectionState(@Nonnull String portName) {
-        log.debug("Deprecated getConnectionState portName: {} ", portName);
-        ConnectionKey newKey = new ConnectionKey(null, portName);
-        if (portStatus.containsKey(newKey)) {
-            return getConnectionState(null, portName);
-        } else {
-            // see if there is a key that has portName as the port value
-            for (Map.Entry<ConnectionKey, String> entry : portStatus.entrySet()) {
-                if ((entry.getKey().getPortName() != null) && (entry.getKey().getPortName().equals(portName))) {
-                    // if we find a match, return it
-                    return entry.getValue();
-                }
-            }
-        }
-        // If we still don't find a match, then we don't know the status
-        log.warn("Didn't find system status for port {}", portName);
-        return CONNECTION_UNKNOWN;
-    }
-
-    /**
      * Get the status of a communication port with a given name.
      *
      * @param systemName human-readable name for system like "LocoNet 2"
@@ -123,7 +95,7 @@ public class ConnectionStatus {
      * @return the status
      */
     public synchronized String getConnectionState(String systemName, @Nonnull String portName) {
-        log.debug("144 getConnectionState systemName: {} portName: {}", systemName, portName);
+        log.debug("getConnectionState systemName: {} portName: {}", systemName, portName);
         String stateText = CONNECTION_UNKNOWN;
         ConnectionKey newKey = new ConnectionKey(systemName, portName);
         if (portStatus.containsKey(newKey)) {
@@ -154,19 +126,6 @@ public class ConnectionStatus {
         // If we still don't find a match, then we don't know the status
         log.warn("Didn't find system status for system {}", systemName);
         return CONNECTION_UNKNOWN;
-    }
-
-    /**
-     * Confirm status of a communication port is not down, based on the port name.
-     *
-     * @param portName the port name
-     * @return true if port connection is operational or unknown, false if not
-     * @deprecated since 4.7.1; use
-     * {@link #isConnectionOk(java.lang.String, java.lang.String)} instead.
-     */
-    @Deprecated
-    public synchronized boolean isConnectionOk(@Nonnull String portName) {
-        return isConnectionOk(null, portName);
     }
 
     /**
@@ -243,7 +202,7 @@ public class ConnectionStatus {
          */
         public ConnectionKey(String system, @Nonnull String port) {
             if (system == null && port == null) {
-                throw new IllegalArgumentException("At least one of system name or port name must be provided");
+                throw new IllegalArgumentException("At least the port name must be provided");
             }
             systemName = system;
             portName = port;

@@ -4,10 +4,13 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,21 +50,15 @@ public class CsvExportAction extends AbstractAction {
                 log.debug("start to export to CSV file " + file);
             }
 
-            try {
-
-                PrintStream str = new PrintStream(new FileOutputStream(file));
-
-                str.println("CV, value");
+            try (CSVPrinter str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
+                str.printRecord("CV, value");
                 for (int i = 0; i < mModel.getRowCount(); i++) {
                     CvValue cv = mModel.getCvByRow(i);
                     String num = cv.number();
                     int value = cv.getValue();
-                    str.println(num + "," + value);
+                    str.printRecord(num, value);
                 }
-
                 str.flush();
-                str.close();
-
             } catch (IOException ex) {
                 log.error("Error writing file: " + ex);
             }

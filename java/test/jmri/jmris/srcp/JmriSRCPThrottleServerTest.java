@@ -1,9 +1,15 @@
 package jmri.jmris.srcp;
 
-import org.junit.*;
-
 import jmri.util.JUnitUtil;
 import jmri.DccLocoAddress;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.io.OutputStream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPThrottleServer class
@@ -17,12 +23,11 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
     @Test
     @Override
     public void requestThrottleTest(){
-       try {
+       Throwable thrown = catchThrowable( () -> {
           ((JmriSRCPThrottleServer)ats).initThrottle(1,42,false,128,28);
           confirmThrottleRequestSucceeded();
-       } catch (java.io.IOException ioe) {
-          Assert.fail("failed requesting throttle");
-       }
+       });
+       assertThat(thrown).withFailMessage("failed requesting throttle").isNull();
     }
 
     /**
@@ -31,17 +36,16 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
      */
     @Override
     public void confirmThrottleRequestSucceeded(){
-        Assert.assertTrue("Throttle notification sent", sb.toString().endsWith("101 INFO 1 GL 42 N 1 28\n\r"));
+        assertThat(sb.toString()).endsWith("101 INFO 1 GL 42 N 1 28\n\r").withFailMessage("Throttle notification sent");
     }
 
     @Test
     public void requestThrottleBadBusTest(){
-       try {
+        Throwable thrown = catchThrowable( () -> {
           ((JmriSRCPThrottleServer)ats).initThrottle(44,42,false,128,28);
-       } catch (java.io.IOException ioe) {
-          Assert.fail("failed requesting throttle");
-       }
-       Assert.assertTrue("wrong value",sb.toString().endsWith("412 ERROR wrong value\n\r"));
+        });
+        assertThat(thrown).withFailMessage("failed requesting throttle").isNull();
+        assertThat(sb.toString()).endsWith("412 ERROR wrong value\n\r").withFailMessage("wrong value");
     }
 
     /**
@@ -49,31 +53,29 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
      */
     @Override
     public void confirmThrottleErrorStatusSent(){
-       Assert.assertTrue("called in error",sb.toString().endsWith("499 ERROR unspecified error\n\r"));
+        assertThat(sb.toString()).endsWith("499 ERROR unspecified error\n\r").withFailMessage("called in error");
     }
 
     @Test
     public void sendStatusStandardTest(){
-       try {
+       Throwable thrown = catchThrowable( () -> {
           ((JmriSRCPThrottleServer)ats).initThrottle(1,42,false,128,28);
           ats.sendStatus(new DccLocoAddress(42,false));
-       } catch (java.io.IOException ioe) {
-          Assert.fail("failed sending status");
-       }
+       });
+       assertThat(thrown).withFailMessage("failed sending status").isNull();
        confirmThrottleErrorStatusSent();
     }
   
     @Override
     @Test
     public void sendStatusTest(){
-       try {
+        Throwable thrown = catchThrowable( () -> {
           ((JmriSRCPThrottleServer)ats).initThrottle(1,42,false,128,28);
           confirmThrottleRequestSucceeded();
           ((JmriSRCPThrottleServer)ats).sendStatus(1,42);
           confirmThrottleStatusSent();
-       } catch (java.io.IOException ioe) {
-          Assert.fail("failed sending status");
-       }
+       });
+       assertThat(thrown).withFailMessage("failed sending status").isNull();
     }
 
     /**
@@ -81,11 +83,11 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
      */
     @Override
     public void confirmThrottleStatusSent(){
-       Assert.assertTrue("throttle status",sb.toString().endsWith("100 INFO 1 GL 42 1 0 126 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n\r"));
+        assertThat(sb.toString()).endsWith("100 INFO 1 GL 42 1 0 126 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n\r").withFailMessage("throttle status");
     }
 
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -98,18 +100,17 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
+        OutputStream output = new OutputStream() {
                     @Override
                     public void write(int b) throws java.io.IOException {
                         sb.append((char)b);
                     }
-                });
+                };
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         ats = new JmriSRCPThrottleServer(input,output);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
 	sb = null;
 	ats = null;

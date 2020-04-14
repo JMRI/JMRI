@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; 2017-01-07-->
+<!-- Updated by Blorec Herv&#233; 2017-01-07-->
 <html lang="fr">
 <head>
   <title>Throttle: Open/Configure a Throttle Window </title>
@@ -8,14 +7,8 @@
   <meta name="Description" content="Throttle documentation for JMRI project">
   <meta name="Keywords" content="JMRI">
   <meta name="Author" content="Paul Fraker (paul@frakers.com)">
-  <meta name="Language" content="fr">
   <meta name="Robots" content="Index, Follow">
   <meta name="Revisit-After" content="7 Days">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the ceur ommon header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
   <!-- Style -->
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -26,13 +19,13 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-<div id="mainContent">
-<h1><span style="color:#ff0000">Mise &#224; jour Version de la documentation du R&#233;gulateur
-</span></h1>
+<h1>Mise &#224; jour Version de la documentation du R&#233;gulateur</h1>
 
 <p>S'il vous pla&#238;t noter que cette documentation a &#233;t&#233; mise &#224; jour. Version Actuelle:</p>
 <ul>
@@ -87,10 +80,10 @@ lisez ceci, il suffit de remplacer "8251" par votre adresse d&#233;codeur Loco p
 <a name="StructWin"></a> 
 
 <h2>Structure d'une fen&#234;tre R&#233;gulateurs </h2>
-<dir>
-   <p> Il y a <i>trois panneaux</i> (ou sous-fen&#234;tres) associ&#233;s &#224; chaque
-   Fen&#234;tre de r&#233;gulateur. Ils sont identifi&#233;s comme suit: </p>
-</dir>
+
+<p> Il y a <i>trois panneaux</i> (ou sous-fen&#234;tres) associ&#233;s &#224; chaque
+Fen&#234;tre de r&#233;gulateur. Ils sont identifi&#233;s comme suit: </p>
+
 <ul>
   <li>Le <b>Panneau de commande</b> contient un curseur d'acc&#233;l&#233;ration pour commander la vitesse des
       locomotives, d'un s&#233;lecteur de marche avant et arri&#232;re, un bouton d'action d'arr&#234;t d'urgence,
@@ -118,10 +111,8 @@ sur l'un des boutons, le panneau dispara&#238;t. </p>
 height="464" src="images/jmri011.jpg"
 title="JMRI Throttle New Default Window"><br>
 Figure 2-2: Nouvelle Fen&#234;tre R&#233;gulateur </p>
-<br>
-<br>
-<a name="WinConfig"></a> 
 
+<a name="WinConfig"></a>
 <h1>Configurer le Nouveau R&#233;gulateur </h1>
 
 <p> Maintenant que nous avons r&#233;ussi &#224; ouvrir la fen&#234;tre du R&#233;gulateur, la prochaine chose
@@ -133,7 +124,6 @@ autres options sur les panneaux seront activ&#233;es. </p>
 <a name="AddressPanel"> </a>
 
 <h2> Affecter une adresse D&#233;codeur &#224; un R&#233;gulateur </h2>
-<dir>
 
    <table border="0" width="100%" cellpadding="0" cellspacing="0">
      <tbody>
@@ -144,18 +134,16 @@ autres options sur les panneaux seront activ&#233;es. </p>
            	<ol>
              	<li> Saisissez manuellement l'adresse du d&#233;codeur dans la grande zone de texte,
                	puis cliquez sur le bouton <big>"Valider"</big>(Set). <br>
-                	<dir>
-                 	<p class="important"> <b>Important!</b> lors de la saisie manuelle
-                	d'une adresse, n'oubliez pas de cliquer sur le bouton <big>Valider</big> .
-                 	Sans cette &#233;tape, toutes les actions du r&#233;gulateur restent d&#233;sactiv&#233;es.</p>
-              		</dir>
-               
+                <p class="important"> <b>Important!</b> lors de la saisie manuelle
+                d'une adresse, n'oubliez pas de cliquer sur le bouton <big>Valider</big> .
+                Sans cette &#233;tape, toutes les actions du r&#233;gulateur restent d&#233;sactiv&#233;es.</p>
              	</li>
              	<li> Ou, utilisez la liste d&#233;roulante pour choisir parmi la liste de l'inventaire (comme
               	indiqu&#233; dans la figure &#224; droite).<br>
                 S'il vous pla&#238;t noter que lorsque vous s&#233;lectionnez une locomotive de cette liste, il suffit
              	de lire l'adresse des d&#233;codeurs &#224; partir de le fichier inventaire. Il ne fait pas actuellement 
-		<u> pas </ u> de r&#233;f&#233;rence crois&#233;e avec n'importe quel fichier de configuration de r&#233;gulateurs sauvagard&#233;s.</li>
+		        <u>pas</u> de r&#233;f&#233;rence crois&#233;e avec n'importe quel fichier de configuration de
+                r&#233;gulateurs sauvagard&#233;s.</li>
            	</ol>
          </td>
          <td> <img width="20" height="40" src="images/spacer.gif"> </td>
@@ -165,20 +153,17 @@ autres options sur les panneaux seront activ&#233;es. </p>
            Figure 2-3: S&#233;lection d'adresse </p>
          </td>
        </tr>
-       <tr colspan="3">
-         <td> <img width="40" height="40" src="images/spacer.gif"> </td>
-         <td> </td>
-         <td> </td>
+       <tr>
+         <td colspan="3"><img width="40" height="10" src="images/spacer.gif"></td>
        </tr>
        <tr>
-        <td valign="top"><dir>
+        <td valign="top">
     	<p> Apr&#232;s qu'une adresse ait &#233;t&#233; s&#233;lectionn&#233;e, toutes les autres commandes et options de
         la fen&#234;tre du r&#233;gulateur deviennent actives. Deux autres boutons d'option sont aussi devenu actifs dans le 
-	"<b>Panneau Adresse</b>". Ils sont
-        d&#233;crit comme  ...</p>
-           </dir>
+	    "<b>Panneau Adresse</b>". Ils sont d&#233;crit comme  ...</p>
+
            <ul>
-             <li> <strong>Dispatcher</strong> Renvoie l'adresse du d&#233;codeur
+             <li><strong>Dispatcher</strong> Renvoie l'adresse du d&#233;codeur
                &#224; la centrale dans un mode "Dispatcher". Habituellement, une seul
                adresse peut &#234;tre en &#233;tat dispatch &#224; la centrale. Toutes les
                autres sont soit "utilis&#233;es" ou "inactives". Les commandes et les
@@ -189,7 +174,7 @@ autres options sur les panneaux seront activ&#233;es. </p>
                la centrale comme "n'&#233;tant plus n&#233;cessaire". Les commandes et les
                options dans la fen&#234;tre  r&#233;gulateur seront d&#233;sactiv&#233;es jusqu'&#224; ce qu'une autre
               adresse soit <big>"Valid&#233;e"</big>.
-	   </li>
+	        </li>
           </ul>
         </td>
         <td> </td>
@@ -197,7 +182,6 @@ autres options sur les panneaux seront activ&#233;es. </p>
         </tr>
     </tbody>
   </table>
-</dir>
 
 <table>
   <tbody>
@@ -216,23 +200,22 @@ autres options sur les panneaux seront activ&#233;es. </p>
 
 <a name="ControlPanel"></a> 
 <h2>Panneau de configuration - Faisons Circuler un train </h2>
-<dir>
 
   <table border="0" width="100%" cellpadding="0" cellspacing="0">
     <tbody>
       <tr>
-        <td align="left"> <valign="top"<p> Maintenant que vous avez &#233;tabli une
+        <td align="left" valign="top"><p> Maintenant que vous avez &#233;tabli une
           Adresse pour le R&#233;gulateur, vous devriez &#234;tre en mesure de faire rouler un train sur votre
           r&#233;seau (si votre r&#233;seau est actif et que l'adresse que vous avez entr&#233;e est valide
           pour la locomotive sur la voie). Pour cela, utilisez le "<b>Panneau de Commandes</b>" 
-	  (voir figure 2-5). Mais voici o&#249; les choses deviennent un peu plus d&#233;licates. </p>
+	      (voir figure 2-5). Mais voici o&#249; les choses deviennent un peu plus d&#233;licates.</p>
 
-          <p> Il y a de multiples combinaisons de syst&#232;mes DCC et de plates-formes
+          <p>Il y a de multiples combinaisons de syst&#232;mes DCC et de plates-formes
           informatiques qui donnent de l&#233;g&#232;res diff&#233;rences dans les fonctionnalit&#233;s des
           r&#233;gulateurs. Les programmeurs travaillent dur pour essayer d'obtenir
           que ces r&#233;gulateurs fonctionnent &#224; l'identique. Mais en raison de ces
           diff&#233;rences, vous pouvez d&#233;couvrir que tout ce qui est not&#233; dans le
-          le texte suivant ne fonctionnera pas tel que d&#233;fini pour votre syst&#232;me. </p>
+          le texte suivant ne fonctionnera pas tel que d&#233;fini pour votre syst&#232;me.</p>
 
           <p class="important"> <b>Important!</b> Le "Panneau de Commandes" doit
           avoir le "focus" pour qu'il devienne actif (et utilisable). En d'autres
@@ -242,8 +225,8 @@ autres options sur les panneaux seront activ&#233;es. </p>
           fen&#234;tre avec le focus actuel. Aucune des actions clavier ou souris
           d&#233;crites ci-dessous ne d&#233;placera le train jusqu'&#224; la mise au point du Panneau de Commandes. 
 	  Pour faire du Panneau de Commandes la fen&#234;tre active, utilisez le pointeur de votre souris
-          pour cliquer quelque part dans le Panneau de Commandee. </P>
-        </Td>
+          pour cliquer quelque part dans le Panneau de Commandee. </p>
+        </td>
         <td> <img width="20" height="40" src="images/spacer.gif"></td>
         <td valign="top" align="center"><p
           style = "text-align: center; font-size: xx-small"><img width = "99"
@@ -265,19 +248,16 @@ autres options sur les panneaux seront activ&#233;es. </p>
            <ul>
              <li> <b>Si vous cliquez n'importe o&#249; &#224; proximit&#233; du curseur, votre loco peut avoir
                des r&#233;actions improvis&#233;e (voir plus bas).</b><br>
-               <br>
              </li>
              <li> <b>Si vous cliquez n'importe o&#249; sur les mots "Avant" ou "Arri&#232;re",
                vous activez cette action ce qui n'est pas trop mauvais sauf si
                La locomotive est en marche dans la direction oppos&#233;e.</b> <br>
-               <br>
              </li>
-             <b><li>Selon la taille de votre r&#233;solution d'&#233;cran, si vous essayez de
+             <li><b>Selon la taille de votre r&#233;solution d'&#233;cran, si vous essayez de
                cliquez sur la barre de fen&#234;tre elle-m&#234;me, vous risquez de fermer 
                la fen&#234;tre de Panneau de Configuration ou le minimiser. Ce qui pourrait bien s&#251;r
-               imm&#233;diatement perturber tout nouvel utilisateur.</b> <br>              
-            <br>
-	 </li>
+               imm&#233;diatement perturber tout nouvel utilisateur.</b>
+             </li>
           </ul>
 
          <p> Alors, en cliquant d'abord dans le Panneau de Contr&#244;le pour en faire la
@@ -287,7 +267,7 @@ autres options sur les panneaux seront activ&#233;es. </p>
            (en fonction bien s&#251;r de l'orientation actuelle de la loco). En d'autres
            termes vous voulez cliquer quelque part dans l'int&#233;rieur des fronti&#232;res de la
            Fen&#234;tre du Panneau de Commandes &#8212;sans que la loco ne fasse quelque chose que
-           vous ne voulez pas qu'elle fasse. </p>
+           vous ne voulez pas qu'elle fasse.</p>
 
            <p> Apr&#232;s un peu d'exp&#233;rimentation, vous d&#233;couvrirez ce qui est
            confortable pour votre utilisation. Le seul point que nous essayons de faire ici
@@ -295,20 +275,18 @@ autres options sur les panneaux seront activ&#233;es. </p>
            avec leur r&#233;gulateur de pouvoir d&#233;placer leur loco. Ne r&#233;alisant pas que le
            Panneau de Commandes n'est pas s&#233;lectionn&#233;. Ou ils ont cliqu&#233; sur un
            bouton de fonction  (plus sur ceux ci-dessous), ce qui change alors la
-          fen&#234;tre  "active" sur le panneau de Fonction. </p>
+          fen&#234;tre  "active" sur le panneau de Fonction.</p>
          </td>
        </tr>
      </tbody>
    </table>
-</dir>
 
-<a name="StandardActions"> </a>
+<a name="StandardActions"></a>
 <h3> Clavier de Commandes </h3>
-<dir>
-   <dir>
+
      <p> Il ya un groupe de touches d'action sur le clavier qui ont &#233;t&#233; d&#233;finies comme
      "<b>standard</b>" sur tous les syst&#232;mes DCC et plates-formes informatiques. Ils sont
-     identifi&#233;s dans le tableau suivant: </p>
+     identifi&#233;s dans le tableau suivant:</p>
 
       <table width="100%" border="2" cellpadding="2" cellspacing="2">
        <tbody>
@@ -328,7 +306,7 @@ autres options sur les panneaux seront activ&#233;es. </p>
          </tr>
          <tr>
            <td align="center"> <p
-             style = "color: #0000CD; font: bolder; font-size: large p ">-</P>
+             style = "color: #0000CD; font: bolder; font-size: large p ">-</p>
            </td>
            <td> Diminue la vitesse de 1 cran &#224; chaque pression sur la touche </td>
          </tr>
@@ -349,19 +327,21 @@ autres options sur les panneaux seront activ&#233;es. </p>
              style = "color: #0000CD; font: bolder; font-size: large"> fl&#232;che haut </p>
            </td>
            <td> Vers l'avant 
-             </tr>
-              <tr>
-           <td align="center"> <p
+          </tr>
+          <tr>
+           <td align="center"><p
              style = "color: #0000CD; font: bolder; font-size: large"> fl&#232;che bas </p>
            </td>
-           vers l'arri&#232;re  <td> </td>
+           <td>vers l'arri&#232;re</td>
          </tr>
-           <td align="center"> <p
+         <tr>
+           <td align="center"><p
              style = "color: #0000CD; font: bolder; font-size: large">fl&#232;che Gauche
             </p>
            </td>
-           <td> Augmente la vitesse  d'un cran pour chaque pression sur la touche </td>
-         </tr>         <tr>
+           <td>Augmente la vitesse d'un cran pour chaque pression sur la touche</td>
+         </tr>
+         <tr>
            <td  align="center"> <p
              style = "color: #0000CD; font: bolder; font-size: large">fl&#232;che  Droite
             </p>
@@ -372,7 +352,8 @@ autres options sur les panneaux seront activ&#233;es. </p>
            <td align="center"> <p
              style = "color: #0000CD; font: bolder; font-size: large"> Page Haut </p>
            </td>
-           <td> Augmente la vitesse d'environ 10% pour chaque pression sur la touche
+             <td>Augmente la vitesse d'environ 10% pour chaque pression sur la touche</td>
+         </tr>
          <tr>
           <td align="center"><p
             style="color: #0000CD; font: bolder; font-size: large">Page Bas</p>
@@ -380,17 +361,15 @@ autres options sur les panneaux seront activ&#233;es. </p>
           <td>Diminue la vitesse d'environ 10 % pour chaque pression sur la touche
           </td>
         </tr>
- </tbody>
+    </tbody>
     </table>   
 
-    <div>
     <p class="important"><b>Remarque:</b> * Les touches implicites not&#233;es ci-dessus (avec l'
      exception des touches fl&#233;ch&#233;es) sont celles qu'on trouve sur le pav&#233; num&#233;rique du
      clavier. Pour les ordinateurs portables et autres claviers qui n'ont pas de
      pav&#233; num&#233;rique s&#233;par&#233;, l'exp&#233;rimentation de votre part peut &#234;tre n&#233;cessaire pour trouver la
      combinaison correcte de touches. Les touches fl&#233;ch&#233;es sont habituellement trouv&#233;es group&#233;es dans leur
-     propre zone s&#233;par&#233;e. </p>
-     </div>
+     propre zone s&#233;par&#233;e.</p>
 
      <p>L'Utilisation standards des touches actions sont assez faciles. Apr&#232;s avoir rendu le
      Panneau de Commandes actif, &#224; chaque clic sur la touche <big>+</big> sur le clavier num&#233;rique
@@ -401,18 +380,15 @@ autres options sur les panneaux seront activ&#233;es. </p>
      z&#233;ro. </p>
 
      <p> Bien s&#251;r, en plus des actions standard du clavier, ce n'est pas la peine d'avoir une souris
- 	si vous ne pouvez pas l'utiliser pour commander vos trains. Alors maintenant, nous allons discuter 
-	comment d&#233;placer votre locomotive en utilisant la souris de votre ordinateur. </p> 
- </dir>
-</dir>
+ 	 si vous ne pouvez pas l'utiliser pour commander vos trains. Alors maintenant, nous allons discuter
+	 comment d&#233;placer votre locomotive en utilisant la souris de votre ordinateur. </p>
 
 <a name="MouseControl"></a> 
 <h3>Commande de la Souris </h3>
-<dir>
-   <dir>
+
      <p> Vous pouvez effectuer toutes les actions du clavier not&#233;es ci-dessus en utilisant votre
      pointeur de la souris dans la fen&#234;tre Panneau de Commandes. Nous allons commencer par d&#233;finir les  marche
-     Avant, marche Arri&#232;re, Arr&#234;t et Inactif. Ils sont assez simples &#224; utiliser. </P>
+     Avant, marche Arri&#232;re, Arr&#234;t et Inactif. Ils sont assez simples &#224; utiliser. </p>
 
      <table width="100%" border="2" cellpadding="2" cellspacing="2">
        <tbody>
@@ -455,15 +431,12 @@ un d&#233;codeur de son (comme un Soundtraxx DSD-150)est utilis&#233;, le son mo
  basculera sur son &#233;tat "inactif". </td> 
        </tr>
       </tbody>
-    </table>  </dir>
-</dir>
+    </table>
 
 <a name="SliderBar"></a> 
 
 <h4>LA BARRE CURSEUR </h4>
-<dir>
-  <dir>
-    <dir>
+
       <p> Le curseur peut fonctionner diff&#233;remment pour chaque utilisateur en fonction de
       plusieurs facteurs. Ce guide de l'utilisateur ne va pas  essayer d'identifier l'ensemble des
       diff&#233;rentes possibilit&#233;s. Au lieu de cela, il va identifier plusieurs
@@ -482,7 +455,7 @@ un d&#233;codeur de son (comme un Soundtraxx DSD-150)est utilis&#233;, le son mo
               votre syst&#232;me. Cette action a le m&#234;me effet que l'utilisation des
               <big>+</big> sur le clavier num&#233;rique. <br>
               <br>
-            </Li>
+            </li>
             <li> cliquer n'importe o&#249; en dessous de la position actuelle du  curseur 
               DIMINUE la vitesse de la loco de la valeur d'un cran. Par exemple, si la
               vitesse actuelle de la locomotive  est de 21, puis un seul clic
@@ -565,7 +538,7 @@ un d&#233;codeur de son (comme un Soundtraxx DSD-150)est utilis&#233;, le son mo
       <table border="2" width="90%" cellpadding="2" cellspacing="2">
         <tbody>
           <tr>            <td><p
-              style="font: bold; color: #FF0000; font-size: large">IMPORTANT! </P>
+              style="font: bold; color: #FF0000; font-size: large">IMPORTANT! </p>
 
                <p> La meilleure fa&#231;on d'arr&#234;ter une locomotive par l'une des m&#233;thodes
                d&#233;crites ci-dessus est tout simplement de cliquer sur le bouton <b>"Inactif"</b>
@@ -583,14 +556,11 @@ un d&#233;codeur de son (comme un Soundtraxx DSD-150)est utilis&#233;, le son mo
        <p> Si vous avez d&#233;couvert que votre syst&#232;me fonctionne d'une mani&#232;re diff&#233;rente
        parmi tous ceux indiqu&#233;s ci-dessus, alors vous avez simplement trouv&#233; un autre
        m&#233;thode.</p>
-    </dir>
-  </dir>
-</dir>
 
 <a name="Acquiring"></a> 
 
 <h2> L'acquisition d'une Locomotive Enregistr&#233;e </h2>
-<dir>
+
    <p> Lorsque l'adresse du d&#233;codeur est d'abord "<big>D&#233;finie</big>", le logiciel demande
    l'&#233;tat actuel du d&#233;codeur. Cela inclut la direction actuelle de la
    locomotive, sa vitesse actuelle, et les boutons de fonction qu'ils soient On ou Off. Le
@@ -610,11 +580,9 @@ un d&#233;codeur de son (comme un Soundtraxx DSD-150)est utilis&#233;, le son mo
    Une am&#233;lioration future de la fonction r&#233;gulateur sera de synchroniser les
    pointeur de la barre curseur en cons&#233;quence. Jusque-l&#224;, m&#233;fiez-vous de cette petite
    r&#233;action. </p>
-</dir>
 
 <a name="FunctionPanel"></a> 
 <h2>Le Panneau Fonction </h2>
-<dir>
 
    <table border="0" width="100%" cellpadding="0" cellspacing="0">
      <tbody>
@@ -646,7 +614,6 @@ un d&#233;codeur de son (comme un Soundtraxx DSD-150)est utilis&#233;, le son mo
       </tr>
     </tbody>
   </table>
-</dir>
 
 <p>Si vous lisez cette page de haut en bas comme un manuel de formation, &#224; sa
 conclusion, vous devriez &#234;tre en mesure de ...</p>
@@ -680,10 +647,9 @@ afin de rendre l'exp&#233;rience de votre r&#233;seau num&#233;rique encore plus
     </tr>
   </tbody>
 </table>
-<br>
-<br>
-<br>
-<br>
-<!--#include virtual="/Footer" --> </div>
+
+        <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

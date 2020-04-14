@@ -524,28 +524,10 @@ public class JmriJTablePersistenceManagerTest {
     }
 
     /**
-     * Test of getDirty method, of class JmriJTablePersistenceManager.
-     */
-    @Test
-    @SuppressWarnings("deprecation")
-    public void testGetDirty() {
-        JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
-        JTable test = testTable("test");
-        Assert.assertFalse("new manager w/o tables is clean", instance.getDirty());
-        instance.persist(test);
-        Assert.assertTrue("table added, not saved", instance.getDirty());
-        instance.setDirty(false);
-        Assert.assertFalse("set to clean for test", instance.getDirty());
-        instance.setPersistedState(test.getName(), "c1", 0, 0, SortOrder.ASCENDING, false);
-        Assert.assertTrue("column changed", instance.getDirty());
-    }
-
-    /**
      * Test of setTableColumnPreferences method, of class
      * JmriJTablePersistenceManager.
      */
     @Test
-    @SuppressWarnings("deprecation")
     public void testSetTableColumnPreferences() {
         JTable table = testTable("test");
         JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();

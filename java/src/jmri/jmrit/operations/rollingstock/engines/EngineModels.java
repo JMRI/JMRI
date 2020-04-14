@@ -68,19 +68,6 @@ public class EngineModels extends RollingStockAttribute {
     public EngineModels() {
     }
 
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     *             {@link jmri.InstanceManager#getDefault(java.lang.Class)}
-     *             instead
-     */
-    @Deprecated
-    public static synchronized EngineModels instance() {
-        return InstanceManager.getDefault(EngineModels.class);
-    }
-
     @Override
     protected String getDefaultNames() {
         return MODELS;
@@ -220,7 +207,7 @@ public class EngineModels extends RollingStockAttribute {
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type.equals(EngineModels.class)) {
                 EngineModels instance = new EngineModels();
                 instance.loadDefaults();

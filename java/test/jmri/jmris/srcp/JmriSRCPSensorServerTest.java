@@ -1,9 +1,23 @@
 package jmri.jmris.srcp;
 
+import jmri.*;
+import jmri.implementation.AbstractSensor;
+import jmri.jmrix.SystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
+import jmri.util.PreferNumericComparator;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.picocontainer.behaviors.Stored;
+
+import javax.annotation.Nonnull;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.util.Collections;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPSensorServer class
@@ -12,14 +26,14 @@ import org.junit.Before;
  */
 public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTestBase {
 
-    private StringBuilder sb = null;
+    private ByteArrayOutputStream output;
 
     /**
      * {@inhertDoc} 
      */
     @Override
     public void checkErrorStatusSent(){
-         Assert.assertTrue("Active Message Sent", sb.toString().endsWith("499 ERROR unspecified error\n\r"));
+         assertThat(output.toString()).endsWith("499 ERROR unspecified error\n\r").withFailMessage("Active Message Sent");
     }
 
     /**
@@ -27,7 +41,7 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
      */
     @Override
     public void checkSensorActiveSent(){
-         Assert.assertTrue("Active Message Sent", sb.toString().endsWith("100 INFO 0 FB 1 1\n\r"));
+        assertThat(output.toString()).endsWith("100 INFO 0 FB 1 1\n\r").withFailMessage("Active Message Sent");
     }
 
     /**
@@ -35,7 +49,7 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
      */
     @Override
     public void checkSensorInActiveSent(){
-         Assert.assertTrue("Active Message Sent", sb.toString().endsWith("100 INFO 0 FB 1 0\n\r"));
+        assertThat(output.toString()).endsWith("100 INFO 0 FB 1 0\n\r").withFailMessage("Active Message Sent");
     }
 
     /**
@@ -43,35 +57,25 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
      */
     @Override
     public void checkSensorUnknownSent(){
-         Assert.assertTrue("Active Message Sent", sb.toString().endsWith("411 ERROR unknown value\n\r"));
+        assertThat(output.toString()).endsWith("411 ERROR unknown value\n\r").withFailMessage("Active Message Sent");
+
     }
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initDebugThrottleManager();
-        sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-                    @Override
-                    public void write(int b) throws java.io.IOException {
-                        sb.append((char)b);
-                    }
-                });
+        output = new ByteArrayOutputStream();
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         ss = new JmriSRCPSensorServer(input, output);
     }
 
-    @After public void tearDown() throws Exception {
+    @AfterEach public void tearDown() throws Exception {
         ss.dispose();
         ss = null;
-        sb = null;
         JUnitUtil.tearDown();
     }
 

@@ -1298,19 +1298,31 @@
 
    
 <li>
-<a href="">Frequently Asked Questions </a>
+<a href="html/tools/scripting/Python.shtml">Python/Jython </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="html/tools/scripting/Python.shtml">Python </a>
+<a href="html/tools/scripting/ex_set_turnouts.shtml">Example: Setting Turnouts </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="html/tools/scripting/AppleScript.shtml">AppleScript </a>
+<a href="html/tools/scripting/Examples.shtml">Examples (Links) </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/tools/scripting/HowTo.shtml">Scripting How To... </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/tools/scripting/WhatWhere.shtml">Scripting What...Where </a>
 <ul></ul>
 </li>
 
@@ -1320,11 +1332,19 @@
 <ul></ul>
 </li>
 
+   
+<li>
+<a href="html/tools/scripting/AppleScript.shtml">Open Scripting Arch (Apple) </a>
+<ul></ul>
+</li>
+
   
 </ul>
 </li>
   
-<li>Sections <ul>
+<li>
+<a href="html/tools/Sections.shtml">Sections </a>
+<ul>
    
 <li>
 <a href="package/jmri/jmrit/beantable/SectionTable.shtml">Section Table </a>
@@ -1515,12 +1535,20 @@
 
   
 <li>
+<a href="package/jmri/jmrit/whereused/WhereUsed.shtml">Where Used </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="html/tools/tracker/index.shtml">Tracker (Blocks) </a>
 <ul></ul>
 </li>
 
   
-<li>Transits <ul>
+<li>
+<a href="html/tools/Transits.shtml">Transits </a>
+<ul>
    
 <li>
 <a href="package/jmri/jmrit/beantable/TransitTable.shtml">Transit Table </a>
@@ -1530,6 +1558,12 @@
    
 <li>
 <a href="package/jmri/jmrit/beantable/TransitAddEdit.shtml">Add/Edit Transits </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/beantable/ViewSpecialActions.shtml">Transit Actions </a>
 <ul></ul>
 </li>
 
@@ -1598,6 +1632,12 @@
    
 <li>
 <a href="package/jmri/jmrit/logix/SpeedChanges.shtml">When Warrant Speeds Are Modified </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/logix/Tracker.shtml">Train Trackers </a>
 <ul></ul>
 </li>
 

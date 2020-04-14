@@ -20,10 +20,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Conditional Tree Editor</h1>
 
       <p>The tree based Conditional Editor uses a single window to display and edit all
@@ -267,7 +267,7 @@
       <p>For more information, consult the <a href=
       "../../../../html/tools/Logix.shtml">main Logix documentation</a>.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

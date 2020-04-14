@@ -29,11 +29,10 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-
-  <div id="mBody">
+<div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI Code: Building with NetBeans</h1>
 
     <div class="toc">
@@ -524,20 +523,20 @@
         <ul>
         <li>Under "Team" -> "Remote" select "Fetch" (not Fetch from Upstream)
         <br><a href="images/38030695-285ba828-324e-11e8-8e73-7ff0f6c32125.png">
-            <img src="images/38030695-285ba828-324e-11e8-8e73-7ff0f6c32125.png" height="212" width="236"></a>
+            <img src="images/38030695-285ba828-324e-11e8-8e73-7ff0f6c32125.png" height="212" width="236"></a></li>
 
         <li>Fill out the form to specify the correct user's repository 
         (After the 1st time you do this, you'll be able to select by name in the top choice)
         <br><a href="images/38030828-932040d8-324e-11e8-933f-cee0bf6f45e2.png">
-            <img src="images/38030828-932040d8-324e-11e8-933f-cee0bf6f45e2.png" height="147" width="247"></a>
+            <img src="images/38030828-932040d8-324e-11e8-933f-cee0bf6f45e2.png" height="147" width="247"></a></li>
 
         <li>On the next screen to select a branch, you can either select all of them (there's a button) 
         or find and select just the name of the branch that holds the desired change:
 
         <br><a href="images/38030974-fa9a7b52-324e-11e8-86f2-23c0c8735c9c.png">
-            <img src="images/38030974-fa9a7b52-324e-11e8-86f2-23c0c8735c9c.png" height="101" width="339"></a>
+            <img src="images/38030974-fa9a7b52-324e-11e8-86f2-23c0c8735c9c.png" height="101" width="339"></a></li>
 
-        <li>Click "Finish"
+        <li>Click "Finish"</li>
         </ul>
 
         At this point, you've pulled my changes onto your local machine, but you're not using them yet.  
@@ -547,16 +546,16 @@
         <li>Back on the main menu, select "Team" -> "Checkout" -> "Checkout Revision...". 
         On the window you get, click "Select":
         <br><a href="images/38031217-94948748-324f-11e8-8d61-8451af389d2e.png">
-            <img src="images/38031217-94948748-324f-11e8-8d61-8451af389d2e.png" height="208" width="268"></a>
+            <img src="images/38031217-94948748-324f-11e8-8d61-8451af389d2e.png" height="208" width="268"></a></li>
 
         <li>In the upper left, find the imported branch you want, which in the example is "bobjacobsen/ast-clock-power-bit". 
         Either click to highlight (show) and then click "Select", or just double click on it.  
         (Don't worry about the upper right or the lower box, they'll be automatically set right)
         <br><a href="images/38031418-024b9f92-3250-11e8-9d52-aca1db8d4435.png">
-            <img src="images/38031418-024b9f92-3250-11e8-9d52-aca1db8d4435.png" height="259" width="321"></a>
+            <img src="images/38031418-024b9f92-3250-11e8-9d52-aca1db8d4435.png" height="259" width="321"></a></li>
 
         <li>Back on the "Checkout Revision ..." window, make sure the "Checkout as New Branch" 
-            is <u>not</u> checked, and then click "Checkout"
+            is <u>not</u> checked, and then click "Checkout"</li>
         </ul>
         
     Now you've got a copy of my changes as your checked-out source.  

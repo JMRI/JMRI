@@ -21,25 +21,6 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         return new jmri.implementation.DefaultIdTag("ID0413276BC1", "Test Tag");
     }
     
-    private TrafficControllerScaffold tcis;
-
-    // The minimal setup for log4J
-    @Before
-    @Override
-    public void setUp() {
-        JUnitUtil.setUp();
-        tcis = new TrafficControllerScaffold();
-        r = new CbusReporter(1, tcis, "Test");
-    }
-
-    @After
-    @Override
-    public void tearDown() {
-        tcis = null;
-        r = null;
-        JUnitUtil.tearDown();
-    }
-    
     @Test
     public void respondToCanReply(){
         
@@ -116,7 +97,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         r5.reply(m2);
         Assert.assertEquals("r5 state set ok after incorrect msgs",IdTag.SEEN,r5.getState());
         
-        Assert.assertEquals("r4 state set CBUS_ACDAT",IdTag.UNSEEN,r4.getState());
+        Assert.assertEquals("r4 state unseen",IdTag.UNSEEN,r4.getState());
         
         CanMessage m3 = new CanMessage(tcis.getCanid());
         m3.setNumDataElements(8);
@@ -131,10 +112,31 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         
         r4.message(m3);
         
-        Assert.assertEquals("r4 state set CBUS_ACDAT",IdTag.UNSEEN,r4.getState());
-        
+        Assert.assertEquals("r4 seen after CBUS_ACDAT outgoing message",IdTag.SEEN,r4.getState());
         
         r.dispose();
+    }
+    
+    private TrafficControllerScaffold tcis;
+
+    // The minimal setup for log4J
+    @Before
+    @Override
+    public void setUp() {
+        JUnitUtil.setUp();
+        tcis = new TrafficControllerScaffold();
+        r = new CbusReporter(1, tcis, "Test");
+    }
+
+    @After
+    @Override
+    public void tearDown() {
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
+        tcis.terminateThreads();
+        tcis = null;
+        r = null;
+        JUnitUtil.tearDown();
+
     }
     
     // private final static Logger log = LoggerFactory.getLogger(CbusReporterTest.class);

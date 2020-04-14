@@ -1,8 +1,10 @@
 package jmri.jmrit.operations.setup;
 
-import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
 import org.junit.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
 
 /**
  *
@@ -14,6 +16,7 @@ public class OperationsSetupPanelTest extends OperationsTestCase {
     public void testCTor() {
         OperationsSetupPanel t = new OperationsSetupPanel();
         Assert.assertNotNull("exists",t);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(OperationsSetupPanelTest.class);

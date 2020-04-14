@@ -1,7 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
 import java.io.File;
-import java.util.ArrayList;
 import jmri.configurexml.SchemaTestBase;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -18,12 +17,7 @@ public class SchemaTest extends SchemaTestBase {
 
     @Parameters(name = "{0} (pass={1})")
     public static Iterable<Object[]> data() {
-        ArrayList<Object[]> files = new ArrayList<>();
-        // the following are just tested for schema pass/fail, not load/store
-        files.addAll(getFiles(new File("java/test/jmri/jmrit/display/configurexml/verify"), true, true));
-        // also tested for load/store
-        files.addAll(getFiles(new File("java/test/jmri/jmrit/display/configurexml/load"), true, true));
-        return files;
+        return setTestFilesBelowThisPath("java/test/jmri/jmrit/display/configurexml");
     }
 
     public SchemaTest(File file, boolean pass) {

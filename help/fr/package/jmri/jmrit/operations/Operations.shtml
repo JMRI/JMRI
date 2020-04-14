@@ -19,26 +19,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-
-  <title>Operations</title>
-  <meta name="author" content="Dan Boudreau">
-  <meta name="keywords" content=
-  "JMRI Help Operations Setup Settings Cars Engines Locomotives Trains itin&eacute;raires Locations Schedules">
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>Exploitations JMRI</h2>Le programme d'Exploitations vous
       permet de cr&eacute;er des manifestes de train
       g&eacute;n&eacute;r&eacute;s par ordinateur pour vos chemins
@@ -306,8 +295,8 @@
         Exploitation</a></li>
       </ul><a name="newUserAdvice" id="newUserAdvice"></a>
 
-      <h3>Nouvel avis &agrave; l'utilisateur</h3><a name="demo" id=
-      "demo"></a>
+      <h3>Nouvel avis &agrave; l'utilisateur</h3>
+      <a name="demo" id="demo"></a>
 
       <h3>Fichiers D&eacute;mo exploitation</h3>Si vous n'avez
       jamais utilis&eacute; un programme informatique pour
@@ -367,35 +356,9 @@
       planifications ne peut pas augmenter le mouvement du wagon,
       et dans la plupart des cas, permettra de r&eacute;duire le
       mouvement du wagon! Donc, notre conseil est d'apprendre
-      &agrave; marcher avant d'essayer de courir.</p><a name="demo"
-      id="demo"></a>
+      &agrave; marcher avant d'essayer de courir.</p>
 
-      <h3>Fichiers D&eacute;monstration Exploitation</h3>Le
-      programme d'Exploitation fournit un ensemble de fichiers de
-      d&eacute;monstration pour aider &agrave; vous introduire dans
-      l'une des caract&eacute;ristiques et des capacit&eacute;s de
-      ce programme. Pour charger les fichiers de
-      d&eacute;monstration, d'abord ouvrir la fen&ecirc;tre des
-      param&egrave;tres d'Exploitation "Outils-&gt;
-      Exploitation&gt; Param&egrave;tres", et dans le coin
-      sup&eacute;rieur gauche de la fen&ecirc;tre de
-      R&eacute;glages dans le menu Outils, s&eacute;lectionnez
-      "Charger Fichiers D&eacute;mo". Le programme cr&eacute;era
-      une sauvegarde <a href="#BackupRestore"></a> de votre
-      configuration &agrave; la position actuelle si vous en avez
-      une, puis charge les fichiers de d&eacute;monstration.
-      Red&eacute;marrez JMRI pour compl&eacute;ter le processus de
-      chargement d&eacute;mo.
-
-      <p>Le programme fournit &eacute;galement un simple panneau
-      pour montrer comment les ic&ocirc;nes de train travaillent.
-      Chargez le panneau avant de asssembler les trains en
-      s&eacute;lectionnant dans le menu principal JMRI,
-      "Panneaux-&gt; Charger Panneaux .." une fen&ecirc;tre devrait
-      appara&icirc;tre et ouvrir le r&eacute;pertoire "operations"
-      puis ouvrez le fichier xml "Operations Demo
-      Panel".</p><a name="QuickStartHelp" id="QuickStartHelp"></a>
-
+      <a name="QuickStartHelp" id="QuickStartHelp"></a>
       <h3>Aide d&eacute;marrage rapide</h3>Dans le menu de niveau
       sup&eacute;rieur pour JMRI trouvez le menu "Outils-&gt;
       Exploitation". Il existe six &eacute;l&eacute;ments dans ce
@@ -893,10 +856,11 @@
       r&eacute;cente utilis&eacute;e comme voie de D&eacute;part .
       Notez que le programme ne vous le demandera que s'il y adeux
       ou plusieurs trains disponibles dans la coulisse qui
-      r&eacute;ponembranchement aux exigences du train. <a name=
+      r&eacute;ponembranchement aux exigences du train.
+
+      <a name=
       "MakeDepartureTrackAvailable" id=
       "MakeDepartureTrackAvailable"></a>
-
       <h4>Rendre des Voies de D&eacute;part Disponibles
       apr&egrave;s Assemblage du Train</h4>Lorsque cette option est
       s&eacute;lectionn&eacute;e, elle rend la voie de
@@ -934,21 +898,9 @@
 
       <p>Cette option est &eacute;galement disponible sur un train
       de base. Voir <a href="#TrainBuildOptions">Train Options
-      d'Assemblage</a> . <a name="PromptDepartureTrack" id=
-      "PromptDepartureTrack"></a></p>
+      d'Assemblage</a> . </p>
 
-      <h4>Demander la Voie de D&eacute;part de la Coulisse</h4>Si
-      vous souhaitez que le programme vous demande quelle voie le
-      train devra utiliser au d&eacute;part de la coulisse, pendant
-      l'assemblage, s&eacute;lectionnez cette option. Normalement,
-      pendant l'assemblage du train le programme choisit la voie la
-      moins r&eacute;cemment utilis&eacute;e pour d&eacute;terminer
-      la voie au d&eacute;part. Notez que le programme ne vous
-      demandera pas s'il y adeux ou plusieurs trains disponibles
-      dans la coulisse qui r&eacute;ponembranchement aux exigences
-      du train. <a name="PromptArrivalTrack" id=
-      "PromptArrivalTrack"></a>
-
+      <a name="PromptArrivalTrack" id="PromptArrivalTrack"></a>
       <h4>Demander la Voie d'Arriv&eacute;e de la Coulisse /h4&gt;
       Si vous souhaitez que le programme vous demande quelle voie
       le train devra utiliser &agrave; l'arriv&eacute;e de la
@@ -984,10 +936,9 @@
       essayer de itin&eacute;rairer un wagon. Si un wagon a
       &eacute;t&eacute; attribu&eacute; &agrave; une "Destination
       Finale", le programme vais essayer et itin&eacute;rairer le
-      wagon apr&egrave;s chaque mouvement.</p><a name=
-      "LoggingOptions" id="LoggingOptions"></a> <a name=
-      "LoggingOptions" id="LoggingOptions"></a>
+      wagon apr&egrave;s chaque mouvement.</p>
 
+      <a name="LoggingOptions" id="LoggingOptions"></a>
       <h3>Options de Rapport</h3>Si vous voulez que le programme
       Exploitation enregistre les mouvements de votre locomotive,
       wagon ou train dans un fichier, s&eacute;lectionnez les cases
@@ -995,9 +946,9 @@
       r&eacute;pertoire appel&eacute; "logger" dans le
       r&eacute;pertoire des Op&eacute;rations. Pour la session de
       chaque jour le programme va cr&eacute;er un nouveau fichier
-      (. csv) en utilisant la date du jour. <a name=
-      "ManifestOptions" id="ManifestOptions"></a>
+      (.csv) en utilisant la date du jour.
 
+      <a name="ManifestOptions" id="ManifestOptions"></a>
       <h3>Options</h3>Si vous voulez cr&eacute;er votre propre
       manifeste en utilisant des valeurs s&eacute;par&eacute;es par
       une virgule (.Csv), s&eacute;lectionnez cette option. Vous
@@ -1457,7 +1408,7 @@
       de d&eacute;tails .</p>
 
       <p>La s&eacute;lection de "Afficher Horaires" imprime l'
-      <a ref="#Timetable">horaire du train</a> que vous utilisez
+      <a href="#Timetable">horaire du train</a> que vous utilisez
       lors de l'assemblage de vos trains .</p>
 
       <p>L'option suivante est "Tronquer" et lorsqu'elle est
@@ -1621,7 +1572,7 @@
       maintenant.</p>Chaque emplacement peut avoir plusieurs voies
       <a href="#Yards">de triages</a> , <a href=
       "#Sidings">d'embranchements</a> , <a href="#Interchange">de
-      classements/&eacute;changes</a> <a ou="" href="#Staging">de
+      classements/&eacute;changes</a> <a href="#Staging">de
       coulisse</a> . Les Triages sont l&agrave; o&ugrave; les
       wagons et les locomotives sont plac&eacute;s pour le stockage
       temporaire. Un embranchement peut &ecirc;tre une voie
@@ -1758,39 +1709,9 @@
       JMRI dans un dossier appel&eacute; "operations". Le programme
       permettra &eacute;galement de cr&eacute;er un fichier de
       sauvegarde contenant les derniers r&eacute;glages pour
-      l'ensemble de vos emplacements. <a name="Sidings" id=
-      "Sidings"></a>
+      l'ensemble de vos emplacements.
 
-      <h3>Embranchements</h3>Un embranchement est utilis&eacute;
-      pour desservir une industrie. Pour ajouter un embranchement,
-      appuyez sur le bouton "Ajouter Embranchement ".les
-      Embranchements sont tr&egrave;s similaires aux <a href=
-      "#Yards">Triages</a> , donc voir ci-dessus pour plus
-      d'informations. Lors de la saisie de la longueur de
-      l'embranchement, saisissez la longueur des wagons qui
-      desserviront la voie industrielle ainsi que les longueurs
-      d'attelage. Par exemple, disons que vous avez une voie
-      industrielle que peut desservir deux 50' Boxcars, la longueur
-      de la voie dans ce cas est de 100' plus 8' pour les coupleurs
-      (4' pour chaque wagon), pour un total de 108. Vous pourriez
-      &eacute;ventuellement arrondir la longueur de 110 pieds ou
-      plus.
-
-      <p>Quand un wagon est plac&eacute;e dans un Embranchement
-      l'&eacute;tat de charge dua wagonu est modifi&eacute;. Le
-      programme fournit deux noms de charge pour toutes les wagons,
-      par d&eacute;faut le "E" ou vide, et la charge par
-      d&eacute;faut ou "L". Si un wagon a une de ces charges quand
-      il arrive &agrave; un embranchement, le nom de la charge
-      passe &agrave; l'autre, c'est &agrave; dire "E" devient "L"
-      et "L" devient "E".</p>
-
-      <p>Vous pouvez si vous le d&eacute;sirez programmer l'ordre
-      dans lequel les wagons seront livr&eacute;s &agrave; un
-      embranchement, ou demande des wagons avec certaines charges.
-      Voir <a href="#Schedules">Horaires</a> ci-dessous pour plus
-      d'informations .</p><a name="Sidings" id="Sidings"></a>
-
+      <a name="Sidings" id="Sidings"></a>
       <h3>Embranchements</h3>Un Embranchement est utilis&eacute; au
       service d'une industrie. Pour ajouter un embranchement,
       appuyez sur le bouton Ajouter " Embranchement". Les
@@ -1809,9 +1730,9 @@
       d&eacute;faut ou "L". Si une wagon a un de ces charges quand
       il arrive &agrave; un embranchement, le nom de charge va
       changer &agrave; l'autre, c'est &agrave; dire "E" devient "L"
-      et "L" devient "E".</p><a name="Schedules" id=
-      "Schedules"></a> <a name="Schedules" id="Schedules"></a>
+      et "L" devient "E".</p>
 
+      <a name="Schedules" id="Schedules"></a>
       <h3>Horaires</h3>Si vous souhaitez voir les wagons
       livr&eacute;s dans un ordre particulier, ou avec une charge
       sp&eacute;cifique pour la livraison ou l'exp&eacute;dition,
@@ -4775,9 +4696,8 @@
       pour enregistrer vos pr&eacute;f&eacute;rences.</p>
 
       <p>La fin de l'aide Exploitation.</p>
+
     </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody--><!-- $Id$ -->
-  <!-- Translated  by Blorec Herv&#233; le 2011-11-24-->
-  <!-- Style -->
+  </div><!-- closes #mBody-->
 </body>
 </html>

@@ -4,7 +4,10 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -14,6 +17,8 @@ import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.MeasurementListener;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,19 +32,19 @@ public class CsvExportMeasurementAction extends AbstractAction implements Measur
 
     RpsSystemConnectionMemo memo = null;
 
-    public CsvExportMeasurementAction(String actionName,RpsSystemConnectionMemo _memo) {
+    public CsvExportMeasurementAction(String actionName, RpsSystemConnectionMemo _memo) {
         super(actionName);
         memo = _memo;
     }
 
     public CsvExportMeasurementAction(RpsSystemConnectionMemo _memo) {
-        this("Start CSV Export Measurement...",_memo);
+        this("Start CSV Export Measurement...", _memo);
     }
 
     JFrame mParent;
 
     boolean logging = false;
-    PrintStream str;
+    CSVPrinter str;
     JFileChooser fileChooser;
 
     @Override
@@ -59,13 +64,17 @@ public class CsvExportMeasurementAction extends AbstractAction implements Measur
 
         logging = false;
 
-        str.flush();
-        str.close();
+        try {
+            str.flush();
+            str.close();
+        } catch (IOException ex) {
+            log.error("Error closing file: {}", ex);
+        }
     }
 
     void startLogging(ActionEvent e) {
 
-        System.out.println("" + e);
+        log.debug("{}", e);
         ((JMenuItem) (e.getSource())).setText("Stop CSV Export Measurement...");
 
         // initialize chooser
@@ -80,19 +89,17 @@ public class CsvExportMeasurementAction extends AbstractAction implements Measur
 
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            if (log.isDebugEnabled()) {
-                log.debug("start to log to file " + file);
-            }
+            log.debug("start to log to file {}", file);
 
             try {
 
-                str = new PrintStream(new FileOutputStream(file));
+                str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT);
 
                 Distributor.instance().addMeasurementListener(this);
 
                 logging = true;
             } catch (IOException ex) {
-                log.error("Error opening file: " + ex);
+                log.error("Error opening file: {}", ex);
             }
         }
     }
@@ -102,14 +109,17 @@ public class CsvExportMeasurementAction extends AbstractAction implements Measur
         if (!logging || str == null) {
             return;
         }
+        ArrayList<Object> values = new ArrayList<>();
         // first measurement info
-        str.print("" + m.getId() + "," + m.getX() + "," + m.getY() + "," + m.getZ() + "," + m.getCode() + ",");
+        values.addAll(Arrays.asList(new Object[]{m.getId(), m.getX(), m.getY(), m.getZ(), m.getCode()}));
         // then reading info
         Reading r = m.getReading();
-        for (int i = 0; i < r.getNValues() - 1; i++) {
-            str.print(r.getValue(i) + ",");
+        values.addAll(Arrays.asList(r.getValues()));
+        try {
+            str.printRecord(values);
+        } catch (IOException ex) {
+            log.error("Error writing file {}", ex);
         }
-        str.println(r.getValue(r.getNValues() - 1));
     }
 
     private final static Logger log = LoggerFactory.getLogger(CsvExportMeasurementAction.class);
