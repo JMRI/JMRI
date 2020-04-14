@@ -1796,7 +1796,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             return;
         }
 
-        for (Routes ro : routes) {
+        for (Routes ro : new ArrayList<>(routes)) {
             if (enableAddRouteLogging) {
                 log.info("next:" + ro.getNextBlock().getDisplayName() + " dest:" + ro.getDestBlock().getDisplayName());
             }
