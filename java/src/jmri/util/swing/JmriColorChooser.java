@@ -111,7 +111,7 @@ public class JmriColorChooser {
             }
         }
         chooser.setChooserPanels(newPanels);
-        _suppressAdd = false;
+        _suppressAdd = false;   // reset to default
         return chooser;
     }
 }
