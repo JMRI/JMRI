@@ -291,12 +291,7 @@ public class CbusNodeTableDataModel extends CbusBasicNodeTableFetch implements C
     }
     
     public boolean startupComplete(){
-    if ( !searchXmlComplete &&
-        searchForNodesTask != null){
-        return false;
-    }
-    
-        return true;
+        return !(!searchXmlComplete && searchForNodesTask != null);
     }
     
     /**
