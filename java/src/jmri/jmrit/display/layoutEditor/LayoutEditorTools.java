@@ -1480,7 +1480,7 @@ public class LayoutEditorTools {
         TrackSegment t = track;
         Object obj = object;
         boolean inBlock = true;
-        LayoutEditor.HitPointType type = LayoutEditor.HitPointType.NONE;
+        LayoutEditor.HitPointType type; // = LayoutEditor.HitPointType.NONE;
         Object connect = null;
         while (inBlock) {
             if (t.getConnect1() == obj) {
