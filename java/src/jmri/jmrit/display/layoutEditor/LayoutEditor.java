@@ -139,7 +139,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         TURNTABLE_RAY_18(68), //      |
         TURNTABLE_RAY_19(69), //      |
         TURNTABLE_RAY_20(70), //      |
-        TURNTABLE_RAY_21(70), //      |
+        TURNTABLE_RAY_21(71), //      |
         TURNTABLE_RAY_22(72), //      |
         TURNTABLE_RAY_23(73), //      |
         TURNTABLE_RAY_24(74), //      |
@@ -149,7 +149,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         TURNTABLE_RAY_28(78), //      |
         TURNTABLE_RAY_29(79), //      |
         TURNTABLE_RAY_30(80), //      |
-        TURNTABLE_RAY_31(82), //      |
+        TURNTABLE_RAY_31(81), //      |
         TURNTABLE_RAY_32(82), //      |
         TURNTABLE_RAY_33(83), //      |
         TURNTABLE_RAY_34(84), //      |
@@ -158,30 +158,30 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         TURNTABLE_RAY_37(87), //      |
         TURNTABLE_RAY_38(88), //      |
         TURNTABLE_RAY_39(89), //      |
-        TURNTABLE_RAY_40(70), //      |
-        TURNTABLE_RAY_41(70), //      |
-        TURNTABLE_RAY_42(72), //      |
-        TURNTABLE_RAY_43(73), //      |
-        TURNTABLE_RAY_44(74), //      |
-        TURNTABLE_RAY_45(75), //      | -- DON'T USE THESE; PLACEHOLDERS ONLY
-        TURNTABLE_RAY_46(76), //      |
-        TURNTABLE_RAY_47(77), //      |
-        TURNTABLE_RAY_48(78), //      |
-        TURNTABLE_RAY_49(79), //      |
-        TURNTABLE_RAY_50(70), //      |
-        TURNTABLE_RAY_51(70), //      |
-        TURNTABLE_RAY_52(72), //      |
-        TURNTABLE_RAY_53(73), //      |
-        TURNTABLE_RAY_54(74), //      |
-        TURNTABLE_RAY_55(75), //      |
-        TURNTABLE_RAY_56(76), //      |
-        TURNTABLE_RAY_57(77), //      |
-        TURNTABLE_RAY_58(78), //     /
-        TURNTABLE_RAY_59(79), //    /
-        TURNTABLE_RAY_60(70), //   /
-        TURNTABLE_RAY_61(70), //  /
-        TURNTABLE_RAY_62(72), // /
-        TURNTABLE_RAY_63(73); // offset for turntable connection points (maximum)
+        TURNTABLE_RAY_40(90), //      |
+        TURNTABLE_RAY_41(91), //      |
+        TURNTABLE_RAY_42(92), //      |
+        TURNTABLE_RAY_43(93), //      |
+        TURNTABLE_RAY_44(94), //      |
+        TURNTABLE_RAY_45(95), //      | -- DON'T USE THESE; PLACEHOLDERS ONLY
+        TURNTABLE_RAY_46(96), //      |
+        TURNTABLE_RAY_47(97), //      |
+        TURNTABLE_RAY_48(98), //      |
+        TURNTABLE_RAY_49(99), //      |
+        TURNTABLE_RAY_50(100), //      |
+        TURNTABLE_RAY_51(101), //      |
+        TURNTABLE_RAY_52(102), //      |
+        TURNTABLE_RAY_53(103), //      |
+        TURNTABLE_RAY_54(104), //      |
+        TURNTABLE_RAY_55(105), //      |
+        TURNTABLE_RAY_56(106), //      |
+        TURNTABLE_RAY_57(107), //      |
+        TURNTABLE_RAY_58(108), //     /
+        TURNTABLE_RAY_59(109), //    /
+        TURNTABLE_RAY_60(110), //   /
+        TURNTABLE_RAY_61(111), //  /
+        TURNTABLE_RAY_62(112), // /
+        TURNTABLE_RAY_63(113); // offset for turntable connection points (maximum)
 
         private final transient Integer xmlValue;
 
@@ -192,7 +192,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         public static HitPointType getValue(Integer xmlValue) {
             HitPointType result = null;
             for (HitPointType instance : HitPointType.values()) {
-                if (instance.xmlValue == xmlValue) {
+                if (instance.xmlValue.equals(xmlValue)) {
                     result = instance;
                     break;
                 }

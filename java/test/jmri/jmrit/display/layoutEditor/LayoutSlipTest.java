@@ -73,6 +73,8 @@ public class LayoutSlipTest {
 
         lts.setSlipType(LayoutTurnout.TurnoutType.NONE); // invalid type
         JUnitAppender.assertErrorMessage("single.setSlipType(NONE); invalid slip type");
+        ltd.setSlipType(LayoutTurnout.TurnoutType.NONE); // invalid type
+        JUnitAppender.assertErrorMessage("double.setSlipType(NONE); invalid slip type");
 
         lts.setSlipType(LayoutTurnout.TurnoutType.DOUBLE_SLIP);
         Assert.assertTrue("lts.getSlipType() is DOUBLE_SLIP", lts.getSlipType() == LayoutTurnout.TurnoutType.DOUBLE_SLIP);
@@ -89,6 +91,8 @@ public class LayoutSlipTest {
 
         lts.setTurnoutType(LayoutTurnout.TurnoutType.NONE); // invalid type
         JUnitAppender.assertErrorMessage("single.setSlipType(NONE); invalid slip type");
+        ltd.setTurnoutType(LayoutTurnout.TurnoutType.NONE); // invalid type
+        JUnitAppender.assertErrorMessage("double.setSlipType(NONE); invalid slip type");
 
         lts.setTurnoutType(LayoutTurnout.TurnoutType.DOUBLE_SLIP);
         Assert.assertTrue("lts.getSlipType() is DOUBLE_SLIP", lts.getSlipType() == LayoutTurnout.TurnoutType.DOUBLE_SLIP);
@@ -254,10 +258,6 @@ public class LayoutSlipTest {
                 new Point2D.Double(69.79898987322333, 100.0),
                 lts.getCoordsForConnectionType(LayoutEditor.HitPointType.SLIP_D));
 
-        Assert.assertEquals("lts.getCoordsForConnectionType(SLIP_CENTER) is equal to...",
-                new Point2D.Double(50.0, 100.0),
-                lts.getCoordsForConnectionType(LayoutEditor.HitPointType.SLIP_CENTER));
-
         Assert.assertEquals("lts.getCoordsForConnectionType(SLIP_LEFT) is equal to...",
                 new Point2D.Double(38.92307692307692, 95.38461538461539),
                 lts.getCoordsForConnectionType(LayoutEditor.HitPointType.SLIP_LEFT));
@@ -286,10 +286,6 @@ public class LayoutSlipTest {
         Assert.assertEquals("ltd.getCoordsForConnectionType(SLIP_D) is equal to...",
                 new Point2D.Double(100.0, 30.201010126776673),
                 ltd.getCoordsForConnectionType(LayoutEditor.HitPointType.SLIP_D));
-
-        Assert.assertEquals("ltd.getCoordsForConnectionType(SLIP_CENTER) is equal to...",
-                new Point2D.Double(100.0, 50.0),
-                ltd.getCoordsForConnectionType(LayoutEditor.HitPointType.SLIP_CENTER));
 
         Assert.assertEquals("ltd.getCoordsForConnectionType(SLIP_LEFT) is equal to...",
                 new Point2D.Double(95.38461538461539, 61.07692307692308),
@@ -625,6 +621,7 @@ public class LayoutSlipTest {
         } catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("single.setConnection(NONE, null, NONE); Invalid Connection Type");
+
         try {
             // test Invalid Connection Type
             ltd.setConnection(LayoutEditor.HitPointType.NONE, null, LayoutEditor.HitPointType.NONE);

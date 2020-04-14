@@ -1486,9 +1486,12 @@ public class LayoutEditorTools {
             if (t.getConnect1() == obj) {
                 type = t.getType2();
                 connect = t.getConnect2();
-            } else {
+            } else if (t.getConnect2() == obj) {
                 type = t.getType1();
                 connect = t.getConnect1();
+            } else {
+                log.error("Error obj not connected to {}!", t.getName());
+                return null;
             }
             if (type == LayoutEditor.HitPointType.POS_POINT) {
                 PositionablePoint p = (PositionablePoint) connect;

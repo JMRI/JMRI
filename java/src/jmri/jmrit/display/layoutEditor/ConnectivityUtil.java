@@ -1691,9 +1691,12 @@ public class ConnectivityUtil {
             if (tTrack.getConnect1() == pObject) {
                 tObject = tTrack.getConnect2();
                 tType = tTrack.getType2();
-            } else {
+            } else if (tTrack.getConnect2() == pObject) {
                 tObject = tTrack.getConnect1();
                 tType = tTrack.getType1();
+            } else {
+                log.error("Error pObject not connected to {}!", tTrack.getName());
+                return null;
             }
             if (tObject == null) {
                 log.error("Error while following track looking for next node");
