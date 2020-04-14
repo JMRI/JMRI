@@ -2,6 +2,7 @@ package jmri.jmrix;
 
 import org.junit.*;
 import javax.swing.JPanel;
+import jmri.util.ThreadingUtil;
 
 /**
  * Base tests for ConnectionConfig objects.
@@ -19,8 +20,10 @@ abstract public class AbstractConnectionConfigTestBase {
 
     @Test
     public void testLoadDetails(){
-        // verify no exceptions thrown
-        cc.loadDetails(new JPanel());
+        ThreadingUtil.runOnGUI(() -> {
+            // verify no exceptions thrown
+            cc.loadDetails(new JPanel());
+        });
     }
 
     @Test
