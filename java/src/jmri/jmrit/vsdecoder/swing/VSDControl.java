@@ -257,7 +257,7 @@ public class VSDControl extends JPanel {
      */
     protected void deleteButtonPressed(ActionEvent e) {
         log.debug("({}) Delete Button Pressed", address);
-        firePropertyChange(DELETE, address, address);
+        firePropertyChange(DELETE, null, address);
     }
 
     /**

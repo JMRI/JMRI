@@ -35,9 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * class VSDManagerFrame
- *
- * Main frame for the new GUI VSDecoder Manager Frame
+ * Main frame for the GUI VSDecoder Manager.
  *
  * <hr>
  * This file is part of JMRI.
@@ -349,7 +347,7 @@ public class VSDManagerFrame extends JmriJFrame {
     protected void volumeChange(ChangeEvent e) {
         JSlider v = (JSlider) e.getSource();
         log.debug("Volume slider moved. value: {}", v.getValue());
-        firePropertyChange(VOLUME_CHANGE, v.getValue(), v.getValue());
+        firePropertyChange(VOLUME_CHANGE, null, v.getValue());
     }
 
     private void buildMenu() {
