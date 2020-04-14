@@ -1,7 +1,8 @@
-package jmri.jmrix.can.cbus.swing.console;
+package jmri.jmrix.can.cbus.swing;
 
 import java.awt.event.ActionEvent;
 import javax.swing.*;
+import jmri.jmrix.can.swing.CanPanel;
 import jmri.jmrix.can.cbus.CbusEvent;
 import jmri.util.swing.ValidationNotifications;
 
@@ -14,9 +15,9 @@ import jmri.util.swing.ValidationNotifications;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Steve Young Copyright (C) 2018
  */
-public class CbusConsoleSendPane extends JPanel {
+public class CbusSendEventPane extends JPanel {
     
-    private final CbusConsolePane _mainPane;
+    private final CanPanel _mainPane;
     
     private JRadioButton onButton;
     private JRadioButton offButton;
@@ -36,7 +37,7 @@ public class CbusConsoleSendPane extends JPanel {
     private JRadioButton select3Data;
     private int _selectedData = 0;
     
-    public CbusConsoleSendPane(CbusConsolePane mainPane){
+    public CbusSendEventPane(CanPanel mainPane){
         super();
         _mainPane = mainPane;
         init();
@@ -97,7 +98,8 @@ public class CbusConsoleSendPane extends JPanel {
         
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(mainEventPanel);
-        add(eventDataPanel = getNewDataPanel());
+        eventDataPanel = getNewDataPanel();
+        add(eventDataPanel);
         
         dataSelectTypePerformed(null); // reset data panel
         
@@ -275,5 +277,5 @@ public class CbusConsoleSendPane extends JPanel {
         return true;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusConsoleSendPane.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusSendEventPane.class);
 }
