@@ -759,6 +759,7 @@
             <arg line="-n ${test.includes}"/>
             <arg line="--reports-dir '${testreport}'" />
             <jvmarg value="-Xmx1536m"/>
+            <jvmarg value="-ea"/>
 	    <jvmarg line="${test-single.jvmargs}"/>
         </java>    
 	<fail>
@@ -797,6 +798,7 @@
             <arg line="-n ${test.includes}"/>
             <arg line="--reports-dir ${testreport}" />
             <jvmarg value="-Xmx1536m"/>
+            <jvmarg value="-ea"/>
             <jvmarg value="${jacocoagent}"/>
 	    <jvmarg line="${test-single.jvmargs}"/>
         </java>    
