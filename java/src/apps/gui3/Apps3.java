@@ -92,7 +92,7 @@ public abstract class Apps3 extends AppsBase {
         super(applicationName, configFileDef, args);
 
         // Prepare font lists
-        prepareFontLists();
+        FontComboUtil.prepareFontListsAsync();
 
         // create GUI
         initializeHelpSystem();
@@ -239,22 +239,6 @@ public abstract class Apps3 extends AppsBase {
         debugmsg = true;
 
         debugmsg = false;
-    }
-
-    private void prepareFontLists() {
-        // Prepare font lists
-        Thread fontThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                log.debug("Prepare font lists...");
-                FontComboUtil.prepareFontLists();
-                log.debug("...Font lists built");
-            }
-        });
-        
-        fontThread.setDaemon(true);
-        fontThread.setPriority(Thread.MIN_PRIORITY);
-        fontThread.start();
     }
 
     protected void initMacOSXMenus() {

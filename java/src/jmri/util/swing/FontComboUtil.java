@@ -1,5 +1,6 @@
 package jmri.util.swing;
 
+import apps.systemconsole.SystemConsolePreferencesManager;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,9 +56,7 @@ public class FontComboUtil {
     private static volatile boolean preparing = false;
 
     public static List<String> getFonts(int which) {
-        if (!prepared && !preparing) { // prepareFontLists is synchronized; don't do it if you don't have to
-            prepareFontLists();
-        }
+        prepareFontListsAsync();
 
         switch (which) {
             case MONOSPACED:
@@ -80,33 +80,45 @@ public class FontComboUtil {
      * @return true if a symbol font; false if not
      */
     public static boolean isSymbolFont(String font) {
-        if (!prepared && !preparing) { // prepareFontLists is synchronized; don't do it if you don't have to
-            prepareFontLists();
-        }
+        prepareFontListsAsync();        
         return symbol.contains(font);
     }
 
+    public static synchronized void prepareFontListsAsync() {
+        if (prepared || preparing) {           
+            return;
+        }
+        
+        if (monospaced == null) {
+            // Initialise the font lists
+            monospaced = new ArrayList<>();
+            proportional = new ArrayList<>();
+            character = new ArrayList<>();
+            symbol = new ArrayList<>();
+            all = new ArrayList<>();
+        }
+        
+        if ( InstanceManager.getDefault(SystemConsolePreferencesManager.class).isFontFamilyChangeable() ) {
+            // Prepare font lists
+            preparing = true;
+            Thread fontThread = new Thread(() -> {
+                log.debug("Prepare font lists thread start...");
+                prepareFontLists();
+                log.debug("...Font lists thread end");
+            }, "PrepareFontListsThread");
+
+            fontThread.setDaemon(true);
+            fontThread.setPriority(Thread.MIN_PRIORITY);
+            fontThread.start();
+        }
+    }
+    
     /**
      * Method to initialise the font lists on first access
      */
-    public static synchronized void prepareFontLists() {
-        if (prepared || preparing) {
-            // Normally we shouldn't get here except when the initialisation
-            // thread has taken a bit longer than normal.
-            log.debug("Subsequent call - no need to prepare");
-            return;
-        }
-        preparing = true;
-
-        log.debug("Prepare font lists...");
-
-        // Initialise the font lists
-        monospaced = new ArrayList<>();
-        proportional = new ArrayList<>();
-        character = new ArrayList<>();
-        symbol = new ArrayList<>();
-        all = new ArrayList<>();
-
+    private static void prepareFontLists() {        
+        log.debug("Prepare font lists ...");        
+        
         // Create a font render context to use for the comparison
         Canvas c = new Canvas();
         // Loop through all available font families
@@ -117,7 +129,6 @@ public class FontComboUtil {
 
             // Retrieve a plain version of the current font family
             Font f = new Font(s, Font.PLAIN, 12);
-            FontMetrics fm = c.getFontMetrics(f);
 
             // Fairly naive test if this is a symbol font
 //            if (f.canDisplayUpTo("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")==-1) {
@@ -128,6 +139,7 @@ public class FontComboUtil {
 
                 // Check if the widths of a 'narrow' letter (I)
                 // a 'wide' letter (W) and a 'space' ( ) are the same.
+                FontMetrics fm = c.getFontMetrics(f);
                 int w = fm.charWidth('I');
                 if (fm.charWidth('W') == w && fm.charWidth(' ') == w) {
                     // Yes, they're all the same width - add to the monospaced list
@@ -141,7 +153,6 @@ public class FontComboUtil {
                 symbol.add(s);
             }
         }
-
         log.debug("...font lists built");
         prepared = true;
     }
@@ -323,6 +334,9 @@ public class FontComboUtil {
             return p;
 
         });
+                
+        fontList.setEnabled(InstanceManager.getDefault(SystemConsolePreferencesManager.class).isFontFamilyChangeable());
+        
         return fontList;
     }
 
@@ -332,11 +346,7 @@ public class FontComboUtil {
      * @return true if ready for use; false otherwise
      */
     public static boolean isReady() {
-        if (!prepared && !preparing) { // prepareFontLists is synchronized; don't do it if you don't have to
-            new Thread(() -> {
-                prepareFontLists();
-            }, "FontComboUtil Prepare").start();
-        }
+        prepareFontListsAsync();
         return prepared;
     }
 

@@ -31,13 +31,15 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     public static final String SCHEME = "scheme";
     public static final String FONT_SIZE = "fontSize";
     public static final String FONT_STYLE = "fontStyle";
+    public static final String CAN_CHANGE_FONT_FAMILY = "canChangeFontFamily";
     public static final String FONT_FAMILY = "fontFamily";
     public static final String WRAP_STYLE = "wrapStyle";
 
     // default settings
     private int scheme = 0; // Green on Black
     private int fontSize = 12;
-    private int fontStyle = Font.PLAIN;
+    private int fontStyle = Font.PLAIN;  
+    private boolean canChangeFontFamily = true;
     private String fontFamily = "Monospaced";  // NOI18N
     private int wrapStyle = SystemConsole.WRAP_STYLE_WORD;
 
@@ -53,6 +55,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     public void initialize(Profile profile) throws InitializationException {
         if (!this.initialized) {
             Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
+            this.setFontFamilyChangeable(preferences.getBoolean(CAN_CHANGE_FONT_FAMILY, this.isFontFamilyChangeable()));
             this.setFontFamily(preferences.get(FONT_FAMILY, this.getFontFamily()));
             this.setFontSize(preferences.getInt(FONT_SIZE, this.getFontSize()));
             this.setFontStyle(preferences.getInt(FONT_STYLE, this.getFontStyle()));
@@ -65,6 +68,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     @Override
     public void savePreferences(Profile profile) {
         Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
+        preferences.putBoolean(CAN_CHANGE_FONT_FAMILY,this.isFontFamilyChangeable());
         preferences.put(FONT_FAMILY, this.getFontFamily());
         preferences.putInt(FONT_SIZE, this.getFontSize());
         preferences.putInt(FONT_STYLE, this.getFontStyle());
@@ -184,6 +188,22 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
                 this.setFontFamily(fontFamily);
             }, 1000); // one second
         }
+    }
+    
+    /**
+     * @return can the fontFamily be changed
+     * if true will trigger a font scan task on JMRI startup
+     */
+    public boolean isFontFamilyChangeable() {
+        return canChangeFontFamily;
+    }
+    
+    /**
+     * @param  canChange can the fontFamily be changed
+     * if true will trigger a font scan task on JMRI startup
+     */
+    public void setFontFamilyChangeable(boolean canChange) {
+        canChangeFontFamily = canChange;
     }
 
     /**

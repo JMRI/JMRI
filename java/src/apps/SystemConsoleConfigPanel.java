@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -64,12 +65,16 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
         rbc.getString("ConsoleWrapStyleWord")};
 
     private static final JToggleButton fontStyleBold = new JToggleButton("B");
+    
+    private static final JCheckBox canChangeFontFamily = new JCheckBox();
 
     private static final JToggleButton fontStyleItalic = new JToggleButton("I");
 
     private static final JComboBox<Scheme> schemes = new JComboBox<>(SystemConsole.getInstance().getSchemes());
 
     private static final JComboBox<String> fontFamily = FontComboUtil.getFontCombo(FontComboUtil.MONOSPACED, 14);
+    
+    private static final JLabel fontFamilyLabel = new JLabel();
 
     private static final JComboBox<Integer> fontSize = new JComboBox<>(fontSizes);
 
@@ -110,17 +115,31 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
         });
 
         p.add(schemes);
-        add(p);
+        add(p);                
 
+        p = new JPanel(new FlowLayout());
+        canChangeFontFamily.setText(rbc.getString("ConsoleCanChangeFontFamily"));
+        canChangeFontFamily.setToolTipText(rbc.getString("ConsoleCanChangeFontFamilyTooltip"));
+        canChangeFontFamily.setSelected(this.getPreferencesManager().isFontFamilyChangeable());
+        canChangeFontFamily.addActionListener((ActionEvent e) -> {
+            this.getPreferencesManager().setFontFamilyChangeable(canChangeFontFamily.isSelected());
+            fontFamily.setEnabled(canChangeFontFamily.isSelected());
+            fontFamilyLabel.setEnabled(canChangeFontFamily.isSelected());
+        });
+        p.add(canChangeFontFamily);
+        add(p);                
+        
         p = new JPanel(new FlowLayout());
         fontFamily.addActionListener((ActionEvent e) -> {
             this.getPreferencesManager().setFontFamily((String) fontFamily.getSelectedItem());
             schemes.repaint();
         });
         fontFamily.setSelectedItem(this.getPreferencesManager().getFontFamily());
+        fontFamily.setEnabled(this.getPreferencesManager().isFontFamilyChangeable());
 
-        JLabel fontFamilyLabel = new JLabel(rbc.getString("ConsoleFontStyle"));
+        fontFamilyLabel.setText(rbc.getString("ConsoleFontStyle"));
         fontFamilyLabel.setLabelFor(fontFamily);
+        fontFamilyLabel.setEnabled(this.getPreferencesManager().isFontFamilyChangeable());
 
         p.add(fontFamilyLabel);
         p.add(fontFamily);
