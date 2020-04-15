@@ -315,7 +315,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         protected static boolean isSlipHitType(HitPointType hitType) {
             return ((hitType.compareTo(HitPointType.SLIP_A) >= 0)
-                    && (hitType.compareTo(HitPointType.SLIP_D) <= 0));
+                    && (hitType.compareTo(HitPointType.SLIP_RIGHT) <= 0));
         }
 
         protected static boolean isBezierHitType(HitPointType hitType) {

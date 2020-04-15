@@ -11,7 +11,6 @@ import java.util.function.*;
 import javax.annotation.*;
 import javax.swing.*;
 import jmri.*;
-import jmri.jmrit.display.layoutEditor.*;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;
