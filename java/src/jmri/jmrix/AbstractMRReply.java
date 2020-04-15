@@ -195,7 +195,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
     }
 
     /**
-     * Attaches the message currently being transmistted to this reply. Marks the reply
+     * Attaches the message currently being transmitted to this reply. Marks the reply
      * as a likely response to the command sent to the layout, based on
      * the state of the transmit thread. Note that even replies marked with some transmitted
      * message may be, in fact, unsolicited, just concurrently received.
@@ -203,7 +203,6 @@ abstract public class AbstractMRReply extends AbstractMessage {
      * @param msg the transmitted command
      */
     protected void attachTo(AbstractMRMessage msg) {
-        assert repliesTo == null;
         repliesTo = msg;
     }
 

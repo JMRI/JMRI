@@ -152,15 +152,19 @@ public class XNetTrafficControllerIT {
         }
     }
     
-    private void initializeLayout(XNetTestSimulator adapter) {
+    private void initializeLayout(XNetTestSimulator adapter) throws Exception {
         initializeLayout(adapter, new TestPacketizer(new LenzCommandStation()));
     }
     
-    private void initializeLayout(XNetTestSimulator adapter, XNetPacketizer packetizer) {
+    private void initializeLayout(XNetTestSimulator adapter, XNetPacketizer packetizer) throws Exception {
         testAdapter = adapter;
         lnis = packetizer;
         testAdapter.configure(lnis);
         xnetManager = (XNetTurnoutManager)InstanceManager.getDefault().getInstance(XNetSystemConnectionMemo.class).getTurnoutManager();
+        
+        // queue a null message, simulator will signal when it is transmitted -
+        // all startup messages are already procesed.
+        testAdapter.drainPackets(true);
     }
 
     @After
@@ -180,7 +184,6 @@ public class XNetTrafficControllerIT {
         XNetTestSimulator simul = new XNetTestSimulator.LZV100();
         initializeLayout(simul);
         
-        simul.clearMesages();
         simul.setCaptureMessages(true);
         
         simul.limitReplies = true;
@@ -217,7 +220,6 @@ public class XNetTrafficControllerIT {
         XNetTestSimulator simul = new XNetTestSimulator.LZV100();
         initializeLayout(simul);
         
-        simul.clearMesages();
         simul.setCaptureMessages(true);
         
         XNetMessage m = XNetMessage.getCSVersionRequestMessage();       
@@ -273,12 +275,11 @@ public class XNetTrafficControllerIT {
         XNetTestSimulator simul = new XNetTestSimulator.NanoXGenLi();
         initializeLayout(simul);
         
-        
         Turnout t = xnetManager.provideTurnout("XT5");
 
-        Thread.sleep(100);
+        lnis.sendXNetMessage(new XNetMessage("00 00 00"), null);
+        testAdapter.drainPackets(true);
         
-        simul.clearMesages();
         simul.setCaptureMessages(true);
         t.setCommandedState(XNetTurnout.THROWN);
 
@@ -301,13 +302,11 @@ public class XNetTrafficControllerIT {
         initializeLayout(simul);
         
         Turnout t = xnetManager.provideTurnout("XT5");
-        // excess OFF messages are sent
-        Thread.sleep(500);
         t.setCommandedState(XNetTurnout.CLOSED);
-
+        // delayed OFF messages are sent
         Thread.sleep(500);
-        
-        simul.clearMesages();
+
+        testAdapter.drainPackets(true);
         simul.setCaptureMessages(true);
         t.setCommandedState(XNetTurnout.CLOSED);
 
@@ -355,12 +354,11 @@ public class XNetTrafficControllerIT {
         });
         
         Turnout t = xnetManager.provideTurnout("XT21");
-        // excess OFF messages are sent
+        // delayed OFF messages are sent
         Thread.sleep(500);
         t.setCommandedState(XNetTurnout.CLOSED);
-
-        Thread.sleep(500);
-        simul.clearMesages();
+        
+        testAdapter.drainPackets(true);
         simul.setCaptureMessages(true);
         
         // block property changes for a while
@@ -371,6 +369,8 @@ public class XNetTrafficControllerIT {
             marker.set(msg);
         }
         l.await(300, TimeUnit.MILLISECONDS);
+        testAdapter.drainPackets(false);
+        
         // the turnout must be already IDLE
         assertEquals(XNetTurnout.IDLE, ((XNetTurnout)t).internalState);
         
@@ -380,7 +380,7 @@ public class XNetTrafficControllerIT {
         // accessory request --> feedback + OK
         // 1st OFF           --> OK
         // 2nd OFF           --> OK
-        l2.await(60000, TimeUnit.MILLISECONDS);
+        l2.await(500, TimeUnit.MILLISECONDS);
         List<XNetReply> replies = simul.getIncomingReplies();
         assertEquals(4, replies.size());
         

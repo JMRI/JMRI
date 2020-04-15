@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import jmri.jmrix.lenz.liusb.LIUSBXNetPacketizer;
@@ -69,6 +70,34 @@ abstract class XNetTestSimulator extends XNetSimulatorAdapter {
      */
     private volatile boolean captureMessages;
     
+    private final Semaphore messageMarkerSemaphore = new Semaphore(0);
+    
+    /**
+     * Will wait until the whole transmit queue is emptied and all replies sent.
+     * The method will send a spurious 0x01 0x00 0x01 message (which does not exist)
+     * and wait until it is received / processed by the receive thread. Optionally
+     * will clear capture buffers.
+     * 
+     * @param clear if true, clear capture buffers.
+     * @throws InterruptedException 
+     */
+    public void drainPackets(boolean clear) throws InterruptedException {
+        messageMarkerSemaphore.drainPermits();
+        getSystemConnectionMemo().getXNetTrafficController().sendXNetMessage(
+            // LI-* messages start with 0x01 0x01
+            new XNetMessage("01 00 01"), new XNetListenerScaffold() {
+                @Override
+                public void message(XNetReply m) {
+                    messageMarkerSemaphore.release();
+                }
+            }
+        );
+        messageMarkerSemaphore.acquire();
+        if (clear) {
+            clearMesages();
+        }
+    }
+
     public void setCaptureMessages(boolean captureMessages) {
         this.captureMessages = captureMessages;
     }
@@ -113,10 +142,23 @@ abstract class XNetTestSimulator extends XNetSimulatorAdapter {
             }
         }
     }
+    
+    private boolean nextRelease;
 
     @Override
     protected XNetMessage readMessage() {
+        /*
+        if (nextRelease) {
+            messageMarkerSemaphore.release();
+            nextRelease = false;
+        }
+        */
         XNetMessage msg = super.readMessage();
+        /*
+        if (msg.getElement(0) == 0x00) {
+            nextRelease = true;
+        }
+        */
         if (captureMessages) {
             synchronized (this) {
                 outgoingMessages.add(msg);
@@ -156,6 +198,10 @@ abstract class XNetTestSimulator extends XNetSimulatorAdapter {
             }
             XNetReply r = replyBuffer.remove(0);
             return captureReply(r);
+        }
+        if (m.getElement(0) == 0x01 && m.getElement(1) == 0x00) {
+            // bypass reply buffer.
+            return new XNetReply("01 04 05");
         }
         XNetReply reply = super.generateReply(m);
         if (isPrimaryReply(m)) {
