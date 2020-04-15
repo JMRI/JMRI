@@ -542,5 +542,9 @@
                 instance of a manager have been removed. Use
                 <code>InstanceManager.getDefault(NameOfManager.class)</code>
                 instead.</li>
+            <li><a href="https://github.com/JMRI/JMRI/pull/8286">PR 8286 revised the way 
+                that JMRI code should fire and catch events.  If you have code (Java or script)
+                of your own that implements event firing or tricky listening, you
+                should review those changes to see if they will or should affect your code.
         </ul>
 

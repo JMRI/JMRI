@@ -38,6 +38,12 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 ```
 After that, add and commit the additional files that were created within lib/
 
+After you have committed your changes, please run
+```
+./scripts/check_lib_dates
+```
+which checks the dates of the control files to make sure they've benen updated when lib/ is updated
+
 ### Specific components:
 
 ##### jsplitbutton-1.3.1.jar
