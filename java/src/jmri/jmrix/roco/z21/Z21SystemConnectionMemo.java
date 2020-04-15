@@ -203,9 +203,10 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         jmri.InstanceManager.setSensorManager(getSensorManager());
 
         // but make sure the LocoNet memo is set (for one feedback message).
-        Z21XNetProgrammerManager xpm = (Z21XNetProgrammerManager) _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();
-        xpm.setLocoNetMemo(_loconettunnel.getStreamPortController().getSystemConnectionMemo());
-
+        XNetProgrammerManager xpm = _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();
+        if ( xpm instanceof Z21XNetProgrammerManager) {
+            ((Z21XNetProgrammerManager) xpm).setLocoNetMemo(_loconettunnel.getStreamPortController().getSystemConnectionMemo());
+        }
         // setup the MultiMeter
         getMultiMeter();
 

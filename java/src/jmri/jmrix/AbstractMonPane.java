@@ -245,7 +245,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         alwaysOnTopCheckBox.setSelected(pm.getSimplePreferenceState(alwaysOnTopCheck));
         Component ancestor = getTopLevelAncestor();
         if (ancestor instanceof JmriJFrame) {
-            ((JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
+            ((JmriJFrame) ancestor).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
         } else {
             // this pane isn't yet part of a frame,
             // which can be normal, but

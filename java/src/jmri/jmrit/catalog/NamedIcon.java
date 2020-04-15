@@ -406,7 +406,7 @@ public class NamedIcon extends ImageIcon {
 
     public void transformImage(int w, int h, AffineTransform t, Component comp) {
         if (w <= 0 || h <= 0) {
-            if (log.isDebugEnabled()) {
+            if (comp instanceof jmri.jmrit.display.Positionable) {
                 log.debug("transformImage bad coords {}",
                         ((jmri.jmrit.display.Positionable) comp).getNameString());
             }
