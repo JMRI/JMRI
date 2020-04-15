@@ -930,10 +930,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      * the message + associated info for later processing. If the internalState is {@link #IDLE}, 
      * the message is passed immediately for transmission.
      * 
-     * @param message to queue.
-     * @param s - the <b>internal state</b> to set when the message is put into the transmit queue.
-     * @param c - the desired <b>commanded state</b>. Use -1 for queries.
-     * @param l - the listener to be notified on command's acknowledge.
+     * @param m message to queue.
+     * @param s the <b>internal state</b> to set when the message is put into the transmit queue.
+     * @param c the desired <b>commanded state</b>. Use -1 for queries.
+     * @param l the listener to be notified on command's acknowledge.
      */
     protected synchronized void queueMessage(XNetMessage m, int s, int c, XNetListener l) {
         log.debug("adding message {} to message queue.  Current Internal State {}",m,internalState);

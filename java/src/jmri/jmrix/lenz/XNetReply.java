@@ -435,7 +435,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * Marks certain parts of message as consumed. The selector values are
      * message-specific, must be within range 0..255. If the message consumed
      * state did not change (it was already consumed), returns true. Can be
-     * used in {@link code} if condition to check whether to proceed with an
+     * used in {@code if} condition to check whether to proceed with an
      * action, and mark the reply consumed by a single call.
      * <p>
      * <b>Note:</b> If processing a feedback, consider using {@link #markFeedbackActionConsumed}.
