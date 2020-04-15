@@ -133,10 +133,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // Enable proper snapping of JSliders
         SliderSnap.init();
 
-        // Prepare font lists
-        log.trace("prepareFontLists");
-        FontComboUtil.prepareFontListsAsync();
-
         // Get configuration profile
         log.trace("start to get configuration profile - locate files");
         // Needs to be done before loading a ConfigManager or UserPreferencesManager
@@ -287,7 +283,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // populate GUI
         log.debug("Start UI");
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
+        
+        // Prepare font lists
+        log.trace("prepareFontLists");
+        FontComboUtil.prepareFontListsAsync();
+        
         // done
         long end = System.nanoTime();
 

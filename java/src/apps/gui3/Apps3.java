@@ -91,9 +91,6 @@ public abstract class Apps3 extends AppsBase {
         // pre-GUI work
         super(applicationName, configFileDef, args);
 
-        // Prepare font lists
-        FontComboUtil.prepareFontListsAsync();
-
         // create GUI
         initializeHelpSystem();
         if (SystemType.isMacOSX()) {
@@ -106,7 +103,9 @@ public abstract class Apps3 extends AppsBase {
             return;
         }
         createAndDisplayFrame();
-    }
+        
+        // Prepare font lists
+        FontComboUtil.prepareFontListsAsync();    }
 
     /**
      * For compatability with adding in buttons to the toolbar using the
