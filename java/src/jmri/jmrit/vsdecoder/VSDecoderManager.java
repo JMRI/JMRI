@@ -594,7 +594,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             if (evt.getPropertyName().equals(VSDManagerFrame.REMOVE_DECODER)) {
                 // Shut down the requested decoder and remove it from the manager's hash maps. 
                 // Unless there are "illegal" handles, this should put the decoder on the garbage heap.  I think.
-                String sa = (String) evt.getNewValue();
+                String sa = (String) evt.getOldValue();
                 VSDecoder d = this.getVSDecoderByAddress(sa);
                 log.debug("Removing Decoder {} ... {}", sa, d.getAddress());
                 stopSoundPositionTimer(d);

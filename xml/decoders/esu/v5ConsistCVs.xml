@@ -58,6 +58,9 @@
             <revremark>Revision in original 0NMRA.xml file</revremark>
         </revision>
     </revhistory>
+    <!-- Do not label any of these variables. -->
+    <!-- The allocation of bits within the CVs changes depending on the (user-updatable) firmware version. -->
+    <!-- Labels must instead be attached to display items in v5ConsistPaneGroup1.xml and v5ConsistPaneGroup1.xm2. -->
     <variable item="CV 21 bit 0" CV="21" mask="XXXXXXXV" comment="No labels here">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <tooltip>Determines whether the function will respond to the consist address</tooltip>
