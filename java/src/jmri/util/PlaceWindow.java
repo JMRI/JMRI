@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.IllegalComponentStateException;
 import java.awt.Point;
 import java.awt.Window;
 //import java.util.ArrayList;
@@ -91,13 +92,18 @@ public class PlaceWindow implements InstanceManagerAutoDefault {
             }
         }*/
         int x = 0;
-        for (int i = 0;  i < _screenSize.length; i++) {
-            x += _screenSize[i].width;
-            if (window.getLocationOnScreen().x < x) {
-                return i;
+        try {
+            for (int i = 0;  i < _screenSize.length; i++) {
+                x += _screenSize[i].width;
+                if (window.getLocationOnScreen().x < x) {
+                    return i;
+                }
             }
+            
+        } catch (IllegalComponentStateException icse) {
+            return 0;
         }
-        return -1;
+        return 0;
     }
 
     public Dimension getScreenSize(int screenNum) {
@@ -144,7 +150,12 @@ public class PlaceWindow implements InstanceManagerAutoDefault {
         Dimension compDim;
         int margin;
         if (comp != null) {
-            compLoc = new Point(comp.getLocationOnScreen());
+            try {
+                compLoc = new Point(comp.getLocationOnScreen());
+            } catch (IllegalComponentStateException icse) {
+                compLoc = comp.getLocation();
+                compLoc = new Point(compLoc.x + parentLoc.x, compLoc.y + parentLoc.y);
+            }
             compDim = comp.getSize();
             margin = 20;
         } else {

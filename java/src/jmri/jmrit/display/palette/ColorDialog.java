@@ -148,13 +148,11 @@ public class ColorDialog extends JDialog implements ChangeListener {
                     cancel();
                 }
             });
-            
-            
             setContentPane(panel);
-            InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(client, t, this);
 
             pack();
             setVisible(true);
+            InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(client, t, this);
         }
 
         JPanel makePanel(JPanel p) {
@@ -200,16 +198,7 @@ public class ColorDialog extends JDialog implements ChangeListener {
             panel.setLayout(new FlowLayout());
             JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
             doneButton.addActionListener((ActionEvent event) -> {
-                    log.debug("Done button: color= {}", _chooser.getColor());
-                    if (_colorAction != null) {
-                        _colorAction.actionPerformed(null);
-                    }
-                    if (_util != null) {
-                        _util.setSuppressRecentColor(false);
-                    }
-                    JmriColorChooser.suppressAddRecentColor(false);
-                    JmriColorChooser.addRecentColor(_chooser.getColor());
-                    dispose();
+                done();
             });
             panel.add(doneButton);
 
@@ -219,8 +208,20 @@ public class ColorDialog extends JDialog implements ChangeListener {
                 });
 
             panel.add(cancelButton);
-
             return panel;
+        }
+
+        void done() {
+            log.debug("Done button: color= {}", _chooser.getColor());
+            if (_colorAction != null) {
+                _colorAction.actionPerformed(null);
+            }
+            if (_util != null) {
+                _util.setSuppressRecentColor(false);
+            }
+            JmriColorChooser.suppressAddRecentColor(false);
+            JmriColorChooser.addRecentColor(_chooser.getColor());
+            dispose();
         }
 
         void cancel() {
