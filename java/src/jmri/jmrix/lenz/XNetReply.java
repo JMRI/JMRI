@@ -380,7 +380,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         if (isFeedbackMessage()) {
             return 1;
         } else if (isFeedbackBroadcastMessage()) {
-            return (this.getElement(0) & 0x0F);
+            return (this.getElement(0) & 0x0F) / 2;
         }
         return 0;
     }
@@ -795,7 +795,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * @return true if the message is an unsollicited message
+     * @return true if the message is an unsolicited message
      */
     @Override
     public boolean isUnsolicited() {
@@ -811,10 +811,13 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * Resets the unsolicited feedback flag. If the feedback was received
-     * as a broadcast - unsolicited, this method <b>will not cause</b> the
-     * {@link #isUnsolicited()} to return {@code false}.  Messages sent
-     * as unsolicited by the command station can not be turned to solicited.
+     * Resets the unsolicited feedback flag. If the reply was not a feedback,
+     * or was received as a broadcast - unsolicited from the command station, 
+     * this method  <b>will not cause</b> the {@link #isUnsolicited()} to 
+     * return {@code false}.  
+     * <p>
+     * Messages sent as unsolicited by the command station can not be turned 
+     * to solicited.
      */
     public final void resetUnsolicited() {
         reallyUnsolicited = false;

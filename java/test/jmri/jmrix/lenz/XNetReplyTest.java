@@ -1,5 +1,9 @@
 package jmri.jmrix.lenz;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -1386,6 +1390,90 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     public void testToMonitorStringInvalidFeedbackReply(){
         XNetReply r = new XNetReply("42 FF FF 42");
         Assert.assertEquals("Monitor String","Feedback Response: 255 255",r.toMonitorString());
+    }
+    
+    /**
+     * Checks that the number of feedback items are correctly returned.
+     */
+    @Test
+    public void testFeedbackItemsCount() {
+        XNetReply r = new XNetReply("42 05 48 0f");
+        assertEquals("Feedback has single item", 1, r.getFeedbackMessageItems());
+        r = new XNetReply("46 05 48 06 48 07 48 0f");
+        assertEquals("Feedback has 3 items", 3, r.getFeedbackMessageItems());
+        r = new XNetReply("E3 32 00 04 C5");
+        assertEquals(0, r.getFeedbackMessageItems());
+    }
+    
+    @Test
+    public void testReplyConsumed() {
+        // try on a random non-feedback reply
+        XNetReply r = new XNetReply("E3 32 00 04 C5");
+        assertFalse("Initialy must not be consumed", r.isConsumed());
+        assertFalse("Odd accessory action OK", r.isConsumed(r.getFeedbackConsumedBit(1)));
+        assertFalse("Even accessory action OK", r.isConsumed(r.getFeedbackConsumedBit(2)));
+
+        // consume the action
+        assertFalse("Action must be permitted", r.markConsumed(XNetReply.CONSUMED_ACTION));
+        assertTrue("Reply was consumed", r.isConsumed());
+        assertTrue("Second action must be blocked", r.markConsumed(XNetReply.CONSUMED_ACTION));
+        
+        // Check that on non-feedback, this block actions for both odd and even accessories
+        assertTrue("Odd accessory action blocked", r.isConsumed(r.getFeedbackConsumedBit(1)));
+        assertTrue("Even accessory action blocked", r.isConsumed(r.getFeedbackConsumedBit(1)));
+        assertTrue("Odd accessory action blocked", r.markFeedbackActionConsumed(1));
+        assertTrue("Even accessory action blocked", r.markFeedbackActionConsumed(2));
+        
+        // real 2nd action must be OK
+        assertFalse("Different action must be still OK", r.markConsumed(XNetReply.CONSUMED_ACTION_EVEN));
+    }
+    
+    @Test
+    public void testFeedbackReplyConsumedOnNonFeedback() {
+        // try on a random non-feedback reply
+        XNetReply r = new XNetReply("E3 32 00 04 C5");
+        assertFalse("Odd accessory action OK", r.isConsumed(r.getFeedbackConsumedBit(1)));
+        assertFalse("Even accessory action OK", r.isConsumed(r.getFeedbackConsumedBit(2)));
+
+        // consume as if it was feedback
+        assertFalse("Odd accessory action OK", r.markFeedbackActionConsumed(1));
+        // the other accessory should also block since the message was not, in fact, feedback
+        assertTrue("Even accessory action now blocked", r.markFeedbackActionConsumed(2));
+        
+        assertTrue("Reply was consumed", r.isConsumed());
+        assertTrue("Odd accessory action now blocked", r.markFeedbackActionConsumed(1));
+        assertTrue("Odd accessory action blocked", r.isConsumed(r.getFeedbackConsumedBit(1)));
+        assertTrue("Even accessory action blocked", r.isConsumed(r.getFeedbackConsumedBit(1)));
+
+        // the opposite direction: mark even, check odd
+        r = new XNetReply("E3 32 00 04 C5");
+        assertFalse("Even accessory action OK", r.markFeedbackActionConsumed(2));
+        assertTrue("Odd accessory action now blocked", r.markFeedbackActionConsumed(1));
+
+        assertTrue("Reply was consumed", r.isConsumed());
+        assertTrue("Odd accessory action now blocked", r.markFeedbackActionConsumed(1));
+        assertTrue("Odd accessory action blocked", r.isConsumed(r.getFeedbackConsumedBit(1)));
+        assertTrue("Even accessory action blocked", r.isConsumed(r.getFeedbackConsumedBit(1)));
+    }
+
+    @Test
+    public void testFeedbackReplyConsumed() {
+        XNetReply r = new XNetReply("42 05 48 0f");
+        assertFalse("Initialy must not be consumed", r.isConsumed());
+        assertFalse("Odd accessory action OK", r.isConsumed(r.getFeedbackConsumedBit(1)));
+        assertFalse("Even accessory action OK", r.isConsumed(r.getFeedbackConsumedBit(2)));
+
+        // mark action on odd
+        assertFalse("Odd accessory action OK", r.markFeedbackActionConsumed(1));
+        assertTrue("Odd accessory bit true", r.isConsumed(r.getFeedbackConsumedBit(1)));
+        assertTrue("Odd accessory action now blocked", r.markFeedbackActionConsumed(1));
+        
+        assertFalse("Even accessory action bit false", r.isConsumed(r.getFeedbackConsumedBit(2)));
+        
+        // mark action on even
+        assertFalse("Even accessory action remains OK", r.markFeedbackActionConsumed(2));
+        assertTrue("Even accessory bit true", r.isConsumed(r.getFeedbackConsumedBit(2)));
+        assertTrue("Even accessory 2nd action blocked", r.markFeedbackActionConsumed(2));
     }
 
     // The minimal setup for log4J
