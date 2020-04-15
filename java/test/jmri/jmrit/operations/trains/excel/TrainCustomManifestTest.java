@@ -1,8 +1,10 @@
 package jmri.jmrit.operations.trains.excel;
 
-import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
 import org.junit.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
 
 /**
  *
@@ -14,6 +16,28 @@ public class TrainCustomManifestTest extends OperationsTestCase {
     public void testCTor() {
         TrainCustomManifest t = new TrainCustomManifest();
         Assert.assertNotNull("exists",t);
+    }
+    
+    @Test
+    public void testFileExists() {
+        TrainCustomManifest t = new TrainCustomManifest();
+        Assert.assertFalse("file should not exist", t.doesCommonFileExist());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    @Test
+    public void testCheckProcessReady() {
+        TrainCustomManifest t = new TrainCustomManifest();
+        Assert.assertTrue("should be ready", t.checkProcessReady());
+    }
+    
+    @Test
+    public void testProcess() {
+        TrainCustomManifest t = new TrainCustomManifest();
+        Assert.assertFalse("should return false", t.process());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainCustomManifestTest.class);
