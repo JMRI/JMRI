@@ -76,7 +76,7 @@ public class LayoutConnectivity {
     private TrackSegment track1 = null;
 
     private LayoutTrack connect2 = null;
-    private int typeConnect2 = 0;
+    private LayoutEditor.HitPointType typeConnect2 = LayoutEditor.HitPointType.NONE;
 
     private LayoutTurnout xover = null;
     private int xoverBoundaryType = NONE;
@@ -131,7 +131,7 @@ public class LayoutConnectivity {
         return (false);
     }
 
-    public void setConnections(TrackSegment t, LayoutTrack o, int type, PositionablePoint p) {
+    public void setConnections(TrackSegment t, LayoutTrack o, LayoutEditor.HitPointType type, PositionablePoint p) {
         track1 = t;
         if (t == null) {
             log.error("null track1 when setting up LayoutConnectivity");
@@ -160,7 +160,7 @@ public class LayoutConnectivity {
         return connect2;
     }
 
-    public int getConnectedType() {
+    public LayoutEditor.HitPointType getConnectedType() {
         return typeConnect2;
     }
 
@@ -226,7 +226,7 @@ public class LayoutConnectivity {
         hash = 37 * hash + direction;
         hash = 37 * hash + (this.track1 != null ? this.track1.hashCode() : 0);
         hash = 37 * hash + (this.connect2 != null ? this.connect2.hashCode() : 0);
-        hash = 37 * hash + typeConnect2;
+        hash = 37 * hash + typeConnect2.getXmlValue();
         hash = 37 * hash + (this.xover != null ? this.xover.hashCode() : 0);
         hash = 37 * hash + (this.anchor != null ? this.anchor.hashCode() : 0);
         return hash;

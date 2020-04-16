@@ -48,7 +48,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
                 if (val instanceof jmri.IdTag) {
                     ObjectNode idTagValue = idTagService.doGet((jmri.IdTag) val, name, IDTAG, request);
                     data.set(VALUE, idTagValue);
-                } else if (val instanceof Reportable) {
+                } else if (val instanceof jmri.Reporter) {
                     ObjectNode reporterValue = reporterService.doGet((jmri.Reporter) val, name, REPORTER, request);
                     data.set(VALUE, reporterValue);
                 } else {

@@ -53,11 +53,9 @@ public class CbusEventRequestDataModelTest {
         
         for (int i = 0; i <t.getColumnCount(); i++) {
             Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
-            Assert.assertTrue("column has a width", CbusEventRequestDataModel.getPreferredWidth(i) > 0 );
         }
         
         Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown") );
-        Assert.assertTrue("column has NO width", CbusEventRequestDataModel.getPreferredWidth(999) > 0 );
         Assert.assertTrue("column class integer",
             t.getColumnClass(CbusEventRequestDataModel.FEEDBACKTIMEOUT_COLUMN) ==  Integer.class );
         Assert.assertTrue("column class string",
