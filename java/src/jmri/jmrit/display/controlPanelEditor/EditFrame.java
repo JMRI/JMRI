@@ -31,8 +31,6 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
     protected boolean _suppressWarnings = false;
 
     static int STRUT_SIZE = 10;
-    static Point _loc = new Point(-1, -1);
-    static Dimension _dim = new Dimension();
 
     public EditFrame(String title, CircuitBuilder parent, OBlock block) {
         super(false, false);
@@ -62,12 +60,7 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
         setContentPane(contentPane);
 
         pack();
-        if (_loc.x < 0) {
-            InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_parent._editor, null, this);
-        } else {
-            setLocation(_loc);
-            setSize(_dim);
-        }
+        InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_parent._editor, null, this);
         setVisible(true);
     }
 
@@ -151,14 +144,8 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
                 }
             }
         }
-        storeLocDim(getLocation(_loc), getSize(_dim));
         _parent.closeCircuitBuilder(_homeBlock);
         dispose();
         return true;
-    }
-
-    private static void storeLocDim(@Nonnull Point location, @Nonnull Dimension size) {
-        _loc = location;
-        _dim = size;
     }
 }
