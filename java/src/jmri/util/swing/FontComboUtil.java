@@ -73,6 +73,26 @@ public class FontComboUtil {
 
     }
 
+    
+    public static List<String> getRealFonts(int which) {
+        if (!prepared && !preparing) { // prepareFontLists is synchronized; don't do it if you don't have to
+            prepareFontLists();
+        }
+
+        switch (which) {
+            case MONOSPACED:
+                return new ArrayList<>(monospaced);
+            case PROPORTIONAL:
+                return new ArrayList<>(proportional);
+            case CHARACTER:
+                return new ArrayList<>(character);
+            case SYMBOL:
+                return new ArrayList<>(symbol);
+            default:
+                return new ArrayList<>(all);
+        }
+
+    }
     /**
      * Determine if the specified font family is a symbol font
      *
@@ -89,7 +109,7 @@ public class FontComboUtil {
     /**
      * Method to initialise the font lists on first access
      */
-    public static synchronized void prepareFontLists() {
+    private static synchronized void prepareFontLists() {
         if (prepared || preparing) {
             // Normally we shouldn't get here except when the initialisation
             // thread has taken a bit longer than normal.
@@ -102,45 +122,18 @@ public class FontComboUtil {
 
         // Initialise the font lists
         monospaced = new ArrayList<>();
+        monospaced.add("Monospaced");
         proportional = new ArrayList<>();
+        proportional.add("Serif");
         character = new ArrayList<>();
+        character.add("Monospaced");
         symbol = new ArrayList<>();
+        symbol.add("SansSerif");
         all = new ArrayList<>();
-
-        // Create a font render context to use for the comparison
-        Canvas c = new Canvas();
-        // Loop through all available font families
-        for (String s : GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames()) {
-
-            // Add to the 'all' fonts list
-            all.add(s);
-
-            // Retrieve a plain version of the current font family
-            Font f = new Font(s, Font.PLAIN, 12);
-            FontMetrics fm = c.getFontMetrics(f);
-
-            // Fairly naive test if this is a symbol font
-//            if (f.canDisplayUpTo("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")==-1) {
-            // Check that a few different characters can be displayed
-            if (f.canDisplay('F') && f.canDisplay('b') && f.canDisplay('8')) {
-                // It's not a symbol font - add to the character font list
-                character.add(s);
-
-                // Check if the widths of a 'narrow' letter (I)
-                // a 'wide' letter (W) and a 'space' ( ) are the same.
-                int w = fm.charWidth('I');
-                if (fm.charWidth('W') == w && fm.charWidth(' ') == w) {
-                    // Yes, they're all the same width - add to the monospaced list
-                    monospaced.add(s);
-                } else {
-                    // No, they're different widths - add to the proportional list
-                    proportional.add(s);
-                }
-            } else {
-                // It's a symbol font - add to the symbol font list
-                symbol.add(s);
-            }
-        }
+        all.addAll(monospaced);
+        all.addAll(proportional);
+        all.addAll(character);
+        all.addAll(symbol);       
 
         log.debug("...font lists built");
         prepared = true;
