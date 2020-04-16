@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.*;
 import java.util.*;
 import javax.annotation.*;
-import javax.swing.JPopupMenu;
+import javax.swing.*;
 import jmri.*;
 import jmri.util.*;
 
@@ -64,6 +64,10 @@ public abstract class LayoutTrack {
 
     /**
      * constructor method
+     *
+     * @param ident        the identifier for this track
+     * @param c            the position for this track
+     * @param layoutEditor the layout editor this track is associated with
      */
     public LayoutTrack(@Nonnull String ident, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
         this.ident = ident;
@@ -73,11 +77,15 @@ public abstract class LayoutTrack {
 
     /**
      * accessor methods
+     *
+     * @return identifier
      */
+    @Nonnull
     public String getId() {
         return ident;
     }
 
+    @Nonnull
     public String getName() {
         return ident;
     }
@@ -87,6 +95,7 @@ public abstract class LayoutTrack {
      *
      * @return the center coordinates
      */
+    @Nonnull
     public Point2D getCoordsCenter() {
         return center;
     }
@@ -112,6 +121,7 @@ public abstract class LayoutTrack {
      *
      * @return the decorations
      */
+    @CheckForNull
     public Map<String, String> getDecorations() {
         return decorations;
     }
@@ -121,7 +131,7 @@ public abstract class LayoutTrack {
      *
      * @param decorations to set
      */
-    public void setDecorations(Map<String, String> decorations) {
+    public void setDecorations(@Nullable Map<String, String> decorations) {
         this.decorations = decorations;
     }
     protected Map<String, String> decorations = null;
@@ -139,11 +149,13 @@ public abstract class LayoutTrack {
     //these are convenience methods to return circles & rectangle used to draw onscreen
     //
     //compute the control point rect at inPoint; use the turnout circle size
+    @Nonnull
     public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
         return trackControlCircleAt(inPoint);
     }
 
     //compute the turnout circle at inPoint (used for drawing)
+    @Nonnull
     public Ellipse2D trackControlCircleAt(@Nonnull Point2D inPoint) {
         return new Ellipse2D.Double(inPoint.getX() - layoutEditor.circleRadius,
                 inPoint.getY() - layoutEditor.circleRadius,
@@ -151,12 +163,14 @@ public abstract class LayoutTrack {
     }
 
     //compute the turnout circle control rect at inPoint
+    @Nonnull
     public Rectangle2D trackControlCircleRectAt(@Nonnull Point2D inPoint) {
         return new Rectangle2D.Double(inPoint.getX() - layoutEditor.circleRadius,
                 inPoint.getY() - layoutEditor.circleRadius,
                 layoutEditor.circleDiameter, layoutEditor.circleDiameter);
     }
 
+    @Nonnull
     protected Color getColorForTrackBlock(
             @CheckForNull LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
         Color result = ColorUtil.CLEAR;  // transparent
@@ -171,11 +185,13 @@ public abstract class LayoutTrack {
     }
 
     // optional parameter forceTrack = false
+    @Nonnull
     protected Color getColorForTrackBlock(@CheckForNull LayoutBlock lb) {
         return getColorForTrackBlock(lb, false);
     }
 
-    protected Color setColorForTrackBlock(Graphics2D g2,
+    @Nonnull
+    protected Color setColorForTrackBlock(@Nonnull Graphics2D g2,
             @CheckForNull LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
         Color result = getColorForTrackBlock(layoutBlock, forceBlockTrackColor);
         g2.setColor(result);
@@ -183,7 +199,8 @@ public abstract class LayoutTrack {
     }
 
     // optional parameter forceTrack = false
-    protected Color setColorForTrackBlock(Graphics2D g2, @CheckForNull LayoutBlock lb) {
+    @Nonnull
+    protected Color setColorForTrackBlock(@Nonnull Graphics2D g2, @CheckForNull LayoutBlock lb) {
         return setColorForTrackBlock(g2, lb, false);
     }
 
@@ -196,7 +213,7 @@ public abstract class LayoutTrack {
      * @param isMain  true if drawing mainlines
      * @param isBlock true if drawing block lines
      */
-    protected abstract void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
+    protected abstract void draw1(@Nonnull Graphics2D g2, boolean isMain, boolean isBlock);
 
     /**
      * draw two lines (rails)
@@ -205,17 +222,17 @@ public abstract class LayoutTrack {
      * @param isMain           true if drawing mainlines
      * @param railDisplacement the offset from center to draw the lines
      */
-    protected abstract void draw2(Graphics2D g2, boolean isMain, float railDisplacement);
+    protected abstract void draw2(@Nonnull Graphics2D g2, boolean isMain, float railDisplacement);
 
     /**
      * draw hidden track
      *
      * @param g2 the graphics context
      */
-    //protected abstract void drawHidden(Graphics2D g2);
+    //protected abstract void drawHidden(@Nonnull Graphics2D g2);
     //note: placeholder until I get this implemented in all sub-classes
     //TODO: replace with abstract declaration (above)
-    protected void drawHidden(Graphics2D g2) {
+    protected void drawHidden(@Nonnull Graphics2D g2) {
         //nothing to do here... move along...
     }
 
@@ -237,24 +254,24 @@ public abstract class LayoutTrack {
      *
      * @param g2 the graphics context
      */
-    protected abstract void drawEditControls(Graphics2D g2);
+    protected abstract void drawEditControls(@Nonnull Graphics2D g2);
 
     /**
      * draw the turnout controls
      *
      * @param g2 the graphics context
      */
-    protected abstract void drawTurnoutControls(Graphics2D g2);
+    protected abstract void drawTurnoutControls(@Nonnull Graphics2D g2);
 
     /**
      * draw track decorations
      *
      * @param g2 the graphics context
      */
-    //protected abstract void drawDecorations(Graphics2D g2);
+    //protected abstract void drawDecorations(@Nonnull Graphics2D g2);
     //note: placeholder until I get this implemented in all sub-classes
     //TODO: replace with abstract declaration (above)
-    protected void drawDecorations(Graphics2D g2) {
+    protected void drawDecorations(@Nonnull Graphics2D g2) {
         //nothing to do here... move along...
     }
 
@@ -285,14 +302,19 @@ public abstract class LayoutTrack {
      * @param turnoutState of the turnout
      * @return the turnout state string
      */
+    @Nonnull
     public String getTurnoutStateString(int turnoutState) {
-        String result = "";
-        if (turnoutState == Turnout.CLOSED) {
-            result = Bundle.getMessage("TurnoutStateClosed");
-        } else if (turnoutState == Turnout.THROWN) {
-            result = Bundle.getMessage("TurnoutStateThrown");
-        } else {
-            result = Bundle.getMessage("BeanStateUnknown");
+        String result;
+        switch (turnoutState) {
+            case Turnout.CLOSED:
+                result = Bundle.getMessage("TurnoutStateClosed");
+                break;
+            case Turnout.THROWN:
+                result = Bundle.getMessage("TurnoutStateThrown");
+                break;
+            default:
+                result = Bundle.getMessage("BeanStateUnknown");
+                break;
         }
         return result;
     }
@@ -314,14 +336,14 @@ public abstract class LayoutTrack {
      * @param itemList A list of the attached heads, masts and/or sensors.
      * @param typeKey  The object type such as Turnout, Level Crossing, etc.
      */
-    public void displayRemoveWarningDialog(List<String> itemList, String typeKey) {
+    public void displayRemoveWarningDialog(@Nonnull List<String> itemList, @Nonnull String typeKey) {
         itemList.sort(null);
         StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel", // NOI18N
                 Bundle.getMessage("DeleteTrackItem", Bundle.getMessage(typeKey))));  // NOI18N
         for (String item : itemList) {
-            msg.append("\n    " + item);  // NOI18N
+            msg.append("\n    ").append(item);  // NOI18N
         }
-        javax.swing.JOptionPane.showMessageDialog(layoutEditor,
+        JOptionPane.showMessageDialog(layoutEditor,
                 msg.toString(),
                 Bundle.getMessage("WarningTitle"), // NOI18N
                 javax.swing.JOptionPane.WARNING_MESSAGE);
@@ -359,6 +381,7 @@ public abstract class LayoutTrack {
      */
     public abstract void rotateCoords(double angleDEG);
 
+    @Nonnull
     protected Point2D rotatePoint(@Nonnull Point2D p, double sineRot, double cosineRot) {
         double cX = center.getX();
         double cY = center.getY();
@@ -399,11 +422,13 @@ public abstract class LayoutTrack {
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
+    @Nonnull
     public abstract Point2D getCoordsForConnectionType(LayoutEditor.HitPointType connectionType);
 
     /**
      * @return the bounds of this track
      */
+    @Nonnull
     public abstract Rectangle2D getBounds();
 
     /**
@@ -422,7 +447,7 @@ public abstract class LayoutTrack {
      * @return the popup menu for this layout track
      */
     @Nonnull
-    protected JPopupMenu showPopup(Point2D where) {
+    protected JPopupMenu showPopup(@Nonnull Point2D where) {
         return this.showPopup(new MouseEvent(
                 layoutEditor.getTargetPanel(), // source
                 MouseEvent.MOUSE_CLICKED, // id
@@ -453,6 +478,7 @@ public abstract class LayoutTrack {
      * @return the LayoutTrack connected at the specified connection type
      * @throws JmriException - if the connectionType is invalid
      */
+    @CheckForNull
     public abstract LayoutTrack getConnection(LayoutEditor.HitPointType connectionType) throws JmriException;
 
     /**
@@ -476,6 +502,7 @@ public abstract class LayoutTrack {
      *
      * @return the list of Layout Connectivity objects
      */
+    @CheckReturnValue
     protected abstract List<LayoutConnectivity> getLayoutConnectivity();
 
     /**

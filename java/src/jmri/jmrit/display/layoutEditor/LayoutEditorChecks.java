@@ -336,9 +336,11 @@ public class LayoutEditorChecks {
         // check all tracks for un-assigned blocks
         List<String> trackNames = new ArrayList<>();
         for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
-            if (!layoutTrack.checkForUnAssignedBlocks()) {
-                // add this track to the list of un-assigned track names
-                trackNames.add(layoutTrack.getName());
+            if (layoutTrack != null) {
+                if (!layoutTrack.checkForUnAssignedBlocks()) {
+                    // add this track to the list of un-assigned track names
+                    trackNames.add(layoutTrack.getName());
+                }
             }
         }
 
@@ -398,7 +400,9 @@ public class LayoutEditorChecks {
         // collect all contiguous blocks
         HashMap<String, List<Set<String>>> blockNamesToTrackNameSetMaps = new HashMap<>();
         for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
-            layoutTrack.checkForNonContiguousBlocks(blockNamesToTrackNameSetMaps);
+            if (layoutTrack != null) {
+                layoutTrack.checkForNonContiguousBlocks(blockNamesToTrackNameSetMaps);
+            }
         }
 
         // clear the "in progress..." menu item

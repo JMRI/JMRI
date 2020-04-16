@@ -57,7 +57,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
                 log.error("System name null during LayoutBlock store");
             } else {
                 log.debug("layoutblock system name is " + sname);
-                LayoutBlock b = tm.getBySystemName(sname);
+                LayoutBlock b = tm.getLayoutBlock(sname);
                 // save only those LayoutBlocks that are in use--skip abandoned ones
                 if (b.getUseCount() > 0) {
                     Element elem = new Element("layoutblock").setAttribute("systemName", sname);

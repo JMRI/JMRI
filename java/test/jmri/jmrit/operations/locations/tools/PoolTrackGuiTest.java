@@ -85,20 +85,20 @@ public class PoolTrackGuiTest extends OperationsTestCase {
 
         // CLicking the Add button should add the new pool to the
         // collection.
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
 
         // Here the track's location should have a pool collection with one
         // item.
         Assert.assertEquals("Pool size", 1, t.getLocation().getPoolsByNameList().size());
 
         // Try to add the same one again, and the count should remain at 1
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
 
         Assert.assertEquals("Pool size", 1, l.getPoolsByNameList().size());
 
         // Add a different name and it should go to 2
         f.trackPoolNameTextField.setText("Test Pool 2");
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
 
         Assert.assertEquals("Pool size", 2, l.getPoolsByNameList().size());
 
@@ -127,7 +127,7 @@ public class PoolTrackGuiTest extends OperationsTestCase {
         Assert.assertEquals("ComboBox selection", desiredPool, f.comboBoxPools.getSelectedItem());
 
         // Now click the Save button and the Track should be updated with the selected Pool
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
         Assert.assertEquals("Updated Track Pool", desiredPool, t.getPool());
 
         // close window
@@ -149,7 +149,7 @@ public class PoolTrackGuiTest extends OperationsTestCase {
         f.trackMinLengthTextField.setText("23");
 
         // Now click the Save button and the Track should be updated with the selected Pool
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
  
         Assert.assertEquals("Updated min track length", 23, t.getMinimumLength());
 

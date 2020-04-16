@@ -28,7 +28,7 @@ public class LocationEditFrameTest extends OperationsTestCase {
         f.setTitle("Test Add Location Frame");
 
         f.locationNameTextField.setText("New Test Location");
-        JemmyUtil.enterClickAndLeave(f.addLocationButton);
+        JemmyUtil.enterPushAndLeave(f.addLocationButton);
 
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Assert.assertEquals("should be 6 locations", 6, lManager.getLocationsByNameList().size());
@@ -37,24 +37,24 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertNotNull(newLoc);
 
         // add a yard track
-        JemmyUtil.enterClickAndLeave(f.addYardButton);
+        JemmyUtil.enterPushAndLeave(f.addYardButton);
 
         // add an interchange track
-        JemmyUtil.enterClickAndLeave(f.addInterchangeButton);
+        JemmyUtil.enterPushAndLeave(f.addInterchangeButton);
 
         // add a staging track
-        JemmyUtil.enterClickAndLeave(f.addStagingButton);
+        JemmyUtil.enterPushAndLeave(f.addStagingButton);
 
         // add a yard track
-        JemmyUtil.enterClickAndLeave(f.addYardButton);
+        JemmyUtil.enterPushAndLeave(f.addYardButton);
 
         f.locationNameTextField.setText("Newer Test Location");
-        JemmyUtil.enterClickAndLeave(f.saveLocationButton);
+        JemmyUtil.enterPushAndLeave(f.saveLocationButton);
 
         Assert.assertEquals("changed location name", "Newer Test Location", newLoc.getName());
 
         // test delete button
-        JemmyUtil.enterClickAndLeave(f.deleteLocationButton);
+        JemmyUtil.enterPushAndLeave(f.deleteLocationButton);
         Assert.assertEquals("should be 6 locations", 6, lManager.getLocationsByNameList().size());
         // confirm delete dialog window should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("deletelocation?"), Bundle.getMessage("ButtonYes"));

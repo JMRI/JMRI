@@ -11,6 +11,7 @@ import org.junit.*;
  * Test simple functioning of LayoutSlip
  *
  * @author	Paul Bender Copyright (C) 2016
+ * @author      George Warner Copyright: (C) 2019
  */
 public class LayoutSlipTest {
 
@@ -637,6 +638,7 @@ public class LayoutSlipTest {
         } catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("single.setConnection(SLIP_A, null, POS_POINT); Invalid type");
+
         try {
             // test invalid object type
             ltd.setConnection(LayoutEditor.HitPointType.SLIP_B, null, LayoutEditor.HitPointType.POS_POINT);
@@ -709,14 +711,14 @@ public class LayoutSlipTest {
     public static void afterClass() {
         if (layoutEditor != null) {
             JUnitUtil.dispose(layoutEditor);
+            layoutEditor = null;
         }
-        layoutEditor = null;
         JUnitUtil.tearDown();
     }
 
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             lts = new LayoutSlip("single", new Point2D.Double(50.0, 100.0), +45.0, layoutEditor, LayoutTurnout.TurnoutType.SINGLE_SLIP);
             ltd = new LayoutSlip("double", new Point2D.Double(100.0, 50.0), -45.0, layoutEditor, LayoutTurnout.TurnoutType.DOUBLE_SLIP);
