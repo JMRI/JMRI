@@ -72,13 +72,13 @@ public class TrackSegment extends LayoutTrack {
             log.error("Invalid object in TrackSegment constructor call - " + id);
         }
 
-        if (LayoutEditor.HitPointType.isConnectionHitType(t1)) {
+        if (t1.isConnectionHitType()) {
             connect1 = c1;
             type1 = t1;
         } else {
             log.error("Invalid connect type 1 ('" + t1 + "') in TrackSegment constructor - " + id);
         }
-        if (LayoutEditor.HitPointType.isConnectionHitType(t2)) {
+        if (t2.isConnectionHitType()) {
             connect2 = c2;
             type2 = t2;
         } else {
@@ -725,7 +725,7 @@ public class TrackSegment extends LayoutTrack {
         Point2D result = getCentreSeg();
         if (connectionType == LayoutEditor.HitPointType.TRACK_CIRCLE_CENTRE) {
             result = getCoordsCenterCircle();
-        } else if (LayoutEditor.HitPointType.isBezierHitType(connectionType)) {
+        } else if (connectionType.isBezierHitType()) {
             result = getBezierControlPoint(connectionType.getXmlValue() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue());
         }
         return result;
@@ -1647,7 +1647,7 @@ public class TrackSegment extends LayoutTrack {
             }
         }
 
-        if (LayoutEditor.HitPointType.isTurnoutHitType(type) && conn instanceof LayoutTurnout) {
+        if (type.isTurnoutHitType() && conn instanceof LayoutTurnout) {
             LayoutTurnout lt = (LayoutTurnout) conn;
             switch (type) {
                 case TURNOUT_A: {
@@ -1672,7 +1672,7 @@ public class TrackSegment extends LayoutTrack {
             }
         }
 
-        if (LayoutEditor.HitPointType.isLevelXingHitType(type) && conn instanceof LevelXing) {
+        if (type.isLevelXingHitType() && conn instanceof LevelXing) {
             LevelXing lx = (LevelXing) conn;
             switch (type) {
                 case LEVEL_XING_A: {
@@ -1697,7 +1697,7 @@ public class TrackSegment extends LayoutTrack {
             }
         }
 
-        if (LayoutEditor.HitPointType.isSlipHitType(type) && conn instanceof LayoutSlip) {
+        if (type.isSlipHitType(type) && conn instanceof LayoutSlip) {
             LayoutSlip ls = (LayoutSlip) conn;
             switch (type) {
                 case SLIP_A: {
@@ -3889,7 +3889,7 @@ public class TrackSegment extends LayoutTrack {
         //ensure that block is assigned
         if (lb1 != null) {
             //check first connection for turnout
-            if (LayoutEditor.HitPointType.isTurnoutHitType(type1)) {
+            if (type1.isTurnoutHitType()) {
                 //have connection to a turnout, is block different
                 LayoutTurnout lt = (LayoutTurnout) getConnect1();
                 lb2 = lt.getLayoutBlock();
@@ -3915,7 +3915,7 @@ public class TrackSegment extends LayoutTrack {
                             LayoutEditor.getCoords(getConnect1(), type1)));
                     results.add(lc);
                 }
-            } else if (LayoutEditor.HitPointType.isLevelXingHitType(type1)) {
+            } else if (type1.isLevelXingHitType()) {
                 //have connection to a level crossing
                 LevelXing lx = (LevelXing) getConnect1();
                 if ((type1 == LayoutEditor.HitPointType.LEVEL_XING_A) || (type1 == LayoutEditor.HitPointType.LEVEL_XING_C)) {
@@ -3933,7 +3933,7 @@ public class TrackSegment extends LayoutTrack {
                             LayoutEditor.getCoords(getConnect1(), type1)));
                     results.add(lc);
                 }
-            } else if (LayoutEditor.HitPointType.isSlipHitType(type1)) {
+            } else if (type1.isSlipHitType()) {
                 //have connection to a slip crossing
                 LayoutSlip ls = (LayoutSlip) getConnect1();
                 lb2 = ls.getLayoutBlock();
@@ -3948,7 +3948,7 @@ public class TrackSegment extends LayoutTrack {
                 }
             }
             //check second connection for turnout
-            if (LayoutEditor.HitPointType.isTurnoutHitType(type2)) {
+            if (type2.isTurnoutHitType()) {
                 //have connection to a turnout
                 LayoutTurnout lt = (LayoutTurnout) getConnect2();
                 lb2 = lt.getLayoutBlock();
@@ -3974,7 +3974,7 @@ public class TrackSegment extends LayoutTrack {
                             LayoutEditor.getCoords(getConnect2(), type2)));
                     results.add(lc);
                 }
-            } else if (LayoutEditor.HitPointType.isLevelXingHitType(type2)) {
+            } else if (type2.isLevelXingHitType()) {
                 //have connection to a level crossing
                 LevelXing lx = (LevelXing) getConnect2();
                 if ((type2 == LayoutEditor.HitPointType.LEVEL_XING_A) || (type2 == LayoutEditor.HitPointType.LEVEL_XING_C)) {
@@ -3992,7 +3992,7 @@ public class TrackSegment extends LayoutTrack {
                             LayoutEditor.getCoords(getConnect2(), type2)));
                     results.add(lc);
                 }
-            } else if (LayoutEditor.HitPointType.isSlipHitType(type2)) {
+            } else if (type2.isSlipHitType()) {
                 //have connection to a slip crossing
                 LayoutSlip ls = (LayoutSlip) getConnect2();
                 lb2 = ls.getLayoutBlock();

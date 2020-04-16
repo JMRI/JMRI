@@ -130,7 +130,7 @@ public class LayoutEditorToolsTest {
     }   //setupSetSignalsAtTurnoutWithDone
 
     @Test
-    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart2() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -174,7 +174,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart3() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -221,11 +221,12 @@ public class LayoutEditorToolsTest {
 
     private void setupSetSignalsAtTurnoutWithDonePart3(JFrameOperator jFrameOperator) {
         setupSetSignalsAtTurnoutWithDonePart2(jFrameOperator);
-        layoutTurnout.setTurnout(turnouts.get(0).getSystemName()); //this should fix the "is not drawn on the panel" error
+        //this should fix the "is not drawn on the panel" error
+        layoutTurnout.setTurnout(turnouts.get(0).getSystemName());
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart4() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -263,11 +264,14 @@ public class LayoutEditorToolsTest {
         //select signal head for this combobox
         JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                 jFrameOperator, new NameComponentChooser("throatContinuingSignalHeadComboBox"));
+
+        new EventTool().waitNoEvent(0);
+
         jComboBoxOperator.selectItem(signalHeads.get(0).getSystemName());
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart5() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -305,11 +309,14 @@ public class LayoutEditorToolsTest {
         //select signal head for this combobox
         JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                 jFrameOperator, new NameComponentChooser("throatDivergingSignalHeadComboBox"));
+
+        new EventTool().waitNoEvent(0);
+
         jComboBoxOperator.selectItem(signalHeads.get(1).getSystemName());
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart6() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -347,11 +354,14 @@ public class LayoutEditorToolsTest {
         //select signal head for this combobox
         JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                 jFrameOperator, new NameComponentChooser("continuingSignalHeadComboBox"));
+
+        new EventTool().waitNoEvent(0);
+
         jComboBoxOperator.selectItem(signalHeads.get(2).getSystemName());
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart7a() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -377,7 +387,7 @@ public class LayoutEditorToolsTest {
     }   //testSetSignalsAtTurnoutWithDonePart7a
 
     @Test
-    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart7b() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -403,7 +413,7 @@ public class LayoutEditorToolsTest {
     }   //testSetSignalsAtTurnoutWithDonePart7b
 
     @Test
-    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart7c() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -429,7 +439,7 @@ public class LayoutEditorToolsTest {
     }   //testSetSignalsAtTurnoutWithDonePart7c
 
     @Test
-    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart7d() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -460,6 +470,9 @@ public class LayoutEditorToolsTest {
         //select signal head for this combobox
         JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                 jFrameOperator, new NameComponentChooser("divergingSignalHeadComboBox"));
+
+        new EventTool().waitNoEvent(0);
+
         jComboBoxOperator.selectItem(signalHeads.get(3).getSystemName());
     }
 
@@ -510,7 +523,8 @@ public class LayoutEditorToolsTest {
         layoutEditor.getLayoutTracks().add(trackSegment);
         try {
             layoutTurnout.setConnection(types[idx], trackSegment, LayoutEditor.HitPointType.TRACK);
-        } catch (JmriException ex) {
+        }
+        catch (JmriException ex) {
             Logger.getLogger(LayoutEditorToolsTest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -691,7 +705,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart1() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -720,7 +734,7 @@ public class LayoutEditorToolsTest {
     }   //testSetSignalsAtThroatToThroatTurnoutsWithDonePart1
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart2() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -755,7 +769,7 @@ public class LayoutEditorToolsTest {
         //fixes SignalsError1 = Error - No turnout name was entered. Please enter a turnout name or cancel.
         //so lets create a turnout
         layoutTurnout = new LayoutTurnout("Right Hand",
-                LayoutTurnout.RH_TURNOUT, new Point2D.Double(100.0, 100.0),
+                LayoutTurnout.TurnoutType.RH_TURNOUT, new Point2D.Double(100.0, 100.0),
                 180.0, 1.1, 1.2, layoutEditor);
         Assert.assertNotNull("RH turnout for testSetSignalsAtThroatToThroatTurnoutsWithDone", layoutTurnout);
         layoutEditor.getLayoutTracks().add(layoutTurnout);
@@ -763,12 +777,14 @@ public class LayoutEditorToolsTest {
         //select the turnout from the popup menu
         JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                 jFrameOperator, new NameComponentChooser("turnout1ComboBox"));
+
         new EventTool().waitNoEvent(0);
+
         jComboBoxOperator.selectItem(turnouts.get(0).getSystemName());
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart3() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -804,7 +820,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart4() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -852,7 +868,7 @@ public class LayoutEditorToolsTest {
         //fixes SignalsError18 = Error - This tool requires two turnouts (RH, LH, or WYE) \nconnected throat-to-throat by a single track segment.
         //so lets create a second turnout
         layoutTurnout2 = new LayoutTurnout("Left Hand",
-                LayoutTurnout.LH_TURNOUT, new Point2D.Double(200.0, 100.0),
+                LayoutTurnout.TurnoutType.LH_TURNOUT, new Point2D.Double(200.0, 100.0),
                 0.0, 1.1, 1.2, layoutEditor);
         Assert.assertNotNull("LH turnout for testSetSignalsAtThroatToThroatTurnoutsWithDone", layoutTurnout2);
         layoutEditor.getLayoutTracks().add(layoutTurnout2);
@@ -860,14 +876,17 @@ public class LayoutEditorToolsTest {
 
         JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                 jFrameOperator, new NameComponentChooser("turnout2ComboBox"));
+
+        new EventTool().waitNoEvent(0);
+
         jComboBoxOperator.selectItem(turnouts.get(1).getSystemName());
 
-        trackSegment = addNewTrackSegment(layoutTurnout, LayoutTrack.TURNOUT_A,
-                layoutTurnout2, LayoutTrack.TURNOUT_A, 1);
+        trackSegment = addNewTrackSegment(layoutTurnout, LayoutEditor.HitPointType.TURNOUT_A,
+                layoutTurnout2, LayoutEditor.HitPointType.TURNOUT_A, 1);
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart5() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -904,12 +923,15 @@ public class LayoutEditorToolsTest {
         for (String name : names) {
             JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                     jFrameOperator, new NameComponentChooser(name));
+
+            new EventTool().waitNoEvent(0);
+
             jComboBoxOperator.selectItem(signalHeads.get(idx++).getSystemName());
         }
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart6() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -969,7 +991,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart7() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -1016,7 +1038,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart8() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -1116,7 +1138,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtXYIntAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(signalHeads.get(1)));
@@ -1133,7 +1155,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtPointAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(signalHeads.get(1)));
@@ -1151,7 +1173,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtXYDoubleAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(signalHeads.get(1)));
@@ -1217,8 +1239,8 @@ public class LayoutEditorToolsTest {
      */
     @Nonnull
     private static TrackSegment addNewTrackSegment(
-            @CheckForNull LayoutTrack c1, int t1,
-            @CheckForNull LayoutTrack c2, int t2,
+            @CheckForNull LayoutTrack c1, LayoutEditor.HitPointType t1,
+            @CheckForNull LayoutTrack c2, LayoutEditor.HitPointType t2,
             int idx) {
         TrackSegment result = null;
         if ((c1 != null) && (c2 != null)) {
@@ -1229,8 +1251,8 @@ public class LayoutEditorToolsTest {
             Assert.assertNotNull("new TrackSegment is null", result);
             layoutEditor.getLayoutTracks().add(result);
             //link to connected objects
-            layoutEditor.setLink(c1, t1, result, LayoutTrack.TRACK);
-            layoutEditor.setLink(c2, t2, result, LayoutTrack.TRACK);
+            layoutEditor.setLink(c1, t1, result, LayoutEditor.HitPointType.TRACK);
+            layoutEditor.setLink(c2, t2, result, LayoutEditor.HitPointType.TRACK);
         }
         return result;
     }

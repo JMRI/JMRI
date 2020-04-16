@@ -86,7 +86,7 @@ public class LevelXing extends LayoutTrack {
     // public static final int POINTC = 0x20;
     // public static final int POINTD = 0x30;
     public enum Geometry {
-        POINTA, POINTB, POINTC, POINTD
+        NONE, POINTA, POINTB, POINTC, POINTD
     }
 
     /**
@@ -365,7 +365,8 @@ public class LevelXing extends LayoutTrack {
         try {
             SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMast);
             signalAMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
-        } catch (IllegalArgumentException ex) {
+        }
+        catch (IllegalArgumentException ex) {
             signalAMastNamed = null;
         }
     }
@@ -393,7 +394,8 @@ public class LevelXing extends LayoutTrack {
         try {
             SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMast);
             signalBMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
-        } catch (IllegalArgumentException ex) {
+        }
+        catch (IllegalArgumentException ex) {
             signalBMastNamed = null;
         }
     }
@@ -421,7 +423,8 @@ public class LevelXing extends LayoutTrack {
         try {
             SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMast);
             signalCMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
-        } catch (IllegalArgumentException ex) {
+        }
+        catch (IllegalArgumentException ex) {
             signalCMastNamed = null;
         }
     }
@@ -449,7 +452,8 @@ public class LevelXing extends LayoutTrack {
         try {
             SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMast);
             signalDMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
-        } catch (IllegalArgumentException ex) {
+        }
+        catch (IllegalArgumentException ex) {
             signalDMastNamed = null;
         }
     }
@@ -477,7 +481,8 @@ public class LevelXing extends LayoutTrack {
         try {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorANamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } catch (IllegalArgumentException ex) {
+        }
+        catch (IllegalArgumentException ex) {
             sensorANamed = null;
         }
     }
@@ -505,7 +510,8 @@ public class LevelXing extends LayoutTrack {
         try {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorBNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } catch (IllegalArgumentException ex) {
+        }
+        catch (IllegalArgumentException ex) {
             sensorBNamed = null;
         }
     }
@@ -533,7 +539,8 @@ public class LevelXing extends LayoutTrack {
         try {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorCNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } catch (IllegalArgumentException ex) {
+        }
+        catch (IllegalArgumentException ex) {
             sensorCNamed = null;
         }
     }
@@ -561,7 +568,8 @@ public class LevelXing extends LayoutTrack {
         try {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorDNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } catch (IllegalArgumentException ex) {
+        }
+        catch (IllegalArgumentException ex) {
             sensorDNamed = null;
         }
     }
@@ -639,7 +647,7 @@ public class LevelXing extends LayoutTrack {
     public void setConnectA(LayoutTrack o, LayoutEditor.HitPointType type) {
         connectA = o;
         if ((connectA != null) && (type != LayoutEditor.HitPointType.TRACK)) {
-            log.error("{}.setConnectA(({}, {}); invalid type",
+            log.error("{}.setConnectA({}, {}); invalid type",
                     getName(), o.getName(), type);
         }
     }
@@ -647,7 +655,7 @@ public class LevelXing extends LayoutTrack {
     public void setConnectB(LayoutTrack o, LayoutEditor.HitPointType type) {
         connectB = o;
         if ((connectB != null) && (type != LayoutEditor.HitPointType.TRACK)) {
-            log.error("{}.setConnectB(({}, {}); invalid type",
+            log.error("{}.setConnectB({}, {}); invalid type",
                     getName(), o.getName(), type);
         }
     }
@@ -655,7 +663,7 @@ public class LevelXing extends LayoutTrack {
     public void setConnectC(LayoutTrack o, LayoutEditor.HitPointType type) {
         connectC = o;
         if ((connectC != null) && (type != LayoutEditor.HitPointType.TRACK)) {
-            log.error("{}.setConnectC(({}, {}); invalid type",
+            log.error("{}.setConnectC({}, {}); invalid type",
                     getName(), o.getName(), type);
         }
     }
@@ -663,7 +671,7 @@ public class LevelXing extends LayoutTrack {
     public void setConnectD(LayoutTrack o, LayoutEditor.HitPointType type) {
         connectD = o;
         if ((connectD != null) && (type != LayoutEditor.HitPointType.TRACK)) {
-            log.error("{}.setConnectD(({}, {}); invalid type",
+            log.error("{}.setConnectD({}, {}); invalid type",
                     getName(), o.getName(), type);
         }
     }
@@ -1361,7 +1369,8 @@ public class LevelXing extends LayoutTrack {
             if ((connectA instanceof TrackSegment) && (((TrackSegment) connectA).getLayoutBlock() != blockAC)) {
                 try {
                     boundaryBetween[0] = (((TrackSegment) connectA).getLayoutBlock().getDisplayName() + " - " + blockAC.getDisplayName());
-                } catch (java.lang.NullPointerException e) {
+                }
+                catch (java.lang.NullPointerException e) {
                     //Can be considered normal if tracksegement hasn't yet been allocated a block
                     log.debug("TrackSegement at connection A doesn't contain a layout block");
                 }
@@ -1369,7 +1378,8 @@ public class LevelXing extends LayoutTrack {
             if ((connectC instanceof TrackSegment) && (((TrackSegment) connectC).getLayoutBlock() != blockAC)) {
                 try {
                     boundaryBetween[2] = (((TrackSegment) connectC).getLayoutBlock().getDisplayName() + " - " + blockAC.getDisplayName());
-                } catch (java.lang.NullPointerException e) {
+                }
+                catch (java.lang.NullPointerException e) {
                     //Can be considered normal if tracksegement hasn't yet been allocated a block
                     log.debug("TrackSegement at connection C doesn't contain a layout block");
                 }
@@ -1379,7 +1389,8 @@ public class LevelXing extends LayoutTrack {
             if ((connectB instanceof TrackSegment) && (((TrackSegment) connectB).getLayoutBlock() != blockBD)) {
                 try {
                     boundaryBetween[1] = (((TrackSegment) connectB).getLayoutBlock().getDisplayName() + " - " + blockBD.getDisplayName());
-                } catch (java.lang.NullPointerException e) {
+                }
+                catch (java.lang.NullPointerException e) {
                     //Can be considered normal if tracksegement hasn't yet been allocated a block
                     log.debug("TrackSegement at connection B doesn't contain a layout block");
                 }
@@ -1387,7 +1398,8 @@ public class LevelXing extends LayoutTrack {
             if ((connectD instanceof TrackSegment) && (((TrackSegment) connectD).getLayoutBlock() != blockBD)) {
                 try {
                     boundaryBetween[3] = (((TrackSegment) connectD).getLayoutBlock().getDisplayName() + " - " + blockBD.getDisplayName());
-                } catch (java.lang.NullPointerException e) {
+                }
+                catch (java.lang.NullPointerException e) {
                     //Can be considered normal if tracksegement hasn't yet been allocated a block
                     log.debug("TrackSegement at connection D doesn't contain a layout block");
                 }

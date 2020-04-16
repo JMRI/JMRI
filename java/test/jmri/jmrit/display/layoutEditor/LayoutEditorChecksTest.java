@@ -238,7 +238,7 @@ public class LayoutEditorChecksTest {
             layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, myBlockName);
 
             //add 1st turnout
-            ltRH = new LayoutTurnout(rightHandName, LayoutTurnout.RH_TURNOUT,
+            ltRH = new LayoutTurnout(rightHandName, LayoutTurnout.TurnoutType.RH_TURNOUT,
                     point, 33.0, 1.1, 1.2, layoutEditor);
             layoutTracks.add(ltRH);
             //set its block
@@ -252,7 +252,7 @@ public class LayoutEditorChecksTest {
 
             //connect 1st turnout to 1st anchor
             int tsIdx = 1;
-            ts1 = addNewTrackSegment(ltRH, LayoutTrack.TURNOUT_B, a1, LayoutTrack.POS_POINT, tsIdx++);
+            ts1 = addNewTrackSegment(ltRH, LayoutEditor.HitPointType.TURNOUT_B, a1, LayoutEditor.HitPointType.POS_POINT, tsIdx++);
 
             //add 2nd anchor
             //point = MathUtil.add(point, delta);
@@ -261,20 +261,20 @@ public class LayoutEditorChecksTest {
             layoutTracks.add(a2);
 
             //connect 1st anchor to 2nd anchor
-            ts2 = addNewTrackSegment(a1, LayoutTrack.POS_POINT, a2, LayoutTrack.POS_POINT, tsIdx++);
+            ts2 = addNewTrackSegment(a1, LayoutEditor.HitPointType.POS_POINT, a2, LayoutEditor.HitPointType.POS_POINT, tsIdx++);
             //set its block
             //ts2.setLayoutBlock(layoutBlock);
 
             //add 2nd turnout
             point = MathUtil.add(point, delta);
-            ltLH = new LayoutTurnout(leftHandName, LayoutTurnout.LH_TURNOUT,
+            ltLH = new LayoutTurnout(leftHandName, LayoutTurnout.TurnoutType.LH_TURNOUT,
                     point, 66.0, 1.3, 1.4, layoutEditor);
             layoutTracks.add(ltLH);
             //set its block
             ltLH.setLayoutBlock(layoutBlock);
 
             //connect 2nd anchor to 2nd turnout
-            ts3 = addNewTrackSegment(a2, LayoutTrack.POS_POINT, ltLH, LayoutTrack.TURNOUT_A, tsIdx++);
+            ts3 = addNewTrackSegment(a2, LayoutEditor.HitPointType.POS_POINT, ltLH, LayoutEditor.HitPointType.TURNOUT_A, tsIdx++);
 
             //wait for layout editor to finish setup and drawing
             new QueueTool().waitEmpty();
@@ -282,8 +282,8 @@ public class LayoutEditorChecksTest {
     }
 
     private static TrackSegment addNewTrackSegment(
-            @CheckForNull LayoutTrack c1, int t1,
-            @CheckForNull LayoutTrack c2, int t2,
+            @CheckForNull LayoutTrack c1, LayoutEditor.HitPointType t1,
+            @CheckForNull LayoutTrack c2, LayoutEditor.HitPointType t2,
             int idx) {
         TrackSegment result = null;
         if ((c1 != null) && (c2 != null)) {
@@ -293,8 +293,8 @@ public class LayoutEditorChecksTest {
                     false, false, layoutEditor);
             layoutEditor.getLayoutTracks().add(result);
             //link to connected objects
-            layoutEditor.setLink(c1, t1, result, LayoutTrack.TRACK);
-            layoutEditor.setLink(c2, t2, result, LayoutTrack.TRACK);
+            layoutEditor.setLink(c1, t1, result, LayoutEditor.HitPointType.TRACK);
+            layoutEditor.setLink(c2, t2, result, LayoutEditor.HitPointType.TRACK);
         }
         return result;
     }

@@ -465,7 +465,7 @@ public class LayoutTurntable extends LayoutTrack {
         if (LayoutEditor.HitPointType.TURNTABLE_CENTER == connectionType) {
             // nothing to see here, move along...
             // (results are already correct)
-        } else if (LayoutEditor.HitPointType.isTurntableRayHitType(connectionType)) {
+        } else if (connectionType.isTurntableRayHitType()) {
             result = getRayCoordsIndexed(connectionType.getXmlValue()
                     - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue());
         } else {
@@ -481,7 +481,7 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     public LayoutTrack getConnection(LayoutEditor.HitPointType connectionType) throws jmri.JmriException {
         LayoutTrack result = null;
-        if (LayoutEditor.HitPointType.isTurntableRayHitType(connectionType)) {
+        if (connectionType.isTurntableRayHitType()) {
             result = getRayConnectIndexed(connectionType.getXmlValue() - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue());
         } else {
             String errString = MessageFormat.format("{0}.getCoordsForConnectionType({1}); Invalid connection type",
@@ -503,7 +503,7 @@ public class LayoutTurntable extends LayoutTrack {
             log.error(errString); // NOI18N
             throw new jmri.JmriException(errString);
         }
-        if (LayoutEditor.HitPointType.isTurntableRayHitType(connectionType)) {
+        if (connectionType.isTurntableRayHitType()) {
             if ((o == null) || (o instanceof TrackSegment)) {
                 setRayConnect((TrackSegment) o, connectionType.getXmlValue() - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue());
             } else {

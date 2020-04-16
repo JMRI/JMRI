@@ -318,24 +318,24 @@ public class LayoutTurntableTest {
         Assert.assertNotNull("layoutTurntable is null", layoutTurntable);
 
         //invalid connection type
-        Point2D testPoint = layoutTurntable.getCoordsForConnectionType(LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("TUR1.getCoordsForConnectionType(0); Invalid connection type");
+        Point2D testPoint = layoutTurntable.getCoordsForConnectionType(LayoutEditor.HitPointType.NONE);
+        JUnitAppender.assertErrorMessage("TUR1.getCoordsForConnectionType(NONE); Invalid connection type");
         Assert.assertEquals("layoutTurntable.getCoordsForConnectionType(NONE)",
                 layoutTurntablePoint, testPoint);
 
         //valid connection types
-        Assert.assertEquals("layoutTurntable.getCoordsForConnectionType(TURNTABLE_RAY_OFFSET)",
+        Assert.assertEquals("layoutTurntable.getCoordsForConnectionType(TURNTABLE_RAY_0)",
                 new Point2D.Double(218.5, 67.95706005997576),
-                layoutTurntable.getCoordsForConnectionType(LayoutTrack.TURNTABLE_RAY_OFFSET));
-        Assert.assertEquals("layoutTurntable.getCoordsForConnectionType(TURNTABLE_RAY_OFFSET + 1)",
+                layoutTurntable.getCoordsForConnectionType(LayoutEditor.HitPointType.TURNTABLE_RAY_0));
+        Assert.assertEquals("layoutTurntable.getCoordsForConnectionType(TURNTABLE_RAY_1)",
                 new Point2D.Double(232.0429399400242, 81.5),
-                layoutTurntable.getCoordsForConnectionType(LayoutTrack.TURNTABLE_RAY_OFFSET + 1));
-        Assert.assertEquals("layoutTurntable.getCoordsForConnectionType(TURNTABLE_RAY_OFFSET + 2)",
+                layoutTurntable.getCoordsForConnectionType(LayoutEditor.HitPointType.TURNTABLE_RAY_1));
+        Assert.assertEquals("layoutTurntable.getCoordsForConnectionType(TURNTABLE_RAY_2)",
                 new Point2D.Double(237.0, 100.0),
-                layoutTurntable.getCoordsForConnectionType(LayoutTrack.TURNTABLE_RAY_OFFSET + 2));
-        Assert.assertEquals("layoutTurntable.getCoordsForConnectionType(TURNTABLE_RAY_OFFSET + 3)",
+                layoutTurntable.getCoordsForConnectionType(LayoutEditor.HitPointType.TURNTABLE_RAY_2));
+        Assert.assertEquals("layoutTurntable.getCoordsForConnectionType(TURNTABLE_RAY_3)",
                 new Point2D.Double(232.04293994002424, 118.5),
-                layoutTurntable.getCoordsForConnectionType(LayoutTrack.TURNTABLE_RAY_OFFSET + 3));
+                layoutTurntable.getCoordsForConnectionType(LayoutEditor.HitPointType.TURNTABLE_RAY_3));
     }
 
     @Test
@@ -346,25 +346,27 @@ public class LayoutTurntableTest {
 
         //invalid connection type
         try {
-            layoutTurntable.getConnection(LayoutTrack.NONE);
+            layoutTurntable.getConnection(LayoutEditor.HitPointType.NONE);
             Assert.fail("layoutTurntable.getConnection didn't throw exception");
-        } catch (JmriException ex) {
-            JUnitAppender.assertWarnMessage("TUR1.getCoordsForConnectionType(0); Invalid connection type");
+        }
+        catch (JmriException ex) {
+            JUnitAppender.assertWarnMessage("TUR1.getCoordsForConnectionType(NONE); Invalid connection type");
         }
 
         setupTracks();
 
         try {
             //valid connection types
-            Assert.assertEquals("layoutTurntable.getConnection(TURNTABLE_RAY_OFFSET)",
-                    ts1, layoutTurntable.getConnection(LayoutTrack.TURNTABLE_RAY_OFFSET));
-            Assert.assertEquals("layoutTurntable.getConnection(TURNTABLE_RAY_OFFSET + 1)",
-                    ts2, layoutTurntable.getConnection(LayoutTrack.TURNTABLE_RAY_OFFSET + 1));
-            Assert.assertEquals("layoutTurntable.getConnection(TURNTABLE_RAY_OFFSET + 2)",
-                    ts3, layoutTurntable.getConnection(LayoutTrack.TURNTABLE_RAY_OFFSET + 2));
-            Assert.assertEquals("layoutTurntable.getConnection(TURNTABLE_RAY_OFFSET + 3)",
-                    ts4, layoutTurntable.getConnection(LayoutTrack.TURNTABLE_RAY_OFFSET + 3));
-        } catch (JmriException ex) {
+            Assert.assertEquals("layoutTurntable.getConnection(TURNTABLE_RAY_0)",
+                    ts1, layoutTurntable.getConnection(LayoutEditor.HitPointType.TURNTABLE_RAY_0));
+            Assert.assertEquals("layoutTurntable.getConnection(TURNTABLE_RAY_1)",
+                    ts2, layoutTurntable.getConnection(LayoutEditor.HitPointType.TURNTABLE_RAY_1));
+            Assert.assertEquals("layoutTurntable.getConnection(TURNTABLE_RAY_2)",
+                    ts3, layoutTurntable.getConnection(LayoutEditor.HitPointType.TURNTABLE_RAY_2));
+            Assert.assertEquals("layoutTurntable.getConnection(TURNTABLE_RAY_3)",
+                    ts4, layoutTurntable.getConnection(LayoutEditor.HitPointType.TURNTABLE_RAY_3));
+        }
+        catch (JmriException ex) {
             Assert.fail("layoutTurntable.getConnection threw exception: " + ex);
         }
     }
@@ -379,31 +381,34 @@ public class LayoutTurntableTest {
 
         try {
             //invalid type
-            layoutTurntable.setConnection(LayoutTrack.POS_POINT, null, LayoutTrack.POS_POINT);
+            layoutTurntable.setConnection(LayoutEditor.HitPointType.POS_POINT, null, LayoutEditor.HitPointType.POS_POINT);
             Assert.fail("layoutTurntable.setConnection(...) didn't throw exception");
-        } catch (JmriException ex) {
-            JUnitAppender.assertWarnMessage("TUR1.setConnection(1, null, 1); Invalid type");
+        }
+        catch (JmriException ex) {
+            JUnitAppender.assertWarnMessage("TUR1.setConnection(POS_POINT, null, POS_POINT); Invalid type");
         }
 
         try {
             //invalid connection type
-            layoutTurntable.setConnection(LayoutTrack.POS_POINT, null, LayoutTrack.TRACK);
+            layoutTurntable.setConnection(LayoutEditor.HitPointType.POS_POINT, null, LayoutEditor.HitPointType.TRACK);
             Assert.fail("layoutTurntable.setConnection(...) didn't throw exception");
-        } catch (JmriException ex) {
-            JUnitAppender.assertWarnMessage("TUR1.setConnection(1, null, 10); Invalid connection type");
+        }
+        catch (JmriException ex) {
+            JUnitAppender.assertWarnMessage("TUR1.setConnection(POS_POINT, null, TRACK); Invalid connection type");
         }
 
         try {
             //valid connection types
-            Assert.assertEquals("layoutTurntable.getConnection(TURNTABLE_RAY_OFFSET)",
-                    ts1, layoutTurntable.getConnection(LayoutTrack.TURNTABLE_RAY_OFFSET));
-            Assert.assertEquals("layoutTurntable.getConnection(TURNTABLE_RAY_OFFSET + 1)",
-                    ts2, layoutTurntable.getConnection(LayoutTrack.TURNTABLE_RAY_OFFSET + 1));
-            Assert.assertEquals("layoutTurntable.getConnection(TURNTABLE_RAY_OFFSET + 2)",
-                    ts3, layoutTurntable.getConnection(LayoutTrack.TURNTABLE_RAY_OFFSET + 2));
-            Assert.assertEquals("layoutTurntable.getConnection(TURNTABLE_RAY_OFFSET + 3)",
-                    ts4, layoutTurntable.getConnection(LayoutTrack.TURNTABLE_RAY_OFFSET + 3));
-        } catch (JmriException ex) {
+            Assert.assertEquals("layoutTurntable.getConnection(TURNTABLE_RAY_0)",
+                    ts1, layoutTurntable.getConnection(LayoutEditor.HitPointType.TURNTABLE_RAY_0));
+            Assert.assertEquals("layoutTurntable.getConnection(TURNTABLE_RAY_1)",
+                    ts2, layoutTurntable.getConnection(LayoutEditor.HitPointType.TURNTABLE_RAY_1));
+            Assert.assertEquals("layoutTurntable.getConnection(TURNTABLE_RAY_2)",
+                    ts3, layoutTurntable.getConnection(LayoutEditor.HitPointType.TURNTABLE_RAY_2));
+            Assert.assertEquals("layoutTurntable.getConnection(TURNTABLE_RAY_3)",
+                    ts4, layoutTurntable.getConnection(LayoutEditor.HitPointType.TURNTABLE_RAY_3));
+        }
+        catch (JmriException ex) {
             Assert.fail("TUR1.getConnection threw exception: " + ex);
         }
     }
@@ -544,10 +549,10 @@ public class LayoutTurntableTest {
 
         List l = layoutTurntable.checkForFreeConnections();
         Assert.assertEquals("Number of free connections", 4, l.size());
-        Assert.assertEquals("connections[#0]", LayoutTrack.TURNTABLE_RAY_OFFSET, l.get(0));
-        Assert.assertEquals("connections[#1]", LayoutTrack.TURNTABLE_RAY_OFFSET + 1, l.get(1));
-        Assert.assertEquals("connections[#2]", LayoutTrack.TURNTABLE_RAY_OFFSET + 2, l.get(2));
-        Assert.assertEquals("connections[#3]", LayoutTrack.TURNTABLE_RAY_OFFSET + 3, l.get(3));
+        Assert.assertEquals("connections[#0]", LayoutEditor.HitPointType.TURNTABLE_RAY_0, l.get(0));
+        Assert.assertEquals("connections[#1]", LayoutEditor.HitPointType.TURNTABLE_RAY_1, l.get(1));
+        Assert.assertEquals("connections[#2]", LayoutEditor.HitPointType.TURNTABLE_RAY_2, l.get(2));
+        Assert.assertEquals("connections[#3]", LayoutEditor.HitPointType.TURNTABLE_RAY_3, l.get(3));
 
         setupTracks();  //this should make all the connections
 
@@ -559,7 +564,7 @@ public class LayoutTurntableTest {
 
         l = layoutTurntable.checkForFreeConnections();
         Assert.assertEquals("Number of free connections", 1, l.size());
-        Assert.assertEquals("connections[#4]", LayoutTrack.TURNTABLE_RAY_OFFSET + 4, l.get(0));
+        Assert.assertEquals("connections[#4]", LayoutEditor.HitPointType.TURNTABLE_RAY_4, l.get(0));
 
     }
 
@@ -667,7 +672,7 @@ public class LayoutTurntableTest {
 
         //connect the 1st LayoutTurntable ray to 1st anchor
         int tsIdx = 1;
-        ts1 = addNewTrackSegment(layoutTurntable, LayoutTrack.TURNTABLE_RAY_OFFSET, a1, LayoutTrack.POS_POINT, tsIdx++);
+        ts1 = addNewTrackSegment(layoutTurntable, LayoutEditor.HitPointType.TURNTABLE_RAY_0, a1, LayoutEditor.HitPointType.POS_POINT, tsIdx++);
 
         //add 2nd anchor
         a2 = new PositionablePoint("A2", PositionablePoint.ANCHOR, new Point2D.Double(20, 80), layoutEditor);
@@ -675,7 +680,7 @@ public class LayoutTurntableTest {
         layoutTracks.add(a2);
 
         //connect the 2nd LayoutTurntable ray to 2nd anchor
-        ts2 = addNewTrackSegment(layoutTurntable, LayoutTrack.TURNTABLE_RAY_OFFSET + 1, a2, LayoutTrack.POS_POINT, tsIdx++);
+        ts2 = addNewTrackSegment(layoutTurntable, LayoutEditor.HitPointType.TURNTABLE_RAY_1, a2, LayoutEditor.HitPointType.POS_POINT, tsIdx++);
 
         //add 3rd anchor
         a3 = new PositionablePoint("A3", PositionablePoint.ANCHOR, new Point2D.Double(90, 50), layoutEditor);
@@ -683,7 +688,7 @@ public class LayoutTurntableTest {
         layoutTracks.add(a3);
 
         //connect the 3rd LayoutTurntable ray to 3rd anchor
-        ts3 = addNewTrackSegment(layoutTurntable, LayoutTrack.TURNTABLE_RAY_OFFSET + 2, a3, LayoutTrack.POS_POINT, tsIdx++);
+        ts3 = addNewTrackSegment(layoutTurntable, LayoutEditor.HitPointType.TURNTABLE_RAY_2, a3, LayoutEditor.HitPointType.POS_POINT, tsIdx++);
 
         //add 4th anchor
         a4 = new PositionablePoint("A4", PositionablePoint.ANCHOR, new Point2D.Double(80, 20), layoutEditor);
@@ -691,15 +696,15 @@ public class LayoutTurntableTest {
         layoutTracks.add(a4);
 
         //connect the 4th LayoutTurntable ray to 4th anchor
-        ts4 = addNewTrackSegment(layoutTurntable, LayoutTrack.TURNTABLE_RAY_OFFSET + 3, a4, LayoutTrack.POS_POINT, tsIdx++);
+        ts4 = addNewTrackSegment(layoutTurntable, LayoutEditor.HitPointType.TURNTABLE_RAY_3, a4, LayoutEditor.HitPointType.POS_POINT, tsIdx++);
 
         //wait for layout editor to finish setup and drawing
         new QueueTool().waitEmpty();
     }
 
     private static TrackSegment addNewTrackSegment(
-            @CheckForNull LayoutTrack c1, int t1,
-            @CheckForNull LayoutTrack c2, int t2,
+            @CheckForNull LayoutTrack c1, LayoutEditor.HitPointType t1,
+            @CheckForNull LayoutTrack c2, LayoutEditor.HitPointType t2,
             int idx) {
         TrackSegment result = null;
         if ((c1 != null) && (c2 != null)) {
@@ -710,8 +715,8 @@ public class LayoutTurntableTest {
             Assert.assertNotNull("new TrackSegment is null", result);
             layoutEditor.getLayoutTracks().add(result);
             //link to connected objects
-            layoutEditor.setLink(c1, t1, result, LayoutTrack.TRACK);
-            layoutEditor.setLink(c2, t2, result, LayoutTrack.TRACK);
+            layoutEditor.setLink(c1, t1, result, LayoutEditor.HitPointType.TRACK);
+            layoutEditor.setLink(c2, t2, result, LayoutEditor.HitPointType.TRACK);
         }
         return result;
     }

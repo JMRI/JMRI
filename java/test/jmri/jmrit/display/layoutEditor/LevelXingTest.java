@@ -103,17 +103,17 @@ public class LevelXingTest {
 
         //these should all return null
         Assert.assertNull("levelXing.getSignalHead(POINTA)",
-                levelXing.getSignalHead(LevelXing.POINTA));
+                levelXing.getSignalHead(LevelXing.Geometry.POINTA));
         Assert.assertNull("levelXing.getSignalHead(POINTB)",
-                levelXing.getSignalHead(LevelXing.POINTB));
+                levelXing.getSignalHead(LevelXing.Geometry.POINTB));
         Assert.assertNull("levelXing.getSignalHead(POINTC)",
-                levelXing.getSignalHead(LevelXing.POINTC));
+                levelXing.getSignalHead(LevelXing.Geometry.POINTC));
         Assert.assertNull("levelXing.getSignalHead(POINTD)",
-                levelXing.getSignalHead(LevelXing.POINTD));
+                levelXing.getSignalHead(LevelXing.Geometry.POINTD));
 
         //this should output a warning
-        levelXing.getSignalHead(LayoutTrack.NONE);
-        JUnitAppender.assertWarnMessage("MyLevelXing.getSignalHead(0); Unhandled loc");
+        levelXing.getSignalHead(LevelXing.Geometry.NONE);
+        JUnitAppender.assertWarnMessage("MyLevelXing.getSignalHead(NONE); Unhandled loc");
     }
 
     @Test
@@ -124,17 +124,17 @@ public class LevelXingTest {
 
         //these should all return null
         Assert.assertNull("levelXing.getSignalMast(POINTA)",
-                levelXing.getSignalMast(LevelXing.POINTA));
+                levelXing.getSignalMast(LevelXing.Geometry.POINTA));
         Assert.assertNull("levelXing.getSignalMast(POINTB)",
-                levelXing.getSignalMast(LevelXing.POINTB));
+                levelXing.getSignalMast(LevelXing.Geometry.POINTB));
         Assert.assertNull("levelXing.getSignalMast(POINTC)",
-                levelXing.getSignalMast(LevelXing.POINTC));
+                levelXing.getSignalMast(LevelXing.Geometry.POINTC));
         Assert.assertNull("levelXing.getSignalMast(POINTD)",
-                levelXing.getSignalMast(LevelXing.POINTD));
+                levelXing.getSignalMast(LevelXing.Geometry.POINTD));
 
         //this should output a warning
-        levelXing.getSignalMast(LayoutTrack.NONE);
-        JUnitAppender.assertWarnMessage("MyLevelXing.getSignalMast(0); Unhandled loc");
+        levelXing.getSignalMast(LevelXing.Geometry.NONE);
+        JUnitAppender.assertWarnMessage("MyLevelXing.getSignalMast(NONE); Unhandled loc");
     }
 
     @Test
@@ -145,17 +145,17 @@ public class LevelXingTest {
 
         //these should all return null
         Assert.assertNull("levelXing.getSensor(POINTA)",
-                levelXing.getSensor(LevelXing.POINTA));
+                levelXing.getSensor(LevelXing.Geometry.POINTA));
         Assert.assertNull("levelXing.getSensor(POINTB)",
-                levelXing.getSensor(LevelXing.POINTB));
+                levelXing.getSensor(LevelXing.Geometry.POINTB));
         Assert.assertNull("levelXing.getSensor(POINTC)",
-                levelXing.getSensor(LevelXing.POINTC));
+                levelXing.getSensor(LevelXing.Geometry.POINTC));
         Assert.assertNull("levelXing.getSensor(POINTD)",
-                levelXing.getSensor(LevelXing.POINTD));
+                levelXing.getSensor(LevelXing.Geometry.POINTD));
 
         //this should output a warning
-        levelXing.getSensor(LayoutTrack.NONE);
-        JUnitAppender.assertWarnMessage("MyLevelXing.getSensor(0); Unhandled loc");
+        levelXing.getSensor(LevelXing.Geometry.NONE);
+        JUnitAppender.assertWarnMessage("MyLevelXing.getSensor(NONE); Unhandled loc");
     }
 
     @Test
@@ -234,23 +234,25 @@ public class LevelXingTest {
         Assert.assertNotNull("levelXing is null", levelXing);
 
         try {   //these should all return null and NOT throw an exception
-            Assert.assertNull("levelXing.getConnection(POINTA)",
-                    levelXing.getConnection(LevelXing.LEVEL_XING_A));
-            Assert.assertNull("levelXing.getConnection(POINTB)",
-                    levelXing.getConnection(LevelXing.LEVEL_XING_B));
-            Assert.assertNull("levelXing.getConnection(POINTC)",
-                    levelXing.getConnection(LevelXing.LEVEL_XING_C));
-            Assert.assertNull("levelXing.getConnection(POINTD)",
-                    levelXing.getConnection(LevelXing.LEVEL_XING_D));
-        } catch (JmriException ex) {
+            Assert.assertNull("levelXing.getConnection(LEVEL_XING_A)",
+                    levelXing.getConnection(LayoutEditor.HitPointType.LEVEL_XING_A));
+            Assert.assertNull("levelXing.getConnection(LEVEL_XING_B)",
+                    levelXing.getConnection(LayoutEditor.HitPointType.LEVEL_XING_B));
+            Assert.assertNull("levelXing.getConnection(LEVEL_XING_C)",
+                    levelXing.getConnection(LayoutEditor.HitPointType.LEVEL_XING_C));
+            Assert.assertNull("levelXing.getConnection(LEVEL_XING_D)",
+                    levelXing.getConnection(LayoutEditor.HitPointType.LEVEL_XING_D));
+        }
+        catch (JmriException ex) {
             Assert.fail("levelXing.getConnection threw exception: " + ex);
         }
 
         try {   //this should output a warning and throw a JmriException
-            levelXing.getConnection(LayoutTrack.NONE);
+            levelXing.getConnection(LayoutEditor.HitPointType.NONE);
             Assert.fail("levelXing.getConnection didn't throw an exception");
-        } catch (JmriException ex) {
-            JUnitAppender.assertWarnMessage("MyLevelXing.getConnection(0); invalid connection type");
+        }
+        catch (JmriException ex) {
+            JUnitAppender.assertWarnMessage("MyLevelXing.getConnection(NONE); invalid connection type");
         }
     }
 
@@ -261,25 +263,28 @@ public class LevelXingTest {
         Assert.assertNotNull("levelXing is null", levelXing);
 
         try {   //invalid connection type
-            levelXing.setConnection(LayoutTrack.NONE, null, LayoutTrack.NONE);
+            levelXing.setConnection(LayoutEditor.HitPointType.NONE, null, LayoutEditor.HitPointType.NONE);
             Assert.fail("levelXing.setConnection(NONE, null, NONE) didn't throw exception");
-        } catch (JmriException ex) {
-            JUnitAppender.assertWarnMessage("MyLevelXing.setConnection(0, null, 0); invalid connection type");
+        }
+        catch (JmriException ex) {
+            JUnitAppender.assertWarnMessage("MyLevelXing.setConnection(NONE, null, NONE); invalid connection type");
         }
 
         try {   //unexpected type of connection to LevelXing
-            levelXing.setConnection(LevelXing.LEVEL_XING_A, null, LevelXing.POS_POINT);
+            levelXing.setConnection(LayoutEditor.HitPointType.LEVEL_XING_A, null, LayoutEditor.HitPointType.POS_POINT);
             Assert.fail("levelXing.setConnection(LEVEL_XING_A, null, POS_POINT) didn't throw exception");
-        } catch (JmriException ex) {
-            JUnitAppender.assertErrorMessage("MyLevelXing.setConnection(6, null, 1); unexpected type");
+        }
+        catch (JmriException ex) {
+            JUnitAppender.assertErrorMessage("MyLevelXing.setConnection(LEVEL_XING_A, null, POS_POINT); invalid type");
         }
 
         try {   //these should all be good
-            levelXing.setConnection(LevelXing.LEVEL_XING_A, null, LayoutTrack.NONE);
-            levelXing.setConnection(LevelXing.LEVEL_XING_B, null, LayoutTrack.NONE);
-            levelXing.setConnection(LevelXing.LEVEL_XING_C, null, LayoutTrack.NONE);
-            levelXing.setConnection(LevelXing.LEVEL_XING_D, null, LayoutTrack.NONE);
-        } catch (JmriException ex) {
+            levelXing.setConnection(LayoutEditor.HitPointType.LEVEL_XING_A, null, LayoutEditor.HitPointType.NONE);
+            levelXing.setConnection(LayoutEditor.HitPointType.LEVEL_XING_B, null, LayoutEditor.HitPointType.NONE);
+            levelXing.setConnection(LayoutEditor.HitPointType.LEVEL_XING_C, null, LayoutEditor.HitPointType.NONE);
+            levelXing.setConnection(LayoutEditor.HitPointType.LEVEL_XING_D, null, LayoutEditor.HitPointType.NONE);
+        }
+        catch (JmriException ex) {
             Assert.fail("levelXing.setConnection(LEVEL_XING_[ABCD], null, NONE) threw exception");
         }
     }
@@ -290,27 +295,27 @@ public class LevelXingTest {
         Assert.assertNotNull("layoutEditor is null", layoutEditor);
         Assert.assertNotNull("levelXing is null", levelXing);
 
-        TrackSegment ts = new TrackSegment("TS1", null, LayoutTrack.NONE, null, LayoutTrack.NONE, false, false, false, layoutEditor);
+        TrackSegment ts = new TrackSegment("TS1", null, LayoutEditor.HitPointType.NONE, null, LayoutEditor.HitPointType.NONE, false, false, false, layoutEditor);
 
         //unexpected type of connection
-        levelXing.setConnectA(ts, LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectA(TS1, 0); unexpected type");
-        levelXing.setConnectB(ts, LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectB(TS1, 0); unexpected type");
-        levelXing.setConnectC(ts, LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectC(TS1, 0); unexpected type");
-        levelXing.setConnectD(ts, LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectD(TS1, 0); unexpected type");
+        levelXing.setConnectA(ts, LayoutEditor.HitPointType.NONE);
+        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectA(TS1, NONE); invalid type");
+        levelXing.setConnectB(ts, LayoutEditor.HitPointType.NONE);
+        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectB(TS1, NONE); invalid type");
+        levelXing.setConnectC(ts, LayoutEditor.HitPointType.NONE);
+        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectC(TS1, NONE); invalid type");
+        levelXing.setConnectD(ts, LayoutEditor.HitPointType.NONE);
+        JUnitAppender.assertErrorMessage("MyLevelXing.setConnectD(TS1, NONE); invalid type");
 
         //everything should be good here (no error output)
-        levelXing.setConnectA(ts, LayoutTrack.TRACK);
-        levelXing.setConnectB(ts, LayoutTrack.TRACK);
-        levelXing.setConnectC(ts, LayoutTrack.TRACK);
-        levelXing.setConnectD(ts, LayoutTrack.TRACK);
-        levelXing.setConnectA(null, LayoutTrack.NONE);
-        levelXing.setConnectB(null, LayoutTrack.NONE);
-        levelXing.setConnectC(null, LayoutTrack.NONE);
-        levelXing.setConnectD(null, LayoutTrack.NONE);
+        levelXing.setConnectA(ts, LayoutEditor.HitPointType.TRACK);
+        levelXing.setConnectB(ts, LayoutEditor.HitPointType.TRACK);
+        levelXing.setConnectC(ts, LayoutEditor.HitPointType.TRACK);
+        levelXing.setConnectD(ts, LayoutEditor.HitPointType.TRACK);
+        levelXing.setConnectA(null, LayoutEditor.HitPointType.NONE);
+        levelXing.setConnectB(null, LayoutEditor.HitPointType.NONE);
+        levelXing.setConnectC(null, LayoutEditor.HitPointType.NONE);
+        levelXing.setConnectD(null, LayoutEditor.HitPointType.NONE);
     }
 
     @Test
@@ -320,24 +325,24 @@ public class LevelXingTest {
         Assert.assertNotNull("levelXing is null", levelXing);
 
         //invalid connection type
-        levelXing.getCoordsForConnectionType(LayoutTrack.NONE);
-        JUnitAppender.assertErrorMessage("MyLevelXing.getCoordsForConnectionType(0); Invalid connection type");
+        levelXing.getCoordsForConnectionType(LayoutEditor.HitPointType.NONE);
+        JUnitAppender.assertErrorMessage("MyLevelXing.getCoordsForConnectionType(NONE); Invalid connection type");
 
         //valid connection types (no error output)
-        Assert.assertEquals("levelXing.getCoordsForConnectionType(LayoutTrack.LEVEL_XING_CENTER)",
-                levelXingPoint, levelXing.getCoordsForConnectionType(LayoutTrack.LEVEL_XING_CENTER));
-        Assert.assertEquals("levelXing.getCoordsForConnectionType(LayoutTrack.LEVEL_XING_A)",
+        Assert.assertEquals("levelXing.getCoordsForConnectionType(LEVEL_XING_CENTER)",
+                levelXingPoint, levelXing.getCoordsForConnectionType(LayoutEditor.HitPointType.LEVEL_XING_CENTER));
+        Assert.assertEquals("levelXing.getCoordsForConnectionType(LEVEL_XING_A)",
                 new Point2D.Double(30, 50),
-                levelXing.getCoordsForConnectionType(LayoutTrack.LEVEL_XING_A));
-        Assert.assertEquals("levelXing.getCoordsForConnectionType(LayoutTrack.LEVEL_XING_B)",
+                levelXing.getCoordsForConnectionType(LayoutEditor.HitPointType.LEVEL_XING_A));
+        Assert.assertEquals("levelXing.getCoordsForConnectionType(LEVEL_XING_B)",
                 new Point2D.Double(36, 64),
-                levelXing.getCoordsForConnectionType(LayoutTrack.LEVEL_XING_B));
-        Assert.assertEquals("levelXing.getCoordsForConnectionType(LayoutTrack.LEVEL_XING_C)",
+                levelXing.getCoordsForConnectionType(LayoutEditor.HitPointType.LEVEL_XING_B));
+        Assert.assertEquals("levelXing.getCoordsForConnectionType(LEVEL_XING_C)",
                 new Point2D.Double(70, 50),
-                levelXing.getCoordsForConnectionType(LayoutTrack.LEVEL_XING_C));
-        Assert.assertEquals("levelXing.getCoordsForConnectionType(LayoutTrack.LEVEL_XING_D)",
+                levelXing.getCoordsForConnectionType(LayoutEditor.HitPointType.LEVEL_XING_C));
+        Assert.assertEquals("levelXing.getCoordsForConnectionType(LEVEL_XING_D)",
                 new Point2D.Double(64, 36),
-                levelXing.getCoordsForConnectionType(LayoutTrack.LEVEL_XING_D));
+                levelXing.getCoordsForConnectionType(LayoutEditor.HitPointType.LEVEL_XING_D));
     }
 
     @Test
@@ -593,10 +598,10 @@ public class LevelXingTest {
 
         List l = levelXing.checkForFreeConnections();
         Assert.assertEquals("Number of free connections", 4, l.size());
-        Assert.assertEquals("connections[0]", LayoutTrack.LEVEL_XING_A, l.get(0));
-        Assert.assertEquals("connections[1]", LayoutTrack.LEVEL_XING_B, l.get(1));
-        Assert.assertEquals("connections[2]", LayoutTrack.LEVEL_XING_C, l.get(2));
-        Assert.assertEquals("connections[3]", LayoutTrack.LEVEL_XING_D, l.get(3));
+        Assert.assertEquals("connections[0]", LayoutEditor.HitPointType.LEVEL_XING_A, l.get(0));
+        Assert.assertEquals("connections[1]", LayoutEditor.HitPointType.LEVEL_XING_B, l.get(1));
+        Assert.assertEquals("connections[2]", LayoutEditor.HitPointType.LEVEL_XING_C, l.get(2));
+        Assert.assertEquals("connections[3]", LayoutEditor.HitPointType.LEVEL_XING_D, l.get(3));
     }
 
     @Test
@@ -798,7 +803,7 @@ public class LevelXingTest {
 
         //connect the levelXing leg A to 1st anchor
         int tsIdx = 1;
-        ts1 = addNewTrackSegment(levelXing, LayoutTrack.LEVEL_XING_A, a1, LayoutTrack.POS_POINT, tsIdx++);
+        ts1 = addNewTrackSegment(levelXing, LayoutEditor.HitPointType.LEVEL_XING_A, a1, LayoutEditor.HitPointType.POS_POINT, tsIdx++);
 
         //add 2nd anchor
         a2 = new PositionablePoint("A2", PositionablePoint.ANCHOR, new Point2D.Double(20, 80), layoutEditor);
@@ -806,7 +811,7 @@ public class LevelXingTest {
         layoutTracks.add(a2);
 
         //connect the levelXing leg B to 2st anchor
-        ts2 = addNewTrackSegment(levelXing, LayoutTrack.LEVEL_XING_B, a2, LayoutTrack.POS_POINT, tsIdx++);
+        ts2 = addNewTrackSegment(levelXing, LayoutEditor.HitPointType.LEVEL_XING_B, a2, LayoutEditor.HitPointType.POS_POINT, tsIdx++);
 
         //add 3rd anchor
         a3 = new PositionablePoint("A3", PositionablePoint.ANCHOR, new Point2D.Double(90, 50), layoutEditor);
@@ -814,7 +819,7 @@ public class LevelXingTest {
         layoutTracks.add(a3);
 
         //connect the levelXing leg B to 2st anchor
-        ts3 = addNewTrackSegment(levelXing, LayoutTrack.LEVEL_XING_C, a3, LayoutTrack.POS_POINT, tsIdx++);
+        ts3 = addNewTrackSegment(levelXing, LayoutEditor.HitPointType.LEVEL_XING_C, a3, LayoutEditor.HitPointType.POS_POINT, tsIdx++);
 
         //add 4th anchor
         a4 = new PositionablePoint("A4", PositionablePoint.ANCHOR, new Point2D.Double(80, 20), layoutEditor);
@@ -822,15 +827,15 @@ public class LevelXingTest {
         layoutTracks.add(a4);
 
         //connect the levelXing leg B to 2st anchor
-        ts4 = addNewTrackSegment(levelXing, LayoutTrack.LEVEL_XING_D, a4, LayoutTrack.POS_POINT, tsIdx++);
+        ts4 = addNewTrackSegment(levelXing, LayoutEditor.HitPointType.LEVEL_XING_D, a4, LayoutEditor.HitPointType.POS_POINT, tsIdx++);
 
         //wait for layout editor to finish setup and drawing
         new QueueTool().waitEmpty();
     }
 
     private static TrackSegment addNewTrackSegment(
-            @CheckForNull LayoutTrack c1, int t1,
-            @CheckForNull LayoutTrack c2, int t2,
+            @CheckForNull LayoutTrack c1, LayoutEditor.HitPointType t1,
+            @CheckForNull LayoutTrack c2, LayoutEditor.HitPointType t2,
             int idx) {
         TrackSegment result = null;
         if ((c1 != null) && (c2 != null)) {
@@ -841,8 +846,8 @@ public class LevelXingTest {
             Assert.assertNotNull("new TrackSegment is null", result);
             layoutEditor.getLayoutTracks().add(result);
             //link to connected objects
-            layoutEditor.setLink(c1, t1, result, LayoutTrack.TRACK);
-            layoutEditor.setLink(c2, t2, result, LayoutTrack.TRACK);
+            layoutEditor.setLink(c1, t1, result, LayoutEditor.HitPointType.TRACK);
+            layoutEditor.setLink(c2, t2, result, LayoutEditor.HitPointType.TRACK);
         }
         return result;
     }

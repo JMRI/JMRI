@@ -247,16 +247,16 @@ public class ConnectivityUtil {
                     prevConnectType = LayoutEditor.HitPointType.POS_POINT;
                     prevConnectTrack = lc.getAnchor();
                 } // check for a level crossing
-                else if (LayoutEditor.HitPointType.isLevelXingHitType(cType)) {
+                else if (cType.isLevelXingHitType()) {
                     // entering this Block at a level crossing, skip over it an initialize the next
                     //      TrackSegment if there is one in this Block
                     setupOpposingTrackSegment((LevelXing) lc.getConnectedObject(), cType);
                 } // check for turnout
-                else if (LayoutEditor.HitPointType.isTurnoutHitType(cType)) {
+                else if (cType.isTurnoutHitType()) {
                     // add turnout to list
                     result.add(new LayoutTrackExpectedState<>((LayoutTurnout) lc.getConnectedObject(),
                             getTurnoutSetting((LayoutTurnout) lc.getConnectedObject(), cType, suppress)));
-                } else if (LayoutEditor.HitPointType.isSlipHitType(cType)) {
+                } else if (cType.isSlipHitType()) {
                     result.add(new LayoutTrackExpectedState<>((LayoutTurnout) lc.getConnectedObject(),
                             getTurnoutSetting((LayoutTurnout) lc.getConnectedObject(), cType, suppress)));
                 }
@@ -314,7 +314,7 @@ public class ConnectivityUtil {
                         prevConnectTrack = cObject;
                     }
                 }
-            } else if (LayoutEditor.HitPointType.isLevelXingHitType(cType)) {
+            } else if (cType.isLevelXingHitType()) {
                 // reached a level crossing, is it within this block?
                 switch (cType) {
                     case LEVEL_XING_A:
@@ -344,7 +344,7 @@ public class ConnectivityUtil {
                         break;
                     }
                 }
-            } else if (LayoutEditor.HitPointType.isTurnoutHitType(cType)) {
+            } else if (cType.isTurnoutHitType()) {
                 // reached a turnout
                 LayoutTurnout lt = (LayoutTurnout) cObject;
                 LayoutTurnout.TurnoutType tType = lt.getTurnoutType();
@@ -507,7 +507,7 @@ public class ConnectivityUtil {
                         result.add(new LayoutTrackExpectedState<>((LayoutTurnout) cObject, getTurnoutSetting(lt, cType, suppress)));
                     }
                 }
-            } else if (LayoutEditor.HitPointType.isSlipHitType(cType)) {
+            } else if (cType.isSlipHitType()) {
                 // reached a LayoutSlip
                 LayoutSlip ls = (LayoutSlip) cObject;
                 if (((cType == LayoutEditor.HitPointType.SLIP_A) && (ls.getLayoutBlock() != currLayoutBlock))
@@ -2465,7 +2465,7 @@ public class ConnectivityUtil {
                         }
                         curLayoutTrack = conLayoutTrack;
                     }
-                } else if (LayoutEditor.HitPointType.isLevelXingHitType(conType)) {
+                } else if (conType.isLevelXingHitType()) {
                     // reached a level crossing
                     if ((conType == LayoutEditor.HitPointType.LEVEL_XING_A) || (conType == LayoutEditor.HitPointType.LEVEL_XING_C)) {
                         if (((LevelXing) conLayoutTrack).getLayoutBlockAC() != currLayoutBlock) {
@@ -2493,7 +2493,7 @@ public class ConnectivityUtil {
                         }
                     }
                     curLayoutTrack = conLayoutTrack;
-                } else if (LayoutEditor.HitPointType.isTurnoutHitType(conType)) {
+                } else if (conType.isTurnoutHitType()) {
                     // reached a turnout
                     LayoutTurnout lt = (LayoutTurnout) conLayoutTrack;
                     LayoutTurnout.TurnoutType tType = lt.getTurnoutType();
@@ -2629,7 +2629,7 @@ public class ConnectivityUtil {
                             curLayoutTrack = conLayoutTrack;
                         }
                     }   // if RH, LH or WYE _TURNOUT
-                } else if (LayoutEditor.HitPointType.isSlipHitType(conType)) {
+                } else if (conType.isSlipHitType()) {
                     LayoutSlip ls = (LayoutSlip) conLayoutTrack;
                     LayoutTurnout.TurnoutType tType = ls.getTurnoutType();
 
@@ -2748,7 +2748,7 @@ public class ConnectivityUtil {
                         }   //switch (conType)
                         curLayoutTrack = conLayoutTrack;
                     }   // if (ls.getLayoutBlock() != currLayoutBlock
-                }   //else if (LayoutEditor.HitPointType.isSlipHitType(conType))
+                }   //else if (conType.isSlipHitType())
             } else {
                 curTrackSegment = null;
             }
