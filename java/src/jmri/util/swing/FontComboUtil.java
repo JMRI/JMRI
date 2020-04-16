@@ -1,10 +1,7 @@
 package jmri.util.swing;
 
-import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BoxLayout;
@@ -73,26 +70,6 @@ public class FontComboUtil {
 
     }
 
-    
-    public static List<String> getRealFonts(int which) {
-        if (!prepared && !preparing) { // prepareFontLists is synchronized; don't do it if you don't have to
-            prepareFontLists();
-        }
-
-        switch (which) {
-            case MONOSPACED:
-                return new ArrayList<>(monospaced);
-            case PROPORTIONAL:
-                return new ArrayList<>(proportional);
-            case CHARACTER:
-                return new ArrayList<>(character);
-            case SYMBOL:
-                return new ArrayList<>(symbol);
-            default:
-                return new ArrayList<>(all);
-        }
-
-    }
     /**
      * Determine if the specified font family is a symbol font
      *
