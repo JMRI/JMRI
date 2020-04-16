@@ -700,7 +700,5 @@ public class LenzXNetTurnoutCommandTest {
         XNetReply reply = new XNetReply("01 04 05");
         checkTwoOffSequence(reply);
     }
-    
-    private final static Logger log = LoggerFactory.getLogger(LenzXNetTurnoutCommandTest.class);
 
 }

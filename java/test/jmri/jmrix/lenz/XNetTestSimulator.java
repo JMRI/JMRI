@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
-import java.util.logging.Level;
 import jmri.jmrix.lenz.liusb.LIUSBXNetPacketizer;
 import jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter;
 import org.slf4j.Logger;
@@ -143,8 +141,6 @@ abstract class XNetTestSimulator extends XNetSimulatorAdapter {
         }
     }
     
-    private boolean nextRelease;
-
     @Override
     protected XNetMessage readMessage() {
         /*
