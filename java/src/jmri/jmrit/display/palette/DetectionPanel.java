@@ -269,9 +269,8 @@ public class DetectionPanel extends JPanel {
         _checkBoxPanel.add(Box.createHorizontalStrut(100));
         _block = block;
         _pathBoxes = new ArrayList<>();
-        List<Path> paths = _block.getPaths();
-        for (String name : paths.stream().filter(o -> o instanceof OPath)
-                      .map(o -> ((OPath) o).getName()).collect(Collectors.toList())) {
+        _block.getPaths().stream().filter(o -> o instanceof OPath)
+                      .map(o -> ((OPath) o).getName()).forEach( name -> {
             if (name.length() < 25) {
                 char[] ca = new char[25];
                 for (int j = 0; j < name.length(); j++) {
@@ -286,7 +285,7 @@ public class DetectionPanel extends JPanel {
             box.setName(name);
             _pathBoxes.add(box);
             _checkBoxPanel.add(box);
-        }
+        });
         _blockPathPanel.add(_checkBoxPanel, 1);
         _blockPathPanel.setVisible(true);
     }
