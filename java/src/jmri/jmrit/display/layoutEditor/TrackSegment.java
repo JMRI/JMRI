@@ -4000,8 +4000,6 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public List<LayoutEditor.HitPointType> checkForFreeConnections() {
-        List<LayoutEditor.HitPointType> result = new ArrayList<>();
-    public List<Integer> checkForFreeConnections() {
         //Track Segments always have all their connections so...
         //(nothing to see here... move along)
         return new ArrayList<>();

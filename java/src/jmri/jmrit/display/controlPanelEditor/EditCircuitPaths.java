@@ -8,6 +8,7 @@ import java.beans.PropertyChangeListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 import javax.swing.AbstractListModel;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -570,15 +571,11 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
             return;
         }
         // is this path already defined? OPath equality is equal turnout settings and portals, not icons
-        Iterator<Path> iter = _homeBlock.getPaths().iterator();
-        while (iter.hasNext()) {
-            Path loopPath = iter.next();
-            if ( loopPath instanceof OPath && newPath.equals(loopPath)) {
-                otherPath = (OPath)loopPath;
-        for (Path value : _homeBlock.getPaths()) {
-            OPath path = (OPath) value;
-            if (newPath.equals(path)) {
-                otherPath = path;
+        for (OPath loopPath : _homeBlock.getPaths().stream()
+                .filter(o -> o instanceof OPath).map(o -> (OPath)o)
+                .collect(Collectors.toList())) {
+            if (newPath.equals(loopPath)) {
+                otherPath = loopPath;
                 break;
             }
         }
