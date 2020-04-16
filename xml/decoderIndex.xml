@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.19.5ish+heap+20200411T1132Z+R624644fdea on Sat Apr 11 21:32:42 AEST 2020-->
-  <decoderIndex version="998">
+  <!--Written by JMRI version 4.19.5ish+heap+20200415T0118Z+Re37a3f80c3 on Wed Apr 15 11:21:03 AEST 2020-->
+  <decoderIndex version="1000">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -7020,9 +7020,73 @@
           <size length="51.8" width="25.4" height="14" units="mm" />
         </model>
         <model model="LokPilot 5 Fx micro" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554611">
+          <output name="1,37" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,38" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,39" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,40" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,9" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,10" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,11" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,12" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,13" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,14" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,15" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,16" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,17" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,18" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,19" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,20" label="|" />
+          <!-- suppress unused item -->
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
         <model model="LokPilot 5 Fx micro DCC" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554612">
+          <output name="1,37" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,38" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,39" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,40" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,9" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,10" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,11" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,12" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,13" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,14" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,15" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,16" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,17" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,18" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,19" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,20" label="|" />
+          <!-- suppress unused item -->
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
         <model model="LokPilot 5 MKL" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554601">
