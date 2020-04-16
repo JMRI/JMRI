@@ -208,6 +208,10 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     @Override
     public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         log.warn("Throttle request failed for {} because {}.", address, reason);
+        if (!(address instanceof DccLocoAddress)){
+            log.warn("Throttle address {} is not a DccLocoAddress", address);
+            return;
+        }
         for (ThrottleControllerListener l : listeners) {
             l.notifyControllerAddressDeclined(this, (DccLocoAddress) address, reason);
             log.debug("Notify TCListener address declined in-use: {}", l.getClass());
