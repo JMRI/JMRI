@@ -1,5 +1,7 @@
 package jmri.util;
 
+import java.awt.GraphicsEnvironment;
+
 import apps.SystemConsole;
 
 import java.io.File;
@@ -172,7 +174,9 @@ public class Log4JUtil {
         // Initialise JMRI System Console
         // Need to do this before initialising log4j so that the new
         // stdout and stderr streams are set up and usable by the ConsoleAppender
-        SystemConsole.create();
+        if (!GraphicsEnvironment.isHeadless()) {
+            SystemConsole.create();
+        }
         log4JSetUp = true;
 
         // initialize the java.util.logging to log4j bridge

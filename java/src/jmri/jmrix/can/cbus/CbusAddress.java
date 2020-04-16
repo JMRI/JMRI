@@ -371,9 +371,6 @@ public class CbusAddress {
         try {
             unsigned = Integer.parseInt(part);
             log.debug("part {} is integer {}", part, unsigned);
-            if (unsigned == 0) {
-                throw new IllegalArgumentException("Event cannot be 0 in address: " + part);
-            }
             if ((part.charAt(0) != '+') && (part.charAt(0) != '-')) {
                 if (unsigned > 0 && unsigned < 65536) {
                     part = plusOrMinus + part;
@@ -399,9 +396,6 @@ public class CbusAddress {
                     // it's got a string in somewhere, start by checking event number
                     int lasta = StringUtil.getLastIntFromString(part);
                     log.debug("last string {}", lasta);
-                    if (lasta == 0) {
-                        throw new IllegalArgumentException("Event cannot be 0 in address: " + part);
-                    }
                     if (lasta > 65535) {
                         throw new IllegalArgumentException("Event Too Large in address: " + part);
                     }

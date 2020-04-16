@@ -40,9 +40,8 @@ public abstract class DragJComponent extends JPanel implements DragGestureListen
 
     public DragJComponent(DataFlavor flavor,  JComponent comp) {
         super();
-        String borderName = ItemPalette.convertText("dragToPanel");
         setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
-                borderName));
+                Bundle.getMessage("dragToPanel")));
         // guestimate border is about 5 pixels thick. plus some margin
         add(comp);
         Dimension dim = comp.getPreferredSize();

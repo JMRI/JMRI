@@ -35,7 +35,7 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
         } else {
             x.append("Mx1_"); // NOI18N
         }
-        x.append(": "); //IN18N
+        x.append(": "); // NOI18N
         x.append("Command Monitor"); // I18N
         return x.toString();
     }

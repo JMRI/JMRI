@@ -69,7 +69,7 @@
         current speed (perhaps 1 to 8) by encoding that number in several bits to be
         sent as part of the CMRINet transmission. A <a href="../../tools/scripting/index.shtml">
         JMRI script</a> can be <a href="../../tools/scripting/HowTo.shtml#multturnouts">listening
-        to changes</a> in these “speed” bits and use them to create a decimal number in a
+        to changes</a> in these "speed" bits and use them to create a decimal number in a
         <a href="../../tools/Memories.shtml"></a>JMRI memory variable for display on a panel,
         as illustrated in a <a href="https://www.jmri.org/jython/CmriBitsToBytes.py" target="_blank">
         this example script.</a> The image here shows sensors 0, 1, 2, and 3 active which
@@ -110,7 +110,7 @@
             as you need to tell the arduino to perform some task. Controlling whether 
             a motor is on or off can be done with a single light (INACTIVE (which sends a
             0) for OFF, ACTIVE (which sends a 1) for ON). Controlling its speed requires
-            two lights – one to tell it to increase, one to tell it to decrease, neither on
+            two lights - one to tell it to increase, one to tell it to decrease, neither on
             to stay the same speed.</p>
 		    </dd>
 
@@ -126,7 +126,7 @@
             
             <p class="note">While JMRI sends and receives a 0 or 1 in the
             CMRI bit steam, it translates a zero into a sensor INACTIVE state, which is
-            actually stored as 4 (requesting “state” and printing it as a number in a script
+            actually stored as 4 (requesting "state" and printing it as a number in a script
             will return a 4) and ACTIVE as a 2.  This is important in writing your JMRI
             script to translate received sensor states as binary bits.]</p>
 		    </dd>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.19.3ish+jake+20200207T1509Z+R853a0f509d on Fri Feb 07 07:09:17 PST 2020-->
-  <decoderIndex version="996">
+  <!--Written by JMRI version 4.19.5ish+heap+20200415T0118Z+Re37a3f80c3 on Wed Apr 15 11:21:03 AEST 2020-->
+  <decoderIndex version="1000">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -322,7 +322,7 @@
       </family>
       <family name="Blueline" mfg="Broadway Limited Imports, LLC" file="BLI_Blueline_diesel.xml">
         <model model="Diesel" numOuts="3" numFns="14" connector="9pin">
-          <versionCV lowVersionID="4" />
+          <versionCV lowVersionID="0" highVersionID="31" />
           <output name="1" label="headlight" />
           <output name="2" label="rearlight" />
           <output name="Horn1" />
@@ -349,7 +349,7 @@
       </family>
       <family name="Blueline" mfg="Broadway Limited Imports, LLC" file="BLI_Blueline_steam.xml">
         <model model="Steam" numOuts="3" numFns="14">
-          <versionCV lowVersionID="32" />
+          <versionCV lowVersionID="32" highVersionID="63" />
           <output name="1" label="headlight" />
           <output name="2" label="rearlight" />
           <output name="Whistle" />
@@ -6994,6 +6994,294 @@
           </protocols>
         </model>
       </family>
+      <family name="ESU LokPilot 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokPilot5.xml">
+        <model model="LokPilot 5" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554600">
+          <size length="30.5" width="15.5" height="5.5" units="mm" />
+        </model>
+        <model model="LokPilot 5 DCC" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554602">
+          <size length="30.5" width="15.5" height="5.5" units="mm" />
+        </model>
+        <model model="LokPilot 5 micro" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777390">
+          <size length="25.5" width="10.6" height="4.5" units="mm" />
+        </model>
+        <model model="LokPilot 5 micro DCC" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777391">
+          <size length="25.5" width="10.6" height="4.5" units="mm" />
+        </model>
+        <model model="LokPilot 5 micro Next18" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554604">
+          <size length="21.0" width="10.6" height="4.0" units="mm" />
+        </model>
+        <model model="LokPilot 5 micro DCC Next18" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">
+          <size length="21.0" width="10.6" height="4.0" units="mm" />
+        </model>
+        <model model="LokPilot 5 L" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554609">
+          <size length="51.8" width="25.4" height="14" units="mm" />
+        </model>
+        <model model="LokPilot 5 L DCC" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554610">
+          <size length="51.8" width="25.4" height="14" units="mm" />
+        </model>
+        <model model="LokPilot 5 Fx micro" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554611">
+          <output name="1,37" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,38" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,39" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,40" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,9" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,10" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,11" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,12" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,13" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,14" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,15" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,16" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,17" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,18" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,19" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,20" label="|" />
+          <!-- suppress unused item -->
+          <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model model="LokPilot 5 Fx micro DCC" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554612">
+          <output name="1,37" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,38" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,39" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,40" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,9" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,10" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,11" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,12" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,13" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,14" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,15" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,16" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,17" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,18" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,19" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,20" label="|" />
+          <!-- suppress unused item -->
+          <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model model="LokPilot 5 MKL" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554601">
+          <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model model="LokPilot 5 MKL DCC" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554608">
+          <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+        <!-- Copyright (C) JMRI 2019 All rights reserved -->
+        <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+          <output name="1,36" label="|" />
+          <!-- suppress reserved item -->
+          <output name="3,1" label="Optional Load" />
+          <output name="3,2" label="Shunting Mode">
+            <label xml:lang="ca">Mode de Maniobra</label>
+            <label xml:lang="cs">Režim posunu</label>
+            <label xml:lang="da">Shunting Mode</label>
+            <label xml:lang="nl">Shunting Mode</label>
+          </output>
+          <output name="3,3" label="Brake 1">
+            <label xml:lang="ca">Fre 1</label>
+            <label xml:lang="cs">Brzda 1</label>
+            <label xml:lang="da">Brake 1</label>
+            <label xml:lang="nl">Brake 1</label>
+          </output>
+          <output name="3,4" label="Brake 2">
+            <label xml:lang="ca">Fre 2</label>
+            <label xml:lang="cs">Brzda 2</label>
+            <label xml:lang="da">Brake 2</label>
+            <label xml:lang="nl">Brake 2</label>
+          </output>
+          <output name="3,5" label="Brake 3">
+            <label xml:lang="ca">Fre 3</label>
+            <label xml:lang="cs">Brzda 3</label>
+            <label xml:lang="da">Brake 3</label>
+            <label xml:lang="nl">Brake 3</label>
+          </output>
+          <output name="3,6" label="Primary Load">
+            <label xml:lang="ca">Càrrega Primary</label>
+            <label xml:lang="cs">Primary náklad</label>
+            <label xml:lang="da">Primary Load</label>
+            <label xml:lang="nl">Primary Load</label>
+          </output>
+          <output name="3,7" label="Uncoupling cycle">
+            <label xml:lang="ca">Desacoplament</label>
+            <label xml:lang="cs">Cyklus rozpojení</label>
+            <label xml:lang="da">Uncoupling cycle</label>
+            <label xml:lang="nl">Uncoupling cycle</label>
+          </output>
+          <output name="3,8" label="Drive Hold" />
+          <output name="3,9" label="Firebox">
+            <label xml:lang="ca">Caixa de Llums</label>
+            <label xml:lang="cs">Topeniště</label>
+            <label xml:lang="da">Firebox</label>
+            <label xml:lang="nl">Firebox</label>
+          </output>
+          <output name="3,10" label="Dim lights">
+            <label xml:lang="ca">Llums Ajustables</label>
+            <label xml:lang="cs">Svítící světla</label>
+            <label xml:lang="da">Dim lights</label>
+            <label xml:lang="nl">Dim lights</label>
+          </output>
+          <output name="3,11" label="Grade crossing">
+            <label xml:lang="ca">Grade crossing</label>
+            <label xml:lang="cs">Úrovňové křižování</label>
+            <label xml:lang="da">Grade crossing</label>
+            <label xml:lang="nl">Grade crossing</label>
+          </output>
+          <output name="3,12" label="Momentum off">
+            <label xml:lang="ca">Apagat off</label>
+            <label xml:lang="cs">Hybnost vypnout</label>
+            <label xml:lang="da">Momentum off</label>
+            <label xml:lang="nl">Momentum off</label>
+          </output>
+          <output name="3,13" label="ESU smoke unit">
+            <label xml:lang="ca">Fumígen ESU</label>
+            <label xml:lang="cs">ESU kouřová jednotka</label>
+            <label xml:lang="da">ESU smoke unit</label>
+            <label xml:lang="nl">ESU smoke unit</label>
+          </output>
+          <output name="3,14" label="Sound fade">
+            <label xml:lang="ca">Esvaiment del Sò</label>
+            <label xml:lang="cs">Slábnoucí zvuk</label>
+            <label xml:lang="da">Sound fade</label>
+            <label xml:lang="nl">Sound fade</label>
+          </output>
+          <output name="3,15" label="Disable brake sound">
+            <label xml:lang="ca">Deshabilita sò del Fre</label>
+            <label xml:lang="cs">Zakázat zvuk brzdy</label>
+            <label xml:lang="da">Disable brake sound</label>
+            <label xml:lang="nl">Disable brake sound</label>
+          </output>
+          <output name="3,16" label="Volume &amp; Mute">
+            <label xml:lang="ca">Volum i Silenci</label>
+            <label xml:lang="cs">Hlasitost &amp; Ztlumení</label>
+            <label xml:lang="da">Volume &amp; Mute</label>
+            <label xml:lang="nl">Volume &amp; Mute</label>
+          </output>
+          <output name="3,17" label="|">
+            <label xml:lang="ca">Mode de Canvi 1</label>
+            <label xml:lang="cs">Režim posunu 1</label>
+            <label xml:lang="da">Shift Mode 1</label>
+            <label xml:lang="nl">Shift Mode 1</label>
+          </output>
+          <output name="3,18" label="|">
+            <label xml:lang="ca">Mode de Canvi 2</label>
+            <label xml:lang="cs">Režim posunu 2</label>
+            <label xml:lang="da">Shift Mode 2</label>
+            <label xml:lang="nl">Shift Mode 2</label>
+          </output>
+          <output name="3,19" label="|">
+            <label xml:lang="ca">Mode de Canvi 3</label>
+            <label xml:lang="cs">Režim posunu 3</label>
+            <label xml:lang="da">Shift Mode 3</label>
+            <label xml:lang="nl">Shift Mode 3</label>
+          </output>
+          <output name="3,20" label="|">
+            <label xml:lang="ca">Mode de Canvi 4</label>
+            <label xml:lang="cs">Režim posunu 4</label>
+            <label xml:lang="da">Shift Mode 4</label>
+            <label xml:lang="nl">Shift Mode 4</label>
+          </output>
+          <output name="3,21" label="|">
+            <label xml:lang="ca">Mode de Canvi 5</label>
+            <label xml:lang="cs">Režim posunu 5</label>
+            <label xml:lang="da">Shift Mode 5</label>
+            <label xml:lang="nl">Shift Mode 5</label>
+          </output>
+          <output name="3,22" label="|">
+            <label xml:lang="ca">Mode de Canvi 6</label>
+            <label xml:lang="cs">Režim posunu 6</label>
+            <label xml:lang="da">Shift Mode 6</label>
+            <label xml:lang="nl">Shift Mode 6</label>
+          </output>
+          <output name="3,23" label="|" />
+          <output name="3,24" label="|" />
+          <output name="4,1" label="Virtual drive sound" />
+          <output name="4,2" label="|" />
+          <output name="4,3" label="|" />
+          <output name="4,4" label="|" />
+          <output name="4,5" label="|" />
+          <output name="4,6" label="|" />
+          <output name="4,7" label="|" />
+          <output name="4,8" label="|" />
+          <output name="4,9" label="|" />
+          <output name="4,10" label="|" />
+          <output name="4,11" label="|" />
+          <output name="4,12" label="|" />
+          <output name="4,13" label="|" />
+          <output name="4,14" label="|" />
+          <output name="4,15" label="|" />
+          <output name="4,16" label="|" />
+          <output name="4,17" label="|" />
+          <output name="4,18" label="|" />
+          <output name="4,19" label="|" />
+          <output name="4,20" label="|" />
+          <output name="4,21" label="|" />
+          <output name="4,22" label="|" />
+          <output name="4,23" label="|" />
+          <output name="4,24" label="|" />
+          <output name="4,25" label="|" />
+          <output name="4,26" label="|" />
+          <output name="4,27" label="|" />
+          <output name="4,28" label="|" />
+          <output name="4,29" label="|" />
+          <output name="4,30" label="|" />
+          <output name="4,31" label="|" />
+          <output name="4,32" label="|" />
+        </outputs>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">
+            <text>Light</text>
+            <text xml:lang="de">Licht</text>
+          </functionlabel>
+          <functionlabel num="1" lockable="true">
+            <text>Bell</text>
+            <text xml:lang="de">Sound</text>
+          </functionlabel>
+          <functionlabel num="2" lockable="false">
+            <text>Horn</text>
+            <text xml:lang="de">Pfeife / Signalhorn</text>
+          </functionlabel>
+        </functionlabels>
+        <soundlabels>
+          <soundlabel num="33">
+            <text>Automatic brake sound</text>
+            <text xml:lang="de">automatischer Bremssound</text>
+          </soundlabel>
+          <soundlabel num="34">
+            <text>Gear shift sound</text>
+            <text xml:lang="de">Schaltgeräusch</text>
+          </soundlabel>
+        </soundlabels>
+      </family>
       <family name="ESU LokPilot Basic 1.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255" file="ESU_LokPilotBasic1.0.xml">
         <model model="LokPilot Basic 1.0" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="3" numFns="5" formFactor="HO" connector="NMRAmedium">
           <output name="1" label="Front light" maxcurrent="180 mA" connection="wire" />
@@ -7341,6 +7629,9 @@
           <size length="51.8" width="25.4" height="14" units="mm" />
         </model>
         <model model="LokSound 5 XL" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554591">
+          <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model model="LokSound 5 MKL" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554598">
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
@@ -18502,8 +18793,10 @@
         <model model="TSU-GN2200 GP40-2L/W w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="785" comment="Model T0204.002B" />
         <model model="TSU-GN2200 GP40-2L/W w/gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="786" comment="Model T0204.003B" />
         <model model="TSU-GN2200 GP40-2L/W w/mars" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="784" comment="Model T0204.001B" />
-        <model model="TSU-GN2200 SDP40F w/gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="813" comment="Model T0207.001B" />
-        <model model="TSU-GN2200 SDF40-2 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="814" comment="Model T0207.002B" />
+        <model model="TSU-GN2200 SDP40F w/gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="813" comment="Model T0207.001" />
+        <model model="TSU-GN2208 SDP40F w/gyra" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="927" comment="Model 8T0207.001" />
+        <model model="TSU-GN2200 SDF40-2 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="814" comment="Model T0207.002" />
+        <model model="TSU-GN2208 SDF40-2 w/beacon" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="928" comment="Model 8T0207.002" />
         <model model="TSU-GN2200 SDP45/F45 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="820" comment="Model T0206.003B" />
         <model model="TSU-GN2208 SD60E" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="835" comment="Model 8T0302.005" />
         <model model="TSU-GN2208 SD60E 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="884" comment="Model 8T0302.?" />

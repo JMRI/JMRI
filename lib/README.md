@@ -39,6 +39,12 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 ```
 After that, add and commit the additional files that were created within lib/
 
+After you have committed your changes, please run
+```
+./scripts/check_lib_dates
+```
+which checks the dates of the control files to make sure they've benen updated when lib/ is updated
+
 ### Specific components:
 
 ##### jsplitbutton-1.3.1.jar
@@ -54,6 +60,9 @@ After that, add and commit the additional files that were created within lib/
 - contributed by Randall Wood
 - from https://github.com/rhwood/jinputvalidator
 - javadoc at https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.6.0
+
+##### assertJ: assertj-core-3.12.0.jar, assertj-swing-3.9.2.jar, assertj-swing-junit-3.9.2.jar
+- testing only
 
 ##### commons-lang3-3.2.1.jar
 - version 3.2.1

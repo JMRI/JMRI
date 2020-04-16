@@ -383,7 +383,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"),
                 Bundle.getMessage("BeanNameTurnout")));
         _itemPanel = new TableItemPanel<>(_paletteFrame, "Turnout", _iconFamily,
-                PickListModel.turnoutPickModelInstance(), _editor); // NOI18N
+                PickListModel.turnoutPickModelInstance()); // NOI18N
         ActionListener updateAction = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {

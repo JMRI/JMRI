@@ -19,8 +19,6 @@
      <Match>
         <Confidence value="3" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
-           <Bug pattern="BC_UNCONFIRMED_CAST" />
-           <Bug pattern="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE" />
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
            <Bug pattern="LI_LAZY_INIT_STATIC" />
            <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" />

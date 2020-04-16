@@ -11,6 +11,7 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.setup.Control;
 
 /**
@@ -20,7 +21,7 @@ import jmri.jmrit.operations.setup.Control;
  * @author Daniel Boudreau Copyright (C) 2014
  *
  */
-public abstract class RollingStockAttribute {
+public abstract class RollingStockAttribute extends PropertyChangeSupport {
 
     protected static final int MIN_NAME_LENGTH = 1;
 
@@ -51,7 +52,7 @@ public abstract class RollingStockAttribute {
     }
 
     protected String getDefaultNames() {
-        return "Error"; // overridden //  NOI18N
+        return "Error"; // overridden // NOI18N
     }
 
     public void setNames(String[] names) {
@@ -223,20 +224,6 @@ public abstract class RollingStockAttribute {
             String[] names = root.getChildText(oldName).split("%%"); // NOI18N
             setNames(names);
         }
-    }
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(RollingStockAttribute.class);

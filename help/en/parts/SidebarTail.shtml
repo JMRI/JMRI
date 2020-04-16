@@ -1,7 +1,7 @@
 <!-- SidebarTail.shtml -->
     <!-- Final items in typical sidebar -->
       <h3 style="padding-left: 1em;"><p class="noted" align="center">
-      JMRI Web Site:<br>
+      JMRI Help:<br>
        <a href="/help/en/webtoc.shtml">Contents</a>/
        <a href="/help/en/webindex.shtml">Index</a>
      </p></h3>

@@ -206,7 +206,9 @@ public class DataSource extends jmri.util.JmriJFrame {
                 @Override
                 public void connect(DataListener l) {
                     DataSource.this.addListener(l);
-                    ((PacketTableFrame) l).setSource(DataSource.this);
+                    if (l instanceof PacketTableFrame) {
+                        ((PacketTableFrame) l).setSource(DataSource.this);
+                    }
                 }
             };
             JButton b = new JButton((String) p.getValue(Action.NAME));

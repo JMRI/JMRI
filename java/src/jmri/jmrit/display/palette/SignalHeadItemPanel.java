@@ -28,12 +28,12 @@ import org.slf4j.LoggerFactory;
 
 public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
 
-    public SignalHeadItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<SignalHead> model, Editor editor) {
-        super(parentFrame, type, family, model, editor);
+    public SignalHeadItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<SignalHead> model) {
+        super(parentFrame, type, family, model);
     }
 
     @Override
-    protected JPanel initTablePanel(PickListModel<SignalHead> model, Editor editor) {
+    protected JPanel initTablePanel(PickListModel<SignalHead> model) {
         _table = model.makePickTable();
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
@@ -119,7 +119,7 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
 
     protected HashMap<String, NamedIcon> getFilteredIconMap(HashMap<String, NamedIcon> allIconsMap) {
         if (allIconsMap == null) {
-            JOptionPane.showMessageDialog(_paletteFrame,
+            JOptionPane.showMessageDialog(_frame,
                     Bundle.getMessage("FamilyNotFound", _itemType, _family),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return null;
@@ -139,7 +139,10 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
                 String name = entry.getKey();
                 String borderName = ItemPalette.convertText(name);
                 for (String state : states) {
-                    if (borderName.equals(state) || name.equals("SignalHeadStateDark") || name.equals(ItemPalette.convertText("SignalHeadStateDark")) || name.equals("SignalHeadStateHeld") || name.equals(ItemPalette.convertText("SignalHeadStateHeld"))) {
+                    if (borderName.equals(state) || name.equals("SignalHeadStateDark") 
+                            || name.equals(ItemPalette.convertText("SignalHeadStateDark")) 
+                            || name.equals("SignalHeadStateHeld") 
+                            || name.equals(ItemPalette.convertText("SignalHeadStateHeld"))) {
                         iconMap.put(name, entry.getValue());
                         break;
                     }
@@ -190,7 +193,7 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
             }
 
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
-                SignalHeadIcon sh = new SignalHeadIcon(_editor);
+                SignalHeadIcon sh = new SignalHeadIcon(_frame.getEditor());
                 sh.setSignalHead(bean.getDisplayName());
                 HashMap<String, NamedIcon> map = getFilteredIconMap(iMap);
                 Iterator<Entry<String, NamedIcon>> iter = map.entrySet().iterator();

@@ -2242,7 +2242,10 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                             String t = lt.getTurnoutName();
                             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
                             if (log.isDebugEnabled()) {
-                                if ((lt.getTurnoutType() <= 3) && (!lt.getBlockName().equals(""))) {
+                                if (    (lt.getTurnoutType() == LayoutTurnout.TurnoutType.RH_TURNOUT ||
+                                         lt.getTurnoutType() == LayoutTurnout.TurnoutType.LH_TURNOUT ||
+                                         lt.getTurnoutType() == LayoutTurnout.TurnoutType.WYE_TURNOUT) 
+                                        && (!lt.getBlockName().equals(""))) {
                                     log.debug("turnout in list is straight left/right wye");
                                     log.debug("turnout block Name " + lt.getBlockName());
                                     log.debug("current " + lblks.get(i).getBlock().getDisplayName() + " - pre " + lblks.get(preBlk).getBlock().getDisplayName());
@@ -2262,7 +2265,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                                 just looking at the state of the other conflicting blocks, such as looking at Signalmasts
                                 that protect the other blocks and the settings of any other turnouts along the way.
                              */
-                            if (lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER) {
+                            if (lt.getTurnoutType() == LayoutTurnout.TurnoutType.DOUBLE_XOVER) {
                                 if (turnoutList.get(x).getExpectedState() == jmri.Turnout.THROWN) {
                                     if (lt.getLayoutBlock() == lblks.get(i) || lt.getLayoutBlockC() == lblks.get(i)) {
                                         if (lt.getLayoutBlockB() != null) {
@@ -2769,7 +2772,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
-        if ("CanDelete".equals(evt.getPropertyName())) { //NOI18N
+        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
             boolean found = false;
             StringBuilder message = new StringBuilder();
             if (nb instanceof SignalMast) {
@@ -2815,7 +2818,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             if (found) {
                 throw new java.beans.PropertyVetoException(message.toString(), evt);
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
+        } else if ("DoDelete".equals(evt.getPropertyName())) { // NOI18N
             if (nb instanceof SignalMast) {
                 if (nb.equals(source)) {
                     dispose();

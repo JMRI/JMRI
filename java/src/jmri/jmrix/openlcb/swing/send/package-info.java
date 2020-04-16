@@ -14,5 +14,6 @@
  * <!-- Put @see and @since tags down here. -->
  * @since 2.9.6
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
+// include empty DefaultAnnotation to avoid excessive recompilation
+@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
 package jmri.jmrix.openlcb.swing.send;

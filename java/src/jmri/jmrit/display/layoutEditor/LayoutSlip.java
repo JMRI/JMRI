@@ -60,7 +60,7 @@ public class LayoutSlip extends LayoutTurnout {
     /**
      * constructor method
      */
-    public LayoutSlip(String id, Point2D c, double rot, LayoutEditor layoutEditor, int type) {
+    public LayoutSlip(String id, Point2D c, double rot, LayoutEditor layoutEditor, TurnoutType type) {
         super(id, c, layoutEditor);
 
         dispA = new Point2D.Double(-20.0, 0.0);
@@ -80,19 +80,19 @@ public class LayoutSlip extends LayoutTurnout {
         return String.format("LayoutSlip %s (%s)", getId(), getSlipStateString(getSlipState()));
     }
 
-    public void setTurnoutType(int slipType) {
+    public void setTurnoutType(LayoutTurnout.TurnoutType slipType) {
         setSlipType(slipType);
     }
 
-    public void setSlipType(int slipType) {
+    public void setSlipType(TurnoutType slipType) {
         if (type != slipType) {
             type = slipType;
             turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
             turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
             turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
-            if (type == SINGLE_SLIP) {
+            if (type == TurnoutType.SINGLE_SLIP) {
                 turnoutStates.remove(STATE_BC);
-            } else if (type == DOUBLE_SLIP) {
+            } else if (type == TurnoutType.DOUBLE_SLIP) {
                 turnoutStates.put(STATE_BC, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
             } else {
                 log.error("{}.setSlipType({}); invalid slip type", getName(), slipType); //I18IN
@@ -100,7 +100,7 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
-    public int getSlipType() {
+    public TurnoutType getSlipType() {
         return type;
     }
 
@@ -157,7 +157,7 @@ public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     @Override
-    public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(LayoutEditor.HitPointType connectionType) throws jmri.JmriException {
         switch (connectionType) {
             case SLIP_A:
                 return connectA;
@@ -179,8 +179,8 @@ public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     @Override
-    public void setConnection(int connectionType, @CheckForNull LayoutTrack o, int type) throws jmri.JmriException {
-        if ((type != TRACK) && (type != NONE)) {
+    public void setConnection(LayoutEditor.HitPointType connectionType, @CheckForNull LayoutTrack o, LayoutEditor.HitPointType type) throws jmri.JmriException {
+        if ((type != LayoutEditor.HitPointType.TRACK) && (type != LayoutEditor.HitPointType.NONE)) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
             log.error(errString);
@@ -258,14 +258,14 @@ public class LayoutSlip extends LayoutTurnout {
      * Toggle slip states if clicked on, physical turnout exists, and not
      * disabled
      */
-    public void toggleState(int selectedPointType) {
+    public void toggleState(LayoutEditor.HitPointType selectedPointType) {
         if (!disabled && !(disableWhenOccupied && isOccupied())) {
             int newSlipState = getSlipState();
             switch (selectedPointType) {
                 case SLIP_LEFT: {
                     switch (newSlipState) {
                         case STATE_AC: {
-                            if (type == SINGLE_SLIP) {
+                            if (type == TurnoutType.SINGLE_SLIP) {
                                 newSlipState = STATE_BD;
                             } else {
                                 newSlipState = STATE_BC;
@@ -304,7 +304,7 @@ public class LayoutSlip extends LayoutTurnout {
                             break;
                         }
                         case STATE_BD: {
-                            if (type == SINGLE_SLIP) {
+                            if (type == TurnoutType.SINGLE_SLIP) {
                                 newSlipState = STATE_AC;
                             } else {
                                 newSlipState = STATE_BC;
@@ -452,7 +452,7 @@ public class LayoutSlip extends LayoutTurnout {
      * @return the Point2D coordinates
      */
     @Override
-    public Point2D getCoordsForConnectionType(int connectionType) {
+    public Point2D getCoordsForConnectionType(LayoutEditor.HitPointType connectionType) {
         Point2D result = center;
         switch (connectionType) {
             case SLIP_A:
@@ -466,8 +466,6 @@ public class LayoutSlip extends LayoutTurnout {
                 break;
             case SLIP_D:
                 result = getCoordsD();
-                break;
-            case SLIP_CENTER:
                 break;
             case SLIP_LEFT:
                 result = getCoordsLeft();
@@ -546,8 +544,8 @@ public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     @Override
-    protected int findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        int result = NONE;  // assume point not on connection
+    protected LayoutEditor.HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
+        LayoutEditor.HitPointType result = LayoutEditor.HitPointType.NONE;  // assume point not on connection
 
         if (!requireUnconnected) {
             // calculate radius of turnout control circle
@@ -562,12 +560,12 @@ public class LayoutSlip extends LayoutTurnout {
                 Rectangle2D leftRectangle = layoutEditor.layoutEditorControlCircleRectAt(leftCenter);
                 if (leftRectangle.contains(hitPoint)) {
                     //point is in this turnout's left control rectangle
-                    result = SLIP_LEFT;
+                    result = LayoutEditor.HitPointType.SLIP_LEFT;
                 }
                 Rectangle2D rightRectangle = layoutEditor.layoutEditorControlCircleRectAt(rightCenter);
                 if (rightRectangle.contains(hitPoint)) {
                     //point is in this turnout's right control rectangle
-                    result = SLIP_RIGHT;
+                    result = LayoutEditor.HitPointType.SLIP_RIGHT;
                 }
             } else {
                 //check east/west turnout control circles
@@ -576,13 +574,13 @@ public class LayoutSlip extends LayoutTurnout {
 
                 if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
                     //mouse was pressed on this slip
-                    result = (leftDistance < rightDistance) ? SLIP_LEFT : SLIP_RIGHT;
+                    result = (leftDistance < rightDistance) ? LayoutEditor.HitPointType.SLIP_LEFT : LayoutEditor.HitPointType.SLIP_RIGHT;
                 }
             }
         }
 
         // have we found anything yet?
-        if (result == NONE) {
+        if (result == LayoutEditor.HitPointType.NONE) {
             // rather than create rectangles for all the points below and
             // see if the passed in point is in one of those rectangles
             // we can create a rectangle for the passed in point and then
@@ -592,28 +590,28 @@ public class LayoutSlip extends LayoutTurnout {
             if (!requireUnconnected || (getConnectA() == null)) {
                 //check the A connection point
                 if (r.contains(getCoordsA())) {
-                    result = SLIP_A;
+                    result = LayoutEditor.HitPointType.SLIP_A;
                 }
             }
 
             if (!requireUnconnected || (getConnectB() == null)) {
                 //check the B connection point
                 if (r.contains(getCoordsB())) {
-                    result = SLIP_B;
+                    result = LayoutEditor.HitPointType.SLIP_B;
                 }
             }
 
             if (!requireUnconnected || (getConnectC() == null)) {
                 //check the C connection point
                 if (r.contains(getCoordsC())) {
-                    result = SLIP_C;
+                    result = LayoutEditor.HitPointType.SLIP_C;
                 }
             }
 
             if (!requireUnconnected || (getConnectD() == null)) {
                 //check the D connection point
                 if (r.contains(getCoordsD())) {
-                    result = SLIP_D;
+                    result = LayoutEditor.HitPointType.SLIP_D;
                 }
             }
         }
@@ -621,7 +619,7 @@ public class LayoutSlip extends LayoutTurnout {
     }   // findHitPointType
 
     /*
-     * Modify coordinates methods
+    * Modify coordinates methods
      */
     /**
      * set center coordinates
@@ -1055,7 +1053,7 @@ public class LayoutSlip extends LayoutTurnout {
 
     public void setTurnoutStates(int state, @Nonnull String turnStateA, @Nonnull String turnStateB) {
         if (!turnoutStates.containsKey(state)) {
-            log.error("{}.setTurnoutStates({}, {}, {}); invalid state for slip", 
+            log.error("{}.setTurnoutStates({}, {}, {}); invalid state for slip",
                     getName(), state, turnStateA, turnStateB);
             return;
         }
@@ -1196,7 +1194,7 @@ public class LayoutSlip extends LayoutTurnout {
                 g2.draw(new Line2D.Double(twoThirdsPointBD, pD));
             }
         } else if (slipState == STATE_BC) {
-            if (getTurnoutType() == DOUBLE_SLIP) {
+            if (getTurnoutType() == TurnoutType.DOUBLE_SLIP) {
                 // draw B<===>C
                 if (drawMain == mainlineB) {
                     g2.setColor(colorB);
@@ -1364,7 +1362,7 @@ public class LayoutSlip extends LayoutTurnout {
         if (drawMain == mainlineB) {
             g2.draw(new Line2D.Double(pBL, pVL));
             g2.draw(new Line2D.Double(pVLtC, pKRtA));
-            if (getTurnoutType() == DOUBLE_SLIP) {
+            if (getTurnoutType() == TurnoutType.DOUBLE_SLIP) {
                 GeneralPath path = new GeneralPath();
                 path.moveTo(pBR.getX(), pBR.getY());
                 path.lineTo(pBPR.getX(), pBPR.getY());
@@ -1377,7 +1375,7 @@ public class LayoutSlip extends LayoutTurnout {
         if (drawMain == mainlineC) {
             g2.draw(new Line2D.Double(pCL, pVR));
             g2.draw(new Line2D.Double(pVRtB, pKRtD));
-            if (getTurnoutType() == DOUBLE_SLIP) {
+            if (getTurnoutType() == TurnoutType.DOUBLE_SLIP) {
                 GeneralPath path = new GeneralPath();
                 path.moveTo(pCR.getX(), pCR.getY());
                 path.lineTo(pCPR.getX(), pCPR.getY());
@@ -1449,7 +1447,7 @@ public class LayoutSlip extends LayoutTurnout {
                 g2.draw(new Line2D.Double(pDPL, pKL));
                 g2.draw(new Line2D.Double(pVRtA, pKLH));
             }
-        } else if ((getTurnoutType() == DOUBLE_SLIP)
+        } else if ((getTurnoutType() == TurnoutType.DOUBLE_SLIP)
                 && (slipState == STATE_BC)) {
             if (drawMain == mainlineA) {
                 g2.draw(new Line2D.Double(pAPL, pKL));
@@ -1474,23 +1472,23 @@ public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     @Override
-    protected void highlightUnconnected(Graphics2D g2, int specificType) {
-        if (((specificType == NONE) || (specificType == SLIP_A))
+    protected void highlightUnconnected(Graphics2D g2, LayoutEditor.HitPointType specificType) {
+        if (((specificType == LayoutEditor.HitPointType.NONE) || (specificType == LayoutEditor.HitPointType.SLIP_A))
                 && (getConnectA() == null)) {
             g2.fill(trackControlCircleAt(getCoordsA()));
         }
 
-        if (((specificType == NONE) || (specificType == SLIP_B))
+        if (((specificType == LayoutEditor.HitPointType.NONE) || (specificType == LayoutEditor.HitPointType.SLIP_B))
                 && (getConnectB() == null)) {
             g2.fill(trackControlCircleAt(getCoordsB()));
         }
 
-        if (((specificType == NONE) || (specificType == SLIP_C))
+        if (((specificType == LayoutEditor.HitPointType.NONE) || (specificType == LayoutEditor.HitPointType.SLIP_C))
                 && (getConnectC() == null)) {
             g2.fill(trackControlCircleAt(getCoordsC()));
         }
 
-        if (((specificType == NONE) || (specificType == SLIP_D))
+        if (((specificType == LayoutEditor.HitPointType.NONE) || (specificType == LayoutEditor.HitPointType.SLIP_D))
                 && (getConnectD() == null)) {
             g2.fill(trackControlCircleAt(getCoordsD()));
         }
@@ -1666,7 +1664,7 @@ public class LayoutSlip extends LayoutTurnout {
     }   // class TurnoutState
 
     /*
-        this is used by ConnectivityUtil to determine the turnout state necessary to get from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
+    this is used by ConnectivityUtil to determine the turnout state necessary to get from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
      */
     @Override
     protected int getConnectivityStateForLayoutBlocks(
@@ -1691,7 +1689,7 @@ public class LayoutSlip extends LayoutTurnout {
                 result = LayoutSlip.STATE_AD;
             }
         } else if (layoutBlockB == thisLayoutBlock) {
-            if (getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+            if (getTurnoutType() == TurnoutType.DOUBLE_SLIP) {
                 if (layoutBlockD == nextLayoutBlock || layoutBlockD == prevLayoutBlock) {
                     result = LayoutSlip.STATE_BD;
                 } else if (layoutBlockC == nextLayoutBlock || layoutBlockC == prevLayoutBlock) {
@@ -1709,7 +1707,7 @@ public class LayoutSlip extends LayoutTurnout {
                 }
             }
         } else if (layoutBlockC == thisLayoutBlock) {
-            if (getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+            if (getTurnoutType() == TurnoutType.DOUBLE_SLIP) {
                 if (layoutBlockA == nextLayoutBlock || layoutBlockA == prevLayoutBlock) {
                     result = LayoutSlip.STATE_AC;
                 } else if (layoutBlockB == nextLayoutBlock || layoutBlockB == prevLayoutBlock) {
@@ -1746,7 +1744,7 @@ public class LayoutSlip extends LayoutTurnout {
     }   // getConnectivityStateForLayoutBlocks
 
     /*
-     * {@inheritDoc}
+    * {@inheritDoc}
      */
     @Override
     public void reCheckBlockBoundary() {
@@ -1828,7 +1826,7 @@ public class LayoutSlip extends LayoutTurnout {
     }   // reCheckBlockBoundary()
 
     /*
-     * {@inheritDoc}
+    * {@inheritDoc}
      */
     @Override
     @Nonnull
@@ -1862,7 +1860,7 @@ public class LayoutSlip extends LayoutTurnout {
                 lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsD()));
                 results.add(lc);
             }
-            if ((type == DOUBLE_SLIP) && (lbB != lbC)) {
+            if ((type == TurnoutType.DOUBLE_SLIP) && (lbB != lbC)) {
                 // have a BC block boundary, create a LayoutConnectivity
                 log.debug("Block boundary  ('{}'<->'{}') found at {}", lbB, lbC, this);
                 lc = new LayoutConnectivity(lbB, lbC);
@@ -1878,27 +1876,27 @@ public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     @Override
-    public List<Integer> checkForFreeConnections() {
-        List<Integer> result = new ArrayList<>();
+    public List<LayoutEditor.HitPointType> checkForFreeConnections() {
+        List<LayoutEditor.HitPointType> result = new ArrayList<>();
 
         //check the A connection point
         if (getConnectA() == null) {
-            result.add(Integer.valueOf(SLIP_A));
+            result.add(LayoutEditor.HitPointType.SLIP_A);
         }
 
         //check the B connection point
         if (getConnectB() == null) {
-            result.add(Integer.valueOf(SLIP_B));
+            result.add(LayoutEditor.HitPointType.SLIP_B);
         }
 
         //check the C connection point
         if (getConnectC() == null) {
-            result.add(Integer.valueOf(SLIP_C));
+            result.add(LayoutEditor.HitPointType.SLIP_C);
         }
 
         //check the D connection point
         if (getConnectD() == null) {
-            result.add(Integer.valueOf(SLIP_D));
+            result.add(LayoutEditor.HitPointType.SLIP_D);
         }
         return result;
     }

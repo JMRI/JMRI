@@ -287,7 +287,7 @@ public class VSDConfigDialog extends JDialog {
                 config.setRosterEntry(null);
             }
 
-            firePropertyChange(CONFIG_PROPERTY, null, config);
+            firePropertyChange(CONFIG_PROPERTY, config, null);
             dispose();
         }
     }

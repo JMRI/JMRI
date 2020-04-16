@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  */
 public class VSDGeoFile extends XmlFile {
 
-    static final String VSDGeoDataFileName = "VSDGeoData.xml"; //NOI18N
+    static final String VSDGeoDataFileName = "VSDGeoData.xml"; // NOI18N
     protected Element root;
     private float blockParameter[][][];
     private List<List<PhysicalLocation>> blockPositionlists; // Two-dimensional ArrayList

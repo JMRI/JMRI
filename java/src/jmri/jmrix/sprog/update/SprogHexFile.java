@@ -71,7 +71,8 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
             // Create an input reader based on the file, so we can read its data.
             in = new FileInputStream(file);
             buffIn = new BufferedInputStream(in);
-            address = 999999;
+            // Assume addresses start at 0 for hex files that do not have an initial type 4 record
+            address = 0;
             //line = new StringBuffer("");
             return true;
         } catch (IOException e) {

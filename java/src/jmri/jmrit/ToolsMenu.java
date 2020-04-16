@@ -135,6 +135,8 @@ public class ToolsMenu extends JMenu {
         add(new JSeparator());
         // add start web server menu item (immediate action)
         add(new jmri.web.server.WebServerAction());
+        // add the server menu
+        add(new jmri.jmris.ServerMenu());
     }
 
 }

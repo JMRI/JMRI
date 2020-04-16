@@ -376,7 +376,7 @@ abstract public class SprogUpdateFrame
     }
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts.
+     * Internal routine to handle timer starts and restarts.
      * 
      * @param delay milliseconds until action
      */

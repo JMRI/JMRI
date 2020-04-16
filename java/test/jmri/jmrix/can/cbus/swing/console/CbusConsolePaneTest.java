@@ -6,6 +6,7 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusConstants;
+import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assume;
@@ -76,6 +77,12 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
     @After
     @Override
     public void tearDown() {
+        
+        CbusEventTableDataModel evMod = jmri.InstanceManager.getNullableDefault(CbusEventTableDataModel.class);
+        if ( evMod != null){
+            evMod.skipSaveOnDispose();
+            evMod.dispose();
+        }
         
         tc.terminateThreads();
         memo.dispose();

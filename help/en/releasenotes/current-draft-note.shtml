@@ -66,7 +66,9 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Improved Console translation of Bootloading ( Firmware Update ) CAN Frames.</li>
+                <li>CBUS Console - Translation of Bootloading ( Firmware Update ) CAN Frames.</li>
+                <li>CBUS Console - Display JMRI Turnout, Sensor and Light status from CBUS On / Off Events.</li>
+                <li>CBUS Event Table - Improvements to UI</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -186,7 +188,8 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>Added LokPilot 5 family.</li>
+                <li>Updated LokSound 5 <strong>Consist</strong> and <strong>Sound Levels</strong> panes to handle latest firmware updates.</li>
             </ul>
 
         <h4>Hornby</h4>
@@ -266,7 +269,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li></li>
+                <li>DSD-100LC steam & diesel add CV59</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -323,6 +326,14 @@
             <ul>
                 <li></li>
             </ul>
+
+    <h3>Circuit Builder</h3>
+        <a id="CB" name="CB"></a>
+        <ul>
+            <li>The system name is auto generated when the<strong>Add New Detector Circuit
+            </strong> window is opened. This name may be changed before the Occupancy
+            Block is created. After creating, the field is removed from the window.</li>
+        </ul>
 
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
@@ -442,7 +453,7 @@
 
 	    <h4>Cab Signals</h4>
             <ul>
-                <li>Better set row height in table.</li>
+                <li></li>
             </ul>
 
     	<h4>Simple Signal Logic</h4>
@@ -494,6 +505,10 @@
             The length of the status field varies as needed and keeps the
             <strong>Stop All Trains</strong> button visible even on small screens.</li>
         </ul>
+        <ul>
+            <li>When creating a new warrant the system name is auto generated. This name may be
+            changed before the warrant is saved. After saving the field can not be edited.</li>
+        </ul>
 
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
@@ -516,7 +531,11 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>The VSD old graphical user interface (GUI) was removed. For users who call VSD
+            from JMRI PanelPro, nothing changes. For users who call VSD from a Jython script,
+            theoretically the script can fail. Please see also
+            <a href="http://jmri.org/help/en/package/jmri/jmrit/vsdecoder/VSDecoderFrame.shtml">here</a>.
+            </li>
         </ul>
 
     <h3>Miscellaneous</h3>
@@ -526,5 +545,9 @@
                 instance of a manager have been removed. Use
                 <code>InstanceManager.getDefault(NameOfManager.class)</code>
                 instead.</li>
+            <li><a href="https://github.com/JMRI/JMRI/pull/8286">PR 8286 revised the way 
+                that JMRI code should fire and catch events.  If you have code (Java or script)
+                of your own that implements event firing or tricky listening, you
+                should review those changes to see if they will or should affect your code.
         </ul>
 

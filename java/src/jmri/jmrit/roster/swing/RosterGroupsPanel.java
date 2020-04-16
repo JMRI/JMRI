@@ -513,7 +513,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
         @Override
         public boolean importData(JComponent c, Transferable t) {
-            if (canImport(c, t.getTransferDataFlavors())) {
+            if (canImport(c, t.getTransferDataFlavors()) && (c instanceof JTree)) {
                 // getDropLocation is null unless dropping on an existing path
                 return importData(c, t, ((JTree) c).getDropLocation().getPath());
             }
@@ -521,11 +521,12 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         }
 
         public boolean importData(JComponent c, Transferable t, TreePath p) {
-            JTree l = (JTree) c;
             if (p != null) {
                 TreePath g = new TreePath(_model.getPathToRoot(_groups));
                 // drag onto existing user defined group, but not onto current selection
-                if (g.isDescendant(p) && !p.isDescendant(g) && !p.isDescendant(l.getSelectionPath())) {
+                if (g.isDescendant(p) && !p.isDescendant(g) 
+                    && ( (c instanceof JTree) && !p.isDescendant(((JTree)c).getSelectionPath()))
+                    ) {
                     try {
                         ArrayList<RosterEntry> REs = RosterEntrySelection.getRosterEntries(t);
                         for (RosterEntry re : REs) {

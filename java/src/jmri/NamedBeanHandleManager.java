@@ -222,23 +222,6 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    @Override
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
     @Override
     public void register(@Nonnull NamedBean n) {
         throw new UnsupportedOperationException("Not supported yet.");

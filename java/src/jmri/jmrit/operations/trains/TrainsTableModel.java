@@ -58,7 +58,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public TrainsTableModel() {
         super();
         trainManager.addPropertyChangeListener(this);
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
         updateList();
     }
 
@@ -576,7 +576,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             tef.dispose();
         }
         trainManager.removePropertyChangeListener(this);
-        Setup.removePropertyChangeListener(this);
+        Setup.getDefault().removePropertyChangeListener(this);
         removePropertyChangeTrains();
     }
 
