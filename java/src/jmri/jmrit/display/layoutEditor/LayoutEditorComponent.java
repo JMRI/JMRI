@@ -17,11 +17,11 @@ import jmri.util.*;
 import org.slf4j.*;
 
 /*
- * This is an intermediate component used to put the Layout Editor
- * into the component layers hierarchy so that objects can be drawn
- * in front of or behind layout editor objects.
- *
- * @author George Warner Copyright (c) 2017-2018
+* This is an intermediate component used to put the Layout Editor
+* into the component layers hierarchy so that objects can be drawn
+* in front of or behind layout editor objects.
+*
+* @author George Warner Copyright (c) 2017-2018
  */
 class LayoutEditorComponent extends JComponent {
 
@@ -43,7 +43,7 @@ class LayoutEditorComponent extends JComponent {
     }
 
     /*
-     * {@inheritDoc}
+    * {@inheritDoc}
      */
     @Override
     public void paint(Graphics g) {
@@ -629,7 +629,7 @@ class LayoutEditorComponent extends JComponent {
     }
 
     /*
-     * {@inheritDoc}
+    * {@inheritDoc}
      */
     @Override
     public Rectangle getBounds() {
@@ -652,7 +652,7 @@ class LayoutEditorComponent extends JComponent {
     }
 
     /*
-     * {@inheritDoc}
+    * {@inheritDoc}
      */
     @Override
     public Rectangle getBounds(Rectangle rv) {
@@ -661,7 +661,7 @@ class LayoutEditorComponent extends JComponent {
     }
 
     /*
-     * {@inheritDoc}
+    * {@inheritDoc}
      */
     @Override
     public int getX() {
@@ -670,7 +670,7 @@ class LayoutEditorComponent extends JComponent {
     }
 
     /*
-     * {@inheritDoc}
+    * {@inheritDoc}
      */
     @Override
     public int getY() {
@@ -679,7 +679,7 @@ class LayoutEditorComponent extends JComponent {
     }
 
     /*
-     * {@inheritDoc}
+    * {@inheritDoc}
      */
     @Override
     public int getWidth() {
@@ -688,7 +688,7 @@ class LayoutEditorComponent extends JComponent {
     }
 
     /*
-     * {@inheritDoc}
+    * {@inheritDoc}
      */
     @Override
     public int getHeight() {

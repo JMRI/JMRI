@@ -56,9 +56,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Create a new LayoutBlock if the LayoutBlock does not exist.
      * <p>
-     * Note that since the userName is used to address LayoutBlocks, the user name
-     * must be present. If the user name is not present, the new LayoutBlock is
-     * not created, and null is returned.
+     * Note that since the userName is used to address LayoutBlocks, the user
+     * name must be present. If the user name is not present, the new
+     * LayoutBlock is not created, and null is returned.
      *
      * @return null if a LayoutBlock with the same systemName or userName
      *         already exists, or if there is trouble creating a new LayoutBlock
@@ -147,10 +147,11 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
-     * Get an existing LayoutBlock. First looks up assuming that name
-     * is a User Name. If this fails, looks up assuming that name is a System
-     * Name.
-     * @return LayoutBlock, or null if not found by either user name or system name
+     * Get an existing LayoutBlock. First looks up assuming that name is a User
+     * Name. If this fails, looks up assuming that name is a System Name.
+     *
+     * @return LayoutBlock, or null if not found by either user name or system
+     *         name
      */
     @CheckReturnValue
     @CheckForNull
@@ -167,7 +168,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckForNull
     public LayoutBlock getLayoutBlock(@CheckForNull Block block) {
         for (LayoutBlock lb : getNamedBeanSet()) {
-             if (lb.getBlock() == block) {
+            if (lb.getBlock() == block) {
                 return lb;
             }
         }
@@ -175,8 +176,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
-     * Find a LayoutBlock with a specified Sensor assigned as its
-     * occupancy sensor.
+     * Find a LayoutBlock with a specified Sensor assigned as its occupancy
+     * sensor.
      *
      * @return the block or null if no existing LayoutBlock has the Sensor
      *         assigned
@@ -193,8 +194,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
-     * Find a LayoutBlock with a specified Memory assigned as its
-     * value display.
+     * Find a LayoutBlock with a specified Memory assigned as its value display.
      *
      * @return the block or null if no existing LayoutBlock has the memory
      *         assigned.
@@ -221,20 +221,20 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
         // cycle through all LayoutBlocks, completing initialization of associated jmri.Blocks
         for (LayoutBlock b : getNamedBeanSet()) {
-                log.debug("Calling block '{}({})'.initializeLayoutBlock()", b.getSystemName(), b.getDisplayName());
-                b.initializeLayoutBlock();
+            log.debug("Calling block '{}({})'.initializeLayoutBlock()", b.getSystemName(), b.getDisplayName());
+            b.initializeLayoutBlock();
         }
 
         //cycle through all LayoutBlocks, updating Paths of associated jmri.Blocks
         badBeanErrors = 0; // perhaps incremented via addBadBeanError(), but that's never called?
         for (LayoutBlock b : getNamedBeanSet()) {
-                log.debug("Calling block '{}({})'.updatePaths()", b.getSystemName(), b.getDisplayName());
+            log.debug("Calling block '{}({})'.updatePaths()", b.getSystemName(), b.getDisplayName());
 
-                b.updatePaths();
+            b.updatePaths();
 
-                if (b.getBlock().getValue() != null) {
-                    b.getBlock().setValue(null);
-                }
+            if (b.getBlock().getValue() != null) {
+                b.getBlock().setValue(null);
+            }
         }
 
         if (badBeanErrors > 0) { // perhaps incremented via addBadBeanError(), but that's never called?
@@ -253,7 +253,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         //LayoutEditorTests layoutEditorTests = new LayoutEditorTests();
         //layoutEditorTests.runClinicTests();
         //layoutEditorTests.runTestPanel3Tests();
-
         initialized = true;
         log.debug("start initializeLayoutBlockRouting");
         initializeLayoutBlockRouting();
@@ -269,8 +268,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     private int badBeanErrors = 0;
 
     /**
-     * Get the Signal Head facing into a specified Block from a
-     * specified protected Block.
+     * Get the Signal Head facing into a specified Block from a specified
+     * protected Block.
      * <p>
      * This method is primarily designed for use with scripts to get information
      * initially residing in a Layout Editor panel. If either of the input
@@ -355,14 +354,14 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         //blocks are connected, get connection item types
         LayoutTurnout lt = null;
         TrackSegment tr = lc.getTrackSegment();
-        int cType = 0;
+        int boundaryType = 0;
 
         if (tr == null) {
             // this is an internal crossover block boundary
             lt = lc.getXover();
-            cType = lc.getXoverBoundaryType();
+            boundaryType = lc.getXoverBoundaryType();
 
-            switch (cType) {
+            switch (boundaryType) {
                 case LayoutConnectivity.XOVER_BOUNDARY_AB: {
                     if (facingIsBlock1) {
                         return lt.getSignalHead(LayoutTurnout.Geometry.POINTA1);
@@ -414,7 +413,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
 
                 default: {
-                    log.error("Unhandled crossover connection type: {}", cType);
+                    log.error("Unhandled crossover connection type: {}", boundaryType);
                     break;
                 }
             }	//switch
@@ -427,8 +426,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
         //not internal crossover block boundary
         LayoutTrack connected = lc.getConnectedObject();
-        cType = lc.getConnectedType();
-
+        LayoutEditor.HitPointType cType = lc.getConnectedType();
         if (connected == null) {
             log.error("No connectivity object found between Blocks {}, {} {}", facingBlock.getDisplayName(),
                     protectedBlock.getDisplayName(), cType);
@@ -436,7 +434,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
 
-        if (cType == LayoutTrack.TRACK) {
+        if (cType == LayoutEditor.HitPointType.TRACK) {
             // block boundary is at an Anchor Point
             //    LayoutEditorTools tools = panel.getLETools(); //TODO: Dead-code strip this
             PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr, (TrackSegment) connected);
@@ -450,7 +448,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (cType == LayoutTrack.TURNOUT_A) {
+        if (cType == LayoutEditor.HitPointType.TURNOUT_A) {
             // block boundary is at the facing point of a turnout or A connection of a crossover turnout
             lt = (LayoutTurnout) connected;
 
@@ -619,7 +617,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (cType == LayoutTrack.TURNOUT_B) {
+        if (cType == LayoutEditor.HitPointType.TURNOUT_B) {
             //block boundary is at the continuing track of a turnout or B connection of a crossover turnout
             lt = (LayoutTurnout) connected;
 
@@ -809,7 +807,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (cType == LayoutTrack.TURNOUT_C) {
+        if (cType == LayoutEditor.HitPointType.TURNOUT_C) {
             //block boundary is at the diverging track of a turnout or C connection of a crossover turnout
             lt = (LayoutTurnout) connected;
 
@@ -1008,7 +1006,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (cType == LayoutTrack.TURNOUT_D) {
+        if (cType == LayoutEditor.HitPointType.TURNOUT_D) {
             //block boundary is at D connectin of a crossover turnout
             lt = (LayoutTurnout) connected;
 
@@ -1115,7 +1113,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if ((cType >= LayoutTrack.SLIP_A) && (cType <= LayoutTrack.SLIP_D)) {
+        if (LayoutEditor.HitPointType.isSlipHitType(cType)) {
             if (!facingIsBlock1) {
                 return null;
             }
@@ -1123,7 +1121,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             LayoutSlip ls = (LayoutSlip) connected;
 
             switch (cType) {
-                case LayoutTrack.SLIP_A: {
+                case SLIP_A: {
                     if (ls.getSlipState() == LayoutSlip.STATE_AD) {
                         return ls.getSignalHead(LayoutTurnout.Geometry.POINTA2);
                     } else {
@@ -1131,7 +1129,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                     }
                 }
 
-                case LayoutTrack.SLIP_B: {
+                case SLIP_B: {
                     if (ls.getTurnoutType() == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
                         if (ls.getSlipState() == LayoutSlip.STATE_BC) {
                             return ls.getSignalHead(LayoutTurnout.Geometry.POINTB2);
@@ -1143,7 +1141,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                     }
                 }
 
-                case LayoutTrack.SLIP_C: {
+                case SLIP_C: {
                     if (ls.getTurnoutType() == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
                         if (ls.getSlipState() == LayoutSlip.STATE_BC) {
                             return ls.getSignalHead(LayoutTurnout.Geometry.POINTC2);
@@ -1155,7 +1153,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                     }
                 }
 
-                case LayoutTrack.SLIP_D: {
+                case SLIP_D: {
                     if (ls.getSlipState() == LayoutSlip.STATE_AD) {
                         return ls.getSignalHead(LayoutTurnout.Geometry.POINTD2);
                     } else {
@@ -1170,7 +1168,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         //block boundary must be at a level crossing
-        if ((cType < LayoutTrack.LEVEL_XING_A) || (cType > LayoutTrack.LEVEL_XING_D)) {
+        if (LayoutEditor.HitPointType.isLevelXingHitType(cType)) {
             log.error("{} {} Block Boundary not identified correctly - Blocks {}, {}",
                     cType, connected, facingBlock.getDisplayName(), protectedBlock.getDisplayName());
 
@@ -1179,7 +1177,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         LevelXing xing = (LevelXing) connected;
 
         switch (cType) {
-            case LayoutTrack.LEVEL_XING_A: {
+            case LEVEL_XING_A: {
                 //block boundary is at the A connection of a level crossing
                 if (facingIsBlock1) {
                     return xing.getSignalHead(LevelXing.Geometry.POINTA);
@@ -1188,7 +1186,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
             }
 
-            case LayoutTrack.LEVEL_XING_B: {
+            case LEVEL_XING_B: {
                 //block boundary is at the B connection of a level crossing
                 if (facingIsBlock1) {
                     return xing.getSignalHead(LevelXing.Geometry.POINTB);
@@ -1197,7 +1195,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
             }
 
-            case LayoutTrack.LEVEL_XING_C: {
+            case LEVEL_XING_C: {
                 //block boundary is at the C connection of a level crossing
                 if (facingIsBlock1) {
                     return xing.getSignalHead(LevelXing.Geometry.POINTC);
@@ -1206,7 +1204,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
             }
 
-            case LayoutTrack.LEVEL_XING_D: {
+            case LEVEL_XING_D: {
                 //block boundary is at the D connection of a level crossing
                 if (facingIsBlock1) {
                     return xing.getSignalHead(LevelXing.Geometry.POINTD);
@@ -1223,8 +1221,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
-     * Get the named bean of either a Sensor or signalmast facing
-     * into a specified Block from a specified protected Block.
+     * Get the named bean of either a Sensor or signalmast facing into a
+     * specified Block from a specified protected Block.
      *
      * @return The assigned sensor or signal mast as a named bean
      */
@@ -1243,8 +1241,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
-     * Get a Signal Mast that is assigned to a block which has an
-     * end bumper at one end.
+     * Get a Signal Mast that is assigned to a block which has an end bumper at
+     * one end.
      */
     @CheckReturnValue
     @CheckForNull
@@ -1276,7 +1274,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             if (t.getLayoutBlock() == fLayoutBlock) {
                 PositionablePoint p = null;
 
-                if (t.getType1() == LayoutTrack.POS_POINT) {
+                if (t.getType1() == LayoutEditor.HitPointType.POS_POINT) {
                     p = (PositionablePoint) t.getConnect1();
 
                     if (p.getType() == PositionablePoint.END_BUMPER) {
@@ -1290,7 +1288,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                     }
                 }
 
-                if (t.getType2() == LayoutTrack.POS_POINT) {
+                if (t.getType2() == LayoutEditor.HitPointType.POS_POINT) {
                     p = (PositionablePoint) t.getConnect2();
 
                     if (p.getType() == PositionablePoint.END_BUMPER) {
@@ -1309,8 +1307,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
-     * Get a Sensor facing into a specific Block. This is used for
-     * Blocks that have an end bumper at one end.
+     * Get a Sensor facing into a specific Block. This is used for Blocks that
+     * have an end bumper at one end.
      */
     @CheckReturnValue
     @CheckForNull
@@ -1342,7 +1340,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             if (t.getLayoutBlock() == fLayoutBlock) {
                 PositionablePoint p = null;
 
-                if (t.getType1() == LayoutTrack.POS_POINT) {
+                if (t.getType1() == LayoutEditor.HitPointType.POS_POINT) {
                     p = (PositionablePoint) t.getConnect1();
 
                     if (p.getType() == PositionablePoint.END_BUMPER) {
@@ -1356,7 +1354,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                     }
                 }
 
-                if (t.getType2() == LayoutTrack.POS_POINT) {
+                if (t.getType2() == LayoutEditor.HitPointType.POS_POINT) {
                     p = (PositionablePoint) t.getConnect2();
 
                     if (p.getType() == PositionablePoint.END_BUMPER) {
@@ -1375,8 +1373,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
-     * Get the named bean of either a Sensor or signalmast facing
-     * into a specified Block from a specified protected Block.
+     * Get the named bean of either a Sensor or signalmast facing into a
+     * specified Block from a specified protected Block.
      *
      * @return The assigned sensor or signal mast as a named bean
      */
@@ -1407,8 +1405,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
-     * Get the Signal Mast facing into a specified Block from a
-     * specified protected Block.
+     * Get the Signal Mast facing into a specified Block from a specified
+     * protected Block.
      *
      * @return The assigned signalMast.
      */
@@ -1423,8 +1421,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
-     * Get the Sensor facing into a specified Block from a
-     * specified protected Block.
+     * Get the Sensor facing into a specified Block from a specified protected
+     * Block.
      *
      * @return The assigned sensor
      */
@@ -1437,8 +1435,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
-     * Get a facing bean into a specified Block from a specified
-     * protected Block.
+     * Get a facing bean into a specified Block from a specified protected
+     * Block.
      *
      * @param panel the layout editor panel the block is assigned, if null then
      *              the maximum connected panel of the facing block is used
@@ -1529,36 +1527,36 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         LayoutTrack connected = lc.getConnectedObject();
 
         TrackSegment tr = lc.getTrackSegment();
-        int cType = lc.getConnectedType();
+        LayoutEditor.HitPointType cType = lc.getConnectedType();
 
         if (connected == null) {
             if (lc.getXover() != null) {
                 if (lc.getXoverBoundaryType() == LayoutConnectivity.XOVER_BOUNDARY_AB) {
                     if (fLayoutBlock == lc.getXover().getLayoutBlock()) {
-                        cType = LayoutTrack.TURNOUT_A;
+                        cType = LayoutEditor.HitPointType.TURNOUT_A;
                     } else {
-                        cType = LayoutTrack.TURNOUT_B;
+                        cType = LayoutEditor.HitPointType.TURNOUT_B;
                     }
                     connected = lc.getXover();
                 } else if (lc.getXoverBoundaryType() == LayoutConnectivity.XOVER_BOUNDARY_CD) {
                     if (fLayoutBlock == lc.getXover().getLayoutBlockC()) {
-                        cType = LayoutTrack.TURNOUT_C;
+                        cType = LayoutEditor.HitPointType.TURNOUT_C;
                     } else {
-                        cType = LayoutTrack.TURNOUT_D;
+                        cType = LayoutEditor.HitPointType.TURNOUT_D;
                     }
                     connected = lc.getXover();
                 } else if (lc.getXoverBoundaryType() == LayoutConnectivity.XOVER_BOUNDARY_AC) {
                     if (fLayoutBlock == lc.getXover().getLayoutBlock()) {
-                        cType = LayoutTrack.TURNOUT_A;
+                        cType = LayoutEditor.HitPointType.TURNOUT_A;
                     } else {
-                        cType = LayoutTrack.TURNOUT_C;
+                        cType = LayoutEditor.HitPointType.TURNOUT_C;
                     }
                     connected = lc.getXover();
                 } else if (lc.getXoverBoundaryType() == LayoutConnectivity.XOVER_BOUNDARY_BD) {
                     if (fLayoutBlock == lc.getXover().getLayoutBlockB()) {
-                        cType = LayoutTrack.TURNOUT_B;
+                        cType = LayoutEditor.HitPointType.TURNOUT_B;
                     } else {
-                        cType = LayoutTrack.TURNOUT_D;
+                        cType = LayoutEditor.HitPointType.TURNOUT_D;
                     }
                     connected = lc.getXover();
                 }
@@ -1572,7 +1570,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
 
-        if (cType == LayoutTrack.TRACK) {
+        if (cType == LayoutEditor.HitPointType.TRACK) {
             //block boundary is at an Anchor Point
             PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr, (TrackSegment) connected);
 
@@ -1594,7 +1592,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (cType == LayoutTrack.TURNOUT_A) {
+        if (cType == LayoutEditor.HitPointType.TURNOUT_A) {
             lt = (LayoutTurnout) connected;
 
             if ((lt.getLinkType() == LayoutTurnout.LinkType.NO_LINK) || (lt.getLinkType() == LayoutTurnout.LinkType.FIRST_3_WAY)) {
@@ -1624,7 +1622,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
 
-        if (cType == LayoutTrack.TURNOUT_B) {
+        if (cType == LayoutEditor.HitPointType.TURNOUT_B) {
             lt = (LayoutTurnout) connected;
 
             if ((T.equals(SignalMast.class) && (lt.getSignalBMast() != null))
@@ -1652,7 +1650,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
 
-        if (cType == LayoutTrack.TURNOUT_C) {
+        if (cType == LayoutEditor.HitPointType.TURNOUT_C) {
             lt = (LayoutTurnout) connected;
 
             if ((T.equals(SignalMast.class) && (lt.getSignalCMast() != null))
@@ -1680,7 +1678,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
 
-        if (cType == LayoutTrack.TURNOUT_D) {
+        if (cType == LayoutEditor.HitPointType.TURNOUT_D) {
             lt = (LayoutTurnout) connected;
 
             if ((T.equals(SignalMast.class) && (lt.getSignalDMast() != null))
@@ -1712,10 +1710,10 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
 
-        if ((cType >= LayoutTrack.SLIP_A) && (cType <= LayoutTrack.SLIP_D)) {
+        if (LayoutEditor.HitPointType.isSlipHitType(cType)) {
             LayoutSlip ls = (LayoutSlip) connected;
 
-            if (cType == LayoutTrack.SLIP_A) {
+            if (cType == LayoutEditor.HitPointType.SLIP_A) {
                 if (T.equals(SignalMast.class)) {
                     return ls.getSignalAMast();
                 } else if (T.equals(Sensor.class)) {
@@ -1723,7 +1721,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
             }
 
-            if (cType == LayoutTrack.SLIP_B) {
+            if (cType == LayoutEditor.HitPointType.SLIP_B) {
                 if (T.equals(SignalMast.class)) {
                     return ls.getSignalBMast();
                 } else if (T.equals(Sensor.class)) {
@@ -1731,7 +1729,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
             }
 
-            if (cType == LayoutTrack.SLIP_C) {
+            if (cType == LayoutEditor.HitPointType.SLIP_C) {
                 if (T.equals(SignalMast.class)) {
                     return ls.getSignalCMast();
                 } else if (T.equals(Sensor.class)) {
@@ -1739,7 +1737,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
             }
 
-            if (cType == LayoutTrack.SLIP_D) {
+            if (cType == LayoutEditor.HitPointType.SLIP_D) {
                 if (T.equals(SignalMast.class)) {
                     return ls.getSignalDMast();
                 } else if (T.equals(Sensor.class)) {
@@ -1748,7 +1746,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if ((cType < LayoutTrack.LEVEL_XING_A) || (cType > LayoutTrack.LEVEL_XING_D)) {
+        if (LayoutEditor.HitPointType.isLevelXingHitType(cType)) {
             log.error("Block Boundary not identified correctly - Blocks {}, {}", facingBlock.getDisplayName(),
                     protectedBlock.getDisplayName());
 
@@ -1756,10 +1754,10 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         /* We don't allow signal masts on the block outward facing from the level
-		   xing, nor do we consider the signal mast, that is protecting the in block on the xing */
+        xing, nor do we consider the signal mast, that is protecting the in block on the xing */
         LevelXing xing = (LevelXing) connected;
 
-        if (cType == LayoutTrack.LEVEL_XING_A) {
+        if (cType == LayoutEditor.HitPointType.LEVEL_XING_A) {
             //block boundary is at the A connection of a level crossing
             if (T.equals(SignalMast.class)) {
                 return xing.getSignalAMast();
@@ -1768,7 +1766,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (cType == LayoutTrack.LEVEL_XING_B) {
+        if (cType == LayoutEditor.HitPointType.LEVEL_XING_B) {
             //block boundary is at the B connection of a level crossing
             if (T.equals(SignalMast.class)) {
                 return xing.getSignalBMast();
@@ -1777,7 +1775,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (cType == LayoutTrack.LEVEL_XING_C) {
+        if (cType == LayoutEditor.HitPointType.LEVEL_XING_C) {
             //block boundary is at the C connection of a level crossing
             if (T.equals(SignalMast.class)) {
                 return xing.getSignalCMast();
@@ -1786,7 +1784,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (cType == LayoutTrack.LEVEL_XING_D) {
+        if (cType == LayoutEditor.HitPointType.LEVEL_XING_D) {
             if (T.equals(SignalMast.class)) {
                 return xing.getSignalDMast();
             } else if (T.equals(Sensor.class)) {
@@ -1797,10 +1795,10 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }	//getFacingBean
 
     /**
-     * In the first instance get a Signal Mast or if none exists a Signal
-     * Head for a given facing block and protected block combination. See
-     * #getFacingSignalMast() and #getFacingSignalHead() as to how they deal with what
-     * each returns.
+     * In the first instance get a Signal Mast or if none exists a Signal Head
+     * for a given facing block and protected block combination. See
+     * #getFacingSignalMast() and #getFacingSignalHead() as to how they deal
+     * with what each returns.
      *
      * @return either a signalMast or signalHead
      */
@@ -1819,11 +1817,11 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
-     * Get the block that a given bean object (Sensor, SignalMast
-     * or SignalHead) is protecting.
+     * Get the block that a given bean object (Sensor, SignalMast or SignalHead)
+     * is protecting.
      *
      * @param nb    NamedBean
-     * @param panel  panel that this bean is on
+     * @param panel panel that this bean is on
      * @return The block that the bean object is facing
      */
     @CheckReturnValue
@@ -1857,8 +1855,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
-     * If the panel variable is null, search all LE panels.
-     * This was added to support multi panel entry/exit.
+     * If the panel variable is null, search all LE panels. This was added to
+     * support multi panel entry/exit.
      *
      * @param bean  The sensor, mast or head to be located.
      * @param panel The panel to search. If null, search all LE panels.
@@ -2086,11 +2084,11 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
-     * Get the block facing a given bean object (Sensor, SignalMast
-     * or SignalHead).
+     * Get the block facing a given bean object (Sensor, SignalMast or
+     * SignalHead).
      *
      * @param nb    NamedBean
-     * @param panel  panel that this bean is on
+     * @param panel panel that this bean is on
      * @return The block that the bean object is facing
      */
     @CheckReturnValue
@@ -2126,8 +2124,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
-     * If the panel variable is null, search all LE panels.
-     * This was added to support multi panel entry/exit.
+     * If the panel variable is null, search all LE panels. This was added to
+     * support multi panel entry/exit.
+     *
      * @param bean  The sensor, mast or head to be located.
      * @param panel The panel to search. Search all LE panels if null.
      * @return the facing layout block.
@@ -2527,8 +2526,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 Thread.currentThread().interrupt();
                 checking = false;
 
-        //} catch (jmri.JmriException ex) {
-        //log.debug("Error setting stability indicator sensor");
+                //} catch (jmri.JmriException ex) {
+                //log.debug("Error setting stability indicator sensor");
             }
         };
         thr = new Thread(r, "Routing stabilising timer");
@@ -2570,8 +2569,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
-     * Get the sensor used to indicate if the routing protocol has stabilised
-     * or not.
+     * Get the sensor used to indicate if the routing protocol has stabilised or
+     * not.
      */
     public Sensor getStabilisedSensor() {
         if (namedStabilisedIndicator == null) {

@@ -63,7 +63,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
         } else if (bv instanceof jmri.IdTag) {
             ObjectNode idTagValue = idTagService.doGet((jmri.IdTag) bv, name, IDTAG, request);
             data.set(VALUE, idTagValue);
-        } else if (bv instanceof Reportable) {
+        } else if (bv instanceof jmri.Reporter) {
             ObjectNode reporterValue = reporterService.doGet((jmri.Reporter) bv, name, REPORTER, request);
             data.set(VALUE, reporterValue);
         } else {

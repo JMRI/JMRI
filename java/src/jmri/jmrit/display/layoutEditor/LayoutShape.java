@@ -293,7 +293,7 @@ public class LayoutShape {
      * @return the maximum number of points
      */
     public int getMaxNumberPoints() {
-        return LayoutTrack.SHAPE_POINT_OFFSET_MAX - LayoutTrack.SHAPE_POINT_OFFSET_MIN + 1;
+        return LayoutEditor.HitPointType.SHAPE_POINT_9.getXmlValue() - LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue() + 1;
     }
 
     /**
@@ -316,8 +316,8 @@ public class LayoutShape {
      *                      circles for hit testing
      * @return the hit point type for the point (or NONE)
      */
-    protected int findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles) {
-        int result = LayoutTrack.NONE;  // assume point not on shape
+    protected LayoutEditor.HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles) {
+        LayoutEditor.HitPointType result = LayoutEditor.HitPointType.NONE;  // assume point not on shape
 
         if (useRectangles) {
             // rather than create rectangles for all the points below and
@@ -327,11 +327,11 @@ public class LayoutShape {
             Rectangle2D r = layoutEditor.layoutEditorControlRectAt(hitPoint);
 
             if (r.contains(getCoordsCenter())) {
-                result = LayoutTrack.SHAPE_CENTER;
+                result = LayoutEditor.HitPointType.SHAPE_CENTER;
             }
             for (int idx = 0; idx < shapePoints.size(); idx++) {
                 if (r.contains(shapePoints.get(idx).getPoint())) {
-                    result = LayoutTrack.SHAPE_POINT_OFFSET_MIN + idx;
+                    result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue() + idx);
                     break;
                 }
             }
@@ -341,21 +341,21 @@ public class LayoutShape {
                 distance = MathUtil.distance(shapePoints.get(idx).getPoint(), hitPoint);
                 if (distance < minDistance) {
                     minDistance = distance;
-                    result = LayoutTrack.SHAPE_POINT_OFFSET_MIN + idx;
+                    result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue() + idx);
                 }
             }
         }
         return result;
     }   // findHitPointType
 
-    public static boolean isShapeHitPointType(int t) {
-        return ((t == LayoutTrack.SHAPE_CENTER)
+    public static boolean isShapeHitPointType(LayoutEditor.HitPointType t) {
+        return ((t == LayoutEditor.HitPointType.SHAPE_CENTER)
                 || isShapePointOffsetHitPointType(t));
     }
 
-    public static boolean isShapePointOffsetHitPointType(int t) {
-        return ((t >= LayoutTrack.SHAPE_POINT_OFFSET_MIN)
-                && (t <= LayoutTrack.SHAPE_POINT_OFFSET_MAX));
+    public static boolean isShapePointOffsetHitPointType(LayoutEditor.HitPointType t) {
+        return ((t.compareTo(LayoutEditor.HitPointType.SHAPE_POINT_0) >= 0)
+                && (t.compareTo(LayoutEditor.HitPointType.SHAPE_POINT_9) <= 0));
     }
 
     /**
@@ -372,7 +372,7 @@ public class LayoutShape {
     }
 
     /*
-     * Modify coordinates methods
+    * Modify coordinates methods
      */
     /**
      * set center coordinates
@@ -422,14 +422,14 @@ public class LayoutShape {
     private JPopupMenu popup = null;
 
     @Nonnull
-    protected JPopupMenu showShapePopUp(@CheckForNull MouseEvent mouseEvent, int hitPointType) {
+    protected JPopupMenu showShapePopUp(@CheckForNull MouseEvent mouseEvent, LayoutEditor.HitPointType hitPointType) {
         if (popup != null) {
             popup.removeAll();
         } else {
             popup = new JPopupMenu();
         }
         if (layoutEditor.isEditable()) {
-            int pointIndex = hitPointType - LayoutTrack.SHAPE_POINT_OFFSET_MIN;
+            int pointIndex = hitPointType.getXmlValue() - LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue();
 
             //JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutShape")) + getName());
             JMenuItem jmi = popup.add(Bundle.getMessage("ShapeNameMenuItemTitle", getName()));
@@ -451,7 +451,7 @@ public class LayoutShape {
 //                jmi = popup.add("hitPointType: " + hitPointType);
 //                jmi.setEnabled(false);
 //            }
-            // add "Change Shape Type to..." menu
+// add "Change Shape Type to..." menu
             JMenu shapeTypeMenu = new JMenu(Bundle.getMessage("ChangeShapeTypeFromTo", getType().getName()));
             if (getType() != LayoutShapeType.eOpen) {
                 jmi = shapeTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapeTypeOpen")) {
@@ -485,8 +485,8 @@ public class LayoutShape {
 
             popup.add(shapeTypeMenu);
 
-            // Add "Change Shape Type from {0} to..." menu
-            if (hitPointType == LayoutTrack.SHAPE_CENTER) {
+// Add "Change Shape Type from {0} to..." menu
+            if (hitPointType == LayoutEditor.HitPointType.SHAPE_CENTER) {
                 JMenu shapePointTypeMenu = new JMenu(Bundle.getMessage("ChangeAllShapePointTypesTo"));
                 jmi = shapePointTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapePointTypeStraight")) {
                     @Override
@@ -534,7 +534,7 @@ public class LayoutShape {
                 }
             }
 
-            // Add "Set Level: x" menu
+// Add "Set Level: x" menu
             jmi = popup.add(new JMenuItem(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ShapeLevelMenuItemTitle")) + level));
             jmi.setToolTipText(Bundle.getMessage("ShapeLevelMenuItemToolTip"));
@@ -574,7 +574,7 @@ public class LayoutShape {
                 jmi.setBackground(ColorUtil.contrast(fillColor));
             }
 
-            // add "Set Line Width: x" menu
+// add "Set Line Width: x" menu
             jmi = popup.add(new JMenuItem(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ShapeLineWidthMenuItemTitle")) + lineWidth));
             jmi.setToolTipText(Bundle.getMessage("ShapeLineWidthMenuItemToolTip"));
@@ -589,7 +589,7 @@ public class LayoutShape {
             });
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
-            if (hitPointType == LayoutTrack.SHAPE_CENTER) {
+            if (hitPointType == LayoutEditor.HitPointType.SHAPE_CENTER) {
                 jmi = popup.add(new AbstractAction(Bundle.getMessage("ShapeDuplicateMenuItemTitle")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {

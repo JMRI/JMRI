@@ -570,6 +570,11 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
             return;
         }
         // is this path already defined? OPath equality is equal turnout settings and portals, not icons
+        Iterator<Path> iter = _homeBlock.getPaths().iterator();
+        while (iter.hasNext()) {
+            Path loopPath = iter.next();
+            if ( loopPath instanceof OPath && newPath.equals(loopPath)) {
+                otherPath = (OPath)loopPath;
         for (Path value : _homeBlock.getPaths()) {
             OPath path = (OPath) value;
             if (newPath.equals(path)) {
