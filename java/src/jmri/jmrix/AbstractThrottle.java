@@ -105,7 +105,6 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * but should either make a call to super.setSpeedSetting() to notify the
      * listeners at the end of their work, or should notify the listeners
      * themselves.
-     * <p>
      */
     @Override
     public void setSpeedSetting(float speed) {
