@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
-public class CbusSensor extends AbstractSensor implements CanListener {
+public class CbusSensor extends AbstractSensor implements CanListener, CbusEventInterface {
 
     private CbusAddress addrActive;    // go to active state
     private CbusAddress addrInactive;  // go to inactive state
@@ -156,7 +156,23 @@ public class CbusSensor extends AbstractSensor implements CanListener {
             m = addrInactive.makeMessage(tc.getCanid());
         }
         return m;
-    }    
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CanMessage getBeanOnMessage(){
+        return checkEvent(getAddrActive());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CanMessage getBeanOffMessage(){
+        return checkEvent(getAddrInactive());
+    }
     
     /**
      * Track layout status from messages being sent to CAN

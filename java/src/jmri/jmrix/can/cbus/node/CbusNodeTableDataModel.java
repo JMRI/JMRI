@@ -147,6 +147,9 @@ public class CbusNodeTableDataModel extends CbusBasicNodeTableFetch implements C
         }
         
         int evRow = getNodeRowFromNodeNum((( CbusNode ) ev.getSource()).getNodeNumber());
+        if (evRow<0){
+            return;
+        }
 
         switch (ev.getPropertyName()) {
             case "SINGLENVUPDATE":
@@ -291,12 +294,7 @@ public class CbusNodeTableDataModel extends CbusBasicNodeTableFetch implements C
     }
     
     public boolean startupComplete(){
-    if ( !searchXmlComplete &&
-        searchForNodesTask != null){
-        return false;
-    }
-    
-        return true;
+        return !(!searchXmlComplete && searchForNodesTask != null);
     }
     
     /**

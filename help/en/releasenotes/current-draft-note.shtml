@@ -66,7 +66,9 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Improved Console translation of Bootloading ( Firmware Update ) CAN Frames.</li>
+                <li>CBUS Console - Translation of Bootloading ( Firmware Update ) CAN Frames.</li>
+                <li>CBUS Console - Display JMRI Turnout, Sensor and Light status from CBUS On / Off Events.</li>
+                <li>CBUS Event Table - Improvements to UI</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -451,7 +453,7 @@
 
 	    <h4>Cab Signals</h4>
             <ul>
-                <li>Better set row height in table.</li>
+                <li></li>
             </ul>
 
     	<h4>Simple Signal Logic</h4>
