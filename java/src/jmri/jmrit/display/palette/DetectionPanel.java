@@ -4,6 +4,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -269,8 +270,8 @@ public class DetectionPanel extends JPanel {
         _block = block;
         _pathBoxes = new ArrayList<>();
         List<Path> paths = _block.getPaths();
-        for (Path path : paths) {
-            String name = ((OPath) path).getName();
+        for (String name : paths.stream().filter(o -> o instanceof OPath)
+                      .map(o -> ((OPath) o).getName()).collect(Collectors.toList())) {
             if (name.length() < 25) {
                 char[] ca = new char[25];
                 for (int j = 0; j < name.length(); j++) {

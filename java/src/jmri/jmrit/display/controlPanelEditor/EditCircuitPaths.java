@@ -391,8 +391,8 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         if (list.isEmpty()) {
             sb.append(Bundle.getMessage("noPaths", _homeBlock.getDisplayName()));
         } else {
-            for (Path value : list) {
-                OPath path = (OPath) value;
+            for (OPath path : list.stream().filter(o -> o instanceof OPath)
+                    .map(o->(OPath) o).collect(Collectors.toList())) {
                 ArrayList<Positionable> pathGp = makePathGroup(path);
                 if (pathGp.isEmpty()) {
                     sb.append(Bundle.getMessage("noPathIcons", path.getName()));
