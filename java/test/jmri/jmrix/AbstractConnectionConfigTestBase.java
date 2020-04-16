@@ -1,8 +1,8 @@
 package jmri.jmrix;
 
+import org.assertj.swing.edt.GuiActionRunner;
 import org.junit.*;
 import javax.swing.JPanel;
-import jmri.util.ThreadingUtil;
 
 /**
  * Base tests for ConnectionConfig objects.
@@ -20,7 +20,7 @@ abstract public class AbstractConnectionConfigTestBase {
 
     @Test
     public void testLoadDetails(){
-        ThreadingUtil.runOnGUI(() -> {
+        GuiActionRunner.execute(() -> {
             // verify no exceptions thrown
             cc.loadDetails(new JPanel());
         });

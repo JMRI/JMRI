@@ -1,8 +1,8 @@
 package jmri.jmrix;
 
+import org.assertj.swing.edt.GuiActionRunner;
 import org.junit.*;
 import javax.swing.JPanel;
-import jmri.util.ThreadingUtil;
 
 /**
  * Base tests for SerialConnectionConfig objects.
@@ -14,7 +14,7 @@ abstract public class AbstractSerialConnectionConfigTestBase extends jmri.jmrix.
     @Test
     @Override
     public void testLoadDetails(){
-        ThreadingUtil.runOnGUI(() -> {
+        GuiActionRunner.execute(() -> {
             // verify no exceptions thrown
             cc.loadDetails(new JPanel());
             // load details MAY produce an error message if no ports are found.
