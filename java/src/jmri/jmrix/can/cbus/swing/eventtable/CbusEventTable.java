@@ -44,7 +44,7 @@ public class CbusEventTable extends JScrollPane implements TableModelListener {
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss EEE d MMM YYYY"); // NOI18N
     /**
      * Create a new CBUS Node Event Table Pane
-     * @param mainPane
+     * @param mainPane main Event Table Pane
      */
     public CbusEventTable( CbusEventTablePane mainPane ) {
         super(mainPane.eventTable);
