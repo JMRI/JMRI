@@ -131,15 +131,12 @@ public class CbusTableRowEventDnDHandler extends TransferHandler implements Drag
             return;
         }
         
-        if ( table.getName().equals("jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel") ) {
-            nn = (Integer) table.getModel().getValueAt(table.convertRowIndexToModel(row), CbusEventTableDataModel.NODE_COLUMN); // node number
-            en = (Integer) table.getModel().getValueAt(table.convertRowIndexToModel(row), CbusEventTableDataModel.EVENT_COLUMN); // event number
-        }
-        else if ( table.getName().equals("jmri.jmrix.can.cbus.node.CbusNodeEventTableDataModel") ) {
+        if ( table.getName().equals(CbusEventTableDataModel.class.getName())
+            || table.getName().equals(CbusNodeEventTableDataModel.class.getName())) {
+            
             nn = (Integer) table.getModel().getValueAt(table.convertRowIndexToModel(row), CbusNodeEventTableDataModel.NODE_NUMBER_COLUMN); // node number
             en = (Integer) table.getModel().getValueAt(table.convertRowIndexToModel(row), CbusNodeEventTableDataModel.EVENT_NUMBER_COLUMN); // event number
         }
-    
     }
     
     public void dispose(){
