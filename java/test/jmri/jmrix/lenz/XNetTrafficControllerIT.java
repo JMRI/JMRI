@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.Semaphore;
@@ -20,6 +21,7 @@ import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRTrafficController;
 import jmri.jmrix.lenz.liusb.LIUSBXNetPacketizer;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -266,6 +268,22 @@ public class XNetTrafficControllerIT {
         assertEquals(Arrays.asList(m, m3, m4, m2, m5), msgs);
     }
     
+    private <T> T initOnLayout(Callable<T> c) throws Exception {
+        AtomicReference<T> res = new AtomicReference<>();
+        AtomicReference<Exception> exe = new AtomicReference<>();
+        ThreadingUtil.runOnLayout(() -> {
+            try {
+                res.set(c.call());
+            } catch (Exception ex) {
+                exe.set(ex);
+            }
+        });
+        if (exe.get() != null) {
+            throw exe.get();
+        }
+        return res.get();
+    }
+    
     /**
      * Checks that a sole feedback response to Turnout command
      * is sufficient to acknowledge the command.
@@ -274,14 +292,19 @@ public class XNetTrafficControllerIT {
     public void testFeedbackOnlyAccepted() throws Exception {
         XNetTestSimulator simul = new XNetTestSimulator.NanoXGenLi();
         initializeLayout(simul);
-        
-        Turnout t = xnetManager.provideTurnout("XT5");
 
-        lnis.sendXNetMessage(new XNetMessage("00 00 00"), null);
-        testAdapter.drainPackets(true);
+        Turnout t = initOnLayout(() -> {
+            Turnout x = xnetManager.provideTurnout("XT5");
+            lnis.sendXNetMessage(new XNetMessage("00 00 00"), null);
+            return x;
+        });
         
+        testAdapter.drainPackets(true);
+
         simul.setCaptureMessages(true);
-        t.setCommandedState(XNetTurnout.THROWN);
+        ThreadingUtil.runOnLayout(() -> {
+            t.setCommandedState(XNetTurnout.THROWN);
+        });
 
         // wait > 5sec to capture a timeout
         Thread.sleep(6000);
@@ -301,14 +324,21 @@ public class XNetTrafficControllerIT {
         XNetTestSimulator simul = new XNetTestSimulator.LZV100();
         initializeLayout(simul);
         
-        Turnout t = xnetManager.provideTurnout("XT5");
-        t.setCommandedState(XNetTurnout.CLOSED);
+        Turnout t = initOnLayout(() -> {
+                Turnout x = xnetManager.provideTurnout("XT5");
+                x.setCommandedState(XNetTurnout.CLOSED);
+                return x;
+        });
+        
         // delayed OFF messages are sent
         Thread.sleep(500);
 
         testAdapter.drainPackets(true);
         simul.setCaptureMessages(true);
-        t.setCommandedState(XNetTurnout.CLOSED);
+        
+        ThreadingUtil.runOnLayout(() -> {
+            t.setCommandedState(XNetTurnout.CLOSED);
+        });
 
         // wait > 5sec to capture a timeout
         Thread.sleep(6000);
@@ -353,21 +383,26 @@ public class XNetTrafficControllerIT {
             }
         });
         
-        Turnout t = xnetManager.provideTurnout("XT21");
+        Turnout t = initOnLayout(() -> {
+            Turnout x = xnetManager.provideTurnout("XT21");
+            x.setCommandedState(XNetTurnout.CLOSED);
+            return x;
+        });
+        
         // delayed OFF messages are sent
         Thread.sleep(500);
-        t.setCommandedState(XNetTurnout.CLOSED);
-        
         testAdapter.drainPackets(true);
         simul.setCaptureMessages(true);
         
-        // block property changes for a while
-        synchronized (t) {
-            t.setCommandedState(XNetTurnout.THROWN);
-            XNetMessage msg = new XNetMessage("21 24 05");
-            lnis.sendXNetMessage(msg, null);
-            marker.set(msg);
-        }
+        ThreadingUtil.runOnLayout(() -> {
+            // block property changes for a while
+            synchronized (t) {
+                t.setCommandedState(XNetTurnout.THROWN);
+                XNetMessage msg = new XNetMessage("21 24 05");
+                lnis.sendXNetMessage(msg, null);
+                marker.set(msg);
+            }
+        });
         l.await(300, TimeUnit.MILLISECONDS);
         testAdapter.drainPackets(false);
         
