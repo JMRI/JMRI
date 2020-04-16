@@ -630,7 +630,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             // can't determine reply, allow OFF
             return false;
         } else {
-            return r.markConsumed(reply.getFeedbackConsumedBit(mNumber));
+            return r.markConsumed(r.getFeedbackConsumedBit(mNumber));
         }
     }
     
@@ -695,6 +695,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         // messages, add a short delay before sending the
         // first off message.
         if (!isOffsentState()) {
+            log.debug("Scheduling OFF message after 30ms");
             jmri.util.ThreadingUtil.runOnLayoutDelayed( () ->
                tc.sendHighPriorityXNetMessage(msg, this), 30);
         } else {

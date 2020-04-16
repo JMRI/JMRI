@@ -2,6 +2,7 @@ package jmri.jmrix.lenz;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -31,9 +32,6 @@ import org.junit.Test;
  * @author svatopluk.dedic@gmail.com
  */
 public class XNetTrafficControllerIT {
-    // derived classes should set the value of tc appropriately.
-    protected AbstractMRTrafficController tc;
-
     XNetTestSimulator testAdapter;
     XNetPacketizer lnis;
     
@@ -61,13 +59,6 @@ public class XNetTrafficControllerIT {
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
-
-        tc = new XNetTrafficController(new LenzCommandStation()){
-            @Override
-            public void sendXNetMessage(XNetMessage m, XNetListener reply){
-                System.err.println("ahoj");
-            }
-        };
     }
     
     public interface MessageOutput {
@@ -103,8 +94,10 @@ public class XNetTrafficControllerIT {
         
         @Override
         protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {
-            super.handleTimeout(msg, l);
-            timeoutOccured = true;
+            if (!threadStopRequest) {
+                super.handleTimeout(msg, l);
+                timeoutOccured = true;
+            }
         }
 
         // Just a trampoline
@@ -170,8 +163,11 @@ public class XNetTrafficControllerIT {
     }
 
     @After
-    public void tearDown(){
-        tc = null;
+    public void tearDown() throws Exception {
+        XNetTrafficController ctrl = (XNetTrafficController)output; 
+        ctrl.terminateThreads();
+        ctrl.disconnectPort(testAdapter);
+        testAdapter.dispose();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
@@ -361,7 +357,7 @@ public class XNetTrafficControllerIT {
         XNetTestSimulator simul = new XNetTestSimulator.LZV100_USB();
         CountDownLatch l = new CountDownLatch(1);
         CountDownLatch l2 = new CountDownLatch(1);
-
+        
         AtomicReference<AbstractMRMessage> marker = new AtomicReference<>();
         
         initializeLayout(simul, new TestUSBPacketizer(new LenzCommandStation()) {
@@ -385,8 +381,13 @@ public class XNetTrafficControllerIT {
         
         Turnout t = initOnLayout(() -> {
             Turnout x = xnetManager.provideTurnout("XT21");
-            x.setCommandedState(XNetTurnout.CLOSED);
             return x;
+        });
+        // there's a query packet after turnout creation
+        testAdapter.drainPackets(true);
+        
+        ThreadingUtil.runOnLayout(() -> {
+            t.setCommandedState(XNetTurnout.CLOSED);
         });
         
         // delayed OFF messages are sent
@@ -403,9 +404,8 @@ public class XNetTrafficControllerIT {
                 marker.set(msg);
             }
         });
-        l.await(300, TimeUnit.MILLISECONDS);
-        testAdapter.drainPackets(false);
-        
+        assertTrue(l.await(300, TimeUnit.MILLISECONDS));
+
         // the turnout must be already IDLE
         assertEquals(XNetTurnout.IDLE, ((XNetTurnout)t).internalState);
         
@@ -414,11 +414,20 @@ public class XNetTrafficControllerIT {
         // there should be 4 replies from the 'command station':
         // accessory request --> feedback + OK
         // 1st OFF           --> OK
-        // 2nd OFF           --> OK
-        l2.await(500, TimeUnit.MILLISECONDS);
+        // 2nd OFF           --> OK, but may be delayed
+        assertTrue(l2.await(500, TimeUnit.MILLISECONDS));
+        Thread.sleep(100);
         List<XNetReply> replies = simul.getIncomingReplies();
-        assertEquals(4, replies.size());
+        assertTrue(replies.size() >= 3);
+        // feedback reply to the turnout command
+        assertEquals(0x42, replies.get(0).getElement(0));
+        // OK 2nd reply to the turnout command
+        assertEquals(0x01, replies.get(1).getElement(0));
+        // OK reply to the non-delayed OFF message
+        assertEquals(0x01, replies.get(2).getElement(0));
         
+        // the message at index #3 and #4 are eithr response to the marker,
+        // or the OK-to-second OFF.
     }
 
 }

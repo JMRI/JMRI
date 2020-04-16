@@ -1,11 +1,11 @@
 package jmri.jmrix.lenz.xnetsimulator;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetConstants;
@@ -161,8 +161,22 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     public boolean status() {
         return (pout != null && pin != null);
     }
+    
+    /**
+     * Allows subclasses to return additional replies. For each message, 
+     * {@link #generateReply} must provide a reply. The {@link #generateAdditionalReply()}
+     * is called in a loop to provide the rest of reply packets. If no packet
+     * is available, the method should return {@code null}.
+     * @return Additional reply packet or {@code null}.
+     */
+    protected XNetReply generateAdditionalReply() {
+        return null;
+    }
 
     @Override
+    @SuppressFBWarnings(value = "NP_LOAD_OF_KNOWN_NULL_VALUE", 
+            justification = "XNetTestSimulator may return non-null from generateAdditionalReply"
+    )
     public void run() { // start a new thread
         // this thread has one task.  It repeatedly reads from the input pipe
         // and writes modified data to the output pipe.  This is the heart
@@ -174,10 +188,14 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         for (;;) {
             XNetMessage m = readMessage();
             log.debug("Simulator Thread received message {}", m);
-            XNetReply r;
-            while ((r = generateReply(m)) != null) {
+            if (m == null) {
+                // readMessage failed with an exception.
+                break;
+            }
+            XNetReply r = generateReply(m);
+            writeReply(r);
+            while ((r = generateAdditionalReply()) != null) {
                 writeReply(r);
-                m = null;
             }
             log.debug("Simulator Thread sent Reply {}", r);
         }

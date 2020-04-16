@@ -143,18 +143,7 @@ abstract class XNetTestSimulator extends XNetSimulatorAdapter {
     
     @Override
     protected XNetMessage readMessage() {
-        /*
-        if (nextRelease) {
-            messageMarkerSemaphore.release();
-            nextRelease = false;
-        }
-        */
         XNetMessage msg = super.readMessage();
-        /*
-        if (msg.getElement(0) == 0x00) {
-            nextRelease = true;
-        }
-        */
         if (captureMessages) {
             synchronized (this) {
                 outgoingMessages.add(msg);
@@ -177,6 +166,15 @@ abstract class XNetTestSimulator extends XNetSimulatorAdapter {
         return r;
     }
 
+    @Override
+    protected XNetReply generateAdditionalReply() {
+        insertAdditionalReplies();
+        if (replyBuffer.isEmpty()) {
+            return null;
+        }
+        XNetReply r = replyBuffer.remove(0);
+        return captureReply(r);
+    }
     
     /**
      * Serves the batched items through FIFO. The test class may generate
@@ -188,13 +186,6 @@ abstract class XNetTestSimulator extends XNetSimulatorAdapter {
     @Override
     protected XNetReply generateReply(XNetMessage m) {
         insertAdditionalReplies();
-        if (m == null) {
-            if (replyBuffer.isEmpty()) {
-                return null;
-            }
-            XNetReply r = replyBuffer.remove(0);
-            return captureReply(r);
-        }
         if (m.getElement(0) == 0x01 && m.getElement(1) == 0x00) {
             // bypass reply buffer.
             return new XNetReply("01 04 05");

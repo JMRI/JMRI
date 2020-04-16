@@ -279,7 +279,8 @@ abstract public class AbstractMRMessage extends AbstractMessage {
      * Sets the priority message flag. A priority message is enqueued for transmission before all
      * other non-priority messages. If there are more priority messages in the queue,
      * this one will be added after all existing ones.
-     * @param priorityMessage 
+     * @param priorityMessage the priority flag
+     * @return this message
      */
     public <T extends AbstractMRMessage> T asPriority(boolean priorityMessage) {
         this.priorityMessage = priorityMessage;
