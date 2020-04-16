@@ -59,12 +59,15 @@ public class AssertTest {
         
         assertsEnabled = false;
         assert assertsEnabled = true; // Intentional side-effect if assert is enabled
+        
         // Now assertsEnabled is set to the correct value
-        System.err.println("assert status: "+assertsEnabled);
+        log.info("assert status: "+assertsEnabled);
     }
 
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
+    
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AssertTest.class);
 }
