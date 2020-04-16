@@ -615,12 +615,22 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         }
     }
     
-    private boolean markReplyConsumedForOff(XNetReply reply) {
-        if (reply == null) {
+    /**
+     * Marks the reply as already used up for sending OFF messages. No further
+     * OFFs will be sent from {@link #sendOffMessageOnce(jmri.jmrix.lenz.XNetReply)}.
+     * If {@code null} is passed, a reply that is just being processed is used - will work
+     * only in the Layout thread, and only if the layout thread is currently processing XpressNet
+     * reply.
+     * @param reply the reply to mark, or {@code null} to use the reply being processed at the moment.
+     * @return true, if the reply was already marked.
+     */
+    protected boolean markReplyConsumedForOff(XNetReply reply) {
+        XNetReply r = reply != null ? reply : processingReply.get();
+        if (r == null) {
             // can't determine reply, allow OFF
             return false;
         } else {
-            return reply.markConsumed(reply.getFeedbackConsumedBit(mNumber));
+            return r.markConsumed(reply.getFeedbackConsumedBit(mNumber));
         }
     }
     
@@ -663,27 +673,17 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     /**
      * Send an "Off" message to the decoder for this output. 
-     * @deprecated this method may generate spurious OFF messages
-     * when called several times during the course of reply processing.
+     * This method may generate spurious OFF messages
+     * when called several times during the course of reply processing. Consider
+     * to use {@link #sendOffMessageOnce(jmri.jmrix.lenz.XNetReply)}, unless it is
+     * really required to amplify number of OFF messages compared to replies sent
+     * by the command station.
      * Use {@link #sendOffMessageOnce(jmri.jmrix.lenz.XNetReply)}.
      */
-    @Deprecated
     protected synchronized void sendOffMessage() {
-        XNetReply r = processingReply.get();
-        // just for the sake, if an old code calls sendOffMessage directly, mark
-        // the action as consumed for potential sendOffMessageOnce calls.
-        markReplyConsumedForOff(r);
-        doSendOffMessage();
-    }
-    
-    /**
-     * Really sends the off message. This method is called when the message
-     * off has not been sent yet during this Reply processing, or when a legacy
-     * code called {@link #sendOffMessage()}.
-     * <p>
-     * Override to implement a different behaviour, scheduling of the message etc.
-     */
-    protected synchronized void doSendOffMessage() {
+        // if someone calls directly sendOffMessage, he will send it, but
+        // we have to leave a note for subsequent sendOffMessageOnce().
+        markReplyConsumedForOff(null);
         // We need to tell the turnout to shut off the output.
         if (log.isDebugEnabled()) {
             log.debug("Sending off message for turnout {} commanded state={}", mNumber, getCommandedState());
