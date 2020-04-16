@@ -649,7 +649,6 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * <p>
      * For when throttles have been stolen or encounter hardware error, and a
      * normal release / dispose is not possible.
-     * <p>
      */
     protected void notifyThrottleDisconnect() {
         firePropertyChange("ThrottleConnected", true, false); // NOI18N
