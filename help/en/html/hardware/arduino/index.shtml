@@ -164,10 +164,12 @@
     <li>
     When defining JMRI objects such as sensors and turnouts that are identified with 
     CMRI bits, JMRI starts numbering CMRI bits with 1 while common CMRI software for arduinos
-    starts with 0.  Reading ("getting") or writing ("setting") CMRI bit 0 within an arduino sketch will be
-    interpreted by JMRI as setting CMRI input bit 1.  Thus, a sensor attached to CS2001 (bit 1 on
-    node 2) will be controlled by CMRI bit 0 in the code in an arduino sketch.  See the <a href="#example-CMRI">
-    example below</a>.
+    starts with 0.  Writing ("setting") CMRI bit 0 within an arduino sketch sets JMRI CMRI input bit 1
+    for the appropriate node.  Thus, a JMRI Sensor named CS2001 (bit 1 on
+    node 2) will be controlled by setting CMRI bit 0 in the code in an arduino sketch.  Reading ("getting")
+    CMRI bit 0 within an arduino sketch will read the bit controlling the JMRI Turnout or Light attached
+    to CMRI output bit 1 in JMRI, e.g. CT2001 or CL2001 (note that you cannot have both a Light and a Turnout
+    controlling the same output bit). See also the<a href="#example-CMRI"> example setup below</a>.
     </li>
     <li>
     When using arduinos to control JMRI turnouts, be mindful that JMRI's behavior is different if the turnout
