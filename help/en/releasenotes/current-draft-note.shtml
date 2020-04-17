@@ -424,6 +424,14 @@
         <a id="Scripting" name="Scripting"></a>
         <ul>
             <li>Jython has been updated to version 2.7.2</li>
+            <li>Long deprecated <code>instance()</code> methods to get the default
+                instance of a manager have been removed. Use
+                <code>InstanceManager.getDefault(NameOfManager.class)</code>
+                instead.</li>
+            <li><a href="https://github.com/JMRI/JMRI/pull/8286">PR 8286 revised the way 
+                that JMRI code should fire and catch events.  If you have code (Java or script)
+                of your own that implements event firing or tricky listening, you
+                should review those changes to see if they will or should affect your code.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -534,20 +542,15 @@
             <li>The VSD old graphical user interface (GUI) was removed. For users who call VSD
             from JMRI PanelPro, nothing changes. For users who call VSD from a Jython script,
             theoretically the script can fail. Please see also
-            <a href="http://jmri.org/help/en/package/jmri/jmrit/vsdecoder/VSDecoderFrame.shtml">here</a>.
+            <a href="https://jmri.org/help/en/package/jmri/jmrit/vsdecoder/VSDecoderFrame.shtml">here</a>.
             </li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Long deprecated <code>instance()</code> methods to get the default
-                instance of a manager have been removed. Use
-                <code>InstanceManager.getDefault(NameOfManager.class)</code>
-                instead.</li>
-            <li><a href="https://github.com/JMRI/JMRI/pull/8286">PR 8286 revised the way 
-                that JMRI code should fire and catch events.  If you have code (Java or script)
-                of your own that implements event firing or tricky listening, you
-                should review those changes to see if they will or should affect your code.
+            <li>Windows Installer updated to support OpenJDK 8 from <a 
+            href="https://adoptopenjdk.net">AdoptOpenJDK.net</a>.</li>
+                
         </ul>
 
