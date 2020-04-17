@@ -19,42 +19,6 @@ import jmri.util.*;
  */
 public abstract class LayoutTrack {
 
-    //
-    // hit point types (NOTE:MOVED TO LAYOUT EDITOR)
-    //
-    //public static final int NONE = 0;
-    //public static final int POS_POINT = 1;
-    //public static final int TURNOUT_A = 2;  // throat for RH, LH, and WYE turnouts
-    //public static final int TURNOUT_B = 3;  // continuing route for RH and LH turnouts
-    //public static final int TURNOUT_C = 4;  // diverging route for RH and LH turnouts
-    //public static final int TURNOUT_D = 5;  // 4th route for crossovers;
-    //public static final int LEVEL_XING_A = 6;
-    //public static final int LEVEL_XING_B = 7;
-    //public static final int LEVEL_XING_C = 8;
-    //public static final int LEVEL_XING_D = 9;
-    //public static final int TRACK = 10;
-    //public static final int TURNOUT_CENTER = 11; // non-connection points should be last
-    //public static final int LEVEL_XING_CENTER = 12;
-    //public static final int TURNTABLE_CENTER = 13;
-    //public static final int LAYOUT_POS_LABEL = 14;
-    //public static final int LAYOUT_POS_JCOMP = 15;
-    //public static final int MULTI_SENSOR = 16;
-    //public static final int MARKER = 17;
-    //public static final int TRACK_CIRCLE_CENTRE = 18;
-    //public static final int SLIP_CENTER = 20;   //should be @Deprecated (use SLIP_LEFT & SLIP_RIGHT instead)
-    //public static final int SLIP_A = 21;
-    //public static final int SLIP_B = 22;
-    //public static final int SLIP_C = 23;
-    //public static final int SLIP_D = 24;
-    //public static final int SLIP_LEFT = 25;
-    //public static final int SLIP_RIGHT = 26;
-    //public static final int BEZIER_CONTROL_POINT_OFFSET_MIN = 30; // offset for TrackSegment Bezier control points (minimum)
-    //public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = 38; // offset for TrackSegment Bezier control points (maximum)
-    //public static final int SHAPE_CENTER = 39;
-    //public static final int SHAPE_POINT_OFFSET_MIN = 40; // offset for Shape points (minimum)
-    //public static final int SHAPE_POINT_OFFSET_MAX = 49; // offset for Shape points (maximum)
-    //public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
-    //
     // operational instance variables (not saved between sessions)
     protected LayoutEditor layoutEditor = null;
     protected String ident = "";
@@ -195,8 +159,8 @@ public abstract class LayoutTrack {
     /**
      * draw one line (Ballast, ties, center or 3rd rail, block lines)
      *
-     * @param g2 the graphics context
-     * @param isMain true if drawing mainlines
+     * @param g2      the graphics context
+     * @param isMain  true if drawing mainlines
      * @param isBlock true if drawing block lines
      */
     protected abstract void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
@@ -204,8 +168,8 @@ public abstract class LayoutTrack {
     /**
      * draw two lines (rails)
      *
-     * @param g2 the graphics context
-     * @param isMain true if drawing mainlines
+     * @param g2               the graphics context
+     * @param isMain           true if drawing mainlines
      * @param railDisplacement the offset from center to draw the lines
      */
     protected abstract void draw2(Graphics2D g2, boolean isMain, float railDisplacement);
@@ -225,7 +189,7 @@ public abstract class LayoutTrack {
     /**
      * highlight unconnected connections
      *
-     * @param g2 the graphics context
+     * @param g2           the graphics context
      * @param specificType the specific connection to draw (or NONE for all)
      */
     protected abstract void highlightUnconnected(Graphics2D g2, LayoutEditor.HitPointType specificType);
@@ -315,7 +279,7 @@ public abstract class LayoutTrack {
      * Display the attached items that prevent removing the layout track item.
      *
      * @param itemList A list of the attached heads, masts and/or sensors.
-     * @param typeKey The object type such as Turnout, Level Crossing, etc.
+     * @param typeKey  The object type such as Turnout, Level Crossing, etc.
      */
     public void displayRemoveWarningDialog(List<String> itemList, String typeKey) {
         itemList.sort(null);
@@ -375,11 +339,11 @@ public abstract class LayoutTrack {
     /**
      * find the hit (location) type for a point
      *
-     * @param hitPoint the point
-     * @param useRectangles whether to use (larger) rectangles or (smaller)
-     * circles for hit testing
+     * @param hitPoint           the point
+     * @param useRectangles      whether to use (larger) rectangles or (smaller)
+     *                           circles for hit testing
      * @param requireUnconnected whether to only return hit types for free
-     * connections
+     *                           connections
      * @return the location type for the point (or NONE)
      * @since 7.4.3
      */
@@ -462,8 +426,8 @@ public abstract class LayoutTrack {
      * set the LayoutTrack connected at the specified connection type
      *
      * @param connectionType where on us to set the connection
-     * @param o the LayoutTrack that is to be connected
-     * @param type where on the LayoutTrack we are connected
+     * @param o              the LayoutTrack that is to be connected
+     * @param type           where on the LayoutTrack we are connected
      * @throws JmriException - if connectionType or type are invalid
      */
     public abstract void setConnection(LayoutEditor.HitPointType connectionType, LayoutTrack o, LayoutEditor.HitPointType type) throws JmriException;
@@ -492,7 +456,8 @@ public abstract class LayoutTrack {
         if (LayoutEditor.HitPointType.isConnectionHitType(connectionType)) {
             try {
                 result = (null == getConnection(connectionType));
-            } catch (JmriException e) {
+            }
+            catch (JmriException e) {
                 // this should never happen because isConnectionType() above would have caught an invalid connectionType.
             }
         }
@@ -535,7 +500,7 @@ public abstract class LayoutTrack {
      * (in blockNamesToTrackNameSetMap)
      *
      * @param blockNamesToTrackNameSetMaps hashmap of key:block names to lists
-     * of track name sets for those blocks
+     *                                     of track name sets for those blocks
      * <p>
      * note: used by LayoutEditorChecks.setupCheckNonContiguousBlocksMenu()
      */
@@ -545,7 +510,7 @@ public abstract class LayoutTrack {
     /**
      * recursive routine to check for all contiguous tracks in this blockName
      *
-     * @param blockName the block that we're checking for
+     * @param blockName    the block that we're checking for
      * @param TrackNameSet the set of track names in this block
      */
     public abstract void collectContiguousTracksNamesInBlockNamed(
@@ -556,7 +521,7 @@ public abstract class LayoutTrack {
      * Assign all the layout blocks in this track
      *
      * @param layoutBlock to this layout block (used by the Tools menu's "Assign
-     * block to selection" item)
+     *                    block to selection" item)
      */
     public abstract void setAllLayoutBlocks(LayoutBlock layoutBlock);
 
