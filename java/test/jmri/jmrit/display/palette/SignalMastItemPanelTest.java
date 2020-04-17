@@ -23,8 +23,7 @@ public class SignalMastItemPanelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel<jmri.SignalMast> tableModel = PickListModel.signalMastPickModelInstance();
         DisplayFrame df = new DisplayFrame("SignalMast Item Panel Test");
-        Editor editor = new EditorScaffold();
-        SignalMastItemPanel t = new SignalMastItemPanel(df,"IM01","",tableModel,editor);
+        SignalMastItemPanel t = new SignalMastItemPanel(df,"IM01","",tableModel);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(df);
     }

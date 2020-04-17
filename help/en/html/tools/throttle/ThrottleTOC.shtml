@@ -26,9 +26,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>Throttle Documentation</h1>
@@ -194,7 +194,7 @@
         <dt>C. <a href="ThrottleChapter4.shtml#CloseThrottle"
         title="Closing A Throttle Window">Closing a Throttle
         Window</a></dt>
-      </dl><!--#include virtual="/Footer" -->
+      </dl><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

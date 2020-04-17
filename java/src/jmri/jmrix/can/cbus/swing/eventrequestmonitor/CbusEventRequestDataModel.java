@@ -3,8 +3,6 @@ package jmri.jmrix.can.cbus.swing.eventrequestmonitor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import java.util.ArrayList;
 import java.util.Date;
 import jmri.jmrix.can.CanListener;
@@ -15,6 +13,7 @@ import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.cbus.CbusEvent;
 import jmri.util.swing.TextAreaFIFO;
 import jmri.util.ThreadingUtil;
 
@@ -32,7 +31,7 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
     private boolean sessionConfirmDeleteRow=true; // display confirm popup
     private final int _defaultFeedback= 1;
     protected int _contype=0; // event table pane console message type
-    protected String _context=null; // event table pane console text
+    protected String _context; // event table pane console text
     private final int _defaultfeedbackdelay = 4000;
     private static final int MAX_LINES = 500; // tablefeedback screen log size
     
@@ -65,7 +64,7 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
         // _memo = memo;
         tc = memo.getTrafficController();
         addTc(tc);
-        nameService = new CbusNameService();
+        nameService = new CbusNameService(memo);
     }
 
     // order needs to match column list top of dtabledatamodel
@@ -96,28 +95,6 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
     @Override
     public int getColumnCount() {
         return MAX_COLUMN;
-    }
-    
-    /**
-     * Configure a table to have our standard rows and columns.
-     * <p>
-     * This is optional, in that other table formats can use this table model.
-     * But we put it here to help keep it consistent.
-     */
-    public void configureTable(JTable eventTable) {
-        // allow reordering of the columns
-        eventTable.getTableHeader().setReorderingAllowed(true);
-
-        // shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        eventTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-        // resize columns as requested
-        for (int i = 0; i < eventTable.getColumnCount(); i++) {
-            int width = getPreferredWidth(i);
-            eventTable.getColumnModel().getColumn(i).setPreferredWidth(width);
-        }
-        eventTable.sizeColumnsToFit(-1);
-        tablefeedback.setEditable ( false ); // set textArea non-editable
     }
     
     /**
@@ -154,33 +131,6 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
                 return Bundle.getMessage("FBTimeout");
             default:
                 return "unknown"; // NOI18N
-        }
-    }
-
-    /**
-    * Returns int of startup column widths
-    * @param col int col number
-    */
-    public static int getPreferredWidth(int col) {
-        switch (col) {
-            case NODE_COLUMN:
-            case EVENT_COLUMN:
-                return new JTextField(4).getPreferredSize().width;
-            case LASTFEEDBACK_COLUMN:
-            case FEEDBACKREQUIRED_COLUMN:
-            case FEEDBACKOUTSTANDING_COLUMN:
-            case FEEDBACKTIMEOUT_COLUMN:
-            case FEEDBACKNODE_COLUMN:
-            case FEEDBACKEVENT_COLUMN:
-                return new JTextField(5).getPreferredSize().width;
-            case LATEST_TIMESTAMP_COLUMN:
-            case STATUS_REQUEST_BUTTON_COLUMN:
-            case DELETE_BUTTON_COLUMN:
-                return new JTextField(7).getPreferredSize().width;                
-            case NAME_COLUMN:
-                return new JTextField(10).getPreferredSize().width;
-            default:
-                return new JTextField(" <unknown> ").getPreferredSize().width; // NOI18N
         }
     }
 
@@ -380,12 +330,7 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
     }
     
     protected int eventRow(int nn, int en) {
-        for (int i = 0; i < getRowCount(); i++) {
-            if (_mainArray.get(i).matches(nn, en)) {
-                return i;
-            }
-        }
-        return -1;
+        return _mainArray.indexOf(new CbusEvent(nn,en));
     }
 
     protected int extraFeedbackRow(int nn, int en) {

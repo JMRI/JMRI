@@ -23,9 +23,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
@@ -138,7 +138,7 @@
       <p>The information from the Signal Group Table is used by the
       Signal Mast Logic to calculate the specified behavior of a
       Signal Group. You can test this by manually changing one of
-      the Indicator Signal Heads in de <a href=
+      the Indicator Signal Heads in the <a href=
       "../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">
       Signal Head Table</a>.</p>
 
@@ -157,7 +157,7 @@
 
       <p>Back to the <a href="index.shtml#tools">Signaling main
       help page</a>.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

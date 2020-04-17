@@ -1,8 +1,5 @@
 package jmri.jmrix.secsi;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Contains the data payload of a serial reply packet. Note that it's _only_ the
  * payload.

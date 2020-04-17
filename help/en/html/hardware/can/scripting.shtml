@@ -19,9 +19,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-      <!--#include virtual="Sidebar" -->
+      <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>Hardware Support: CAN - Scripting</h1>
@@ -83,7 +83,7 @@ jmri.jmrix.can.TrafficController.instance().addCanListener(MyCanListener())
       <ul>
         <li>Back to the <a href="index.shtml">Main CAN Network
         Support Help page</a>.</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

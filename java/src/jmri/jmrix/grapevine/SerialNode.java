@@ -1,13 +1,11 @@
 package jmri.jmrix.grapevine;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractNode;
-import jmri.jmrix.grapevine.SerialTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,6 +1,5 @@
 package jmri.jmrix.can.cbus;
 
-import jmri.ProgListenerScaffold;
 import jmri.ProgrammingMode;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
@@ -15,14 +14,14 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Test
     @Override
     public void testDefault() {
-        Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
                 programmer.getMode());        
     }
     
     @Override
     @Test
     public void testDefaultViaBestMode() {
-        Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
                 ((CbusDccProgrammer)programmer).getBestMode());        
     }
 
@@ -70,20 +69,24 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
 */
+    
+    private TrafficControllerScaffold tcis;
 
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        programmer = new CbusDccProgrammer(new TrafficControllerScaffold());
+        tcis = new TrafficControllerScaffold();
+        programmer = new CbusDccProgrammer(tcis);
     }
 
     @Override
     @After
     public void tearDown() {
         programmer = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tcis.terminateThreads();
+        tcis = null;
         JUnitUtil.tearDown();
 
     }

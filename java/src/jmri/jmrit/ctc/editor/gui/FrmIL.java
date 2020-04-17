@@ -162,6 +162,7 @@ public class FrmIL extends javax.swing.JFrame {
 
         _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
             }
@@ -288,6 +289,7 @@ public class FrmIL extends javax.swing.JFrame {
 
         jButton1.setText(Bundle.getMessage("ButtonDlgILCompact"));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
@@ -307,6 +309,7 @@ public class FrmIL extends javax.swing.JFrame {
 
         BT_Replace.setText(Bundle.getMessage("ButtonDlgILReplace"));
         BT_Replace.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BT_ReplaceActionPerformed(evt);
             }

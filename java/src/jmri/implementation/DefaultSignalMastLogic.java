@@ -15,6 +15,7 @@ import jmri.Block;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanUsageReport;
 import jmri.Section;
 import jmri.Sensor;
 import jmri.SignalMast;
@@ -2241,7 +2242,10 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                             String t = lt.getTurnoutName();
                             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
                             if (log.isDebugEnabled()) {
-                                if ((lt.getTurnoutType() <= 3) && (!lt.getBlockName().equals(""))) {
+                                if (    (lt.getTurnoutType() == LayoutTurnout.TurnoutType.RH_TURNOUT ||
+                                         lt.getTurnoutType() == LayoutTurnout.TurnoutType.LH_TURNOUT ||
+                                         lt.getTurnoutType() == LayoutTurnout.TurnoutType.WYE_TURNOUT) 
+                                        && (!lt.getBlockName().equals(""))) {
                                     log.debug("turnout in list is straight left/right wye");
                                     log.debug("turnout block Name " + lt.getBlockName());
                                     log.debug("current " + lblks.get(i).getBlock().getDisplayName() + " - pre " + lblks.get(preBlk).getBlock().getDisplayName());
@@ -2261,7 +2265,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                                 just looking at the state of the other conflicting blocks, such as looking at Signalmasts
                                 that protect the other blocks and the settings of any other turnouts along the way.
                              */
-                            if (lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER) {
+                            if (lt.getTurnoutType() == LayoutTurnout.TurnoutType.DOUBLE_XOVER) {
                                 if (turnoutList.get(x).getExpectedState() == jmri.Turnout.THROWN) {
                                     if (lt.getLayoutBlock() == lblks.get(i) || lt.getLayoutBlockC() == lblks.get(i)) {
                                         if (lt.getLayoutBlockB() != null) {
@@ -2768,7 +2772,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
-        if ("CanDelete".equals(evt.getPropertyName())) { //NOI18N
+        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
             boolean found = false;
             StringBuilder message = new StringBuilder();
             if (nb instanceof SignalMast) {
@@ -2814,7 +2818,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             if (found) {
                 throw new java.beans.PropertyVetoException(message.toString(), evt);
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
+        } else if ("DoDelete".equals(evt.getPropertyName())) { // NOI18N
             if (nb instanceof SignalMast) {
                 if (nb.equals(source)) {
                     dispose();
@@ -2879,6 +2883,57 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
 
     @Override
     public void setState(int i) {
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean.equals(getSourceMast())) {
+                report.add(new NamedBeanUsageReport("SMLSourceMast"));  // NOI18N
+            }
+            getDestinationList().forEach((dest) -> {
+                if (bean.equals(dest)) {
+                    report.add(new NamedBeanUsageReport("SMLDestinationMast"));  // NOI18N
+                }
+                getAutoBlocks(dest).forEach((block) -> {
+                    if (bean.equals(block)) {
+                        report.add(new NamedBeanUsageReport("SMLBlockAuto", dest));  // NOI18N
+                    }
+                });
+                getBlocks(dest).forEach((block) -> {
+                    if (bean.equals(block)) {
+                        report.add(new NamedBeanUsageReport("SMLBlockUser", dest));  // NOI18N
+                    }
+                });
+                getAutoTurnouts(dest).forEach((turnout) -> {
+                    if (bean.equals(turnout)) {
+                        report.add(new NamedBeanUsageReport("SMLTurnoutAuto", dest));  // NOI18N
+                    }
+                });
+                getTurnouts(dest).forEach((turnout) -> {
+                    if (bean.equals(turnout)) {
+                        report.add(new NamedBeanUsageReport("SMLTurnoutUser", dest));  // NOI18N
+                    }
+                });
+                getSensors(dest).forEach((sensor) -> {
+                    if (bean.equals(sensor)) {
+                        report.add(new NamedBeanUsageReport("SMLSensor", dest));  // NOI18N
+                    }
+                });
+                getAutoMasts(dest).forEach((mast) -> {
+                    if (bean.equals(mast)) {
+                        report.add(new NamedBeanUsageReport("SMLMastAuto", dest));  // NOI18N
+                    }
+                });
+                getSignalMasts(dest).forEach((mast) -> {
+                    if (bean.equals(mast)) {
+                        report.add(new NamedBeanUsageReport("SMLMastUser", dest));  // NOI18N
+                    }
+                });
+            });
+        }
+        return report;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogic.class);

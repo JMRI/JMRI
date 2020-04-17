@@ -24,9 +24,9 @@
 
 <body>
   <div id="container">
-    <!--#include virtual="/Header" -->
+    <!--#include virtual="/Header.shtml" -->
     <div id="mBody">
-      <!--#include virtual="Sidebar" -->
+      <!--#include virtual="Sidebar.shtml" -->
       <div id="mainContent">
         <!-- Page Body -->
 
@@ -140,7 +140,7 @@
             <strong>Edit</strong> button, and control it by
             clicking its <b>Cmd</b> button.</p>
           </li>
-        </ol><!--#include virtual="/Footer" -->
+        </ol><!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
   </div><!-- closes #container -->

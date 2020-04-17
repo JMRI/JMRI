@@ -180,8 +180,6 @@ public class WarrantTest {
 
         warrant.getSpeedUtil().setDccAddress("999(L)");
         String msg = warrant.allocateRoute(false, orders);
-        SpeedUtil su = warrant.getSpeedUtil();
-        su.setOrders(orders);
 
         warrant.setTrainName("TestTrain");
         PropertyChangeListener listener = new WarrantListener(warrant);
@@ -338,7 +336,6 @@ public class WarrantTest {
         sNorth = null;
         sSouth = null;
         warrant = null;
-
         JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }

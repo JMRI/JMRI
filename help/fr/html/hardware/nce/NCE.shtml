@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
@@ -45,7 +45,7 @@ sur leur face avant.
 <li> Pour connecter votre ordinateur &#224; un Power Pro NCE ou le syst&#232;me de PowerHouse, il
  peut suffire g&#233;n&#233;ralement de connecter la centrale de commande au port s&#233;rie de l'ordinateur
  &#224; l'aide d'un c&#226;ble s&#233;rie &#224; 9 broches. Sur les ordinateurs r&#233;cents il se pourrait qu'il
- n'y ait pas de connecteur s&#233;rie, vous aurez donc besoin d'utiliser un des ports USB de 
+ n'y ait pas de connecteur s&#233;rie, vous aurez donc besoin d'utiliser un des ports USB de
 l'ordinateur et d'un adaptateur USB/s&#233;rie. Voir<a  href="../USBtoSerial.shtml"> un adaptateur USB s&#233;rie</a> pour
 plus d'informations.
 Notez que ce n'est <em>pas</em> la m&#234;me chose
@@ -68,7 +68,7 @@ pour r&#233;gler le d&#233;bit en bauds &#224; 9600, et appuyez sur PROG/ESC pou
 <li> S&#233;lectionnez la version de l'actuelle EPROM dans votre
 centrale de commande, soit "2004 ou plus t&#244;t" ou "2006 ou plus tard".
 <a href="#eeprom">Voir ci-dessous</a> pour plus d'informations &#224; ce sujet.</li>
-    
+
 <li> La s&#233;rie de boutons radio &#233;tiquet&#233;s "style Interface" vous permet de
 s&#233;lectionnez la fa&#231;on dont le programme va s'afficher. "Metal" est l'apparence native de Java
 disponible sur tous les types. D'autres choix peuvent varier avec votre ordinateur
@@ -114,7 +114,7 @@ num&#233;ro de r&#233;vision au d&#233;marrage, et vous enverra un avertissement
 si elle trouve l'EPROM d&#233;but 2007. Si vous n'&#234;tes pas s&#251;r d'avoir la plus r&#233;cente, vous pouvez effectuer un test simple. Premi&#232;rement accessoire normale 1 et
 5 en utilisant le bouton "S&#233;lect ACCY " sur votre ProCab. Ensuite, en utilisant le bouton S&#233;lect "
 ACCY " changer l'accessoire 1 &#224; REV. Ensuite, v&#233;rifiez l'accessoire 5, et si
-NOW= REV pour l'accessoire 5, vous avez la r&#233;vision pr&#233;c&#233;dente avec le 
+NOW= REV pour l'accessoire 5, vous avez la r&#233;vision pr&#233;c&#233;dente avec le
 probl&#232;me connu. Si vous avez l'EPROM d&#233;but des ann&#233;es 2007  et que vous souhaitez utiliser des SUIVI
 r&#233;tro-signalisations, contactez NCE pour une mise &#224; niveau EPROM.</p>
 
@@ -145,7 +145,7 @@ pouvez acc&#233;der &#224;  l'aiguillage 21 partir de votre r&#233;gulateur, JMR
 avait un "circuit de commande analogique optionnel". (Si vous ne vous rappelez pas les
 commandes, vous n'avez probablement pas besoin de lire le reste de ce
 paragraphe!) Dans ces derni&#232;res, les broches 5, 6 et 9 sont utilis&#233;es avec une tension analogique
-comme un r&#233;gulateur s&#233;par&#233;. Si vous avez une de ces stations de commande, un c&#226;ble s&#233;rie normal avec 
+comme un r&#233;gulateur s&#233;par&#233;. Si vous avez une de ces stations de commande, un c&#226;ble s&#233;rie normal avec
 un connecteur &#224; 9 broches ne fonctionnera pas! Vous aurez besoin de faire un c&#226;ble personnalis&#233;
  qui relie simplement les broches "envoyer donn&#233;es ", "recevoir des donn&#233;es" et "masse"
  Consultez votre manuel NCE pour plus de d&#233;tails.</p>
@@ -193,7 +193,7 @@ qui va &#234;tre utilis&#233;.</li>
 <li> S&#233;lectionnez la version actuelle de l'EPROM dans votre
 centrale de commande, soit "2004 ou plus t&#244;t" ou "2006 ou plus tard".
 <a  href="#eeprom"> Voir ci-dessus</a> pour plus d'informations &#224; ce sujet.</li>
-    
+
 <li> La s&#233;rie de boutons radio &#233;tiquet&#233;s "style graphique" vous permet de
 S&#233;lectionnez la fa&#231;on dont le programme va apparaitre. "Metal" est l'apparence native de Java
 disponible sur tous les types. D'autres choix peuvent varier avec votre ordinateur
@@ -225,10 +225,10 @@ syst&#232;me &#224; partir du menu des pr&#233;f&#233;rences pour un fonctionnem
 <h3>Configuration</h3>
 <ol>
 <li> Pour connecter votre ordinateur &#224; l'aide d'une interface NCE--> USB, vous avez
-besoin en plus de l'adaptateur USB, d'un c&#226;ble USB A &#224; USB B pour connecter 
+besoin en plus de l'adaptateur USB, d'un c&#226;ble USB A &#224; USB B pour connecter
 l'adaptateur &#224; votre ordinateur et un r&#233;gulateur pour connecter l'adaptateur &#224; votre syst&#232;me NCE.
 Le c&#226;ble r&#233;gulateur peut &#234;tre un autre des cordons spirales qui est venu avec un autre r&#233;gulateur
-ou le syst&#232;me PowerCab. 
+ou le syst&#232;me PowerCab.
 <p>
 Il est important que vous utilisiez un c&#226;ble RJ11 mais pas un c&#226;cle crois&#233; comme beaucoup de c&#226;bles t&#233;l&#233;phoniques
 , non pas seulement quatre comme certains c&#226;bles de t&#233;l&#233;phone. Regardez les connecteurs d'extr&#233;mit&#233; pour s'assurer que le
@@ -267,7 +267,7 @@ s&#233;lectionnez le port s&#233;rie appropri&#233; dans la deuxi&#232;me de bo&
 <li> Si l'option de s&#233;lectionnion d'un d&#233;bit en bauds est de 9600, c'est le choix par d&#233;faut pour NCE.</li>
 <li> S&#233;lectionnez le type de syst&#232;me que vous connectez sur l'adaptateur USB, Cabine Power, SB3, ou Power Pro (centrale). La valeur par d&#233;faut est Cab Power, aucun cavaliers install&#233;s.</li>
 <li> Maintenant confirmer que la vitesse de transmission de l'adaptateur est &#233;galement pr&#233;vue pour 9600
-en supprimant le cavalier n°1. L'a mise en place du cavalier n°1 fixe le taux de transmission &#224; 19200.</li>
+en supprimant le cavalier n&#186;1. L'a mise en place du cavalier n&#186;1 fixe le taux de transmission &#224; 19200.</li>
 <li> La s&#233;rie de boutons radio &#233;tiquet&#233;s "style graphique" vous permet de
 s&#233;lectionnez la fa&#231;on dont le programme sera affich&#233;. "Metal" est l'apparence native de Java
 disponible sur tous les types. D'autres choix peuvent varier avec votre ordinateur
@@ -317,7 +317,7 @@ Programme JMRI.</p>
 <a name="troubleShoot"></a>
 <h2>D&#233;pannage</h2>
 
-Lorsque la connexion &#224; votre NCE est correct et que votre syst&#232;me NCE est aliment&#233; 
+Lorsque la connexion &#224; votre NCE est correct et que votre syst&#232;me NCE est aliment&#233;
 vous devriez voir apr&#232;s le d&#233;marrage PanelPro le panneau de commande suivante:
 <p> <img src ="../images/jmriMainPageOk.jpg "
 ALT = "JMRI PanelPro Main Panel"></p>
@@ -341,8 +341,8 @@ liste des solutions potentielles qui pourraient vous aider &#224; r&#233;soudre 
 
 <h3>syt&#232;me Console</h3>
 
-JMRI fournit une connexion information via le syst&#232;me console. Vous pouvez trouver le syst&#232;me console sous l'en-t&#234;te du menu principal "Aide" puis console syst&#232;me »... Ci-Dessousi il y a une image de la fen&#234;tre console quand le programme fonctionne normalement. Notez que la taille de la fen&#234;tre a &#233;t&#233; ajust&#233;e afin que nous
-puissions lire un peu plus facilement. 
+JMRI fournit une connexion information via le syst&#232;me console. Vous pouvez trouver le syst&#232;me console sous l'en-t&#234;te du menu principal "Aide" puis console syst&#232;me &#187;... Ci-Dessousi il y a une image de la fen&#234;tre console quand le programme fonctionne normalement. Notez que la taille de la fen&#234;tre a &#233;t&#233; ajust&#233;e afin que nous
+puissions lire un peu plus facilement.
 <p><IMG SRC="../images/jmriConsoleOk.jpg" ALT="JMRI Console"></p>
 <p> Si vous rencontrez des probl&#232;mes, la fen&#234;tre de la console peut ressembler &#224;
 celle ci-dessous:</p>
@@ -395,9 +395,8 @@ Vous devriez &#234;tre capable de communiquer avec d'autres utilisateurs JMRI qu
 <p>Syst&#232;mes <a href="http://www.ncedcc.com/"> NCE et
 Catalogue Cabs</a></p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 </div>
 </div>
 </body>
 </html>
-

@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -100,7 +100,7 @@
       cela fait, un double " Type de signal d'aiguillage" fera
       &eacute;galement g&eacute;n&eacute;rer des signaux jaunes sur
       ces sorties.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

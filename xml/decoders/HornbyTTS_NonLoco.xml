@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2015, 2018 All rights reserved -->
-<!-- $Id$      -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,8 +12,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<version author="Brian Jackson, brian-jackson1@blueyonder.co.uk" version="2" lastUpdated="20200206"/>
 	<version author="Brian Jackson, brian-jackson1@blueyonder.co.uk" version="1" lastUpdated="20181208"/>	
 	<!--  Version 1 - Based on Hornby TTS decoder profile - adapted for TTS Vent Van -->
+	<!--  Version 2 - Based on Hornby TTS decoder profile - adapted for TTS Vent Van 2 -->
 	<decoder>
         <family name="Hornby TTS Accessory Sound Decoder" mfg="Hornby" comment="">
 		<model model="Hornby TTS Vent Van" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="2">
@@ -175,4 +176,3 @@
         </resets>
     </decoder>
 </decoder-config>
-			

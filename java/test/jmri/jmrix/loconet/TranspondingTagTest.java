@@ -2,10 +2,8 @@ package jmri.jmrix.loconet;
 
 import java.util.Calendar;
 import java.util.Date;
-import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.implementation.AbstractReporter;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -42,13 +40,15 @@ public class TranspondingTagTest {
         TranspondingTag r = new TranspondingTag("ID1234");
         // set the entryexit property
         r.setProperty("entryexit","exits");
-        Assert.assertEquals("TranspondingTag toString ", "1234 exits", r.toString());
+        Assert.assertEquals("TranspondingTag toString ", "ID1234", r.toString());
     }
 
     @Test
     public void testTranspondingTagToReportString() {
         TranspondingTag r = new TranspondingTag("LD1234");
         Assert.assertEquals("TranspondingTag toReportString ", "1234", r.toReportString());
+        r.setProperty("entryexit","exits");
+        Assert.assertEquals("TranspondingTag toReportString ", "1234 exits", r.toReportString());
     }
 
     @Test

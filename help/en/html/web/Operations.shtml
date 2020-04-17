@@ -21,9 +21,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>JMRI: Operations web functions</h1>
@@ -51,7 +51,7 @@
       visited, and the current status of the Train.<br>
       You can click on each location and the status line to display
       additional details about the pickups, set outs, and cars on
-      the train.</p><!--#include virtual="/Footer" -->
+      the train.</p><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

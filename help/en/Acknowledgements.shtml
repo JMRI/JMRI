@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -207,7 +207,7 @@
         <a href="http://jmri.org/k/UDRP/index.shtml">despicable
         behavior</a>, and wrote a scripting example page</li>
 
-        <li><a href="https://github.com/JMRI/JMRI/pulls?utf8=✓&q=author%3Asilverailscolo+">Egbert Broerse</a>,
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Asilverailscolo+">Egbert Broerse</a>,
         <!-- silverailscolo --> who worked on translations, added
         Switchboards, graphic state display in the tables,
         the Output Matrix signal mast and the Rio Grande 1965
@@ -317,8 +317,8 @@
         <li>Bob Coleman added the CTI Acela support and did a huge
         amount of work on the operations code tests.</li>
 
-        <li>Jeff Collell, <!--- auctionsjeff --->
-            who added Light support for OpenLCB.<li>
+        <li>Jeff Collell, <!-- auctionsjeff -->
+            who added Light support for OpenLCB.</li>
 
         <li>Joe Comuzzi <!-- jcomuzzi -->
         added new icon tests and added a definition for  CNJ 1974 signals </li>
@@ -327,7 +327,7 @@
         decoder definitions for MRC decoders and the Kato
         FL11.</li>
 
-        <li><a href="https://github.com/JMRI/JMRI/pulls?utf8=✓&q=author%3Apetecressman+">Peter Cressman</a>
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Apetecressman+">Peter Cressman</a>
         provided a major improvement to Logix,
         improved Sensor Groups, fixed some problems in Routes, and
         provided the Warrant system for scripted running</li>
@@ -391,7 +391,7 @@
 
         <li>Mike Dunston, <!-- atanisoft -->
             who provided 
-            <a href="https://github.com/JMRI/JMRI/pull/4533">several updates</a> 
+            <a href="https://github.com/JMRI/JMRI/pulls?q=author%3Aatanisoft+">several updates</a> 
             for the DCC++ code</li>
 
         <li>Joe Ellis provided the DecoderPro configuration files
@@ -495,10 +495,10 @@
             
         <li>Mark Gurries, who provided loaner equipment and great
             ideas. He's currently working on decoder definitions for
-            DecoderPro </li>
-        
+            DecoderPro
         <a name="H" id="H"></a>
-
+        </li>
+        
         <li>Victoria K. Hall led the legal action that held Matt
         Katzer responsible for his depredations against JMRI</li>
 
@@ -543,7 +543,9 @@
         info</li>
 
         <li>Austin Hendrix, <!-- trainman419 -->
-        who improved the quality of the code and documentation.</li>
+        who improved how the throttle handles speed steps
+        andimproved the quality of the code and documentation.
+        </li>
 
         <li>William Hipple, who registered the JMRI.org and
         DecoderPro.org domains for us</li>
@@ -553,18 +555,17 @@
         </li>
         
         <li>Osvaldo Hojvat provided definitions for several
-                    <a href-"http://www.ldhtrenes.com.ar">LDH</a>
+                    <a href="http://www.ldhtrenes.com.ar">LDH</a>
                     decoders</li>
               
         <li>Hornby Hobbys, who provided a full set of TTS manuals 
         plus information regarding various CVs.</li>
         
         <li>Al Huberty, who organized our first users meeting at
-        the NMRA Toronto convention</li>
-        
+        the NMRA Toronto convention
         <a name="I" id="I"></a>
-
         <a name="J" id="J"></a>
+        </li>
 
         <li>AJ Ireland of Digitrax, who loaned equipment, answered
         questions and made valuable suggestions</li>
@@ -638,7 +639,7 @@
         <li>Matjaz Krajnc, who provided better code and icons for
         the web throttle</li>
         
-        <li>Andrew Kroll, who improved the Operations documentation</a>
+        <li>Andrew Kroll, who improved the Operations documentation</li>
 
         <li>Ross Kudlick, who researched options switches on
         Digitrax command stations</li>
@@ -767,6 +768,10 @@
         <li>Larry Meaney provided decoder ID for the Digitrax
         DN163K0b decoder</li>
 
+        <li>Eckart Meyer, <!-- emey05 -->
+        who updated the aspect controls in the DB HV 1969
+        signals.</li>
+        
         <li>Philip Middlemiss provided a decoder definition Hornby
         R8215 decoder.</li>
 
@@ -933,7 +938,7 @@
         <li>Joe Salemi, who contributed the Atlas 345 decoder
         definition and updated the TCS Tx definition.</li>
 
-        <li><a href="https://github.com/JMRI/JMRI/pulls?utf8=✓&q=author%3Adsand47+">Dave Sand</a>, <!-- dsand47 -->
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Adsand47+">Dave Sand</a>, <!-- dsand47 -->
         who's worked on Layout Editor, Logix, 
         Entry/Exit signaling and other things.</li>
         
@@ -1106,7 +1111,7 @@
 
         <li>George Warner, who changed all the TextFields to editable
         comboboxes (with drop-down menus); added a 2nd turnout
-        circle for slips and added left, right & bottom options
+        circle for slips and added left, right &amp; bottom options
         for the toolbar (and re-laid out same) in the Layout Editor.
         Added support for DMX512 lighting.
         Also wrote all the slip code for the web server.
@@ -1213,7 +1218,7 @@
       "http://jmri.org/community/visuals/codeswarm.shtml">Code Swarm</a>
       page.</p>
             
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -36,20 +36,11 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
     }
 
     public Analytic_AAlgorithm(Point3d sensor1, Point3d sensor2, Point3d sensor3, double vsound) {
-        this(null, vsound);
-        sensors = new Point3d[3];
-        sensors[0] = sensor1;
-        sensors[1] = sensor2;
-        sensors[2] = sensor3;
+        this(new Point3d[]{sensor1, sensor2, sensor3}, vsound);
     }
 
     public Analytic_AAlgorithm(Point3d sensor1, Point3d sensor2, Point3d sensor3, Point3d sensor4, double vsound) {
-        this(null, vsound);
-        sensors = new Point3d[4];
-        sensors[0] = sensor1;
-        sensors[1] = sensor2;
-        sensors[2] = sensor3;
-        sensors[3] = sensor4;
+        this(new Point3d[]{sensor1, sensor2, sensor3, sensor4}, vsound);
     }
 
     double Vs;
@@ -64,7 +55,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
             log.debug("Reading: " + r.toString());
             log.debug("Sensors: " + sensors.length);
             if (sensors.length >= 1 && sensors[0] != null) {
-                log.debug("Sensor[0]: " + sensors[0].x + "," + sensors[0].y + "," + sensors[0].z);
+                log.debug("Sensor[0]: {},{},{}", sensors[0].x, sensors[0].y, sensors[0].z);
             }
         }
 
@@ -97,14 +88,12 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
                 Xs[j][1] = sensors[i].y;
                 Xs[j][2] = sensors[i].z;
                 SV[j] = true;
-                if (log.isDebugEnabled()) {
-                    log.debug("  " + j + "th point at " + Xs[j][0] + "," + Xs[j][1] + "," + Xs[j][2] + " time=" + r.getValue(i) + " is distance " + P[j]);
-                }
+                log.debug("  {}th point at {},{},{} time={} is distance {}", j, Xs[j][0], Xs[j][1], Xs[j][2], r.getValue(i), P[j]);
                 j++;
             }
         }
         nr = j;
-        log.debug("nr is " + nr);
+        log.debug("nr is {}", nr);
 
         double[] result = solve(Xs, SV, P, Xr);
 

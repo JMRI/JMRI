@@ -15,9 +15,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>JMRI LocoIO Programmer Tools (deprecated)</h1>
@@ -265,7 +265,7 @@ To-Do list:
       LocoIO unit, the operation will be retried until it succeeds
       or until you close the window.</p>
     </div><!-- Close #list -->
-    <!--#include virtual="/Footer" -->
+    <!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
   <!-- closes #mBody-->
 </body>

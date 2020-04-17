@@ -402,7 +402,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         InstanceManager.getDefault(EngineModels.class).addPropertyChangeListener(this);
 
         // get notified if return to staging option changes
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
 
         initMinimumSize();
     }
@@ -809,10 +809,10 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             return false;
         }
         try {
-            if (!builtAfterTextField.getText().trim().equals("")) {
+            if (!builtAfterTextField.getText().trim().isEmpty()) {
                 Integer.parseInt(builtAfterTextField.getText().trim());
             }
-            if (!builtBeforeTextField.getText().trim().equals("")) {
+            if (!builtBeforeTextField.getText().trim().isEmpty()) {
                 Integer.parseInt(builtBeforeTextField.getText().trim());
             }
         } catch (NumberFormatException e) {
@@ -971,7 +971,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     public void dispose() {
         InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(EngineModels.class).removePropertyChangeListener(this);
-        Setup.removePropertyChangeListener(this);
+        Setup.getDefault().removePropertyChangeListener(this);
         if (_train != null) {
             _train.removePropertyChangeListener(this);
         }

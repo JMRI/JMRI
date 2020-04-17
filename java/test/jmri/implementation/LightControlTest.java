@@ -12,7 +12,7 @@ import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * Tests for the LightControl class
+ * Tests for the LightControl class.
  *
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2019
@@ -21,22 +21,18 @@ public class LightControlTest {
 
     @Test
     public void testCtor() {
-        LightControl l = new LightControl();
-        Assert.assertNotNull("LightControl not null", l);
+        LightControl lca = new LightControl();
+        Assert.assertNotNull("LightControl not null", lca);
     }
 
     @Test
     public void testCLighttor() {
-        Light o = new AbstractLight("IL1", "test light") {
-        };
-        LightControl l = new LightControl(o);
-        Assert.assertNotNull("LightControl not null", l);
+        Assert.assertNotNull("LightControl not null", lc);
     }
 
     @Test
     public void testLightControlCopyCtor() {
-        LightControl l = new LightControl();
-        LightControl copyOfl = new LightControl(l);
+        LightControl copyOfl = new LightControl(lc);
         Assert.assertNotNull("LightControl Copy not null", copyOfl);
     }
 
@@ -149,34 +145,30 @@ public class LightControlTest {
         Assert.assertTrue(l1.equals(l2));
 
         Assert.assertNotNull("Has Hashcode", l1.hashCode());
-
     }
 
     @Test
     public void testSetGetNames() {
         // used while editing the control with no Sensors / turnouts etc. attached
-        LightControl t = new LightControl();
-        t.setControlSensorName("MySensor");
-        Assert.assertEquals("Same Name", "MySensor", t.getControlSensorName());
+        lc.setControlSensorName("MySensor");
+        Assert.assertEquals("Same Name", "MySensor", lc.getControlSensorName());
 
-        t.setControlTimedOnSensorName("Shirley");
-        Assert.assertEquals("Same Name", "Shirley", t.getControlTimedOnSensorName());
+        lc.setControlTimedOnSensorName("Shirley");
+        Assert.assertEquals("Same Name", "Shirley", lc.getControlTimedOnSensorName());
 
-        t.setControlSensor2Name("DownMain7");
-        Assert.assertEquals("Same Name", "DownMain7", t.getControlSensor2Name());
+        lc.setControlSensor2Name("DownMain7");
+        Assert.assertEquals("Same Name", "DownMain7", lc.getControlSensor2Name());
     }
 
     @Test
     public void testInvalidControlType() {
-        l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
-        lc = new LightControl(l);
         lc.activateLightControl();
         JUnitAppender.assertErrorMessage("Unexpected control type when activating Light: ILL1");
     }
 
     @Test
     public void testActivateNoLight() {
-        lc = new LightControl();
+        lc.setParentLight(null);
         lc.activateLightControl();
         JUnitAppender.assertErrorMessage("No Parent Light when activating LightControl");
     }
@@ -184,12 +176,9 @@ public class LightControlTest {
     @Test
     public void testSingleSensorFollower() throws jmri.JmriException {
 
-        l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
         Sensor s = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S2");
-
         int startListeners = s.getPropertyChangeListeners().length;
 
-        lc = new LightControl(l);
         lc.setControlType(Light.SENSOR_CONTROL);
         lc.setControlSensorName("S2");
         lc.setControlSensorSense(Sensor.ACTIVE);
@@ -230,29 +219,21 @@ public class LightControlTest {
         s.setState(Sensor.OFF);
         Assert.assertEquals("does not change", Light.OFF, l.getState());
 
-        l.deactivateLight();
-        l.dispose();
-
     }
 
     @Test
     public void testNoSensor() {
 
-        l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
-        lc = new LightControl(l);
         lc.setControlType(Light.SENSOR_CONTROL);
 
         l.addLightControl(lc);
         l.activateLight();
         JUnitAppender.assertErrorMessage("Light ILL1 is linked to a Sensor that does not exist:");
-
     }
 
     @Test
     public void testNoTurnout() {
 
-        l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
-        lc = new LightControl(l);
         lc.setControlType(Light.TURNOUT_STATUS_CONTROL);
 
         l.addLightControl(lc);
@@ -262,18 +243,14 @@ public class LightControlTest {
 
         lc.setControlTurnoutState(999);
         JUnitAppender.assertErrorMessageStartsWith("Incorrect Turnout State Set");
-
     }
 
     @Test
     public void testTurnoutFollower() throws jmri.JmriException {
 
-        l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
         Turnout t = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("T1");
-
         int startListeners = t.getPropertyChangeListeners().length;
 
-        lc = new LightControl(l);
         lc.setControlType(Light.TURNOUT_STATUS_CONTROL);
         lc.setControlTurnout("T1");
         lc.setControlTurnoutState(Turnout.THROWN);
@@ -319,9 +296,6 @@ public class LightControlTest {
         t.setState(Turnout.THROWN);
         Assert.assertEquals("does not update when light not enabled", Light.ON, l.getState());
 
-        l.deactivateLight();
-        l.dispose();
-
     }
 
     @Test
@@ -332,15 +306,13 @@ public class LightControlTest {
         cal.set(2018, 1, 12, 2, 00, 00); // 02:00:00
         timebase.setTime(cal.getTime());
 
-        l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
+
 
         Assert.assertEquals("OFF state by default", Light.OFF, l.getState()); // lights are OFF by default
         Assert.assertEquals("enabled by default", true, l.getEnabled()); // lights are enabled by default
 
         int startListeners = timebase.getMinuteChangeListeners().length;
 
-        lc = new LightControl();
-        lc.setParentLight(l);
         lc.setControlType(Light.FAST_CLOCK_CONTROL);
         lc.setFastClockControlSchedule(3, 0, 4, 0); // onHr, OnMin, OffHr, OffMin
         
@@ -377,7 +349,6 @@ public class LightControlTest {
 
         Assert.assertEquals("listener removed", startListeners, timebase.getMinuteChangeListeners().length);
 
-        l.dispose();
     }
 
     @Test
@@ -388,10 +359,8 @@ public class LightControlTest {
         cal.set(2018, 1, 12, 21, 00, 00); // 21:00:00
         timebase.setTime(cal.getTime());
 
-        l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
         Assert.assertEquals("OFF state by default", Light.OFF, l.getState()); // lights are OFF by default
 
-        lc = new LightControl(l);
         lc.setControlType(Light.FAST_CLOCK_CONTROL);
         lc.setFastClockControlSchedule(18, 0, 7, 0); // onHr, OnMin, OffHr, OffMin
 
@@ -422,8 +391,6 @@ public class LightControlTest {
         timebase.setTime(cal.getTime());
         Assert.assertEquals("Light goes off on next update re-enabled", Light.OFF, l.getState());
 
-        l.deactivateLight();
-        l.dispose();
     }
 
     @Test
@@ -434,10 +401,8 @@ public class LightControlTest {
         cal.set(2018, 1, 12, 21, 00, 00); // 21:00:00
         timebase.setTime(cal.getTime());
 
-        l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
         Assert.assertEquals("OFF state by default", Light.OFF, l.getState()); // lights are OFF by default
 
-        lc = new LightControl(l);
         lc.setControlType(Light.FAST_CLOCK_CONTROL);
         lc.setFastClockControlSchedule(3, 0, 4, 0); // onHr, OnMin, OffHr, OffMin
 
@@ -499,8 +464,6 @@ public class LightControlTest {
         Assert.assertEquals("goes OFF", Light.OFF, l.getState());
         Assert.assertEquals("8 Light PropertyChangeEvents for 4 actual changes", 8, _listenerkicks);
 
-        l.deactivateLight();
-        l.dispose();
     }
 
     @Test
@@ -511,10 +474,7 @@ public class LightControlTest {
         cal.set(2018, 1, 12, 02, 59, 00); // 02:59:00
         timebase.setTime(cal.getTime());
 
-        l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
-        Assert.assertEquals("OFF state by default", Light.OFF, l.getState()); // lights are OFF by default
 
-        lc = new LightControl(l);
         lc.setControlType(Light.FAST_CLOCK_CONTROL);
         lc.setFastClockControlSchedule(3, 0, 4, 0); // onHr, OnMin, OffHr, OffMin
 
@@ -575,20 +535,16 @@ public class LightControlTest {
         Assert.assertEquals("still OFF", Light.OFF, l.getState());
         Assert.assertEquals("4 Light PropertyChangeEvents for 2 actual changes", 4, _listenerkicks);
 
-        l.deactivateLight();
-        l.dispose();
     }
 
     @Test
     public void testTimedSensorFollowing() throws jmri.JmriException {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         
-        l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
         Sensor s = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S2");
 
         int startListeners = s.getPropertyChangeListeners().length;
 
-        lc = new LightControl(l);
         lc.setControlType(Light.TIMED_ON_CONTROL);
         lc.setControlTimedOnSensorName("S2");
 
@@ -661,29 +617,21 @@ public class LightControlTest {
         lc.activateLightControl();
         Assert.assertEquals("Light still off", Light.OFF, l.getState());
 
-        l.dispose();
-
     }
 
     @Test
     public void testNoTimedSensor() {
 
-        l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
-        lc = new LightControl(l);
         lc.setControlType(Light.TIMED_ON_CONTROL);
 
         l.addLightControl(lc);
         l.activateLight();
         JUnitAppender.assertErrorMessage("Light ILL1 is linked to a Sensor that does not exist:");
-
     }
 
     @Test
     public void testTwoSensorFollowingNoSensorSet() {
 
-        l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
-
-        lc = new LightControl(l);
         lc.setControlType(Light.TWO_SENSOR_CONTROL);
 
         lc.setControlSensorName("");
@@ -707,17 +655,14 @@ public class LightControlTest {
 
         lc.setControlSensorSense(999);
         JUnitAppender.assertErrorMessage("Incorrect Sensor State Set");
-
     }
 
     @Test
     public void testTwoSensorFollowing() throws jmri.JmriException {
 
-        l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
         Sensor sOne = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S1");
         Sensor sTwo = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S2");
 
-        lc = new LightControl(l);
         lc.setControlType(Light.TWO_SENSOR_CONTROL);
         lc.setControlSensorName("S1");
         lc.setControlSensor2Name("S2");
@@ -775,19 +720,14 @@ public class LightControlTest {
         sOne.setState(Sensor.OFF);
         Assert.assertEquals("does not change", Light.ON, l.getState());
 
-        l.deactivateLight();
-        l.dispose();
-
     }
 
     @Test
     public void testTwoSensorFollowingInactive() throws jmri.JmriException {
 
-        l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
         Sensor sOne = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S1");
         Sensor sTwo = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S2");
 
-        lc = new LightControl(l);
         lc.setControlType(Light.TWO_SENSOR_CONTROL);
         lc.setControlSensorName("S1");
         lc.setControlSensor2Name("S2");
@@ -831,17 +771,11 @@ public class LightControlTest {
         Assert.assertEquals("Light OFF state", Light.OFF, l.getState());
         Assert.assertEquals("4 Light PropertyChangeEvents, 2 actual changes", 4, _listenerkicks);
 
-        l.deactivateLight();
-        l.dispose();
-        
     }
     
     @Test
     public void testUniqueTimes() {
-        l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
-        Assert.assertEquals("OFF state by default", Light.OFF, l.getState()); // lights are OFF by default
 
-        lc = new LightControl(l);
         lc.setControlType(Light.FAST_CLOCK_CONTROL);
         lc.setFastClockControlSchedule(0, 0, 0, 0); // onHr, OnMin, OffHr, OffMin
 
@@ -898,12 +832,21 @@ public class LightControlTest {
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
         _listenerkicks = 0;
+        l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
+        lc = new LightControl(l);
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+        
+        l.deactivateLight();
+        l.dispose();
+        
+        l = null;
+        lc = null;
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LightControlTest.class);
+
 }

@@ -21,9 +21,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>JMRI: Open Scripting Architecture</h1>
@@ -78,7 +78,7 @@
       <p>A <a href=
       "http://www.google.com/search?q=applescript">Google
       search</a> will turn up lots of interesting resources.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

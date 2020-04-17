@@ -28,7 +28,7 @@ import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class HtmlTrainCommon extends TrainCommon {
 
@@ -248,11 +248,9 @@ public class HtmlTrainCommon extends TrainCommon {
         if (attribute.equals(Setup.NUMBER)) {
             return splitString(rs.getNumber());
         } else if (attribute.equals(Setup.ROAD)) {
-            return StringEscapeUtils.escapeHtml4(rs.getRoadName());
+            return StringEscapeUtils.escapeHtml4(rs.getRoadName().split("-")[0]);
         } else if (attribute.equals(Setup.TYPE)) {
-            String[] type = rs.getTypeName().split("-"); // second half of string
-            // can be anything
-            return type[0];
+            return rs.getTypeName().split("-")[0];
         } else if (attribute.equals(Setup.LENGTH)) {
             return rs.getLength();
         } else if (attribute.equals(Setup.COLOR)) {

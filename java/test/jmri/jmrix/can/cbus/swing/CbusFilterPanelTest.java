@@ -1,30 +1,42 @@
 package jmri.jmrix.can.cbus.swing;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import jmri.jmrix.can.cbus.CbusFilterType;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
+ * @author Steve Young Copyright (C) 2019,2020
  */
 public class CbusFilterPanelTest {
 
     @Test
-    public void testCTor() {
-        CbusFilterPanel t = new CbusFilterPanel();
-        Assert.assertNotNull("exists",t);
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    public void testCTorNode() {
+        CbusFilterPanel t = new CbusFilterPanel(null,1);
+        assertThat(t).isNotNull();
     }
 
+    @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    public void testCTorFilter() {
+        CbusFilterPanel t = new CbusFilterPanel(null,CbusFilterType.CFIN);
+        assertThat(t).isNotNull();
+    }
+    
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

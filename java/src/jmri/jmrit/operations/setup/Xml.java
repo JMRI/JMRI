@@ -9,6 +9,10 @@ package jmri.jmrit.operations.setup;
  */
 public class Xml {
 
+    private Xml(){
+        // class of constants
+    }
+
     // Common to operation xml files
     static final String ID = "id"; // NOI18N
     static final String NAME = "name"; // NOI18N
@@ -41,6 +45,9 @@ public class Xml {
     
     static final String ACTIONS = "actions"; // NOI18N
     static final String EXCEL_WAIT_TIME = "excelWaitTime"; // NOI18N
+    
+    static final String PRINT_OPTIONS = "printOptions"; // NOI18N
+    static final String DISABLE_PRINT_IF_CUSTOM = "disablePrintIfCustom"; // NOI18N
 
     // Setup.java
     static final String OPERATIONS = "operations"; // NOI18N

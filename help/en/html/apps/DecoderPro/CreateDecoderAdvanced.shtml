@@ -22,9 +22,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>JMRI: DecoderPro User Guide</h1>
@@ -1275,7 +1275,7 @@ means that it doesn't.
       number is too low. Note that initially, before the values are
       read from the decoder, this display will depend on the
       default value from the file, which might be misleading to the
-      user.</p><!--#include virtual="/Footer" -->
+      user.</p><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

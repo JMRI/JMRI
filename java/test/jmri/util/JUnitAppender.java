@@ -1,5 +1,7 @@
 package jmri.util;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 import org.apache.commons.lang3.StringUtils;
@@ -244,6 +246,10 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             instance().superappend(evt);
         }
         return false;
+    }
+
+    public static void assertNoErrorMessage() {
+        assertThat(list).isEmpty();
     }
 
     /**
@@ -520,6 +526,26 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             return;
         }
         LoggingEvent evt = checkForMessage(msg);
+
+        if (evt == null) {
+            Assert.fail("Looking for message \"" + msg + "\" and didn't find it");
+        }
+    }
+
+    /**
+     * Check that the next queued message was of Warn severity, and has a
+     * specific message. White space is ignored.
+     * <p>
+     * Invokes a JUnit Assert if the message doesn't match.
+     *
+     * @param msg the message to assert exists
+     */
+    public static void assertWarnMessageStartingWith(String msg) {
+        if (list.isEmpty()) {
+            Assert.fail("No message present: " + msg);
+            return;
+        }
+        LoggingEvent evt = checkForMessageStartingWith(msg);
 
         if (evt == null) {
             Assert.fail("Looking for message \"" + msg + "\" and didn't find it");

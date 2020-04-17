@@ -88,6 +88,7 @@ public interface AudioManager extends Manager<Audio> {
      * @param systemName Audio object system name (such as IAS1 or IAB4)
      * @return requested Audio object or null if none exists
      */
+    @Override
     @CheckForNull
     public Audio getBySystemName(@Nonnull String systemName);
 
@@ -98,6 +99,7 @@ public interface AudioManager extends Manager<Audio> {
      * @param userName Audio object user name
      * @return requested Audio object or null if none exists
      */
+    @Override
     @CheckForNull
     public Audio getByUserName(@Nonnull String userName);
 

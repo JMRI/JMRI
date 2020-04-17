@@ -29,7 +29,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -204,7 +204,7 @@
       Table help</a> for details on creating and editing Warrants.</p>
 
       <p>Back to <a href="OBlockTable.shtml">OBlock Table</a> Help.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

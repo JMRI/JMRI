@@ -11,7 +11,6 @@ import java.beans.PropertyChangeEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import java.util.Vector;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -71,7 +70,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
     public ListedTableFrame(String s) {
         super(s);
         if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
-            // We add this to the instanceManager so that other components can add to the table
+            // We add this to the InstanceManager so that other components can add to the table
             jmri.InstanceManager.store(this, jmri.jmrit.beantable.ListedTableFrame.class);
         }
         if (!init) {
@@ -223,7 +222,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             actionList.openNewTableWindow(list.getSelectedIndex());
         });
 
-        fileMenu.add(new jmri.configurexml.SaveMenu());
+        fileMenu.add(new jmri.configurexml.StoreMenu());
 
         JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintTable"));
         fileMenu.add(printItem);

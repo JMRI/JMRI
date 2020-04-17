@@ -570,7 +570,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
                 FileUtil.getProgramPath());
         Properties properties;
         properties = new Properties(System.getProperties());
-        properties.setProperty("python.console.encoding", "UTF-8"); // NOI18N
+        properties.setProperty("python.console.encoding", StandardCharsets.UTF_8.name()); // NOI18N
         properties.setProperty("python.cachedir", FileUtil
                 .getAbsoluteFilename(properties.getProperty("python.cachedir", "settings:jython/cache"))); // NOI18N
         boolean execJython = false;

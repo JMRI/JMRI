@@ -3,11 +3,8 @@ package jmri.jmrit.logix;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Hashtable;
-
+import java.util.*;
+import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import org.slf4j.Logger;
@@ -39,13 +36,14 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (C) 2014
  */
 public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyChangeListener {
-    
+
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private ArrayList<Portal> _nameList = new ArrayList<>();   // stores Portal in loaded order
-    private Hashtable<String, Portal> _portalMap = new Hashtable<>();   // stores portal by current name
-    private Integer _nextIndex = Integer.valueOf(1);
+    private ArrayList<Portal> _nameList = new ArrayList<>();          // stores Portal in loaded order
+    private HashMap<String, Portal> _portalMap = new HashMap<>(); // stores portal by current name
+    private Integer _nextIndex = 1;
 
     public PortalManager() {
+        // no setup currently required
     }
 
     public int getPortalCount() {
@@ -68,10 +66,17 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         return Collections.unmodifiableCollection(_nameList);
     }
 
-    public Portal createNewPortal(String userName) {
+    /*
+     * Create a new Portal with a given user name.
+     *
+     * @return null if a Portal with the same userName already exists,
+     * or if an empty userName was requested
+     */
+    public Portal createNewPortal(@Nonnull String userName) {
+        java.util.Objects.requireNonNull(userName, "Name cannot be null");
         // Check that Portal does not already exist
         Portal portal;
-        if (userName != null && userName.trim().length() > 0) {
+        if (userName.trim().length() > 0) {
             portal = _portalMap.get(userName);
             if (portal != null) {
                 return null;
@@ -84,7 +89,7 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         // save in the maps
         _nameList.add(portal);
         _portalMap.put(userName, portal);
-        _nextIndex = Integer.valueOf(_nextIndex.intValue()+1);
+        _nextIndex = _nextIndex + 1;
         pcs.firePropertyChange("numPortals", null, _nameList.size());
         // listen for name and state changes to forward
         portal.addPropertyChangeListener(this);
@@ -131,7 +136,6 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PortalManager.class);
+    private static final Logger log = LoggerFactory.getLogger(PortalManager.class);
+
 }
-
-

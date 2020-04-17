@@ -5,28 +5,18 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import jmri.util.ColorUtil;
-import jmri.util.MathUtil;
-import jmri.util.QuickPromptUtil;
+import javax.annotation.*;
+import javax.swing.*;
+import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 /**
  * A LayoutShape is a set of LayoutShapePoint used to draw a shape. Each point
@@ -37,8 +27,9 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutShape {
+
     public static final int MAX_LINEWIDTH = 200;
-    
+
     // operational instance variables (not saved between sessions)
     private LayoutEditor layoutEditor = null;
     private String name;
@@ -269,6 +260,19 @@ public class LayoutShape {
         }
     }
 
+    /**
+     * get point
+     *
+     * @param idx the index of the point to add
+     */
+    public Point2D getPoint(int idx) {
+        Point2D result = MathUtil.zeroPoint2D;
+        if (idx < shapePoints.size()) {
+            result = shapePoints.get(idx).getPoint();
+        }
+        return result;
+    }
+
     // should only be used by xml save code
     public ArrayList<LayoutShapePoint> getPoints() {
         return shapePoints;
@@ -289,7 +293,7 @@ public class LayoutShape {
      * @return the maximum number of points
      */
     public int getMaxNumberPoints() {
-        return LayoutTrack.SHAPE_POINT_OFFSET_MAX - LayoutTrack.SHAPE_POINT_OFFSET_MIN + 1;
+        return LayoutEditor.HitPointType.SHAPE_POINT_9.getXmlValue() - LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue() + 1;
     }
 
     /**
@@ -309,27 +313,27 @@ public class LayoutShape {
     /**
      * find the hit (location) type for a point
      *
-     * @param hitPoint       the point
-     * @param useRectangles  whether to use (larger) rectangles or (smaller)
+     * @param hitPoint      the point
+     * @param useRectangles whether to use (larger) rectangles or (smaller)
      *                      circles for hit testing
      * @return the hit point type for the point (or NONE)
      */
-    protected int findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles) {
-        int result = LayoutTrack.NONE;  // assume point not on shape
+    protected LayoutEditor.HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles) {
+        LayoutEditor.HitPointType result = LayoutEditor.HitPointType.NONE;  // assume point not on shape
 
         if (useRectangles) {
             // rather than create rectangles for all the points below and
             // see if the passed in point is in one of those rectangles
             // we can create a rectangle for the passed in point and then
             // test if any of the points below are in that rectangle instead.
-            Rectangle2D r = layoutEditor.trackEditControlRectAt(hitPoint);
+            Rectangle2D r = layoutEditor.layoutEditorControlRectAt(hitPoint);
 
             if (r.contains(getCoordsCenter())) {
-                result = LayoutTrack.SHAPE_CENTER;
+                result = LayoutEditor.HitPointType.SHAPE_CENTER;
             }
             for (int idx = 0; idx < shapePoints.size(); idx++) {
                 if (r.contains(shapePoints.get(idx).getPoint())) {
-                    result = LayoutTrack.SHAPE_POINT_OFFSET_MIN + idx;
+                    result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue() + idx);
                     break;
                 }
             }
@@ -339,21 +343,21 @@ public class LayoutShape {
                 distance = MathUtil.distance(shapePoints.get(idx).getPoint(), hitPoint);
                 if (distance < minDistance) {
                     minDistance = distance;
-                    result = LayoutTrack.SHAPE_POINT_OFFSET_MIN + idx;
+                    result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue() + idx);
                 }
             }
         }
         return result;
     }   // findHitPointType
 
-    public static boolean isShapeHitPointType(int t) {
-        return ((t == LayoutTrack.SHAPE_CENTER)
+    public static boolean isShapeHitPointType(LayoutEditor.HitPointType t) {
+        return ((t == LayoutEditor.HitPointType.SHAPE_CENTER)
                 || isShapePointOffsetHitPointType(t));
     }
 
-    public static boolean isShapePointOffsetHitPointType(int t) {
-        return ((t >= LayoutTrack.SHAPE_POINT_OFFSET_MIN)
-                && (t <= LayoutTrack.SHAPE_POINT_OFFSET_MAX));
+    public static boolean isShapePointOffsetHitPointType(LayoutEditor.HitPointType t) {
+        return ((t.compareTo(LayoutEditor.HitPointType.SHAPE_POINT_0) >= 0)
+                && (t.compareTo(LayoutEditor.HitPointType.SHAPE_POINT_9) <= 0));
     }
 
     /**
@@ -370,7 +374,7 @@ public class LayoutShape {
     }
 
     /*
-     * Modify coordinates methods
+    * Modify coordinates methods
      */
     /**
      * set center coordinates
@@ -388,13 +392,12 @@ public class LayoutShape {
     }
 
     /**
-     * scale this LayoutTrack's coordinates by the x and y factors
+     * scale this shapes coordinates by the x and y factors
      *
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
-//    @Override
-    public void scaleCoords(float xFactor, float yFactor) {
+    public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         shapePoints.forEach((lsp) -> {
             lsp.setPoint(MathUtil.multiply(lsp.getPoint(), factor));
@@ -402,30 +405,41 @@ public class LayoutShape {
     }
 
     /**
-     * translate this LayoutTrack's coordinates by the x and y factors
+     * translate this shapes coordinates by the x and y factors
      *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
-//    @Override
-    public void translateCoords(float xFactor, float yFactor) {
+    public void translateCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         shapePoints.forEach((lsp) -> {
             lsp.setPoint(MathUtil.add(factor, lsp.getPoint()));
         });
     }
 
+    /**
+     * rotate this LayoutTrack's coordinates by angleDEG's
+     *
+     * @param angleDEG the amount to rotate in degrees
+     */
+    public void rotateCoords(double angleDEG) {
+        Point2D center = getCoordsCenter();
+        shapePoints.forEach((lsp) -> {
+            lsp.setPoint(MathUtil.rotateDEG(lsp.getPoint(), center, angleDEG));
+        });
+    }
+
     private JPopupMenu popup = null;
 
     @Nonnull
-    protected JPopupMenu showShapePopUp(@CheckForNull MouseEvent mouseEvent, int hitPointType) {
+    protected JPopupMenu showShapePopUp(@CheckForNull MouseEvent mouseEvent, LayoutEditor.HitPointType hitPointType) {
         if (popup != null) {
             popup.removeAll();
         } else {
             popup = new JPopupMenu();
         }
         if (layoutEditor.isEditable()) {
-            int pointIndex = hitPointType - LayoutTrack.SHAPE_POINT_OFFSET_MIN;
+            int pointIndex = hitPointType.getXmlValue() - LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue();
 
             //JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutShape")) + getName());
             JMenuItem jmi = popup.add(Bundle.getMessage("ShapeNameMenuItemTitle", getName()));
@@ -447,7 +461,7 @@ public class LayoutShape {
 //                jmi = popup.add("hitPointType: " + hitPointType);
 //                jmi.setEnabled(false);
 //            }
-            // add "Change Shape Type to..." menu
+// add "Change Shape Type to..." menu
             JMenu shapeTypeMenu = new JMenu(Bundle.getMessage("ChangeShapeTypeFromTo", getType().getName()));
             if (getType() != LayoutShapeType.eOpen) {
                 jmi = shapeTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapeTypeOpen")) {
@@ -481,8 +495,8 @@ public class LayoutShape {
 
             popup.add(shapeTypeMenu);
 
-            // Add "Change Shape Type from {0} to..." menu
-            if (hitPointType == LayoutTrack.SHAPE_CENTER) {
+// Add "Change Shape Type from {0} to..." menu
+            if (hitPointType == LayoutEditor.HitPointType.SHAPE_CENTER) {
                 JMenu shapePointTypeMenu = new JMenu(Bundle.getMessage("ChangeAllShapePointTypesTo"));
                 jmi = shapePointTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapePointTypeStraight")) {
                     @Override
@@ -523,14 +537,14 @@ public class LayoutShape {
                                 break;
                             }
                             default:
-                              log.error("unexpected enum member!");
+                                log.error("unexpected enum member!");
                         }
                         layoutEditor.repaint();
                     });
                 }
             }
 
-            // Add "Set Level: x" menu
+// Add "Set Level: x" menu
             jmi = popup.add(new JMenuItem(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ShapeLevelMenuItemTitle")) + level));
             jmi.setToolTipText(Bundle.getMessage("ShapeLevelMenuItemToolTip"));
@@ -570,7 +584,7 @@ public class LayoutShape {
                 jmi.setBackground(ColorUtil.contrast(fillColor));
             }
 
-            // add "Set Line Width: x" menu
+// add "Set Line Width: x" menu
             jmi = popup.add(new JMenuItem(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ShapeLineWidthMenuItemTitle")) + lineWidth));
             jmi.setToolTipText(Bundle.getMessage("ShapeLineWidthMenuItemToolTip"));
@@ -585,7 +599,7 @@ public class LayoutShape {
             });
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
-            if (hitPointType == LayoutTrack.SHAPE_CENTER) {
+            if (hitPointType == LayoutEditor.HitPointType.SHAPE_CENTER) {
                 jmi = popup.add(new AbstractAction(Bundle.getMessage("ShapeDuplicateMenuItemTitle")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -709,9 +723,9 @@ public class LayoutShape {
                     path.quadTo(p.getX(), p.getY(), midR.getX(), midR.getY());
                     break;
                 }
-                
+
                 default:
-                  log.error("unexpected enum member!");
+                    log.error("unexpected enum member!");
             }
         }   // for (idx = 0; idx < cnt; idx++)
 
@@ -726,13 +740,13 @@ public class LayoutShape {
     }   // draw
 
     protected void drawEditControls(Graphics2D g2) {
-        Color backgroundColor = layoutEditor.getBackgroundColor();
+        Color backgroundColor = layoutEditor.getBackground();
         Color controlsColor = ColorUtil.contrast(backgroundColor);
         controlsColor = ColorUtil.setAlpha(controlsColor, 0.5);
         g2.setColor(controlsColor);
 
         shapePoints.forEach((slp) -> {
-            g2.draw(layoutEditor.trackEditControlRectAt(slp.getPoint()));
+            g2.draw(layoutEditor.layoutEditorControlRectAt(slp.getPoint()));
         });
         if (shapePoints.size() > 0) {
             Point2D end0 = shapePoints.get(0).getPoint();
@@ -748,8 +762,22 @@ public class LayoutShape {
             }
         }
 
-        g2.draw(layoutEditor.trackEditControlCircleAt(getCoordsCenter()));
+        g2.draw(trackEditControlCircleAt(getCoordsCenter()));
     }   // drawEditControls
+
+    //these are convenience methods to return circles used to draw onscreen
+    //
+    //compute the control point rect at inPoint; use the turnout circle size
+    public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
+        return trackControlCircleAt(inPoint);
+    }
+
+    //compute the turnout circle at inPoint (used for drawing)
+    public Ellipse2D trackControlCircleAt(@Nonnull Point2D inPoint) {
+        return new Ellipse2D.Double(inPoint.getX() - layoutEditor.circleRadius,
+                inPoint.getY() - layoutEditor.circleRadius,
+                layoutEditor.circleDiameter, layoutEditor.circleDiameter);
+    }
 
     /**
      * These are the points that make up the outline of the shape. Each point

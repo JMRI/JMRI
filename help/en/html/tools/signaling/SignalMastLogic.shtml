@@ -23,9 +23,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>JMRI: Signal Mast Logic</h1>
@@ -283,7 +283,7 @@
           destination Signal Mast, so if you have a valid route to an
           End Bumper/Buffer Stop/Dark Area, then there is no specific
           destination Signal Mast. In this situation you would create
-          a "dummy" Signal Mast of type Virtual in de Signal Mast
+          a "dummy" Signal Mast of type Virtual in the Signal Mast
           Table to act as your destination Signal Mast. It doesn't
           have to represent a signal on the layout or have Signal
           Heads associated. All that this Virtual Signal Mast has to
@@ -291,7 +291,7 @@
 
         <p>Back to the <a href="index.shtml#tools">Signaling main
         help page</a>.</p>
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
   </div>

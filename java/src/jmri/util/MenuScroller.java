@@ -558,9 +558,11 @@ public class MenuScroller
             }
             menu.setPreferredSize(new Dimension(maxPreferredWidth, menu.getPreferredSize().height));
 
-            JComponent parent = (JComponent) upItem.getParent();
-            parent.revalidate();
-            parent.repaint();
+            java.awt.Container cont = upItem.getParent();
+            if (cont instanceof JComponent) {
+                ((JComponent) cont).revalidate();
+                ((JComponent) cont).repaint();
+            }
         }
     }
 

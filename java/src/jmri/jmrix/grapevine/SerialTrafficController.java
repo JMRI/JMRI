@@ -6,7 +6,6 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRNodeTrafficController;
 import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.grapevine.SerialNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

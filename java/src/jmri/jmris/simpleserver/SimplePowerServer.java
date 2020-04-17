@@ -62,9 +62,7 @@ public class SimplePowerServer extends AbstractPowerServer {
               if(v.getOutputString() != null ){
                  sendStatus(v.getOutputString());
               } 
-           } catch(ParseException pe){
-              sendErrorStatus();
-           } catch(TokenMgrError pe){
+           } catch(ParseException | TokenMgrError pe){
               sendErrorStatus();
            }
         } catch(IOException ioe) {

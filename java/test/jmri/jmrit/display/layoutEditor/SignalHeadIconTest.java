@@ -2,7 +2,6 @@ package jmri.jmrit.display.layoutEditor;
 
 import jmri.jmrit.display.SignalHeadIcon;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
 import org.junit.*;
 
 import java.awt.*;
@@ -36,6 +35,7 @@ public class SignalHeadIconTest extends jmri.jmrit.display.SignalHeadIconTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initInternalSignalHeadManager();
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new LayoutEditor();
             shi = new SignalHeadIcon(editor);

@@ -1,6 +1,11 @@
 package jmri.jmrit.operations.automation.actions;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.automation.AutomationItem;
@@ -8,9 +13,6 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -64,6 +66,9 @@ public class BuildTrainActionTest extends OperationsTestCase {
         //try again
         action.doAction();
         Assert.assertFalse(automationItem.isActionSuccessful());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
     
     @Test
@@ -122,6 +127,9 @@ public class BuildTrainActionTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(title, Bundle.getMessage("Halt"));
         
         Assert.assertFalse(automationItem.isActionSuccessful());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(BuildTrainActionTest.class);

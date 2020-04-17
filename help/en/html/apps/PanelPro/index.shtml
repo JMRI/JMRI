@@ -22,9 +22,9 @@
 </head>
 
 <body>
-    <!--#include virtual="/Header" -->
+    <!--#include virtual="/Header.shtml" -->
     <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>JMRI: PanelPro</h1>
@@ -328,7 +328,7 @@
             system at the same time. See the page on <a href=
             "../../doc/Technical/Names.shtml">Names &amp; Naming</a> for
             more information.</p>
-            <!--#include virtual="/Footer" -->
+            <!--#include virtual="/Footer.shtml" -->
         </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
 </body>

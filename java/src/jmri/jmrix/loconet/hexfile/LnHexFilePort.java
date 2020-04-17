@@ -8,7 +8,6 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.util.Arrays;
 
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LnPortController;
@@ -119,7 +118,7 @@ public class LnHexFilePort extends LnPortController implements Runnable {
                 String s;
                 while ((s = currFile.readLine()) != null) {
                     // this loop reads one line per turn
-                    // ErrLog.msg(ErrLog.debugging,"LnHexFilePort","run","string=<"+s+">");
+                    // ErrLog.msg(ErrLog.debugging, "LnHexFilePort", "run", "string=<" + s + ">");
                     int len = s.length();
                     for (int i = 0; i < len; i += 3) {
                         // parse as hex into integer, then convert to byte

@@ -7,9 +7,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +20,8 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,22 +34,8 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
 
     File _fileLogger;
     private boolean _trainLog = false; // when true logging train movements
-    static final String DEL = ","; // delimiter
-    static final String ESC = "\""; // escape // NOI18N
 
     public TrainLogger() {
-    }
-
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized TrainLogger instance() {
-        return InstanceManager.getDefault(TrainLogger.class);
     }
 
     public void enableTrainLogging(boolean enable) {
@@ -92,76 +81,45 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
         // create train file if needed
         createFile();
         // Note that train status can contain a comma
-        String line = ESC +
-                train.getName() +
-                ESC +
-                DEL +
-                ESC +
-                train.getDescription() +
-                ESC +
-                DEL +
-                ESC +
-                train.getCurrentLocationName() +
-                ESC +
-                DEL +
-                ESC +
-                train.getNextLocationName() +
-                ESC +
-                DEL +
-                ESC +
-                train.getStatus() +
-                ESC +
-                DEL +
-                ESC +
-                train.getBuildFailedMessage() +
-                ESC +
-                DEL +
-                getTime();
+        List<Object> line = Arrays.asList(new Object[]{train.getName(),
+                train.getDescription(),
+                train.getCurrentLocationName(),
+                train.getNextLocationName(),
+                train.getStatus(),
+                train.getBuildFailedMessage(),
+                getTime()});
         fileOut(line);
     }
 
-    private String getHeader() {
-        String header = Bundle.getMessage("Name") +
-                DEL +
-                Bundle.getMessage("Description") +
-                DEL +
-                Bundle.getMessage("Current") +
-                DEL +
-                Bundle.getMessage("NextLocation") +
-                DEL +
-                Bundle.getMessage("Status") +
-                DEL +
-                Bundle.getMessage("BuildMessages") +
-                DEL +
-                Bundle.getMessage("DateAndTime");
-        return header;
+    private List<Object> getHeader() {
+        return Arrays.asList(new Object[]{Bundle.getMessage("Name"),
+            Bundle.getMessage("Description"),
+            Bundle.getMessage("Current"),
+            Bundle.getMessage("NextLocation"),
+            Bundle.getMessage("Status"),
+            Bundle.getMessage("BuildMessages"),
+            Bundle.getMessage("DateAndTime")});
     }
 
     /*
      * Appends one line to file.
      */
-    private void fileOut(String line) {
+    private void fileOut(List<Object> line) {
         if (_fileLogger == null) {
             log.error("Log file doesn't exist");
             return;
         }
 
-        PrintWriter fileOut = null;
-
-        try {
-            // FileOutputStream is set to append
-            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(_fileLogger, true), "UTF-8")), true); // NOI18N
+        // FileOutputStream is set to append
+        try (CSVPrinter fileOut = new CSVPrinter(new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(_fileLogger, true), StandardCharsets.UTF_8)), CSVFormat.DEFAULT)) {
+            log.debug("Log: " + line);
+            fileOut.printRecord(line);
+            fileOut.flush();
+            fileOut.close();
         } catch (IOException e) {
             log.error("Exception while opening log file: " + e.getLocalizedMessage());
-            return;
         }
-
-        log.debug("Log: " + line);
-
-        fileOut.println(line);
-        fileOut.flush();
-        fileOut.close();
     }
 
     private void addTrainListeners() {
@@ -169,9 +127,7 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
             log.debug("Train Logger adding train listerners");
             _trainLog = true;
             List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsByIdList();
-            for (Train train : trains) {
-                train.addPropertyChangeListener(this);
-            }
+            trains.forEach(train -> train.addPropertyChangeListener(this));
             // listen for new trains being added
             InstanceManager.getDefault(TrainManager.class).addPropertyChangeListener(this);
         }
@@ -181,9 +137,7 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
         log.debug("Train Logger removing train listerners");
         if (_trainLog) {
             List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsByIdList();
-            for (Train train : trains) {
-                train.removePropertyChangeListener(this);
-            }
+            trains.forEach(train -> train.removePropertyChangeListener(this));
             InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(this);
         }
         _trainLog = false;
@@ -195,8 +149,8 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
             if (Control.SHOW_PROPERTY) {
                 log.debug("Train logger sees property change for train " + e.getSource());
             }
@@ -215,8 +169,8 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
         return loggingDirectory + File.separator + getFileName();
     }
 
-    private String operationsDirectory =
-            OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName();
+    private String operationsDirectory
+            = OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName();
     private String loggingDirectory = operationsDirectory + File.separator + "logger"; // NOI18N
 
     public String getDirectoryName() {

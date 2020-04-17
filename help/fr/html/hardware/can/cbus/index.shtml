@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
 	<!--#include virtual="Sidebar" -->
 	<div id="mainContent">
@@ -162,7 +162,7 @@ sauf que  la lettre type est "L"au lieu de "T", par exemple, <code>ML-18;+21</co
 	<li><a href="../index.shtml">Page d'AidePrincipale du support CAN</a> includant des liens pour obtenir plus d'outils.</li>
 	</ul>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

@@ -262,6 +262,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.add(new SetupExcelProgramFrameAction(Bundle.getMessage("MenuItemSetupExcelProgram")));
         toolMenu.add(new ExportTrainRosterAction());
         toolMenu.add(new ExportTimetableAction());
+        toolMenu.add(new ExportTrainLineupsAction());
         toolMenu.addSeparator();
         toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPrint"), false, this));
         toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPreview"), true, this));
@@ -281,7 +282,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         InstanceManager.getDefault(TrainScheduleManager.class).addPropertyChangeListener(this);
         // listen for changes in the number of trains
         trainManager.addPropertyChangeListener(this);
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
         // listen for location switch list changes
         addPropertyChangeLocations();
 
@@ -541,7 +542,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         trainManager.runShutDownScripts();
         trainManager.removePropertyChangeListener(this);
         InstanceManager.getDefault(TrainScheduleManager.class).removePropertyChangeListener(this);
-        Setup.removePropertyChangeListener(this);
+        Setup.getDefault().removePropertyChangeListener(this);
         removePropertyChangeLocations();
         setModifiedFlag(false);
         InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {

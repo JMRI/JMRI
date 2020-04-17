@@ -11,15 +11,12 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
@@ -34,13 +31,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineSetFrame;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainManifestText;
-import jmri.jmrit.operations.trains.TrainSwitchListText;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Common elements for the Conductor and Yardmaster Frames.
@@ -276,7 +267,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 MessageFormat.format(Bundle.getMessage("WantAddCarsToTrain?"), new Object[]{_train.getName()}),
                 Bundle.getMessage("AddCarsToTrain?"),
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            new CarsTableFrame(false, textLocationName.getText(), null);
+            new CarsTableFrame(false, _train.getCurrentLocation().getName(), null);
         }
     }
 

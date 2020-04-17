@@ -12,8 +12,8 @@ import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.*;
-import org.junit.rules.Timeout;
 
+import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
@@ -83,8 +83,7 @@ public class NXFrameTest {
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
 
-        NXFrame nxFrame = new NXFrame();
-        WarrantTableAction.setNXFrame(nxFrame);
+        NXFrame nxFrame = WarrantTableAction.getDefault().makeNXFrame();
         nxFrame.setVisible(true);
 
         JFrameOperator nfo = new JFrameOperator(nxFrame);
@@ -152,8 +151,7 @@ public class NXFrameTest {
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         OBlock block = _OBlockMgr.getBySystemName("OB0");
 
-        NXFrame nxFrame = new NXFrame();
-        WarrantTableAction.setNXFrame(nxFrame);
+        NXFrame nxFrame = WarrantTableAction.getDefault().makeNXFrame();
         nxFrame.setVisible(true);
 
         JFrameOperator nfo = new JFrameOperator(nxFrame);
@@ -343,15 +341,20 @@ public class NXFrameTest {
         Assert.assertEquals("Train in block OB3", block.getSensor().getDisplayName(), runtimes(route1,_OBlockMgr).getDisplayName());
 
         warrant.controlRunTrain(Warrant.RAMP_HALT); // user interrupts script
+        new QueueTool().waitEmpty(10);
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
             return (m.startsWith("Halted in block"));
         }, "Train Halted");
 
         warrant.controlRunTrain(Warrant.RESUME);
+        new QueueTool().waitEmpty(10);
+
+
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            return m.startsWith("Overdue for arrival at block");
+            return m.startsWith("Running in Block OB3") ||
+                    m.startsWith("Overdue for arrival at block");
         }, "Train Resumed");
 
         String[] route2 = {"OB3", "OB7", "OB5"};
@@ -452,14 +455,15 @@ public class NXFrameTest {
         JUnitUtil.initOBlockManager();
         JUnitUtil.initLogixManager();
         JUnitUtil.initConditionalManager();
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         JUnitUtil.initWarrantManager();
     }
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         InstanceManager.getDefault(WarrantManager.class).dispose();
         JUnitUtil.resetWindows(false,false);
-        jmri.util.JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

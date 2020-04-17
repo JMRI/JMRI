@@ -202,7 +202,7 @@ public class TrackerTableActionTest {
     public void tearDown() {
         _OBlockMgr.dispose();
         _OBlockMgr = null;
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

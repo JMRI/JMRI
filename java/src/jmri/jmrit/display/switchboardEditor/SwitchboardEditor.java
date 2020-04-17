@@ -44,6 +44,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.NamedBeanUsageReport;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
@@ -333,17 +334,6 @@ public class SwitchboardEditor extends Editor {
         setupEditorPane(); // re-layout all the toolbar items
         updatePressed();   // refresh default Switchboard, updates all buttons
         pack();
-
-        // TODO choose your own icons
-//        class makeCatalog extends SwingWorker<CatalogPanel, Object> {
-//
-//            @Override
-//            public CatalogPanel doInBackground() {
-//                return CatalogPanel.makeDefaultCatalog();
-//            }
-//        }
-//        (new makeCatalog()).execute();
-//        log.debug("Init SwingWorker launched");
     }
 
     /**
@@ -1382,6 +1372,19 @@ public class SwitchboardEditor extends Editor {
 
     protected ArrayList<Positionable> getSelectionGroup() {
         return _selectionGroup;
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            getSwitches().forEach((beanSwitch) -> {
+                if (bean.equals(beanSwitch.getNamedBean())) {
+                    report.add(new NamedBeanUsageReport("SwitchBoard", getName()));
+                }
+            });
+        }
+        return report;
     }
 
     private final static Logger log = LoggerFactory.getLogger(SwitchboardEditor.class);

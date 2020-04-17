@@ -1,6 +1,8 @@
 package jmri;
 
-import java.util.Vector;
+import java.beans.PropertyChangeListener;
+import java.util.List;
+import jmri.beans.PropertyChangeProvider;
 
 /**
  * A Throttle object can be manipulated to change the speed, direction and
@@ -14,20 +16,20 @@ import java.util.Vector;
  * <p>
  * On DCC systems, Throttles are often actually {@link DccThrottle} objects,
  * which have some additional DCC-specific capabilities.
- * <hr>
- * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * {@link java.beans.PropertyChangeEvent}s that can be listened to include
+ * <ul>
+ * <li>SpeedSetting, SpeedSteps, isForward
+ * <li>F0, F1, F2 .. F27, F28
+ * <li>F0Momentary, F1Momentary, F2Momentary .. F28Momentary
+ * <li>ThrottleAssigned, throttleRemoved, throttleConnected,
+ * throttleNotFoundInRemoval
+ * <li>DispatchEnabled, ReleaseEnabled
+ * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
-public interface Throttle {
+public interface Throttle extends PropertyChangeProvider {
 
     /**
      * Properties strings sent to property change listeners
@@ -36,7 +38,7 @@ public interface Throttle {
     public static final String SPEEDSTEPMODE = "SpeedStepsMode"; // speed steps NOI18N
     public static final String SPEEDSETTING = "SpeedSetting"; // speed setting NOI18N
     public static final String ISFORWARD = "IsForward"; // direction setting NOI18N
-    public static final String SPEEDINCREMENT= "SpeedIncrement"; // direction setting NOI18N
+    public static final String SPEEDINCREMENT = "SpeedIncrement"; // direction setting NOI18N
 
     /**
      * Constants to represent the functions F0 through F28.
@@ -70,6 +72,12 @@ public interface Throttle {
     public static final String F26 = "F26"; // NOI18N
     public static final String F27 = "F27"; // NOI18N
     public static final String F28 = "F28"; // NOI18N
+
+    public static final String[] FUNCTION_STRING_ARRAY = new String[]{
+        F0, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14,
+        F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28
+    };
+
     /**
      * Constants to represent the functions F0 through F28.
      */
@@ -119,20 +127,22 @@ public interface Throttle {
     public void setSpeedSetting(float speed);
 
     /**
-     * Set the speed - on systems which normally suppress the sending of a message
-     * if the new speed won't (appear to JMRI to) make any difference, the two extra
-     * options allow the calling method to insist the message is sent under some
-     * circumstances.
+     * Set the speed - on systems which normally suppress the sending of a
+     * message if the new speed won't (appear to JMRI to) make any difference,
+     * the two extra options allow the calling method to insist the message is
+     * sent under some circumstances.
      *
-     * @param speed a number from 0.0 to 1.0
-     * @param allowDuplicates if true, don't suppress messages that should have no effect
-     * @param allowDuplicatesOnStop if true, and the new speed is idle or estop, don't suppress messages
+     * @param speed                 a number from 0.0 to 1.0
+     * @param allowDuplicates       if true, don't suppress messages that should
+     *                              have no effect
+     * @param allowDuplicatesOnStop if true, and the new speed is idle or estop,
+     *                              don't suppress messages
      */
     public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop);
 
     /**
-     * Set the speed, and on systems which normally suppress the sending of a message make sure
-     * the message gets sent.
+     * Set the speed, and on systems which normally suppress the sending of a
+     * message make sure the message gets sent.
      *
      * @param speed a number from 0.0 to 1.0
      */
@@ -388,36 +398,22 @@ public interface Throttle {
      * Locomotive address. The exact format is defined by the specific
      * implementation, as subclasses of LocoAddress will contain different
      * information.
-     *
+     * <p>
      * This is an unbound property.
      *
      * @return The locomotive address
      */
     public LocoAddress getLocoAddress();
 
-    // register for notification if any of the properties change
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener p);
-
     /**
-     * Add a PropertyChangeListener to the Throttle
-     * <p>
-     * Property Change Events Include
-     * <P>
-     * SpeedSetting, SpeedSteps, isForward
-     * <p>
-     * F0, F1, F2 .. F27, F28
-     * <p>
-     * F0Momentary, F1Momentary, F2Momentary .. F28Momentary
-     * <p>
-     * ThrottleAssigned, throttleRemoved, throttleConnected, throttleNotFoundInRemoval
-     * <P>
-     * DispatchEnabled, ReleaseEnabled
-     *
-     * @param p the PropertyChangeListener to add
+     * Get a list of property change listeners.
+     * 
+     * @return a list of listeners
+     * @deprecated since 4.19.5; use {@link #getPropertyChangeListeners()} or
+     * {@link #getPropertyChangeListeners(java.lang.String)} instead
      */
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener p);
-
-    public Vector<java.beans.PropertyChangeListener> getListeners();
+    @Deprecated
+    public List<PropertyChangeListener> getListeners();
 
     /**
      * Not for general use, see {@link #release(ThrottleListener l)} and
@@ -445,7 +441,8 @@ public interface Throttle {
      * <p>
      * Normally, release ends with a call to dispose.
      *
-     * @param l {@link ThrottleListener} to release. May be null if no {@link ThrottleListener} is currently held.
+     * @param l {@link ThrottleListener} to release. May be null if no
+     *          {@link ThrottleListener} is currently held.
      */
     public void release(ThrottleListener l);
 
@@ -453,7 +450,8 @@ public interface Throttle {
      * Finished with this Throttle, tell the layout that the locomotive is
      * available for reuse/reallocation by somebody else. If possible, tell the
      * layout that this locomotive has been dispatched to another user. Not all
-     * layouts will implement this, in which case it is synomous with release();
+     * layouts will implement this, in which case it is synonymous with
+     * {@link #release(jmri.ThrottleListener)}.
      * <p>
      * After this, further usage of this Throttle object will result in a
      * JmriException.
@@ -467,7 +465,7 @@ public interface Throttle {
     public void setRosterEntry(BasicRosterEntry re);
 
     public BasicRosterEntry getRosterEntry();
-    
+
     /**
      * Notify listeners that a Throttle has Release enabled or disabled.
      * <p>
@@ -475,8 +473,8 @@ public interface Throttle {
      *
      * @param newVal true if Release enabled, else false
      */
-    public void notifyThrottleReleaseEnabled( boolean newVal );
-    
+    public void notifyThrottleReleaseEnabled(boolean newVal);
+
     /**
      * Notify listeners that a Throttle has Dispatch enabled or disabled.
      * <p>
@@ -484,5 +482,5 @@ public interface Throttle {
      *
      * @param newVal true if Dispatch enabled, else false
      */
-    public void notifyThrottleDispatchEnabled( boolean newVal );
+    public void notifyThrottleDispatchEnabled(boolean newVal);
 }

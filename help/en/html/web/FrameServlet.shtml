@@ -21,9 +21,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>JMRI: Frame Servlet</h1>The JMRI Frame Servlet provides
@@ -94,7 +94,7 @@
       "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/web/servlet/frameimage/JmriJFrameServlet.properties">
       properties file</a> can be used to configure the HTML that's
       returned when a frame is requested.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

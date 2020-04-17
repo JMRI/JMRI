@@ -12,8 +12,6 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Route Add Edit">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -24,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -71,7 +69,7 @@
         DIRECT, DELAYED, ONE SENSOR, TWO SENSOR, and MONITORING. A turnout
         using DIRECT mode doesn't have feedback from the layout.
         When a close or throw command is executed the JMRI program
-        assumes that the command always completes immediately. 
+        assumes that the command always completes immediately.
         DELAYED simulates the turnout operation taking a few seconds
         to complete.
         ONE SENSOR uses
@@ -117,7 +115,7 @@
       <p>To help you select a set of turnouts to lock, a route can
       be locked. All turnouts that are being monitored by the JMRI
       program and are included in the route will be locked.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -22,7 +22,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -155,7 +155,7 @@ options disponibles, et n'oublions pas ... de faire circuler une locomotive.</p>
  </tbody>
 </table>
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

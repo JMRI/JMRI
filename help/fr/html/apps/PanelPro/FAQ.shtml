@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
   <!--#include virtual="Sidebar" -->
 
@@ -316,7 +316,7 @@
       plus r&eacute;cente d'un fichier, peut-&ecirc;tre
       &eacute;crasera votre copie, le remplacement est bas&eacute;
       sur la date du fichier).</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

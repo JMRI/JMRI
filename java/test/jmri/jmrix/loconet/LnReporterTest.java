@@ -1,12 +1,9 @@
 package jmri.jmrix.loconet;
 
 import jmri.IdTag;
-import jmri.InstanceManager;
 import jmri.Reportable;
 import jmri.LocoAddress;
-import jmri.NamedBean;
 import jmri.PhysicalLocationReporter;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.PhysicalLocation;
 import org.junit.After;
@@ -101,7 +98,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
                 7, r.getState());
         
         Assert.assertEquals("MessageFromManagerFindReport- check report string after message 1", 
-                "7 enter", r.getCurrentReport().toString() );
+                "7 enter", ((Reportable)r.getCurrentReport()).toReportString() );
 
         Assert.assertEquals("MessageFromManagerFindReport- check last loco after message 1",
                 7, ((LnReporter)r).lastLoco);

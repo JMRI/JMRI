@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
@@ -162,7 +162,7 @@ Bouton "Enregistrer" sur la
 <p>Des informations compl&#233;mentaires sur le mat&#233;riel  peuvent &#234;tre trouv&#233;es sur le 
 <a href="http://www.cti-electronics.com/app_sw.htm">Site web CTI</a>.</p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

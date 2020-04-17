@@ -10,9 +10,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
 
       <h1>Hardware Support: MQTT</h1>
@@ -165,7 +165,7 @@ There are also MQTT tools available for
 <a href="https://play.google.com/store/search?q=mqtt&amp;c=apps&amp;authuser">Android devices</a>
 that can be useful for monitoring, testing and operating your layout.
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

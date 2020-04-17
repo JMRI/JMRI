@@ -1,35 +1,24 @@
 package jmri.web.servlet.panel;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
 import java.awt.Color;
 import java.util.List;
+
+import javax.annotation.Nonnull;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
+import jmri.*;
 import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.layoutEditor.LayoutBlock;
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.display.layoutEditor.LayoutShape;
-import jmri.jmrit.display.layoutEditor.LayoutTrack;
+import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.ColorUtil;
-import org.jdom2.Attribute;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
+import org.jdom2.*;
+import org.jdom2.output.*;
 import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 /**
  * Return xml (for specified LayoutPanel) suitable for use by external clients
  *
- * @author mstevetodd -- based on PanelServlet.java by rhwood
+ * @author mstevetodd -- based on PanelServlet.java by Randall Wood
  */
 @WebServlet(name = "LayoutPanelServlet",
         urlPatterns = {"/panel/Layout"})
@@ -153,6 +142,12 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                 Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
                 if (e != null) {
                     replaceUserNames(e);
+                    if (sub instanceof LayoutTurntable) {
+                        List<Element> raytracks = e.getChildren("raytrack");
+                        for (Element raytrack : raytracks) {
+                            replaceUserNameAttribute(raytrack, "turnout", "turnout");
+                        }
+                    }
                     panel.addContent(e);
                 }
             } catch (Exception e) {
@@ -192,7 +187,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
      * @param attrName attribute name to replace
      *
      */
-    private void replaceUserNameAttribute(@NonNull Element e, @NonNull String beanType, @NonNull String attrName) {
+    private void replaceUserNameAttribute(@Nonnull Element e, @Nonnull String beanType, @Nonnull String attrName) {
 
         String sn = "";
         Attribute a = e.getAttribute(attrName);
@@ -233,7 +228,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
      * @param childName child element name whose text will be replaced
      *
      */
-    private void replaceUserNameChild(@NonNull Element e, @NonNull String beanType, @NonNull String childName) {
+    private void replaceUserNameChild(@Nonnull Element e, @Nonnull String beanType, @Nonnull String childName) {
 
         String sn = "";
         Element c = e.getChild(childName);
@@ -265,7 +260,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
      *
      * @param e element to be updated
      */
-    private void replaceUserNames(Element e) {
+    private void replaceUserNames(@Nonnull Element e) {
         replaceUserNameAttribute(e, "turnout", "turnoutname");
         replaceUserNameAttribute(e, "turnout", "secondturnoutname");
 

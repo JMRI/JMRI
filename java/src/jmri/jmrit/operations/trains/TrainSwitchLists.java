@@ -1,22 +1,18 @@
 package jmri.jmrit.operations.trains;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarColors;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -25,8 +21,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Builds a switch list for a location on the railroad
@@ -81,7 +75,7 @@ public class TrainSwitchLists extends TrainCommon {
         PrintWriter fileOut = null;
         try {
             fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, append),
-                    "UTF-8")), true); // NOI18N
+                    StandardCharsets.UTF_8)), true);
         } catch (IOException e) {
             log.error("Can not open switchlist file: {}", file.getName());
             return;
@@ -226,7 +220,7 @@ public class TrainSwitchLists extends TrainCommon {
                             stops--; // don't bump stop count, same location
                             // Does the train reverse direction?
                             if (rl.getTrainDirection() != rlPrevious.getTrainDirection() &&
-                                    !TrainSwitchListText.getStringTrainDirectionChange().equals("")) {
+                                    !TrainSwitchListText.getStringTrainDirectionChange().isEmpty()) {
                                 newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
                                         .getStringTrainDirectionChange(), new Object[]{train.getName(),
                                                 rl.getTrainDirectionString(), train.getDescription(),
@@ -238,9 +232,11 @@ public class TrainSwitchLists extends TrainCommon {
                     rlPrevious = rl; // save current location in case there's back to back location with the same name
 
                     // add route comment
-                    if (Setup.isSwitchListRouteLocationCommentEnabled() && !rl.getComment().trim().equals("")) {
+                    if (Setup.isSwitchListRouteLocationCommentEnabled() && !rl.getComment().trim().isEmpty()) {
                         newLine(fileOut, rl.getFormatedColorComment());
                     }
+                    
+                    printTrackComments(fileOut, rl, carList, !IS_MANIFEST);
 
                     // now print out the work for this location
                     if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
@@ -392,19 +388,19 @@ public class TrainSwitchLists extends TrainCommon {
                             } else {
                                 newLine(fileOut, MessageFormat.format(
                                         messageFormatText = TrainSwitchListText.getStringHoldCar(),
-                                        new Object[]{padAndTruncateString(car.getRoadName(),
+                                        new Object[]{padAndTruncateIfNeeded(car.getRoadName(),
                                                 InstanceManager.getDefault(CarRoads.class).getMaxNameLength()),
-                                                padAndTruncateString(TrainCommon.splitString(car.getNumber()),
+                                                padAndTruncateIfNeeded(TrainCommon.splitString(car.getNumber()),
                                                         Control.max_len_string_print_road_number),
-                                                padAndTruncateString(car.getTypeName().split("-")[0],
+                                                padAndTruncateIfNeeded(car.getTypeName().split("-")[0],
                                                         InstanceManager.getDefault(CarTypes.class).getMaxNameLength()),
-                                                padAndTruncateString(car.getLength() + LENGTHABV,
+                                                padAndTruncateIfNeeded(car.getLength() + Setup.getLengthUnitAbv(),
                                                         Control.max_len_string_length_name),
-                                                padAndTruncateString(car.getLoadName(),
+                                                padAndTruncateIfNeeded(car.getLoadName(),
                                                         InstanceManager.getDefault(CarLoads.class).getMaxNameLength()),
-                                                padAndTruncateString(trackName,
+                                                padAndTruncateIfNeeded(trackName,
                                                         locationManager.getMaxTrackNameLength()),
-                                                padAndTruncateString(car.getColor(),
+                                                padAndTruncateIfNeeded(car.getColor(),
                                                         InstanceManager.getDefault(CarColors.class).getMaxNameLength())}));
                             }
                         }

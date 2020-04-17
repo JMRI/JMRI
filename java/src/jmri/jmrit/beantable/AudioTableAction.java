@@ -2,7 +2,6 @@ package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -350,7 +349,11 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
         @Override
         public String getValue(String systemName) {
             Object m = InstanceManager.getDefault(jmri.AudioManager.class).getBySystemName(systemName);
-            return (m != null) ? m.toString() : "";
+            if (subType == Audio.SOURCE) {
+                return (m != null) ? ((jmri.jmrit.audio.AudioSource) m).getDebugString() : "";
+            } else {
+                return (m != null) ? m.toString() : "";
+            }
         }
 
         @Override

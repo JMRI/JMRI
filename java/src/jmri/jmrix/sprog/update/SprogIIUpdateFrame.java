@@ -41,6 +41,19 @@ public class SprogIIUpdateFrame
         // Get the SPROG version
         _memo.getSprogVersionQuery().requestVersion(this);
     }
+    
+    
+    /** 
+     * {@inheritDoc}
+     * Also ensures timers are no longer running
+     */
+    @Override
+    public void dispose() {
+        // kill any timers still running 
+        stopTimer();
+            
+        super.dispose();
+    }
 
     int bootVer = 0;
 
@@ -54,9 +67,7 @@ public class SprogIIUpdateFrame
         sv = v;
         if (sv!=null && sv.sprogType.isSprog() == false) {
             // Didn't recognize a SPROG so check if it is in boot mode already
-            if (log.isDebugEnabled()) {
-                log.debug("SPROG not found - looking for bootloader");
-            }
+            log.debug("SPROG not found - looking for bootloader");
             statusBar.setText(Bundle.getMessage("StatusSprogNotFound"));
             blockLen = -1;
             requestBoot();
@@ -66,9 +77,7 @@ public class SprogIIUpdateFrame
                 statusBar.setText(Bundle.getMessage("StatusFoundX", sv.toString()));
                 blockLen = sv.sprogType.getBlockLen();
                 // Put SPROG in boot mode
-                if (log.isDebugEnabled()) {
-                    log.debug("Putting SPROG in boot mode");
-                }
+                log.debug("Putting SPROG in boot mode");
                 msg = new SprogMessage("b 1 1 1");
                 bootState = BootState.SETBOOTSENT;
                 tc.sendSprogMessage(msg, this);
@@ -272,6 +281,10 @@ public class SprogIIUpdateFrame
             log.debug("Request bootloader version");
         }
         // allow parsing of bootloader replies
+        if (tc == null) {
+            log.warn("requestBoot with null tc, ignored");
+            return;
+        }
         tc.setSprogState(SprogState.SIIBOOTMODE);
         bootState = BootState.VERREQSENT;
         msg = SprogMessage.getReadBootVersion();

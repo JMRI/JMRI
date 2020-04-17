@@ -1,7 +1,6 @@
 package jmri.configurexml.turnoutoperations;
 
 import jmri.TurnoutOperation;
-import jmri.util.StringUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

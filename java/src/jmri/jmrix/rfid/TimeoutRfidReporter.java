@@ -26,7 +26,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matthew Harris Copyright (C) 2014
  * @since 3.9.2
+ * @deprecated since 4.19.4.  Use jmri.implementation.decorators.TimeoutReporter as a replacement.
  */
+@Deprecated
 public class TimeoutRfidReporter extends RfidReporter {
 
     /**

@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import javax.annotation.Nonnull;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -42,7 +43,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public static final String GRAPHICTABLESTATE = "graphicTableState";
     public static final String VERTICAL_TOOLBAR = "verticalToolBar";
     public final static String SHOW_TOOL_TIP_TIME = "showToolTipDismissDelay";
-    public final static String EDITOR_USE_OLD_LOC_SIZE= "editorUseOldLocSize";
+    public final static String EDITOR_USE_OLD_LOC_SIZE = "editorUseOldLocSize";
     /**
      * Smallest font size a user can set the font size to other than zero
      * ({@value}). A font size of 0 indicates that the system default font size
@@ -125,11 +126,13 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     @Override
+    @Nonnull
     public Iterable<Class<? extends PreferencesManager>> getRequires() {
         return new HashSet<>();
     }
 
     @Override
+    @Nonnull
     public Iterable<Class<?>> getProvides() {
         Set<Class<?>> provides = new HashSet<>();
         provides.add(this.getClass());
@@ -149,7 +152,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         String currentFontName = currentFont.getFontName();
         if (currentFontName != null) {
             String prefFontName = preferences.get(FONT_NAME, currentFontName);
-            if ((prefFontName == null) || ( ! prefFontName.equals(currentFontName))) {
+            if ((prefFontName == null) || (!prefFontName.equals(currentFontName))) {
                 preferences.put(FONT_NAME, currentFontName);
             }
         }
@@ -415,7 +418,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * is not available on the current platform; and will be overwritten if
      * preferences are saved on a platform where the preferred look and feel is
      * not available.
-     * 
+     *
      * @return the look and feel class name
      */
     public String getLookAndFeel() {
@@ -427,7 +430,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * this change only takes effect after the application is restarted, because
      * Java has some issues setting the look and feel correctly on already open
      * windows.
-     * 
+     *
      * @param lookAndFeel the look and feel class name
      */
     public void setLookAndFeel(String lookAndFeel) {
@@ -507,7 +510,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * @param profile The profile to get the locale from
      */
     public static void setLocaleMinimally(Profile profile) {
-        String name = ProfileUtils.getPreferences(profile, GuiLafPreferencesManager.class, true).get("locale","en"); // "en" is default if not found
+        String name = ProfileUtils.getPreferences(profile, GuiLafPreferencesManager.class, true).get("locale", "en"); // "en" is default if not found
         log.debug("setLocaleMinimally found language {}, setting", name);
         Locale.setDefault(new Locale(name));
         javax.swing.JComponent.setDefaultLocale(new Locale(name));
@@ -575,6 +578,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     @Override
+    @Nonnull
     public List<Exception> getInitializationExceptions(Profile profile) {
         return new ArrayList<>(this.exceptions);
     }

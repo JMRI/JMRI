@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.17.8ish+jake+20191218T1552Z+R5bf1220c9e on Wed Dec 18 07:52:23 PST 2019-->
-  <decoderIndex version="986">
+  <!--Written by JMRI version 4.19.5ish+heap+20200415T0118Z+Re37a3f80c3 on Wed Apr 15 11:21:03 AEST 2020-->
+  <decoderIndex version="1000">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -322,7 +322,7 @@
       </family>
       <family name="Blueline" mfg="Broadway Limited Imports, LLC" file="BLI_Blueline_diesel.xml">
         <model model="Diesel" numOuts="3" numFns="14" connector="9pin">
-          <versionCV lowVersionID="4" />
+          <versionCV lowVersionID="0" highVersionID="31" />
           <output name="1" label="headlight" />
           <output name="2" label="rearlight" />
           <output name="Horn1" />
@@ -349,7 +349,7 @@
       </family>
       <family name="Blueline" mfg="Broadway Limited Imports, LLC" file="BLI_Blueline_steam.xml">
         <model model="Steam" numOuts="3" numFns="14">
-          <versionCV lowVersionID="32" />
+          <versionCV lowVersionID="32" highVersionID="63" />
           <output name="1" label="headlight" />
           <output name="2" label="rearlight" />
           <output name="Whistle" />
@@ -463,7 +463,10 @@
         </functionlabels>
       </family>
       <family name="Paragon 3" mfg="Broadway Limited Imports, LLC" file="BLI_Rolling_Thunder.xml">
-        <model model="Rolling Thunder">
+        <model model="Rolling Thunder Receiver" comment="Device that connects to Subwoofer">
+          <versionCV lowVersionID="0" highVersionID="31" />
+        </model>
+        <model show="no" model="Rolling Thunder">
           <versionCV lowVersionID="0" highVersionID="31" />
         </model>
       </family>
@@ -1035,7 +1038,7 @@
           <output name="BEMF" />
         </model>
       </family>
-      <family name="DCC Concepts Zen" mfg="DCC Concepts" lowVersionID="34" highVersionID="35" file="DCC_Concepts_Zen.xml">
+      <family name="DCC Concepts Zen" mfg="DCCconcepts" lowVersionID="34" highVersionID="35" file="DCC_Concepts_Zen.xml">
         <model model="ZBHP Buddha" numOuts="6" numFns="14" maxMotorCurrent="3A (peak=5A)" productID="ZBHP" formFactor="O" connector="other" comment="O-scale, with screw connectors">
           <output name="1" label="White" connection="other" maxcurrent="250 mA" />
           <output name="2" label="Yellow" connection="other" maxcurrent="250 mA" />
@@ -6991,6 +6994,294 @@
           </protocols>
         </model>
       </family>
+      <family name="ESU LokPilot 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokPilot5.xml">
+        <model model="LokPilot 5" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554600">
+          <size length="30.5" width="15.5" height="5.5" units="mm" />
+        </model>
+        <model model="LokPilot 5 DCC" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554602">
+          <size length="30.5" width="15.5" height="5.5" units="mm" />
+        </model>
+        <model model="LokPilot 5 micro" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777390">
+          <size length="25.5" width="10.6" height="4.5" units="mm" />
+        </model>
+        <model model="LokPilot 5 micro DCC" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777391">
+          <size length="25.5" width="10.6" height="4.5" units="mm" />
+        </model>
+        <model model="LokPilot 5 micro Next18" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554604">
+          <size length="21.0" width="10.6" height="4.0" units="mm" />
+        </model>
+        <model model="LokPilot 5 micro DCC Next18" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">
+          <size length="21.0" width="10.6" height="4.0" units="mm" />
+        </model>
+        <model model="LokPilot 5 L" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554609">
+          <size length="51.8" width="25.4" height="14" units="mm" />
+        </model>
+        <model model="LokPilot 5 L DCC" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554610">
+          <size length="51.8" width="25.4" height="14" units="mm" />
+        </model>
+        <model model="LokPilot 5 Fx micro" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554611">
+          <output name="1,37" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,38" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,39" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,40" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,9" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,10" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,11" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,12" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,13" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,14" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,15" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,16" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,17" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,18" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,19" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,20" label="|" />
+          <!-- suppress unused item -->
+          <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model model="LokPilot 5 Fx micro DCC" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554612">
+          <output name="1,37" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,38" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,39" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,40" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,9" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,10" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,11" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,12" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,13" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,14" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,15" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,16" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,17" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,18" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,19" label="|" />
+          <!-- suppress unused item -->
+          <output name="2,20" label="|" />
+          <!-- suppress unused item -->
+          <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model model="LokPilot 5 MKL" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554601">
+          <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model model="LokPilot 5 MKL DCC" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554608">
+          <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+        <!-- Copyright (C) JMRI 2019 All rights reserved -->
+        <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+          <output name="1,36" label="|" />
+          <!-- suppress reserved item -->
+          <output name="3,1" label="Optional Load" />
+          <output name="3,2" label="Shunting Mode">
+            <label xml:lang="ca">Mode de Maniobra</label>
+            <label xml:lang="cs">Režim posunu</label>
+            <label xml:lang="da">Shunting Mode</label>
+            <label xml:lang="nl">Shunting Mode</label>
+          </output>
+          <output name="3,3" label="Brake 1">
+            <label xml:lang="ca">Fre 1</label>
+            <label xml:lang="cs">Brzda 1</label>
+            <label xml:lang="da">Brake 1</label>
+            <label xml:lang="nl">Brake 1</label>
+          </output>
+          <output name="3,4" label="Brake 2">
+            <label xml:lang="ca">Fre 2</label>
+            <label xml:lang="cs">Brzda 2</label>
+            <label xml:lang="da">Brake 2</label>
+            <label xml:lang="nl">Brake 2</label>
+          </output>
+          <output name="3,5" label="Brake 3">
+            <label xml:lang="ca">Fre 3</label>
+            <label xml:lang="cs">Brzda 3</label>
+            <label xml:lang="da">Brake 3</label>
+            <label xml:lang="nl">Brake 3</label>
+          </output>
+          <output name="3,6" label="Primary Load">
+            <label xml:lang="ca">Càrrega Primary</label>
+            <label xml:lang="cs">Primary náklad</label>
+            <label xml:lang="da">Primary Load</label>
+            <label xml:lang="nl">Primary Load</label>
+          </output>
+          <output name="3,7" label="Uncoupling cycle">
+            <label xml:lang="ca">Desacoplament</label>
+            <label xml:lang="cs">Cyklus rozpojení</label>
+            <label xml:lang="da">Uncoupling cycle</label>
+            <label xml:lang="nl">Uncoupling cycle</label>
+          </output>
+          <output name="3,8" label="Drive Hold" />
+          <output name="3,9" label="Firebox">
+            <label xml:lang="ca">Caixa de Llums</label>
+            <label xml:lang="cs">Topeniště</label>
+            <label xml:lang="da">Firebox</label>
+            <label xml:lang="nl">Firebox</label>
+          </output>
+          <output name="3,10" label="Dim lights">
+            <label xml:lang="ca">Llums Ajustables</label>
+            <label xml:lang="cs">Svítící světla</label>
+            <label xml:lang="da">Dim lights</label>
+            <label xml:lang="nl">Dim lights</label>
+          </output>
+          <output name="3,11" label="Grade crossing">
+            <label xml:lang="ca">Grade crossing</label>
+            <label xml:lang="cs">Úrovňové křižování</label>
+            <label xml:lang="da">Grade crossing</label>
+            <label xml:lang="nl">Grade crossing</label>
+          </output>
+          <output name="3,12" label="Momentum off">
+            <label xml:lang="ca">Apagat off</label>
+            <label xml:lang="cs">Hybnost vypnout</label>
+            <label xml:lang="da">Momentum off</label>
+            <label xml:lang="nl">Momentum off</label>
+          </output>
+          <output name="3,13" label="ESU smoke unit">
+            <label xml:lang="ca">Fumígen ESU</label>
+            <label xml:lang="cs">ESU kouřová jednotka</label>
+            <label xml:lang="da">ESU smoke unit</label>
+            <label xml:lang="nl">ESU smoke unit</label>
+          </output>
+          <output name="3,14" label="Sound fade">
+            <label xml:lang="ca">Esvaiment del Sò</label>
+            <label xml:lang="cs">Slábnoucí zvuk</label>
+            <label xml:lang="da">Sound fade</label>
+            <label xml:lang="nl">Sound fade</label>
+          </output>
+          <output name="3,15" label="Disable brake sound">
+            <label xml:lang="ca">Deshabilita sò del Fre</label>
+            <label xml:lang="cs">Zakázat zvuk brzdy</label>
+            <label xml:lang="da">Disable brake sound</label>
+            <label xml:lang="nl">Disable brake sound</label>
+          </output>
+          <output name="3,16" label="Volume &amp; Mute">
+            <label xml:lang="ca">Volum i Silenci</label>
+            <label xml:lang="cs">Hlasitost &amp; Ztlumení</label>
+            <label xml:lang="da">Volume &amp; Mute</label>
+            <label xml:lang="nl">Volume &amp; Mute</label>
+          </output>
+          <output name="3,17" label="|">
+            <label xml:lang="ca">Mode de Canvi 1</label>
+            <label xml:lang="cs">Režim posunu 1</label>
+            <label xml:lang="da">Shift Mode 1</label>
+            <label xml:lang="nl">Shift Mode 1</label>
+          </output>
+          <output name="3,18" label="|">
+            <label xml:lang="ca">Mode de Canvi 2</label>
+            <label xml:lang="cs">Režim posunu 2</label>
+            <label xml:lang="da">Shift Mode 2</label>
+            <label xml:lang="nl">Shift Mode 2</label>
+          </output>
+          <output name="3,19" label="|">
+            <label xml:lang="ca">Mode de Canvi 3</label>
+            <label xml:lang="cs">Režim posunu 3</label>
+            <label xml:lang="da">Shift Mode 3</label>
+            <label xml:lang="nl">Shift Mode 3</label>
+          </output>
+          <output name="3,20" label="|">
+            <label xml:lang="ca">Mode de Canvi 4</label>
+            <label xml:lang="cs">Režim posunu 4</label>
+            <label xml:lang="da">Shift Mode 4</label>
+            <label xml:lang="nl">Shift Mode 4</label>
+          </output>
+          <output name="3,21" label="|">
+            <label xml:lang="ca">Mode de Canvi 5</label>
+            <label xml:lang="cs">Režim posunu 5</label>
+            <label xml:lang="da">Shift Mode 5</label>
+            <label xml:lang="nl">Shift Mode 5</label>
+          </output>
+          <output name="3,22" label="|">
+            <label xml:lang="ca">Mode de Canvi 6</label>
+            <label xml:lang="cs">Režim posunu 6</label>
+            <label xml:lang="da">Shift Mode 6</label>
+            <label xml:lang="nl">Shift Mode 6</label>
+          </output>
+          <output name="3,23" label="|" />
+          <output name="3,24" label="|" />
+          <output name="4,1" label="Virtual drive sound" />
+          <output name="4,2" label="|" />
+          <output name="4,3" label="|" />
+          <output name="4,4" label="|" />
+          <output name="4,5" label="|" />
+          <output name="4,6" label="|" />
+          <output name="4,7" label="|" />
+          <output name="4,8" label="|" />
+          <output name="4,9" label="|" />
+          <output name="4,10" label="|" />
+          <output name="4,11" label="|" />
+          <output name="4,12" label="|" />
+          <output name="4,13" label="|" />
+          <output name="4,14" label="|" />
+          <output name="4,15" label="|" />
+          <output name="4,16" label="|" />
+          <output name="4,17" label="|" />
+          <output name="4,18" label="|" />
+          <output name="4,19" label="|" />
+          <output name="4,20" label="|" />
+          <output name="4,21" label="|" />
+          <output name="4,22" label="|" />
+          <output name="4,23" label="|" />
+          <output name="4,24" label="|" />
+          <output name="4,25" label="|" />
+          <output name="4,26" label="|" />
+          <output name="4,27" label="|" />
+          <output name="4,28" label="|" />
+          <output name="4,29" label="|" />
+          <output name="4,30" label="|" />
+          <output name="4,31" label="|" />
+          <output name="4,32" label="|" />
+        </outputs>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">
+            <text>Light</text>
+            <text xml:lang="de">Licht</text>
+          </functionlabel>
+          <functionlabel num="1" lockable="true">
+            <text>Bell</text>
+            <text xml:lang="de">Sound</text>
+          </functionlabel>
+          <functionlabel num="2" lockable="false">
+            <text>Horn</text>
+            <text xml:lang="de">Pfeife / Signalhorn</text>
+          </functionlabel>
+        </functionlabels>
+        <soundlabels>
+          <soundlabel num="33">
+            <text>Automatic brake sound</text>
+            <text xml:lang="de">automatischer Bremssound</text>
+          </soundlabel>
+          <soundlabel num="34">
+            <text>Gear shift sound</text>
+            <text xml:lang="de">Schaltgeräusch</text>
+          </soundlabel>
+        </soundlabels>
+      </family>
       <family name="ESU LokPilot Basic 1.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255" file="ESU_LokPilotBasic1.0.xml">
         <model model="LokPilot Basic 1.0" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="3" numFns="5" formFactor="HO" connector="NMRAmedium">
           <output name="1" label="Front light" maxcurrent="180 mA" connection="wire" />
@@ -7338,6 +7629,9 @@
           <size length="51.8" width="25.4" height="14" units="mm" />
         </model>
         <model model="LokSound 5 XL" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554591">
+          <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model model="LokSound 5 MKL" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554598">
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
@@ -9422,6 +9716,9 @@
           <output name="SH" label="Shunting Spd" />
         </model>
       </family>
+      <family name="fucik.name" mfg="Fucik" file="Fucik_Servo4.xml">
+        <model model="ServoDecoder v5.x" lowVersionID="53" highVersionID="55" numOuts="4" connector="other" />
+      </family>
       <family name="Turnouts" mfg="GFB Designs" comment="TT300 is a turnout motor with integral decoder, programmable by service mode or ops-mode for accessories" file="GFB_TT300.xml">
         <model model="TT300" lowVersionID="1" highVersionID="1" />
       </family>
@@ -9449,7 +9746,7 @@
           <output name="2" label="Yellow" />
         </model>
       </family>
-      <family name="Harman DIY Accessory Decoders" mfg="Harman-DIY" file="Harman_DIY_accessory_decoders.xml">
+      <family name="Harman DIY Accessory Decoders" mfg="Harman DCC" file="Harman_DIY_accessory_decoders.xml">
         <model model="Eight outputs" numOuts="8" numFns="16" formFactor="HO">
           <output name="1" label="Output A" />
           <output name="2" label="Output B" />
@@ -9465,7 +9762,7 @@
           <output name="2" label="Output B" />
         </model>
       </family>
-      <family name="Harman DIY Function Decoders" mfg="Harman-DIY" file="Harman_DIY_function_decoders.xml">
+      <family name="Harman DIY Function Decoders" mfg="Harman DCC" file="Harman_DIY_function_decoders.xml">
         <model model="Function1-8" numOuts="8" numFns="16" formFactor="HO">
           <output name="1" label="Output A" />
           <output name="2" label="Output B" />
@@ -9755,19 +10052,19 @@
           <versionCV lowVersionID="2" highVersionID="120" />
         </model>
       </family>
-      <family name="Ditch Light Decoder" mfg="Kato" lowVersionID="49" highVersionID="51" file="Kato_Ditch.xml">
+      <family name="Ditch Light Decoder" mfg="KATO Precision Models" lowVersionID="49" highVersionID="51" file="Kato_Ditch.xml">
         <model model="Ditch Light Decoder" numOuts="2" numFns="5" formFactor="HO" connector="unspecified">
           <output name="1" label="Ditch Lights" connection="unspecified" />
           <output name="2" label="Flashing" connection="unspecified" />
         </model>
       </family>
-      <family name="Function Only, with transponding" mfg="Kato" file="Kato_FL11.xml">
+      <family name="Function Only, with transponding" mfg="KATO Precision Models" file="Kato_FL11.xml">
         <model model="FL11" lowVersionID="0" />
       </family>
-      <family name="Function Only, with transponding" mfg="Kato" file="Kato_FL12.xml">
+      <family name="Function Only, with transponding" mfg="KATO Precision Models" file="Kato_FL12.xml">
         <model model="FL12" numOuts="2" lowVersionID="254" />
       </family>
-      <family name="EM13, silent, readback" mfg="Kato" lowVersionID="49" highVersionID="51" file="Kato_em13.xml">
+      <family name="EM13, silent, readback" mfg="KATO Precision Models" lowVersionID="49" highVersionID="51" file="Kato_em13.xml">
         <model model="EM13" numOuts="1" numFns="0" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="unspecified">
           <output name="4" label="Violet" connection="unspecified" />
           <size length=".55" width=".36" height=".13" units="inches" />
@@ -10854,16 +11151,16 @@
       <family name="DCCACC" mfg="MERG" comment="DCCACC is a stationary decoder, but it can be programmed in the usual way" file="MERG_DCCACC.xml">
         <model model="DCCACC" />
       </family>
-      <family name="BTLocobridge" mfg="MGP" type="stationary" comment="Bluetooth LocoNet interface" file="MGP_BT_LocoBridge.xml">
+      <family name="BTLocobridge" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Bluetooth LocoNet interface" file="MGP_BT_LocoBridge.xml">
         <model model="BTLocobridge" lowVersionID="1" />
       </family>
-      <family name="Panel" mfg="MGP" type="stationary" comment="Panel, a LocoNet decoder control panels" file="MGP_Panel.xml">
+      <family name="Panel" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Panel, a LocoNet decoder control panels" file="MGP_Panel.xml">
         <model model="Panel" lowVersionID="1" />
       </family>
-      <family name="Servo5" mfg="MGP" type="stationary" comment="Servo5, a LocoNet decoder for railway switches" file="MGP_Servo5.xml">
+      <family name="Servo5" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Servo5, a LocoNet decoder for railway switches" file="MGP_Servo5.xml">
         <model model="Servo5" lowVersionID="1" />
       </family>
-      <family name="Signal10" mfg="MGP" type="stationary" comment="Signal10, a LocoNet decoder for railway signals" file="MGP_Signal10.xml">
+      <family name="Signal10" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Signal10, a LocoNet decoder for railway signals" file="MGP_Signal10.xml">
         <model model="Signal10" lowVersionID="1" />
       </family>
       <family name="MRC 14/28/128 step decoders" mfg="MRC" file="MRC_128step.xml">
@@ -13699,23 +13996,31 @@
       <family name="NYB Dual Mode Decoder" mfg="New York Byano Limited" type="locomotive" file="NYB_dualmode.xml">
         <model model="NYB Dual Mode Decoder" numOuts="2" numFns="0" lowVersionID="46" nmraWarrant="yes" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
-      <family name="PpP Decoders" mfg="PpP" lowVersionID="22" highVersionID="22" comment="PpP-Des3 decoder." file="PpP_Des3.xml">
+      <family name="PpP Decoders" mfg="PpP Digital" lowVersionID="22" highVersionID="22" comment="PpP-Des3 decoder." file="PpP_Des3.xml">
         <model model="PpP-Des3" />
       </family>
-      <family name="PpP Decoders" mfg="PpP" lowVersionID="10" highVersionID="11" comment="PpP-LightFX decoder." file="PpP_LightFX.xml">
+      <family name="PpP Decoders" mfg="PpP Digital" lowVersionID="10" highVersionID="11" comment="PpP-LightFX decoder." file="PpP_LightFX.xml">
         <model model="PpP-LightFX" />
       </family>
-      <family name="PpP Decoders" mfg="PpP" lowVersionID="52" highVersionID="53" comment="PpP-Sem2 decoder." file="PpP_Sem2.xml">
+      <family name="PpP Decoders" mfg="PpP Digital" lowVersionID="52" highVersionID="53" comment="PpP-Sem2 decoder." file="PpP_Sem2.xml">
         <model model="PpP-Sem2" />
       </family>
-      <family name="PpP Decoders" mfg="PpP" lowVersionID="32" highVersionID="32" comment="PpP-Sem3 decoder." file="PpP_Sem3.xml">
+      <family name="PpP Decoders" mfg="PpP Digital" lowVersionID="32" highVersionID="32" comment="PpP-Sem3 decoder." file="PpP_Sem3.xml">
         <model model="PpP-Sem3" />
       </family>
-      <family name="PpP Decoders" mfg="PpP" lowVersionID="42" highVersionID="42" comment="PpP-Sem4 decoder." file="PpP_Sem4.xml">
+      <family name="PpP Decoders" mfg="PpP Digital" lowVersionID="42" highVersionID="42" comment="PpP-Sem4 decoder." file="PpP_Sem4.xml">
         <model model="PpP-Sem4" />
       </family>
       <family name="FREDi" mfg="Public-domain and DIY" file="Public_Domain_FREDi_LNSV2.xml">
         <model model="FREDi using LNSV2" productID="11" developerID="1" />
+      </family>
+      <family name="fucik.name DIY" mfg="Public-domain and DIY" file="Public_Domain_Fucik_1.xml">
+        <model model="1 ServoDecoder v3.4" lowVersionID="34" highVersionID="34" numOuts="2" connector="other" />
+      </family>
+      <family name="fucik.name DIY" mfg="Public-domain and DIY" file="Public_Domain_Fucik_2_4.xml">
+        <model model="4 ServoDecoder v3.0" lowVersionID="30" highVersionID="30" numOuts="4" connector="other" />
+        <model model="2 ServoDecoder v3.2" lowVersionID="32" highVersionID="32" numOuts="2" connector="other" />
+        <model model="4 ServoDecoder v3.5" lowVersionID="35" highVersionID="35" numOuts="4" connector="other" />
       </family>
       <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY" file="Public_Domain_HDL_LocoIO.xml">
         <model model="HDL LocoIO v1.54" productID="154" />
@@ -13769,6 +14074,9 @@
           <output name="04" label="Green" />
           <output name="05" label="Brown" />
         </model>
+      </family>
+      <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_ARD_8SCOM_4VYH_TC.xml">
+        <model model="ARD-8SCOM-4VYH-TC" lowVersionID="10" highVersionID="19" productID="16843521" maxInputVolts="24V AC" maxTotalCurrent="0.2A" numOuts="16" connector="other" />
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_ARD_SCOM_MX.xml">
         <model model="ARD-SCOM-MX" lowVersionID="10" highVersionID="19" productID="16843265" maxInputVolts="24V AC" maxTotalCurrent="0.2A peak 3.3A" numOuts="16" connector="other" />
@@ -18485,8 +18793,10 @@
         <model model="TSU-GN2200 GP40-2L/W w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="785" comment="Model T0204.002B" />
         <model model="TSU-GN2200 GP40-2L/W w/gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="786" comment="Model T0204.003B" />
         <model model="TSU-GN2200 GP40-2L/W w/mars" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="784" comment="Model T0204.001B" />
-        <model model="TSU-GN2200 SDP40F w/gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="813" comment="Model T0207.001B" />
-        <model model="TSU-GN2200 SDF40-2 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="814" comment="Model T0207.002B" />
+        <model model="TSU-GN2200 SDP40F w/gyra" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="813" comment="Model T0207.001" />
+        <model model="TSU-GN2208 SDP40F w/gyra" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="927" comment="Model 8T0207.001" />
+        <model model="TSU-GN2200 SDF40-2 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="814" comment="Model T0207.002" />
+        <model model="TSU-GN2208 SDF40-2 w/beacon" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="928" comment="Model 8T0207.002" />
         <model model="TSU-GN2200 SDP45/F45 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="820" comment="Model T0206.003B" />
         <model model="TSU-GN2208 SD60E" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="835" comment="Model 8T0302.005" />
         <model model="TSU-GN2208 SD60E 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="884" comment="Model 8T0302.?" />
@@ -18500,6 +18810,7 @@
         <model model="TSU-GN2200 SD70ACe w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="792" comment="Model T0303.002B" />
         <model model="TSU-GN2200 SD70M/75M" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="778" comment="Model T0301.001B" />
         <model model="TSU-GN2200 SD70M w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="779" comment="Model T0301.002B" />
+        <model model="TSU-GN2208 SD90MAC-H" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="908" comment="Model 8T0305.001" />
         <model model="TSU-GN2200 ES40DC w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="816" comment="Model T1004.002B" />
         <model model="TSU-GN2208 ES44AC" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="855" comment="Model 8T1004.001" />
         <model model="TSU-GN2208 ES44AC 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="856" comment="Model T1004.004" />
@@ -22079,6 +22390,31 @@
           <output name="Coupler" />
           <functionlabels>
             <functionlabel num="5" lockable="true">Mars Light</functionlabel>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="GP7 NYC" numOuts="4" numFns="14" connector="other" productID="GP7NYC" comment="Diesel Prime Mover EMD567 Turbo">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Reserved" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Gyralite</functionlabel>
             <functionlabel num="6" lockable="true"># Boards</functionlabel>
           </functionlabels>
         </model>
@@ -28569,56 +28905,56 @@
           <size length="0.500" width="0.375" height="0.125" units="inches" />
         </model>
       </family>
-      <family name="BlocD8" mfg="Team Digital" type="stationary" file="TD_BlocD8.xml">
+      <family name="BlocD8" mfg="Team Digital, LLC" type="stationary" file="TD_BlocD8.xml">
         <model model="BlocD8" lowVersionID="1" comment="BlocD8 can be programmed in the usual way" />
       </family>
-      <family name="CSC Family" mfg="Team Digital" type="stationary" comment="The CSC can be programmed in the usual way" file="TD_CSC.xml">
+      <family name="CSC Family" mfg="Team Digital, LLC" type="stationary" comment="The CSC can be programmed in the usual way" file="TD_CSC.xml">
         <model model="CSC" lowVersionID="10" comment="Original HW" />
         <model model="CSCe" lowVersionID="10" comment="Later HW" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SC8.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SC8.xml">
         <model model="SC8" lowVersionID="1" comment="SC8 is a stationary decoder, but it can be programmed in the usual way" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SC82.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SC82.xml">
         <model model="SC82" lowVersionID="1" comment="SC82 is a stationary decoder, but it can be programmed in the usual way" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SHD2.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SHD2.xml">
         <model model="SHD2" lowVersionID="1" comment="SHD2 is a DCC Signal decoder" />
       </family>
-      <family name="SIC24" mfg="Team Digital" type="stationary" comment="SIC24 is not stationary decoder, but it can be programmed in the usual way" file="TD_SIC24.xml">
+      <family name="SIC24" mfg="Team Digital, LLC" type="stationary" comment="SIC24 is not stationary decoder, but it can be programmed in the usual way" file="TD_SIC24.xml">
         <model model="SIC24" lowVersionID="12" />
       </family>
-      <family name="SIC24AD" mfg="Team Digital" type="stationary" comment="The SIC24AD can be programmed in the usual way" file="TD_SIC24AD.xml">
+      <family name="SIC24AD" mfg="Team Digital, LLC" type="stationary" comment="The SIC24AD can be programmed in the usual way" file="TD_SIC24AD.xml">
         <model model="SIC24AD" lowVersionID="10" />
       </family>
-      <family name="SIC24e" mfg="Team Digital" type="stationary" comment="The SIC24e can be programmed in the usual way" file="TD_SIC24e.xml">
+      <family name="SIC24e" mfg="Team Digital, LLC" type="stationary" comment="The SIC24e can be programmed in the usual way" file="TD_SIC24e.xml">
         <model model="SIC24e" lowVersionID="10" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SMC4.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SMC4.xml">
         <model model="SMC4" lowVersionID="1" comment="SMC4 is a stationary decoder, but it can be programmed in the usual way" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" comment="SMD2 is a stationary decoder, but it can be programmed in the usual way" file="TD_SMD2.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" comment="SMD2 is a stationary decoder, but it can be programmed in the usual way" file="TD_SMD2.xml">
         <model model="SMD2" lowVersionID="1" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SMD8.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SMD8.xml">
         <model model="SMD8" lowVersionID="52" comment="SMD8 is a stationary decoder, but it can be programmed in the usual way" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SMD82.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SMD82.xml">
         <model model="SMD82" lowVersionID="1" comment="SMD82 is a stationary decoder, but it can be programmed in the usual way" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SMD84.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SMD84.xml">
         <model model="SMD84" lowVersionID="1" comment="SMD84 is a stationary decoder, but it can be programmed in the usual way" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SRC16.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SRC16.xml">
         <model model="SRC16" lowVersionID="1" comment="SRC16 is a stationary decoder with serial bus" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SRC162.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_SRC162.xml">
         <model model="SRC162" lowVersionID="1" comment="SRC162 is a stationary decoder with serial bus" />
       </family>
-      <family name="SRC8" mfg="Team Digital" type="stationary" comment="SRC8 is not stationary decoder, but it can be programmed in the usual way" file="TD_SRC8.xml">
+      <family name="SRC8" mfg="Team Digital, LLC" type="stationary" comment="SRC8 is not stationary decoder, but it can be programmed in the usual way" file="TD_SRC8.xml">
         <model model="SRC8" lowVersionID="12" />
       </family>
-      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_Servette.xml">
+      <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" file="TD_Servette.xml">
         <model model="Servette" lowVersionID="1" comment="Servette is a stationary decoder, but it can be programmed in the usual way" />
       </family>
       <family name="Quad-LN" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN is programmed in OPs mode except for the address." file="TamValleyDepot_QuadLn.xml">
@@ -33236,7 +33572,8 @@
         <model model="73510" />
       </family>
       <family name="Mini-Function Decoder" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_73900.xml">
-        <model model="73900" />
+        <model model="73800" productID="73800" maxTotalCurrent="0.6A" />
+        <model model="73900" productID="73900" maxTotalCurrent="0.6A" />
       </family>
       <family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order" file="Uhlenbrock_73xx5.xml">
         <!-- to be checked by hardware owner -->
@@ -33852,7 +34189,7 @@
           <output name="4" maxcurrent="100 mA" />
         </model>
       </family>
-      <family name="Wekomm for LSM" mfg="Wekomm" file="Wekomm_RRR.xml">
+      <family name="Wekomm for LSM" mfg="Wekomm Engineering, GmbH" file="Wekomm_RRR.xml">
         <model model="Wekomm_RRR" />
         <functionlabels>
           <functionlabel num="0" lockable="true">Cab Lights</functionlabel>

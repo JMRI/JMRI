@@ -42,13 +42,12 @@ import jmri.RouteManager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.implementation.DefaultConditionalAction;
+import jmri.swing.NamedBeanComboBox;
 import jmri.swing.RowSorterUtil;
 import jmri.util.AlphanumComparator;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-import jmri.swing.NamedBeanComboBox;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Swing action to create and register a Route Table.
@@ -294,10 +293,10 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             // want to update when enabled parameter changes
             @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-                if (e.getPropertyName().equals("Enabled")) { //NOI18N
+                if (e.getPropertyName().equals("Enabled")) { // NOI18N
                     return true;
                 }
-                if (e.getPropertyName().equals("Locked")) { //NOI18N
+                if (e.getPropertyName().equals("Locked")) { // NOI18N
                     return true;
                 } else {
                     return super.matchPropertyName(e);
@@ -488,6 +487,15 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             sensor3 = new NamedBeanComboBox<>(InstanceManager.sensorManagerInstance());
             cTurnout = new NamedBeanComboBox<>(InstanceManager.turnoutManagerInstance());
             cLockTurnout = new NamedBeanComboBox<>(InstanceManager.turnoutManagerInstance());
+
+            // Set combo max rows
+            JComboBoxUtil.setupComboBoxMaxRows(turnoutsAlignedSensor);
+            JComboBoxUtil.setupComboBoxMaxRows(sensor1);
+            JComboBoxUtil.setupComboBoxMaxRows(sensor2);
+            JComboBoxUtil.setupComboBoxMaxRows(sensor3);
+            JComboBoxUtil.setupComboBoxMaxRows(cTurnout);
+            JComboBoxUtil.setupComboBoxMaxRows(cLockTurnout);
+
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddRoute"), false, true); // title later changed for Edit
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.RouteAddEdit", true);
             addFrame.setLocation(100, 30);
@@ -563,10 +571,11 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             JTable routeTurnoutTable = new JTable(_routeTurnoutModel);
             TableRowSorter<RouteTurnoutModel> rtSorter = new TableRowSorter<>(_routeTurnoutModel);
 
-            // use NamedBean's built-in Comparator interface for sorting the system name column
-            RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
+            // Use AlphanumComparator for SNAME and UNAME columns.  Start with SNAME sort.
+            rtSorter.setComparator(RouteTurnoutModel.SNAME_COLUMN, new AlphanumComparator());
             rtSorter.setComparator(RouteTurnoutModel.UNAME_COLUMN, new AlphanumComparator());
-            RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.UNAME_COLUMN, SortOrder.ASCENDING);
+            RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
+
             routeTurnoutTable.setRowSorter(rtSorter);
             routeTurnoutTable.setRowSelectionAllowed(false);
             routeTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 80));
@@ -618,10 +627,10 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             JTable routeSensorTable = new JTable(_routeSensorModel);
             TableRowSorter<RouteSensorModel> rsSorter = new TableRowSorter<>(_routeSensorModel);
 
-            // use NamedBean's built-in Comparator interface for sorting the system name column
+            // Use AlphanumComparator for SNAME and UNAME columns.  Start with SNAME sort.
+            rsSorter.setComparator(RouteTurnoutModel.SNAME_COLUMN, new AlphanumComparator());
+            rsSorter.setComparator(RouteTurnoutModel.UNAME_COLUMN, new AlphanumComparator());
             RowSorterUtil.setSortOrder(rsSorter, RouteSensorModel.SNAME_COLUMN, SortOrder.ASCENDING);
-            rtSorter.setComparator(RouteTurnoutModel.UNAME_COLUMN, new AlphanumComparator());
-            RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.UNAME_COLUMN, SortOrder.ASCENDING);
             routeSensorTable.setRowSorter(rsSorter);
             routeSensorTable.setRowSelectionAllowed(false);
             routeSensorTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 80));
@@ -849,11 +858,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 // remind to save, if Route was created or edited
                 if (routeDirty) {
-                    InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showInfoMessage(Bundle.getMessage("ReminderTitle"),
-                                    Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemRouteTable")),
-                                    getClassName(),
-                                    "remindSaveRoute"); //NOI18N
+                    showReminderMessage();
                     routeDirty = false;
                 }
                 // hide addFrame
@@ -872,6 +877,14 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         // display the window
         addFrame.setVisible(true);
         autoSystemName();
+    }
+
+    void showReminderMessage() {
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                showInfoMessage(Bundle.getMessage("ReminderTitle"),  // NOI18N
+                        Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemRouteTable")),  // NOI18N
+                        getClassName(),
+                        "remindSaveRoute"); // NOI18N
     }
 
     void autoSystemName() {
@@ -1846,6 +1859,9 @@ public class RouteTableAction extends AbstractTableAction<Route> {
      * Cancel Add mode.
      */
     void cancelAdd() {
+        if (routeDirty) {
+            showReminderMessage();
+        }
         curRoute = null;
         finishUpdate();
         status1.setText(createInst);
@@ -2073,9 +2089,15 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
     private boolean showAll = true;   // false indicates show only included Turnouts
 
-    public final static String LOGIX_SYS_NAME = "RTX";
-    public final static String CONDITIONAL_SYS_PREFIX = LOGIX_SYS_NAME + "C";
+    public final static String LOGIX_SYS_NAME;
+    public final static String CONDITIONAL_SYS_PREFIX;
     private static int ROW_HEIGHT;
+
+    static {
+        String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();
+        LOGIX_SYS_NAME = logixPrefix + ":RTX:";
+        CONDITIONAL_SYS_PREFIX = LOGIX_SYS_NAME + "C";
+    }
 
     private static String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),
         Bundle.getMessage("ColumnUserName"),
@@ -2285,6 +2307,6 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         return Bundle.getMessage("TitleRouteTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteTableAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RouteTableAction.class);
 
 }

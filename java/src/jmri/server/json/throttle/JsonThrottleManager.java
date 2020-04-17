@@ -28,18 +28,6 @@ public class JsonThrottleManager implements InstanceManagerAutoDefault {
         // do nothing
     }
 
-    /**
-     *
-     * @return the default JsonThrottleManager
-     * @deprecated since 4.11.4; use
-     * {@link InstanceManager#getDefault(java.lang.Class)} directly
-     */
-    @Deprecated
-    public static JsonThrottleManager getDefault() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "getDefault");        
-        return InstanceManager.getDefault(JsonThrottleManager.class);
-    }
-
     public Collection<JsonThrottle> getThrottles() {
         return this.throttles.values();
     }
@@ -88,8 +76,19 @@ public class JsonThrottleManager implements InstanceManagerAutoDefault {
         return InstanceManager.getDefault(ThrottleManager.class).requestThrottle(address, listener, false);
     }
 
+    /**
+     * Make the JsonThrottle listen to the given address.
+     *
+     * @param address  the address to listen to
+     * @param throttle the throttle that should listen
+     * @deprecated since 4.19.5 without direct replacement; JsonThrottles
+     * already attach themselves as listeners to the throttle in
+     * {@link JsonThrottle#notifyThrottleFound(jmri.DccThrottle)}
+     */
+    @Deprecated
     public void attachListener(DccLocoAddress address, JsonThrottle throttle) {
         InstanceManager.getDefault(ThrottleManager.class).attachListener(address, throttle);
     }
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonThrottleManager.class);
+
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonThrottleManager.class);
 }

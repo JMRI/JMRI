@@ -64,7 +64,9 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
      */
     @Override
     public void forwardMessage(AbstractMRListener reply, AbstractMRMessage m) {
-        ((DCCppListener) reply).message((DCCppMessage) m);
+        if (reply instanceof DCCppListener && m instanceof DCCppMessage) {
+            ((DCCppListener) reply).message((DCCppMessage) m);
+        }
     }
 
     /**
@@ -80,6 +82,10 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     @Override
     public void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         // check parity
+        if (!( client instanceof DCCppListener || m instanceof DCCppReply )){
+            return;
+        }
+        
         try {
             // NOTE: For now, just forward ALL messages without filtering
             ((DCCppListener) client).message((DCCppReply) m);

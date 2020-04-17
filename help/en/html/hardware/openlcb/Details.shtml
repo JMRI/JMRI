@@ -20,9 +20,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>Hardware Support: OpenLCB - Technical
@@ -66,7 +66,7 @@
       <p><a href="../can/index.shtml">CAN support Help</a></p>
 
       <p>Back to the <a href="index.shtml">main OpenLCB Help
-      page</a></p><!--#include virtual="/Footer" -->
+      page</a></p><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

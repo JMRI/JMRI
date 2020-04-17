@@ -1,14 +1,12 @@
 package jmri.jmrit;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Calendar;
@@ -129,7 +127,7 @@ public abstract class XmlFile {
 
     /**
      * Read a File as XML, and return the root object.
-     *
+     * <p>
      * Exceptions are only thrown when local recovery is impossible.
      *
      * @param file File to be parsed. A FileNotFoundException is thrown if it
@@ -151,7 +149,7 @@ public abstract class XmlFile {
 
     /**
      * Read an {@link java.io.InputStream} as XML, and return the root object.
-     *
+     * <p>
      * Exceptions are only thrown when local recovery is impossible.
      *
      * @param stream InputStream to be parsed.
@@ -166,7 +164,7 @@ public abstract class XmlFile {
 
     /**
      * Read a URL as XML, and return the root object.
-     *
+     * <p>
      * Exceptions are only thrown when local recovery is impossible.
      *
      * @param url URL locating the data file
@@ -457,7 +455,7 @@ public abstract class XmlFile {
 
     /**
      * Execute the Processing Instructions in the file.
-     *
+     * <p>
      * JMRI only knows about certain ones; the others will be ignored.
      *
      * @param doc the document containing processing instructions
@@ -634,42 +632,33 @@ public abstract class XmlFile {
 
     /**
      * Provide a JFileChooser initialized to the default user location, and with
-     * a default filter.
+     * a default filter. This filter excludes {@code .zip} and {@code .jar}
+     * archives.
      *
-     * @param filter  Title for the filter, may not be null
-     * @param suffix1 An allowed suffix, or null
-     * @param suffix2 A second allowed suffix, or null. If both arguments are
-     *                null, no specific filtering is done.
+     * @param filter Title for the filter, may not be null
+     * @param suffix Allowed file extensions, if empty all extensions are
+     *               allowed except {@code .zip} and {@code .jar}; include an
+     *               empty String to allow files without an extension if
+     *               specifying other extensions.
      * @return a file chooser
      */
-    public static JFileChooser userFileChooser(
-            String filter, String suffix1, String suffix2) {
+    public static JFileChooser userFileChooser(String filter, String... suffix) {
         JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
-        NoArchiveFileFilter filt = new NoArchiveFileFilter(filter);
-        if (suffix1 != null) {
-            filt.addExtension(suffix1);
-        }
-        if (suffix2 != null) {
-            filt.addExtension(suffix2);
-        }
-        fc.setFileFilter(filt);
+        fc.setFileFilter(new NoArchiveFileFilter(filter, suffix));
         return fc;
     }
 
+    /**
+     * Provide a JFileChooser initialized to the default user location, and with
+     * a default filter. This filter excludes {@code .zip} and {@code .jar}
+     * archives.
+     *
+     * @return a file chooser
+     */
     public static JFileChooser userFileChooser() {
         JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
-        NoArchiveFileFilter filt = new NoArchiveFileFilter();
-        fc.setFileFilter(filt);
+        fc.setFileFilter(new NoArchiveFileFilter());
         return fc;
-    }
-
-    public static JFileChooser userFileChooser(String filter) {
-        return userFileChooser(filter, null, null);
-    }
-
-    public static JFileChooser userFileChooser(
-            String filter, String suffix1) {
-        return userFileChooser(filter, suffix1, null);
     }
 
     @SuppressWarnings("deprecation") // wait for updated Xerxes before coding substitute for SAXBuilder(String, boolean)

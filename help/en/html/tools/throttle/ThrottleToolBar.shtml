@@ -26,9 +26,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>Throttle pane Toolbar</h1><img src=
@@ -65,7 +65,7 @@
 
       <h2>List Button</h2>Show/Hide the <a href=
       "ThrottlesListWindow.shtml">Throttles List</a>. 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

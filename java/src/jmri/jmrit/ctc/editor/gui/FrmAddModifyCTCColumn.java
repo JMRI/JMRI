@@ -81,6 +81,7 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
 
         _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
             }
@@ -100,6 +101,7 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
         _mGUIGeneratedAtLeastOnceAlready.setText(Bundle.getMessage("LabelDlgAddModGen")
         );
         _mGUIGeneratedAtLeastOnceAlready.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mGUIGeneratedAtLeastOnceAlreadyActionPerformed(evt);
             }

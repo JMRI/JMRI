@@ -1,20 +1,11 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.POS_POINT;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
-
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 import jmri.JmriException;
-import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import jmri.util.*;
+import org.junit.*;
+import org.netbeans.jemmy.operators.Operator;
 
 /**
  * Test simple functioning of TrackSegment
@@ -34,11 +25,11 @@ public class TrackSegmentTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
             // Invalid parameters in TrackSegment constructor call
-            TrackSegment ts = new TrackSegment("TS01", null, NONE, null, NONE, false, false, layoutEditor);
+            TrackSegment ts = new TrackSegment("TS01", null, LayoutEditor.HitPointType.NONE, null, LayoutEditor.HitPointType.NONE, false, false, layoutEditor);
             Assert.assertNotNull("TrackSegment TS01 not null", ts);
-            jmri.util.JUnitAppender.assertErrorMessage("Invalid object in TrackSegment constructor call - TS01");
-            jmri.util.JUnitAppender.assertErrorMessage("Invalid connect type 1 ('0') in TrackSegment constructor - TS01");
-            jmri.util.JUnitAppender.assertErrorMessage("Invalid connect type 2 ('0') in TrackSegment constructor - TS01");
+            JUnitAppender.assertErrorMessage("Invalid object in TrackSegment constructor call - TS01");
+            JUnitAppender.assertErrorMessage("Invalid connect type 1 ('NONE') in TrackSegment constructor - TS01");
+            JUnitAppender.assertErrorMessage("Invalid connect type 2 ('NONE') in TrackSegment constructor - TS01");
         }
     }
 
@@ -46,19 +37,19 @@ public class TrackSegmentTest {
     public void testReplaceTrackConnection() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertFalse("trackSegment.replaceTrackConnection(null, null, NONE) fail", trackSegment.replaceTrackConnection(null, null, NONE));
-            jmri.util.JUnitAppender.assertErrorMessage("Can't replace null track connection with null");
+            Assert.assertFalse("trackSegment.replaceTrackConnection(null, null, NONE) fail", trackSegment.replaceTrackConnection(null, null, LayoutEditor.HitPointType.NONE));
+            JUnitAppender.assertWarnMessage("TS1.replaceTrackConnection(null, null, NONE); Can't replace null track connection with null");
 
             LayoutTrack c1 = trackSegment.getConnect1();
-            int t1 = trackSegment.getType1();
-            Assert.assertTrue("trackSegment.replaceTrackConnection(c1, null, NONE) fail", trackSegment.replaceTrackConnection(c1, null, NONE));
+            LayoutEditor.HitPointType t1 = trackSegment.getType1();
+            Assert.assertTrue("trackSegment.replaceTrackConnection(c1, null, NONE) fail", trackSegment.replaceTrackConnection(c1, null, LayoutEditor.HitPointType.NONE));
             Assert.assertNull("trackSegment.replaceTrackConnection(c1, null, NONE) fail", trackSegment.getConnect1());
 
             Assert.assertTrue("trackSegment.replaceTrackConnection(null, c1, t1) fail", trackSegment.replaceTrackConnection(null, c1, t1));
             Assert.assertEquals("trackSegment.replaceTrackConnection(null, c1, t1) fail", c1, trackSegment.getConnect1());
 
             PositionablePoint a3 = new PositionablePoint("A3", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 10.0), layoutEditor);
-            Assert.assertTrue("trackSegment.replaceTrackConnection(c1, a3, POS_POINT) fail", trackSegment.replaceTrackConnection(c1, a3, POS_POINT));
+            Assert.assertTrue("trackSegment.replaceTrackConnection(c1, a3, POS_POINT) fail", trackSegment.replaceTrackConnection(c1, a3, LayoutEditor.HitPointType.POS_POINT));
         }
     }
 
@@ -66,7 +57,7 @@ public class TrackSegmentTest {
     public void testToString() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertEquals("trackSegment.toString()", "TrackSegment TS1 c1:{A1 (1)}, c2:{A2 (1)}", trackSegment.toString());
+            Assert.assertEquals("trackSegment.toString()", "TrackSegment TS1 c1:{A1 (POS_POINT)}, c2:{A2 (POS_POINT)}", trackSegment.toString());
         }
     }
 
@@ -74,13 +65,13 @@ public class TrackSegmentTest {
     public void testSetNewConnect() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            trackSegment.setNewConnect1(null, NONE);
+            trackSegment.setNewConnect1(null, LayoutEditor.HitPointType.NONE);
             Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", null, trackSegment.getConnect1());
-            Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", NONE, trackSegment.getType1());
+            Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", LayoutEditor.HitPointType.NONE, trackSegment.getType1());
 
-            trackSegment.setNewConnect2(null, NONE);
+            trackSegment.setNewConnect2(null, LayoutEditor.HitPointType.NONE);
             Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", null, trackSegment.getConnect2());
-            Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", NONE, trackSegment.getType2());
+            Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", LayoutEditor.HitPointType.NONE, trackSegment.getType2());
         }
     }
 
@@ -99,7 +90,7 @@ public class TrackSegmentTest {
         if ((layoutEditor != null) && (trackSegment != null)) {
             boolean fail = true;   // assume failure (pessimist!)
             try {
-                Assert.assertNull("trackSegment.getConnection()", trackSegment.getConnection(NONE));
+                Assert.assertNull("trackSegment.getConnection()", trackSegment.getConnection(LayoutEditor.HitPointType.NONE));
             } catch (JmriException e) {
                 fail = false;
             }
@@ -174,7 +165,7 @@ public class TrackSegmentTest {
             } catch (NullPointerException e) {
             }
             Assert.assertNull("trackSegment.getLayoutBlock() == null", trackSegment.getLayoutBlock());
-            jmri.util.JUnitAppender.assertErrorMessage("provideLayoutBlock: The block name does not return a block.");
+            JUnitAppender.assertErrorMessage("provideLayoutBlock: The block name 'invalid name' does not return a block.");
 
 //            LayoutBlock layoutBlock = new LayoutBlock("ILB999", "Test Block");
 //            trackSegment.setLayoutBlockByName("ILB999");
@@ -213,27 +204,34 @@ public class TrackSegmentTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
             Point2D ccc = trackSegment.getCentreSeg();
-            Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ccc, false, false));
-            Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ccc, false, true));
-            Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ccc, true, false));
-            Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ccc, true, true));
+            Assert.assertEquals("trackSegment.findHitPointType()", LayoutEditor.HitPointType.TRACK, trackSegment.findHitPointType(ccc, false, false));
+            Assert.assertEquals("trackSegment.findHitPointType()", LayoutEditor.HitPointType.NONE, trackSegment.findHitPointType(ccc, false, true));
+            Assert.assertEquals("trackSegment.findHitPointType()", LayoutEditor.HitPointType.TRACK, trackSegment.findHitPointType(ccc, true, false));
+            Assert.assertEquals("trackSegment.findHitPointType()", LayoutEditor.HitPointType.NONE, trackSegment.findHitPointType(ccc, true, true));
 
             Point2D ep1 = trackSegment.getConnect1().getCoordsForConnectionType(trackSegment.getType1());
-            Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ep1, false, false));
-            Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ep1, false, true));
-            Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ep1, true, false));
-            Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ep1, true, true));
+            Assert.assertEquals("trackSegment.findHitPointType()", LayoutEditor.HitPointType.TRACK, trackSegment.findHitPointType(ep1, false, false));
+            Assert.assertEquals("trackSegment.findHitPointType()", LayoutEditor.HitPointType.NONE, trackSegment.findHitPointType(ep1, false, true));
+            Assert.assertEquals("trackSegment.findHitPointType()", LayoutEditor.HitPointType.TRACK, trackSegment.findHitPointType(ep1, true, false));
+            Assert.assertEquals("trackSegment.findHitPointType()", LayoutEditor.HitPointType.NONE, trackSegment.findHitPointType(ep1, true, true));
 
             Point2D ep2 = trackSegment.getConnect2().getCoordsForConnectionType(trackSegment.getType2());
-            Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ep2, false, false));
-            Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ep2, false, true));
-            Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ep2, true, false));
-            Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ep2, true, true));
+            Assert.assertEquals("trackSegment.findHitPointType()", LayoutEditor.HitPointType.TRACK, trackSegment.findHitPointType(ep2, false, false));
+            Assert.assertEquals("trackSegment.findHitPointType()", LayoutEditor.HitPointType.NONE, trackSegment.findHitPointType(ep2, false, true));
+            Assert.assertEquals("trackSegment.findHitPointType()", LayoutEditor.HitPointType.TRACK, trackSegment.findHitPointType(ep2, true, false));
+            Assert.assertEquals("trackSegment.findHitPointType()", LayoutEditor.HitPointType.NONE, trackSegment.findHitPointType(ep2, true, true));
+
+            trackSegment.setCircle(true);
+            Point2D cp = trackSegment.getCoordsCenterCircle();
+            Assert.assertEquals("trackSegment.findHitPointType()", LayoutEditor.HitPointType.TRACK_CIRCLE_CENTRE, trackSegment.findHitPointType(cp, false, false));
+            Assert.assertEquals("trackSegment.findHitPointType()", LayoutEditor.HitPointType.NONE, trackSegment.findHitPointType(cp, false, true));
+            Assert.assertEquals("trackSegment.findHitPointType()", LayoutEditor.HitPointType.TRACK_CIRCLE_CENTRE, trackSegment.findHitPointType(cp, true, false));
+            Assert.assertEquals("trackSegment.findHitPointType()", LayoutEditor.HitPointType.NONE, trackSegment.findHitPointType(cp, true, true));
         }
     }
 
     /*
-        Arrow Decorations
+     *  Arrow Decorations
      */
     @Test
     public void testDefaultGetSetArrowStyle() {
@@ -419,7 +417,7 @@ public class TrackSegmentTest {
     public void testDefaultGetSetBumperLineWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertEquals("trackSegment.getBumperLineWidth() == 1 (default).", 1, trackSegment.getBumperLineWidth());
+            Assert.assertEquals("trackSegment.getBumperLineWidth() == 8 (default).", 8, trackSegment.getBumperLineWidth());
             trackSegment.setBumperLineWidth(-1);
             Assert.assertNotEquals("trackSegment.setBumperLineWidth(-1) not allowed.", -1, trackSegment.getBumperLineWidth());
             trackSegment.setBumperLineWidth(5);
@@ -537,11 +535,17 @@ public class TrackSegmentTest {
      * @throws Exception
      */
     @BeforeClass
-    static public void setUpAll() throws Exception {
+    public static void setUpClass() throws Exception {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.resetProfileManager();
+
             layoutEditor = new LayoutEditor();
+
+            //save the old string comparator
+            stringComparator = Operator.getDefaultStringComparator();
+            //set default string matching comparator to one that exactly matches and is case sensitive
+            Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
         }
     }
 
@@ -551,16 +555,18 @@ public class TrackSegmentTest {
      * @throws Exception
      */
     @AfterClass
-    static public void tearDownAll() throws Exception {
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
+    public static void tearDownClass() throws Exception {
+        if (!GraphicsEnvironment.isHeadless()) {
+            if (layoutEditor != null) {
+                JUnitUtil.dispose(layoutEditor);
+                // release refereces to layout editor
+                layoutEditor = null;
+            }
+            //restore the default string matching comparator
+            Operator.setDefaultStringComparator(stringComparator);
         }
-
-        // release refereces to layout editor
-        layoutEditor = null;
-
-        JUnitUtil.tearDown();
     }
+    private static Operator.StringComparator stringComparator = null;
 
     /**
      * This is called before each test
@@ -569,13 +575,13 @@ public class TrackSegmentTest {
      */
     @Before
     public void setUpEach() throws Exception {
-        //JUnitUtil.setUp();
-        //jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             if (layoutEditor != null) {
                 PositionablePoint p1 = new PositionablePoint("A1", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 20.0), layoutEditor);
                 PositionablePoint p2 = new PositionablePoint("A2", PositionablePoint.ANCHOR, new Point2D.Double(20.0, 33.0), layoutEditor);
-                trackSegment = new TrackSegment("TS1", p1, LayoutTrack.POS_POINT, p2, LayoutTrack.POS_POINT, false, true, layoutEditor);
+                trackSegment = new TrackSegment("TS1", p1, LayoutEditor.HitPointType.POS_POINT, p2, LayoutEditor.HitPointType.POS_POINT, false, true, layoutEditor);
             }
         }
     }
@@ -589,6 +595,6 @@ public class TrackSegmentTest {
     public void tearDownEach() throws Exception {
         // release refereces to track segment
         trackSegment = null;
-        //JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 }

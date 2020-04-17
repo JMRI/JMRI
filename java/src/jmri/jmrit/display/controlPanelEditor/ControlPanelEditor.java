@@ -51,7 +51,6 @@ import javax.swing.SwingWorker;
 import jmri.CatalogTreeManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.CoordinateEdit;
@@ -101,7 +100,6 @@ import org.slf4j.LoggerFactory;
  * implemented at JDK 1.2 for backward compatibility
  *
  * @author Pete Cressman Copyright: Copyright (c) 2009, 2010, 2011
- *
  */
 public class ControlPanelEditor extends Editor implements DropTargetListener, ClipboardOwner {
 
@@ -183,26 +181,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
         pack();
         setVisible(true);
-        class MakeCatalog extends SwingWorker<CatalogPanel, Object> {
-
-            @Override
-            public CatalogPanel doInBackground() {
-                return CatalogPanel.makeDefaultCatalog();
-            }
-            /**
-             * Minimal implementation to catch and log errors
-             */
-            @Override
-            protected void done() {
-                try {
-                    get();  // called to get errors
-                } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
-                    log.error("Exception while in MakeCatalog", e);
-                }
-            }
-        }
-        (new MakeCatalog()).execute();
-        log.debug("Init SwingWorker launched");
     }
 
     protected void makeIconMenu() {
@@ -310,7 +288,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     protected void makeWarrantMenu(boolean edit, boolean addMenu) {
         JMenu oldMenu = _warrantMenu;
-        _warrantMenu = jmri.jmrit.logix.WarrantTableAction.makeWarrantMenu(edit);
+        _warrantMenu = jmri.jmrit.logix.WarrantTableAction.getDefault().makeWarrantMenu(edit);
         if (_warrantMenu == null) {
             _warrantMenu = new JMenu(ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle").getString("MenuWarrant"));
             JMenuItem aboutItem = new JMenuItem(Bundle.getMessage("AboutWarrant"));
@@ -342,7 +320,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             int idx = _menuBar.getComponentIndex(oldMenu);
             _menuBar.remove(oldMenu);
             _menuBar.add(_warrantMenu, idx);
-            
+
         }
         _menuBar.revalidate();
     }
@@ -1000,7 +978,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     ////////////////// Overridden methods of Editor //////////////////
     private boolean _manualSelection = false;
 
-    @Override 
+    @Override
     public void deselectSelectionGroup() {
         _circuitBuilder.hidePortalIcons();
         super.deselectSelectionGroup();
@@ -1062,6 +1040,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                             }
                             if (((String) select).equals(name)) {
                                 _manualSelection = true;
+                                highlight(pos);
                                 return pos;
                             }
                         }
@@ -1089,7 +1068,17 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         } else {
             if (event.isControlDown() && (event.isPopupTrigger() || event.isMetaDown() || event.isAltDown())) {
-                new ColorDialog(this, getTargetPanel(), ColorDialog.ONLY, null);
+                ActionListener ca = null;
+                Editor ed = this;
+                ca = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (_itemPalette != null) {
+                            _itemPalette.setEditor(ed);
+                        }
+                    }
+                };
+                new ColorDialog(this, getTargetPanel(), ColorDialog.ONLY, ca);
             }
         }
         if (!isEditable() && selection != null && selection.isHidden()) {
@@ -1316,7 +1305,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 selection.doMouseClicked(event);
             }
             if (selection instanceof IndicatorTrack) {
-                WarrantTableAction.mouseClickedOnBlock(((IndicatorTrack) selection).getOccBlock());
+                WarrantTableAction.getDefault().mouseClickedOnBlock(((IndicatorTrack) selection).getOccBlock());
             }
         }
         if (!isEditable()) {
@@ -1585,7 +1574,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     /**
-     * Create popup for a Positionable object Popup items common to all
+     * Create popup for a Positionable object. Popup items common to all
      * positionable objects are done before and after the items that pertain
      * only to specific Positionable types.
      */

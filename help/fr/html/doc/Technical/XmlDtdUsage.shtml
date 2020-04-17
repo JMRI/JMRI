@@ -23,7 +23,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -110,7 +110,7 @@
       <a href="XmlSchema.shtml">sch&eacute;ma XML</a> au lieu des
       DTDs et ce processus est diff&eacute;rent.
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

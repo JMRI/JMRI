@@ -2,7 +2,6 @@ package jmri.jmrix.loconet.downloader;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.BoxLayout;
@@ -205,7 +204,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
             p.add(new JLabel(Bundle.getMessage("LabelDev")
-                    + " ")); //NOI18N
+                    + " ")); // NOI18N
             developer.setToolTipText(Bundle.getMessage("TipValueRange",
                     MIN_VALUE_ZERO, MAX_VALUE_255));
             p.add(developer);
@@ -400,7 +399,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
             p.add(new JLabel(Bundle.getMessage("LabelEraseBlockSize")
-                    + " ")); //NOI18N
+                    + " ")); // NOI18N
             eraseBlockSize.setToolTipText(Bundle.getMessage("TipValueRange",
                     MIN_VALUE_64, MAX_VALUE_128));
             p.add(eraseBlockSize);
@@ -466,7 +465,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                         Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 this.disableDownloadVerifyButtons();
-                log.warn("Invalid dmf file 'Options' value {0}",text);
+                log.warn("Invalid dmf file 'Options' value {}",text);
                 return;
             }
         }
@@ -495,7 +494,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             }
             
             if (interpretationProblem == true) {
-                log.warn("Invalid dmf file 'Erase Blk Size' value {0}",text);
+                log.warn("Invalid dmf file 'Erase Blk Size' value {}",text);
                 JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ErrorInvalidEraseBlkSize", text, "Erase Blk Size"), // NOI18N
                         Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -524,10 +523,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
             chooser.addChoosableFileFilter(
                     new javax.swing.filechooser.FileNameExtensionFilter(
-                            "Digitrax Mangled Firmware (*.dmf)", "dmf")); //NOI18N
+                            "Digitrax Mangled Firmware (*.dmf)", "dmf")); // NOI18N
             chooser.addChoosableFileFilter(
                     new javax.swing.filechooser.FileNameExtensionFilter(
-                            "Intel Hex Format Firmware (*.hex)", "hex")); //NOI18N
+                            "Intel Hex Format Firmware (*.hex)", "hex")); // NOI18N
             chooser.addChoosableFileFilter(filter);
 
             // make the downloadable file filter the default active filter

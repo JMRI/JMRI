@@ -188,8 +188,10 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public void setCommandStation(@Nonnull CommandStation c) {
         commandStation = c;
-        ((DCCppCommandStation) c).setTrafficController(xt);
-        ((DCCppCommandStation) c).setSystemConnectionMemo(this);
+        if ( c instanceof DCCppCommandStation ) {
+            ((DCCppCommandStation) c).setTrafficController(xt);
+            ((DCCppCommandStation) c).setSystemConnectionMemo(this);
+        }
     }
 
     private CommandStation commandStation = null;

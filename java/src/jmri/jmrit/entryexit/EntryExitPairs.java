@@ -5,10 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
-import java.beans.VetoableChangeSupport;
 import java.util.*;
 import java.util.Map.Entry;
 import javax.annotation.CheckReturnValue;
@@ -21,7 +18,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
-import jmri.SignalSystem;
+import jmri.beans.VetoableChangeSupport;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
@@ -47,7 +44,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault,
+public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault,
         PropertyChangeListener {
 
     public int routingMethod = LayoutBlockConnectivityTools.METRIC;
@@ -110,7 +107,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     public final static int AUTOCANCEL = 0x02;
     public final static int AUTOSTACK = 0x03;
 
+    public final static int OVERLAP_CANCEL = 0x01;
+    public final static int OVERLAP_STACK = 0x02;
+
     int routeClearOption = PROMPTUSER;
+    int routeOverlapOption = PROMPTUSER;
+    String memoryOption = "";     // Optional memory variable to receive allocation messages
+    int memoryClearDelay = 0;     // Delay before clearing memory, 0 for clearing disabled
 
     static JPanel glassPane = new JPanel();
 
@@ -212,6 +215,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return ENTRYEXIT;
     }
 
+    /** {@inheritDoc} */
+    @Override
     public DestinationPoints getBySystemName(String systemName) {
         for (Source e : nxpair.values()) {
             DestinationPoints pd = e.getByUniqueId(systemName);
@@ -224,13 +229,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public DestinationPoints getBeanBySystemName(String systemName) {
-        return getBySystemName(systemName);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public DestinationPoints getBeanByUserName(String userName) {
+    public DestinationPoints getByUserName(@Nonnull String userName) {
         for (Source e : nxpair.values()) {
             DestinationPoints pd = e.getByUserName(userName);
             if (pd != null) {
@@ -242,15 +241,16 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public DestinationPoints getNamedBean(String name) {
-        DestinationPoints b = getBeanByUserName(name);
+    public DestinationPoints getNamedBean(@Nonnull String name) {
+        DestinationPoints b = getByUserName(name);
         if (b != null) {
             return b;
         }
-        return getBeanBySystemName(name);
+        return getBySystemName(name);
     }
 
     /** {@inheritDoc} */
+    @Nonnull
     @Override
     public SystemConnectionMemo getMemo() {
         return memo;
@@ -258,6 +258,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String getSystemPrefix() {
         return memo.getSystemPrefix();
     }
@@ -270,38 +271,21 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public String makeSystemName(String s) {
+    @Nonnull
+    public String makeSystemName(@Nonnull String s) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
     /** {@inheritDoc} */
     @Override
     @CheckReturnValue
-    public int getObjectCount() { 
+    public int getObjectCount() {
         return getNamedBeanList().size(); // not efficient
-    }
-
-    /**
-     * Implemented to support the Conditional combo box name list
-     * @since 4.9.3
-     * @return a sorted array of NX names
-     */
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public String[] getSystemNameArray() {
-        List<String> nxList = getEntryExitList();
-        String[] arr = new String[nxList.size()];
-        int i = 0;
-        for (String nxRow : nxList) {
-            arr[i] = nxRow;
-            i++;
-        }
-        java.util.Arrays.sort(arr);
-        return arr;
     }
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
         return getEntryExitList();
@@ -313,6 +297,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * @return a list of Destination Point beans
      */
     @Override
+    @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<DestinationPoints> getNamedBeanList() {
         List<DestinationPoints> beanList = new ArrayList<>();
@@ -331,6 +316,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * @return a list of Destination Point beans
      */
     @Override
+    @Nonnull
     public SortedSet<DestinationPoints> getNamedBeanSet() {
         TreeSet<DestinationPoints> beanList = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
         for (Source e : nxpair.values()) {
@@ -344,13 +330,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public void register(DestinationPoints n) {
+    public void register(@Nonnull DestinationPoints n) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
     /** {@inheritDoc} */
     @Override
-    public void deregister(DestinationPoints n) {
+    public void deregister(@Nonnull DestinationPoints n) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
@@ -360,6 +346,30 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     public int getClearDownOption() {
         return routeClearOption;
+    }
+
+    public void setOverlapOption(int i) {
+        routeOverlapOption = i;
+    }
+
+    public int getOverlapOption() {
+        return routeOverlapOption;
+    }
+
+    public void setMemoryOption(String memoryName) {
+        memoryOption = memoryName;
+    }
+
+    public String getMemoryOption() {
+        return memoryOption;
+    }
+
+    public void setMemoryClearDelay(int secs) {
+        memoryClearDelay = secs;
+    }
+
+    public int getMemoryClearDelay() {
+        return memoryClearDelay;
     }
 
     /** {@inheritDoc} */
@@ -1282,22 +1292,6 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         }
     }
 
-    PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
     boolean runWhenStabilised = false;
     LayoutEditor toUseWhenStable;
     int interlockTypeToUseWhenStable;
@@ -1369,65 +1363,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     }
 
-    VetoableChangeSupport vcs = new VetoableChangeSupport(this);
-
     @Override
-    public synchronized void addVetoableChangeListener(VetoableChangeListener l) {
-        vcs.addVetoableChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removeVetoableChangeListener(VetoableChangeListener l) {
-        vcs.removeVetoableChangeListener(l);
-    }
-
-
-    @Override
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(propertyName, listener);
-    }
-
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListeners() {
-        return pcs.getPropertyChangeListeners();
-    }
-
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
-        return pcs.getPropertyChangeListeners(propertyName);
-    }
-
-    @Override
-    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        pcs.removePropertyChangeListener(propertyName, listener);
-    }
-
-    @Override
-    public void addVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
-        vcs.addVetoableChangeListener(propertyName, listener);
-    }
-
-    @Override
-    public VetoableChangeListener[] getVetoableChangeListeners() {
-        return vcs.getVetoableChangeListeners();
-    }
-
-    @Override
-    public VetoableChangeListener[] getVetoableChangeListeners(String propertyName) {
-        return vcs.getVetoableChangeListeners(propertyName);
-    }
-
-    @Override
-    public void removeVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
-        vcs.removeVetoableChangeListener(propertyName, listener);
-    }
-
-    @Override
-    public void deleteBean(DestinationPoints bean, String property) throws PropertyVetoException {
+    public void deleteBean(@Nonnull DestinationPoints bean, @Nonnull String property) throws PropertyVetoException {
 
     }
 
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");  // NOI18N
     }
@@ -1453,7 +1395,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     final List<ManagerDataListener<DestinationPoints>> listeners = new ArrayList<>();
-    
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(EntryExitPairs.class);
+
 }

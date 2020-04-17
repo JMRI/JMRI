@@ -20,9 +20,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <a name="Top" id="Top"></a> <img src="images/Logo.gif" alt=
       "JMRI DecoderPro Logo" width="163" height="117" vspace="15"
@@ -83,7 +83,7 @@
 
         <p><a href="index.shtml#Getting%20Started">Back to
         Index</a></p>
-      </div><!--#include virtual="/Footer" -->
+      </div><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

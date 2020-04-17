@@ -1,5 +1,6 @@
 package jmri.jmrix;
 
+import org.assertj.swing.edt.GuiActionRunner;
 import org.junit.*;
 import javax.swing.JPanel;
 
@@ -13,9 +14,11 @@ abstract public class AbstractSerialConnectionConfigTestBase extends jmri.jmrix.
     @Test
     @Override
     public void testLoadDetails(){
-        // verify no exceptions thrown
-        cc.loadDetails(new JPanel());
-        // load details MAY produce an error message if no ports are found.
-        jmri.util.JUnitAppender.suppressErrorMessage("No usable ports returned");
+        GuiActionRunner.execute(() -> {
+            // verify no exceptions thrown
+            cc.loadDetails(new JPanel());
+            // load details MAY produce an error message if no ports are found.
+            jmri.util.JUnitAppender.suppressErrorMessage("No usable ports returned");
+        });
     }
 }

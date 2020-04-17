@@ -162,11 +162,12 @@ public class LoadAndStoreTestBase {
 
             String[] startsWithStrings = {
                 "  <!--Written by JMRI version",
-                "  <timebase", // time changes from timezone to timezone
-                "    <test>", // version changes over time
-                "    <modifier", // version changes over time
-                "    <major", // version changes over time
-                "    <minor", // version changes over time
+                "  <timebase",      // time changes from timezone to timezone
+                "    <test>",       // version changes over time
+                "    <modifier",    // version changes over time
+                "    <major",       // version changes over time
+                "    <minor",       // version changes over time
+                "<layout-config",   // Linux seems to put attributes in different order
                 "<?xml-stylesheet", // Linux seems to put attributes in different order
                 "    <memory systemName=\"IMCURRENTTIME\"", // time varies - old format
                 "    <modifier>This line ignored</modifier>"
@@ -306,12 +307,15 @@ public class LoadAndStoreTestBase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initMemoryManager();
+        System.setProperty("jmri.test.no-dialogs", "true");
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
+        System.setProperty("jmri.test.no-dialogs", "false");
     }
 
     private final static Logger log = LoggerFactory.getLogger(LoadAndStoreTest.class);

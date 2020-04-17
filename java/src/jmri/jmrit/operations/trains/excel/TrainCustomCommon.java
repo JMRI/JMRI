@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 
 public abstract class TrainCustomCommon {
 
+    protected final String xmlElement;
+    protected String directoryName;
     private String mcAppName = "MC4JMRI.xls"; // NOI18N
     private final String mcAppArg = ""; // NOI18N
     private String csvNamesFileName = "CSVFilesFile.txt"; // NOI18N
@@ -24,6 +26,11 @@ public abstract class TrainCustomCommon {
     private long waitTimeSeconds = 0;
     private Process process;
     private boolean alive = false;
+
+    protected TrainCustomCommon(String dirName, String xmlElement) {
+        directoryName = dirName;
+        this.xmlElement = xmlElement;
+    }
 
     public String getFileName() {
         return mcAppName;
@@ -42,11 +49,15 @@ public abstract class TrainCustomCommon {
         csvNamesFileName = name;
     }
 
-    abstract public String getDirectoryName();
+    public String getDirectoryName() {
+        return directoryName;
+    }
 
-    abstract public void setDirectoryName(String name);
+    public void setDirectoryName(String name) {
+        directoryName = name;
+    }
 
-//    public int getFileCount() {
+    //    public int getFileCount() {
 //        return fileCount;
 //    }
 
@@ -236,7 +247,8 @@ public abstract class TrainCustomCommon {
         return file.exists();
     }
 
-    public void load(Element mc) {
+    public void load(Element options) {
+        Element mc = options.getChild(xmlElement);
         if (mc != null) {
             Attribute a;
             Element directory = mc.getChild(Xml.DIRECTORY);
@@ -254,7 +266,8 @@ public abstract class TrainCustomCommon {
         }
     }
 
-    public void store(Element mc) {
+    public void store(Element options) {
+        Element mc = new Element(Xml.MANIFEST_CREATOR);
         Element file = new Element(Xml.RUN_FILE);
         file.setAttribute(Xml.NAME, getFileName());
         Element directory = new Element(Xml.DIRECTORY);
@@ -264,6 +277,7 @@ public abstract class TrainCustomCommon {
         mc.addContent(directory);
         mc.addContent(file);
         mc.addContent(common);
+        options.addContent(mc);
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrainCustomCommon.class);

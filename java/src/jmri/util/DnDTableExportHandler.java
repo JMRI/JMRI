@@ -22,6 +22,9 @@ public class DnDTableExportHandler extends TransferHandler {
 
     @Override
     public Transferable createTransferable(JComponent c) {
+        if (!(c instanceof JTable)) {
+            return null;
+        }
         JTable table = (JTable) c;
         int col = table.getSelectedColumn();
         int row = table.getSelectedRow();

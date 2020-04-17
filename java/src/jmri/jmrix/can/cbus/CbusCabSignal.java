@@ -107,10 +107,9 @@ public class CbusCabSignal extends DefaultCabSignal {
             }
         }
         
-        CanMessage m = new CanMessage(tc.getCanid());
-        m.setNumDataElements(7);
+        CanMessage m = new CanMessage(7,tc.getCanid());
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        m.setElement(0, 0xc2); // experimental cabdata opc
+        m.setElement(0, CbusConstants.CBUS_CABDAT);
         m.setElement(1, locoD1); // addr hi
         m.setElement(2, locoD2);  // addr low
         m.setElement(3, 1); // datcode type
@@ -136,10 +135,9 @@ public class CbusCabSignal extends DefaultCabSignal {
         int locoD1 = locoAddr / 256;
         int locoD2 = locoAddr & 0xff;
 
-        CanMessage m = new CanMessage(tc.getCanid());
-        m.setNumDataElements(7);
+        CanMessage m = new CanMessage(7,tc.getCanid());
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        m.setElement(0, 0xc2); // experimental cabdata opc
+        m.setElement(0, CbusConstants.CBUS_CABDAT); // experimental cabdata opc
         m.setElement(1, locoD1); // addr hi
         m.setElement(2, locoD2);  // addr low
         m.setElement(3, 1); // datcode type

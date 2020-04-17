@@ -23,13 +23,14 @@ public class SignalHeadIconDialogTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel<SignalHead> tableModel = PickListModel.signalHeadPickModelInstance(); // NOI18N
-        DisplayFrame df = new DisplayFrame("Indicator TO Icon Dialog Test"); // NOI18N
-        Editor editor = new EditorScaffold();
-        SignalHeadItemPanel sip = new SignalHeadItemPanel(df,"IS01","",tableModel,editor);  // NOI18N
+        EditorScaffold editor = new EditorScaffold("ED");
+        DisplayFrame df = new DisplayFrame("Indicator TO Icon Dialog Test", editor); // NOI18N
+        SignalHeadItemPanel sip = new SignalHeadItemPanel(df,"IS01","",tableModel);  // NOI18N
         SignalHeadIconDialog t = new SignalHeadIconDialog("SignalHead","SignalHead",sip,null); // NOI18N
         Assert.assertNotNull("exists",t); // NOI18N
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(df);
+        JUnitUtil.dispose(editor);
     }
 
     // The minimal setup for log4J
@@ -37,6 +38,7 @@ public class SignalHeadIconDialogTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initInternalSignalHeadManager();
     }
 
     @After

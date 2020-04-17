@@ -21,18 +21,6 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
     /**
      * Constructor.
      * @param memo system connection memo
-     * @param mgr config manager
-     * @deprecated since 4.13.4
-     */
-    @Deprecated
-    public OlcbThrottleManager(jmri.jmrix.SystemConnectionMemo memo, OlcbConfigurationManager mgr) {
-        this(memo);
-        jmri.util.Log4JUtil.deprecationWarning(log, "OlcbThrottleManager(..)");        
-    }
-
-    /**
-     * Constructor.
-     * @param memo system connection memo
      */
     public OlcbThrottleManager(jmri.jmrix.SystemConnectionMemo memo) {
         super(memo);
@@ -41,6 +29,10 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
     @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
         // Immediately trigger the callback.
+        if (!(a instanceof DccLocoAddress)){
+            failedThrottleRequest(a, "Not a DccLocoAddress");
+            return;
+        }
         DccLocoAddress address = (DccLocoAddress) a;
         log.debug("new debug throttle for " + address);
         notifyThrottleKnown(new OlcbThrottle(address, adapterMemo), a);

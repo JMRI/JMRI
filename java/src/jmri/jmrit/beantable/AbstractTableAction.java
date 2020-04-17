@@ -268,5 +268,20 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         });
     }
 
+    /**
+     * Display a warning to user about invalid entry. Needed as entry validation
+     * does not disable the Create button when full system name eg "LT1" is entered.
+     *
+     * @param curAddress address as entered in Add new... pane address field
+     * @param ex the exception that occurred
+     */
+    protected void displayHwError(String curAddress, Exception ex) {
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager .class).
+                showErrorMessage(Bundle.getMessage("ErrorTitle"),
+                        Bundle.getMessage("ErrorConvertHW", curAddress),"" + ex,"",
+                        true,false);
+    }
+
     private static final Logger log = LoggerFactory.getLogger(AbstractTableAction.class);
+
 }

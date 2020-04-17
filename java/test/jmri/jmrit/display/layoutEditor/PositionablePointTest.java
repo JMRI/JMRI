@@ -1,18 +1,10 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.*;
 import jmri.JmriException;
-import jmri.util.JUnitUtil;
-import jmri.util.MathUtil;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import jmri.util.*;
+import org.junit.*;
 
 /**
  * Test simple functioning of PositionablePoint
@@ -40,7 +32,7 @@ public class PositionablePointTest {
         // 2nd parameter is illegal type
         PositionablePoint pp = new PositionablePoint("test", 0, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp);
-        jmri.util.JUnitAppender.assertErrorMessage("Illegal type of PositionablePoint - 0");
+        JUnitAppender.assertErrorMessage("Illegal type of PositionablePoint - 0");
     }
 
     @Test
@@ -231,12 +223,12 @@ public class PositionablePointTest {
         Assert.assertNotNull("exists", pp);
 
         // first, try hit
-        int hitType = pp.findHitPointType(thePoint, true, false);
-        Assert.assertTrue("pp.findHitPointType equals POS_POINT", hitType == LayoutTrack.POS_POINT);
+        LayoutEditor.HitPointType hitType = pp.findHitPointType(thePoint, true, false);
+        Assert.assertTrue("pp.findHitPointType equals POS_POINT", hitType == LayoutEditor.HitPointType.POS_POINT);
 
         // Now, try miss
         hitType = pp.findHitPointType(MathUtil.zeroPoint2D, true, false);
-        Assert.assertTrue("pp.findHitPointType equals NONE", hitType == LayoutTrack.NONE);
+        Assert.assertTrue("pp.findHitPointType equals NONE", hitType == LayoutEditor.HitPointType.NONE);
     }
 
     @Test
@@ -249,13 +241,13 @@ public class PositionablePointTest {
         Assert.assertNotNull("exists", pp);
 
         // test failure
-        Assert.assertEquals("pp.getCoordsForConnectionType(LayoutTrack.NONE) == {666.6, 999.9}",
-                thePoint, pp.getCoordsForConnectionType(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        Assert.assertEquals("pp.getCoordsForConnectionType(LayoutEditor.HitPointTypes.NONE) == {666.6, 999.9}",
+                thePoint, pp.getCoordsForConnectionType(LayoutEditor.HitPointType.NONE));
+        JUnitAppender.assertErrorMessage("test.getCoordsForConnectionType(NONE); Invalid Connection Type");
 
         // test success
-        Assert.assertEquals("pp.getCoordsForConnectionType(LayoutTrack.POS_POINT) == {666.6, 999.9}",
-                thePoint, pp.getCoordsForConnectionType(LayoutTrack.POS_POINT));
+        Assert.assertEquals("pp.getCoordsForConnectionType(LayoutEditor.HitPointTypes.POS_POINT) == {666.6, 999.9}",
+                thePoint, pp.getCoordsForConnectionType(LayoutEditor.HitPointType.POS_POINT));
     }
 
     @Test
@@ -267,18 +259,18 @@ public class PositionablePointTest {
         Assert.assertNotNull("exists", pp);
 
         try {
-            // test invalid connection type
+            // test Invalid Connection Type
             Assert.assertNull("pp.getConnection(invalid type) is null",
-                    pp.getConnection(LayoutTrack.NONE));
+                    pp.getConnection(LayoutEditor.HitPointType.NONE));
             Assert.fail("No exception thrown on pp.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+        JUnitAppender.assertErrorMessage("test.getConnection(NONE); Invalid Connection Type");
 
         try {
             // test valid connection type (null value)
             Assert.assertNull("pp.getConnection(valid type) is null",
-                    pp.getConnection(LayoutTrack.POS_POINT));
+                    pp.getConnection(LayoutEditor.HitPointType.POS_POINT));
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on pp.getConnection(valid type)");
         }
@@ -293,24 +285,24 @@ public class PositionablePointTest {
         Assert.assertNotNull("exists", pp);
 
         try {
-            // test invalid connection type
-            pp.setConnection(LayoutTrack.NONE, null, LayoutTrack.NONE);
-            Assert.fail("No exception thrown on pp.setConnection(invalid connection type)");
+            // test Invalid Connection Type
+            pp.setConnection(LayoutEditor.HitPointType.NONE, null, LayoutEditor.HitPointType.NONE);
+            Assert.fail("No exception thrown on pp.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        JUnitAppender.assertErrorMessage("test.setConnection(NONE, null, NONE); Invalid Connection Type");
 
         try {
             // test invalid object type
-            pp.setConnection(LayoutTrack.POS_POINT, null, LayoutTrack.POS_POINT);
+            pp.setConnection(LayoutEditor.HitPointType.POS_POINT, null, LayoutEditor.HitPointType.POS_POINT);
             Assert.fail("No exception thrown on pp.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
-        jmri.util.JUnitAppender.assertErrorMessage("unexpected type of connection to positionable point - 1");
+        JUnitAppender.assertErrorMessage("test.setConnection(POS_POINT, null, POS_POINT); unexpected type");
 
         try {
             // test valid types
-            pp.setConnection(LayoutTrack.POS_POINT, null, LayoutTrack.NONE);
+            pp.setConnection(LayoutEditor.HitPointType.POS_POINT, null, LayoutEditor.HitPointType.NONE);
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on pp.setConnection(valid types)");
         }
@@ -324,14 +316,14 @@ public class PositionablePointTest {
         PositionablePoint pp = new PositionablePoint("test", PositionablePoint.ANCHOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp);
 
-        // test invalid connection type
+        // test Invalid Connection Type
         Assert.assertFalse("pp.isDisconnected(invalid type) is null",
-                pp.isDisconnected(LayoutTrack.NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
+                pp.isDisconnected(LayoutEditor.HitPointType.NONE));
+        JUnitAppender.assertErrorMessage("test.isDisconnected(NONE); Invalid Connection Type");
 
         // test valid connection type
         Assert.assertTrue("pp.isDisconnected(valid type) is null",
-                pp.isDisconnected(LayoutTrack.POS_POINT));
+                pp.isDisconnected(LayoutEditor.HitPointType.POS_POINT));
     }
 
     @Test
@@ -345,17 +337,17 @@ public class PositionablePointTest {
         // test null track segment
         Assert.assertFalse("pp.setTrackConnection(null) is false",
                 pp.setTrackConnection(null));
-        jmri.util.JUnitAppender.assertErrorMessage("Attempt to remove non-existant track connection: null");
+        JUnitAppender.assertErrorMessage("test.replaceTrackConnection(null, null); Attempt to remove non-existant track connection");
 
         PositionablePoint ppA = new PositionablePoint("A", PositionablePoint.ANCHOR, new Point2D.Double(0.0, 0.0), le);
         PositionablePoint ppB = new PositionablePoint("B", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 10.0), le);
         PositionablePoint ppC = new PositionablePoint("C", PositionablePoint.ANCHOR, new Point2D.Double(20.0, 20.0), le);
         PositionablePoint ppD = new PositionablePoint("D", PositionablePoint.ANCHOR, new Point2D.Double(30.0, 30.0), le);
-        TrackSegment tsAB = new TrackSegment("testAB", ppA, LayoutTrack.POS_POINT, ppB, LayoutTrack.POS_POINT, false, false, le);
+        TrackSegment tsAB = new TrackSegment("testAB", ppA, LayoutEditor.HitPointType.POS_POINT, ppB, LayoutEditor.HitPointType.POS_POINT, false, false, le);
         Assert.assertNotNull("Track Segment AB exists", tsAB);
-        TrackSegment tsBC = new TrackSegment("testBC", ppB, LayoutTrack.POS_POINT, ppC, LayoutTrack.POS_POINT, false, false, le);
+        TrackSegment tsBC = new TrackSegment("testBC", ppB, LayoutEditor.HitPointType.POS_POINT, ppC, LayoutEditor.HitPointType.POS_POINT, false, false, le);
         Assert.assertNotNull("Track Segment BC exists", tsBC);
-        TrackSegment tsCD = new TrackSegment("testCD", ppC, LayoutTrack.POS_POINT, ppD, LayoutTrack.POS_POINT, false, false, le);
+        TrackSegment tsCD = new TrackSegment("testCD", ppC, LayoutEditor.HitPointType.POS_POINT, ppD, LayoutEditor.HitPointType.POS_POINT, false, false, le);
         Assert.assertNotNull("Track Segment CD exists", tsCD);
 
         // test non-null track segment
@@ -365,7 +357,7 @@ public class PositionablePointTest {
         // test already connected
         Assert.assertFalse("pp.setTrackConnection(tsAB) is false",
                 pp.setTrackConnection(tsAB));
-        jmri.util.JUnitAppender.assertErrorMessage("Already connected to testAB");
+        JUnitAppender.assertWarnMessage("test.replaceTrackConnection(null, testAB); Already connected");
 
         // test 2nd non-null track segment
         Assert.assertTrue("pp.setTrackConnection(tsBC) is true",
@@ -374,12 +366,12 @@ public class PositionablePointTest {
         // test already connected
         Assert.assertFalse("pp.setTrackConnection(tsBC) is false",
                 pp.setTrackConnection(tsBC));
-        jmri.util.JUnitAppender.assertErrorMessage("Already connected to testBC");
+        JUnitAppender.assertWarnMessage("test.replaceTrackConnection(null, testBC); Already connected");
 
         // test 3rd non-null track segment
         Assert.assertFalse("pp.setTrackConnection(tsCD) is false",
                 pp.setTrackConnection(tsCD));
-        jmri.util.JUnitAppender.assertErrorMessage("Attempt to assign more than allowed number of connections");
+        JUnitAppender.assertErrorMessage("test.replaceTrackConnection(null, testCD); Attempt to assign more than allowed number of connections");
     }
 
     @Before

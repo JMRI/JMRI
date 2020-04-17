@@ -382,7 +382,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"),
                 Bundle.getMessage("BeanNameSignalHead")));
         _itemPanel = new SignalHeadItemPanel(_paletteFrame, "SignalHead", getFamily(),
-                PickListModel.signalHeadPickModelInstance(), _editor); // NOI18N
+                PickListModel.signalHeadPickModelInstance()); // NOI18N
         ActionListener updateAction = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
@@ -417,8 +417,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             // map1 may be keyed with NamedBean names. Convert to local name keys.
             Hashtable<String, NamedIcon> map2 = new Hashtable<>();
             for (Entry<String, NamedIcon> entry : map1.entrySet()) {
-                // TODO I18N using existing NamedBeanBundle keys before calling convertText(entry.getKey())?
-                map2.put(jmri.jmrit.display.palette.ItemPalette.convertText(entry.getKey()), entry.getValue());
+                map2.put(entry.getKey(), entry.getValue());
             }
             setIcons(map2);
         }   // otherwise retain current map

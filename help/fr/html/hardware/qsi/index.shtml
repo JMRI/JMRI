@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
@@ -50,7 +50,7 @@ ou
 <h2>Installation de Pilote</h2>
 
 Pour acc&#233;der au programmateur Quantum , vous devez installer un pilote sur votre
-ordinateur. Cette section d&#233;crit comment le faire pour plusieurs 
+ordinateur. Cette section d&#233;crit comment le faire pour plusieurs
 types d'ordinateurs populaires.
 
 <a id="driverWin"></a>
@@ -112,7 +112,7 @@ Vous configurez JMRI pour utiliser un programmateur Quantum similaire &#224; la 
     <li>
     D&#233;marrez le programme
     <li>
-    S&#233;lectionnez «Pr&#233;f&#233;rences ...» &#233;l&#233;ment du menu "&#233;dition" sur la fen&#234;tre principale.
+    S&#233;lectionnez &#171;Pr&#233;f&#233;rences ...&#187; &#233;l&#233;ment du menu "&#233;dition" sur la fen&#234;tre principale.
     <li>
     S&#233;lectionnez "Programmateur Quantum" comme type de connexion.
     <li>
@@ -137,7 +137,7 @@ Nous n'avons actuellement pas assez d'informations pour t&#233;l&#233;charger de
 Programmateur Quantum. Si nous obtenons l'information, nous allons certainement &#233;crire ce code.
     </p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
         </div>
       </div>
 </body>

@@ -8,8 +8,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import jmri.InstanceManager;
 import jmri.NamedBeanHandleManager;
@@ -25,10 +28,9 @@ import jmri.jmrit.display.palette.FamilyItemPanel;
 import jmri.jmrit.display.palette.IndicatorItemPanel;
 import jmri.jmrit.display.palette.IndicatorTOItemPanel;
 import jmri.jmrit.logix.OBlock;
-import jmri.util.PlaceWindow;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 class ConvertDialog extends JDialog {
 
@@ -36,7 +38,6 @@ class ConvertDialog extends JDialog {
         private PositionableLabel _pos;
         FamilyItemPanel _panel;
         DisplayFrame _filler;
-        java.awt.Point location;
 
         ConvertDialog(CircuitBuilder cb, PositionableLabel pos, OBlock block) {
             super(cb._editor, true);
@@ -57,7 +58,7 @@ class ConvertDialog extends JDialog {
             ActionListener updateAction;
             if (pos instanceof TurnoutIcon) {
                 title = "IndicatorTO";
-                _panel = new IndicatorTOItemPanel(_filler, title, null, null, cb._editor) {
+                _panel = new IndicatorTOItemPanel(_filler, title, null, null) {
                     @Override
                     protected void showIcons() {
                          super.showIcons();
@@ -74,7 +75,7 @@ class ConvertDialog extends JDialog {
                 };
             } else {
                 title = "IndicatorTrack";
-                _panel = new IndicatorItemPanel(_filler, title, null, cb._editor) {
+                _panel = new IndicatorItemPanel(_filler, title, null) {
                     @Override
                     protected void showIcons() {
                         super.showIcons();
@@ -91,18 +92,28 @@ class ConvertDialog extends JDialog {
                 };
             }
             _panel.init(updateAction);
+            
+            JPanel buttonPanel = _panel.getBottomPanel();
+            _panel.getUpdateButton().setText(Bundle.getMessage("convert"));
+            JButton button = new JButton(Bundle.getMessage("skip"));
+            button.addActionListener((ActionEvent a) -> {
+                dispose();
+            });
+            buttonPanel.add(button);
+            JPanel p = new JPanel();
+             p.add(new JLabel(Bundle.getMessage("notIndicatorIcon")));
+            _panel.add(p, 0);
             Dimension dim = _panel.getPreferredSize();
-//            JScrollPane sp = new JScrollPane(_panel);
+
+            javax.swing.JScrollPane sp = new javax.swing.JScrollPane(_panel);
             dim = new Dimension(dim.width +25, dim.height + 25);
-//            add(_panel);
-//            sp.setPreferredSize(dim);
-            _panel.setPreferredSize(dim);
-            add(_panel);
+            sp.setPreferredSize(dim);
+            sp.setPreferredSize(dim);
+            add(sp);
             setTitle(Bundle.getMessage(title));
             pack();
-            location = PlaceWindow.inside(cb._editor, pos, this);
-            setLocation(location);
-            setVisible(true);
+            jmri.InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(cb._editor, pos, this);
+             setVisible(true);
         }
 
         /*
@@ -110,28 +121,20 @@ class ConvertDialog extends JDialog {
          * need to do for reSizeDisplay and reSize
          */
         private void displayIcons() {
-            Dimension oldDim = _panel.getSize();
-            Dimension totalDim = getSize();
-            _panel.invalidate();
-            invalidate();
             Dimension newDim = _panel.getPreferredSize();
-            Dimension deltaDim = new Dimension(totalDim.width - oldDim.width, totalDim.height - oldDim.height);
-            Dimension dim = new Dimension(deltaDim.width + newDim.width + 10, 
-                    deltaDim.height + newDim.height + 10);
+            Dimension deltaDim = _panel.shellDimension(_panel);
+            Dimension dim = new Dimension(deltaDim.width + newDim.width, deltaDim.height + newDim.height);
             setPreferredSize(dim);
+            invalidate();
             pack();
-            setLocation(location);
-            repaint();
-            if (log.isDebugEnabled()) {
-                log.debug(" panelDim= ({}, {}) totalDim= ({}, {}) setPreferredSize to ({}, {})", 
-                        oldDim.width, oldDim.height, newDim.width, newDim.height, dim.width, dim.height);
-            }
         }
 
         private void convertTO(OBlock block) {
             IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_parent._editor);
             t.setOccBlockHandle(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(block.getSystemName(), block));
-            t.setTurnout(((TurnoutIcon) _pos).getNamedTurnout());
+            if ( _pos instanceof TurnoutIcon ) {
+                t.setTurnout(((TurnoutIcon) _pos).getNamedTurnout());
+            }
             t.setFamily(_panel.getFamilyName());
 
             HashMap<String, HashMap<String, NamedIcon>> iconMap = ((IndicatorTOItemPanel)_panel).getIconMaps();
@@ -184,7 +187,8 @@ class ConvertDialog extends JDialog {
             pos.updateSize();
             _parent._editor.highlight(null);
             dispose();
+            _filler.dispose();
         }
 
-        private final static Logger log = LoggerFactory.getLogger(ConvertDialog.class);
+//        private final static Logger log = LoggerFactory.getLogger(ConvertDialog.class);
     }

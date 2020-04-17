@@ -2,6 +2,10 @@ package jmri.jmrit.operations.automation.actions;
 
 import java.io.File;
 import java.io.IOException;
+
+import org.junit.Assert;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -11,8 +15,6 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  *
@@ -124,6 +126,9 @@ public class RunTrainActionTest extends OperationsTestCase {
         Assert.assertFalse(automationItem.isActionSuccessful());
 
         jmri.util.JUnitAppender.assertWarnMessage("Train (STF) needs to be built before creating a custom manifest");
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(RunTrainActionTest.class);

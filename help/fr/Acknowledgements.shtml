@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
 	<div id="mainContent">
 
@@ -35,8 +35,8 @@
 			<a href="#A">A</a>|<a href="#B">B</a>|<a href="#C">C</a>|<a href="#D">D</a>|<a href="#E">E</a>|<a href="#F">F</a>|<a href="#G">G</a>|<a href="#H">H</a>|<a href="#I">I</a>|<a href="#J">J</a>|<a href="#K">K</a>|<a href="#L">L</a>|<a href="#M">M</a>|<a href="#N">N</a>|<a href="#O">O</a>|<a href="#P">P</a>|<a href="#Q">Q</a>|<a href="#R">R</a>|<a href="#S">S</a>|<a href="#T">T</a>|<a href="#U">U</a>|<a href="#V">V</a>|<a href="#W">W</a>|<a href="#X">X</a>|<a href="#Y">Y</a>|<a href="#Z">Z</a>
 
 		<ul>
+        <li style="list-style: none"><a name="A" id="A"></a></li>
 
-			<a name="A"></a>
 			<li>Sakae Akanuma provided a Japanese translation.
 			<li>Kerry Albrecht, who helped debug a problem loading panel files
 			<li>Nelson Allison, who provided scripts for Roco cranes
@@ -525,7 +525,7 @@
 			<li>Randall Wood, who updated the fast clock support, improved
 				the XMLIO support with some fixed memory variables,
 				migrated us to Git and GitHub, and build our Travis (Linux/Mac) and
-				Appveyor (Windows) continuous integration & test support.
+				Appveyor (Windows) continuous integration &amp; test support.
 				<a name="X"></a>
 				<a name="Y"></a>
 			<li>Mike Yawn, who provided the instructions for building under Eclipse
@@ -542,7 +542,7 @@
 		</a>depuis sa création à Janvier 2009.  Un Code Swarm est une représentation visuelle dynamique et passionnante 
 		des modifications que les développeurs apportent aux fichiers qui composent un projet.. Plus d'informations sont disponibles sur
 		la page <a href="http://jmri.org/community/visuals/codeswarm.shtml">Code Swarm</a> .</p>
-			<!--#include virtual="/Footer" -->
+			<!--#include virtual="/Footer.shtml" -->
 </div>
 </div>
 </body>

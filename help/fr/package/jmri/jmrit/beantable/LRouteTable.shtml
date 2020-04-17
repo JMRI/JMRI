@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -112,7 +112,7 @@
         itin&eacute;raire Logix. Pour plus d'informations, voir
         <a href="LRouteAddEdit.shtml">Ajouter/Editer
         L-Itin&eacute;raires</a>.</dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

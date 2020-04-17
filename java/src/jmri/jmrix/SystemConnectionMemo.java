@@ -3,7 +3,6 @@ package jmri.jmrix;
 import apps.startup.StartupActionModelUtil;
 
 import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
@@ -209,10 +208,22 @@ public abstract class SystemConnectionMemo extends Bean {
         SystemConnectionMemoManager.getDefault().deregister(this);
     }
 
+    /**
+     * Get if the System Connection is currently Disabled.
+     * @return true if Disabled, else false.
+     */
     public boolean getDisabled() {
         return disabled;
     }
 
+    /**
+     * Set if the System Connection is currently Disabled.
+     * <p>
+     * disabledAsLoaded is only set once.
+     * Sends PropertyChange on change of disabled status.
+     * 
+     * @param disabled true to disable, false to enable.
+     */
     public void setDisabled(boolean disabled) {
         if (this.disabledAsLoaded == null) {
             // only set first time
@@ -268,6 +279,11 @@ public abstract class SystemConnectionMemo extends Bean {
         });
     }
 
+    /**
+     * Get if connection is dirty.
+     * Checked fields are disabled, prefix, userName
+     * @return true if changed since loaded
+     */
     public boolean isDirty() {
         return ((this.disabledAsLoaded == null || this.disabledAsLoaded != this.disabled)
                 || (this.prefixAsLoaded == null || !this.prefixAsLoaded.equals(this.prefix))

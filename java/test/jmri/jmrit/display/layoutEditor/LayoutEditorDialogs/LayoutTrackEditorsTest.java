@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 import javax.swing.*;
 import jmri.*;
+import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.*;
 import jmri.util.junit.rules.RetryRule;
@@ -815,14 +816,13 @@ public class LayoutTrackEditorsTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        InstanceManager.setDefault(BlockManager.class, new BlockManager());
+        JUnitUtil.initLayoutBlockManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
-            JUnitUtil.resetInstanceManager();
-            JUnitUtil.initInternalTurnoutManager();
-            JUnitUtil.initInternalSensorManager();
 
             layoutEditor = new LayoutEditor();
+            layoutEditor.setVisible(true);
             layoutTrackEditors = layoutEditor.getLayoutTrackEditors();
 
             Point2D point = new Point2D.Double(150.0, 100.0);
@@ -832,26 +832,27 @@ public class LayoutTrackEditorsTest {
             PositionablePoint pp1 = new PositionablePoint("a", PositionablePoint.ANCHOR, point, layoutEditor);
             point = MathUtil.add(point, delta);
             PositionablePoint pp2 = new PositionablePoint("b", PositionablePoint.ANCHOR, point, layoutEditor);
-            trackSegment = new TrackSegment("Segment", pp1, LayoutTrack.POS_POINT, pp2, LayoutTrack.POS_POINT, false, false, layoutEditor);
+            trackSegment = new TrackSegment("Segment", pp1, LayoutEditor.HitPointType.POS_POINT, pp2, LayoutEditor.HitPointType.POS_POINT, false, false, layoutEditor
+            );
 
             // RH Turnout
             point = MathUtil.add(point, delta);
             rightHandLayoutTurnout = new LayoutTurnout("RH Turnout",
-                    LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
+                    LayoutTurnout.TurnoutType.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
 
             // Double crossover
             doubleXoverLayoutTurnout = new LayoutTurnout("Double Xover",
-                    LayoutTurnout.DOUBLE_XOVER, point, 33.0, 1.1, 1.2, layoutEditor);
+                    LayoutTurnout.TurnoutType.DOUBLE_XOVER, point, 33.0, 1.1, 1.2, layoutEditor);
 
             // Single doubleLayoutSlip
             point = MathUtil.add(point, delta);
             singleLayoutSlip = new LayoutSlip("Single Slip",
-                    point, 0.0, layoutEditor, LayoutTurnout.SINGLE_SLIP);
+                    point, 0.0, layoutEditor, LayoutTurnout.TurnoutType.SINGLE_SLIP);
 
             // Double doubleLayoutSlip
             point = MathUtil.add(point, delta);
             doubleLayoutSlip = new LayoutSlip("Double Slip",
-                    point, 0.0, layoutEditor, LayoutTurnout.DOUBLE_SLIP);
+                    point, 0.0, layoutEditor, LayoutTurnout.TurnoutType.DOUBLE_SLIP);
 
             // Level crossing
             point = MathUtil.add(point, delta);
@@ -867,51 +868,52 @@ public class LayoutTrackEditorsTest {
 
     @After
     public void tearDown() {
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
-        }
         if (doubleXoverLayoutTurnout != null) {
             doubleXoverLayoutTurnout.remove();
             doubleXoverLayoutTurnout.dispose();
-            doubleXoverLayoutTurnout = null;
         }
 
         if (rightHandLayoutTurnout != null) {
             rightHandLayoutTurnout.remove();
             rightHandLayoutTurnout.dispose();
-            rightHandLayoutTurnout = null;
         }
 
         if (doubleLayoutSlip != null) {
             doubleLayoutSlip.remove();
             doubleLayoutSlip.dispose();
-            doubleLayoutSlip = null;
         }
 
         if (singleLayoutSlip != null) {
             singleLayoutSlip.remove();
             singleLayoutSlip.dispose();
-            singleLayoutSlip = null;
         }
 
         if (levelXing != null) {
             levelXing.remove();
             levelXing.dispose();
-            levelXing = null;
         }
 
         if (trackSegment != null) {
             trackSegment.remove();
             trackSegment.dispose();
-            trackSegment = null;
         }
 
         if (layoutTurntable != null) {
             layoutTurntable.remove();
             layoutTurntable.dispose();
-            layoutTurntable = null;
         }
 
+        if (layoutEditor != null) {
+            EditorFrameOperator efo = new EditorFrameOperator(layoutEditor);
+            efo.closeFrameWithConfirmations();
+        }
+        doubleXoverLayoutTurnout = null;
+        rightHandLayoutTurnout = null;
+        doubleLayoutSlip = null;
+        singleLayoutSlip = null;
+        levelXing = null;
+        trackSegment = null;
+        layoutTurntable = null;
         layoutEditor = null;
         layoutTrackEditors = null;
 

@@ -25,9 +25,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>JMRI: DecoderPro User Guide</h1>
@@ -130,7 +130,7 @@
           Click <em>OK</em>. Close the Properties panel. Restart
           JMRI and verify your connection settings.
         </dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
   <!-- FAQ-Tail -->

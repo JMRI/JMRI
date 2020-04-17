@@ -22,9 +22,9 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-  <!--#include virtual="Sidebar" -->
+  <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
     <!-- Page Body -->
 
@@ -332,7 +332,7 @@
 
       <p><a href="http://www.digi.com/xbee">Digi Intl. XBee</a> web
       site</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

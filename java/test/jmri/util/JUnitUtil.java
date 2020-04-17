@@ -169,48 +169,48 @@ public class JUnitUtil {
     static private String initPrefsDir = null;
 
     /**
-     * JMRI standard setUp for tests. This should be the first line in the {@code @Before}
-     * annotated method.
+     * JMRI standard setUp for tests that mock the InstanceManager. This should be the first line in the {@code @Before}
+     * annotated method if the tests mock the InstanceManager.
      */
-    public static void setUp() {
+    public static void setUpLoggingAndCommonProperties() {
         if (!isLoggingInitialized) {
             // init logging if needed
             isLoggingInitialized = true;
             String filename = System.getProperty("jmri.log4jconfigfilename", "tests.lcf");
             Log4JUtil.initLogging(filename);
         }
-        
+
         // need to do this each time
         try {
             JUnitAppender.start();
-            
+
             // reset warn _only_ once logic to make tests repeatable
             Log4JUtil.restartWarnOnce();
             // ensure logging of deprecated method calls;
             // individual tests can turn off as needed
             Log4JUtil.setDeprecatedLogging(true);
- 
+
         } catch (Throwable e) {
             System.err.println("Could not start JUnitAppender, but test continues:\n" + e);
         }
-            
-        // clear the backlog and reset the UnexpectedMessageFlags so that 
+
+        // clear the backlog and reset the UnexpectedMessageFlags so that
         // errors from a previous test do not interfere with the current test.
         JUnitAppender.clearBacklog();
-        JUnitAppender.resetUnexpectedMessageFlags(Level.INFO); 
+        JUnitAppender.resetUnexpectedMessageFlags(Level.INFO);
 
 
         // do not set the UncaughtExceptionHandler while unit testing
         // individual tests can explicitly set it after calling this method
         Thread.setDefaultUncaughtExceptionHandler(null);
 
-        // make sure the jmri.prefsdir property match the property passed 
+        // make sure the jmri.prefsdir property match the property passed
         // to the tests.
         if (initPrefsDir == null) {
             initPrefsDir = System.getProperty("jmri.prefsdir", "./temp");
         }
-        System.setProperty("jmri.prefsdir",initPrefsDir);
-        
+        System.setProperty("jmri.prefsdir", initPrefsDir);
+
         // silence the Jemmy GUI unit testing framework
         JUnitUtil.silenceGUITestOutput();
 
@@ -218,6 +218,15 @@ public class JUnitUtil {
         // test left a window open, but different platforms seem to have just
         // enough differences that this is, for now, turned off
         resetWindows(false, false);
+    }
+
+    /**
+     * JMRI standard setUp for tests. This should be the first line in the {@code @Before}
+     * annotated method if the tests do not mock the InstanceManager.
+     */
+    public static void setUp() {
+        // all the setup for a MockInstanceManager applies
+        setUpLoggingAndCommonProperties();
 
         // Do a minimal amount of de-novo setup
         resetInstanceManager();
@@ -811,6 +820,12 @@ public class JUnitUtil {
                         // do not actually read tags
                         this.dirty = false;
                     }
+
+                    @Override
+                    protected void initShutdownTask(){
+                        //don't even register the shutdownTask
+                    }
+
                 });
     }
 
@@ -927,7 +942,7 @@ public class JUnitUtil {
 
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         List<ShutDownTask> list = sm.tasks();
-        while (list != null && list.size() > 0) {
+        while (!list.isEmpty()) {
             ShutDownTask task = list.get(0);
             sm.deregister(task);
             list = sm.tasks();  // avoid ConcurrentModificationException
@@ -947,7 +962,7 @@ public class JUnitUtil {
         
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         List<ShutDownTask> list = sm.tasks();
-        while (list != null && !list.isEmpty()) {
+        while (!list.isEmpty()) {
             ShutDownTask task = list.get(0);
             log.error("Test {} left ShutDownTask registered: {} (of type {})}", getTestClassName(), task.getName(), task.getClass(), 
                         Log4JUtil.shortenStacktrace(new Exception("traceback")));
@@ -1063,8 +1078,8 @@ public class JUnitUtil {
      * test use {@link #resetProfileManager(jmri.profile.Profile)} with a
      * provided profile.
      * <p>
-     * The new profile will have the name {@literal TestProfile }, the id
-     * {@literal 00000000 }, and will be in the directory {@literal temp }
+     * The new profile will have the name {@literal TestProfile}, the id
+     * {@literal 00000000}, and will be in the directory {@literal temp}
      * within the sources working copy.
      */
     public static void resetProfileManager() {
@@ -1370,20 +1385,6 @@ public class JUnitUtil {
      */
     public static Container findContainer(String title) {
         return new JDialogOperator(title).getContentPane();
-    }
-
-    /**
-     * Press a button after finding it in a container by title.
-     * 
-     * @param clazz an object no longer used
-     * @param frame container containing button to press
-     * @param text button title
-     * @return the pressed button
-     * @deprecated use {@link #pressButton(Container, String)} instead
-     */
-    @Deprecated // for removal after 4.18
-    public static AbstractButton pressButton(SwingTestCase clazz, Container frame, String text) {
-        return pressButton(frame, text);
     }
 
     /**

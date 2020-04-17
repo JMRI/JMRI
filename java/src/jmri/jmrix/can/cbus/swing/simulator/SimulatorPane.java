@@ -1,8 +1,6 @@
 package jmri.jmrix.can.cbus.swing.simulator;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -12,7 +10,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.Timer;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 
@@ -37,9 +34,12 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
     private JPanel _csPanes;
     private JPanel _ndPanes;
     private JPanel _evPanes;
-    private Boolean _disposeSimOnWindowClose = Boolean.valueOf(false);
+    private Boolean _disposeSimOnWindowClose = false;
     private JScrollPane mainScroll;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -54,6 +54,9 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         init();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         return prependConnToString(Bundle.getMessage("MenuItemNetworkSim"));
@@ -118,47 +121,35 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
      */
     @Override
     public List<JMenu> getMenus() {
-        List<JMenu> menuList = new ArrayList<JMenu>();
+        List<JMenu> menuList = new ArrayList<>();
         JMenu optionsMenu = new JMenu(Bundle.getMessage("OptionsMenu"));
         JMenu addMenu = new JMenu(Bundle.getMessage("MenuAdd"));
         
         JCheckBoxMenuItem closeSimOnDispose = new JCheckBoxMenuItem(Bundle.getMessage("StopSimWinClose"));
         closeSimOnDispose.setSelected(false);
-        closeSimOnDispose.addActionListener ( new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                _disposeSimOnWindowClose = closeSimOnDispose.isSelected();
-            }
+        closeSimOnDispose.addActionListener ((ActionEvent e) -> {
+            _disposeSimOnWindowClose = closeSimOnDispose.isSelected();
         });
         
         JMenuItem newCs = new JMenuItem(Bundle.getMessage("CommandStation"));
-        newCs.addActionListener ( new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                CsPane thispane = new CsPane(_sim.getNewCS());
-                _csPanes.add(thispane);
-                revalidate();
-            }
+        newCs.addActionListener ((ActionEvent e) -> {
+            CsPane thispane = new CsPane(_sim.getNewCS());
+            _csPanes.add(thispane);
+            revalidate();
         });
 
         JMenuItem newEv = new JMenuItem(Bundle.getMessage("EventResponders"));
-        newEv.addActionListener ( new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                EvResponderPane thispane = new EvResponderPane(_sim.getNewEv());
-                _evPanes.add(thispane);
-                revalidate();
-            }
+        newEv.addActionListener ((ActionEvent e) -> {
+            EvResponderPane thispane = new EvResponderPane(_sim.getNewEv());
+            _evPanes.add(thispane);
+            revalidate();
         });
 
         JMenuItem newNd = new JMenuItem(Bundle.getMessage("CbusNode"));
-        newNd.addActionListener ( new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                NdPane thispanend = new NdPane(_sim.getNewNd());
-                _ndPanes.add(thispanend);
-                revalidate();
-            }
+        newNd.addActionListener ((ActionEvent e) -> {
+            NdPane thispanend = new NdPane(_sim.getNewNd());
+            _ndPanes.add(thispanend);
+            revalidate();
         });
 
 
@@ -180,6 +171,9 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         return "package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         super.dispose();

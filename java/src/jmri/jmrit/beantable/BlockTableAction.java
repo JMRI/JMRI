@@ -35,7 +35,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import jmri.Block;
-import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -140,7 +139,12 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 }
                 Object m = b.getValue();
                 if (m != null) {
-                    return m.toString();
+                    if ( m instanceof jmri.Reportable) {
+                        return ((jmri.Reportable) m).toReportString();
+                    }
+                    else {
+                        return m.toString();
+                    }
                 } else {
                     return "";
                 }
@@ -900,7 +904,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddBlock"), false, true);
-            addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); //NOI18N
+            addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); // NOI18N
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             ActionListener oklistener = new ActionListener() {
                 @Override

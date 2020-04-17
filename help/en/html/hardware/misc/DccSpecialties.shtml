@@ -20,9 +20,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
 
       <h1>Hardware Support: DCC Specialties Products</h1><a href=
@@ -67,7 +67,7 @@
       from the JMRI web site, and it also available in the <a href=
       "http://jmri.org/jython">sample scripts directory</a> in the
       <a href="http://jmri.org/download/">JMRI downloads</a>.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

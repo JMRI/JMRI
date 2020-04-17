@@ -11,8 +11,6 @@
   <meta name="author" content="Mark Underwood">
   <meta name="keywords" content="JMRI help Virtual Sound Decoder">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -23,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -52,7 +50,7 @@
         the Manage VSD Locations window to have them appear.</li>
       </ul><a id="prefs" name="prefs">(This is the
       jmri.jmrit.vsdecoder.swing.ManageLocationsFrame help page) 
-      <!--#include virtual="/Footer" --></a>
+      <!--#include virtual="/Footer.shtml" --></a>
     </div>
   </div>
 </body>

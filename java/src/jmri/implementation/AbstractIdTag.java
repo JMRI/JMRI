@@ -49,7 +49,7 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag, 
     private String findPrefix() {
         List<Manager<IdTag>> managerList = InstanceManager.getDefault(ProxyIdTagManager.class).getManagerList();
         for (Manager<IdTag> m : managerList) {
-            if (m.getBeanBySystemName(mSystemName) != null) {
+            if (m.getBySystemName(mSystemName) != null) {
                 return m.getSystemPrefix();
             }
         }

@@ -19,9 +19,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
 
       <img src="http://www.modbus.org/images/logo_new.jpg" alt=
@@ -203,7 +203,7 @@
       <h3>Third Party info</h3>
 
       <p><a href="http://www.modbus.org">Modbus website</a></p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

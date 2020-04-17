@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import jmri.util.FileUtil;
 import jmri.util.XmlFilenameFilter;
 import org.jdom2.Document;
@@ -163,7 +165,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                                     tInfo.setDelayedRestart(ActiveTrain.SENSORDELAY);
                                     if (traininfo.getAttribute("delayedrestartsensor") != null) {
                                         tInfo.setRestartSensorName(traininfo.getAttribute("delayedrestartsensor").getValue());
-                                    }   
+                                    }
                                     if (traininfo.getAttribute("resetrestartsensor") != null) {
                                         tInfo.setResetRestartSensor(traininfo.getAttribute("resetrestartsensor").getValue().equals("yes"));
                                     }
@@ -310,8 +312,9 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                         }
                         // Transit we need the whole thing or the bit before the first open bracket
                         tInfo.setTransitId(tInfo.getTransitName().split("\\(")[0]);
+                        log.debug("v1: t = {}, bs = {}, be = {}", tInfo.getTransitName(), tInfo.getStartBlockName(), tInfo.getDestinationBlockName());
                     }
-                    if ( version == 2 ) {
+                    if ( version == 2 || version == 3) {
                         if (traininfo.getAttribute("transitid") != null) {
                             // there is a transit name selected
                             tInfo.setTransitId(traininfo.getAttribute("transitid").getValue());
@@ -353,10 +356,36 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             log.error("Destination block sequence missing when reading TrainInfoFile " + name);
                         }
                     }
-                }
+                    if ( version == 1 || version == 2) {
+                        // Change transit and block names from sysName(userName) to displayName
+                        tInfo.setTransitName(convertName(tInfo.getTransitName()));
+                        tInfo.setStartBlockName(convertName(tInfo.getStartBlockName()));
+                        tInfo.setDestinationBlockName(convertName(tInfo.getDestinationBlockName()));
+                    }
+               }
             }
         }
         return tInfo;
+    }
+
+    public String convertName(String name) {
+        // transit: sys(user), block: sys(user)-n
+        String newName = name;
+
+        Pattern p = Pattern.compile(".+\\((.+)\\)(-\\d+)*");
+        Matcher m = p.matcher(name);
+        if (m.matches()) {
+            log.debug("regex: name = '{}', group 1 = '{}', group 2 = '{}'", name, m.group(1), m.group(2));
+            if (m.group(1) != null) {
+                newName = m.group(1).trim();
+                if (m.group(2) != null) {
+                    newName = newName + m.group(2).trim();
+                }
+            }
+        }
+
+        log.debug("convertName: old = '{}', new = '{}'", name, newName);
+        return newName;
     }
 
     /*
@@ -377,7 +406,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         // save Dispatcher TrainInfo in xml format
         Element traininfo = new Element("traininfo");
         // write version number
-        traininfo.setAttribute("version","2");
+        traininfo.setAttribute("version", "3");
         traininfo.setAttribute("transitname", tf.getTransitName());
         traininfo.setAttribute("transitid", tf.getTransitId());
         traininfo.setAttribute("trainname", tf.getTrainName());

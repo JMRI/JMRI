@@ -14,7 +14,7 @@
 <!--#include virtual="/Style" -->
 </head>
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -91,7 +91,7 @@ tableaux contenant les donn&#233;es g&#233;n&#233;r&#233;es automatiquement sero
 	
 	     <p>Retour &#224; la page d'aide <a href="../beantable/SignalMastLogicTable.shtml">Tableau Logique M&#226;t de Signalisation</a>.
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
 </body>

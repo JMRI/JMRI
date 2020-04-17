@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2020 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    
+    <variable CV="1" item="Short Address" default="200" exclude="1 ServoDecoder v3.4">
+        <splitVal highCV="9" upperMask="XXXXXVVV" factor="1" offset="0" />
+        <label>Group Address:</label>
+        <label xml:lang="cs">Skupinová adresa:</label>
+        <tooltip>Address for the group of turnouts. The decoder listens to serval accessory addresses.</tooltip>
+        <tooltip xml:lang="cs">Dekodér obsluhuje několik po sobě následujících DCC adres. Skupinová adresa určuje první obsluhované příslušenství.</tooltip>
+    </variable>
+
+    <variable CV="1" item="Short Address" default="200" include="1 ServoDecoder v3.4">
+        <splitVal highCV="9" upperMask="XXXXXVVV" factor="1" offset="0" />
+        <label>Address:</label>
+        <label xml:lang="cs">Adresa:</label>
+    </variable>
+
+    <variable item="Decoder Version" CV="7" readOnly="yes" default="30" include="4 ServoDecoder v3.0,4 ServoDecoder v3.5,ServoDecoder v5.x">
+        <decVal/>
+        <label>Decoder Version:</label>
+        <label xml:lang="cs">Verze software:</label>
+    </variable>
+
+    <variable item="Decoder Version" CV="7" readOnly="yes" default="32" include="2 ServoDecoder v3.2">
+        <decVal/>
+        <label>Decoder Version:</label>
+        <label xml:lang="cs">Verze software:</label>
+    </variable>
+
+    <variable item="Decoder Version" CV="7" readOnly="yes" default="34" include="1 ServoDecoder v3.4">
+        <decVal/>
+        <label>Decoder Version:</label>
+        <label xml:lang="cs">Verze software:</label>
+    </variable>
+
+    <variable CV="8" item="Manufacturer" readOnly="yes" default="158" >
+        <decVal/>
+        <label>Manufacturer:</label>
+        <label xml:lang="cs">Výrobce ID:</label>
+    </variable>
+
+    <variable CV="29" mask="VXXXXXXX" item="Save positions" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Save positions</label>
+        <label xml:lang="cs">Ukládat pozice:</label>  
+        <tooltip>Save servo positions, move servos to stored positions on power up</tooltip>
+        <tooltip xml:lang="cs">Ukládat pozice serva, přesunout na uložené pozice po zapnutí.</tooltip>
+    </variable>
+
+    <variable CV="3" item="Servo1_Speed" default="1" >
+        <decVal min="0" max="255" />
+        <label>Servo 1 Speed:</label>
+        <label xml:lang="cs">Rychlost Serva 1:</label>
+        <tooltip>Servo 1 Speed</tooltip>
+        <tooltip xml:lang="cs">Rychlost serva 1</tooltip>
+    </variable>
+    <variable CV="4" item="Servo2_Speed" default="1" minOut="2">
+        <decVal min="0" max="255" />
+        <label>Servo 2 Speed:</label>
+        <label xml:lang="cs">Rychlost Serva 2:</label>
+        <tooltip>Servo 2 Speed</tooltip>
+        <tooltip xml:lang="cs">Rychlost serva 2</tooltip>
+    </variable>
+    <variable CV="5" item="Servo3_Speed" default="1" minOut="4">
+        <decVal min="0" max="255" />
+        <label>Servo 3 Speed:</label>
+        <label xml:lang="cs">Rychlost Serva 3:</label>
+        <tooltip>Servo 3 Speed</tooltip>
+        <tooltip xml:lang="cs">Rychlost serva 3</tooltip>
+    </variable>
+    <variable CV="6" item="Servo4_Speed" default="1" minOut="4">
+        <decVal min="0" max="255" />
+        <label>Servo 4 Speed:</label>
+        <label xml:lang="cs">Rychlost Serva 4:</label>
+        <tooltip>Servo 4 Speed</tooltip>
+        <tooltip xml:lang="cs">Rychlost serva 4</tooltip>
+    </variable>
+    <variable CV="43" item="PulsesReached" default="4">
+        <decVal min="4" max="10"/>
+        <label>Final Pulses</label>
+        <label xml:lang="cs">Pulzy po nastavení</label>
+        <tooltip>Number of control pulses sent after the target position is reached</tooltip>
+        <tooltip xml:lang="cs">Počet řídících pulzů, které se pošlou po dosažení cílové pozice</tooltip>
+    </variable>
+    
+</variables>

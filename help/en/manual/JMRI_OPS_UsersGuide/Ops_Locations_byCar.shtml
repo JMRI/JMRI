@@ -20,9 +20,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
@@ -113,7 +113,7 @@
 
           <div align="right">
             <p><a href="Ops_Locations_Menu.shtml">Back</a></p>
-          </div><!--#include virtual="/Footer" -->
+          </div><!--#include virtual="/Footer.shtml" -->
         </li>
       </ul>
     </div>

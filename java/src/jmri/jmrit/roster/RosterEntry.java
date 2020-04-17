@@ -1152,7 +1152,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         e.setAttribute("owner", getOwner());
         e.setAttribute("model", getModel());
         e.setAttribute("dccAddress", getDccAddress());
-        //e.setAttribute("protocol",""+getProtocol());
+        //e.setAttribute("protocol", "" + getProtocol());
         e.setAttribute("comment", getComment());
         e.setAttribute(RosterEntry.MAX_SPEED, (Integer.toString(getMaxSpeedPCT())));
         // file path are saved without default xml config path
@@ -1521,9 +1521,12 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Separate write statements for text and line feeds to work around the
      * HardcopyWriter bug that misplaces borders.
      *
-     * @param w the writer used to print
+     * @param w the HardcopyWriter used to print
      */
     public void printEntryDetails(Writer w) {
+        if (!(w instanceof HardcopyWriter)){
+            throw new IllegalArgumentException("No HardcopyWriter instance passed");
+        }
         int linesadded = -1;
         String title;
         String leftMargin = "   "; // 3 spaces in front of legend labels
@@ -1667,7 +1670,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 w.write(newLine, 0, 1);
             }
         } catch (IOException e) {
-            log.error("Error printing RosterEntry: " + e);
+            log.error("Error printing RosterEntry: {}", e);
         }
     }
 

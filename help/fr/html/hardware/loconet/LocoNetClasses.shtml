@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -76,11 +76,11 @@ LocoNetInterface l = LnTrafficController.instance ();
 Les classes qui souhaitent recevoir des paquets entrants LocoNet devraient prendre en charge l'interfaces
 <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetListener.html"> LocoNetListener </a> ,
 et enregistrer leur d&#233;sir d'&#233;couter
-via un objet de l'interface 
+via un objet de l'interface
 <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterface.html"> LocoNetInterface </a> .
 Il est important de noter que les
 objets auditeur ne peuvent pas supposer qu'ils re&#231;oivent des messages entrants LocoNet
-dans n'importe quel fil sp&#233;cifique. En particulier, ils ne doivent pas pr&#233;sumer qu'ils 
+dans n'importe quel fil sp&#233;cifique. En particulier, ils ne doivent pas pr&#233;sumer qu'ils
 recoivent ces messages dans un fil GUI, donc ils ont &#224; transmettre toute
 modifications de l'interface utilisateur..
 
@@ -97,7 +97,7 @@ et
 
 <h3>LnTrafficController</h3>
 
-La classe abstraite 
+La classe abstraite
 <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html"> LnTrafficController </a>
  fournit une prise en charge commune pour ses sous-classes, et
 ajoute un m&#233;canisme de mise en oeuvre pour trouver une LocoNetInterface utilisable.
@@ -208,12 +208,12 @@ LocoNet; qui a un PIC en elle qui g&#232;re tout cela correctement.
 La classe MS100Action (paquet jmrix.loconet.ms100) d&#233;marre une connexion LocoNet
 via un MS100. Une fois d&#233;clench&#233;, il cr&#233;e un objet MS100Frame visible.
 <p>
-À son tour, le MS100Frame cr&#233;e un objet MS100Adapter,
+&#192; son tour, le MS100Frame cr&#233;e un objet MS100Adapter,
 montre ensuite les ports de communication disponibles , permettant &#224; l'utilisateur d'en choisir un.
 L'objet MS100Adapter met en oeuvre l'interface LnPortController, de sorte
 qu'il peut &#233;ventuellement connecter un LnTrafficController &#224; un port s&#233;rie et MS100.
 <p>
-Quand le bouton "port ouvert MS100" est enfonc&#233;, l'objet MS100Frame 
+Quand le bouton "port ouvert MS100" est enfonc&#233;, l'objet MS100Frame
 
 <ul>
 <li> Passe du port de communication s&#233;lectionn&#233;
@@ -276,7 +276,7 @@ Cela complique grandement la classe, mais elle est acceptable pour l'instant.</p
 
 <p>LocoNet&reg; est une marque s&#233;pos&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div>
   </div>
 </body>

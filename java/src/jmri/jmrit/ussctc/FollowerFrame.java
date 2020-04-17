@@ -16,12 +16,12 @@ public class FollowerFrame extends jmri.util.JmriJFrame {
 
     @Override
     public void initComponents() {
-        addHelpMenu("package.jmri.jmrit.ussctc.FollowerFrame", true);  //NOI18N
+        addHelpMenu("package.jmri.jmrit.ussctc.FollowerFrame", true);  // NOI18N
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(new FollowerPanel());
-        setTitle(Bundle.getMessage("TitleFollower"));  //NOI18N
+        setTitle(Bundle.getMessage("TitleFollower"));  // NOI18N
 
         // pack to cause display
         pack();

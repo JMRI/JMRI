@@ -1,5 +1,6 @@
 package jmri.jmrix.internal;
 
+import javax.annotation.Nonnull;
 import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
@@ -21,6 +22,7 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public InternalSystemConnectionMemo getMemo() {
         return (InternalSystemConnectionMemo) memo;
     }
@@ -29,7 +31,7 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
      * Create and return an internal (no layout connection) turnout
      */
     @Override
-    protected Turnout createNewTurnout(String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         return new AbstractTurnout(systemName, userName) {
 
             @Override
@@ -43,19 +45,24 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
             }
 
             @Override
-            public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n) {
+            public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, NamedBean n) {
                 return (new PreferNumericComparator()).compare(suffix1, suffix2);
+            }
+            
+            @Override
+            public boolean isCanFollow() {
+                return true;
             }
         };
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws jmri.JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
         return prefix + typeLetter() + curAddress;
     }
 
@@ -71,6 +78,7 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
      * Turnout operation support. Internal turnouts don't need retries.
      */
     @Override
+    @Nonnull
     public String[] getValidOperationTypes() {
         return new String[]{"NoFeedback"};
     }

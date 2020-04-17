@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -172,7 +172,7 @@ a automatiquement toutes les infos.
 	 Vous pouvez vous inscrire pour une notification lorsque cela se produit.
 </ul>
 
- <!--#include virtual="/Footer" -->
+ <!--#include virtual="/Footer.shtml" -->
 
   </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->

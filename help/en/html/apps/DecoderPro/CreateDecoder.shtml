@@ -22,9 +22,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
     <h1>JMRI: DecoderPro User Guide</h1>
@@ -523,7 +523,7 @@
       <p>For more advanced information on the content of the files,
       please see the <a href="CreateDecoderAdvanced.shtml">Advanced
       Decoder Definitions</a> page.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

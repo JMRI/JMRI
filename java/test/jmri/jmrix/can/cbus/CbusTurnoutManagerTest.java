@@ -4,7 +4,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.Manager.NameValidity;
 import jmri.JmriException;
-import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -23,12 +22,8 @@ import org.junit.Test;
  */
 public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
-    CanSystemConnectionMemo memo = null;
-
     @Test
     public void testCTor() {
-        TrafficControllerScaffold tc = new TrafficControllerScaffold();
-        memo.setTrafficController(tc);
         CbusTurnoutManager t = new CbusTurnoutManager(memo);
         Assert.assertNotNull("exists", t);
     }
@@ -240,8 +235,8 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         }
         Turnout t = l.provideTurnout(name.toUpperCase());
         Assert.assertNotNull(t);
-        Assert.assertNotEquals(t, l.getBeanBySystemName(name));
-        Assert.assertNull(l.getBeanBySystemName(name));
+        Assert.assertNotEquals(t, l.getBySystemName(name));
+        Assert.assertNull(l.getBySystemName(name));
     }
 
     @Test
@@ -265,16 +260,17 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertEquals("MT100001", NameValidity.VALID, l.validSystemNameFormat("MT100001"));
         Assert.assertEquals("MT-100001", NameValidity.VALID, l.validSystemNameFormat("MT-100001"));
 
+        Assert.assertEquals("MT+1;+0", NameValidity.VALID, l.validSystemNameFormat("MT+1;+0"));
+        Assert.assertEquals("MT+1;-0", NameValidity.VALID, l.validSystemNameFormat("MT+1;-0"));
+        Assert.assertEquals("MT+0;+17", NameValidity.VALID, l.validSystemNameFormat("MT+0;+17"));
+        Assert.assertEquals("MT+0;-17", NameValidity.VALID, l.validSystemNameFormat("MT+0;-17"));
+        Assert.assertEquals("MT+0", NameValidity.VALID, l.validSystemNameFormat("MT+0"));
+        Assert.assertEquals("MT-0", NameValidity.VALID, l.validSystemNameFormat("MT-0"));
+        
         Assert.assertEquals("M", NameValidity.INVALID, l.validSystemNameFormat("M"));
         Assert.assertEquals("MT", NameValidity.INVALID, l.validSystemNameFormat("MT"));
         Assert.assertEquals("MT-65536", NameValidity.INVALID, l.validSystemNameFormat("MT-65536"));
         Assert.assertEquals("MT65536", NameValidity.INVALID, l.validSystemNameFormat("MT65536"));
-        Assert.assertEquals("MT+1;+0", NameValidity.INVALID, l.validSystemNameFormat("MT+1;+0"));
-        Assert.assertEquals("MT+1;-0", NameValidity.INVALID, l.validSystemNameFormat("MT+1;-0"));
-        Assert.assertEquals("MT+0;+17", NameValidity.INVALID, l.validSystemNameFormat("MT+0;+17"));
-        Assert.assertEquals("MT+0;-17", NameValidity.INVALID, l.validSystemNameFormat("MT+0;-17"));
-        Assert.assertEquals("MT+0", NameValidity.INVALID, l.validSystemNameFormat("MT+0"));
-        Assert.assertEquals("MT-0", NameValidity.INVALID, l.validSystemNameFormat("MT-0"));
         Assert.assertEquals("MT7;0", NameValidity.INVALID, l.validSystemNameFormat("MT7;0"));
         Assert.assertEquals("MT0;7", NameValidity.INVALID, l.validSystemNameFormat("MT0;7"));
     }
@@ -293,9 +289,9 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertEquals("+N45E23", "+N45E23", l.getNextValidAddress("+N45E22", "M"));        
         
         try {
-            Assert.assertNull("null", l.getNextValidAddress(null, "M"));
+            Assert.assertNull("null", l.getNextValidAddress("", "M"));
         } catch (JmriException ex) {
-            Assert.assertEquals("java.lang.IllegalArgumentException: No address Passed ", ex.getMessage());
+            Assert.assertEquals("java.lang.IllegalArgumentException: Address Too Short? : ", ex.getMessage());
         }
     }
 
@@ -353,21 +349,32 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertTrue(t == ta);
     }
     
+    @Test
+    @Override
+    public void testAutoSystemNames() {
+        Assert.assertEquals("No auto system names",0,tcis.numListeners());
+    }
+    
+    private TrafficControllerScaffold tcis;
+    private CanSystemConnectionMemo memo;
+    
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
-        memo.setTrafficController(new TrafficControllerScaffold());
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
         l = new CbusTurnoutManager(memo);
     }
 
     @After
     public void tearDown() {
+        tcis.terminateThreads();
+        tcis = null;
         l.dispose();
         memo.dispose();
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

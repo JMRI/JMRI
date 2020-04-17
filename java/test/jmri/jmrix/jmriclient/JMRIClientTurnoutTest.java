@@ -1,7 +1,6 @@
 package jmri.jmrix.jmriclient;
 
 import org.junit.*;
-import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
 /**

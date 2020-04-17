@@ -26,18 +26,6 @@ public class CarManagerXml extends OperationsXml implements InstanceManagerAutoD
     public CarManagerXml() {
     }
 
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized CarManagerXml instance() {
-        return InstanceManager.getDefault(CarManagerXml.class);
-    }
-
     @Override
     public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
         log.debug("writeFile {}", name);

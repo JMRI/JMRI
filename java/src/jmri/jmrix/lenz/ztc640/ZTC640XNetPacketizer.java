@@ -38,16 +38,14 @@ public class ZTC640XNetPacketizer extends XNetPacketizer {
     @Override
     protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
-        if (log.isDebugEnabled()) {
-            log.debug("loading characters from port");
-        }
+        log.debug("loading characters from port");
         for (i = 0; i < msg.maxSize(); i++) {
             byte char1 = readByteProtected(istream);
             // This is a test for the ZTC640 device
             while ((i == 0) && ((char1 & 0xF0) == 0xF0)) {
                 if ((char1 & 0xFF) != 0xF0 && (char1 & 0xFF) != 0xF2) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Filtering 0x" + Integer.toHexString(char1 & 0xFF) + " from stream");
+                    if(log.isDebugEnabled()) {
+                        log.debug("Filtering 0x{} from stream", Integer.toHexString(char1 & 0xFF));
                     }
                     //  toss this byte and read the next one
                     char1 = readByteProtected(istream);
@@ -58,12 +56,10 @@ public class ZTC640XNetPacketizer extends XNetPacketizer {
                 break;
             }
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Accepted Message: " + msg.toString());
-        }
+        log.debug("Accepted Message: {}",msg);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC640XNetPacketizer.class);
+    private static final Logger log = LoggerFactory.getLogger(ZTC640XNetPacketizer.class);
 }
 
 

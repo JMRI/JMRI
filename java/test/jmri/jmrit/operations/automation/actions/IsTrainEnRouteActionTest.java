@@ -1,5 +1,8 @@
 package jmri.jmrit.operations.automation.actions;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.automation.AutomationItem;
@@ -7,8 +10,6 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  *
@@ -73,6 +74,9 @@ public class IsTrainEnRouteActionTest extends OperationsTestCase {
 
         action.doAction();
         Assert.assertTrue(automationItem.isActionSuccessful());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     @Test
@@ -115,6 +119,9 @@ public class IsTrainEnRouteActionTest extends OperationsTestCase {
         action.doAction();
         // train has departed the route location
         Assert.assertFalse(automationItem.isActionSuccessful());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(IsTrainEnRouteActionTest.class);
