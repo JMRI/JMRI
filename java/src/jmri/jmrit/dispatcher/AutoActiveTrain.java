@@ -319,18 +319,22 @@ public class AutoActiveTrain implements ThrottleListener {
                 _activeTrain.getTrainName(),
                 _throttle.getLocoAddress(),
                 getMaxTrainLength(), _speedFactor, _useSpeedProfile);
-        _autoEngineer = new AutoEngineer();
-        new Thread(_autoEngineer, "Auto Engineer " + _address).start();
-        _activeTrain.setMode(ActiveTrain.AUTOMATIC);
-        if (_resumingAutomatic) {
-            _resumingAutomatic = false;
-            _activeTrain.setStatus(ActiveTrain.RUNNING);
-            setupNewCurrentSignal(null, true);
-            setEngineDirection();
-            setSpeedBySignal();
-        } else if (InstanceManager.getDefault(DispatcherFrame.class).getAutoAllocate()) {
-            // starting for the first time with automatic allocation of Sections
-            setSpeedBySignal();
+        if (_autoEngineer != null) {
+            log.error("Second Trottle for same loco[{}] - ignoring", _address);
+        } else {
+            _autoEngineer = new AutoEngineer();
+            new Thread(_autoEngineer, "Auto Engineer " + _address).start();
+            _activeTrain.setMode(ActiveTrain.AUTOMATIC);
+            if (_resumingAutomatic) {
+                _resumingAutomatic = false;
+                _activeTrain.setStatus(ActiveTrain.RUNNING);
+                setupNewCurrentSignal(null, true);
+                setEngineDirection();
+                setSpeedBySignal();
+            } else if (InstanceManager.getDefault(DispatcherFrame.class).getAutoAllocate()) {
+                // starting for the first time with automatic allocation of Sections
+                setSpeedBySignal();
+            }
         }
     }
 
@@ -475,7 +479,24 @@ public class AutoActiveTrain implements ThrottleListener {
                         removeCurrentSignal();
                         stopInCurrentSection(END_REVERSAL);
                     }
-                    // are we going continuously loop
+                    // are we going continuously without delay
+                    else if ( _activeTrain.getResetWhenDone() && _activeTrain.getDelayedRestart() == ActiveTrain.NODELAY) {
+                        _activeTrain.setRestart();
+                        _activeTrain.setTransitReversed(false);
+                        _activeTrain.resetAllAllocatedSections();
+                        _previousBlock = null;
+                        _nextBlock = getNextBlock(_currentBlock, _currentAllocatedSection);
+                        setEngineDirection();
+                        if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
+                            // we need to get a next section
+                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                            // and then set the signal
+                        }
+                        // can be mid block
+                        setupNewCurrentSignal(null, true);
+                        setSpeedBySignal();
+                    }
+                    // are we restarting later
                     else if ( _activeTrain.getResetWhenDone()) {
                         // entered start block of Transit, must stop and reset for continuing - ignore signal changes till train stopped.
                         removeCurrentSignal();
@@ -1246,18 +1267,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 _activeTrain.setRestart();
                 if (_activeTrain.getResetWhenDone()) {
                     if (_activeTrain.getDelayedRestart() == ActiveTrain.NODELAY) {
-                        _activeTrain.setTransitReversed(false);
-                        _activeTrain.resetAllAllocatedSections();
-                        _previousBlock = null;
-                        _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
-                        setEngineDirection();
-                        if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
-                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
-                            break;
-                        }
-                        // can be mid block
-                        setupNewCurrentSignal(null, true);
-                        setSpeedBySignal();
+                        log.error("[{}]: train is continueing without pause, should have been handled in handleBlockStateChange.",_activeTrain.getTrainName());
                     } else {
                         // then active train is delayed
                         _activeTrain.setTransitReversed(false);
