@@ -1,6 +1,9 @@
 package jmri.plaf.macosx;
 
-import org.junit.Assert;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.awt.Desktop;
+import jmri.util.SystemType;
 import org.junit.Assume;
 import org.junit.Test;
 
@@ -9,18 +12,26 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class EawtApplicationTest  {
+public class EawtApplicationTest {
 
-   @Test
-   public void testCtorMacOSX(){
-      Assume.assumeTrue(jmri.util.SystemType.isMacOSX());
-      Assert.assertNotNull(new EawtApplication());
-   }
+    @Test
+    public void testCtorMacOSXandJDK8() {
+        Assume.assumeTrue(SystemType.isMacOSX());
+        Assume.assumeFalse(Desktop.getDesktop().isSupported(Desktop.Action.valueOf("APP_ABOUT")));
+        assertThat(new EawtApplication()).isNotNull();
+    }
 
-   @Test(expected=java.lang.RuntimeException.class)
-   public void testCtorNotMacOSX(){
-      Assume.assumeFalse(jmri.util.SystemType.isMacOSX());
-      Assert.assertNotNull(new EawtApplication());
-   }
+    @Test(expected = NoClassDefFoundError.class)
+    public void testCtorMacOSXandJDK9plus() {
+        Assume.assumeTrue(SystemType.isMacOSX());
+        Assume.assumeTrue(Desktop.getDesktop().isSupported(Desktop.Action.valueOf("APP_ABOUT")));
+        assertThat(new EawtApplication()).isNotNull();
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testCtorNotMacOSX() {
+        Assume.assumeFalse(SystemType.isMacOSX());
+        assertThat(new EawtApplication()).isNotNull();
+    }
 
 }

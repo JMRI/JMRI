@@ -1535,9 +1535,9 @@
       </xs:attribute>
       <xs:attribute name="blockname" type="beanNameType"></xs:attribute>  <!-- required in DTD, missing from some files -->
       <xs:attribute name="connect1name" type="beanNameType" use="required"></xs:attribute>
-      <xs:attribute name="type1" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="type1" type="xs:string" use="required"></xs:attribute>
       <xs:attribute name="connect2name" type="beanNameType" use="required"></xs:attribute>
-      <xs:attribute name="type2" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="type2" type="xs:string" use="required"></xs:attribute>
       <xs:attribute name="dashed" type="yesNoType"></xs:attribute>
       <xs:attribute name="mainline" type="yesNoType"></xs:attribute>
       <xs:attribute name="hidden" type="yesNoType"></xs:attribute>

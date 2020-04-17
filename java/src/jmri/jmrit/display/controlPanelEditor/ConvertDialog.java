@@ -132,7 +132,9 @@ class ConvertDialog extends JDialog {
         private void convertTO(OBlock block) {
             IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_parent._editor);
             t.setOccBlockHandle(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(block.getSystemName(), block));
-            t.setTurnout(((TurnoutIcon) _pos).getNamedTurnout());
+            if ( _pos instanceof TurnoutIcon ) {
+                t.setTurnout(((TurnoutIcon) _pos).getNamedTurnout());
+            }
             t.setFamily(_panel.getFamilyName());
 
             HashMap<String, HashMap<String, NamedIcon>> iconMap = ((IndicatorTOItemPanel)_panel).getIconMaps();
