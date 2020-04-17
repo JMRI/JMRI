@@ -172,7 +172,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
 
         listenStatus = Turnout.UNKNOWN;
         t.addPropertyChangeListener(new Listen());
-        
+
         // Check that state changes appropriately
         t.setCommandedState(Turnout.THROWN);
         checkThrownMsgSent();
@@ -202,7 +202,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
 
         listenStatus = Turnout.UNKNOWN;
         t.addPropertyChangeListener(new Listen());
-        
+
         // Check that state changes appropriately
         t.setCommandedState(Turnout.THROWN);
         checkThrownMsgSent();
@@ -224,7 +224,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
             return listenStatus != Turnout.UNKNOWN;
         }, "Turnout state changed");
         Assert.assertEquals(t.getState(), Turnout.CLOSED);
-	    Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.CLOSED,listenStatus);
+	    Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.CLOSED, listenStatus);
     }
 
     // The minimal setup for log4J

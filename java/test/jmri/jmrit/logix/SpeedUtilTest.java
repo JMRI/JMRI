@@ -16,14 +16,14 @@ public class SpeedUtilTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SpeedUtil t = new SpeedUtil(null);
+        SpeedUtil t = new SpeedUtil();
         Assert.assertNotNull("exists",t);
     }
 
     @Test
     public void testMakeRamp() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SpeedUtil su = new SpeedUtil(null);
+        SpeedUtil su = new SpeedUtil();
         Assert.assertNotNull("exists", su);
         RampData ramp = su.getRampForSpeedChange(.1f, .8f);
         Assert.assertNotNull("exists",ramp);

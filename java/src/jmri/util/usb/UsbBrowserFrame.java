@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class UsbBrowserFrame extends JmriJFrame {
 

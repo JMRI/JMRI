@@ -42,6 +42,7 @@ public class DetectionPanel extends JPanel {
 
     /**
      * Add _blockPathPanel to this ItemPanel.
+     * @param parent the indicator track item panel
      */
     public DetectionPanel(ItemPanel parent) {
         super();
@@ -203,6 +204,7 @@ public class DetectionPanel extends JPanel {
 
     /**
      * Name of either Sensor or OBlock for detection
+     * @param name detector name
      */
     public void setOccDetector(String name) {
         _occDetectorName.setText(name);
@@ -214,7 +216,8 @@ public class DetectionPanel extends JPanel {
         if (_pathBoxes != null) {
             for (int i = 0; i < _pathBoxes.size(); i++) {
                 if (_pathBoxes.get(i).isSelected()) {
-                    paths.add(_pathBoxes.get(i).getName());
+                    // displayed path names are padded to 25 charts
+                    paths.add(_pathBoxes.get(i).getName().trim());
                 }
             }
         }
@@ -228,7 +231,8 @@ public class DetectionPanel extends JPanel {
         }
         for (int k = 0; k < iconPath.size(); k++) {
             for (int i = 0; i < _pathBoxes.size(); i++) {
-                String name = _pathBoxes.get(i).getName();
+                // displayed path names are padded to 25 charts
+                String name = _pathBoxes.get(i).getName().trim();
                 if (iconPath.get(k).equals(name)) {
                     _pathBoxes.get(i).setSelected(true);
                 }
@@ -251,7 +255,7 @@ public class DetectionPanel extends JPanel {
             } else {
                 Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);
                 if (sensor == null) {
-                    JOptionPane.showMessageDialog(_parent._paletteFrame,
+                    JOptionPane.showMessageDialog(_parent._frame,
                             Bundle.getMessage("InvalidOccDetector", name),
                             Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                     _occDetectorName.setText(null);

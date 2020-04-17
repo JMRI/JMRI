@@ -2,7 +2,7 @@ package jmri.jmrix.loconet.locoio;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetListener;
@@ -15,19 +15,13 @@ import org.slf4j.LoggerFactory;
  * 
  * @author John Plocher, January 28, 2007
  */
-public class LocoIOData
-        implements LocoNetListener, java.beans.PropertyChangeListener {
+public class LocoIOData extends PropertyChangeSupport
+        implements LocoNetListener, PropertyChangeListener {
 
     private int sv0;
     private int unitAddress;
     private int unitSubAddress;
     private LnTrafficController tc;
-
-    /*
-     * This data model is shared between several views; each
-     * needs to know when the data changes out from under it.
-     */
-    private PropertyChangeSupport dataListeners = new PropertyChangeSupport(this);
 
     /**
      * Define the number of rows in the table, which is also the number of
@@ -90,14 +84,6 @@ public class LocoIOData
         }
     }
 
-    public void addPropertyChangeListener(PropertyChangeListener pcl) {
-        dataListeners.addPropertyChangeListener(pcl);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener pcl) {
-        dataListeners.removePropertyChangeListener(pcl);
-    }
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         log.info("LocoIOData: {} := {} from {}", // NOI18N
@@ -123,12 +109,12 @@ public class LocoIOData
     }
 
     public synchronized void setUnitAddress(int unit) {
-        dataListeners.firePropertyChange("UnitAddress", Integer.valueOf(unitAddress), Integer.valueOf(0x0100 | (unit & 0x07F))); // NOI18N
+        firePropertyChange("UnitAddress", unitAddress, 0x0100 | (unit & 0x07F)); // NOI18N
         unitAddress = 0x0100 | (unit & 0x07F);  // protect against high bits set
     }
 
     public synchronized void setUnitSubAddress(int unitSub) {
-        dataListeners.firePropertyChange("UnitSubAddress", Integer.valueOf(unitSubAddress), Integer.valueOf(unitSub & 0x07F)); // NOI18N
+        firePropertyChange("UnitSubAddress", unitSubAddress, unitSub & 0x07F); // NOI18N
         unitSubAddress = unitSub & 0x07F;
     }
 
@@ -158,7 +144,7 @@ public class LocoIOData
                 // bit 2 is left at zero
                 ((isServo & 0x01) << 0x03) |    // bit 3
                 ((blinkRate & 0x0F) << 0x04);   // bits 4-7
-        dataListeners.firePropertyChange("UnitConfig", Integer.valueOf(sv0), Integer.valueOf(newsv0)); // NOI18N
+        firePropertyChange("UnitConfig", sv0, newsv0); // NOI18N
         sv0 = newsv0;
     }
 
@@ -168,7 +154,7 @@ public class LocoIOData
 
     public void setLBVersion(String version) {
         locoBufferVersion = version;
-        dataListeners.firePropertyChange("LBVersionChange", "", locoBufferVersion); // NOI18N
+        firePropertyChange("LBVersionChange", "", locoBufferVersion); // NOI18N
     }
 
     public String getLBVersion() {
@@ -177,7 +163,7 @@ public class LocoIOData
 
     public void setLIOVersion(String version) {
         locoIOVersion = version;
-        dataListeners.firePropertyChange("LIOVersionChange", "", locoIOVersion); // NOI18N
+        firePropertyChange("LIOVersionChange", "", locoIOVersion); // NOI18N
     }
 
     public String getLIOVersion() {
@@ -186,7 +172,7 @@ public class LocoIOData
 
     public void setStatus(String msg) {
         status = msg;
-        dataListeners.firePropertyChange("StatusChange", "", status); // NOI18N
+        firePropertyChange("StatusChange", "", status); // NOI18N
     }
 
     public String getStatus() {
@@ -195,7 +181,7 @@ public class LocoIOData
 
     public void setSV(int channel, int value) {
         sv[channel] = value & 0xFF;
-        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel)); // NOI18N
+        firePropertyChange("PortChange", -1, channel); // NOI18N
     }
 
     public int getSV(int channel) {
@@ -208,7 +194,7 @@ public class LocoIOData
 
     public void setV1(int channel, int value) {
         v1[channel] = value & 0xFF;
-        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel)); // NOI18N
+        firePropertyChange("PortChange", -1, channel); // NOI18N
     }
 
     public int getV1(int channel) {
@@ -221,7 +207,7 @@ public class LocoIOData
 
     public void setV2(int channel, int value) {
         v2[channel] = value & 0xFF;
-        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel)); // NOI18N
+        firePropertyChange("PortChange", -1, channel); // NOI18N
     }
 
     public int getV2(int channel) {
@@ -236,7 +222,7 @@ public class LocoIOData
      */
     public void setAddr(int channel, int value) {
         addr[channel] = value & 0x7FF;
-        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel)); // NOI18N
+        firePropertyChange("PortChange", -1, channel); // NOI18N
     }
 
     public int getAddr(int channel) {
@@ -245,7 +231,7 @@ public class LocoIOData
 
     public void setMode(int channel, String m) {
         mode[channel] = m;
-        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel)); // NOI18N
+        firePropertyChange("PortChange", -1, channel); // NOI18N
     }
 
     public String getMode(int channel) {
@@ -266,7 +252,7 @@ public class LocoIOData
 
     public void setLIM(int channel, LocoIOMode m) {
         lim[channel] = m;
-        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel)); // NOI18N
+        firePropertyChange("PortChange", -1, channel); // NOI18N
     }
 
     public LocoIOMode getLIM(int channel) {
@@ -694,7 +680,7 @@ public class LocoIOData
     }
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts.
+     * Internal routine to handle timer starts and restarts.
      */
     protected void restartTimer(int delay) {
         if (timer == null) {

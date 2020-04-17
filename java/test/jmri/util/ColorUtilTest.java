@@ -150,7 +150,7 @@ public class ColorUtilTest {
     @Test
     public void testDefaultColorFromString() {
         try {
-            ColorUtil.stringToColor("other"); //NOI18N
+            ColorUtil.stringToColor("other"); // NOI18N
             Assert.fail("Expected exception not thrown");
         } catch (IllegalArgumentException ex) {
             Assert.assertEquals("unknown color text 'other'", ex.getMessage());

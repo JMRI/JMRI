@@ -1,23 +1,22 @@
 package jmri.jmrit.operations.rollingstock;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import jmri.jmrit.operations.setup.Control;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrit.operations.setup.Control;
 
 /**
  * Provides common routes for importing cars and locomotives
@@ -39,16 +38,12 @@ public abstract class ImportRollingStock extends Thread {
     // Get file to read from
     protected File getFile() {
         JFileChooser fc = new JFileChooser(jmri.jmrit.operations.OperationsXml.getFileLocation());
-        fc.addChoosableFileFilter(new ImportFilter());
+        fc.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("Text&CSV"), "txt", "csv")); // NOI18N
         int retVal = fc.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
             return null; // canceled
         }
-        if (fc.getSelectedFile() == null) {
-            return null; // canceled
-        }
-        File file = fc.getSelectedFile();
-        return file;
+        return fc.getSelectedFile();
     }
 
     protected BufferedReader getBufferedReader(File file) {
@@ -87,23 +82,6 @@ public abstract class ImportRollingStock extends Thread {
             Arrays.fill(outLine, ""); // NOI18N
         }
         return outLine;
-    }
-
-    public static class ImportFilter extends javax.swing.filechooser.FileFilter {
-
-        @Override
-        public boolean accept(File f) {
-            if (f.isDirectory()) {
-                return true;
-            }
-            String name = f.getName();
-            return (name.matches(".*\\.txt") || name.matches(".*\\.csv")); // NOI18N
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("Text&CSV");
-        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(ImportRollingStock.class);

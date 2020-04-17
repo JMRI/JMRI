@@ -27,18 +27,6 @@ public class CarTypes extends RollingStockAttribute implements InstanceManagerAu
     public CarTypes() {
     }
 
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized CarTypes instance() {
-        return InstanceManager.getDefault(CarTypes.class);
-    }
-
     @Override
     protected String getDefaultNames() {
         if (Setup.getCarTypes().equals(Setup.AAR)) {

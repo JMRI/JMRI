@@ -55,6 +55,7 @@ public class CbusAllocateNodeNumber implements CanListener {
         NODE_NUM_DIALOGUE_OPEN = false;
         WAITING_RESPONSE_NAME = false;
         _timeout = CbusNodeTimerManager.SINGLE_MESSAGE_TIMEOUT_TIME;
+        _tempNodeName="";
     }
     
     
@@ -165,7 +166,7 @@ public class CbusAllocateNodeNumber implements CanListener {
         return rqnnSpinner;
     }
     
-    private TimerTask sendSNNTask;
+    protected TimerTask sendSNNTask;
     
     private void clearSendSNNTimeout(){
         if (sendSNNTask != null ) {
@@ -237,13 +238,16 @@ public class CbusAllocateNodeNumber implements CanListener {
                 // if nodes are allowed to be added to node table, add.
                 // this is done here so any known parameters can be passed directly rather than re-requested
                 if ( jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class).getAddNodes() ) {
-                    
+                    int nodeNum = m.getElement(1) * 256 + m.getElement(2);
+                    nodeModel.setRequestNodeDisplay(nodeNum);
                     // provide will add to table
-                    CbusNode nd = nodeModel.provideNodeByNodeNum( ( m.getElement(1) * 256 ) + m.getElement(2) );
+                    CbusNode nd = nodeModel.provideNodeByNodeNum( nodeNum );
                     nd.getCanListener().setParamsFromSetup(_paramsArr);
                     nd.setNodeNameFromName(_tempNodeName);
                     nd.resetNodeAll();
                     nodeModel.startUrgentFetch();
+                    nodeModel.setRequestNodeDisplay(-1);
+                    send.searchForCommandStations();
                 }   
                 _paramsArr = null;
                 break;

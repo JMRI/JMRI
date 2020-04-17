@@ -13,6 +13,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.beans.*;
+import java.text.MessageFormat;
 import java.util.*;
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -84,7 +85,6 @@ public class LayoutTurntable extends LayoutTrack {
     //
     // Accessor methods
     //
-
     /**
      * Get the radius for this turntable.
      *
@@ -268,7 +268,8 @@ public class LayoutTurntable extends LayoutTrack {
             }
         }
         if (!found) {
-            log.error("Attempt to add Turnout control to a non-existant ray track");
+            log.error("{}.setRayTurnout({}, {}, {}); Attempt to add Turnout control to a non-existant ray track",
+                    getName(), index, turnoutName, state);
         }
     }
 
@@ -437,7 +438,8 @@ public class LayoutTurntable extends LayoutTrack {
             }
         }
         if (!found) {
-            log.error("Attempt to move a non-existant ray track");
+            log.error("{}.setRayCoordsIndexed({}, {}, {}); Attempt to move a non-existant ray track",
+                    getName(), x, y, index);
         }
     }
 
@@ -450,22 +452,25 @@ public class LayoutTurntable extends LayoutTrack {
     public void setRayCoordsIndexed(Point2D point, int index) {
         setRayCoordsIndexed(point.getX(), point.getY(), index);
     }
+
     /**
      * Get the coordinates for a specified connection type.
      *
-     * @param locationType the connection type
+     * @param connectionType the connection type
      * @return the coordinates
      */
     @Override
-    public Point2D getCoordsForConnectionType(int locationType) {
+    public Point2D getCoordsForConnectionType(LayoutEditor.HitPointType connectionType) {
         Point2D result = getCoordsCenter();
-        if (TURNTABLE_CENTER == locationType) {
+        if (LayoutEditor.HitPointType.TURNTABLE_CENTER == connectionType) {
             // nothing to see here, move along...
             // (results are already correct)
-        } else if (locationType >= TURNTABLE_RAY_OFFSET) {
-            result = getRayCoordsIndexed(locationType - TURNTABLE_RAY_OFFSET);
+        } else if (LayoutEditor.HitPointType.isTurntableRayHitType(connectionType)) {
+            result = getRayCoordsIndexed(connectionType.getXmlValue()
+                    - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue());
         } else {
-            log.error("Invalid connection type " + locationType); // NOI18N
+            log.error("{}.getCoordsForConnectionType({}); Invalid connection type",
+                    getName(), connectionType); // NOI18N
         }
         return result;
     }
@@ -474,13 +479,15 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(LayoutEditor.HitPointType connectionType) throws jmri.JmriException {
         LayoutTrack result = null;
-        if (connectionType >= TURNTABLE_RAY_OFFSET) {
-            result = getRayConnectIndexed(connectionType - TURNTABLE_RAY_OFFSET);
+        if (LayoutEditor.HitPointType.isTurntableRayHitType(connectionType)) {
+            result = getRayConnectIndexed(connectionType.getXmlValue() - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue());
         } else {
-            log.error("Invalid Turntable connection type " + connectionType); // NOI18N
-            throw new jmri.JmriException("Invalid Point");
+            String errString = MessageFormat.format("{0}.getCoordsForConnectionType({1}); Invalid connection type",
+                    getName(), connectionType); // NOI18N
+            log.error(errString); // NOI18N
+            throw new jmri.JmriException(errString);
         }
         return result;
     }
@@ -489,23 +496,28 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
-        if ((type != TRACK) && (type != NONE)) {
-            log.error("unexpected type of connection to LevelXing - " + type);
-            throw new jmri.JmriException("unexpected type of connection to LevelXing - " + type);
+    public void setConnection(LayoutEditor.HitPointType connectionType, LayoutTrack o, LayoutEditor.HitPointType type) throws jmri.JmriException {
+        if ((type != LayoutEditor.HitPointType.TRACK) && (type != LayoutEditor.HitPointType.NONE)) {
+            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid type",
+                    getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
+            log.error(errString); // NOI18N
+            throw new jmri.JmriException(errString);
         }
-        if (connectionType >= TURNTABLE_RAY_OFFSET) {
+        if (LayoutEditor.HitPointType.isTurntableRayHitType(connectionType)) {
             if ((o == null) || (o instanceof TrackSegment)) {
-                setRayConnect((TrackSegment) o, connectionType - TURNTABLE_RAY_OFFSET);
+                setRayConnect((TrackSegment) o, connectionType.getXmlValue() - LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue());
             } else {
-                String msg = "Invalid object type " + o.getClass().getName(); // NOI18N
-                log.error(msg);
-                throw new jmri.JmriException(msg);
+                String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid object: {4}",
+                        getName(), connectionType, o.getName(),
+                        type, o.getClass().getName()); // NOI18N
+                log.error(errString); // NOI18N
+                throw new jmri.JmriException(errString);
             }
         } else {
-            String msg = "Invalid Connection Type " + connectionType; // NOI18N
-            log.error(msg);
-            throw new jmri.JmriException(msg);
+            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid connection type",
+                    getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
+            log.error(errString); // NOI18N
+            throw new jmri.JmriException(errString);
         }
     }
 
@@ -562,7 +574,6 @@ public class LayoutTurntable extends LayoutTrack {
     //
     // Modify coordinates methods
     //
-
     /**
      * Scale this LayoutTrack's coordinates by the x and y factors.
      *
@@ -577,7 +588,8 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Translate (2D move) this LayoutTrack's coordinates by the x and y factors.
+     * Translate (2D move) this LayoutTrack's coordinates by the x and y
+     * factors.
      *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
@@ -603,8 +615,8 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        int result = NONE;  // assume point not on connection
+    protected LayoutEditor.HitPointType findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
+        LayoutEditor.HitPointType result = LayoutEditor.HitPointType.NONE;  // assume point not on connection
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
@@ -620,7 +632,7 @@ public class LayoutTurntable extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = TURNTABLE_CENTER;
+                result = LayoutEditor.HitPointType.TURNTABLE_CENTER;
             }
         }
 
@@ -631,13 +643,13 @@ public class LayoutTurntable extends LayoutTrack {
                 if (distance < minDistance) {
                     minDistance = distance;
                     minPoint = p;
-                    result = TURNTABLE_RAY_OFFSET + getRayIndex(k);
+                    result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue() + getRayIndex(k));
                 }
             }
         }
         if ((useRectangles && !r.contains(minPoint))
                 || (!useRectangles && (minDistance > circleRadius))) {
-            result = NONE;
+            result = LayoutEditor.HitPointType.NONE;
         }
         return result;
     }
@@ -797,7 +809,8 @@ public class LayoutTurntable extends LayoutTrack {
                 }
             }
             if (!found) {
-                log.error("Attempt to set the position on a non-existant ray track");
+                log.error("{}.setPosition({}); Attempt to set the position on a non-existant ray track",
+                        getName(), index);
             }
         }
     }
@@ -819,7 +832,7 @@ public class LayoutTurntable extends LayoutTrack {
     public void deleteRay(RayTrack rayTrack) {
         TrackSegment t = null;
         if (rayTrack == null) {
-            log.error("rayTrack is null!");
+            log.error("{}.deleteRay(null); rayTrack is null", getName());
         } else {
             t = rayTrack.getConnect();
             getRayList().remove(rayTrack.getConnectionIndex());
@@ -893,7 +906,6 @@ public class LayoutTurntable extends LayoutTrack {
         //
         // Accessor routines
         //
-
         /**
          * Set ray track disabled.
          *
@@ -1199,9 +1211,11 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void highlightUnconnected(Graphics2D g2, int specificType) {
+    protected void highlightUnconnected(Graphics2D g2, LayoutEditor.HitPointType specificType) {
+        int specificTypeValue = specificType.getXmlValue();
         for (int j = 0; j < getNumberRays(); j++) {
-            if ((specificType == NONE) || (specificType == (TURNTABLE_RAY_OFFSET + j))) {
+            if ((specificType == LayoutEditor.HitPointType.NONE)
+                    || (specificTypeValue == (LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue() + j))) {
                 if (getRayConnectOrdered(j) == null) {
                     Point2D pt = getRayCoordsOrdered(j);
                     g2.fill(trackControlCircleAt(pt));
@@ -1255,7 +1269,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /*
-     * {@inheritDoc}
+    * {@inheritDoc}
      */
     @Override
     protected void reCheckBlockBoundary() {
@@ -1263,7 +1277,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /*
-     * {@inheritDoc}
+    * {@inheritDoc}
      */
     @Override
     protected List<LayoutConnectivity> getLayoutConnectivity() {
@@ -1275,12 +1289,12 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public List<Integer> checkForFreeConnections() {
-        List<Integer> result = new ArrayList<>();
+    public List<LayoutEditor.HitPointType> checkForFreeConnections() {
+        List<LayoutEditor.HitPointType> result = new ArrayList<>();
 
         for (int k = 0; k < getNumberRays(); k++) {
             if (getRayConnectOrdered(k) == null) {
-                result.add(Integer.valueOf(TURNTABLE_RAY_OFFSET + getRayIndex(k)));
+                result.add(LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue() + getRayIndex(k)));
             }
         }
         return result;
@@ -1304,16 +1318,16 @@ public class LayoutTurntable extends LayoutTrack {
     public void checkForNonContiguousBlocks(
             @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetsMap) {
         /*
-         * For each (non-null) blocks of this track do:
-         * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
-         * #2) If this track is already in the TrackNameSet for this block
-         *     then return (done!)
-         * #3) else add a new set (with this block/track) to
-         *     blockNamesToTrackNameSetMap and check all the connections in this
-         *     block (by calling the 2nd method below)
-         * <p>
-         *     Basically, we're maintaining contiguous track sets for each block found
-         *     (in blockNamesToTrackNameSetMap)
+        * For each (non-null) blocks of this track do:
+        * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
+        * #2) If this track is already in the TrackNameSet for this block
+        *     then return (done!)
+        * #3) else add a new set (with this block/track) to
+        *     blockNamesToTrackNameSetMap and check all the connections in this
+        *     block (by calling the 2nd method below)
+        * <p>
+        *     Basically, we're maintaining contiguous track sets for each block found
+        *     (in blockNamesToTrackNameSetMap)
          */
 
         // We're using a map here because it is convient to
@@ -1343,7 +1357,7 @@ public class LayoutTurntable extends LayoutTrack {
                     }
                 }
             } else {    // (#3)
-                log.debug("*New block ('{}') trackNameSets", theBlockName);
+                log.debug("*New block (''{}'') trackNameSets", theBlockName);
                 TrackNameSets = new ArrayList<>();
                 blockNamesToTrackNameSetsMap.put(theBlockName, TrackNameSets);
             }
@@ -1352,7 +1366,7 @@ public class LayoutTurntable extends LayoutTrack {
                 TrackNameSets.add(TrackNameSet);
             }
             if (TrackNameSet.add(getName())) {
-                log.debug("*    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
+                log.debug("*    Add track ''{}'' to trackNameSet for block ''{}''", getName(), theBlockName);
             }
             theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
         }
@@ -1377,7 +1391,7 @@ public class LayoutTurntable extends LayoutTrack {
                     if ((!blk.isEmpty()) && (blk.equals(blockName))) { // (#1)
                         // if we are added to the TrackNameSet
                         if (TrackNameSet.add(getName())) {
-                            log.debug("*    Add track '{}' for block '{}'", getName(), blockName);
+                            log.debug("*    Add track ''{}'' for block ''{}''", getName(), blockName);
                         }
                         // it's time to play... flood your neighbours!
                         ts.collectContiguousTracksNamesInBlockNamed(blockName,

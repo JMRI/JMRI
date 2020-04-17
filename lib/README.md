@@ -13,9 +13,8 @@ macOS binaries are treated slightly differently, see the README file there.
 #### Updates
 
 If you make a change in this directory (add/change/remove a file), please make corresponding changes in the control files that are used for various JMRI development and release operations:
-- build.xml - used by Ant, and in turn by various IDEs. Note that in addition to changing the classpath entry or entries, you should also check to make sure that the three javadoc targets are linking to the proper sources.
+- build.xml - used by Ant; note that in addition to changing the classpath entry or entries, you should also ensure the three javadoc targets are linking to the proper sources
 - pom.xml - used by Maven (see notes below)
-- nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
 - .factorypath - used by Visual Studio Code
 
 On macOS, most of these changes can be affected with (Javadoc links will need to fixed manually):
@@ -39,6 +38,12 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 ```
 After that, add and commit the additional files that were created within lib/
 
+After you have committed your changes, please run
+```
+./scripts/check_lib_dates
+```
+which checks the dates of the control files to make sure they've benen updated when lib/ is updated
+
 ### Specific components:
 
 ##### jsplitbutton-1.3.1.jar
@@ -54,6 +59,9 @@ After that, add and commit the additional files that were created within lib/
 - contributed by Randall Wood
 - from https://github.com/rhwood/jinputvalidator
 - javadoc at https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.6.0
+
+##### assertJ: assertj-core-3.12.0.jar, assertj-swing-3.9.2.jar, assertj-swing-junit-3.9.2.jar
+- testing only
 
 ##### commons-lang3-3.2.1.jar
 - version 3.2.1
@@ -91,10 +99,6 @@ After that, add and commit the additional files that were created within lib/
 - version 1.0.1
 - from http://www.sparetimelabs.com/maven2/com/sparetimelabs/purejavacomm/1.0.1/
 - javadoc at https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE
-
-##### jna-4.2.2.jar
-- version 4.2.2
-- from https://maven.java.net/content/repositories/releases/net/java/dev/jna/jna/4.2.2/
 
 ##### security.policy
 - (JMRI file)
@@ -142,17 +146,17 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
         lib/windows/x64/intelbth_x64.dll
         lib/windows/x86/intelbth.dll
 
-##### jython-standalone-2.7.1.jar
-- from http://repo1.maven.org/maven2/org/python/jython-standalone/2.7.1/
-- unlike jython-2.7.1.jar, includes embedded standard python libs
+##### jython-standalone-2.7.2.jar
+- from http://repo1.maven.org/maven2/org/python/jython-standalone/2.7.2/
+- unlike jython-2.7.2.jar, includes embedded standard python libs
+- unlike jython-slim-2.7.2.jar, includes embedded Java dependencies
 
 ##### jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
 - from <https://jinput.dev.java.net/> jinput_dist_20090401
 - (most recent as of 2010-Jan-02)
 
-##### JavaMail 1.4.1
+##### JavaMail 1.4.1 (used to validate email address formats)
 - mailapi.jar
-- smtp.jar
 
 ##### Joal 2.3.1
 - from <http://jogamp.org/deployment/archive/rc/v2.3.1/jar/>

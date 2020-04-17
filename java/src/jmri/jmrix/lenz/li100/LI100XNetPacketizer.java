@@ -29,6 +29,6 @@ public class LI100XNetPacketizer extends XNetPacketizer {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LI100XNetPacketizer.class);
+    private static final Logger log = LoggerFactory.getLogger(LI100XNetPacketizer.class);
 
 }

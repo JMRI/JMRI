@@ -92,10 +92,6 @@ public class NXFrame extends WarrantRoute {
     
     private void init() {
         if (log.isDebugEnabled()) log.debug("newInstance");
-        WarrantFrame f = WarrantTableAction.getWarrantFrame();
-        if (f != null) {    // only edit one warrant at a time.
-            WarrantTableAction.closeWarrantFrame(f);
-        }
         makeMenus();
 
         _routePanel = new JPanel();
@@ -119,7 +115,7 @@ public class NXFrame extends WarrantRoute {
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                closeFrame();
+                WarrantTableAction.getDefault().closeNXFrame();
             }
         });
         setAlwaysOnTop(true);
@@ -185,7 +181,9 @@ public class NXFrame extends WarrantRoute {
         p.add(button);
         p.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
         button = new JButton(Bundle.getMessage("ButtonCancel"));
-        button.addActionListener((ActionEvent e) -> closeFrame());
+        button.addActionListener((ActionEvent e) -> {
+            WarrantTableAction.getDefault().closeNXFrame();
+        });
         p.add(button);
         p.add(Box.createGlue());
         
@@ -429,7 +427,7 @@ public class NXFrame extends WarrantRoute {
      * @param orders list of block orders
      */
     @Override
-    public void selectedRoute(ArrayList<BlockOrder> orders) {
+    protected void selectedRoute(ArrayList<BlockOrder> orders) {
         JPanel con = (JPanel)getContentPane().getComponent(0);
         con.removeAll();
         if (_runAuto.isSelected()) {
@@ -477,6 +475,7 @@ public class NXFrame extends WarrantRoute {
         }
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         if (msg == null) {
+            warrant.setNXWarrant(true);
             tableFrame.getModel().addNXWarrant(warrant);   //need to catch propertyChange at start
             if (log.isDebugEnabled()) {
                 log.debug("NXWarrant added to table");
@@ -521,16 +520,8 @@ public class NXFrame extends WarrantRoute {
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage(WARNING_TITLE), JOptionPane.WARNING_MESSAGE);
         } else {
-            closeFrame();
-            if (log.isDebugEnabled()) {
-                log.debug("Close Frame.");
-            }
+            WarrantTableAction.getDefault().closeNXFrame();
         }
-    }
-
-    protected void closeFrame() {
-        clearTempWarrant();
-        WarrantTableAction.closeNXFrame(this);
     }
 
     // for the convenience of testing

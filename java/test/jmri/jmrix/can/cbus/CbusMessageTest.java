@@ -343,16 +343,22 @@ public class CbusMessageTest {
         Assert.assertEquals("Priority DEFAULT_DYNAMIC_PRIORITY m",2,CbusMessage.getPri(m));
         
         r.setExtended(true);
+        
+        try {
+            CbusMessage.setPri(r,CbusConstants.DEFAULT_MINOR_PRIORITY);
+            Assert.fail("Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            Assert.assertEquals("Extended CBUS CAN Frames do not have a priority concept.", e.getMessage());
+        }
+        
         m.setExtended(true);
         
-        Assert.assertEquals("Priority setExtended r",0,CbusMessage.getPri(r));
-        Assert.assertEquals("Priority setExtended m",0,CbusMessage.getPri(m));        
-
-        CbusMessage.setPri(m,CbusConstants.DEFAULT_MINOR_PRIORITY);
-        CbusMessage.setPri(r,CbusConstants.DEFAULT_MINOR_PRIORITY);
-        Assert.assertEquals("Priority setExtended DEFAULT_MINOR_PRIORITY r",3,CbusMessage.getPri(r));
-        Assert.assertEquals("Priority setExtended DEFAULT_MINOR_PRIORITY m",3,CbusMessage.getPri(m));
-        
+        try {
+            CbusMessage.setPri(m,CbusConstants.DEFAULT_MINOR_PRIORITY);
+            Assert.fail("Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            Assert.assertEquals("Extended CBUS CAN Frames do not have a priority concept.", e.getMessage());
+        }
     }
     
     @Test
@@ -398,26 +404,37 @@ public class CbusMessageTest {
         }
         
         r.setExtended(true);
-        m.setExtended(true);        
+        m.setExtended(true);
         
-        CbusMessage.setId(r,0x01);
-        CbusMessage.setId(m,0x01);
-        Assert.assertEquals("getId 1 r",1,CbusMessage.getId(r));
-        Assert.assertEquals("getId 1 m",1,CbusMessage.getId(m));
-        CbusMessage.setId(r,120);
-        CbusMessage.setId(m,120);
-        Assert.assertEquals("getId 120 r",120,CbusMessage.getId(r));
-        Assert.assertEquals("getId 120 m",120,CbusMessage.getId(m));
+        try {
+            CbusMessage.setId(r,0x05);
+            Assert.fail("Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            Assert.assertEquals("No CAN ID Concept on Extended CBUS CAN Frame.", e.getMessage());
+        }
+        
+        try {
+            CbusMessage.setId(m,0x05);
+            Assert.fail("Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            Assert.assertEquals("No CAN ID Concept on Extended CBUS CAN Frame.", e.getMessage());
+        }
+        
+        r.setExtended(false);
+        m.setExtended(false);
+        
         try {
             CbusMessage.setId(r,0xffffff);
             Assert.fail("r Should have thrown an exception");
         } catch (IllegalArgumentException e) {
+            Assert.assertEquals("invalid standard ID value: 16777215", e.getMessage());
         }
         
         try {
             CbusMessage.setId(m,0xffffff);
             Assert.fail("m Should have thrown an exception");
         } catch (IllegalArgumentException e) {
+            Assert.assertEquals("invalid standard ID value: 16777215", e.getMessage());
         }        
         
     }
@@ -471,8 +488,8 @@ public class CbusMessageTest {
 
     @Test
     public void testgetBootNop() {
-        CanMessage m = CbusMessage.getBootNop(0x3D,0x12);
-        Assert.assertEquals("getBootNop","[4] 00 00 3D 00 0D 00 00 00",m.toString());
+        CanMessage m = CbusMessage.getBootNop(0x123456,0x12);
+        Assert.assertEquals("getBootNop","[4] 56 34 12 00 0D 00 00 00",m.toString());
     }    
 
     @Test
@@ -483,8 +500,8 @@ public class CbusMessageTest {
 
     @Test
     public void testgetBootInitialise() {
-        CanMessage m = CbusMessage.getBootInitialise(202,0x12);
-        Assert.assertEquals("getBootInitialise","[4] 00 00 CA 00 0D 02 00 00",m.toString());
+        CanMessage m = CbusMessage.getBootInitialise(0x123456,0x12);
+        Assert.assertEquals("getBootInitialise","[4] 56 34 12 00 0D 02 00 00",m.toString());
     }
 
     @Test

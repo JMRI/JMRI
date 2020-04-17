@@ -271,7 +271,7 @@ public class LayoutEditorChecks {
         // check all tracks for free connections
         List<String> trackNames = new ArrayList<>();
         for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
-            List<Integer> connections = layoutTrack.checkForFreeConnections();
+            List<LayoutEditor.HitPointType> connections = layoutTrack.checkForFreeConnections();
             if (!connections.isEmpty()) {
                 // add this track's name to the list of track names
                 trackNames.add(layoutTrack.getName());
@@ -594,7 +594,7 @@ public class LayoutEditorChecks {
 //                if (ts.getName().equals("T104")) {
 //                    log.debug("T104");
 //                }
-                // adjacent connections must be defined...
+// adjacent connections must be defined...
                 LayoutTrack c1 = ts.getConnect1();
                 LayoutTrack c2 = ts.getConnect2();
                 if ((c1 != null) && (c2 != null)) {

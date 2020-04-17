@@ -1,31 +1,17 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.TrafficController;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
-public class CbusEvent {
+public class CbusEvent extends CbusEventDataElements {
     
     private int _nn;
     private int _en;
     protected EvState _state;
     protected String _name;
-    private CanSystemConnectionMemo _memo;
-    
-    /**
-     * Enum of the event state.
-     * <p>
-     * Events generally have on, off or unknown status.
-     * <p>
-     * They can also be asked to request their current status via the network,
-     * or toggled to the opposite state that it is currently at.
-     */
-    public enum EvState{
-        ON, OFF, UNKNOWN, REQUEST, TOGGLE;
-    }
+    private final CanSystemConnectionMemo _memo;
     
     /**
      * Create a new event
@@ -36,10 +22,12 @@ public class CbusEvent {
      * @param en Event Number
      */
     public CbusEvent( int nn, int en){
+        super();
         this._nn = nn;
         this._en = en;
         this._state = EvState.UNKNOWN;
         this._name = "";
+        this._memo = null;
     }
     
     /**
@@ -52,6 +40,7 @@ public class CbusEvent {
      * @param en Event Number
      */
     public CbusEvent( CanSystemConnectionMemo memo, int nn, int en){
+        super();
         this._nn = nn;
         this._en = en;
         this._state = EvState.UNKNOWN;
@@ -158,6 +147,22 @@ public class CbusEvent {
         return (nn == _nn) && (en == _en);
     }
     
+    /** 
+     * {@inheritDoc} 
+     * <p>
+     * Custom method to compare Node Number and Event Number.
+     */
+    @Override
+    public boolean equals(Object o) {
+        return ((o instanceof CbusEvent) && matches(((CbusEvent) o).getNn(),((CbusEvent) o).getEn()));
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(getEn(), getNn());
+    }
+    
     /**
      * Send ON event CAN frame.
      * <p>
@@ -203,7 +208,6 @@ public class CbusEvent {
         } else {
             memo = _memo;
         }
-        TrafficController _tc = memo.getTrafficController();
         if ( state == EvState.TOGGLE ) {
             if ( _state == EvState.OFF )  {
                 state =EvState.ON;
@@ -213,36 +217,10 @@ public class CbusEvent {
             }
         }
         _state = state;
-        CanMessage m = new CanMessage(_tc.getCanid());
-        CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        m.setNumDataElements(5);
-        if (null!=state) switch (state) {
-            case ON:
-                if (_nn > 0) {
-                    m.setElement(0, CbusConstants.CBUS_ACON);
-                } else {
-                    m.setElement(0, CbusConstants.CBUS_ASON);
-                }   break;
-            case OFF:
-                if (_nn > 0) {
-                    m.setElement(0, CbusConstants.CBUS_ACOF);
-                } else {
-                    m.setElement(0, CbusConstants.CBUS_ASOF);
-                }   break;
-            case REQUEST:
-                if (_nn > 0) {
-                    m.setElement(0, CbusConstants.CBUS_AREQ);
-                } else {
-                    m.setElement(0, CbusConstants.CBUS_ASRQ);
-                }   break;
-            default:
-                break;
-        }
-        m.setElement(1, _nn >> 8);
-        m.setElement(2, _nn & 0xff);
-        m.setElement(3, _en >> 8);
-        m.setElement(4, _en & 0xff);
-        jmri.util.ThreadingUtil.runOnLayout( () -> { _tc.sendCanMessage(m, null); } );
+        
+        jmri.util.ThreadingUtil.runOnLayout( () -> {
+            memo.getTrafficController().sendCanMessage(getCanMessage(memo.getTrafficController().getCanid(),_nn,_en,_state), null);
+        } );
     }
     
     /**
@@ -254,22 +232,16 @@ public class CbusEvent {
     public String toString() {
         StringBuilder addevbuf = new StringBuilder(50);
         if ( _nn > 0 ) {
-            addevbuf.append (Bundle.getMessage("OPC_NN"));
-            addevbuf.append (":");
-            addevbuf.append (_nn);
-            addevbuf.append (" ");
+            addevbuf.append (Bundle.getMessage("OPC_NN")).append (":");
+            addevbuf.append (_nn).append (" ");
             if ( !getNodeName().isEmpty() ) {
-                addevbuf.append ( getNodeName() );
-                addevbuf.append (" ");
+                addevbuf.append (getNodeName()).append (" ");
             }
         }
-        addevbuf.append (Bundle.getMessage("OPC_EN"));
-        addevbuf.append (":");
-        addevbuf.append (_en);
-        addevbuf.append (" ");
+        addevbuf.append (Bundle.getMessage("OPC_EN")).append (":");
+        addevbuf.append (_en).append (" ");
         if ( !getName().isEmpty() ) {
-            addevbuf.append ( getName() );
-            addevbuf.append (" ");
+            addevbuf.append ( getName() ).append (" ");
         }
         return addevbuf.toString();
     }

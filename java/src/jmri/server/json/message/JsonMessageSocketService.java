@@ -28,7 +28,7 @@ public class JsonMessageSocketService extends JsonSocketService<JsonMessageHttpS
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, JsonRequest request)
+    public void onMessage(String type, JsonNode data, JsonRequest request)
             throws IOException, JmriException, JsonException {
         switch (type) {
             case JSON.HELLO:
@@ -43,7 +43,7 @@ public class JsonMessageSocketService extends JsonSocketService<JsonMessageHttpS
                 }
                 break;
             case JsonMessage.CLIENT:
-                switch (method) {
+                switch (request.method) {
                     case JSON.DELETE:
                         // remove client id
                         if (!data.path(CLIENT).isMissingNode()) {

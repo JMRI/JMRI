@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
@@ -72,6 +73,7 @@ public class CbusNodeBackupManager {
      *
      * @return value else null if unknown
      */
+    @CheckForNull
     public java.util.Date getFirstBackupTime() {
         for (int j = _backupInfos.size()-1; j >-1 ; j--) {
             if ( _backupInfos.get(j).getBackupResult() == BackupType.COMPLETE ){
@@ -86,6 +88,7 @@ public class CbusNodeBackupManager {
      *
      * @return value else null if unknown
      */
+    @CheckForNull
     public java.util.Date getLastBackupTime() {
         for (int j = 0; j <_backupInfos.size(); j++) {
             if ( _backupInfos.get(j).getBackupResult() == BackupType.COMPLETE ){
@@ -349,9 +352,8 @@ public class CbusNodeBackupManager {
         }
         
         Document doc = new Document(root);
-        Element values;
-        
-        root.addContent(values = new Element("Backups"));  // NOI18N
+        Element values = new Element("Backups");
+        root.addContent(values);  // NOI18N
         _backupInfos.stream().map((node) -> {
             Element e = new Element("BackupInfo");  // NOI18N
             e.setAttribute("dateTimeStamp",xmlDateStyle.format( node.getBackupTimeStamp() ));  // NOI18N
@@ -465,8 +467,7 @@ public class CbusNodeBackupManager {
      * @return Location of the file, creating new if required
      */
     protected File getFileLocation() {
-        CbusNodeBackupFile x = new CbusNodeBackupFile();
-        return x.getFile(_node.getNodeNumber(),true);
+        return new CbusNodeBackupFile().getFile(_node.getNodeNumber(),true);
     }
     
     /**

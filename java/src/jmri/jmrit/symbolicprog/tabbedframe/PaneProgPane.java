@@ -610,7 +610,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Read changes on sheet" button, this sets in motion a
-     * continuing sequence of "read" operations on the variables {@literal &}
+     * continuing sequence of "read" operations on the variables and
      * CVs in the Pane. Only variables in states marked as "changed" will be
      * read.
      *
@@ -663,7 +663,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Read Full Sheet" button, this sets in motion a continuing
-     * sequence of "read" operations on the variables {@literal &} CVs in the
+     * sequence of "read" operations on the variables and CVs in the
      * Pane. The read mechanism only reads variables in certain states (and
      * needs to do that to handle error processing right now), so this is
      * implemented by first setting all variables and CVs on this pane to TOREAD
@@ -1108,7 +1108,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Compare changes on sheet" button, this sets in motion a
-     * continuing sequence of "confirm" operations on the variables {@literal &}
+     * continuing sequence of "confirm" operations on the variables and
      * CVs in the Pane. Only variables in states marked as "changed" will be
      * checked.
      *
@@ -1127,7 +1127,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Compare Full Sheet" button, this sets in motion a continuing
-     * sequence of "confirm" operations on the variables {@literal &} CVs in the
+     * sequence of "confirm" operations on the variables and CVs in the
      * Pane. The read mechanism only reads variables in certain states (and
      * needs to do that to handle error processing right now), so this is
      * implemented by first setting all variables and CVs on this pane to TOREAD

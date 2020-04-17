@@ -163,6 +163,6 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         fireTableDataChanged();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(StackMonDataModel.class);
+    private static final Logger log = LoggerFactory.getLogger(StackMonDataModel.class);
 
 }

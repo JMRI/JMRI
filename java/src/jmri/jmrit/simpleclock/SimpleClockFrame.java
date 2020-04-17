@@ -54,8 +54,8 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
     protected JComboBox<String> clockStartBox = null;
     protected JComboBox<String> startRunBox = null;
     // These are the indexes into the start run box.
-    private final static int START_STOPPED = 0;
-    private final static int START_RUNNING = 1;
+    private final static int START_RUNNING = 0;
+    private final static int START_STOPPED = 1;
     private final static int START_NORUNCHANGE = 2;
 
     protected JCheckBox synchronizeCheckBox = null;
@@ -437,7 +437,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
-        fileMenu.add(new jmri.configurexml.SaveMenu());
+        fileMenu.add(new jmri.configurexml.StoreMenu());
 
         setJMenuBar(menuBar);
         // add help menu to window

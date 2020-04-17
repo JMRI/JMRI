@@ -24,6 +24,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
@@ -73,6 +74,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.NamedBean;
+import jmri.NamedBeanUsageReport;
 import jmri.Reporter;
 import jmri.ShutDownManager;
 import jmri.SignalHeadManager;
@@ -667,7 +669,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 log.error("paint failed in thread "+
                     Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": ", e);
             }
-            
+
             Stroke stroke = new BasicStroke();
             if (g2d != null) {
                 stroke = g2d.getStroke();
@@ -2603,7 +2605,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 });
             }
         } else {
-            log.error("No icon editor specified for {}", name); //NOI18N
+            log.error("No icon editor specified for {}", name); // NOI18N
         }
         if (add) {
             txt = MessageFormat.format(Bundle.getMessage("AddItem"), Bundle.getMessage(BundleName));
@@ -2938,31 +2940,34 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         popup.add(new AbstractAction(Bundle.getMessage("TextAttributes")) {
             Positionable comp;
+            Editor ed;
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                (new TextAttrDialog(comp)).setVisible(true);
+                (new TextAttrDialog(comp, ed)).setVisible(true);
             }
 
             AbstractAction init(Positionable pos, Editor e) { // e unused?
                 comp = pos;
+                ed = e;
                 return this;
             }
         }.init(p, this));
         return true;
     }
 
-    public class TextAttrDialog extends JDialog {
+    public class TextAttrDialog extends DisplayFrame {
 
         Positionable _pos;
         DecoratorPanel _decorator;
+        BufferedImage[] _backgrounds;
 
-        TextAttrDialog(Positionable p) {
-            super(_targetFrame, Bundle.getMessage("TextAttributes"), true);
+        TextAttrDialog(Positionable p, Editor ed) {
+            super(Bundle.getMessage("TextAttributes"), ed);
             _pos = p;
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            _decorator = new DecoratorPanel(_pos.getEditor(), null);
+            _decorator = new DecoratorPanel(this);
             _decorator.initDecoratorPanel(_pos);
             panel.add(_decorator);
             panel.add(makeDoneButtonPanel());
@@ -2971,7 +2976,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             dim = new Dimension(dim.width +10, dim.height + 10);
             sp.setPreferredSize(dim);
             setContentPane(sp);
-            setLocation(jmri.util.PlaceWindow.nextTo(_pos.getEditor(), (Component)_pos, this));
+            InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_pos.getEditor(), (Component)_pos, this);
             pack();
         }
 
@@ -3237,9 +3242,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
-        if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
+        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
             StringBuilder message = new StringBuilder();
-            message.append(Bundle.getMessage("VetoInUseEditorHeader", getName())); //IN18N
+            message.append(Bundle.getMessage("VetoInUseEditorHeader", getName())); // NOI18N
             message.append("<br>");
             boolean found = false;
             int count = 0;
@@ -3252,11 +3257,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             if (found) {
                 message.append(Bundle.getMessage("VetoFoundInPanel", count));
                 message.append("<br>");
-                message.append(Bundle.getMessage("VetoReferencesWillBeRemoved")); //IN18N
+                message.append(Bundle.getMessage("VetoReferencesWillBeRemoved")); // NOI18N
                 message.append("<br>");
                 throw new PropertyVetoException(message.toString(), evt);
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
+        } else if ("DoDelete".equals(evt.getPropertyName())) { // NOI18N
             ArrayList<Positionable> toDelete = new ArrayList<>();
             for (Positionable p : _contents) {
                 if (nb.equals(p.getNamedBean())) {
@@ -3385,6 +3390,63 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public static Editor getEditor(String name) {
         return InstanceManager.getDefault(EditorManager.class).getEditor(name);
+    }
+
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            getContents().forEach((pos) -> {
+                String data = getUsageData(pos);
+                if (pos instanceof MultiSensorIcon) {
+                    MultiSensorIcon multi = (MultiSensorIcon) pos;
+                    multi.getSensors().forEach((sensor) -> {
+                        if (bean.equals(sensor)) {
+                            report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                        }
+                    });
+
+                } else if (pos instanceof SlipTurnoutIcon) {
+                    SlipTurnoutIcon slip3Scissor = (SlipTurnoutIcon) pos;
+                    if (bean.equals(slip3Scissor.getTurnout(SlipTurnoutIcon.EAST))) {
+                        report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                    }
+                    if (bean.equals(slip3Scissor.getTurnout(SlipTurnoutIcon.WEST))) {
+                        report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                    }
+                    if (slip3Scissor.getNamedTurnout(SlipTurnoutIcon.LOWEREAST) != null) {
+                        if (bean.equals(slip3Scissor.getTurnout(SlipTurnoutIcon.LOWEREAST))) {
+                            report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                        }
+                    }
+                    if (slip3Scissor.getNamedTurnout(SlipTurnoutIcon.LOWERWEST) != null) {
+                        if (bean.equals(slip3Scissor.getTurnout(SlipTurnoutIcon.LOWERWEST))) {
+                            report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                        }
+                    }
+
+                } else if (pos instanceof LightIcon) {
+                    LightIcon icon = (LightIcon) pos;
+                    if (bean.equals(icon.getLight())) {
+                        report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                    }
+
+                } else {
+                    if (bean.equals(pos.getNamedBean())) {
+                        report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                    }
+               }
+            });
+        }
+        return report;
+    }
+
+    String getUsageData(Positionable pos) {
+        Point point = pos.getLocation();
+        String data = String.format("%s :: x=%d, y=%d",
+                pos.getClass().getSimpleName(),
+                Math.round(point.getX()),
+                Math.round(point.getY()));
+        return data;
     }
 
     // initialize logging

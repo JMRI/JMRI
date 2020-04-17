@@ -318,7 +318,7 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
         _contentPanel.add(tPanel);
         _contentPanel.add(makeDoneButtonPanel());
         pack();
-        setLocation(jmri.util.PlaceWindow.nextTo(_editor, _shape, this));
+        InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_editor, _shape, this);
         setVisible(true);
         setAlwaysOnTop(true);
         if (log.isDebugEnabled()) {

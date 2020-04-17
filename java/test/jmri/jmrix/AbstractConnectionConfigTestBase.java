@@ -1,5 +1,6 @@
 package jmri.jmrix;
 
+import org.assertj.swing.edt.GuiActionRunner;
 import org.junit.*;
 import javax.swing.JPanel;
 
@@ -19,8 +20,10 @@ abstract public class AbstractConnectionConfigTestBase {
 
     @Test
     public void testLoadDetails(){
-        // verify no exceptions thrown
-        cc.loadDetails(new JPanel());
+        GuiActionRunner.execute(() -> {
+            // verify no exceptions thrown
+            cc.loadDetails(new JPanel());
+        });
     }
 
     @Test

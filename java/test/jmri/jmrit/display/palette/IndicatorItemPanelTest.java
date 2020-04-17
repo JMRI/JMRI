@@ -20,8 +20,7 @@ public class IndicatorItemPanelTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DisplayFrame df = new DisplayFrame();
-        EditorScaffold es = new EditorScaffold();
-        IndicatorItemPanel t = new IndicatorItemPanel(df,"test1","test2",es);
+        IndicatorItemPanel t = new IndicatorItemPanel(df,"test1","test2");
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(df);
     }

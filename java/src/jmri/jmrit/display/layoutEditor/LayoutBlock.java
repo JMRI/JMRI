@@ -101,9 +101,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     private String occupancySensorName = "";
     private String memoryName = "";
     private int occupiedSense = Sensor.ACTIVE;
-    private Color blockTrackColor = Color.black;
-    private Color blockOccupiedColor = Color.black;
-    private Color blockExtraColor = Color.black;
+    private Color blockTrackColor = Color.darkGray;
+    private Color blockOccupiedColor = Color.red;
+    private Color blockExtraColor = Color.white;
 
     /*
      * Creates a LayoutBlock object.
@@ -1102,7 +1102,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         @Override
         public String helpTarget() {
             return "package.jmri.jmrit.display.EditLayoutBlock";
-        }  //IN18N
+        }  // NOI18N
 
         @Override
         protected void initPanels() {
@@ -2624,7 +2624,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 boolean allowAddition = false;
                 for (int i = 0; i < maxt.size(); i++) {
                     LayoutTurnout turn = maxt.get(i).getObject();
-                    if (turn.type == LayoutTurnout.DOUBLE_XOVER) {
+                    if (turn.type == LayoutTurnout.TurnoutType.DOUBLE_XOVER) {
                         allowAddition = true;
                         //The double crossover gets reported in the opposite setting.
                         if (maxt.get(i).getExpectedState() == 2) {
@@ -4752,7 +4752,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) {    //IN18N
+        if ("CanDelete".equals(evt.getPropertyName())) {    // NOI18N
             if (evt.getOldValue() instanceof Sensor) {
                 if (evt.getOldValue().equals(getOccupancySensor())) {
                     throw new PropertyVetoException(getDisplayName(), evt);
@@ -4764,7 +4764,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     throw new PropertyVetoException(getDisplayName(), evt);
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) {  //IN18N
+        } else if ("DoDelete".equals(evt.getPropertyName())) {  // NOI18N
             //Do nothing at this stage
             if (evt.getOldValue() instanceof Sensor) {
                 if (evt.getOldValue().equals(getOccupancySensor())) {
@@ -4778,6 +4778,28 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 }
             }
         }
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean.equals(getBlock())) {
+                report.add(new NamedBeanUsageReport("LayoutBlockBlock"));  // NOI18N
+            }
+            if (bean.equals(getMemory())) {
+                report.add(new NamedBeanUsageReport("LayoutBlockMemory"));  // NOI18N
+            }
+            if (bean.equals(getOccupancySensor())) {
+                report.add(new NamedBeanUsageReport("LayoutBlockSensor"));  // NOI18N
+            }
+            for (int i = 0; i < getNumberOfNeighbours(); i++) {
+                if (bean.equals(getNeighbourAtIndex(i))) {
+                    report.add(new NamedBeanUsageReport("LayoutBlockNeighbor", "Neighbor"));  // NOI18N
+                }
+            }
+        }
+        return report;
     }
 
     @Override

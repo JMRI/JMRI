@@ -1,5 +1,7 @@
 package jmri.implementation;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.beans.PropertyChangeListener;
 
 import jmri.InstanceManager;
@@ -284,6 +286,29 @@ public abstract class AbstractTurnoutTestBase {
     @Test
     public void testGetBeanType(){
          Assert.assertEquals("bean type", t.getBeanType(), Bundle.getMessage("BeanNameTurnout"));
+    }
+
+    @Test
+    public void testIsCanFollow() {
+        assertThat(t.isCanFollow()).as("Abstract method should always return false").isFalse();
+    }
+
+    @Test
+    public void testSetLeadingTurnout() {
+        assertThat(t.getLeadingTurnout()).as("Defaults to null").isNull();
+        t.setLeadingTurnout(new AbstractTurnout("9999") {
+
+            @Override
+            protected void forwardCommandChangeToLayout(int s) {
+                // nothing to do
+            }
+
+            @Override
+            protected void turnoutPushbuttonLockout(boolean locked) {
+                // nothing to do
+            }
+        });
+        assertThat(t.getLeadingTurnout()).as("Did not change from null").isNull();
     }
 
 }

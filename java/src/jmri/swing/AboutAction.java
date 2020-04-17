@@ -8,7 +8,7 @@ import jmri.util.swing.WindowInterface;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class AboutAction extends JmriAbstractAction {
 

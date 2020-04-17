@@ -416,7 +416,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"),
                 Bundle.getMessage("BeanNameSignalMast")));
         _itemPanel = new SignalMastItemPanel(_paletteFrame, "SignalMast", getFamily(),
-                PickListModel.signalMastPickModelInstance(), _editor);
+                PickListModel.signalMastPickModelInstance());
         ActionListener updateAction = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {

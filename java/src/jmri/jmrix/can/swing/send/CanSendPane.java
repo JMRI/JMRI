@@ -174,9 +174,9 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
                 CanReply mr = new CanReply(m);
                 tc.sendCanReply(mr, null);
             }
-        } catch (StringIndexOutOfBoundsException | NumberFormatException ex) {
+        } catch (StringIndexOutOfBoundsException | IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, 
-            (Bundle.getMessage("NoMakeFrame")), Bundle.getMessage("WarningTitle"),
+            (Bundle.getMessage("NoMakeFrame",ex.getMessage())), Bundle.getMessage("WarningTitle"),
                 JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -186,7 +186,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
     javax.swing.Timer timer = null;
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts
+     * Internal routine to handle timer starts and restarts
      * @param delay in ms
      */
     protected void restartTimer(int delay) {
@@ -291,9 +291,9 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
                     tc.sendCanReply(mr, null);
                 }
                 startSequenceDelay();
-            } catch (StringIndexOutOfBoundsException | NumberFormatException ex) {
+            } catch (StringIndexOutOfBoundsException | IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(null, 
-                (Bundle.getMessage("NoMakeFrame")), Bundle.getMessage("WarningTitle"),
+                (Bundle.getMessage("NoMakeFrame", ex.getMessage())), Bundle.getMessage("WarningTitle"),
                     JOptionPane.ERROR_MESSAGE);
                 mRunButton.setSelected(false);
                 mRunButton.setText(Bundle.getMessage("ButtonStart"));

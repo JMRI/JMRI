@@ -196,27 +196,4 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    /*
-     The property change listener is located here so that the menus can interact with the front end
-     */
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    @Override
-    protected void firePropertyChange(String p, Object old, Object n) {
-        if (pcs == null) {
-            return;
-        }
-        pcs.firePropertyChange(p, old, n);
-    }
-
 }

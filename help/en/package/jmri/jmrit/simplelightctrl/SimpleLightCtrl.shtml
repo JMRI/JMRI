@@ -49,6 +49,8 @@
       "../../../../html/doc/Technical/Names.shtml">Names</a>
       under general help for more information.</p>
 
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h2>Light Control Buttons and Status</h2>
       <img src="light-control-window-600x266.png" height="266" width="600"
       alt="Light Control Tool Window">
@@ -165,9 +167,19 @@
         intensity to new intensity as fast as the device is able to
         do so.</dd>
       </dl>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
       
-      <h2>Further Light Support</h2>
-        <p><a href="../../../../html/tools/Lights.shtml" >JMRI Lights</a></p>
+      <h2>Other Light Reading</h2>
+      
+        <p><a href="../../../../html/tools/Lights.shtml" >Lights General Documentation</a></p>
+        
+        <p><a title="JMRI Light Table" href="../beantable/LightTable.shtml">Light Table</a></p>
+        
+        <p><a href="../beantable/LightAddEdit.shtml#addLight"> Add / </a>
+        <a href="../beantable/LightAddEdit.shtml#editLight">
+        Edit Light</a> (including automated <a href="../beantable/LightAddEdit.shtml#lightcontrol">
+        Light Controls</a>)</p>
       
       <!--#include virtual="/Footer.shtml" -->
     </div>

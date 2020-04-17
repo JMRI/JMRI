@@ -47,7 +47,7 @@ public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*
         try {
             command = (stateChangeCheck(newState) ? Turnout.CLOSED : Turnout.THROWN);
         } catch (IllegalArgumentException ex) {
-            log.error("new state invalid, Turnout not set");
+            log.error("new state invalid, Turnout not set"); // NOI18N
         }
         forwardToCommandStation(command);
     }

@@ -20,8 +20,7 @@ public class IconItemPanelTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DisplayFrame df = new DisplayFrame();
-        EditorScaffold es = new EditorScaffold();
-        IconItemPanel t = new IconItemPanel(df,"test",es);
+        IconItemPanel t = new IconItemPanel(df,"test");
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(df);
     }

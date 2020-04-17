@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend an ImageIcon to remember the name from which it was created and
- * provide rotation {@literal &} scaling services.
+ * provide rotation and scaling services.
  * <p>
  * We store both a "URL" for finding the file this was made from (so we can load
  * this later), plus a shorter (localized) "name" for display in GUI.
@@ -406,7 +406,7 @@ public class NamedIcon extends ImageIcon {
 
     public void transformImage(int w, int h, AffineTransform t, Component comp) {
         if (w <= 0 || h <= 0) {
-            if (log.isDebugEnabled()) {
+            if (comp instanceof jmri.jmrit.display.Positionable) {
                 log.debug("transformImage bad coords {}",
                         ((jmri.jmrit.display.Positionable) comp).getNameString());
             }

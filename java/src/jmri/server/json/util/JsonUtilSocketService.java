@@ -37,7 +37,7 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, JsonRequest request) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
         String name = data.path(JSON.NAME).asText();
         switch (type) {
             case JSON.LOCALE:
@@ -78,7 +78,7 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
 
     private void handleRailroadChange() throws IOException {
         try {
-            connection.sendMessage(service.doGet(JSON.RAILROAD, null, connection.getObjectMapper().createObjectNode(), new JsonRequest(this.connection.getLocale(), JSON.V5, 0)), 0);
+            connection.sendMessage(service.doGet(JSON.RAILROAD, null, connection.getObjectMapper().createObjectNode(), new JsonRequest(this.connection.getLocale(), JSON.V5, JSON.GET, 0)), 0);
         } catch (JsonException ex) {
             this.connection.sendMessage(ex.getJsonMessage(), 0);
         }

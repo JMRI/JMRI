@@ -12,8 +12,6 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Send DCC Packet">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -29,7 +27,7 @@
     <div id="mainContent">
 
       <h1>Send DCC Packet</h1>This is the
-      help/jmri/jmrit/sendpacket/SendPacketFrame help page 
+      help/jmri/jmrit/sendpacket/SendPacketFrame help page
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

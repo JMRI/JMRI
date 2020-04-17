@@ -10,7 +10,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -24,8 +26,10 @@ public class EditPortalDirectionTest {
     OBlockManager blkMgr;
 
     @Test
-    public void testCTor() {
+    public void testSetup() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        
         ControlPanelEditor frame = new ControlPanelEditor("EditPortalDirectionTest");
         frame.makeCircuitMenu(true);
         CircuitBuilder cb = frame.getCircuitBuilder();
@@ -42,7 +46,7 @@ public class EditPortalDirectionTest {
         Assert.assertNotNull("exists", dFrame);
         
         JUnitUtil.dispose(frame);
-        JUnitUtil.dispose(dFrame);
+//        JUnitUtil.dispose(dFrame);    // OK button should close dFrame
     }
 
     // The minimal setup for log4J

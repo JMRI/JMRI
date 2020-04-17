@@ -3,8 +3,6 @@ package jmri.jmrix.nce;
 import java.util.Arrays;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Encodes a message to an NCE command station.
@@ -34,7 +32,8 @@ import org.slf4j.LoggerFactory;
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
  
-    protected static final jmri.jmrix.nce.ncemon.NceMonBinary nceMon = new jmri.jmrix.nce.ncemon.NceMonBinary();
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceMessage.class); // called in static block
+    private static final jmri.jmrix.nce.ncemon.NceMonBinary nceMon = new jmri.jmrix.nce.ncemon.NceMonBinary();
 
     public static final int NOP_CMD = 0x80; //NCE NOP command
     public static final int ASSIGN_CAB_CMD = 0x81; // NCE Assign loco to cab command, NCE-USB no
@@ -621,6 +620,4 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     public String toMonitorString(){
 	    return nceMon.displayMessage(this);
     }
-
-    private final static Logger log = LoggerFactory.getLogger(NceMessage.class);
 }

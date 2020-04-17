@@ -26,11 +26,7 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
     public void TestInitComponents() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        CbusSlotMonitorPane smPanel = (CbusSlotMonitorPane) panel;
-        
-        memo = new CanSystemConnectionMemo();
-        tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
+        CbusSlotMonitorPane smPanel;
         
         smPanel = new CbusSlotMonitorPane();
         smPanel.initComponents(memo);
@@ -104,11 +100,6 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
         
         smPanel.dispose();
         
-        memo.dispose();
-        memo=null;
-        tcis.terminateThreads();
-        tcis=null;
-        
     }
     
     private CanSystemConnectionMemo memo;
@@ -118,6 +109,10 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        
+        memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
         panel = new CbusSlotMonitorPane();
         title = Bundle.getMessage("MenuItemCbusSlotMonitor");
         helpTarget = "package.jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorPane";
@@ -126,7 +121,10 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     @After
     public void tearDown() { 
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly    
+        memo.dispose();
+        memo=null;
+        tcis.terminateThreads();
+        tcis=null;
         JUnitUtil.tearDown();
     }
 

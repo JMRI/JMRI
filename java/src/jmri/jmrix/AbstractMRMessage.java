@@ -87,13 +87,19 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     // accessors to the bulk data
 
     // state info
-    int mNeededMode;
+    private int mNeededMode;
 
-    public void setNeededMode(int pMode) {
+    /**
+     * final so that it can be called in constructors
+     */
+    final public void setNeededMode(int pMode) {
         mNeededMode = pMode;
     }
 
-    public int getNeededMode() {
+    /**
+     * final so that it can be called in constructors
+     */
+    final public int getNeededMode() {
         return mNeededMode;
     }
 
@@ -111,13 +117,19 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     }
 
     // mode accessors
-    boolean _isBinary;
+    private boolean _isBinary;
 
-    public boolean isBinary() {
+    /**
+     * final so that it can be called in constructors
+     */
+    final public boolean isBinary() {
         return _isBinary;
     }
 
-    public void setBinary(boolean b) {
+    /**
+     * final so that it can be called in constructors
+     */
+    final public void setBinary(boolean b) {
         _isBinary = b;
     }
 
@@ -132,13 +144,20 @@ abstract public class AbstractMRMessage extends AbstractMessage {
      */
     static protected final int SHORT_TIMEOUT = 2000;
     static protected final int LONG_TIMEOUT = 60000;  // e.g. for programming options
-    int mTimeout;  // in milliseconds
+    
+    private int mTimeout;  // in milliseconds
 
-    public void setTimeout(int t) {
+    /**
+     * final so that it can be called in constructors
+     */
+    final public void setTimeout(int t) {
         mTimeout = t;
     }
 
-    public int getTimeout() {
+    /**
+     * final so that it can be called in constructors
+     */
+    final public int getTimeout() {
         return mTimeout;
     }
 
@@ -146,11 +165,17 @@ abstract public class AbstractMRMessage extends AbstractMessage {
      isn't ready for them. */
     private int mRetries = 0; // number of retries, default = 0;
 
-    public void setRetries(int i) {
+    /**
+     * final so that it can be called in constructors
+     */
+    final public void setRetries(int i) {
         mRetries = i;
     }
 
-    public int getRetries() {
+    /**
+     * final so that it can be called in constructors
+     */
+    final public int getRetries() {
         return mRetries;
     }
 
@@ -170,6 +195,10 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         setElement(offset + 2, s.charAt(2));
     }
 
+    /**
+     * Put an int value into the message as 
+     * two ASCII upper-case hex characters.
+     */
     public void addIntAsTwoHex(int val, int offset) {
         String s = ("" + Integer.toHexString(val)).toUpperCase();
         if (s.length() < 2) {
@@ -182,6 +211,10 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         setElement(offset + 1, s.charAt(1));
     }
 
+    /**
+     * Put an int value into the message as 
+     * three ASCII upper-case hex characters.
+     */
     public void addIntAsThreeHex(int val, int offset) {
         String s = ("" + Integer.toHexString(val)).toUpperCase();
         if (s.length() > 3) {
@@ -198,6 +231,10 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         setElement(offset + 2, s.charAt(2));
     }
 
+    /**
+     * Put an int value into the message as 
+     * four ASCII upper-case hex characters.
+     */
     public void addIntAsFourHex(int val, int offset) {
         String s = ("" + Integer.toHexString(val)).toUpperCase();
         if (s.length() > 4) {

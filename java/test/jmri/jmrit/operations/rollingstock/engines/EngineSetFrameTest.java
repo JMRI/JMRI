@@ -13,7 +13,6 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 
 /**

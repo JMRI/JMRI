@@ -832,26 +832,27 @@ public class LayoutTrackEditorsTest {
             PositionablePoint pp1 = new PositionablePoint("a", PositionablePoint.ANCHOR, point, layoutEditor);
             point = MathUtil.add(point, delta);
             PositionablePoint pp2 = new PositionablePoint("b", PositionablePoint.ANCHOR, point, layoutEditor);
-            trackSegment = new TrackSegment("Segment", pp1, LayoutTrack.POS_POINT, pp2, LayoutTrack.POS_POINT, false, false, layoutEditor);
+            trackSegment = new TrackSegment("Segment", pp1, LayoutEditor.HitPointType.POS_POINT, pp2, LayoutEditor.HitPointType.POS_POINT, false, false, layoutEditor
+            );
 
             // RH Turnout
             point = MathUtil.add(point, delta);
             rightHandLayoutTurnout = new LayoutTurnout("RH Turnout",
-                    LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
+                    LayoutTurnout.TurnoutType.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
 
             // Double crossover
             doubleXoverLayoutTurnout = new LayoutTurnout("Double Xover",
-                    LayoutTurnout.DOUBLE_XOVER, point, 33.0, 1.1, 1.2, layoutEditor);
+                    LayoutTurnout.TurnoutType.DOUBLE_XOVER, point, 33.0, 1.1, 1.2, layoutEditor);
 
             // Single doubleLayoutSlip
             point = MathUtil.add(point, delta);
             singleLayoutSlip = new LayoutSlip("Single Slip",
-                    point, 0.0, layoutEditor, LayoutTurnout.SINGLE_SLIP);
+                    point, 0.0, layoutEditor, LayoutTurnout.TurnoutType.SINGLE_SLIP);
 
             // Double doubleLayoutSlip
             point = MathUtil.add(point, delta);
             doubleLayoutSlip = new LayoutSlip("Double Slip",
-                    point, 0.0, layoutEditor, LayoutTurnout.DOUBLE_SLIP);
+                    point, 0.0, layoutEditor, LayoutTurnout.TurnoutType.DOUBLE_SLIP);
 
             // Level crossing
             point = MathUtil.add(point, delta);

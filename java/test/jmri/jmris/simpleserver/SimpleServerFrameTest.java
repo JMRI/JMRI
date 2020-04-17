@@ -2,7 +2,9 @@ package jmri.jmris.simpleserver;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import jmri.util.ThreadingUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleServerFrame class
@@ -11,17 +13,17 @@ import org.junit.*;
  */
 public class SimpleServerFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         if(!GraphicsEnvironment.isHeadless()){
-           frame = new SimpleServerFrame();
+            ThreadingUtil.runOnGUI( () -> frame = new SimpleServerFrame());
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();
