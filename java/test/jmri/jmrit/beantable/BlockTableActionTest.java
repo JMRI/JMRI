@@ -6,7 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import jmri.Block;
+import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JUnitUtil;
@@ -317,6 +319,7 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
     public void tearDown() {
         a = null;
         JUnitUtil.resetWindows(false,false);
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

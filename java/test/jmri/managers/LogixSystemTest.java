@@ -65,6 +65,7 @@ public class LogixSystemTest {
 
     @After
     public void tearDown() throws Exception {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         jmri.util.JUnitUtil.tearDown();
     }
 }
