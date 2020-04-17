@@ -46,7 +46,7 @@ public class LayoutShape {
     /**
      * constructor method (used by XML loading code)
      *
-     * @param name         the name of the shape
+     * @param name the name of the shape
      * @param layoutEditor reference to the LayoutEditor this shape is in
      */
     public LayoutShape(String name, LayoutEditor layoutEditor) {
@@ -59,7 +59,7 @@ public class LayoutShape {
     /**
      * constructor method (used by XML loading code)
      *
-     * @param name         the name of the shape
+     * @param name the name of the shape
      * @param layoutEditor reference to the LayoutEditor this shape is in
      */
     public LayoutShape(String name, LayoutShapeType t, LayoutEditor layoutEditor) {
@@ -70,8 +70,8 @@ public class LayoutShape {
     /**
      * constructor method (used by LayoutEditor)
      *
-     * @param name         the name of the shape
-     * @param c            the Point2D for the initial point
+     * @param name the name of the shape
+     * @param c the Point2D for the initial point
      * @param layoutEditor reference to the LayoutEditor this shape is in
      */
     public LayoutShape(String name, Point2D c, LayoutEditor layoutEditor) {
@@ -190,10 +190,9 @@ public class LayoutShape {
     /**
      * add point
      *
-     * @param p         the point to add
+     * @param p the point to add
      * @param nearIndex the index of the existing point to add it near note:
-     *                  "near" is defined as before or after depending on
-     *                  closest neighbor
+     * "near" is defined as before or after depending on closest neighbor
      */
     public void addPoint(Point2D p, int nearIndex) {
         int cnt = shapePoints.size();
@@ -252,7 +251,7 @@ public class LayoutShape {
      * set point
      *
      * @param idx the index of the point to add
-     * @param p   the point to add
+     * @param p the point to add
      */
     public void setPoint(int idx, Point2D p) {
         if (idx < shapePoints.size()) {
@@ -313,9 +312,9 @@ public class LayoutShape {
     /**
      * find the hit (location) type for a point
      *
-     * @param hitPoint      the point
+     * @param hitPoint the point
      * @param useRectangles whether to use (larger) rectangles or (smaller)
-     *                      circles for hit testing
+     * circles for hit testing
      * @return the hit point type for the point (or NONE)
      */
     protected LayoutEditor.HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles) {
@@ -333,7 +332,7 @@ public class LayoutShape {
             }
             for (int idx = 0; idx < shapePoints.size(); idx++) {
                 if (r.contains(shapePoints.get(idx).getPoint())) {
-                    result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue() + idx);
+                    result = LayoutEditor.HitPointType.SHAPE_POINT_0.getEnumAtOffset(idx);
                     break;
                 }
             }
@@ -343,7 +342,7 @@ public class LayoutShape {
                 distance = MathUtil.distance(shapePoints.get(idx).getPoint(), hitPoint);
                 if (distance < minDistance) {
                     minDistance = distance;
-                    result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue() + idx);
+                    result = LayoutEditor.HitPointType.SHAPE_POINT_0.getEnumAtOffset(idx);
                 }
             }
         }

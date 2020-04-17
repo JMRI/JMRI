@@ -195,7 +195,7 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Set the connection for the ray at the index in the rayList.
      *
-     * @param ts    the connection
+     * @param ts the connection
      * @param index the index in the rayList
      */
     public void setRayConnect(TrackSegment ts, int index) {
@@ -254,9 +254,9 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Set the turnout and state for the ray with this index.
      *
-     * @param index       the index
+     * @param index the index
      * @param turnoutName the turnout name
-     * @param state       the state
+     * @param state the state
      */
     public void setRayTurnout(int index, String turnoutName, int state) {
         boolean found = false; // assume failure (pessimist!)
@@ -336,7 +336,7 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Set the disabled state of the ray at this index.
      *
-     * @param i   the index
+     * @param i the index
      * @param boo the state
      */
     public void setRayDisabled(int i, boolean boo) {
@@ -364,7 +364,7 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Set the disabled when occupied state of the ray at this index.
      *
-     * @param i   the index
+     * @param i the index
      * @param boo the state
      */
     public void setRayDisabledWhenOccupied(int i, boolean boo) {
@@ -421,8 +421,8 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Set the coordinates for the ray at this index.
      *
-     * @param x     the x coordinates
-     * @param y     the y coordinates
+     * @param x the x coordinates
+     * @param y the y coordinates
      * @param index the index
      */
     public void setRayCoordsIndexed(double x, double y, int index) {
@@ -643,7 +643,7 @@ public class LayoutTurntable extends LayoutTrack {
                 if (distance < minDistance) {
                     minDistance = distance;
                     minPoint = p;
-                    result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue() + getRayIndex(k));
+                    result = LayoutEditor.HitPointType.TURNTABLE_RAY_0.getEnumAtOffset(getRayIndex(k));
                 }
             }
         }
@@ -1026,7 +1026,7 @@ public class LayoutTurntable extends LayoutTrack {
          * Set the turnout and state for this ray track.
          *
          * @param turnoutName the turnout name
-         * @param state       its state
+         * @param state its state
          */
         public void setTurnout(String turnoutName, int state) {
             Turnout turnout = null;
@@ -1294,7 +1294,7 @@ public class LayoutTurntable extends LayoutTrack {
 
         for (int k = 0; k < getNumberRays(); k++) {
             if (getRayConnectOrdered(k) == null) {
-                result.add(LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue() + getRayIndex(k)));
+                result.add(LayoutEditor.HitPointType.TURNTABLE_RAY_0.getEnumAtOffset(getRayIndex(k)));
             }
         }
         return result;

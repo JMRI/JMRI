@@ -160,7 +160,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * set a new connection 1
      *
-     * @param connectTrack   the track we want to connect to
+     * @param connectTrack the track we want to connect to
      * @param connectionType where on that track we want to be connected
      */
     protected void setNewConnect1(@CheckForNull LayoutTrack connectTrack, LayoutEditor.HitPointType connectionType) {
@@ -171,7 +171,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * set a new connection 2
      *
-     * @param connectTrack   the track we want to connect to
+     * @param connectTrack the track we want to connect to
      * @param connectionType where on that track we want to be connected
      */
     protected void setNewConnect2(@CheckForNull LayoutTrack connectTrack, LayoutEditor.HitPointType connectionType) {
@@ -694,7 +694,7 @@ public class TrackSegment extends LayoutTrack {
                     if (distance < minDistance) {
                         minDistance = distance;
                         minPoint = p;
-                        result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue() + index);
+                        result = LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getEnumAtOffset(index);
                     }
                 }
             }
@@ -788,12 +788,12 @@ public class TrackSegment extends LayoutTrack {
      * Helper method, which adds "Set value" item to the menu. The value can be
      * optionally range-checked. Item will be appended at the end of the menu.
      *
-     * @param menu       the target menu.
-     * @param titleKey   bundle key for the menu title/dialog title
+     * @param menu the target menu.
+     * @param titleKey bundle key for the menu title/dialog title
      * @param toolTipKey bundle key for the menu item tooltip
-     * @param val        value getter
-     * @param set        value setter
-     * @param predicate  checking predicate, possibly null.
+     * @param val value getter
+     * @param set value setter
+     * @param predicate checking predicate, possibly null.
      */
     private void addNumericMenuItem(@Nonnull JMenu menu,
             @Nonnull String titleKey, @Nonnull String toolTipKey,

@@ -216,6 +216,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return result;
         }
 
+        //return the enum offset from this one
+        //used for BEZIER_CONTROL_POINT_0, SHAPE_POINT_0 and TURNTABLE_RAY_0
+        public HitPointType getEnumAtOffset(int offset) {
+            return values()[this.ordinal() + offset];
+        }
+
         public Integer getXmlValue() {
             return xmlValue;
         }
