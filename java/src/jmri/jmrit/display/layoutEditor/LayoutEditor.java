@@ -88,7 +88,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         TRACK_CIRCLE_CENTRE(18),
         UNUSED_19(19),
         @Deprecated //(use SLIP_LEFT & SLIP_RIGHT instead)
-        SLIP_CENTER(20),
+        SLIP_CENTER(20), //replace with UNUSED_20 when @Deprecated is removed
         SLIP_A(21),
         SLIP_B(22),
         SLIP_C(23),
@@ -202,9 +202,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         public static HitPointType getValue(String name) {
             HitPointType result = null;
-            for (HitPointType instance : HitPointType.values()) {
-                if (instance.name().equals(name)) {
-                    result = instance;
+            try {
+                //first see if it matches enum name (exactally)
+                result = HitPointType.valueOf(name);
+            } catch (IllegalArgumentException e) {
+                try {
+                    //now see if it matches the xmlValue
+                    result = getValue(Integer.parseInt(name));
+                } catch (NumberFormatException e1) {
+                    //nope: failure
                 }
             }
             return result;
@@ -1018,10 +1024,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Set up NamedBeanComboBox
      *
-     * @param inComboBox     the NamedBeanComboBox to set up
+     * @param inComboBox the NamedBeanComboBox to set up
      * @param inValidateMode true to validate typed inputs; false otherwise
-     * @param inEnable       boolean to enable / disable the NamedBeanComboBox
-     * @param inEditable     boolean to make the NamedBeanComboBox editable
+     * @param inEnable boolean to enable / disable the NamedBeanComboBox
+     * @param inEditable boolean to make the NamedBeanComboBox editable
      */
     public static void setupComboBox(@Nonnull NamedBeanComboBox<?> inComboBox, boolean inValidateMode, boolean inEnable, boolean inEditable) {
         log.debug("LE setupComboBox called");
@@ -3615,7 +3621,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * get the coordinates for the connection type of the specified object
      *
-     * @param layoutTrack    the object (Layout track subclass)
+     * @param layoutTrack the object (Layout track subclass)
      * @param connectionType the type of connection
      * @return the coordinates for the connection type of the specified object
      */
@@ -5379,8 +5385,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Turnouts Returns true if valid turnout was entered, false otherwise
      *
      * @param inTurnoutName the (system or user) name of the turnout
-     * @param inOpenPane    the pane over which to show dialogs (null to
-     *                      suppress dialogs)
+     * @param inOpenPane the pane over which to show dialogs (null to suppress
+     * dialogs)
      * @return true if valid
      */
     public boolean validatePhysicalTurnout(
@@ -5500,10 +5506,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * link the 'from' object and type to the 'to' object and type
      *
-     * @param fromObject    the object to link from
+     * @param fromObject the object to link from
      * @param fromPointType the object type to link from
-     * @param toObject      the object to link to
-     * @param toPointType   the object type to link to
+     * @param toObject the object to link to
+     * @param toPointType the object type to link to
      */
     protected void setLink(@Nonnull LayoutTrack fromObject, HitPointType fromPointType,
             @Nonnull LayoutTrack toObject, HitPointType toPointType) {
@@ -5649,8 +5655,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * nothing to the block.
      *
      * @param sensorName the sensor name to validate
-     * @param blk        the LayoutBlock in which to set it
-     * @param openFrame  the frame (Component) it is in
+     * @param blk the LayoutBlock in which to set it
+     * @param openFrame the frame (Component) it is in
      * @return true if sensor is valid
      */
     public boolean validateSensor(
@@ -8398,8 +8404,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Create a listener that will exclude turnouts that are present in the
      * current panel. The list of current turnouts are not excluded.
      *
-     * @param comboBox        The NamedBeanComboBox that contains the turnout
-     *                        list.
+     * @param comboBox The NamedBeanComboBox that contains the turnout list.
      * @param currentTurnouts The turnouts to be left in the turnout list.
      * @return A PopupMenuListener
      */
