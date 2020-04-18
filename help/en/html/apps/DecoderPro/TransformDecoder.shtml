@@ -315,6 +315,73 @@ xsltproc scom.xsl decoder-template.xml > decoder-gen.xml
     &lt;/xsl:call-template>
 &lt;/xsl:template>    
       </pre>
+      <p>
+          You can easily use the above label list to make a loop from 1 to 15, which directly not possible in XSLT. Instead of controlling the
+          loop by a <i>control index variable</i>, we control the loop by <i>the data that should apply in individual cycle iterations</i> and
+          derive the index variable from them. Here's the modified example:
+      </p>
+      <pre>
+&lt;xsl:template name="generate-panes">
+    &lt;xsl:param name="root"/>
+    <b>&lt;-- The loop count is controlled by the number of <i>label</i> variables --></b>
+    &lt;xsl:for-each select="$root/display[@item='masts']/label">
+        &lt;xsl:variable name="mast" select="string(./text())"/>
+        &lt;xsl:call-template name="mast-pane">
+            &lt;xsl:with-param name="root" select="$root"/>
+            &lt;xsl:with-param name="mast" select="$mast"/>
+            <b>&lt;-- We use the current label's element <i>position</i> to derive the
+               "loop control variable" value --></b>
+            &lt;xsl:with-param name="index" select="./position()"/>
+        &lt;/xsl:call-template>
+    &lt;/xsl:for-each>
+&lt;/xsl:template>    
+      </pre>
+      <h3>
+          Cycles and loops
+      </h3>
+      <p>
+          XSLT language is a declarative one, and variables, once assigned, cannot be changed - so it does not have a <b>loop construct</b> as
+          most programmig languages do. Sometimes, a cycle can be more illustratively replaced by iteration over the content. Sometimes it is
+          not possible: truly some fixed number of iterations need to be done, such as <b>generating sequential CVs</b> with the same structure -
+          just the sequence number and the represented function index will differ.
+      </p>
+      <p>
+          This can be done by <b>tail recursion</b>, which replaces loops by invoking a template from that template itself. The only caveat is 
+          that the number of iterations is <b>limited</b> to about 100 (?), before the stack space is exhausted. The example can be found in
+          <code><a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/TamValleyDepot_QuadLn_S_11.xsl">TamsValleyDepot_QuadLn_s_11.xsl</a></code>, 
+          look for template <code>AllLEDGroups</code>:
+      </p>
+      <pre>
+&lt;xsl:template name="AllLEDGroups">
+  <b>&lt;-- Use <i>select=""</i> attribute to pick an initial value for the cycle.
+      Applies if the template does not get parameter on (first) invocation --></b>
+  &lt;xsl:param name="CV1" select="633"/>
+  &lt;xsl:param name="CV2" select="513"/>
+  &lt;xsl:param name="CV3" select="537"/>
+  <b>&lt;-- This is the loop's control variable --></b>
+  &lt;xsl:param name="index" select="1"/>
+  <b>&lt;!-- next line controls count --></b>
+  &lt;xsl:if test="24 >= $index">
+    &lt;xsl:call-template name="OneLEDGroup">
+      &lt;xsl:with-param name="CV1" select="$CV1"/>
+      &lt;xsl:with-param name="CV2" select="$CV2"/>
+      &lt;xsl:with-param name="CV3" select="$CV3"/>
+      &lt;xsl:with-param name="index" select="$index"/>
+    &lt;/xsl:call-template>
+    &lt;!-- iterate until done -->
+    <b>&lt;-- The <i>if</i> a few lines above makes sure, this <i>call-template</i>
+        will not be executed for i > 24 --></b>
+    &lt;xsl:call-template name="AllLEDGroups">
+      &lt;xsl:with-param name="CV1" select="$CV1 +1"/>
+      &lt;xsl:with-param name="CV2" select="$CV2 +1"/>
+      &lt;xsl:with-param name="CV3" select="$CV3 +2"/>
+      <b>&lt;-- Call itself, but with control variable one higher, therefore counting
+          the number of cycles--></b>
+      &lt;xsl:with-param name="index" select="$index+1"/>
+    &lt;/xsl:call-template>
+  &lt;/xsl:if>
+&lt;/xsl:template>
+      </pre>
       <h2>
           Creating the stylesheet
       </h2>
@@ -395,6 +462,42 @@ xsltproc scom.xsl decoder-template.xml > decoder-gen.xml
           The <code>match</code> clause will react on the <code>__Aspect</code> data holder pane element, but unlike the variables
           insertion point, <b>no copy instruction is present</b>. So the old content will be thrown away (entire <code>&lt;pane></code> element!), 
           replaced by whatever elements the <code>call-template</code> instructions generate.
+      </p>
+      <h2>
+          Using XML fragments
+      </h2>
+      <p>
+          If part of the generated content <b>does not change</b> from place to place, it is possible to prepare it as a <b>XML fragment</b> to
+          be included: it won't be a part of XSL stylesheet with all those strange <i>xsl:xxx</i> instructions, but will stored as a separate,
+          small and clean bit of XML. This can be useful for <b>choice values</b>, or even repeated <b>UI panels</b> without variable content.
+          An example of the usage is again in <code><a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/TamValleyDepot_QuadLn_S_11.xsl">TamsValleyDepot_QuadLn_s_11.xsl</a></code>.
+          (LedPaneHeader) 
+      </p>
+      <p>
+          Individual variables are generates using <i>xsl:template</i>, but the value part, mostly a <i>choice</i> is included from a separate file. Note
+          that the <i>xi:include</i> will be generated into the resulting XML, so it is the DecoderPro  panel reader, who does the content inclusion,
+          not the generator. The template subsitutes the variable parts of the definition:
+      </p>
+      <pre>
+&lt;variable item="Aspect{$index} LED1 Out" CV="{$CV2}" mask="XXXVVVVV" default="0">
+    &lt;xi:include href="http://jmri.org/xml/decoders/tvd/LedOutput.xml"/>
+&lt;/variable>
+      </pre>
+      <p>
+          There are two important things. When using <i>xi:</i> prefix, that <b>prefix must be declared</b> at the top of the document (may be in any parent element,
+          but conventionally prefixes are collected at the start). Use exactly the same URL (attribute value), otherwise the instruction won't be recognized.
+      </p>
+      <pre>
+&lt;xsl:stylesheet	version="1.0" 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:db="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"      <b>-- this is the prefix declaration</b>
+    >
+      </pre>
+      <p>
+          The second issue is that the <i>xi:include</i> must use URLs that JMRI is able to <b>resolve locally</b>. Otherwise, the DecoderPro would attempt to download
+          parts of the definition from the Internet, which requires an online connection - and is slow. The prefix <b>http://jmri.org/xml</b> is guaranteed to resolve
+          to the <b>xml</b> directory of your local JMRI installation. For more mapping, please see other JMRI documentation.
       </p>
       </div><!-- close #mainContent -->
     </div><!-- close #mBody -->
