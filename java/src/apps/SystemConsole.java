@@ -113,6 +113,7 @@ public final class SystemConsole extends JTextArea {
      * Initialise the system console ensuring both System.out and System.err
      * streams are re-directed to the consoles JTextArea
      */
+    
     public static void create() {
 
         if (instance == null) {
@@ -147,7 +148,7 @@ public final class SystemConsole extends JTextArea {
         this.errorStream = new PrintStream(outStream(STD_ERR), true);
 
         // Then redirect to it
-        redirectSystemStreams();
+        redirectSystemStreams(outputStream, errorStream);
     }
 
     /**
@@ -160,6 +161,15 @@ public final class SystemConsole extends JTextArea {
             SystemConsole.create();
         }
         return instance;
+    }
+
+    /**
+     * Test if the default instance exists.
+     * 
+     * @return true if default instance exists; false otherwise
+     */
+    public static boolean isCreated() {
+        return instance != null;
     }
 
     /**
@@ -394,9 +404,9 @@ public final class SystemConsole extends JTextArea {
      */
     @SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
             justification = "Can only be called from the same instance so default encoding OK")
-    private void redirectSystemStreams() {
-        System.setOut(this.getOutputStream());
-        System.setErr(this.getErrorStream());
+    private void redirectSystemStreams(PrintStream out, PrintStream err) {
+        System.setOut(out);
+        System.setErr(err);
     }
 
     /**
@@ -567,7 +577,21 @@ public final class SystemConsole extends JTextArea {
     public PrintStream getErrorStream() {
         return this.errorStream;
     }
-    
+
+    /**
+     * Stop logging System output and error streams to the console.
+     */
+    public void close() {
+        redirectSystemStreams(originalOut, originalErr);
+    }
+
+    /**
+     * Start logging System output and error streams to the console.
+     */
+    public void open() {
+        redirectSystemStreams(getOutputStream(), getErrorStream());
+    }
+
     /**
      * Retrieve the current console colour scheme
      *
