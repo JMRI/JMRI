@@ -72,7 +72,7 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
         });
     }
 
-    private String getFrameTextONGUIThread() {
+    protected String getFrameTextONGUIThread() {
         return ThreadingUtil.runOnGUIwithReturn(() -> pane.getFrameText());
     }
 
@@ -146,7 +146,7 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
         setAndCheckFilterTextEntry("ab", "AB", "filter field edited");
     }
 
-    private void setAndCheckFilterTextEntry(String entryText, String resultText, String errorMessage) {
+    protected void setAndCheckFilterTextEntry(String entryText, String resultText, String errorMessage) {
         ThreadingUtil.runOnGUI( () -> pane.setFilterText(entryText));
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         assertThat(resultText).withFailMessage(errorMessage)
@@ -233,7 +233,8 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
         ThreadingUtil.runOnGUI( () -> {
             f.setVisible(false);
             f.dispose();
-        });    }
+        });
+    }
 
     // Test checking the AutoScroll checkbox.
     @Test
