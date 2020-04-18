@@ -87,7 +87,6 @@ import jmri.util.SystemType;
 import jmri.util.ThreadingUtil;
 import jmri.util.WindowMenu;
 import jmri.util.iharder.dnd.URIDrop;
-import jmri.util.swing.FontComboUtil;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.SliderSnap;
 import jmri.util.swing.WindowInterface;
@@ -132,10 +131,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         // Enable proper snapping of JSliders
         SliderSnap.init();
-
-        // Prepare font lists
-        log.trace("prepareFontLists");
-        prepareFontLists();
 
         // Get configuration profile
         log.trace("start to get configuration profile - locate files");
@@ -1175,19 +1170,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         // Log the startup information
         log.info(Log4JUtil.startupInfo(name));
-    }
-
-    private void prepareFontLists() {
-        // Prepare font lists
-        Thread fontThread = new Thread(() -> {
-            log.debug("Prepare font lists...");
-            FontComboUtil.prepareFontLists();
-            log.debug("...Font lists built");
-        }, "PrepareFontListsThread");
-
-        fontThread.setDaemon(true);
-        fontThread.setPriority(Thread.MIN_PRIORITY);
-        fontThread.start();
     }
 
     @Override
