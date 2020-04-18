@@ -5,6 +5,7 @@ import java.awt.geom.Point2D;
 import jmri.Turnout;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import org.jdom2.Attribute;
@@ -18,11 +19,9 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @author George Warner Copyright (c) 2017-2019
+ * @author George Warner Copyright (c) 2017-2020
  */
 public class LayoutTurnoutXml extends AbstractXmlAdapter {
-
-    EnumIO<LayoutTurnout.LinkType> linkEnumMap = new EnumIO<>(LayoutTurnout.LinkType.class);
 
     public LayoutTurnoutXml() {
     }
@@ -80,7 +79,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
         if (!p.getLinkedTurnoutName().isEmpty()) {
             element.setAttribute("linkedturnoutname", p.getLinkedTurnoutName());
-            element.setAttribute("linktype", "" + linkEnumMap.outputFromEnum(p.getLinkType()));
+            element.setAttribute("linktype", p.getLinkType().name());
         }
 
         if (!p.getBlockName().isEmpty()) {
@@ -313,7 +312,14 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         a = element.getAttribute("linkedturnoutname");
         if (a != null) {
             l.linkedTurnoutName = a.getValue();
-            l.linkType = linkEnumMap.inputFromAttribute(element.getAttribute("linktype"));
+
+            a = element.getAttribute("linktype");
+            if (a != null) {
+                l.linkType = LayoutTurnout.LinkType.getValue(a.getValue());
+            }
+            if (l.linkType == null) {
+                log.error("failed to load linktype attribute");
+            }
         }
         a = element.getAttribute("continuing");
         if (a != null) {

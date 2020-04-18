@@ -59,7 +59,7 @@ import jmri.util.swing.*;
  * as some of the control design.
  *
  * @author Dave Duchamp Copyright: (c) 2004-2007
- * @author George Warner Copyright: (c) 2017-2019
+ * @author George Warner Copyright (c) 2017-2020
  */
 @SuppressWarnings("serial")
 @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
@@ -209,6 +209,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         /**
+         * @return this enum's Integer xml value
+         */
+        public Integer getXmlValue() {
+            return xmlValue;
+        }
+
+        /**
          * get the appropriate enum for the provided string
          *
          * @param string the String
@@ -258,13 +265,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 log.error("{} is not a valid enum for an offset. Should be BEZIER_CONTROL_POINT_0, SHAPE_POINT_0 or TURNTABLE_RAY_0", name());
             }
             return hitPointType.getXmlValue() - getXmlValue();
-        }
-
-        /**
-         * @return this enum's Integer xml value
-         */
-        public Integer getXmlValue() {
-            return xmlValue;
         }
 
         /**

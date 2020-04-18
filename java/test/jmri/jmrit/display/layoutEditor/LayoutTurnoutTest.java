@@ -9,7 +9,8 @@ import org.junit.*;
 /**
  * Test simple functioning of LayoutTurnout.
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
+ * @author George Warner Copyright (c) 2017-2020
  */
 public class LayoutTurnoutTest {
 
@@ -22,7 +23,7 @@ public class LayoutTurnoutTest {
     private LayoutTurnout ltLX = null;
 
     @Test
-    public void testEnums() {
+    public void testTurnoutTypeEnums() {
         // Check that enum ordinal values used for I/O don't
         // change.  Want to remove this once I/O is done
         // via enum names instead of numbers.
@@ -41,6 +42,104 @@ public class LayoutTurnoutTest {
         Assert.assertEquals(1, LayoutTurnout.LinkType.FIRST_3_WAY.ordinal());
         Assert.assertEquals(2, LayoutTurnout.LinkType.SECOND_3_WAY.ordinal());
         Assert.assertEquals(3, LayoutTurnout.LinkType.THROAT_TO_THROAT.ordinal());
+    }
+
+    @Test
+    public void testTurnoutTypeEnumGetXmlValue() {
+        Assert.assertEquals("LayoutSlip.TurnoutType.NONE.getXmlValue() == 0",
+                LayoutSlip.TurnoutType.NONE.getXmlValue(), Integer.valueOf(0));
+        Assert.assertEquals("LayoutSlip.TurnoutTypeRH_TURNOUT.getXmlValue() == 1",
+                LayoutSlip.TurnoutType.RH_TURNOUT.getXmlValue(), Integer.valueOf(1));
+        Assert.assertEquals("LayoutSlip.TurnoutType.LH_TURNOUT.getXmlValue() == 2",
+                LayoutSlip.TurnoutType.LH_TURNOUT.getXmlValue(), Integer.valueOf(2));
+        Assert.assertEquals("LayoutSlip.TurnoutType.WYE_TURNOUT.getXmlValue() == 3",
+                LayoutSlip.TurnoutType.WYE_TURNOUT.getXmlValue(), Integer.valueOf(3));
+        Assert.assertEquals("LayoutSlip.TurnoutType.DOUBLE_XOVER.getXmlValue() == 4",
+                LayoutSlip.TurnoutType.DOUBLE_XOVER.getXmlValue(), Integer.valueOf(4));
+        Assert.assertEquals("LayoutSlip.TurnoutType.RH_XOVER.getXmlValue() == 5",
+                LayoutSlip.TurnoutType.RH_XOVER.getXmlValue(), Integer.valueOf(5));
+        Assert.assertEquals("LayoutSlip.TurnoutType.LH_XOVER.getXmlValue() == 6",
+                LayoutSlip.TurnoutType.LH_XOVER.getXmlValue(), Integer.valueOf(6));
+        Assert.assertEquals("LayoutSlip.TurnoutType.SINGLE_SLIP.getXmlValue() == 7",
+                LayoutSlip.TurnoutType.SINGLE_SLIP.getXmlValue(), Integer.valueOf(7));
+        Assert.assertEquals("LayoutSlip.TurnoutType.DOUBLE_SLIP.getXmlValue() == 8",
+                LayoutSlip.TurnoutType.DOUBLE_SLIP.getXmlValue(), Integer.valueOf(8));
+    }
+
+    @Test
+    public void testTurnoutTypeEnumGetValueInt() {
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(0) == LayoutSlip.TurnoutType.NONE",
+                LayoutSlip.TurnoutType.getValue("0"), LayoutSlip.TurnoutType.NONE);
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(1) == LayoutSlip.TurnoutType.RH_TURNOUT",
+                LayoutSlip.TurnoutType.getValue("1"), LayoutSlip.TurnoutType.RH_TURNOUT);
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(2) == LayoutSlip.TurnoutType.LH_TURNOUT",
+                LayoutSlip.TurnoutType.getValue("2"), LayoutSlip.TurnoutType.LH_TURNOUT);
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(3) == LayoutSlip.TurnoutType.WYE_TURNOUT",
+                LayoutSlip.TurnoutType.getValue("3"), LayoutSlip.TurnoutType.WYE_TURNOUT);
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(4) == LayoutSlip.TurnoutType.DOUBLE_XOVER",
+                LayoutSlip.TurnoutType.getValue("4"), LayoutSlip.TurnoutType.DOUBLE_XOVER);
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(5) == LayoutSlip.TurnoutType.RH_XOVER",
+                LayoutSlip.TurnoutType.getValue("5"), LayoutSlip.TurnoutType.RH_XOVER);
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(6) == LayoutSlip.TurnoutType.LH_XOVER",
+                LayoutSlip.TurnoutType.getValue("6"), LayoutSlip.TurnoutType.LH_XOVER);
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(7) == LayoutSlip.TurnoutType.SINGLE_SLIP",
+                LayoutSlip.TurnoutType.getValue("7"), LayoutSlip.TurnoutType.SINGLE_SLIP);
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(8) == LayoutSlip.TurnoutType.DOUBLE_SLIP",
+                LayoutSlip.TurnoutType.getValue("8"), LayoutSlip.TurnoutType.DOUBLE_SLIP);
+    }
+
+    @Test
+    public void testTurnoutTypeEnumGetValueString() {
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('NONE') == LayoutSlip.TurnoutType.NONE",
+                LayoutSlip.TurnoutType.getValue("NONE"), LayoutSlip.TurnoutType.NONE);
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('RH_TURNOUT') == LayoutSlip.TurnoutType.RH_TURNOUT",
+                LayoutSlip.TurnoutType.getValue("RH_TURNOUT"), LayoutSlip.TurnoutType.RH_TURNOUT);
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('LH_TURNOUT') == LayoutSlip.TurnoutType.LH_TURNOUT",
+                LayoutSlip.TurnoutType.getValue("LH_TURNOUT"), LayoutSlip.TurnoutType.LH_TURNOUT);
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('WYE_TURNOUT') == LayoutSlip.TurnoutType.WYE_TURNOUT",
+                LayoutSlip.TurnoutType.getValue("WYE_TURNOUT"), LayoutSlip.TurnoutType.WYE_TURNOUT);
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('DOUBLE_XOVER') == LayoutSlip.TurnoutType.DOUBLE_XOVER",
+                LayoutSlip.TurnoutType.getValue("DOUBLE_XOVER"), LayoutSlip.TurnoutType.DOUBLE_XOVER);
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('RH_XOVER') == LayoutSlip.TurnoutType.RH_XOVER",
+                LayoutSlip.TurnoutType.getValue("RH_XOVER"), LayoutSlip.TurnoutType.RH_XOVER);
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('LH_XOVER') == LayoutSlip.TurnoutType.LH_XOVER",
+                LayoutSlip.TurnoutType.getValue("LH_XOVER"), LayoutSlip.TurnoutType.LH_XOVER);
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('SINGLE_SLIP') == LayoutSlip.TurnoutType.SINGLE_SLIP",
+                LayoutSlip.TurnoutType.getValue("SINGLE_SLIP"), LayoutSlip.TurnoutType.SINGLE_SLIP);
+        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('DOUBLE_SLIP') == LayoutSlip.TurnoutType.DOUBLE_SLIP",
+                LayoutSlip.TurnoutType.getValue("DOUBLE_SLIP"), LayoutSlip.TurnoutType.DOUBLE_SLIP);
+    }
+
+    @Test
+    public void testLinkTypeEnumGetXmlValue() {
+        Assert.assertEquals("LayoutTurnout.LinkType.NO_LINK.getXmlValue() == 0", LayoutTurnout.LinkType.NO_LINK.getXmlValue(), Integer.valueOf(0));
+        Assert.assertEquals("LayoutTurnout.LinkType.FIRST_3_WAY.getXmlValue() == 1", LayoutTurnout.LinkType.FIRST_3_WAY.getXmlValue(), Integer.valueOf(1));
+        Assert.assertEquals("LayoutTurnout.LinkType.SECOND_3_WAY.getXmlValue() == 2", LayoutTurnout.LinkType.SECOND_3_WAY.getXmlValue(), Integer.valueOf(2));
+        Assert.assertEquals("LayoutTurnout.LinkType.THROAT_TO_THROAT.getXmlValue() == 3", LayoutTurnout.LinkType.THROAT_TO_THROAT.getXmlValue(), Integer.valueOf(3));
+    }
+
+    @Test
+    public void testLinkTypeEnumGetValueInt() {
+        Assert.assertEquals("LayoutTurnout.LinkType.getValue(0) == LayoutTurnout.LinkType.NO_LINK",
+                LayoutTurnout.LinkType.getValue("0"), LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals("LayoutTurnout.LinkType.getValue(1) == LayoutTurnout.LinkType.FIRST_3_WAY",
+                LayoutTurnout.LinkType.getValue("1"), LayoutTurnout.LinkType.FIRST_3_WAY);
+        Assert.assertEquals("LayoutTurnout.LinkType.getValue(2) == LayoutTurnout.LinkType.SECOND_3_WAY",
+                LayoutTurnout.LinkType.getValue("2"), LayoutTurnout.LinkType.SECOND_3_WAY);
+        Assert.assertEquals("LayoutTurnout.LinkType.getValue(3) == LayoutTurnout.LinkType.THROAT_TO_THROAT",
+                LayoutTurnout.LinkType.getValue("3"), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+    }
+
+    @Test
+    public void testLinkTypeEnumGetValueString() {
+        Assert.assertEquals("LayoutTurnout.LinkType.getValue('NO_LINK') == LayoutTurnout.LinkType.NO_LINK",
+                LayoutTurnout.LinkType.getValue("NO_LINK"), LayoutTurnout.LinkType.NO_LINK);
+        Assert.assertEquals("LayoutTurnout.LinkType.getValue('FIRST_3_WAY') == LayoutTurnout.LinkType.FIRST_3_WAY",
+                LayoutTurnout.LinkType.getValue("FIRST_3_WAY"), LayoutTurnout.LinkType.FIRST_3_WAY);
+        Assert.assertEquals("LayoutTurnout.LinkType.getValue('SECOND_3_WAY') == LayoutTurnout.LinkType.SECOND_3_WAY",
+                LayoutTurnout.LinkType.getValue("SECOND_3_WAY"), LayoutTurnout.LinkType.SECOND_3_WAY);
+        Assert.assertEquals("LayoutTurnout.LinkType.getValue('THROAT_TO_THROAT') == LayoutTurnout.LinkType.THROAT_TO_THROAT",
+                LayoutTurnout.LinkType.getValue("THROAT_TO_THROAT"), LayoutTurnout.LinkType.THROAT_TO_THROAT);
     }
 
     @Test
@@ -572,7 +671,8 @@ public class LayoutTurnoutTest {
             Assert.assertNull("ltRH.getConnection(invalid type) is null",
                     ltRH.getConnection(LayoutEditor.HitPointType.NONE));
             Assert.fail("No exception thrown on ltRH.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        }
+        catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("Right Hand.getConnection(NONE); Invalid Connection Type");
 
@@ -580,7 +680,8 @@ public class LayoutTurnoutTest {
             Assert.assertNull("ltLH.getConnection(invalid type) is null",
                     ltLH.getConnection(LayoutEditor.HitPointType.NONE));
             Assert.fail("No exception thrown on ltLH.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        }
+        catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("Left Hand.getConnection(NONE); Invalid Connection Type");
 
@@ -588,7 +689,8 @@ public class LayoutTurnoutTest {
             Assert.assertNull("ltWY.getConnection(invalid type) is null",
                     ltWY.getConnection(LayoutEditor.HitPointType.NONE));
             Assert.fail("No exception thrown on ltWY.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        }
+        catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("Wye.getConnection(NONE); Invalid Connection Type");
 
@@ -596,7 +698,8 @@ public class LayoutTurnoutTest {
             Assert.assertNull("ltDX.getConnection(invalid type) is null",
                     ltDX.getConnection(LayoutEditor.HitPointType.NONE));
             Assert.fail("No exception thrown on ltDX.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        }
+        catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("Double XOver.getConnection(NONE); Invalid Connection Type");
 
@@ -604,7 +707,8 @@ public class LayoutTurnoutTest {
             Assert.assertNull("ltRX.getConnection(invalid type) is null",
                     ltRX.getConnection(LayoutEditor.HitPointType.NONE));
             Assert.fail("No exception thrown on ltRX.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        }
+        catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("Right Hand XOver.getConnection(NONE); Invalid Connection Type");
 
@@ -612,7 +716,8 @@ public class LayoutTurnoutTest {
             Assert.assertNull("ltLX.getConnection(invalid type) is null",
                     ltLX.getConnection(LayoutEditor.HitPointType.NONE));
             Assert.fail("No exception thrown on ltLX.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        }
+        catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("Left Hand XOver.getConnection(NONE); Invalid Connection Type");
     }
@@ -625,42 +730,48 @@ public class LayoutTurnoutTest {
         try {
             Assert.assertNull("ltRH.getConnection(valid type) is null",
                     ltRH.getConnection(LayoutEditor.HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        }
+        catch (JmriException ex) {
             Assert.fail("Exception thrown on ltRH.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltLH.getConnection(valid type) is null",
                     ltLH.getConnection(LayoutEditor.HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        }
+        catch (JmriException ex) {
             Assert.fail("Exception thrown on ltLH.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltWY.getConnection(valid type) is null",
                     ltWY.getConnection(LayoutEditor.HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        }
+        catch (JmriException ex) {
             Assert.fail("Exception thrown on ltWY.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltDX.getConnection(valid type) is null",
                     ltDX.getConnection(LayoutEditor.HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        }
+        catch (JmriException ex) {
             Assert.fail("Exception thrown on ltDX.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltRX.getConnection(valid type) is null",
                     ltRX.getConnection(LayoutEditor.HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        }
+        catch (JmriException ex) {
             Assert.fail("Exception thrown on ltRX.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltLX.getConnection(valid type) is null",
                     ltLX.getConnection(LayoutEditor.HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        }
+        catch (JmriException ex) {
             Assert.fail("Exception thrown on ltLX.getConnection(valid type)");
         }
     }
@@ -674,7 +785,8 @@ public class LayoutTurnoutTest {
             // test Invalid Connection Type
             ltRH.setConnection(LayoutEditor.HitPointType.NONE, null, LayoutEditor.HitPointType.NONE);
             Assert.fail("No exception thrown on ltRH.setConnection(Invalid Connection Type)");
-        } catch (JmriException ex) {
+        }
+        catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("Right Hand.setConnection(NONE, null, NONE); Invalid Connection Type");
 
@@ -682,14 +794,16 @@ public class LayoutTurnoutTest {
             // test unexpected type
             ltRH.setConnection(LayoutEditor.HitPointType.POS_POINT, null, LayoutEditor.HitPointType.POS_POINT);
             Assert.fail("No exception thrown on ltRH.setConnection(unexpected type)");
-        } catch (JmriException ex) {
+        }
+        catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("Right Hand.setConnection(POS_POINT, null, POS_POINT); unexpected type");
 
         try {
             // test valid types
             ltRH.setConnection(LayoutEditor.HitPointType.TURNOUT_A, null, LayoutEditor.HitPointType.NONE);
-        } catch (JmriException ex) {
+        }
+        catch (JmriException ex) {
             Assert.fail("Exception thrown on ltRH.setConnection(valid types)");
         }
     }

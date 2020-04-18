@@ -115,7 +115,7 @@ import org.slf4j.*;
  * required to be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @author George Warner Copyright (c) 2017-2019
+ * @author George Warner Copyright (c) 2017-2020
  */
 public class LayoutTurnout extends LayoutTrack {
 
@@ -308,16 +308,66 @@ public class LayoutTurnout extends LayoutTrack {
 
     // defined constants - link types
     public enum LinkType {
-        NO_LINK,
-        FIRST_3_WAY, // this turnout is the first turnout of a 3-way
+        NO_LINK(0),
+        FIRST_3_WAY(1), // this turnout is the first turnout of a 3-way
         // turnout pair (closest to the throat)
-        SECOND_3_WAY, // this turnout is the second turnout of a 3-way
+        SECOND_3_WAY(2), // this turnout is the second turnout of a 3-way
         // turnout pair (furthest from the throat)
-        THROAT_TO_THROAT // this turnout is one of two throat-to-throat
+        THROAT_TO_THROAT(3); // this turnout is one of two throat-to-throat
         // turnouts - no signals at throat
+
+        private final transient Integer xmlValue;
+
+        /**
+         * constructor for this class
+         *
+         * @param xmlValue the Integer value used to load from xml file (for
+         *                 backwards compatibility)
+         */
+        LinkType(Integer xmlValue) {
+            this.xmlValue = xmlValue;
+        }
+
+        /**
+         * @return this enum's Integer xml value
+         */
+        public Integer getXmlValue() {
+            return xmlValue;
+        }
+
+        /**
+         * get the appropriate enum for the provided string
+         *
+         * @param string the String
+         * @return the appropriate LinkType enum
+         */
+        public static LinkType getValue(String string) {
+            LinkType result = null;
+            try {
+                //first see if it matches enum name (exactally)
+                result = valueOf(string);
+            }
+            catch (IllegalArgumentException e) {    //(nope)
+                try {
+                    //try to parse it as an integer
+                    int i = Integer.parseInt(string);
+                    //now see if it matches the xmlValue
+                    for (LinkType instance : values()) {
+                        if (instance.xmlValue.equals(i)) {  //(yes!)
+                            result = instance;
+                            break;
+                        }
+                    }
+                }
+                catch (NumberFormatException e1) {  //(nope)
+                    //failure
+                }
+            }
+            return result;
+        }
     }
 
-    // operational instance variables (not saved between sessions)
+// operational instance variables (not saved between sessions)
     public static final int UNKNOWN = Turnout.UNKNOWN;
     public static final int INCONSISTENT = Turnout.INCONSISTENT;
     public static final int STATE_AC = 0x02;
@@ -360,7 +410,8 @@ public class LayoutTurnout extends LayoutTrack {
     protected NamedBeanHandle<SignalHead> signalC1HeadNamed = null; // diverging (RH, LH, WYE) signal 1 (double crossover)
     protected NamedBeanHandle<SignalHead> signalC2HeadNamed = null; // RH_Xover and double crossover only
     protected NamedBeanHandle<SignalHead> signalD1HeadNamed = null; // single or double crossover only
-    protected NamedBeanHandle<SignalHead> signalD2HeadNamed = null; // LH_Xover and double crossover only
+    protected NamedBeanHandle<SignalHead> signalD2HeadNamed
+            = null; // LH_Xover and double crossover only
 
     // public static final int POINTA1 = 0x01;
     // public static final int POINTA2 = 0x03;
@@ -666,9 +717,11 @@ public class LayoutTurnout extends LayoutTrack {
             return;
         }
 
-        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class
+        ).getSignalHead(signalHead);
         if (head != null) {
-            signalA1HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
+            signalA1HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(signalHead, head);
         } else {
             signalA1HeadNamed = null;
             log.error("{}.setSignalA1Name({}); not fournd for turnout {}", getName(), signalHead, getTurnoutName());
@@ -692,9 +745,11 @@ public class LayoutTurnout extends LayoutTrack {
             return;
         }
 
-        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class
+        ).getSignalHead(signalHead);
         if (head != null) {
-            signalA2HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
+            signalA2HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(signalHead, head);
         } else {
             signalA2HeadNamed = null;
             log.error("{}.setSignalA2Name({}); not fournd for turnout {}", getName(), signalHead, getTurnoutName());
@@ -718,9 +773,11 @@ public class LayoutTurnout extends LayoutTrack {
             return;
         }
 
-        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class
+        ).getSignalHead(signalHead);
         if (head != null) {
-            signalA3HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
+            signalA3HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(signalHead, head);
         } else {
             signalA3HeadNamed = null;
             log.error("{}.setSignalA3Name({}); not fournd for turnout {}", getName(), signalHead, getTurnoutName());
@@ -744,9 +801,11 @@ public class LayoutTurnout extends LayoutTrack {
             return;
         }
 
-        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class
+        ).getSignalHead(signalHead);
         if (head != null) {
-            signalB1HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
+            signalB1HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(signalHead, head);
         } else {
             signalB1HeadNamed = null;
             log.error("{}.setSignalB1Name({}); not fournd for turnout {}", getName(), signalHead, getTurnoutName());
@@ -770,9 +829,11 @@ public class LayoutTurnout extends LayoutTrack {
             return;
         }
 
-        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class
+        ).getSignalHead(signalHead);
         if (head != null) {
-            signalB2HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
+            signalB2HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(signalHead, head);
         } else {
             signalB2HeadNamed = null;
             log.error("{}.setSignalB2Name({}); not fournd for turnout {}", getName(), signalHead, getTurnoutName());
@@ -796,9 +857,11 @@ public class LayoutTurnout extends LayoutTrack {
             return;
         }
 
-        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class
+        ).getSignalHead(signalHead);
         if (head != null) {
-            signalC1HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
+            signalC1HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(signalHead, head);
         } else {
             signalC1HeadNamed = null;
             log.error("{}.setSignalC1Name({}); not fournd for turnout {}", getName(), signalHead, getTurnoutName());
@@ -822,9 +885,11 @@ public class LayoutTurnout extends LayoutTrack {
             return;
         }
 
-        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class
+        ).getSignalHead(signalHead);
         if (head != null) {
-            signalC2HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
+            signalC2HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(signalHead, head);
         } else {
             signalC2HeadNamed = null;
             log.error("{}.setSignalC2Name({}); not fournd for turnout {}", getName(), signalHead, getTurnoutName());
@@ -848,9 +913,11 @@ public class LayoutTurnout extends LayoutTrack {
             return;
         }
 
-        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class
+        ).getSignalHead(signalHead);
         if (head != null) {
-            signalD1HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
+            signalD1HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(signalHead, head);
         } else {
             signalD1HeadNamed = null;
             log.error("{}.setSignalD1Name({}); not fournd for turnout {}", getName(), signalHead, getTurnoutName());
@@ -874,9 +941,11 @@ public class LayoutTurnout extends LayoutTrack {
             return;
         }
 
-        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class
+        ).getSignalHead(signalHead);
         if (head != null) {
-            signalD2HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
+            signalD2HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(signalHead, head);
         } else {
             signalD2HeadNamed = null;
             log.error("{}.setSignalD2Name({}); not fournd for turnout {}", getName(), signalHead, getTurnoutName());
@@ -1054,9 +1123,11 @@ public class LayoutTurnout extends LayoutTrack {
             return;
         }
 
-        SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
+        SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class
+        ).getSignalMast(signalMast);
         if (mast != null) {
-            signalAMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+            signalAMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(signalMast, mast);
         } else {
             signalAMastNamed = null;
             log.error("{}.setSignalAMast({}); not fournd for turnout {}", getName(), signalMast, getTurnoutName());
@@ -1083,9 +1154,11 @@ public class LayoutTurnout extends LayoutTrack {
             return;
         }
 
-        SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
+        SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class
+        ).getSignalMast(signalMast);
         if (mast != null) {
-            signalBMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+            signalBMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(signalMast, mast);
         } else {
             signalBMastNamed = null;
             log.error("{}.setSignalBMast({}); not fournd for turnout {}", getName(), signalMast, getTurnoutName());
@@ -1112,9 +1185,11 @@ public class LayoutTurnout extends LayoutTrack {
             return;
         }
 
-        SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
+        SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class
+        ).getSignalMast(signalMast);
         if (mast != null) {
-            signalCMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+            signalCMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(signalMast, mast);
         } else {
             log.error("{}.setSignalCMast({}); not fournd for turnout {}", getName(), signalMast, getTurnoutName());
             signalCMastNamed = null;
@@ -1141,9 +1216,11 @@ public class LayoutTurnout extends LayoutTrack {
             return;
         }
 
-        SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
+        SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class
+        ).getSignalMast(signalMast);
         if (mast != null) {
-            signalDMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+            signalDMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(signalMast, mast);
         } else {
             log.error("{}.setSignalDMast({}); not fournd for turnout {}", getName(), signalMast, getTurnoutName());
             signalDMastNamed = null;
@@ -1172,7 +1249,8 @@ public class LayoutTurnout extends LayoutTrack {
 
         try {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-            sensorANamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+            sensorANamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(sensorName, sensor);
         }
         catch (IllegalArgumentException ex) {
             sensorANamed = null;
@@ -1201,7 +1279,8 @@ public class LayoutTurnout extends LayoutTrack {
 
         try {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-            sensorBNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+            sensorBNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(sensorName, sensor);
         }
         catch (IllegalArgumentException ex) {
             sensorBNamed = null;
@@ -1230,7 +1309,8 @@ public class LayoutTurnout extends LayoutTrack {
 
         try {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-            sensorCNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+            sensorCNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(sensorName, sensor);
         }
         catch (IllegalArgumentException ex) {
             sensorCNamed = null;
@@ -1259,7 +1339,8 @@ public class LayoutTurnout extends LayoutTrack {
 
         try {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-            sensorDNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+            sensorDNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(sensorName, sensor);
         }
         catch (IllegalArgumentException ex) {
             sensorDNamed = null;
@@ -1335,7 +1416,8 @@ public class LayoutTurnout extends LayoutTrack {
             turnout = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
         }
         if (turnout != null) {
-            namedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turnout);
+            namedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(turnoutName, turnout);
             activateTurnout();
         } else {
             turnoutName = "";
@@ -1379,7 +1461,8 @@ public class LayoutTurnout extends LayoutTrack {
             turnout = InstanceManager.turnoutManagerInstance().getTurnout(secondTurnoutName);
         }
         if (turnout != null) {
-            secondNamedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(secondTurnoutName, turnout);
+            secondNamedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(secondTurnoutName, turnout);
             if (turnout.getFeedbackMode() == Turnout.DIRECT) {
                 turnout.setLeadingTurnout(getTurnout(), false);
             }
@@ -1825,7 +1908,8 @@ public class LayoutTurnout extends LayoutTrack {
             if (newLayoutBlock != null) {
                 String userName = newLayoutBlock.getUserName();
                 if (userName != null) {
-                    namedLayoutBlockA = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, newLayoutBlock);
+                    namedLayoutBlockA = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+                    ).getNamedBeanHandle(userName, newLayoutBlock);
                 }
             } else {
                 namedLayoutBlockA = null;
@@ -1860,7 +1944,8 @@ public class LayoutTurnout extends LayoutTrack {
                 }
                 blockB = newLayoutBlock;
                 if (newLayoutBlock != null) {
-                    namedLayoutBlockB = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
+                    namedLayoutBlockB = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+                    ).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
                 } else {
                     namedLayoutBlockB = null;
                 }
@@ -1896,7 +1981,8 @@ public class LayoutTurnout extends LayoutTrack {
                 }
                 blockC = newLayoutBlock;
                 if (newLayoutBlock != null) {
-                    namedLayoutBlockC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
+                    namedLayoutBlockC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+                    ).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
                 } else {
                     namedLayoutBlockC = null;
                 }
@@ -1932,7 +2018,8 @@ public class LayoutTurnout extends LayoutTrack {
                 }
                 blockD = newLayoutBlock;
                 if (newLayoutBlock != null) {
-                    namedLayoutBlockD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
+                    namedLayoutBlockD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+                    ).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
                 } else {
                     namedLayoutBlockD = null;
                 }
@@ -2751,7 +2838,8 @@ public class LayoutTurnout extends LayoutTrack {
             if (lb != null) {
                 String userName = lb.getUserName();
                 if (userName != null) {
-                    namedLayoutBlockA = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, lb);
+                    namedLayoutBlockA = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+                    ).getNamedBeanHandle(userName, lb);
                     lb.incrementUse();
                 }
             } else {
@@ -2766,7 +2854,8 @@ public class LayoutTurnout extends LayoutTrack {
             if (lb != null) {
                 String userName = lb.getUserName();
                 if (userName != null) {
-                    namedLayoutBlockB = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, lb);
+                    namedLayoutBlockB = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+                    ).getNamedBeanHandle(userName, lb);
                 }
                 if (namedLayoutBlockB != namedLayoutBlockA) {
                     lb.incrementUse();
@@ -2783,7 +2872,8 @@ public class LayoutTurnout extends LayoutTrack {
             if (lb != null) {
                 String userName = lb.getUserName();
                 if (userName != null) {
-                    namedLayoutBlockC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, lb);
+                    namedLayoutBlockC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+                    ).getNamedBeanHandle(userName, lb);
                 }
                 if ((namedLayoutBlockC != namedLayoutBlockA)
                         && (namedLayoutBlockC != namedLayoutBlockB)) {
@@ -2801,7 +2891,8 @@ public class LayoutTurnout extends LayoutTrack {
             if (lb != null) {
                 String userName = lb.getUserName();
                 if (userName != null) {
-                    namedLayoutBlockD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, lb);
+                    namedLayoutBlockD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+                    ).getNamedBeanHandle(userName, lb);
                 }
                 if ((namedLayoutBlockD != namedLayoutBlockA)
                         && (namedLayoutBlockD != namedLayoutBlockB)
@@ -3120,16 +3211,24 @@ public class LayoutTurnout extends LayoutTrack {
                 if (InstanceManager.getDefault(LayoutBlockManager.class
                 ).isAdvancedRoutingEnabled()) {
                     Map<String, LayoutBlock> map = new HashMap<>();
-                    if (!getBlockName().isEmpty()) {
+
+                    if (!getBlockName()
+                            .isEmpty()) {
                         map.put(getBlockName(), getLayoutBlock());
                     }
-                    if (!getBlockBName().isEmpty()) {
+
+                    if (!getBlockBName()
+                            .isEmpty()) {
                         map.put(getBlockBName(), getLayoutBlockB());
                     }
-                    if (!getBlockCName().isEmpty()) {
+
+                    if (!getBlockCName()
+                            .isEmpty()) {
                         map.put(getBlockCName(), getLayoutBlockC());
                     }
-                    if (!getBlockDName().isEmpty()) {
+
+                    if (!getBlockDName()
+                            .isEmpty()) {
                         map.put(getBlockDName(), getLayoutBlockD());
                     }
                     if (blockBoundaries) {
@@ -3457,7 +3556,8 @@ public class LayoutTurnout extends LayoutTrack {
         if (jmri.InstanceManager.getDefault(LayoutBlockManager.class
         ).isAdvancedRoutingEnabled() && InstanceManager.getDefault(jmri.SignalMastLogicManager.class
         ).isSignalMastUsed(signalMast)) {
-            SignallingGuiTools.removeSignalMastLogic(null, signalMast);
+            SignallingGuiTools.removeSignalMastLogic(
+                    null, signalMast);
         }
     }
 
@@ -5095,6 +5195,7 @@ public class LayoutTurnout extends LayoutTrack {
             setLayoutBlockB(layoutBlock);
             setLayoutBlockC(layoutBlock);
             setLayoutBlockD(layoutBlock);
+
         }
     }
 
@@ -5116,5 +5217,6 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurnout.class);
+    private final static Logger log = LoggerFactory.getLogger(LayoutTurnout.class
+    );
 }
