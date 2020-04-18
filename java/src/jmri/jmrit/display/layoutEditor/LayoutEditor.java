@@ -65,7 +65,20 @@ import jmri.util.swing.*;
 @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
 public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
-    // hit point types
+    /**
+     * HitPointType enum
+     * <p>
+     * Note: constructor is NAME(xmlValue). The previous xml save code used the
+     * hard-coded xml int values. With introduction of this enum that code has
+     * been changed to save those values as the HitPointType enum name string
+     * instead. For backwards compatibility the xml int values are still
+     * recognized on load. They should NOT be used going forward so that some
+     * point they can be removed.
+     * <p>
+     * Note also that there are placeholders for values that were previously
+     * used as offsets from base values. These now have to exist as enums so
+     * that the xml loading code can resolve them.
+     */
     public enum HitPointType {
         NONE(0),
         POS_POINT(1),
@@ -196,25 +209,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         /**
-         * given an xml value return the appropriate enum
-         *
-         * @param xmlValue the Integer value used to load from xml file (for
-         *                 backwards compatibility)
-         * @return the appropriate HitPointType enum
-         */
-        public static HitPointType getValue(Integer xmlValue) {
-            HitPointType result = null;
-            for (HitPointType instance : HitPointType.values()) {
-                if (instance.xmlValue.equals(xmlValue)) {
-                    result = instance;
-                    break;
-                }
-            }
-            return result;
-        }
-
-        /**
-         * get the appropriate HitPointType enum for the provided string
+         * get the appropriate enum for the provided string
          *
          * @param string the String
          * @return the appropriate HitPointType enum
@@ -223,12 +218,19 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             HitPointType result = null;
             try {
                 //first see if it matches enum name (exactally)
-                result = HitPointType.valueOf(string);
+                result = valueOf(string);
             }
             catch (IllegalArgumentException e) {    //(nope)
                 try {
+                    //try to parse it as an integer
+                    int i = Integer.parseInt(string);
                     //now see if it matches the xmlValue
-                    result = getValue(Integer.parseInt(string));
+                    for (HitPointType instance : values()) {
+                        if (instance.xmlValue.equals(i)) {  //(yes!)
+                            result = instance;
+                            break;
+                        }
+                    }
                 }
                 catch (NumberFormatException e1) {  //(nope)
                     //failure
@@ -245,7 +247,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
          * @return the appropriate HitPointType enum
          */
         public HitPointType getEnumAtOffset(int offset) {
+            if ((this != BEZIER_CONTROL_POINT_0) && (this != SHAPE_POINT_0) && (this != TURNTABLE_RAY_0)) {
+                log.error("{} is not a valid enum for an offset. Should be BEZIER_CONTROL_POINT_0, SHAPE_POINT_0 or TURNTABLE_RAY_0", name());
+            }
             return values()[this.ordinal() + offset];
+        }
+
+        public int getOffsetToEnum(HitPointType hitPointType) {
+            if ((this != BEZIER_CONTROL_POINT_0) && (this != SHAPE_POINT_0) && (this != TURNTABLE_RAY_0)) {
+                log.error("{} is not a valid enum for an offset. Should be BEZIER_CONTROL_POINT_0, SHAPE_POINT_0 or TURNTABLE_RAY_0", name());
+            }
+            return hitPointType.getXmlValue() - getXmlValue();
         }
 
         /**
@@ -259,9 +271,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
          * @param hitPointType the hit point type
          * @return true if this is for a connection to a LayoutTrack
          */
-        protected static boolean isConnectionHitType(HitPointType hitPointType) {
+        protected boolean isConnectionHitType() {
             boolean result = false; // assume failure (pessimist!)
-            switch (hitPointType) {
+            switch (this) {
                 case POS_POINT:
                 case TURNOUT_A:
                 case TURNOUT_B:
@@ -293,9 +305,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     result = false; // these are not
                     break;
             }
-            if (isBezierHitType(hitPointType)) {
+            if (isBezierHitType()) {
                 result = false; // these are not
-            } else if (isTurntableRayHitType(hitPointType)) {
+            } else if (isTurntableRayHitType()) {
                 result = true;  // these are all connection types
             }
             return result;
@@ -305,9 +317,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
          * @param hitPointType the hit point type
          * @return true if this hit type is for a layout control
          */
-        protected static boolean isControlHitType(HitPointType hitPointType) {
+        protected boolean isControlHitType() {
             boolean result = false; // assume failure (pessimist!)
-            switch (hitPointType) {
+            switch (this) {
                 case TURNOUT_CENTER:
                 case SLIP_LEFT:
                 case SLIP_RIGHT:
@@ -339,9 +351,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     result = false; // these are not
                     break;
             }
-            if (isBezierHitType(hitPointType)) {
+            if (isBezierHitType()) {
                 result = false; // these are not control types
-            } else if (isTurntableRayHitType(hitPointType)) {
+            } else if (isTurntableRayHitType()) {
                 result = true;  // these are all control types
             }
             return result;
@@ -351,54 +363,54 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
          * @param hitPointType the hit point type
          * @return true if this hit type is for a LayoutTurnout
          */
-        protected static boolean isTurnoutHitType(HitPointType hitPointType) {
-            return ((hitPointType.compareTo(HitPointType.TURNOUT_A) >= 0)
-                    && (hitPointType.compareTo(HitPointType.TURNOUT_D) <= 0));
+        protected boolean isTurnoutHitType() {
+            return ((compareTo(TURNOUT_A) >= 0)
+                    && (compareTo(TURNOUT_D) <= 0));
         }
 
         /**
          * @param hitPointType the hit point type
          * @return true if this hit type is for a LayoutSlip
          */
-        protected static boolean isSlipHitType(HitPointType hitPointType) {
-            return ((hitPointType.compareTo(HitPointType.SLIP_A) >= 0)
-                    && (hitPointType.compareTo(HitPointType.SLIP_RIGHT) <= 0));
+        protected boolean isSlipHitType() {
+            return ((compareTo(SLIP_A) >= 0)
+                    && (compareTo(SLIP_RIGHT) <= 0));
         }
 
         /**
          * @param hitPointType the hit point type
          * @return true if this hit type is for a TrackSegment bezier point
          */
-        protected static boolean isBezierHitType(HitPointType hitPointType) {
-            return ((hitPointType.compareTo(HitPointType.BEZIER_CONTROL_POINT_0) >= 0)
-                    && (hitPointType.compareTo(HitPointType.BEZIER_CONTROL_POINT_8) <= 0));
+        protected boolean isBezierHitType() {
+            return ((compareTo(BEZIER_CONTROL_POINT_0) >= 0)
+                    && (compareTo(BEZIER_CONTROL_POINT_8) <= 0));
         }
 
         /**
          * @param hitPointType the hit point type
          * @return true if this hit type is for a LevelXing
          */
-        protected static boolean isLevelXingHitType(HitPointType hitPointType) {
-            return ((hitPointType.compareTo(HitPointType.LEVEL_XING_A) >= 0)
-                    && (hitPointType.compareTo(HitPointType.LEVEL_XING_D) <= 0));
+        protected boolean isLevelXingHitType() {
+            return ((compareTo(LEVEL_XING_A) >= 0)
+                    && (compareTo(LEVEL_XING_D) <= 0));
         }
 
         /**
          * @param hitPointType the hit point type
          * @return true if this hit type is for a LayoutTurntable ray
          */
-        protected static boolean isTurntableRayHitType(HitPointType hitPointType) {
-            return ((hitPointType.compareTo(HitPointType.TURNTABLE_RAY_0) >= 0)
-                    && (hitPointType.compareTo(HitPointType.TURNTABLE_RAY_63) <= 0));
+        protected boolean isTurntableRayHitType() {
+            return ((compareTo(TURNTABLE_RAY_0) >= 0)
+                    && (compareTo(TURNTABLE_RAY_63) <= 0));
         }
 
         /**
          * @param hitPointType the hit point type
          * @return true if this is for a popup menu
          */
-        protected static boolean isPopupHitType(HitPointType hitPointType) {
+        protected boolean isPopupHitType() {
             boolean result = false; // assume failure (pessimist!)
-            switch (hitPointType) {
+            switch (this) {
                 case LEVEL_XING_CENTER:
                 case POS_POINT:
                 case SLIP_LEFT:
@@ -430,9 +442,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     result = false; // these are not
                     break;
             }
-            if (isBezierHitType(hitPointType)) {
+            if (isBezierHitType()) {
                 result = true; // these are all popup hit types
-            } else if (isTurntableRayHitType(hitPointType)) {
+            } else if (isTurntableRayHitType()) {
                 result = true;  // these are all popup hit types
             }
             return result;
@@ -3470,7 +3482,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         selectedObject = null;  // deliberate side-effect
         for (LayoutTrack theTrack : layoutTrackList) {
             selectedHitPointType = theTrack.findHitPointType(dLoc, useRectangles); // deliberate side-effect
-            if (HitPointType.isControlHitType(selectedHitPointType)) {
+            if (selectedHitPointType.isControlHitType()) {
                 selectedObject = theTrack; // deliberate side-effect
                 return;
             }
@@ -3795,7 +3807,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 //controlling slips, in edit mode
                 LayoutSlip sl = (LayoutSlip) selectedObject;
                 sl.toggleState(selectedHitPointType);
-            } else if ((selectedObject != null) && (HitPointType.isTurntableRayHitType(selectedHitPointType))
+            } else if ((selectedObject != null) && (selectedHitPointType.isTurntableRayHitType())
                     && allControlling() && (!isMetaDown(event) && !event.isAltDown()) && !event.isPopupTrigger()
                     && !event.isShiftDown() && !event.isControlDown()) {
                 //controlling turntable, in edit mode
@@ -3843,7 +3855,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             // controlling slip out of edit mode
             LayoutSlip sl = (LayoutSlip) selectedObject;
             sl.toggleState(selectedHitPointType);
-        } else if ((selectedObject != null) && (HitPointType.isTurntableRayHitType(selectedHitPointType))
+        } else if ((selectedObject != null) && (selectedHitPointType.isTurntableRayHitType())
                 && allControlling() && !isMetaDown(event) && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling turntable out of edit mode
@@ -3935,16 +3947,16 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private void showEditPopUps(@Nonnull MouseEvent event) {
         if (findLayoutTracksHitPoint(dLoc)) {
-            if (HitPointType.isBezierHitType(foundHitPointType)) {
+            if (foundHitPointType.isBezierHitType()) {
                 ((TrackSegment) foundTrack).showBezierPopUp(event, foundHitPointType);
-            } else if (HitPointType.isTurntableRayHitType(foundHitPointType)) {
+            } else if (foundHitPointType.isTurntableRayHitType()) {
                 LayoutTurntable t = (LayoutTurntable) foundTrack;
                 if (t.isTurnoutControlled()) {
                     ((LayoutTurntable) foundTrack).showRayPopUp(event, foundHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
                 }
-            } else if (HitPointType.isPopupHitType(foundHitPointType)) {
+            } else if (foundHitPointType.isPopupHitType()) {
                 foundTrack.showPopup(event);
-            } else if (HitPointType.isTurnoutHitType(foundHitPointType)) {
+            } else if (foundHitPointType.isTurnoutHitType()) {
                 // don't curently have edit popup for these
             } else {
                 log.warn("Unknown foundPointType:" + foundHitPointType);
@@ -4269,7 +4281,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 }
 
                 default: {
-                    if (HitPointType.isTurntableRayHitType(foundHitPointType)) {
+                    if (foundHitPointType.isTurntableRayHitType()) {
                         LayoutTurntable tt = (LayoutTurntable) foundTrack;
                         int ray = foundHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue();
 
@@ -4337,7 +4349,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             hitPointCheckLayoutTurnoutSubs(dLoc);
         }
 
-        if ((lt.getConnectD() == null) && (lt.isTurnoutTypeXover() || lt.isTurnoutTypeSlip())) {
+        if ((lt.getConnectD() == null) && (lt.isTurnoutTypeXoverOrSlip())) {
             if (lt instanceof LayoutSlip) {
                 beginHitPointType = HitPointType.SLIP_D;
             } else {
@@ -5076,7 +5088,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         }
 
                         default: {
-                            if (HitPointType.isBezierHitType(foundHitPointType)) {
+                            if (foundHitPointType.isBezierHitType()) {
                                 int index = selectedHitPointType.getXmlValue() - HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue();
                                 ((TrackSegment) selectedObject).setBezierControlPoint(currentPoint, index);
                             } else if ((selectedHitPointType == HitPointType.SHAPE_CENTER)) {
@@ -5084,7 +5096,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                             } else if (LayoutShape.isShapePointOffsetHitPointType(selectedHitPointType)) {
                                 int index = selectedHitPointType.getXmlValue() - HitPointType.SHAPE_POINT_0.getXmlValue();
                                 ((LayoutShape) selectedObject).setPoint(index, currentPoint);
-                            } else if (HitPointType.isTurntableRayHitType(selectedHitPointType)) {
+                            } else if (selectedHitPointType.isTurntableRayHitType()) {
                                 LayoutTurntable turn = (LayoutTurntable) selectedObject;
                                 turn.setRayCoordsIndexed(currentPoint.getX(), currentPoint.getY(),
                                         selectedHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
@@ -5612,7 +5624,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
 
             default: {
-                if (HitPointType.isTurntableRayHitType(fromPointType)) {
+                if (fromPointType.isTurntableRayHitType()) {
                     ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
                             fromPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
                 }
@@ -6495,7 +6507,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
 
             default: {
-                if (HitPointType.isTurntableRayHitType(type)) {
+                if (type.isTurntableRayHitType()) {
                     ((LayoutTurntable) o).setRayConnect(null, type.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
                 }
                 break;
@@ -8513,7 +8525,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             if (isLBLockUsed(bean, turnout.getLayoutBlock())) {
                 usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutBlock", data));
             }
-            if (turnout.hasEnteringDoubleTrack()) {
+            if (turnout.getTurnoutType().hasEnteringDoubleTrack()) {
                 if (isLBLockUsed(bean, turnout.getLayoutBlockB())) {
                     usageReport.add(new NamedBeanUsageReport("LayoutEditorTurnoutBlock", data));
                 }

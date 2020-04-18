@@ -453,7 +453,7 @@ public abstract class LayoutTrack {
      */
     public boolean isDisconnected(LayoutEditor.HitPointType connectionType) {
         boolean result = false;
-        if (LayoutEditor.HitPointType.isConnectionHitType(connectionType)) {
+        if (connectionType.isConnectionHitType()) {
             try {
                 result = (null == getConnection(connectionType));
             }
