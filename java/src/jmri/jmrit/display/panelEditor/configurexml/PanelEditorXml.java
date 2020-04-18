@@ -164,11 +164,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
             value = false;
         }
         panel.setAllEditable(value);
-
-        value = true;
-        if ((a = shared.getAttribute("positionable")) != null && a.getValue().equals("no")) {
-            value = false;
-        }
+        value = (a = shared.getAttribute("positionable")) == null || !a.getValue().equals("no");
         panel.setAllPositionable(value);
 
         /*
@@ -177,28 +173,13 @@ public class PanelEditorXml extends AbstractXmlAdapter {
          value = true;
          panel.setShowCoordinates(value);
          */
-        value = true;
-        if ((a = shared.getAttribute("showtooltips")) != null && a.getValue().equals("no")) {
-            value = false;
-        }
+        value = (a = shared.getAttribute("showtooltips")) == null || !a.getValue().equals("no");
         panel.setAllShowToolTip(value);
-
-        value = true;
-        if ((a = shared.getAttribute("controlling")) != null && a.getValue().equals("no")) {
-            value = false;
-        }
+        value = (a = shared.getAttribute("controlling")) == null || !a.getValue().equals("no");
         panel.setAllControlling(value);
-
-        value = false;
-        if ((a = shared.getAttribute("hide")) != null && a.getValue().equals("yes")) {
-            value = true;
-        }
+        value = (a = shared.getAttribute("hide")) != null && a.getValue().equals("yes");
         panel.setShowHidden(value);
-
-        value = true;
-        if ((a = shared.getAttribute("panelmenu")) != null && a.getValue().equals("no")) {
-            value = false;
-        }
+        value = (a = shared.getAttribute("panelmenu")) == null || !a.getValue().equals("no");
         panel.setPanelMenuVisible(value);
 
         String state = "both";
