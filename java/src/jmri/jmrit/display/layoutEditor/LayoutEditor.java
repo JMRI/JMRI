@@ -268,7 +268,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         /**
-         * @param hitPointType the hit point type
          * @return true if this is for a connection to a LayoutTrack
          */
         protected boolean isConnectionHitType() {
@@ -314,7 +313,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }   // isConnectionHitType
 
         /**
-         * @param hitPointType the hit point type
          * @return true if this hit type is for a layout control
          */
         protected boolean isControlHitType() {
@@ -360,7 +358,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }   // isControlHitType
 
         /**
-         * @param hitPointType the hit point type
          * @return true if this hit type is for a LayoutTurnout
          */
         protected boolean isTurnoutHitType() {
@@ -369,7 +366,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         /**
-         * @param hitPointType the hit point type
          * @return true if this hit type is for a LayoutSlip
          */
         protected boolean isSlipHitType() {
@@ -378,7 +374,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         /**
-         * @param hitPointType the hit point type
          * @return true if this hit type is for a TrackSegment bezier point
          */
         protected boolean isBezierHitType() {
@@ -387,7 +382,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         /**
-         * @param hitPointType the hit point type
          * @return true if this hit type is for a LevelXing
          */
         protected boolean isLevelXingHitType() {
@@ -396,7 +390,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         /**
-         * @param hitPointType the hit point type
          * @return true if this hit type is for a LayoutTurntable ray
          */
         protected boolean isTurntableRayHitType() {
@@ -405,7 +398,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         /**
-         * @param hitPointType the hit point type
          * @return true if this is for a popup menu
          */
         protected boolean isPopupHitType() {
