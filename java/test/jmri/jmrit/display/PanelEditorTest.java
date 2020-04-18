@@ -2,8 +2,10 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
+import jmri.BlockManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assume;
@@ -58,6 +60,7 @@ public class PanelEditorTest {
     @After
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 
