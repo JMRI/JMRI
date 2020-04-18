@@ -45,7 +45,6 @@ public class BlockValueFile extends XmlFile {
     // operational variables
     private BlockManager blockManager = null;
     private final static String defaultFileName = FileUtil.getUserFilesPath() + "blockvalues.xml";
-    private Document doc = null;
     private Element root = null;
 
     /**
@@ -156,7 +155,7 @@ public class BlockValueFile extends XmlFile {
         if (blocks.size() > 0) {
             // there are blocks defined, create root element
             root = new Element("block_values");
-            doc = newDocument(root, dtdLocation + "block-values.dtd");
+            Document doc = newDocument(root, dtdLocation + "block-values.dtd");
             boolean valuesFound = false;
 
             // add XSLT processing instruction
@@ -169,8 +168,7 @@ public class BlockValueFile extends XmlFile {
 
             // save block values in xml format
             Element values = new Element("blockvalues");
-            for (int i = 0; i < blocks.size(); i++) {
-                String sname = blocks.get(i);
+            for (String sname : blocks) {
                 Block b = blockManager.getBySystemName(sname);
                 if (b != null) {
                     Object o = b.getValue();

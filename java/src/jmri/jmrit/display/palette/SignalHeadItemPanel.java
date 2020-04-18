@@ -3,11 +3,8 @@ package jmri.jmrit.display.palette;
 import java.awt.BorderLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -46,12 +43,7 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
         topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
         JPanel panel = new JPanel();
         JButton clearSelectionButton = new JButton(Bundle.getMessage("ClearSelection"));
-        clearSelectionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                _table.clearSelection();
-            }
-        });
+        clearSelectionButton.addActionListener(a -> _table.clearSelection());
         clearSelectionButton.setToolTipText(Bundle.getMessage("ToolTipClearSelection"));
         panel.add(clearSelectionButton);
         topPanel.add(panel, BorderLayout.SOUTH);
@@ -196,9 +188,7 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
                 SignalHeadIcon sh = new SignalHeadIcon(_frame.getEditor());
                 sh.setSignalHead(bean.getDisplayName());
                 HashMap<String, NamedIcon> map = getFilteredIconMap(iMap);
-                Iterator<Entry<String, NamedIcon>> iter = map.entrySet().iterator();
-                while (iter.hasNext()) {
-                    Entry<String, NamedIcon> ent = iter.next();
+                for (Entry<String, NamedIcon> ent : map.entrySet()) {
                     sh.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
                 }
                 sh.setFamily(_family);

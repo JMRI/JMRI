@@ -307,8 +307,8 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     void edit() {
     }
 
-    /**
-     * ************** end Positionable methods *********************
+    /*
+     ************** end Positionable methods *********************
      */
     /**
      * Removes this object from display and persistance

@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -46,7 +45,7 @@ public class SignalMastItemPanel extends TableItemPanel<SignalMast> {
     private HashMap<String, NamedIcon> _iconMastMap;
     private JLabel _promptLabel;
     private JPanel _blurb;
-    private NamedIcon _defaultIcon;
+    private final NamedIcon _defaultIcon;
 
     public SignalMastItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.SignalMast> model) {
         super(parentFrame, type, family, model);
@@ -166,14 +165,11 @@ public class SignalMastItemPanel extends TableItemPanel<SignalMast> {
     protected void makeBottomPanel(ActionListener doneAction) {
         JPanel panel = new JPanel();
         _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
-        _showIconsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                if (_iconPanel.isVisible()) {
-                    hideIcons();
-                } else {
-                    showIcons();
-                }
+        _showIconsButton.addActionListener(a -> {
+            if (_iconPanel.isVisible()) {
+                hideIcons();
+            } else {
+                showIcons();
             }
         });
         _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipShowIcons"));
@@ -233,9 +229,9 @@ public class SignalMastItemPanel extends TableItemPanel<SignalMast> {
 
     private NamedIcon getDragIcon() {
         if (_iconMastMap != null) {
-            if (_iconMastMap.keySet().contains("Clear")) {
+            if (_iconMastMap.containsKey("Clear")) {
                 return _iconMastMap.get("Clear");
-            } else if (_iconMastMap.keySet().contains("Stop")) {
+            } else if (_iconMastMap.containsKey("Stop")) {
                 return _iconMastMap.get("Stop");
             }
             Iterator<String> e = _iconMastMap.keySet().iterator();

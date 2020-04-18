@@ -10,7 +10,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.MessageFormat;
 import java.util.*;
-import java.util.function.Predicate;
 import javax.annotation.*;
 import javax.swing.*;
 import jmri.*;
@@ -1176,16 +1175,13 @@ public class PositionablePoint extends LayoutTrack {
                     int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
-                            connect1.getBumperLineWidth(), new Predicate<Integer>() {
-                        @Override
-                        public boolean test(Integer t) {
-                            if (t < 0 || t > TrackSegment.MAX_BUMPER_WIDTH) {
-                                throw new IllegalArgumentException(
-                                        Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegment.MAX_BUMPER_WIDTH));
-                            }
-                            return true;
-                        }
-                    });
+                            connect1.getBumperLineWidth(), t -> {
+                                if (t < 0 || t > TrackSegment.MAX_BUMPER_WIDTH) {
+                                    throw new IllegalArgumentException(
+                                            Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegment.MAX_BUMPER_WIDTH));
+                                }
+                                return true;
+                            });
                     connect1.setBumperLineWidth(newValue);
                 });
 
@@ -1197,16 +1193,13 @@ public class PositionablePoint extends LayoutTrack {
                     int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
-                            connect1.getBumperLength(), new Predicate<Integer>() {
-                        @Override
-                        public boolean test(Integer t) {
-                            if (t < 0 || t > TrackSegment.MAX_BUMPER_LENGTH) {
-                                throw new IllegalArgumentException(
-                                        Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegment.MAX_BUMPER_LENGTH));
-                            }
-                            return true;
-                        }
-                    });
+                            connect1.getBumperLength(), t -> {
+                                if (t < 0 || t > TrackSegment.MAX_BUMPER_LENGTH) {
+                                    throw new IllegalArgumentException(
+                                            Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegment.MAX_BUMPER_LENGTH));
+                                }
+                                return true;
+                            });
                     connect1.setBumperLength(newValue);
                 });
             }
@@ -1580,9 +1573,7 @@ public class PositionablePoint extends LayoutTrack {
         container.setLayout(new BorderLayout());
 
         JButton done = new JButton(Bundle.getMessage("ButtonDone"));
-        done.addActionListener((ActionEvent a) -> {
-            updateLink();
-        });
+        done.addActionListener((ActionEvent a) -> updateLink());
 
         container.add(getLinkPanel(), BorderLayout.NORTH);
         container.add(done, BorderLayout.SOUTH);
@@ -1602,30 +1593,28 @@ public class PositionablePoint extends LayoutTrack {
     private ArrayList<PositionablePoint> pointList;
 
     public JPanel getLinkPanel() {
-        editorCombo = new JComboBox<JCBHandle<LayoutEditor>>();
+        editorCombo = new JComboBox<>();
         ArrayList<LayoutEditor> panels
                 = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
-        editorCombo.addItem(new JCBHandle<LayoutEditor>("None"));
+        editorCombo.addItem(new JCBHandle<>("None"));
         if (panels.contains(layoutEditor)) {
             panels.remove(layoutEditor);
         }
         for (LayoutEditor p : panels) {
-            JCBHandle<LayoutEditor> h = new JCBHandle<LayoutEditor>(p);
+            JCBHandle<LayoutEditor> h = new JCBHandle<>(p);
             editorCombo.addItem(h);
             if (p == getLinkedEditor()) {
                 editorCombo.setSelectedItem(h);
             }
         }
 
-        ActionListener selectPanelListener = (ActionEvent a) -> {
-            updatePointBox();
-        };
+        ActionListener selectPanelListener = (ActionEvent a) -> updatePointBox();
 
         editorCombo.addActionListener(selectPanelListener);
         JPanel selectorPanel = new JPanel();
         selectorPanel.add(new JLabel(Bundle.getMessage("SelectPanel")));
         selectorPanel.add(editorCombo);
-        linkPointsBox = new JComboBox<String>();
+        linkPointsBox = new JComboBox<>();
         updatePointBox();
         selectorPanel.add(new JLabel(Bundle.getMessage("ConnectingTo")));
         selectorPanel.add(linkPointsBox);
@@ -1907,7 +1896,6 @@ public class PositionablePoint extends LayoutTrack {
             //from the panel and potentially any SignalMast logics generated
         } else if (getConnect1() == null || getConnect2() == null) {
             //could still be in the process of rebuilding the point details
-            return;
         } else if (getConnect1().getLayoutBlock() == getConnect2().getLayoutBlock()) {
             //We are no longer a block bounardy
             if (westBoundSignalMastNamed != null) {

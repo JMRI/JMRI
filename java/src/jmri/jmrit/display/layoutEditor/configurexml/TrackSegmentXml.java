@@ -320,15 +320,14 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                     List<Element> elementList = controlpointsElement.getChildren("controlpoint");
                     if (elementList != null) {
                         if (elementList.size() >= 2) {
-                            for (int i = 0; i < elementList.size(); i++) {
+                            for (Element value : elementList) {
                                 double x = 0.0;
                                 double y = 0.0;
                                 int index = 0;
-                                Element relem = elementList.get(i);
                                 try {
-                                    index = (relem.getAttribute("index")).getIntValue();
-                                    x = (relem.getAttribute("x")).getFloatValue();
-                                    y = (relem.getAttribute("y")).getFloatValue();
+                                    index = (value.getAttribute("index")).getIntValue();
+                                    x = (value.getAttribute("x")).getFloatValue();
+                                    y = (value.getAttribute("y")).getFloatValue();
                                 } catch (DataConversionException e) {
                                     log.error("failed to convert controlpoint coordinates or index attributes");
                                 }
@@ -606,7 +605,6 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                             String eValue = (a != null) ? a.getValue() : "";
                             decorations.put(eName, eValue);
                         } catch (NullPointerException e) {  // considered normal if the attribute is not present
-                            continue;
                         }
                     }
                 }

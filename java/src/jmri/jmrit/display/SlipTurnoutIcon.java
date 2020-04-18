@@ -539,9 +539,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         tristateItem = new javax.swing.JCheckBoxMenuItem(Bundle.getMessage("Tristate"));
         tristateItem.setSelected(getTristate());
         popup.add(tristateItem);
-        tristateItem.addActionListener((java.awt.event.ActionEvent e) -> {
-            setTristate(tristateItem.isSelected());
-        });
+        tristateItem.addActionListener((java.awt.event.ActionEvent e) -> setTristate(tristateItem.isSelected()));
     }
 
     /**
@@ -812,9 +810,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 
         _iconEditor.makeIconPanel(true);
 
-        ActionListener addIconAction = (ActionEvent a) -> {
-            updateTurnout();
-        };
+        ActionListener addIconAction = (ActionEvent a) -> updateTurnout();
         _iconEditor.complete(addIconAction, true, true, true);
     }
 
@@ -909,12 +905,10 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             case 7:
                 setLowerWestToUpperEast();
                 break;
-            case 9:
-                setUpperWestToLowerEast();
-                break;
             case 11:
                 setLowerWestToLowerEast();
                 break;
+            case 9:
             default:
                 setUpperWestToLowerEast();
         }
@@ -1127,53 +1121,37 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         } else {
             JMenuItem LWUE = new JMenuItem(lowerWestToUpperEastText);
             if ((turnoutType == THREEWAY) && (!singleSlipRoute)) {
-                LWUE.addActionListener((ActionEvent e) -> {
-                    setLowerWestToLowerEast();
-                });
+                LWUE.addActionListener((ActionEvent e) -> setLowerWestToLowerEast());
 
             } else {
-                LWUE.addActionListener((ActionEvent e) -> {
-                    setLowerWestToUpperEast();
-                });
+                LWUE.addActionListener((ActionEvent e) -> setLowerWestToUpperEast());
             }
             popup.add(LWUE);
             JMenuItem UWLE = new JMenuItem(upperWestToLowerEastText);
-            UWLE.addActionListener((ActionEvent e) -> {
-                setUpperWestToLowerEast();
-            });
+            UWLE.addActionListener((ActionEvent e) -> setUpperWestToLowerEast());
             popup.add(UWLE);
             if ((turnoutType == DOUBLESLIP) || ((turnoutType == SINGLESLIP) && (!singleSlipRoute))) {
                 JMenuItem LWLE = new JMenuItem(lowerWestToLowerEastText);
-                LWLE.addActionListener((ActionEvent e) -> {
-                    setLowerWestToLowerEast();
-                });
+                LWLE.addActionListener((ActionEvent e) -> setLowerWestToLowerEast());
                 popup.add(LWLE);
             }
             if ((turnoutType == DOUBLESLIP) || ((turnoutType == SINGLESLIP) && (singleSlipRoute))) {
                 JMenuItem UWUE = new JMenuItem(upperWestToUpperEastText);
-                UWUE.addActionListener((ActionEvent e) -> {
-                    setUpperWestToUpperEast();
-                });
+                UWUE.addActionListener((ActionEvent e) -> setUpperWestToUpperEast());
                 popup.add(UWUE);
             }
             if (turnoutType == THREEWAY) {
                 JMenuItem LWLE = new JMenuItem(lowerWestToLowerEastText);
                 if (!singleSlipRoute) {
-                    LWLE.addActionListener((ActionEvent e) -> {
-                        setLowerWestToUpperEast();
-                    });
+                    LWLE.addActionListener((ActionEvent e) -> setLowerWestToUpperEast());
                 } else {
-                    LWLE.addActionListener((ActionEvent e) -> {
-                        setLowerWestToLowerEast();
-                    });
+                    LWLE.addActionListener((ActionEvent e) -> setLowerWestToLowerEast());
                 }
                 popup.add(LWLE);
             }
             if (turnoutType == SCISSOR) {
                 JMenuItem LWLE = new JMenuItem(lowerWestToLowerEastText);
-                LWLE.addActionListener((ActionEvent e) -> {
-                    setLowerWestToLowerEast();
-                });
+                LWLE.addActionListener((ActionEvent e) -> setLowerWestToLowerEast());
                 popup.add(LWLE);
             }
         }

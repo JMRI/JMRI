@@ -2499,9 +2499,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                         log.debug("routing table has now been stable for 2 seconds");
                         checking = false;
                         stabilised = true;
-                        jmri.util.ThreadingUtil.runOnLayoutEventually(() -> {
-                            firePropertyChange("topology", false, true);
-                        });
+                        jmri.util.ThreadingUtil.runOnLayoutEventually(() -> firePropertyChange("topology", false, true));
 
                         if (namedStabilisedIndicator != null) {
                             jmri.util.ThreadingUtil.runOnLayoutEventually(() -> {

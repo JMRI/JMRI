@@ -3,8 +3,6 @@ package jmri.jmrit.display.controlPanelEditor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
@@ -73,12 +71,7 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
         panel.setLayout(new FlowLayout());
 
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
-        doneButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                closingEvent(false);
-            }
-        });
+        doneButton.addActionListener(a -> closingEvent(false));
         panel.add(doneButton);
         buttonPanel.add(panel);
 
