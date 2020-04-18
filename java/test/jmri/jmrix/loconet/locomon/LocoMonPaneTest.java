@@ -7,11 +7,15 @@ import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.ThreadingUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Test of LocoMonPane
@@ -23,8 +27,9 @@ import org.junit.Test;
 public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Test
-    public void testInput() throws Exception {
-        pane.initComponents();
+    public void testInput() {
+        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        assertThat(thrown).isNull();
         LocoNetMessage m = new LocoNetMessage(new int[]{0xA0, 0x07, 0x00, 0x58});
         ((LocoMonPane)pane).message(m);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
@@ -32,8 +37,9 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @Test
-    public void testFilterNot() throws Exception {
-        pane.initComponents();
+    public void testFilterNot() {
+        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        assertThat(thrown).isNull();
         // filter not match
         pane.setFilterText("A1");
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
@@ -46,8 +52,9 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @Test
-    public void testFilterSimple() throws Exception {
-        pane.initComponents();
+    public void testFilterSimple() {
+        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        assertThat(thrown).isNull();
         // filter A0
         pane.setFilterText("A0");
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
@@ -60,8 +67,9 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @Test
-    public void testFilterMultiple() throws Exception {
-        pane.initComponents();
+    public void testFilterMultiple() {
+        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        assertThat(thrown).isNull();
         // filter A0
         pane.setFilterText("B1 A0");
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
@@ -84,11 +92,10 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
          // for Jemmy to work, we need the pane inside of a frame
          JmriJFrame f = new JmriJFrame();
-         try{
-            pane.initComponents();
-         } catch(Exception ex) {
-           Assert.fail("Could not load pane: " + ex);
-         }
+
+         Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+         assertThat(thrown).isNull();
+
          f.add(pane);
          // set title if available
          if (pane.getTitle() != null) {
@@ -142,6 +149,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     @After
     public void tearDown() {
         pane.dispose();
+        panel = pane = null;
         
         l.dispose();
         s.dispose();
