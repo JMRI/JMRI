@@ -184,20 +184,20 @@ public abstract class ItemPanel extends JPanel {
     static protected HashMap<String, NamedIcon> makeNewIconMap(String type) {
         HashMap<String, NamedIcon> newMap = new HashMap<>();
         String[] names = getNames(type);
-        for (int i = 0; i < names.length; i++) {
-            NamedIcon icon = new jmri.jmrit.catalog.NamedIcon(ItemPalette.RED_X, ItemPalette.RED_X);
-            newMap.put(names[i], icon);
+        for (String name : names) {
+            NamedIcon icon = new NamedIcon(ItemPalette.RED_X, ItemPalette.RED_X);
+            newMap.put(name, icon);
         }
         return newMap;
     }
 
     static protected void checkIconMap(String type, HashMap<String, NamedIcon> map) {
         String[] names = getNames(type);
-        for (int i = 0; i < names.length; i++) {
-            if (map.get(names[i]) == null) {
-                NamedIcon icon = new jmri.jmrit.catalog.NamedIcon(ItemPalette.RED_X, ItemPalette.RED_X);
+        for (String name : names) {
+            if (map.get(name) == null) {
+                NamedIcon icon = new NamedIcon(ItemPalette.RED_X, ItemPalette.RED_X);
                 // store RedX as default icon if icon not set
-                map.put(names[i], icon);
+                map.put(name, icon);
             }
         }
     }

@@ -33,8 +33,8 @@ public class MoveSelectionDialog {
     //operational variables for move selection pane
     private transient JmriJFrame moveSelectionFrame = null;
     private boolean moveSelectionOpen = false;
-    private transient JTextField xMoveField = new JTextField(6);
-    private transient JTextField yMoveField = new JTextField(6);
+    private final transient JTextField xMoveField = new JTextField(6);
+    private final transient JTextField yMoveField = new JTextField(6);
     private transient JButton moveSelectionDone;
     private transient JButton moveSelectionCancel;
 
@@ -87,14 +87,10 @@ public class MoveSelectionDialog {
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
             panel5.add(moveSelectionDone = new JButton(Bundle.getMessage("MoveSelection")));
-            moveSelectionDone.addActionListener((ActionEvent event) -> {
-                moveSelectionDonePressed(event);
-            });
+            moveSelectionDone.addActionListener(this::moveSelectionDonePressed);
             moveSelectionDone.setToolTipText(Bundle.getMessage("MoveSelectionHint"));
             panel5.add(moveSelectionCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            moveSelectionCancel.addActionListener((ActionEvent event) -> {
-                moveSelectionCancelPressed();
-            });
+            moveSelectionCancel.addActionListener((ActionEvent event) -> moveSelectionCancelPressed());
             moveSelectionCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel5);
 

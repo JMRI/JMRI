@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -12,13 +13,7 @@ import jmri.InstanceManagerAutoDefault;
 
 public class EditorManager implements InstanceManagerAutoDefault {
 
-    private final SortedSet<Editor> editors = new TreeSet<>(new Comparator<Editor>() {
-
-        @Override
-        public int compare(Editor o1, Editor o2) {
-            return o1.getTitle().compareTo(o2.getTitle());
-        }
-    });
+    private final SortedSet<Editor> editors = new TreeSet<>(Comparator.comparing(Frame::getTitle));
 
     /**
      * Get a List of the currently-existing Editor objects. The returned list is

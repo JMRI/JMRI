@@ -123,7 +123,6 @@ public class LayoutTrackEditors {
                         msg.toString(),
                         "jmri.jmrit.display.PanelMenu", // NOI18N
                         "BlockSensorMessage");  // NOI18N
-        return;
     }
 
     /*==================*\
@@ -133,13 +132,13 @@ public class LayoutTrackEditors {
     private TrackSegment trackSegment;
 
     private JmriJFrame editTrackSegmentFrame = null;
-    private JComboBox<String> editTrackSegmentMainlineComboBox = new JComboBox<String>();
+    private final JComboBox<String> editTrackSegmentMainlineComboBox = new JComboBox<>();
 //    private JCheckBox editTrackSegmentMainlineCheckBox = new JCheckBox(Bundle.getMessage("Mainline"));
-    private JComboBox<String> editTrackSegmentDashedComboBox = new JComboBox<String>();
-    private JCheckBox editTrackSegmentHiddenCheckBox = new JCheckBox(Bundle.getMessage("HideTrack"));  // NOI18N
-    private NamedBeanComboBox<Block> editTrackSegmentBlockNameComboBox = new NamedBeanComboBox<>(
+    private final JComboBox<String> editTrackSegmentDashedComboBox = new JComboBox<>();
+    private final JCheckBox editTrackSegmentHiddenCheckBox = new JCheckBox(Bundle.getMessage("HideTrack"));  // NOI18N
+    private final NamedBeanComboBox<Block> editTrackSegmentBlockNameComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
-    private JTextField editTrackSegmentArcTextField = new JTextField(5);
+    private final JTextField editTrackSegmentArcTextField = new JTextField(5);
     private JButton editTrackSegmentSegmentEditBlockButton;
 
     private int editTrackSegmentMainlineTrackIndex;
@@ -249,9 +248,7 @@ public class LayoutTrackEditors {
 
             // Edit Block
             panel5.add(editTrackSegmentSegmentEditBlockButton = new JButton(Bundle.getMessage("EditBlock", "")));  // NOI18N
-            editTrackSegmentSegmentEditBlockButton.addActionListener((ActionEvent e) -> {
-                editTrackSegmentEditBlockPressed(e);
-            });
+            editTrackSegmentSegmentEditBlockButton.addActionListener(this::editTrackSegmentEditBlockPressed);
             editTrackSegmentSegmentEditBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
 
             addDoneCancelButtons(panel5, editTrackSegmentFrame.getRootPane(),
@@ -399,22 +396,22 @@ public class LayoutTrackEditors {
     private NamedBeanComboBox<Turnout> editLayoutTurnout1stTurnoutComboBox = null;
     private NamedBeanComboBox<Turnout> editLayoutTurnout2ndTurnoutComboBox = null;
     private JLabel editLayoutTurnout2ndTurnoutLabel = null;
-    private NamedBeanComboBox<Block> editLayoutTurnoutBlockNameComboBox = new NamedBeanComboBox<>(
+    private final NamedBeanComboBox<Block> editLayoutTurnoutBlockNameComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
-    private NamedBeanComboBox<Block> editLayoutTurnoutBlockBNameComboBox = new NamedBeanComboBox<>(
+    private final NamedBeanComboBox<Block> editLayoutTurnoutBlockBNameComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
-    private NamedBeanComboBox<Block> editLayoutTurnoutBlockCNameComboBox = new NamedBeanComboBox<>(
+    private final NamedBeanComboBox<Block> editLayoutTurnoutBlockCNameComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
-    private NamedBeanComboBox<Block> editLayoutTurnoutBlockDNameComboBox = new NamedBeanComboBox<>(
+    private final NamedBeanComboBox<Block> editLayoutTurnoutBlockDNameComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
-    private JComboBox<String> editLayoutTurnoutStateComboBox = new JComboBox<String>();
+    private final JComboBox<String> editLayoutTurnoutStateComboBox = new JComboBox<>();
     private JCheckBox editLayoutTurnoutHiddenCheckBox = null;
     private JButton editLayoutTurnoutBlockButton;
     private JButton editLayoutTurnoutBlockBButton;
     private JButton editLayoutTurnoutBlockCButton;
     private JButton editLayoutTurnoutBlockDButton;
-    private JCheckBox editLayoutTurnout2ndTurnoutCheckBox = new JCheckBox(Bundle.getMessage("SupportingTurnout"));  // NOI18N
-    private JCheckBox editLayoutTurnout2ndTurnoutInvertCheckBox = new JCheckBox(Bundle.getMessage("SecondTurnoutInvert"));  // NOI18N
+    private final JCheckBox editLayoutTurnout2ndTurnoutCheckBox = new JCheckBox(Bundle.getMessage("SupportingTurnout"));  // NOI18N
+    private final JCheckBox editLayoutTurnout2ndTurnoutInvertCheckBox = new JCheckBox(Bundle.getMessage("SecondTurnoutInvert"));  // NOI18N
 
     private boolean editLayoutTurnoutOpen = false;
     private boolean editLayoutTurnoutNeedRedraw = false;
@@ -477,9 +474,7 @@ public class LayoutTrackEditors {
             panel1b.add(editLayoutTurnout2ndTurnoutLabel);
             editLayoutTurnout2ndTurnoutLabel.setLabelFor(editLayoutTurnout2ndTurnoutComboBox);
             panel1b.add(editLayoutTurnout2ndTurnoutComboBox);
-            editLayoutTurnout2ndTurnoutInvertCheckBox.addActionListener((ActionEvent e) -> {
-                layoutTurnout.setSecondTurnoutInverted(editLayoutTurnout2ndTurnoutInvertCheckBox.isSelected());
-            });
+            editLayoutTurnout2ndTurnoutInvertCheckBox.addActionListener((ActionEvent e) -> layoutTurnout.setSecondTurnoutInverted(editLayoutTurnout2ndTurnoutInvertCheckBox.isSelected()));
             editLayoutTurnout2ndTurnoutInvertCheckBox.setEnabled(false);
             panel1b.add(editLayoutTurnout2ndTurnoutInvertCheckBox);
             contentPane.add(panel1b);
@@ -519,9 +514,7 @@ public class LayoutTrackEditors {
             editLayoutTurnoutBlockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
             panel2.add(editLayoutTurnoutBlockButton = new JButton(Bundle.getMessage("CreateEdit")));  // NOI18N
             editLayoutTurnoutBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
-            editLayoutTurnoutBlockButton.addActionListener((ActionEvent e) -> {
-                editLayoutTurnoutEditBlockPressed(e);
-            });
+            editLayoutTurnoutBlockButton.addActionListener(this::editLayoutTurnoutEditBlockPressed);
             contentPane.add(panel2);
 
             if (layoutTurnout.isTurnoutTypeXover()) {
@@ -535,9 +528,7 @@ public class LayoutTrackEditors {
                 panel21.add(editLayoutTurnoutBlockBNameComboBox);
 
                 panel21.add(editLayoutTurnoutBlockBButton = new JButton(Bundle.getMessage("CreateEdit")));  // NOI18N
-                editLayoutTurnoutBlockBButton.addActionListener((ActionEvent e) -> {
-                    editLayoutTurnoutEditBlockBPressed(e);
-                });
+                editLayoutTurnoutBlockBButton.addActionListener(this::editLayoutTurnoutEditBlockBPressed);
                 editLayoutTurnoutBlockBButton.setToolTipText(Bundle.getMessage("EditBlockHint", "2"));  // NOI18N
                 contentPane.add(panel21);
 
@@ -550,9 +541,7 @@ public class LayoutTrackEditors {
                 editLayoutTurnoutBlockCNameComboBox.setToolTipText(Bundle.getMessage("EditBlockCNameHint"));  // NOI18N
                 panel22.add(editLayoutTurnoutBlockCNameComboBox);
                 panel22.add(editLayoutTurnoutBlockCButton = new JButton(Bundle.getMessage("CreateEdit")));  // NOI18N
-                editLayoutTurnoutBlockCButton.addActionListener((ActionEvent e) -> {
-                    editLayoutTurnoutEditBlockCPressed(e);
-                });
+                editLayoutTurnoutBlockCButton.addActionListener(this::editLayoutTurnoutEditBlockCPressed);
                 editLayoutTurnoutBlockCButton.setToolTipText(Bundle.getMessage("EditBlockHint", "3"));  // NOI18N
                 contentPane.add(panel22);
 
@@ -565,9 +554,7 @@ public class LayoutTrackEditors {
                 editLayoutTurnoutBlockDNameComboBox.setToolTipText(Bundle.getMessage("EditBlockDNameHint"));  // NOI18N
                 panel23.add(editLayoutTurnoutBlockDNameComboBox);
                 panel23.add(editLayoutTurnoutBlockDButton = new JButton(Bundle.getMessage("CreateEdit")));  // NOI18N
-                editLayoutTurnoutBlockDButton.addActionListener((ActionEvent e) -> {
-                    editLayoutTurnoutEditBlockDPressed(e);
-                });
+                editLayoutTurnoutBlockDButton.addActionListener(this::editLayoutTurnoutEditBlockDPressed);
                 editLayoutTurnoutBlockDButton.setToolTipText(Bundle.getMessage("EditBlockHint", "4"));  // NOI18N
                 contentPane.add(panel23);
             }
@@ -889,8 +876,8 @@ public class LayoutTrackEditors {
     private JButton editLayoutSlipBlockButton;
     private NamedBeanComboBox<Turnout> editLayoutSlipTurnoutAComboBox;
     private NamedBeanComboBox<Turnout> editLayoutSlipTurnoutBComboBox;
-    private JCheckBox editLayoutSlipHiddenBox = new JCheckBox(Bundle.getMessage("HideSlip"));
-    private NamedBeanComboBox<Block> editLayoutSlipBlockNameComboBox = new NamedBeanComboBox<>(
+    private final JCheckBox editLayoutSlipHiddenBox = new JCheckBox(Bundle.getMessage("HideSlip"));
+    private final NamedBeanComboBox<Block> editLayoutSlipBlockNameComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
 
     private boolean editLayoutSlipOpen = false;
@@ -960,9 +947,7 @@ public class LayoutTrackEditors {
             testPanel.setPreferredSize(new Dimension(40, 40));
             panel2.add(testPanel);
             JButton testButton = new JButton("Test");  // NOI18N
-            testButton.addActionListener((ActionEvent e) -> {
-                toggleStateTest();
-            });
+            testButton.addActionListener((ActionEvent e) -> toggleStateTest());
             panel2.add(testButton);
             contentPane.add(panel2);
 
@@ -988,10 +973,7 @@ public class LayoutTrackEditors {
             panel4.setLayout(new FlowLayout());
             // Edit Block
             panel4.add(editLayoutSlipBlockButton = new JButton(Bundle.getMessage("EditBlock", "")));  // NOI18N
-            editLayoutSlipBlockButton.addActionListener(
-                    (ActionEvent event) -> {
-                        editLayoutSlipEditBlockPressed(event);
-                    }
+            editLayoutSlipBlockButton.addActionListener(this::editLayoutSlipEditBlockPressed
             );
             editLayoutSlipBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
 
@@ -1310,11 +1292,11 @@ public class LayoutTrackEditors {
 
     // variables for Edit Level Crossing pane
     private JmriJFrame editLevelXingFrame = null;
-    private JCheckBox editLevelXingHiddenCheckBox = new JCheckBox(Bundle.getMessage("HideCrossing"));  // NOI18N
+    private final JCheckBox editLevelXingHiddenCheckBox = new JCheckBox(Bundle.getMessage("HideCrossing"));  // NOI18N
 
-    private NamedBeanComboBox<Block> editLevelXingBlock1NameComboBox = new NamedBeanComboBox<>(
+    private final NamedBeanComboBox<Block> editLevelXingBlock1NameComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
-    private NamedBeanComboBox<Block> editLevelXingBlock2NameComboBox = new NamedBeanComboBox<>(
+    private final NamedBeanComboBox<Block> editLevelXingBlock2NameComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private JButton editLevelXingBlock1Button;
     private JButton editLevelXingBlock2Button;
@@ -1375,15 +1357,11 @@ public class LayoutTrackEditors {
             panel4.setLayout(new FlowLayout());
             // Edit 1 Block
             panel4.add(editLevelXingBlock1Button = new JButton(Bundle.getMessage("EditBlock", "AC")));  // NOI18N
-            editLevelXingBlock1Button.addActionListener((ActionEvent e) -> {
-                editLevelXingBlockACPressed(e);
-            });
+            editLevelXingBlock1Button.addActionListener(this::editLevelXingBlockACPressed);
             editLevelXingBlock1Button.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
             // Edit 2 Block
             panel4.add(editLevelXingBlock2Button = new JButton(Bundle.getMessage("EditBlock", "BD")));  // NOI18N
-            editLevelXingBlock2Button.addActionListener((ActionEvent e) -> {
-                editLevelXingBlockBDPressed(e);
-            });
+            editLevelXingBlock2Button.addActionListener(this::editLevelXingBlockBDPressed);
             editLevelXingBlock2Button.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
             contentPane.add(panel4);
 
@@ -1533,8 +1511,8 @@ public class LayoutTrackEditors {
     private LayoutTurntable layoutTurntable = null;
 
     private JmriJFrame editLayoutTurntableFrame = null;
-    private JTextField editLayoutTurntableRadiusTextField = new JTextField(8);
-    private JTextField editLayoutTurntableAngleTextField = new JTextField(8);
+    private final JTextField editLayoutTurntableRadiusTextField = new JTextField(8);
+    private final JTextField editLayoutTurntableAngleTextField = new JTextField(8);
 
     private JPanel editLayoutTurntableRayPanel;
     private JButton editLayoutTurntableAddRayTrackButton;
@@ -1544,7 +1522,7 @@ public class LayoutTrackEditors {
     private boolean editLayoutTurntableOpen = false;
     private boolean editLayoutTurntableNeedsRedraw = false;
 
-    private List<Turnout> turntableTurnouts = new ArrayList<>();
+    private final List<Turnout> turntableTurnouts = new ArrayList<>();
 
     /**
      * Edit a Turntable.
@@ -1735,12 +1713,12 @@ public class LayoutTrackEditors {
 
         // variables for Edit Turntable ray pane
         private RayTrack rayTrack = null;
-        private JPanel rayTurnoutPanel;
-        private transient NamedBeanComboBox<Turnout> turnoutNameComboBox;
-        private TitledBorder rayTitledBorder;
-        private JComboBox<String> rayTurnoutStateComboBox;
-        private JLabel rayTurnoutStateLabel;
-        private JTextField rayAngleTextField;
+        private final JPanel rayTurnoutPanel;
+        private final transient NamedBeanComboBox<Turnout> turnoutNameComboBox;
+        private final TitledBorder rayTitledBorder;
+        private final JComboBox<String> rayTurnoutStateComboBox;
+        private final JLabel rayTurnoutStateLabel;
+        private final JTextField rayAngleTextField;
         private final int[] rayTurnoutStateValues = new int[]{Turnout.CLOSED, Turnout.THROWN};
         private final DecimalFormat twoDForm = new DecimalFormat("#.00");
 
@@ -1770,7 +1748,6 @@ public class LayoutTrackEditors {
                         JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": " // NOI18N
                                 + ex + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"), // NOI18N
                                 JOptionPane.ERROR_MESSAGE);
-                        return;
                     }
                 }
             }
@@ -1788,7 +1765,7 @@ public class LayoutTrackEditors {
             String turnoutStateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
             String[] turnoutStates = new String[]{turnoutStateClosed, turnoutStateThrown};
 
-            rayTurnoutStateComboBox = new JComboBox<String>(turnoutStates);
+            rayTurnoutStateComboBox = new JComboBox<>(turnoutStates);
             rayTurnoutStateLabel = new JLabel(Bundle.getMessage("TurnoutState"));  // NOI18N
             rayTurnoutPanel = new JPanel();
 
