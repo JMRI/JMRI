@@ -2,6 +2,9 @@ package jmri.jmrix.rps;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Editor;
 import jmri.util.JUnitUtil;
@@ -49,6 +52,9 @@ public class RpsPositionIconTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.tearDown();
+    }
 
 }

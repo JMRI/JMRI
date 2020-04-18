@@ -3,6 +3,7 @@ package jmri.jmrit.operations;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
+import jmri.BlockManager;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -94,6 +95,7 @@ public class OperationsTestCase {
         }
 
         JUnitUtil.resetWindows(false,false);
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 
