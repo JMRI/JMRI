@@ -2,7 +2,10 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.*;
+import jmri.BlockManager;
+import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.ShutDownManager;
 import jmri.util.*;
 import jmri.util.junit.annotations.*;
 import org.junit.*;
@@ -711,6 +714,7 @@ public class LayoutSlipTest {
             JUnitUtil.dispose(layoutEditor);
         }
         layoutEditor = null;
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

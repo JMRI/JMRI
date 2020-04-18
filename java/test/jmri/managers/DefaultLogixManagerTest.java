@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import jmri.BlockManager;
 import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
@@ -8,6 +9,7 @@ import org.junit.Test;
 
 import jmri.Logix;
 import jmri.LogixManager;
+import jmri.ShutDownManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
@@ -83,6 +85,7 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixM
     @After
     public void tearDown() {
         l = null;
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         jmri.util.JUnitUtil.tearDown();
     }
 }

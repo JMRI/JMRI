@@ -1,8 +1,10 @@
 package jmri.jmrit.ussctc;
 
+import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
+import jmri.ShutDownManager;
 import jmri.Turnout;
 
 import org.junit.After;
@@ -141,6 +143,7 @@ public class OsIndicatorTest {
 
     @After
     public void tearDown() throws Exception {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         jmri.util.JUnitUtil.tearDown();
     }
 

@@ -2,6 +2,9 @@ package jmri.jmrit.display.switchboardEditor;
 
 import org.junit.*;
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 
 /**
@@ -36,6 +39,7 @@ public class BeanSwitchTest {
             swe = null;
         }
         JUnitUtil.resetWindows(false,false);
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

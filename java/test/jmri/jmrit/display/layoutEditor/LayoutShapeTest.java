@@ -4,6 +4,9 @@ import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.jmrit.display.layoutEditor.LayoutShape.LayoutShapeType;
 import jmri.util.JUnitUtil;
 import jmri.util.MathUtil;
@@ -187,6 +190,7 @@ public class LayoutShapeTest {
             JUnitUtil.dispose(layoutEditor);
             layoutEditor = null;
         }
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 
