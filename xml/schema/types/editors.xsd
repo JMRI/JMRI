@@ -1159,7 +1159,7 @@
       <xs:attribute name="ident" type="beanNameType" use="required">
         <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
       </xs:attribute>
-      <xs:attribute name="type" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="type" type="xs:string" use="required"></xs:attribute>
       <xs:attribute name="continuing" type="xs:string" use="required"></xs:attribute>
 
       <xs:attribute name="xa" type="xs:float"></xs:attribute>

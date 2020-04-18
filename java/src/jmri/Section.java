@@ -13,7 +13,6 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
-import jmri.jmrit.display.layoutEditor.LayoutTrack;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
@@ -111,10 +110,21 @@ public class Section extends AbstractNamedBean {
      */
     public static final int REVERSE = 0X08;
 
+    /**
+     * Section constructor
+     *
+     * @param systemName the system name for this section
+     * @param userName   the user name for this section
+     */
     public Section(String systemName, String userName) {
         super(systemName, userName);
     }
 
+    /**
+     * Section constructor
+     *
+     * @param systemName the system name for this section
+     */
     public Section(String systemName) {
         super(systemName);
     }
@@ -178,7 +188,7 @@ public class Section extends AbstractNamedBean {
             firePropertyChange("state", old, mState);
             // update the forward/reverse blocking sensors as needed
             switch (state) {
-                case FORWARD:
+                case FORWARD: {
                     try {
                         if ((getForwardBlockingSensor() != null) && (getForwardBlockingSensor().getState() != Sensor.INACTIVE)) {
                             getForwardBlockingSensor().setState(Sensor.INACTIVE);
@@ -186,11 +196,13 @@ public class Section extends AbstractNamedBean {
                         if ((getReverseBlockingSensor() != null) && (getReverseBlockingSensor().getState() != Sensor.ACTIVE)) {
                             getReverseBlockingSensor().setKnownState(Sensor.ACTIVE);
                         }
-                    } catch (jmri.JmriException reason) {
+                    }
+                    catch (jmri.JmriException reason) {
                         log.error("Exception when setting Sensors for Section {}", getDisplayName(USERSYS));
                     }
                     break;
-                case REVERSE:
+                }
+                case REVERSE: {
                     try {
                         if ((getReverseBlockingSensor() != null) && (getReverseBlockingSensor().getState() != Sensor.INACTIVE)) {
                             getReverseBlockingSensor().setKnownState(Sensor.INACTIVE);
@@ -198,11 +210,13 @@ public class Section extends AbstractNamedBean {
                         if ((getForwardBlockingSensor() != null) && (getForwardBlockingSensor().getState() != Sensor.ACTIVE)) {
                             getForwardBlockingSensor().setKnownState(Sensor.ACTIVE);
                         }
-                    } catch (jmri.JmriException reason) {
+                    }
+                    catch (jmri.JmriException reason) {
                         log.error("Exception when setting Sensors for Section {}", getDisplayName(USERSYS));
                     }
                     break;
-                case FREE:
+                }
+                case FREE: {
                     try {
                         if ((getForwardBlockingSensor() != null) && (getForwardBlockingSensor().getState() != Sensor.ACTIVE)) {
                             getForwardBlockingSensor().setKnownState(Sensor.ACTIVE);
@@ -210,12 +224,15 @@ public class Section extends AbstractNamedBean {
                         if ((getReverseBlockingSensor() != null) && (getReverseBlockingSensor().getState() != Sensor.ACTIVE)) {
                             getReverseBlockingSensor().setKnownState(Sensor.ACTIVE);
                         }
-                    } catch (jmri.JmriException reason) {
+                    }
+                    catch (jmri.JmriException reason) {
                         log.error("Exception when setting Sensors for Section {}", getDisplayName(USERSYS));
                     }
                     break;
-                default:
+                }
+                default: {
                     break;
+                }
             }
         } else {
             log.error("Attempt to set state of Section {} to illegal value - {}", getDisplayName(USERSYS), state);
@@ -487,11 +504,10 @@ public class Section extends AbstractNamedBean {
             mFirstBlock = b;
         } else {
             // check that block is unique
-            for (Block block : mBlockEntries) {
-                if (block == b) {
-                    return false; // already present
-                }            // Note: connectivity to current block is assumed to have been checked
-            }
+            if (!mBlockEntries.stream().noneMatch((block) -> (block == b))) {
+                return false;
+            } // already present
+            // Note: connectivity to current block is assumed to have been checked
         }
 
         // a lot of this code searches for blocks by their user name.
@@ -735,12 +751,7 @@ public class Section extends AbstractNamedBean {
     }
 
     public boolean containsBlock(Block b) {
-        for (Block block : mBlockEntries) {
-            if (b == block) {
-                return true;
-            }
-        }
-        return false;
+        return mBlockEntries.stream().anyMatch((block) -> (b == block));
     }
 
     public boolean connectsToBlock(Block b) {
@@ -1588,7 +1599,7 @@ public class Section extends AbstractNamedBean {
         TrackNode tn = tNode;
         if ((tn != null) && (sh != null)) {
             Block tBlock = null;
-            LayoutBlock lb = null;
+            LayoutBlock lb;
             int dir = EntryPoint.UNKNOWN;
             while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                 tn = cUtil.getNextNode(tn, 0);
@@ -2267,7 +2278,7 @@ public class Section extends AbstractNamedBean {
                                 }
                             }
                         }
-                    } else if (t.isTurnoutTypeSlip()) {
+                    } else if (t.getTurnoutType().isTurnoutTypeSlip()) {
                         int direction = getDirectionSlip(t, cUtil);
                         int altDirection = EntryPoint.FORWARD;
                         if (direction == EntryPoint.FORWARD) {
@@ -2452,7 +2463,7 @@ public class Section extends AbstractNamedBean {
             }
         }
         // validate entry points
-        if ((mForwardEntryPoints.size() == 0) && (mReverseEntryPoints.size() == 0)) {
+        if ((mForwardEntryPoints.isEmpty()) && (mReverseEntryPoints.isEmpty())) {
             String s = "Section " + getDisplayName(USERSYS) + "has no Entry Points.";
             return s;
         }
@@ -2601,9 +2612,9 @@ public class Section extends AbstractNamedBean {
      * @param name the value to set all blocks to
      */
     public void setNameInBlocks(String name) {
-        for (Block b : mBlockEntries) {
+        mBlockEntries.forEach((b) -> {
             b.setValue(name);
-        }
+        });
     }
 
     /**
@@ -2612,9 +2623,9 @@ public class Section extends AbstractNamedBean {
      * @param value the name to set block values to
      */
     public void setNameInBlocks(Object value) {
-        for (Block b : mBlockEntries) {
+        mBlockEntries.forEach((b) -> {
             b.setValue(value);
-        }
+        });
     }
 
     public void setNameFromActiveBlock(Object value) {

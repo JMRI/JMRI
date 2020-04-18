@@ -59,6 +59,12 @@ public class LayoutSlip extends LayoutTurnout {
 
     /**
      * constructor method
+     *
+     * @param id           the id/name string
+     * @param c            the center point
+     * @param rot          the angle in degrees
+     * @param layoutEditor the LayoutEditor
+     * @param type         the turnout type
      */
     public LayoutSlip(String id, Point2D c, double rot, LayoutEditor layoutEditor, TurnoutType type) {
         super(id, c, layoutEditor);
@@ -80,10 +86,20 @@ public class LayoutSlip extends LayoutTurnout {
         return String.format("LayoutSlip %s (%s)", getId(), getSlipStateString(getSlipState()));
     }
 
-    public void setTurnoutType(LayoutTurnout.TurnoutType slipType) {
-        setSlipType(slipType);
+    /**
+     * set the turnout(/slip) type
+     *
+     * @param turnoutType the slip TurnoutType
+     */
+    public void setTurnoutType(TurnoutType turnoutType) {
+        setSlipType(turnoutType);
     }
 
+    /**
+     * set the slip(/turnout) type
+     *
+     * @param slipType the slip TurnoutType
+     */
     public void setSlipType(TurnoutType slipType) {
         if (type != slipType) {
             type = slipType;
@@ -100,14 +116,23 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
+    /**
+     * @return the slip (/turnout) type
+     */
     public TurnoutType getSlipType() {
         return type;
     }
 
+    /**
+     * @return the slip state
+     */
     public int getSlipState() {
         return currentState;
     }
 
+    /**
+     * @return the named turnout B
+     */
     public String getTurnoutBName() {
         if (namedTurnoutB != null) {
             return namedTurnoutB.getName();
@@ -115,6 +140,9 @@ public class LayoutSlip extends LayoutTurnout {
         return turnoutBName;
     }
 
+    /**
+     * @return the turnout B
+     */
     public Turnout getTurnoutB() {
         Turnout result = null;
         if (namedTurnoutB == null) {
@@ -128,6 +156,11 @@ public class LayoutSlip extends LayoutTurnout {
         return result;
     }
 
+    /**
+     * set the named turnout
+     *
+     * @param tName the name of the turnout to set
+     */
     public void setTurnoutB(@CheckForNull String tName) {
         boolean reactivate = false;
         if (namedTurnoutB != null) {
@@ -207,6 +240,9 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
+    /**
+     * @return the name to use for user display
+     */
     public String getDisplayName() {
         String name = "Slip " + getId();
         String tnA = getTurnoutName();
@@ -228,6 +264,12 @@ public class LayoutSlip extends LayoutTurnout {
         return name;
     }
 
+    /**
+     * get the name for the specified slip state
+     *
+     * @param slipState the specified slip state
+     * @return the name for the specified slip state
+     */
     private String getSlipStateString(int slipState) {
         String result = Bundle.getMessage("BeanStateUnknown");
         switch (slipState) {
@@ -257,6 +299,8 @@ public class LayoutSlip extends LayoutTurnout {
     /**
      * Toggle slip states if clicked on, physical turnout exists, and not
      * disabled
+     *
+     * @param selectedPointType the HitPointType where clicked
      */
     public void toggleState(LayoutEditor.HitPointType selectedPointType) {
         if (!disabled && !(disableWhenOccupied && isOccupied())) {
@@ -322,6 +366,11 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
+    /**
+     * set the slip state
+     *
+     * @param newSlipState the new slip state
+     */
     private void setSlipState(int newSlipState) {
         if (disableWhenOccupied && isOccupied()) {
             log.debug("Turnout not changed as Block is Occupied");
@@ -490,8 +539,7 @@ public class LayoutSlip extends LayoutTurnout {
 
     @Override
     public void updateBlockInfo() {
-        LayoutBlock b1 = null;
-        LayoutBlock b2 = null;
+        LayoutBlock b1 = null, b2 = null;
         if (getLayoutBlock() != null) {
             getLayoutBlock().updatePaths();
         }
@@ -524,20 +572,17 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     /**
-     * Methods to test if mainline track or not Returns true if either
-     * connecting track segment is mainline Defaults to not mainline if
-     * connecting track segments are missing
+     * Methods to test if mainline track or not Returns
+     *
+     * @return true if either connecting track segment is mainline Defaults to
+     *         not mainline if connecting track segments are missing
      */
     @Override
     public boolean isMainline() {
-        if (((connectA != null) && (((TrackSegment) connectA).isMainline()))
+        return ((connectA != null) && (((TrackSegment) connectA).isMainline()))
                 || ((connectB != null) && (((TrackSegment) connectB).isMainline()))
                 || ((connectC != null) && (((TrackSegment) connectC).isMainline()))
-                || ((connectD != null) && (((TrackSegment) connectD).isMainline()))) {
-            return true;
-        } else {
-            return false;
-        }
+                || ((connectD != null) && (((TrackSegment) connectD).isMainline()));
     }
 
     /**
@@ -852,9 +897,8 @@ public class LayoutSlip extends LayoutTurnout {
                 popup.add(rotateItem);
                 rotateItem.addActionListener(
                         (ActionEvent event) -> {
-                            boolean entering = true;
-                            boolean error = false;
-                            String newAngle = "";
+                            boolean entering = true, error;
+                            String newAngle;
                             while (entering) {
                                 // prompt for rotation angle
                                 error = false;
@@ -866,11 +910,11 @@ public class LayoutSlip extends LayoutTurnout {
                                 double rot = 0.0;
                                 try {
                                     rot = Double.parseDouble(newAngle);
-                                } catch (Exception e1) {
+                                }
+                                catch (NumberFormatException e1) {
                                     JOptionPane.showMessageDialog(layoutEditor, Bundle.getMessage("Error3")
                                             + " " + e1, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                                     error = true;
-                                    newAngle = "";
                                 }
                                 if (!error) {
                                     entering = false;
@@ -947,10 +991,14 @@ public class LayoutSlip extends LayoutTurnout {
             }
             setAdditionalEditPopUpMenu(popup);
             layoutEditor.setShowAlignmentMenu(popup);
-            popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+            if (mouseEvent != null) {
+                popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+            }
         } else if (!viewAdditionalMenu.isEmpty()) {
             setAdditionalViewPopUpMenu(popup);
-            popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+            if (mouseEvent != null) {
+                popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+            }
         }
         return popup;
     }   // showPopup
@@ -963,7 +1011,8 @@ public class LayoutSlip extends LayoutTurnout {
             if ((connectA instanceof TrackSegment) && (((TrackSegment) connectA).getLayoutBlock() != getLayoutBlock())) {
                 try {
                     boundaryBetween[0] = (((TrackSegment) connectA).getLayoutBlock().getDisplayName() + " - " + getLayoutBlock().getDisplayName());
-                } catch (java.lang.NullPointerException e) {
+                }
+                catch (java.lang.NullPointerException e) {
                     //Can be considered normal if tracksegement hasn't yet been allocated a block
                     log.debug("TrackSegement at connection A doesn't contain a layout block");
                 }
@@ -971,7 +1020,8 @@ public class LayoutSlip extends LayoutTurnout {
             if ((connectC instanceof TrackSegment) && (((TrackSegment) connectC).getLayoutBlock() != getLayoutBlock())) {
                 try {
                     boundaryBetween[2] = (((TrackSegment) connectC).getLayoutBlock().getDisplayName() + " - " + getLayoutBlock().getDisplayName());
-                } catch (java.lang.NullPointerException e) {
+                }
+                catch (java.lang.NullPointerException e) {
                     //Can be considered normal if tracksegement hasn't yet been allocated a block
                     log.debug("TrackSegement at connection C doesn't contain a layout block");
                 }
@@ -979,7 +1029,8 @@ public class LayoutSlip extends LayoutTurnout {
             if ((connectB instanceof TrackSegment) && (((TrackSegment) connectB).getLayoutBlock() != getLayoutBlock())) {
                 try {
                     boundaryBetween[1] = (((TrackSegment) connectB).getLayoutBlock().getDisplayName() + " - " + getLayoutBlock().getDisplayName());
-                } catch (java.lang.NullPointerException e) {
+                }
+                catch (java.lang.NullPointerException e) {
                     //Can be considered normal if tracksegement hasn't yet been allocated a block
                     log.debug("TrackSegement at connection B doesn't contain a layout block");
                 }
@@ -987,7 +1038,8 @@ public class LayoutSlip extends LayoutTurnout {
             if ((connectD instanceof TrackSegment) && (((TrackSegment) connectD).getLayoutBlock() != getLayoutBlock())) {
                 try {
                     boundaryBetween[3] = (((TrackSegment) connectD).getLayoutBlock().getDisplayName() + " - " + getLayoutBlock().getDisplayName());
-                } catch (java.lang.NullPointerException e) {
+                }
+                catch (java.lang.NullPointerException e) {
                     //Can be considered normal if tracksegement hasn't yet been allocated a block
                     log.debug("TrackSegement at connection D doesn't contain a layout block");
                 }
@@ -1090,10 +1142,7 @@ public class LayoutSlip extends LayoutTurnout {
             return true;
         }
         Turnout tB = getTurnoutB();
-        if (tB != null && tB.getKnownState() == INCONSISTENT) {
-            return true;
-        }
-        return false;
+        return ((tB != null) && (tB.getKnownState() == INCONSISTENT));
     }
 
     @Override
@@ -1833,7 +1882,7 @@ public class LayoutSlip extends LayoutTurnout {
     protected List<LayoutConnectivity> getLayoutConnectivity() {
         List<LayoutConnectivity> results = new ArrayList<>();
 
-        LayoutConnectivity lc = null;
+        LayoutConnectivity lc;
         LayoutBlock lbA = getLayoutBlock(), lbB = getLayoutBlockB(), lbC = getLayoutBlockC(), lbD = getLayoutBlockD();
         if (lbA != null) {
             if (lbA != lbC) {

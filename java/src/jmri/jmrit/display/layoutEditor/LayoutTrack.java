@@ -19,39 +19,6 @@ import jmri.util.*;
  */
 public abstract class LayoutTrack {
 
-    // hit point types
-//     public static final int NONE = 0;
-//     public static final int POS_POINT = 1;
-//     public static final int TURNOUT_A = 2;  // throat for RH, LH, and WYE turnouts
-//     public static final int TURNOUT_B = 3;  // continuing route for RH and LH turnouts
-//     public static final int TURNOUT_C = 4;  // diverging route for RH and LH turnouts
-//     public static final int TURNOUT_D = 5;  // 4th route for crossovers;
-//     public static final int LEVEL_XING_A = 6;
-//     public static final int LEVEL_XING_B = 7;
-//     public static final int LEVEL_XING_C = 8;
-//     public static final int LEVEL_XING_D = 9;
-//     public static final int TRACK = 10;
-//     public static final int TURNOUT_CENTER = 11; // non-connection points should be last
-//     public static final int LEVEL_XING_CENTER = 12;
-//     public static final int TURNTABLE_CENTER = 13;
-//     public static final int LAYOUT_POS_LABEL = 14;
-//     public static final int LAYOUT_POS_JCOMP = 15;
-//     public static final int MULTI_SENSOR = 16;
-//     public static final int MARKER = 17;
-//     public static final int TRACK_CIRCLE_CENTRE = 18;
-//     public static final int SLIP_CENTER = 20;   //should be @Deprecated (use SLIP_LEFT & SLIP_RIGHT instead)
-//     public static final int SLIP_A = 21;
-//     public static final int SLIP_B = 22;
-//     public static final int SLIP_C = 23;
-//     public static final int SLIP_D = 24;
-//     public static final int SLIP_LEFT = 25;
-//     public static final int SLIP_RIGHT = 26;
-//     public static final int BEZIER_CONTROL_POINT_OFFSET_MIN = 30; // offset for TrackSegment Bezier control points (minimum)
-//     public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = 38; // offset for TrackSegment Bezier control points (maximum)
-//     public static final int SHAPE_CENTER = 39;
-//     public static final int SHAPE_POINT_OFFSET_MIN = 40; // offset for Shape points (minimum)
-//     public static final int SHAPE_POINT_OFFSET_MAX = 49; // offset for Shape points (maximum)
-//     public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
     // operational instance variables (not saved between sessions)
     protected LayoutEditor layoutEditor = null;
     protected String ident = "";
@@ -486,10 +453,11 @@ public abstract class LayoutTrack {
      */
     public boolean isDisconnected(LayoutEditor.HitPointType connectionType) {
         boolean result = false;
-        if (LayoutEditor.HitPointType.isConnectionHitType(connectionType)) {
+        if (connectionType.isConnectionHitType()) {
             try {
                 result = (null == getConnection(connectionType));
-            } catch (JmriException e) {
+            }
+            catch (JmriException e) {
                 // this should never happen because isConnectionType() above would have caught an invalid connectionType.
             }
         }
