@@ -1697,7 +1697,7 @@ public class TrackSegment extends LayoutTrack {
             }
         }
 
-        if (type.isSlipHitType(type) && conn instanceof LayoutSlip) {
+        if (type.isSlipHitType() && conn instanceof LayoutSlip) {
             LayoutSlip ls = (LayoutSlip) conn;
             switch (type) {
                 case SLIP_A: {
