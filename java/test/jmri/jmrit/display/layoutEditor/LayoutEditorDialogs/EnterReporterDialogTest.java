@@ -3,6 +3,9 @@ package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JTextField;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -58,6 +61,7 @@ public class EnterReporterDialogTest {
             layoutEditor = null;
             enterReporterDialog = null;
         }
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 
