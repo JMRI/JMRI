@@ -81,7 +81,7 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
         });
         assertThat(s.getAutoScrollCheckBoxValue()).isTrue();
         s.checkAutoScrollCheckBox();
-        assertThat(s.getAutoScrollCheckBoxValue()).isTrue();
+        assertThat(s.getAutoScrollCheckBoxValue()).isFalse();
         ThreadingUtil.runOnGUI( () -> {
             f.setVisible(false);
             f.dispose();
