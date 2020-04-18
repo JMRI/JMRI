@@ -13,9 +13,8 @@ macOS binaries are treated slightly differently, see the README file there.
 #### Updates
 
 If you make a change in this directory (add/change/remove a file), please make corresponding changes in the control files that are used for various JMRI development and release operations:
-- build.xml - used by Ant, and in turn by various IDEs. Note that in addition to changing the classpath entry or entries, you should also check to make sure that the three javadoc targets are linking to the proper sources.
+- build.xml - used by Ant; note that in addition to changing the classpath entry or entries, you should also ensure the three javadoc targets are linking to the proper sources
 - pom.xml - used by Maven (see notes below)
-- nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
 - .factorypath - used by Visual Studio Code
 
 On macOS, most of these changes can be affected with (Javadoc links will need to fixed manually):
@@ -38,6 +37,12 @@ for example:
 mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplugin -Dversion=0.0 -Durl=file:./lib -DrepositoryId=lib -DupdateReleaseInfo=true -Dfile=./lib/jhidrawplugin.jar
 ```
 After that, add and commit the additional files that were created within lib/
+
+After you have committed your changes, please run
+```
+./scripts/check_lib_dates
+```
+which checks the dates of the control files to make sure they've benen updated when lib/ is updated
 
 ### Specific components:
 

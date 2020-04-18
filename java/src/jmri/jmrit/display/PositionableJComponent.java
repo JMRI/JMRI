@@ -306,8 +306,8 @@ public class PositionableJComponent extends JComponent implements Positionable {
         return getHeight();
     }
 
-    /**
-     * ************** end Positionable methods *********************
+    /*
+     ************** end Positionable methods *********************
      */
     /**
      * Removes this object from display and persistance

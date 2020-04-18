@@ -2,6 +2,7 @@ package jmri.managers;
 
 import static org.junit.Assert.assertNotNull;
 
+import jmri.BlockManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,6 +12,7 @@ import jmri.Conditional;
 import jmri.ConditionalManager;
 import jmri.InstanceManager;
 import jmri.Logix;
+import jmri.ShutDownManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
@@ -71,6 +73,7 @@ public class DefaultConditionalManagerTest extends AbstractManagerTestBase<jmri.
     @After
     public void tearDown() throws Exception {
         l = null;
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         jmri.util.JUnitUtil.tearDown();
     }
 }

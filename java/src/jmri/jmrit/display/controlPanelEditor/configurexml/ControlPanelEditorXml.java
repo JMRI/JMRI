@@ -287,7 +287,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             }
         }
         if (icons != null) {
-            HashMap<String, NamedIcon> portalIconMap = new HashMap<String, NamedIcon>();
+            HashMap<String, NamedIcon> portalIconMap = new HashMap<>();
             portalIconMap.put(PortalIcon.VISIBLE, loadIcon("visible", icons, panel));
             portalIconMap.put(PortalIcon.PATH, loadIcon("path_edit", icons, panel));
             portalIconMap.put(PortalIcon.HIDDEN, loadIcon("hidden", icons, panel));

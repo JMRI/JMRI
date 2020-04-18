@@ -832,7 +832,8 @@ public class LayoutTrackEditorsTest {
             PositionablePoint pp1 = new PositionablePoint("a", PositionablePoint.ANCHOR, point, layoutEditor);
             point = MathUtil.add(point, delta);
             PositionablePoint pp2 = new PositionablePoint("b", PositionablePoint.ANCHOR, point, layoutEditor);
-            trackSegment = new TrackSegment("Segment", pp1, LayoutTrack.POS_POINT, pp2, LayoutTrack.POS_POINT, false, false, layoutEditor);
+            trackSegment = new TrackSegment("Segment", pp1, LayoutEditor.HitPointType.POS_POINT, pp2, LayoutEditor.HitPointType.POS_POINT, false, false, layoutEditor
+            );
 
             // RH Turnout
             point = MathUtil.add(point, delta);
@@ -917,6 +918,7 @@ public class LayoutTrackEditorsTest {
         layoutTrackEditors = null;
 
         JUnitUtil.resetWindows(false, false);
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

@@ -1,6 +1,9 @@
 package jmri.jmrix.can.cbus.node;
 
+import jmri.InstanceManager;
+import jmri.PowerManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.CbusPowerManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,42 +76,29 @@ public class CbusBasicNodeWithMgrsCommandStation extends CbusBasicNodeWithManage
         // 5 - Reset done
         // 6 - Service mode (programming) On/ Off
         
-        checkSingleFlag(0,"Command Station {} Node {} Reporting Hardware Error (self test)");
-        
-        checkSingleFlag(1,"Command Station {} Node {} Reporting Track Error");
+        checkSingleFlag(0,"Command Station {} Reporting Hardware Error (self test)");
+        checkSingleFlag(1,"Command Station {} Reporting Track Error");
         
         // flag 2 handled by CbusPowerManager
         
         // listening for RSTAT flag bit 2 here rather than power manager in case in future 
         // we can direct to power zones rather than whole layout power
         // it's also a per command station report than a per layout report
-        if ( ( ( flags >> 2 ) & 1 ) == 1 ){
-            setTrackPower(true);
-        } else {
-            setTrackPower(false);
-        }
+        setTrackPower(( ( flags >> 2 ) & 1 ) == 1 );
         
-        checkSingleFlag(3,"Command Station {} Node Num {} Reporting Bus Halted");
+        checkSingleFlag(3,"Command Station {} Reporting Bus Halted");
         
     }
     
     private void setTrackPower ( boolean powerOn ){
-        int newVal = jmri.PowerManager.OFF;
-        if (powerOn){
-            newVal = jmri.PowerManager.ON;
-        }
-    
-        try {
-            jmri.InstanceManager.getDefault(jmri.PowerManager.class).setPower(newVal);
-        } catch (jmri.JmriException e) {
-            log.error("unable to set Power On {}",e);
-        }
+        ( (CbusPowerManager) InstanceManager.getDefault(PowerManager.class))
+            .updatePower(powerOn ? PowerManager.ON : PowerManager.OFF);
         
     }
     
     private void checkSingleFlag(int flagNum, String errorText){
-        if ( ( ( _csFlags >> flagNum ) & 1 ) == 0 ){
-            log.error(errorText, getCsNum(), getNodeNumber() );
+        if ( ( ( _csFlags >> flagNum ) & 1 ) == 1 ){
+            log.error(errorText, "" + getCsNum() + " " + getNodeNumber() );
         }
     }
     

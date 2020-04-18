@@ -22,6 +22,7 @@ import org.netbeans.jemmy.operators.JDialogOperator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import apps.SystemConsole;
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.Editor;
@@ -178,6 +179,10 @@ public class JUnitUtil {
             isLoggingInitialized = true;
             String filename = System.getProperty("jmri.log4jconfigfilename", "tests.lcf");
             Log4JUtil.initLogging(filename);
+        }
+
+        if (SystemConsole.isCreated()) {
+            SystemConsole.getInstance().open();
         }
 
         // need to do this each time
@@ -338,6 +343,10 @@ public class JUnitUtil {
         // Optionally, check that the Swing queue is idle
         //new org.netbeans.jemmy.QueueTool().waitEmpty(250);
 
+        // remove SystemConsole log appenders so test framework output is not included
+        if (SystemConsole.isCreated()) {
+            SystemConsole.getInstance().close();
+        }
     }
 
     /**

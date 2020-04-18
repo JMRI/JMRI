@@ -129,7 +129,6 @@ public class LayoutTurnout extends LayoutTrack {
     //public static final int LH_XOVER = 6;
     //public static final int SINGLE_SLIP = 7;    // used for LayoutSlip which extends this class
     //public static final int DOUBLE_SLIP = 8;    // used for LayoutSlip which extends this class
-
     public enum TurnoutType {
         NONE,
         RH_TURNOUT,
@@ -138,45 +137,112 @@ public class LayoutTurnout extends LayoutTrack {
         DOUBLE_XOVER,
         RH_XOVER,
         LH_XOVER,
-        SINGLE_SLIP,    // used for LayoutSlip which extends this class
+        SINGLE_SLIP, // used for LayoutSlip which extends this class
         DOUBLE_SLIP     // used for LayoutSlip which extends this class
     }
-    
+
     /**
-     * Returns true if this is a turnout or wye, i.e.
-     * has a single-track entrance end.
+     * Returns true if this is a turnout (not a crossover or slip)
+     *
+     * @param type the turnout type
+     * @return boolean true if this is a turnout
+     */
+    public static boolean isTurnoutTypeTurnout(TurnoutType type) {
+        return (type == TurnoutType.RH_TURNOUT
+                || type == TurnoutType.LH_TURNOUT
+                || type == TurnoutType.WYE_TURNOUT);
+    }
+
+    /**
+     * Returns true if this is a turnout (not a crossover or slip)
+     *
+     * @return boolean true if this is a turnout
+     */
+    public boolean isTurnoutTypeTurnout() {
+        return isTurnoutTypeTurnout(getTurnoutType());
+    }
+
+    /**
+     * Returns true if this is a crossover
+     *
+     * @param type the turnout type
+     * @return boolean true if this is a crossover
+     */
+    public static boolean isTurnoutTypeXover(TurnoutType type) {
+        return (type == TurnoutType.DOUBLE_XOVER
+                || type == TurnoutType.RH_XOVER
+                || type == TurnoutType.LH_XOVER);
+    }
+
+    /**
+     * Returns true if this is a crossover
+     *
+     * @return boolean true if this is a crossover
+     */
+    public boolean isTurnoutTypeXover() {
+        return hasEnteringDoubleTrack(getTurnoutType());
+    }
+
+    /**
+     * Returns true if this is a slip
+     *
+     * @param type the turnout type
+     * @return boolean true if this is a slip
+     */
+    public static boolean isTurnoutTypeSlip(TurnoutType type) {
+        return (type == TurnoutType.SINGLE_SLIP
+                || type == TurnoutType.DOUBLE_SLIP);
+    }
+
+    /**
+     * Returns true if this is a slip
+     *
+     * @return boolean true if this is a slip
+     */
+    public boolean isTurnoutTypeSlip() {
+        return isTurnoutTypeSlip(getTurnoutType());
+    }
+
+    /**
+     * Returns true if this has a single-track entrance end. (turnout or wye)
+     *
+     * @param type the turnout type
+     * @return boolean true if single track entrance
      */
     public static boolean hasEnteringSingleTrack(TurnoutType type) {
-        return (
-            type == TurnoutType.RH_TURNOUT ||
-            type == TurnoutType.LH_TURNOUT ||
-            type == TurnoutType.WYE_TURNOUT
-                );
+        return isTurnoutTypeTurnout(type);
     }
-    
+
+    /**
+     * Returns true if this has a single-track entrance end. (turnout or wye)
+     *
+     * @return boolean true if single track entrance
+     */
     public boolean hasEnteringSingleTrack() {
         return hasEnteringSingleTrack(getTurnoutType());
     }
-    
+
     /**
-     * Returns true if this is a slip or crossover, i.e.
-     * has double track on the entrance end
+     * Returns true if this has double track on the entrance end (crossover or
+     * slip)
+     *
+     * @param type the turnout type
+     * @return boolean true if double track entrance
      */
     public static boolean hasEnteringDoubleTrack(TurnoutType type) {
-        return (
-            type == TurnoutType.DOUBLE_XOVER ||
-            type == TurnoutType.RH_XOVER ||
-            type == TurnoutType.LH_XOVER ||
-            type == TurnoutType.SINGLE_SLIP ||
-            type == TurnoutType.DOUBLE_SLIP
-                );
+        return isTurnoutTypeXover(type) || isTurnoutTypeSlip(type);
     }
 
+    /**
+     * Returns true if this has double track on the entrance end (crossover or
+     * slip)
+     *
+     * @return boolean true if double track entrance
+     */
     public boolean hasEnteringDoubleTrack() {
         return hasEnteringDoubleTrack(getTurnoutType());
     }
-    
-    
+
     // defined constants - link types
     //public static final int NO_LINK = 0;
     //public static final int FIRST_3_WAY = 1;       // this turnout is the first turnout of a 3-way
@@ -185,15 +251,14 @@ public class LayoutTurnout extends LayoutTrack {
     // turnout pair (furthest from the throat)
     //public static final int THROAT_TO_THROAT = 3;  // this turnout is one of two throat-to-throat
     // turnouts - no signals at throat
-
     public enum LinkType {
         NO_LINK,
-        FIRST_3_WAY,    // this turnout is the first turnout of a 3-way
-                        // turnout pair (closest to the throat)
-        SECOND_3_WAY,   // this turnout is the second turnout of a 3-way
-                        // turnout pair (furthest from the throat)
+        FIRST_3_WAY, // this turnout is the first turnout of a 3-way
+        // turnout pair (closest to the throat)
+        SECOND_3_WAY, // this turnout is the second turnout of a 3-way
+        // turnout pair (furthest from the throat)
         THROAT_TO_THROAT  // this turnout is one of two throat-to-throat
-                        // turnouts - no signals at throat
+        // turnouts - no signals at throat
     }
     // operational instance variables (not saved between sessions)
     public static final int UNKNOWN = Turnout.UNKNOWN;
@@ -249,7 +314,6 @@ public class LayoutTurnout extends LayoutTrack {
     // public static final int POINTC2 = 0x22;
     // public static final int POINTD1 = 0x30;
     // public static final int POINTD2 = 0x32;
-
     public enum Geometry {
         NONE,
         POINTA1,
@@ -262,7 +326,7 @@ public class LayoutTurnout extends LayoutTrack {
         POINTD1,
         POINTD2
     }
-    
+
     protected NamedBeanHandle<SignalMast> signalAMastNamed = null; // Throat
     protected NamedBeanHandle<SignalMast> signalBMastNamed = null; // Continuing
     protected NamedBeanHandle<SignalMast> signalCMastNamed = null; // diverging
@@ -297,7 +361,7 @@ public class LayoutTurnout extends LayoutTrack {
     public String linkedTurnoutName = ""; // name of the linked Turnout (as entered in tool)
     public LinkType linkType = LinkType.NO_LINK;
 
-    private boolean useBlockSpeed = false;
+    private final boolean useBlockSpeed = false;
 
     protected LayoutTurnout(@Nonnull String id,
             @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
@@ -1134,14 +1198,6 @@ public class LayoutTurnout extends LayoutTrack {
         return type;
     }
 
-    public boolean isTurnoutTypeXover() {
-        return ((type == TurnoutType.DOUBLE_XOVER) || (type == TurnoutType.RH_XOVER) || (type == TurnoutType.LH_XOVER));
-    }
-
-    public boolean isTurnoutTypeSlip() {
-        return ((type == TurnoutType.SINGLE_SLIP) || (type == TurnoutType.DOUBLE_SLIP));
-    }
-
     public LayoutTrack getConnectA() {
         return connectA;
     }
@@ -1244,9 +1300,7 @@ public class LayoutTurnout extends LayoutTrack {
             secondNamedTurnout = null;
         }
         activateTurnout(); // Even if secondary is null, the primary Turnout may still need to be re-activated
-        if ((getTurnoutType() == TurnoutType.RH_TURNOUT)
-                || (getTurnoutType() == TurnoutType.LH_TURNOUT)
-                || (getTurnoutType() == TurnoutType.WYE_TURNOUT)) {
+        if (isTurnoutTypeTurnout()) {
             LayoutEditorFindItems lf = layoutEditor.getFinder();
             if (oldSecondTurnoutName != null && !oldSecondTurnoutName.isEmpty()) {
                 Turnout oldTurnout = InstanceManager.turnoutManagerInstance().getTurnout(oldSecondTurnoutName);
@@ -1312,7 +1366,7 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(LayoutEditor.HitPointType connectionType) throws jmri.JmriException {
         LayoutTrack result = null;
         switch (connectionType) {
             case TURNOUT_A: {
@@ -1345,8 +1399,8 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
-        if ((type != TRACK) && (type != NONE)) {
+    public void setConnection(LayoutEditor.HitPointType connectionType, LayoutTrack o, LayoutEditor.HitPointType type) throws jmri.JmriException {
+        if ((type != LayoutEditor.HitPointType.TRACK) && (type != LayoutEditor.HitPointType.NONE)) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); unexpected type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
             log.error(errString);
@@ -1373,33 +1427,33 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    public void setConnectA(LayoutTrack o, int type) {
+    public void setConnectA(LayoutTrack o, LayoutEditor.HitPointType type) {
         connectA = o;
-        if ((type != TRACK) && (type != NONE)) {
+        if ((type != LayoutEditor.HitPointType.TRACK) && (type != LayoutEditor.HitPointType.NONE)) {
             log.error("{}.setConnectA({}, {}); unexpected type",
                     getName(), (o == null) ? "null" : o.getName(), type);
         }
     }
 
-    public void setConnectB(LayoutTrack o, int type) {
+    public void setConnectB(LayoutTrack o, LayoutEditor.HitPointType type) {
         connectB = o;
-        if ((type != TRACK) && (type != NONE)) {
+        if ((type != LayoutEditor.HitPointType.TRACK) && (type != LayoutEditor.HitPointType.NONE)) {
             log.error("{}.setConnectB({}, {}); unexpected type",
                     getName(), (o == null) ? "null" : o.getName(), type);
         }
     }
 
-    public void setConnectC(LayoutTrack o, int type) {
+    public void setConnectC(LayoutTrack o, LayoutEditor.HitPointType type) {
         connectC = o;
-        if ((type != TRACK) && (type != NONE)) {
+        if ((type != LayoutEditor.HitPointType.TRACK) && (type != LayoutEditor.HitPointType.NONE)) {
             log.error("{}.setConnectC({}, {}); unexpected type",
                     getName(), (o == null) ? "null" : o.getName(), type);
         }
     }
 
-    public void setConnectD(LayoutTrack o, int type) {
+    public void setConnectD(LayoutTrack o, LayoutEditor.HitPointType type) {
         connectD = o;
-        if ((type != TRACK) && (type != NONE)) {
+        if ((type != LayoutEditor.HitPointType.TRACK) && (type != LayoutEditor.HitPointType.NONE)) {
             log.error("{}.setConnectD({}, {}); unexpected type",
                     getName(), (o == null) ? "null" : o.getName(), type);
         }
@@ -1422,9 +1476,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public Point2D getCoordsA() {
-        if ((getTurnoutType() == TurnoutType.DOUBLE_XOVER)
-                || (getTurnoutType() == TurnoutType.LH_XOVER)
-                || (getTurnoutType() == TurnoutType.RH_XOVER)) {
+        if (isTurnoutTypeXover()) {
             if (version == 2) {
                 return pointA;
             }
@@ -1437,27 +1489,21 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public Point2D getCoordsB() {
-        if ((version == 2) && ((getTurnoutType() == TurnoutType.DOUBLE_XOVER)
-                || (getTurnoutType() == TurnoutType.LH_XOVER)
-                || (getTurnoutType() == TurnoutType.RH_XOVER))) {
+        if ((version == 2) && isTurnoutTypeXover()) {
             return pointB;
         }
         return MathUtil.add(center, dispB);
     }
 
     public Point2D getCoordsC() {
-        if ((version == 2) && ((getTurnoutType() == TurnoutType.DOUBLE_XOVER)
-                || (getTurnoutType() == TurnoutType.LH_XOVER)
-                || (getTurnoutType() == TurnoutType.RH_XOVER))) {
+        if ((version == 2) && isTurnoutTypeXover()) {
             return pointC;
         }
         return MathUtil.add(center, dispA);
     }
 
     public Point2D getCoordsD() {
-        if ((version == 2) && ((getTurnoutType() == TurnoutType.DOUBLE_XOVER)
-                || (getTurnoutType() == TurnoutType.LH_XOVER)
-                || (getTurnoutType() == TurnoutType.RH_XOVER))) {
+        if ((version == 2) && isTurnoutTypeXover()) {
             return pointD;
         }
         // only allowed for single and double crossovers
@@ -1468,7 +1514,7 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public Point2D getCoordsForConnectionType(int connectionType) {
+    public Point2D getCoordsForConnectionType(LayoutEditor.HitPointType connectionType) {
         Point2D result = center;
         switch (connectionType) {
             case TURNOUT_CENTER:
@@ -1839,11 +1885,11 @@ public class LayoutTurnout extends LayoutTrack {
      * @since 4.11.6
      */
     void setTrackSegmentBlocks() {
-        setTrackSegmentBlock(TURNOUT_A, false);
-        setTrackSegmentBlock(TURNOUT_B, false);
-        setTrackSegmentBlock(TURNOUT_C, false);
-        if (hasEnteringDoubleTrack())  {
-            setTrackSegmentBlock(TURNOUT_D, false);
+        setTrackSegmentBlock(LayoutEditor.HitPointType.TURNOUT_A, false);
+        setTrackSegmentBlock(LayoutEditor.HitPointType.TURNOUT_B, false);
+        setTrackSegmentBlock(LayoutEditor.HitPointType.TURNOUT_C, false);
+        if (hasEnteringDoubleTrack()) {
+            setTrackSegmentBlock(LayoutEditor.HitPointType.TURNOUT_D, false);
         }
     }
 
@@ -1864,7 +1910,7 @@ public class LayoutTurnout extends LayoutTrack {
      *                    connections which require a track segment length
      *                    calculation.
      */
-    void setTrackSegmentBlock(int pointType, boolean isAutomatic) {
+    void setTrackSegmentBlock(LayoutEditor.HitPointType pointType, boolean isAutomatic) {
         TrackSegment trkSeg;
         Point2D pointCoord;
         LayoutBlock blockA = getLayoutBlock();
@@ -2090,8 +2136,8 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected int findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        int result = NONE;  // assume point not on connection
+    protected LayoutEditor.HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
+        LayoutEditor.HitPointType result = LayoutEditor.HitPointType.NONE;  // assume point not on connection
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
@@ -2108,7 +2154,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = TURNOUT_CENTER;
+                result = LayoutEditor.HitPointType.TURNOUT_CENTER;
             }
         }
 
@@ -2119,7 +2165,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = TURNOUT_A;
+                result = LayoutEditor.HitPointType.TURNOUT_A;
             }
         }
 
@@ -2130,7 +2176,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = TURNOUT_B;
+                result = LayoutEditor.HitPointType.TURNOUT_B;
             }
         }
 
@@ -2141,7 +2187,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = TURNOUT_C;
+                result = LayoutEditor.HitPointType.TURNOUT_C;
             }
         }
 
@@ -2153,19 +2199,19 @@ public class LayoutTurnout extends LayoutTrack {
                 if (distance < minDistance) {
                     minDistance = distance;
                     minPoint = p;
-                    result = TURNOUT_D;
+                    result = LayoutEditor.HitPointType.TURNOUT_D;
                 }
             }
         }
         if ((useRectangles && !r.contains(minPoint))
                 || (!useRectangles && (minDistance > circleRadius))) {
-            result = NONE;
+            result = LayoutEditor.HitPointType.NONE;
         }
         return result;
     }   // findHitPointType
 
     /*
-     * Modify coordinates methods
+    * Modify coordinates methods
      */
     /**
      * {@inheritDoc}
@@ -2541,15 +2587,12 @@ public class LayoutTurnout extends LayoutTrack {
      * @return true if occupied
      */
     private boolean isOccupied() {
-        if ((getTurnoutType() == TurnoutType.RH_TURNOUT)
-                || (getTurnoutType() == TurnoutType.LH_TURNOUT)
-                || (getTurnoutType() == TurnoutType.WYE_TURNOUT)) {
+        if (isTurnoutTypeTurnout()) {
             if (getLayoutBlock().getOccupancy() == LayoutBlock.OCCUPIED) {
                 log.debug("Block {} is Occupied", getBlockName());
                 return true;
             }
-        }
-        if (isTurnoutTypeXover()) {
+        } else if (isTurnoutTypeXover()) {
             //If the turnout is set for straight over, we need to deal with the straight over connecting blocks
             if (getTurnout().getKnownState() == Turnout.CLOSED) {
                 if ((getLayoutBlock().getOccupancy() == LayoutBlock.OCCUPIED)
@@ -3033,9 +3076,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
-        if ((getTurnoutType() == TurnoutType.WYE_TURNOUT)
-                || (getTurnoutType() == TurnoutType.RH_TURNOUT)
-                || (getTurnoutType() == TurnoutType.LH_TURNOUT)) {
+        if (isTurnoutTypeTurnout()) {
             //This should only be needed where we are looking at a single turnout.
             if (getLayoutBlock() != null) {
                 LayoutBlock aLBlock = null;
@@ -4405,23 +4446,23 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void highlightUnconnected(Graphics2D g2, int specificType) {
-        if (((specificType == NONE) || (specificType == TURNOUT_A))
+    protected void highlightUnconnected(Graphics2D g2, LayoutEditor.HitPointType specificType) {
+        if (((specificType == LayoutEditor.HitPointType.NONE) || (specificType == LayoutEditor.HitPointType.TURNOUT_A))
                 && (getConnectA() == null)) {
             g2.fill(trackControlCircleAt(getCoordsA()));
         }
 
-        if (((specificType == NONE) || (specificType == TURNOUT_B))
+        if (((specificType == LayoutEditor.HitPointType.NONE) || (specificType == LayoutEditor.HitPointType.TURNOUT_B))
                 && (getConnectB() == null)) {
             g2.fill(trackControlCircleAt(getCoordsB()));
         }
 
-        if (((specificType == NONE) || (specificType == TURNOUT_C))
+        if (((specificType == LayoutEditor.HitPointType.NONE) || (specificType == LayoutEditor.HitPointType.TURNOUT_C))
                 && (getConnectC() == null)) {
             g2.fill(trackControlCircleAt(getCoordsC()));
         }
         if (isTurnoutTypeXover()) {
-            if (((specificType == NONE) || (specificType == TURNOUT_D))
+            if (((specificType == LayoutEditor.HitPointType.NONE) || (specificType == LayoutEditor.HitPointType.TURNOUT_D))
                     && (getConnectD() == null)) {
                 g2.fill(trackControlCircleAt(getCoordsD()));
             }
@@ -4502,8 +4543,8 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /*
-     * Used by ConnectivityUtil to determine the turnout state necessary to get
-     * from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
+    * Used by ConnectivityUtil to determine the turnout state necessary to get
+    * from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
      */
     protected int getConnectivityStateForLayoutBlocks(
             LayoutBlock currLayoutBlock,
@@ -4637,9 +4678,7 @@ public class LayoutTurnout extends LayoutTrack {
     @Override
     public void reCheckBlockBoundary() {
         if (connectA == null && connectB == null && connectC == null) {
-            if ((getTurnoutType() == TurnoutType.RH_TURNOUT)
-                    || (getTurnoutType() == TurnoutType.LH_TURNOUT)
-                    || (getTurnoutType() == TurnoutType.WYE_TURNOUT)) {
+            if (isTurnoutTypeTurnout()) {
                 if (signalAMastNamed != null) {
                     removeSML(getSignalAMast());
                 }
@@ -4800,28 +4839,28 @@ public class LayoutTurnout extends LayoutTrack {
      */
     @Override
     public @Nonnull
-    List<Integer> checkForFreeConnections() {
-        List<Integer> result = new ArrayList<>();
+    List<LayoutEditor.HitPointType> checkForFreeConnections() {
+        List<LayoutEditor.HitPointType> result = new ArrayList<>();
 
         //check the A connection point
         if (getConnectA() == null) {
-            result.add(TURNOUT_A);
+            result.add(LayoutEditor.HitPointType.TURNOUT_A);
         }
 
         //check the B connection point
         if (getConnectB() == null) {
-            result.add(TURNOUT_B);
+            result.add(LayoutEditor.HitPointType.TURNOUT_B);
         }
 
         //check the C connection point
         if (getConnectC() == null) {
-            result.add(TURNOUT_C);
+            result.add(LayoutEditor.HitPointType.TURNOUT_C);
         }
 
         //check the D connection point
         if (isTurnoutTypeXover()) {
             if (getConnectD() == null) {
-                result.add(TURNOUT_D);
+                result.add(LayoutEditor.HitPointType.TURNOUT_D);
             }
         }
         return result;
@@ -4844,16 +4883,16 @@ public class LayoutTurnout extends LayoutTrack {
     public void checkForNonContiguousBlocks(
             @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetsMap) {
         /*
-         * For each (non-null) blocks of this track do:
-         * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
-         * #2) If this track is already in the TrackNameSet for this block
-         *     then return (done!)
-         * #3) else add a new set (with this block/track) to
-         *     blockNamesToTrackNameSetMap and check all the connections in this
-         *     block (by calling the 2nd method below)
-         * <p>
-         *     Basically, we're maintaining contiguous track sets for each block found
-         *     (in blockNamesToTrackNameSetMap)
+                * For each (non-null) blocks of this track do:
+                * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
+                * #2) If this track is already in the TrackNameSet for this block
+                *     then return (done!)
+                * #3) else add a new set (with this block/track) to
+                *     blockNamesToTrackNameSetMap and check all the connections in this
+                *     block (by calling the 2nd method below)
+                * <p>
+                *     Basically, we're maintaining contiguous track sets for each block found
+                *     (in blockNamesToTrackNameSetMap)
          */
 
         // We're only using a map here because it's convient to

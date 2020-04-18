@@ -25,6 +25,7 @@ import org.w3c.dom.NodeList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.DOMException;
 import org.xml.sax.SAXException;
 
 /**
@@ -476,14 +477,9 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
                         
             updateImportEventsButton();
         }
-        catch (RuntimeException e) {
-            log.warn("Error importing xml file {}", e);
-            JOptionPane.showMessageDialog(null, (Bundle.getMessage("ImportError")),
-                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-        } 
-        catch (IOException | ParserConfigurationException | SAXException e) {
+        catch (NumberFormatException | DOMException | IOException | ParserConfigurationException | SAXException e) {
             log.warn("Error importing xml file. Valid xml? {}", e);
-            JOptionPane.showMessageDialog(null, (Bundle.getMessage("ImportError") + " Valid XML?"),
+            JOptionPane.showMessageDialog(this, (Bundle.getMessage("ImportError") + " Valid XML?"),
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
         }
     }

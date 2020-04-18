@@ -115,7 +115,7 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
     public void notify(AbstractMessage m) {
         if (m instanceof SprogMessage) {
             this.notifyMessage((SprogMessage) m);
-        } else {
+        } else if (m instanceof SprogReply){
             this.notifyReply((SprogReply) m);
         }
     }

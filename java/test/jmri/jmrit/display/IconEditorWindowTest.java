@@ -2,11 +2,13 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JComponent;
+import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.Memory;
 import jmri.Reporter;
 import jmri.Sensor;
+import jmri.ShutDownManager;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.display.panelEditor.PanelEditor;
@@ -436,6 +438,7 @@ public class IconEditorWindowTest {
         _editor = null;
         
         JUnitUtil.resetWindows(false, false); // don't log existing windows here, should just be from this class
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 }

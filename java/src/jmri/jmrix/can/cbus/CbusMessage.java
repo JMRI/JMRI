@@ -120,13 +120,16 @@ public class CbusMessage {
 
     /**
      * Tests if a CanMessage or CanReply is an Event.
-     *
-     * Adheres to cbus spec, ie on off responses to an AREQ are events
+     * Performs Extended and RTR check.
+     * Adheres to cbus spec, ie on off responses to an AREQ are events.
      *
      * @param am CanMessage or CanReply
      * @return True if event, else False.
      */
     public static boolean isEvent(AbstractMessage am) {
+        if ( am instanceof CanFrame && ((CanFrame)am).extendedOrRtr()){
+            return false;
+        }
         return CbusOpCodes.isEvent(am.getElement(0));
     }
     

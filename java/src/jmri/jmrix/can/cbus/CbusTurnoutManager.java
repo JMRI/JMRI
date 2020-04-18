@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus;
 
+import java.beans.PropertyChangeEvent;
 import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.JmriException;
@@ -191,6 +192,14 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     @Override
     public String getEntryToolTip() {
         return Bundle.getMessage("AddOutputEntryToolTip");
+    }
+    
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        super.propertyChange(e);
+        if (e.getPropertyName().equals("inverted")) {
+            firePropertyChange("beaninverted", null, null); //IN18N
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusTurnoutManager.class);

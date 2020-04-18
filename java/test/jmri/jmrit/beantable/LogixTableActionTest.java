@@ -2,8 +2,10 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Logix;
+import jmri.ShutDownManager;
 
 import jmri.util.*;
 import jmri.util.junit.rules.*;
@@ -238,6 +240,7 @@ public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
     @Override
     public void tearDown() {
         a = null;
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 }

@@ -713,6 +713,9 @@
    If you decide to use schedules, the <a href="#ShowSchedulesByCarTypeAndLoad">Show Schedules by Car Type and Load</a>
    tool can show you which car types and loads will be serviced by your spurs.</p>
 
+   <p>OperationsPro&trade; will send messages to the system console when there are errors or problems with the program. You
+    can access the system console from the main menu bar under "Help".</p>
+
    <a name="Settings" id="Settings"></a>
    <h2>Settings</h2>
    The Settings window contains general parameters for the Operations application. Select from the
@@ -899,7 +902,7 @@
     especially if you are managing data for more than one railroad. For example, if today is August
     29, 2012, the program will create a backup directory named "2012_08_29_00".</p>
 
-   <h4>What isn't backed up by OperationsPro</h4>
+   <h4>What isn't backed up by OperationsPro&trade;</h4>
 
    <p>There are many OperationPro directories and files that aren't backed up using the methods described above. You
     can find all of the directories and files not backed up inside the "operations" directory. Here's the list with the
@@ -1615,7 +1618,7 @@
    <h3>Options</h3>
 
    <h4>Save Train Manifests</h4>
-   When the option "Save Train Manifests" is selected, OperationsPro will save the current train
+   When the option "Save Train Manifests" is selected, OperationsPro&trade; will save the current train
    Manifest before creating a new one. The program will store the old Manifests in a directory
    called "manifestBackups" located in the "operations" directory. You can review your old Manifest
    using the
@@ -5019,7 +5022,7 @@
    <h4>Export Timetable</h4>
    The export Timetable tool produces comma separated value (CSV) file for the Timetable application. You can also use
    the "Import from OperationsPro..." found in the Timetable application to create and import in one step. The
-   OperationsPro export creates a "Segment" called "Locations" based on an alphabetical list of location names, or if
+   OperationsPro&trade; export creates a "Segment" called "Locations" based on an alphabetical list of location names, or if
    you create a route named "Timetable", produces a segment of locations based on the route's location order. 
    
    <p>During the export, the program will calculate the maximum work times at each train's location based on the move

@@ -13,14 +13,12 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -188,9 +186,7 @@ public class IconItemPanel extends ItemPanel {
        } else {
             _iconPanel.removeAll();
         }
-        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, NamedIcon> entry = it.next();
+        for (Entry<String, NamedIcon> entry : iconMap.entrySet()) {
             NamedIcon icon = new NamedIcon(entry.getValue()); // make copy for possible reduction
             String borderName = ItemPalette.convertText(entry.getKey());
             IconDisplayPanel panel = new IconDisplayPanel(borderName, icon);
@@ -203,14 +199,11 @@ public class IconItemPanel extends ItemPanel {
         bottomPanel.setLayout(new FlowLayout());
 
         _catalogButton = new JButton(Bundle.getMessage("ButtonShowCatalog"));
-        _catalogButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                if (_catalog.isVisible()) {
-                    hideCatalog();
-                } else {
-                    showCatalog();
-                }
+        _catalogButton.addActionListener(a -> {
+            if (_catalog.isVisible()) {
+                hideCatalog();
+            } else {
+                showCatalog();
             }
         });
         _catalogButton.setToolTipText(Bundle.getMessage("ToolTipCatalog"));
@@ -218,31 +211,16 @@ public class IconItemPanel extends ItemPanel {
 
         if (doneAction == null) {
             JButton renameButton = new JButton(Bundle.getMessage("RenameIcon"));
-            renameButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent a) {
-                    renameIcon();
-                }
-            });
+            renameButton.addActionListener(a -> renameIcon());
             bottomPanel.add(renameButton);
 
             JButton addIconButton = new JButton(Bundle.getMessage("addIcon"));
-            addIconButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent a) {
-                    addNewIcon();
-                }
-            });
+            addIconButton.addActionListener(a -> addNewIcon());
             addIconButton.setToolTipText(Bundle.getMessage("ToolTipAddIcon"));
             bottomPanel.add(addIconButton);
 
             _deleteIconButton = new JButton(Bundle.getMessage("deleteIcon"));
-            _deleteIconButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent a) {
-                    deleteIcon();
-                }
-            });
+            _deleteIconButton.addActionListener(a -> deleteIcon());
             _deleteIconButton.setToolTipText(Bundle.getMessage("ToolTipDeleteIcon"));
             bottomPanel.add(_deleteIconButton);
             _deleteIconButton.setEnabled(false);
@@ -495,10 +473,7 @@ public class IconItemPanel extends ItemPanel {
                     log.debug("IconDragJLabel.drop REJECTED!");
                     e.rejectDrop();
                 }
-            } catch (IOException ioe) {
-                log.debug("IconDragJLabel.drop REJECTED!");
-                e.rejectDrop();
-            } catch (UnsupportedFlavorException ufe) {
+            } catch (IOException | UnsupportedFlavorException ioe) {
                 log.debug("IconDragJLabel.drop REJECTED!");
                 e.rejectDrop();
             }

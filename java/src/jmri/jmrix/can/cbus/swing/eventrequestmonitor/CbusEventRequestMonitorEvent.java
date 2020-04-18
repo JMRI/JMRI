@@ -169,6 +169,20 @@ public class CbusEventRequestMonitorEvent extends CbusEvent {
             }
         }
     }
+    
+    /** 
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusEventRequestMonitorEvent.class);
 

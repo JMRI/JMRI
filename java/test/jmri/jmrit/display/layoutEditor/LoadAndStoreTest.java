@@ -2,7 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.io.File;
 import org.junit.runners.Parameterized;
-import org.junit.Before;
+import org.junit.*;
 import jmri.util.JUnitUtil;
 
 /**
@@ -35,5 +35,14 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
     public void setUp() {
         super.setUp();
         JUnitUtil.initLayoutBlockManager();
+    }
+
+    @After
+    @Override
+    public void tearDown() {
+        // since each file tested will open its own windows, just close any
+        // open windows since we can't accurately list them here
+        JUnitUtil.resetWindows(false, false);
+        super.tearDown();
     }
 }
