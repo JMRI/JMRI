@@ -1,7 +1,6 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
-import javax.annotation.Nonnull;
 
 import jmri.Turnout;
 import jmri.configurexml.AbstractXmlAdapter;

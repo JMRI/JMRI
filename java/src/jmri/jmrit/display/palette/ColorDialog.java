@@ -151,8 +151,8 @@ public class ColorDialog extends JDialog implements ChangeListener {
             setContentPane(panel);
 
             pack();
-            setVisible(true);
             InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(client, t, this);
+            setVisible(true);
         }
 
         JPanel makePanel(JPanel p) {
@@ -203,9 +203,7 @@ public class ColorDialog extends JDialog implements ChangeListener {
             panel.add(doneButton);
 
             JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-            cancelButton.addActionListener((ActionEvent event) -> {
-                    cancel();
-                });
+            cancelButton.addActionListener((ActionEvent event) -> cancel());
 
             panel.add(cancelButton);
             return panel;

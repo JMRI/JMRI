@@ -338,7 +338,6 @@ public class LevelXing extends LayoutTrack {
             }
             if (nb.equals(getSignalHead(Geometry.POINTD))) {
                 setSignalDName(null);
-                return;
             }
         }
     }
@@ -1222,9 +1221,7 @@ public class LevelXing extends LayoutTrack {
             JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
             hiddenCheckBoxMenuItem.setSelected(hidden);
             popup.add(hiddenCheckBoxMenuItem);
-            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setHidden(hiddenCheckBoxMenuItem.isSelected());
-            });
+            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setHidden(hiddenCheckBoxMenuItem.isSelected()));
 
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
@@ -1429,12 +1426,12 @@ public class LevelXing extends LayoutTrack {
             return;
         }
         SignalMastLogic sl = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sm);
-        for (int i = 0; i < sml.size(); i++) {
-            SignalMastLogic s = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sml.get(i));
+        for (SignalMast signalMast : sml) {
+            SignalMastLogic s = InstanceManager.getDefault(SignalMastLogicManager.class).getSignalMastLogic(signalMast);
             if (s != null) {
                 s.setConflictingLogic(sm, this);
             }
-            sl.setConflictingLogic(sml.get(i), this);
+            sl.setConflictingLogic(signalMast, this);
         }
         sml.add(sm);
     }

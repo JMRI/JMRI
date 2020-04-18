@@ -11,7 +11,6 @@ import java.awt.dnd.DragSourceDragEvent;
 import java.awt.dnd.DragSourceDropEvent;
 import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.Box;
@@ -95,12 +94,7 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
         panel.add(updateButton);
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                closeDialogs();
-            }
-        });
+        cancelButton.addActionListener(a -> closeDialogs());
         panel.add(cancelButton);
         return panel;
     }

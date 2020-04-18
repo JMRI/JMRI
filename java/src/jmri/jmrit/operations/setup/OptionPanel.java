@@ -1,21 +1,14 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import jmri.InstanceManager;
-import jmri.jmrit.operations.trains.TrainManager;
+
+import javax.swing.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.jmrit.operations.trains.TrainManager;
 
 /**
  * Frame for user edit of setup options
@@ -54,6 +47,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
     JCheckBox stagingTurnCheckBox = new JCheckBox(Bundle.getMessage("AllowCarsToReturn"));
     JCheckBox promptFromTrackStagingCheckBox = new JCheckBox(Bundle.getMessage("PromptFromStaging"));
     JCheckBox promptToTrackStagingCheckBox = new JCheckBox(Bundle.getMessage("PromptToStaging"));
+    JCheckBox tryNormalStagingCheckBox = new JCheckBox(Bundle.getMessage("TryNormalStaging"));
 
     JCheckBox generateCvsManifestCheckBox = new JCheckBox(Bundle.getMessage("GenerateCsvManifest"));
     JCheckBox generateCvsSwitchListCheckBox = new JCheckBox(Bundle.getMessage("GenerateCsvSwitchList"));
@@ -80,6 +74,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         stagingTurnCheckBox.setSelected(Setup.isAllowReturnToStagingEnabled());
         promptToTrackStagingCheckBox.setSelected(Setup.isPromptToStagingEnabled());
         promptFromTrackStagingCheckBox.setSelected(Setup.isPromptFromStagingEnabled());
+        tryNormalStagingCheckBox.setSelected(Setup.isStagingTryNormalBuildEnabled());
         // router
         routerCheckBox.setSelected(Setup.isCarRoutingEnabled());
         routerYardCheckBox.setSelected(Setup.isCarRoutingViaYardsEnabled());
@@ -161,6 +156,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         addItemLeft(pStaging, stagingTurnCheckBox, 1, 6);
         addItemLeft(pStaging, promptFromTrackStagingCheckBox, 1, 7);
         addItemLeft(pStaging, promptToTrackStagingCheckBox, 1, 8);
+        addItemLeft(pStaging, tryNormalStagingCheckBox, 1, 9);
         addItemLeft(pBuild, pStaging, 1, 3);
 
         // Router panel
@@ -312,6 +308,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         Setup.setAllowReturnToStagingEnabled(stagingTurnCheckBox.isSelected());
         Setup.setPromptFromStagingEnabled(promptFromTrackStagingCheckBox.isSelected());
         Setup.setPromptToStagingEnabled(promptToTrackStagingCheckBox.isSelected());
+        Setup.setStagingTryNormalBuildEnabled(tryNormalStagingCheckBox.isSelected());
         // Car routing enabled?
         Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
         Setup.setCarRoutingViaYardsEnabled(routerYardCheckBox.isSelected());
@@ -351,6 +348,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
                 || Setup.isAllowReturnToStagingEnabled() != stagingTurnCheckBox.isSelected()
                 || Setup.isPromptFromStagingEnabled() != promptFromTrackStagingCheckBox.isSelected()
                 || Setup.isPromptToStagingEnabled() != promptToTrackStagingCheckBox.isSelected()
+                || Setup.isStagingTryNormalBuildEnabled() != tryNormalStagingCheckBox.isSelected()
                 // Car routing enabled?
                 || Setup.isCarRoutingEnabled() != routerCheckBox.isSelected()
                 || Setup.isCarRoutingViaYardsEnabled() != routerYardCheckBox.isSelected()
