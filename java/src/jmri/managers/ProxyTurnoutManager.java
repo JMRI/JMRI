@@ -233,11 +233,11 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     /** {@inheritDoc}
-     * @return outputInterval from first TurnoutManager
+     * @return outputInterval from default TurnoutManager
      */
     @Override
     public int getOutputInterval() {
-        return ((TurnoutManager) getMgr(0)).getOutputInterval();
+        return ((TurnoutManager) getDefaultManager()).getOutputInterval();
     }
 
     /**
@@ -248,21 +248,21 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     @Override
     public void setOutputInterval(int newInterval) {
         log.debug("setOutputInterval called in ProxyTurnoutManager");
-        // only intended for testing, do not set interval via ProxyTurnoutManager in actual code
-        for (int i = 0; i < nMgrs(); i++) {
-            ((TurnoutManager) getMgr(i)).setOutputInterval(newInterval);
+        // only intended for testing; do not set interval via ProxyTurnoutManager in actual code
+        for (Manager<Turnout> manager : getManagerList()) {
+            ((TurnoutManager) manager).setOutputInterval(newInterval);
         }
     }
 
     /**
      * {@inheritDoc}
-     * @return outputInterval from first TurnoutManager
+     * @return outputInterval from default TurnoutManager
      */
     @Nonnull
     @Override
     public LocalDateTime outputIntervalEnds() {
         log.debug("outputIntervalEnds called in ProxyTurnoutManager");
-        return ((TurnoutManager) getMgr(0)).outputIntervalEnds();
+        return ((TurnoutManager) getDefaultManager()).outputIntervalEnds();
     }
 
     @Override
