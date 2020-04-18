@@ -2,7 +2,10 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
+import jmri.BlockManager;
+import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.ShutDownManager;
 import jmri.util.*;
 import org.junit.*;
 import org.netbeans.jemmy.operators.Operator;
@@ -595,6 +598,7 @@ public class TrackSegmentTest {
     public void tearDownEach() throws Exception {
         // release refereces to track segment
         trackSegment = null;
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 }
