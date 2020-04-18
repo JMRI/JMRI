@@ -1199,7 +1199,7 @@
       <xs:attribute name="linkedturnoutname" type="beanNameType"></xs:attribute>
       <xs:attribute name="secondturnoutname" type="beanNameType"></xs:attribute>
       <xs:attribute name="secondturnoutinverted" type="trueFalseType"></xs:attribute>
-      <xs:attribute name="linktype" type="xs:string"></xs:attribute>
+      <xs:attribute name="linktype" type="LinkTypeEnumType"></xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="EditorLayoutSlipType">
@@ -2050,6 +2050,15 @@
         <xs:pattern value="(LH_XOVER|6)"></xs:pattern>
         <xs:pattern value="(SINGLE_SLIP|7)"></xs:pattern>
         <xs:pattern value="(DOUBLE_SLIP|8)"></xs:pattern>
+      </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="LinkTypeEnumType">
+      <xs:restriction base="xs:string">
+        <xs:pattern value="(NO_LINK|0)"></xs:pattern>
+        <xs:pattern value="(FIRST_3_WAY|1)"></xs:pattern>
+        <xs:pattern value="(SECOND_3_WAY|2)"></xs:pattern>
+        <xs:pattern value="(THROAT_TO_THROAT|3)"></xs:pattern>
       </xs:restriction>
     </xs:simpleType>
 
