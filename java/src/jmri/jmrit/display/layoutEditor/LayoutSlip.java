@@ -539,7 +539,7 @@ public class LayoutSlip extends LayoutTurnout {
 
     @Override
     public void updateBlockInfo() {
-        LayoutBlock b1, b2;
+        LayoutBlock b1 = null, b2 = null;
         if (getLayoutBlock() != null) {
             getLayoutBlock().updatePaths();
         }
