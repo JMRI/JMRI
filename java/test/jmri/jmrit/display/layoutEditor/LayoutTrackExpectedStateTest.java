@@ -6,6 +6,7 @@ import java.awt.geom.Point2D;
 import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -22,20 +23,20 @@ public class LayoutTrackExpectedStateTest {
         TrackSegment s = new TrackSegment("test", p1, LayoutEditor.HitPointType.POS_POINT, p2, LayoutEditor.HitPointType.POS_POINT, false, true, le);
         LayoutTrackExpectedState<LayoutTrack> t = new LayoutTrackExpectedState<LayoutTrack>(s, 0);
         Assert.assertNotNull("exists", t);
-        jmri.util.JUnitUtil.dispose(le);
+        JUnitUtil.dispose(le);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After
     public void tearDown() {
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 
 }

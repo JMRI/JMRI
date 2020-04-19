@@ -598,7 +598,7 @@ public class TrackSegmentTest {
     public void tearDownEach() throws Exception {
         // release refereces to track segment
         trackSegment = null;
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }
