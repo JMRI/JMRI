@@ -35,7 +35,6 @@ import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
-import jmri.util.swing.FontComboUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,9 +89,6 @@ public abstract class Apps3 extends AppsBase {
     public Apps3(String applicationName, String configFileDef, String[] args) {
         // pre-GUI work
         super(applicationName, configFileDef, args);
-
-        // Prepare font lists
-        prepareFontLists();
 
         // create GUI
         initializeHelpSystem();
@@ -239,22 +235,6 @@ public abstract class Apps3 extends AppsBase {
         debugmsg = true;
 
         debugmsg = false;
-    }
-
-    private void prepareFontLists() {
-        // Prepare font lists
-        Thread fontThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                log.debug("Prepare font lists...");
-                FontComboUtil.prepareFontLists();
-                log.debug("...Font lists built");
-            }
-        });
-        
-        fontThread.setDaemon(true);
-        fontThread.setPriority(Thread.MIN_PRIORITY);
-        fontThread.start();
     }
 
     protected void initMacOSXMenus() {

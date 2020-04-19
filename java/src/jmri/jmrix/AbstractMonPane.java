@@ -303,6 +303,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         JPanel pane2 = new JPanel();
         pane2.setLayout(new BoxLayout(pane2, BoxLayout.X_AXIS));
         pane2.add(filterLabel);
+        filterLabel.setLabelFor(filterField);
         pane2.add(filterField);
         pane2.add(openFileChooserButton);
         pane2.add(startLogButton);

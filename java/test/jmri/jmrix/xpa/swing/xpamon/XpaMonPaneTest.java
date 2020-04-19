@@ -26,6 +26,7 @@ public class XpaMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     @Override
     @After
     public void tearDown() {
+        panel = pane = null;
         JUnitUtil.tearDown();
     }
 }
