@@ -34,7 +34,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * See the <a href="package-summary.html#schema">Schema versioning
      * discussion</a>. Also controls the stylesheet file version.
      */
-    static final public String schemaVersion = "-4-19-2";
+    static final public String schemaVersion = "-4-19-5";
 
     public ConfigXmlManager() {
     }
@@ -491,7 +491,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         XmlAdapter adapter = null;
         try {
             adapter = (XmlAdapter) Class.forName(adapterName(object)).getDeclaredConstructor().newInstance();
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException 
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException
                     | NoSuchMethodException | java.lang.reflect.InvocationTargetException ex) {
             log.error("Cannot load configuration adapter for {}", object.getClass().getName(), ex);
         }
@@ -572,10 +572,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     @Override
     public boolean load(URL url, boolean registerDeferred) throws JmriConfigureXmlException {
         log.trace("starting load({}, {})", url, registerDeferred);
-        
+
         // we do the actual load on the Swing thread in case it changes visible windows
         Boolean retval = jmri.util.ThreadingUtil.runOnGUIwithReturn(() -> {
-            try { 
+            try {
                 Boolean ret = loadOnSwingThread(url, registerDeferred);
                 return ret;
             } catch (Exception e) {
@@ -583,7 +583,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 throw new RuntimeException(e);
             }
         });
-        
+
         log.trace("  ending load({}, {} with {})", url, registerDeferred, retval);
         return retval;
     }

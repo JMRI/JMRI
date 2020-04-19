@@ -192,8 +192,7 @@ public class LayoutShape {
      *
      * @param p         the point to add
      * @param nearIndex the index of the existing point to add it near note:
-     *                  "near" is defined as before or after depending on
-     *                  closest neighbor
+     * "near" is defined as before or after depending on closest neighbor
      */
     public void addPoint(Point2D p, int nearIndex) {
         int cnt = shapePoints.size();
@@ -331,7 +330,7 @@ public class LayoutShape {
             }
             for (int idx = 0; idx < shapePoints.size(); idx++) {
                 if (r.contains(shapePoints.get(idx).getPoint())) {
-                    result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue() + idx);
+                    result = LayoutEditor.HitPointType.SHAPE_POINT_0.getEnumAtOffset(idx);
                     break;
                 }
             }
@@ -341,7 +340,7 @@ public class LayoutShape {
                 distance = MathUtil.distance(shapePoints.get(idx).getPoint(), hitPoint);
                 if (distance < minDistance) {
                     minDistance = distance;
-                    result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue() + idx);
+                    result = LayoutEditor.HitPointType.SHAPE_POINT_0.getEnumAtOffset(idx);
                 }
             }
         }

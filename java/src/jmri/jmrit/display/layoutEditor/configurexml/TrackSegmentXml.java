@@ -201,7 +201,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
      * Load, starting with the track segment element, then all all attributes
      *
      * @param element Top level Element to unpack.
-     * @param o       LayoutEditor as an Object
+     * @param o LayoutEditor as an Object
      */
     @Override
     public void load(Element element, Object o) {
@@ -240,34 +240,22 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         String con1Name = element.getAttribute("connect1name").getValue();
         String con2Name = element.getAttribute("connect2name").getValue();
 
-        LayoutEditor.HitPointType type1 = LayoutEditor.HitPointType.NONE;
-        try {
-            attribute = element.getAttribute("type1");
-            type1 = LayoutEditor.HitPointType.valueOf(attribute.getValue());
-        } catch (IllegalArgumentException | NullPointerException e) {
-            try {
-                if (attribute == null) {
-                    throw new NullPointerException();
-                }
-                type1 = LayoutEditor.HitPointType.getValue(attribute.getIntValue());
-            } catch (DataConversionException | NullPointerException e1) {
-                log.error("failed to convert tracksegment type1 attribute");
-            }
+        LayoutEditor.HitPointType type1 = null;
+        attribute = element.getAttribute("type1");
+        if (attribute != null) {
+            type1 = LayoutEditor.HitPointType.getValue(attribute.getValue());
+        }
+        if (type1 == null) {
+            log.error("failed to convert tracksegment type1 attribute");
         }
 
-        LayoutEditor.HitPointType type2 = LayoutEditor.HitPointType.NONE;
-        try {
-            attribute = element.getAttribute("type2");
-            type2 = LayoutEditor.HitPointType.valueOf(attribute.getValue());
-        } catch (IllegalArgumentException | NullPointerException e) {
-            try {
-                if (attribute == null) {
-                    throw new NullPointerException();
-                }
-                type2 = LayoutEditor.HitPointType.getValue(attribute.getIntValue());
-            } catch (DataConversionException | NullPointerException e1) {
-                log.error("failed to convert tracksegment type2 attribute");
-            }
+        LayoutEditor.HitPointType type2 = null;
+        attribute = element.getAttribute("type2");
+        if (attribute != null) {
+            type2 = LayoutEditor.HitPointType.getValue(attribute.getValue());
+        }
+        if (type2 == null) {
+            log.error("failed to convert tracksegment type2 attribute");
         }
 
         // create the new TrackSegment

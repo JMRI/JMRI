@@ -12,7 +12,7 @@ import org.junit.Test;
 
 /**
  * LayoutTurnoutXmlTest.java
- *
+ * <p>
  * Description: tests for the LayoutTurnoutXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
@@ -20,30 +20,10 @@ import org.junit.Test;
 public class LayoutTurnoutXmlTest {
 
     @Test
-    public void testCtor(){
-        Assert.assertNotNull("LayoutTurnoutXml constructor",new LayoutTurnoutXml());
+    public void testCtor() {
+        Assert.assertNotNull("LayoutTurnoutXml constructor", new LayoutTurnoutXml());
     }
 
-    @Test
-    public void testFromEnum() {
-        LayoutTurnoutXml.EnumIO<LayoutTurnout.LinkType> enumMap = (new LayoutTurnoutXml()).linkEnumMap;
-
-        Assert.assertEquals("0", enumMap.outputFromEnum(LayoutTurnout.LinkType.NO_LINK));
-        Assert.assertEquals("2", enumMap.outputFromEnum(LayoutTurnout.LinkType.SECOND_3_WAY));
-    }
-    
-    @Test
-    public void testToEnum() {
-        LayoutTurnoutXml.EnumIO<LayoutTurnout.LinkType> enumMap = (new LayoutTurnoutXml()).linkEnumMap;
-        
-        Assert.assertEquals(LayoutTurnout.LinkType.NO_LINK, enumMap.inputFromString("0"));
-        Assert.assertEquals(LayoutTurnout.LinkType.SECOND_3_WAY, enumMap.inputFromString("2"));
-
-        // Assert.assertEquals(null, enumMap.inputFromString("21"));
-        // Assert.assertEquals(null, enumMap.inputFromString("A"));
-        // Assert.assertEquals(null, enumMap.inputFromString(""));
-    }
-    
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -55,4 +35,3 @@ public class LayoutTurnoutXmlTest {
         JUnitUtil.tearDown();
     }
 }
-
