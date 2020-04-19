@@ -2040,7 +2040,7 @@
           </xs:restriction>
         </xs:simpleType>
         <xs:simpleType>
-          <!--  integers 0 thru 113 -->
+          <!-- integers 0 thru 113 -->
           <xs:restriction base="xs:integer">
             <xs:minInclusive value="0" />
             <xs:maxInclusive value="113" />
@@ -2065,7 +2065,7 @@
           </xs:restriction>
         </xs:simpleType>
         <xs:simpleType>
-          <!--  integers 0 thru 8 -->
+          <!-- integers 0 thru 8 -->
           <xs:restriction base="xs:integer">
             <xs:minInclusive value="0" />
             <xs:maxInclusive value="8" />
@@ -2085,7 +2085,7 @@
           </xs:restriction>
         </xs:simpleType>
         <xs:simpleType>
-          <!--  integers 0 thru 3 -->
+          <!-- integers 0 thru 3 -->
           <xs:restriction base="xs:integer">
             <xs:minInclusive value="0" />
             <xs:maxInclusive value="3" />
