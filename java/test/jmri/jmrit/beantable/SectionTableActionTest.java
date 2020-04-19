@@ -4,8 +4,10 @@ import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Section;
+import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
@@ -127,6 +129,7 @@ public class SectionTableActionTest extends AbstractTableActionBase<Section> {
     @Override
     @After
     public void tearDown() {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

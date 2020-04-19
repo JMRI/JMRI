@@ -4,6 +4,7 @@ import jmri.Block;
 import jmri.BlockManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -65,6 +66,7 @@ public class DefaultCabSignalTest {
     public void tearDown() {
         cs.dispose(); // verify no exceptions
         cs = null;
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

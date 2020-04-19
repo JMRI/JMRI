@@ -1,6 +1,9 @@
 package jmri.jmrit.display.switchboardEditor;
 
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.jmrit.display.AbstractEditorTestBase;
 import jmri.util.ColorUtil;
 import jmri.util.JUnitUtil;
@@ -95,6 +98,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
              JUnitUtil.dispose(e);
             e = null;
         }
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }		         
 

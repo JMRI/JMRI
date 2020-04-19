@@ -53,14 +53,12 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.JmriPlugin;
 import jmri.ShutDownManager;
-import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.DebugMenu;
 import jmri.jmrit.ToolsMenu;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.decoderdefn.PrintDecoderListAction;
 import jmri.jmrit.display.PanelMenu;
-import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrit.jython.RunJythonScript;
@@ -87,7 +85,6 @@ import jmri.util.SystemType;
 import jmri.util.ThreadingUtil;
 import jmri.util.WindowMenu;
 import jmri.util.iharder.dnd.URIDrop;
-import jmri.util.swing.FontComboUtil;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.SliderSnap;
 import jmri.util.swing.WindowInterface;
@@ -132,10 +129,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         // Enable proper snapping of JSliders
         SliderSnap.init();
-
-        // Prepare font lists
-        log.trace("prepareFontLists");
-        prepareFontLists();
 
         // Get configuration profile
         log.trace("start to get configuration profile - locate files");
@@ -199,26 +192,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
-
-        // add the default shutdown task to save blocks
-        // as a special case, register a ShutDownTask to write out blocks
-        InstanceManager.getDefault(ShutDownManager.class).
-                register(new AbstractShutDownTask("Writing Blocks") {
-                    @Override
-                    public boolean execute() {
-                        // Save block values prior to exit, if necessary
-                        log.debug("Start writing block info");
-                        try {
-                            new BlockValueFile().writeBlockValues();
-                        } //catch (org.jdom2.JDOMException jde) { log.error("Exception writing blocks: {}", jde); }
-                        catch (IOException ioe) {
-                            log.error("Exception writing blocks: {}", ioe.getMessage());
-                        }
-
-                        // continue shutdown
-                        return true;
-                    }
-                });
 
         // Install configuration manager and Swing error handler
         // Constructing the JmriConfigurationManager also loads various configuration services
@@ -1175,19 +1148,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         // Log the startup information
         log.info(Log4JUtil.startupInfo(name));
-    }
-
-    private void prepareFontLists() {
-        // Prepare font lists
-        Thread fontThread = new Thread(() -> {
-            log.debug("Prepare font lists...");
-            FontComboUtil.prepareFontLists();
-            log.debug("...Font lists built");
-        }, "PrepareFontListsThread");
-
-        fontThread.setDaemon(true);
-        fontThread.setPriority(Thread.MIN_PRIORITY);
-        fontThread.start();
     }
 
     @Override
