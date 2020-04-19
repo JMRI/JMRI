@@ -16,14 +16,12 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @author George Warner Copyright (c) 2017-2018
+ * @author George Warner Copyright (c) 2017-2020
  */
 public class LayoutSlipXml extends AbstractXmlAdapter {
 
     public LayoutSlipXml() {
     }
-
-    EnumIO<LayoutSlip.TurnoutType> tTypeEnumMap = new EnumIO<>(LayoutSlip.TurnoutType.class);
 
     /**
      * Default implementation for storing the contents of a LayoutSlip
@@ -40,7 +38,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
 
         // include attributes
         element.setAttribute("ident", p.getName());
-        element.setAttribute("slipType", tTypeEnumMap.outputFromEnum(p.getTurnoutType()));
+        element.setAttribute("slipType", p.getTurnoutType().name());
 
         element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
         element.setAttribute("disabled", "" + (p.isDisabled() ? "yes" : "no"));
@@ -188,18 +186,28 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         // create the objects
         LayoutEditor p = (LayoutEditor) o;
 
-        // get center point
+        //get name
         String name = element.getAttribute("ident").getValue();
+
+        // get center point
         double x = 0.0;
         double y = 0.0;
         try {
             x = element.getAttribute("xcen").getFloatValue();
             y = element.getAttribute("ycen").getFloatValue();
-        } catch (org.jdom2.DataConversionException e) {
+        }
+        catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert layoutslip center  attribute");
         }
 
-        LayoutSlip.TurnoutType type = tTypeEnumMap.inputFromAttribute(element.getAttribute("slipType"));
+        LayoutSlip.TurnoutType type = null;
+        Attribute a = element.getAttribute("slipType");
+        if (a != null) {
+            type = LayoutSlip.TurnoutType.getValue(a.getValue());
+        }
+        if (type == null) {
+            log.error("failed to convert tracksegment type1 attribute");
+        }
 
         // create the new LayoutSlip
         LayoutSlip l = new LayoutSlip(name, new Point2D.Double(x, y), 0.0, p, type);
@@ -208,7 +216,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         l.setTurnout(getElement(element, "turnout"));
         l.setTurnoutB(getElement(element, "turnoutB"));
 
-        Attribute a = element.getAttribute("blockname");
+        a = element.getAttribute("blockname");
         if (a != null) {
             l.tBlockAName = a.getValue();
         }
@@ -254,35 +262,43 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
 
         try {
             l.setDisabled(element.getAttribute("disabled").getBooleanValue());
-        } catch (DataConversionException e1) {
+        }
+        catch (DataConversionException e1) {
             log.warn("unable to convert layout turnout disabled attribute");
-        } catch (NullPointerException e) {  // considered normal if the attribute is not present
+        }
+        catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
         try {
             l.setDisableWhenOccupied(element.getAttribute("disableWhenOccupied").getBooleanValue());
-        } catch (DataConversionException e1) {
+        }
+        catch (DataConversionException e1) {
             log.warn("unable to convert layout turnout disableWhenOccupied attribute");
-        } catch (NullPointerException e) {  // considered normal if the attribute is not present
+        }
+        catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
         try {
             l.setHidden(element.getAttribute("hidden").getBooleanValue());
-        } catch (DataConversionException e1) {
+        }
+        catch (DataConversionException e1) {
             log.warn("unable to convert layout turnout hidden attribute");
-        } catch (NullPointerException e) {  // considered normal if the attribute is not present
+        }
+        catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         try {
             x = element.getAttribute("xa").getFloatValue();
             y = element.getAttribute("ya").getFloatValue();
             l.setCoordsA(new Point2D.Double(x, y));
-        } catch (org.jdom2.DataConversionException e) {
+        }
+        catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert LayoutSlip a coords attribute");
         }
         try {
             x = element.getAttribute("xb").getFloatValue();
             y = element.getAttribute("yb").getFloatValue();
             l.setCoordsB(new Point2D.Double(x, y));
-        } catch (org.jdom2.DataConversionException e) {
+        }
+        catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert LayoutSlip b coords attribute");
         }
 

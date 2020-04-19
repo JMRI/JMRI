@@ -337,7 +337,8 @@ public class LayoutTrackEditors {
                 double newAngle = Double.parseDouble(editTrackSegmentArcTextField.getText());
                 trackSegment.setAngle(newAngle);
                 editTrackSegmentNeedsRedraw = true;
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e) {
                 editTrackSegmentArcTextField.setText("" + trackSegment.getAngle());
             }
         }
@@ -1653,7 +1654,8 @@ public class LayoutTrackEditors {
         double ang = 0.0;
         try {
             ang = Float.parseFloat(editLayoutTurntableAngleTextField.getText());
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": " // NOI18N
                     + e + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"), // NOI18N
                     JOptionPane.ERROR_MESSAGE);
@@ -1672,7 +1674,8 @@ public class LayoutTrackEditors {
             double rad = 0.0;
             try {
                 rad = Float.parseFloat(str);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": " // NOI18N
                         + e + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"), // NOI18N
                         JOptionPane.ERROR_MESSAGE);
@@ -1744,7 +1747,8 @@ public class LayoutTrackEditors {
                 public void focusLost(FocusEvent e) {
                     try {
                         Float.parseFloat(rayAngleTextField.getText());
-                    } catch (Exception ex) {
+                    }
+                    catch (Exception ex) {
                         JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": " // NOI18N
                                 + ex + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"), // NOI18N
                                 JOptionPane.ERROR_MESSAGE);
@@ -1830,7 +1834,8 @@ public class LayoutTrackEditors {
                 try {
                     double ang = Float.parseFloat(rayAngleTextField.getText());
                     rayTrack.setAngle(ang);
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     log.error("Angle is not in correct format so will skip " + rayAngleTextField.getText());  // NOI18N
                 }
             }

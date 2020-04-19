@@ -30,20 +30,19 @@ import org.slf4j.LoggerFactory;
  * (with certain lines skipped) against either a file by the same name in the
  * "loadref" directory, or against the original file itself. A minimal test
  * class is:
- <pre>
-   @RunWith(Parameterized.class)
-   public class LoadAndStoreTest extends LoadAndStoreTestBase {
- 
-     @Parameterized.Parameters(name = "{0} (pass={1})")
-     public static Iterable<Object[]> data() { 
-       return getFiles(new File("java/test/jmri/configurexml"), false, true); 
-     }
-  
-     public LoadAndStoreTest(File file, boolean pass) { super(file, pass); }
-   }
-</pre>
+ * <pre>
+ * @RunWith(Parameterized.class)
+ * public class LoadAndStoreTest extends LoadAndStoreTestBase {
+ *
+ * @Parameterized.Parameters(name = "{0} (pass={1})")
+ * public static Iterable<Object[]> data() { return getFiles(new
+ * File("java/test/jmri/configurexml"), false, true); }
+ *
+ * public LoadAndStoreTest(File file, boolean pass) { super(file, pass); } }
+ * </pre>
  *
  * @author Bob Jacobsen Copyright 2009, 2014
+ * @author George Warner Copyright (c) 2020 (added skip layouteditor x and y attributes)
  * @since 2.5.5 (renamed & reworked in 3.9 series)
  */
 @RunWith(Parameterized.class)
@@ -63,13 +62,15 @@ public class LoadAndStoreTestBase {
      * Get all XML files in a directory and validate the ability to load and
      * store them.
      *
-     * @param file      the file to be tested
-     * @param pass      if true, successful validation will pass; if false,
-     *                  successful validation will fail
-     * @param saveType  the type (i.e. level) of ConfigureXml information being saved
-     * @param isGUI     true for files containing GUI elements, i.e. panels.  These
-     *                  can only be loaded once (others can be loaded twice, and that's
-     *                  tested when this is false), and can't be loaded when running headless.
+     * @param file     the file to be tested
+     * @param pass     if true, successful validation will pass; if false,
+     *                 successful validation will fail
+     * @param saveType the type (i.e. level) of ConfigureXml information being
+     *                 saved
+     * @param isGUI    true for files containing GUI elements, i.e. panels.
+     *                 These can only be loaded once (others can be loaded
+     *                 twice, and that's tested when this is false), and can't
+     *                 be loaded when running headless.
      */
     public LoadAndStoreTestBase(File file, boolean pass, SaveType saveType, boolean isGUI) {
         this.file = file;
@@ -162,12 +163,12 @@ public class LoadAndStoreTestBase {
 
             String[] startsWithStrings = {
                 "  <!--Written by JMRI version",
-                "  <timebase",      // time changes from timezone to timezone
-                "    <test>",       // version changes over time
-                "    <modifier",    // version changes over time
-                "    <major",       // version changes over time
-                "    <minor",       // version changes over time
-                "<layout-config",   // Linux seems to put attributes in different order
+                "  <timebase", // time changes from timezone to timezone
+                "    <test>", // version changes over time
+                "    <modifier", // version changes over time
+                "    <major", // version changes over time
+                "    <minor", // version changes over time
+                "<layout-config", // Linux seems to put attributes in different order
                 "<?xml-stylesheet", // Linux seems to put attributes in different order
                 "    <memory systemName=\"IMCURRENTTIME\"", // time varies - old format
                 "    <modifier>This line ignored</modifier>"
@@ -202,9 +203,29 @@ public class LoadAndStoreTestBase {
                     if (splits2.length == 2) {  // (yes) remove it
                         line2 = splits2[0] + splits2[1];
                     }
+                    // if either line contains a x attribute
+                    String x_regexe = "( x=\"[^\"]*\")";
+                    splits1 = line1.split(x_regexe);
+                    if (splits1.length == 2) {  // (yes) remove it
+                        line1 = splits1[0] + splits1[1];
+                    }
+                    splits2 = line2.split(x_regexe);
+                    if (splits2.length == 2) {  // (yes) remove it
+                        line2 = splits2[0] + splits2[1];
+                    }
+                    // if either line contains a y attribute
+                    String y_regexe = "( y=\"[^\"]*\")";
+                    splits1 = line1.split(y_regexe);
+                    if (splits1.length == 2) {  // (yes) remove it
+                        line1 = splits1[0] + splits1[1];
+                    }
+                    splits2 = line2.split(y_regexe);
+                    if (splits2.length == 2) {  // (yes) remove it
+                        line2 = splits2[0] + splits2[1];
+                    }
                 }
             }
-            
+
             // Time will vary when written out
             if (!match) {
                 String memory_value = "<memory value";
@@ -215,7 +236,7 @@ public class LoadAndStoreTestBase {
                     }
                 }
             }
-            
+
             // Dates can vary when written out
             String date_string = "<date>";
             if (!match && line1.contains(date_string) && line2.contains(date_string)) {
@@ -234,7 +255,7 @@ public class LoadAndStoreTestBase {
                     line2 = splits2[0] + splits2[1];
                 }
             }
-            
+
             if (!match && !line1.equals(line2)) {
                 log.error("match failed in LoadAndStoreTest:");
                 log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
@@ -324,7 +345,7 @@ public class LoadAndStoreTestBase {
 
         File outFile = storeFile(this.file, this.saveType);
         checkFile(compFile, outFile);
-        
+
         JUnitAppender.suppressErrorMessage("systemName is already registered: ");
     }
 

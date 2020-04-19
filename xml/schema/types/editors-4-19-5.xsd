@@ -1159,7 +1159,7 @@
       <xs:attribute name="ident" type="beanNameType" use="required">
         <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
       </xs:attribute>
-      <xs:attribute name="type" type="xs:string" use="required"></xs:attribute>
+      <xs:attribute name="type" type="TurnoutTypeEnumType" use="required"></xs:attribute>
       <xs:attribute name="continuing" type="xs:string" use="required"></xs:attribute>
 
       <xs:attribute name="xa" type="xs:float"></xs:attribute>
@@ -1199,7 +1199,7 @@
       <xs:attribute name="linkedturnoutname" type="beanNameType"></xs:attribute>
       <xs:attribute name="secondturnoutname" type="beanNameType"></xs:attribute>
       <xs:attribute name="secondturnoutinverted" type="trueFalseType"></xs:attribute>
-      <xs:attribute name="linktype" type="xs:string"></xs:attribute>
+      <xs:attribute name="linktype" type="LinkTypeEnumType"></xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="EditorLayoutSlipType">
@@ -1535,9 +1535,9 @@
       </xs:attribute>
       <xs:attribute name="blockname" type="beanNameType"></xs:attribute>  <!-- required in DTD, missing from some files -->
       <xs:attribute name="connect1name" type="beanNameType" use="required"></xs:attribute>
-      <xs:attribute name="type1" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="type1" type="HitPointTypeEnumType" use="required"></xs:attribute>
       <xs:attribute name="connect2name" type="beanNameType" use="required"></xs:attribute>
-      <xs:attribute name="type2" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="type2" type="xs:string" use="required"></xs:attribute>
       <xs:attribute name="dashed" type="yesNoType"></xs:attribute>
       <xs:attribute name="mainline" type="yesNoType"></xs:attribute>
       <xs:attribute name="hidden" type="yesNoType"></xs:attribute>
@@ -1951,6 +1951,114 @@
         <xs:enumeration value="center"></xs:enumeration>
         <xs:enumeration value="centre"></xs:enumeration>
         <xs:enumeration value="right"></xs:enumeration>
+      </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="HitPointTypeEnumType">
+      <xs:restriction base="xs:string">
+        <!-- Note: only HitPointTypes used for track connections (stored/loaded into/from xml) are here. -->
+        <xs:pattern value="(NONE|0)"></xs:pattern>
+        <xs:pattern value="(POS_POINT|1)"></xs:pattern>
+        <xs:pattern value="(TURNOUT_A|2)"></xs:pattern>
+        <xs:pattern value="(TURNOUT_B|3)"></xs:pattern>
+        <xs:pattern value="(TURNOUT_C|4)"></xs:pattern>
+        <xs:pattern value="(TURNOUT_D|5)"></xs:pattern>
+        <xs:pattern value="(LEVEL_XING_A|6)"></xs:pattern>
+        <xs:pattern value="(LEVEL_XING_B|7)"></xs:pattern>
+        <xs:pattern value="(LEVEL_XING_C|8)"></xs:pattern>
+        <xs:pattern value="(LEVEL_XING_D|9)"></xs:pattern>
+        <xs:pattern value="(TRACK|10)"></xs:pattern>
+        <xs:pattern value="(SLIP_A|21)"></xs:pattern>
+        <xs:pattern value="(SLIP_B|22)"></xs:pattern>
+        <xs:pattern value="(SLIP_C|23)"></xs:pattern>
+        <xs:pattern value="(SLIP_D|24)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_0|50)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_1|51)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_2|52)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_3|53)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_4|54)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_5|55)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_6|56)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_7|57)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_8|58)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_9|59)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_10|60)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_11|61)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_12|62)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_13|63)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_14|64)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_15|65)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_16|66)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_17|67)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_18|68)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_19|69)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_20|70)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_21|71)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_22|72)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_23|73)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_24|74)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_25|75)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_26|76)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_27|77)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_28|78)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_29|79)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_30|80)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_31|81)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_32|82)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_33|83)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_34|84)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_35|85)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_36|86)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_37|87)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_38|88)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_39|89)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_40|90)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_41|91)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_42|92)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_43|93)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_44|94)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_45|95)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_46|96)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_47|97)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_48|98)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_49|99)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_50|100)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_51|101)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_52|102)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_53|103)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_54|104)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_55|105)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_56|106)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_57|107)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_58|108)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_59|109)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_60|110)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_61|111)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_62|112)"></xs:pattern>
+        <xs:pattern value="(TURNTABLE_RAY_63|113)"></xs:pattern>
+      </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="TurnoutTypeEnumType">
+      <xs:restriction base="xs:string">
+        <xs:pattern value="(NONE|0)"></xs:pattern>
+        <xs:pattern value="(RH_TURNOUT|1)"></xs:pattern>
+        <xs:pattern value="(LH_TURNOUT|2)"></xs:pattern>
+        <xs:pattern value="(WYE_TURNOUT|3)"></xs:pattern>
+        <xs:pattern value="(DOUBLE_XOVER|4)"></xs:pattern>
+        <xs:pattern value="(RH_XOVER|5)"></xs:pattern>
+        <xs:pattern value="(LH_XOVER|6)"></xs:pattern>
+        <xs:pattern value="(SINGLE_SLIP|7)"></xs:pattern>
+        <xs:pattern value="(DOUBLE_SLIP|8)"></xs:pattern>
+      </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="LinkTypeEnumType">
+      <xs:restriction base="xs:string">
+        <xs:pattern value="(NO_LINK|0)"></xs:pattern>
+        <xs:pattern value="(FIRST_3_WAY|1)"></xs:pattern>
+        <xs:pattern value="(SECOND_3_WAY|2)"></xs:pattern>
+        <xs:pattern value="(THROAT_TO_THROAT|3)"></xs:pattern>
       </xs:restriction>
     </xs:simpleType>
 
