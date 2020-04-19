@@ -1477,7 +1477,7 @@ public class CsOpSwAccessTest {
     public void tearDown() {
         memo.dispose();
         lnis = null;
-		JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
