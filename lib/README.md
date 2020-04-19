@@ -299,6 +299,11 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 ##### system-rules-1.16.0.jar
 - Handle rules for testing calls to java.System methods
 
+##### springframework-*
+- version 5.1.14
+- from https://search.maven.org/search?q=g:org.springframework%20v:5.1.14.RELEASE
+- Mocks Java Servlet requests and responses
+
 ##### AppleJavaExtensions.jar
 - version 1.5
 - from <http://developer.apple.com/library/mac/samplecode/AppleJavaExtensions/>
