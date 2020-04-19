@@ -754,9 +754,9 @@ public class LayoutTurntableTest {
     public static void tearDownClass() throws Exception {
         if (!GraphicsEnvironment.isHeadless()) {
             new QueueTool().waitEmpty();
+
             JUnitUtil.dispose(layoutEditor);
             layoutEditor = null;
-            lt = null;
 
             Operator.setDefaultStringComparator(stringComparator);
         }
@@ -767,6 +767,9 @@ public class LayoutTurntableTest {
     @Before
     public void setUp() {
         JUnitUtil.resetProfileManager();
+
+        JUnitUtil.initLayoutBlockManager();
+
         if (!GraphicsEnvironment.isHeadless()) {
             layoutTurntable = new LayoutTurntable(layoutTurntableName, layoutTurntablePoint, layoutEditor);
             layoutTurntable.addRay(30.0);

@@ -26,6 +26,8 @@ public class LayoutEditorHorizontalToolBarPanelTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+
+        JUnitUtil.initLayoutBlockManager();
     }
 
     @After

@@ -119,6 +119,9 @@ public class LayoutBlockTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+
+        JUnitUtil.initLayoutBlockManager();
+
         // Create layout block and the related automatic block
         layoutBlock = new LayoutBlock("ILB999", "Test Block");
     }

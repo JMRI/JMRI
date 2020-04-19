@@ -8,6 +8,7 @@ import jmri.ShutDownManager;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrackDrawingOptions;
+import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
@@ -17,12 +18,13 @@ import org.junit.*;
 public class LayoutTrackDrawingOptionsDialogTest {
 
     private LayoutEditor le;
+
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutTrackDrawingOptions ltdo = new LayoutTrackDrawingOptions("test");
-        LayoutTrackDrawingOptionsDialog t = new LayoutTrackDrawingOptionsDialog(le,false,ltdo);
-        Assert.assertNotNull("exists",t);
+        LayoutTrackDrawingOptionsDialog t = new LayoutTrackDrawingOptionsDialog(le, false, ltdo);
+        Assert.assertNotNull("exists", t);
         le.dispose();
     }
 
@@ -31,7 +33,10 @@ public class LayoutTrackDrawingOptionsDialogTest {
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()) {
+
+        JUnitUtil.initLayoutBlockManager();
+
+        if (!GraphicsEnvironment.isHeadless()) {
             le = new LayoutEditor("Layout Track Drawing Options Dialog Test Layout");
             le.setVisible(true);
         }
@@ -39,7 +44,7 @@ public class LayoutTrackDrawingOptionsDialogTest {
 
     @After
     public void tearDown() {
-        if(le!=null){
+        if (le != null) {
             EditorFrameOperator efo = new EditorFrameOperator(le);
             efo.closeFrameWithConfirmations();
         }

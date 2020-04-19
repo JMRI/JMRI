@@ -939,6 +939,9 @@ public class LevelXingTest {
     @Before
     public void setUp() {
         JUnitUtil.resetProfileManager();
+
+        JUnitUtil.initLayoutBlockManager();
+
         if (!GraphicsEnvironment.isHeadless()) {
             levelXing = new LevelXing(myLevelXingName, levelXingPoint, layoutEditor);
         }

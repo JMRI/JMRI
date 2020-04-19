@@ -704,6 +704,9 @@ public class LayoutSlipTest {
     @BeforeClass
     public static void beforeClass() {
         JUnitUtil.setUp();
+
+        JUnitUtil.initLayoutBlockManager();
+
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
             layoutEditor = new LayoutEditor();

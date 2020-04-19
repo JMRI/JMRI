@@ -26,6 +26,8 @@ public class BlockValueFileTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+
+        JUnitUtil.initLayoutBlockManager();
     }
 
     @After

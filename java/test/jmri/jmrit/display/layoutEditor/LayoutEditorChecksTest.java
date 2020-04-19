@@ -5,7 +5,9 @@ import java.awt.geom.*;
 import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.swing.*;
+import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.*;
 import jmri.util.junit.rules.RetryRule;
@@ -216,6 +218,9 @@ public class LayoutEditorChecksTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
+
+        JUnitUtil.initLayoutBlockManager();
+
         if (!GraphicsEnvironment.isHeadless()) {
             //save the old string comparator
             stringComparator = Operator.getDefaultStringComparator();
@@ -303,11 +308,16 @@ public class LayoutEditorChecksTest {
     public static void tearDownClass() {
         if (!GraphicsEnvironment.isHeadless()) {
             new QueueTool().waitEmpty();
+
+            layoutEditorEFO.requestClose();
+            layoutEditorEFO.waitClosed();
+
             JUnitUtil.dispose(layoutEditor);
             layoutEditor = null;
             layoutEditorChecks = null;
-            layoutEditorEFO.requestClose();
-            layoutEditorEFO.waitClosed();
+
+            InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+
             //restore the default string matching comparator
             Operator.setDefaultStringComparator(stringComparator);
         }

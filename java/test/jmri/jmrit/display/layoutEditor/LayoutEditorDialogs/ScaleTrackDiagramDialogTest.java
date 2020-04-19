@@ -40,6 +40,9 @@ public class ScaleTrackDiagramDialogTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+
+        JUnitUtil.initLayoutBlockManager();
+
         if (!GraphicsEnvironment.isHeadless()) {
             layoutEditor = new LayoutEditor();
             layoutEditor.setVisible(true);

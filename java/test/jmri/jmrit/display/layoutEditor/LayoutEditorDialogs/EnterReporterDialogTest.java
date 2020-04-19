@@ -61,6 +61,9 @@ public class EnterReporterDialogTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+
+        JUnitUtil.initLayoutBlockManager();
+
         if (!GraphicsEnvironment.isHeadless()) {
             layoutEditor = new LayoutEditor();
             enterReporterDialog = new EnterReporterDialog(layoutEditor);

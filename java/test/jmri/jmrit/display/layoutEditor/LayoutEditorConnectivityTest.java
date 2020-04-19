@@ -302,6 +302,8 @@ public class LayoutEditorConnectivityTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+
+        JUnitUtil.initLayoutBlockManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
         cm = new jmri.configurexml.ConfigXmlManager() {

@@ -32,6 +32,8 @@ public class LayoutEditorAuxToolsTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+
+        JUnitUtil.initLayoutBlockManager();
     }
 
     @After

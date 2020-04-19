@@ -38,6 +38,9 @@ public class EnterGridSizesDialogTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+
+        JUnitUtil.initLayoutBlockManager();
+
         if (!GraphicsEnvironment.isHeadless()) {
             layoutEditor = new LayoutEditor();
             enterGridSizesDialog = new EnterGridSizesDialog(layoutEditor);

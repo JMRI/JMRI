@@ -580,6 +580,13 @@ public class TrackSegmentTest {
     public void setUpEach() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initLayoutBlockManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
+
         if (!GraphicsEnvironment.isHeadless()) {
             if (layoutEditor != null) {
                 PositionablePoint p1 = new PositionablePoint("A1", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 20.0), layoutEditor);

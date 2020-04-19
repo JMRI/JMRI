@@ -6,6 +6,7 @@ import java.awt.geom.Point2D;
 import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -30,6 +31,8 @@ public class LayoutTrackExpectedStateTest {
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+
+        JUnitUtil.initLayoutBlockManager();
     }
 
     @After

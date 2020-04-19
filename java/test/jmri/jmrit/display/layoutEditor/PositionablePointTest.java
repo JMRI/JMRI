@@ -381,6 +381,13 @@ public class PositionablePointTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initLayoutBlockManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
+
         if (!GraphicsEnvironment.isHeadless()) {
             le = new LayoutEditor();
         }
@@ -390,8 +397,8 @@ public class PositionablePointTest {
     public void tearDown() {
         if (le != null) {
             JUnitUtil.dispose(le);
+            le = null;
         }
-        le = null;
         InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
