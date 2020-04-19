@@ -1,5 +1,8 @@
 package jmri.jmrit.jython;
 
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -21,11 +24,13 @@ public class InputWindowTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.setUp();
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After
     public void tearDown() {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

@@ -262,14 +262,12 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             if (log.isDebugEnabled()) {
                 java.util.List<Attribute> attrs = element.getAttributes();
                 log.debug("\tElement Has " + attrs.size() + " Attributes:");
-                for (int i = 0; i < attrs.size(); i++) {
-                    Attribute a = attrs.get(i);
+                for (Attribute a : attrs) {
                     log.debug("\t\t" + a.getName() + " = " + a.getValue());
                 }
                 java.util.List<Element> kids = element.getChildren();
                 log.debug("\tElementHas " + kids.size() + " children:");
-                for (int i = 0; i < kids.size(); i++) {
-                    Element e = kids.get(i);
+                for (Element e : kids) {
                     log.debug("\t\t" + e.getName() + " = \"" + e.getValue() + "\"");
                 }
             }
@@ -306,14 +304,11 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 int style = a.getIntValue();
                 int drop = 0;
                 switch (style) {
-                    case 0:
-                        drop = 1; //0 Normal
-                        break;
-                    case 2:
-                        drop = 1; //italic
+                    case 0:  //0 Normal
+                    case 2:  // italic
+                        drop = 1;
                         break;
                     default:
-                        // fall through
                         break;
                 }
                 util.setFontStyle(style, drop);

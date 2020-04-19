@@ -2,7 +2,10 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.*;
+import jmri.BlockManager;
+import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.ShutDownManager;
 import jmri.util.*;
 import org.junit.*;
 
@@ -389,6 +392,7 @@ public class PositionablePointTest {
             JUnitUtil.dispose(le);
         }
         le = null;
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 }

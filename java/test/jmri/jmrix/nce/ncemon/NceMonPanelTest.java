@@ -8,7 +8,11 @@ import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.ThreadingUtil;
 import org.junit.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * JUnit tests for the NceProgrammer class
@@ -64,23 +68,24 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
         // for Jemmy to work, we need the pane inside of a frame
         JmriJFrame f = new JmriJFrame();
-        try {
-            pane.initComponents();
-        } catch (Exception ex) {
-            Assert.fail("Could not load pane: " + ex);
-        }
-        f.add(pane);
-        // set title if available
-        if (pane.getTitle() != null) {
-            f.setTitle(pane.getTitle());
-        }
-        f.pack();
-        f.setVisible(true);
-        Assert.assertTrue(s.getAutoScrollCheckBoxValue());
+        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        assertThat(thrown).withFailMessage("could not load pane: {}",thrown).isNull();
+        ThreadingUtil.runOnGUI( () -> {
+            f.add(pane);
+            // set title if available
+            if (pane.getTitle() != null) {
+                f.setTitle(pane.getTitle());
+            }
+            f.pack();
+            f.setVisible(true);
+        });
+        assertThat(s.getAutoScrollCheckBoxValue()).isTrue();
         s.checkAutoScrollCheckBox();
-        Assert.assertFalse(s.getAutoScrollCheckBoxValue());
-        f.setVisible(false);
-        f.dispose();
+        assertThat(s.getAutoScrollCheckBoxValue()).isFalse();
+        ThreadingUtil.runOnGUI( () -> {
+            f.setVisible(false);
+            f.dispose();
+        });
     }
 
     @Override
@@ -92,13 +97,14 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
         memo = tc.getAdapterMemo();
         // pane for AbstractMonPaneTestBase, panel for JmriPanelTest
         panel = pane = new NceMonPanel();
-        ((NceMonPanel) pane).initContext(memo);
+        ThreadingUtil.runOnGUI( () -> ((NceMonPanel) pane).initContext(memo));
         title = "NCE: Command Monitor";
     }
 
     @Override
     @After
     public void tearDown() {
+        panel = pane = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }

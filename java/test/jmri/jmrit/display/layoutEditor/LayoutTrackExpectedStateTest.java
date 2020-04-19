@@ -3,6 +3,9 @@ package jmri.jmrit.display.layoutEditor;
 import org.junit.*;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 
 /**
  *
@@ -31,6 +34,7 @@ public class LayoutTrackExpectedStateTest {
 
     @After
     public void tearDown() {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         jmri.util.JUnitUtil.tearDown();
     }
 

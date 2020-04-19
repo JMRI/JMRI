@@ -59,7 +59,7 @@ public class LayoutTurntable extends LayoutTrack {
     // persistent instance variables (saved between sessions)
     private boolean turnoutControlled = false;
     private double radius = 25.0;
-    private ArrayList<RayTrack> rayList = new ArrayList<>(); // list of Ray Track objects.
+    private final ArrayList<RayTrack> rayList = new ArrayList<>(); // list of Ray Track objects.
     private int lastKnownIndex = -1;
 
     /**

@@ -22,5 +22,8 @@ public class MarklinMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Override
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        panel = pane = null;
+        JUnitUtil.tearDown();
+    }
 }

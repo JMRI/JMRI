@@ -327,12 +327,32 @@
                 <li></li>
             </ul>
 
-    <h3>Circuit Builder</h3>
-        <a id="CB" name="CB"></a>
+   <h3>Control Panel Editor</h3>
+        <a id="CPE" name="CPE"></a>
         <ul>
+            <li>The <strong>Palette</strong> and <strong>Circuit Builder</strong>
+             windows make a "best effort" to open at a position minimizing 
+             any area that may obscure the panel display.</li>
+        <h4>Circuit Builder</h4>
+            <a id="CPE-CB" name="CPE-CB"></a>
+            <ul>
             <li>The system name is auto generated when the<strong>Add New Detector Circuit
-            </strong> window is opened. This name may be changed before the Occupancy
-            Block is created. After creating, the field is removed from the window.</li>
+             </strong> window is opened. This name may be changed before the Occupancy
+             Block is created. After creating, the field is removed from the window
+             since the system name can no longer be edited.</li>
+            </ul>
+        <h4>Palette</h4>
+            <a id="CPE-P" name="CPE-P"></a>
+            <ul>
+            <li>Each tab resizes to display itself with its preferred dimensions.</li>
+            <li>The <strong>Memory</strong> Tab has been modified to display generic 
+             forms of their respective devices.  Dragging is best accomplished by 
+             mouse down within the <strong>Drag to Panel</strong> box, but outside
+             of the device icon itself.</li>
+            <li>Bugs in the <strong>Signal Mast</strong> and <strong>Background</strong>
+             tabs have been fixed.</li>
+            <li>The <strong>Text</strong> tab items have been rearranged.</li>
+            </ul>
         </ul>
 
     <h3>DecoderPro</h3>
@@ -431,6 +451,14 @@
         <a id="Scripting" name="Scripting"></a>
         <ul>
             <li>Jython has been updated to version 2.7.2</li>
+            <li>Long deprecated <code>instance()</code> methods to get the default
+                instance of a manager have been removed. Use
+                <code>InstanceManager.getDefault(NameOfManager.class)</code>
+                instead.</li>
+            <li><a href="https://github.com/JMRI/JMRI/pull/8286">PR 8286 revised the way 
+                that JMRI code should fire and catch events.  If you have code (Java or script)
+                of your own that implements event firing or tricky listening, you
+                should review those changes to see if they will or should affect your code.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -541,20 +569,15 @@
             <li>The VSD old graphical user interface (GUI) was removed. For users who call VSD
             from JMRI PanelPro, nothing changes. For users who call VSD from a Jython script,
             theoretically the script can fail. Please see also
-            <a href="http://jmri.org/help/en/package/jmri/jmrit/vsdecoder/VSDecoderFrame.shtml">here</a>.
+            <a href="https://jmri.org/help/en/package/jmri/jmrit/vsdecoder/VSDecoderFrame.shtml">here</a>.
             </li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Long deprecated <code>instance()</code> methods to get the default
-                instance of a manager have been removed. Use
-                <code>InstanceManager.getDefault(NameOfManager.class)</code>
-                instead.</li>
-            <li><a href="https://github.com/JMRI/JMRI/pull/8286">PR 8286 revised the way 
-                that JMRI code should fire and catch events.  If you have code (Java or script)
-                of your own that implements event firing or tricky listening, you
-                should review those changes to see if they will or should affect your code.
+            <li>Windows Installer updated to support OpenJDK 8 from <a 
+            href="https://adoptopenjdk.net">AdoptOpenJDK.net</a>.</li>
+                
         </ul>
 

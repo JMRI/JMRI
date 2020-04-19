@@ -4,6 +4,7 @@ import jmri.Block;
 import jmri.BlockManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.TrafficControllerScaffold;
@@ -76,6 +77,7 @@ public class CbusCabSignalTest extends jmri.implementation.DefaultCabSignalTest 
         tc = null;
         cs.dispose();
         cs = null;
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

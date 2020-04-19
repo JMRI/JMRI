@@ -177,6 +177,7 @@ public class Xml {
     static final String ALLOW_RETURN_STAGING = "allowReturnStaging"; // NOI18N
     static final String PROMPT_STAGING_ENABLED = "promptStagingEnabled"; // NOI18N
     static final String PROMPT_TO_STAGING_ENABLED = "promptToStagingEnabled"; // NOI18N
+    static final String STAGING_TRY_NORMAL = "stagingTryNormal"; // NOI18N
 
     static final String GENERATE_CSV_MANIFEST = "generateCsvManifest"; // NOI18N
     static final String GENERATE_CSV_SWITCH_LIST = "generateCsvSwitchList"; // NOI18N

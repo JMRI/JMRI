@@ -1,5 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -27,6 +30,7 @@ public class BlockValueFileTest {
 
     @After
     public void tearDown() throws Exception {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
     // private final static Logger log = LoggerFactory.getLogger(BlockValueFileTest.class);
