@@ -7144,7 +7144,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     @Nonnull
     public String getDefaultOccupiedTrackColor() {
-        return ColorUtil.colorToColorName(defaultOccupiedTrackColor);
+        return ColorUtil.colorToString(defaultOccupiedTrackColor);
     }
 
     /**
@@ -7160,7 +7160,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     @Nonnull
     public String getDefaultAlternativeTrackColor() {
-        return ColorUtil.colorToColorName(defaultAlternativeTrackColor);
+        return ColorUtil.colorToString(defaultAlternativeTrackColor);
     }
 
     /**
@@ -7176,17 +7176,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     @Nonnull
     public String getDefaultTextColor() {
-        return ColorUtil.colorToColorName(defaultTextColor);
+        return ColorUtil.colorToString(defaultTextColor);
     }
 
     @Nonnull
     public String getTurnoutCircleColor() {
-        return ColorUtil.colorToColorName(turnoutCircleColor);
+        return ColorUtil.colorToString(turnoutCircleColor);
     }
 
     @Nonnull
     public String getTurnoutCircleThrownColor() {
-        return ColorUtil.colorToColorName(turnoutCircleThrownColor);
+        return ColorUtil.colorToString(turnoutCircleThrownColor);
     }
 
     public boolean isTurnoutFillControlCircles() {

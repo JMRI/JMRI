@@ -33,6 +33,10 @@ public class JynstrumentFactory {
         }
         String jyFile = path + File.separator + className + ".py";
         ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON);
+        if (engine==null){
+            log.error("No Default Jython ScriptEngine");
+            return null;
+        }
         Jynstrument jyns;
         try {
             FileReader fr = new FileReader(jyFile);

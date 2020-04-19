@@ -52,7 +52,11 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
 
     @Override
     public JsonNode doGet(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
-        return doGet(InstanceManager.getDefault(LayoutBlockManager.class).getBySystemName(name), name, type, request);
+        LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getBySystemName(name);
+        if (lb == null){
+            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, "ErrorInternal", type), request.id);
+        }
+        return doGet(lb, name, type, request);
     }
 
     @Override
