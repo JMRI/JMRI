@@ -171,14 +171,11 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
     private void addShowButtonToBottom() {
         _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
-        _showIconsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                if (_iconPanel.isVisible()) {
-                    hideIcons();
-                } else {
-                    showIcons();
-                }
+        _showIconsButton.addActionListener(a -> {
+            if (_iconPanel.isVisible()) {
+                hideIcons();
+            } else {
+                showIcons();
             }
         });
         _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipShowIcons"));
@@ -189,12 +186,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _bottom1Panel = new JPanel(new FlowLayout());
         addShowButtonToBottom();
         _editIconsButton = new JButton(Bundle.getMessage("ButtonEditIcons"));
-        _editIconsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                openDialog(_itemType, _family, _currentIconMap);
-            }
-        });
+        _editIconsButton.addActionListener(a -> openDialog(_itemType, _family, _currentIconMap));
         _editIconsButton.setToolTipText(Bundle.getMessage("ToolTipEditIcons"));
         _bottom1Panel.add(_editIconsButton);
 
@@ -206,22 +198,12 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
     protected void addCreateDeleteFamilyButtons() {
         JButton createIconsButton = new JButton(Bundle.getMessage("createNewFamily"));
-        createIconsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                newFamilyDialog();
-            }
-        });
+        createIconsButton.addActionListener(a -> newFamilyDialog());
         createIconsButton.setToolTipText(Bundle.getMessage("ToolTipAddFamily"));
         _bottom1Panel.add(createIconsButton);
 
         JButton deleteButton = new JButton(Bundle.getMessage("deleteFamily"));
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                deleteFamilySet();
-           }
-        });
+        deleteButton.addActionListener(a -> deleteFamilySet());
         deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeleteFamily"));
         _bottom1Panel.add(deleteButton);
     }
@@ -323,9 +305,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
      * @return null if map is not in the family
      */
     private String findFamilyOfMap(HashMap<String, NamedIcon> iconMap, HashMap<String, HashMap<String, NamedIcon>> families) {
-        Iterator<Entry<String, HashMap<String, NamedIcon>>> it = families.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, HashMap<String, NamedIcon>> entry = it.next();
+        for (Entry<String, HashMap<String, NamedIcon>> entry : families.entrySet()) {
             log.debug("FamilyKey = {}", entry.getKey());
             if (mapsAreEqual(entry.getValue(), iconMap)) {
                 String family = entry.getKey();
@@ -345,9 +325,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
      * @return true if all of signal head entries have matching entries in the family map.
      */
     protected boolean mapsAreEqual(HashMap<String, NamedIcon> familyMap, HashMap<String, NamedIcon> signalHeadMap) {
-        Iterator<Entry<String, NamedIcon>> iter = signalHeadMap.entrySet().iterator();
-        while (iter.hasNext()) {
-            Entry<String, NamedIcon> signlHeadEntry = iter.next();
+        for (Entry<String, NamedIcon> signlHeadEntry : signalHeadMap.entrySet()) {
             NamedIcon familyIcon = familyMap.get(signlHeadEntry.getKey());
             if (familyIcon == null) {
                 log.debug("key = {}, signal head map url= {} family icon is null", signlHeadEntry.getKey(), signlHeadEntry.getValue().getURL());
@@ -823,23 +801,13 @@ public abstract class FamilyItemPanel extends ItemPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         JButton newFamilyButton = new JButton(Bundle.getMessage("createNewFamily"));
-        newFamilyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                newFamilyDialog();
-            }
-        });
+        newFamilyButton.addActionListener(a -> newFamilyDialog());
         newFamilyButton.setToolTipText(Bundle.getMessage("ToolTipAddFamily"));
         panel.add(newFamilyButton);
 
         if(!_update) {
             JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-            cancelButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent a) {
-                    updateFamiliesPanel();
-                }
-            });
+            cancelButton.addActionListener(a -> updateFamiliesPanel());
             panel.add(cancelButton);
         }
         return panel;
@@ -852,12 +820,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
             // bail out
             return false;
         }
-        Iterator<String> iter = ItemPalette.getFamilyMaps(_itemType).keySet().iterator();
-        while (iter.hasNext()) {
-            if (family.equals(iter.next())) {
-                JOptionPane.showMessageDialog(_frame,
-                        Bundle.getMessage("DuplicateFamilyName", family, _itemType),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+        for (String s : ItemPalette.getFamilyMaps(_itemType).keySet()) {
+            if (family.equals(s)) {
+                JOptionPane.showMessageDialog(_frame, Bundle.getMessage("DuplicateFamilyName", family, _itemType), Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return false;
             }
         }

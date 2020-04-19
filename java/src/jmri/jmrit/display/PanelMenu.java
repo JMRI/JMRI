@@ -196,8 +196,7 @@ public class PanelMenu extends JMenu {
         if (panelsList.isEmpty()) {
             return false;
         }
-        for (int i = 0; i < panelsList.size(); i++) {
-            Editor editor = panelsList.get(i);
+        for (Editor editor : panelsList) {
             if (editor.getTargetFrame().getTitle().equals(name)) {
                 return true;
             }
@@ -209,8 +208,7 @@ public class PanelMenu extends JMenu {
         if (panelsList.isEmpty()) {
             return null;
         }
-        for (int i = 0; (i < panelsList.size()); i++) {
-            Editor editor = panelsList.get(i);
+        for (Editor editor : panelsList) {
             if (editor.getTargetFrame().getTitle().equals(name)) {
                 return editor;
             }
@@ -224,9 +222,7 @@ public class PanelMenu extends JMenu {
 
     public ArrayList<LayoutEditor> getLayoutEditorPanelList() {
         ArrayList<LayoutEditor> lePanelsList = new ArrayList<>();
-        panelsList.stream().filter((e) -> (e instanceof LayoutEditor)).forEachOrdered((e) -> {
-            lePanelsList.add((LayoutEditor) e);
-        });
+        panelsList.stream().filter((e) -> (e instanceof LayoutEditor)).forEachOrdered((e) -> lePanelsList.add((LayoutEditor) e));
         return lePanelsList;
     }
 

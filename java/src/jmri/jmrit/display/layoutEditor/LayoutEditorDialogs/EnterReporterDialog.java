@@ -39,9 +39,9 @@ public class EnterReporterDialog {
     //operational variables for enter reporter pane
     private transient JmriJFrame enterReporterFrame = null;
     private boolean reporterOpen = false;
-    private transient JTextField xPositionField = new JTextField(6);
-    private transient JTextField yPositionField = new JTextField(6);
-    private transient JTextField reporterNameField = new JTextField(6);
+    private final transient JTextField xPositionField = new JTextField(6);
+    private final transient JTextField yPositionField = new JTextField(6);
+    private final transient JTextField reporterNameField = new JTextField(6);
     private transient JButton reporterDone;
     private transient JButton reporterCancel;
 
@@ -94,16 +94,12 @@ public class EnterReporterDialog {
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
             panel5.add(reporterDone = new JButton(Bundle.getMessage("AddNewLabel")));
-            reporterDone.addActionListener((ActionEvent event) -> {
-                reporterDonePressed(event);
-            });
+            reporterDone.addActionListener(this::reporterDonePressed);
             reporterDone.setToolTipText(Bundle.getMessage("ReporterDoneHint"));
 
             //Cancel
             panel5.add(reporterCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            reporterCancel.addActionListener((ActionEvent event) -> {
-                reporterCancelPressed();
-            });
+            reporterCancel.addActionListener((ActionEvent event) -> reporterCancelPressed());
             reporterCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel5);
 
@@ -142,8 +138,7 @@ public class EnterReporterDialog {
         if ((xx <= 0) || (xx > layoutEditor.getLayoutWidth())) {
             log.error("invalid x: " + xx + ", LayoutWidth: " + layoutEditor.getLayoutWidth());
             JOptionPane.showMessageDialog(enterReporterFrame,
-                    MessageFormat.format(Bundle.getMessage("Error2a"),
-                            new Object[]{String.format(" %s ", xx)}),
+                    MessageFormat.format(Bundle.getMessage("Error2a"), String.format(" %s ", xx)),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
 
@@ -164,8 +159,7 @@ public class EnterReporterDialog {
         if ((yy <= 0) || (yy > layoutEditor.getLayoutHeight())) {
             log.error("invalid y: " + yy + ", LayoutWidth: " + layoutEditor.getLayoutHeight());
             JOptionPane.showMessageDialog(enterReporterFrame,
-                    MessageFormat.format(Bundle.getMessage("Error2a"),
-                            new Object[]{String.format(" %s ", yy)}),
+                    MessageFormat.format(Bundle.getMessage("Error2a"), String.format(" %s ", yy)),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
 
@@ -181,8 +175,7 @@ public class EnterReporterDialog {
                 reporter = InstanceManager.getDefault(ReporterManager.class).provideReporter(rName);
             } catch (IllegalArgumentException e) {
                 JOptionPane.showMessageDialog(enterReporterFrame,
-                        MessageFormat.format(Bundle.getMessage("Error18"),
-                                new Object[]{rName}), Bundle.getMessage("ErrorTitle"),
+                        MessageFormat.format(Bundle.getMessage("Error18"), rName), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }

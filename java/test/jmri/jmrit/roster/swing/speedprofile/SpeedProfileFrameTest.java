@@ -1,6 +1,9 @@
 package jmri.jmrit.roster.swing.speedprofile;
 
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -25,6 +28,7 @@ public class SpeedProfileFrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         super.tearDown();
     }
 

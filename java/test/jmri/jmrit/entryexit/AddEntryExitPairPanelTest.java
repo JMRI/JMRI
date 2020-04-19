@@ -2,6 +2,9 @@ package jmri.jmrit.entryexit;
 
 import java.awt.GraphicsEnvironment;
 import java.util.HashMap;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
 import org.junit.AfterClass;
@@ -89,6 +92,7 @@ public class AddEntryExitPairPanelTest {
     public static void tearDown() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
         panels = null;
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

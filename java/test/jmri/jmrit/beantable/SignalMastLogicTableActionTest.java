@@ -11,6 +11,8 @@ import org.netbeans.jemmy.operators.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ResourceBundle;
+import jmri.BlockManager;
+import jmri.ShutDownManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -272,6 +274,7 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
     @After
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

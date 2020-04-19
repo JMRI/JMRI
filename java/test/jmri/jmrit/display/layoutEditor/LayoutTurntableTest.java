@@ -756,9 +756,11 @@ public class LayoutTurntableTest {
             new QueueTool().waitEmpty();
             JUnitUtil.dispose(layoutEditor);
             layoutEditor = null;
+            lt = null;
 
             Operator.setDefaultStringComparator(stringComparator);
         }
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

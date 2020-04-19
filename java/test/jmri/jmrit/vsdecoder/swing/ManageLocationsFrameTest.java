@@ -5,6 +5,7 @@ import java.util.List;
 import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.ReporterManager;
+import jmri.ShutDownManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
@@ -40,6 +41,7 @@ public class ManageLocationsFrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         super.tearDown();
     }
 

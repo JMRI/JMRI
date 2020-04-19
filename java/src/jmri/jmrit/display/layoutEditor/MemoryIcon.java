@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification="Cannot rename for user data compatiblity reasons.")
 public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
-    private String defaultText = " ";
+    private final String defaultText = " ";
 
     public MemoryIcon(String s, LayoutEditor panel) {
         super(s, panel);
@@ -85,21 +85,18 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                     _icon = false;
                     setAttributes(getPopupUtility(), this);
                     updateSize();
-                    return;
                 } else if (val instanceof javax.swing.ImageIcon) {
                     setIcon((javax.swing.ImageIcon) val);
                     setText(null);
                     _text = false;
                     _icon = true;
                     updateSize();
-                    return;
                 } else if (val instanceof Number) {
                     setText(val.toString());
                     setIcon(null);
                     _text = true;
                     _icon = false;
                     updateSize();
-                    return;
                 } else if (val instanceof jmri.IdTag){
                     // most IdTags are Reportable objects, so 
                     // this needs to be before Reportable
@@ -108,14 +105,12 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                     _text = true;
                     _icon = false;
                     updateSize();
-                    return;
                 } else if (val instanceof Reportable) {
                     setText(((Reportable)val).toReportString());
                     setIcon(null);
                     _text = true;
                     _icon = false;
                     updateSize();
-                    return;
                 } else {
                     log.warn("can't display current value of " + getNamedMemory().getName()
                             + ", val= " + val + " of Class " + val.getClass().getName());
@@ -130,7 +125,6 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                     _text = false;
                     _icon = true;
                     updateSize();
-                    return;
                 } else {
                     // no match, use default
                     setIcon(getDefaultIcon());
@@ -150,16 +144,14 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         }
     }
 
-    private JCheckBoxMenuItem updateBlockItem = new JCheckBoxMenuItem("Update Block Details");
+    private final JCheckBoxMenuItem updateBlockItem = new JCheckBoxMenuItem("Update Block Details");
 
     @Override
     public boolean showPopUp(JPopupMenu popup) {
         if (isEditable()) {
             popup.add(updateBlockItem);
             updateBlockItem.setSelected(updateBlockValueOnChange());
-            updateBlockItem.addActionListener((java.awt.event.ActionEvent e) -> {
-                updateBlockValueOnChange(updateBlockItem.isSelected());
-            });
+            updateBlockItem.addActionListener((java.awt.event.ActionEvent e) -> updateBlockValueOnChange(updateBlockItem.isSelected()));
         }  // end of selectable
         return super.showPopUp(popup);
     }

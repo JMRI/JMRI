@@ -928,6 +928,11 @@ public class LevelXingTest {
             //restore the default string matching comparator
             Operator.setDefaultStringComparator(stringComparator);
         }
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

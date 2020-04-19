@@ -10,6 +10,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import jmri.BlockManager;
+import jmri.ShutDownManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -53,6 +55,7 @@ public class JythonSigletTest {
 
     @After
     public void tearDown() {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

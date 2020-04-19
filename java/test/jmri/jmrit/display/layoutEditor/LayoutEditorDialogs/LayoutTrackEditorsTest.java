@@ -1000,6 +1000,7 @@ public class LayoutTrackEditorsTest {
         layoutTrackEditors = null;
 
         JUnitUtil.resetWindows(false, false);
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

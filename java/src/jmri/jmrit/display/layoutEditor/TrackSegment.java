@@ -58,7 +58,7 @@ public class TrackSegment extends LayoutTrack {
     private boolean bezier = false;
 
     //for Bezier
-    private ArrayList<Point2D> bezierControlPoints = new ArrayList<>(); //list of control point displacements
+    private final ArrayList<Point2D> bezierControlPoints = new ArrayList<>(); //list of control point displacements
 
     public TrackSegment(@Nonnull String id,
             @CheckForNull LayoutTrack c1, LayoutEditor.HitPointType t1,
@@ -762,10 +762,10 @@ public class TrackSegment extends LayoutTrack {
     }
 
     private JPopupMenu popupMenu = null;
-    private JCheckBoxMenuItem mainlineCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("MainlineCheckBoxMenuItemTitle"));
-    private JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("HiddenCheckBoxMenuItemTitle"));
-    private JCheckBoxMenuItem dashedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("DashedCheckBoxMenuItemTitle"));
-    private JCheckBoxMenuItem flippedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("FlippedCheckBoxMenuItemTitle"));
+    private final JCheckBoxMenuItem mainlineCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("MainlineCheckBoxMenuItemTitle"));
+    private final JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("HiddenCheckBoxMenuItemTitle"));
+    private final JCheckBoxMenuItem dashedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("DashedCheckBoxMenuItemTitle"));
+    private final JCheckBoxMenuItem flippedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("FlippedCheckBoxMenuItemTitle"));
 
     /**
      * Maximum length of the bumper decoration.
@@ -888,31 +888,23 @@ public class TrackSegment extends LayoutTrack {
         popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
 
         popupMenu.add(mainlineCheckBoxMenuItem);
-        mainlineCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setMainline(mainlineCheckBoxMenuItem.isSelected());
-        });
+        mainlineCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setMainline(mainlineCheckBoxMenuItem.isSelected()));
         mainlineCheckBoxMenuItem.setToolTipText(Bundle.getMessage("MainlineCheckBoxMenuItemToolTip"));
         mainlineCheckBoxMenuItem.setSelected(mainline);
 
         popupMenu.add(hiddenCheckBoxMenuItem);
-        hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setHidden(hiddenCheckBoxMenuItem.isSelected());
-        });
+        hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setHidden(hiddenCheckBoxMenuItem.isSelected()));
         hiddenCheckBoxMenuItem.setToolTipText(Bundle.getMessage("HiddenCheckBoxMenuItemToolTip"));
         hiddenCheckBoxMenuItem.setSelected(hidden);
 
         popupMenu.add(dashedCheckBoxMenuItem);
-        dashedCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setDashed(dashedCheckBoxMenuItem.isSelected());
-        });
+        dashedCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setDashed(dashedCheckBoxMenuItem.isSelected()));
         dashedCheckBoxMenuItem.setToolTipText(Bundle.getMessage("DashedCheckBoxMenuItemToolTip"));
         dashedCheckBoxMenuItem.setSelected(dashed);
 
         if (isArc()) {
             popupMenu.add(flippedCheckBoxMenuItem);
-            flippedCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setFlip(flippedCheckBoxMenuItem.isSelected());
-            });
+            flippedCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setFlip(flippedCheckBoxMenuItem.isSelected()));
             flippedCheckBoxMenuItem.setToolTipText(Bundle.getMessage("FlippedCheckBoxMenuItemToolTip"));
             flippedCheckBoxMenuItem.setSelected(isFlip());
         }
@@ -1360,16 +1352,13 @@ public class TrackSegment extends LayoutTrack {
                 int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                         Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                         Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
-                        getBumperLineWidth(), new Predicate<Integer>() {
-                    @Override
-                    public boolean test(Integer t) {
-                        if (t < 0 || t > TrackSegment.MAX_BUMPER_WIDTH) {
-                            throw new IllegalArgumentException(
-                                    Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegment.MAX_BUMPER_WIDTH));
-                        }
-                        return true;
-                    }
-                });
+                        getBumperLineWidth(), t -> {
+                            if (t < 0 || t > TrackSegment.MAX_BUMPER_WIDTH) {
+                                throw new IllegalArgumentException(
+                                        Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegment.MAX_BUMPER_WIDTH));
+                            }
+                            return true;
+                        });
                 setBumperLineWidth(newValue);
             });
 
@@ -1381,17 +1370,13 @@ public class TrackSegment extends LayoutTrack {
                 int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                         Bundle.getMessage("DecorationLengthMenuItemTitle"),
                         Bundle.getMessage("DecorationLengthMenuItemTitle"),
-                        bumperLength, new Predicate<Integer>() {
-                    @Override
-                    public boolean test(Integer t) {
-                        if (t < 0 || t > MAX_BUMPER_LENGTH) {
-                            throw new IllegalArgumentException(
-                                    Bundle.getMessage("DecorationLengthMenuItemRange", MAX_BUMPER_LENGTH));
-                        }
-                        return true;
-                    }
-                }
-                );
+                        bumperLength, t -> {
+                            if (t < 0 || t > MAX_BUMPER_LENGTH) {
+                                throw new IllegalArgumentException(
+                                        Bundle.getMessage("DecorationLengthMenuItemRange", MAX_BUMPER_LENGTH));
+                            }
+                            return true;
+                        });
                 setBumperLength(newValue);
             });
         }
@@ -3054,7 +3039,7 @@ public class TrackSegment extends LayoutTrack {
         //
         if (arrowStyle > 0) {
             //<decoration name="arrow" value="double;both;linewidth=1;length=12;gap=1" />
-            List<String> arrowValues = new ArrayList<String>();
+            List<String> arrowValues = new ArrayList<>();
 
             arrowValues.add("style=" + arrowStyle);
 
@@ -3088,7 +3073,7 @@ public class TrackSegment extends LayoutTrack {
         //
         if (bridgeSideLeft || bridgeSideRight) {
             //<decoration name="bridge" value="both;linewidth=2;deckwidth=8" />
-            List<String> bridgeValues = new ArrayList<String>();
+            List<String> bridgeValues = new ArrayList<>();
 
             if (bridgeHasEntry && !bridgeHasExit) {
                 bridgeValues.add("entry");
@@ -3115,7 +3100,7 @@ public class TrackSegment extends LayoutTrack {
         //
         if (bumperEndStart || bumperEndStop) {
             //<decoration name="bumper" value="double;linewidth=2;length=6;gap=2;flipped" />
-            List<String> bumperValues = new ArrayList<String>();
+            List<String> bumperValues = new ArrayList<>();
             if (bumperEndStart) {
                 bumperValues.add("start");
             } else if (bumperEndStop) {
@@ -3137,7 +3122,7 @@ public class TrackSegment extends LayoutTrack {
         //
         if (tunnelSideLeft || tunnelSideRight) {
             //<decoration name="tunnel" value="both;linewidth=2;floorwidth=8" />
-            List<String> tunnelValues = new ArrayList<String>();
+            List<String> tunnelValues = new ArrayList<>();
 
             if (tunnelHasEntry && !tunnelHasExit) {
                 tunnelValues.add("entry");
@@ -3186,8 +3171,7 @@ public class TrackSegment extends LayoutTrack {
                     int lineWidth = 1, length = 3, gap = 1, count = 1;
                     Color color = defaultTrackColor;
                     String[] values = arrowValue.split(";");
-                    for (int i = 0; i < values.length; i++) {
-                        String value = values[i];
+                    for (String value : values) {
                         if (value.equals("single")) {
                             count = 1;
                         } else if (value.equals("double")) {
@@ -3251,8 +3235,7 @@ public class TrackSegment extends LayoutTrack {
                     int approachWidth = 4, lineWidth = 1, deckWidth = 2;
                     Color color = defaultTrackColor;
                     String[] values = bridgeValue.split(";");
-                    for (int i = 0; i < values.length; i++) {
-                        String value = values[i];
+                    for (String value : values) {
                         //log.info("value[{}]: ''{}''", i, value);
                         if (value.equals("left")) {
                             hasRight = false;
@@ -3308,8 +3291,7 @@ public class TrackSegment extends LayoutTrack {
                     boolean isFlipped = false, atStart = true, atStop = true;
                     Color color = defaultTrackColor;
                     String[] values = bumperValue.split(";");
-                    for (int i = 0; i < values.length; i++) {
-                        String value = values[i];
+                    for (String value : values) {
                         //log.info("value[{}]: ''{}''", i, value);
                         if (value.equals("start")) {
                             atStop = false;
@@ -3351,8 +3333,7 @@ public class TrackSegment extends LayoutTrack {
                     int entranceWidth = 4, lineWidth = 1, floorWidth = 2;
                     Color color = defaultTrackColor;
                     String[] values = tunnelValue.split(";");
-                    for (int i = 0; i < values.length; i++) {
-                        String value = values[i];
+                    for (String value : values) {
                         //log.info("value[{}]: ''{}''", i, value);
                         if (value.equals("left")) {
                             hasRight = false;
@@ -4019,10 +4000,9 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public List<LayoutEditor.HitPointType> checkForFreeConnections() {
-        List<LayoutEditor.HitPointType> result = new ArrayList<>();
         //Track Segments always have all their connections so...
         //(nothing to see here... move along)
-        return result;
+        return new ArrayList<>();
     }
 
     /**
@@ -4118,6 +4098,5 @@ public class TrackSegment extends LayoutTrack {
         setLayoutBlock(layoutBlock);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class
-    );
+    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class);
 }

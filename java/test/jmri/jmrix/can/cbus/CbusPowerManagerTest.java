@@ -111,7 +111,13 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         r.setRtr(false);
         pwr.reply(r);
         Assert.assertEquals("on", PowerManager.ON, p.getPower());
+        Assert.assertEquals(0, controller.outbound.size());
         
+    }
+    
+    @Test
+    public void checkName() {
+        Assert.assertNotNull(pwr.getUserName());
     }
     
     private CanSystemConnectionMemo memo;

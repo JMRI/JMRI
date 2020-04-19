@@ -304,9 +304,7 @@ public class LayoutShape {
     public Rectangle2D getBounds() {
         Rectangle2D result = MathUtil.rectangleAtPoint(shapePoints.get(0).getPoint(), 1.0, 1.0);
 
-        shapePoints.forEach((lsp) -> {
-            result.add(lsp.getPoint());
-        });
+        shapePoints.forEach((lsp) -> result.add(lsp.getPoint()));
         return result;
     }
 
@@ -385,9 +383,7 @@ public class LayoutShape {
     public void setCoordsCenter(@Nonnull Point2D p) {
         Point2D factor = MathUtil.subtract(p, getCoordsCenter());
         if (!MathUtil.isEqualToZeroPoint2D(factor)) {
-            shapePoints.forEach((lsp) -> {
-                lsp.setPoint(MathUtil.add(factor, lsp.getPoint()));
-            });
+            shapePoints.forEach((lsp) -> lsp.setPoint(MathUtil.add(factor, lsp.getPoint())));
         }
     }
 
@@ -399,9 +395,7 @@ public class LayoutShape {
      */
     public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        shapePoints.forEach((lsp) -> {
-            lsp.setPoint(MathUtil.multiply(lsp.getPoint(), factor));
-        });
+        shapePoints.forEach((lsp) -> lsp.setPoint(MathUtil.multiply(lsp.getPoint(), factor)));
     }
 
     /**
@@ -412,9 +406,7 @@ public class LayoutShape {
      */
     public void translateCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        shapePoints.forEach((lsp) -> {
-            lsp.setPoint(MathUtil.add(factor, lsp.getPoint()));
-        });
+        shapePoints.forEach((lsp) -> lsp.setPoint(MathUtil.add(factor, lsp.getPoint())));
     }
 
     /**
@@ -424,9 +416,7 @@ public class LayoutShape {
      */
     public void rotateCoords(double angleDEG) {
         Point2D center = getCoordsCenter();
-        shapePoints.forEach((lsp) -> {
-            lsp.setPoint(MathUtil.rotateDEG(lsp.getPoint(), center, angleDEG));
-        });
+        shapePoints.forEach((lsp) -> lsp.setPoint(MathUtil.rotateDEG(lsp.getPoint(), center, angleDEG)));
     }
 
     private JPopupMenu popup = null;
@@ -745,9 +735,7 @@ public class LayoutShape {
         controlsColor = ColorUtil.setAlpha(controlsColor, 0.5);
         g2.setColor(controlsColor);
 
-        shapePoints.forEach((slp) -> {
-            g2.draw(layoutEditor.layoutEditorControlRectAt(slp.getPoint()));
-        });
+        shapePoints.forEach((slp) -> g2.draw(layoutEditor.layoutEditorControlRectAt(slp.getPoint())));
         if (shapePoints.size() > 0) {
             Point2D end0 = shapePoints.get(0).getPoint();
             Point2D end1 = end0;

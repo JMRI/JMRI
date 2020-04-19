@@ -3,6 +3,9 @@ package jmri.jmrit.jython;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -82,6 +85,7 @@ public class SampleScriptTest {
     @After 
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.resetWindows(false,false);
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         jmri.util.JUnitUtil.tearDown();
     }
 

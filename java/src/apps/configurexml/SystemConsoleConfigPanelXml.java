@@ -42,7 +42,6 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
         e.setAttribute("class", this.getClass().getName());
         SystemConsolePreferencesManager manager = InstanceManager.getDefault(SystemConsolePreferencesManager.class);
         e.setAttribute("scheme", "" + manager.getScheme());
-        e.setAttribute("fontfamily", "" + manager.getFontFamily());
         e.setAttribute("fontsize", "" + manager.getFontSize());
         e.setAttribute("fontstyle", "" + manager.getFontStyle());
         e.setAttribute("wrapstyle", "" + manager.getWrapStyle());
@@ -71,10 +70,6 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
         try {
             if ((value = shared.getAttributeValue("scheme")) != null) {
                 manager.setScheme(Integer.parseInt(value));
-            }
-
-            if ((value = shared.getAttributeValue("fontfamily")) != null) {
-                manager.setFontFamily(value);
             }
 
             if ((value = shared.getAttributeValue("fontsize")) != null) {

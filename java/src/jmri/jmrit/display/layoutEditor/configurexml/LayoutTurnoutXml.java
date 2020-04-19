@@ -1,7 +1,6 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
-import javax.annotation.Nonnull;
 
 import jmri.Turnout;
 import jmri.configurexml.AbstractXmlAdapter;
@@ -82,7 +81,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
         if (!p.getLinkedTurnoutName().isEmpty()) {
             element.setAttribute("linkedturnoutname", p.getLinkedTurnoutName());
-            element.setAttribute("linktype", "" + p.getLinkType());
+            element.setAttribute("linktype", "" + linkEnumMap.outputFromEnum(p.getLinkType()));
         }
 
         if (!p.getBlockName().isEmpty()) {

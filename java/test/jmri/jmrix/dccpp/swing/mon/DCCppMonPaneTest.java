@@ -29,7 +29,9 @@ public class DCCppMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Override
     @After
-    public void tearDown() {        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+    public void tearDown() {
+        panel = pane = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 }

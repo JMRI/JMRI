@@ -337,7 +337,6 @@ public class LevelXing extends LayoutTrack {
             }
             if (nb.equals(getSignalHead(Geometry.POINTD))) {
                 setSignalDName(null);
-                return;
             }
         }
     }
@@ -1235,9 +1234,7 @@ public class LevelXing extends LayoutTrack {
             JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
             hiddenCheckBoxMenuItem.setSelected(hidden);
             popup.add(hiddenCheckBoxMenuItem);
-            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setHidden(hiddenCheckBoxMenuItem.isSelected());
-            });
+            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setHidden(hiddenCheckBoxMenuItem.isSelected()));
 
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override

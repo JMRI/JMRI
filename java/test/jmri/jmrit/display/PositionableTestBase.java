@@ -5,6 +5,9 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JPanel;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.JFrame;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -59,6 +62,7 @@ abstract public class PositionableTestBase {
         JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
         editor = null;
         p = null;
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

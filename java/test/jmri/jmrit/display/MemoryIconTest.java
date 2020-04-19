@@ -9,6 +9,9 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -330,6 +333,7 @@ public class MemoryIconTest extends PositionableTestBase {
     @After
     public void tearDown() {
         to = null;
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         super.tearDown();
     }
 

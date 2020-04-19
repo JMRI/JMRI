@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LayoutEditorFindItems {
 
-    private LayoutEditor layoutEditor;
+    private final LayoutEditor layoutEditor;
 
     public LayoutEditorFindItems(LayoutEditor editor) {
         layoutEditor = editor;

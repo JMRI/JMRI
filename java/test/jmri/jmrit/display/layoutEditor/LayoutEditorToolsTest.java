@@ -1354,9 +1354,9 @@ public class LayoutEditorToolsTest {
 
             let = null;
             layoutEditor = null;
-
-            JUnitUtil.tearDown();
         }
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.tearDown();
     }
 //
     //private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorToolsTest.class);

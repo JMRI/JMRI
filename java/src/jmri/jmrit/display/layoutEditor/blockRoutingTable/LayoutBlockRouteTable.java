@@ -25,14 +25,14 @@ public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
     private TableRowSorter<LayoutBlockNeighbourTableModel> neighbourSorter;
     private JTable neighbourDataTable;
     private JScrollPane neighbourDataScroll;
-    private TableRowSorter<LayoutBlockRouteTableModel> sorter;
+    private final TableRowSorter<LayoutBlockRouteTableModel> sorter;
     private JTable dataTable;
     private JScrollPane dataScroll;
 
-    private LayoutBlockThroughPathsTableModel throughPathsDataModel;
-    private TableRowSorter<LayoutBlockThroughPathsTableModel> throughPathsSorter;
-    private JTable throughPathsDataTable;
-    private JScrollPane throughPathsDataScroll;
+    private final LayoutBlockThroughPathsTableModel throughPathsDataModel;
+    private final TableRowSorter<LayoutBlockThroughPathsTableModel> throughPathsSorter;
+    private final JTable throughPathsDataTable;
+    private final JScrollPane throughPathsDataScroll;
 
     public LayoutBlockRouteTable(boolean editable, LayoutBlock block) {
         super();
