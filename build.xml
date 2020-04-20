@@ -264,9 +264,9 @@
         <pathelement location="${libdir}/webdrivermanager-3.4.0.jar"/>
         <pathelement location="${libdir}/jarchivelib-1.0.0.jar"/>
         <!-- Spring Mock and it's dependencies -->
-        <pathelement location="${libdir}/spring-test-5.1.3.RELEASE.jar"/>
-        <pathelement location="${libdir}/spring-core-5.1.3.RELEASE.jar"/>
-        <pathelement location="${libdir}/spring-web-5.1.3.RELEASE.jar"/>
+        <pathelement location="${libdir}/spring-test-5.1.14.RELEASE.jar"/>
+        <pathelement location="${libdir}/spring-core-5.1.14.RELEASE.jar"/>
+        <pathelement location="${libdir}/spring-web-5.1.14.RELEASE.jar"/>
         <!-- Assertj -->
         <pathelement location="${libdir}/assertj-core-3.12.0.jar"/>
         <pathelement location="${libdir}/assertj-swing-3.9.2.jar"/>
