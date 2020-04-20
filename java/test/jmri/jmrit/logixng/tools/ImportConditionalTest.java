@@ -53,6 +53,7 @@ public class ImportConditionalTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

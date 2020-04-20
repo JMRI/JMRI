@@ -402,6 +402,7 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         // this created an audio manager, clean that up
         InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
         
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
     
