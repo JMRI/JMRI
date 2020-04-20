@@ -1737,7 +1737,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         userFileChooser.setDialogTitle(Bundle.getMessage("BrowserSaveDialogTitle"));  // NOI18N
         userFileChooser.rescanCurrentDirectory();
         // Default to logix system name.txt
-        userFileChooser.setSelectedFile(new File(_curLogix.getSystemName() + ".txt"));  // NOI18N
+        userFileChooser.setSelectedFile(new File(FileUtil.sanitizeFilename(_curLogix.getSystemName()) + ".txt"));  // NOI18N
         int retVal = userFileChooser.showSaveDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
             log.debug("Save browser content stopped, no file selected");  // NOI18N
