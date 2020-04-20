@@ -85,6 +85,9 @@
       which you can get the hardware-specific items 
       that represent what you want to access on the layout.
       </p>
+      <a href="images/OverallPackageStructure.png">
+        <img src="images/OverallPackageStructure.png" align="right" height="261" width="247" style="border:1px solid blue"/>
+      </a>
       <p>Because
       we have different hardware implementations in 
       subpackages of the 
@@ -95,12 +98,10 @@
       <p>Other code should, in general, not reference
       those specific implementations directly.</p>
 
-      <a href="images/OverallPackageStructure.png"><img src="images/OverallPackageStructure.png" align="right" height="20%" width="20%" /></a>
-              (The help/en/packages section of the in-program help files are also organized this way)
+      <p>(The help/en/packages section of the in-program help files are also organized this way)</p>
               
       <p>More specifically:</p>
 
-      <a href="images/OverallImplementationStructure.png"><img src="images/OverallImplementationStructure.png" align="right" height="20%" width="20%" /></a>
       <dl>
         <dt>jmri</dt>
 
@@ -118,6 +119,10 @@
         It can depend on jmri.* and externals. It must not depend
         on jmrix.*</dd>
 
+      <a href="images/OverallImplementationStructure.png">
+        <img src="images/OverallImplementationStructure.png" align="right" height="261" width="360"  style="border:1px solid blue" />
+      </a>
+
         <dt>jmrix</dt>
 
         <dd>Contains code that is specific to a particular
@@ -130,7 +135,7 @@
         jmrix subpackages.
         </dd>
 
-        <dt>The jmri.jmris package</dt>
+        <dt>jmris</dt>
 
         <dd>contains all the code for the server implementation for
         the JMRI interfaces.</dd>
@@ -162,6 +167,10 @@
         not directly reference classes across the tree: these utility
         classes are generally available for use.
         </dd>
+        
+      <a href="images/OverallAppDependencies.png">
+        <img src="images/OverallAppDependencies.png" align="right" height="456" width="325"  style="border:1px solid blue" />
+      </a>
 
         <dt>apps</dt>
 
@@ -173,9 +182,9 @@
         system-specific tool objects for an application; that
         dependency is from the apps package)</dd>
 
+     </dl>
 
-
-      </dl>
+     
 
       Although it's not always honored, the tree structure here is important:
       Packages should <em>not</em> reference across the tree.
