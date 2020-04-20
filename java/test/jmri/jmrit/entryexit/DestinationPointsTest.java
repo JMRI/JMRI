@@ -140,7 +140,7 @@ public class DestinationPointsTest {
         eep = null;
         panels = null;
         tools = null;
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

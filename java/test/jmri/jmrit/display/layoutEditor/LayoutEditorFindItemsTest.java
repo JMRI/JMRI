@@ -35,7 +35,7 @@ public class LayoutEditorFindItemsTest {
 
     @After
     public void tearDown() {
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

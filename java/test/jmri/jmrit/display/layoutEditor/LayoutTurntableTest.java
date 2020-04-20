@@ -59,7 +59,7 @@ public class LayoutTurntableTest {
         }
         lt = null;
         layoutEditor = null;
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

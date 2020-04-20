@@ -51,7 +51,7 @@ public class ControlPanelEditorTest extends AbstractEditorTestBase<ControlPanelE
             JUnitUtil.dispose(e);
             e = null;
         }
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

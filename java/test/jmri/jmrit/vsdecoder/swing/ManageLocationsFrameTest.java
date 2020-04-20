@@ -9,6 +9,7 @@ import jmri.ShutDownManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
+import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
@@ -20,7 +21,7 @@ public class ManageLocationsFrameTest extends jmri.util.JmriJFrameTestBase {
     @Before
     @Override
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         ListeningSpot s = new ListeningSpot();
         ReporterManager rmgr = jmri.InstanceManager.getDefault(jmri.ReporterManager.class);
         Object[][] reporterTable = new Object[rmgr.getObjectCount()][6];
@@ -41,7 +42,7 @@ public class ManageLocationsFrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 

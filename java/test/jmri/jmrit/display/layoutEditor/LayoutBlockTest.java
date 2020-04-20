@@ -128,7 +128,7 @@ public class LayoutBlockTest {
     @After
     public void tearDown() throws Exception {
         layoutBlock = null;
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
     // private final static Logger log = LoggerFactory.getLogger(LayoutBlockTest.class);
