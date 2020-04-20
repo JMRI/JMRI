@@ -52,7 +52,7 @@ public class PanelEditorTest extends AbstractEditorTestBase<PanelEditor> {
             JUnitUtil.dispose(e);
             e = null;
         }
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

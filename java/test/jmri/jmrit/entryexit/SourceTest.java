@@ -122,7 +122,7 @@ public class SourceTest {
     @AfterClass
     static public void tearDown() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
