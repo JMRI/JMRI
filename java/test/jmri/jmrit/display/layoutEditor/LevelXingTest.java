@@ -58,8 +58,8 @@ public class LevelXingTest {
     private static Sensor s3 = null;
     private static Sensor s4 = null;
 
-    private static String myLevelXingName = "MyLevelXing";
-    private static Point2D levelXingPoint = new Point2D.Double(50.0, 50.0);
+    private static final String myLevelXingName = "MyLevelXing";
+    private static final Point2D levelXingPoint = new Point2D.Double(50.0, 50.0);
 
     @Test
     public void testCtor() {
@@ -861,6 +861,8 @@ public class LevelXingTest {
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
 
+            JUnitUtil.initLayoutBlockManager();
+
             //save the old string comparator
             stringComparator = Operator.getDefaultStringComparator();
             //set default string matching comparator to one that exactly matches and is case sensitive
@@ -888,16 +890,16 @@ public class LevelXingTest {
             InstanceManager.getDefault(jmri.SignalHeadManager.class).register(sh4);
 
             //create signal masts
-            sm1 = new VirtualSignalMast("IF$vsm:basic:one-searchlight(VM1)", "signal mast 1");
+            sm1 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)", "signal mast 1");
             InstanceManager.getDefault(jmri.SignalMastManager.class).register(sm1);
 
-            sm2 = new VirtualSignalMast("IF$vsm:basic:one-searchlight(VM2)", "signal mast 2");
+            sm2 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($2)", "signal mast 2");
             InstanceManager.getDefault(jmri.SignalMastManager.class).register(sm2);
 
-            sm3 = new VirtualSignalMast("IF$vsm:basic:one-searchlight(VM3)", "signal mast 3");
+            sm3 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($3)", "signal mast 3");
             InstanceManager.getDefault(jmri.SignalMastManager.class).register(sm3);
 
-            sm4 = new VirtualSignalMast("IF$vsm:basic:one-searchlight(VM4)", "signal mast 4");
+            sm4 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($4)", "signal mast 4");
             InstanceManager.getDefault(jmri.SignalMastManager.class).register(sm4);
 
             //create sensors
@@ -928,20 +930,18 @@ public class LevelXingTest {
             //restore the default string matching comparator
             Operator.setDefaultStringComparator(stringComparator);
         }
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
     }
 
     @After
     public void tearDown() throws Exception {
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
-        JUnitUtil.tearDown();
+        if (levelXing != null) {
+            levelXing = null;
+        }
     }
 
     @Before
     public void setUp() {
-        JUnitUtil.resetProfileManager();
-
-        JUnitUtil.initLayoutBlockManager();
-
         if (!GraphicsEnvironment.isHeadless()) {
             levelXing = new LevelXing(myLevelXingName, levelXingPoint, layoutEditor);
         }

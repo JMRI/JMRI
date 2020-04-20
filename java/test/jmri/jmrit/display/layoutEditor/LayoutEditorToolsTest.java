@@ -1110,9 +1110,9 @@ public class LayoutEditorToolsTest {
     @Test
     public void testGetHeadFromNameValid() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        for (SignalHead sh : signalHeads) {
+        signalHeads.forEach((sh) -> {
             Assert.assertEquals("signal head for valid name", sh, let.getHeadFromName(sh.getSystemName()));
-        }
+        });
     }
 
     @Test
@@ -1194,34 +1194,34 @@ public class LayoutEditorToolsTest {
     public void testGetSignalHeadIcon() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("let null", let);
-        for (SignalHead sh : signalHeads) {
+        signalHeads.forEach((sh) -> {
             Assert.assertNotNull("Signal head icon for panel", let.getSignalHeadIcon(sh.getSystemName()));
-        }
+        });
     }
 
     @Test
     public void testIsHeadOnPanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        for (SignalHead sh : signalHeads) {
+        signalHeads.forEach((sh) -> {
             Assert.assertFalse("Signal head not on panel", let.isHeadOnPanel(sh));
-        }
+        });
     }
 
     @Test
     public void testIsHeadAssignedAnywhere() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        for (SignalHead sh : signalHeads) {
+        signalHeads.forEach((sh) -> {
             Assert.assertFalse("Signal head not on panel", let.isHeadAssignedAnywhere(sh));
-        }
+        });
     }
 
     @Test
     public void testRemoveSignalHeadAssignment() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //just verify this doesn't thrown an error.
-        for (SignalHead sh : signalHeads) {
+        signalHeads.forEach((sh) -> {
             let.removeAssignment(sh);
-        }
+        });
     }
 
     @Test
