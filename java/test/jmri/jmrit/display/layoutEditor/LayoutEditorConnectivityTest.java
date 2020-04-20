@@ -311,7 +311,7 @@ public class LayoutEditorConnectivityTest {
     @After
     public void tearDown() throws Exception {
         cm = null;
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

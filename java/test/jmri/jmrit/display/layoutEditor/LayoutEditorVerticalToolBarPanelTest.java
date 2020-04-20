@@ -30,7 +30,7 @@ public class LayoutEditorVerticalToolBarPanelTest {
 
     @After
     public void tearDown() throws Exception {
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
     // private final static Logger log = LoggerFactory.getLogger(LayoutEditorVerticalToolBarPanelTest.class);

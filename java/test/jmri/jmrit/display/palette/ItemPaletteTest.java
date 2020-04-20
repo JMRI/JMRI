@@ -42,7 +42,7 @@ public class ItemPaletteTest {
     @After
     public void tearDown() {
         ip = null;
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -92,7 +92,7 @@ public class AddEntryExitPairPanelTest {
     public static void tearDown() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
         panels = null;
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
