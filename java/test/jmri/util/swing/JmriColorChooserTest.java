@@ -1,5 +1,7 @@
 package jmri.util.swing;
 
+import static org.assertj.core.api.Assumptions.assumeThat;
+
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ public class JmriColorChooserTest {
 
     @Test
     public void testExtendColorChooser() {
+        assumeThat(GraphicsEnvironment.isHeadless()).isFalse();
         JColorChooser jmriTab = JmriColorChooser.extendColorChooser(new JColorChooser(Color.WHITE));
         Assert.assertNotNull("exists", jmriTab);
     }
@@ -68,10 +71,9 @@ public class JmriColorChooserTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(JmriColorChooserTest.class);
-
 }
