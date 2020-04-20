@@ -7189,8 +7189,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     @Nonnull
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "coloToColorName only returns null if null passed to it")
     public String getTurnoutCircleThrownColor() {
-        return ColorUtil.colorToString(turnoutCircleThrownColor);
+        return ColorUtil.colorToColorName(turnoutCircleThrownColor);
     }
 
     public boolean isTurnoutFillControlCircles() {
