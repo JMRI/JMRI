@@ -2,9 +2,11 @@ package jmri.jmrit.entryexit;
 
 import java.awt.GraphicsEnvironment;
 import java.util.HashMap;
+import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.MemoryManager;
 import jmri.SensorManager;
+import jmri.ShutDownManager;
 import jmri.TurnoutManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -132,13 +134,14 @@ public class DestinationPointsTest {
     @AfterClass
     public static void tearDown() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
-        JUnitUtil.tearDown();
         tm = null;
         sm = null;
         lbm = null;
         eep = null;
         panels = null;
         tools = null;
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.tearDown();
     }
 
 //     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DestinationPointsTest.class);

@@ -51,6 +51,7 @@ public class Z21MonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         memo=null;
         tc.terminateThreads();
         tc=null;
+        panel = pane = null;
         JUnitUtil.tearDown();
     }
 

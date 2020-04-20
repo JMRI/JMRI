@@ -2,6 +2,9 @@ package jmri.jmrit.jython;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -72,6 +75,7 @@ public class JythonWindowsTest {
 
     @After
     public void tearDown() throws Exception {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 }

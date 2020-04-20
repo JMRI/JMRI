@@ -3,6 +3,9 @@ package jmri.jmrit.display.palette;
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JComponent;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
@@ -225,6 +228,7 @@ public class ColorDialogTest {
 
     @After
     public void tearDown() {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 }

@@ -1,6 +1,9 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -40,6 +43,7 @@ public class LayoutTrackDrawingOptionsDialogTest {
             EditorFrameOperator efo = new EditorFrameOperator(le);
             efo.closeFrameWithConfirmations();
         }
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         jmri.util.JUnitUtil.tearDown();
     }
 

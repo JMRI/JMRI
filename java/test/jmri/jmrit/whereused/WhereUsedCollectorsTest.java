@@ -1,9 +1,11 @@
 package jmri.jmrit.whereused;
 
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.ShutDownManager;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlock;
@@ -110,6 +112,7 @@ public class WhereUsedCollectorsTest {
 
     @After
     public void tearDown() {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

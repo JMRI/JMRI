@@ -1094,6 +1094,7 @@ public class LayoutTurnoutTest {
             JUnitUtil.dispose(layoutEditor);
         }
         layoutEditor = null;
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 
