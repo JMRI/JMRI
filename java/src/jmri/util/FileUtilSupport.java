@@ -85,6 +85,10 @@ public class FileUtilSupport extends Bean {
     // default instance
     volatile private static FileUtilSupport defaultInstance = null;
 
+    public FileUtilSupport() {
+        super(false);
+    }
+
     /**
      * Get the {@link java.io.File} that path refers to. Throws a
      * {@link java.io.FileNotFoundException} if the file cannot be found instead

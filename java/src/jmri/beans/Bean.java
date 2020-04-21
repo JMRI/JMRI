@@ -23,8 +23,29 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
     /**
      * Provide a {@link java.beans.PropertyChangeSupport} helper.
      */
-    protected final PropertyChangeSupport propertyChangeSupport = new SwingPropertyChangeSupport(this);
+    protected final PropertyChangeSupport propertyChangeSupport;
 
+    /**
+     * Create a Bean that ensures all events are fired on the Event Dispatch
+     * Thread (EDT).
+     */
+    protected Bean() {
+        this(true);
+    }
+
+    /**
+     * Create a Bean.
+     *<p>
+     * Note that the single parameter is considered unstable API and
+     * subject to change without notice.
+     * 
+     * @param notifyOnEDT true to fire all events on EDT; false to fire all
+     *                    events on the current thread
+     */
+    protected Bean(boolean notifyOnEDT) {
+        propertyChangeSupport = new SwingPropertyChangeSupport(this, notifyOnEDT);
+    }
+    
     /**
      * Add a PropertyChangeListener to the listener list.
      *
