@@ -11,7 +11,7 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 /**
  * Check the architecture of the JMRI library
  * <p>
- * This is run as part of CI, so it's expected to pass at all times.
+ * This is run as part of CI, so it's expected to kept passing at all times.
  * It includes some exceptions that have been grandfathered in 
  * via the archunit_ignore_patterns.txt file.
  * <p>
@@ -51,9 +51,6 @@ public class ArchitectureTest {
     @ArchTest // Initially 50 flags in JMRI 4.17.4 - see archunit_ignore_patterns.txt
     public static final ArchRule checkStandardStreams = noClasses().that()
                                 // classes with permitted access
-                                .doNotHaveFullyQualifiedName("apps.SystemConsole").and()
-                                .doNotHaveFullyQualifiedName("apps.FindBugsCheck").and()
-                                .doNotHaveFullyQualifiedName("apps.CheckerFrameworkCheck").and()
                                 .doNotHaveFullyQualifiedName("apps.gui3.paned.QuitAction").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.decoderdefn.DecoderIndexBuilder").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetArgumentList").and()
@@ -124,9 +121,22 @@ public class ArchitectureTest {
      */
     @ArchTest
     public static final ArchRule checkServerPackageJmrix = noClasses()
-        .that().resideInAPackage("jmri.jmris")
+        .that().resideInAPackage("jmri.server")
         .should().dependOnClassesThat().resideInAPackage("jmri.jmrix..");
 
+    /**
+     * Jmri.server should not reference jmri.jmrit
+     * <p>
+     * Intentionally redundant with the check for references to
+     * jmri.jmrit outside itself; fix these first!
+     * <p>
+     * 
+     */
+    @ArchTest
+    public static final ArchRule checkServerPackageJmrit = noClasses()
+            .that().resideInAPackage("jmri.server")
+            .should().dependOnClassesThat().resideInAPackage("jmri.jmrit..");
+    
     /**
      * Jmri.web should not reference jmri.jmrit
      * <p>
