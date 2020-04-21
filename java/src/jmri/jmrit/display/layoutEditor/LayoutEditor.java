@@ -7144,6 +7144,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     @Nonnull
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "coloToColorName only returns null if null passed to it")
     public String getDefaultOccupiedTrackColor() {
         return ColorUtil.colorToColorName(defaultOccupiedTrackColor);
     }
@@ -7160,6 +7161,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     @Nonnull
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "coloToColorName only returns null if null passed to it")
     public String getDefaultAlternativeTrackColor() {
         return ColorUtil.colorToColorName(defaultAlternativeTrackColor);
     }
@@ -7168,7 +7170,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      *
      * Getter defaultAlternativeTrackColor.
      *
-     * @return block default alternetive color as Color
+     * @return block default alternative color as Color
      */
     @Nonnull
     public Color getDefaultAlternativeTrackColorColor() {
@@ -7176,16 +7178,19 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     @Nonnull
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "coloToColorName only returns null if null passed to it")
     public String getDefaultTextColor() {
         return ColorUtil.colorToColorName(defaultTextColor);
     }
 
     @Nonnull
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "coloToColorName only returns null if null passed to it")
     public String getTurnoutCircleColor() {
         return ColorUtil.colorToColorName(turnoutCircleColor);
     }
 
     @Nonnull
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "coloToColorName only returns null if null passed to it")
     public String getTurnoutCircleThrownColor() {
         return ColorUtil.colorToColorName(turnoutCircleThrownColor);
     }

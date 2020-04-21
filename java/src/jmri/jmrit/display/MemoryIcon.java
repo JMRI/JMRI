@@ -270,8 +270,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                if (!df.getNewTrainActive()) {
-                                    df.getActiveTrainFrame().initiateTrain(e, re, jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory()).getBlock());
+                                jmri.jmrit.display.layoutEditor.LayoutBlock lBlock = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory());
+                                if (!df.getNewTrainActive() && lBlock!=null) {
+                                    df.getActiveTrainFrame().initiateTrain(e, re, lBlock.getBlock());
                                     df.setNewTrainActive(true);
                                 } else {
                                     df.getActiveTrainFrame().showActivateFrame(re);

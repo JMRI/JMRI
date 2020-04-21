@@ -505,7 +505,10 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         log.debug("directory of TrainInfoFiles is {}", fileLocation);
         File fp = new File(fileLocation);
         if (fp.exists()) {
-            names.addAll(Arrays.asList(fp.list(new XmlFilenameFilter())));
+            String[] xmlList = fp.list(new XmlFilenameFilter());
+            if (xmlList!=null) {
+                names.addAll(Arrays.asList(xmlList));
+            }
         }
         // Sort the resulting array
         names.sort((s1, s2) -> {

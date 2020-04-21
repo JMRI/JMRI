@@ -2100,9 +2100,12 @@ public class SignallingPanel extends JmriPanel {
             Vector<String> comboaspects = boxMap.get(this.getValueAt(row, SNAME_COLUMN));
             if (comboaspects == null) {
                 // create a new one with correct aspects
-                comboaspects = InstanceManager.getDefault(jmri.SignalMastManager.class)
-                        .getSignalMast((String) this.getValueAt(row, SNAME_COLUMN)).getValidAspects();
-                boxMap.put(this.getValueAt(row, SNAME_COLUMN), comboaspects); // and store it
+                SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class)
+                    .getSignalMast((String) this.getValueAt(row, SNAME_COLUMN));
+                if (mast!=null) {
+                    comboaspects = mast.getValidAspects();
+                    boxMap.put(this.getValueAt(row, SNAME_COLUMN), comboaspects); // and store it
+                }
             }
             return comboaspects;
         }

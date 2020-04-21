@@ -1915,6 +1915,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 }
                 LayoutBlock layoutBlockToNotify = InstanceManager.getDefault(
                         LayoutBlockManager.class).getLayoutBlock(neighbours.get(i).getBlock());
+                if (layoutBlockToNotify==null){ // move to provides?
+                    log.error("Unable to notify neighbours for block {}",neighbours.get(i).getBlock());
+                    continue;
+                }
                 getAdjacency(neighbours.get(i).getBlock()).dispose();
                 neighbours.remove(i);
                 layoutBlockToNotify.notifiedNeighbourNoLongerMutual(this);
@@ -2308,8 +2312,13 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                                             + nextblk.getDisplayName()
                                             + " to remove route ########### haven't found an example of this yet!");
                                 }
+                                if (layoutBlock==null) { // change to provides
+                                    log.error("Unable to fetch block {}",nextblk);
+                                    continue;
+                                }
                                 layoutBlock.removeRouteFromNeighbour(this, newUpdate);
                                 getAdjacency(nextblk).removeRouteAdvertisedToNeighbour(routesToRemove.get(j));
+                                
                             } else {
                                 if (enableDeleteRouteLogging) {
                                     log.info(msgPrefix + " a valid path through exists "
