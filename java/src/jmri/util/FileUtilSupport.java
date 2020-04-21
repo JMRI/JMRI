@@ -86,7 +86,7 @@ public class FileUtilSupport extends Bean {
     volatile private static FileUtilSupport defaultInstance = null;
 
     public FileUtilSupport() {
-        super(false);
+        super(true); // fire events on EDT
     }
 
     /**
