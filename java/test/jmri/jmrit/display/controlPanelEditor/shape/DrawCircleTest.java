@@ -57,7 +57,7 @@ public class DrawCircleTest {
     public void tearDown() {
         editor = null;
         jmri.util.JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

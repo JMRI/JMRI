@@ -101,7 +101,11 @@ public class ReportContext {
 
         //String operations = jmri.jmrit.operations.setup.OperationsSetupXml.getFileLocation();
         //addString("Operations files location: "+operations+"  ");
-        jmri.jmrit.audio.AudioFactory af = jmri.InstanceManager.getNullableDefault(jmri.AudioManager.class).getActiveAudioFactory();
+        jmri.AudioManager am = jmri.InstanceManager.getNullableDefault(jmri.AudioManager.class);
+        jmri.jmrit.audio.AudioFactory af = null;
+        if ( am !=null ) {
+            af = am.getActiveAudioFactory();
+        }
         String audio = af != null ? af.toString() : "[not initialised]";
         addString("Audio factory type: " + audio + "   ");
 

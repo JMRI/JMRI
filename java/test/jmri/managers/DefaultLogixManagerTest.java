@@ -2,6 +2,7 @@ package jmri.managers;
 
 import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -73,19 +74,19 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixM
 
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initIdTagManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initIdTagManager();
         l = new DefaultLogixManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @After
     public void tearDown() {
         l = null;
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 }

@@ -27,7 +27,7 @@ public class SensorGroupFrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 

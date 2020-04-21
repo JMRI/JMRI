@@ -98,7 +98,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
              JUnitUtil.dispose(e);
             e = null;
         }
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }		         
 
