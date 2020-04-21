@@ -266,7 +266,9 @@ public class JUnitUtil {
         }
         
         // checking time?
-        if (checkTestDuration) checkTestDurationStartTime = System.currentTimeMillis();
+        if (checkTestDuration) {
+            checkTestDurationStartTime = System.currentTimeMillis();
+        }
     }
     
     /**
@@ -283,7 +285,7 @@ public class JUnitUtil {
             long duration = System.currentTimeMillis() - checkTestDurationStartTime;
             if (duration > checkTestDurationMax) {
                 // test too long, log that
-                log.warn("Test in {} duration {} msec exceeded limit {}", getTestClassName(), duration, checkTestDurationMax);
+                System.err.println("Test in "+getTestClassName()+" duration "+duration+" msec exceeded limit "+checkTestDurationMax);
             }
         }
         // Log and/or check the use of setUp and tearDown
