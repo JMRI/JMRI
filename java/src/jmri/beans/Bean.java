@@ -36,9 +36,9 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
     /**
      * Create a Bean.
      *<p>
-     * Note that the single parameter is considered unstable API and
-     * subject to change without notice.
-     * 
+     * Note: this method is considered unstable API and subject to change
+     * without notice.
+       * 
      * @param notifyOnEDT true to fire all events on EDT; false to fire all
      *                    events on the current thread
      */
