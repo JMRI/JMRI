@@ -259,6 +259,10 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      */
     private static ArrayList<ScreenDimensions> getInitialScreenDimensionsOnce() {
         ArrayList<ScreenDimensions> screenDimensions = new ArrayList<>();
+        if (GraphicsEnvironment.isHeadless()) {
+            // there are no screens
+            return screenDimensions;
+        }
         for (GraphicsDevice gd: GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()) {
             Rectangle bounds = new Rectangle();
             Insets insets = new Insets(0, 0, 0, 0);
@@ -631,6 +635,10 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     @Override
     public Dimension getMaximumSize() {
         // adjust maximum size to full screen minus any toolbars
+        if (GraphicsEnvironment.isHeadless()) {
+            // there are no screens
+            return new Dimension(0,0);
+        }
         try {
             // Try our own algorithm. This throws null-pointer exceptions on
             // some Java installs, however, for unknown reasons, so be
