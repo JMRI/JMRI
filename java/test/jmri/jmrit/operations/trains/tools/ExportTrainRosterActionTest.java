@@ -1,8 +1,10 @@
 package jmri.jmrit.operations.trains.tools;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
@@ -21,6 +23,7 @@ public class ExportTrainRosterActionTest extends OperationsTestCase {
     
     @Test
     public void testAction() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ExportTrainRosterAction a = new ExportTrainRosterAction();
         Assert.assertNotNull("exists", a);
               

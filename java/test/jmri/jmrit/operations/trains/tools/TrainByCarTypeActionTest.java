@@ -2,7 +2,6 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Assume;
@@ -10,8 +9,6 @@ import org.junit.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
@@ -34,7 +31,6 @@ public class TrainByCarTypeActionTest extends OperationsTestCase {
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
         JUnitOperationsUtil.initOperationsData();
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train train1 = tmanager.getTrainById("1");
@@ -43,10 +39,6 @@ public class TrainByCarTypeActionTest extends OperationsTestCase {
         // create work to show
         Assert.assertTrue(train1.build());
         Assert.assertTrue(train1.isBuilt());
-        
-        CarManager cmanager = InstanceManager.getDefault(CarManager.class);
-        List<Car> cars = cmanager.getByTrainList(train1);
-        
         TrainByCarTypeAction a = new TrainByCarTypeAction("Test Action", train1);
         
         Thread performAction = new Thread(new Runnable() {
