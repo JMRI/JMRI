@@ -497,7 +497,10 @@ public class LayoutBlockConnectivityTools {
                 }
                 //Sets the old next block to be our current block.
                 LayoutBlock currentLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(nextBlock);
-
+                if (currentLBlock==null){
+                    log.error("Unable to get block :{}: from instancemanager",nextBlock);
+                    continue;
+                }
                 offSet.clear();
 
                 directionOfTravel = currentLBlock.getRouteDirectionAtIndex(nextBlockIndex);

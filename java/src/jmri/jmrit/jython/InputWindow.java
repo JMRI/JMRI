@@ -1,5 +1,6 @@
 package jmri.jmrit.jython;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -170,6 +171,7 @@ public class InputWindow extends JPanel {
      * @param fileChooser the chooser to select the file with
      * @return true if successful; false otherwise
      */
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Should crash if missing ScriptEngine dependencies are not present")
     protected boolean loadFile(JFileChooser fileChooser) {
         boolean results = false;
         File file = getFile(fileChooser);
