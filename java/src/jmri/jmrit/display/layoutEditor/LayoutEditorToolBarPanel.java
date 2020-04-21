@@ -562,13 +562,13 @@ public class LayoutEditorToolBarPanel extends JPanel {
     };
 
     public void keyPressed(@Nonnull KeyEvent event) {
-        //log.error("keyPressed({})", event);
+        //log.info("keyPressed({})", event);
         if (layoutEditor.isEditable()) {
             if (!event.isMetaDown() && !event.isAltDown() && !event.isControlDown()) {
                 if (event.getID() == KEY_PRESSED) {
                     char keyChar = event.getKeyChar();
                     String keyString = String.valueOf(keyChar);
-                    log.error("KeyEvent.getKeyChar() == {}", KeyEvent.getKeyText(keyChar));
+                    //log.info("KeyEvent.getKeyChar() == {}", KeyEvent.getKeyText(keyChar));
 
                     //find last radio button
                     JRadioButton lastRadioButton = null;
@@ -576,7 +576,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
                         JRadioButton thisRadioButton = entry.getKey();
                         if (thisRadioButton.isSelected()) {
                             lastRadioButton = thisRadioButton;
-                            log.error("lastRadioButton is {}", lastRadioButton.getText());
+                            //log.info("lastRadioButton is {}", lastRadioButton.getText());
                             break;
                         }
                     }
@@ -588,16 +588,16 @@ public class LayoutEditorToolBarPanel extends JPanel {
                         String quickKeys = entry.getValue();
                         if (keyString.equals(" ") || StringUtils.containsAny(keyString, quickKeys)) {    // found keyString
                             JRadioButton thisRadioButton = entry.getKey();
-                            log.error("Matched keyString to {}", thisRadioButton.getText());
+                            //log.info("Matched keyString to {}", thisRadioButton.getText());
                             if (foundLast) {
-                                log.error("Found next!");
+                                //log.info("Found next!");
                                 nextRadioButton = thisRadioButton;
                                 break;
                             } else if (lastRadioButton == thisRadioButton) {
-                                log.error("Found last!");
+                                //log.info("Found last!");
                                 foundLast = true;
                             } else if (firstRadioButton == null) {
-                                log.error("Found first!");
+                                //log.info("Found first!");
                                 firstRadioButton = thisRadioButton;
                             }
                         }
