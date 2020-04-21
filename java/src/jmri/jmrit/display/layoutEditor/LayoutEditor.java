@@ -772,7 +772,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     _targetPanel.remove(layoutEditorComponent);
                     _targetPanel.add(layoutEditorComponent, Integer.valueOf(3));
                     _targetPanel.moveToFront(layoutEditorComponent);
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     log.warn("paintTargetPanelBefore: Exception {}", e);
                 }
             }
@@ -1057,7 +1058,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 int code = 0;
                 try {
                     code = field.getInt(null);
-                } catch (IllegalAccessException | IllegalArgumentException e) {
+                }
+                catch (IllegalAccessException | IllegalArgumentException e) {
                     //exceptions make me throw up...
                 }
 
@@ -2833,13 +2835,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         reLocateFlag = false;
                     }
                     positionableLabel.rotate(positionableLabel.getDegrees() + 90);
-                } catch (NullPointerException ex) {
+                }
+                catch (NullPointerException ex) {
                 }
             }
             if (reLocateFlag) {
                 try {
                     positionable.setLocation((int) (newTopLeft.getX() - cBounds.getHeight()), (int) newTopLeft.getY());
-                } catch (NullPointerException ex) {
+                }
+                catch (NullPointerException ex) {
 
                 }
             }
@@ -2850,7 +2854,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 Point2D newPoint = MathUtil.subtract(MathUtil.rotateDEG(lt.getCoordsCenter(), lowerLeft, 90), lowerLeft);
                 lt.setCoordsCenter(newPoint);
                 lt.rotateCoords(90);
-            } catch (NullPointerException ex) {
+            }
+            catch (NullPointerException ex) {
 
             }
         }
@@ -4123,7 +4128,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                                 removePositionablePoint(p);
                             }
                         }
-                    } catch (JmriException e) {
+                    }
+                    catch (JmriException e) {
                         log.debug("Unable to set location");
                     }
                     break;
@@ -4245,7 +4251,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                             if (t.getLayoutBlock() != null) {
                                 getLEAuxTools().setBlockConnectivityChanged();
                             }
-                        } catch (JmriException e) {
+                        }
+                        catch (JmriException e) {
                             log.debug("Unable to set location");
                         }
                     }
@@ -4649,7 +4656,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 ls.setCoordsCenter(newPoint);
             });
             redrawPanel();
+            return;
         }
+        getLayoutEditorToolBarPanel().keyPressed(event);
     }
 
     private double returnDeltaPositionX(@Nonnull KeyEvent event) {
@@ -5138,7 +5147,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         } else {
             try {
                 rot = Double.parseDouble(s);
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("Error3") + " "
                         + e, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
 
@@ -5231,7 +5241,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         } else {
             try {
                 rot = Double.parseDouble(s);
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("Error3") + " "
                         + e, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
 
@@ -5452,7 +5463,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             case LEVEL_XING_D: {
                 try {
                     fromObject.setConnection(fromPointType, toObject, toPointType);
-                } catch (jmri.JmriException e) {
+                }
+                catch (jmri.JmriException e) {
                     // ignore (log.error in setConnection method)
                 }
                 break;
@@ -6340,7 +6352,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             case LEVEL_XING_D: {
                 try {
                     o.setConnection(type, null, HitPointType.NONE);
-                } catch (jmri.JmriException e) {
+                }
+                catch (jmri.JmriException e) {
                     // ignore (log.error in setConnection method)
                 }
                 break;
