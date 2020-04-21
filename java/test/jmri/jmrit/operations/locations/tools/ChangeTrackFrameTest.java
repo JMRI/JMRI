@@ -66,7 +66,7 @@ public class ChangeTrackFrameTest extends OperationsTestCase {
         Assert.assertTrue(track.isYard());
         
         JemmyUtil.enterClickAndLeave(ctf.spurRadioButton);
-        JemmyUtil.enterClickAndLeave(ctf.saveButton);
+        JemmyUtil.enterPushAndLeave(ctf.saveButton);
         
         // confirm change
         Assert.assertTrue(track.isSpur());

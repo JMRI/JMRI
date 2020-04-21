@@ -34,6 +34,9 @@ public class MemoryIconTest extends jmri.jmrit.display.MemoryIconTest {
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+
+        JUnitUtil.initLayoutBlockManager();
+
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new LayoutEditor();
             p = to = new MemoryIcon("MemoryTest1", (LayoutEditor)editor );

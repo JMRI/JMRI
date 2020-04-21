@@ -49,21 +49,21 @@ public class YardmasterFrameTest extends OperationsTestCase {
         YardmasterPanel ymPanel = (YardmasterPanel) ymFrame.getContentPane();
 
         // press "Next" button to load window
-        JemmyUtil.enterClickAndLeave(ymPanel.nextButton);
+        JemmyUtil.enterPushAndLeave(ymPanel.nextButton);
 
         // exercise buttons
-        JemmyUtil.enterClickAndLeave(ymPanel.selectButton);
+        JemmyUtil.enterPushAndLeave(ymPanel.selectButton);
 
-        JemmyUtil.enterClickAndLeave(ymPanel.clearButton);
+        JemmyUtil.enterPushAndLeave(ymPanel.clearButton);
 
         // press "Modify"
-        JemmyUtil.enterClickAndLeave(ymPanel.modifyButton);
+        JemmyUtil.enterPushAndLeave(ymPanel.modifyButton);
 
         // clear dialog window
         JemmyUtil.pressDialogButton(ymFrame, Bundle.getMessage("AddCarsToTrain?"), Bundle.getMessage("ButtonNo"));
 
         // press "Done"
-        JemmyUtil.enterClickAndLeave(ymPanel.modifyButton);
+        JemmyUtil.enterPushAndLeave(ymPanel.modifyButton);
 
         JUnitUtil.dispose(ymFrame);
         JUnitOperationsUtil.checkOperationsShutDownTask();

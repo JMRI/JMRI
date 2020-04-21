@@ -44,19 +44,19 @@ public class LocationTrackBlockingOrderFrameTest extends OperationsTestCase {
         }
         
         //test set order button
-        JemmyUtil.enterClickAndLeave(ltbo.reorderButton);  
+        JemmyUtil.enterPushAndLeave(ltbo.reorderButton);  
         int i = 1; // block order starts at 1
         for (Track t : westford.getTracksByBlockingOrderList(null)) {
             Assert.assertEquals("Track blocking order", i++ , t.getBlockingOrder());
         }
         
         // test reset button
-        JemmyUtil.enterClickAndLeave(ltbo.resetButton);
+        JemmyUtil.enterPushAndLeave(ltbo.resetButton);
         for (Track t : westford.getTrackList()) {
             Assert.assertEquals("Track blocking order", 0 , t.getBlockingOrder());
         }
         
-        JemmyUtil.enterClickAndLeave(ltbo.saveButton);
+        JemmyUtil.enterPushAndLeave(ltbo.saveButton);
         
         JUnitUtil.dispose(ltbo);
     }
