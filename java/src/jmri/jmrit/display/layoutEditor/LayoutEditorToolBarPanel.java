@@ -534,7 +534,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         log.error("layoutComponents called in LayoutEditorToolBarPanel base class");
     }
 
-    final Map<JRadioButton, String> quickKeyMap = new LinkedHashMap() {
+    final Map<JRadioButton, String> quickKeyMap = new LinkedHashMap<JRadioButton, String>() {
         {   //NOTE: These are in the order that the space bar will select thru
             put(turnoutRHButton, Bundle.getMessage("TurnoutRH_QuickKeys"));
             put(turnoutLHButton, Bundle.getMessage("TurnoutLH_QuickKeys"));
