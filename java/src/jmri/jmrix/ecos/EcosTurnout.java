@@ -235,20 +235,30 @@ public class EcosTurnout extends AbstractTurnout
                 int turnaddr = _number - 1;
                 Turnout t = tm.getTurnout(prefix + "T" + turnaddr);
                 secondstate = closed;
-                if (t.getKnownState() == CLOSED) {
-                    firststate = true;
+                if (t==null){
+                    log.error("Unable to locate second Turnout address {}",turnaddr);
+                    return;
                 } else {
-                    firststate = false;
+                    if (t.getKnownState() == CLOSED) {
+                        firststate = true;
+                    } else {
+                        firststate = false;
+                    }
                 }
 
             } else {
                 Turnout t = tm.getTurnout(slaveAddress);
                 firststate = closed;
-
-                if (t.getKnownState() == CLOSED) {
-                    secondstate = true;
+                if (t==null){
+                    log.error("Unable to locate slave Turnout address {}",slaveAddress);
+                    return;
                 } else {
-                    secondstate = false;
+
+                    if (t.getKnownState() == CLOSED) {
+                        secondstate = true;
+                    } else {
+                        secondstate = false;
+                    }
                 }
             }
             int setState = 0;

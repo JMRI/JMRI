@@ -141,8 +141,11 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
 
     @Override
     public String getValue(String name) {
-        int state = _manager.getBySystemName(name).getState();
-        return getValue(state);
+        OBlock bl = _manager.getBySystemName(name);
+        if (bl !=null) {
+            return getValue(bl.getState());
+        }
+        return "";
     }
 
     static protected String getValue(int state) {

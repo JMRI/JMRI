@@ -226,7 +226,12 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         if (mMemo == null) {
             return true;
         }
-        return !(((jmri.jmrix.dccpp.DCCppProgrammer) mMemo.getProgrammerManager().getGlobalProgrammer()).programmerBusy());
+        DCCppProgrammer progrmr = (jmri.jmrix.dccpp.DCCppProgrammer) mMemo.getProgrammerManager().getGlobalProgrammer();
+        if ( progrmr!=null ) {
+            return !(progrmr.programmerBusy());
+        }
+        log.warn("Unable to fetch DCCppProgrammer");
+        return true;
     }
 
     @Override

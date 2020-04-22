@@ -77,7 +77,7 @@ public class CbusCabSignalTest extends jmri.implementation.DefaultCabSignalTest 
         tc = null;
         cs.dispose();
         cs = null;
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

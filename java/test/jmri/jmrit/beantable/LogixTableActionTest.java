@@ -240,7 +240,7 @@ public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
     @Override
     public void tearDown() {
         a = null;
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

@@ -729,6 +729,12 @@ public class JUnitUtil {
         }
     }
 
+    public static void deregisterBlockManagerShutdownTask() {
+        InstanceManager
+                .getDefault(ShutDownManager.class)
+                .deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+    }
+
     public static void initWarrantManager() {
         WarrantManager w = new WarrantManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {

@@ -108,10 +108,11 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
         // create the programmer display combo box
         java.util.Vector<GlobalProgrammerManager> v = new java.util.Vector<>();
         for (GlobalProgrammerManager pm : getMgrList()) {
-            if (pm != null && pm.getGlobalProgrammer() != null) {
+            Programmer progrmr = pm.getGlobalProgrammer();
+            if (progrmr!=null) {
                 v.add(pm);
                 // listen for changes
-                pm.getGlobalProgrammer().addPropertyChangeListener(this);
+                progrmr.addPropertyChangeListener(this);
             }
         }
 

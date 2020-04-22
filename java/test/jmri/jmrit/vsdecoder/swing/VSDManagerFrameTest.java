@@ -29,7 +29,7 @@ public class VSDManagerFrameTest extends jmri.util.JmriJFrameTestBase {
 
         // this created an audio manager, clean that up
         jmri.InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 

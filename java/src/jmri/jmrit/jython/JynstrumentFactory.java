@@ -1,5 +1,6 @@
 package jmri.jmrit.jython;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.FileReader;
 import javax.script.ScriptEngine;
@@ -19,6 +20,7 @@ public class JynstrumentFactory {
 
     private static final String instanceName = "jynstrumentObjectInstance";
 
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Should crash if missing ScriptEngine dependencies are not present")
     public static Jynstrument createInstrument(String path, Object context) {
         String className = validate(path);
         if (className == null) {

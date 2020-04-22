@@ -91,7 +91,7 @@ public class TrainIconTest extends OperationsTestCase {
         }
         editor = null;
         trainicon = null;
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 

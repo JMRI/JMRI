@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import jmri.*;
+import jmri.util.JUnitUtil;
 import org.junit.Test;
 import org.junit.After;
 import org.junit.Assert;
@@ -55,17 +56,17 @@ public class LogixSystemTest {
 
     @Before
     public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initIdTagManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initIdTagManager();
     }
 
     @After
     public void tearDown() throws Exception {
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 }

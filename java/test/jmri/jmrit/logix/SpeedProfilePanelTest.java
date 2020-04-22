@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -29,13 +30,13 @@ public class SpeedProfilePanelTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SpeedProfilePanelTest.class);

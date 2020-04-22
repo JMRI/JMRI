@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.script.ScriptException;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -151,6 +152,7 @@ public class DefaultConditional extends AbstractNamedBean
      * Make deep clone of variables.
      */
     @Override
+    @Nonnull
     public ArrayList<ConditionalVariable> getCopyOfStateVariables() {
         ArrayList<ConditionalVariable> variableList = new ArrayList<>();
         for (int i = 0; i < _variableList.size(); i++) {
@@ -192,6 +194,7 @@ public class DefaultConditional extends AbstractNamedBean
      * Make deep clone of actions.
      */
     @Override
+    @Nonnull
     public ArrayList<ConditionalAction> getCopyOfActions() {
         ArrayList<ConditionalAction> actionList = new ArrayList<>();
         for (int i = 0; i < _actionList.size(); i++) {
@@ -1014,10 +1017,16 @@ public class DefaultConditional extends AbstractNamedBean
                             // add the text to the output frame
                             ScriptOutput.writeScript(getActionString(action));
                             // and execute
-                            try {
-                                JmriScriptEngineManager.getDefault().eval(getActionString(action), JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON));
-                            } catch (ScriptException ex) {
-                                log.error("Error executing script:", ex);  // NOI18N
+                            
+                            javax.script.ScriptEngine se =  JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON);
+                            if (se!=null) {
+                                try {
+                                    JmriScriptEngineManager.getDefault().eval(getActionString(action), se);
+                                } catch (ScriptException ex) {
+                                    log.error("Error executing script:", ex);  // NOI18N
+                                }
+                            } else {
+                                log.error("Error getting default ScriptEngine");
                             }
                             actionCount++;
                         }
