@@ -145,6 +145,7 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
     @Test
     public void testSmlTableMenuYes() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleSignalMastLogicTable"), true, true);
