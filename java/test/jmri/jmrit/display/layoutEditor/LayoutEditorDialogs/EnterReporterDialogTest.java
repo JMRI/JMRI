@@ -103,7 +103,7 @@ public class EnterReporterDialogTest {
     }
 
     @Test
-    @Ignore("giving up after X failures")
+    ///@Ignore("giving up after X failures")
     public void testEnterReporter() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
