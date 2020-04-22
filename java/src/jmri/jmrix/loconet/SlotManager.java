@@ -60,7 +60,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @author sg
      *
      */
-    public class SlotMapEntry {
+    static public class SlotMapEntry {
         public SlotMapEntry(int from, int to) {
             fromSlot = from;
             toSlot = to;
