@@ -1,8 +1,16 @@
 package jmri.jmrit.operations.trains.excel;
 
-import jmri.jmrit.operations.OperationsTestCase;
+import java.awt.GraphicsEnvironment;
+import java.awt.event.ActionEvent;
+
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
 
 /**
  *
@@ -14,6 +22,20 @@ public class SetupExcelProgramSwitchListFrameActionTest extends OperationsTestCa
     public void testCTor() {
         SetupExcelProgramSwitchListFrameAction t = new SetupExcelProgramSwitchListFrameAction("test action");
         Assert.assertNotNull("exists",t);
+    }
+    
+    @Test
+    public void testAction() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SetupExcelProgramSwitchListFrameAction sepfa = new SetupExcelProgramSwitchListFrameAction("test action");
+        Assert.assertNotNull("exists", sepfa);
+        
+        sepfa.actionPerformed(new ActionEvent(this, 0, null));
+        
+        JmriJFrame excelFrame = JmriJFrame.getFrame(Bundle.getMessage("MenuItemSetupExcelProgramSwitchList"));
+        Assert.assertNotNull("frame exists", excelFrame);
+        JUnitUtil.dispose(excelFrame);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     // private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramSwitchListFrameActionTest.class);

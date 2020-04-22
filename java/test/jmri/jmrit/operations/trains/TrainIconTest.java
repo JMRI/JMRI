@@ -2,6 +2,9 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -88,6 +91,7 @@ public class TrainIconTest extends OperationsTestCase {
         }
         editor = null;
         trainicon = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 

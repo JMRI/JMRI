@@ -3,8 +3,10 @@ package jmri.jmrit.beantable.oblock;
 import java.awt.*;
 
 import jmri.Block;
+import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Path;
+import jmri.ShutDownManager;
 import jmri.implementation.AbstractSensor;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
@@ -81,6 +83,7 @@ public class TableFramesTest {
     @After
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

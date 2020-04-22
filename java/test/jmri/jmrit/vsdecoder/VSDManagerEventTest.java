@@ -31,6 +31,7 @@ public class VSDManagerEventTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

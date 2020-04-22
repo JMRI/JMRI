@@ -1,6 +1,9 @@
 package jmri.jmrit.vsdecoder.swing;
 
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -26,7 +29,7 @@ public class VSDManagerFrameTest extends jmri.util.JmriJFrameTestBase {
 
         // this created an audio manager, clean that up
         jmri.InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
-
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 

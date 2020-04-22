@@ -994,9 +994,11 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             }
         }
         Logix srcLogic = _logixManager.getBySystemName(_logixSysName);
-        for (int i = 0; i < srcLogic.getNumConditionals(); i++) {
-            String cSysName = srcLogic.getConditionalByNumberOrder(i);
-            copyConditionalToLogix(cSysName, srcLogic, targetLogix);
+        if (srcLogic!=null){
+            for (int i = 0; i < srcLogic.getNumConditionals(); i++) {
+                String cSysName = srcLogic.getConditionalByNumberOrder(i);
+                copyConditionalToLogix(cSysName, srcLogic, targetLogix);
+            }
         }
         cancelAddPressed(null);
     }
@@ -1658,7 +1660,11 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     }
 
     String getWhereUsedName(String cName) {
-        return _conditionalManager.getBySystemName(cName).getUserName();
+        Conditional cond = _conditionalManager.getBySystemName(cName);
+        if ( cond!=null){
+            return cond.getUserName();
+        }
+        return "";
     }
 
 // ------------ Methods for Conditional Browser Window ------------
@@ -1737,7 +1743,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         userFileChooser.setDialogTitle(Bundle.getMessage("BrowserSaveDialogTitle"));  // NOI18N
         userFileChooser.rescanCurrentDirectory();
         // Default to logix system name.txt
-        userFileChooser.setSelectedFile(new File(_curLogix.getSystemName() + ".txt"));  // NOI18N
+        userFileChooser.setSelectedFile(new File(FileUtil.sanitizeFilename(_curLogix.getSystemName()) + ".txt"));  // NOI18N
         int retVal = userFileChooser.showSaveDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
             log.debug("Save browser content stopped, no file selected");  // NOI18N
@@ -1808,6 +1814,9 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         for (int rx = 0; rx < numConditionals; rx++) {
             conditionalRowNumber = rx;
             Conditional curConditional = _conditionalManager.getBySystemName(_curLogix.getConditionalByNumberOrder(rx));
+            if (curConditional==null){
+                continue;
+            }
             variableList = curConditional.getCopyOfStateVariables();
             _logixSysName = curConditional.getSystemName();
             actionList = curConditional.getCopyOfActions();

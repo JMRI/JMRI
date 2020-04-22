@@ -264,9 +264,9 @@
         <pathelement location="${libdir}/webdrivermanager-3.4.0.jar"/>
         <pathelement location="${libdir}/jarchivelib-1.0.0.jar"/>
         <!-- Spring Mock and it's dependencies -->
-        <pathelement location="${libdir}/spring-test-5.1.3.RELEASE.jar"/>
-        <pathelement location="${libdir}/spring-core-5.1.3.RELEASE.jar"/>
-        <pathelement location="${libdir}/spring-web-5.1.3.RELEASE.jar"/>
+        <pathelement location="${libdir}/spring-test-5.1.14.RELEASE.jar"/>
+        <pathelement location="${libdir}/spring-core-5.1.14.RELEASE.jar"/>
+        <pathelement location="${libdir}/spring-web-5.1.14.RELEASE.jar"/>
         <!-- Assertj -->
         <pathelement location="${libdir}/assertj-core-3.12.0.jar"/>
         <pathelement location="${libdir}/assertj-swing-3.9.2.jar"/>
@@ -286,7 +286,6 @@
                 //echo.perform();
 
                 // Only attempt to quiet if the top logger is the default Ant logger
-                // This avoids errors when e.g. NetBeans has injected it's own logger ([object org.apache.tools.ant.module.bridge.impl.NbBuildLogger])
                 if (Object.prototype.toString.call(project.getBuildListeners().firstElement()) == "[object org.apache.tools.ant.DefaultLogger]") {
                     project.getBuildListeners().firstElement().setMessageOutputLevel(0);
                 }
@@ -646,8 +645,6 @@
             />
     </target>
 
-    <!-- Note if modifying the debug target, please be sure to up date the -->
-    <!-- NetBeans IDE debug target in nbproject/ide-targets.xml -->
     <target name="debug"
             description="compile source with debugging on, omitting tests - identical to compile target"
             depends="compile">
@@ -746,11 +743,10 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
-            <sysproperty key="java.awt.headless" value="true"/>
-            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
+            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
 
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
@@ -761,14 +757,14 @@
             <jvmarg value="-Xmx1536m"/>
 	    <jvmarg line="${test-single.jvmargs}"/>
         </java>    
-	<fail>
+        <fail>
             <condition>
                 <istrue value="${test.failed}" />
             </condition>
         </fail>
     </target>
 
-    <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test." name="test-single-coverage">
+    <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test with Coverage." name="test-single-coverage">
         <mkdir dir="${tempdir}"/>
         <mkdir dir="${testreport}"/>
         <jacoco:agent property="jacocoagent" destfile="${jacocoexec}" excludes="org.slf4j.*" />
@@ -784,11 +780,10 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
-            <sysproperty key="java.awt.headless" value="true"/>
-            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
+            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
 
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
@@ -1216,54 +1211,6 @@
     <!-- end of I18N test targets -->
 
     <!-- ============================================================================= -->
-    <!-- NetBeans targets: profiling et al                                             -->
-    <!-- ============================================================================= -->
-
-
-    <!-- Note if modifying the profile target, please be sure to up date the -->
-    <!-- NetBeans IDE profile target in this file -->
-    <target name="profile"
-            description="build and run PanelPro app with profiling"
-            depends="debug, runtime-library-selection">
-        <java classname="apps.PanelPro.PanelPro"
-              dir="."
-              fork="yes" >
-            <classpath refid="project.class.path"/>
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
-            <sysproperty key="log4j.ignoreTCL" path="true/"/>
-            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
-            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
-            <jvmarg value="-Xrunhprof:cpu=samples,heap=sites,file=log.txt,depth=10"/>
-        </java>
-    </target>
-
-    <!-- The next target is NetBeans-specific, but is here so it -->
-    <!-- can use other info defined in this file -->
-    <!-- The profiler is not so well integrated into the IDE and requires -->
-    <!-- the build target to be specified in the ANT build script -->
-    <target name="profile-nb" depends="debug, runtime-library-selection" description="build and run PanelPro app with NetBeans profiling">
-        <property name="antargline" value="PanelProConfig2.xml"/>
-        <fail unless="netbeans.home">This target can only run inside the NetBeans IDE.</fail>
-        <java classname="apps.PanelPro.PanelPro" dir="${basedir}" fork="yes" resultproperty="application.returncode">
-            <classpath refid="project.class.path"/>
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
-            <sysproperty key="log4j.ignoreTCL" path="true/"/>
-            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
-            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
-       <!--      <jvmarg value="${profiler.info.jvmargs.agent}"/> -->
-       <!-- <jvmarg value="-verbose"/> -->
-       <!-- <jvmarg value="-verbosegc"/> -->
-       <!-- <jvmarg value="-Xloggc:memory.vgc"/> --> <!-- for JTune -->
-            <jvmarg line="${jvm.args}"/>
-            <arg value="${antargline}"/>
-        </java>
-    </target>
-
-    <!-- end of NetBeans targets -->
-
-    <!-- ============================================================================= -->
     <!-- File-checking (e.g. XML tests) targets                                        -->
     <!-- ============================================================================= -->
 
@@ -1583,8 +1530,6 @@
         </java>
     </target>
 
-    <!-- Note if modifying the alltest target, please be sure to up date the -->
-    <!-- NetBeans IDE alltest target in nbproject/ide-targets.xml -->
     <target name="alltest" depends="debug, tests, runtime-library-selection" description="build and run AllTest suite">
         <java classname="apps.tests.AllTest"
           dir="."

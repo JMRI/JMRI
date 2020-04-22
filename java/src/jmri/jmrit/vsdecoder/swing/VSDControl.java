@@ -257,7 +257,7 @@ public class VSDControl extends JPanel {
      */
     protected void deleteButtonPressed(ActionEvent e) {
         log.debug("({}) Delete Button Pressed", address);
-        firePropertyChange(DELETE, address, address);
+        firePropertyChange(DELETE, address, null);
     }
 
     /**
@@ -265,7 +265,7 @@ public class VSDControl extends JPanel {
      */
     protected void optionsDialogPropertyChange(PropertyChangeEvent event) {
         log.debug("internal options dialog handler");
-        firePropertyChange(OPTION_CHANGE, event.getOldValue(), event.getNewValue());
+        firePropertyChange(OPTION_CHANGE, null, event.getNewValue());
     }
 
     // VSDecoderManager Events

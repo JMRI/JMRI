@@ -194,7 +194,7 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
                     _spinner.getValue());
         }
         Integer nCols = (Integer) _spinner.getValue();
-        _writeMem.setNumColumns(nCols.intValue());
+        _writeMem.setNumColumns(nCols);
     }
 
     /**

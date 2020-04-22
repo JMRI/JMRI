@@ -1,6 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
 import org.junit.*;
@@ -47,6 +50,7 @@ public class MemoryIconTest extends jmri.jmrit.display.MemoryIconTest {
            p = null;
         }
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

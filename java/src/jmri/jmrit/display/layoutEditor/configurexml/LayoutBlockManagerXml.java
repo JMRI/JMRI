@@ -40,8 +40,9 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         if (tm.isAdvancedRoutingEnabled()) {
             layoutblocks.setAttribute("blockrouting", "yes");
         }
-        if (tm.getNamedStabilisedSensor() != null) {
-            layoutblocks.setAttribute("routingStablisedSensor", tm.getNamedStabilisedSensor().getName());
+        jmri.NamedBeanHandle<Sensor> tmStable = tm.getNamedStabilisedSensor();
+        if (tmStable != null) {
+            layoutblocks.setAttribute("routingStablisedSensor", tmStable.getName());
         }
 
         java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
@@ -59,7 +60,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
                 log.debug("layoutblock system name is " + sname);
                 LayoutBlock b = tm.getBySystemName(sname);
                 // save only those LayoutBlocks that are in use--skip abandoned ones
-                if (b.getUseCount() > 0) {
+                if (b!=null && b.getUseCount() > 0) {
                     Element elem = new Element("layoutblock").setAttribute("systemName", sname);
                     elem.addContent(new Element("systemName").addContent(sname));
                     storeCommon(b, elem);

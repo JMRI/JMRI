@@ -36,10 +36,10 @@ public class ScaleTrackDiagramDialog {
     //operational variables for scale/translate track diagram pane
     private transient JmriJFrame scaleTrackDiagramFrame = null;
     private boolean scaleTrackDiagramOpen = false;
-    private transient JTextField xFactorField = new JTextField(6);
-    private transient JTextField yFactorField = new JTextField(6);
-    private transient JTextField xTranslateField = new JTextField(6);
-    private transient JTextField yTranslateField = new JTextField(6);
+    private final transient JTextField xFactorField = new JTextField(6);
+    private final transient JTextField yFactorField = new JTextField(6);
+    private final transient JTextField xTranslateField = new JTextField(6);
+    private final transient JTextField yTranslateField = new JTextField(6);
     private transient JButton scaleTrackDiagramDone;
     private transient JButton scaleTrackDiagramCancel;
 
@@ -117,15 +117,11 @@ public class ScaleTrackDiagramDialog {
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
             panel5.add(scaleTrackDiagramDone = new JButton(Bundle.getMessage("ScaleTranslate")));
-            scaleTrackDiagramDone.addActionListener((ActionEvent event) -> {
-                scaleTrackDiagramDonePressed(event);
-            });
+            scaleTrackDiagramDone.addActionListener(this::scaleTrackDiagramDonePressed);
             scaleTrackDiagramDone.setToolTipText(Bundle.getMessage("ScaleTranslateHint"));
 
             panel5.add(scaleTrackDiagramCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            scaleTrackDiagramCancel.addActionListener((ActionEvent event) -> {
-                scaleTrackDiagramCancelPressed(event);
-            });
+            scaleTrackDiagramCancel.addActionListener(this::scaleTrackDiagramCancelPressed);
             scaleTrackDiagramCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel5);
 

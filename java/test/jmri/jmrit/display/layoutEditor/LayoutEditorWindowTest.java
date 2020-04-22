@@ -1,6 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.EditorFrameOperator;
@@ -49,6 +52,7 @@ public class LayoutEditorWindowTest {
     @After
     public void tearDown() throws Exception {
         cm = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

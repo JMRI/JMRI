@@ -14,6 +14,8 @@ import jmri.util.JUnitUtil;
 
 import java.util.ArrayList;
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
+import jmri.ShutDownManager;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -74,6 +76,7 @@ public class ConvertDialogTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

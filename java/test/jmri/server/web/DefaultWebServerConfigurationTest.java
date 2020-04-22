@@ -1,43 +1,39 @@
 package jmri.server.web;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import jmri.util.JUnitAppender;
+import jmri.util.JUnitUtil;
 
 /**
- *
  * @author Randall Wood (C) 2016
  */
 public class DefaultWebServerConfigurationTest {
 
-    public DefaultWebServerConfigurationTest() {
-    }
+    private DefaultWebServerConfiguration instance;
 
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
+    @BeforeEach
     public void setUp() {
+        JUnitUtil.setUp();
+        instance = new DefaultWebServerConfiguration();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        instance = null;
+        JUnitUtil.tearDown();
     }
 
     @Test
     public void testConstructor() {
-        DefaultWebServerConfiguration instance = new DefaultWebServerConfiguration();
-        Assert.assertNotNull("Default constructor", instance);
+        assertThat(instance).as("Default constructor").isNotNull();
     }
 
     /**
@@ -45,10 +41,12 @@ public class DefaultWebServerConfigurationTest {
      */
     @Test
     public void testGetFilePaths() {
-        DefaultWebServerConfiguration instance = new DefaultWebServerConfiguration();
-        HashMap<String, String> result = instance.getFilePaths();
-        Assert.assertNotNull("Default file paths", result);
-        Assert.assertEquals("Default file paths", 15, result.size());
+        assertThat(instance.getFilePaths())
+                .as("Default file paths")
+                .satisfies(paths -> {
+                    assertThat(paths).isNotNull();
+                    assertThat(paths.size()).isEqualTo(15);
+                });
     }
 
     /**
@@ -57,10 +55,12 @@ public class DefaultWebServerConfigurationTest {
      */
     @Test
     public void testGetRedirectedPaths() {
-        DefaultWebServerConfiguration instance = new DefaultWebServerConfiguration();
-        HashMap<String, String> result = instance.getRedirectedPaths();
-        Assert.assertNotNull("Default redirections", result);
-        Assert.assertTrue("Default redirections", result.isEmpty());
+        assertThat(instance.getRedirectedPaths())
+                .as("Default redirections")
+                .satisfies(paths -> {
+                    assertThat(paths).isNotNull();
+                    assertThat(paths).isEmpty();
+                });
     }
 
     /**
@@ -68,10 +68,25 @@ public class DefaultWebServerConfigurationTest {
      */
     @Test
     public void testGetForbiddenPaths() {
-        DefaultWebServerConfiguration instance = new DefaultWebServerConfiguration();
-        List<String> result = instance.getForbiddenPaths();
-        Assert.assertNotNull("Default forbidden paths", result);
-        Assert.assertTrue("Default forbidden paths", result.isEmpty());
+        assertThat(instance.getForbiddenPaths())
+                .as("Default forbidden paths")
+                .satisfies(paths -> {
+                    assertThat(paths).isNotNull();
+                    assertThat(paths).isEmpty();
+                });
     }
 
+    /**
+     * Test of load method with missing/non-existent resource.
+     * 
+     * @throws Exception if unable to use reflection
+     */
+    @Test
+    public void testLoadWithMissingResource() throws Exception {
+        Method method = instance.getClass()
+                .getDeclaredMethod("loadMap", HashMap.class, String.class);
+        method.setAccessible(true);
+        method.invoke(instance, new HashMap<String, String>(), "no.such.resource");
+        JUnitAppender.assertErrorMessage("Unable to load no.such.resource");
+    }
 }

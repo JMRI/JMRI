@@ -171,9 +171,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         }
 
         //attach a listener for changes in the Block
-        mBlockListener = (PropertyChangeEvent e) -> {
-            handleBlockChange(e);
-        };
+        mBlockListener = this::handleBlockChange;
         block.addPropertyChangeListener(mBlockListener,
                 getUserName(), "Layout Block:" + getUserName());
         if (occupancyNamedSensor != null) {
@@ -188,9 +186,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         }
         setBlockMetric();
 
-        block.getPaths().stream().forEach((p) -> {
-            addAdjacency(p);
-        });
+        block.getPaths().stream().forEach(this::addAdjacency);
     }
 
     /*
@@ -288,9 +284,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * Redraw panels using this layout block.
      */
     public void redrawLayoutBlockPanels() {
-        panels.stream().forEach((le) -> {
-            le.redrawPanel();
-        });
+        panels.stream().forEach(LayoutEditor::redrawPanel);
         firePropertyChange("redraw", null, null);
     }
 
@@ -763,9 +757,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     p.setToBlockDirection(lc.getReverseDirection());
                     p.setFromBlockDirection(lc.getDirection());
                 }
-                List<BeanSetting> beans = p.getSettings();
-                for (int j = 0; j < beans.size(); j++) {
-                    p.removeSetting(beans.get(j));
+                List<BeanSetting> beans = new ArrayList<>(p.getSettings());
+                for (BeanSetting bean : beans) {
+                    p.removeSetting(bean);
                 }
                 auxTools.addBeanSettings(p, lc, this);
             }
@@ -810,9 +804,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
         //djd debugging - lists results of automatic initialization of Paths and BeanSettings
         if (log.isDebugEnabled()) {
-            block.getPaths().stream().forEach((p) -> {
-                log.debug("From {} to {}", getDisplayName(), p.toString());
-            });
+            block.getPaths().stream().forEach((p) -> log.debug("From {} to {}", getDisplayName(), p.toString()));
         }
     }
 
@@ -1134,19 +1126,19 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
             trackColorChooser = new JColorChooser(blockTrackColor);
             trackColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel trackColorPanels[] = {new SplitButtonColorChooserPanel()};
+            AbstractColorChooserPanel[] trackColorPanels = {new SplitButtonColorChooserPanel()};
             trackColorChooser.setChooserPanels(trackColorPanels);
             layout.addItem(new BeanEditItem(trackColorChooser, Bundle.getMessage("TrackColor"), Bundle.getMessage("TrackColorHint")));
 
             occupiedColorChooser = new JColorChooser(blockOccupiedColor);
             occupiedColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel occupiedColorPanels[] = {new SplitButtonColorChooserPanel()};
+            AbstractColorChooserPanel[] occupiedColorPanels = {new SplitButtonColorChooserPanel()};
             occupiedColorChooser.setChooserPanels(occupiedColorPanels);
             layout.addItem(new BeanEditItem(occupiedColorChooser, Bundle.getMessage("OccupiedColor"), Bundle.getMessage("OccupiedColorHint")));
 
             extraColorChooser = new JColorChooser(blockExtraColor);
             extraColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel extraColorPanels[] = {new SplitButtonColorChooserPanel()};
+            AbstractColorChooserPanel[] extraColorPanels = {new SplitButtonColorChooserPanel()};
             extraColorChooser.setChooserPanels(extraColorPanels);
             layout.addItem(new BeanEditItem(extraColorChooser, Bundle.getMessage("ExtraColor"), Bundle.getMessage("ExtraColorHint")));
 
@@ -1328,8 +1320,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         return active;
     }
 
-    /**
-     * The code below relates to the layout block routing protocol
+    /*
+      The code below relates to the layout block routing protocol
      */
     /**
      * Set the block metric based upon the track segment that the block is
@@ -1361,8 +1353,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         int mainline = 0;
         int side = 0;
 
-        for (int i = 0; i < ts.size(); i++) {
-            if (ts.get(i).isMainline()) {
+        for (TrackSegment t : ts) {
+            if (t.isMainline()) {
                 mainline++;
             } else {
                 side++;
@@ -1477,22 +1469,21 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             List<LayoutConnectivity> d = auxTools.getConnectivityList(this);
             List<LayoutBlock> attachedBlocks = new ArrayList<>();
 
-            for (int i = 0; i < d.size(); i++) {
-                if (d.get(i).getBlock1() != this) {
-                    attachedBlocks.add(d.get(i).getBlock1());
+            for (LayoutConnectivity connectivity : d) {
+                if (connectivity.getBlock1() != this) {
+                    attachedBlocks.add(connectivity.getBlock1());
                 } else {
-                    attachedBlocks.add(d.get(i).getBlock2());
+                    attachedBlocks.add(connectivity.getBlock2());
                 }
             }
             //Will need to re-look at this to cover both way and single way routes
-            List<LayoutBlock> attachedBlocks2 = attachedBlocks;
-            for (int i = 0; i < attachedBlocks.size(); i++) {
+            for (LayoutBlock attachedBlock : attachedBlocks) {
                 if (enableAddRouteLogging) {
-                    log.info("From {} block is attached {}", this.getDisplayName(), attachedBlocks.get(i).getDisplayName());
+                    log.info("From {} block is attached {}", this.getDisplayName(), attachedBlock.getDisplayName());
                 }
 
-                for (int x = 0; x < attachedBlocks2.size(); x++) {
-                    addThroughPath(attachedBlocks.get(i).getBlock(), attachedBlocks2.get(x).getBlock(), panel);
+                for (LayoutBlock layoutBlock : attachedBlocks) {
+                    addThroughPath(attachedBlock.getBlock(), layoutBlock.getBlock(), panel);
                 }
             }
         }
@@ -1577,9 +1568,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                             }
                         }
                         RoutingPacket newUpdate = new RoutingPacket(REMOVAL, addBlock, -1, -1, -1, -1, getNextPacketID());
-                        neighbours.forEach((adja) -> {
-                            adja.removeRouteAdvertisedToNeighbour(addBlock);
-                        });
+                        neighbours.forEach((adja) -> adja.removeRouteAdvertisedToNeighbour(addBlock));
                         firePropertyChange("routing", null, newUpdate);
                     }
                 } else {
@@ -1613,8 +1602,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             log.info("From {} layout connectivity before {}", this.getDisplayName(), layoutConnectivityBefore);
         }
         if (!layoutConnectivityBefore) {
-            for (int i = 0; i < neighbours.size(); i++) {
-                addThroughPath(neighbours.get(i));
+            for (Adjacencies neighbour : neighbours) {
+                addThroughPath(neighbour);
             }
         }
         /* We need to send our new neighbour our copy of the routing table however
@@ -1723,9 +1712,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     }
                 }
                 RoutingPacket newUpdate = new RoutingPacket(REMOVAL, block, -1, -1, -1, -1, getNextPacketID());
-                neighbours.forEach((adja) -> {
-                    adja.removeRouteAdvertisedToNeighbour(block);
-                });
+                neighbours.forEach((adja) -> adja.removeRouteAdvertisedToNeighbour(block));
                 firePropertyChange("routing", null, newUpdate);
             }
 
@@ -1809,8 +1796,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             return;
         }
 
-        for (int i = 0; i < routes.size(); i++) {
-            Routes ro = routes.get(i);
+        for (Routes ro : new ArrayList<>(routes)) {
             if (enableAddRouteLogging) {
                 log.info("next:" + ro.getNextBlock().getDisplayName() + " dest:" + ro.getDestBlock().getDisplayName());
             }
@@ -1821,15 +1807,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 }
                 if (validFromPath.contains(ro.getDestBlock())) {
                     if (enableAddRouteLogging) {
-                        log.info("From " + this.getDisplayName()
-                                + " route to " + ro.getDestBlock().getDisplayName()
-                                + " we have it with a metric of " + ro.getMetric()
-                                + " we will add our metric of " + metric
-                                + " this will be sent to " + lBnewblock.getDisplayName() + " a");
+                        log.info("From " + this.getDisplayName() + " route to " + ro.getDestBlock().getDisplayName() + " we have it with a metric of " + ro.getMetric() + " we will add our metric of " + metric + " this will be sent to " + lBnewblock.getDisplayName() + " a");
                     } //we added +1 to hop count and our metric.
 
-                    RoutingPacket update = new RoutingPacket(ADDITION, ro.getDestBlock(), ro.getHopCount() + 1,
-                            (ro.getMetric() + metric), (ro.getLength() + block.getLengthMm()), -1, getNextPacketID());
+                    RoutingPacket update = new RoutingPacket(ADDITION, ro.getDestBlock(), ro.getHopCount() + 1, (ro.getMetric() + metric), (ro.getLength() + block.getLengthMm()), -1, getNextPacketID());
                     lBnewblock.addRouteFromNeighbour(this, update);
                 }
             } else {
@@ -1837,11 +1818,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 //route to the neighbour, rather than cycling through them all.
                 if (validFromPath.contains(ro.getNextBlock())) {
                     if (enableAddRouteLogging) {
-                        log.info("From " + this.getDisplayName()
-                                + " route to " + ro.getDestBlock().getDisplayName()
-                                + " we have it with a metric of " + ro.getMetric()
-                                + " we will add our metric of " + metric
-                                + " this will be sent to " + lBnewblock.getDisplayName() + " b");
+                        log.info("From " + this.getDisplayName() + " route to " + ro.getDestBlock().getDisplayName() + " we have it with a metric of " + ro.getMetric() + " we will add our metric of " + metric + " this will be sent to " + lBnewblock.getDisplayName() + " b");
                     } //we added +1 to hop count and our metric.
                     if (adj.advertiseRouteToNeighbour(ro)) {
                         if (enableAddRouteLogging) {
@@ -1849,8 +1826,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                         }
                         //this should keep track of the routes we sent to our neighbour.
                         adj.addRouteAdvertisedToNeighbour(ro);
-                        RoutingPacket update = new RoutingPacket(ADDITION, ro.getDestBlock(), ro.getHopCount() + 1,
-                                (ro.getMetric() + metric), (ro.getLength() + block.getLengthMm()), -1, getNextPacketID());
+                        RoutingPacket update = new RoutingPacket(ADDITION, ro.getDestBlock(), ro.getHopCount() + 1, (ro.getMetric() + metric), (ro.getLength() + block.getLengthMm()), -1, getNextPacketID());
                         lBnewblock.addRouteFromNeighbour(this, update);
                     } else {
                         if (enableAddRouteLogging) {
@@ -1939,6 +1915,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 }
                 LayoutBlock layoutBlockToNotify = InstanceManager.getDefault(
                         LayoutBlockManager.class).getLayoutBlock(neighbours.get(i).getBlock());
+                if (layoutBlockToNotify==null){ // move to provides?
+                    log.error("Unable to notify neighbours for block {}",neighbours.get(i).getBlock());
+                    continue;
+                }
                 getAdjacency(neighbours.get(i).getBlock()).dispose();
                 neighbours.remove(i);
                 layoutBlockToNotify.notifiedNeighbourNoLongerMutual(this);
@@ -2081,9 +2061,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         }
 
         final LayoutBlock neighLBlock = neighbour.getLayoutBlock();
-        Runnable r = () -> {
-            neighLBlock.updateNeighbourPacketFlow(block, flow);
-        };
+        Runnable r = () -> neighLBlock.updateNeighbourPacketFlow(block, flow);
 
         Block neighBlock = neighbour.getBlock();
         int oldPacketFlow = neighbour.getPacketFlow();
@@ -2261,22 +2239,19 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                         log.info(msgPrefix + " do we need to find out if we could of send the route to another neighbour such as?");
                     }
 
-                    for (int i = 0; i < validNeighboursToNotify.size(); i++) {
+                    for (Block value : validNeighboursToNotify) {
                         //If the neighbour has a valid through path to the dest
                         //we will not notify the neighbour of our loss of route
-                        if (!validThroughPath(validNeighboursToNotify.get(i), destBlock)) {
-                            layoutBlock
-                                    = InstanceManager.getDefault(
-                                            LayoutBlockManager.class).
-                                            getLayoutBlock(validNeighboursToNotify.get(i));
+                        if (!validThroughPath(value, destBlock)) {
+                            layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).
+                                    getLayoutBlock(value);
                             if (layoutBlock != null) {
                                 layoutBlock.removeRouteFromNeighbour(this, newUpdate);
                             }
-                            getAdjacency(validNeighboursToNotify.get(i)).removeRouteAdvertisedToNeighbour(routesToRemove.get(j));
+                            getAdjacency(value).removeRouteAdvertisedToNeighbour(routesToRemove.get(j));
                         } else {
                             if (enableDeleteRouteLogging) {
-                                log.info(msgPrefix + validNeighboursToNotify.get(i).getDisplayName()
-                                        + " has a valid path to " + destBlock.getDisplayName());
+                                log.info(msgPrefix + value.getDisplayName() + " has a valid path to " + destBlock.getDisplayName());
                             }
                         }
                     }
@@ -2286,22 +2261,20 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                         log.info(msgPrefix + " routes left to block " + destBlock.getDisplayName());
                     }
 
-                    for (int i = 0; i < validroute.size(); i++) {
+                    for (Routes item : validroute) {
                         //We need to see if we have valid routes.
-                        if (validThroughPath(notifyingblk, validroute.get(i).getNextBlock())) {
+                        if (validThroughPath(notifyingblk, item.getNextBlock())) {
                             if (enableDeleteRouteLogging) {
-                                log.info(msgPrefix + " to " + validroute.get(i).getNextBlock().getDisplayName()
-                                        + " Is a valid route");
+                                log.info(msgPrefix + " to " + item.getNextBlock().getDisplayName() + " Is a valid route");
                             }
                             //Will mark the route for potential removal
-                            validroute.get(i).setMiscFlags(0x02);
+                            item.setMiscFlags(0x02);
                         } else {
                             if (enableDeleteRouteLogging) {
-                                log.info(msgPrefix + " to " + validroute.get(i).getNextBlock().getDisplayName()
-                                        + " Is not a valid route");
+                                log.info(msgPrefix + " to " + item.getNextBlock().getDisplayName() + " Is not a valid route");
                             }
                             //Mark the route to not be removed.
-                            validroute.get(i).setMiscFlags(0x01);
+                            item.setMiscFlags(0x01);
 
                             //Given that the route to this is not valid, we do not want to
                             //be notifying this next block about the loss of route.
@@ -2320,12 +2293,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
                             //Need to cross reference it with the routes that are left.
                             boolean leaveroute = false;
-                            for (int k = 0; k < validroute.size(); k++) {
-                                if (validroute.get(k).getMiscFlags() == 0x01) {
-                                    if (validThroughPath(nextblk, validroute.get(k).getNextBlock())) {
+                            for (Routes value : validroute) {
+                                if (value.getMiscFlags() == 0x01) {
+                                    if (validThroughPath(nextblk, value.getNextBlock())) {
                                         if (enableDeleteRouteLogging) {
-                                            log.info(msgPrefix + " we have a valid path from " + nextblk.getDisplayName()
-                                                    + " to " + validroute.get(k).getNextBlock());
+                                            log.info(msgPrefix + " we have a valid path from " + nextblk.getDisplayName() + " to " + value.getNextBlock());
                                         }
                                         leaveroute = true;
                                     }
@@ -2340,8 +2312,13 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                                             + nextblk.getDisplayName()
                                             + " to remove route ########### haven't found an example of this yet!");
                                 }
+                                if (layoutBlock==null) { // change to provides
+                                    log.error("Unable to fetch block {}",nextblk);
+                                    continue;
+                                }
                                 layoutBlock.removeRouteFromNeighbour(this, newUpdate);
                                 getAdjacency(nextblk).removeRouteAdvertisedToNeighbour(routesToRemove.get(j));
+                                
                             } else {
                                 if (enableDeleteRouteLogging) {
                                     log.info(msgPrefix + " a valid path through exists "
@@ -2377,36 +2354,34 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             log.debug("From " + this.getDisplayName() + " addThroughPathCalled with adj " + adj.getBlock().getDisplayName());
         }
 
-        for (int i = 0; i < neighbours.size(); i++) {
+        for (Adjacencies neighbour : neighbours) {
             //cycle through all the neighbours
-            if (neighbours.get(i).getBlock() != newAdj) {
-                int neighPacketFlow = neighbours.get(i).getPacketFlow();
+            if (neighbour.getBlock() != newAdj) {
+                int neighPacketFlow = neighbour.getPacketFlow();
 
                 if (enableAddRouteLogging) {
-                    log.info("From " + this.getDisplayName() + " our direction: "
-                            + decodePacketFlow(packetFlow) + ", neighbour direction: " + decodePacketFlow(neighPacketFlow));
+                    log.info("From " + this.getDisplayName() + " our direction: " + decodePacketFlow(packetFlow) + ", neighbour direction: " + decodePacketFlow(neighPacketFlow));
                 }
 
                 if ((packetFlow == RXTX) && (neighPacketFlow == RXTX)) {
                     //if both are RXTX then add flow in both directions
-                    addThroughPath(neighbours.get(i).getBlock(), newAdj);
-                    addThroughPath(newAdj, neighbours.get(i).getBlock());
+                    addThroughPath(neighbour.getBlock(), newAdj);
+                    addThroughPath(newAdj, neighbour.getBlock());
                 } else if ((packetFlow == RXONLY) && (neighPacketFlow == TXONLY)) {
-                    addThroughPath(neighbours.get(i).getBlock(), newAdj);
+                    addThroughPath(neighbour.getBlock(), newAdj);
                 } else if ((packetFlow == TXONLY) && (neighPacketFlow == RXONLY)) {
-                    addThroughPath(newAdj, neighbours.get(i).getBlock());
+                    addThroughPath(newAdj, neighbour.getBlock());
                 } else if ((packetFlow == RXTX) && (neighPacketFlow == TXONLY)) {   //was RX
-                    addThroughPath(neighbours.get(i).getBlock(), newAdj);
+                    addThroughPath(neighbour.getBlock(), newAdj);
                 } else if ((packetFlow == RXTX) && (neighPacketFlow == RXONLY)) {   //was TX
-                    addThroughPath(newAdj, neighbours.get(i).getBlock());
+                    addThroughPath(newAdj, neighbour.getBlock());
                 } else if ((packetFlow == RXONLY) && (neighPacketFlow == RXTX)) {
-                    addThroughPath(neighbours.get(i).getBlock(), newAdj);
+                    addThroughPath(neighbour.getBlock(), newAdj);
                 } else if ((packetFlow == TXONLY) && (neighPacketFlow == RXTX)) {
-                    addThroughPath(newAdj, neighbours.get(i).getBlock());
+                    addThroughPath(newAdj, neighbour.getBlock());
                 } else {
                     if (enableAddRouteLogging) {
-                        log.info("Invalid combination " + decodePacketFlow(packetFlow)
-                                + " and " + decodePacketFlow(neighPacketFlow));
+                        log.info("Invalid combination " + decodePacketFlow(packetFlow) + " and " + decodePacketFlow(neighPacketFlow));
                     }
                 }
             }
@@ -2490,9 +2465,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         //Initally check to make sure that the through path doesn't already exist.
         //no point in going through the checks if the path already exists.
         boolean add = true;
-        for (int i = 0; i < throughPaths.size(); i++) {
-            if (throughPaths.get(i).getSourceBlock() == srcBlock) {
-                if (throughPaths.get(i).getDestinationBlock() == dstBlock) {
+        for (ThroughPaths throughPath : throughPaths) {
+            if (throughPath.getSourceBlock() == srcBlock) {
+                if (throughPath.getDestinationBlock() == dstBlock) {
                     add = false;
                 }
             }
@@ -2589,8 +2564,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             }
             Set<LayoutTurnout> set = new HashSet<>();
 
-            for (int i = 0; i < stod.size(); i++) {
-                boolean val = set.add(stod.get(i).getObject());
+            for (LayoutTrackExpectedState<LayoutTurnout> layoutTurnoutLayoutTrackExpectedState : stod) {
+                boolean val = set.add(layoutTurnoutLayoutTrackExpectedState.getObject());
                 if (val == false) {
                     //Duplicate found. will not add
                     return;
@@ -2622,15 +2597,15 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     log.info("All turnouts are unique so potentially a valid path");
                 }
                 boolean allowAddition = false;
-                for (int i = 0; i < maxt.size(); i++) {
-                    LayoutTurnout turn = maxt.get(i).getObject();
-                    if (turn.type == LayoutTurnout.DOUBLE_XOVER) {
+                for (LayoutTrackExpectedState<LayoutTurnout> layoutTurnoutLayoutTrackExpectedState : maxt) {
+                    LayoutTurnout turn = layoutTurnoutLayoutTrackExpectedState.getObject();
+                    if (turn.type == LayoutTurnout.TurnoutType.DOUBLE_XOVER) {
                         allowAddition = true;
                         //The double crossover gets reported in the opposite setting.
-                        if (maxt.get(i).getExpectedState() == 2) {
-                            maxt.get(i).setExpectedState(4);
+                        if (layoutTurnoutLayoutTrackExpectedState.getExpectedState() == 2) {
+                            layoutTurnoutLayoutTrackExpectedState.setExpectedState(4);
                         } else {
-                            maxt.get(i).setExpectedState(2);
+                            layoutTurnoutLayoutTrackExpectedState.setExpectedState(2);
                         }
                     }
                 }
@@ -2652,16 +2627,16 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         List<Path> paths = block.getPaths();
         Path srcPath = null;
 
-        for (int i = 0; i < paths.size(); i++) {
-            if (paths.get(i).getBlock() == srcBlock) {
-                srcPath = paths.get(i);
+        for (Path item : paths) {
+            if (item.getBlock() == srcBlock) {
+                srcPath = item;
             }
         }
         Path dstPath = null;
 
-        for (int i = 0; i < paths.size(); i++) {
-            if (paths.get(i).getBlock() == dstBlock) {
-                dstPath = paths.get(i);
+        for (Path value : paths) {
+            if (value.getBlock() == dstBlock) {
+                dstPath = value;
             }
         }
         ThroughPaths path = new ThroughPaths(srcBlock, srcPath, dstBlock, dstPath);
@@ -2769,10 +2744,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     public List<Block> getActiveNextBlocks(Block source) {
         List<Block> currentPath = new ArrayList<>();
 
-        for (int i = 0; i < throughPaths.size(); i++) {
-            ThroughPaths path = throughPaths.get(i);
+        for (ThroughPaths path : throughPaths) {
             if ((path.getSourceBlock() == source) && (path.isPathActive())) {
-                currentPath.add(throughPaths.get(i).getDestinationBlock());
+                currentPath.add(path.getDestinationBlock());
             }
         }
         return currentPath;
@@ -2787,12 +2761,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     public boolean validThroughPath(Block sourceBlock, Block destinationBlock) {
-        for (int i = 0; i < throughPaths.size(); i++) {
-            if ((throughPaths.get(i).getSourceBlock() == sourceBlock)
-                    && (throughPaths.get(i).getDestinationBlock() == destinationBlock)) {
+        for (ThroughPaths throughPath : throughPaths) {
+            if ((throughPath.getSourceBlock() == sourceBlock) && (throughPath.getDestinationBlock() == destinationBlock)) {
                 return true;
-            } else if ((throughPaths.get(i).getSourceBlock() == destinationBlock)
-                    && (throughPaths.get(i).getDestinationBlock() == sourceBlock)) {
+            } else if ((throughPath.getSourceBlock() == destinationBlock) && (throughPath.getDestinationBlock() == sourceBlock)) {
                 return true;
             }
         }
@@ -2870,11 +2842,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         log.info("");
         log.info("Adjacencies for block " + this.getDisplayName());
         log.info("Neighbour, Direction, mutual, relationship, metric");
-        for (int i = 0; i < neighbours.size(); i++) {
-            log.info(neighbours.get(i).getBlock().getDisplayName() + ", "
-                    + Path.decodeDirection(neighbours.get(i).getDirection()) + ", "
-                    + neighbours.get(i).isMutual() + ", " + decodePacketFlow(neighbours.get(i).getPacketFlow())
-                    + ", " + neighbours.get(i).getMetric());
+        for (Adjacencies neighbour : neighbours) {
+            log.info(neighbour.getBlock().getDisplayName() + ", " + Path.decodeDirection(neighbour.getDirection()) + ", " + neighbour.isMutual() + ", " + decodePacketFlow(neighbour.getPacketFlow()) + ", " + neighbour.getMetric());
         }
     }
 
@@ -2910,11 +2879,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     public void printRoutes(String inBlockName) {
         log.info("Routes for block " + this.getDisplayName());
         log.info("Our Block, Destination, Next Block, Hop Count, Direction, Metric");
-        for (int i = 0; i < routes.size(); i++) {
-            if (routes.get(i).getDestBlock().getDisplayName().equals(inBlockName)) {
-                log.info("From " + this.getDisplayName() + ", " + (routes.get(i).getDestBlock()).getDisplayName()
-                        + ", " + (routes.get(i).getNextBlock()).getDisplayName() + ", " + routes.get(i).getHopCount() + ", "
-                        + Path.decodeDirection(routes.get(i).getDirection()) + ", " + routes.get(i).getMetric());
+        for (Routes route : routes) {
+            if (route.getDestBlock().getDisplayName().equals(inBlockName)) {
+                log.info("From " + this.getDisplayName() + ", " + (route.getDestBlock()).getDisplayName() + ", " + (route.getNextBlock()).getDisplayName() + ", " + route.getHopCount() + ", " + Path.decodeDirection(route.getDirection()) + ", " + route.getMetric());
             }
         }
     }
@@ -3143,26 +3110,26 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     @Nonnull
     List<Routes> getRouteByNeighbour(Block blk) {
         List<Routes> rtr = new ArrayList<>();
-        for (int i = 0; i < routes.size(); i++) {
-            if (routes.get(i).getNextBlock() == blk) {
-                rtr.add(routes.get(i));
+        for (Routes route : routes) {
+            if (route.getNextBlock() == blk) {
+                rtr.add(route);
             }
         }
         return rtr;
     }
 
     int getAdjacencyPacketFlow(Block blk) {
-        for (int i = 0; i < neighbours.size(); i++) {
-            if (neighbours.get(i).getBlock() == blk) {
-                return neighbours.get(i).getPacketFlow();
+        for (Adjacencies neighbour : neighbours) {
+            if (neighbour.getBlock() == blk) {
+                return neighbour.getPacketFlow();
             }
         }
         return -1;
     }
 
     boolean isValidNeighbour(Block blk) {
-        for (int i = 0; i < neighbours.size(); i++) {
-            if (neighbours.get(i).getBlock() == blk) {
+        for (Adjacencies neighbour : neighbours) {
+            if (neighbour.getBlock() == blk) {
                 return true;
             }
         }
@@ -3313,9 +3280,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      */
     List<Routes> getDestRoutes(Block dstBlock) {
         List<Routes> rtr = new ArrayList<>();
-        for (int i = 0; i < routes.size(); i++) {
-            if (routes.get(i).getDestBlock() == dstBlock) {
-                rtr.add(routes.get(i));
+        for (Routes route : routes) {
+            if (route.getDestBlock() == dstBlock) {
+                rtr.add(route);
             }
         }
         return rtr;
@@ -3329,9 +3296,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      */
     List<Routes> getNextRoutes(Block nxtBlock) {
         List<Routes> rtr = new ArrayList<>();
-        for (int i = 0; i < routes.size(); i++) {
-            if (routes.get(i).getNextBlock() == nxtBlock) {
-                rtr.add(routes.get(i));
+        for (Routes route : routes) {
+            if (route.getNextBlock() == nxtBlock) {
+                rtr.add(route);
             }
         }
         return rtr;
@@ -3475,22 +3442,17 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
                         //neighbourRoutes, contains all the routes that have been advertised by the neighbour
                         //that will need to have their metric updated to reflect the change.
-                        for (int i = 0; i < neighbourRoute.size(); i++) {
-                            Routes nRo = neighbourRoute.get(i);
-
+                        for (Routes nRo : neighbourRoute) {
                             //Need to remove old metric to the neigbour, then add the new one on
                             float updateLength = nRo.getLength();
                             updateLength = (updateLength - oldLength) + length;
 
                             if (enableUpdateRouteLogging) {
-                                log.info("From " + this.getDisplayName() + " update metric for route "
-                                        + nRo.getDestBlock().getDisplayName() + " from " + nRo.getLength() + " to "
-                                        + updateLength);
+                                log.info("From " + this.getDisplayName() + " update metric for route " + nRo.getDestBlock().getDisplayName() + " from " + nRo.getLength() + " to " + updateLength);
                             }
                             nRo.setLength(updateLength);
                             List<Block> messageRecipients = getThroughPathDestinationBySource(srcblk);
-                            RoutingPacket newUpdate = new RoutingPacket(UPDATE, nRo.getDestBlock(), -1, -1, updateLength
-                                    + block.getLengthMm(), -1, getNextPacketID());
+                            RoutingPacket newUpdate = new RoutingPacket(UPDATE, nRo.getDestBlock(), -1, -1, updateLength + block.getLengthMm(), -1, getNextPacketID());
                             updateRoutesToNeighbours(messageRecipients, nRo, newUpdate);
                         }
                     }
@@ -3537,22 +3499,17 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
                         //neighbourRoutes, contains all the routes that have been advertised by the neighbour that
                         //will need to have their metric updated to reflect the change.
-                        for (int i = 0; i < neighbourRoute.size(); i++) {
-                            Routes nRo = neighbourRoute.get(i);
-
+                        for (Routes nRo : neighbourRoute) {
                             //Need to remove old metric to the neigbour, then add the new one on
                             int updatemet = nRo.getMetric();
                             updatemet = (updatemet - oldmetric) + packetmetric;
 
                             if (enableUpdateRouteLogging) {
-                                log.info("From " + this.getDisplayName() + " update metric for route "
-                                        + nRo.getDestBlock().getDisplayName() + " from " + nRo.getMetric() + " to " + updatemet);
+                                log.info("From " + this.getDisplayName() + " update metric for route " + nRo.getDestBlock().getDisplayName() + " from " + nRo.getMetric() + " to " + updatemet);
                             }
                             nRo.setMetric(updatemet);
                             List<Block> messageRecipients = getThroughPathDestinationBySource(srcblk);
-                            RoutingPacket newUpdate = new RoutingPacket(UPDATE, nRo.getDestBlock(),
-                                    hopCount, updatemet + metric, -1, -1,
-                                    getNextPacketID());
+                            RoutingPacket newUpdate = new RoutingPacket(UPDATE, nRo.getDestBlock(), hopCount, updatemet + metric, -1, -1, getNextPacketID());
                             updateRoutesToNeighbours(messageRecipients, nRo, newUpdate);
                         }
                     }
@@ -3603,12 +3560,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     void updateRoutesToNeighbours(List<Block> messageRecipients, Routes ro, RoutingPacket update) {
-        for (int i = 0; i < messageRecipients.size(); i++) {
-            Adjacencies adj = getAdjacency(messageRecipients.get(i));
+        for (Block messageRecipient : messageRecipients) {
+            Adjacencies adj = getAdjacency(messageRecipient);
             if (adj.advertiseRouteToNeighbour(ro)) {
                 adj.addRouteAdvertisedToNeighbour(ro);
-                LayoutBlock recipient = InstanceManager.getDefault(
-                        LayoutBlockManager.class).getLayoutBlock(messageRecipients.get(i));
+                LayoutBlock recipient = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(messageRecipient);
                 if (recipient != null) {
                     recipient.updateRoutingInfo(this, update);
                 }
@@ -3717,26 +3673,23 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             log.info("From " + this.getDisplayName() + " ===== valid from size path "
                     + validFromPath.size() + " ==== (addroutetoneigh)");
 
-            validFromPath.forEach((valid) -> {
-                log.info(valid.getDisplayName());
-            });
+            validFromPath.forEach((valid) -> log.info(valid.getDisplayName()));
             log.info("Next Hop " + nextHop.getDisplayName());
         }
         RoutingPacket update = new RoutingPacket(ADDITION, ro.getDestBlock(), ro.getHopCount() + 1,
                 ro.getMetric() + metric,
                 (ro.getLength() + getBlock().getLengthMm()), -1, getNextPacketID());
 
-        for (int i = 0; i < validFromPath.size(); i++) {
-            Adjacencies adj = getAdjacency(validFromPath.get(i).getBlock());
+        for (LayoutBlock layoutBlock : validFromPath) {
+            Adjacencies adj = getAdjacency(layoutBlock.getBlock());
             if (adj.advertiseRouteToNeighbour(ro)) {
                 //getBestRouteByHop(destBlock).getHopCount()+1, ((getBestRouteByMetric(destBlock).getMetric())+metric),
                 //((getBestRouteByMetric(destBlock).getMetric())+block.getLengthMm())
                 if (enableAddRouteLogging) {
-                    log.info("From " + this.getDisplayName() + " Sending update to "
-                            + validFromPath.get(i).getDisplayName() + " As this has a better hop count or metric");
+                    log.info("From " + this.getDisplayName() + " Sending update to " + layoutBlock.getDisplayName() + " As this has a better hop count or metric");
                 }
                 adj.addRouteAdvertisedToNeighbour(ro);
-                validFromPath.get(i).addRouteFromNeighbour(this, update);
+                layoutBlock.addRouteFromNeighbour(this, update);
             }
         }
     }
@@ -3830,18 +3783,18 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     public int getNeighbourDirection(Block neighbourBlock) {
-        for (int i = 0; i < neighbours.size(); i++) {
-            if (neighbours.get(i).getBlock() == neighbourBlock) {
-                return neighbours.get(i).getDirection();
+        for (Adjacencies neighbour : neighbours) {
+            if (neighbour.getBlock() == neighbourBlock) {
+                return neighbour.getDirection();
             }
         }
         return Path.NONE;
     }
 
     Adjacencies getAdjacency(Block blk) {
-        for (int i = 0; i < neighbours.size(); i++) {
-            if (neighbours.get(i).getBlock() == blk) {
-                return neighbours.get(i);
+        for (Adjacencies neighbour : neighbours) {
+            if (neighbour.getBlock() == blk) {
+                return neighbour;
             }
         }
         return null;
@@ -4299,10 +4252,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             return 1;
         }
 
-        for (int i = 0; i < routes.size(); i++) {
-            if (routes.get(i).getDestBlock() == destination) {
-                if (routes.get(i).getNextBlock() == nextBlock) {
-                    return routes.get(i).getHopCount();
+        for (Routes route : routes) {
+            if (route.getDestBlock() == destination) {
+                if (route.getNextBlock() == nextBlock) {
+                    return route.getHopCount();
                 }
             }
         }
@@ -4326,10 +4279,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             return 1;
         }
 
-        for (int i = 0; i < routes.size(); i++) {
-            if (routes.get(i).getDestBlock() == destination) {
-                if (routes.get(i).getNextBlock() == nextBlock) {
-                    return routes.get(i).getMetric();
+        for (Routes route : routes) {
+            if (route.getDestBlock() == destination) {
+                if (route.getNextBlock() == nextBlock) {
+                    return route.getMetric();
                 }
             }
         }
@@ -4353,10 +4306,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             return 1;
         }
 
-        for (int i = 0; i < routes.size(); i++) {
-            if (routes.get(i).getDestBlock() == destination) {
-                if (routes.get(i).getNextBlock() == nextBlock) {
-                    return routes.get(i).getLength();
+        for (Routes route : routes) {
+            if (route.getDestBlock() == destination) {
+                if (route.getNextBlock() == nextBlock) {
+                    return route.getLength();
                 }
             }
         }
@@ -4571,9 +4524,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         void setTurnoutList(List<LayoutTrackExpectedState<LayoutTurnout>> turnouts) {
             if (!_turnouts.isEmpty()) {
                 Set<Turnout> en = _turnouts.keySet();
-                en.forEach((listTurnout) -> {
-                    listTurnout.removePropertyChangeListener(this);
-                });
+                en.forEach((listTurnout) -> listTurnout.removePropertyChangeListener(this));
             }
 
             // If we have no turnouts in this path, then this path is always active
@@ -4584,10 +4535,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 return;
             }
             _turnouts = new HashMap<>(turnouts.size());
-            for (int i = 0; i < turnouts.size(); i++) {
-                if (turnouts.get(i).getObject() instanceof LayoutSlip) {
-                    int slipState = turnouts.get(i).getExpectedState();
-                    LayoutSlip ls = (LayoutSlip) turnouts.get(i).getObject();
+            for (LayoutTrackExpectedState<LayoutTurnout> turnout : turnouts) {
+                if (turnout.getObject() instanceof LayoutSlip) {
+                    int slipState = turnout.getExpectedState();
+                    LayoutSlip ls = (LayoutSlip) turnout.getObject();
                     int taState = ls.getTurnoutState(slipState);
                     _turnouts.put(ls.getTurnout(), taState);
                     ls.getTurnout().addPropertyChangeListener(this, ls.getTurnoutName(), "Layout Block Routing");
@@ -4596,9 +4547,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     _turnouts.put(ls.getTurnoutB(), tbState);
                     ls.getTurnoutB().addPropertyChangeListener(this, ls.getTurnoutBName(), "Layout Block Routing");
                 } else {
-                    LayoutTurnout lt = turnouts.get(i).getObject();
+                    LayoutTurnout lt = turnout.getObject();
                     if (lt.getTurnout() != null) {
-                        _turnouts.put(lt.getTurnout(), turnouts.get(i).getExpectedState());
+                        _turnouts.put(lt.getTurnout(), turnout.getExpectedState());
                         lt.getTurnout().addPropertyChangeListener(this, lt.getTurnoutName(), "Layout Block Routing");
                     } else {
                         log.error("{} has no physical turnout allocated, block = {}", lt, block.getDisplayName());
@@ -4640,9 +4591,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     List<Block> getThroughPathSourceByDestination(Block dest) {
         List<Block> a = new ArrayList<>();
 
-        for (int i = 0; i < throughPaths.size(); i++) {
-            if (throughPaths.get(i).getDestinationBlock() == dest) {
-                a.add(throughPaths.get(i).getSourceBlock());
+        for (ThroughPaths throughPath : throughPaths) {
+            if (throughPath.getDestinationBlock() == dest) {
+                a.add(throughPath.getSourceBlock());
             }
         }
         return a;
@@ -4651,9 +4602,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     List<Block> getThroughPathDestinationBySource(Block source) {
         List<Block> a = new ArrayList<>();
 
-        for (int i = 0; i < throughPaths.size(); i++) {
-            if (throughPaths.get(i).getSourceBlock() == source) {
-                a.add(throughPaths.get(i).getDestinationBlock());
+        for (ThroughPaths throughPath : throughPaths) {
+            if (throughPath.getSourceBlock() == source) {
+                a.add(throughPath.getDestinationBlock());
             }
         }
         return a;
@@ -4712,9 +4663,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             boolean SourceInUse = false;
             boolean DestinationInUse = false;
 
-            for (int i = 0; i < activePaths.size(); i++) {
-                Block testSour = activePaths.get(i).getSourceBlock();
-                Block testDest = activePaths.get(i).getDestinationBlock();
+            for (ThroughPaths activePath : activePaths) {
+                Block testSour = activePath.getSourceBlock();
+                Block testDest = activePath.getDestinationBlock();
                 if ((testSour == tp.getSourceBlock()) || (testDest == tp.getSourceBlock())) {
                     SourceInUse = true;
                 }
@@ -4745,9 +4696,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      */
     void setRoutesValid(Block nxtHopActive, boolean state) {
         List<Routes> rtr = getRouteByNeighbour(nxtHopActive);
-        rtr.forEach((rt) -> {
-            rt.setValidCurrentRoute(state);
-        });
+        rtr.forEach((rt) -> rt.setValidCurrentRoute(state));
     }
 
     @Override

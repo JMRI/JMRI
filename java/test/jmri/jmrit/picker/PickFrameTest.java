@@ -1,6 +1,9 @@
 package jmri.jmrit.picker;
 
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 import org.junit.*;
@@ -71,6 +74,7 @@ public class PickFrameTest extends JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 }

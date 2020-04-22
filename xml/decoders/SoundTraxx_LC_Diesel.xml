@@ -14,6 +14,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="8" lastUpdated="20050817"/>
   <version author="Walter Thompson wsthompson@earthlink.net" version="10" lastUpdated="20080414"/>
+  <version author="Michael Mosher" version="11" lastUpdated="20200415"/>
   <!-- version 4: updates to minOut usage, function mapping -->
   <!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
   <!-- version 6: rename for tree structure -->
@@ -22,6 +23,7 @@
   <!-- version 9: (20050817 BobJ): numFns corrected from 8 to 10 -->
   <!-- Version 10 author Walter Thompson wsthompson@earthlink.net 20080412 -->
   <!--            added Reset option -->
+  <!-- version 11: add CV59 -->
   <decoder>
     <family name="LC Diesel decoders" mfg="SoundTraxx (Throttle-Up)">
       <model model="100LC Diesel" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305">
@@ -566,6 +568,16 @@
           </enumChoice>
         </enumVal>
         <label>Reverse light F0R behavior</label>
+      </variable>
+      <variable CV="59" mask="XXXXVVVV" item="Global lighting option 2" comment="0 is fast, 15 is slow, 4 is recommended for start">
+        <decVal max="15"/>
+        <label>Hyperlight flash rate</label>
+        <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
+      </variable>
+      <variable CV="59" mask="VVVVXXXX" item="Global lighting option 3" comment="0-15 seconds">
+        <decVal max="15"/>
+        <label>Grade crossing logic hold time</label>
+        <comment>0-15 seconds</comment>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>

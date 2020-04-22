@@ -957,6 +957,7 @@ public class ConditionalVariableTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

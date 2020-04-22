@@ -3,6 +3,7 @@ package jmri.jmrix.loconet;
 import jmri.BlockManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.SignalMastManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -73,6 +74,7 @@ public class LnCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
     public void tearDown() {
         cs.dispose(); // verify no exceptions
         cs = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

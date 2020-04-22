@@ -541,6 +541,9 @@ public class Maintenance {
             // get the next Logix
             String sName = iter1.next();
             jmri.jmrit.logix.OBlock block = oBlockManager.getBySystemName(sName);
+            if (block==null){
+                continue;
+            }
             String uName = block.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
                     new Object[]{" ", Bundle.getMessage("BeanNameOBlock"), uName, sName});
@@ -1038,6 +1041,9 @@ public class Maintenance {
         while (iter1.hasNext()) {
             String sName = iter1.next();
             Logix x = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(sName);
+            if (x == null){
+                continue;
+            }
             for (int i = 0; i < x.getNumConditionals(); i++) {
                 sName = x.getConditionalByNumberOrder(i);
                 sysNameList.remove(sName);

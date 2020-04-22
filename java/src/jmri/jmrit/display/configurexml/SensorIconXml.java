@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SensorIconXml extends PositionableLabelXml {
 
-    static final HashMap<String, String> _nameMap = new HashMap<String, String>();
+    static final HashMap<String, String> _nameMap = new HashMap<>();
 
     public SensorIconXml() {
         // map previous store names to property key names

@@ -370,6 +370,7 @@ public class InstanceManagerTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

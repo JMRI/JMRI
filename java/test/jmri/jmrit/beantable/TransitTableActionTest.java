@@ -8,6 +8,7 @@ import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Section;
 import jmri.SectionManager;
+import jmri.ShutDownManager;
 import jmri.Transit;
 import jmri.TransitSection;
 import jmri.util.JUnitUtil;
@@ -126,6 +127,7 @@ public class TransitTableActionTest extends AbstractTableActionBase<Transit> {
     @Override
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

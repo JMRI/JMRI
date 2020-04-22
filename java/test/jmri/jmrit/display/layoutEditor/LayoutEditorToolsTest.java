@@ -79,10 +79,10 @@ public class LayoutEditorToolsTest {
     @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         //create a new Layout Turnout
         layoutTurnout = new LayoutTurnout("Right Hand",
-                LayoutTurnout.RH_TURNOUT, new Point2D.Double(150.0, 100.0),
+                LayoutTurnout.TurnoutType.RH_TURNOUT, new Point2D.Double(150.0, 100.0),
                 33.0, 1.1, 1.2, layoutEditor);
         Assert.assertNotNull("RH turnout for testSetSignalsAtTurnoutWithDone", layoutTurnout);
         layoutEditor.getLayoutTracks().add(layoutTurnout);
@@ -265,16 +265,16 @@ public class LayoutEditorToolsTest {
 
         //define connection
         String uName = "T" + (idx + 1);
-        int types[] = {LayoutTrack.TURNOUT_B, LayoutTrack.TURNOUT_C, LayoutTrack.TURNOUT_A, LayoutTrack.TURNOUT_A};
+        LayoutEditor.HitPointType types[] = {LayoutEditor.HitPointType.TURNOUT_B, LayoutEditor.HitPointType.TURNOUT_C, LayoutEditor.HitPointType.TURNOUT_A, LayoutEditor.HitPointType.TURNOUT_A};
         PositionablePoint[] positionablePoints = {positionablePoint2, positionablePoint3, positionablePoint1, positionablePoint1};
         TrackSegment trackSegment = new TrackSegment(uName,
                 layoutTurnout, types[idx],
-                positionablePoints[idx], LayoutTrack.POS_POINT,
+                positionablePoints[idx], LayoutEditor.HitPointType.POS_POINT,
                 false, false, layoutEditor);
         Assert.assertNotNull("trackSegment not null", trackSegment);
         layoutEditor.getLayoutTracks().add(trackSegment);
         try {
-            layoutTurnout.setConnection(types[idx], trackSegment, LayoutTrack.TRACK);
+            layoutTurnout.setConnection(types[idx], trackSegment, LayoutEditor.HitPointType.TRACK);
         } catch (JmriException ex) {
             Logger.getLogger(LayoutEditorToolsTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -374,7 +374,7 @@ public class LayoutEditorToolsTest {
         ThreadingUtil.runOnLayoutEventually(() -> {
             Point2D point = new Point2D.Double(150.0, 100.0);
             LayoutTurnout to = new LayoutTurnout("Right Hand",
-                    LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
+                    LayoutTurnout.TurnoutType.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
             to.setTurnout(turnouts.get(0).getSystemName());
             layoutEditor.getLayoutTracks().add(to);
 
@@ -398,7 +398,7 @@ public class LayoutEditorToolsTest {
         ThreadingUtil.runOnLayoutEventually(() -> {
             Point2D point = new Point2D.Double(150.0, 100.0);
             LayoutTurnout to = new LayoutTurnout("Right Hand",
-                    LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
+                    LayoutTurnout.TurnoutType.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
             to.setTurnout(turnouts.get(0).getSystemName());
             layoutEditor.getLayoutTracks().add(to);
             //this causes a "set Signal Heads Turnout" dialog to be displayed.
@@ -573,6 +573,7 @@ public class LayoutEditorToolsTest {
 
     /**
      * convenience method for accessing...
+     *
      * @return the layout editor's toolbar panel
      */
     @Nonnull
@@ -621,7 +622,7 @@ public class LayoutEditorToolsTest {
             for (int i = 0; i < 5; i++) {
                 String sName = "IH" + i;
                 String uName = "signal head " + i;
-                VirtualSignalHead signalHead = new VirtualSignalHead(sName,uName);
+                VirtualSignalHead signalHead = new VirtualSignalHead(sName, uName);
                 InstanceManager.getDefault(SignalHeadManager.class).register(signalHead);
             }
             signalHeads = InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().stream().collect(Collectors.toList());
@@ -645,6 +646,7 @@ public class LayoutEditorToolsTest {
         turnouts = null;
         signalHeads = null;
         sensors = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

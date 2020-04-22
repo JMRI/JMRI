@@ -1,6 +1,9 @@
 package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
@@ -45,6 +48,7 @@ public class EditCircuitFrameTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

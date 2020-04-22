@@ -182,7 +182,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
     # Retrieve DOUBLE_XOVER constant, depending on JMRI Version
     # (LayoutTurnout class was moved to a new package, starting with JMRI 2.9.3)
     try :
-        DOUBLE_XOVER = jmri.jmrit.display.layoutEditor.LayoutTurnout.DOUBLE_XOVER
+        DOUBLE_XOVER = jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType.DOUBLE_XOVER
     except :
         DOUBLE_XOVER = jmri.jmrit.display.LayoutTurnout.DOUBLE_XOVER
 

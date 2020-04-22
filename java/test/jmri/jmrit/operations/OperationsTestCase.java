@@ -3,6 +3,7 @@ package jmri.jmrit.operations;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
+import jmri.BlockManager;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -85,6 +86,7 @@ public class OperationsTestCase {
             }
         }
         
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         if (InstanceManager.containsDefault(ShutDownManager.class)) {
             ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
             List<ShutDownTask> list = sm.tasks();

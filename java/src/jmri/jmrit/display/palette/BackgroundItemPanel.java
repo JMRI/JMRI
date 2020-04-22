@@ -2,7 +2,6 @@ package jmri.jmrit.display.palette;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import jmri.util.swing.JmriColorChooser;
@@ -67,14 +66,11 @@ public class BackgroundItemPanel extends IconItemPanel {
     protected JPanel makeBottomPanel(ActionListener doneAction) {
         JPanel bottomPanel =  super.makeBottomPanel(doneAction);
         _colorButton = new JButton(Bundle.getMessage("ButtonShowColorPanel"));
-        _colorButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                if (_colorPanel.isVisible()) {
-                    hideColorPanel();
-                } else {
-                    showColorPanel();
-                }
+        _colorButton.addActionListener(a -> {
+            if (_colorPanel.isVisible()) {
+                hideColorPanel();
+            } else {
+                showColorPanel();
             }
         });
         _colorButton.setToolTipText(Bundle.getMessage("ToolTipCatalog"));
@@ -122,14 +118,11 @@ public class BackgroundItemPanel extends IconItemPanel {
     protected void initLinkPanel() {
         JPanel bottomPanel = new JPanel();
         JButton backgroundButton = new JButton(Bundle.getMessage("ButtonBackgroundColor"));
-        backgroundButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                if (!_colorPanel.isVisible()) {
-                    showColorPanel();
-                } else {
-                    setColor();
-                }
+        backgroundButton.addActionListener(a -> {
+            if (!_colorPanel.isVisible()) {
+                showColorPanel();
+            } else {
+                setColor();
             }
         });
         backgroundButton.setToolTipText(Bundle.getMessage("ToColorBackground"));
@@ -141,9 +134,7 @@ public class BackgroundItemPanel extends IconItemPanel {
         JPanel panel =new JPanel();
         _chooser = new JColorChooser(_frame.getCurrentColor());
         _chooser.setPreviewPanel(new JPanel());
-        _chooser.getSelectionModel().addChangeListener((ChangeEvent e) -> {
-            colorChange();
-        });
+        _chooser.getSelectionModel().addChangeListener((ChangeEvent e) -> colorChange());
         _chooser.setColor(_frame.getCurrentColor());
         _chooser = JmriColorChooser.extendColorChooser(_chooser);
         panel.add(_chooser);

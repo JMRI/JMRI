@@ -18,10 +18,10 @@ import jmri.jmrit.logix.OBlock;
 
 public class LengthPanel extends JPanel
 {
-    private OBlock _block;
+    private final OBlock _block;
     private float _length;
-    private JTextField _lengthField;
-    private JToggleButton _units;
+    private final JTextField _lengthField;
+    private final JToggleButton _units;
 
     LengthPanel(OBlock block, String label) {
         _block = block;
@@ -35,9 +35,7 @@ public class LengthPanel extends JPanel
         _lengthField.setPreferredSize(new Dimension(100, _lengthField.getPreferredSize().height));
         _units = new JToggleButton("", !_block.isMetric());
         _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
-        _units.addActionListener((ActionEvent event) -> {
-            changeUnits();
-        });
+        _units.addActionListener((ActionEvent event) -> changeUnits());
         pp.add(_units);
         add(pp);
     }
