@@ -24,6 +24,16 @@ public class SchedulesByLoadFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(t);
 
     }
+    
+    @Test
+    public void testSchedulesByLoadFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SchedulesByLoadFrame f = new SchedulesByLoadFrame();
+        Assert.assertNotNull(f);
+
+        // TODO improve test
+        JUnitUtil.dispose(f);
+    }
 
     // private final static Logger log = LoggerFactory.getLogger(SchedulesByLoadFrameTest.class);
 
