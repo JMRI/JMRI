@@ -9,10 +9,7 @@ import jmri.JmriException;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
 import jmri.Turnout;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Abstract base class for Turnout tests in specific jmrix.* packages
@@ -25,10 +22,20 @@ import org.junit.Test;
  */
 public abstract class AbstractTurnoutTestBase {
 
-    // implementing classes must provide these abstract members:
+    /**
+     * Implementing classes must overload to load t with actual object; create scaffolds as needed
+     */
     @Before
-    abstract public void setUp();    	// load t with actual object; create scaffolds as needed
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
 
+    @After
+    public void tearDown() {
+        t = null; // to save space, as JU4 doesn't garbage collect this object
+        JUnitUtil.tearDown();
+    }
+    
     /** 
      * @return number of listeners registered with the TrafficController by the object under test
      */
