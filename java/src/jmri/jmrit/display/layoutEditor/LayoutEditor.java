@@ -4727,7 +4727,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         if (findLayoutTracksHitPoint(dLoc)) {
             //log.debug("foundTrack: {}", foundTrack);
-            if (foundHitPointType.isControlHitType()) {
+            if (HitPointType.isControlHitType(foundHitPointType)) {
                 _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             } else {
                 _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
