@@ -172,7 +172,7 @@ public class JUnitUtil {
     /**
      * JMRI standard setUp for tests that mock the InstanceManager. This should be the first line in the {@code @Before}
      * annotated method if the tests mock the InstanceManager.
-     * One or the other of {@link #setUp()} or {@link }#setUpLoggingAndCommonProperties()} must
+     * One or the other of {@link #setUp()} or {@link #setUpLoggingAndCommonProperties()} must
      * be present in the {@code @Before} routine.
      */
     public static void setUpLoggingAndCommonProperties() {
@@ -264,7 +264,7 @@ public class JUnitUtil {
     /**
      * JMRI standard setUp for tests. This should be the first line in the {@code @Before}
      * annotated method if the tests do not mock the InstanceManager.
-     * One or the other of {@link #setUp()} or {@link }#setUpLoggingAndCommonProperties()} must
+     * One or the other of {@link #setUp()} or {@link #setUpLoggingAndCommonProperties()} must
      * be present in the {@code @Before} routine.
      */
     public static void setUp() {
