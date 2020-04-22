@@ -37,7 +37,6 @@ public class JMRIClientComponentFactoryTest {
 
     @After
     public void tearDown() {
-        // JUnitUtil.tearDown();
-        // tc = null;
+        JUnitUtil.tearDown();
     }
 }
