@@ -274,7 +274,7 @@ public class LayoutEditorAuxTools {
                         log.warn("Did not decode lc.getConnectedType() of {}", lc.getConnectedType());  // NOI18N
                     }
                 } // is this Track Segment connected to the continuing track of a RH_XOVER or LH_XOVER?
-                else if (LayoutEditor.HitPointType.isTurnoutHitType(lc.getConnectedType())
+                else if (lc.getConnectedType().isTurnoutHitType()
                         && ((((LayoutTurnout) prevConnection).getTurnoutType() == LayoutTurnout.TurnoutType.RH_XOVER)
                         || (((LayoutTurnout) prevConnection).getTurnoutType() == LayoutTurnout.TurnoutType.LH_XOVER))) {
                     LayoutTurnout ltz = (LayoutTurnout) prevConnection;
@@ -293,7 +293,7 @@ public class LayoutEditorAuxTools {
                         }
                     }
                 } // is this track section is connected to a slip?
-                else if (LayoutEditor.HitPointType.isSlipHitType(lc.getConnectedType())) {
+                else if (lc.getConnectedType().isSlipHitType()) {
                     LayoutSlip lsz = (LayoutSlip) prevConnection;
                     if (lsz.getSlipType() == LayoutSlip.TurnoutType.SINGLE_SLIP) {
                         if (lc.getConnectedType() == LayoutEditor.HitPointType.SLIP_C) {
@@ -412,7 +412,7 @@ public class LayoutEditorAuxTools {
                 curConnection = lc.getConnectedObject();
                 prevConnection = lc.getTrackSegment();
                 typeCurConnection = lc.getConnectedType();
-                if (LayoutEditor.HitPointType.isTurnoutHitType(typeCurConnection)) {
+                if (typeCurConnection.isTurnoutHitType()) {
                     // connected object is a turnout
                     LayoutTurnout.TurnoutType turnoutType = ((LayoutTurnout) curConnection).getTurnoutType();
                     if (LayoutTurnout.hasEnteringDoubleTrack(turnoutType)) {
@@ -575,7 +575,7 @@ public class LayoutEditorAuxTools {
                         }
                     }
                 }
-            } else if (LayoutEditor.HitPointType.isTurnoutHitType(typeCurConnection)) {
+            } else if (typeCurConnection.isTurnoutHitType()) {
                 lt = (LayoutTurnout) curConnection;
                 // test for crossover turnout
                 if (lt.hasEnteringSingleTrack()) {
@@ -770,7 +770,7 @@ public class LayoutEditorAuxTools {
                     curConnection = ((LevelXing) curConnection).getConnectB();
                     typeCurConnection = LayoutEditor.HitPointType.TRACK;
                 }
-            } else if (LayoutEditor.HitPointType.isSlipHitType(typeCurConnection)) {
+            } else if (typeCurConnection.isSlipHitType()) {
                 LayoutSlip ls = (LayoutSlip) curConnection;
                 if (ls.getLayoutBlock() != layoutBlock) {
                     curConnection = null;
@@ -817,7 +817,7 @@ public class LayoutEditorAuxTools {
                     //At double slip, can not follow any further
                     curConnection = null;
                 }
-            } else if (LayoutEditor.HitPointType.isTurntableRayHitType(typeCurConnection)) {
+            } else if (typeCurConnection.isTurntableRayHitType()) {
                 if (log.isDebugEnabled()) {
                     log.debug("Layout Block: {}, found track type: {}, to " // NOI18N
                             + "Block: {}, is potentially assigned to turntable ray", // NOI18N

@@ -246,20 +246,23 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 case MULTI_SENSOR:
                 case MARKER:
                 case TRACK_CIRCLE_CENTRE:
-                case SLIP_CENTER:
                 case SLIP_LEFT:
                 case SLIP_RIGHT:
                 default:
                     result = false; // these are not
                     break;
             }
-            if (isBezierHitType(hitType)) {
+            if (hitType.isBezierHitType()) {
                 result = false; // these are not
-            } else if (isTurntableRayHitType(hitType)) {
+            } else if (hitType.isTurntableRayHitType()) {
                 result = true;  // these are all connection types
             }
             return result;
         }   // isConnectionHitType
+
+        protected boolean isConnectionHitType() {
+            return isConnectionHitType(this);
+        }
 
         /**
          * @param hitType the hit point type
@@ -269,7 +272,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             boolean result = false; // assume failure (pessimist!)
             switch (hitType) {
                 case TURNOUT_CENTER:
-                case SLIP_CENTER:
                 case SLIP_LEFT:
                 case SLIP_RIGHT:
                     result = true;  // these are all control types
@@ -300,17 +302,25 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     result = false; // these are not
                     break;
             }
-            if (isBezierHitType(hitType)) {
+            if (hitType.isBezierHitType()) {
                 result = false; // these are not control types
-            } else if (isTurntableRayHitType(hitType)) {
+            } else if (hitType.isTurntableRayHitType()) {
                 result = true;  // these are all control types
             }
             return result;
         }   // isControlHitType
 
+        protected boolean isControlHitType() {
+            return isControlHitType(this);
+        }
+
         protected static boolean isTurnoutHitType(HitPointType hitType) {
             return ((hitType.compareTo(HitPointType.TURNOUT_A) >= 0)
                     && (hitType.compareTo(HitPointType.TURNOUT_D) <= 0));
+        }
+
+        protected boolean isTurnoutHitType() {
+            return isTurnoutHitType(this);
         }
 
         protected static boolean isSlipHitType(HitPointType hitType) {
@@ -318,9 +328,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     && (hitType.compareTo(HitPointType.SLIP_RIGHT) <= 0));
         }
 
+        protected boolean isSlipHitType() {
+            return isSlipHitType(this);
+        }
+
         protected static boolean isBezierHitType(HitPointType hitType) {
             return ((hitType.compareTo(HitPointType.BEZIER_CONTROL_POINT_0) >= 0)
                     && (hitType.compareTo(HitPointType.BEZIER_CONTROL_POINT_8) <= 0));
+        }
+
+        protected boolean isBezierHitType() {
+            return isBezierHitType(this);
         }
 
         protected static boolean isLevelXingHitType(HitPointType hitType) {
@@ -328,9 +346,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     && (hitType.compareTo(HitPointType.LEVEL_XING_D) <= 0));
         }
 
+        protected boolean isLevelXingHitType() {
+            return isLevelXingHitType(this);
+        }
+
         protected static boolean isTurntableRayHitType(HitPointType hitType) {
             return ((hitType.compareTo(HitPointType.TURNTABLE_RAY_0) >= 0)
                     && (hitType.compareTo(HitPointType.TURNTABLE_RAY_63) <= 0));
+        }
+
+        protected boolean isTurntableRayHitType() {
+            return isTurntableRayHitType(this);
         }
 
         /**
@@ -342,7 +368,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             switch (hitType) {
                 case LEVEL_XING_CENTER:
                 case POS_POINT:
-                case SLIP_CENTER:
                 case SLIP_LEFT:
                 case SLIP_RIGHT:
                 case TRACK:
@@ -372,14 +397,18 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     result = false; // these are not
                     break;
             }
-            if (isBezierHitType(hitType)) {
+            if (hitType.isBezierHitType()) {
                 result = true; // these are all popup hit types
-            } else if (isTurntableRayHitType(hitType)) {
+            } else if (hitType.isTurntableRayHitType()) {
                 result = true;  // these are all popup hit types
             }
             return result;
         }   // isPopupHitType
-    }
+
+        protected boolean isPopupHitType() {
+            return isPopupHitType(this);
+        }
+    }   // public enum HitPointType
 
     //Operational instance variables - not saved to disk
     private transient JmriJFrame floatingEditToolBoxFrame = null;
@@ -403,8 +432,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     //end of main panel controls
     private transient boolean delayedPopupTrigger = false;
-    private transient Point2D currentPoint = new Point2D.Double(100.0, 100.0);
-    private transient Point2D dLoc = new Point2D.Double(0.0, 0.0);
+    private transient Point2D currentPoint = MathUtil.zeroPoint2D();
+    private transient Point2D dLoc = MathUtil.zeroPoint2D();
 
     private transient int toolbarHeight = 100;
     private transient int toolbarWidth = 100;
@@ -413,7 +442,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient boolean panelChanged = false;
 
     private transient int gridSize1st = 10;    //grid size in pixels
-    private transient int gridSize2nd = 10;    // secondary grid
+    private transient int gridSize2nd = 10;    // secondary
 
     //size of point boxes
     protected static final double SIZE = 3.0;
@@ -498,21 +527,21 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private final transient JMenuItem assignBlockToSelectionMenuItem = new JMenuItem(Bundle.getMessage("AssignBlockToSelectionTitle") + "...");
 
     //Selected point information
-    private final transient Point2D startDelta = new Point2D.Double(0.0, 0.0); //starting delta coordinates
+    private final transient Point2D startDelta = MathUtil.zeroPoint2D(); //starting delta coordinates
     protected transient Object selectedObject = null;       //selected object, null if nothing selected
     protected transient Object prevSelectedObject = null;   //previous selected object, for undo
     private transient HitPointType selectedHitPointType = HitPointType.NONE;         //hit point type within the selected object
 
     protected transient LayoutTrack foundTrack = null;      //found object, null if nothing found
-    protected transient Point2D foundLocation = new Point2D.Double(0.0, 0.0); //location of found object
+    protected transient Point2D foundLocation = MathUtil.zeroPoint2D(); //location of found object
     protected transient HitPointType foundHitPointType = HitPointType.NONE;          //connection type within the found object
     ///private transient boolean foundNeedsConnect = false;    //true if found point needs a connection
 
     protected transient LayoutTrack beginTrack = null;      //begin track segment connection object, null if none
-    protected transient Point2D beginLocation = new Point2D.Double(0.0, 0.0); //location of begin object
+    protected transient Point2D beginLocation = MathUtil.zeroPoint2D(); //location of begin object
     protected transient HitPointType beginHitPointType = HitPointType.NONE; //connection type within begin connection object
 
-    protected transient Point2D currentLocation = new Point2D.Double(0.0, 0.0); //current location
+    protected transient Point2D currentLocation = MathUtil.zeroPoint2D(); //current location
 
     //Lists of items that describe the Layout, and allow it to be drawn
     //Each of the items must be saved to disk over sessions
@@ -526,7 +555,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private final transient List<LayoutTrack> layoutTrackList = new ArrayList<>();         // LayoutTrack list
 
-    // PositionableLabel's
+    //PositionableLabel's
     public transient List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); //BlockContentsIcon Label List
     public transient List<MemoryIcon> memoryLabelList = new ArrayList<>();               //Memory Label List
     public transient List<SensorIcon> sensorList = new ArrayList<>();                    //Sensor Icons
@@ -535,7 +564,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private final transient List<LayoutShape> layoutShapes = new ArrayList<>();               // LayoutShap list
 
-    // counts used to determine unique internal names
+    //counts used to determine unique internal names
     private transient int numAnchors = 0;
     private transient int numEndBumpers = 0;
     private transient int numEdgeConnectors = 0;
@@ -546,16 +575,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient int numLayoutTurntables = 0;
     private transient int numShapes = 0;
 
-    public transient LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
-
-    @Nonnull
-    public LayoutEditorFindItems getFinder() {
-        return finder;
-    }
-
     //persistent instance variables - saved to disk with Save Panel
-    private transient int upperLeftX = 0; // Note: These are _WINDOW_ upper left x & y
-    private transient int upperLeftY = 0; // (not panel)
+    private transient int upperLeftX = 0; //Note: These are _WINDOW_ upper left x & y
+    private transient int upperLeftY = 0; //(not panel)
 
     private transient int windowWidth = 0;
     private transient int windowHeight = 0;
@@ -638,10 +660,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             ENUM_MAP = Collections.unmodifiableMap(map);
         }
 
+        @Nonnull
         public static ToolBarSide getName(@CheckForNull String name) {
             return ENUM_MAP.get(name);
         }
 
+        @Nonnull
         public String getName() {
             return name;
         }
@@ -763,7 +787,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
             }); //InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
 
-            // make sure that the layoutEditorComponent is in the _targetPanel components
+            //make sure that the layoutEditorComponent is in the _targetPanel components
             List<Component> componentList = Arrays.asList(_targetPanel.getComponents());
             if (!componentList.contains(layoutEditorComponent)) {
                 try {
@@ -832,6 +856,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JmriColorChooser.addRecentColor(defaultTextColor);
     }
 
+    @Nonnull
     private final LayoutEditorComponent layoutEditorComponent = new LayoutEditorComponent(this);
 
     private void setupToolBar() {
@@ -905,7 +930,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 break;
 
             default:
-                // fall through
+                //fall through
                 break;
         }
 
@@ -954,7 +979,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             leToolBarPanel.add(floatEditHelpPanel);
 
             //Notice: End tree structure indenting
-            // Force the help panel width to the same as the tabs section
+            //Force the help panel width to the same as the tabs section
             int tabSectionWidth = (int) leftbp.getPreferredSize().getWidth();
 
             //Change the textarea settings
@@ -1016,10 +1041,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Set up NamedBeanComboBox
      *
-     * @param inComboBox     the NamedBeanComboBox to set up
+     * @param inComboBox the NamedBeanComboBox to set up
      * @param inValidateMode true to validate typed inputs; false otherwise
-     * @param inEnable       boolean to enable / disable the NamedBeanComboBox
-     * @param inEditable     boolean to make the NamedBeanComboBox editable
+     * @param inEnable boolean to enable / disable the NamedBeanComboBox
+     * @param inEditable boolean to make the NamedBeanComboBox editable
      */
     public static void setupComboBox(@Nonnull NamedBeanComboBox<?> inComboBox, boolean inValidateMode, boolean inEnable, boolean inEditable) {
         log.debug("LE setupComboBox called");
@@ -1029,11 +1054,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         inComboBox.setValidatingInput(inValidateMode);
         inComboBox.setSelectedIndex(-1);
 
-        // This has to be set before calling setupComboBoxMaxRows
-        // (otherwise if inFirstBlank then the  number of rows will be wrong)
+        //This has to be set before calling setupComboBoxMaxRows
+        //(otherwise if inFirstBlank then the  number of rows will be wrong)
         inComboBox.setAllowNull(!inValidateMode);
 
-        // set the max number of rows that will fit onscreen
+        //set the max number of rows that will fit onscreen
         JComboBoxUtil.setupComboBoxMaxRows(inComboBox);
 
         inComboBox.setSelectedIndex(-1);
@@ -1073,6 +1098,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param menuBar to add the option menu to
      * @return option menu that was added
      */
+    @Nonnull
     protected JMenu setupOptionMenu(@Nonnull JMenuBar menuBar) {
         JMenu optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
 
@@ -1080,7 +1106,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         menuBar.add(optionMenu);
 
         //
-        //  edit mode
+        //edit mode
         //
         editModeCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("EditMode"));
         optionMenu.add(editModeCheckBoxMenuItem);
@@ -1122,7 +1148,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         editModeCheckBoxMenuItem.setSelected(isEditable());
 
         //
-        // toolbar
+        //toolbar
         //
         JMenu toolBarMenu = new JMenu(Bundle.getMessage("ToolBar")); //used for ToolBar SubMenu
         optionMenu.add(toolBarMenu);
@@ -1174,7 +1200,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         wideToolBarCheckBoxMenuItem.setEnabled(toolBarSide.equals(ToolBarSide.eTOP) || toolBarSide.equals(ToolBarSide.eBOTTOM));
 
         //
-        // Scroll Bars
+        //Scroll Bars
         //
         scrollMenu = new JMenu(Bundle.getMessage("ComboBoxScrollable")); //used for ScrollBarsSubMenu
         optionMenu.add(scrollMenu);
@@ -1217,7 +1243,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
 
         //
-        // Tooltips
+        //Tooltips
         //
         tooltipMenu = new JMenu(Bundle.getMessage("TooltipSubMenu"));
         optionMenu.add(tooltipMenu);
@@ -1260,7 +1286,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
 
         //
-        // show edit help
+        //show edit help
         //
         showHelpCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ShowEditHelp"));
         optionMenu.add(showHelpCheckBoxMenuItem);
@@ -1271,7 +1297,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         showHelpCheckBoxMenuItem.setSelected(getShowHelpBar());
 
         //
-        // Allow Repositioning
+        //Allow Repositioning
         //
         positionableCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AllowRepositioning"));
         optionMenu.add(positionableCheckBoxMenuItem);
@@ -1279,7 +1305,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         positionableCheckBoxMenuItem.setSelected(allPositionable());
 
         //
-        // Allow Layout Control
+        //Allow Layout Control
         //
         controlCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AllowLayoutControl"));
         optionMenu.add(controlCheckBoxMenuItem);
@@ -1290,7 +1316,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         controlCheckBoxMenuItem.setSelected(allControlling());
 
         //
-        // use direct turnout control
+        //use direct turnout control
         //
         useDirectTurnoutControlCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("UseDirectTurnoutControl")); // NOI18N
         optionMenu.add(useDirectTurnoutControlCheckBoxMenuItem);
@@ -1298,7 +1324,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         useDirectTurnoutControlCheckBoxMenuItem.setSelected(useDirectTurnoutControl);
 
         //
-        // antialiasing
+        //antialiasing
         //
         antialiasingOnCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AntialiasingOn"));
         optionMenu.add(antialiasingOnCheckBoxMenuItem);
@@ -1309,7 +1335,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         antialiasingOnCheckBoxMenuItem.setSelected(antialiasingOn);
 
         //
-        // edit title
+        //edit title
         //
         optionMenu.addSeparator();
         JMenuItem titleItem = new JMenuItem(Bundle.getMessage("EditTitle") + "...");
@@ -1335,7 +1361,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         setDirty();
 
                         if (toolBarSide.equals(ToolBarSide.eFLOAT) && isEditable()) {
-                            // Rebuild the toolbox after a name change.
+                            //Rebuild the toolbox after a name change.
                             deletefloatingEditToolBoxFrame();
                             createfloatingEditToolBoxFrame();
                             createFloatingHelpPanel();
@@ -1346,7 +1372,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
 
         //
-        // set background color
+        //set background color
         //
         JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor", "..."));
         optionMenu.add(backgroundColorMenuItem);
@@ -1363,7 +1389,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
 
         //
-        // set default text color
+        //set default text color
         //
         JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor", "..."));
         optionMenu.add(textColorMenuItem);
@@ -1380,7 +1406,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         if (editorUseOldLocSize) {
             //
-            //  save location and size
+            //save location and size
             //
             JMenuItem locationItem = new JMenuItem(Bundle.getMessage("SetLocation"));
             optionMenu.add(locationItem);
@@ -1391,12 +1417,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         //
-        // Add Options
+        //Add Options
         //
         JMenu optionsAddMenu = new JMenu(Bundle.getMessage("AddMenuTitle"));
         optionMenu.add(optionsAddMenu);
 
-        // add background image
+        //add background image
         JMenuItem backgroundItem = new JMenuItem(Bundle.getMessage("AddBackground") + "...");
         optionsAddMenu.add(backgroundItem);
         backgroundItem.addActionListener((ActionEvent event) -> {
@@ -1406,7 +1432,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             redrawPanel();
         });
 
-        // add fast clock
+        //add fast clock
         JMenuItem clockItem = new JMenuItem(Bundle.getMessage("AddItem", Bundle.getMessage("FastClock")));
         optionsAddMenu.add(clockItem);
         clockItem.addActionListener((ActionEvent event) -> {
@@ -1430,7 +1456,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             redrawPanel();
         });
 
-        // add reporter
+        //add reporter
         JMenuItem reporterItem = new JMenuItem(Bundle.getMessage("AddReporter") + "...");
         optionsAddMenu.add(reporterItem);
         reporterItem.addActionListener((ActionEvent event) -> {
@@ -1446,7 +1472,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
 
         //
-        // grid menu
+        //grid menu
         //
         JMenu gridMenu = new JMenu(Bundle.getMessage("GridMenuTitle")); //used for Grid SubMenu
         optionMenu.add(gridMenu);
@@ -1495,12 +1521,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
 
         //
-        // track menu
+        //track menu
         //
         JMenu trackMenu = new JMenu(Bundle.getMessage("TrackMenuTitle"));
         optionMenu.add(trackMenu);
 
-        // set track drawing options menu item
+        //set track drawing options menu item
         JMenuItem jmi = new JMenuItem(Bundle.getMessage("SetTrackDrawingOptions"));
         trackMenu.add(jmi);
         jmi.setToolTipText(Bundle.getMessage("SetTrackDrawingOptionsToolTip"));
@@ -1692,7 +1718,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public LayoutTrackDrawingOptions getLayoutTrackDrawingOptions() {
         if (layoutTrackDrawingOptions == null) {
             layoutTrackDrawingOptions = new LayoutTrackDrawingOptions(getLayoutName());
-            // integrate LayoutEditor drawing options with previous drawing options
+            //integrate LayoutEditor drawing options with previous drawing options
             layoutTrackDrawingOptions.setMainBlockLineWidth((int) mainlineTrackWidth);
             layoutTrackDrawingOptions.setSideBlockLineWidth((int) sidelineTrackWidth);
             layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
@@ -1715,7 +1741,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public void setLayoutTrackDrawingOptions(LayoutTrackDrawingOptions ltdo) {
         layoutTrackDrawingOptions = ltdo;
 
-        // integrate LayoutEditor drawing options with previous drawing options
+        //integrate LayoutEditor drawing options with previous drawing options
         mainlineTrackWidth = layoutTrackDrawingOptions.getMainBlockLineWidth();
         sidelineTrackWidth = layoutTrackDrawingOptions.getSideBlockLineWidth();
         mainlineTrackColor = layoutTrackDrawingOptions.getMainRailColor();
@@ -1897,14 +1923,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
             addEntryExitPairAction.actionPerformed(event);
         });
-//        if (true) {   //TODO: disable for production
-//            jmi = new JMenuItem("GEORGE");
-//            toolsMenu.add(jmi);
-//            jmi.addActionListener((ActionEvent event) -> {
-//                //do GEORGE stuff here!
-//            });
-//        }
-    }   // setupToolsMenu
+        //if (true) {   //TODO: disable for production
+        //    jmi = new JMenuItem("GEORGE");
+        //    toolsMenu.add(jmi);
+        //    jmi.addActionListener((ActionEvent event) -> {
+        //        //do GEORGE stuff here!
+        //    });
+        //}
+    }   //setupToolsMenu
 
     /**
      * get the toolbar side
@@ -1921,7 +1947,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param newToolBarSide on which side to put the toolbar
      */
     public void setToolBarSide(ToolBarSide newToolBarSide) {
-        // null if edit toolbar is not setup yet...
+        //null if edit toolbar is not setup yet...
         if (!newToolBarSide.equals(toolBarSide)) {
             toolBarSide = newToolBarSide;
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setProperty(getWindowFrameRef(), "toolBarSide", toolBarSide.getName()));
@@ -1959,10 +1985,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     toolBarSide.equals(ToolBarSide.eTOP)
                     || toolBarSide.equals(ToolBarSide.eBOTTOM));
         }
-    }   // setToolBarSide
+    }   //setToolBarSide
 
     //
-    //
+    //setToolBarWide
     //
     private void setToolBarWide(boolean newToolBarIsWide) {
         //null if edit toolbar not setup yet...
@@ -1990,10 +2016,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 helpBarPanel.setVisible(isEditable() && getShowHelpBar());
             }
         }
-    }   // setToolBarWide
+    }   //setToolBarWide
 
     //
-    //
+    //setupZoomMenu
     //
     private void setupZoomMenu(@Nonnull JMenuBar menuBar) {
         zoomMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuZoomMnemonic")));
@@ -2100,7 +2126,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
             );
 
-            // get the scroll bars from the scroll pane
+            //get the scroll bars from the scroll pane
             JScrollPane scrollPane = getPanelScrollPane();
             if (scrollPane != null) {
                 JScrollBar hsb = scrollPane.getHorizontalScrollBar();
@@ -2114,31 +2140,31 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 vsb.addAdjustmentListener(this::scrollBarAdjusted);
                 hsb.addAdjustmentListener(this::scrollBarAdjusted);
 
-                // remove all mouse wheel listeners
+                //remove all mouse wheel listeners
                 mouseWheelListeners = scrollPane.getMouseWheelListeners();
                 for (MouseWheelListener mwl : mouseWheelListeners) {
                     scrollPane.removeMouseWheelListener(mwl);
                 }
 
-                // add my mouse wheel listener
-                // (so mouseWheelMoved (below) will be called)
+                //add my mouse wheel listener
+                //(so mouseWheelMoved (below) will be called)
                 scrollPane.addMouseWheelListener(this);
             }
         });
-    }   // setupZoomMenu
+    }   //setupZoomMenu
 
     private transient MouseWheelListener[] mouseWheelListeners;
 
-    // scroll bar listener to update x & y coordinates in toolbar on scroll
+    //scroll bar listener to update x & y coordinates in toolbar on scroll
     public void scrollBarAdjusted(AdjustmentEvent event) {
         //log.warn("scrollBarAdjusted");
         if (isEditable()) {
-            // get the location of the mouse
+            //get the location of the mouse
             PointerInfo mpi = MouseInfo.getPointerInfo();
             Point mouseLoc = mpi.getLocation();
-            // convert to target panel coordinates
+            //convert to target panel coordinates
             SwingUtilities.convertPointFromScreen(mouseLoc, getTargetPanel());
-            // correct for scaling...
+            //correct for scaling...
             double theZoom = getZoom();
             xLoc = (int) (mouseLoc.getX() / theZoom);
             yLoc = (int) (mouseLoc.getY() / theZoom);
@@ -2229,7 +2255,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             JComponent targetPanel = getTargetPanel();
             Point2D mousePoint = SwingUtilities.convertPoint(component, eventPoint, targetPanel);
 
-            // get the old view port position
+            //get the old view port position
             JScrollPane scrollPane = getPanelScrollPane();
             JViewport viewPort = scrollPane.getViewport();
             Point2D viewPosition = viewPort.getViewPosition();
@@ -2241,12 +2267,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             // compute the delta (in image coordinates)
             Point2D imageDelta = MathUtil.subtract(imageMousePoint, imageViewPosition);
 
-            // compute how much to change zoom
+            //compute how much to change zoom
             double amount = Math.pow(1.1, event.getScrollAmount());
             if (event.getWheelRotation() < 0.0) {
                 //reciprocal for zoom out
                 amount = 1.0 / amount;
             }
+
             // set the new zoom
             double newZoom = setZoom(zoom * amount);
             // recalulate the amount (in case setZoom didn't zoom as much as we wanted)
@@ -2269,14 +2296,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             JScrollPane scrollPane = getPanelScrollPane();
             if (scrollPane != null) {
                 if (scrollPane.getVerticalScrollBar().isVisible()) {
-                    // Redispatch the event to the original MouseWheelListeners
+                    //Redispatch the event to the original MouseWheelListeners
                     for (MouseWheelListener mwl : mouseWheelListeners) {
                         mwl.mouseWheelMoved(event);
                     }
                 } else {
-                    // proprogate event to ancestor
-                    Component ancestor = SwingUtilities.getAncestorOfClass(JScrollPane.class,
-                            scrollPane);
+                    //proprogate event to ancestor
+                    Component ancestor = SwingUtilities.getAncestorOfClass(JScrollPane.class, scrollPane);
                     if (ancestor != null) {
                         MouseWheelEvent mwe = new MouseWheelEvent(
                                 ancestor,
@@ -2413,13 +2439,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     //
-    // TODO: make this public? (might be useful!)
+    //TODO: make this public? (might be useful!)
     //
+    @Nonnull
     private Rectangle2D calculateMinimumLayoutBounds() {
-        // calculate a union of the bounds of everything on the layout
+        //calculate a union of the bounds of everything on the layout
         Rectangle2D result = new Rectangle2D.Double();
 
-        // combine all (onscreen) Components into a list of list of Components
+        //combine all (onscreen) Components into a list of list of Components
         List<List<? extends Component>> listOfListsOfComponents = new ArrayList<>();
         listOfListsOfComponents.add(backgroundImage);
         listOfListsOfComponents.add(sensorImage);
@@ -2433,7 +2460,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         listOfListsOfComponents.add(blockContentsLabelList);
         listOfListsOfComponents.add(sensorList);
         listOfListsOfComponents.add(signalMastList);
-        // combine their bounds
+        //combine their bounds
         for (List<? extends Component> listOfComponents : listOfListsOfComponents) {
             for (Component o : listOfComponents) {
                 if (result.isEmpty()) {
@@ -2472,6 +2499,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param forceFlag if false only grow bigger
      * @return the new (?) panel bounds
      */
+    @Nonnull
     private Rectangle2D resizePanelBounds(boolean forceFlag) {
         Rectangle2D panelBounds = getPanelBounds();
         Rectangle2D layoutBounds = calculateMinimumLayoutBounds();
@@ -2485,7 +2513,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             panelBounds.add(layoutBounds);
         }
 
-        // don't let origin go negative
+        //don't let origin go negative
         panelBounds = panelBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
         //log.info("resizePanelBounds: {}", MathUtil.rectangle2DToString(panelBounds));
@@ -2497,27 +2525,27 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private double zoomToFit() {
         Rectangle2D layoutBounds = resizePanelBounds(true);
 
-        // calculate the bounds for the scroll pane
+        //calculate the bounds for the scroll pane
         JScrollPane scrollPane = getPanelScrollPane();
         Rectangle2D scrollBounds = scrollPane.getViewportBorderBounds();
 
-        // don't let origin go negative
+        //don't let origin go negative
         scrollBounds = scrollBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
-        // calculate the horzontial and vertical scales
+        //calculate the horzontial and vertical scales
         double scaleWidth = scrollPane.getWidth() / layoutBounds.getWidth();
         double scaleHeight = scrollPane.getHeight() / layoutBounds.getHeight();
 
-        // set the new zoom to the smallest of the two
+        //set the new zoom to the smallest of the two
         double result = setZoom(Math.min(scaleWidth, scaleHeight));
 
-        // set the new zoom (return value may be different)
+        //set the new zoom (return value may be different)
         result = setZoom(result);
 
-        // calculate new scroll bounds
+        //calculate new scroll bounds
         scrollBounds = MathUtil.scale(layoutBounds, result);
 
-        // don't let origin go negative
+        //don't let origin go negative
         scrollBounds = scrollBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
         //make sure it includes the origin
@@ -2529,6 +2557,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return result;
     }
 
+    @Nonnull
     private Point2D windowCenter() {
         //Returns window's center coordinates converted to layout space
         //Used for initial setup of turntables and reporters
@@ -2601,7 +2630,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     boolean openDispatcherOnLoad = false;
 
-    //TODO: @Deprecated // Java standard pattern for boolean getters is "isOpenDispatcherOnLoad()"
+    //TODO: @Deprecated //Java standard pattern for boolean getters is "isOpenDispatcherOnLoad()"
     public boolean getOpenDispatcherOnLoad() {
         return openDispatcherOnLoad;
     }
@@ -2641,6 +2670,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         _layoutTrackSelection.forEach((lt) -> lt.setAllLayoutBlocks(b));
     }
 
+    /**
+     * translate all layout tracks by the x and Y factors
+     *
+     * @param xDel the amount to translate the X coordinates
+     * @param yDel the amount to translate the Y coordinates
+     * @return true (?)
+     */
     public boolean translateTrack(float xDel, float yDel) {
         Point2D delta = new Point2D.Double(xDel, yDel);
         layoutTrackList.forEach((lt) -> lt.setCoordsCenter(MathUtil.add(lt.getCoordsCenter(), delta)));
@@ -2687,14 +2723,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     private transient Rectangle2D undoRect;
-    private boolean canUndoMoveSelection = false;
-    private Point2D undoDelta = MathUtil.zeroPoint2D;
+    private transient boolean canUndoMoveSelection = false;
+    private transient Point2D undoDelta = MathUtil.zeroPoint2D;
 
     /**
      * Translate entire layout by x and y amounts.
      *
-     * @param xTranslation horizontal (X) translation value
-     * @param yTranslation vertical (Y) translation value
+     * @param xTranslation the horizontal amount to translate the layout
+     * @param yTranslation the vertical amount to translate the layout
      */
     public void translate(float xTranslation, float yTranslation) {
         // here when all numbers read in - translation if entered
@@ -2939,6 +2975,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         setDirty();
     }
 
+    @Nonnull
     private JRadioButtonMenuItem addButtonGroupMenuEntry(
             @Nonnull JMenu inMenu,
             ButtonGroup inButtonGroup,
@@ -3075,15 +3112,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     * Side effects on xLoc, yLoc and dLoc
      */
     @Nonnull
-    private Point2D calcLocation(MouseEvent event, int dX, int dY) {
-        xLoc = (int) ((event.getX() + dX) / getZoom());
-        yLoc = (int) ((event.getY() + dY) / getZoom());
+    private Point2D calcLocation(MouseEvent event) {
+        xLoc = (int) (event.getX() / getZoom());
+        yLoc = (int) (event.getY() / getZoom());
         dLoc.setLocation(xLoc, yLoc);
         return dLoc;
-    }
-
-    private Point2D calcLocation(MouseEvent event) {
-        return calcLocation(event, 0, 0);
     }
 
     /**
@@ -3095,13 +3128,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param event the MouseEvent
      */
     @Override
-    public void mousePressed(MouseEvent event) {
+    public void mousePressed(@Nonnull MouseEvent event) {
         //initialize cursor position
         _anchorX = xLoc;
         _anchorY = yLoc;
         _lastX = _anchorX;
         _lastY = _anchorY;
         calcLocation(event);
+        //log.warn("••••mousePressed @ {{}, {}}, startDelta: {}.", xLoc, yLoc, startDelta);
 
         //TODO: Add command-click on nothing to pan view?
         if (isEditable()) {
@@ -3187,7 +3221,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                                     selectedHitPointType = ls.findHitPointType(dLoc, true);
                                     if (LayoutShape.isShapeHitPointType(selectedHitPointType)) {
                                         //log.warn("drag selectedObject: ", lt);
-                                        selectedObject = ls;    // found one!
+                                        selectedObject = ls;    //found one!
                                         beginLocation.setLocation(dLoc);
                                         currentLocation.setLocation(beginLocation);
                                         startDelta.setLocation(MathUtil.zeroPoint2D);
@@ -3215,12 +3249,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 }
             } else if (event.isShiftDown() && leToolBarPanel.shapeButton.isSelected() && !event.isPopupTrigger()) {
                 //adding or extending a shape
-                selectedObject = null;  // assume we're adding...
+                selectedObject = null;  //assume we're adding...
                 for (LayoutShape ls : layoutShapes) {
                     selectedHitPointType = ls.findHitPointType(dLoc, true);
                     if (LayoutShape.isShapePointOffsetHitPointType(selectedHitPointType)) {
                         //log.warn("extend selectedObject: ", lt);
-                        selectedObject = ls;    // nope, we're extending
+                        selectedObject = ls;    //nope, we're extending
                         beginLocation.setLocation(dLoc);
                         currentLocation.setLocation(beginLocation);
                         break;
@@ -3275,40 +3309,42 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         requestFocusInWindow();
-    }   // mousePressed
+    }   //mousePressed
 
-// this is a method to iterate over a list of lists of items
-// calling the predicate tester.test on each one
-// all matching items are then added to the resulting List
-//note: currently unused; commented out to avoid findbugs warning
-//private static List testEachItemInListOfLists(
-//        @Nonnull List<List> listOfListsOfObjects,
-//        @Nonnull Predicate<Object> tester) {
-//    List result = new ArrayList<>();
-//    for (List<Object> listOfObjects : listOfListsOfObjects) {
-//        List<Object> l = listOfObjects.stream().filter(o -> tester.test(o)).collect(Collectors.toList());
-//        result.addAll(l);
-//    }
-//    return result;
-//}
-// this is a method to iterate over a list of lists of items
-// calling the predicate tester.test on each one
-// and return the first one that matches
-//TODO: make this public? (it is useful! ;-)
-//note: currently unused; commented out to avoid findbugs warning
-//private static Object findFirstMatchingItemInListOfLists(
-//        @Nonnull List<List> listOfListsOfObjects,
-//        @Nonnull Predicate<Object> tester) {
-//    Object result = null;
-//    for (List listOfObjects : listOfListsOfObjects) {
-//        Optional<Object> opt = listOfObjects.stream().filter(o -> tester.test(o)).findFirst();
-//        if (opt.isPresent()) {
-//            result = opt.get();
-//            break;
-//        }
-//    }
-//    return result;
-//}
+    //this is a method to iterate over a list of lists of items
+    //calling the predicate tester.test on each one
+    //all matching items are then added to the resulting List
+    //note: currently unused; commented out to avoid findbugs warning
+    //
+    //private static List testEachItemInListOfLists(
+    //        @Nonnull List<List> listOfListsOfObjects,
+    //        @Nonnull Predicate<Object> tester) {
+    //    List result = new ArrayList<>();
+    //    for (List<Object> listOfObjects : listOfListsOfObjects) {
+    //        List<Object> l = listOfObjects.stream().filter(o -> tester.test(o)).collect(Collectors.toList());
+    //        result.addAll(l);
+    //    }
+    //    return result;
+    //}
+    //this is a method to iterate over a list of lists of items
+    //calling the predicate tester.test on each one
+    //and return the first one that matches
+    //TODO: make this public? (it is useful! ;-)
+    //note: currently unused; commented out to avoid findbugs warning
+    //
+    //private static Object findFirstMatchingItemInListOfLists(
+    //        @Nonnull List<List> listOfListsOfObjects,
+    //        @Nonnull Predicate<Object> tester) {
+    //    Object result = null;
+    //    for (List listOfObjects : listOfListsOfObjects) {
+    //        Optional<Object> opt = listOfObjects.stream().filter(o -> tester.test(o)).findFirst();
+    //        if (opt.isPresent()) {
+    //            result = opt.get();
+    //            break;
+    //        }
+    //    }
+    //    return result;
+    //}
     /**
      * Called by {@link #mousePressed} to determine if the mouse click was in a
      * turnout control location. If so, update selectedHitPointType and
@@ -3324,30 +3360,30 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param useRectangles set true to use rectangle; false for circles.
      */
     private void checkControls(boolean useRectangles) {
-        selectedObject = null;  // deliberate side-effect
+        selectedObject = null;  //deliberate side-effect
         for (LayoutTrack theTrack : layoutTrackList) {
-            selectedHitPointType = theTrack.findHitPointType(dLoc, useRectangles); // deliberate side-effect
-            if (HitPointType.isControlHitType(selectedHitPointType)) {
-                selectedObject = theTrack; // deliberate side-effect
+            selectedHitPointType = theTrack.findHitPointType(dLoc, useRectangles); //deliberate side-effect
+            if (selectedHitPointType.isControlHitType()) {
+                selectedObject = theTrack; //deliberate side-effect
                 return;
             }
         }
     }
 
-    // optional parameter avoid
+    //optional parameter avoid
     private boolean findLayoutTracksHitPoint(
             @Nonnull Point2D loc, boolean requireUnconnected) {
         return findLayoutTracksHitPoint(loc, requireUnconnected, null);
     }
 
-    // optional parameter requireUnconnected
+    //optional parameter requireUnconnected
     private boolean findLayoutTracksHitPoint(@Nonnull Point2D loc) {
         return findLayoutTracksHitPoint(loc, false, null);
     }
 
     private boolean findLayoutTracksHitPoint(@Nonnull Point2D loc,
             boolean requireUnconnected, @CheckForNull LayoutTrack avoid) {
-        boolean result = false; // assume failure (pessimist!)
+        boolean result = false; //assume failure (pessimist!)
 
         foundTrack = null;
         foundHitPointType = HitPointType.NONE;
@@ -3372,13 +3408,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return result;
     }
 
+    @CheckForNull
     private TrackSegment checkTrackSegmentPopUps(@Nonnull Point2D loc) {
         TrackSegment result = null;
 
         //NOTE: Rather than calculate all the hit rectangles for all
-        // the points below and test if this location is in any of those
-        // rectangles just create a hit rectangle for the location and
-        // see if any of the points below are in it instead...
+        //the points below and test if this location is in any of those
+        //rectangles just create a hit rectangle for the location and
+        //see if any of the points below are in it instead...
         Rectangle2D r = layoutEditorControlCircleRectAt(loc);
 
         //check Track Segments, if any
@@ -3391,6 +3428,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return result;
     }
 
+    @CheckForNull
     private PositionableLabel checkBackgroundPopUps(@Nonnull Point2D loc) {
         PositionableLabel result = null;
         //check background images, if any
@@ -3405,6 +3443,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return result;
     }
 
+    @CheckForNull
     private SensorIcon checkSensorIconPopUps(@Nonnull Point2D loc) {
         SensorIcon result = null;
         //check sensor images, if any
@@ -3418,6 +3457,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return result;
     }
 
+    @CheckForNull
     private SignalHeadIcon checkSignalHeadIconPopUps(@Nonnull Point2D loc) {
         SignalHeadIcon result = null;
         //check signal head images, if any
@@ -3432,6 +3472,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return result;
     }
 
+    @CheckForNull
     private SignalMastIcon checkSignalMastIconPopUps(@Nonnull Point2D loc) {
         SignalMastIcon result = null;
         //check signal head images, if any
@@ -3446,6 +3487,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return result;
     }
 
+    @CheckForNull
     private PositionableLabel checkLabelImagePopUps(@Nonnull Point2D loc) {
         PositionableLabel result = null;
         int level = 0;
@@ -3477,6 +3519,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return result;
     }
 
+    @CheckForNull
     private AnalogClock2Display checkClockPopUps(@Nonnull Point2D loc) {
         AnalogClock2Display result = null;
         //check clocks, if any
@@ -3491,6 +3534,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return result;
     }
 
+    @CheckForNull
     private MultiSensorIcon checkMultiSensorPopUps(@Nonnull Point2D loc) {
         MultiSensorIcon result = null;
         //check multi sensor icons, if any
@@ -3505,6 +3549,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return result;
     }
 
+    @CheckForNull
     private LocoIcon checkMarkerPopUps(@Nonnull Point2D loc) {
         LocoIcon result = null;
         //check marker icons, if any
@@ -3520,6 +3565,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return result;
     }
 
+    @CheckForNull
     private LayoutShape checkLayoutShapePopUps(@Nonnull Point2D loc) {
         LayoutShape result = null;
         for (LayoutShape ls : layoutShapes) {
@@ -3535,7 +3581,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * get the coordinates for the connection type of the specified object
      *
-     * @param layoutTrack    the object (Layout track subclass)
+     * @param layoutTrack the object (Layout track subclass)
      * @param connectionType the type of connection
      * @return the coordinates for the connection type of the specified object
      */
@@ -3545,26 +3591,27 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     @Override
-    public void mouseReleased(MouseEvent event) {
+    public void mouseReleased(@Nonnull MouseEvent event) {
         super.setToolTip(null);
 
         //initialize mouse position
         calcLocation(event);
+        //log.warn("••••mouseReleased @ {{}, {}}, startDelta: {}.", xLoc, yLoc, startDelta);
 
-        // if alt modifier is down invert the snap to grid behaviour
+        //if alt modifier is down invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
 
         if (isEditable()) {
             leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
             leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
 
-            // released the mouse with shift down... see what we're adding
+            //released the mouse with shift down... see what we're adding
             if (!event.isPopupTrigger() && !isMetaDown(event) && event.isShiftDown()) {
 
                 currentPoint = new Point2D.Double(xLoc, yLoc);
 
                 if (snapToGridOnAdd != snapToGridInvert) {
-                    // this snaps the current point to the grid
+                    //this snaps the current point to the grid
                     currentPoint = MathUtil.granulize(currentPoint, gridSize1st);
                     xLoc = (int) currentPoint.getX();
                     yLoc = (int) currentPoint.getY();
@@ -3652,24 +3699,23 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 //controlling slips, in edit mode
                 LayoutSlip sl = (LayoutSlip) selectedObject;
                 sl.toggleState(selectedHitPointType);
-            } else if ((selectedObject != null) && (HitPointType.isTurntableRayHitType(selectedHitPointType))
+            } else if ((selectedObject != null) && (selectedHitPointType.isTurntableRayHitType())
                     && allControlling() && (!isMetaDown(event) && !event.isAltDown()) && !event.isPopupTrigger()
                     && !event.isShiftDown() && !event.isControlDown()) {
                 //controlling turntable, in edit mode
                 LayoutTurntable t = (LayoutTurntable) selectedObject;
                 t.setPosition(selectedHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
             } else if ((selectedObject != null) && ((selectedHitPointType == HitPointType.TURNOUT_CENTER)
-                    || (selectedHitPointType == HitPointType.SLIP_CENTER)
                     || (selectedHitPointType == HitPointType.SLIP_LEFT)
                     || (selectedHitPointType == HitPointType.SLIP_RIGHT))
                     && allControlling() && (isMetaDown(event) && !event.isAltDown())
                     && !event.isShiftDown() && !event.isControlDown() && isDragging) {
-                // We just dropped a turnout (or slip)... see if it will connect to anything
+                //We just dropped a turnout (or slip)... see if it will connect to anything
                 hitPointCheckLayoutTurnouts((LayoutTurnout) selectedObject);
             } else if ((selectedObject != null) && (selectedHitPointType == HitPointType.POS_POINT)
                     && allControlling() && (isMetaDown(event))
                     && !event.isShiftDown() && !event.isControlDown() && isDragging) {
-                // We just dropped a PositionablePoint... see if it will connect to anything
+                //We just dropped a PositionablePoint... see if it will connect to anything
                 PositionablePoint p = (PositionablePoint) selectedObject;
                 if ((p.getConnect1() == null) || (p.getConnect2() == null)) {
                     checkPointOfPositionable(p);
@@ -3698,17 +3744,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 || (selectedHitPointType == HitPointType.SLIP_RIGHT))
                 && allControlling() && !isMetaDown(event) && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
-            // controlling slip out of edit mode
+            //controlling slip out of edit mode
             LayoutSlip sl = (LayoutSlip) selectedObject;
             sl.toggleState(selectedHitPointType);
-        } else if ((selectedObject != null) && (HitPointType.isTurntableRayHitType(selectedHitPointType))
+        } else if ((selectedObject != null) && (selectedHitPointType.isTurntableRayHitType())
                 && allControlling() && !isMetaDown(event) && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
-            // controlling turntable out of edit mode
+            //controlling turntable out of edit mode
             LayoutTurntable t = (LayoutTurntable) selectedObject;
             t.setPosition(selectedHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
         } else if ((event.isPopupTrigger() || delayedPopupTrigger) && (!isDragging)) {
-            // requesting marker popup out of edit mode
+            //requesting marker popup out of edit mode
             LocoIcon lo = checkMarkerPopUps(dLoc);
             if (lo != null) {
                 showPopUp(lo, event);
@@ -3777,7 +3823,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             selectedObject = null;
         }
 
-        // clear these
+        //clear these
         beginTrack = null;
         foundTrack = null;
 
@@ -3789,23 +3835,23 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         requestFocusInWindow();
-    }   // mouseReleased
+    }   //mouseReleased
 
     private void showEditPopUps(@Nonnull MouseEvent event) {
         if (findLayoutTracksHitPoint(dLoc)) {
-            if (HitPointType.isBezierHitType(foundHitPointType)) {
+            if (foundHitPointType.isBezierHitType()) {
                 ((TrackSegment) foundTrack).showBezierPopUp(event, foundHitPointType);
-            } else if (HitPointType.isTurntableRayHitType(foundHitPointType)) {
+            } else if (foundHitPointType.isTurntableRayHitType()) {
                 LayoutTurntable t = (LayoutTurntable) foundTrack;
                 if (t.isTurnoutControlled()) {
                     ((LayoutTurntable) foundTrack).showRayPopUp(event, foundHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
                 }
-            } else if (HitPointType.isPopupHitType(foundHitPointType)) {
+            } else if (foundHitPointType.isPopupHitType()) {
                 foundTrack.showPopup(event);
-            } else if (HitPointType.isTurnoutHitType(foundHitPointType)) {
+            } else if (foundHitPointType.isTurnoutHitType()) {
                 // don't curently have edit popup for these
             } else {
-                log.warn("Unknown foundPointType:" + foundHitPointType);
+                log.warn("Unknown foundPointType: " + foundHitPointType);
             }
         } else {
             do {
@@ -3909,8 +3955,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     setPositionableMenu(p, popup);
                 }
 
-                boolean popupSet = false;
-                popupSet |= p.setRotateOrthogonalMenu(popup);
+                boolean popupSet = p.setRotateOrthogonalMenu(popup);
                 popupSet |= p.setRotateMenu(popup);
                 if (popupSet) {
                     popup.addSeparator();
@@ -3973,8 +4018,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public void mouseClicked(@Nonnull MouseEvent event) {
         //initialize mouse position
         calcLocation(event);
+        //log.warn("••••mouseClicked @ {{}, {}}, startDelta: {}.", xLoc, yLoc, startDelta);
 
-        // if alt modifier is down invert the snap to grid behaviour
+        //if alt modifier is down invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
 
         if (!isMetaDown(event) && !event.isPopupTrigger() && !event.isAltDown()
@@ -4126,7 +4172,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 }
 
                 default: {
-                    if (HitPointType.isTurntableRayHitType(foundHitPointType)) {
+                    if (foundHitPointType.isTurntableRayHitType()) {
                         LayoutTurntable tt = (LayoutTurntable) foundTrack;
                         int ray = foundHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue();
 
@@ -4160,7 +4206,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         beginTrack = null;
     }
 
-    // We just dropped a turnout... see if it will connect to anything
+    //We just dropped a turnout... see if it will connect to anything
     private void hitPointCheckLayoutTurnouts(@Nonnull LayoutTurnout lt) {
         beginTrack = lt;
 
@@ -4263,7 +4309,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         rotateTurnout(ft);
                     }
 
-                    // Assign a block to the new zero length track segment.
+                    //Assign a block to the new zero length track segment.
                     ft.setTrackSegmentBlock(foundHitPointType, true);
                     break;
                 }
@@ -4512,7 +4558,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         for (Positionable comp : _positionableSelection) {
             if (!getFlag(Editor.OPTION_POSITION, comp.isPositionable())) {
-                continue;   // skip non-positionables
+                continue;   //skip non-positionables
             }
             Point2D p = MathUtil.pointToPoint2D(comp.getLocation());
             minPoint = MathUtil.min(minPoint, p);
@@ -4543,7 +4589,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         for (Positionable comp : _positionableSelection) {
             if (!getFlag(Editor.OPTION_POSITION, comp.isPositionable())) {
-                continue;   // skip non-positionables
+                continue;   //skip non-positionables
             }
 
             if (alignX) {
@@ -4573,9 +4619,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     protected boolean showAlignPopup() {
-        return ((_positionableSelection.size() > 0)
-                || (_layoutTrackSelection.size() > 0)
-                || (_layoutShapeSelection.size() > 0));
+        return ((_positionableSelection.size()
+                + _layoutTrackSelection.size()
+                + _layoutShapeSelection.size()) >= 2);
     }
 
     /**
@@ -4700,8 +4746,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public void mouseMoved(@Nonnull MouseEvent event) {
         //initialize mouse position
         calcLocation(event);
+        //log.warn("••••mouseMoved @ {{}, {}}, startDelta: {}.", xLoc, yLoc, startDelta);
 
-        // if alt modifier is down invert the snap to grid behaviour
+        //if alt modifier is down invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
 
         if (isEditable()) {
@@ -4745,13 +4792,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public void mouseDragged(@Nonnull MouseEvent event) {
         //initialize mouse position
         calcLocation(event);
+        //log.warn("••••mouseDragged @ {{}, {}}, startDelta: {}.", xLoc, yLoc, startDelta);
 
         //ignore this event if still at the original point
         if ((!isDragging) && (xLoc == getAnchorX()) && (yLoc == getAnchorY())) {
             return;
         }
 
-        // if alt modifier is down invert the snap to grid behaviour
+        //if alt modifier is down invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
 
         //process this mouse dragged event
@@ -4776,7 +4824,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (isEditable()) {
             if ((selectedObject != null) && isMetaDown(event) && allPositionable()) {
                 if (snapToGridOnMove != snapToGridInvert) {
-                    // this snaps currentPoint to the grid
+                    //this snaps currentPoint to the grid
                     currentPoint = MathUtil.granulize(currentPoint, gridSize1st);
                     xLoc = (int) currentPoint.getX();
                     yLoc = (int) currentPoint.getY();
@@ -4788,7 +4836,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         || (_layoutTrackSelection.size() > 0)
                         || (_layoutShapeSelection.size() > 0)) {
                     Point2D lastPoint = new Point2D.Double(_lastX, _lastY);
-                    Point2D offset = MathUtil.subtract(currentPoint, lastPoint);
+                    Point2D offset = MathUtil.subtract(dLoc, lastPoint);
                     Point2D newPoint;
 
                     for (Positionable c : _positionableSelection) {
@@ -4941,9 +4989,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                             t.reCalculateTrackSegmentAngle(currentPoint.getX(), currentPoint.getY());
                             break;
                         }
-
+                        case SHAPE_CENTER: {
+                            ((LayoutShape) selectedObject).setCoordsCenter(currentPoint);
+                            break;
+                        }
                         default: {
-                            if (HitPointType.isBezierHitType(foundHitPointType)) {
+                            if (foundHitPointType.isBezierHitType()) {
                                 int index = selectedHitPointType.getXmlValue() - HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue();
                                 ((TrackSegment) selectedObject).setBezierControlPoint(currentPoint, index);
                             } else if ((selectedHitPointType == HitPointType.SHAPE_CENTER)) {
@@ -4951,7 +5002,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                             } else if (LayoutShape.isShapePointOffsetHitPointType(selectedHitPointType)) {
                                 int index = selectedHitPointType.getXmlValue() - HitPointType.SHAPE_POINT_0.getXmlValue();
                                 ((LayoutShape) selectedObject).setPoint(index, currentPoint);
-                            } else if (HitPointType.isTurntableRayHitType(selectedHitPointType)) {
+                            } else if (selectedHitPointType.isTurntableRayHitType()) {
                                 LayoutTurntable turn = (LayoutTurntable) selectedObject;
                                 turn.setRayCoordsIndexed(currentPoint.getX(), currentPoint.getY(),
                                         selectedHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
@@ -4985,8 +5036,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         } else {
             Rectangle r = new Rectangle(event.getX(), event.getY(), 1, 1);
             ((JComponent) event.getSource()).scrollRectToVisible(r);
-        }   // if (isEditable())
-    }   // mouseDragged
+        }   //if (isEditable())
+    }   //mouseDragged
 
     @Override
     public void mouseEntered(@Nonnull MouseEvent event) {
@@ -5315,8 +5366,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Turnouts Returns true if valid turnout was entered, false otherwise
      *
      * @param inTurnoutName the (system or user) name of the turnout
-     * @param inOpenPane    the pane over which to show dialogs (null to
-     *                      suppress dialogs)
+     * @param inOpenPane the pane over which to show dialogs (null to suppress
+     * dialogs)
      * @return true if valid
      */
     public boolean validatePhysicalTurnout(
@@ -5341,7 +5392,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         log.debug("validatePhysicalTurnout('{}')", inTurnoutName);
-        boolean result = true;  // assume success (optimist!)
+        boolean result = true;  //assume success (optimist!)
 
         //ensure that this turnout is unique among Layout Turnouts in this Layout
         for (LayoutTurnout lt : getLayoutTurnouts()) {
@@ -5357,9 +5408,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 }
             }
 
-            // Only check for the second turnout if the type is a double cross over
-            // otherwise the second turnout is used to throw an additional turnout at
-            // the same time.
+            //Only check for the second turnout if the type is a double cross over
+            //otherwise the second turnout is used to throw an additional turnout at
+            //the same time.
             if (lt.isTurnoutTypeXover()) {
                 t = lt.getSecondTurnout();
                 if (t != null) {
@@ -5375,7 +5426,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         }
 
-        if (result) {   // only need to test slips if we haven't failed yet...
+        if (result) {   //only need to test slips if we haven't failed yet...
             //ensure that this turnout is unique among Layout slips in this Layout
             for (LayoutSlip sl : getLayoutSlips()) {
                 t = sl.getTurnout();
@@ -5404,7 +5455,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         }
 
-        if (result) {   // only need to test Turntable turnouts if we haven't failed yet...
+        if (result) {   //only need to test Turntable turnouts if we haven't failed yet...
             //ensure that this turntable turnout is unique among turnouts in this Layout
             for (LayoutTurntable tt : getLayoutTurntables()) {
                 for (LayoutTurntable.RayTrack ray : tt.getRayList()) {
@@ -5434,10 +5485,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * link the 'from' object and type to the 'to' object and type
      *
-     * @param fromObject    the object to link from
+     * @param fromObject the object to link from
      * @param fromPointType the object type to link from
-     * @param toObject      the object to link to
-     * @param toPointType   the object type to link to
+     * @param toObject the object to link to
+     * @param toPointType the object type to link to
      */
     protected void setLink(@Nonnull LayoutTrack fromObject, HitPointType fromPointType,
             @Nonnull LayoutTrack toObject, HitPointType toPointType) {
@@ -5467,7 +5518,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 try {
                     fromObject.setConnection(fromPointType, toObject, toPointType);
                 } catch (jmri.JmriException e) {
-                    // ignore (log.error in setConnection method)
+                    //ignore (log.error in setConnection method)
                 }
                 break;
             }
@@ -5479,7 +5530,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
 
             default: {
-                if (HitPointType.isTurntableRayHitType(fromPointType)) {
+                if (fromPointType.isTurntableRayHitType()) {
                     ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
                             fromPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
                 }
@@ -5500,6 +5551,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param inBlockName the entered name
      * @return the provided LayoutBlock
      */
+    @CheckForNull
     public LayoutBlock provideLayoutBlock(@Nonnull String inBlockName) {
         LayoutBlock result = null; //assume failure (pessimist!)
         LayoutBlock newBlk = null; //assume failure (pessimist!)
@@ -5516,33 +5568,33 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             //check if this Layout Block already exists
             result = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(inBlockName);
             if (result == null) { //(no)
-                // The combo box name can be either a block system name or a block user name
+                //The combo box name can be either a block system name or a block user name
                 Block checkBlock = InstanceManager.getDefault(BlockManager.class).getBlock(inBlockName);
                 if (checkBlock == null) {
                     log.error("provideLayoutBlock: The block name '{}' does not return a block.", inBlockName);
                 } else {
                     String checkUserName = checkBlock.getUserName();
                     if (checkUserName != null && checkUserName.equals(inBlockName)) {
-                        // Go ahead and use the name for the layout block
+                        //Go ahead and use the name for the layout block
                         newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, inBlockName);
                         if (newBlk == null) {
                             log.error("provideLayoutBlock: Failure to create new LayoutBlock '{}'.", inBlockName);
                         }
                     } else {
-                        // Appears to be a system name, request a user name
+                        //Appears to be a system name, request a user name
                         String blkUserName = JOptionPane.showInputDialog(getTargetFrame(),
                                 Bundle.getMessage("BlkUserNameMsg"),
                                 Bundle.getMessage("BlkUserNameTitle"),
                                 JOptionPane.PLAIN_MESSAGE);
                         if (blkUserName != null && !blkUserName.isEmpty()) {
-                            // Verify the user name
+                            //Verify the user name
                             Block checkDuplicate = InstanceManager.getDefault(BlockManager.class).getByUserName(blkUserName);
                             if (checkDuplicate != null) {
                                 JOptionPane.showMessageDialog(getTargetFrame(),
                                         Bundle.getMessage("BlkUserNameInUse", blkUserName),
                                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                             } else {
-                                // OK to use as a block user name
+                                //OK to use as a block user name
                                 checkBlock.setUserName(blkUserName);
                                 newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, blkUserName);
                                 if (newBlk == null) {
@@ -5583,8 +5635,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * nothing to the block.
      *
      * @param sensorName the sensor name to validate
-     * @param blk        the LayoutBlock in which to set it
-     * @param openFrame  the frame (Component) it is in
+     * @param blk the LayoutBlock in which to set it
+     * @param openFrame the frame (Component) it is in
      * @return true if sensor is valid
      */
     public boolean validateSensor(
@@ -5615,6 +5667,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param blockID the given name
      * @return null if blockID does not already exist
      */
+    @CheckForNull
     public LayoutBlock getLayoutBlock(@Nonnull String blockID) {
         //check if this Layout Block already exists
         LayoutBlock blk = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(blockID);
@@ -5703,6 +5756,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return remove(l);
     }
 
+    @CheckForNull
     private String findBeanUsage(@Nonnull NamedBean sm) {
         PositionablePoint pe;
         PositionablePoint pw;
@@ -5711,29 +5765,28 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         LayoutSlip ls;
         boolean found = false;
         StringBuilder sb = new StringBuilder();
-        String msgKey = "DeleteReference";  // NOI18N
-        String beanKey = "None";  // NOI18N
+        String msgKey = "DeleteReference";  //NOI18N
+        String beanKey = "None";  //NOI18N
         String beanValue = sm.getDisplayName();
 
         if (sm instanceof SignalMast) {
-            beanKey = "BeanNameSignalMast";  // NOI18N
+            beanKey = "BeanNameSignalMast";  //NOI18N
 
             if (InstanceManager.getDefault(SignalMastLogicManager.class
             )
                     .isSignalMastUsed((SignalMast) sm)) {
                 SignalMastLogic sml = InstanceManager.getDefault(
                         SignalMastLogicManager.class).getSignalMastLogic((SignalMast) sm);
-                if ((sml
-                        != null) && sml.useLayoutEditor(sml.getDestinationList().get(0))) {
-                    msgKey = "DeleteSmlReference";  // NOI18N
+                if ((sml != null) && sml.useLayoutEditor(sml.getDestinationList().get(0))) {
+                    msgKey = "DeleteSmlReference";  //NOI18N
                 }
             }
         } else if (sm instanceof Sensor) {
-            beanKey = "BeanNameSensor";  // NOI18N
+            beanKey = "BeanNameSensor";  //NOI18N
         } else if (sm instanceof SignalHead) {
-            beanKey = "BeanNameSignalHead";  // NOI18N
+            beanKey = "BeanNameSignalHead";  //NOI18N
         }
-        if (!beanKey.equals("None")) {  // NOI18N
+        if (!beanKey.equals("None")) {  //NOI18N
             sb.append(Bundle.getMessage(msgKey, Bundle.getMessage(beanKey), beanValue));
         }
 
@@ -5742,10 +5795,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             TrackSegment t2 = pw.getConnect2();
             if (t1 != null) {
                 if (t2 != null) {
-                    sb.append(Bundle.getMessage("DeleteAtPoint1", t1.getBlockName()));  // NOI18N
-                    sb.append(Bundle.getMessage("DeleteAtPoint2", t2.getBlockName()));  // NOI18N
+                    sb.append(Bundle.getMessage("DeleteAtPoint1", t1.getBlockName()));  //NOI18N
+                    sb.append(Bundle.getMessage("DeleteAtPoint2", t2.getBlockName()));  //NOI18N
                 } else {
-                    sb.append(Bundle.getMessage("DeleteAtPoint1", t1.getBlockName()));  // NOI18N
+                    sb.append(Bundle.getMessage("DeleteAtPoint1", t1.getBlockName()));  //NOI18N
                 }
             }
             found = true;
@@ -5757,27 +5810,27 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             if (t1 != null) {
                 if (t2 != null) {
-                    sb.append(Bundle.getMessage("DeleteAtPoint1", t1.getBlockName()));  // NOI18N
-                    sb.append(Bundle.getMessage("DeleteAtPoint2", t2.getBlockName()));  // NOI18N
+                    sb.append(Bundle.getMessage("DeleteAtPoint1", t1.getBlockName()));  //NOI18N
+                    sb.append(Bundle.getMessage("DeleteAtPoint2", t2.getBlockName()));  //NOI18N
                 } else {
-                    sb.append(Bundle.getMessage("DeleteAtPoint1", t1.getBlockName()));  // NOI18N
+                    sb.append(Bundle.getMessage("DeleteAtPoint1", t1.getBlockName()));  //NOI18N
                 }
             }
             found = true;
         }
 
         if ((lt = finder.findLayoutTurnoutByBean(sm)) != null) {
-            sb.append(Bundle.getMessage("DeleteAtOther", Bundle.getMessage("BeanNameTurnout"), lt.getTurnoutName()));   // NOI18N
+            sb.append(Bundle.getMessage("DeleteAtOther", Bundle.getMessage("BeanNameTurnout"), lt.getTurnoutName()));   //NOI18N
             found = true;
         }
 
         if ((lx = finder.findLevelXingByBean(sm)) != null) {
-            sb.append(Bundle.getMessage("DeleteAtOther", Bundle.getMessage("LevelCrossing"), lx.getId()));   // NOI18N
+            sb.append(Bundle.getMessage("DeleteAtOther", Bundle.getMessage("LevelCrossing"), lx.getId()));   //NOI18N
             found = true;
         }
 
         if ((ls = finder.findLayoutSlipByBean(sm)) != null) {
-            sb.append(Bundle.getMessage("DeleteAtOther", Bundle.getMessage("Slip"), ls.getTurnoutName()));   // NOI18N
+            sb.append(Bundle.getMessage("DeleteAtOther", Bundle.getMessage("Slip"), ls.getTurnoutName()));   //NOI18N
             found = true;
         }
 
@@ -6355,13 +6408,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 try {
                     o.setConnection(type, null, HitPointType.NONE);
                 } catch (jmri.JmriException e) {
-                    // ignore (log.error in setConnection method)
+                    //ignore (log.error in setConnection method)
                 }
                 break;
             }
 
             default: {
-                if (HitPointType.isTurntableRayHitType(type)) {
+                if (type.isTurntableRayHitType()) {
                     ((LayoutTurntable) o).setRayConnect(null, type.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
                 }
                 break;
@@ -6369,6 +6422,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    @CheckForNull
     public LayoutBlock getAffectedBlock(@Nonnull LayoutTrack o, HitPointType type) {
         LayoutBlock result = null;
 
@@ -6468,13 +6522,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         leToolBarPanel.sensorComboBox.setSelectedItem(l.getSensor());
         setNextLocation(l);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        putItem(l); //note: this calls unionToPanelBounds & setDirty()
     }
 
     public void putSensor(@Nonnull SensorIcon l) {
         l.updateSize();
         l.setDisplayLevel(Editor.SENSORS);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        putItem(l); //note: this calls unionToPanelBounds & setDirty()
     }
 
     /**
@@ -6498,7 +6552,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         if (mHead == null) {
-            // There is no signal head corresponding to this name
+            //There is no signal head corresponding to this name
             JOptionPane.showMessageDialog(this,
                     MessageFormat.format(Bundle.getMessage("Error9"), newName),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -6527,7 +6581,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public void putSignal(@Nonnull SignalHeadIcon l) {
         l.updateSize();
         l.setDisplayLevel(Editor.SIGNALS);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        putItem(l); //note: this calls unionToPanelBounds & setDirty()
     }
 
     @CheckForNull
@@ -6604,7 +6658,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public void putSignalMast(@Nonnull SignalMastIcon l) {
         l.updateSize();
         l.setDisplayLevel(Editor.SIGNALS);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        putItem(l); //note: this calls unionToPanelBounds & setDirty()
     }
 
     SignalMast getSignalMast(@Nonnull String name) {
@@ -6712,7 +6766,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         l.setDisplayLevel(Editor.LABELS);
         l.setForeground(defaultTextColor);
         unionToPanelBounds(l.getBounds());
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        putItem(l); //note: this calls unionToPanelBounds & setDirty()
     }
 
     void addBlockContents() {
@@ -6741,7 +6795,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(Editor.LABELS);
         l.setForeground(defaultTextColor);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        putItem(l); //note: this calls unionToPanelBounds & setDirty()
     }
 
     /**
@@ -6754,7 +6808,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(Editor.LABELS);
         unionToPanelBounds(l.getBounds());
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        putItem(l); //note: this calls unionToPanelBounds & setDirty()
     }
 
     /**
@@ -6766,13 +6820,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         l.setDisplayLevel(Editor.ICONS);
         unionToPanelBounds(l.getBounds());
         l.updateSize();
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        putItem(l); //note: this calls unionToPanelBounds & setDirty()
     }
 
     /**
      * Add a loco marker to the target
      */
     @Override
+    @Nonnull
     public LocoIcon addLocoIcon(@Nonnull String name) {
         LocoIcon l = new LocoIcon(this);
         Point2D pt = windowCenter();
@@ -6909,7 +6964,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //Invoked when window has new multi-sensor ready
     public void addMultiSensor(@Nonnull MultiSensorIcon l) {
         l.setLocation(multiLocX, multiLocY);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        putItem(l); //note: this calls unionToPanelBounds & setDirty()
         leToolBarPanel.multiSensorFrame.dispose();
         leToolBarPanel.multiSensorFrame = null;
     }
@@ -6925,8 +6980,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     //
-    // singleton (one per-LayoutEditor) accessors
+    //singleton (one per-LayoutEditor) accessors
     //
+    public transient LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
+
+    @Nonnull
+    public LayoutEditorFindItems getFinder() {
+        return finder;
+    }
+
     private transient ConnectivityUtil conTools = null;
 
     @Nonnull
@@ -7138,9 +7200,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return yScale;
     }
 
-//    public Color getDefaultBackgroundColor() {
-//        return defaultBackgroundColor;
-//    }
+    //public Color getDefaultBackgroundColor() {
+    //  return defaultBackgroundColor;
+    //}
+    @CheckForNull
     public String getDefaultTrackColor() {
         return ColorUtil.colorToColorName(defaultTrackColor);
     }
@@ -7220,56 +7283,57 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return turnoutDrawUnselectedLeg;
     }
 
+    @Nonnull
     public String getLayoutName() {
         return layoutName;
     }
 
-    //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    //TODO: @Deprecated //Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getShowHelpBar() {
         return showHelpBar;
     }
 
-    //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    //TODO: @Deprecated //Java standard pattern for boolean getters is "isDrawGrid()"
     public boolean getDrawGrid() {
         return drawGrid;
     }
 
-    //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    //TODO: @Deprecated //Java standard pattern for boolean getters is "isSnapOnAdd()"
     public boolean getSnapOnAdd() {
         return snapToGridOnAdd;
     }
 
-    //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    //TODO: @Deprecated //Java standard pattern for boolean getters is "isSnapOnMove()"
     public boolean getSnapOnMove() {
         return snapToGridOnMove;
     }
 
-    //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    //TODO: @Deprecated //Java standard pattern for boolean getters is "isAntialiasingOn()"
     public boolean getAntialiasingOn() {
         return antialiasingOn;
     }
 
-    //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    //TODO: @Deprecated //Java standard pattern for boolean getters is "isHighlightSelectedBlock()"
     public boolean getHighlightSelectedBlock() {
         return highlightSelectedBlockFlag;
     }
 
-    //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    //TODO: @Deprecated //Java standard pattern for boolean getters is "isTurnoutCircles()"
     public boolean getTurnoutCircles() {
         return turnoutCirclesWithoutEditMode;
     }
 
-    //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    //TODO: @Deprecated //Java standard pattern for boolean getters is "isTooltipsNotEdit()"
     public boolean getTooltipsNotEdit() {
         return tooltipsWithoutEditMode;
     }
 
-    //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    //TODO: @Deprecated //Java standard pattern for boolean getters is "isTooltipsInEdit()"
     public boolean getTooltipsInEdit() {
         return tooltipsInEditMode;
     }
 
-    //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    //TODO: @Deprecated //Java standard pattern for boolean getters is "isAutoBlockAssignment()"
     public boolean getAutoBlockAssignment() {
         return autoAssignBlocks;
     }
@@ -7301,7 +7365,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     public void setPanelBounds(@Nonnull Rectangle2D newBounds) {
-        // don't let origin go negative
+        //don't let origin go negative
         newBounds = newBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
         if (!getPanelBounds().equals(newBounds)) {
@@ -7326,15 +7390,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
-    // this will grow the panel bounds based on items added to the layout
+    //this will grow the panel bounds based on items added to the layout
     @Nonnull
     public Rectangle2D unionToPanelBounds(@Nonnull Rectangle2D bounds) {
         Rectangle2D result = getPanelBounds();
 
-        // make room to expand
+        //make room to expand
         Rectangle2D b = MathUtil.inset(bounds, gridSize1st * gridSize2nd / -2.0);
 
-        // don't let origin go negative
+        //don't let origin go negative
         b = b.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
         result.add(b);
@@ -7463,7 +7527,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Should only be invoked on the GUI (Swing) thread
      */
-    @InvokeOnGuiThread  // due to the setSelected call on a possibly-visible item
+    @InvokeOnGuiThread  //due to the setSelected call on a possibly-visible item
     public void setShowHelpBar(boolean state) {
         if (showHelpBar != state) {
             showHelpBar = state;
@@ -7550,7 +7614,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".highlightSelectedBlock", highlightSelectedBlockFlag));
 
-            // thread this so it won't break the AppVeyor checks
+            //thread this so it won't break the AppVeyor checks
             new Thread(() -> {
                 if (highlightSelectedBlockFlag) {
                     //use the "Extra" color to highlight the selected block
@@ -7723,7 +7787,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         useDirectTurnoutControlCheckBoxMenuItem.setSelected(useDirectTurnoutControl);
     }
 
-    //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    //TODO: @Deprecated //Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getDirectTurnoutControl() {
         return useDirectTurnoutControl;
     }
@@ -7761,11 +7825,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     @Override
     protected void paintTargetPanel(@Nonnull Graphics g) {
-        // Nothing to do here
-        // All drawing has been moved into LayoutEditorComponent
-        // which calls draw.
-        // This is so the layout is drawn at level three
-        // (above or below the Positionables)
+        //Nothing to do here
+        //All drawing has been moved into LayoutEditorComponent
+        //which calls draw.
+        //This is so the layout is drawn at level three
+        //(above or below the Positionables)
     }
 
     // get selection rectangle
@@ -7777,7 +7841,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 Math.abs(selectionWidth), Math.abs(selectionHeight));
     }
 
-    // set selection rectangle
+    //set selection rectangle
     public void setSelectionRect(@Nonnull Rectangle2D selectionRect) {
         //selectionRect = selectionRect.createIntersection(MathUtil.zeroToInfinityRectangle2D);
         selectionX = selectionRect.getX();
@@ -7785,20 +7849,20 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         selectionWidth = selectionRect.getWidth();
         selectionHeight = selectionRect.getHeight();
 
-        // There's already code in the super class (Editor) to draw
-        // the selection rect... We just have to set _selectRect
+        //There's already code in the super class (Editor) to draw
+        //the selection rect... We just have to set _selectRect
         _selectRect = MathUtil.rectangle2DToRectangle(selectionRect);
 
         selectionRect = MathUtil.scale(selectionRect, getZoom());
 
         JComponent targetPanel = getTargetPanel();
         Rectangle targetRect = targetPanel.getVisibleRect();
-        // this will make it the size of the targetRect
-        // (effectively centering it onscreen)
+        //this will make it the size of the targetRect
+        //(effectively centering it onscreen)
         Rectangle2D selRect2D = MathUtil.inset(selectionRect,
                 (selectionRect.getWidth() - targetRect.getWidth()) / 2.0,
                 (selectionRect.getHeight() - targetRect.getHeight()) / 2.0);
-        // don't let the origin go negative
+        //don't let the origin go negative
         selRect2D = selRect2D.createIntersection(MathUtil.zeroToInfinityRectangle2D);
         Rectangle selRect = MathUtil.rectangle2DToRectangle(selRect2D);
         if (!targetRect.contains(selRect)) {
@@ -7808,7 +7872,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         clearSelectionGroups();
         selectionActive = true;
         createSelectionGroups();
-        //redrawPanel(); // createSelectionGroups already calls this
+        //redrawPanel(); //createSelectionGroups already calls this
     }
 
     protected void setSelectRect(Rectangle rectangle) {
@@ -7818,102 +7882,97 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /*
     //TODO: This compiles but I can't get the syntax correct to pass the (sub-)class
     public List<LayoutTrack> getLayoutTracksOfClass(@Nonnull Class<LayoutTrack> layoutTrackClass) {
-    return layoutTrackList.stream()
-    .filter(item -> item instanceof PositionablePoint)
-    .filter(layoutTrackClass::isInstance)
-    //.map(layoutTrackClass::cast)  // TODO: Do we need this? if not dead-code-strip
-    .collect(Collectors.toList());
+        return layoutTrackList.stream()
+                .filter(item -> item instanceof PositionablePoint)
+                .filter(layoutTrackClass::isInstance)
+                //.map(layoutTrackClass::cast)  //TODO: Do we need this? if not dead-code-strip
+                .collect(Collectors.toList());
     }
 
     //TODO: This compiles but I can't get the syntax correct to pass the array of (sub-)classes
     public List<LayoutTrack> getLayoutTracksOfClasses(@Nonnull List<Class<? extends LayoutTrack>> layoutTrackClasses) {
-    return layoutTrackList.stream()
-    .filter(o -> layoutTrackClasses.contains(o.getClass()))
-    .collect(Collectors.toList());
+        return layoutTrackList.stream()
+                .filter(o -> layoutTrackClasses.contains(o.getClass()))
+                .collect(Collectors.toList());
     }
 
     //TODO: This compiles but I can't get the syntax correct to pass the (sub-)class
     public List<LayoutTrack> getLayoutTracksOfClass(@Nonnull Class<? extends LayoutTrack> layoutTrackClass) {
-    return getLayoutTracksOfClasses(new ArrayList<>(Arrays.asList(layoutTrackClass)));
+        return getLayoutTracksOfClasses(new ArrayList<>(Arrays.asList(layoutTrackClass)));
     }
 
     public List<PositionablePoint> getPositionablePoints() {
-    return getLayoutTracksOfClass(PositionablePoint);
+        return getLayoutTracksOfClass(PositionablePoint);
     }
      */
-    private @Nonnull
-    Stream<LayoutTrack> getLayoutTracksOfClass(Class<? extends LayoutTrack> layoutTrackClass) {
+    @Nonnull
+    private Stream<LayoutTrack> getLayoutTracksOfClass(Class<? extends LayoutTrack> layoutTrackClass) {
         return layoutTrackList.stream()
                 .filter(layoutTrackClass::isInstance)
                 .map(layoutTrackClass::cast);
     }
 
-    public @Nonnull
-    List<PositionablePoint> getPositionablePoints() {
-        return getLayoutTracksOfClass(PositionablePoint.class
-        )
+    @Nonnull
+    public List<PositionablePoint> getPositionablePoints() {
+        return getLayoutTracksOfClass(PositionablePoint.class)
                 .map(PositionablePoint.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public @Nonnull
-    List<LayoutSlip> getLayoutSlips() {
-        return getLayoutTracksOfClass(LayoutSlip.class
-        )
+    @Nonnull
+    public List<LayoutSlip> getLayoutSlips() {
+        return getLayoutTracksOfClass(LayoutSlip.class)
                 .map(LayoutSlip.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public @Nonnull
-    List<TrackSegment> getTrackSegments() {
-        return getLayoutTracksOfClass(TrackSegment.class
-        )
+    @Nonnull
+    public List<TrackSegment> getTrackSegments() {
+        return getLayoutTracksOfClass(TrackSegment.class)
                 .map(TrackSegment.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public @Nonnull
-    List<LayoutTurnout> getLayoutTurnouts() {
+    @Nonnull
+    public List<LayoutTurnout> getLayoutTurnouts() {
         return layoutTrackList.stream() // next line excludes LayoutSlips
                 .filter((o) -> (!(o instanceof LayoutSlip) && (o instanceof LayoutTurnout)))
                 .map(LayoutTurnout.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public @Nonnull
-    List<LayoutTurntable> getLayoutTurntables() {
-        return getLayoutTracksOfClass(LayoutTurntable.class
-        )
+    @Nonnull
+    public List<LayoutTurntable> getLayoutTurntables() {
+        return getLayoutTracksOfClass(LayoutTurntable.class)
                 .map(LayoutTurntable.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public @Nonnull
-    List<LevelXing> getLevelXings() {
-        return getLayoutTracksOfClass(LevelXing.class
-        )
+    @Nonnull
+    public List<LevelXing> getLevelXings() {
+        return getLayoutTracksOfClass(LevelXing.class)
                 .map(LevelXing.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public @Nonnull
-    List<LayoutTrack> getLayoutTracks() {
+    @Nonnull
+    public List<LayoutTrack> getLayoutTracks() {
         return layoutTrackList;
     }
 
-    public @Nonnull
-    List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
-        return getLayoutTracksOfClass(LayoutTurnout.class
-        )
+    @Nonnull
+    public List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
+        return getLayoutTracksOfClass(LayoutTurnout.class)
                 .map(LayoutTurnout.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public @Nonnull
-    List<LayoutShape> getLayoutShapes() {
+    @Nonnull
+    public List<LayoutShape> getLayoutShapes() {
         return layoutShapes;
     }
 
+    @Nonnull
     public void sortLayoutShapesByLevel() {
         layoutShapes.sort((lhs, rhs) -> {
             // -1 == less than, 0 == equal, +1 == greater than
@@ -7987,8 +8046,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     @Override
-    public @Nonnull
-    String toString() {
+    @Nonnull
+    public String toString() {
         return String.format("LayoutEditor: %s", getLayoutName());
     }
 
@@ -8022,7 +8081,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
                 if (p != null) {
                     message.append("<li>");
-                    // Need to expand to get the names of blocks
+                    //Need to expand to get the names of blocks
                     message.append(Bundle.getMessage("VetoSignalHeadAssignedToPoint"));
                     message.append("</li>");
                 }
@@ -8246,9 +8305,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
-//    protected void rename(String inFrom, String inTo) {
-//
-//    }
     @Override
     public void dispose() {
         if (leToolBarPanel.sensorFrame != null) {
@@ -8267,7 +8323,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     }
 
-    // package protected
+    //package protected
     class TurnoutComboBoxPopupMenuListener implements PopupMenuListener {
 
         private final NamedBeanComboBox<Turnout> comboBox;
@@ -8280,7 +8336,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         @Override
         public void popupMenuWillBecomeVisible(PopupMenuEvent event) {
-            // This method is called before the popup menu becomes visible.
+            //This method is called before the popup menu becomes visible.
             log.debug("PopupMenuWillBecomeVisible");
             Set<Turnout> l = new HashSet<>();
             comboBox.getManager().getNamedBeanSet().forEach((turnout) -> {
@@ -8295,13 +8351,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         @Override
         public void popupMenuWillBecomeInvisible(PopupMenuEvent event) {
-            // This method is called before the popup menu becomes invisible
+            //This method is called before the popup menu becomes invisible
             log.debug("PopupMenuWillBecomeInvisible");
         }
 
         @Override
         public void popupMenuCanceled(PopupMenuEvent event) {
-            // This method is called when the popup menu is canceled
+            //This method is called when the popup menu is canceled
             log.debug("PopupMenuCanceled");
         }
     }
@@ -8313,6 +8369,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param comboBox The NamedBeanComboBox that contains the turnout list.
      * @return A PopupMenuListener
      */
+    @Nonnull
     public TurnoutComboBoxPopupMenuListener newTurnoutComboBoxPopupMenuListener(NamedBeanComboBox<Turnout> comboBox) {
         return new TurnoutComboBoxPopupMenuListener(comboBox, new ArrayList<>());
     }
@@ -8321,11 +8378,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Create a listener that will exclude turnouts that are present in the
      * current panel. The list of current turnouts are not excluded.
      *
-     * @param comboBox        The NamedBeanComboBox that contains the turnout
-     *                        list.
+     * @param comboBox The NamedBeanComboBox that contains the turnout list.
      * @param currentTurnouts The turnouts to be left in the turnout list.
      * @return A PopupMenuListener
      */
+    @Nonnull
     public TurnoutComboBoxPopupMenuListener newTurnoutComboBoxPopupMenuListener(NamedBeanComboBox<Turnout> comboBox, List<Turnout> currentTurnouts) {
         return new TurnoutComboBoxPopupMenuListener(comboBox, currentTurnouts);
     }

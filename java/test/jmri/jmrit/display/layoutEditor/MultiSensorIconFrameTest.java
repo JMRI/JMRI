@@ -13,7 +13,7 @@ import org.junit.*;
  * @author	Paul Bender Copyright (C) 2016
  */
 public class MultiSensorIconFrameTest extends jmri.util.JmriJFrameTestBase {
-        
+
     private LayoutEditor e;
 
     @Before
@@ -21,11 +21,14 @@ public class MultiSensorIconFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+
+        JUnitUtil.initLayoutBlockManager();
+
         if(!GraphicsEnvironment.isHeadless()){
            e = new LayoutEditor();
            frame = new MultiSensorIconFrame(e);
         }
-        
+
     }
 
     @After

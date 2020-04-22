@@ -44,7 +44,7 @@ public class PrintCarRosterActionTest extends OperationsTestCase {
         Assert.assertNotNull("exists", f);
         f.initComponents();
         
-        JemmyUtil.enterClickAndLeave(f.okayButton); // closes window
+        JemmyUtil.enterPushAndLeave(f.okayButton); // closes window
         
         // confirm print preview window is showing
         ResourceBundle rb = ResourceBundle

@@ -48,13 +48,13 @@ public class LocationsByCarTypeFrameTest extends OperationsTestCase {
         Assert.assertTrue("accepts", loc.acceptsTypeName("Boxcar"));
         Assert.assertTrue("accepts", loc.acceptsTypeName("Flat"));
         
-        JemmyUtil.enterClickAndLeave(lctf.clearButton);
-        JemmyUtil.enterClickAndLeave(lctf.saveButton); 
+        JemmyUtil.enterPushAndLeave(lctf.clearButton);
+        JemmyUtil.enterPushAndLeave(lctf.saveButton); 
         Assert.assertFalse("accepts", loc.acceptsTypeName("Boxcar"));
         Assert.assertTrue("accepts", loc.acceptsTypeName("Flat"));
         
-        JemmyUtil.enterClickAndLeave(lctf.setButton);
-        JemmyUtil.enterClickAndLeave(lctf.saveButton);
+        JemmyUtil.enterPushAndLeave(lctf.setButton);
+        JemmyUtil.enterPushAndLeave(lctf.saveButton);
         Assert.assertTrue("accepts", loc.acceptsTypeName("Boxcar"));
         Assert.assertTrue("accepts", loc.acceptsTypeName("Flat"));
         
@@ -81,22 +81,22 @@ public class LocationsByCarTypeFrameTest extends OperationsTestCase {
         
         // Flat is the 1st car type in the selection box
         
-        JemmyUtil.enterClickAndLeave(lctf.clearButton);
-        JemmyUtil.enterClickAndLeave(lctf.saveButton); 
+        JemmyUtil.enterPushAndLeave(lctf.clearButton);
+        JemmyUtil.enterPushAndLeave(lctf.saveButton); 
         Assert.assertTrue("accepts", loc.acceptsTypeName("Boxcar"));
         Assert.assertFalse("accepts", loc.acceptsTypeName("Flat"));
         
-        JemmyUtil.enterClickAndLeave(lctf.setButton);
-        JemmyUtil.enterClickAndLeave(lctf.saveButton);
+        JemmyUtil.enterPushAndLeave(lctf.setButton);
+        JemmyUtil.enterPushAndLeave(lctf.saveButton);
         Assert.assertTrue("accepts", loc.acceptsTypeName("Boxcar"));
         Assert.assertTrue("accepts", loc.acceptsTypeName("Flat"));
         
-        JemmyUtil.enterClickAndLeave(lctf.clearButton);
-        JemmyUtil.enterClickAndLeave(lctf.saveButton); 
+        JemmyUtil.enterPushAndLeave(lctf.clearButton);
+        JemmyUtil.enterPushAndLeave(lctf.saveButton); 
         JemmyUtil.enterClickAndLeave(lctf.copyCheckBox);
         lctf.typeComboBox.setSelectedItem("Boxcar");
 
-        JemmyUtil.enterClickAndLeave(lctf.saveButton); 
+        JemmyUtil.enterPushAndLeave(lctf.saveButton); 
         
         // the save should have opened a dialog window
         JemmyUtil.pressDialogButton(lctf, Bundle.getMessage("CopyCarTypeTitle"), Bundle.getMessage("ButtonYes"));

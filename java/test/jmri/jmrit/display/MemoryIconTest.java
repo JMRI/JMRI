@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
 import org.apache.log4j.Level;
 import org.junit.*;
 import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.QueueTool;
+import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JLabelOperator;
 
 /**
@@ -45,19 +45,19 @@ public class MemoryIconTest extends PositionableTestBase {
         jf.getContentPane().add(new javax.swing.JLabel("| Expect \"Data Data\" text"));
 
         jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue("Data Data");
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         int[] colors = getColor("Expect \"Data Data\" as text", "| Expect \"Data Data\" as text", 0, 6, 10);
         int r = ((colors[1] >> 16) & 0xFF) + ((colors[2] >> 16) & 0xFF) + ((colors[3] >> 16) & 0xFF) + ((colors[4] >> 16) & 0xFF);
         int g = ((colors[1] >> 8) & 0xFF) + ((colors[2] >> 8) & 0xFF) + ((colors[3] >> 8) & 0xFF) + ((colors[4] >> 8) & 0xFF);
         int b = ((colors[1]) & 0xFF) + ((colors[2]) & 0xFF) + ((colors[3]) & 0xFF) + ((colors[4]) & 0xFF);
         Assert.assertTrue("Expect gray/black text", r == g & g == b); // gray pixels
-        // the following assert fails on some Linux machines, but I am 
-        // uncertain what that implies, since the previous test verifies the 
+        // the following assert fails on some Linux machines, but I am
+        // uncertain what that implies, since the previous test verifies the
         // text is grey.
         //Assert.assertTrue("Expect blacker than grey", r < 4 * 0xee); // gray pixels
 
@@ -83,7 +83,7 @@ public class MemoryIconTest extends PositionableTestBase {
         jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue("");
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         int[] colors = getColor("Expect blank", "| Expect blank", 0, 6, 10);
         //for (int i=0; i< 10; i++) System.out.println("   "+String.format("0x%8s", Integer.toHexString(colors[i])).replace(' ', '0'));
@@ -109,11 +109,11 @@ public class MemoryIconTest extends PositionableTestBase {
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect red X default icon: "));
 
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         int colors[] = getColor("Expect empty", "| Expect empty", 0, 6, 10);
         Assert.assertTrue("Expect red X", (colors[3] == 0xff800000) || (colors[4] == 0xff800000) || (colors[5] == 0xff800000));
@@ -138,11 +138,11 @@ public class MemoryIconTest extends PositionableTestBase {
         jf.getContentPane().add(new javax.swing.JLabel("| Expect roster entry: "));
 
 	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue(42);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
 
@@ -166,11 +166,11 @@ public class MemoryIconTest extends PositionableTestBase {
         jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
 
 	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue(re);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
 
         jf.setVisible(false);
@@ -193,11 +193,11 @@ public class MemoryIconTest extends PositionableTestBase {
         jmri.IdTag tag = new jmri.implementation.DefaultIdTag("1234");
 
 	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue(tag);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
         Assert.assertNotNull("Label with correct text value",jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(),tag.getDisplayName()));
 
@@ -226,11 +226,11 @@ public class MemoryIconTest extends PositionableTestBase {
         };
 
 	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue(rpt);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
         Assert.assertNotNull("Label with correct text value",jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(),rpt.toReportString()));
 
@@ -257,15 +257,15 @@ public class MemoryIconTest extends PositionableTestBase {
         jf.pack();
         jf.setVisible(true);
 
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         Assert.assertNotNull("Label with correct text value before key",jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(),"1"));
 
         to.addKeyAndIcon(icon,"1");
 
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
         // we should probably verify the icon displays the correct icon here.
         // The text contents of the field are not displayed.

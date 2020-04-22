@@ -1078,6 +1078,9 @@ public class LayoutTurnoutTest {
     @BeforeClass
     public static void beforeClass() {
         JUnitUtil.setUp();
+
+        JUnitUtil.initLayoutBlockManager();
+
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
             JUnitUtil.resetInstanceManager();

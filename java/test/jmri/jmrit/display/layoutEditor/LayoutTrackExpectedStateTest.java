@@ -31,6 +31,8 @@ public class LayoutTrackExpectedStateTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+
+        JUnitUtil.initLayoutBlockManager();
     }
 
     @After

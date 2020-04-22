@@ -23,13 +23,13 @@ import org.netbeans.jemmy.operators.JMenuOperator;
  */
 public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
-    private EditorFrameOperator jfo;
+    @Rule   // 10 second timeout for methods in this test class.
+    public Timeout globalTimeout = Timeout.seconds(10);
 
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
+    @Rule   // allow 3 retries
+    public RetryRule retryRule = new RetryRule(3);
 
-    @Rule
-    public RetryRule retryRule = new RetryRule(3); // allow 3 retries
+    private EditorFrameOperator jfo = null;
 
     @Before
     @Override
@@ -59,17 +59,17 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutEditor e = new LayoutEditor("Layout Editor Test Layout");
-        Assert.assertNotNull("exists", e);
-        JUnitUtil.dispose(e);
+        LayoutEditor layoutEditor = new LayoutEditor("Layout Editor Test Layout");
+        Assert.assertNotNull("layoutEditor null", layoutEditor);
+        JUnitUtil.dispose(layoutEditor);
     }
 
     @Test
     public void testDefaultCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutEditor e = new LayoutEditor(); // create layout editor
-        Assert.assertNotNull("exists", e);
-        JUnitUtil.dispose(e);
+        LayoutEditor layoutEditor = new LayoutEditor(); // create layout editor
+        Assert.assertNotNull("layoutEditor null", layoutEditor);
+        JUnitUtil.dispose(layoutEditor);
     }
 
     @Test
@@ -237,7 +237,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     public void testGetFinder() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditorFindItems f = e.getFinder();
-        Assert.assertNotNull("exists", f);
+        Assert.assertNotNull("e.getFinder() null", f);
     }
 
     @Test
@@ -991,18 +991,22 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         e.setHighlightSelectedBlock(true);
         // setHighlightSelectedBlock performs some GUI actions, so give
         // the AWT queue some time to clear.
-        new EventTool().waitNoEvent(0);
+
+        new EventTool().waitNoEvent(100);
+
         Assert.assertTrue("le.getHighlightSelectedBlock after setHighlightSelectedBlock(true)", e.getHighlightSelectedBlock());
     }
 
     @Test
-    @Ignore("unreliable on CI servers")
+    ///@Ignore("unreliable on CI servers")
     public void testSetHighlightSelectedBlockFalse() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setHighlightSelectedBlock(false);
         // setHighlightSelectedBlock performs some GUI actions, so give
         // the AWT queue some time to clear.
-        new EventTool().waitNoEvent(0);
+
+        new EventTool().waitNoEvent(100);
+
         Assert.assertFalse("le.getHighlightSelectedBlock after setHighlightSelectedBlock(false)", e.getHighlightSelectedBlock());
     }
 
@@ -1047,7 +1051,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on Travis 12/20/2019")
     public void testToolBarPositionLeft() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
@@ -1068,7 +1072,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on Travis 12/20/2019")
     public void testToolBarPositionBottom() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
@@ -1089,7 +1093,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on Travis 12/20/2019")
     public void testToolBarPositionRight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
@@ -1110,7 +1114,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on Travis 12/20/2019")
     public void testToolBarPositionFloat() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
@@ -1121,8 +1125,12 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideFloat"), "/");
 
+        new EventTool().waitNoEvent(200);
+
         // bring this window back to the front...
         jfo.activate();
+
+        new EventTool().waitNoEvent(200);
 
         //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"

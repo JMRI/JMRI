@@ -551,7 +551,7 @@ public class LayoutEditorFindItems {
             case TRACK:
                 return findTrackSegmentByName(name);
             default:
-                if (LayoutEditor.HitPointType.isTurntableRayHitType(type)) {
+                if (type.isTurntableRayHitType()) {
                     return findLayoutTurntableByName(name);
                 }
         }
