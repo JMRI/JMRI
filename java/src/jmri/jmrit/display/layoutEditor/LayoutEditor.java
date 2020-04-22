@@ -743,8 +743,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 //we invert it and save it as thin
                 boolean prefsToolBarIsWide = prefsMgr.getSimplePreferenceState(windowFrameRef + ".toolBarThin");
 
-                log.debug(
-                        "{}.toolBarThin is {}", windowFrameRef, prefsProp);
+                log.debug("{}.toolBarThin is {}", windowFrameRef, prefsProp);
                 setToolBarWide(prefsToolBarIsWide);
 
                 boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(windowFrameRef + ".showHelpBar");
@@ -762,8 +761,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 //log.debug("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
 
                 setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
-            }
-            ); //InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
+            }); //InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
 
             // make sure that the layoutEditorComponent is in the _targetPanel components
             List<Component> componentList = Arrays.asList(_targetPanel.getComponents());
@@ -2840,7 +2838,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 try {
                     positionable.setLocation((int) (newTopLeft.getX() - cBounds.getHeight()), (int) newTopLeft.getY());
                 } catch (NullPointerException ex) {
-
                 }
             }
         }
@@ -2851,7 +2848,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 lt.setCoordsCenter(newPoint);
                 lt.rotateCoords(90);
             } catch (NullPointerException ex) {
-
             }
         }
 
@@ -3604,7 +3600,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     if ((beginTrack != null) && (foundTrack != null)
                             && (beginTrack != foundTrack)) {
                         addTrackSegment();
-                        setCursor(Cursor.getDefaultCursor());
+                        _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                     }
                     beginTrack = null;
                     foundTrack = null;
@@ -3625,7 +3621,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 } else if (leToolBarPanel.shapeButton.isSelected()) {
                     if (selectedObject == null) {
                         addLayoutShape(currentPoint);
-                        setCursor(Cursor.getDefaultCursor());
+                        _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                     } else {
                         LayoutShape ls = (LayoutShape) selectedObject;
                         ls.addPoint(currentPoint, selectedHitPointType.getXmlValue() - HitPointType.SHAPE_POINT_0.getXmlValue());
@@ -3682,7 +3678,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             if ((leToolBarPanel.trackButton.isSelected()) && (beginTrack != null) && (foundTrack != null)) {
                 //user let up shift key before releasing the mouse when creating a track segment
-                setCursor(Cursor.getDefaultCursor());
+                _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                 beginTrack = null;
                 foundTrack = null;
                 redrawPanel();
@@ -4649,7 +4645,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 ls.setCoordsCenter(newPoint);
             });
             redrawPanel();
+            return;
         }
+        getLayoutEditorToolBarPanel().keyPressed(event);
     }
 
     private double returnDeltaPositionX(@Nonnull KeyEvent event) {
@@ -4728,7 +4726,18 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             redrawPanel();
             _prevNumSel = numSel;
         }
-    }   // mouseMoved
+
+        if (findLayoutTracksHitPoint(dLoc)) {
+            //log.debug("foundTrack: {}", foundTrack);
+            if (HitPointType.isControlHitType(foundHitPointType)) {
+                _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            } else {
+                _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+            }
+        } else {
+            _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        }
+    }   //mouseMoved
 
     private boolean isDragging = false;
 
@@ -4960,9 +4969,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
                 if (findLayoutTracksHitPoint(currentLocation, true)) {
                     //have match to free connection point, change cursor
-                    setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                    _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 } else if (needResetCursor) {
-                    setCursor(Cursor.getDefaultCursor());
+                    _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                 }
             } else if (event.isShiftDown()
                     && leToolBarPanel.shapeButton.isSelected() && (selectedObject != null)) {
@@ -4978,6 +4987,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             ((JComponent) event.getSource()).scrollRectToVisible(r);
         }   // if (isEditable())
     }   // mouseDragged
+
+    @Override
+    public void mouseEntered(@Nonnull MouseEvent event) {
+        _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    }
 
     /**
      * Add an Anchor point.
@@ -7143,6 +7157,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     @Nonnull
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "coloToColorName only returns null if null passed to it")
     public String getDefaultOccupiedTrackColor() {
         return ColorUtil.colorToColorName(defaultOccupiedTrackColor);
     }
@@ -7159,6 +7174,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     @Nonnull
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "coloToColorName only returns null if null passed to it")
     public String getDefaultAlternativeTrackColor() {
         return ColorUtil.colorToColorName(defaultAlternativeTrackColor);
     }
@@ -7167,7 +7183,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      *
      * Getter defaultAlternativeTrackColor.
      *
-     * @return block default alternetive color as Color
+     * @return block default alternative color as Color
      */
     @Nonnull
     public Color getDefaultAlternativeTrackColorColor() {
@@ -7175,16 +7191,19 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     @Nonnull
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "coloToColorName only returns null if null passed to it")
     public String getDefaultTextColor() {
         return ColorUtil.colorToColorName(defaultTextColor);
     }
 
     @Nonnull
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "coloToColorName only returns null if null passed to it")
     public String getTurnoutCircleColor() {
         return ColorUtil.colorToColorName(turnoutCircleColor);
     }
 
     @Nonnull
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "coloToColorName only returns null if null passed to it")
     public String getTurnoutCircleThrownColor() {
         return ColorUtil.colorToColorName(turnoutCircleThrownColor);
     }

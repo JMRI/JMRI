@@ -1660,13 +1660,19 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         //Working on the basis that if the nextsection is not null, then we are not at the end of the transit.
         List<Section> intermediateSections = new ArrayList<>();
         Section mastHeldAtSection = null;
-        if (nextSection != null && ar.getSection().getProperty("intermediateSection") != null && ((Boolean) ar.getSection().getProperty("intermediateSection")).booleanValue()) {
+        Object imSecProperty = ar.getSection().getProperty("intermediateSection");
+        if (nextSection != null 
+            && imSecProperty != null 
+                && ((Boolean) imSecProperty)) {
+            
             String property = "forwardMast";
             if (at.isAllocationReversed()) {
                 property = "reverseMast";
             }
-            if (ar.getSection().getProperty(property) != null) {
-                SignalMast endMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(ar.getSection().getProperty(property).toString());
+            
+            Object sectionDirProp = ar.getSection().getProperty(property); 
+            if ( sectionDirProp != null) {
+                SignalMast endMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(sectionDirProp.toString());
                 if (endMast != null) {
                     if (endMast.getHeld()) {
                         mastHeldAtSection = ar.getSection();
@@ -1681,12 +1687,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     if (ts.getSection() == ar.getSection() && ts.getSequenceNumber() == ar.getSectionSeqNumber()) {
                         found = true;
                     } else if (found) {
-                        if (ts.getSection().getProperty("intermediateSection") != null && ((Boolean) ts.getSection().getProperty("intermediateSection")).booleanValue()) {
-                            intermediateSections.add(ts.getSection());
-                        } else {
-                            //we add the section after the last intermediate in, so that the last allocation request can be built correctly
-                            intermediateSections.add(ts.getSection());
-                            break;
+                        Object imSecProp = ts.getSection().getProperty("intermediateSection");
+                        if ( imSecProp != null) { 
+                            if ((Boolean) imSecProp) {
+                                intermediateSections.add(ts.getSection());
+                            } else {
+                                //we add the section after the last intermediate in, so that the last allocation request can be built correctly
+                                intermediateSections.add(ts.getSection());
+                                break;
+                            }
                         }
                     }
                 }
@@ -1696,12 +1705,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     if (ts.getSection() == ar.getSection() && ts.getSequenceNumber() == ar.getSectionSeqNumber()) {
                         found = true;
                     } else if (found) {
-                        if (ts.getSection().getProperty("intermediateSection") != null && ((Boolean) ts.getSection().getProperty("intermediateSection")).booleanValue()) {
-                            intermediateSections.add(ts.getSection());
-                        } else {
-                            //we add the section after the last intermediate in, so that the last allocation request can be built correctly
-                            intermediateSections.add(ts.getSection());
-                            break;
+                        Object imSecProp = ts.getSection().getProperty("intermediateSection");
+                        if ( imSecProp != null ){
+                            if ((Boolean) imSecProp) {
+                                intermediateSections.add(ts.getSection());
+                            } else {
+                                //we add the section after the last intermediate in, so that the last allocation request can be built correctly
+                                intermediateSections.add(ts.getSection());
+                                break;
+                            }
                         }
                     }
                 }
@@ -1719,8 +1731,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         return null;
                     } else {
                         if (mastHeldAtSection == null) {
-                            if (se.getProperty(property) != null) {
-                                SignalMast endMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(se.getProperty(property).toString());
+                            Object heldProp = se.getProperty(property);
+                            if (heldProp != null) {
+                                SignalMast endMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(heldProp.toString());
                                 if (endMast != null && endMast.getHeld()) {
                                     mastHeldAtSection = se;
                                 }
@@ -1839,8 +1852,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             if (s.getState() == Section.REVERSE) {
                 property = "reverseMast";
             }
-            if (s.getProperty(property) != null) {
-                SignalMast toHold = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(s.getProperty(property).toString());
+            Object smProperty = s.getProperty(property);
+            if (smProperty != null) {
+                SignalMast toHold = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(smProperty.toString());
                 if (toHold != null) {
                     if (!toHold.getHeld()) {
                         heldMasts.add(new HeldMastDetails(toHold, at));
@@ -1850,12 +1864,16 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
             }
 
-            if (at.getLastAllocatedSection() != null && at.getLastAllocatedSection().getProperty(property) != null) {
-                SignalMast toRelease = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(at.getLastAllocatedSection().getProperty(property).toString());
-                if (toRelease != null && isMastHeldByDispatcher(toRelease, at)) {
-                    removeHeldMast(toRelease, at);
-                    //heldMasts.remove(toRelease);
-                    toRelease.setHeld(false);
+            Section lastOccSec = at.getLastAllocatedSection();
+            if (lastOccSec != null) {
+                smProperty = lastOccSec.getProperty(property);
+                if ( smProperty != null) {
+                    SignalMast toRelease = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(smProperty.toString());
+                    if (toRelease != null && isMastHeldByDispatcher(toRelease, at)) {
+                        removeHeldMast(toRelease, at);
+                        //heldMasts.remove(toRelease);
+                        toRelease.setHeld(false);
+                    }
                 }
             }
         }

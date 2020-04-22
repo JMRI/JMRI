@@ -11,7 +11,6 @@
         <Confidence value="2" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
-           <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
         </Or>
      </Match>
 

@@ -1185,37 +1185,28 @@ public class SlotManagerTest {
     public void testOpCode8a() {
 
         LocoNetMessage m = new LocoNetMessage(new int[] {0x8a, 0x75});
-        
+
         slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DCS100;
         slotmanager.message(m);
         JUnitUtil.waitFor(600);
         Assert.assertEquals("check no messages sent when DCS100", 0, lnis.outbound.size());
-        
-        
+
+
         slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DCS051;
         slotmanager.message(m);
         JUnitUtil.waitFor(600);
         Assert.assertEquals("check no messages sent when DCS051", 0, lnis.outbound.size());
-        
+
         slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DCS050;
         slotmanager.message(m);
         JUnitUtil.waitFor(600);
         Assert.assertEquals("check no messages sent when DCS050", 0, lnis.outbound.size());
-        
+
         slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DB150;
         slotmanager.message(m);
         JUnitUtil.waitFor(600);
         Assert.assertEquals("check no messages sent when DB150", 0, lnis.outbound.size());
 
-        slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DCS240;
-        slotmanager.message(new LocoNetMessage(new int[] {0x8a, 0x75}));
-        JUnitUtil.waitFor(()->{return lnis.outbound.size() >126;},"testOpCode8a: slot managersent at least 127 LocoNet messages");
-        for (int i = 0; i < 127; ++i) {
-            Assert.assertEquals("testOpCode8a: loop "+i+" check sent opcode", 0xBB, lnis.outbound.get(i).getOpCode());
-            Assert.assertEquals("testOpCode8a: loop "+i+" check sent byte 1", i, lnis.outbound.get(i).getElement(1));
-            Assert.assertEquals("testOpCode8a: loop "+i+" check sent byte 2", 0, lnis.outbound.get(i).getElement(2));
-
-        }
     }
 
     @Test
@@ -1242,6 +1233,20 @@ public class SlotManagerTest {
             Assert.assertEquals("testOpCode8a DCS052: loop "+i+" check sent opcode", 0xBB, lnis.outbound.get(i).getOpCode());
             Assert.assertEquals("testOpCode8a DCS052: loop "+i+" check sent byte 1", i, lnis.outbound.get(i).getElement(1));
             Assert.assertEquals("testOpCode8a DCS052: loop "+i+" check sent byte 2", 0, lnis.outbound.get(i).getElement(2));
+
+        }
+    }
+
+    @Test
+    public void testYetMoreOpCode8a() {
+
+        slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DCS240;
+        slotmanager.message(new LocoNetMessage(new int[] {0x8a, 0x75}));
+        JUnitUtil.waitFor(()->{return lnis.outbound.size() >126;},"testOpCode8a: slot managersent at least 127 LocoNet messages");
+        for (int i = 0; i < 127; ++i) {
+            Assert.assertEquals("testOpCode8a: loop "+i+" check sent opcode", 0xBB, lnis.outbound.get(i).getOpCode());
+            Assert.assertEquals("testOpCode8a: loop "+i+" check sent byte 1", i, lnis.outbound.get(i).getElement(1));
+            Assert.assertEquals("testOpCode8a: loop "+i+" check sent byte 2", 0, lnis.outbound.get(i).getElement(2));
 
         }
     }

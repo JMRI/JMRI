@@ -65,7 +65,13 @@ public class ProjectsCommonSubs {
     public static String getFilenameOnly(String path) {
         // Paths.get(path) can return null per the Paths documentation
         Path file = Paths.get(path);
-        return file != null ? file.getFileName().toString() : "";
+        if (file != null){
+            Object fileName = file.getFileName();
+            if (fileName!=null) {
+                return fileName.toString();
+            }
+        }
+        return "";
     }
 
     public static String addExtensionIfMissing(String path, String missingExtension) {

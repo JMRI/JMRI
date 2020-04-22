@@ -705,9 +705,8 @@ public class CatalogPanel extends JPanel {
             CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
             manager.loadImageIndex();
             for (CatalogTree tree : manager.getNamedBeanSet()) {
-                String systemName = tree.getSystemName();
-                if (systemName.charAt(0) == 'I') {
-                    catalog.addTree(manager.getBySystemName(systemName));
+                if (tree.getSystemName().charAt(0) == 'I') {
+                    catalog.addTree(tree);
                 }
             }
             catalog.createNewBranch("IFJAR", "Program Directory", "resources");

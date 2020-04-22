@@ -380,8 +380,14 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         SortedSet<OBlock> oblkList = obm.getNamedBeanSet();
         for (OBlock oblk : oblkList) {
             for (Portal po : oblk.getPortals()) {
-                obm.getByUserName(po.getFromBlockName()).addPortal(po);
-                obm.getByUserName(po.getToBlockName()).addPortal(po);
+                OBlock oob = obm.getByUserName(po.getFromBlockName());
+                if (oob !=null) {
+                    oob.addPortal(po);
+                }
+                oob = obm.getByUserName(po.getToBlockName());
+                if (oob !=null) {
+                    oob.addPortal(po);
+                }
             }
         }
         // storing and reloading will add in these items
