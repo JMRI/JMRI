@@ -60,8 +60,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @author sg
      *
      */
-    public class slotMapEntry {
-        public slotMapEntry(int from, int to) {
+    public class SlotMapEntry {
+        public SlotMapEntry(int from, int to) {
             fromSlot = from;
             toSlot = to;
         }
@@ -78,7 +78,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * a Map of the CS slots.
      */
-    public List<slotMapEntry> slotMap = new ArrayList<slotMapEntry>();
+    public List<SlotMapEntry> slotMap = new ArrayList<SlotMapEntry>();
     
     /**
      * Constructor for a SlotManager on a given TrafficController.
@@ -92,7 +92,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         LONG_TIMEOUT = 180000;  // Fleischmann command stations take forever
         SHORT_TIMEOUT = 8000;   // DCS240 reads
         
-        slotMap = Arrays.asList(new slotMapEntry(0,127));
+        slotMap = Arrays.asList(new SlotMapEntry(0,127));
 
         loadSlots();
 
@@ -1465,8 +1465,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param inputSlotMap array of from to pairs
      * @param interval ms between slt rds
      */
-    synchronized public void update(List<slotMapEntry> inputSlotMap, int interval) {
-        for ( slotMapEntry item: inputSlotMap) {
+    synchronized public void update(List<SlotMapEntry> inputSlotMap, int interval) {
+        for ( SlotMapEntry item: inputSlotMap) {
             nextReadSlot = item.getFrom();
             readNextSlot(item.getTo(),interval);
         }
