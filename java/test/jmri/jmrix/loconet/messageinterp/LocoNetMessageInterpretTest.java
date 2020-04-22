@@ -6670,13 +6670,11 @@ public class LocoNetMessageInterpretTest {
     }
 
     @Before
-    @Test
     public void setUp() {
         JUnitUtil.setUp();
     }
 
     @After
-    @Test
     public void tearDown() {
         JUnitUtil.tearDown();
     }
