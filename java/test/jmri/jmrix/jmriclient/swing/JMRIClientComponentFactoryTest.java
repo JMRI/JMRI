@@ -37,6 +37,7 @@ public class JMRIClientComponentFactoryTest {
 
     @After
     public void tearDown() {
+        m.getJMRIClientTrafficController().terminateThreads();
         JUnitUtil.tearDown();
     }
 }
