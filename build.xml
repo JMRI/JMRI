@@ -1518,7 +1518,7 @@
             <sysproperty key="user.country" value="US"/>
 
             <arg value="--scan-classpath"/>
-            <arg value="--details=none"/>
+            <arg value="--details=verbose"/>
             <arg value="--include-engine=junit-jupiter"/>
 	    <arg value="--include-engine=junit-vintage"/>
 	    <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
