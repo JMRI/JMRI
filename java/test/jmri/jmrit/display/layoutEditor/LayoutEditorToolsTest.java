@@ -494,12 +494,12 @@ public class LayoutEditorToolsTest {
         let.setSignalHeadOnPanel(0.D, "IH1", 0, 0);
         //setSignalHeadOnPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(0);
         Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(signalHeads.get(1)));
         let.removeSignalHeadFromPanel("IH1");
         //removeSignalHeadFromPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(0);
         Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(signalHeads.get(1)));
     }
 
@@ -512,12 +512,12 @@ public class LayoutEditorToolsTest {
         let.setSignalHeadOnPanel(0.D, "IH1", point);
         //setSignalHeadOnPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(0);
         Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(signalHeads.get(1)));
         let.removeSignalHeadFromPanel("IH1");
         //removeSignalHeadFromPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(0);
         Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(signalHeads.get(1)));
     }
 
@@ -529,12 +529,12 @@ public class LayoutEditorToolsTest {
         let.setSignalHeadOnPanel(0.D, "IH1", 0, 0);
         //setSignalHeadOnPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(0);
         Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(signalHeads.get(1)));
         let.removeSignalHeadFromPanel("IH1");
         //removeSignalHeadFromPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(0);
         Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(signalHeads.get(1)));
     }
 

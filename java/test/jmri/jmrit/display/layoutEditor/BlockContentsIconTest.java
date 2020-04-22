@@ -43,11 +43,11 @@ public class BlockContentsIconTest {
         jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
 
         jmri.InstanceManager.getDefault(BlockManager.class).getBlock("IB1").setValue(re);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(0);
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(0);
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
 
         jf.setVisible(false);
@@ -68,11 +68,11 @@ public class BlockContentsIconTest {
         jmri.IdTag tag = new jmri.implementation.DefaultIdTag("1234");
 
         jmri.InstanceManager.getDefault(BlockManager.class).getBlock("IB1").setValue(tag);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(0);
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(0);
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
         Assert.assertNotNull("Label with correct text value",jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(),tag.getDisplayName()));
 
