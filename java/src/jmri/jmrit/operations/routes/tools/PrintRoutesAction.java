@@ -2,7 +2,6 @@ package jmri.jmrit.operations.routes.tools;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -34,8 +33,7 @@ public class PrintRoutesAction extends PrintRouteAction {
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, MessageFormat.format(
-                    Bundle.getMessage("TitleRoutesTable"), new Object[]{}), Control.reportFontSize, .5, .5, .5, .5,
+            writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleRoutesTable"), Control.reportFontSize, .5, .5, .5, .5,
                     isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
