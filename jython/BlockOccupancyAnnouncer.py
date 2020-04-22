@@ -35,7 +35,7 @@ def cvtBlockStateToText(state) :
 # use external "nircmd" command to "speak" some text  (I prefer this voice to eSpeak)
 def speak(msg) :
     #uncomment next line for speech (Jenkins doesn't like this command)
-    java.lang.Runtime.getRuntime().exec('C:\\Progra~2\\nircmd\\nircmd speak text "' + msg +'"')
+    #java.lang.Runtime.getRuntime().exec('C:\\Progra~2\\nircmd\\nircmd speak text "' + msg +'"')
     return
     
 # Define the sensor listener: 
@@ -60,7 +60,7 @@ class SensorListener(java.beans.PropertyChangeListener):
             #only speak for occupied blocks (cuts down on noise level)
             if (b.getState() == jmri.Block.OCCUPIED) :
                 spoken_mesg    = b.userName + " "
-                spoken_mesg += cvtBlockStateToText(b.getState()) + ", "
+                #spoken_mesg += cvtBlockStateToText(b.getState()) + ", "
                 spoken_mesg += block_length
                 speak(spoken_mesg)
         print mesg
@@ -84,7 +84,7 @@ sensors.addPropertyChangeListener(ManagerListener())
 
 # For the sensors that exist, attach a sensor listener
 list = sensors.getNamedBeanSet()
-for sensor in list :
+for i in list :
     sensor.addPropertyChangeListener(listener)
 
 speak("block occupancy announcer started")
