@@ -909,7 +909,8 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         java.lang.reflect.Method resetTurnoutSize = null;
         try {
             resetTurnoutSize = e.getClass().getDeclaredMethod("resetTurnoutSize");
-        } catch (java.lang.NoSuchMethodException nsm) {
+        }
+        catch (java.lang.NoSuchMethodException nsm) {
             Assert.fail("Could not find method resetTurnoutSize in LayoutEditor class.");
         }
         // override the default permissions.
@@ -917,9 +918,11 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         resetTurnoutSize.setAccessible(true);
         try {
             resetTurnoutSize.invoke(e);
-        } catch (java.lang.IllegalAccessException iae) {
+        }
+        catch (java.lang.IllegalAccessException iae) {
             Assert.fail("Could not access method resetTurnoutSize in LayoutEditor class.");
-        } catch (java.lang.reflect.InvocationTargetException ite) {
+        }
+        catch (java.lang.reflect.InvocationTargetException ite) {
             Throwable cause = ite.getCause();
             Assert.fail("resetTurnoutSize execution failed reason: " + cause.getMessage());
         }
@@ -991,7 +994,6 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         e.setHighlightSelectedBlock(true);
         // setHighlightSelectedBlock performs some GUI actions, so give
         // the AWT queue some time to clear.
-
         new EventTool().waitNoEvent(100);
 
         Assert.assertTrue("le.getHighlightSelectedBlock after setHighlightSelectedBlock(true)", e.getHighlightSelectedBlock());
@@ -1004,7 +1006,6 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         e.setHighlightSelectedBlock(false);
         // setHighlightSelectedBlock performs some GUI actions, so give
         // the AWT queue some time to clear.
-
         new EventTool().waitNoEvent(100);
 
         Assert.assertFalse("le.getHighlightSelectedBlock after setHighlightSelectedBlock(false)", e.getHighlightSelectedBlock());
