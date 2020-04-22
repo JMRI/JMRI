@@ -4649,7 +4649,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 ls.setCoordsCenter(newPoint);
             });
             redrawPanel();
+            return;
         }
+        getLayoutEditorToolBarPanel().keyPressed(event);
     }
 
     private double returnDeltaPositionX(@Nonnull KeyEvent event) {
