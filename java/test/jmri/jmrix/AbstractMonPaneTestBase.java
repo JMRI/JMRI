@@ -148,7 +148,6 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
 
     protected void setAndCheckFilterTextEntry(String entryText, String resultText, String errorMessage) {
         ThreadingUtil.runOnGUI( () -> pane.setFilterText(entryText));
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         assertThat(resultText).withFailMessage(errorMessage)
                 .isEqualTo(ThreadingUtil.runOnGUIwithReturn( () -> pane.getFilterText()));
     }
