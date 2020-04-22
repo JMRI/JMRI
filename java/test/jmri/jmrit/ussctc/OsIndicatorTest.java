@@ -6,6 +6,7 @@ import jmri.JmriException;
 import jmri.Sensor;
 import jmri.ShutDownManager;
 import jmri.Turnout;
+import jmri.util.JUnitUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -134,17 +135,17 @@ public class OsIndicatorTest {
 
     @Before
     public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
     }
 
     @After
     public void tearDown() throws Exception {
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 
 }

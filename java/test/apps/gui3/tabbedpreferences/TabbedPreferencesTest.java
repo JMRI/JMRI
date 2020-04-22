@@ -30,7 +30,7 @@ public class TabbedPreferencesTest extends jmri.util.swing.JmriPanelTest {
     @After
     @Override
     public void tearDown() {
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

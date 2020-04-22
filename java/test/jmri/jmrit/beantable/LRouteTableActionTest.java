@@ -164,7 +164,7 @@ public class LRouteTableActionTest {
         if (_lRouteTable.f != null) {
             _lRouteTable.f.dispose();
         }
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

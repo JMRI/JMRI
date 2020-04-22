@@ -50,7 +50,7 @@ public class MemoryIconTest extends jmri.jmrit.display.MemoryIconTest {
            p = null;
         }
         JUnitUtil.resetWindows(false,false);
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

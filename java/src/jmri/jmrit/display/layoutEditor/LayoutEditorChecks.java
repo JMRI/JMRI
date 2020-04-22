@@ -504,6 +504,14 @@ public class LayoutEditorChecks {
                                 aatzlts.add(pp);
                                 continue;   // so we don't get added again
                             }
+                            // if track segments isMainline's don't match
+                            if (ts1.isMainline() != ts2.isMainline()) {
+                                continue;   // skip it
+                            }
+                            // if track segments isHidden's don't match
+                            if (ts1.isHidden() != ts2.isHidden()) {
+                                continue;   // skip it
+                            }
                             // if either track segment has decorations
                             if (ts1.hasDecorations() || ts2.hasDecorations()) {
                                 continue;   // skip it

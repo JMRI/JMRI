@@ -4206,6 +4206,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 if (cn == null) {
                     String sName = _curLogix.getConditionalByNumberOrder(row);
                     Conditional cdl = _conditionalManager.getBySystemName(sName);
+                    if (cdl==null){
+                        log.error("No conditional {} while editing user name",sName);
+                        return;
+                    }
                     cdl.setUserName(uName);
                     fireTableRowsUpdated(row, row);
 
@@ -4214,15 +4218,14 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     if (refList != null) {
                         for (String ref : refList) {
                             Conditional cRef = _conditionalManager.getBySystemName(ref);
+                            if (cRef==null){
+                                continue;
+                            }
                             List<ConditionalVariable> varList = cRef.getCopyOfStateVariables();
                             for (ConditionalVariable var : varList) {
                                 // Find the affected conditional variable
                                 if (var.getName().equals(sName)) {
-                                    if (uName.length() > 0) {
-                                        var.setGuiName(uName);
-                                    } else {
-                                        var.setGuiName(sName);
-                                    }
+                                    var.setGuiName( (uName.length() > 0) ? uName : sName );
                                 }
                             }
                             cRef.setStateVariables(varList);

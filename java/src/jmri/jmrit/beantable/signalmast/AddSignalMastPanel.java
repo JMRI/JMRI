@@ -289,7 +289,12 @@ public class AddSignalMastPanel extends JPanel {
 
             // get the signals system name from the user name in combo box
             String u = (String) sigSysBox.getSelectedItem();
-            sigsysname = man.getByUserName(u).getSystemName();
+            SignalSystem sig = man.getByUserName(u);
+            if (sig==null){
+                log.error("Signal System Not found for Username {}",u);
+                return;
+            }
+            sigsysname = sig.getSystemName();
             log.trace("     loadMastDefinitions with sigsysname {}", sigsysname); // NOI18N
             mapNameToShowSize = new LinkedHashMap<>();
             mapTypeToName = new LinkedHashMap<>();

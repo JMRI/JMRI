@@ -62,7 +62,7 @@ abstract public class PositionableTestBase {
         JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
         editor = null;
         p = null;
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

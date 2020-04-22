@@ -333,7 +333,7 @@ public class MemoryIconTest extends PositionableTestBase {
     @After
     public void tearDown() {
         to = null;
-        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 

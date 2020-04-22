@@ -396,8 +396,9 @@ public class DefaultSignalMastLogicManager
             LayoutBlock faceLBlock = sml.getFacingBlock();
             if (faceLBlock != null) {
                 boolean sourceIntermediate = false;
-                if (sml.getSourceMast().getProperty("intermediateSignal") != null) {
-                    sourceIntermediate = ((Boolean) sml.getSourceMast().getProperty("intermediateSignal"));
+                Object intermSigProp = sml.getSourceMast().getProperty("intermediateSignal"); 
+                if ( intermSigProp != null) {
+                    sourceIntermediate = ((Boolean) intermSigProp);
                 }
                 for (SignalMast destMast : sml.getDestinationList()) {
                     if (!sml.getAutoBlocksBetweenMasts(destMast).isEmpty()) {
@@ -426,8 +427,9 @@ public class DefaultSignalMastLogicManager
                         sml.setAssociatedSection(sec, destMast);
                         sec.setProperty("forwardMast", destMast.getDisplayName());
                         boolean destIntermediate = false;
-                        if (destMast.getProperty("intermediateSignal") != null) {
-                            destIntermediate = ((Boolean) destMast.getProperty("intermediateSignal"));
+                        Object destMastImSigProp = destMast.getProperty("intermediateSignal"); 
+                        if ( destMastImSigProp != null) {
+                            destIntermediate = ((Boolean) destMastImSigProp);
                         }
                         if (sourceIntermediate || destIntermediate) {
                             sec.setProperty("intermediateSection", true);

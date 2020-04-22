@@ -335,39 +335,39 @@ public class OptionPanel extends OperationsPreferencesPanel {
 
     @Override
     public boolean isDirty() {
-        return ( // build option
-                Setup.isBuildAggressive() != buildAggressive.isSelected()
-                || Setup.getNumberPasses() != (int) numberPassesComboBox.getSelectedItem()
+        return !( // build option
+                Setup.isBuildAggressive() == buildAggressive.isSelected()
+                && Setup.getNumberPasses() == (int) numberPassesComboBox.getSelectedItem()
                 // Local moves?
-                || Setup.isLocalInterchangeMovesEnabled() != localInterchangeCheckBox.isSelected()
-                || Setup.isLocalSpurMovesEnabled() != localSpurCheckBox.isSelected()
-                || Setup.isLocalYardMovesEnabled() != localYardCheckBox.isSelected()
+                && Setup.isLocalInterchangeMovesEnabled() == localInterchangeCheckBox.isSelected()
+                && Setup.isLocalSpurMovesEnabled() == localSpurCheckBox.isSelected()
+                && Setup.isLocalYardMovesEnabled() == localYardCheckBox.isSelected()
                 // Staging options
-                || Setup.isTrainIntoStagingCheckEnabled() != trainIntoStagingCheckBox.isSelected()
-                || Setup.isStagingTrackImmediatelyAvail() != stagingAvailCheckBox.isSelected()
-                || Setup.isAllowReturnToStagingEnabled() != stagingTurnCheckBox.isSelected()
-                || Setup.isPromptFromStagingEnabled() != promptFromTrackStagingCheckBox.isSelected()
-                || Setup.isPromptToStagingEnabled() != promptToTrackStagingCheckBox.isSelected()
-                || Setup.isStagingTryNormalBuildEnabled() != tryNormalStagingCheckBox.isSelected()
+                && Setup.isTrainIntoStagingCheckEnabled() == trainIntoStagingCheckBox.isSelected()
+                && Setup.isStagingTrackImmediatelyAvail() == stagingAvailCheckBox.isSelected()
+                && Setup.isAllowReturnToStagingEnabled() == stagingTurnCheckBox.isSelected()
+                && Setup.isPromptFromStagingEnabled() == promptFromTrackStagingCheckBox.isSelected()
+                && Setup.isPromptToStagingEnabled() == promptToTrackStagingCheckBox.isSelected()
+                && Setup.isStagingTryNormalBuildEnabled() == tryNormalStagingCheckBox.isSelected()
                 // Car routing enabled?
-                || Setup.isCarRoutingEnabled() != routerCheckBox.isSelected()
-                || Setup.isCarRoutingViaYardsEnabled() != routerYardCheckBox.isSelected()
-                || Setup.isCarRoutingViaStagingEnabled() != routerStagingCheckBox.isSelected()
-                || Setup.isOnlyActiveTrainsEnabled() != !routerAllTrainsBox.isSelected()
-                || Setup.isCheckCarDestinationEnabled() != routerRestrictBox.isSelected()
+                && Setup.isCarRoutingEnabled() == routerCheckBox.isSelected()
+                && Setup.isCarRoutingViaYardsEnabled() == routerYardCheckBox.isSelected()
+                && Setup.isCarRoutingViaStagingEnabled() == routerStagingCheckBox.isSelected()
+                && Setup.isOnlyActiveTrainsEnabled() == !routerAllTrainsBox.isSelected()
+                && Setup.isCheckCarDestinationEnabled() == routerRestrictBox.isSelected()
                 // Options
-                || Setup.isGenerateCsvManifestEnabled() != generateCvsManifestCheckBox.isSelected()
-                || Setup.isGenerateCsvSwitchListEnabled() != generateCvsSwitchListCheckBox.isSelected()
-                || Setup.isValueEnabled() != valueCheckBox.isSelected()
-                || !Setup.getValueLabel().equals(valueTextField.getText())
-                || Setup.isRfidEnabled() != rfidCheckBox.isSelected()
-                || !Setup.getRfidLabel().equals(rfidTextField.getText())
-                || Setup.isSaveTrainManifestsEnabled() != saveTrainManifestCheckBox.isSelected()
+                && Setup.isGenerateCsvManifestEnabled() == generateCvsManifestCheckBox.isSelected()
+                && Setup.isGenerateCsvSwitchListEnabled() == generateCvsSwitchListCheckBox.isSelected()
+                && Setup.isValueEnabled() == valueCheckBox.isSelected()
+                && Setup.getValueLabel().equals(valueTextField.getText())
+                && Setup.isRfidEnabled() == rfidCheckBox.isSelected()
+                && Setup.getRfidLabel().equals(rfidTextField.getText())
+                && Setup.isSaveTrainManifestsEnabled() == saveTrainManifestCheckBox.isSelected()
                 // Logging enabled?
-                || Setup.isEngineLoggerEnabled() != engineLoggerCheckBox.isSelected()
-                || Setup.isCarLoggerEnabled() != carLoggerCheckBox.isSelected()
-                || Setup.isTrainLoggerEnabled() != trainLoggerCheckBox.isSelected()
+                && Setup.isEngineLoggerEnabled() == engineLoggerCheckBox.isSelected()
+                && Setup.isCarLoggerEnabled() == carLoggerCheckBox.isSelected()
+                && Setup.isTrainLoggerEnabled() == trainLoggerCheckBox.isSelected()
                 // VSD
-                || Setup.isVsdPhysicalLocationEnabled() != enableVsdCheckBox.isSelected());
+                && Setup.isVsdPhysicalLocationEnabled() == enableVsdCheckBox.isSelected());
     }
 }

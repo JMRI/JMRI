@@ -293,6 +293,10 @@ public class ReportPanel extends JPanel {
         File[] files = source.listFiles();
 
         log.debug("Add directory: {}", directory);
+        if ( files == null ) {
+            log.warn("No files in directory {}",source);
+            return;
+        }
 
         for (File file : files) {
             // if current file is a directory, call recursively
