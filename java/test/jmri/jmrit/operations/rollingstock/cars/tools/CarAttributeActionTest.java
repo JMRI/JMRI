@@ -17,13 +17,6 @@ import jmri.util.JmriJFrame;
 public class CarAttributeActionTest extends OperationsTestCase {
 
     @Test
-    public void testCTor() {
-        CarAttributeEditFrame f = new CarAttributeEditFrame();
-        CarAttributeAction t = new CarAttributeAction("Test Action", f);
-        Assert.assertNotNull("exists", t);
-    }
-
-    @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarAttributeEditFrame cef = new CarAttributeEditFrame();
