@@ -1240,6 +1240,7 @@ public class LayoutTurntable extends LayoutTrack {
             if (ts != null) {
                 main = ts.isMainline();
             }
+
             if (isBlock) {
                 if (ts == null) {
                     g2.setColor(layoutEditor.getDefaultTrackColorColor());
@@ -1251,6 +1252,7 @@ public class LayoutTurntable extends LayoutTrack {
                     }
                 }
             }
+
             Point2D pt2 = getRayCoordsOrdered(j);
             Point2D delta = MathUtil.normalize(MathUtil.subtract(pt2, center), radius);
             Point2D pt1 = MathUtil.add(center, delta);
