@@ -67,6 +67,10 @@ public class LayoutTurntable extends LayoutTrack {
 
     /**
      * Constructor method
+     *
+     * @param id           the name for the turntable
+     * @param c            where to put it
+     * @param layoutEditor what layout editor panel to put it in
      */
     public LayoutTurntable(@Nonnull String id, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
         super(id, c, layoutEditor);
@@ -257,7 +261,7 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Set the connection for the ray at the index in the rayList
      *
-     * @param ts the connection
+     * @param ts    the connection
      * @param index the index in the rayList
      */
     public void setRayConnect(TrackSegment ts, int index) {
@@ -316,9 +320,9 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Set the turnout and state for the ray with this index
      *
-     * @param index the index
+     * @param index       the index
      * @param turnoutName the turnout name
-     * @param state the state
+     * @param state       the state
      */
     public void setRayTurnout(int index, String turnoutName, int state) {
         boolean found = false; // assume failure (pessimist!)
@@ -398,7 +402,7 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Set the disabled state of the ray at this index
      *
-     * @param i the index
+     * @param i   the index
      * @param boo the state
      */
     public void setRayDisabled(int i, boolean boo) {
@@ -426,7 +430,7 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Set the disabled when occupied state of the ray at this index
      *
-     * @param i the index
+     * @param i   the index
      * @param boo the state
      */
     public void setRayDisabledWhenOccupied(int i, boolean boo) {
@@ -483,8 +487,8 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Set the coordinates for the ray at this index
      *
-     * @param x the x coordinates
-     * @param y the y coordinates
+     * @param x     the x coordinates
+     * @param y     the y coordinates
      * @param index the index
      */
     public void setRayCoordsIndexed(double x, double y, int index) {
@@ -667,9 +671,9 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     public void rotateCoords(double angleDEG) {
         // rotate all rayTracks
-        for (RayTrack rayTrack : rayTrackList) {
+        rayTrackList.forEach((rayTrack) -> {
             rayTrack.setAngle(rayTrack.getAngle() + angleDEG);
-        }
+        });
     }
 
     /**
@@ -730,9 +734,9 @@ public class LayoutTurntable extends LayoutTrack {
         if (tLayoutBlockName != null && !tLayoutBlockName.isEmpty()) {
             setLayoutBlockByName(tLayoutBlockName);
         }
-        for (RayTrack rt : rayTrackList) {
+        rayTrackList.forEach((rt) -> {
             rt.setConnect(p.getFinder().findTrackSegmentByName(rt.connectName));
-        }
+        });
     }
 
     /**
@@ -770,17 +774,19 @@ public class LayoutTurntable extends LayoutTrack {
         JMenuItem jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Turntable")) + getName());
         jmi.setEnabled(false);
 
-        if (namedLayoutBlock == null) {
+        LayoutBlock lb = getLayoutBlock();
+        if (lb == null) {
             jmi = popupMenu.add(Bundle.getMessage("NoBlock"));
         } else {
-            jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
+            String displayName = lb.getDisplayName();
+            jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + displayName);
         }
         jmi.setEnabled(false);
 
         //if there are any track connections
         if (!rayTrackList.isEmpty()) {
             JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections"));
-            for (RayTrack rt : rayTrackList) {
+            rayTrackList.forEach((rt) -> {
                 TrackSegment ts = rt.getConnect();
                 if (ts != null) {
                     connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "" + rt.getConnectionIndex()) + ts.getName()) {
@@ -791,7 +797,7 @@ public class LayoutTurntable extends LayoutTrack {
                         }
                     });
                 }
-            }
+            });
             popupMenu.add(connectionsMenu);
         }
 
@@ -947,9 +953,9 @@ public class LayoutTurntable extends LayoutTrack {
             popupMenu.removeAll();
         }
         popupMenu = null;
-        for (RayTrack rt : rayTrackList) {
+        rayTrackList.forEach((rt) -> {
             rt.dispose();
-        }
+        });
     }
 
     /**
@@ -963,7 +969,7 @@ public class LayoutTurntable extends LayoutTrack {
     private boolean active = true;
 
     /**
-     * "active" means that the object is still displayed, and should be stored
+     * @return true if the object is still displayed, and should be stored
      */
     public boolean isActive() {
         return active;
@@ -1117,7 +1123,7 @@ public class LayoutTurntable extends LayoutTrack {
          * Set the turnout and state for this ray track
          *
          * @param turnoutName the turnout name
-         * @param state its state
+         * @param state       its state
          */
         public void setTurnout(String turnoutName, int state) {
             Turnout turnout = null;
@@ -1137,8 +1143,10 @@ public class LayoutTurntable extends LayoutTrack {
                 namedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
             }
             if (turnout != null && (namedTurnout == null || namedTurnout.getBean() != turnout)) {
-                namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turnout);
-                turnout.addPropertyChangeListener(mTurnoutListener, turnoutName, "Layout Editor Turntable");
+                if ((turnoutName != null) && !turnoutName.isEmpty()) {
+                    namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turnout);
+                    turnout.addPropertyChangeListener(mTurnoutListener, turnoutName, "Layout Editor Turntable");
+                }
             }
             if (turnout == null) {
                 namedTurnout = null;
@@ -1466,8 +1474,8 @@ public class LayoutTurntable extends LayoutTrack {
             }
         }
 
-        List<Set<String>> TrackNameSets = null;
-        Set<String> TrackNameSet = null;
+        List<Set<String>> TrackNameSets;
+        Set<String> TrackNameSet;
         for (Map.Entry<LayoutTrack, String> entry : blocksAndTracksMap.entrySet()) {
             LayoutTrack theConnect = entry.getKey();
             String theBlockName = entry.getValue();
