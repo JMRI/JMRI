@@ -225,6 +225,25 @@ public class ThreadingUtil {
     }
 
     /**
+     * Get the JMRI default thread group.
+     * This should be passed to as the first argument to the {@link Thread} constructor
+     * so we can track JMRI-created threads.
+     */
+    static public ThreadGroup getJmriThreadGroup() {
+        // we access this dynamically instead of keeping it in a static
+        
+        ThreadGroup main = Thread.currentThread().getThreadGroup();
+        while (main.getParent() != null ) {main = main.getParent(); }        
+        ThreadGroup[] list = new ThreadGroup[main.activeGroupCount()+2];  // space on end
+        int max = main.enumerate(list);
+        
+        for (int i = 0; i<max; i++) { // usually just 2 or 3, quite quick
+            if (list[i].getName().equals("JMRI")) return list[i];
+        }
+        return new ThreadGroup(main, "JMRI");
+    }
+    
+    /**
      * Check whether a specific thread is running (or able to run) right now.
      *
      * @param t the thread to check
