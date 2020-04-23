@@ -598,6 +598,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     Thread t = new Thread(jmri.util.ThreadingUtil.getJmriThreadGroup(), "olcbCanInterface.initialize"){
+                                    @Override
                                     public void run()  { 
                                       // N.B. during JUnit testing, the following call tends to hang
                                       // on semaphore acquisition in org.openlcb.can.CanInterface.initialize()
