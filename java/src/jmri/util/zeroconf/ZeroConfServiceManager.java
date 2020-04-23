@@ -305,17 +305,21 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
         }
         CountDownLatch nsLatch = new CountDownLatch(getDNSes().size());
         new HashMap<>(getDNSes()).values().parallelStream().forEach(dns -> {
-            new Thread(() -> {
-                dns.unregisterAllServices();
-                if (close) {
-                    try {
-                        dns.close();
-                    } catch (IOException ex) {
-                        log.debug("jmdns.close() returned IOException: {}", ex.getMessage());
+            new Thread(
+                jmri.util.ThreadingUtil.getJmriThreadGroup(),
+                () -> {
+                    dns.unregisterAllServices();
+                    if (close) {
+                        try {
+                            dns.close();
+                        } catch (IOException ex) {
+                            log.debug("jmdns.close() returned IOException: {}", ex.getMessage());
+                        }
                     }
-                }
-                nsLatch.countDown();
-            }, "dns.close in ZeroConfServiceManager#stopAll").start();
+                    nsLatch.countDown();
+                }, 
+                "dns.close in ZeroConfServiceManager#stopAll")
+            .start();
         });
         try {
             zcLatch.await();
@@ -623,10 +627,14 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
 
         @Override
         public boolean execute() {
-            new Thread(() -> {
-                dispose(manager);
-                this.isComplete = true;
-            }, "ZeroConfServiceManager ShutDownTask").start();
+            new Thread(
+                jmri.util.ThreadingUtil.getJmriThreadGroup(),
+                () -> {
+                    dispose(manager);
+                    this.isComplete = true;
+                },
+                "ZeroConfServiceManager ShutDownTask")
+            .start();
             return true;
         }
 

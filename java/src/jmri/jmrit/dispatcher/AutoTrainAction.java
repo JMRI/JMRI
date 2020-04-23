@@ -99,7 +99,8 @@ public class AutoTrainAction {
                     case TransitSectionAction.TRAINSTART:
                         // when train starts - monitor in separate thread
                         Runnable monTrain = new MonitorTrain(tsa);
-                        Thread tMonTrain = new Thread(monTrain, "Monitor Train Transit Action " + _activeTrain.getDccAddress());
+                        Thread tMonTrain = new Thread(jmri.util.ThreadingUtil.getJmriThreadGroup(), 
+                                                        monTrain, "Monitor Train Transit Action " + _activeTrain.getDccAddress());
                         tsa.setWaitingThread(tMonTrain);
                         tMonTrain.start();
                         break;
@@ -261,7 +262,8 @@ public class AutoTrainAction {
         } else {
             // start thread to trigger delayed action execution
             Runnable r = new TSActionDelay(tsa, delay);
-            Thread t = new Thread(r, "Check Delay on Action");
+            Thread t = new Thread(jmri.util.ThreadingUtil.getJmriThreadGroup(), 
+                                    r, "Check Delay on Action");
             tsa.setWaitingThread(t);
             t.start();
         }
@@ -347,7 +349,7 @@ public class AutoTrainAction {
                     _autoActiveTrain.setCurrentRampRate(AutoActiveTrain.RAMP_NONE);
                     // wait for train to achieve speed in a separate thread which will complete action
                     Runnable monTrainSpeed = new MonitorTrainSpeed(tsa);
-                    Thread tMonTrainSpeed = new Thread(monTrainSpeed);
+                    Thread tMonTrainSpeed = new Thread(jmri.util.ThreadingUtil.getJmriThreadGroup(), monTrainSpeed);
                     tsa.setWaitingThread(tMonTrainSpeed);
                     tMonTrainSpeed.start();
                 } else {
@@ -410,7 +412,7 @@ public class AutoTrainAction {
                 if (_autoActiveTrain.getSoundDecoder()) {
                     log.debug("{}: sounding horn as specified in action", _activeTrain.getTrainName());
                     Runnable rHorn = new HornExecution(tsa);
-                    Thread tHorn = new Thread(rHorn);
+                    Thread tHorn = new Thread(jmri.util.ThreadingUtil.getJmriThreadGroup(), rHorn);
                     tsa.setWaitingThread(tHorn);
                     tHorn.start();
                 } else {

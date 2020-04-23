@@ -1657,7 +1657,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         };
 
         synchronized (allocateBlocks) {
-            Thread doit = new Thread() {
+            Thread doit = new Thread(jmri.util.ThreadingUtil.getJmriThreadGroup(),"Warrant doit") {
                 @Override
                 public void run() {
                     try {

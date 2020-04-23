@@ -83,7 +83,7 @@ public class ListedTableAction extends AbstractAction {
                 
             }
         };
-        Thread thr = new Thread(r, "Listed Table Generation");
+        Thread thr = new Thread(jmri.util.ThreadingUtil.getJmriThreadGroup(), r, "Listed Table Generation");
         thr.start();
     }
 
