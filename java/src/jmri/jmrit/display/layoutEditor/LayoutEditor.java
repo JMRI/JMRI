@@ -42,8 +42,8 @@ import jmri.util.swing.*;
 /**
  * Provides a scrollable Layout Panel and editor toolbars (that can be hidden)
  * <p>
- * This module serves as a manager for the LayoutTurnout, LayoutBlock,
- * LayoutTurntable, PositionablePoint, TrackSegment, LayoutSlip and LevelXing
+ * This module serves as a manager for the LayoutBlock, LayoutTurnout,
+ * LayoutSlip, LayoutTurntable, PositionablePoint, TrackSegment and LevelXing
  * objects which are integral subparts of the LayoutEditor class
  * <p>
  * All created objects are put on specific levels depending on their type
@@ -770,7 +770,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     _targetPanel.remove(layoutEditorComponent);
                     _targetPanel.add(layoutEditorComponent, Integer.valueOf(3));
                     _targetPanel.moveToFront(layoutEditorComponent);
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     log.warn("paintTargetPanelBefore: Exception {}", e);
                 }
             }
@@ -1016,10 +1017,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Set up NamedBeanComboBox
      *
-     * @param inComboBox the NamedBeanComboBox to set up
+     * @param inComboBox     the NamedBeanComboBox to set up
      * @param inValidateMode true to validate typed inputs; false otherwise
-     * @param inEnable boolean to enable / disable the NamedBeanComboBox
-     * @param inEditable boolean to make the NamedBeanComboBox editable
+     * @param inEnable       boolean to enable / disable the NamedBeanComboBox
+     * @param inEditable     boolean to make the NamedBeanComboBox editable
      */
     public static void setupComboBox(@Nonnull NamedBeanComboBox<?> inComboBox, boolean inValidateMode, boolean inEnable, boolean inEditable) {
         log.debug("LE setupComboBox called");
@@ -1055,7 +1056,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 int code = 0;
                 try {
                     code = field.getInt(null);
-                } catch (IllegalAccessException | IllegalArgumentException e) {
+                }
+                catch (IllegalAccessException | IllegalArgumentException e) {
                     //exceptions make me throw up..
                 }
 
@@ -2831,13 +2833,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         reLocateFlag = false;
                     }
                     positionableLabel.rotate(positionableLabel.getDegrees() + 90);
-                } catch (NullPointerException ex) {
+                }
+                catch (NullPointerException ex) {
                 }
             }
             if (reLocateFlag) {
                 try {
                     positionable.setLocation((int) (newTopLeft.getX() - cBounds.getHeight()), (int) newTopLeft.getY());
-                } catch (NullPointerException ex) {
+                }
+                catch (NullPointerException ex) {
                 }
             }
         }
@@ -2847,7 +2851,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 Point2D newPoint = MathUtil.subtract(MathUtil.rotateDEG(lt.getCoordsCenter(), lowerLeft, 90), lowerLeft);
                 lt.setCoordsCenter(newPoint);
                 lt.rotateCoords(90);
-            } catch (NullPointerException ex) {
+            }
+            catch (NullPointerException ex) {
             }
         }
 
@@ -3534,7 +3539,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * get the coordinates for the connection type of the specified object
      *
-     * @param layoutTrack the object (Layout track subclass)
+     * @param layoutTrack    the object (Layout track subclass)
      * @param connectionType the type of connection
      * @return the coordinates for the connection type of the specified object
      */
@@ -4118,7 +4123,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                                 removePositionablePoint(p);
                             }
                         }
-                    } catch (JmriException e) {
+                    }
+                    catch (JmriException e) {
                         log.debug("Unable to set location");
                     }
                     break;
@@ -4240,7 +4246,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                             if (t.getLayoutBlock() != null) {
                                 getLEAuxTools().setBlockConnectivityChanged();
                             }
-                        } catch (JmriException e) {
+                        }
+                        catch (JmriException e) {
                             log.debug("Unable to set location");
                         }
                     }
@@ -5151,7 +5158,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         } else {
             try {
                 rot = Double.parseDouble(s);
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("Error3") + " "
                         + e, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
 
@@ -5244,7 +5252,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         } else {
             try {
                 rot = Double.parseDouble(s);
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("Error3") + " "
                         + e, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
 
@@ -5314,8 +5323,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Turnouts Returns true if valid turnout was entered, false otherwise
      *
      * @param inTurnoutName the (system or user) name of the turnout
-     * @param inOpenPane the pane over which to show dialogs (null to suppress
-     * dialogs)
+     * @param inOpenPane    the pane over which to show dialogs (null to
+     *                      suppress dialogs)
      * @return true if valid
      */
     public boolean validatePhysicalTurnout(
@@ -5433,10 +5442,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * link the 'from' object and type to the 'to' object and type
      *
-     * @param fromObject the object to link from
+     * @param fromObject    the object to link from
      * @param fromPointType the object type to link from
-     * @param toObject the object to link to
-     * @param toPointType the object type to link to
+     * @param toObject      the object to link to
+     * @param toPointType   the object type to link to
      */
     protected void setLink(@Nonnull LayoutTrack fromObject, HitPointType fromPointType,
             @Nonnull LayoutTrack toObject, HitPointType toPointType) {
@@ -5465,7 +5474,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             case LEVEL_XING_D: {
                 try {
                     fromObject.setConnection(fromPointType, toObject, toPointType);
-                } catch (jmri.JmriException e) {
+                }
+                catch (jmri.JmriException e) {
                     // ignore (log.error in setConnection method)
                 }
                 break;
@@ -5582,8 +5592,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * nothing to the block
      *
      * @param sensorName the sensor name to validate
-     * @param blk the LayoutBlock in which to set it
-     * @param openFrame the frame (Component) it is in
+     * @param blk        the LayoutBlock in which to set it
+     * @param openFrame  the frame (Component) it is in
      * @return true if sensor is valid
      */
     public boolean validateSensor(
@@ -6353,7 +6363,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             case LEVEL_XING_D: {
                 try {
                     o.setConnection(type, null, HitPointType.NONE);
-                } catch (jmri.JmriException e) {
+                }
+                catch (jmri.JmriException e) {
                     // ignore (log.error in setConnection method)
                 }
                 break;
@@ -8320,7 +8331,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Create a listener that will exclude turnouts that are present in the
      * current panel. The list of current turnouts are not excluded
      *
-     * @param comboBox The NamedBeanComboBox that contains the turnout list
+     * @param comboBox        The NamedBeanComboBox that contains the turnout
+     *                        list
      * @param currentTurnouts The turnouts to be left in the turnout list
      * @return A PopupMenuListener
      */
