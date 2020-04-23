@@ -782,13 +782,8 @@ public class LayoutTurntable extends LayoutTrack {
                     connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "" + rt.getConnectionIndex()) + ts.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            //LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            //LayoutTrack lt = lf.findObjectByName(ts.getName());
-                            //this shouldn't ever be null... however..
-                            if (ts != null) {
-                                layoutEditor.setSelectionRect(ts.getBounds());
-                                ts.showPopup();
-                            }
+                            layoutEditor.setSelectionRect(ts.getBounds());
+                            ts.showPopup();
                         }
                     });
                 }
