@@ -197,8 +197,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         try {
             x = element.getAttribute("xcen").getFloatValue();
             y = element.getAttribute("ycen").getFloatValue();
-        }
-        catch (org.jdom2.DataConversionException e) {
+        } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert layoutslip center  attribute");
         }
 
@@ -260,43 +259,35 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
 
         try {
             l.setDisabled(element.getAttribute("disabled").getBooleanValue());
-        }
-        catch (DataConversionException e1) {
+        } catch (DataConversionException e1) {
             log.warn("unable to convert layout turnout disabled attribute");
-        }
-        catch (NullPointerException e) {  // considered normal if the attribute is not present
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
         try {
             l.setDisableWhenOccupied(element.getAttribute("disableWhenOccupied").getBooleanValue());
-        }
-        catch (DataConversionException e1) {
+        } catch (DataConversionException e1) {
             log.warn("unable to convert layout turnout disableWhenOccupied attribute");
-        }
-        catch (NullPointerException e) {  // considered normal if the attribute is not present
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
         try {
             l.setHidden(element.getAttribute("hidden").getBooleanValue());
-        }
-        catch (DataConversionException e1) {
+        } catch (DataConversionException e1) {
             log.warn("unable to convert layout turnout hidden attribute");
-        }
-        catch (NullPointerException e) {  // considered normal if the attribute is not present
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         try {
             x = element.getAttribute("xa").getFloatValue();
             y = element.getAttribute("ya").getFloatValue();
             l.setCoordsA(new Point2D.Double(x, y));
-        }
-        catch (org.jdom2.DataConversionException e) {
+        } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert LayoutSlip a coords attribute");
         }
         try {
             x = element.getAttribute("xb").getFloatValue();
             y = element.getAttribute("yb").getFloatValue();
             l.setCoordsB(new Point2D.Double(x, y));
-        }
-        catch (org.jdom2.DataConversionException e) {
+        } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert LayoutSlip b coords attribute");
         }
 

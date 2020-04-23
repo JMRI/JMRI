@@ -46,100 +46,32 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testTurnoutTypeEnumGetXmlValue() {
-        Assert.assertEquals("LayoutSlip.TurnoutType.NONE.getXmlValue() == 0",
-                LayoutSlip.TurnoutType.NONE.getXmlValue(), Integer.valueOf(0));
-        Assert.assertEquals("LayoutSlip.TurnoutTypeRH_TURNOUT.getXmlValue() == 1",
-                LayoutSlip.TurnoutType.RH_TURNOUT.getXmlValue(), Integer.valueOf(1));
-        Assert.assertEquals("LayoutSlip.TurnoutType.LH_TURNOUT.getXmlValue() == 2",
-                LayoutSlip.TurnoutType.LH_TURNOUT.getXmlValue(), Integer.valueOf(2));
-        Assert.assertEquals("LayoutSlip.TurnoutType.WYE_TURNOUT.getXmlValue() == 3",
-                LayoutSlip.TurnoutType.WYE_TURNOUT.getXmlValue(), Integer.valueOf(3));
-        Assert.assertEquals("LayoutSlip.TurnoutType.DOUBLE_XOVER.getXmlValue() == 4",
-                LayoutSlip.TurnoutType.DOUBLE_XOVER.getXmlValue(), Integer.valueOf(4));
-        Assert.assertEquals("LayoutSlip.TurnoutType.RH_XOVER.getXmlValue() == 5",
-                LayoutSlip.TurnoutType.RH_XOVER.getXmlValue(), Integer.valueOf(5));
-        Assert.assertEquals("LayoutSlip.TurnoutType.LH_XOVER.getXmlValue() == 6",
-                LayoutSlip.TurnoutType.LH_XOVER.getXmlValue(), Integer.valueOf(6));
-        Assert.assertEquals("LayoutSlip.TurnoutType.SINGLE_SLIP.getXmlValue() == 7",
-                LayoutSlip.TurnoutType.SINGLE_SLIP.getXmlValue(), Integer.valueOf(7));
-        Assert.assertEquals("LayoutSlip.TurnoutType.DOUBLE_SLIP.getXmlValue() == 8",
-                LayoutSlip.TurnoutType.DOUBLE_SLIP.getXmlValue(), Integer.valueOf(8));
-    }
-
-    @Test
-    public void testTurnoutTypeEnumGetValueInt() {
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(0) == LayoutSlip.TurnoutType.NONE",
-                LayoutSlip.TurnoutType.getValue("0"), LayoutSlip.TurnoutType.NONE);
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(1) == LayoutSlip.TurnoutType.RH_TURNOUT",
-                LayoutSlip.TurnoutType.getValue("1"), LayoutSlip.TurnoutType.RH_TURNOUT);
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(2) == LayoutSlip.TurnoutType.LH_TURNOUT",
-                LayoutSlip.TurnoutType.getValue("2"), LayoutSlip.TurnoutType.LH_TURNOUT);
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(3) == LayoutSlip.TurnoutType.WYE_TURNOUT",
-                LayoutSlip.TurnoutType.getValue("3"), LayoutSlip.TurnoutType.WYE_TURNOUT);
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(4) == LayoutSlip.TurnoutType.DOUBLE_XOVER",
-                LayoutSlip.TurnoutType.getValue("4"), LayoutSlip.TurnoutType.DOUBLE_XOVER);
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(5) == LayoutSlip.TurnoutType.RH_XOVER",
-                LayoutSlip.TurnoutType.getValue("5"), LayoutSlip.TurnoutType.RH_XOVER);
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(6) == LayoutSlip.TurnoutType.LH_XOVER",
-                LayoutSlip.TurnoutType.getValue("6"), LayoutSlip.TurnoutType.LH_XOVER);
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(7) == LayoutSlip.TurnoutType.SINGLE_SLIP",
-                LayoutSlip.TurnoutType.getValue("7"), LayoutSlip.TurnoutType.SINGLE_SLIP);
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue(8) == LayoutSlip.TurnoutType.DOUBLE_SLIP",
-                LayoutSlip.TurnoutType.getValue("8"), LayoutSlip.TurnoutType.DOUBLE_SLIP);
-    }
-
-    @Test
-    public void testTurnoutTypeEnumGetValueString() {
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('NONE') == LayoutSlip.TurnoutType.NONE",
-                LayoutSlip.TurnoutType.getValue("NONE"), LayoutSlip.TurnoutType.NONE);
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('RH_TURNOUT') == LayoutSlip.TurnoutType.RH_TURNOUT",
-                LayoutSlip.TurnoutType.getValue("RH_TURNOUT"), LayoutSlip.TurnoutType.RH_TURNOUT);
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('LH_TURNOUT') == LayoutSlip.TurnoutType.LH_TURNOUT",
-                LayoutSlip.TurnoutType.getValue("LH_TURNOUT"), LayoutSlip.TurnoutType.LH_TURNOUT);
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('WYE_TURNOUT') == LayoutSlip.TurnoutType.WYE_TURNOUT",
-                LayoutSlip.TurnoutType.getValue("WYE_TURNOUT"), LayoutSlip.TurnoutType.WYE_TURNOUT);
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('DOUBLE_XOVER') == LayoutSlip.TurnoutType.DOUBLE_XOVER",
-                LayoutSlip.TurnoutType.getValue("DOUBLE_XOVER"), LayoutSlip.TurnoutType.DOUBLE_XOVER);
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('RH_XOVER') == LayoutSlip.TurnoutType.RH_XOVER",
-                LayoutSlip.TurnoutType.getValue("RH_XOVER"), LayoutSlip.TurnoutType.RH_XOVER);
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('LH_XOVER') == LayoutSlip.TurnoutType.LH_XOVER",
-                LayoutSlip.TurnoutType.getValue("LH_XOVER"), LayoutSlip.TurnoutType.LH_XOVER);
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('SINGLE_SLIP') == LayoutSlip.TurnoutType.SINGLE_SLIP",
-                LayoutSlip.TurnoutType.getValue("SINGLE_SLIP"), LayoutSlip.TurnoutType.SINGLE_SLIP);
-        Assert.assertEquals("LayoutSlip.TurnoutType.getValue('DOUBLE_SLIP') == LayoutSlip.TurnoutType.DOUBLE_SLIP",
-                LayoutSlip.TurnoutType.getValue("DOUBLE_SLIP"), LayoutSlip.TurnoutType.DOUBLE_SLIP);
+        Assert.assertEquals("LayoutSlip.TurnoutType.NONE.ordinal() == 0",
+                LayoutSlip.TurnoutType.NONE.ordinal(), (0));
+        Assert.assertEquals("LayoutSlip.TurnoutTypeRH_TURNOUT.ordinal() == 1",
+                LayoutSlip.TurnoutType.RH_TURNOUT.ordinal(), (1));
+        Assert.assertEquals("LayoutSlip.TurnoutType.LH_TURNOUT.ordinal() == 2",
+                LayoutSlip.TurnoutType.LH_TURNOUT.ordinal(), (2));
+        Assert.assertEquals("LayoutSlip.TurnoutType.WYE_TURNOUT.ordinal() == 3",
+                LayoutSlip.TurnoutType.WYE_TURNOUT.ordinal(), (3));
+        Assert.assertEquals("LayoutSlip.TurnoutType.DOUBLE_XOVER.ordinal() == 4",
+                LayoutSlip.TurnoutType.DOUBLE_XOVER.ordinal(), (4));
+        Assert.assertEquals("LayoutSlip.TurnoutType.RH_XOVER.ordinal() == 5",
+                LayoutSlip.TurnoutType.RH_XOVER.ordinal(), (5));
+        Assert.assertEquals("LayoutSlip.TurnoutType.LH_XOVER.ordinal() == 6",
+                LayoutSlip.TurnoutType.LH_XOVER.ordinal(), (6));
+        Assert.assertEquals("LayoutSlip.TurnoutType.SINGLE_SLIP.ordinal() == 7",
+                LayoutSlip.TurnoutType.SINGLE_SLIP.ordinal(), (7));
+        Assert.assertEquals("LayoutSlip.TurnoutType.DOUBLE_SLIP.ordinal() == 8",
+                LayoutSlip.TurnoutType.DOUBLE_SLIP.ordinal(), (8));
     }
 
     @Test
     public void testLinkTypeEnumGetXmlValue() {
-        Assert.assertEquals("LayoutTurnout.LinkType.NO_LINK.getXmlValue() == 0", LayoutTurnout.LinkType.NO_LINK.getXmlValue(), Integer.valueOf(0));
-        Assert.assertEquals("LayoutTurnout.LinkType.FIRST_3_WAY.getXmlValue() == 1", LayoutTurnout.LinkType.FIRST_3_WAY.getXmlValue(), Integer.valueOf(1));
-        Assert.assertEquals("LayoutTurnout.LinkType.SECOND_3_WAY.getXmlValue() == 2", LayoutTurnout.LinkType.SECOND_3_WAY.getXmlValue(), Integer.valueOf(2));
-        Assert.assertEquals("LayoutTurnout.LinkType.THROAT_TO_THROAT.getXmlValue() == 3", LayoutTurnout.LinkType.THROAT_TO_THROAT.getXmlValue(), Integer.valueOf(3));
-    }
-
-    @Test
-    public void testLinkTypeEnumGetValueInt() {
-        Assert.assertEquals("LayoutTurnout.LinkType.getValue(0) == LayoutTurnout.LinkType.NO_LINK",
-                LayoutTurnout.LinkType.getValue("0"), LayoutTurnout.LinkType.NO_LINK);
-        Assert.assertEquals("LayoutTurnout.LinkType.getValue(1) == LayoutTurnout.LinkType.FIRST_3_WAY",
-                LayoutTurnout.LinkType.getValue("1"), LayoutTurnout.LinkType.FIRST_3_WAY);
-        Assert.assertEquals("LayoutTurnout.LinkType.getValue(2) == LayoutTurnout.LinkType.SECOND_3_WAY",
-                LayoutTurnout.LinkType.getValue("2"), LayoutTurnout.LinkType.SECOND_3_WAY);
-        Assert.assertEquals("LayoutTurnout.LinkType.getValue(3) == LayoutTurnout.LinkType.THROAT_TO_THROAT",
-                LayoutTurnout.LinkType.getValue("3"), LayoutTurnout.LinkType.THROAT_TO_THROAT);
-    }
-
-    @Test
-    public void testLinkTypeEnumGetValueString() {
-        Assert.assertEquals("LayoutTurnout.LinkType.getValue('NO_LINK') == LayoutTurnout.LinkType.NO_LINK",
-                LayoutTurnout.LinkType.getValue("NO_LINK"), LayoutTurnout.LinkType.NO_LINK);
-        Assert.assertEquals("LayoutTurnout.LinkType.getValue('FIRST_3_WAY') == LayoutTurnout.LinkType.FIRST_3_WAY",
-                LayoutTurnout.LinkType.getValue("FIRST_3_WAY"), LayoutTurnout.LinkType.FIRST_3_WAY);
-        Assert.assertEquals("LayoutTurnout.LinkType.getValue('SECOND_3_WAY') == LayoutTurnout.LinkType.SECOND_3_WAY",
-                LayoutTurnout.LinkType.getValue("SECOND_3_WAY"), LayoutTurnout.LinkType.SECOND_3_WAY);
-        Assert.assertEquals("LayoutTurnout.LinkType.getValue('THROAT_TO_THROAT') == LayoutTurnout.LinkType.THROAT_TO_THROAT",
-                LayoutTurnout.LinkType.getValue("THROAT_TO_THROAT"), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        Assert.assertEquals("LayoutTurnout.LinkType.NO_LINK.ordinal() == 0", LayoutTurnout.LinkType.NO_LINK.ordinal(), (0));
+        Assert.assertEquals("LayoutTurnout.LinkType.FIRST_3_WAY.ordinal() == 1", LayoutTurnout.LinkType.FIRST_3_WAY.ordinal(), (1));
+        Assert.assertEquals("LayoutTurnout.LinkType.SECOND_3_WAY.ordinal() == 2", LayoutTurnout.LinkType.SECOND_3_WAY.ordinal(), (2));
+        Assert.assertEquals("LayoutTurnout.LinkType.THROAT_TO_THROAT.ordinal() == 3", LayoutTurnout.LinkType.THROAT_TO_THROAT.ordinal(), (3));
     }
 
     @Test

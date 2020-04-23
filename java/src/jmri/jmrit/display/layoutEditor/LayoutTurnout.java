@@ -1140,8 +1140,7 @@ public class LayoutTurnout extends LayoutTrack {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorANamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
             ).getNamedBeanHandle(sensorName, sensor);
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             sensorANamed = null;
         }
     }
@@ -1170,8 +1169,7 @@ public class LayoutTurnout extends LayoutTrack {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorBNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
             ).getNamedBeanHandle(sensorName, sensor);
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             sensorBNamed = null;
         }
     }
@@ -1198,10 +1196,8 @@ public class LayoutTurnout extends LayoutTrack {
 
         try {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-            sensorCNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
-            ).getNamedBeanHandle(sensorName, sensor);
-        }
-        catch (IllegalArgumentException ex) {
+            sensorCNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+        } catch (IllegalArgumentException ex) {
             sensorCNamed = null;
         }
     }
@@ -1230,8 +1226,7 @@ public class LayoutTurnout extends LayoutTrack {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorDNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
             ).getNamedBeanHandle(sensorName, sensor);
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             sensorDNamed = null;
         }
     }
@@ -2991,8 +2986,7 @@ public class LayoutTurnout extends LayoutTrack {
                         double rot = 0.0;
                         try {
                             rot = Double.parseDouble(newAngle);
-                        }
-                        catch (NumberFormatException e1) {
+                        } catch (NumberFormatException e1) {
                             JOptionPane.showMessageDialog(layoutEditor, Bundle.getMessage("Error3")
                                     + " " + e1, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                             error = true;
@@ -3166,8 +3160,7 @@ public class LayoutTurnout extends LayoutTrack {
                     if (aLBlock != getLayoutBlock()) {
                         try {
                             boundaryBetween[0] = (aLBlock.getDisplayName() + " - " + getLayoutBlock().getDisplayName());
-                        }
-                        catch (java.lang.NullPointerException e) {
+                        } catch (java.lang.NullPointerException e) {
                             //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection A doesn't contain a layout block");
                         }
@@ -3180,8 +3173,7 @@ public class LayoutTurnout extends LayoutTrack {
                     if (bLBlock != getLayoutBlock()) {
                         try {
                             boundaryBetween[1] = (bLBlock.getDisplayName() + " - " + getLayoutBlock().getDisplayName());
-                        }
-                        catch (java.lang.NullPointerException e) {
+                        } catch (java.lang.NullPointerException e) {
                             //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection B doesn't contain a layout block");
                         }
@@ -3195,8 +3187,7 @@ public class LayoutTurnout extends LayoutTrack {
                     if (cLBlock != getLayoutBlock()) {
                         try {
                             boundaryBetween[2] = (cLBlock.getDisplayName() + " - " + getLayoutBlock().getDisplayName());
-                        }
-                        catch (java.lang.NullPointerException e) {
+                        } catch (java.lang.NullPointerException e) {
                             //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection C doesn't contain a layout block");
                         }
@@ -3211,16 +3202,14 @@ public class LayoutTurnout extends LayoutTrack {
                     if (aLBlock != getLayoutBlock()) {
                         try {
                             boundaryBetween[0] = (aLBlock.getDisplayName() + " - " + getLayoutBlock().getDisplayName());
-                        }
-                        catch (java.lang.NullPointerException e) {
+                        } catch (java.lang.NullPointerException e) {
                             //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection A doesn't contain a layout block");
                         }
                     } else if (getLayoutBlock() != getLayoutBlockB()) {
                         try {
                             boundaryBetween[0] = (getLayoutBlock().getDisplayName() + " - " + getLayoutBlockB().getDisplayName());
-                        }
-                        catch (java.lang.NullPointerException e) {
+                        } catch (java.lang.NullPointerException e) {
                             //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection A doesn't contain a layout block");
                         }
@@ -3233,8 +3222,7 @@ public class LayoutTurnout extends LayoutTrack {
                     if (bLBlock != getLayoutBlock() && bLBlock != getLayoutBlockB()) {
                         try {
                             boundaryBetween[1] = (bLBlock.getDisplayName() + " - " + getLayoutBlockB().getDisplayName());
-                        }
-                        catch (java.lang.NullPointerException e) {
+                        } catch (java.lang.NullPointerException e) {
                             //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection B doesn't contain a layout block");
                         }
@@ -3242,8 +3230,7 @@ public class LayoutTurnout extends LayoutTrack {
                         //This is an interal block on the turnout
                         try {
                             boundaryBetween[1] = (getLayoutBlockB().getDisplayName() + " - " + getLayoutBlock().getDisplayName());
-                        }
-                        catch (java.lang.NullPointerException e) {
+                        } catch (java.lang.NullPointerException e) {
                             //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection A doesn't contain a layout block");
                         }
@@ -3255,8 +3242,7 @@ public class LayoutTurnout extends LayoutTrack {
                     if (cLBlock != getLayoutBlock() && cLBlock != getLayoutBlockB() && cLBlock != getLayoutBlockC()) {
                         try {
                             boundaryBetween[2] = (cLBlock.getDisplayName() + " - " + getLayoutBlockC().getDisplayName());
-                        }
-                        catch (java.lang.NullPointerException e) {
+                        } catch (java.lang.NullPointerException e) {
                             //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection C doesn't contain a layout block");
                         }
@@ -3264,8 +3250,7 @@ public class LayoutTurnout extends LayoutTrack {
                         //This is an interal block on the turnout
                         try {
                             boundaryBetween[2] = (getLayoutBlockC().getDisplayName() + " - " + getLayoutBlockD().getDisplayName());
-                        }
-                        catch (java.lang.NullPointerException e) {
+                        } catch (java.lang.NullPointerException e) {
                             //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection A doesn't contain a layout block");
                         }
@@ -3277,8 +3262,7 @@ public class LayoutTurnout extends LayoutTrack {
                     if (dLBlock != getLayoutBlock() && dLBlock != getLayoutBlockB() && dLBlock != getLayoutBlockC() && dLBlock != getLayoutBlockD()) {
                         try {
                             boundaryBetween[3] = (dLBlock.getDisplayName() + " - " + getLayoutBlockD().getDisplayName());
-                        }
-                        catch (java.lang.NullPointerException e) {
+                        } catch (java.lang.NullPointerException e) {
                             //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection C doesn't contain a layout block");
                         }
@@ -3286,8 +3270,7 @@ public class LayoutTurnout extends LayoutTrack {
                         //This is an interal block on the turnout
                         try {
                             boundaryBetween[3] = (getLayoutBlockD().getDisplayName() + " - " + getLayoutBlockC().getDisplayName());
-                        }
-                        catch (java.lang.NullPointerException e) {
+                        } catch (java.lang.NullPointerException e) {
                             //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection A doesn't contain a layout block");
                         }

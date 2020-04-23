@@ -910,8 +910,7 @@ public class LayoutSlip extends LayoutTurnout {
                                 double rot = 0.0;
                                 try {
                                     rot = Double.parseDouble(newAngle);
-                                }
-                                catch (NumberFormatException e1) {
+                                } catch (NumberFormatException e1) {
                                     JOptionPane.showMessageDialog(layoutEditor, Bundle.getMessage("Error3")
                                             + " " + e1, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                                     error = true;
@@ -1011,8 +1010,7 @@ public class LayoutSlip extends LayoutTurnout {
             if ((connectA instanceof TrackSegment) && (((TrackSegment) connectA).getLayoutBlock() != getLayoutBlock())) {
                 try {
                     boundaryBetween[0] = (((TrackSegment) connectA).getLayoutBlock().getDisplayName() + " - " + getLayoutBlock().getDisplayName());
-                }
-                catch (java.lang.NullPointerException e) {
+                } catch (java.lang.NullPointerException e) {
                     //Can be considered normal if tracksegement hasn't yet been allocated a block
                     log.debug("TrackSegement at connection A doesn't contain a layout block");
                 }
@@ -1020,8 +1018,7 @@ public class LayoutSlip extends LayoutTurnout {
             if ((connectC instanceof TrackSegment) && (((TrackSegment) connectC).getLayoutBlock() != getLayoutBlock())) {
                 try {
                     boundaryBetween[2] = (((TrackSegment) connectC).getLayoutBlock().getDisplayName() + " - " + getLayoutBlock().getDisplayName());
-                }
-                catch (java.lang.NullPointerException e) {
+                } catch (java.lang.NullPointerException e) {
                     //Can be considered normal if tracksegement hasn't yet been allocated a block
                     log.debug("TrackSegement at connection C doesn't contain a layout block");
                 }
@@ -1029,8 +1026,7 @@ public class LayoutSlip extends LayoutTurnout {
             if ((connectB instanceof TrackSegment) && (((TrackSegment) connectB).getLayoutBlock() != getLayoutBlock())) {
                 try {
                     boundaryBetween[1] = (((TrackSegment) connectB).getLayoutBlock().getDisplayName() + " - " + getLayoutBlock().getDisplayName());
-                }
-                catch (java.lang.NullPointerException e) {
+                } catch (java.lang.NullPointerException e) {
                     //Can be considered normal if tracksegement hasn't yet been allocated a block
                     log.debug("TrackSegement at connection B doesn't contain a layout block");
                 }
@@ -1038,8 +1034,7 @@ public class LayoutSlip extends LayoutTurnout {
             if ((connectD instanceof TrackSegment) && (((TrackSegment) connectD).getLayoutBlock() != getLayoutBlock())) {
                 try {
                     boundaryBetween[3] = (((TrackSegment) connectD).getLayoutBlock().getDisplayName() + " - " + getLayoutBlock().getDisplayName());
-                }
-                catch (java.lang.NullPointerException e) {
+                } catch (java.lang.NullPointerException e) {
                     //Can be considered normal if tracksegement hasn't yet been allocated a block
                     log.debug("TrackSegement at connection D doesn't contain a layout block");
                 }

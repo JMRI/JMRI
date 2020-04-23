@@ -243,11 +243,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
         try {
             new BlockValueFile().readBlockValues();
-        }
-        catch (org.jdom2.JDOMException jde) {
+        } catch (org.jdom2.JDOMException jde) {
             log.error("JDOM Exception when retreiving block values {}", jde);
-        }
-        catch (java.io.IOException ioe) {
+        } catch (java.io.IOException ioe) {
             log.error("I/O Exception when retreiving block values {}", ioe);
         }
 
@@ -2485,8 +2483,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         if (namedStabilisedIndicator != null) {
             try {
                 namedStabilisedIndicator.getBean().setState(Sensor.INACTIVE);
-            }
-            catch (jmri.JmriException ex) {
+            } catch (jmri.JmriException ex) {
                 log.debug("Error setting stability indicator sensor");
             }
         }
@@ -2510,8 +2507,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                                         namedStabilisedIndicator.getBean().getDisplayName());
                                 try {
                                     namedStabilisedIndicator.getBean().setState(Sensor.ACTIVE);
-                                }
-                                catch (jmri.JmriException ex) {
+                                } catch (jmri.JmriException ex) {
                                     log.debug("Error setting stability indicator sensor");
                                 }
                             });
@@ -2526,8 +2522,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                     }
                     oldvalue = lastRoutingChange;
                 }
-            }
-            catch (InterruptedException ex) {
+            } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
                 checking = false;
 
@@ -2560,12 +2555,10 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                     } else {
                         sensor.setState(Sensor.INACTIVE);
                     }
-                }
-                catch (jmri.JmriException ex) {
+                } catch (jmri.JmriException ex) {
                     log.error("Error setting stablilty indicator sensor");
                 }
-            }
-            catch (IllegalArgumentException ex) {
+            } catch (IllegalArgumentException ex) {
                 log.error("Sensor '{}' not available", pName);
                 throw new jmri.JmriException("Sensor '" + pName + "' not available");
             }

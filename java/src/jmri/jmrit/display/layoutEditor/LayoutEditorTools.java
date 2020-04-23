@@ -5904,8 +5904,7 @@ public class LayoutEditorTools {
         String logixName = "IX" + namer;
         try {
             InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             log.error("Trouble creating sensor " + sensorName + " while setting up Logix.");
             return "";
 
@@ -13494,8 +13493,7 @@ public class LayoutEditorTools {
         String sensorName = "IS:" + logixName + "C" + number;
         try {
             InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             log.error("Trouble creating sensor " + sensorName + " while setting up Logix.");
             return "";
         }
