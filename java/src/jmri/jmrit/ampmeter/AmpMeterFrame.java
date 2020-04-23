@@ -35,9 +35,6 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
     JLabel milliAmp;
     JLabel amp;
 
-    double aspect;
-    double iconAspect;
-
     private int startWidth;
     private int startHeight;
 
@@ -66,14 +63,6 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         milliAmpIcon = new NamedIcon("resources/icons/misc/LCD/milliampb.gif", "resources/icons/misc/LCD/milliampb.gif");
         ampIcon = new NamedIcon("resources/icons/misc/LCD/ampb.gif", "resources/icons/misc/LCD/ampb.gif");
 
-        // determine aspect ratio of a single digit graphic
-        iconAspect = 24. / 32.;
-
-        // determine the aspect ratio of the 4 digit base graphic plus a half digit for the colon
-        // this DOES NOT allow space for the Run/Stop button, if it is
-        // enabled.  When the Run/Stop button is enabled, the layout will have to be changed
-        aspect = (4.5 * 24.) / 32.; // used to be 4.5??
-
         // listen for changes to the meter parameters
         meter.addPropertyChangeListener(this);
 
@@ -89,6 +78,12 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
 
         buildContents();
 
+        // Initially we want to scale the icons to fit the previously saved window size
+        startHeight = digits[0].getIconHeight();
+        startWidth = (int)(digits[0].getIconWidth() * 4.5);
+        scaleImage();
+        buildContents();
+        
         meter.enable();
 
         update();
@@ -111,9 +106,6 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
                 scaleImage();
             }
         });
-
-        startHeight = this.getContentPane().getSize().height;
-        startWidth = this.getContentPane().getSize().width;
 
     }
 
@@ -162,11 +154,6 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
                 getContentPane().add(percent);
                 break;
         }
-
-        getContentPane().add(b = new JButton(Bundle.getMessage("ButtonStop")));
-        b.addActionListener(new ButtonListener());
-        // since Run/Stop button looks crummy, don't display for now
-        b.setVisible(false);
 
         pack();
     }
