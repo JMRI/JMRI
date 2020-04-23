@@ -213,7 +213,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
      */
     void getStartDimensions() {
         startHeight = digits[0].getIconHeight();
-        startWidth = (int)(digits[0].getIconWidth() * (displayLength + 1));
+        startWidth = digits[0].getIconWidth() * (displayLength + 1);
         if (displayDP) {
             startWidth += decimalIcon.getIconWidth();
         }
