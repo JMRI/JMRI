@@ -67,15 +67,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     /**
      * HitPointType enum
-     * <p>
-     * Note: constructor is NAME(xmlValue). The previous xml save code used the
-     * hard-coded xml int values. With introduction of this enum that code has
-     * been changed to save those values as the HitPointType enum name string
-     * instead. For backwards compatibility the xml int values are still
-     * recognized on load. They should NOT be used going forward so that some
-     * point they can be removed.
-     * <p>
-     * Note also that there are placeholders for values that were previously
+     * 
+     * Note: there are placeholders for values that were previously
      * used as offsets from base values. These now have to exist as enums so
      * that the xml loading code can resolve them.
      */
@@ -197,15 +190,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         TURNTABLE_RAY_63; // offset for turntable connection points (maximum)
 
         /**
-         * constructor for this class
-         *
-         * @param xmlValue the Integer value used to load from xml file (for
-         * backwards compatibility)
-         */
-        HitPointType() {
-        }
-
-        /**
          * return the enum offset from this one used for BEZIER_CONTROL_POINT_0,
          * SHAPE_POINT_0 and TURNTABLE_RAY_0
          *
@@ -219,6 +203,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return values()[this.ordinal() + offset];
         }
 
+        /**
+         * convert an enum to it offset from a base enum
+         * @param hitPointType
+         * @return the integer offset
+         */
         public int getOffsetToEnum(HitPointType hitPointType) {
             if ((this != BEZIER_CONTROL_POINT_0) && (this != SHAPE_POINT_0) && (this != TURNTABLE_RAY_0)) {
                 log.error("{} is not a valid enum for an offset. Should be BEZIER_CONTROL_POINT_0, SHAPE_POINT_0 or TURNTABLE_RAY_0", name());

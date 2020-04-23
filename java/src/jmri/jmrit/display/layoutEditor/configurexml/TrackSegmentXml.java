@@ -210,8 +210,6 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         // create the objects
         LayoutEditor p = (LayoutEditor) o;
 
-        Attribute attribute = null;
-
         // get attributes
         String name = element.getAttribute("ident").getValue();
 

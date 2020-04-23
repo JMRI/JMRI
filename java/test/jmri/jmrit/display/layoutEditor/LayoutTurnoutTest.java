@@ -45,7 +45,7 @@ public class LayoutTurnoutTest {
     }
 
     @Test
-    public void testTurnoutTypeEnumGetXmlValue() {
+    public void testTurnoutTypeEnumOrdinals() {
         Assert.assertEquals("LayoutSlip.TurnoutType.NONE.ordinal() == 0",
                 LayoutSlip.TurnoutType.NONE.ordinal(), (0));
         Assert.assertEquals("LayoutSlip.TurnoutTypeRH_TURNOUT.ordinal() == 1",
@@ -67,7 +67,7 @@ public class LayoutTurnoutTest {
     }
 
     @Test
-    public void testLinkTypeEnumGetXmlValue() {
+    public void testLinkTypeEnumOrdinals() {
         Assert.assertEquals("LayoutTurnout.LinkType.NO_LINK.ordinal() == 0", LayoutTurnout.LinkType.NO_LINK.ordinal(), (0));
         Assert.assertEquals("LayoutTurnout.LinkType.FIRST_3_WAY.ordinal() == 1", LayoutTurnout.LinkType.FIRST_3_WAY.ordinal(), (1));
         Assert.assertEquals("LayoutTurnout.LinkType.SECOND_3_WAY.ordinal() == 2", LayoutTurnout.LinkType.SECOND_3_WAY.ordinal(), (2));
@@ -603,8 +603,7 @@ public class LayoutTurnoutTest {
             Assert.assertNull("ltRH.getConnection(invalid type) is null",
                     ltRH.getConnection(LayoutEditor.HitPointType.NONE));
             Assert.fail("No exception thrown on ltRH.getConnection(invalid type)");
-        }
-        catch (JmriException ex) {
+        } catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("Right Hand.getConnection(NONE); Invalid Connection Type");
 
@@ -612,8 +611,7 @@ public class LayoutTurnoutTest {
             Assert.assertNull("ltLH.getConnection(invalid type) is null",
                     ltLH.getConnection(LayoutEditor.HitPointType.NONE));
             Assert.fail("No exception thrown on ltLH.getConnection(invalid type)");
-        }
-        catch (JmriException ex) {
+        } catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("Left Hand.getConnection(NONE); Invalid Connection Type");
 
@@ -621,8 +619,7 @@ public class LayoutTurnoutTest {
             Assert.assertNull("ltWY.getConnection(invalid type) is null",
                     ltWY.getConnection(LayoutEditor.HitPointType.NONE));
             Assert.fail("No exception thrown on ltWY.getConnection(invalid type)");
-        }
-        catch (JmriException ex) {
+        } catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("Wye.getConnection(NONE); Invalid Connection Type");
 
@@ -630,8 +627,7 @@ public class LayoutTurnoutTest {
             Assert.assertNull("ltDX.getConnection(invalid type) is null",
                     ltDX.getConnection(LayoutEditor.HitPointType.NONE));
             Assert.fail("No exception thrown on ltDX.getConnection(invalid type)");
-        }
-        catch (JmriException ex) {
+        } catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("Double XOver.getConnection(NONE); Invalid Connection Type");
 
@@ -639,8 +635,7 @@ public class LayoutTurnoutTest {
             Assert.assertNull("ltRX.getConnection(invalid type) is null",
                     ltRX.getConnection(LayoutEditor.HitPointType.NONE));
             Assert.fail("No exception thrown on ltRX.getConnection(invalid type)");
-        }
-        catch (JmriException ex) {
+        } catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("Right Hand XOver.getConnection(NONE); Invalid Connection Type");
 
@@ -648,8 +643,7 @@ public class LayoutTurnoutTest {
             Assert.assertNull("ltLX.getConnection(invalid type) is null",
                     ltLX.getConnection(LayoutEditor.HitPointType.NONE));
             Assert.fail("No exception thrown on ltLX.getConnection(invalid type)");
-        }
-        catch (JmriException ex) {
+        } catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("Left Hand XOver.getConnection(NONE); Invalid Connection Type");
     }
@@ -662,48 +656,42 @@ public class LayoutTurnoutTest {
         try {
             Assert.assertNull("ltRH.getConnection(valid type) is null",
                     ltRH.getConnection(LayoutEditor.HitPointType.TURNOUT_A));
-        }
-        catch (JmriException ex) {
+        } catch (JmriException ex) {
             Assert.fail("Exception thrown on ltRH.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltLH.getConnection(valid type) is null",
                     ltLH.getConnection(LayoutEditor.HitPointType.TURNOUT_A));
-        }
-        catch (JmriException ex) {
+        } catch (JmriException ex) {
             Assert.fail("Exception thrown on ltLH.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltWY.getConnection(valid type) is null",
                     ltWY.getConnection(LayoutEditor.HitPointType.TURNOUT_A));
-        }
-        catch (JmriException ex) {
+        } catch (JmriException ex) {
             Assert.fail("Exception thrown on ltWY.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltDX.getConnection(valid type) is null",
                     ltDX.getConnection(LayoutEditor.HitPointType.TURNOUT_A));
-        }
-        catch (JmriException ex) {
+        } catch (JmriException ex) {
             Assert.fail("Exception thrown on ltDX.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltRX.getConnection(valid type) is null",
                     ltRX.getConnection(LayoutEditor.HitPointType.TURNOUT_A));
-        }
-        catch (JmriException ex) {
+        } catch (JmriException ex) {
             Assert.fail("Exception thrown on ltRX.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltLX.getConnection(valid type) is null",
                     ltLX.getConnection(LayoutEditor.HitPointType.TURNOUT_A));
-        }
-        catch (JmriException ex) {
+        } catch (JmriException ex) {
             Assert.fail("Exception thrown on ltLX.getConnection(valid type)");
         }
     }
@@ -717,8 +705,7 @@ public class LayoutTurnoutTest {
             // test Invalid Connection Type
             ltRH.setConnection(LayoutEditor.HitPointType.NONE, null, LayoutEditor.HitPointType.NONE);
             Assert.fail("No exception thrown on ltRH.setConnection(Invalid Connection Type)");
-        }
-        catch (JmriException ex) {
+        } catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("Right Hand.setConnection(NONE, null, NONE); Invalid Connection Type");
 
@@ -726,16 +713,14 @@ public class LayoutTurnoutTest {
             // test unexpected type
             ltRH.setConnection(LayoutEditor.HitPointType.POS_POINT, null, LayoutEditor.HitPointType.POS_POINT);
             Assert.fail("No exception thrown on ltRH.setConnection(unexpected type)");
-        }
-        catch (JmriException ex) {
+        } catch (JmriException ex) {
         }
         JUnitAppender.assertErrorMessage("Right Hand.setConnection(POS_POINT, null, POS_POINT); unexpected type");
 
         try {
             // test valid types
             ltRH.setConnection(LayoutEditor.HitPointType.TURNOUT_A, null, LayoutEditor.HitPointType.NONE);
-        }
-        catch (JmriException ex) {
+        } catch (JmriException ex) {
             Assert.fail("Exception thrown on ltRH.setConnection(valid types)");
         }
     }
