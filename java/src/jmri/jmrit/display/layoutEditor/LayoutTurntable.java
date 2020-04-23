@@ -1235,6 +1235,7 @@ public class LayoutTurntable extends LayoutTrack {
         // draw ray tracks
         for (int j = 0; j < getNumberRays(); j++) {
             boolean main = false;
+            Color color = null;
             TrackSegment ts = getRayConnectOrdered(j);
             if (ts != null) {
                 main = ts.isMainline();
@@ -1243,19 +1244,35 @@ public class LayoutTurntable extends LayoutTrack {
                 if (ts == null) {
                     g2.setColor(layoutEditor.getDefaultTrackColorColor());
                 } else {
-                    setColorForTrackBlock(g2, ts.getLayoutBlock());
+                    LayoutBlock lb = ts.getLayoutBlock();
+                    if (lb != null) {
+                        color = g2.getColor();
+                        setColorForTrackBlock(g2, lb);
+                    }
                 }
             }
+            Point2D pt2 = getRayCoordsOrdered(j);
+            Point2D delta = MathUtil.normalize(MathUtil.subtract(pt2, center), radius);
+            Point2D pt1 = MathUtil.add(center, delta);
             if (main == isMain) {
-                Point2D pt2 = getRayCoordsOrdered(j);
-                Point2D delta = MathUtil.normalize(MathUtil.subtract(pt2, center), radius);
-                Point2D pt1 = MathUtil.add(center, delta);
                 g2.draw(new Line2D.Double(pt1, pt2));
-                if (isTurnoutControlled() && (getPosition() == j)) {
-                    delta = MathUtil.normalize(delta, radius - halfTrackWidth);
-                    pt1 = MathUtil.subtract(center, delta);
-                    g2.draw(new Line2D.Double(pt1, pt2));
+            }
+            if (isMain && isTurnoutControlled() && (getPosition() == j)) {
+                if (isBlock) {
+                    LayoutBlock lb = getLayoutBlock();
+                    if (lb != null) {
+                        color = (color == null) ? g2.getColor() : color;
+                        setColorForTrackBlock(g2, lb);
+                    } else {
+                        g2.setColor(layoutEditor.getDefaultTrackColorColor());
+                    }
                 }
+                delta = MathUtil.normalize(delta, radius - halfTrackWidth);
+                pt1 = MathUtil.subtract(center, delta);
+                g2.draw(new Line2D.Double(pt1, pt2));
+            }
+            if (color != null) {
+                g2.setColor(color); //restore previous color
             }
         }
     }
@@ -1271,30 +1288,46 @@ public class LayoutTurntable extends LayoutTrack {
         // draw ray tracks
         for (int j = 0; j < getNumberRays(); j++) {
             boolean main = false;
+//            Color c = null;
             TrackSegment ts = getRayConnectOrdered(j);
             if (ts != null) {
                 main = ts.isMainline();
+//                LayoutBlock lb = ts.getLayoutBlock();
+//                if (lb != null) {
+//                    c = g2.getColor();
+//                    setColorForTrackBlock(g2, lb);
+//                }
             }
+            Point2D pt2 = getRayCoordsOrdered(j);
+            Point2D vDelta = MathUtil.normalize(MathUtil.subtract(pt2, center), radius);
+            Point2D vDeltaO = MathUtil.normalize(MathUtil.orthogonal(vDelta), railDisplacement);
+            Point2D pt1 = MathUtil.add(center, vDelta);
+            Point2D pt1L = MathUtil.subtract(pt1, vDeltaO);
+            Point2D pt1R = MathUtil.add(pt1, vDeltaO);
+            Point2D pt2L = MathUtil.subtract(pt2, vDeltaO);
+            Point2D pt2R = MathUtil.add(pt2, vDeltaO);
             if (main == isMain) {
-                Point2D pt2 = getRayCoordsOrdered(j);
-                Point2D vDelta = MathUtil.normalize(MathUtil.subtract(pt2, center), radius);
-                Point2D vDeltaO = MathUtil.normalize(MathUtil.orthogonal(vDelta), railDisplacement);
-                Point2D pt1 = MathUtil.add(center, vDelta);
-                Point2D pt1L = MathUtil.subtract(pt1, vDeltaO);
-                Point2D pt1R = MathUtil.add(pt1, vDeltaO);
-                Point2D pt2L = MathUtil.subtract(pt2, vDeltaO);
-                Point2D pt2R = MathUtil.add(pt2, vDeltaO);
                 g2.draw(new Line2D.Double(pt1L, pt2L));
                 g2.draw(new Line2D.Double(pt1R, pt2R));
-                if (isTurnoutControlled() && (getPosition() == j)) {
-                    vDelta = MathUtil.normalize(vDelta, radius - halfTrackWidth);
-                    pt1 = MathUtil.subtract(center, vDelta);
-                    pt1L = MathUtil.subtract(pt1, vDeltaO);
-                    pt1R = MathUtil.add(pt1, vDeltaO);
-                    g2.draw(new Line2D.Double(pt1L, pt2L));
-                    g2.draw(new Line2D.Double(pt1R, pt2R));
-                }
             }
+            if (isMain && isTurnoutControlled() && (getPosition() == j)) {
+//                LayoutBlock lb = getLayoutBlock();
+//                if (lb != null) {
+//                    c = g2.getColor();
+//                    setColorForTrackBlock(g2, lb);
+//                } else {
+//                    g2.setColor(layoutEditor.getDefaultTrackColorColor());
+//                }
+                vDelta = MathUtil.normalize(vDelta, radius - halfTrackWidth);
+                pt1 = MathUtil.subtract(center, vDelta);
+                pt1L = MathUtil.subtract(pt1, vDeltaO);
+                pt1R = MathUtil.add(pt1, vDeltaO);
+                g2.draw(new Line2D.Double(pt1L, pt2L));
+                g2.draw(new Line2D.Double(pt1R, pt2R));
+            }
+//            if (c != null) {
+//                g2.setColor(c); //restore previous color
+//            }
         }
     }
 
