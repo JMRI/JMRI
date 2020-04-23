@@ -34,8 +34,8 @@ public class EnterGridSizesDialog {
     private transient JmriJFrame enterGridSizesFrame = null;
     private boolean enterGridSizesOpen = false;
     private boolean gridSizesChange = false;
-    private transient JTextField primaryGridSizeField = new JTextField(6);
-    private transient JTextField secondaryGridSizeField = new JTextField(6);
+    private final transient JTextField primaryGridSizeField = new JTextField(6);
+    private final transient JTextField secondaryGridSizeField = new JTextField(6);
     private transient JButton gridSizesDone;
     private transient JButton gridSizesCancel;
 
@@ -80,16 +80,12 @@ public class EnterGridSizesDialog {
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
             panel5.add(gridSizesDone = new JButton(Bundle.getMessage("ButtonDone")));
-            gridSizesDone.addActionListener((ActionEvent event) -> {
-                gridSizesDonePressed(event);
-            });
+            gridSizesDone.addActionListener(this::gridSizesDonePressed);
             gridSizesDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             //Cancel
             panel5.add(gridSizesCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            gridSizesCancel.addActionListener((ActionEvent event) -> {
-                gridSizesCancelPressed(event);
-            });
+            gridSizesCancel.addActionListener(this::gridSizesCancelPressed);
             gridSizesCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel5);
 
@@ -128,8 +124,7 @@ public class EnterGridSizesDialog {
 
         if ((siz < 5.0) || (siz > 100.0)) {
             JOptionPane.showMessageDialog(enterGridSizesFrame,
-                    MessageFormat.format(Bundle.getMessage("Error2a"),
-                            new Object[]{String.format(" %s ", siz)}),
+                    MessageFormat.format(Bundle.getMessage("Error2a"), String.format(" %s ", siz)),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
 
@@ -152,8 +147,7 @@ public class EnterGridSizesDialog {
 
         if ((siz < 5) || (siz > 100.0)) {
             JOptionPane.showMessageDialog(enterGridSizesFrame,
-                    MessageFormat.format(Bundle.getMessage("Error2a"),
-                            new Object[]{String.format(" %s ", siz)}),
+                    MessageFormat.format(Bundle.getMessage("Error2a"), String.format(" %s ", siz)),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
         } else {

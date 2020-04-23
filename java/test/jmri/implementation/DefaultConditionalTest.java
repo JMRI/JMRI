@@ -818,6 +818,7 @@ public class DefaultConditionalTest {
     @After
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

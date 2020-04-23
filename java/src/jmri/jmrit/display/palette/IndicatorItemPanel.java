@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -164,9 +163,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
                 t.setShowTrain(_detectPanel.getShowTrainName());
                 t.setFamily(_family);
 
-                Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-                while (it.hasNext()) {
-                    Entry<String, NamedIcon> entry = it.next();
+                for (Entry<String, NamedIcon> entry : iconMap.entrySet()) {
                     t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
                 }
                 t.setLevel(Editor.TURNOUTS);

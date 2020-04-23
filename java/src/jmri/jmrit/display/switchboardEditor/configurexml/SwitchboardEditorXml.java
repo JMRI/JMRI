@@ -102,9 +102,9 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         int rangemin = 1;
         int rangemax = 32;
         int columns = 4;
-        String type = "T";
-        String connection = "I";
-        String shape = "key";
+        String type;
+        String connection;
+        String shape;
         String name;
 
         try {

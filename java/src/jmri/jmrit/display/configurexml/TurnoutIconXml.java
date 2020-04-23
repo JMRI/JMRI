@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 
-    static final HashMap<String, String> _nameMap = new HashMap<String, String>();
+    static final HashMap<String, String> _nameMap = new HashMap<>();
 
     public TurnoutIconXml() {
         // map previous store names to property key names
@@ -118,18 +118,16 @@ public class TurnoutIconXml extends PositionableLabelXml {
             Element elem = element;     // the element containing the icons
             Element icons = element.getChild("icons");
             if (icons != null) {
-                List<Element> s = icons.getChildren();
-                states = s;
+                states = icons.getChildren();
                 elem = icons;          // the element containing the icons
                 if (log.isDebugEnabled()) {
                     log.debug("icons element has" + states.size() + " items");
                 }
             }
-            for (int i = 0; i < states.size(); i++) {
-                String state = states.get(i).getName();
+            for (Element value : states) {
+                String state = value.getName();
                 if (log.isDebugEnabled()) {
-                    log.debug("setIcon for state \"" + state
-                            + "\" and " + _nameMap.get(state));
+                    log.debug("setIcon for state \"" + state + "\" and " + _nameMap.get(state));
                 }
                 NamedIcon icon = loadIcon(l, state, elem, "TurnoutIcon \"" + name + "\": icon \"" + state + "\" ", p);
                 if (icon != null) {

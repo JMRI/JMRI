@@ -1,7 +1,9 @@
 package jmri.jmrix.can.cbus;
 
+import jmri.BlockManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.TrafficControllerScaffold;
@@ -53,6 +55,7 @@ public class CbusCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
         tc = null;
         cs.dispose();
         cs = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
 
     }

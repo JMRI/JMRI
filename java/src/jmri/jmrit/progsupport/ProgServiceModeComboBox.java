@@ -99,10 +99,14 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
         progBox = new JComboBox<GlobalProgrammerManager>();
         Vector<GlobalProgrammerManager> v = new Vector<>();
         for (GlobalProgrammerManager pm : getMgrList()) {
-            if (pm != null && pm.getGlobalProgrammer() != null) {
+            Programmer globProg=null;
+            if (pm != null ) {
+                globProg = pm.getGlobalProgrammer();
+            }
+            if ( globProg != null) {
                 v.add(pm);
                 // listen for changes
-                pm.getGlobalProgrammer().addPropertyChangeListener(this);
+                globProg.addPropertyChangeListener(this);
             }
         }
 

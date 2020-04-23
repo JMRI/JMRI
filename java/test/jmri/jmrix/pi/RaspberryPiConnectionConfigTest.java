@@ -19,8 +19,6 @@ public class RaspberryPiConnectionConfigTest extends jmri.jmrix.AbstractConnecti
         JUnitUtil.setUp();
         GpioProvider myprovider = new PiGpioProviderScaffold();
         GpioFactory.setDefaultProvider(myprovider);
-
-        JUnitUtil.setUp();
         cc = new RaspberryPiConnectionConfig();
     }
 

@@ -8,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-
+		
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-
+		
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -66,7 +66,7 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Improved Console translation of Bootloading ( Firmware Update ) CAN Frames.</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
@@ -156,7 +156,7 @@
 
         <h4>BLI</h4>
             <ul>
-                <li>Blueline change version range</li>
+                <li></li>
             </ul>
 
         <h4>BNM Hobbies</h4>
@@ -278,7 +278,7 @@
             <ul>
                 <li></li>
             </ul>
-
+	    
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -324,14 +324,6 @@
                 <li></li>
             </ul>
 
-    <h3>Circuit Builder</h3>
-        <a id="CB" name="CB"></a>
-        <ul>
-            <li>The system name is auto generated when the<strong>Add New Detector Circuit
-            </strong> window is opened. This name may be changed before the Occupancy
-            Block is created. After creating, the field is removed from the window.</li>
-        </ul>
-
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
@@ -341,16 +333,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>The displayed names in the <strong>Section</strong> and <strong>Transit</strong>
-             tables, along with the transit selection and block selections in the
-             <strong>Activate New Train</strong> Dispatcher window, now behave like other
-             JMRI tools.  Instead of the <strong>system name (user name)</strong> format,
-             the names use the <strong>display name</strong> format.  The display name format
-             uses the <strong>user name</strong>.  If not available, the system name is used.</li>
-             <li>The list size for the dropdown combo boxes use the content size instead of
-             the default 8 rows.</li>
-             <li>The Section, Transit, and Dispatcher help documents have been updated.  The
-             Section and Transit help have been cleaned up to reduce redundant verbiage.</li>
+             <li></li>
         </ul>
 
    <h3>Internationalization</h3>
@@ -382,7 +365,7 @@
             <li></li>
         </ul>
 
-   <h3>Panel Editors</h3>
+   <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
             <li></li>
@@ -393,6 +376,22 @@
                 <li></li>
             </ul>
 
+    <h3>Control Panel Editor</h3>
+        <a id="CPE" name="CPE"></a>
+        <ul>
+            <li></li>
+        </ul>
+        <h4>Circuit Builder</h4>
+            <a id="CPE-CB" name="CPE-CB"></a>
+            <ul>
+                <li></li>
+            </ul>
+        <h4>Palette</h4>
+            <a id="CPE-P" name="CPE-P"></a>
+            <ul>
+                <li></li>
+            </ul>
+   
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
@@ -420,7 +419,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Jython has been updated to version 2.7.2</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -430,7 +429,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>Eckart Meyer updated the DB HV 1969 system to have proper aspect control.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -442,7 +441,7 @@
             <ul>
                 <li></li>
             </ul>
-
+            
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -469,18 +468,10 @@
             <li></li>
         </ul>
 
-   <h3>Throttle</h3>
+    <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Add a speed step dropdown to the extended throttle;
-                this makes it easier to select the speed step mode and
-                makes it possible to select the less common speed step modes
-                exposed by some systems.
-            </li>
-            <li>Consolidated the throttle layout code,
-                centralized the logic for determining if throttle icons should be shown,
-                and added unit tests for the control panel layout and some preferences.
-            </li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -498,13 +489,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>The <strong>Warrant List</strong> now responds to changes in window size.
-            The length of the status field varies as needed and keeps the
-            <strong>Stop All Trains</strong> button visible even on small screens.</li>
-        </ul>
-        <ul>
-            <li>When creating a new warrant the system name is auto generated. This name may be
-            changed before the warrant is saved. After saving the field can not be edited.</li>
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>
@@ -524,27 +509,16 @@
         <ul>
             <li></li>
         </ul>
-
+        
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>The VSD old graphical user interface (GUI) was removed. For users who call VSD
-            from JMRI PanelPro, nothing changes. For users who call VSD from a Jython script,
-            theoretically the script can fail. Please see also
-            <a href="http://jmri.org/help/en/package/jmri/jmrit/vsdecoder/VSDecoderFrame.shtml">here</a>.
-            </li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Long deprecated <code>instance()</code> methods to get the default
-                instance of a manager have been removed. Use
-                <code>InstanceManager.getDefault(NameOfManager.class)</code>
-                instead.</li>
-            <li><a href="https://github.com/JMRI/JMRI/pull/8286">PR 8286 revised the way 
-                that JMRI code should fire and catch events.  If you have code (Java or script)
-                of your own that implements event firing or tricky listening, you
-                should review those changes to see if they will or should affect your code.
+            <li></li>
         </ul>
 

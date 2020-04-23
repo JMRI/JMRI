@@ -124,6 +124,12 @@ public class QsiMonFrameTest {
         jmri.util.JUnitUtil.setUp();
     }
 
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.clearShutDownManager();
+        jmri.util.JUnitUtil.tearDown();
+    }
+
     private final static Logger log = LoggerFactory.getLogger(QsiMonFrameTest.class);
 
 }

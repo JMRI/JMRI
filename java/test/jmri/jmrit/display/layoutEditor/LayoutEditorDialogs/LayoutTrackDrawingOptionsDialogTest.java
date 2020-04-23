@@ -1,6 +1,10 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
+import jmri.util.JUnitUtil;
 
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -26,8 +30,8 @@ public class LayoutTrackDrawingOptionsDialogTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         if(!GraphicsEnvironment.isHeadless()) {
             le = new LayoutEditor("Layout Track Drawing Options Dialog Test Layout");
             le.setVisible(true);
@@ -40,7 +44,8 @@ public class LayoutTrackDrawingOptionsDialogTest {
             EditorFrameOperator efo = new EditorFrameOperator(le);
             efo.closeFrameWithConfirmations();
         }
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 
 }

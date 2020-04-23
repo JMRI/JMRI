@@ -1,8 +1,6 @@
 package jmri.jmrix;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Base tests for messages implementing the jmri.jmrix.Message interface.
@@ -14,8 +12,15 @@ abstract public class AbstractMessageTestBase {
     protected AbstractMessage m = null; // set in setUp
 
     @Before
-    abstract public void setUp();
+    public void setUp() { // minimum needed, usually overridden
+        jmri.util.JUnitUtil.setUp();
+    }
 
+    @After
+    public void tearDown() { // minimum needed, usually overridden
+        jmri.util.JUnitUtil.tearDown();
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertNotNull("exists",m);

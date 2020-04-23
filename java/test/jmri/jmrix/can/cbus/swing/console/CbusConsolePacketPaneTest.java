@@ -38,12 +38,12 @@ public class CbusConsolePacketPaneTest  {
         tc = new TrafficControllerScaffold();
         memo.setTrafficController(tc);
         mainConsolePane = new CbusConsolePane();
-        mainConsolePane.initComponents(memo);
+        mainConsolePane.initComponents(memo,false);
     }
 
     @After
     public void tearDown() {
-        
+        mainConsolePane.dispose();
         tc.terminateThreads();
         memo.dispose();
         tc = null;

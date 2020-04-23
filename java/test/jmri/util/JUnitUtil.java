@@ -22,6 +22,7 @@ import org.netbeans.jemmy.operators.JDialogOperator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import apps.SystemConsole;
 import apps.gui.GuiLafPreferencesManager;
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
@@ -156,8 +157,8 @@ public class JUnitUtil {
     
     static private int threadCount = 0;
     
-    static private boolean didSetUp = false;
-    static private boolean didTearDown = true;
+    static private boolean didSetUp = false;    // If true, last saw setUp, waiting tearDown normally
+    static private boolean didTearDown = true;  // If true, last saw tearDown, waiting setUp normally
     static private String lastSetUpClassName = "<unknown>";
     static private String lastSetUpThreadName = "<unknown>";
     static private StackTraceElement[] lastSetUpStackTrace = new StackTraceElement[0];
@@ -171,6 +172,8 @@ public class JUnitUtil {
     /**
      * JMRI standard setUp for tests that mock the InstanceManager. This should be the first line in the {@code @Before}
      * annotated method if the tests mock the InstanceManager.
+     * One or the other of {@link #setUp()} or {@link #setUpLoggingAndCommonProperties()} must
+     * be present in the {@code @Before} routine.
      */
     public static void setUpLoggingAndCommonProperties() {
         if (!isLoggingInitialized) {
@@ -178,6 +181,10 @@ public class JUnitUtil {
             isLoggingInitialized = true;
             String filename = System.getProperty("jmri.log4jconfigfilename", "tests.lcf");
             Log4JUtil.initLogging(filename);
+        }
+
+        if (SystemConsole.isCreated()) {
+            SystemConsole.getInstance().open();
         }
 
         // need to do this each time
@@ -218,18 +225,6 @@ public class JUnitUtil {
         // test left a window open, but different platforms seem to have just
         // enough differences that this is, for now, turned off
         resetWindows(false, false);
-    }
-
-    /**
-     * JMRI standard setUp for tests. This should be the first line in the {@code @Before}
-     * annotated method if the tests do not mock the InstanceManager.
-     */
-    public static void setUp() {
-        // all the setup for a MockInstanceManager applies
-        setUpLoggingAndCommonProperties();
-
-        // Do a minimal amount of de-novo setup
-        resetInstanceManager();
 
         // Log and/or check the use of setUp and tearDown
         if (checkSetUpTearDownSequence || printSetUpTearDownNames) {
@@ -241,7 +236,7 @@ public class JUnitUtil {
                 if (checkSequenceDumpsStack)  lastSetUpThreadName = Thread.currentThread().getName();
                 
                 if (didSetUp || ! didTearDown) {
-                    System.err.println("   "+getTestClassName()+".setUp on thread "+lastSetUpThreadName+" unexpectedly found setUp="+didSetUp+" tearDown="+didTearDown+"; last tearDown was in "+lastTearDownClassName+" thread "+lastTearDownThreadName);
+                    System.err.println("   "+getTestClassName()+".setUp on thread "+lastSetUpThreadName+" unexpectedly found setUp="+didSetUp+" tearDown="+didTearDown+"; last setUp was in "+lastSetUpClassName+" thread "+lastSetUpThreadName);
                     if (checkSequenceDumpsStack) {
                         System.err.println("---- This stack ------");
                         Thread.dumpStack();
@@ -261,7 +256,24 @@ public class JUnitUtil {
         }
         
         // checking time?
-        if (checkTestDuration) checkTestDurationStartTime = System.currentTimeMillis();
+        if (checkTestDuration) {
+            checkTestDurationStartTime = System.currentTimeMillis();
+        }
+    }
+
+    /**
+     * JMRI standard setUp for tests. This should be the first line in the {@code @Before}
+     * annotated method if the tests do not mock the InstanceManager.
+     * One or the other of {@link #setUp()} or {@link #setUpLoggingAndCommonProperties()} must
+     * be present in the {@code @Before} routine.
+     */
+    public static void setUp() {
+        // all the setup for a MockInstanceManager applies
+        setUpLoggingAndCommonProperties();
+
+        // Do a minimal amount of de-novo setup
+        resetInstanceManager();
+
     }
     
     /**
@@ -278,7 +290,7 @@ public class JUnitUtil {
             long duration = System.currentTimeMillis() - checkTestDurationStartTime;
             if (duration > checkTestDurationMax) {
                 // test too long, log that
-                log.warn("Test in {} duration {} msec exceeded limit {}", getTestClassName(), duration, checkTestDurationMax);
+                System.err.println("Test in "+getTestClassName()+" duration "+duration+" msec exceeded limit "+checkTestDurationMax);
             }
         }
         // Log and/or check the use of setUp and tearDown
@@ -289,7 +301,7 @@ public class JUnitUtil {
                 if (checkSequenceDumpsStack) lastTearDownThreadName = Thread.currentThread().getName();
                 
                 if (! didSetUp || didTearDown) {
-                    System.err.println("   "+getTestClassName()+".tearDown on thread "+lastTearDownThreadName+" unexpectedly found setUp="+didSetUp+" tearDown="+didTearDown+"; last setUp was in "+lastSetUpClassName+" thread "+lastSetUpThreadName);
+                    System.err.println("   "+getTestClassName()+".tearDown on thread "+lastTearDownThreadName+" unexpectedly found setUp="+didSetUp+" tearDown="+didTearDown+"; last tearDown was in "+lastTearDownClassName+" thread "+lastTearDownThreadName);
                     if (checkSequenceDumpsStack) {
                         System.err.println("---- This stack ------");
                         Thread.dumpStack();
@@ -338,6 +350,10 @@ public class JUnitUtil {
         // Optionally, check that the Swing queue is idle
         //new org.netbeans.jemmy.QueueTool().waitEmpty(250);
 
+        // remove SystemConsole log appenders so test framework output is not included
+        if (SystemConsole.isCreated()) {
+            SystemConsole.getInstance().close();
+        }
     }
 
     /**
@@ -718,6 +734,12 @@ public class JUnitUtil {
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(b, jmri.Manager.OBLOCKS);
         }
+    }
+
+    public static void deregisterBlockManagerShutdownTask() {
+        InstanceManager
+                .getDefault(ShutDownManager.class)
+                .deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
     }
 
     public static void initWarrantManager() {
@@ -1289,10 +1311,11 @@ public class JUnitUtil {
         "Java2D Disposer",
         "AWT-Shutdown",
         "AWT-EventQueue",
+        "AWT-XAWT",                         // seen on Jenkins Ubuntu
         "GC Daemon",
         "Finalizer",
         "Reference Handler",
-        "Signal Dispatcher",                // POSIX signals in JRE
+        "Signal Dispatcher",                // POSIX signals in JRE, not trains signals
         "Java2D Queue Flusher",
         "Time-limited test",
         "WindowMonitor-DispatchThread",
@@ -1309,6 +1332,8 @@ public class JUnitUtil {
         "SIGINT handler",                   // observed in JmDNS; clean shutdown takes time
         "Multihomed mDNS.Timer",            // observed in JmDNS; clean shutdown takes time
         "Direct Clip",                      // observed in macOS JRE, associated with javax.sound.sampled.AudioSystem
+        "Basic L&F File Loading Thread",
+        "dns.close in ZeroConfServiceManager#stopAll"
     }));
     static List<Thread> threadsSeen = new ArrayList<>();
 
@@ -1334,9 +1359,11 @@ public class JUnitUtil {
                      || name.startsWith("Image Fetcher ")
                      || name.startsWith("Image Animator ")
                      || name.startsWith("JmDNS(")
+                     || name.startsWith("JmmDNS pool")
+                     || name.startsWith("ForkJoinPool.commonPool-worker")
                      || name.startsWith("SocketListener(")
+                     || ( t.getThreadGroup() != null && t.getThreadGroup().getName().equals("system")) // JRE system threads
                      || ( t.getThreadGroup() != null && t.getThreadGroup().getName().contains("FailOnTimeoutGroup")) // JUnit timeouts
-                     || name.startsWith("SocketListener(")
                      || (name.startsWith("SwingWorker-pool-1-thread-") && 
                             ( t.getThreadGroup() != null && 
                                 (t.getThreadGroup().getName().contains("FailOnTimeoutGroup") || t.getThreadGroup().getName().contains("main") )

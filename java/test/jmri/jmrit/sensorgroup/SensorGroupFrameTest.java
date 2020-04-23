@@ -1,6 +1,9 @@
 package jmri.jmrit.sensorgroup;
 
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -24,6 +27,7 @@ public class SensorGroupFrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 

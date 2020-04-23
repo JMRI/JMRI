@@ -234,14 +234,14 @@
             because they behave intermittently when run as part of the main test sequence.  
             The <code>scripts/run_flagged_tests_separately</code> file
             runs these test classes separately.</dd>
-        <dt>jmri.skipschematests</dt>
-            <dd>If true, JUnit tests will skip checking the schema of all the test XML files.</dd>
         <dt>jmri.util.JUnitUtil.printSetUpTearDownNames</dt>
-            <dd>If true, JUnit tests will print out each JUnitUtil.setUp() and JUnitUtil.teardown() call.
+            <dd>If true, JUnit tests will print to stderr each JUnitUtil.setUp() call
+                and when checkSetUpTearDownSequence is true will also print to stderr each JUnitUtil.teardown()
+                call.
                 This can be useful if i.e. the CI tests are hanging, and you can't figure out which
                 test class is the problem.</dd>
         <dt>jmri.util.junit.PrintingTestListener.verbose</dt>
-            <dd>Prints detailed lists of each test completed, failed and ignored to System.out.
+            <dd>Prints detailed lists of each test completed, failed and ignored to stdout.
                 It's a lot of output, but can help track down when an obscure message was
                 emitted or exception happened. It also can be used to see the order in 
                 which tests are being run.</dd>

@@ -30,6 +30,9 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
     }
 
     public static ComponentUI createUI(JComponent x) {
+        if (!(x instanceof JHelpContentViewer)){
+            throw new IllegalArgumentException("Not a JHelpContentViewer");
+        }
         return new ExternalLinkContentViewerUI((JHelpContentViewer) x);
     }
 
@@ -77,7 +80,7 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
             }
             File file = new File(pathName);
             if (!file.exists()) {
-                URI uri = new URI("http://jmri.org/" + u.getFile());
+                URI uri = new URI("https://jmri.org/" + u.getFile());
                 log.debug("fallback to browser with {}", uri);
                 Desktop.getDesktop().browse(uri);
             }

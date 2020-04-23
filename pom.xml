@@ -18,7 +18,8 @@
         dependency source) -->
         <cucumber.version>4.3.1</cucumber.version>
         <jetty.version>9.4.26.v20200117</jetty.version>
-        <jemmy.version>22-00c9f753cd0a</jemmy.version> <!-- this is a custom version, see lib/README.md -->
+        <!-- this is a custom version, see lib/README.md -->
+        <jemmy.version>22-00c9f753cd0a</jemmy.version>
         <slf4j.version>1.7.25</slf4j.version>
         <jackson.version>2.10.0</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
@@ -30,12 +31,16 @@
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
         <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
-        <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin><!-- don't load JInput during CI tests -->
+        <!-- don't load JInput during CI tests -->
+        <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin>
         <ant.version>1.10.7</ant.version>
         <junit5.version>5.6.0</junit5.version>
         <junit.platform.version>1.6.0</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
+        <!-- define argLines to allow running surefire:test -->
+        <surefire.argLine></surefire.argLine>
+        <failsafe.argLine></failsafe.argLine>
         <surefire.version>2.22.0</surefire.version>
         <failsafe.version>2.22.0</failsafe.version>
         <jqassistant.version>1.6.0</jqassistant.version>
@@ -98,12 +103,12 @@
         <profile>
             <id>appveyor</id>
             <build>
-	        <plugins>
-                <plugin>
+                <plugins>
+                    <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
                         <configuration>
-                             <skipMain>true</skipMain>
+                            <skipMain>true</skipMain>
                             <skip>true</skip>
                         </configuration>
                     </plugin>
@@ -128,15 +133,6 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!-- use surefire (maven default test harness) only for line endings -->
-		    <!--<plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${surefire.version}</version>
-                        <configuration>
-                            <test>jmri.util.FileLineEndingsTest</test>
-                        </configuration>
-		    </plugin> -->
                 </plugins>
             </build>
         </profile>
@@ -447,7 +443,7 @@
                     </systemPropertyVariables>
                     <trimStackTrace>false</trimStackTrace>
                     <workingDirectory>${basedir}</workingDirectory>
-                    <argLine>@{argLine} ${surefire.argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
+                    <argLine>@{argLine} @{surefire.argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
                     <!-- forkCount causes tests to run in forked JVMs.  The following the number with C says to fork the number multiplied by the number of cores available. -->
@@ -467,7 +463,7 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <argLine>@{argLine} ${failsafe.argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
+                            <argLine>@{argLine} @{failsafe.argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                         </configuration>
                     </execution>
                 </executions>
@@ -692,7 +688,10 @@
                         <id>report</id>
                         <goals>
                             <goal>report</goal>
-                        </goals>
+                        </goals>      
+                        <configuration>
+                            <skip>${skipTests}</skip>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>default-check</id>
@@ -700,6 +699,7 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
+                            <skip>${skipTests}</skip>
                             <excludes>
                                 <File>**/*Test*.class</File>
                                 <!-- Exclude testing infrastructure classes -->
@@ -1268,15 +1268,15 @@
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-device</artifactId>
             <version>1.2</version>
-            <optional>true</optional> <!-- not used at compile time,
-                                           may be used at runtime. -->
+            <!-- not used at compile time, may be used at runtime. -->
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-gpio-extension</artifactId>
             <version>1.2</version>
-            <optional>true</optional> <!-- not used at compile time,
-                                           may be used at runtime. -->
+            <!-- not used at compile time, may be used at runtime. -->
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>net.sf.bluecove</groupId>
@@ -1437,13 +1437,13 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>5.1.3.RELEASE</version>
+            <version>5.1.14.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>5.1.3.RELEASE</version>
+            <version>5.1.14.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
