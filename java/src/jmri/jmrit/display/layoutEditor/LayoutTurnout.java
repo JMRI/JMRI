@@ -1,4 +1,3 @@
-package jmri.jmrit.display.layoutEditor;
 
 import static java.lang.Float.POSITIVE_INFINITY;
 
@@ -121,78 +120,17 @@ public class LayoutTurnout extends LayoutTrack {
 
     /**
      * TurnoutType enum
-     * <p>
-     * Note: constructor is NAME(xmlValue). The previous xml save code used the
-     * hard-coded xml int values. With introduction of this enum that code has
-     * been changed to save those values as the TurnoutType enum name string
-     * instead. For backwards compatibility the xml int values are still
-     * recognized on load. They should NOT be used going forward so that some
-     * point they can be removed.
-     * <p>
-     * Note also that there are placeholders for values that were previously
-     * used as offsets from base values. These now have to exist as enums so
-     * that the xml loading code can resolve them.
      */
     public enum TurnoutType {
-        NONE(0),
-        RH_TURNOUT(1),
-        LH_TURNOUT(2),
-        WYE_TURNOUT(3),
-        DOUBLE_XOVER(4),
-        RH_XOVER(5),
-        LH_XOVER(6),
-        SINGLE_SLIP(7), // used for LayoutSlip which extends this class
-        DOUBLE_SLIP(8); // used for LayoutSlip which extends this class
-
-        private final transient Integer xmlValue;
-
-        /**
-         * constructor for this class
-         *
-         * @param xmlValue the Integer value used to load from xml file (for
-         *                 backwards compatibility)
-         */
-        TurnoutType(Integer xmlValue) {
-            this.xmlValue = xmlValue;
-        }
-
-        /**
-         * get the appropriate enum for the provided string
-         *
-         * @param string the String
-         * @return the appropriate TurnoutType enum
-         */
-        public static TurnoutType getValue(String string) {
-            TurnoutType result = null;
-            try {
-                //first see if it matches enum name (exactally)
-                result = valueOf(string);
-            }
-            catch (IllegalArgumentException e) {    //(nope)
-                try {
-                    //try to parse it as an integer
-                    int i = Integer.parseInt(string);
-                    //now see if it matches the xmlValue
-                    for (TurnoutType instance : values()) {
-                        if (instance.xmlValue.equals(i)) {  //(yes!)
-                            result = instance;
-                            break;
-                        }
-                    }
-                }
-                catch (NumberFormatException e1) {  //(nope)
-                    //failure
-                }
-            }
-            return result;
-        }
-
-        /**
-         * @return this enum's Integer xml value
-         */
-        public Integer getXmlValue() {
-            return xmlValue;
-        }
+        NONE,
+        RH_TURNOUT,
+        LH_TURNOUT,
+        WYE_TURNOUT,
+        DOUBLE_XOVER,
+        RH_XOVER,
+        LH_XOVER,
+        SINGLE_SLIP, // used for LayoutSlip which extends this class
+        DOUBLE_SLIP; // used for LayoutSlip which extends this class
 
         /**
          * Returns true if this is a turnout (not a crossover or slip)
@@ -308,63 +246,13 @@ public class LayoutTurnout extends LayoutTrack {
 
     // defined constants - link types
     public enum LinkType {
-        NO_LINK(0),
-        FIRST_3_WAY(1), // this turnout is the first turnout of a 3-way
+        NO_LINK,
+        FIRST_3_WAY, // this turnout is the first turnout of a 3-way
         // turnout pair (closest to the throat)
-        SECOND_3_WAY(2), // this turnout is the second turnout of a 3-way
+        SECOND_3_WAY, // this turnout is the second turnout of a 3-way
         // turnout pair (furthest from the throat)
-        THROAT_TO_THROAT(3); // this turnout is one of two throat-to-throat
+        THROAT_TO_THROAT; // this turnout is one of two throat-to-throat
         // turnouts - no signals at throat
-
-        private final transient Integer xmlValue;
-
-        /**
-         * constructor for this class
-         *
-         * @param xmlValue the Integer value used to load from xml file (for
-         *                 backwards compatibility)
-         */
-        LinkType(Integer xmlValue) {
-            this.xmlValue = xmlValue;
-        }
-
-        /**
-         * @return this enum's Integer xml value
-         */
-        public Integer getXmlValue() {
-            return xmlValue;
-        }
-
-        /**
-         * get the appropriate enum for the provided string
-         *
-         * @param string the String
-         * @return the appropriate LinkType enum
-         */
-        public static LinkType getValue(String string) {
-            LinkType result = null;
-            try {
-                //first see if it matches enum name (exactally)
-                result = valueOf(string);
-            }
-            catch (IllegalArgumentException e) {    //(nope)
-                try {
-                    //try to parse it as an integer
-                    int i = Integer.parseInt(string);
-                    //now see if it matches the xmlValue
-                    for (LinkType instance : values()) {
-                        if (instance.xmlValue.equals(i)) {  //(yes!)
-                            result = instance;
-                            break;
-                        }
-                    }
-                }
-                catch (NumberFormatException e1) {  //(nope)
-                    //failure
-                }
-            }
-            return result;
-        }
     }
 
 // operational instance variables (not saved between sessions)

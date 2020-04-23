@@ -223,7 +223,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             if ((this != BEZIER_CONTROL_POINT_0) && (this != SHAPE_POINT_0) && (this != TURNTABLE_RAY_0)) {
                 log.error("{} is not a valid enum for an offset. Should be BEZIER_CONTROL_POINT_0, SHAPE_POINT_0 or TURNTABLE_RAY_0", name());
             }
-            //return hitPointType.getXmlValue() - getXmlValue();
             return hitPointType.ordinal() - ordinal();
         }
 
