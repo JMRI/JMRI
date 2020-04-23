@@ -7,6 +7,7 @@ package jmri.jmrix.openlcb;
 
 import jmri.Light;
 import jmri.implementation.AbstractLight;
+import jmri.implementation.LightControl;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.VersionedValueListener;
@@ -45,14 +46,11 @@ public class OlcbLight extends AbstractLight {
             log.error("Did not find usable system name: " + address);
             return;
         }
-        switch (v.length) {
-            case 2:
-                addrOn = v[0];
-                addrOff = v[1];
-                break;
-            default:
-                log.error("Can't parse OpenLCB Light system name: " + address);
-                return;
+        if (v.length == 2) {
+            addrOn = v[0];
+            addrOff = v[1];
+        } else {
+            log.error("Can't parse OpenLCB Light system name: " + address);
         }
     }
     
@@ -88,9 +86,7 @@ public class OlcbLight extends AbstractLight {
         if (lightListener==null){
             return;
         }
-        lightControlList.stream().forEach((lc) -> {
-            lc.activateLightControl();
-        });
+        lightControlList.stream().forEach(LightControl::activateLightControl);
         mActive = true; // set flag for control listeners
         _finishedLoad = true;
     }
@@ -135,7 +131,7 @@ public class OlcbLight extends AbstractLight {
     public void setProperty(String key, Object value) {
         Object old = getProperty(key);
         super.setProperty(key, value);
-        if (old != null && value.equals(old)) return;
+        if (value.equals(old)) return;
         if (pc == null) return;
         finishLoad();
     }

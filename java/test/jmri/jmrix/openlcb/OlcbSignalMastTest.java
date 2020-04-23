@@ -3,15 +3,6 @@ package jmri.jmrix.openlcb;
 import jmri.util.JUnitUtil;
 
 import org.openlcb.*;
-import org.openlcb.Connection;
-import org.openlcb.EventID;
-import org.openlcb.Message;
-import org.openlcb.NodeID;
-import org.openlcb.OlcbInterface;
-import org.openlcb.ProducerConsumerEventReportMessage;
-import org.openlcb.IdentifyConsumersMessage;
-import org.openlcb.IdentifyProducersMessage;
-import org.openlcb.IdentifyEventsMessage;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -377,7 +368,7 @@ public class OlcbSignalMastTest {
             }
         });
         
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
     @After

@@ -3,7 +3,6 @@ package jmri.jmrix.openlcb;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
-import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 import jmri.jmrix.SystemConnectionMemo;
 import org.openlcb.OlcbInterface;
@@ -59,9 +58,9 @@ public class OlcbThrottle extends AbstractThrottle {
         oti.start();
     }
 
-    ThrottleImplementation oti;
+    final ThrottleImplementation oti;
 
-    DccLocoAddress address;
+    final DccLocoAddress address;
 
     @Override
     public LocoAddress getLocoAddress() {

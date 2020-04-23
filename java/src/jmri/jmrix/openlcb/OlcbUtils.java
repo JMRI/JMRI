@@ -34,7 +34,7 @@ public final class OlcbUtils {
         Object propValue = parent.getProperty(propertyKey);
         if (propValue == null) return flags;
         if (!(propValue instanceof Boolean)) {
-            boolean v = Boolean.valueOf((String)propValue);
+            boolean v = Boolean.parseBoolean((String)propValue);
             parent.setProperty(propertyKey, v);
             propValue = v;
         }

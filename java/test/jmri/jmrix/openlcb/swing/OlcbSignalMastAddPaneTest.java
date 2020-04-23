@@ -137,9 +137,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         Assert.assertEquals(new OlcbAddress("05.02.01.01.01.01.01.01"), new OlcbAddress(foundMast.getHeldEventId()));
         Assert.assertEquals(new OlcbAddress("06.02.01.01.01.01.01.01"), new OlcbAddress(foundMast.getNotHeldEventId()));
 
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
-            frame.dispose();
-        });
+        jmri.util.ThreadingUtil.runOnGUI(frame::dispose);
     }
 
     @Test
@@ -212,9 +210,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         Assert.assertEquals(new OlcbAddress("05.01.01.01.01.01.01.01"), new OlcbAddress(foundMast.getHeldEventId()));
         Assert.assertEquals(new OlcbAddress("06.01.01.01.01.01.01.01"), new OlcbAddress(foundMast.getNotHeldEventId()));
 
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
-            frame.dispose();
-        });
+        jmri.util.ThreadingUtil.runOnGUI(frame::dispose);
     }
 
 
@@ -258,7 +254,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
             }
         });
         
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
     @After

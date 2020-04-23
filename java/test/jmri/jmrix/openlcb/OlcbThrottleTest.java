@@ -398,7 +398,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo.setTrafficController(new TestTrafficController());
         memo.configureManagers();
     
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
     @AfterClass

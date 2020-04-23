@@ -88,6 +88,7 @@ public class CdiPanelDemo {
         f.dispose();
     }
 
+    @SuppressWarnings("deprecation") // wait for updated Xerxes before coding substitute for SAXBuilder(String, boolean)
     Element getRootFromFile(String name) {
         Element root = null;
         try {

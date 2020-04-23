@@ -1,7 +1,5 @@
 package jmri.jmrix.openlcb;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Iterator;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
@@ -59,13 +57,13 @@ public class OlcbTurnoutTest {
 
         t.sendMessage(mActive);
       
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
+        JUnitUtil.waitFor( () -> l.getPropertyChanged());
         Assert.assertEquals("called twice",2,l.getCallCount());
         Assert.assertTrue(s.getCommandedState() == Turnout.THROWN);
 
         l.resetPropertyChanged();
         t.sendMessage(mInactive);
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
+        JUnitUtil.waitFor( () -> l.getPropertyChanged());
         Assert.assertEquals("called twice",2,l.getCallCount());
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
     }
@@ -82,7 +80,7 @@ public class OlcbTurnoutTest {
         t.tc.rcvMessage = null;
         s.setState(Turnout.THROWN);
         t.flush();
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
+        JUnitUtil.waitFor( () -> l.getPropertyChanged());
         Assert.assertEquals("called twice",2,l.getCallCount());
         Assert.assertTrue(s.getCommandedState() == Turnout.THROWN);
         log.debug("recv msg: " + t.tc.rcvMessage + " header " + Integer.toHexString(t.tc.rcvMessage.getHeader()));
@@ -92,7 +90,7 @@ public class OlcbTurnoutTest {
         t.tc.rcvMessage = null;
         s.setState(Turnout.CLOSED);
         t.flush();
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
+        JUnitUtil.waitFor( () -> l.getPropertyChanged());
         Assert.assertEquals("called twice",2,l.getCallCount());
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
@@ -101,7 +99,7 @@ public class OlcbTurnoutTest {
         t.tc.rcvMessage = null;
         s.setState(Turnout.CLOSED);
         t.flush();
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
+        JUnitUtil.waitFor( () -> l.getPropertyChanged());
         Assert.assertEquals("called twice",2,l.getCallCount());
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
@@ -155,14 +153,14 @@ public class OlcbTurnoutTest {
 
         s.setState(Turnout.THROWN);
         t.flush();
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
+        JUnitUtil.waitFor( () -> l.getPropertyChanged());
         Assert.assertEquals("called twice",2,l.getCallCount());
         Assert.assertTrue(s.getCommandedState() == Turnout.THROWN);
 
         l.resetPropertyChanged();
         s.setState(Turnout.CLOSED);
         t.flush();
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
+        JUnitUtil.waitFor( () -> l.getPropertyChanged());
         Assert.assertEquals("called twice",2,l.getCallCount());
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
     }
@@ -195,7 +193,7 @@ public class OlcbTurnoutTest {
 
         // Resets the turnout to unknown state
         s.setState(Turnout.UNKNOWN);
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
+        JUnitUtil.waitFor( () -> l.getPropertyChanged());
         Assert.assertEquals("called twice",2,l.getCallCount());
         l.resetPropertyChanged();
         t.assertNoSentMessages();
@@ -205,7 +203,7 @@ public class OlcbTurnoutTest {
                 ":X19547C4CN0102030405060708;");
         // getting a state notify will change state
         t.sendMessage(":X19544123N0102030405060709;");
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
+        JUnitUtil.waitFor( () -> l.getPropertyChanged());
         Assert.assertEquals("called twice",2,l.getCallCount());
         l.resetPropertyChanged();
         Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
@@ -256,20 +254,12 @@ public class OlcbTurnoutTest {
 
         t.clearSentMessages();
 
-        r.addPropertyChangeListener("KnownState", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-                Assert.assertEquals(Turnout.THROWN, r.getKnownState());
-                u.setCommandedState(Turnout.THROWN);
-            }
+        r.addPropertyChangeListener("KnownState", propertyChangeEvent -> {
+            Assert.assertEquals(Turnout.THROWN, r.getKnownState());
+            u.setCommandedState(Turnout.THROWN);
         });
 
-        ThreadingUtil.runOnLayout(new ThreadingUtil.ThreadAction() {
-            @Override
-            public void run() {
-                r.setCommandedState(Turnout.THROWN);
-            }
-        });
+        ThreadingUtil.runOnLayout(() -> r.setCommandedState(Turnout.THROWN));
 
         Assert.assertEquals(Turnout.THROWN, r.getKnownState());
         Assert.assertEquals(Turnout.THROWN, u.getKnownState());

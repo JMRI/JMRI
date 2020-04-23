@@ -145,7 +145,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             }
         });
     
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
     @AfterClass

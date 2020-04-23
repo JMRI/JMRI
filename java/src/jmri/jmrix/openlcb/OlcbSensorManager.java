@@ -134,9 +134,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     public void finishLoad() {
         log.debug("Sensor manager : finish load");
         synchronized (pendingSensors) {
-            pendingSensors.forEach((s) -> {
-                s.finishLoad();
-            });
+            pendingSensors.forEach(OlcbSensor::finishLoad);
             pendingSensors.clear();
             isLoading = false;
         }

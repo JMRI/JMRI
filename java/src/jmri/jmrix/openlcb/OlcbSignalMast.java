@@ -134,9 +134,9 @@ public class OlcbSignalMast extends AbstractSignalMast {
             node = ((OlcbInterface)systemMemo.get(OlcbInterface.class)).getNodeId();
             connection = ((OlcbInterface)systemMemo.get(OlcbInterface.class)).getOutputConnection();
  
-            litMachine = new StateMachine<Boolean>(connection, node, Boolean.TRUE);
-            heldMachine = new StateMachine<Boolean>(connection, node, Boolean.FALSE);
-            aspectMachine = new StateMachine<String>(connection, node, getAspect());
+            litMachine = new StateMachine<>(connection, node, Boolean.TRUE);
+            heldMachine = new StateMachine<>(connection, node, Boolean.FALSE);
+            aspectMachine = new StateMachine<>(connection, node, getAspect());
         
             ((OlcbInterface)systemMemo.get(OlcbInterface.class)).registerMessageListener(new MessageDecoder(){
                 @Override
@@ -267,13 +267,13 @@ public class OlcbSignalMast extends AbstractSignalMast {
             this.state = start;
         }
         
-        Connection connection;
-        NodeID node;
+        final Connection connection;
+        final NodeID node;
         T state;
         boolean initizalized = false;
-        protected HashMap<T, String> stateToEventString = new HashMap<>();
-        protected HashMap<T, EventID> stateToEventID = new HashMap<>();
-        protected HashMap<EventID, T> eventToState = new HashMap<>(); // for efficiency, but requires no null entries
+        protected final HashMap<T, String> stateToEventString = new HashMap<>();
+        protected final HashMap<T, EventID> stateToEventID = new HashMap<>();
+        protected final HashMap<EventID, T> eventToState = new HashMap<>(); // for efficiency, but requires no null entries
         
         public void setState(@Nonnull T newState) {
             log.debug("sending PCER to {}", getEventStringForState(newState));

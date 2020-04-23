@@ -38,9 +38,9 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     AliasMap aliasMap;
     MessageBuilder messageBuilder;
     OlcbInterface olcbInterface;
-    JCheckBox nodeNameCheckBox = new JCheckBox();
-    JCheckBox eventCheckBox = new JCheckBox();
-    JCheckBox eventAllCheckBox = new JCheckBox();
+    final JCheckBox nodeNameCheckBox = new JCheckBox();
+    final JCheckBox eventCheckBox = new JCheckBox();
+    final JCheckBox eventAllCheckBox = new JCheckBox();
     final String nodeNameCheck = this.getClass().getName() + ".NodeName";
     final String eventCheck = this.getClass().getName() + ".Event";
     final String eventAllCheck = this.getClass().getName() + ".EventAll";
@@ -113,7 +113,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     }
 
     String formatFrame(boolean extended, int header, int len, int[] content) {
-        StringBuilder formatted = new StringBuilder("");
+        StringBuilder formatted = new StringBuilder();
         formatted.append(extended ? "[" : "(");
         formatted.append(Integer.toHexString(header));
         formatted.append((extended ? "]" : ")"));
@@ -140,8 +140,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         }
 
         aliasMap.processFrame(frame);
-        java.util.List<Message> list = messageBuilder.processFrame(frame);
-        return list;
+        return messageBuilder.processFrame(frame);
     }
 
     void format(String prefix, boolean extended, int header, int len, int[] content) {

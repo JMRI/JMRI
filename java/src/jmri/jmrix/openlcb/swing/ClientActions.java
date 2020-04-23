@@ -31,9 +31,9 @@ public class ClientActions {
     }
 
     public void openCdiWindow(NodeID destNode, String description) {
-        final java.util.ArrayList<JButton> readList = new java.util.ArrayList<JButton>();
-        final java.util.ArrayList<JButton> sensorButtonList = new java.util.ArrayList<JButton>();
-        final java.util.ArrayList<JButton> turnoutButtonList = new java.util.ArrayList<JButton>();
+        final java.util.ArrayList<JButton> readList = new java.util.ArrayList<>();
+        final java.util.ArrayList<JButton> sensorButtonList = new java.util.ArrayList<>();
+        final java.util.ArrayList<JButton> turnoutButtonList = new java.util.ArrayList<>();
 
         JmriJFrame f = new JmriJFrame();
         f.setTitle(Bundle.getMessage("CdiPanelConfigure", description));
@@ -63,7 +63,6 @@ public class ClientActions {
                 evt1 = null;
                 evt2 = null;
                 desc = null;
-                return;
             }
 
             @Override
@@ -88,9 +87,9 @@ public class ClientActions {
                                     " [" + mdesc.getText() + "]");
                         }
 
-                        JTextField mdesc = desc;
-                        JFormattedTextField mevt1 = evt1;
-                        JFormattedTextField mevt2 = evt2;
+                        final JTextField mdesc = desc;
+                        final JFormattedTextField mevt1 = evt1;
+                        final JFormattedTextField mevt2 = evt2;
                     });
                     button = new JButton(Bundle.getMessage("CdiPanelMakeTurnout"));
                     p.add(button);
@@ -107,9 +106,9 @@ public class ClientActions {
                                     + " [" + mdesc.getText() + "]");
                         }
 
-                        JTextField mdesc = desc;
-                        JFormattedTextField mevt1 = evt1;
-                        JFormattedTextField mevt2 = evt2;
+                        final JTextField mdesc = desc;
+                        final JFormattedTextField mevt1 = evt1;
+                        final JFormattedTextField mevt2 = evt2;
                     });
                     if (!haveButtons) {
                         haveButtons = true;
@@ -121,7 +120,6 @@ public class ClientActions {
                     evt2 = null;
                     desc = null;
                 }
-                return;
             }
 
             @Override
@@ -157,24 +155,21 @@ public class ClientActions {
 
     JButton buttonForList(final java.util.ArrayList<JButton> list, String label) {
         JButton b = new JButton(label);
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                int delay = 0; //milliseconds
-                for (final JButton b : list) {
+        b.addActionListener(e -> {
+            int delay = 0; //milliseconds
+            for (final JButton b1 : list) {
 
-                    ActionListener taskPerformer = new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent evt) {
-                            target.doClick();
-                        }
-                        JButton target = b;
-                    };
-                    Timer t = new Timer(delay, taskPerformer);
-                    t.setRepeats(false);
-                    t.start();
-                    delay = delay + 150;
-                }
+                ActionListener taskPerformer = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        target.doClick();
+                    }
+                    final JButton target = b1;
+                };
+                Timer t = new Timer(delay, taskPerformer);
+                t.setRepeats(false);
+                t.start();
+                delay = delay + 150;
             }
         });
         return b;

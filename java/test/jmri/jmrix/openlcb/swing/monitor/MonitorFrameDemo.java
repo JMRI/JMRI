@@ -21,7 +21,7 @@ public class MonitorFrameDemo {
     private String testRaw;
     private CanSystemConnectionMemo memo = null;
 
-    class OurScaffold extends TrafficControllerScaffold {
+    static class OurScaffold extends TrafficControllerScaffold {
 
         /*
          * Forward CanMessage to object under test

@@ -42,8 +42,8 @@ public class OlcbClockControlTest {
         void onChange(String property, Object newValue);
     }
 
-    private class MockRateChangeListener implements PropertyChangeListener {
-        public MockInterface m;
+    private static class MockRateChangeListener implements PropertyChangeListener {
+        public final MockInterface m;
 
         public MockRateChangeListener() {
             m = mock(MockInterface.class);

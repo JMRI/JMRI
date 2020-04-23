@@ -108,8 +108,7 @@ public class OlcbSignalMastXml
         }
         
         List<Element> list = element.getChildren("aspect");
-        for (int i = 0; i < list.size(); i++) {
-            Element e = list.get(i);
+        for (Element e : list) {
             String aspect = e.getAttribute("defines").getValue();
             String event = e.getChild("event").getValue();
             m.setOutputForAppearance(aspect, event);

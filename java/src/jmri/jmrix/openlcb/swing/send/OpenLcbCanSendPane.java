@@ -55,26 +55,26 @@ import org.slf4j.LoggerFactory;
 public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
     // member declarations
-    JLabel jLabel1 = new JLabel();
-    JButton sendButton = new JButton();
-    JTextField packetTextField = new JTextField(12);
+    final JLabel jLabel1 = new JLabel();
+    final JButton sendButton = new JButton();
+    final JTextField packetTextField = new JTextField(12);
 
     // internal members to hold sequence widgets
     static final int MAXSEQUENCE = 4;
-    JTextField mPacketField[] = new JTextField[MAXSEQUENCE];
-    JCheckBox mUseField[] = new JCheckBox[MAXSEQUENCE];
-    JTextField mDelayField[] = new JTextField[MAXSEQUENCE];
-    JToggleButton mRunButton = new JToggleButton("Go");
+    final JTextField[] mPacketField = new JTextField[MAXSEQUENCE];
+    final JCheckBox[] mUseField = new JCheckBox[MAXSEQUENCE];
+    final JTextField[] mDelayField = new JTextField[MAXSEQUENCE];
+    final JToggleButton mRunButton = new JToggleButton("Go");
 
-    JTextField srcAliasField = new JTextField(4);
+    final JTextField srcAliasField = new JTextField(4);
     NodeSelector nodeSelector;
-    JTextField sendEventField = new JTextField("02 03 04 05 06 07 00 01 ");     // NOI18N
-    JTextField datagramContentsField = new JTextField("20 61 00 00 00 00 08");  // NOI18N
-    JTextField configNumberField = new JTextField("40");                        // NOI18N
-    JTextField configAddressField = new JTextField("000000");                   // NOI18N
-    JTextField readDataField = new JTextField(80);
-    JTextField writeDataField = new JTextField(80);
-    JComboBox<String> addrSpace = new JComboBox<String>(new String[]{"CDI", "All", "Config", "None"});
+    final JTextField sendEventField = new JTextField("02 03 04 05 06 07 00 01 ");     // NOI18N
+    final JTextField datagramContentsField = new JTextField("20 61 00 00 00 00 08");  // NOI18N
+    final JTextField configNumberField = new JTextField("40");                        // NOI18N
+    final JTextField configAddressField = new JTextField("000000");                   // NOI18N
+    final JTextField readDataField = new JTextField(80);
+    final JTextField writeDataField = new JTextField(80);
+    final JComboBox<String> addrSpace = new JComboBox<>(new String[]{"CDI", "All", "Config", "None"});
 
     Connection connection;
     AliasMap aliasMap;
@@ -135,12 +135,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
             pane1.add(sendButton);
             pane1.add(Box.createVerticalGlue());
 
-            sendButton.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    sendButtonActionPerformed(e);
-                }
-            });
+            sendButton.addActionListener(this::sendButtonActionPerformed);
 
             add(pane1);
         }
@@ -167,12 +162,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.add(mRunButton); // starts a new row in layout
         add(pane2);
 
-        mRunButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                runButtonActionPerformed(e);
-            }
-        });
+        mRunButton.addActionListener(this::runButtonActionPerformed);
 
         // special packet forms
         add(new JSeparator());
@@ -189,12 +179,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         add(pane2);
         JButton b;
         b = new JButton("Send CIM");
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                sendCimPerformed(e);
-            }
-        });
+        b.addActionListener(this::sendCimPerformed);
 
         pane2.add(b);
 
@@ -206,20 +191,10 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.setLayout(new FlowLayout());
         add(pane2);
         b = new JButton("Send Verify Nodes Global");
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                sendVerifyNodeGlobal(e);
-            }
-        });
+        b.addActionListener(this::sendVerifyNodeGlobal);
         pane2.add(b);
         b = new JButton("Send Verify Node Global with NodeID");
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                sendVerifyNodeGlobalID(e);
-            }
-        });
+        b.addActionListener(this::sendVerifyNodeGlobalID);
         pane2.add(b);
 
         add(new JSeparator());
@@ -228,28 +203,13 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.setLayout(new FlowLayout());
         add(pane2);
         b = new JButton("Send Request Consumers");
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                sendReqConsumers(e);
-            }
-        });
+        b.addActionListener(this::sendReqConsumers);
         pane2.add(b);
         b = new JButton("Send Request Producers");
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                sendReqProducers(e);
-            }
-        });
+        b.addActionListener(this::sendReqProducers);
         pane2.add(b);
         b = new JButton("Send Event Produced");
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                sendEventPerformed(e);
-            }
-        });
+        b.addActionListener(this::sendEventPerformed);
         pane2.add(b);
         pane2.add(new JLabel("Event ID (8 bytes):"));
         pane2.add(sendEventField);
@@ -260,34 +220,19 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.setLayout(new FlowLayout());
         add(pane2);
         b = new JButton("Send Request Events");
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                sendRequestEvents(e);
-            }
-        });
+        b.addActionListener(this::sendRequestEvents);
         pane2.add(b);
 
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
         add(pane2);
         b = new JButton("Send Datagram");
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                sendDatagramPerformed(e);
-            }
-        });
+        b.addActionListener(this::sendDatagramPerformed);
         pane2.add(b);
         pane2.add(new JLabel("Contents: "));
         pane2.add(datagramContentsField);
         b = new JButton("Send Datagram Reply");
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                sendDatagramReply(e);
-            }
-        });
+        b.addActionListener(this::sendDatagramReply);
         pane2.add(b);
 
         // send OpenLCB Configuration message
@@ -307,12 +252,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.add(new JLabel("Byte Count: "));
         pane2.add(configNumberField);
         b = new JButton("Read");
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                readPerformed(e);
-            }
-        });
+        b.addActionListener(this::readPerformed);
         pane2.add(b);
         pane2.add(new JLabel("Data: "));
         pane2.add(readDataField);
@@ -321,12 +261,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.setLayout(new FlowLayout());
         add(pane2);
         b = new JButton("Write");
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                writePerformed(e);
-            }
-        });
+        b.addActionListener(this::writePerformed);
         pane2.add(b);
         pane2.add(new JLabel("Data: "));
         writeDataField.setText("00 00");   // NOI18N
@@ -334,12 +269,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
         b = new JButton("Open CDI Config Tool");
         add(b);
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                openCdiPane();
-            }
-        });
+        b.addActionListener(e -> openCdiPane());
 
     }
 
@@ -493,12 +423,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
-            timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    sendNextItem();
-                }
-            });
+            timer = new javax.swing.Timer(delay, e -> sendNextItem());
         }
         timer.stop();
         timer.setInitialDelay(delay);
@@ -600,16 +525,16 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
                 int i = s.indexOf(']');       // NOI18N
                 String h = s.substring(1, i);
                 m.setHeader(Integer.parseInt(h, 16));
-                s = s.substring(i + 1, s.length());
+                s = s.substring(i + 1);
             } else if (s.charAt(0) == '(') {  // NOI18N
                 // standard header
                 int i = s.indexOf(')');       // NOI18N
                 String h = s.substring(1, i);
                 m.setHeader(Integer.parseInt(h, 16));
-                s = s.substring(i + 1, s.length());
+                s = s.substring(i + 1);
             }
             // Try to get hex bytes
-            byte b[] = StringUtil.bytesFromHexString(s);
+            byte[] b = StringUtil.bytesFromHexString(s);
             m.setNumDataElements(b.length);
             // Use &0xff to ensure signed bytes are stored as unsigned ints
             for (int i = 0; i < b.length; i++) {

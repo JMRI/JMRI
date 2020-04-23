@@ -131,7 +131,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         setOperationAborted(false);
         abortButton.setEnabled(false);
         abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
-        Integer ispace = Integer.valueOf(spaceField.getText());
+        int ispace = Integer.parseInt(spaceField.getText());
         long addr = 0;
         loaderClient.doLoad(nid, destNodeID(), ispace, addr, fdata, new LoaderStatusReporter() {
             @Override
@@ -161,15 +161,12 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     }
 
     void updateGUI(final int value) {
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                if (log.isDebugEnabled()) {
-                    log.debug("updateGUI with " + value);
-                }
-                // update progress bar
-                bar.setValue(value);
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            if (log.isDebugEnabled()) {
+                log.debug("updateGUI with " + value);
             }
+            // update progress bar
+            bar.setValue(value);
         });
     }
 

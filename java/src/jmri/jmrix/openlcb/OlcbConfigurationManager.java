@@ -95,10 +95,10 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         InstanceManager.store(this, OlcbConfigurationManager.class);
     }
 
-    jmri.jmrix.swing.ComponentFactory cf = null;
+    jmri.jmrix.swing.ComponentFactory cf;
 
     private void initializeFastClock() {
-        boolean isMaster = true;
+        boolean isMaster;
         String enableOption = adapterMemo.getProtocolOption(OPT_PROTOCOL_FASTCLOCK, OPT_FASTCLOCK_ENABLE);
         if (OPT_FASTCLOCK_ENABLE_GENERATOR.equals(enableOption)) {
             isMaster = true;
@@ -245,12 +245,12 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (type.equals(jmri.LightManager.class)) {
             return true;
         }
-        if (type.equals(AliasMap.class)) {
-            return true;
-        }
-        if (type.equals(MessageBuilder.class)) {
-            return true;
-        }
+//        if (type.equals(AliasMap.class)) {
+//            return true;
+//        }
+//        if (type.equals(MessageBuilder.class)) {
+//            return true;
+//        }
         if (type.equals(MimicNodeStore.class)) {
             return true;
         }
@@ -296,12 +296,12 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (T.equals(jmri.LightManager.class)) {
             return (T) getLightManager();
         }
-        if (T.equals(AliasMap.class)) {
-            return (T) aliasMap;
-        }
-        if (T.equals(MessageBuilder.class)) {
-            return (T) messageBuilder;
-        }
+//        if (T.equals(AliasMap.class)) {
+//            return (T) aliasMap;
+//        }
+//        if (T.equals(MessageBuilder.class)) {
+//            return (T) messageBuilder;
+//        }
         if (T.equals(MimicNodeStore.class)) {
             return (T) getInterface().getNodeStore();
         }
@@ -423,16 +423,14 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
          * @param contents represents the byte stream that will be sent.
          */
         private void  addStringPart(String value, List<Byte> contents) {
-            if (value == null || value.isEmpty()) {
-                contents.add((byte)0);
-            } else {
+            if (value != null && !value.isEmpty()) {
                 byte[] bb = value.getBytes(StandardCharsets.UTF_8);
                 for (byte b : bb) {
                     contents.add(b);
                 }
-                // terminating null byte.
-                contents.add((byte)0);
             }
+            // terminating null byte.
+            contents.add(null);
         }
 
         SimpleNodeIdentInfoHandler() {

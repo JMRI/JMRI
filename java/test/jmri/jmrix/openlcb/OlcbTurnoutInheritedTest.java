@@ -67,14 +67,14 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
 
         t.setState(Turnout.THROWN);
         tif.flush();
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
+        JUnitUtil.waitFor( () -> l.getPropertyChanged());
 
         Assert.assertEquals(Turnout.THROWN, t.getCommandedState());
         Assert.assertEquals(Turnout.THROWN, t.getKnownState());
 
         t.setState(Turnout.CLOSED);
         tif.flush();
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
+        JUnitUtil.waitFor( () -> l.getPropertyChanged());
 
         Assert.assertEquals(Turnout.CLOSED, t.getCommandedState());
         Assert.assertEquals(Turnout.CLOSED, t.getKnownState());

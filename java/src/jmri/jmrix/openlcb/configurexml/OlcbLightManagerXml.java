@@ -1,7 +1,6 @@
 package jmri.jmrix.openlcb.configurexml;
 
 import jmri.InstanceManager;
-import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrix.openlcb.OlcbConfigurationManager;
 
 import org.jdom2.Element;
@@ -33,8 +32,8 @@ public class OlcbLightManagerXml extends jmri.managers.configurexml.AbstractLigh
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
-        boolean result = true;
+    public boolean load(Element shared, Element perNode) {
+        boolean result;
         // We tell the Light managers that we will be loading Lights from XML and they should
         // expect additional property set sequences. This is somewhat tricky in the face of
         // possibly multiple OpenLCB buses registered.
