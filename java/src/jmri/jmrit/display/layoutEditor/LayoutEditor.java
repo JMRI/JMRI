@@ -80,123 +80,121 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * that the xml loading code can resolve them.
      */
     public enum HitPointType {
-        NONE(0),
-        POS_POINT(1),
-        TURNOUT_A(2), // throat for RH, LH, and WYE turnouts
-        TURNOUT_B(3), // continuing route for RH and LH turnouts
-        TURNOUT_C(4), // diverging route for RH and LH turnouts
-        TURNOUT_D(5), // 4th route for crossovers
-        LEVEL_XING_A(6),
-        LEVEL_XING_B(7),
-        LEVEL_XING_C(8),
-        LEVEL_XING_D(9),
-        TRACK(10),
-        TURNOUT_CENTER(11), // non-connection points should be last
-        LEVEL_XING_CENTER(12),
-        TURNTABLE_CENTER(13),
-        LAYOUT_POS_LABEL(14),
-        LAYOUT_POS_JCOMP(15),
-        MULTI_SENSOR(16),
-        MARKER(17),
-        TRACK_CIRCLE_CENTRE(18),
-        UNUSED_19(19),
+        NONE,
+        POS_POINT,
+        TURNOUT_A, // throat for RH, LH, and WYE turnouts
+        TURNOUT_B, // continuing route for RH and LH turnouts
+        TURNOUT_C, // diverging route for RH and LH turnouts
+        TURNOUT_D, // 4th route for crossovers
+        LEVEL_XING_A,
+        LEVEL_XING_B,
+        LEVEL_XING_C,
+        LEVEL_XING_D,
+        TRACK,
+        TURNOUT_CENTER, // non-connection points should be last
+        LEVEL_XING_CENTER,
+        TURNTABLE_CENTER,
+        LAYOUT_POS_LABEL,
+        LAYOUT_POS_JCOMP,
+        MULTI_SENSOR,
+        MARKER,
+        TRACK_CIRCLE_CENTRE,
+        UNUSED_19,
         @Deprecated //(use SLIP_LEFT & SLIP_RIGHT instead)
-        SLIP_CENTER(20), //replace with UNUSED_20 when @Deprecated is removed
-        SLIP_A(21),
-        SLIP_B(22),
-        SLIP_C(23),
-        SLIP_D(24),
-        SLIP_LEFT(25),
-        SLIP_RIGHT(26),
-        UNUSED_27(27),
-        UNUSED_28(28),
-        UNUSED_29(29),
-        BEZIER_CONTROL_POINT_0(30), // offset for TrackSegment Bezier control points (minimum)
-        BEZIER_CONTROL_POINT_1(31), //  \
-        BEZIER_CONTROL_POINT_2(32), //   \
-        BEZIER_CONTROL_POINT_3(33), //    \
-        BEZIER_CONTROL_POINT_4(34), //     } -- DON'T USE THESE; PLACEHOLDERS ONLY
-        BEZIER_CONTROL_POINT_5(35), //    /
-        BEZIER_CONTROL_POINT_6(36), //   /
-        BEZIER_CONTROL_POINT_7(37), //  /
-        BEZIER_CONTROL_POINT_8(38), // offset for TrackSegment Bezier control points (maximum)
-        SHAPE_CENTER(39),
-        SHAPE_POINT_0(40), // offset for Shape points (minimum)
-        SHAPE_POINT_1(41), //  \
-        SHAPE_POINT_2(42), //   \
-        SHAPE_POINT_3(43), //    \
-        SHAPE_POINT_4(44), //     \ __ DON'T USE THESE; PLACEHOLDERS ONLY
-        SHAPE_POINT_5(45), //     /
-        SHAPE_POINT_6(46), //    /
-        SHAPE_POINT_7(47), //   /
-        SHAPE_POINT_8(48), //  /
-        SHAPE_POINT_9(49), // offset for Shape points (maximum)
-        TURNTABLE_RAY_0(50), // offset for turntable connection points (minimum)
-        TURNTABLE_RAY_1(51), // \
-        TURNTABLE_RAY_2(52), //  \
-        TURNTABLE_RAY_3(53), //   \
-        TURNTABLE_RAY_4(54), //    \
-        TURNTABLE_RAY_5(55), //     \
-        TURNTABLE_RAY_6(56), //      \
-        TURNTABLE_RAY_7(57), //       |
-        TURNTABLE_RAY_8(58), //       |
-        TURNTABLE_RAY_9(59), //       |
-        TURNTABLE_RAY_10(60), //      |
-        TURNTABLE_RAY_11(61), //      |
-        TURNTABLE_RAY_12(62), //      |
-        TURNTABLE_RAY_13(63), //      |
-        TURNTABLE_RAY_14(64), //      |
-        TURNTABLE_RAY_15(65), //      |
-        TURNTABLE_RAY_16(66), //      |
-        TURNTABLE_RAY_17(67), //      |
-        TURNTABLE_RAY_18(68), //      |
-        TURNTABLE_RAY_19(69), //      |
-        TURNTABLE_RAY_20(70), //      |
-        TURNTABLE_RAY_21(71), //      |
-        TURNTABLE_RAY_22(72), //      |
-        TURNTABLE_RAY_23(73), //      |
-        TURNTABLE_RAY_24(74), //      |
-        TURNTABLE_RAY_25(75), //      |
-        TURNTABLE_RAY_26(76), //      |
-        TURNTABLE_RAY_27(77), //      |
-        TURNTABLE_RAY_28(78), //      |
-        TURNTABLE_RAY_29(79), //      |
-        TURNTABLE_RAY_30(80), //      |
-        TURNTABLE_RAY_31(81), //      |
-        TURNTABLE_RAY_32(82), //      |
-        TURNTABLE_RAY_33(83), //      |
-        TURNTABLE_RAY_34(84), //      |
-        TURNTABLE_RAY_35(85), //      |
-        TURNTABLE_RAY_36(86), //      |
-        TURNTABLE_RAY_37(87), //      |
-        TURNTABLE_RAY_38(88), //      |
-        TURNTABLE_RAY_39(89), //      |
-        TURNTABLE_RAY_40(90), //      |
-        TURNTABLE_RAY_41(91), //      |
-        TURNTABLE_RAY_42(92), //      |
-        TURNTABLE_RAY_43(93), //      |
-        TURNTABLE_RAY_44(94), //      |
-        TURNTABLE_RAY_45(95), //      | -- DON'T USE THESE; PLACEHOLDERS ONLY
-        TURNTABLE_RAY_46(96), //      |
-        TURNTABLE_RAY_47(97), //      |
-        TURNTABLE_RAY_48(98), //      |
-        TURNTABLE_RAY_49(99), //      |
-        TURNTABLE_RAY_50(100), //      |
-        TURNTABLE_RAY_51(101), //      |
-        TURNTABLE_RAY_52(102), //      |
-        TURNTABLE_RAY_53(103), //      |
-        TURNTABLE_RAY_54(104), //      |
-        TURNTABLE_RAY_55(105), //      |
-        TURNTABLE_RAY_56(106), //      |
-        TURNTABLE_RAY_57(107), //      |
-        TURNTABLE_RAY_58(108), //     /
-        TURNTABLE_RAY_59(109), //    /
-        TURNTABLE_RAY_60(110), //   /
-        TURNTABLE_RAY_61(111), //  /
-        TURNTABLE_RAY_62(112), // /
-        TURNTABLE_RAY_63(113); // offset for turntable connection points (maximum)
-
-        private final transient Integer xmlValue;
+        SLIP_CENTER, //replace with UNUSED_20 when @Deprecated is removed
+        SLIP_A,
+        SLIP_B,
+        SLIP_C,
+        SLIP_D,
+        SLIP_LEFT,
+        SLIP_RIGHT,
+        UNUSED_27,
+        UNUSED_28,
+        UNUSED_29,
+        BEZIER_CONTROL_POINT_0, // offset for TrackSegment Bezier control points (minimum)
+        BEZIER_CONTROL_POINT_1, //  \
+        BEZIER_CONTROL_POINT_2, //   \
+        BEZIER_CONTROL_POINT_3, //    \
+        BEZIER_CONTROL_POINT_4, //     } -- DON'T USE THESE; PLACEHOLDERS ONLY
+        BEZIER_CONTROL_POINT_5, //    /
+        BEZIER_CONTROL_POINT_6, //   /
+        BEZIER_CONTROL_POINT_7, //  /
+        BEZIER_CONTROL_POINT_8, // offset for TrackSegment Bezier control points (maximum)
+        SHAPE_CENTER,
+        SHAPE_POINT_0, // offset for Shape points (minimum)
+        SHAPE_POINT_1, //  \
+        SHAPE_POINT_2, //   \
+        SHAPE_POINT_3, //    \
+        SHAPE_POINT_4, //     \ __ DON'T USE THESE; PLACEHOLDERS ONLY
+        SHAPE_POINT_5, //     /
+        SHAPE_POINT_6, //    /
+        SHAPE_POINT_7, //   /
+        SHAPE_POINT_8, //  /
+        SHAPE_POINT_9, // offset for Shape points (maximum)
+        TURNTABLE_RAY_0, // offset for turntable connection points (minimum)
+        TURNTABLE_RAY_1, // \
+        TURNTABLE_RAY_2, //  \
+        TURNTABLE_RAY_3, //   \
+        TURNTABLE_RAY_4, //    \
+        TURNTABLE_RAY_5, //     \
+        TURNTABLE_RAY_6, //      \
+        TURNTABLE_RAY_7, //       |
+        TURNTABLE_RAY_8, //       |
+        TURNTABLE_RAY_9, //       |
+        TURNTABLE_RAY_10, //      |
+        TURNTABLE_RAY_11, //      |
+        TURNTABLE_RAY_12, //      |
+        TURNTABLE_RAY_13, //      |
+        TURNTABLE_RAY_14, //      |
+        TURNTABLE_RAY_15, //      |
+        TURNTABLE_RAY_16, //      |
+        TURNTABLE_RAY_17, //      |
+        TURNTABLE_RAY_18, //      |
+        TURNTABLE_RAY_19, //      |
+        TURNTABLE_RAY_20, //      |
+        TURNTABLE_RAY_21, //      |
+        TURNTABLE_RAY_22, //      |
+        TURNTABLE_RAY_23, //      |
+        TURNTABLE_RAY_24, //      |
+        TURNTABLE_RAY_25, //      |
+        TURNTABLE_RAY_26, //      |
+        TURNTABLE_RAY_27, //      |
+        TURNTABLE_RAY_28, //      |
+        TURNTABLE_RAY_29, //      |
+        TURNTABLE_RAY_30, //      |
+        TURNTABLE_RAY_31, //      |
+        TURNTABLE_RAY_32, //      |
+        TURNTABLE_RAY_33, //      |
+        TURNTABLE_RAY_34, //      |
+        TURNTABLE_RAY_35, //      |
+        TURNTABLE_RAY_36, //      |
+        TURNTABLE_RAY_37, //      |
+        TURNTABLE_RAY_38, //      |
+        TURNTABLE_RAY_39, //      |
+        TURNTABLE_RAY_40, //      |
+        TURNTABLE_RAY_41, //      |
+        TURNTABLE_RAY_42, //      |
+        TURNTABLE_RAY_43, //      |
+        TURNTABLE_RAY_44, //      |
+        TURNTABLE_RAY_45, //      | -- DON'T USE THESE; PLACEHOLDERS ONLY
+        TURNTABLE_RAY_46, //      |
+        TURNTABLE_RAY_47, //      |
+        TURNTABLE_RAY_48, //      |
+        TURNTABLE_RAY_49, //      |
+        TURNTABLE_RAY_50, //      |
+        TURNTABLE_RAY_51, //      |
+        TURNTABLE_RAY_52, //      |
+        TURNTABLE_RAY_53, //      |
+        TURNTABLE_RAY_54, //      |
+        TURNTABLE_RAY_55, //      |
+        TURNTABLE_RAY_56, //      |
+        TURNTABLE_RAY_57, //      |
+        TURNTABLE_RAY_58, //     /
+        TURNTABLE_RAY_59, //    /
+        TURNTABLE_RAY_60, //   /
+        TURNTABLE_RAY_61, //  /
+        TURNTABLE_RAY_62, // /
+        TURNTABLE_RAY_63; // offset for turntable connection points (maximum)
 
         /**
          * constructor for this class
@@ -204,44 +202,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
          * @param xmlValue the Integer value used to load from xml file (for
          * backwards compatibility)
          */
-        HitPointType(Integer xmlValue) {
-            this.xmlValue = xmlValue;
-        }
-
-        /**
-         * @return this enum's Integer xml value
-         */
-        public Integer getXmlValue() {
-            return xmlValue;
-        }
-
-        /**
-         * get the appropriate enum for the provided string
-         *
-         * @param string the String
-         * @return the appropriate HitPointType enum
-         */
-        public static HitPointType getValue(String string) {
-            HitPointType result = null;
-            try {
-                //first see if it matches enum name (exactally)
-                result = valueOf(string);
-            } catch (IllegalArgumentException e) {    //(nope)
-                try {
-                    //try to parse it as an integer
-                    int i = Integer.parseInt(string);
-                    //now see if it matches the xmlValue
-                    for (HitPointType instance : values()) {
-                        if (instance.xmlValue.equals(i)) {  //(yes!)
-                            result = instance;
-                            break;
-                        }
-                    }
-                } catch (NumberFormatException e1) {  //(nope)
-                    //failure
-                }
-            }
-            return result;
+        HitPointType() {
         }
 
         /**
@@ -262,7 +223,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             if ((this != BEZIER_CONTROL_POINT_0) && (this != SHAPE_POINT_0) && (this != TURNTABLE_RAY_0)) {
                 log.error("{} is not a valid enum for an offset. Should be BEZIER_CONTROL_POINT_0, SHAPE_POINT_0 or TURNTABLE_RAY_0", name());
             }
-            return hitPointType.getXmlValue() - getXmlValue();
+            //return hitPointType.getXmlValue() - getXmlValue();
+            return hitPointType.ordinal() - ordinal();
         }
 
         /**
@@ -3682,7 +3644,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                     } else {
                         LayoutShape ls = (LayoutShape) selectedObject;
-                        ls.addPoint(currentPoint, selectedHitPointType.getXmlValue() - HitPointType.SHAPE_POINT_0.getXmlValue());
+                        ls.addPoint(currentPoint, selectedHitPointType.ordinal() - HitPointType.SHAPE_POINT_0.ordinal());
                     }
                 } else if (leToolBarPanel.signalMastButton.isSelected()) {
                     addSignalMast();
@@ -3715,7 +3677,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     && !event.isShiftDown() && !event.isControlDown()) {
                 //controlling turntable, in edit mode
                 LayoutTurntable t = (LayoutTurntable) selectedObject;
-                t.setPosition(selectedHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+                t.setPosition(selectedHitPointType.ordinal() - HitPointType.TURNTABLE_RAY_0.ordinal());
             } else if ((selectedObject != null) && ((selectedHitPointType == HitPointType.TURNOUT_CENTER)
                     || (selectedHitPointType == HitPointType.SLIP_LEFT)
                     || (selectedHitPointType == HitPointType.SLIP_RIGHT))
@@ -3763,7 +3725,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling turntable out of edit mode
             LayoutTurntable t = (LayoutTurntable) selectedObject;
-            t.setPosition(selectedHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+            t.setPosition(selectedHitPointType.ordinal() - HitPointType.TURNTABLE_RAY_0.ordinal());
         } else if ((event.isPopupTrigger() || delayedPopupTrigger) && (!isDragging)) {
             // requesting marker popup out of edit mode
             LocoIcon lo = checkMarkerPopUps(dLoc);
@@ -3855,7 +3817,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             } else if (foundHitPointType.isTurntableRayHitType()) {
                 LayoutTurntable t = (LayoutTurntable) foundTrack;
                 if (t.isTurnoutControlled()) {
-                    ((LayoutTurntable) foundTrack).showRayPopUp(event, foundHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+                    ((LayoutTurntable) foundTrack).showRayPopUp(event, foundHitPointType.ordinal() - HitPointType.TURNTABLE_RAY_0.ordinal());
                 }
             } else if (foundHitPointType.isPopupHitType()) {
                 foundTrack.showPopup(event);
@@ -4188,7 +4150,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 default: {
                     if (foundHitPointType.isTurntableRayHitType()) {
                         LayoutTurntable tt = (LayoutTurntable) foundTrack;
-                        int ray = foundHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue();
+                        int ray = foundHitPointType.ordinal() - HitPointType.TURNTABLE_RAY_0.ordinal();
 
                         if (tt.getRayConnectIndexed(ray) == null) {
                             tt.setRayConnect(t, ray);
@@ -5004,17 +4966,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
                         default: {
                             if (foundHitPointType.isBezierHitType()) {
-                                int index = selectedHitPointType.getXmlValue() - HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue();
+                                int index = selectedHitPointType.ordinal() - HitPointType.BEZIER_CONTROL_POINT_0.ordinal();
                                 ((TrackSegment) selectedObject).setBezierControlPoint(currentPoint, index);
                             } else if ((selectedHitPointType == HitPointType.SHAPE_CENTER)) {
                                 ((LayoutShape) selectedObject).setCoordsCenter(currentPoint);
                             } else if (LayoutShape.isShapePointOffsetHitPointType(selectedHitPointType)) {
-                                int index = selectedHitPointType.getXmlValue() - HitPointType.SHAPE_POINT_0.getXmlValue();
+                                int index = selectedHitPointType.ordinal() - HitPointType.SHAPE_POINT_0.ordinal();
                                 ((LayoutShape) selectedObject).setPoint(index, currentPoint);
                             } else if (selectedHitPointType.isTurntableRayHitType()) {
                                 LayoutTurntable turn = (LayoutTurntable) selectedObject;
                                 turn.setRayCoordsIndexed(currentPoint.getX(), currentPoint.getY(),
-                                        selectedHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+                                        selectedHitPointType.ordinal() - HitPointType.TURNTABLE_RAY_0.ordinal());
                             }
                             break;
                         }
@@ -5541,7 +5503,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             default: {
                 if (fromPointType.isTurntableRayHitType()) {
                     ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
-                            fromPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+                            fromPointType.ordinal() - HitPointType.TURNTABLE_RAY_0.ordinal());
                 }
                 break;
             }
@@ -6449,7 +6411,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             default: {
                 if (type.isTurntableRayHitType()) {
-                    ((LayoutTurntable) o).setRayConnect(null, type.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+                    ((LayoutTurntable) o).setRayConnect(null, type.ordinal() - HitPointType.TURNTABLE_RAY_0.ordinal());
                 }
                 break;
             }

@@ -23,6 +23,9 @@ import org.slf4j.LoggerFactory;
  */
 public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
+    EnumIO<LayoutTurnout.LinkType> linkEnumMap = new EnumIO<>(LayoutTurnout.LinkType.class);
+    EnumIO<LayoutTurnout.TurnoutType> tTypeEnumMap = new EnumIO<>(LayoutTurnout.TurnoutType.class);
+
     public LayoutTurnoutXml() {
     }
 
@@ -41,7 +44,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
         // include attributes
         element.setAttribute("ident", p.getName());
-        element.setAttribute("type", p.getTurnoutType().name());
+        element.setAttribute("type", tTypeEnumMap.outputFromEnum(p.getTurnoutType()));
 
         element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
         element.setAttribute("disabled", "" + (p.isDisabled() ? "yes" : "no"));
@@ -79,7 +82,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
         if (!p.getLinkedTurnoutName().isEmpty()) {
             element.setAttribute("linkedturnoutname", p.getLinkedTurnoutName());
-            element.setAttribute("linktype", p.getLinkType().name());
+            element.setAttribute("linktype", linkEnumMap.outputFromEnum(p.getLinkType()));
         }
 
         if (!p.getBlockName().isEmpty()) {
@@ -197,13 +200,9 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
             log.error("failed to convert layoutturnout x & y attributes");
         }
 
-        LayoutTurnout.TurnoutType tType = null;
-        Attribute a = element.getAttribute("type");
-        if (a != null) {
-            tType = LayoutTurnout.TurnoutType.getValue(a.getValue());
-        }
+        LayoutTurnout.TurnoutType tType = tTypeEnumMap.inputFromAttribute(element.getAttribute("type"));
         if (tType == null) {
-            log.error("failed to convert layoutturnout type attribute {}", a);
+            log.error("failed to get layoutturnout type attribute ");
         }
 
         int version = 1;
@@ -222,7 +221,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
                 new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
 
         // get remaining attributes
-        a = element.getAttribute("turnoutname");
+        Attribute a = element.getAttribute("turnoutname");
         if (a != null) {
             l.setTurnout(a.getValue());
         }
@@ -312,11 +311,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         a = element.getAttribute("linkedturnoutname");
         if (a != null) {
             l.linkedTurnoutName = a.getValue();
-
-            a = element.getAttribute("linktype");
-            if (a != null) {
-                l.linkType = LayoutTurnout.LinkType.getValue(a.getValue());
-            }
+            l.linkType = linkEnumMap.inputFromAttribute(element.getAttribute("linktype"));
             if (l.linkType == null) {
                 log.error("failed to load linktype attribute");
             }

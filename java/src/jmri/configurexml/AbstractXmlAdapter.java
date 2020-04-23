@@ -1,6 +1,8 @@
 package jmri.configurexml;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import jmri.jmrit.display.layoutEditor.LayoutSlip;
 
 import org.jdom2.Attribute;
 import org.jdom2.Element;
@@ -15,7 +17,9 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
 
     private ErrorHandler errorHandler = XmlAdapter.getDefaultExceptionHandler();
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void handleException(
             String description,
@@ -28,19 +32,25 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean load(Element e) throws JmriConfigureXmlException {
         throw new UnsupportedOperationException("One of the other load methods must be implemented.");
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean load(@Nonnull Element shared, Element perNode) throws JmriConfigureXmlException { // may not need exception
         return this.load(shared);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void load(@Nonnull Element shared, Element perNode, Object o) throws JmriConfigureXmlException { // may not need exception
         this.load(shared, o);
@@ -63,13 +73,17 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int loadOrder() {
         return 50;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Element store(@Nonnull Object o, boolean shared) {
         if (shared) {
@@ -78,13 +92,17 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         return null;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setExceptionHandler(ErrorHandler errorHandler) {
         this.errorHandler = errorHandler;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ErrorHandler getExceptionHandler() {
         return this.errorHandler;
@@ -93,34 +111,46 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
     /**
      * Support for Enum I/O via XML
      */
-    public static class EnumIO <T extends Enum<T>> {  // public to be usable in other packages
-    
+    public static class EnumIO<T extends Enum<T>> {  // public to be usable in other packages
+
         // This implementation just uses ordinal for now,
-        // so the order of definitions in the enum has to 
+        // so the order of definitions in the enum has to
         // match up with the (former) constant values.
         // Later, we can add an explicit mapping here (rather
         // than having to define it in the enum itself)
-
         public EnumIO(Class<T> clazz) {
             this.clazz = clazz;
         }
         Class<T> clazz;
-        
-        @Nonnull
-        public String outputFromEnum(@Nonnull T e) {
-            int ordinal = e.ordinal();
-            return ""+ordinal;
-        }
-        
-        @Nonnull
-        public T inputFromString(@Nonnull String s) {
-            int content = Integer.parseInt(s);
-            return clazz.getEnumConstants()[content];
-        }
 
         @Nonnull
-        public T inputFromAttribute(@Nonnull Attribute a) {
-            return inputFromString(a.getValue());
+        public String outputFromEnum(@Nonnull T e) {
+            return e.name();
+        }
+
+        @CheckForNull
+        public T inputFromString(@CheckForNull String string) {
+            T result = null;
+            if ((string != null) && !string.isEmpty()) {
+                try {
+                    //first see if it matches enum name (exactly)
+                    result = Enum.valueOf(clazz, string);
+                } catch (IllegalArgumentException e) {    //(nope)
+                    try {
+                        //try to parse it as an integer
+                        int ordinal = Integer.parseInt(string);
+                        result = clazz.getEnumConstants()[ordinal];
+                    } catch (NumberFormatException e1) {  //(nope)
+                        //failure
+                    }
+                }
+            }
+            return result;
+        }
+
+        @CheckForNull
+        public T inputFromAttribute(@CheckForNull Attribute a) {
+            return ((a == null) ? null : inputFromString(a.getValue()));
         }
     }
 }

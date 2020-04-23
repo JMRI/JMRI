@@ -192,7 +192,8 @@ public class LayoutShape {
      *
      * @param p         the point to add
      * @param nearIndex the index of the existing point to add it near note:
-     * "near" is defined as before or after depending on closest neighbor
+     *                  "near" is defined as before or after depending on
+     *                  closest neighbor
      */
     public void addPoint(Point2D p, int nearIndex) {
         int cnt = shapePoints.size();
@@ -292,7 +293,7 @@ public class LayoutShape {
      * @return the maximum number of points
      */
     public int getMaxNumberPoints() {
-        return LayoutEditor.HitPointType.SHAPE_POINT_9.getXmlValue() - LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue() + 1;
+        return LayoutEditor.HitPointType.SHAPE_POINT_9.ordinal() - LayoutEditor.HitPointType.SHAPE_POINT_0.ordinal() + 1;
     }
 
     /**
@@ -428,7 +429,7 @@ public class LayoutShape {
             popup = new JPopupMenu();
         }
         if (layoutEditor.isEditable()) {
-            int pointIndex = hitPointType.getXmlValue() - LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue();
+            int pointIndex = hitPointType.ordinal() - LayoutEditor.HitPointType.SHAPE_POINT_0.ordinal();
 
             //JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutShape")) + getName());
             JMenuItem jmi = popup.add(Bundle.getMessage("ShapeNameMenuItemTitle", getName()));

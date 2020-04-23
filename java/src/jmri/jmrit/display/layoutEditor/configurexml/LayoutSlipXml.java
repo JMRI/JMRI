@@ -23,6 +23,8 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
     public LayoutSlipXml() {
     }
 
+    EnumIO<LayoutSlip.TurnoutType> tTypeEnumMap = new EnumIO<>(LayoutSlip.TurnoutType.class);
+
     /**
      * Default implementation for storing the contents of a LayoutSlip
      *
@@ -38,7 +40,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
 
         // include attributes
         element.setAttribute("ident", p.getName());
-        element.setAttribute("slipType", p.getTurnoutType().name());
+        element.setAttribute("slipType", tTypeEnumMap.outputFromEnum(p.getTurnoutType()));
 
         element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
         element.setAttribute("disabled", "" + (p.isDisabled() ? "yes" : "no"));
@@ -200,11 +202,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
             log.error("failed to convert layoutslip center  attribute");
         }
 
-        LayoutSlip.TurnoutType type = null;
-        Attribute a = element.getAttribute("slipType");
-        if (a != null) {
-            type = LayoutSlip.TurnoutType.getValue(a.getValue());
-        }
+        LayoutSlip.TurnoutType type = tTypeEnumMap.inputFromAttribute(element.getAttribute("slipType"));
         if (type == null) {
             log.error("failed to convert tracksegment type1 attribute");
         }
@@ -216,7 +214,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         l.setTurnout(getElement(element, "turnout"));
         l.setTurnoutB(getElement(element, "turnoutB"));
 
-        a = element.getAttribute("blockname");
+        Attribute a = element.getAttribute("blockname");
         if (a != null) {
             l.tBlockAName = a.getValue();
         }

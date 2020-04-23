@@ -726,7 +726,7 @@ public class TrackSegment extends LayoutTrack {
         if (connectionType == LayoutEditor.HitPointType.TRACK_CIRCLE_CENTRE) {
             result = getCoordsCenterCircle();
         } else if (connectionType.isBezierHitType()) {
-            result = getBezierControlPoint(connectionType.getXmlValue() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue());
+            result = getBezierControlPoint(connectionType.ordinal() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.ordinal());
         }
         return result;
     }
@@ -737,7 +737,7 @@ public class TrackSegment extends LayoutTrack {
      * @return the maximum number of points
      */
     public int getMaxNumberBezierPoints() {
-        return LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_8.getXmlValue() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue() + 1;
+        return LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_8.ordinal() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.ordinal() + 1;
     }
 
     /**
@@ -1792,7 +1792,7 @@ public class TrackSegment extends LayoutTrack {
      * Display popup menu for information and editing.
      */
     protected void showBezierPopUp(MouseEvent e, LayoutEditor.HitPointType hitPointType) {
-        int bezierControlPointIndex = hitPointType.getXmlValue() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue();
+        int bezierControlPointIndex = hitPointType.ordinal() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.ordinal();
         if (popupMenu != null) {
             popupMenu.removeAll();
         } else {

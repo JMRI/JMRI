@@ -23,6 +23,8 @@ import org.slf4j.LoggerFactory;
  */
 public class TrackSegmentXml extends AbstractXmlAdapter {
 
+    EnumIO<LayoutEditor.HitPointType> tHitPointTypeMap = new EnumIO<>(LayoutEditor.HitPointType.class);
+
     public TrackSegmentXml() {
     }
 
@@ -45,9 +47,9 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             element.setAttribute("blockname", p.getBlockName());
         }
         element.setAttribute("connect1name", p.getConnect1Name());
-        element.setAttribute("type1", "" + p.getType1().name());
+        element.setAttribute("type1", tHitPointTypeMap.outputFromEnum(p.getType1()));
         element.setAttribute("connect2name", p.getConnect2Name());
-        element.setAttribute("type2", "" + p.getType2().name());
+        element.setAttribute("type2", tHitPointTypeMap.outputFromEnum(p.getType2()));
         element.setAttribute("dashed", "" + (p.isDashed() ? "yes" : "no"));
         element.setAttribute("mainline", "" + (p.isMainline() ? "yes" : "no"));
         element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
@@ -201,7 +203,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
      * Load, starting with the track segment element, then all all attributes
      *
      * @param element Top level Element to unpack.
-     * @param o LayoutEditor as an Object
+     * @param o       LayoutEditor as an Object
      */
     @Override
     public void load(Element element, Object o) {
@@ -238,22 +240,13 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         }
 
         String con1Name = element.getAttribute("connect1name").getValue();
-        String con2Name = element.getAttribute("connect2name").getValue();
-
-        LayoutEditor.HitPointType type1 = null;
-        attribute = element.getAttribute("type1");
-        if (attribute != null) {
-            type1 = LayoutEditor.HitPointType.getValue(attribute.getValue());
-        }
+        LayoutEditor.HitPointType type1 = tHitPointTypeMap.inputFromAttribute(element.getAttribute("type1"));
         if (type1 == null) {
             log.error("failed to convert tracksegment type1 attribute");
         }
 
-        LayoutEditor.HitPointType type2 = null;
-        attribute = element.getAttribute("type2");
-        if (attribute != null) {
-            type2 = LayoutEditor.HitPointType.getValue(attribute.getValue());
-        }
+        String con2Name = element.getAttribute("connect2name").getValue();
+        LayoutEditor.HitPointType type2 = tHitPointTypeMap.inputFromAttribute(element.getAttribute("type2"));
         if (type2 == null) {
             log.error("failed to convert tracksegment type2 attribute");
         }
