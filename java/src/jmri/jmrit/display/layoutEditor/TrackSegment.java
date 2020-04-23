@@ -520,7 +520,14 @@ public class TrackSegment extends LayoutTrack {
      */
     public void setLayoutBlockByName(@CheckForNull String name) {
         if ((name != null) && !name.isEmpty()) {
-            setLayoutBlock(layoutEditor.provideLayoutBlock(name));
+            LayoutBlock b = layoutEditor.provideLayoutBlock(name);
+            if (b != null) {
+                namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, b);
+            } else {
+                namedLayoutBlock = null;
+            }
+        } else {
+            namedLayoutBlock = null;
         }
     }
 
@@ -589,10 +596,9 @@ public class TrackSegment extends LayoutTrack {
      * Initialization method. The above variables are initialized by
      * PositionablePointXml, then the following method is called after the
      * entire LayoutEditor is loaded to set the specific TrackSegment objects
+     *
+     * @param p the layout editor panel
      */
-    @SuppressWarnings("deprecation")
-    //NOTE: findObjectByTypeAndName is @Deprecated;
-    //we're using it here for backwards compatibility until it can be removed
     @Override
     @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null check performed before using return value")
     public void setObjects(LayoutEditor p) {
@@ -611,20 +617,8 @@ public class TrackSegment extends LayoutTrack {
             tLayoutBlockName = null; //release this memory
         }
 
-        //NOTE: testing "type-less" connects
-        //(read comments for findObjectByName in LayoutEditorFindItems.java)
         connect1 = p.getFinder().findObjectByName(tConnect1Name);
-        if (null == connect1) { //findObjectByName failed... try findObjectByTypeAndName
-            log.warn("{}.setObjects(...); Unknown connect1 object prefix: '{}' of type {}.",
-                    getName(), tConnect1Name, type1);
-            connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
-        }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
-        if (null == connect2) { //findObjectByName failed; try findObjectByTypeAndName
-            log.warn("{}.setObjects(...); Unknown connect2 object prefix: '{}' of type {}.",
-                    getName(), tConnect2Name, type2);
-            connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
-        }
     }
 
     public void updateBlockInfo() {

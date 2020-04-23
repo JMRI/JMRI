@@ -545,13 +545,13 @@ public class ConnectivityUtil {
         //    lBlock = layoutBlockManager.getByUserName(userName);
         //}
         List<LayoutConnectivity> cList = auxTools.getConnectivityList(currLayoutBlock);
-        for (LayoutConnectivity lc : cList) {
+        cList.forEach((lc) -> {
             if (lc.getBlock1().getBlock() == block) {
                 result.add((lc.getBlock2()).getBlock());
             } else if (lc.getBlock2().getBlock() == block) {
                 result.add((lc.getBlock1()).getBlock());
             }
-        }
+        });
         return result;
     }
 

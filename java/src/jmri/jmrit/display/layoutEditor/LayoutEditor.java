@@ -219,7 +219,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
          * @return true if this is for a connection to a LayoutTrack
          */
         protected static boolean isConnectionHitType(HitPointType hitType) {
-            boolean result = false; // assume failure (pessimist!)
+            boolean result;
             switch (hitType) {
                 case POS_POINT:
                 case TURNOUT_A:
@@ -266,7 +266,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
          * @return true if this hit type is for a layout control
          */
         protected static boolean isControlHitType(HitPointType hitType) {
-            boolean result = false; // assume failure (pessimist!)
+            boolean result;
             switch (hitType) {
                 case TURNOUT_CENTER:
                 case SLIP_CENTER:
@@ -338,7 +338,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
          * @return true if this is for a popup menu
          */
         protected static boolean isPopupHitType(HitPointType hitType) {
-            boolean result = false; // assume failure (pessimist!)
+            boolean result;
             switch (hitType) {
                 case LEVEL_XING_CENTER:
                 case POS_POINT:
@@ -676,7 +676,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JTextArea helpTextArea2 = new JTextArea(Bundle.getMessage("Help2"));
         helpBar.add(helpTextArea2);
 
-        String helpText3 = "";
+        String helpText3;
 
         switch (SystemType.getType()) {
             case SystemType.MACOSX: {

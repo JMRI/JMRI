@@ -734,6 +734,8 @@ public class LayoutTurntable extends LayoutTrack {
         if (tLayoutBlockName != null && !tLayoutBlockName.isEmpty()) {
             setLayoutBlockByName(tLayoutBlockName);
         }
+        tLayoutBlockName = null; //release this memory
+
         rayTrackList.forEach((rt) -> {
             rt.setConnect(p.getFinder().findTrackSegmentByName(rt.connectName));
         });
