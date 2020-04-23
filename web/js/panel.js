@@ -1938,7 +1938,7 @@ function $handleClick(e) {
         $widget.raytracks.each(function(i, item) {
             $logProperties(item);
             //note:offset 50 is due to TrackSegment.java TURNTABLE_RAY_OFFSET
-            var rayID = $turntableID + "." + (50 + item.attributes.index.value * 1);
+            var rayID = $turntableID + ".TURNTABLE_RAY_" + (item.attributes.index.value * 1);
             if (rayID == $rayID) {
                 if (isDefined(item.attributes.turnout)) {
                     var turnout = item.attributes.turnout.value;
