@@ -202,22 +202,4 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
          */
     }
 
-    JButton b;
-
-    static private class ButtonListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent a) {
-            /*
-            boolean next = !clock.getRun();
-            clock.setRun(next);
-            if (next) {
-                b.setText("Stop");
-            } else {
-                b.setText("Run ");
-            }
-             */
-        }
-    }
-
 }
