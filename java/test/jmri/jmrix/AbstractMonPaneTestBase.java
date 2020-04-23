@@ -3,6 +3,7 @@ package jmri.jmrix;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
+import org.assertj.swing.edt.GuiActionRunner;
 import org.junit.After;
 import jmri.util.JUnitUtil;
 import org.junit.Assume;
@@ -43,13 +44,13 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
 
     @Test
     public void testConcreteCtor() {
-        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute(() -> pane.initComponents()));
         assertThat(thrown).isNull();
     }
 
     @Test
     public void testInsertLine() {
-        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
 
         setFrameTextOnGUIThread("foo");
@@ -80,7 +81,7 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
 
     @Test
     public void testClearButton() {
-        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
 
         setFrameTextOnGUIThread("foo");
@@ -100,7 +101,7 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
 
         // for Jemmy to work, we need the pane inside of a frame
         JmriJFrame f = new JmriJFrame();
-        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
 
         ThreadingUtil.runOnGUI( () -> {
@@ -136,7 +137,7 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
     @Test
     public void testFilterFormatting() {
 
-        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
 
         setAndCheckFilterTextEntry("00", "00", "filter field unedited");
@@ -162,7 +163,7 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
 
         // for Jemmy to work, we need the pane inside of a frame
         JmriJFrame f = new JmriJFrame();
-        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
 
         ThreadingUtil.runOnGUI( () -> {
@@ -190,7 +191,7 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
 
         // for Jemmy to work, we need the pane inside of a frame
         JmriJFrame f = new JmriJFrame();
-        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
 
         ThreadingUtil.runOnGUI( () -> {
@@ -217,7 +218,7 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
 
         // for Jemmy to work, we need the pane inside of a frame
         JmriJFrame f = new JmriJFrame();
-        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
 
         ThreadingUtil.runOnGUI( () -> {
@@ -245,7 +246,7 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
 
         // for Jemmy to work, we need the pane inside of a frame
         JmriJFrame f = new JmriJFrame();
-        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
 
         ThreadingUtil.runOnGUI( () -> {

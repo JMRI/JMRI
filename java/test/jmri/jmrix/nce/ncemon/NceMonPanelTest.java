@@ -9,6 +9,7 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
+import org.assertj.swing.edt.GuiActionRunner;
 import org.junit.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -68,7 +69,7 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
         // for Jemmy to work, we need the pane inside of a frame
         JmriJFrame f = new JmriJFrame();
-        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
         assertThat(thrown).withFailMessage("could not load pane: {}",thrown).isNull();
         ThreadingUtil.runOnGUI( () -> {
             f.add(pane);
