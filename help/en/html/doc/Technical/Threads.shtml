@@ -137,7 +137,26 @@
     <code>@GuardedBy</code> annotations that are useful.
     See the discussion on the 
     <a href="SpotBugs.shtml#annotations">JMRI SpotBugs page</a>.
-
+    <p>
+    If you do need to launch a thread of your own, there are a few things
+    to remember:
+    <ul>
+        <li>Please put your thread into the JMRI thread group by
+            putting <code>ThreadingUtil.getJmriThreadGroup()</code>
+            as the first argument to the 
+            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html#constructor.summary">Thread constructor</a>.
+            This makes it easier to sort JMRI-created threads from system and library threads
+            when debugging.
+        <li>Please make sure that your new thread(s)
+            are terminated properly at the end each
+            <a href="JUnit.shtml">JUnit test</a>
+            for your code.  If you leave them running, 
+            they interfere with later tests. See the 
+            <a href="#ending">next section</a>
+            for how to terminate threads.
+    </ul>
+    
+     
 <a id="ending" name="ending"></a>
 <h3>Ending Threads</h3>
 
