@@ -643,7 +643,7 @@ public class LayoutBlockConnectivityTools {
             return -1;
         }
         List<Integer> blkIndexTested = new ArrayList<>(5);
-        if (log.isDebugEnabled() && (currentLBlock != null) && (preBlock != null)) {
+        if (log.isDebugEnabled() && (preBlock != null)) {
             log.debug("In find best hop current " + currentLBlock.getDisplayName() + " previous " + preBlock.getDisplayName());
         }
         Block block;
