@@ -97,7 +97,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("turnoutcirclecolor", turnoutCircleColor);
         String turnoutCircleThrownColor = p.getTurnoutCircleThrownColor();
         // optional attributes
-        if (!turnoutCircleColor.equals(turnoutCircleThrownColor)) {
+        if ((turnoutCircleColor != null) && !turnoutCircleColor.equals(turnoutCircleThrownColor)) {
             panel.setAttribute("turnoutcirclethrowncolor", turnoutCircleThrownColor);
         }
         if (p.isTurnoutFillControlCircles()) {
