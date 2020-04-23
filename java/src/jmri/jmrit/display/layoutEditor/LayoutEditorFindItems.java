@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.CheckReturnValue;
@@ -26,7 +27,8 @@ public class LayoutEditorFindItems {
         layoutEditor = editor;
     }
 
-    public TrackSegment findTrackSegmentByName(String name) {
+    @CheckReturnValue
+    public TrackSegment findTrackSegmentByName(@NonNull String name) {
         if (!name.isEmpty()) {
             for (TrackSegment t : layoutEditor.getTrackSegments()) {
                 if (t.getId().equals(name)) {
