@@ -636,26 +636,30 @@ public class LayoutBlockConnectivityTools {
 
     //We need to take into account if the returned block has a signalmast attached.
     int findBestHop(final Block preBlock, final Block currentBlock, Block destBlock, int direction, List<Integer> offSet, boolean validateOnly, int pathMethod) {
-        int blockindex = 0;
-        Block block;
+        int result = 0;
+
         LayoutBlock currentLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(currentBlock);
+        if (currentLBlock == null) {
+            return -1;
+        }
         List<Integer> blkIndexTested = new ArrayList<>(5);
         if (log.isDebugEnabled() && (currentLBlock != null) && (preBlock != null)) {
             log.debug("In find best hop current " + currentLBlock.getDisplayName() + " previous " + preBlock.getDisplayName());
         }
-        while (blockindex != -1) {
+        Block block;
+        while (result != -1) {
             if (currentBlock == preBlock) {
                 //Basically looking for the connected block, which there should only be one of!
                 log.debug("At get ConnectedBlockRoute");
-                blockindex = currentLBlock.getConnectedBlockRouteIndex(destBlock, direction);
+                result = currentLBlock.getConnectedBlockRouteIndex(destBlock, direction);
             } else {
                 if (log.isDebugEnabled()) {
                     log.debug("Off Set " + offSet);
                 }
-                blockindex = currentLBlock.getNextBestBlock(preBlock, destBlock, offSet, METRIC);
+                result = currentLBlock.getNextBestBlock(preBlock, destBlock, offSet, METRIC);
             }
-            if (blockindex != -1) {
-                block = currentLBlock.getRouteNextBlockAtIndex(blockindex);
+            if (result != -1) {
+                block = currentLBlock.getRouteNextBlockAtIndex(result);
                 LayoutBlock lBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(block);
 
                 Block blocktoCheck = block;
@@ -696,7 +700,7 @@ public class LayoutBlockConnectivityTools {
                     MDC.remove("loggingDisabled");
                     if (foundBean == null) {
                         log.debug("No object found so okay to return");
-                        return blockindex;
+                        return result;
                     } else {
                         lastErrorMessage = "Signal " + foundBean.getDisplayName() + " already exists between blocks " + currentBlock.getDisplayName() + " and " + blocktoCheck.getDisplayName() + " in the same direction on this path";
                         log.debug(lastErrorMessage);
@@ -705,12 +709,12 @@ public class LayoutBlockConnectivityTools {
                     lastErrorMessage = "block " + block.getDisplayName() + " found not to be not usable";
                     log.debug(lastErrorMessage);
                 }
-                if (blkIndexTested.contains(blockindex)) {
+                if (blkIndexTested.contains(result)) {
                     lastErrorMessage = ("No valid free path found");
                     return -1;
                 }
-                blkIndexTested.add(blockindex);
-                offSet.add(blockindex);
+                blkIndexTested.add(result);
+                offSet.add(result);
             } else {
                 log.debug("At this point the getNextBextBlock() has returned a -1");
             }
