@@ -42,9 +42,9 @@ import jmri.util.swing.*;
 /**
  * Provides a scrollable Layout Panel and editor toolbars (that can be hidden)
  * <p>
- * This module serves as a manager for the LayoutTurnout, Layout Block,
- * PositionablePoint, Track Segment, LayoutSlip and LevelXing objects which are
- * integral subparts of the LayoutEditor class
+ * This module serves as a manager for the LayoutTurnout, LayoutBlock,
+ * LayoutTurntable, PositionablePoint, TrackSegment, LayoutSlip and LevelXing
+ * objects which are integral subparts of the LayoutEditor class
  * <p>
  * All created objects are put on specific levels depending on their type
  * (higher levels are in front): Note that higher numbers appear behind lower
@@ -52,14 +52,14 @@ import jmri.util.swing.*;
  * <p>
  * The "contents" List keeps track of all text and icon label objects added to
  * the target frame for later manipulation. Other Lists keep track of drawn
- * items
+ * items.
  * <p>
  * Based in part on PanelEditor.java (Bob Jacobsen (c) 2002, 2003). In
  * particular, text and icon label items are copied from Panel editor, as well
  * as some of the control design
  *
  * @author Dave Duchamp Copyright: (c) 2004-2007
- * @author George Warner Copyright: (c) 2017-2019
+ * @author George Warner Copyright: (c) 2017-2020
  */
 @SuppressWarnings("serial")
 @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
