@@ -8,6 +8,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
+import org.assertj.swing.edt.GuiActionRunner;
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
@@ -26,7 +27,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Test
     public void testInput() {
-        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
         LocoNetMessage m = new LocoNetMessage(new int[]{0xA0, 0x07, 0x00, 0x58});
         ThreadingUtil.runOnGUI( () -> ((LocoMonPane)pane).message(m));
@@ -36,7 +37,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Test
     public void testFilterNot() {
-        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
         // filter not match
         setAndCheckFilterTextEntry("A1","A1","filter set");
@@ -49,7 +50,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Test
     public void testFilterSimple() {
-        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
         // filter A0
         setAndCheckFilterTextEntry("A0","A0","filter set");
@@ -62,7 +63,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Test
     public void testFilterMultiple() {
-        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
         // filter B1 A0
         setAndCheckFilterTextEntry("B1 A0","B1 A0","filter set");
@@ -85,7 +86,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
          // for Jemmy to work, we need the pane inside of a frame
          JmriJFrame f = new JmriJFrame();
 
-         Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
+         Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
          assertThat(thrown).isNull();
 
         ThreadingUtil.runOnGUI( () -> {

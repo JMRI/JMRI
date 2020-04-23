@@ -748,16 +748,12 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 if (getTurnout().canInvert()) { // if supported
                     this.setInverted(set);
                     getTurnout().setInverted(set);
-                } else {
-                    // show error message?
                 }
                 break;
             case 'S':
                 if (getSensor().canInvert()) { // if supported
                     this.setInverted(set);
                     getSensor().setInverted(set);
-                } else {
-                    // show error message?
                 }
                 break;
             case 'L':

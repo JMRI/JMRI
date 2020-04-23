@@ -2,16 +2,11 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
+import org.junit.*;
+
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -69,8 +64,6 @@ public class TrainIconTest extends OperationsTestCase {
         // confirm that there are 6 icon colors
         Assert.assertEquals("Six colors", 6, TrainIcon.getLocoColors().length);
     }
-
-
 
     // The minimal setup for log4J
     @Override

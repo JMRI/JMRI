@@ -367,8 +367,7 @@ public class SwitchboardEditor extends Editor {
             log.debug("Warning for big range");
             int retval = JOptionPane.showOptionDialog(null,
                     Bundle.getMessage("LargeRangeWarning", range, Bundle.getMessage("CheckBoxHideUnconnected")),
-                    Bundle.getMessage("WarningTitle"),
-                    0, JOptionPane.INFORMATION_MESSAGE, null,
+                    Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                     new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonCancel")}, null);
             log.debug("Retval: {}", retval);
             if (retval != 0) {
@@ -647,8 +646,7 @@ public class SwitchboardEditor extends Editor {
                // if new bgColor matches the defaultTextColor, ask user as labels will become unreadable
                if (desiredColor.equals(defaultTextColor)) {
                   int retval = JOptionPane.showOptionDialog(null,
-                               Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"),
-                               0, JOptionPane.INFORMATION_MESSAGE, null,
+                               Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
                   log.debug("Retval: {}", retval);
                   if (retval != 0) {
@@ -674,8 +672,7 @@ public class SwitchboardEditor extends Editor {
                // if new defaultTextColor matches bgColor, ask user as labels will become unreadable
                if (desiredColor.equals(defaultBackgroundColor)) {
                   int retval = JOptionPane.showOptionDialog(null,
-                  Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"),
-                  0, JOptionPane.INFORMATION_MESSAGE, null,
+                  Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                   new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
                   log.debug("Retval: {}", retval);
                   if (retval != 0) {

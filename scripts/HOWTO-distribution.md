@@ -132,6 +132,8 @@ We roll some general code maintenance items into the release process.
         grep -lr '\t' jython/ | grep '\.py'
 ```
 
+- Consider running jmri.ArchitectureCheck to recreate (and hopefully reduce) the known coupling exceptions in archunit_store/ and perhaps even trim the archunit_ignore_patterns.txt contents.
+
 - Run "ant alltest"; make sure they all pass; fix problems and commit back (might also take the jvisualvm data below)
 
 - Run "ant decoderpro"; check for no startup errors, right version, help index present and working OK. Fix problems and commit back.
@@ -304,6 +306,7 @@ If you're developing any additional (post-4.19.5) changes that you want in the J
 
 - On your local machine, open jvisualvm. Do 
 
+    ant clean tests
     unsetenv JMRI_OPTIONS
     ant alltest
     
@@ -418,10 +421,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.19.5+R7364caf9c.dmg](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R7364caf9c.dmg) | 832ce84fb3e799a4fb7f245386b67fae3bb8791286f0f20eca652034d41eb18c
-[JMRI.4.19.5+R7364caf9c.exe](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R7364caf9c.exe) | e3f80296837eba7efd534301880ed10e18ea330256d579b480612077e06e3233
-[JMRI.4.19.5+R7364caf9c.tgz](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R7364caf9c.tgz) | fc3a3189c3518654717a13417a98c6846ee37a794e81812901555ab3d42fddc7
-
+[JMRI.4.19.5+R8300f0d90.dmg](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R8300f0d90.dmg) | 70e7d608c2a35f095bb478a3656ed2e92db0bf2f79c453e57b964b0701d02548
+[JMRI.4.19.5+R8300f0d90.exe](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R8300f0d90.exe) | 0518751086287dbfbf85fa462c954e33403890b69f88cac2723638ecde0b1f7f
+[JMRI.4.19.5+R8300f0d90.tgz](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R8300f0d90.tgz) | 100e56edd915d1834cd3b1abee2cab1bd9b5cf3e978145098252fe09c83e1a0a
 
 ```
 
@@ -592,7 +594,9 @@ The rest of the document provides information about specific cases.
 If you can't use Jenkins for the actual build, you can create the files locally:
 
 If you're building locally:
-* You need to have installed NSIS from http://nsis.sourceforge.net (we use version 3.01 with long string support; see [Issue 3913](https://github.com/JMRI/JMRI/issues/3913) for instructions on how to build that for Linux). On macOS, install (currently [version 3.03](https://formulae.brew.sh/formula/makensis) via Homebrew
+
+* You no need to have installed NSIS, as the two .exe files are pre-built.  If 
+you want to have it anyway to update the .nsi files and rebuild it, start by getting it from http://nsis.sourceforge.net (we use version 3.01 with long string support; see [Issue 3913](https://github.com/JMRI/JMRI/issues/3913) for instructions on how to build that for Linux). On macOS, install (currently [version 3.03](https://formulae.brew.sh/formula/makensis) via Homebrew
  - brew install makensis --with-large-strings
  - add an entry in "local.properties" nsis.home=/usr/local/bin/
 
