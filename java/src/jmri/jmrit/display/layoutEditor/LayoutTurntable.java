@@ -139,7 +139,12 @@ public class LayoutTurntable extends LayoutTrack {
                 layoutBlock.decrementUse();
             }
             if (newLayoutBlock != null) {
-                namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
+                String newName = newLayoutBlock.getUserName();
+                if ((newName != null) && !newName.isEmpty()) {
+                    namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newName, newLayoutBlock);
+                } else {
+                    namedLayoutBlock = null;
+                }
             } else {
                 namedLayoutBlock = null;
             }
@@ -153,10 +158,7 @@ public class LayoutTurntable extends LayoutTrack {
      */
     public void setLayoutBlockByName(@CheckForNull String name) {
         if ((name != null) && !name.isEmpty()) {
-            LayoutBlock b = layoutEditor.provideLayoutBlock(name);
-            namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(b.getUserName(), b);
-        } else {
-            namedLayoutBlock = null;
+            setLayoutBlock(layoutEditor.provideLayoutBlock(name));
         }
     }
 
@@ -725,7 +727,9 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     public void setObjects(LayoutEditor p) {
-        setLayoutBlockByName(tLayoutBlockName);
+        if (tLayoutBlockName != null && !tLayoutBlockName.isEmpty()) {
+            setLayoutBlockByName(tLayoutBlockName);
+        }
         for (RayTrack rt : rayTrackList) {
             rt.setConnect(p.getFinder().findTrackSegmentByName(rt.connectName));
         }

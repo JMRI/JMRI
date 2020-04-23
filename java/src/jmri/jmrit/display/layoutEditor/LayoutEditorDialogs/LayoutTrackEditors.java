@@ -1659,18 +1659,21 @@ public class LayoutTrackEditors {
             ///layoutTurntable.updateBlockInfo();
         }
         // check if a block exists to edit
-        if (layoutTurntable.getLayoutBlock() == null) {
+        LayoutBlock lb = layoutTurntable.getLayoutBlock();
+        if (lb == null) {
             JOptionPane.showMessageDialog(editLayoutTurntableFrame,
                     Bundle.getMessage("Error1"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
             return;
+        } else {
+            lb.editLayoutBlock(editLayoutTurntableFrame);
         }
-        layoutTurntable.getLayoutBlock().editLayoutBlock(editLayoutTurntableFrame);
+
         layoutEditor.setDirty();
         editLayoutTurntableNeedsRedraw = true;
     }
 
-    //Remove old rays and add them back in
+//Remove old rays and add them back in
     private void updateRayPanel() {
         for (Component comp : editLayoutTurntableRayPanel.getComponents()) {
             editLayoutTurntableRayPanel.remove(comp);
@@ -1768,6 +1771,7 @@ public class LayoutTrackEditors {
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
             editLayoutTurntableNeedsRedraw = false;
+
         }
     }
 
@@ -1910,6 +1914,7 @@ public class LayoutTrackEditors {
         }
     }   // class TurntableRayPanel
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTrackEditors.class);
+    private final static Logger log = LoggerFactory.getLogger(LayoutTrackEditors.class
+    );
 
 }
