@@ -123,6 +123,8 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         decimalIcon.scale(scale,this);
         ampIcon.scale(scale, this);
         milliAmpIcon.scale(scale,this);
+
+        this.getContentPane().revalidate();
     }
 
     private void buildContents(){
@@ -198,7 +200,5 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         }
          */
     }
-
-    private final static Logger log = LoggerFactory.getLogger(AmpMeterFrame.class);
 
 }
