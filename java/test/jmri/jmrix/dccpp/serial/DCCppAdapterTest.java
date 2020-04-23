@@ -26,6 +26,7 @@ public class DCCppAdapterTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

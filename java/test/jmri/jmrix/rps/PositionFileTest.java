@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.vecmath.Point3d;
 import jmri.util.FileUtil;
-import org.junit.Test;
-import org.junit.Before;
+import org.junit.*;
 import org.jdom2.Element;
 import org.junit.Assert;
 
@@ -98,5 +97,9 @@ public class PositionFileTest {
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
-
+    
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
 }

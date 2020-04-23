@@ -320,7 +320,7 @@ public class CbusEventTablePaneTest {
         memo = null;
         tcis = null;
         JUnitUtil.resetWindows(false,false);
-        // super.tearDown();
+        JUnitUtil.tearDown();
     }    
     
 }

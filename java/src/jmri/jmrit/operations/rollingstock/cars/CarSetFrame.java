@@ -7,8 +7,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 
-import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +16,8 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarLoadEditFrame;
@@ -253,7 +253,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             f = new CarAttributeEditFrame();
             f.setLocationRelativeTo(this);
             f.addPropertyChangeListener(this);
-            f.initComponents(Bundle.getMessage(KERNEL), (String) kernelComboBox.getSelectedItem());
+            f.initComponents(CarAttributeEditFrame.KERNEL, (String) kernelComboBox.getSelectedItem());
         }
     }
 

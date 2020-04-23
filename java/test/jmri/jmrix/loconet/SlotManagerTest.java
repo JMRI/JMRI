@@ -2,11 +2,14 @@ package jmri.jmrix.loconet;
 
 import jmri.ProgListener;
 import jmri.ProgrammingMode;
+import jmri.jmrix.loconet.SlotManager.SlotMapEntry;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -1287,7 +1290,8 @@ public class SlotManagerTest {
                 stoppedTimer = true;
             }
         };
-
+        slotmanager.slotMap = Arrays.asList(new SlotMapEntry(0,127)); // still all slots
+        slotmanager.slotScanInterval = 5;  // 5ms instead of 50
         status = -999;
         value = -999;
         startedShortTimer = false;

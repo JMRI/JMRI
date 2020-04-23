@@ -11,9 +11,9 @@ import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -235,7 +235,7 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
 
     // The minimal setup for log4J
     @Override
-    @Test
+    @Before
     public void setUp() {
         JUnitUtil.setUp();
         memo = new SpecificSystemConnectionMemo();
