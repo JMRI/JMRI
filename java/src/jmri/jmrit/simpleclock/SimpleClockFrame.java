@@ -62,7 +62,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
     protected JButton setTimeButton = new JButton(Bundle.getMessage("ButtonSet"));
     protected JButton startButton = new JButton(Bundle.getMessage("ButtonStart"));
     protected JButton stopButton = new JButton(Bundle.getMessage("ButtonStop"));
-    protected JButton applyCloseButton = new JButton(Bundle.getMessage("MenuItemStore"));
+    protected JButton applyCloseButton = new JButton(Bundle.getMessage("ButtonStoreClock"));
 
     protected JLabel clockStatus = new JLabel();
     protected JLabel timeLabel = new JLabel();
