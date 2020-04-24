@@ -11,9 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="W.D.Kok" version="1.00" lastUpdated="20200423            "/>
   <!-- Version 1.00 - Initial version                                       -->
   <decoder>
@@ -98,7 +96,7 @@
         <label xml:lang="cs">Střední napětí</label>
         <label xml:lang="de">Mittengeschwindigkeit</label>
         <label xml:lang="it">Tensione intermedia</label>
-        <label xml:lang="de">Gemiddelde snelheid</label>
+        <label xml:lang="nl">Gemiddelde snelheid</label>
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="7" readOnly="yes" item="Decoder Version">
@@ -170,12 +168,6 @@
         <label xml:lang="it">Canale.1 per Comando Ack.</label>
         <label xml:lang="nl">Kanaal 1 voor beveel erkenning.</label>
       </variable>
-      <!--<variable CV="28" readOnly="yes" mask="XXXXXVXX" item="RailCom Command" default="0" include="31">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Not in use.</label>
-        <label xml:lang="de">nicht verwendet.</label>
-        <label xml:lang="nl">Nicht in gebruik.</label>
-      </variable-->
       <variable CV="28" readOnly="yes" mask="XXXXXVXX" item="RailCom Command" default="1" include="05,09,18,10,02">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Not in use.</label>
@@ -188,7 +180,6 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-      <!--<xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>-->
       <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1" include="31,22,24,28,32">
         <enumVal>
           <enumChoice choice="NMRA Digital only">
@@ -448,7 +439,6 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Constant Braking Distance</label>
         <label xml:lang="ca">Distància de Frenada Constant</label>
-        <label xml:lang="ca">Distància de Frenada Constant</label>
         <label xml:lang="de">Konstanter Bremsweg bei ABC</label>
         <label xml:lang="it">Distanza Frenata Costante</label>
         <label xml:lang="nl">Constante remweg bij ABC</label>
@@ -624,7 +614,6 @@
         <label xml:lang="nl">Functietoewijzing Lichteffecten F-uitgang C en D</label>
         <comment>Range 0-255</comment>
       </variable>
-      
       <variable CV="71" item="Steam generator 2" default="60" include="22,24">
         <decVal min="0" max="255"/>
         <label>Shutdown time of the steam generator at standstill</label>
@@ -699,7 +688,7 @@
         <label xml:lang="cs">CV ukazatel pro SUSI, offset 800</label>
         <label xml:lang="de">Zeiger-CV für SUSI, offset 800</label>
         <label xml:lang="it">Indicatore CV per SUSI, offset 800</label>
-        <label xml:lang="de">CV-Aanwijzer voor SUSI, offset 800</label>
+        <label xml:lang="nl">CV-Aanwijzer voor SUSI, offset 800</label>
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="127" item="SUSI transport" default="0" comment="Range 0-255">
@@ -732,7 +721,6 @@
       </factReset>
     </resets>
   </decoder>
-  
   <pane nameFmt="label"> <!-- Function Map -->
     <name>Function Map</name>
     <name xml:lang="ca">Mapejat de funcions</name>
@@ -825,19 +813,6 @@
       </grid>
     </column>
   </pane>
-  <pane nameFmt="label"> <!-- RailCom -->
-    <name>RailCom</name>
-    <column>
-      <display item="Enable RailCom"/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="RailCom Address"/>
-      <display item="RailCom Data"/>
-      <display item="RailCom Command"/>
-      
-    </column>
-   </pane>
   <pane nameFmt="label"> <!-- Lenz -->
     <name>Lenz</name>
     <column>
