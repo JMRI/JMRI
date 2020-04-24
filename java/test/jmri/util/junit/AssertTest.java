@@ -21,6 +21,13 @@ public class AssertTest {
     }
     
     @Test
+    public void assertDisplay() {
+        // show the assert status
+        log.info("AssertTest: assert are "+(assertsEnabled ? "enabled" : "disabled"));
+        System.err.println("AssertTest: asserts are "+(assertsEnabled ? "enabled" : "disabled"));
+    }
+
+    @Test
     public void assertFails() {
         try {
             assert false ;
@@ -61,7 +68,6 @@ public class AssertTest {
         assert assertsEnabled = true; // Intentional side-effect if assert is enabled
         
         // Now assertsEnabled is set to the correct value
-        log.info("assert status: "+assertsEnabled);
     }
 
     @After
