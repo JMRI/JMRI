@@ -19,14 +19,14 @@ public class RouteCopyActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        RouteCopyAction t = new RouteCopyAction("Test");
+        RouteCopyAction t = new RouteCopyAction();
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        RouteCopyAction a = new RouteCopyAction("Test");
+        RouteCopyAction a = new RouteCopyAction();
         Assert.assertNotNull("exists", a);
         
         a.actionPerformed(new ActionEvent(this, 0, null));

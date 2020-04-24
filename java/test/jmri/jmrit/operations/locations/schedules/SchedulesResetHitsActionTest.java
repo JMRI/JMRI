@@ -1,8 +1,9 @@
 package jmri.jmrit.operations.locations.schedules;
 
-import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
 import org.junit.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
 
 /**
  *
@@ -12,7 +13,7 @@ public class SchedulesResetHitsActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        SchedulesResetHitsAction t = new SchedulesResetHitsAction("Test");
+        SchedulesResetHitsAction t = new SchedulesResetHitsAction();
         Assert.assertNotNull("exists",t);
     }
 

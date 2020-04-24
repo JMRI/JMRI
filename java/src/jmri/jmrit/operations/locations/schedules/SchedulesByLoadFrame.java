@@ -90,8 +90,8 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new PrintCarLoadsAction(true, this));
-        toolMenu.add(new PrintCarLoadsAction(false, this));
+        toolMenu.add(new PrintCarLoadsAction(true));
+        toolMenu.add(new PrintCarLoadsAction(false));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_ShowSchedulesByCarTypeAndLoad", true); // NOI18N

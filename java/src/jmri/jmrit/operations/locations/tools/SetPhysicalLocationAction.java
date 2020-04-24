@@ -2,7 +2,9 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
 import jmri.jmrit.operations.locations.Location;
 
 /**
@@ -14,13 +16,12 @@ import jmri.jmrit.operations.locations.Location;
  */
 public class SetPhysicalLocationAction extends AbstractAction {
 
-    Location _location;
-
-    public SetPhysicalLocationAction(String s, Location location) {
-        super(s);
+    public SetPhysicalLocationAction(Location location) {
+        super(Bundle.getMessage("MenuSetPhysicalLocation"));
         _location = location;
     }
 
+    Location _location;
     SetPhysicalLocationFrame f = null;
 
     @Override

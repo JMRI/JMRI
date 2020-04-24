@@ -19,14 +19,14 @@ public class SetTrainIconPositionActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        SetTrainIconPositionAction t = new SetTrainIconPositionAction("Test");
+        SetTrainIconPositionAction t = new SetTrainIconPositionAction();
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SetTrainIconPositionAction a = new SetTrainIconPositionAction("Test");
+        SetTrainIconPositionAction a = new SetTrainIconPositionAction();
         Assert.assertNotNull("exists", a);
         
         a.actionPerformed(new ActionEvent(this, 0, null));

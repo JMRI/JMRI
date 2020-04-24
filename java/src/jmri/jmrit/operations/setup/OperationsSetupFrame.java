@@ -1,8 +1,10 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.Dimension;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+
 import jmri.jmrit.operations.OperationsFrame;
 
 /**
@@ -22,14 +24,14 @@ public class OperationsSetupFrame extends OperationsFrame {
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new OptionAction(Bundle.getMessage("TitleOptions")));
+        toolMenu.add(new OptionAction());
         toolMenu.add(new PrintOptionAction());
         toolMenu.add(new BuildReportOptionAction());
-        toolMenu.add(new BackupFilesAction(Bundle.getMessage("Backup")));
-        toolMenu.add(new RestoreFilesAction(Bundle.getMessage("Restore")));
-        toolMenu.add(new LoadDemoAction(Bundle.getMessage("LoadDemo")));
-        toolMenu.add(new ResetAction(Bundle.getMessage("ResetOperations")));
-        toolMenu.add(new ManageBackupsAction(Bundle.getMessage("ManageAutoBackups")));
+        toolMenu.add(new BackupFilesAction());
+        toolMenu.add(new RestoreFilesAction());
+        toolMenu.add(new LoadDemoAction());
+        toolMenu.add(new ResetAction());
+        toolMenu.add(new ManageBackupsAction());
 
         menuBar.add(toolMenu);
         menuBar.add(new jmri.jmrit.operations.OperationsMenu());
