@@ -35,7 +35,7 @@ public class Pr1ImportActionTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(Pr1ImportActionTest.class);

@@ -539,9 +539,7 @@ public class TrackSegmentTest {
      */
     @BeforeClass
     public static void setUpClass() throws Exception {
-        JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
 
             layoutEditor = new LayoutEditor();
 

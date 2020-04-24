@@ -412,7 +412,6 @@ public class PanelEditor extends Editor implements ItemListener {
     static class ComboBoxItem {
 
         private final String name;
-        private String bundleName;
 
         protected ComboBoxItem(String n) {
             name = n;
@@ -426,6 +425,7 @@ public class PanelEditor extends Editor implements ItemListener {
         public String toString() {
             // I18N split Bundle name
             // use NamedBeanBundle property for basic beans like "Turnout" I18N
+            String bundleName;
             if (SENSOR.equals(name)) {
                 bundleName = "BeanNameSensor";
             } else if (SIGNAL_HEAD.equals(name)) {
@@ -603,17 +603,15 @@ public class PanelEditor extends Editor implements ItemListener {
 
             // Positionable items with defaults or using overrides
             boolean popupSet = false;
-            popupSet |= p.setRotateOrthogonalMenu(popup);
+            popupSet = p.setRotateOrthogonalMenu(popup);
             popupSet |= p.setRotateMenu(popup);
             popupSet |= p.setScaleMenu(popup);
             if (popupSet) {
                 popup.addSeparator();
-                popupSet = false;
             }
             popupSet = p.setEditIconMenu(popup);
             if (popupSet) {
                 popup.addSeparator();
-                popupSet = false;
             }
             popupSet = p.setTextEditMenu(popup);
             if (util != null) {
@@ -632,7 +630,6 @@ public class PanelEditor extends Editor implements ItemListener {
             }
             if (popupSet) {
                 popup.addSeparator();
-                popupSet = false;
             }
             p.setDisableControlMenu(popup);
 
@@ -981,9 +978,7 @@ public class PanelEditor extends Editor implements ItemListener {
             _multiItemCopyGroup = new ArrayList<>();
             // must make a copy or pasteItem() will hang
             if (_selectionGroup != null) {
-                for (Positionable comp : _selectionGroup) {
-                    _multiItemCopyGroup.add(comp);
-                }
+                _multiItemCopyGroup.addAll(_selectionGroup);
             }
         });
 
@@ -1030,10 +1025,8 @@ public class PanelEditor extends Editor implements ItemListener {
                 addItemViaMouseClick = true;
                 getIconFrame(item.getName());
             }
-//            ComboBoxItem selected;
 
             ActionListener init(ComboBoxItem i) {
-//                selected = i;
                 return this;
             }
         }.init(item);

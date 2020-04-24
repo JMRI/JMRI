@@ -44,7 +44,6 @@ public class DataSourceTest {
     @Before
     public void setup() {
         JUnitUtil.setUp();
-        JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
 
         DataSource.existingInstance = null;

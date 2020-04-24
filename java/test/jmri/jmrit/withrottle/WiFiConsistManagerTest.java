@@ -14,7 +14,7 @@ public class WiFiConsistManagerTest extends jmri.implementation.AbstractConsistM
 
     @Test(expected=NullPointerException.class)
     public void testCTorThrowsNPE() {
-        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         cm = new WiFiConsistManager();
     }
 
