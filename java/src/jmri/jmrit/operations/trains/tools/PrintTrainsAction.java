@@ -47,7 +47,7 @@ public class PrintTrainsAction extends PrintTrainAction {
         printTrains();
     }
     
-    public void printTrains() {
+    private void printTrains() {
 
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;

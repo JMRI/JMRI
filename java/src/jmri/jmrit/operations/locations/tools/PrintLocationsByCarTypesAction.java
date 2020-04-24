@@ -46,6 +46,10 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        print();
+    }
+    
+    private void print() {
         // obtain a HardcopyWriter
         HardcopyWriter writer;
         try {
@@ -87,11 +91,11 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
                     }
                 }
             }
-            // and force completion of the printing
-            writer.close();
         } catch (IOException we) {
             log.error("Error printing PrintLocationAction: " + we);
         }
+        // and force completion of the printing
+        writer.close();
     }
 
     private final static Logger log = LoggerFactory.getLogger(PrintLocationsByCarTypesAction.class);
