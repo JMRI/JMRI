@@ -21,7 +21,7 @@ public class CarAttributeActionTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarAttributeEditFrame cef = new CarAttributeEditFrame();
         cef.initComponents(CarAttributeEditFrame.ROAD);
-        CarAttributeAction a = new CarAttributeAction("Test Action", cef);
+        CarAttributeAction a = new CarAttributeAction(cef);
         Assert.assertNotNull("exists", a);
         
         Assert.assertFalse("toggle state", cef.showQuanity);

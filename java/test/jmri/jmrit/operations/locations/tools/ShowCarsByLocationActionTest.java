@@ -21,14 +21,14 @@ public class ShowCarsByLocationActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        ShowCarsByLocationAction t = new ShowCarsByLocationAction("Test");
+        ShowCarsByLocationAction t = new ShowCarsByLocationAction(true, null, null);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ShowCarsByLocationAction a = new ShowCarsByLocationAction("Test");
+        ShowCarsByLocationAction a = new ShowCarsByLocationAction(true, null, null);
         Assert.assertNotNull("exists", a);
         
         a.actionPerformed(new ActionEvent(this, 0, null));

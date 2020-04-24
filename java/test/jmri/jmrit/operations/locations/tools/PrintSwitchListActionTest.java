@@ -21,7 +21,7 @@ public class PrintSwitchListActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Location l = new Location("Test id", "Test Name");
-        PrintSwitchListAction t = new PrintSwitchListAction("Test", l, true);
+        PrintSwitchListAction t = new PrintSwitchListAction(l, true);
         Assert.assertNotNull("exists", t);
     }
 
@@ -29,7 +29,7 @@ public class PrintSwitchListActionTest extends OperationsTestCase {
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Location l = new Location("Test id", "Test Name");
-        PrintSwitchListAction a = new PrintSwitchListAction("Test", l, true);
+        PrintSwitchListAction a = new PrintSwitchListAction(l, true);
         Assert.assertNotNull("exists", a);
 
         a.actionPerformed(new ActionEvent(this, 0, null));
