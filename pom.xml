@@ -463,7 +463,7 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <argLine>@{argLine} @{failsafe.argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
+                            <argLine>@{argLine} @{failsafe.argLine} -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                         </configuration>
                     </execution>
                 </executions>
