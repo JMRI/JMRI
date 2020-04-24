@@ -93,7 +93,7 @@
         <decVal/>
         <label>Vmid</label>
         <label xml:lang="ca">Voltatge mitjà</label>
-        <label xml:lang="cs">Střední napětí</label>
+	      <label xml:lang="cs">Střední napětí</label>
         <label xml:lang="de">Mittengeschwindigkeit</label>
         <label xml:lang="it">Tensione intermedia</label>
         <label xml:lang="de">Gemiddelde snelheid</label>
