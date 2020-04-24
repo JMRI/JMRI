@@ -1,8 +1,8 @@
 package apps;
 
-import static apps.gui.GuiLafPreferencesManager.MIN_FONT_SIZE;
+import static jmri.util.gui.GuiLafPreferencesManager.MIN_FONT_SIZE;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;

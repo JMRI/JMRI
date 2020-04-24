@@ -54,7 +54,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         panel.setAttribute("class", getClass().getName());
         panel.setAttribute("name", p.getLayoutName());
-        if (InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
+        if (InstanceManager.getDefault(jmri.util.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
             panel.setAttribute("x", "" + p.getUpperLeftX());
             panel.setAttribute("y", "" + p.getUpperLeftY());
             panel.setAttribute("windowheight", "" + p.getWindowHeight());
@@ -334,7 +334,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         }
 
         // If available, override location and size with machine dependent values
-        if (!InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
+        if (!InstanceManager.getDefault(jmri.util.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
             jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
             if (prefsMgr != null) {
                 String windowFrameRef = "jmri.jmrit.display.layoutEditor.LayoutEditor:" + name;

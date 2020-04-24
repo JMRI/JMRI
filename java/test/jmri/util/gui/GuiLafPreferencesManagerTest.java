@@ -1,4 +1,4 @@
-package apps.gui;
+package jmri.util.gui;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -14,7 +14,6 @@ public class GuiLafPreferencesManagerTest {
 
     @Test
     public void testCTor() {
-        @SuppressWarnings("deprecation")
         GuiLafPreferencesManager t = new GuiLafPreferencesManager();
         Assert.assertNotNull("exists",t);
     }
