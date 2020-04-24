@@ -29,7 +29,7 @@ public class PrintLocationsActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        PrintLocationsAction t = new PrintLocationsAction("test action", true);
+        PrintLocationsAction t = new PrintLocationsAction(true);
         Assert.assertNotNull("exists", t);
     }
 
@@ -96,7 +96,7 @@ public class PrintLocationsActionTest extends OperationsTestCase {
         stagingTrack.setShipLoadOption(Track.EXCLUDE_LOADS);
         stagingTrack.addShipLoadName("Screws");
 
-        PrintLocationsAction pla = new PrintLocationsAction("test action", true);
+        PrintLocationsAction pla = new PrintLocationsAction(true);
         Assert.assertNotNull("exists", pla);
         // select all options
         pla.printLocations.setSelected(true);
@@ -123,7 +123,7 @@ public class PrintLocationsActionTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.initOperationsData();
-        PrintLocationsAction pla = new PrintLocationsAction("test action", true);
+        PrintLocationsAction pla = new PrintLocationsAction(true);
         Assert.assertNotNull("exists", pla);
 
         LocationPrintOptionFrame f = pla.new LocationPrintOptionFrame(pla);
@@ -150,7 +150,7 @@ public class PrintLocationsActionTest extends OperationsTestCase {
         JUnitOperationsUtil.initOperationsData();
         Location location = InstanceManager.getDefault(LocationManager.class).getLocationByName("North Industries");
 
-        PrintLocationsAction pla = new PrintLocationsAction("test action", true, location);
+        PrintLocationsAction pla = new PrintLocationsAction(true, location);
         Assert.assertNotNull("exists", pla);
 
         pla.actionPerformed(new ActionEvent("Test Action", 0, null));

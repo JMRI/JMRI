@@ -25,7 +25,7 @@ public class PrintCarRosterActionTest extends OperationsTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarsTableFrame ctf = new CarsTableFrame(true, null, null);
-        PrintCarRosterAction t = new PrintCarRosterAction("Test Action", true, ctf);
+        PrintCarRosterAction t = new PrintCarRosterAction(true, ctf);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(ctf);
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -37,7 +37,7 @@ public class PrintCarRosterActionTest extends OperationsTestCase {
 
         JUnitOperationsUtil.initOperationsData();
         CarsTableFrame ctf = new CarsTableFrame(true, null, null);
-        PrintCarRosterAction pcra = new PrintCarRosterAction("Test Action", true, ctf);
+        PrintCarRosterAction pcra = new PrintCarRosterAction(true, ctf);
         Assert.assertNotNull("exists", pcra);
         
         CarPrintOptionFrame f = pcra.new CarPrintOptionFrame(pcra);

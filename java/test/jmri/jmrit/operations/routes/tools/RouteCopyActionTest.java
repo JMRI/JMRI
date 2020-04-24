@@ -1,9 +1,15 @@
 package jmri.jmrit.operations.routes.tools;
 
-import jmri.jmrit.operations.OperationsTestCase;
+import java.awt.GraphicsEnvironment;
+import java.awt.event.ActionEvent;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
 
 /**
  *
@@ -13,8 +19,21 @@ public class RouteCopyActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        RouteCopyAction t = new RouteCopyAction("Test");
+        RouteCopyAction t = new RouteCopyAction();
         Assert.assertNotNull("exists",t);
+    }
+    
+    @Test
+    public void testAction() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        RouteCopyAction a = new RouteCopyAction();
+        Assert.assertNotNull("exists", a);
+        
+        a.actionPerformed(new ActionEvent(this, 0, null));
+        
+        JmriJFrame f = JmriJFrame.getFrame(Bundle.getMessage("TitleRouteCopy"));
+        Assert.assertNotNull("frame exists", f);
+        JUnitUtil.dispose(f);
     }
 
     // private final static Logger log = LoggerFactory.getLogger(RouteCopyActionTest.class);

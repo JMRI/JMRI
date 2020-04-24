@@ -132,6 +132,8 @@ We roll some general code maintenance items into the release process.
         grep -lr '\t' jython/ | grep '\.py'
 ```
 
+- Consider running jmri.ArchitectureCheck to recreate (and hopefully reduce) the known coupling exceptions in archunit_store/ and perhaps even trim the archunit_ignore_patterns.txt contents.
+
 - Run "ant alltest"; make sure they all pass; fix problems and commit back (might also take the jvisualvm data below)
 
 - Run "ant decoderpro"; check for no startup errors, right version, help index present and working OK. Fix problems and commit back.
@@ -187,13 +189,13 @@ git push github
     If there were, update the master
 
 - Merge the release note body from help/en/releasenotes/current-draft-note.shtml in the JMRI/JMRI repository into the actual release note in website repository:
-     bbedit help/en/releasenotes/current-draft-note.shtml ../website/releasenotes/jmri4.19.5.shtml
+     ${EDITOR} help/en/releasenotes/current-draft-note.shtml ../website/releasenotes/jmri4.19.5.shtml
      
 - Merge the new warnings (if any) from help/en/releasenotes/current-warnings.shtml in the JMRI/JMRI repository into the actual release note in website repository:
-     bbedit help/en/releasenotes/current-draft-warnings.shtml ../website/releasenotes/jmri4.19.5.shtml
+     ${EDITOR} help/en/releasenotes/current-draft-warnings.shtml ../website/releasenotes/jmri4.19.5.shtml
      
  - add any new warnings to the old warnings section of the next (4.19.6) release note:
-    bbedit ../website/releasenotes/jmri4.19.5.shtml ../website/releasenotes/jmri4.19.6.shtml
+    ${EDITOR} ../website/releasenotes/jmri4.19.5.shtml ../website/releasenotes/jmri4.19.6.shtml
        
 - Clean out the unneeded sections from the release note
 
@@ -304,6 +306,7 @@ If you're developing any additional (post-4.19.5) changes that you want in the J
 
 - On your local machine, open jvisualvm. Do 
 
+    ant clean tests
     unsetenv JMRI_OPTIONS
     ant alltest
     
@@ -412,16 +415,16 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```   
+
 [Release notes](https://jmri.org/releasenotes/jmri4.19.5.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.19.5+R7364caf9c.dmg](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R7364caf9c.dmg) | 832ce84fb3e799a4fb7f245386b67fae3bb8791286f0f20eca652034d41eb18c
-[JMRI.4.19.5+R7364caf9c.exe](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R7364caf9c.exe) | e3f80296837eba7efd534301880ed10e18ea330256d579b480612077e06e3233
-[JMRI.4.19.5+R7364caf9c.tgz](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R7364caf9c.tgz) | fc3a3189c3518654717a13417a98c6846ee37a794e81812901555ab3d42fddc7
-
+[JMRI.4.19.5+R6ede87265.dmg](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R6ede87265.dmg) | 77b392c3b7d650df822e0b642c786a829d3937dd9b32a02bc02e1378fd8ecc9f
+[JMRI.4.19.5+R6ede87265.exe](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R6ede87265.exe) | 9410e05e9eb9df0e7afc720c0888a68178a0dc6012c740bda3fafe627fe27c85
+[JMRI.4.19.5+R6ede87265.tgz](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R6ede87265.tgz) | 925207153a2f3d027de55cb63a222fb5cfaa13b79bbec42d0d3011a451948746
 
 ```
 
@@ -501,7 +504,12 @@ git push github
 
 - Update the web site front page and downloads page:
 ```
-     index.shtml download/Sidebar.shtml download/index.shtml releaselist
+     ${EDITOR}  index.shtml download/Sidebar.shtml download/index.shtml releaselist 
+```
+
+- Update the release note with date, name, remove warning about draft, download links, one last check of release numbers throughout
+```
+     ${EDITOR}  releasenotes/jmri4.19.5.shtml
 ```
 
 - Commit site, push to github
@@ -592,7 +600,9 @@ The rest of the document provides information about specific cases.
 If you can't use Jenkins for the actual build, you can create the files locally:
 
 If you're building locally:
-* You need to have installed NSIS from http://nsis.sourceforge.net (we use version 3.01 with long string support; see [Issue 3913](https://github.com/JMRI/JMRI/issues/3913) for instructions on how to build that for Linux). On macOS, install (currently [version 3.03](https://formulae.brew.sh/formula/makensis) via Homebrew
+
+* You no need to have installed NSIS, as the two .exe files are pre-built.  If 
+you want to have it anyway to update the .nsi files and rebuild it, start by getting it from http://nsis.sourceforge.net (we use version 3.01 with long string support; see [Issue 3913](https://github.com/JMRI/JMRI/issues/3913) for instructions on how to build that for Linux). On macOS, install (currently [version 3.03](https://formulae.brew.sh/formula/makensis) via Homebrew
  - brew install makensis --with-large-strings
  - add an entry in "local.properties" nsis.home=/usr/local/bin/
 

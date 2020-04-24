@@ -121,6 +121,6 @@ public class NdPane extends JPanel {
         updateNode();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(SimulatorPane.class);
+    private final static Logger log = LoggerFactory.getLogger(NdPane.class);
     
 }
