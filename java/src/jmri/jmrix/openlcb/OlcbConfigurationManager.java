@@ -245,12 +245,12 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (type.equals(jmri.LightManager.class)) {
             return true;
         }
-//        if (type.equals(AliasMap.class)) {
-//            return true;
-//        }
-//        if (type.equals(MessageBuilder.class)) {
-//            return true;
-//        }
+        if (type.equals(AliasMap.class)) {
+            return true;
+        }
+        if (type.equals(MessageBuilder.class)) {
+            return true;
+        }
         if (type.equals(MimicNodeStore.class)) {
             return true;
         }
@@ -296,12 +296,12 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (T.equals(jmri.LightManager.class)) {
             return (T) getLightManager();
         }
-//        if (T.equals(AliasMap.class)) {
-//            return (T) aliasMap;
-//        }
-//        if (T.equals(MessageBuilder.class)) {
-//            return (T) messageBuilder;
-//        }
+        if (T.equals(AliasMap.class)) {
+            return (T) aliasMap;
+        }
+        if (T.equals(MessageBuilder.class)) {
+            return (T) messageBuilder;
+        }
         if (T.equals(MimicNodeStore.class)) {
             return (T) getInterface().getNodeStore();
         }

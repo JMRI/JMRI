@@ -187,9 +187,7 @@ public class OlcbSensor extends AbstractSensor {
             @Override
             public void run() {
                 timerTask = null;
-                jmri.util.ThreadingUtil.runOnGUI(() -> {
-                    setKnownState(Sensor.INACTIVE);
-                });
+                jmri.util.ThreadingUtil.runOnGUI(() -> setKnownState(Sensor.INACTIVE));
             }
         };
         jmri.util.TimerUtil.schedule(timerTask, ON_TIME);

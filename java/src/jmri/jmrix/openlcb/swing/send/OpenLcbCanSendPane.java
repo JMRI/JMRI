@@ -117,28 +117,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // handle single-packet part
-        {
-            JPanel pane1 = new JPanel();
-            pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
-
-            jLabel1.setText("Single Frame:  (Raw input format is [123] 12 34 56) ");
-            jLabel1.setVisible(true);
-
-            sendButton.setText("Send");
-            sendButton.setVisible(true);
-            sendButton.setToolTipText("Send frame");
-
-            packetTextField.setToolTipText("Frame as hex pairs, e.g. 82 7D; standard header in (), extended in []");
-
-            pane1.add(jLabel1);
-            pane1.add(packetTextField);
-            pane1.add(sendButton);
-            pane1.add(Box.createVerticalGlue());
-
-            sendButton.addActionListener(this::sendButtonActionPerformed);
-
-            add(pane1);
-        }
+        add(getSendSinglePacketJPanel());
 
         add(new JSeparator());
 
@@ -273,6 +252,28 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     }
 
+    private JPanel getSendSinglePacketJPanel() {
+        JPanel pane1 = new JPanel();
+        pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
+
+        jLabel1.setText("Single Frame:  (Raw input format is [123] 12 34 56) ");
+        jLabel1.setVisible(true);
+
+        sendButton.setText("Send");
+        sendButton.setVisible(true);
+        sendButton.setToolTipText("Send frame");
+
+        packetTextField.setToolTipText("Frame as hex pairs, e.g. 82 7D; standard header in (), extended in []");
+
+        pane1.add(jLabel1);
+        pane1.add(packetTextField);
+        pane1.add(sendButton);
+        pane1.add(Box.createVerticalGlue());
+
+        sendButton.addActionListener(this::sendButtonActionPerformed);
+        return pane1;
+    }
+
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane";
@@ -295,28 +296,24 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         if (c != null) {
-            //JPanel p2 = new JPanel();
-            //p2.setLayout(new FlowLayout());
             p.add(lab);
             p.add(c);
-            //p.add(p2);
         } else {
             p.add(lab);
         }
         p.add(Box.createHorizontalGlue());
-        //lab.setAlignmentX(Component.RIGHT_ALIGNMENT);
         return p;
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         CanMessage m = createPacket(packetTextField.getText());
-        log.debug("sendButtonActionPerformed: " + m);
+        log.debug("sendButtonActionPerformed: {}",m);
         tc.sendCanMessage(m, this);
     }
 
     public void sendCimPerformed(java.awt.event.ActionEvent e) {
         String data = "[10700" + srcAliasField.getText() + "]";  // NOI18N
-        log.debug("|" + data + "|");
+        log.debug("|{}|",data);
         CanMessage m = createPacket(data);
         log.debug("sendCimPerformed");
         tc.sendCanMessage(m, this);
@@ -380,7 +377,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
                 length, new MemoryConfigurationService.McsReadHandler() {
                     @Override
                     public void handleReadData(NodeID dest, int space, long address, byte[] data) {
-                        log.debug("Read data received " + data.length + " bytes");
+                        log.debug("Read data received {} bytes",data.length);
                         readDataField.setText(jmri.util.StringUtil.hexStringFromBytes(data));
                     }
 
@@ -399,6 +396,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         mcs.requestWrite(destNodeID(), space, addr, content, new MemoryConfigurationService.McsWriteHandler() {
             @Override
             public void handleSuccess() {
+                // no action required on success
             }
 
             @Override
@@ -434,7 +432,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     /**
      * Internal routine to handle a timeout and send next item
      */
-    synchronized protected void timeout() {
+    protected synchronized void timeout() {
         sendNextItem();
     }
 
@@ -549,6 +547,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
      */
     @Override
     public void message(CanMessage m) {
+        // ignore outgoing messages
     }
 
     /**
@@ -556,6 +555,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
      */
     @Override
     public void reply(CanReply m) {
+        // ignore incoming replies
     }
 
     /**
@@ -569,6 +569,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     // private data
     private TrafficController tc = null; //was CanInterface
-    private final static Logger log = LoggerFactory.getLogger(OpenLcbCanSendPane.class);
+    private static final Logger log = LoggerFactory.getLogger(OpenLcbCanSendPane.class);
 
 }

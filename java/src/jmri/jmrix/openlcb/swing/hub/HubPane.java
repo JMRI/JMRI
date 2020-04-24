@@ -79,7 +79,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         hub.addForwarder(m -> {
             if (m.source == null) {
                 return;  // was from this
-            }                // process and forward m.line;
+            }                // process and forward m.line
             GridConnectReply msg = new GridConnectReply();
             byte[] bytes;
             bytes = m.line.getBytes(StandardCharsets.US_ASCII);  // GC adapters use ASCII // NOI18N
@@ -134,7 +134,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
     public synchronized void message(CanMessage l) {  // receive a message and log it
         GridConnectMessage gm = new GridConnectMessage(l);
         if (log.isDebugEnabled()) {
-            log.debug("message " + gm.toString());
+            log.debug("message {}",gm);
         }
         hub.putLine(gm.toString());
     }
@@ -150,6 +150,6 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(HubPane.class);
+    private static final Logger log = LoggerFactory.getLogger(HubPane.class);
 
 }
