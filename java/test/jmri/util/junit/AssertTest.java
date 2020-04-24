@@ -65,11 +65,17 @@ public class AssertTest {
         jmri.util.JUnitUtil.setUp();
         
         assertsEnabled = false;
-        assert assertsEnabled = true; // Intentional side-effect if assert is enabled
+
+        assert localAssign(); // Intentional side-effect if assert is enabled
         
         // Now assertsEnabled is set to the correct value
     }
 
+    boolean localAssign() {
+        assertsEnabled = true; // Intentional side-effect if assert is enabled
+        return true;
+    }
+    
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
