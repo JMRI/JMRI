@@ -761,8 +761,7 @@ public abstract class AbstractMRTrafficController {
             }
             controller = p;
             // and start threads
-            xmtThread = new Thread(
-                jmri.util.ThreadingUtil.getJmriThreadGroup(),
+            xmtThread = jmri.util.ThreadingUtil.newThread(
                 xmtRunnable = new Runnable() {
                     @Override
                     public void run() {
@@ -788,8 +787,7 @@ public abstract class AbstractMRTrafficController {
             xmtThread.setPriority(Thread.MAX_PRIORITY-1);      //bump up the priority
             xmtThread.start();
 
-            rcvThread = new Thread(
-                jmri.util.ThreadingUtil.getJmriThreadGroup(),
+            rcvThread = jmri.util.ThreadingUtil.newThread(
                 new Runnable() {
                     @Override
                     public void run() {

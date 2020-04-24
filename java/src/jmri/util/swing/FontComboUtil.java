@@ -336,7 +336,7 @@ public class FontComboUtil {
      */
     public static boolean isReady() {
         if (!prepared && !preparing) { // prepareFontLists is synchronized; don't do it if you don't have to
-            new Thread(jmri.util.ThreadingUtil.getJmriThreadGroup(),
+            jmri.util.ThreadingUtil.newThread(
                 () -> {
                     prepareFontLists();
                 }, 

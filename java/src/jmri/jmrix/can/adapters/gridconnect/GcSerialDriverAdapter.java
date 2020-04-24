@@ -145,8 +145,7 @@ public class GcSerialDriverAdapter extends GcPortController {
         AsyncBufferInputStream(InputStream inputStream, String portName) {
             super(inputStream);
             this.portName = portName;
-            Thread rt = new Thread(jmri.util.ThreadingUtil.getJmriThreadGroup(), 
-                                    this::readThreadBody);
+            Thread rt = jmri.util.ThreadingUtil.newThread(this::readThreadBody);
             rt.setName("GcSerialPort InputBufferThread " + portName);
             rt.setDaemon(true);
             rt.setPriority(Thread.MAX_PRIORITY);

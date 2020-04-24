@@ -305,8 +305,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
         }
         CountDownLatch nsLatch = new CountDownLatch(getDNSes().size());
         new HashMap<>(getDNSes()).values().parallelStream().forEach(dns -> {
-            new Thread(
-                jmri.util.ThreadingUtil.getJmriThreadGroup(),
+            jmri.util.ThreadingUtil.newThread(
                 () -> {
                     dns.unregisterAllServices();
                     if (close) {
@@ -627,8 +626,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
 
         @Override
         public boolean execute() {
-            new Thread(
-                jmri.util.ThreadingUtil.getJmriThreadGroup(),
+            jmri.util.ThreadingUtil.newThread(
                 () -> {
                     dispose(manager);
                     this.isComplete = true;

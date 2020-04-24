@@ -2530,7 +2530,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 //log.debug("Error setting stability indicator sensor");
             }
         };
-        thr = new Thread(r, "Routing stabilising timer");
+        thr = jmri.util.ThreadingUtil.newThread(r, "Routing stabilising timer");
         thr.start();
     }	//setRoutingStabilised
 
