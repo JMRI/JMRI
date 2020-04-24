@@ -133,15 +133,6 @@ public class OlcbTestInterface {
         iface.flushSendQueue();
     }
 
-    public static OlcbSystemConnectionMemo createForLegacyTests() {
-        OlcbTestInterface testIf = new OlcbTestInterface();
-        OlcbSystemConnectionMemo memo = new OlcbSystemConnectionMemo();
-        memo.setTrafficController(testIf.tc);
-        memo.setInterface(testIf.iface);
-        testIf.waitForStartup();
-        return memo;
-    }
-
     /**
      * @return an OlcbSystemConnectionMemo bound to this test interface for integration tests.
      */

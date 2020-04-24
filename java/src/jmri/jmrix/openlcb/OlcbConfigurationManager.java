@@ -95,7 +95,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         InstanceManager.store(this, OlcbConfigurationManager.class);
     }
 
-    jmri.jmrix.swing.ComponentFactory cf;
+    final jmri.jmrix.swing.ComponentFactory cf;
 
     private void initializeFastClock() {
         boolean isMaster;

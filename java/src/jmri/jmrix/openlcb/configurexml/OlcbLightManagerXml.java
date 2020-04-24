@@ -7,6 +7,8 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Provides load and store functionality for configuring OlcbLightManagers.
  * <p>
@@ -32,7 +34,7 @@ public class OlcbLightManagerXml extends jmri.managers.configurexml.AbstractLigh
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) {
+    public boolean load(@Nonnull Element shared, Element perNode) {
         boolean result;
         // We tell the Light managers that we will be loading Lights from XML and they should
         // expect additional property set sequences. This is somewhat tricky in the face of

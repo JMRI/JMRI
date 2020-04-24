@@ -106,7 +106,7 @@ public class ProtocolOptionsFrame extends JmriJFrame {
             scm.setProtocolOption(protocolKey, optionKey, newV);
             anyChanged = true;
         });
-        valueField.addActionListener(actionEvent -> log.warn("Entry changed: " + protocolKey + " " + optionKey + " = " + valueField.getText()));
+        valueField.addActionListener(actionEvent -> log.warn("Entry changed: {} {} = {}", protocolKey, optionKey, valueField.getText()));
     }
 
     private void addOptionLabel(String protocolKey, String optionKey, JPanel tab) {

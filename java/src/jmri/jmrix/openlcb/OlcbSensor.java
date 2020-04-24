@@ -57,7 +57,7 @@ public class OlcbSensor extends AbstractSensor {
         OlcbAddress a = new OlcbAddress(address);
         OlcbAddress[] v = a.split();
         if (v == null) {
-            log.error("Did not find usable system name: " + address);
+            log.error("Did not find usable system name: {}", address);
             return;
         }
         switch (v.length) {
@@ -71,7 +71,7 @@ public class OlcbSensor extends AbstractSensor {
                 addrInactive = v[1];
                 break;
             default:
-                log.error("Can't parse OpenLCB Sensor system name: " + address);
+                log.error("Can't parse OpenLCB Sensor system name: {}", address);
         }
 
     }
@@ -220,7 +220,7 @@ public class OlcbSensor extends AbstractSensor {
     }
 
     @Override
-    public void setProperty(String key, Object value) {
+    public void setProperty(@Nonnull String key, Object value) {
         Object old = getProperty(key);
         super.setProperty(key, value);
         if (value.equals(old)) return;

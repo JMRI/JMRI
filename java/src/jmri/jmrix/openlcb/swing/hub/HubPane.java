@@ -143,9 +143,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
     public synchronized void reply(CanReply reply) {
         if (reply != workingReply) {
             GridConnectMessage gm = new GridConnectMessage(new CanMessage(reply));
-            if (log.isDebugEnabled()) {
-                log.debug("reply " + gm.toString());
-            }
+            log.debug("reply {}", gm.toString());
             hub.putLine(gm.toString());
         }
     }

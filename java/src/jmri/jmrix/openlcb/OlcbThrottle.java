@@ -84,7 +84,7 @@ public class OlcbThrottle extends AbstractThrottle {
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         if (speed > 1.0) {
-            log.warn("Speed was set too high: " + speed);
+            log.warn("Speed was set too high: {}", speed);
         }
         this.speedSetting = speed;
 

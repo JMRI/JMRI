@@ -83,8 +83,7 @@ public class ClientActions {
                             if (mdesc.getText().length() > 0) {
                                 sensor.setUserName(mdesc.getText());
                             }
-                            log.info("make sensor MS" + mevt1.getText() + ";" + mevt2.getText() +
-                                    " [" + mdesc.getText() + "]");
+                            log.info("make sensor MS{};{} [{}]", mevt1.getText(), mevt2.getText(), mdesc.getText());
                         }
 
                         final JTextField mdesc = desc;
@@ -102,8 +101,7 @@ public class ClientActions {
                             if (mdesc.getText().length() > 0) {
                                 turnout.setUserName(mdesc.getText());
                             }
-                            log.info("make turnout MT" + mevt1.getText() + ";" + mevt2.getText()
-                                    + " [" + mdesc.getText() + "]");
+                            log.info("make turnout MT{};{} [{}]", mevt1.getText(), mevt2.getText(), mdesc.getText());
                         }
 
                         final JTextField mdesc = desc;

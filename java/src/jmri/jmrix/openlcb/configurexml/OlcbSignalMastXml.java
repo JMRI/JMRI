@@ -9,6 +9,8 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Handle XML configuration for OlcbSignalMast objects.
  *
@@ -74,7 +76,7 @@ public class OlcbSignalMastXml
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) {
+    public boolean load(@Nonnull Element shared, Element perNode) {
         OlcbSignalMast m;
         String sys = getSystemName(shared);
         try {

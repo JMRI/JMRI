@@ -14,6 +14,8 @@ import org.openlcb.implementations.VersionedValueListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  *
  * @author jcollell
@@ -43,14 +45,14 @@ public class OlcbLight extends AbstractLight {
         OlcbAddress a = new OlcbAddress(address);
         OlcbAddress[] v = a.split();
         if (v == null) {
-            log.error("Did not find usable system name: " + address);
+            log.error("Did not find usable system name: {}", address);
             return;
         }
         if (v.length == 2) {
             addrOn = v[0];
             addrOff = v[1];
         } else {
-            log.error("Can't parse OpenLCB Light system name: " + address);
+            log.error("Can't parse OpenLCB Light system name: {}", address);
         }
     }
     
@@ -128,7 +130,7 @@ public class OlcbLight extends AbstractLight {
     
     /** {@inheritDoc} */
     @Override
-    public void setProperty(String key, Object value) {
+    public void setProperty(@Nonnull String key, Object value) {
         Object old = getProperty(key);
         super.setProperty(key, value);
         if (value.equals(old)) return;
