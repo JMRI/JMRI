@@ -89,5 +89,5 @@ public class UnzipFileClass {
 		}
 	}
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PhysicalLocation.class);	
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(UnzipFileClass.class);
 }

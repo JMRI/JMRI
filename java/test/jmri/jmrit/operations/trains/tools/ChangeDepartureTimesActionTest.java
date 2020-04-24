@@ -19,14 +19,14 @@ public class ChangeDepartureTimesActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        ChangeDepartureTimesAction t = new ChangeDepartureTimesAction("Test Action");
+        ChangeDepartureTimesAction t = new ChangeDepartureTimesAction();
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ChangeDepartureTimesAction a = new ChangeDepartureTimesAction("Test Action");
+        ChangeDepartureTimesAction a = new ChangeDepartureTimesAction();
         Assert.assertNotNull("exists", a);
         
         a.actionPerformed(new ActionEvent(this, 0, null));

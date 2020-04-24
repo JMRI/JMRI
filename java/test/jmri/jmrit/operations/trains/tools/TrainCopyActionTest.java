@@ -19,14 +19,14 @@ public class TrainCopyActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        TrainCopyAction t = new TrainCopyAction("Test Action");
+        TrainCopyAction t = new TrainCopyAction();
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrainCopyAction a = new TrainCopyAction("Test Action");
+        TrainCopyAction a = new TrainCopyAction();
         Assert.assertNotNull("exists", a);
         
         a.actionPerformed(new ActionEvent(this, 0, null));

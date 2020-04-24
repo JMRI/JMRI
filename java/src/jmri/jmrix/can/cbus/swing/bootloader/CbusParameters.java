@@ -212,6 +212,6 @@ public class CbusParameters {
         valid = s;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(CbusBootloaderPane.class);
+    private final static Logger log = LoggerFactory.getLogger(CbusParameters.class);
     
 }

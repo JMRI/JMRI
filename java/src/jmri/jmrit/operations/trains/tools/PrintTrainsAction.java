@@ -4,6 +4,10 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
@@ -11,8 +15,6 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainsTableFrame;
 import jmri.util.davidflanagan.HardcopyWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action to print a summary of each train in operations.
@@ -35,8 +37,8 @@ public class PrintTrainsAction extends PrintTrainAction {
 
     public static final int MAX_NAME_LENGTH = Control.max_len_string_train_name - 10;
 
-    public PrintTrainsAction(String actionName, boolean preview, TrainsTableFrame frame) {
-        super(actionName, preview);
+    public PrintTrainsAction(boolean isPreview, TrainsTableFrame frame) {
+        super(isPreview);
         trainsTableFrame = frame;
     }
 
@@ -45,7 +47,7 @@ public class PrintTrainsAction extends PrintTrainAction {
         printTrains();
     }
     
-    public void printTrains() {
+    private void printTrains() {
 
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;

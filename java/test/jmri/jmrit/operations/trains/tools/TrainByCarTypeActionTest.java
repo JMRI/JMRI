@@ -16,18 +16,17 @@ import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 
 /**
- *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TrainByCarTypeActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
         Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
-        TrainByCarTypeAction t = new TrainByCarTypeAction("Test Action",train1);
-        Assert.assertNotNull("exists",t);
+        TrainByCarTypeAction t = new TrainByCarTypeAction(train1);
+        Assert.assertNotNull("exists", t);
     }
-    
+
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -39,8 +38,8 @@ public class TrainByCarTypeActionTest extends OperationsTestCase {
         // create work to show
         Assert.assertTrue(train1.build());
         Assert.assertTrue(train1.isBuilt());
-        TrainByCarTypeAction a = new TrainByCarTypeAction("Test Action", train1);
-        
+        TrainByCarTypeAction a = new TrainByCarTypeAction(train1);
+
         Thread performAction = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -53,17 +52,18 @@ public class TrainByCarTypeActionTest extends OperationsTestCase {
         jmri.util.JUnitUtil.waitFor(() -> {
             return performAction.getState().equals(Thread.State.TERMINATED);
         }, "wait to complete");
-        
+
         // confirm window is showing
         JmriJFrame frame = JmriJFrame.getFrame(Bundle.getMessage("MenuItemShowCarTypes") + " " + train1.getName());
         Assert.assertNotNull("exists", frame);
-        
+
         JUnitUtil.dispose(frame);
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainByCarTypeActionTest.class);
+    // private final static Logger log =
+    // LoggerFactory.getLogger(TrainByCarTypeActionTest.class);
 
 }

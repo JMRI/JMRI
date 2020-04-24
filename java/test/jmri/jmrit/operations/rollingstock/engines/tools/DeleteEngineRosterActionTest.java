@@ -22,14 +22,14 @@ public class DeleteEngineRosterActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        DeleteEngineRosterAction t = new DeleteEngineRosterAction("Test Action");
+        DeleteEngineRosterAction t = new DeleteEngineRosterAction();
         Assert.assertNotNull("exists", t);
     }
 
     @Test
     public void testDelete() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        DeleteEngineRosterAction deleteRosterAction = new DeleteEngineRosterAction("Test Action");
+        DeleteEngineRosterAction deleteRosterAction = new DeleteEngineRosterAction();
         Assert.assertNotNull("exists", deleteRosterAction);
 
         JUnitOperationsUtil.initOperationsData();

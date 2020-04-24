@@ -27,7 +27,7 @@ public class RoutesTableActionTest extends OperationsTestCase {
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        RoutesTableAction a = new RoutesTableAction("Test");
+        RoutesTableAction a = new RoutesTableAction();
         Assert.assertNotNull("exists", a);
         
         a.actionPerformed(new ActionEvent(this, 0, null));

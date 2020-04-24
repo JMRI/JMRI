@@ -7,8 +7,12 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.TrackEditFrame;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Track;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 
@@ -17,20 +21,16 @@ import jmri.util.JmriJFrame;
  * @author Paul Bender Copyright (C) 2017	
  */
 public class IgnoreUsedTrackActionTest extends OperationsTestCase {
-
-    @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrackEditFrame tf = new TrackEditFrame();
-        IgnoreUsedTrackAction t = new IgnoreUsedTrackAction(tf);
-        Assert.assertNotNull("exists",t);
-    }
     
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrackEditFrame tf = new TrackEditFrame();
-        IgnoreUsedTrackAction a = new IgnoreUsedTrackAction(tf);
+        JUnitOperationsUtil.initOperationsData();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
+        Location location = lManager.getLocationById("20");
+        Track track = location.getTrackById("20s1");
+        
+        IgnoreUsedTrackAction a = new IgnoreUsedTrackAction(track);
         Assert.assertNotNull("exists", a);
         
         a.actionPerformed(new ActionEvent(this, 0, null));

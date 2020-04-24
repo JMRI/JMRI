@@ -19,7 +19,7 @@ public class TrainsScheduleActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        TrainsScheduleAction t = new TrainsScheduleAction("Test Action");
+        TrainsScheduleAction t = new TrainsScheduleAction();
         Assert.assertNotNull("exists", t);
     }
     
