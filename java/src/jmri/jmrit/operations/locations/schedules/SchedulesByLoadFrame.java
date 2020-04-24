@@ -246,6 +246,6 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationsByCarTypeFrame.class);
+    private final static Logger log = LoggerFactory.getLogger(SchedulesByLoadFrame.class);
 
 }

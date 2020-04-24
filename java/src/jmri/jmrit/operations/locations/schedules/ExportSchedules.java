@@ -143,6 +143,6 @@ public class ExportSchedules extends XmlFile {
 
     private static String operationsFileName = "ExportOperationsSchedules.csv"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(ExportLocations.class);
+    private final static Logger log = LoggerFactory.getLogger(ExportSchedules.class);
 
 }

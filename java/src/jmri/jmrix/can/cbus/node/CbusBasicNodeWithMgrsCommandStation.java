@@ -120,6 +120,6 @@ public class CbusBasicNodeWithMgrsCommandStation extends CbusBasicNodeWithManage
         return _StatResponseFlagsAccurate;
     }
     
-    private static final Logger log = LoggerFactory.getLogger(CbusBasicNodeWithManagers.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusBasicNodeWithMgrsCommandStation.class);
     
 }
