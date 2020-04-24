@@ -94,14 +94,25 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
 
     public static abstract class EnumIO <T extends Enum<T>> { // public to be usable by adapters in other configXML packages
 
+        /**
+         * Convert an enum value to a String for storage in an XML file.
+         */
         @Nonnull
         abstract public String outputFromEnum(@Nonnull T e);
         
+        /**
+         * Convert a String value from an XML file to an enum value
+         */
         @Nonnull
         abstract public T inputFromString(@Nonnull String s);
 
+        /**
+         * Convert a JDOM Attribute from an XML file to an enum value
+         */
         @Nonnull
-        abstract public T inputFromAttribute(@Nonnull Attribute a);
+        public T inputFromAttribute(@Nonnull Attribute a) {
+            return inputFromString(a.getValue());
+        }
     }
     
     /**
@@ -118,22 +129,22 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         }
         Class<T> clazz;
 
+        /** {@inheritDoc} */
+        @Override
         @Nonnull
         public String outputFromEnum(@Nonnull T e) {
             int ordinal = e.ordinal();
             return ""+ordinal;
         }
         
+        /** {@inheritDoc} */
+        @Override
         @Nonnull
         public T inputFromString(@Nonnull String s) {
             int content = Integer.parseInt(s);
             return clazz.getEnumConstants()[content];
         }
 
-        @Nonnull
-        public T inputFromAttribute(@Nonnull Attribute a) {
-            return inputFromString(a.getValue());
-        }
     }
 
     /**
@@ -142,15 +153,8 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
     public static class EnumIoNames <T extends Enum<T>> extends EnumIO<T> { // public to be usable by adapters in other configXML packages
     
         /**
-         * This constructor converts to and from strings.
-         * If both Map arguments are null, a 1-to-1 mapping
-         * to the enum element names is used.
-         * @param mapToEnum if provided, substitutes an explicit mapping
-         * for mapping from Strings to enums; this could allow e.g.
-         * accepting both name and number versions.
-         * @param mapFromEnum if provided, substitutes an explicit mapping
-         * for mapping from enum entries to Strings; this determines what will
-         * be written out.
+         * This constructor converts to and from strings
+         * using the enum element names.
          */
         public EnumIoNames(@Nonnull Class<T> clazz) {
             this.clazz = clazz;
@@ -165,6 +169,8 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         Class<T> clazz;
         final Map<String, T> mapToEnum;
         
+        /** {@inheritDoc} */
+        @Override
         @Nonnull
         public String outputFromEnum(@Nonnull T e) {
                 String retval = e.toString();
@@ -172,16 +178,13 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
                 return retval;
         }
         
+        /** {@inheritDoc} */
+        @Override
         @Nonnull
         public T inputFromString(@Nonnull String s) {
                 T retval = mapToEnum.get(s);
                 log.trace("from String {} get {}} for {}", s, retval, clazz);
                 return retval;
-        }
-
-        @Nonnull
-        public T inputFromAttribute(@Nonnull Attribute a) {
-            return inputFromString(a.getValue());
         }
     }
 
@@ -232,6 +235,8 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         final Map<T, String> mapFromEnum;
         final Map<String, T> mapToEnum;
         
+        /** {@inheritDoc} */
+        @Override
         @Nonnull
         public String outputFromEnum(@Nonnull T e) {
             String retval = mapFromEnum.get(e);
@@ -239,16 +244,13 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
             return retval;
         }
         
+        /** {@inheritDoc} */
+        @Override
         @Nonnull
         public T inputFromString(@Nonnull String s) {
             T retval = mapToEnum.get(s);
             log.trace("from String {} get {}} for {}", s, retval, clazz);
             return retval;
-        }
-
-        @Nonnull
-        public T inputFromAttribute(@Nonnull Attribute a) {
-            return inputFromString(a.getValue());
         }
     }
 
