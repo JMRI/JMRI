@@ -166,5 +166,5 @@ public class DefaultProgrammerManager implements AddressedProgrammerManager, Glo
         return retval;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgrammingMode.class);
+    private final static Logger log = LoggerFactory.getLogger(DefaultProgrammerManager.class);
 }
