@@ -32,7 +32,7 @@ public class ThreadingUtilTest {
     
     @Test
     public void testThreadStartEnd() throws InterruptedException {
-        ThreadGroup tg = ThreadingUtil.getJmriThreadGroup();
+        ThreadingUtil.getJmriThreadGroup();  // just used to create the group
         Thread t = ThreadingUtil.newThread(() -> {});  // create and run quick
         t.join();
     }
