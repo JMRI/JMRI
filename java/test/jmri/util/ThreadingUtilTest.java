@@ -30,6 +30,13 @@ public class ThreadingUtilTest {
         Assert.assertEquals(tg, ThreadingUtil.getJmriThreadGroup());
     }
     
+    @Test
+    public void testThreadStartEnd() throws InterruptedException {
+        ThreadGroup tg = ThreadingUtil.getJmriThreadGroup();
+        Thread t = ThreadingUtil.newThread(() -> {});  // create and run quick
+        t.join();
+    }
+
     Object testRef = null;
     @Test
     public void testToGuiWarn() {
