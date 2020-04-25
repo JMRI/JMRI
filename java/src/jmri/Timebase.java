@@ -104,8 +104,8 @@ public interface Timebase extends NamedBean {
      * Set internalMaster and update fields.
      *
      * @param master true if fast clock time is derived from internal computer clock, 
-     *                  false if derived from hardware clock
-     * @param update 
+     *                  false if derived from hardware clock.
+     * @param update true to send update, else false.
      */
     public void setInternalMaster(boolean master, boolean update);
 
