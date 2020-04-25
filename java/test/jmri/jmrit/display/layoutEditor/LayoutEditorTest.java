@@ -194,19 +194,54 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         }
     }
 
-    public void testHPTisShapePointOffsetHitPointType() {
-        Assert.assertTrue(LayoutEditor.HitPointType.isShapePointOffsetHitPointType(LayoutEditor.HitPointType.SHAPE_POINT_0));
-        Assert.assertTrue(LayoutEditor.HitPointType.isShapePointOffsetHitPointType(LayoutEditor.HitPointType.SHAPE_POINT_1));
+       // *****************************************************************
+       //    Bezier Point support
+       // *****************************************************************
+       
+    @Test
+    public void testHPTbezierPointIndexOK() {
+        Assert.assertEquals(0, LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.bezierPointIndex());
+        Assert.assertEquals(1, LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_1.bezierPointIndex());
+        Assert.assertEquals(2, LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_2.bezierPointIndex());
         // ..
-        Assert.assertTrue(LayoutEditor.HitPointType.isShapePointOffsetHitPointType(LayoutEditor.HitPointType.SHAPE_POINT_8));
-        Assert.assertTrue(LayoutEditor.HitPointType.isShapePointOffsetHitPointType(LayoutEditor.HitPointType.SHAPE_POINT_9));
-        
-        Assert.assertFalse(LayoutEditor.HitPointType.isShapePointOffsetHitPointType(LayoutEditor.HitPointType.NONE));
-        Assert.assertFalse(LayoutEditor.HitPointType.isShapePointOffsetHitPointType(LayoutEditor.HitPointType.SHAPE_CENTER));
-        // ..
-        Assert.assertFalse(LayoutEditor.HitPointType.isShapePointOffsetHitPointType(LayoutEditor.HitPointType.TURNTABLE_RAY_0));
-        Assert.assertFalse(LayoutEditor.HitPointType.isShapePointOffsetHitPointType(LayoutEditor.HitPointType.TURNTABLE_RAY_63));
+        Assert.assertEquals(7, LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_7.bezierPointIndex());
+        Assert.assertEquals(8, LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_8.bezierPointIndex());        
     }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testHPTbezierPointIndexBad1() {
+        LayoutEditor.HitPointType.POS_POINT.bezierPointIndex();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testHPTbezierPointIndexBad2() {
+        LayoutEditor.HitPointType.TURNTABLE_RAY_0.bezierPointIndex();
+    }
+
+    @Test
+    public void testHPTbezierPointIndexedValueOK() {
+        Assert.assertEquals(LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0, LayoutEditor.HitPointType.bezierPointIndexedValue(0));
+        Assert.assertEquals(LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_1, LayoutEditor.HitPointType.bezierPointIndexedValue(1));
+        Assert.assertEquals(LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_2, LayoutEditor.HitPointType.bezierPointIndexedValue(2));
+        // ..
+        Assert.assertEquals(LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_6, LayoutEditor.HitPointType.bezierPointIndexedValue(6));
+        Assert.assertEquals(LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_7, LayoutEditor.HitPointType.bezierPointIndexedValue(7));
+        Assert.assertEquals(LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_8, LayoutEditor.HitPointType.bezierPointIndexedValue(8));
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testHPTbezierPointIndexedValueBad1() throws IllegalArgumentException {
+        LayoutEditor.HitPointType.bezierPointIndexedValue(-1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testHPTbezierPointIndexedValueBad2() {
+        LayoutEditor.HitPointType.bezierPointIndexedValue(9);
+    }
+    
+        // *****************************************************************
+        // General Enum tests
+        // *****************************************************************
     
     /**
      * Ensure that assigned integer values (xmlValue) and ordinal values are actually the same

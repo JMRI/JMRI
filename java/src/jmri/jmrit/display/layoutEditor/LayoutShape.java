@@ -292,7 +292,7 @@ public class LayoutShape {
      * @return the maximum number of points
      */
     public int getMaxNumberPoints() {
-        return LayoutEditor.HitPointType.shapePointValues().length;
+        return LayoutEditor.HitPointType.NUM_SHAPE_POINTS;
     }
 
     /**

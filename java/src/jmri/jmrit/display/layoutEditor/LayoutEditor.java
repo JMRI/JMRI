@@ -397,13 +397,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }   // isPopupHitType
        
        // *****************************************************************
-       //    Turntable Ray support
+       //    TURNTABLE_RAY support
        // *****************************************************************
        
        /**
         * Find the 0-63 index with respect to TURNTABLE_RAY_0
         * of a given enum entry.  Throws {@link IllegalArgumentException} if
-        * the given enum value isn't one of the TURNTABLE_RAY entries.
+        * the given enum value isn't one of the TURNTABLE_RAY_n entries.
         * <p>
         * Ideally, this would be replaced by turntable code that works
         * directly with the enum values as a step toward using objects
@@ -450,13 +450,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
        // *****************************************************************
-       //    Shape Point support
+       //    SHAPE_POINT support
        // *****************************************************************
        
        /**
         * Find the 0-9 index with respect to SHAPE_POINT_0
         * of a given enum entry.  Throws {@link IllegalArgumentException} if
-        * the given enum value isn't one of the SHAPE_POINT_0 entries.
+        * the given enum value isn't one of the SHAPE_POINT_n entries.
         * <p>
         * Ideally, this would be replaced by shape code that works
         * directly with the enum values as a step toward using objects
@@ -500,8 +500,46 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     && (t.compareTo(SHAPE_POINT_9) <= 0));
         }
 
+        // limited use, remove?
+        public final static int NUM_SHAPE_POINTS = 10;
 
 
+       // *****************************************************************
+       //    BEZIER_CONTROL_POINT support
+       // *****************************************************************
+       
+       /**
+        * Find the 0-8 index with respect to BEZIER_CONTROL_POINT_0
+        * of a given enum entry.  Throws {@link IllegalArgumentException} if
+        * the given enum value isn't one of the BEZIER_CONTROL_POINT_n entries.
+        * <p>
+        * Ideally, this would be replaced by bezier code that works
+        * directly with the enum values as a step toward using objects
+        * to implement hit points.
+        */
+        protected int bezierPointIndex() {
+            int result = this.xmlValue - HitPointType.BEZIER_CONTROL_POINT_0.xmlValue;
+            if (result < 0) throw new IllegalArgumentException(this.toString()+ "is not a valid BEZIER_CONTROL_POINT");
+            if (result > 8) throw new IllegalArgumentException(this.toString()+ "is not a valid BEZIER_CONTROL_POINT");
+            return result;
+        }
+
+       /**
+        * Return a specific SHAPE_POINT from its 0-8 index.
+        * Throws {@link IllegalArgumentException} if
+        * the given index value isn't valid for the SHAPE_POINT entries.
+        * <p>
+        * Ideally, this would be replaced by shape code that works
+        * directly with the enum values as a step toward using objects
+        * to implement hit points.
+        */
+        protected static HitPointType bezierPointIndexedValue(int i) {
+            if (i<0 || i>8 ) throw new IllegalArgumentException(i+ "is not a valid BEZIER_CONTROL_POINT index");
+            return getValue(BEZIER_CONTROL_POINT_0.xmlValue+i);
+        }
+        
+        // limited use, remove?
+        public final static int NUM_BEZIER_CONTROL_POINTS = 9;
     }
 
 
