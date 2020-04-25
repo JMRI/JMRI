@@ -443,6 +443,7 @@
                     </systemPropertyVariables>
                     <trimStackTrace>false</trimStackTrace>
                     <workingDirectory>${basedir}</workingDirectory>
+                    <!-- -ea or -da in the next line to control Java asserts -->
                     <argLine>@{argLine} @{surefire.argLine} -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
