@@ -177,7 +177,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         preferences.putInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay());
         try {
             preferences.sync();
-        } catch (BackingStoreException ex) {
+        }
+        catch (BackingStoreException ex) {
             log.error("Unable to save preferences.", ex);
         }
         this.setDirty(false);
@@ -241,8 +242,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     * Called to load the current {@literal Look & Feel} default font,
-     * based on looking up the "List.font"
+     * Called to load the current {@literal Look & Feel} default font, based on
+     * looking up the "List.font"
      * <br><br>
      * The value can be can be read by calling {@link #getDefaultFont()}
      */
@@ -339,7 +340,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     /**
      * Sets the time a tooltip is displayed before it goes away.
-     *
+     * <p>
      * Note that this preference takes effect immediately.
      *
      * @param time the delay in seconds.
@@ -452,11 +453,14 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                 log.debug("Apply look and feel \"{}\" ({})", this.lookAndFeel, lafClassName);
                 try {
                     UIManager.setLookAndFeel(lafClassName);
-                } catch (ClassNotFoundException ex) {
+                }
+                catch (ClassNotFoundException ex) {
                     log.error("Could not find look and feel \"{}\".", this.lookAndFeel);
-                } catch (IllegalAccessException | InstantiationException ex) {
+                }
+                catch (IllegalAccessException | InstantiationException ex) {
                     log.error("Could not load look and feel \"{}\".", this.lookAndFeel);
-                } catch (UnsupportedLookAndFeelException ex) {
+                }
+                catch (UnsupportedLookAndFeelException ex) {
                     log.error("Look and feel \"{}\" is not supported on this platform.", this.lookAndFeel);
                 }
             } else {
@@ -492,14 +496,12 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     * Stand-alone service routine to
-     * set the default Locale.
+     * Stand-alone service routine to set the default Locale.
+     * <p>
+     * Intended to be invoked early, as soon as a profile is available, to
+     * ensure the correct language is set as startup proceeds. Must be followed
+     * eventually by a complete {@link #setLocale}.
      *
-     * Intended to be invoked early, as soon as a profile is
-     * available, to ensure the correct language is set as
-     * startup proceeds. Must be followed eventually
-     * by a complete {@link #setLocale}.
-     * 
      * @param profile The profile to get the locale from
      */
     public static void setLocaleMinimally(Profile profile) {
@@ -550,10 +552,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     * Set restart required state.
-     *
-     * @param restartRequired true if application needs to restart to apply
-     *                        preferences
+     * Set restart required state. Sets the state to true if
+     * {@link #isInitialized(jmri.profile.Profile)} is true.
      */
     private void setRestartRequired() {
         if (initialized && !restartRequired) {
