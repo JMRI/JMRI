@@ -185,10 +185,18 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         private final transient Integer xmlValue;
 
-        HitPointType(Integer xmlValue) {
+        /** 
+         * @deprecated 4.19.6 - we are migrating away from integer access
+         */
+        @Deprecated  // 4.19.6 - we are migrating away from integer access
+        private HitPointType(Integer xmlValue) {
             this.xmlValue = xmlValue;
         }
 
+        /** 
+         * @deprecated 4.19.6 - we are migrating away from integer access
+         */
+        @Deprecated  // 4.19.6 - we are migrating away from integer access
         public static HitPointType getValue(Integer xmlValue) {
             HitPointType result = null;
             for (HitPointType instance : HitPointType.values()) {
@@ -200,7 +208,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return result;
         }
 
-        public static HitPointType getValue(String name) {
+        /** 
+         * @deprecated 4.19.6 - we are migrating away from integer access
+         */
+        @Deprecated  // 4.19.6 - we are migrating away from integer access
+        private static HitPointType XgetValue(String name) {
             HitPointType result = null;
             for (HitPointType instance : HitPointType.values()) {
                 if (instance.name().equals(name)) {
@@ -210,7 +222,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return result;
         }
 
-        public Integer getXmlValue() {
+        /** 
+         * @deprecated 4.19.6 - we are migrating away from integer access
+         */
+        @Deprecated  // 4.19.6 - we are migrating away from integer access
+        protected Integer getXmlValue() {
             return xmlValue;
         }
 
