@@ -81,6 +81,9 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
 
     @Test
     public void testClearButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
 
@@ -97,6 +100,8 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
     @Test
     public void testFreezeButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        
         AbstractMonPaneScaffold s = new AbstractMonPaneScaffold(pane);
 
         // for Jemmy to work, we need the pane inside of a frame
