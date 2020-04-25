@@ -429,6 +429,7 @@
         <delete dir="release"/>
         <delete dir="dist"/>
         <delete dir="temp"/>
+        <delete dir="test"/>
         <delete dir="web/TrainCrew"/>
         <delete dir="lib/cachedir"/>
         <delete dir="java/tmp"/>
