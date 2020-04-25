@@ -105,6 +105,17 @@
         <a href="http://opencsv.sourceforge.net/">opencsv API</a>, 
         but since we only want to use one, the
         conversion will be a lot of work.</li>
+        
+        <li>We currently don't use the Java <code>assert</code> keyword in our production
+        code. (We use the 
+        <a href="JUnit.shtml">JUnit Assert in testing</a>, but that's different).
+        We may use it in the future, but for now please 
+        <a href="Logging.shtml">log a message at the Error level</a> 
+        if you encounter an internal consistency problem during normal 
+        operation; if there's no way to continue, 
+        <code>throw new AssertionError("description");</code> as that's 
+        a step toward our eventually figuring out how to use Java
+        assertions in such cases.
       </ul>
 
       <a id="collections" name="collections"></a>
