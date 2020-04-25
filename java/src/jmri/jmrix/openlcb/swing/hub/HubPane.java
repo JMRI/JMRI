@@ -73,12 +73,9 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
     Thread t;
 
     void startHubThread(int port) {
-        t = new Thread() {
-            @Override
-            public void run() {
-                hub.start();
-            }
-        };
+        t = jmri.util.ThreadingUtil.newThread( 
+                () -> {hub.start();},
+                "OpenLCB Hub Thread");
         t.setDaemon(true);
 
         // add forwarder for internal JMRI traffic

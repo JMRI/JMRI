@@ -175,7 +175,7 @@ public class Sound {
     public void play() {
         if (streaming) {
             Runnable streamSound = new StreamingSound(this.url);
-            Thread tStream = new Thread(streamSound);
+            Thread tStream = jmri.util.ThreadingUtil.newThread(streamSound);
             tStream.start();
         } else {
             clipRef.updateAndGet(clip -> {
