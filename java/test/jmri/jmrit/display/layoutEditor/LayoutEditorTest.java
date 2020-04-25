@@ -72,6 +72,10 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         JUnitUtil.dispose(e);
     }
 
+       // *****************************************************************
+       //    Turntable Ray support
+       // *****************************************************************
+       
     @Test
     public void testHPTturntableTrackIndexOK() {
         Assert.assertEquals(0, LayoutEditor.HitPointType.TURNTABLE_RAY_0.turntableTrackIndex());
@@ -114,7 +118,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    public void turntableValues() {
+    public void testHPTturntableValues() {
         LayoutEditor.HitPointType[] array = LayoutEditor.HitPointType.turntableValues();
         Assert.assertEquals(64, array.length);
         Assert.assertEquals(LayoutEditor.HitPointType.TURNTABLE_RAY_0, array[0]);
@@ -124,8 +128,93 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assert.assertEquals(LayoutEditor.HitPointType.TURNTABLE_RAY_63, array[63]);
         
         // while available, use the indexing operations to test content
-        for (int i = 0; i<=63; i++) {
+        for (int i = 0; i<array.length; i++) {
             Assert.assertEquals(LayoutEditor.HitPointType.turntableTrackIndexedValue(i),array[i]);
+        }
+    }
+
+       // *****************************************************************
+       //    Shape Point support
+       // *****************************************************************
+       
+    @Test
+    public void testHPTshapePointIndexOK() {
+        Assert.assertEquals(0, LayoutEditor.HitPointType.SHAPE_POINT_0.shapePointIndex());
+        Assert.assertEquals(1, LayoutEditor.HitPointType.SHAPE_POINT_1.shapePointIndex());
+        Assert.assertEquals(2, LayoutEditor.HitPointType.SHAPE_POINT_2.shapePointIndex());
+        // ..
+        Assert.assertEquals(8, LayoutEditor.HitPointType.SHAPE_POINT_8.shapePointIndex());
+        Assert.assertEquals(9, LayoutEditor.HitPointType.SHAPE_POINT_9.shapePointIndex());        
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testHPTshapePointIndexBad1() {
+        LayoutEditor.HitPointType.POS_POINT.shapePointIndex();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testHPTshapePointIndexBad2() {
+        LayoutEditor.HitPointType.TURNTABLE_RAY_0.shapePointIndex();
+    }
+
+    @Test
+    public void testHPTshapePointIndexedValueOK() {
+        Assert.assertEquals(LayoutEditor.HitPointType.SHAPE_POINT_0, LayoutEditor.HitPointType.shapePointIndexedValue(0));
+        Assert.assertEquals(LayoutEditor.HitPointType.SHAPE_POINT_1, LayoutEditor.HitPointType.shapePointIndexedValue(1));
+        Assert.assertEquals(LayoutEditor.HitPointType.SHAPE_POINT_2, LayoutEditor.HitPointType.shapePointIndexedValue(2));
+        // ..
+        Assert.assertEquals(LayoutEditor.HitPointType.SHAPE_POINT_7, LayoutEditor.HitPointType.shapePointIndexedValue(7));
+        Assert.assertEquals(LayoutEditor.HitPointType.SHAPE_POINT_8, LayoutEditor.HitPointType.shapePointIndexedValue(8));
+        Assert.assertEquals(LayoutEditor.HitPointType.SHAPE_POINT_9, LayoutEditor.HitPointType.shapePointIndexedValue(9));
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testHPTshapePointIndexedValueBad1() throws IllegalArgumentException {
+        LayoutEditor.HitPointType.shapePointIndexedValue(-1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testHPTshapePointIndexedValueBad2() {
+        LayoutEditor.HitPointType.shapePointIndexedValue(10);
+    }
+
+    @Test
+    public void testHPTshapePointValues() {
+        LayoutEditor.HitPointType[] array = LayoutEditor.HitPointType.shapePointValues();
+        Assert.assertEquals(10, array.length);
+        Assert.assertEquals(LayoutEditor.HitPointType.SHAPE_POINT_0, array[0]);
+        Assert.assertEquals(LayoutEditor.HitPointType.SHAPE_POINT_1, array[1]);
+        // ..
+        Assert.assertEquals(LayoutEditor.HitPointType.SHAPE_POINT_8, array[8]);
+        Assert.assertEquals(LayoutEditor.HitPointType.SHAPE_POINT_9, array[9]);
+        
+        // while available, use the indexing operations to test content
+        for (int i = 0; i<array.length; i++) {
+            Assert.assertEquals(LayoutEditor.HitPointType.shapePointIndexedValue(i),array[i]);
+        }
+    }
+
+    public void testHPTisShapePointOffsetHitPointType() {
+        Assert.assertTrue(LayoutEditor.HitPointType.isShapePointOffsetHitPointType(LayoutEditor.HitPointType.SHAPE_POINT_0));
+        Assert.assertTrue(LayoutEditor.HitPointType.isShapePointOffsetHitPointType(LayoutEditor.HitPointType.SHAPE_POINT_1));
+        // ..
+        Assert.assertTrue(LayoutEditor.HitPointType.isShapePointOffsetHitPointType(LayoutEditor.HitPointType.SHAPE_POINT_8));
+        Assert.assertTrue(LayoutEditor.HitPointType.isShapePointOffsetHitPointType(LayoutEditor.HitPointType.SHAPE_POINT_9));
+        
+        Assert.assertFalse(LayoutEditor.HitPointType.isShapePointOffsetHitPointType(LayoutEditor.HitPointType.NONE));
+        Assert.assertFalse(LayoutEditor.HitPointType.isShapePointOffsetHitPointType(LayoutEditor.HitPointType.SHAPE_CENTER));
+        // ..
+        Assert.assertFalse(LayoutEditor.HitPointType.isShapePointOffsetHitPointType(LayoutEditor.HitPointType.TURNTABLE_RAY_0));
+        Assert.assertFalse(LayoutEditor.HitPointType.isShapePointOffsetHitPointType(LayoutEditor.HitPointType.TURNTABLE_RAY_63));
+    }
+    
+    /**
+     * Ensure that assigned integer values (xmlValue) and ordinal values are actually the same
+     */
+    @Test
+    public void testHPTesureOrdinalValuesSameAsAssigned() {
+        for (LayoutEditor.HitPointType instance : LayoutEditor.HitPointType.values()) {
+            Assert.assertEquals(Integer.valueOf(instance.ordinal()), instance.getXmlValue());
         }
     }
 

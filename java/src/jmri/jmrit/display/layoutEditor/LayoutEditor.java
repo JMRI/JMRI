@@ -380,6 +380,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return result;
         }   // isPopupHitType
        
+       // *****************************************************************
+       //    Turntable Ray support
+       // *****************************************************************
+       
        /**
         * Find the 0-63 index with respect to TURNTABLE_RAY_0
         * of a given enum entry.  Throws {@link IllegalArgumentException} if
@@ -391,7 +395,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         */
         protected int turntableTrackIndex() {
             int result = this.xmlValue - HitPointType.TURNTABLE_RAY_0.xmlValue;
-            if (result < 0) throw new IllegalArgumentException(this.toString()+ "is not a valid TURNTABLE_RAY");
+            if (result < 0)  throw new IllegalArgumentException(this.toString()+ "is not a valid TURNTABLE_RAY");
+            if (result > 63) throw new IllegalArgumentException(this.toString()+ "is not a valid TURNTABLE_RAY");
             return result;
         }
 
@@ -427,6 +432,60 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     TURNTABLE_RAY_56, TURNTABLE_RAY_57, TURNTABLE_RAY_58, TURNTABLE_RAY_59, TURNTABLE_RAY_60, TURNTABLE_RAY_61, TURNTABLE_RAY_62, TURNTABLE_RAY_63
                 };
         }
+
+       // *****************************************************************
+       //    Shape Point support
+       // *****************************************************************
+       
+       /**
+        * Find the 0-9 index with respect to SHAPE_POINT_0
+        * of a given enum entry.  Throws {@link IllegalArgumentException} if
+        * the given enum value isn't one of the SHAPE_POINT_0 entries.
+        * <p>
+        * Ideally, this would be replaced by shape code that works
+        * directly with the enum values as a step toward using objects
+        * to implement hit points.
+        */
+        protected int shapePointIndex() {
+            int result = this.xmlValue - HitPointType.SHAPE_POINT_0.xmlValue;
+            if (result < 0) throw new IllegalArgumentException(this.toString()+ "is not a valid SHAPE_POINT");
+            if (result > 9) throw new IllegalArgumentException(this.toString()+ "is not a valid SHAPE_POINT");
+            return result;
+        }
+
+       /**
+        * Return a specific SHAPE_POINT from its 0-9 index.
+        * Throws {@link IllegalArgumentException} if
+        * the given index value isn't valid for the SHAPE_POINT entries.
+        * <p>
+        * Ideally, this would be replaced by shape code that works
+        * directly with the enum values as a step toward using objects
+        * to implement hit points.
+        */
+        protected static HitPointType shapePointIndexedValue(int i) {
+            if (i<0 || i>9 ) throw new IllegalArgumentException(i+ "is not a valid SHAPE_POINT index");
+            return getValue(SHAPE_POINT_0.xmlValue+i);
+        }
+        
+        
+       /**
+        * Return an array of the valid SHAPE_POINT enum values.
+        * Meant for interations over the set of points.  Order is 
+        * from 0 to 9.
+        */
+        protected static HitPointType[] shapePointValues() {
+            return new HitPointType[]{
+                     SHAPE_POINT_0, SHAPE_POINT_1, SHAPE_POINT_2, SHAPE_POINT_3, SHAPE_POINT_4, SHAPE_POINT_5, SHAPE_POINT_6, SHAPE_POINT_7, SHAPE_POINT_8, SHAPE_POINT_9
+                };
+        }
+
+        protected static boolean isShapePointOffsetHitPointType(LayoutEditor.HitPointType t) {
+            return ((t.compareTo(SHAPE_POINT_0) >= 0)
+                    && (t.compareTo(SHAPE_POINT_9) <= 0));
+        }
+
+
+
     }
 
 
@@ -3269,7 +3328,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 selectedObject = null;  // assume we're adding...
                 for (LayoutShape ls : layoutShapes) {
                     selectedHitPointType = ls.findHitPointType(dLoc, true);
-                    if (LayoutShape.isShapePointOffsetHitPointType(selectedHitPointType)) {
+                    if (LayoutEditor.HitPointType.isShapePointOffsetHitPointType(selectedHitPointType)) {
                         //log.warn("extend selectedObject: ", lt);
                         selectedObject = ls;    // nope, we're extending
                         beginLocation.setLocation(dLoc);
@@ -3675,7 +3734,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                     } else {
                         LayoutShape ls = (LayoutShape) selectedObject;
-                        ls.addPoint(currentPoint, selectedHitPointType.getXmlValue() - HitPointType.SHAPE_POINT_0.getXmlValue());
+                        ls.addPoint(currentPoint, selectedHitPointType.shapePointIndex());
                     }
                 } else if (leToolBarPanel.signalMastButton.isSelected()) {
                     addSignalMast();
@@ -4999,8 +5058,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                                 ((TrackSegment) selectedObject).setBezierControlPoint(currentPoint, index);
                             } else if ((selectedHitPointType == HitPointType.SHAPE_CENTER)) {
                                 ((LayoutShape) selectedObject).setCoordsCenter(currentPoint);
-                            } else if (LayoutShape.isShapePointOffsetHitPointType(selectedHitPointType)) {
-                                int index = selectedHitPointType.getXmlValue() - HitPointType.SHAPE_POINT_0.getXmlValue();
+                            } else if (LayoutEditor.HitPointType.isShapePointOffsetHitPointType(selectedHitPointType)) {
+                                int index = selectedHitPointType.shapePointIndex();
                                 ((LayoutShape) selectedObject).setPoint(index, currentPoint);
                             } else if (HitPointType.isTurntableRayHitType(selectedHitPointType)) {
                                 LayoutTurntable turn = (LayoutTurntable) selectedObject;
