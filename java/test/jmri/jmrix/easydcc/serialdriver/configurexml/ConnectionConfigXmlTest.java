@@ -23,9 +23,9 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
     @After
     @Override
     public void tearDown() {
-        xmlAdapter = null;
-        cc = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
+        xmlAdapter = null;
+        cc = null;
     }
 }
