@@ -1979,7 +1979,14 @@
             <xs:sequence>
               <xs:element name="point" minOccurs="1" maxOccurs="10">
                 <xs:complexType>
-                  <xs:attribute name="type" type="xs:string" use="required"></xs:attribute>
+                  <xs:attribute name="type" use="required">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:token">
+                        <xs:enumeration value="Straight"></xs:enumeration>
+                        <xs:enumeration value="Curve"></xs:enumeration>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
                   <xs:attribute name="x" type="xs:float" use="required"></xs:attribute>
                   <xs:attribute name="y" type="xs:float" use="required"></xs:attribute>
                 </xs:complexType>
@@ -1990,7 +1997,15 @@
       </xs:sequence>
 
       <xs:attribute name="ident" type="xs:string" use="required"></xs:attribute>
-      <xs:attribute name="type" type="xs:string" use="required"></xs:attribute>
+      <xs:attribute name="type" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="Open"></xs:enumeration>
+            <xs:enumeration value="Filled"></xs:enumeration>
+            <xs:enumeration value="Closed"></xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
       <xs:attribute name="level" type="xs:string" use="required"></xs:attribute>
       <xs:attribute name="linewidth" type="xs:int"></xs:attribute>
       <xs:attribute name="lineColor" type="screenColorType" use="required"></xs:attribute>
