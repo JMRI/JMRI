@@ -226,7 +226,7 @@ public class LayoutConnectivity {
         hash = 37 * hash + direction;
         hash = 37 * hash + (this.track1 != null ? this.track1.hashCode() : 0);
         hash = 37 * hash + (this.connect2 != null ? this.connect2.hashCode() : 0);
-        hash = 37 * hash + typeConnect2.getXmlValue();
+        hash = 37 * hash + typeConnect2.hashCode();
         hash = 37 * hash + (this.xover != null ? this.xover.hashCode() : 0);
         hash = 37 * hash + (this.anchor != null ? this.anchor.hashCode() : 0);
         return hash;
