@@ -379,7 +379,58 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
             return result;
         }   // isPopupHitType
+       
+       /**
+        * Find the 0-63 index with respect to TURNTABLE_RAY_0
+        * of a given enum entry.  Throws {@link IllegalArgumentException} if
+        * the given enum value isn't one of the TURNTABLE_RAY entries.
+        * <p>
+        * Ideally, this would be replaced by turntable code that works
+        * directly with the enum values as a step toward using objects
+        * to implement hit points.
+        */
+        protected int turntableTrackIndex() {
+            int result = this.xmlValue - HitPointType.TURNTABLE_RAY_0.xmlValue;
+            if (result < 0) throw new IllegalArgumentException(this.toString()+ "is not a valid TURNTABLE_RAY");
+            return result;
+        }
+
+       /**
+        * Return a specific TURNTABLE_RAY from its 0-63 index.
+        * Throws {@link IllegalArgumentException} if
+        * the given index value isn't valid for the TURNTABLE_RAY entries.
+        * <p>
+        * Ideally, this would be replaced by turntable code that works
+        * directly with the enum values as a step toward using objects
+        * to implement hit points.
+        */
+        protected static HitPointType turntableTrackIndexedValue(int i) {
+            if (i<0 || i>63 ) throw new IllegalArgumentException(i+ "is not a valid TURNTABLE_RAY index");
+            return getValue(TURNTABLE_RAY_0.xmlValue+i);
+        }
+        
+        
+       /**
+        * Return an array of the valid TURNTABLE_RAY enum values.
+        * Meant for interations over the set of rays.  Order is 
+        * from 0 to 63.
+        */
+        protected static HitPointType[] turntableValues() {
+            return new HitPointType[]{
+                     TURNTABLE_RAY_0,  TURNTABLE_RAY_1,  TURNTABLE_RAY_2,  TURNTABLE_RAY_3,  TURNTABLE_RAY_4,  TURNTABLE_RAY_5,  TURNTABLE_RAY_6,  TURNTABLE_RAY_7,
+                     TURNTABLE_RAY_8,  TURNTABLE_RAY_9, TURNTABLE_RAY_10, TURNTABLE_RAY_11, TURNTABLE_RAY_12, TURNTABLE_RAY_13, TURNTABLE_RAY_14, TURNTABLE_RAY_15,
+                    TURNTABLE_RAY_16, TURNTABLE_RAY_17, TURNTABLE_RAY_18, TURNTABLE_RAY_19, TURNTABLE_RAY_20, TURNTABLE_RAY_21, TURNTABLE_RAY_22, TURNTABLE_RAY_23,
+                    TURNTABLE_RAY_24, TURNTABLE_RAY_25, TURNTABLE_RAY_26, TURNTABLE_RAY_27, TURNTABLE_RAY_28, TURNTABLE_RAY_29, TURNTABLE_RAY_30, TURNTABLE_RAY_31,
+                    TURNTABLE_RAY_32, TURNTABLE_RAY_33, TURNTABLE_RAY_34, TURNTABLE_RAY_35, TURNTABLE_RAY_36, TURNTABLE_RAY_37, TURNTABLE_RAY_38, TURNTABLE_RAY_39,
+                    TURNTABLE_RAY_40, TURNTABLE_RAY_41, TURNTABLE_RAY_42, TURNTABLE_RAY_43, TURNTABLE_RAY_44, TURNTABLE_RAY_45, TURNTABLE_RAY_46, TURNTABLE_RAY_47,
+                    TURNTABLE_RAY_48, TURNTABLE_RAY_49, TURNTABLE_RAY_50, TURNTABLE_RAY_51, TURNTABLE_RAY_52, TURNTABLE_RAY_53, TURNTABLE_RAY_54, TURNTABLE_RAY_55,
+                    TURNTABLE_RAY_56, TURNTABLE_RAY_57, TURNTABLE_RAY_58, TURNTABLE_RAY_59, TURNTABLE_RAY_60, TURNTABLE_RAY_61, TURNTABLE_RAY_62, TURNTABLE_RAY_63
+                };
+        }
     }
+
+
+
 
     //Operational instance variables - not saved to disk
     private transient JmriJFrame floatingEditToolBoxFrame = null;
@@ -3657,7 +3708,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     && !event.isShiftDown() && !event.isControlDown()) {
                 //controlling turntable, in edit mode
                 LayoutTurntable t = (LayoutTurntable) selectedObject;
-                t.setPosition(selectedHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+                t.setPosition(selectedHitPointType.turntableTrackIndex());
             } else if ((selectedObject != null) && ((selectedHitPointType == HitPointType.TURNOUT_CENTER)
                     || (selectedHitPointType == HitPointType.SLIP_CENTER)
                     || (selectedHitPointType == HitPointType.SLIP_LEFT)
@@ -3706,7 +3757,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling turntable out of edit mode
             LayoutTurntable t = (LayoutTurntable) selectedObject;
-            t.setPosition(selectedHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+            t.setPosition( selectedHitPointType.turntableTrackIndex() );
         } else if ((event.isPopupTrigger() || delayedPopupTrigger) && (!isDragging)) {
             // requesting marker popup out of edit mode
             LocoIcon lo = checkMarkerPopUps(dLoc);
@@ -3798,7 +3849,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             } else if (HitPointType.isTurntableRayHitType(foundHitPointType)) {
                 LayoutTurntable t = (LayoutTurntable) foundTrack;
                 if (t.isTurnoutControlled()) {
-                    ((LayoutTurntable) foundTrack).showRayPopUp(event, foundHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+                    ((LayoutTurntable) foundTrack).showRayPopUp(event, foundHitPointType.turntableTrackIndex());
                 }
             } else if (HitPointType.isPopupHitType(foundHitPointType)) {
                 foundTrack.showPopup(event);
@@ -4128,7 +4179,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 default: {
                     if (HitPointType.isTurntableRayHitType(foundHitPointType)) {
                         LayoutTurntable tt = (LayoutTurntable) foundTrack;
-                        int ray = foundHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue();
+                        int ray = foundHitPointType.turntableTrackIndex();
 
                         if (tt.getRayConnectIndexed(ray) == null) {
                             tt.setRayConnect(t, ray);
@@ -4954,7 +5005,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                             } else if (HitPointType.isTurntableRayHitType(selectedHitPointType)) {
                                 LayoutTurntable turn = (LayoutTurntable) selectedObject;
                                 turn.setRayCoordsIndexed(currentPoint.getX(), currentPoint.getY(),
-                                        selectedHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+                                        selectedHitPointType.turntableTrackIndex());
                             }
                             break;
                         }
@@ -5481,7 +5532,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             default: {
                 if (HitPointType.isTurntableRayHitType(fromPointType)) {
                     ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
-                            fromPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+                            fromPointType.turntableTrackIndex() );
                 }
                 break;
             }
@@ -6362,7 +6413,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             default: {
                 if (HitPointType.isTurntableRayHitType(type)) {
-                    ((LayoutTurntable) o).setRayConnect(null, type.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+                    ((LayoutTurntable) o).setRayConnect(null, type.turntableTrackIndex());
                 }
                 break;
             }

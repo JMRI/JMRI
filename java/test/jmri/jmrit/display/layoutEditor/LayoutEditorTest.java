@@ -73,7 +73,70 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    public void testEnums() {
+    public void testHPTturntableTrackIndexOK() {
+        Assert.assertEquals(0, LayoutEditor.HitPointType.TURNTABLE_RAY_0.turntableTrackIndex());
+        Assert.assertEquals(1, LayoutEditor.HitPointType.TURNTABLE_RAY_1.turntableTrackIndex());
+        Assert.assertEquals(2, LayoutEditor.HitPointType.TURNTABLE_RAY_2.turntableTrackIndex());
+        // ..
+        Assert.assertEquals(62, LayoutEditor.HitPointType.TURNTABLE_RAY_62.turntableTrackIndex());
+        Assert.assertEquals(63, LayoutEditor.HitPointType.TURNTABLE_RAY_63.turntableTrackIndex());        
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testHPTturntableTrackIndexBad1() {
+        LayoutEditor.HitPointType.POS_POINT.turntableTrackIndex();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testHPTturntableTrackIndexBad2() {
+        LayoutEditor.HitPointType.SHAPE_POINT_9.turntableTrackIndex();
+    }
+
+    @Test
+    public void testHPTturntableTrackIndexedValueOK() {
+        Assert.assertEquals(LayoutEditor.HitPointType.TURNTABLE_RAY_0, LayoutEditor.HitPointType.turntableTrackIndexedValue(0));
+        Assert.assertEquals(LayoutEditor.HitPointType.TURNTABLE_RAY_1, LayoutEditor.HitPointType.turntableTrackIndexedValue(1));
+        Assert.assertEquals(LayoutEditor.HitPointType.TURNTABLE_RAY_2, LayoutEditor.HitPointType.turntableTrackIndexedValue(2));
+        // ..
+        Assert.assertEquals(LayoutEditor.HitPointType.TURNTABLE_RAY_61, LayoutEditor.HitPointType.turntableTrackIndexedValue(61));
+        Assert.assertEquals(LayoutEditor.HitPointType.TURNTABLE_RAY_62, LayoutEditor.HitPointType.turntableTrackIndexedValue(62));
+        Assert.assertEquals(LayoutEditor.HitPointType.TURNTABLE_RAY_63, LayoutEditor.HitPointType.turntableTrackIndexedValue(63));
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testHPTturntableTrackIndexedValueBad1() throws IllegalArgumentException {
+        LayoutEditor.HitPointType.turntableTrackIndexedValue(-1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testHPTturntableTrackIndexedValueBad2() {
+        LayoutEditor.HitPointType.turntableTrackIndexedValue(64);
+    }
+
+    @Test
+    public void turntableValues() {
+        LayoutEditor.HitPointType[] array = LayoutEditor.HitPointType.turntableValues();
+        Assert.assertEquals(64, array.length);
+        Assert.assertEquals(LayoutEditor.HitPointType.TURNTABLE_RAY_0, array[0]);
+        Assert.assertEquals(LayoutEditor.HitPointType.TURNTABLE_RAY_1, array[1]);
+        // ..
+        Assert.assertEquals(LayoutEditor.HitPointType.TURNTABLE_RAY_62, array[62]);
+        Assert.assertEquals(LayoutEditor.HitPointType.TURNTABLE_RAY_63, array[63]);
+        
+        // while available, use the indexing operations to test content
+        for (int i = 0; i<=63; i++) {
+            Assert.assertEquals(LayoutEditor.HitPointType.turntableTrackIndexedValue(i),array[i]);
+        }
+    }
+
+    /** 
+     * The specific values are tested for historical i/O compatibility
+     * and because some internal operations do arithmetic with them.
+     * For now, it's sufficient for this test to ensure they don't change,
+     * hence this test.
+     */
+    @Test
+    public void testEnumIntegerValues() {
         Assert.assertEquals("HitPointTypes.NONE.getValue() == 0", LayoutEditor.HitPointType.NONE.getXmlValue(), Integer.valueOf(0));
         Assert.assertEquals("HitPointTypes.POS_POINT.getValue() == 1", LayoutEditor.HitPointType.POS_POINT.getXmlValue(), Integer.valueOf(1));
         Assert.assertEquals("HitPointTypes.TURNOUT_A.getValue() == 2", LayoutEditor.HitPointType.TURNOUT_A.getXmlValue(), Integer.valueOf(2));
