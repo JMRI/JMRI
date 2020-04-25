@@ -189,13 +189,13 @@ git push github
     If there were, update the master
 
 - Merge the release note body from help/en/releasenotes/current-draft-note.shtml in the JMRI/JMRI repository into the actual release note in website repository:
-     bbedit help/en/releasenotes/current-draft-note.shtml ../website/releasenotes/jmri4.19.5.shtml
+     ${EDITOR} help/en/releasenotes/current-draft-note.shtml ../website/releasenotes/jmri4.19.5.shtml
      
 - Merge the new warnings (if any) from help/en/releasenotes/current-warnings.shtml in the JMRI/JMRI repository into the actual release note in website repository:
-     bbedit help/en/releasenotes/current-draft-warnings.shtml ../website/releasenotes/jmri4.19.5.shtml
+     ${EDITOR} help/en/releasenotes/current-draft-warnings.shtml ../website/releasenotes/jmri4.19.5.shtml
      
  - add any new warnings to the old warnings section of the next (4.19.6) release note:
-    bbedit ../website/releasenotes/jmri4.19.5.shtml ../website/releasenotes/jmri4.19.6.shtml
+    ${EDITOR} ../website/releasenotes/jmri4.19.5.shtml ../website/releasenotes/jmri4.19.6.shtml
        
 - Clean out the unneeded sections from the release note
 
@@ -415,15 +415,16 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```   
+
 [Release notes](https://jmri.org/releasenotes/jmri4.19.5.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.19.5+R8300f0d90.dmg](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R8300f0d90.dmg) | 70e7d608c2a35f095bb478a3656ed2e92db0bf2f79c453e57b964b0701d02548
-[JMRI.4.19.5+R8300f0d90.exe](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R8300f0d90.exe) | 0518751086287dbfbf85fa462c954e33403890b69f88cac2723638ecde0b1f7f
-[JMRI.4.19.5+R8300f0d90.tgz](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R8300f0d90.tgz) | 100e56edd915d1834cd3b1abee2cab1bd9b5cf3e978145098252fe09c83e1a0a
+[JMRI.4.19.5+R6ede87265.dmg](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R6ede87265.dmg) | 77b392c3b7d650df822e0b642c786a829d3937dd9b32a02bc02e1378fd8ecc9f
+[JMRI.4.19.5+R6ede87265.exe](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R6ede87265.exe) | 9410e05e9eb9df0e7afc720c0888a68178a0dc6012c740bda3fafe627fe27c85
+[JMRI.4.19.5+R6ede87265.tgz](https://github.com/JMRI/JMRI/releases/download/v4.19.5/JMRI.4.19.5+R6ede87265.tgz) | 925207153a2f3d027de55cb63a222fb5cfaa13b79bbec42d0d3011a451948746
 
 ```
 
@@ -503,7 +504,12 @@ git push github
 
 - Update the web site front page and downloads page:
 ```
-     index.shtml download/Sidebar.shtml download/index.shtml releaselist
+     ${EDITOR}  index.shtml download/Sidebar.shtml download/index.shtml releaselist 
+```
+
+- Update the release note with date, name, remove warning about draft, download links, one last check of release numbers throughout
+```
+     ${EDITOR}  releasenotes/jmri4.19.5.shtml
 ```
 
 - Commit site, push to github

@@ -78,7 +78,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new EnableDestinationAction(Bundle.getMessage("MenuEnableDestination"), this));
+        toolMenu.add(new EnableDestinationAction(this));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_CarsSet", true); // NOI18N

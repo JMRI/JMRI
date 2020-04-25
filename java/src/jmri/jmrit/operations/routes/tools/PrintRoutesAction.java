@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.routes.tools;
 
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
@@ -23,8 +24,8 @@ public class PrintRoutesAction extends PrintRouteAction {
     private static final char FORM_FEED = '\f';
     private final static Logger log = LoggerFactory.getLogger(PrintRoutesAction.class);
 
-    public PrintRoutesAction(String actionName, boolean preview) {
-        super(actionName, preview, null);
+    public PrintRoutesAction(boolean preview) {
+        super(preview, null);
     }
 
     @Override
@@ -33,8 +34,8 @@ public class PrintRoutesAction extends PrintRouteAction {
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleRoutesTable"), Control.reportFontSize, .5, .5, .5, .5,
-                    isPreview);
+            writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleRoutesTable"), Control.reportFontSize, .5, .5, .5, .5,
+                    _isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;

@@ -513,7 +513,7 @@ public class NXFrame extends WarrantRoute {
                     }
                 }
                 Halter h = new Halter(warrant);
-                new Thread(h).start();
+                jmri.util.ThreadingUtil.newThread(h).start();
             }
         }
         if (msg != null) {

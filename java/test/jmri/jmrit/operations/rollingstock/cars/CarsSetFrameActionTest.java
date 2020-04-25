@@ -19,12 +19,6 @@ import jmri.util.JmriJFrame;
  * @author Paul Bender Copyright (C) 2017	
  */
 public class CarsSetFrameActionTest extends OperationsTestCase {
-
-    @Test
-    public void testCTor() {
-        CarsSetFrameAction t = new CarsSetFrameAction("Test");
-        Assert.assertNotNull("exists",t);
-    }
     
     @Test
     public void testAction() {

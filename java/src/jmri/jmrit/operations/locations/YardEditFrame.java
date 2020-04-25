@@ -23,9 +23,9 @@ public class YardEditFrame extends TrackEditFrame {
         _type = Track.YARD;
         super.initComponents(location, track);
 
-        _toolMenu.add(new IgnoreUsedTrackAction(this));
+        _toolMenu.add(new IgnoreUsedTrackAction(_track));
         _toolMenu.add(new ChangeTrackTypeAction(this));
-        _toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsTrack"), _location, _track));
+        _toolMenu.add(new ShowTrainsServingLocationAction(_location, _track));
         _toolMenu.add(new ShowCarsByLocationAction(false, _location, _track));
         addHelpMenu("package.jmri.jmrit.operations.Operations_Yards", true); // NOI18N
 
