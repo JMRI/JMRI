@@ -122,7 +122,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
             }
         };
 
-        thr = new Thread(r);
+        thr = jmri.util.ThreadingUtil.newThread(r);
         thr.start();
     }
 

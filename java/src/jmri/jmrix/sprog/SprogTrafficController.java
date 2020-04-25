@@ -55,11 +55,11 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         // Set the timeout for communication with hardware
         resetTimeout();
 
-        tcThread = new Thread(this);
+        tcThread = jmri.util.ThreadingUtil.newThread(this);
         tcThread.setName("SPROG TC thread");
         tcThread.setPriority(Thread.MAX_PRIORITY-1);
         tcThread.setDaemon(true);
-        log.debug("starting TC thread from {} in group {}", this, tcThread.getThreadGroup(), jmri.util.Log4JUtil.shortenStacktrace(new Exception("traceback"),6));
+        log.debug("starting TC thread from {} ", this, jmri.util.Log4JUtil.shortenStacktrace(new Exception("traceback"),6));
         tcThread.start();
     }
 
