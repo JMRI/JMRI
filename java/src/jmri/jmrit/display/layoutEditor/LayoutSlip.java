@@ -22,8 +22,8 @@ import org.slf4j.*;
  * A LayoutSlip has four connection points, designated A, B, C, and D. A train
  * may proceed between A and D, A and C, B and D and in the case of
  * double-slips, B and C.
- * <p>
- * {@literal
+ * <br>
+ * <pre>
  * \\      //
  *   A==-==D
  *    \\ //
@@ -31,8 +31,8 @@ import org.slf4j.*;
  *    // \\
  *   B==-==C
  *  //      \\
- * literal}
- * <p>
+ * </pre>
+ * <br>
  * For drawing purposes, each LayoutSlip carries a center point and
  * displacements for A and B. The displacements for C = - the displacement for
  * A, and the displacement for D = - the displacement for B. The center point

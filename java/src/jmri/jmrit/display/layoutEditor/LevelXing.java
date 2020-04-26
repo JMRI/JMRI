@@ -25,15 +25,15 @@ import org.slf4j.*;
  * A LevelXing has four connection points, designated A, B, C, and D. At the
  * crossing, A-C and B-D are straight segments. A train proceeds through the
  * crossing on either of these segments.
- * <p>
- * {@literal
+ * <br>
+ * <pre>
  *    A   D
  *    \\ //
  *      X
  *    // \\
  *    B   C
- * literal}
- * <p>
+ * </pre>
+ * <br>
  * Each straight segment carries Block information. A-C and B-D may be in the
  * same or different Layout Blocks.
  * <p>

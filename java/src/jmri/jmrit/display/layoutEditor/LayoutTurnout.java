@@ -37,8 +37,8 @@ import org.slf4j.*;
  * the crossing, A-B (and C-D for crossovers) is a straight segment (continuing
  * route). A-C (and B-D for crossovers) is the diverging route. B-C (and A-D for
  * crossovers) is an illegal condition.
- * <p>
- * {@literal
+ * <br>
+ * <pre>
  *           Turnouts
  * Right-hand       Left-hand
  *
@@ -69,7 +69,7 @@ import org.slf4j.*;
  *              XX
  *             //\\
  *        D ==**==**== C
- * literal}
+ * </pre>
  * <p>
  * A LayoutTurnout carries Block information. For right-handed, left-handed, and
  * wye turnouts, the entire turnout is in one block, however, a block border may
