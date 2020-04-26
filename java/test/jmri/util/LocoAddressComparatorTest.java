@@ -9,7 +9,7 @@ import jmri.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LocoAddressComparatorTest {
 
@@ -37,7 +37,6 @@ public class LocoAddressComparatorTest {
         Assert.assertEquals("30, false > 30, true", +1, t.compare(l5, l4));
     }
     
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

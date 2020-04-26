@@ -10,7 +10,7 @@ import jmri.jmrix.tams.TamsSystemConnectionMemo;
  *
  * Based on work by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 abstract public class TamsPanel extends jmri.util.swing.JmriPanel implements TamsPanelInterface {
 

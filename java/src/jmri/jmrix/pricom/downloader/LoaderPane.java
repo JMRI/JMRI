@@ -24,7 +24,7 @@ import purejavacomm.*;
 /**
  * Pane for downloading software updates to PRICOM products
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -430,8 +430,8 @@ public class LoaderPane extends javax.swing.JPanel {
             }
 
             // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true); // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(true); // pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
@@ -615,7 +615,7 @@ public class LoaderPane extends javax.swing.JPanel {
         long crc = 0;
 
         for (int r = 0; r < buffer.length - 2; r++) {
-            crc = CRC_char(crc, buffer[r]);	// do this character
+            crc = CRC_char(crc, buffer[r]); // do this character
         }
 
         // store into buffer

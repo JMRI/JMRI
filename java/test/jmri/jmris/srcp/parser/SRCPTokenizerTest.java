@@ -261,7 +261,6 @@ public class SRCPTokenizerTest {
         assertThat(caught).isNotNull().isInstanceOf(TokenMgrError.class);
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

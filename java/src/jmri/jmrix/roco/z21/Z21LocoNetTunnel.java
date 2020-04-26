@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * Parts of this code are derived from the
  * jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter class.
  *
- * @author	Paul Bender Copyright (C) 2014
+ * @author Paul Bender Copyright (C) 2014
  */
 public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable {
 

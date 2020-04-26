@@ -26,7 +26,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * The current implementation only handles the 19,200 baud rate, and does not
  * use any other options at configuration time.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class SerialDriverAdapter extends QsiPortController {
 

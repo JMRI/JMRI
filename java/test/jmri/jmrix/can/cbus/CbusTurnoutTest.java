@@ -569,7 +569,6 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     
     private TrafficControllerScaffold tcis;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

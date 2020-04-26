@@ -9,9 +9,6 @@ import jmri.jmrit.catalog.NamedIcon;
 import org.junit.*;
 
 /**
- * LinkingLabelTest.java
- * <p>
- * Description:
  *
  * @author Bob Jacobsen
  */
@@ -67,7 +64,6 @@ public class LinkingLabelTest extends PositionableTestBase {
         Assert.assertEquals("URL after set", "bar", l.getURL());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

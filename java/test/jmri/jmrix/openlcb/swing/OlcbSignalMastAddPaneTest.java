@@ -15,7 +15,7 @@ import org.junit.*;
 import org.openlcb.*;
 
 /**
- * @author	Bob Jacobsen Copyright 2018
+ * @author Bob Jacobsen Copyright 2018
  */
 public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
@@ -224,7 +224,6 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
     static java.util.ArrayList<Message> messages;
     
-    // The minimal setup for log4J
     //
     // This only initialized JUnit and Log4J once per class so that it
     // can only initialize the OpenLCB structure once per class

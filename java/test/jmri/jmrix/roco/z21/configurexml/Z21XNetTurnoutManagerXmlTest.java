@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Z21XNetTurnoutManagerXml.java
  *
- * Description: tests for the Z21XNetTurnoutManagerXml class
+ * Test for the Z21XNetTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class Z21XNetTurnoutManagerXmlTest {
       Assert.assertNotNull("Z21XNetTurnoutManagerXml constructor",new Z21XNetTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

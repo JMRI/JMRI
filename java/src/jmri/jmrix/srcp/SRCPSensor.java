@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * SRCPSensor implementation of the Sensor interface.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	Paul Bender Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Paul Bender Copyright (C) 2010
  */
 public class SRCPSensor extends AbstractSensor implements SRCPListener {
 

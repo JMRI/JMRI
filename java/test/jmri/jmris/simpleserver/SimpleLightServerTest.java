@@ -129,7 +129,6 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
         assertThat(thrown).withFailMessage("Exception retrieving Status").isNull();
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     @Override
     public void setUp() {

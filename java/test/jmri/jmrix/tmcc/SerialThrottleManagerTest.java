@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SerialThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
@@ -17,7 +17,6 @@ public class SerialThrottleManagerTest extends jmri.managers.AbstractThrottleMan
         Assert.assertNotNull("exists",tm);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

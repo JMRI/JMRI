@@ -9,7 +9,7 @@ import org.junit.Before;
 /**
  * Test simple functioning of WiFiConsist
  *
- * @author	Paul Bender Copyright (C) 2016,2017
+ * @author Paul Bender Copyright (C) 2016,2017
  */
 public class WiFiConsistTest extends jmri.implementation.AbstractConsistTestBase {
 

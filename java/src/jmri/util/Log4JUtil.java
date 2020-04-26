@@ -271,7 +271,7 @@ public class Log4JUtil {
      * @return The original object with truncated stack trace
      */
     public  @Nonnull static <T extends Throwable> T shortenStacktrace(@Nonnull T t) {
-        StackTraceElement[]	originalTrace = t.getStackTrace();
+        StackTraceElement[] originalTrace = t.getStackTrace();
         int i;
         for (i = originalTrace.length-1; i>0; i--) { // search from deepest
             String name = originalTrace[i].getClassName();
@@ -293,7 +293,7 @@ public class Log4JUtil {
      * @return The original object with truncated stack trace
      */
     public  @Nonnull static <T extends Throwable> T shortenStacktrace(@Nonnull T t, int len) {
-        StackTraceElement[]	originalTrace = t.getStackTrace();
+        StackTraceElement[] originalTrace = t.getStackTrace();
         int newLen = Math.min(len, originalTrace.length);
         StackTraceElement[] newTrace = new StackTraceElement[newLen];
         for (int i = 0; i < newLen; i++) newTrace[i] = originalTrace[i];

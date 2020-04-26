@@ -8,7 +8,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.jmrix.roco.z21.Z21SensorManager class for CanBus sensors.
  *
- * @author	Paul Bender Copyright (c) 2018,2019
+ * @author Paul Bender Copyright (c) 2018,2019
  */
 public class Z21CanBusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 

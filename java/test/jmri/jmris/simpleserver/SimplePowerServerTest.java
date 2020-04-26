@@ -132,7 +132,6 @@ public class SimplePowerServerTest extends jmri.jmris.AbstractPowerServerTestBas
         assertThat(sb.toString()).isEqualTo("POWER UNKNOWN\n").withFailMessage("send UNKNOWN status check");
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     @Override
     public void setUp() {

@@ -21,8 +21,8 @@ import org.netbeans.jemmy.operators.*;
 /**
  * Test simple functioning of LayoutEditorTools
  *
- * @author	Paul Bender Copyright (C) 2016
- * @author	George Warner Copyright (C) 2019
+ * @author Paul Bender Copyright (C) 2016
+ * @author George Warner Copyright (C) 2019
  */
 public class LayoutEditorToolsTest {
 

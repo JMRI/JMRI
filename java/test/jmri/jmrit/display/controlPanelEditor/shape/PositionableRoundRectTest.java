@@ -20,7 +20,6 @@ public class PositionableRoundRectTest extends PositionableRectangleTest {
         Assert.assertNotNull("exists", p);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

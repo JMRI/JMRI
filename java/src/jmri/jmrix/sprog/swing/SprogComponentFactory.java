@@ -8,8 +8,8 @@ import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 /**
  * Provide access to Swing components for the Sprog subsystem.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
- * @author	Paul Bender Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
+ * @author Paul Bender Copyright (C) 2010
  * @since 3.5.1
  */
 public class SprogComponentFactory extends jmri.jmrix.swing.ComponentFactory {

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.cmri.SerialTurnoutManager class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -43,7 +43,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         stcs = null;
         memo = null;
 
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

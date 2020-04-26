@@ -6,7 +6,7 @@ import org.junit.*;
 /**
  * Tests for classes in the jmri.jmrit.sendpacket package
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class SendPacketTest {
 

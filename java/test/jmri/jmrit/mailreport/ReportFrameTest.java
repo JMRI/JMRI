@@ -6,18 +6,17 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ReportFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new ReportFrame();
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new ReportFrame();
+        }
     }
 
     @After

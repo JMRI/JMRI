@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * SprogTurnoutManagerXmlTest.java
  *
- * Description: tests for the SprogTurnoutManagerXml class
+ * Test for the SprogTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class SprogTurnoutManagerXmlTest {
       Assert.assertNotNull("SprogTurnoutManagerXml constructor",new SprogTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JUnit tests for the QsiProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class QsiMonFrameTest {
 

@@ -13,8 +13,8 @@ import jmri.util.NamedBeanComparator;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
- * @author	Paul Bender Copyright (C) 2015-2016
+ * @author Bob Jacobsen Copyright (C) 2010
+ * @author Paul Bender Copyright (C) 2015-2016
  */
 public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

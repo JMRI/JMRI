@@ -17,7 +17,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of Consist classes.
  *
- * @author	Paul Copyright (C) 2017
+ * @author Paul Copyright (C) 2017
  */
 abstract public class AbstractConsistTestBase {
 
@@ -178,6 +178,5 @@ abstract public class AbstractConsistTestBase {
     }
 
 
-    // The minimal setup for log4J
 
 }

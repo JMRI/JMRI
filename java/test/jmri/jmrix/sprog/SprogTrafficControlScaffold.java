@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Stands in for the SprogTrafficController class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SprogTrafficControlScaffold extends SprogTrafficController {
 

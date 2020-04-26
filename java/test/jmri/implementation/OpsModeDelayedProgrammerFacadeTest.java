@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Test the OpsModeDelayedProgrammerFacade class.
  *
- * @author	Bob Jacobsen Copyright 2014
+ * @author Bob Jacobsen Copyright 2014
  *
  */
 public class OpsModeDelayedProgrammerFacadeTest {
@@ -153,7 +153,6 @@ public class OpsModeDelayedProgrammerFacadeTest {
         facProgReplied = false;
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();

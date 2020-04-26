@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * not be the very next message after a query is sent, due to slot manager
  * traffic. Add Pi-SPROG version decoding.
  *
- * @author	Andrew Crosland Copyright (C) 2012, 2016
+ * @author Andrew Crosland Copyright (C) 2012, 2016
  */
 public class SprogVersionQuery implements SprogListener {
 

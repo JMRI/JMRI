@@ -29,9 +29,9 @@ public class Z21ConfigFrameTest extends jmri.util.JmriJFrameTestBase {
         tc = new Z21InterfaceScaffold();
         memo.setTrafficController(tc);
         memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
-        if(!GraphicsEnvironment.isHeadless()){
-          frame = new Z21ConfigFrame(memo);
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new Z21ConfigFrame(memo);
+        }
     }
 
     @After

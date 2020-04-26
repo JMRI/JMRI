@@ -14,7 +14,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * <p>
  * Objects of this class are immutable once created.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 @javax.annotation.concurrent.Immutable
 public class Reading {

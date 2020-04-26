@@ -10,7 +10,7 @@ import jmri.util.swing.WindowInterface;
  *
  * Based on work by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class TamsNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 

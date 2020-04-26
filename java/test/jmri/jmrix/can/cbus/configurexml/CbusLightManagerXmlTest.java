@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * CbusLightManagerXmlTest.java
  *
- * Description: tests for the CbusLightManagerXml class
+ * Test for the CbusLightManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class CbusLightManagerXmlTest {
       Assert.assertNotNull("CbusLightManagerXml constructor",new CbusLightManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

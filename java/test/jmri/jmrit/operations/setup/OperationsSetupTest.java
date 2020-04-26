@@ -83,9 +83,9 @@ public class OperationsSetupTest extends OperationsTestCase {
         Setup s = new Setup();
         s.setMainMenuEnabled(true);
         /* Seems to be failing on test machine */
-//		Assert.assertTrue(s.isMainMenuEnabled());
+//        Assert.assertTrue(s.isMainMenuEnabled());
         s.setMainMenuEnabled(false);
-//		Assert.assertFalse(s.isMainMenuEnabled());
+//        Assert.assertFalse(s.isMainMenuEnabled());
     }
 
     // test scale attributes

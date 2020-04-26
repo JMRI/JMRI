@@ -11,7 +11,7 @@ import org.netbeans.jemmy.operators.*;
 import org.junit.*;
 
 /**
- * @author	Bob Jacobsen Copyright 2014
+ * @author Bob Jacobsen Copyright 2014
  */
 public class AddSignalMastPanelTest {
 

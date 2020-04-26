@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * NceSensorManagerXmlTest.java
  *
- * Description: tests for the NceSensorManagerXml class
+ * Test for the NceSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class NceSensorManagerXmlTest {
       Assert.assertNotNull("NceSensorManagerXml constructor",new NceSensorManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

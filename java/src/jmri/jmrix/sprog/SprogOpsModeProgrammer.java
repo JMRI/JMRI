@@ -16,7 +16,7 @@ import jmri.ProgrammingMode;
  * Functionally, this just creates packets to send via the command station.
  *
  * @see jmri.Programmer
- * @author	Andrew Crosland Copyright (C) 2006
+ * @author Andrew Crosland Copyright (C) 2006
  */
 public class SprogOpsModeProgrammer extends SprogProgrammer implements AddressedProgrammer {
 

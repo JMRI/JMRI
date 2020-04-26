@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
  * <p>
  * Careful - tests are loaded via a separate class loader!
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 @RunWith(JUnitPlatform.class)
 @SelectClasses(jmri.implementation.swing.SwingShutDownTaskDemo.class)

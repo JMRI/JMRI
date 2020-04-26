@@ -40,7 +40,6 @@ public class CbusFilterTypeTest {
         Assert.assertEquals("CFIN cat null",CbusFilterType.CFNODE,CbusFilterType.CFNODES.getCategory());    
     }
     
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

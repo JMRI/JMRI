@@ -252,7 +252,6 @@ public class SimpleSignalHeadServerTest {
         assertThat(sb.toString()).isEqualTo("SIGNALHEAD IH1 DARK\n").withFailMessage("parse blank check");
     }
 
-    // The minimal setup for log4J
     @BeforeEach public void setUp() throws Exception {
         JUnitUtil.setUp();
 

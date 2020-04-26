@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Class to hold SPROG type and firmware version.
  *
- * @author	Andrew Crosland Copyright (C) 2012
+ * @author Andrew Crosland Copyright (C) 2012
  */
 public class SprogVersion {
 

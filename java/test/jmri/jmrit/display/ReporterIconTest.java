@@ -11,8 +11,6 @@ import org.junit.*;
 
 /**
  * Test the ReporterIcon.
- * <p>
- * Description:
  *
  * @author Bob Jacobsen Copyright 2007
  */

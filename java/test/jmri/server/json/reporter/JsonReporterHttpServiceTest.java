@@ -204,7 +204,6 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
         assertEquals(2, result.size());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() throws Exception {

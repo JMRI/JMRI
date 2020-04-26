@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * JMRIClient implementation of the Reporter interface.
  * <p>
  *
- * Description: extend jmri.AbstractReporter for JMRIClient layouts
+ * extend jmri.AbstractReporter for JMRIClient layouts
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Paul Bender Copyright (C) 2010

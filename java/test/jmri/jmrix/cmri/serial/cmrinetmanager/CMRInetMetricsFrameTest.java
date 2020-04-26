@@ -8,7 +8,7 @@ import java.awt.GraphicsEnvironment;
 /**
  * Test simple functioning of CMRInetMetricsFrame
  *
- * @author	Chuck Catania Copyright (C) 2017, 2018
+ * @author Chuck Catania Copyright (C) 2017, 2018
  */
 public class CMRInetMetricsFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -17,9 +17,9 @@ public class CMRInetMetricsFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new CMRInetMetricsFrame(new CMRISystemConnectionMemo());
-	} 
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new CMRInetMetricsFrame(new CMRISystemConnectionMemo());
+        }
     }
 
     @After

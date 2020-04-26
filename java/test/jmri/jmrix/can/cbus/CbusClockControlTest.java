@@ -364,7 +364,6 @@ public class CbusClockControlTest {
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
     
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class QuantumCvMgrImporterTest {
 
@@ -46,7 +46,6 @@ public class QuantumCvMgrImporterTest {
         jmri.util.JUnitAppender.assertWarnMessage("Adding CV 2 description \"\", which was in import file but not defined by the decoder definition");
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

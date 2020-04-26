@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * PanelEditorXmlTest.java
  *
- * Description: tests for the PanelEditorXml class
+ * Test for the PanelEditorXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class PanelEditorXmlTest {
       Assert.assertNotNull("PanelEditorXml constructor",new PanelEditorXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

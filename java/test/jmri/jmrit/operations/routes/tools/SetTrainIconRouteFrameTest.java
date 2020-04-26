@@ -18,7 +18,7 @@ import jmri.util.swing.JemmyUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SetTrainIconRouteFrameTest extends OperationsTestCase {
 

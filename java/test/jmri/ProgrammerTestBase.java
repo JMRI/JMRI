@@ -67,7 +67,6 @@ abstract public class ProgrammerTestBase {
                 programmer.writeCV("1",42,null);
     }
     
-    // The minimal setup for log4J
     @Before
     abstract public void setUp();
 

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * PerformScriptModelXmlTest.java
  *
- * Description: tests for the PerformScriptModelXml class
+ * Test for the PerformScriptModelXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class PerformScriptModelXmlTest {
       Assert.assertNotNull("PerformScriptModelXml constructor",new PerformScriptModelXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

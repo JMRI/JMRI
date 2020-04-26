@@ -363,7 +363,6 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

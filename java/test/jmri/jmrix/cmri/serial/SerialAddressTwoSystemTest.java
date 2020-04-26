@@ -14,7 +14,7 @@ import org.junit.Test;
  * These used to be in a separate SerialAddress class, with its own test class.
  * This structure is a vestige of that.
  *
- * @author	Dave Duchamp Copyright 2004
+ * @author Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2017
  */
 public class SerialAddressTwoSystemTest {
@@ -92,7 +92,7 @@ public class SerialAddressTwoSystemTest {
         stcs2 = null;
         memo2 = null;
 
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

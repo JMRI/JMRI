@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * PowerManager implementation for controlling SPROG layout power.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SprogPowerManager extends jmri.managers.AbstractPowerManager
         implements SprogListener {

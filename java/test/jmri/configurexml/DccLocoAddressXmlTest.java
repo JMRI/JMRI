@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * DccLocoAddressXmlTest.java
  *
- * Description: tests for the DccLocoAddressXml class
+ * Test for the DccLocoAddressXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class DccLocoAddressXmlTest {
       Assert.assertNotNull("DccLocoAddressXml constructor",new DccLocoAddressXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

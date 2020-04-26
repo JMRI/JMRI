@@ -133,7 +133,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
         String optionDisplayName;
         JComponent optionSelection;
         Boolean advanced = true;
-	    JLabel label = null;
+        JLabel label = null;
 
         public Option(String name, JComponent optionSelection, Boolean advanced) {
             this.optionDisplayName = name;

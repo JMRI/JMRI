@@ -39,7 +39,7 @@ public class TranspondingTagTest {
     public void testTranspondingTagToString() {
         TranspondingTag r = new TranspondingTag("ID1234");
         // set the entryexit property
-        r.setProperty("entryexit","exits");
+        r.setProperty("entryexit", "exits");
         Assert.assertEquals("TranspondingTag toString ", "ID1234", r.toString());
     }
 
@@ -47,7 +47,7 @@ public class TranspondingTagTest {
     public void testTranspondingTagToReportString() {
         TranspondingTag r = new TranspondingTag("LD1234");
         Assert.assertEquals("TranspondingTag toReportString ", "1234", r.toReportString());
-        r.setProperty("entryexit","exits");
+        r.setProperty("entryexit", "exits");
         Assert.assertEquals("TranspondingTag toReportString ", "1234 exits", r.toReportString());
     }
 
@@ -99,7 +99,6 @@ public class TranspondingTagTest {
 
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
@@ -111,7 +110,7 @@ public class TranspondingTagTest {
 
     @After
     public void tearDown() throws Exception {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

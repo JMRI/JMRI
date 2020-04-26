@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * PositionableEllipseXmlTest.java
  *
- * Description: tests for the PositionableEllipseXml class
+ * Test for the PositionableEllipseXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class PositionableEllipseXmlTest {
       Assert.assertNotNull("PositionableEllipseXml constructor",new PositionableEllipseXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

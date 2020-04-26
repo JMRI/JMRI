@@ -9,9 +9,9 @@ import org.junit.Test;
 /**
  * SRCPTurnoutManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPTurnoutManager class
+ * Test for the jmri.jmrix.srcp.SRCPTurnoutManager class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -33,7 +33,6 @@ public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertNotNull(l);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

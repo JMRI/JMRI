@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the SprogMessage class.
  *
- * @author	Bob Jacobsen Copyright 2012
+ * @author Bob Jacobsen Copyright 2012
  */
 public class SprogMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
@@ -40,7 +40,6 @@ public class SprogMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("string compare ", "V 1021 251", msg.toString());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -50,7 +49,7 @@ public class SprogMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	m = msg = null;
+        m = msg = null;
         JUnitUtil.tearDown();
     }
 

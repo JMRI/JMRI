@@ -409,7 +409,6 @@ public class SRCPParserTest {
         assertThat(n).isNotNull().withFailMessage("Set node");
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Stands in for the can.TrafficController class
  *
- * @author	Bob Jacobsen 2008
+ * @author Bob Jacobsen 2008
  */
 public class TrafficControllerScaffold extends TrafficController {
 

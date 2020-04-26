@@ -25,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * The current implementation only handles the 9,600 baud rate. It uses the
  * first configuraiont variable for the modem initilization string.
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
  */
 public class SerialDriverAdapter extends XpaPortController {
 
