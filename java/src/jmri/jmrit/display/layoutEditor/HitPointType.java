@@ -33,8 +33,7 @@ public enum HitPointType {
     MARKER,         //     17   
     TRACK_CIRCLE_CENTRE,   //     18   
     UNUSED_19,      //     19   
-    @Deprecated
-    SLIP_CENTER,    //     20   
+    SLIP_CENTER,    //     20   should be @Deprecated (use SLIP_LEFT & SLIP_RIGHT instead)
     SLIP_A,         //     21   
     SLIP_B,         //     22   
     SLIP_C,         //     23   
