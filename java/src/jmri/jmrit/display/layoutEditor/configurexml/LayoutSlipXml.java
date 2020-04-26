@@ -23,7 +23,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
     public LayoutSlipXml() {
     }
 
-    EnumIoOrdinals<LayoutSlip.TurnoutType> tTypeEnumMap = new EnumIoOrdinals<>(LayoutSlip.TurnoutType.class);
+    final static EnumIoOrdinals<LayoutSlip.TurnoutType> tTypeEnumMap = new EnumIoOrdinals<>(LayoutSlip.TurnoutType.class);
 
     /**
      * Default implementation for storing the contents of a LayoutSlip
