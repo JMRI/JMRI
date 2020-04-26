@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PositionablePointXml extends AbstractXmlAdapter {
 
-    static final EnumIO<PositionablePoint.PointType> pTypeEnumMap = new EnumIoOrdinals<>(PositionablePoint.PointType.class);
+    static final EnumIO<PositionablePoint.PointType> pTypeEnumMap = new EnumIoNamesNumbers<>(PositionablePoint.PointType.class);
 
     public PositionablePointXml() {
     }

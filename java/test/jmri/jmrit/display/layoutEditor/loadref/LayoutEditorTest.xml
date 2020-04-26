@@ -4,7 +4,7 @@
   <jmriversion>
     <major>4</major>
     <minor>19</minor>
-    <test>5</test>
+    <test>6</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -289,15 +289,15 @@
         <controlpoint index="1" x="420.0" y="140.0" />
       </controlpoints>
     </tracksegment>
-    <positionablepoint ident="EB1" type="2" x="50.0" y="260.0" connect1name="T6" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="EB2" type="2" x="570.0" y="260.0" connect1name="T7" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A2" type="1" x="110.0" y="100.0" connect1name="T13" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A3" type="1" x="120.0" y="200.0" connect1name="T14" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A4" type="1" x="150.0" y="220.0" connect1name="T18" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A5" type="1" x="420.0" y="240.0" connect1name="T20" connect2name="T21" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A6" type="1" x="500.0" y="140.0" connect1name="T22" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB1" type="END_BUMPER" x="50.0" y="260.0" connect1name="T6" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB2" type="END_BUMPER" x="570.0" y="260.0" connect1name="T7" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A2" type="ANCHOR" x="110.0" y="100.0" connect1name="T13" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A3" type="ANCHOR" x="120.0" y="200.0" connect1name="T14" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A4" type="ANCHOR" x="150.0" y="220.0" connect1name="T18" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A5" type="ANCHOR" x="420.0" y="240.0" connect1name="T20" connect2name="T21" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A6" type="ANCHOR" x="500.0" y="140.0" connect1name="T22" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
     <levelxing ident="X1" blocknameac="Yard" blocknamebd="Yard" connectaname="T10" connectbname="T9" connectdname="T11" xcen="260.0" ycen="70.0" xa="240.0" ya="60.0" xb="240.0" yb="80.0" class="jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml" />
-    <layoutSlip ident="SL1" slipType="8" hidden="yes" disabled="yes" disableWhenOccupied="yes" xcen="300.0" ycen="90.0" xa="280.0" ya="80.0" xb="280.0" yb="100.0" blockname="Yard" connectbname="T18" connectcname="T22" connectdname="T17" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutSlipXml">
+    <layoutSlip ident="SL1" slipType="DOUBLE_SLIP" hidden="yes" disabled="yes" disableWhenOccupied="yes" xcen="300.0" ycen="90.0" xa="280.0" ya="80.0" xb="280.0" yb="100.0" blockname="Yard" connectbname="T18" connectcname="T22" connectdname="T17" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutSlipXml">
       <turnout>IT5</turnout>
       <turnoutB>IT6</turnoutB>
       <states>
@@ -328,38 +328,16 @@
   </LayoutEditor>
   <filehistory>
     <operation>
-      <type>app</type>
-      <date>Mon Apr 13 14:12:12 PDT 2020</date>
-      <filename>JMRI program</filename>
-    </operation>
-    <operation>
       <type>Load OK</type>
-      <date>Mon Apr 13 14:12:15 PDT 2020</date>
-      <filename>/Volumes/Geo512GB/Users/Shared/Dropbox/Model%20Railroading/JMRI/GeoDebugging/GeoDebugging.xml</filename>
-      <filehistory>
-        <operation>
-          <type>app</type>
-      <date>Tue Sep 10 22:44:20 CEST 2019</date>
-      <filename>JMRI program</filename>
-    </operation>
-    <operation>
-      <type>Load OK</type>
-      <date>Tue Sep 10 22:46:01 CEST 2019</date>
-      <filename>/Users/egbertbroerse/Documents/Egbert/Computers/IntelliJ%20local/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest.xml</filename>
+      <date>Sun Apr 26 15:57:57 PDT 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest.xml</filename>
       <filehistory />
     </operation>
     <operation>
       <type>Store</type>
-      <date>Tue Sep 10 22:46:23 CEST 2019</date>
+      <date>Sun Apr 26 15:57:57 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-    </operation>
-    <operation>
-      <type>Store</type>
-      <date>Mon Apr 13 14:12:28 PDT 2020</date>
-      <filename />
-    </operation>
-  </filehistory>
-  <!--Written by JMRI version 4.19.5ish+geowar+20200413T2112Z+R4323a6e1be on Mon Apr 13 14:12:28 PDT 2020-->
+  <!--Written by JMRI version 4.19.6ish+jake+20200426T2255Z+R6c02d72f3a on Sun Apr 26 15:57:57 PDT 2020-->
 </layout-config>

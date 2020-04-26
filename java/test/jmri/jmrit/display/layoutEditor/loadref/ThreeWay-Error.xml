@@ -4,7 +4,7 @@
   <jmriversion>
     <major>4</major>
     <minor>19</minor>
-    <test>5</test>
+    <test>6</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -262,7 +262,7 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="8:48 PM">
+    <memory value="3:57 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -699,15 +699,15 @@
     <tracksegment ident="T3" blockname="SouthEast-B" connect1name="TO1" type1="TURNOUT_C" connect2name="EB2" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="T4" blockname="CentralEast-B" connect1name="TO2" type1="TURNOUT_B" connect2name="EB3" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="T5" blockname="NorthEast-B" connect1name="TO2" type1="TURNOUT_C" connect2name="EB4" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <positionablepoint ident="EB1" type="2" x="40.0" y="100.0" connect1name="T2" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="EB2" type="2" x="360.0" y="140.0" connect1name="T3" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="EB3" type="2" x="360.0" y="100.0" connect1name="T4" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="EB4" type="2" x="360.0" y="60.0" connect1name="T5" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB1" type="END_BUMPER" x="40.0" y="100.0" connect1name="T2" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB2" type="END_BUMPER" x="360.0" y="140.0" connect1name="T3" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB3" type="END_BUMPER" x="360.0" y="100.0" connect1name="T4" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB4" type="END_BUMPER" x="360.0" y="60.0" connect1name="T5" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
   </LayoutEditor>
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Fri Apr 17 20:48:29 PDT 2020</date>
+      <date>Sun Apr 26 15:57:58 PDT 2020</date>
       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/ThreeWay-Error.xml</filename>
       <filehistory>
         <operation>
@@ -753,9 +753,9 @@
     </operation>
     <operation>
       <type>Store</type>
-      <date>Fri Apr 17 20:48:29 PDT 2020</date>
+      <date>Sun Apr 26 15:57:58 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.5ish+jake+20200417T2344Z+R918c4d1801 on Fri Apr 17 20:48:29 PDT 2020-->
+  <!--Written by JMRI version 4.19.6ish+jake+20200426T2255Z+R6c02d72f3a on Sun Apr 26 15:57:58 PDT 2020-->
 </layout-config>

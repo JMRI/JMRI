@@ -1259,6 +1259,7 @@
       <xs:attribute name="linktype" type="xs:string"></xs:attribute>
     </xs:complexType>
 
+
     <xs:complexType name="EditorLayoutSlipType">
       <xs:annotation>
         <xs:documentation>
@@ -1332,7 +1333,7 @@
       <xs:attribute name="ident" type="beanNameType" use="required">
         <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
       </xs:attribute>
-      <xs:attribute name="slipType" type="xs:string" use="required"></xs:attribute>
+      <xs:attribute name="slipType" type="LayoutTurnoutType" use="required"></xs:attribute>
 
       <xs:attribute name="xa" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="ya" type="xs:float" use="required"></xs:attribute>
