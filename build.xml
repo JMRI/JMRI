@@ -444,6 +444,8 @@
             <fileset file="release.zip"/>
             <fileset file="spotbugs.html"/>
             <fileset file="spotbugs-check.html"/>
+            <fileset file="spotbugs.xml"/>
+            <fileset file="spotbugs-check.xml"/>
             <fileset dir="." includes="hs_err_pid*.log"/>
         </delete>
     </target>
@@ -464,8 +466,6 @@
             <fileset file="junit-results.xml"/>
             <fileset file="findbugs.html"/>
             <fileset file="findbugs.xml"/>
-            <fileset file="spotbugs.html"/>
-            <fileset file="spotbugs.xml"/>
             <fileset file="jacoco.exec"/>
             <fileset file="jmri-fb.html"/>
             <fileset file="coveragereport"/>
