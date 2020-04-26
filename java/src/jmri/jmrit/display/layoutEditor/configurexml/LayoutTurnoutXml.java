@@ -22,8 +22,8 @@ import org.slf4j.LoggerFactory;
  */
 public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
-    EnumIO<LayoutTurnout.LinkType> linkEnumMap = new EnumIoOrdinals<>(LayoutTurnout.LinkType.class);
-    EnumIO<LayoutTurnout.TurnoutType> tTypeEnumMap = new EnumIoOrdinals<>(LayoutTurnout.TurnoutType.class);
+    static final EnumIO<LayoutTurnout.LinkType> linkEnumMap = new EnumIoOrdinals<>(LayoutTurnout.LinkType.class);
+    static final EnumIO<LayoutTurnout.TurnoutType> tTypeEnumMap = new EnumIoOrdinals<>(LayoutTurnout.TurnoutType.class);
     
     public LayoutTurnoutXml() {
     }

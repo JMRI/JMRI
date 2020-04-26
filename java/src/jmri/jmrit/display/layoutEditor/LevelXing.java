@@ -1043,7 +1043,7 @@ public class LevelXing extends LayoutTrack {
                     lb.incrementUse();
                 }
             } else {
-                log.error("{}.setObjects(); bad blockname BD ''{}''", tLayoutBlockNameBD);
+                log.error("{}.setObjects(); bad blockname BD ''{}''", this, tLayoutBlockNameBD);
                 namedLayoutBlockBD = null;
             }
             tLayoutBlockNameBD = null; //release this memory
