@@ -148,7 +148,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
     }
 
     /**
-     * Support for Enum I/O to XML using the enum's element names.<p>
+     * Support for Enum I/O to XML using the enum's element names.
      */
     public static class EnumIoNames <T extends Enum<T>> extends EnumIO<T> { // public to be usable by adapters in other configXML packages
     

@@ -265,16 +265,16 @@ public class LayoutEditorToolsTest {
 
         //define connection
         String uName = "T" + (idx + 1);
-        LayoutEditor.HitPointType types[] = {LayoutEditor.HitPointType.TURNOUT_B, LayoutEditor.HitPointType.TURNOUT_C, LayoutEditor.HitPointType.TURNOUT_A, LayoutEditor.HitPointType.TURNOUT_A};
+        HitPointType types[] = {HitPointType.TURNOUT_B, HitPointType.TURNOUT_C, HitPointType.TURNOUT_A, HitPointType.TURNOUT_A};
         PositionablePoint[] positionablePoints = {positionablePoint2, positionablePoint3, positionablePoint1, positionablePoint1};
         TrackSegment trackSegment = new TrackSegment(uName,
                 layoutTurnout, types[idx],
-                positionablePoints[idx], LayoutEditor.HitPointType.POS_POINT,
+                positionablePoints[idx], HitPointType.POS_POINT,
                 false, false, layoutEditor);
         Assert.assertNotNull("trackSegment not null", trackSegment);
         layoutEditor.getLayoutTracks().add(trackSegment);
         try {
-            layoutTurnout.setConnection(types[idx], trackSegment, LayoutEditor.HitPointType.TRACK);
+            layoutTurnout.setConnection(types[idx], trackSegment, HitPointType.TRACK);
         } catch (JmriException ex) {
             Logger.getLogger(LayoutEditorToolsTest.class.getName()).log(Level.SEVERE, null, ex);
         }

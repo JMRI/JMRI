@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus;
 
 import java.util.ResourceBundle;
 import jmri.CabSignalManager;
+import jmri.ClockControl;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.ThrottleManager;
@@ -30,8 +31,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     public CbusConfigurationManager(CanSystemConnectionMemo memo) {
         super(memo);
         addToConfigMgr();
-        InstanceManager.store(cf = new jmri.jmrix.can.cbus.swing.CbusComponentFactory(adapterMemo),
-            jmri.jmrix.swing.ComponentFactory.class);
+        cf = new jmri.jmrix.can.cbus.swing.CbusComponentFactory(adapterMemo);
+        InstanceManager.store(cf, jmri.jmrix.swing.ComponentFactory.class);
     }
     
     protected final void addToConfigMgr() {
@@ -48,6 +49,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         
         InstanceManager.store(getCbusPreferences(), CbusPreferences.class);
         InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
+        
+        InstanceManager.setDefault(ClockControl.class, getClockControl());
 
         InstanceManager.setSensorManager(getSensorManager());
 
@@ -177,6 +180,19 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         return powerManager;
     }
+    
+    protected CbusClockControl clockControl;
+    
+    public CbusClockControl getClockControl() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (clockControl == null) {
+            clockControl = new CbusClockControl(adapterMemo);
+        }
+        return clockControl;
+    
+    }
 
     protected ThrottleManager throttleManager;
 
@@ -303,6 +319,9 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (powerManager != null) {
             InstanceManager.deregister(powerManager, jmri.jmrix.can.cbus.CbusPowerManager.class);
+        }
+        if (clockControl != null) {
+            InstanceManager.deregister(clockControl, ClockControl.class);
         }
         if (turnoutManager != null) {
             InstanceManager.deregister(turnoutManager, jmri.jmrix.can.cbus.CbusTurnoutManager.class);

@@ -1472,7 +1472,7 @@ public class LayoutEditorTools {
         TrackSegment t = track;
         Object obj = object;
         boolean inBlock = true;
-        LayoutEditor.HitPointType type; // = LayoutEditor.HitPointType.NONE;
+        HitPointType type; // = LayoutEditor.HitPointType.NONE;
         Object connect = null;
         while (inBlock) {
             if (t.getConnect1() == obj) {
@@ -1485,7 +1485,7 @@ public class LayoutEditorTools {
                 log.error("Error obj not connected to {}!", t.getName());
                 return null;
             }
-            if (type == LayoutEditor.HitPointType.POS_POINT) {
+            if (type == HitPointType.POS_POINT) {
                 PositionablePoint p = (PositionablePoint) connect;
                 if (p.getType() == PositionablePoint.END_BUMPER) {
                     hitEndBumper = true;
@@ -1513,7 +1513,7 @@ public class LayoutEditorTools {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
                 obj = p;
-            } else if (type == LayoutEditor.HitPointType.TURNOUT_A) {
+            } else if (type == HitPointType.TURNOUT_A) {
                 //Reached turnout throat, should be signalled
                 LayoutTurnout to = (LayoutTurnout) connect;
                 String signalName = to.getSignalA2Name();
@@ -1534,7 +1534,7 @@ public class LayoutEditorTools {
                 } else {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
-            } else if (type == LayoutEditor.HitPointType.TURNOUT_B) {
+            } else if (type == HitPointType.TURNOUT_B) {
                 //Reached turnout continuing, should be signalled
                 LayoutTurnout to = (LayoutTurnout) connect;
                 String signalName = to.getSignalB2Name();
@@ -1562,7 +1562,7 @@ public class LayoutEditorTools {
                 } else {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
-            } else if (type == LayoutEditor.HitPointType.TURNOUT_C) {
+            } else if (type == HitPointType.TURNOUT_C) {
                 //Reached turnout diverging, should be signalled
                 LayoutTurnout to = (LayoutTurnout) connect;
                 String signalName = to.getSignalC2Name();
@@ -1590,7 +1590,7 @@ public class LayoutEditorTools {
                 } else {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
-            } else if (type == LayoutEditor.HitPointType.TURNOUT_D) {
+            } else if (type == HitPointType.TURNOUT_D) {
                 //Reached turnout xover 4, should be signalled
                 LayoutTurnout to = (LayoutTurnout) connect;
                 String signalName = to.getSignalD2Name();
@@ -1611,7 +1611,7 @@ public class LayoutEditorTools {
                 } else {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
-            } else if (type == LayoutEditor.HitPointType.LEVEL_XING_A) {
+            } else if (type == HitPointType.LEVEL_XING_A) {
                 //Reached level crossing that may or may not be a block boundary
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalAName();
@@ -1626,7 +1626,7 @@ public class LayoutEditorTools {
                     return null;
                 }
                 obj = x;
-            } else if (type == LayoutEditor.HitPointType.LEVEL_XING_B) {
+            } else if (type == HitPointType.LEVEL_XING_B) {
                 //Reached level crossing that may or may not be a block boundary
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalBName();
@@ -1641,7 +1641,7 @@ public class LayoutEditorTools {
                     return null;
                 }
                 obj = x;
-            } else if (type == LayoutEditor.HitPointType.LEVEL_XING_C) {
+            } else if (type == HitPointType.LEVEL_XING_C) {
                 //Reached level crossing that may or may not be a block boundary
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalCName();
@@ -1656,7 +1656,7 @@ public class LayoutEditorTools {
                     return null;
                 }
                 obj = x;
-            } else if (type == LayoutEditor.HitPointType.LEVEL_XING_D) {
+            } else if (type == HitPointType.LEVEL_XING_D) {
                 //Reached level crossing that may or may not be a block boundary
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalDName();
@@ -1671,7 +1671,7 @@ public class LayoutEditorTools {
                     return null;
                 }
                 obj = x;
-            } else if (type == LayoutEditor.HitPointType.SLIP_A) {
+            } else if (type == HitPointType.SLIP_A) {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName = sl.getSignalA2Name();
                 if (!signalName.isEmpty()) {
@@ -1691,7 +1691,7 @@ public class LayoutEditorTools {
                 } else {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
-            } else if (type == LayoutEditor.HitPointType.SLIP_B) {
+            } else if (type == HitPointType.SLIP_B) {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName;
                 if (sl.getTurnoutType() == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
@@ -1714,7 +1714,7 @@ public class LayoutEditorTools {
                 } else {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
-            } else if (type == LayoutEditor.HitPointType.SLIP_C) {
+            } else if (type == HitPointType.SLIP_C) {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName;
                 if (sl.getTurnoutType() == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
@@ -1737,7 +1737,7 @@ public class LayoutEditorTools {
                 } else {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
-            } else if (type == LayoutEditor.HitPointType.SLIP_D) {
+            } else if (type == HitPointType.SLIP_D) {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName = sl.getSignalD2Name();
                 if (!signalName.isEmpty()) {
@@ -1757,7 +1757,7 @@ public class LayoutEditorTools {
                 } else {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
-            } else if (LayoutEditor.HitPointType.isTurntableRayHitType(type)) {
+            } else if (HitPointType.isTurntableRayHitType(type)) {
                 hitEndBumper = true;
                 return null;
             }
@@ -1779,10 +1779,10 @@ public class LayoutEditorTools {
     }
 
     @CheckReturnValue
-    private TrackSegment getContinuingTrack(@Nonnull LayoutTurnout to, LayoutEditor.HitPointType type) {
+    private TrackSegment getContinuingTrack(@Nonnull LayoutTurnout to, HitPointType type) {
         LayoutTurnout.TurnoutType ty = to.getTurnoutType();
         if ((ty == LayoutTurnout.TurnoutType.RH_TURNOUT) || (ty == LayoutTurnout.TurnoutType.LH_TURNOUT)) {
-            if (type == LayoutEditor.HitPointType.TURNOUT_A) {
+            if (type == HitPointType.TURNOUT_A) {
                 if (to.getContinuingSense() == Turnout.CLOSED) {
                     return (TrackSegment) to.getConnectB();
                 } else {
@@ -1793,13 +1793,13 @@ public class LayoutEditorTools {
             }
         } else if ((ty == LayoutTurnout.TurnoutType.DOUBLE_XOVER) || (ty == LayoutTurnout.TurnoutType.RH_XOVER)
                 || (ty == LayoutTurnout.TurnoutType.LH_XOVER)) {
-            if (type == LayoutEditor.HitPointType.TURNOUT_A) {
+            if (type == HitPointType.TURNOUT_A) {
                 return (TrackSegment) to.getConnectB();
-            } else if (type == LayoutEditor.HitPointType.TURNOUT_B) {
+            } else if (type == HitPointType.TURNOUT_B) {
                 return (TrackSegment) to.getConnectA();
-            } else if (type == LayoutEditor.HitPointType.TURNOUT_C) {
+            } else if (type == HitPointType.TURNOUT_C) {
                 return (TrackSegment) to.getConnectD();
-            } else if (type == LayoutEditor.HitPointType.TURNOUT_D) {
+            } else if (type == HitPointType.TURNOUT_D) {
                 return (TrackSegment) to.getConnectC();
             }
         }
@@ -4922,7 +4922,7 @@ public class LayoutEditorTools {
     }
 
     private boolean getTToTTurnoutInformation() {
-        LayoutEditor.HitPointType type = LayoutEditor.HitPointType.NONE;
+        HitPointType type = HitPointType.NONE;
         Object connect = null;
 
         turnout1 = null;
@@ -4984,7 +4984,7 @@ public class LayoutEditorTools {
                 type = connectorTrack.getType2();
                 connect = connectorTrack.getConnect2();
             }
-            if ((type != LayoutEditor.HitPointType.TURNOUT_A) || (connect == null)) {
+            if ((type != HitPointType.TURNOUT_A) || (connect == null)) {
                 //Not two turnouts connected throat-to-throat by a single Track Segment
                 //Inform user of error and terminate
                 JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
@@ -5045,7 +5045,7 @@ public class LayoutEditorTools {
                     type = connectorTrack.getType2();
                     connect = connectorTrack.getConnect2();
                 }
-                if ((type != LayoutEditor.HitPointType.TURNOUT_A) || (connect == null)) {
+                if ((type != HitPointType.TURNOUT_A) || (connect == null)) {
                     //Not two turnouts connected throat-to-throat by a single Track Segment
                     //Inform user of error and terminate
                     JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame,
@@ -6364,7 +6364,7 @@ public class LayoutEditorTools {
     }
 
     private boolean get3WayTurnoutInformation() {
-        LayoutEditor.HitPointType type = LayoutEditor.HitPointType.NONE;
+        HitPointType type = HitPointType.NONE;
         Object connect = null;
         turnoutA = null;
         turnoutB = null;
@@ -6416,7 +6416,7 @@ public class LayoutEditorTools {
                 type = connectorTrack.getType2();
                 connect = connectorTrack.getConnect2();
             }
-            if ((type != LayoutEditor.HitPointType.TURNOUT_B) || (connect == null)) {
+            if ((type != HitPointType.TURNOUT_B) || (connect == null)) {
                 //Not two turnouts connected as required by a single Track Segment
                 //Inform user of error and terminate
                 JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
@@ -6475,7 +6475,7 @@ public class LayoutEditorTools {
                     type = connectorTrack.getType2();
                     connect = connectorTrack.getConnect2();
                 }
-                if ((type != LayoutEditor.HitPointType.TURNOUT_A) || (connect == null)) {
+                if ((type != HitPointType.TURNOUT_A) || (connect == null)) {
                     //Not two turnouts connected with the throat of B connected to the continuing of A
                     //	  by a single Track Segment.  Inform user of error and terminat.e
                     JOptionPane.showMessageDialog(setSignalsAt3WayTurnoutFrame,
