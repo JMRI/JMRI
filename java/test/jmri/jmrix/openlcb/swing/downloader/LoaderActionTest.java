@@ -1,5 +1,6 @@
 package jmri.jmrix.openlcb.swing.downloader;
 
+import jmri.InstanceManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
@@ -33,11 +34,15 @@ public class LoaderActionTest {
         tcs = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcs);
+        InstanceManager.setDefault(CanSystemConnectionMemo.class,memo);
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        memo.dispose();
+        memo = null;
+        tcs.terminateThreads();
+        tcs = null;
         JUnitUtil.tearDown();
 
     }

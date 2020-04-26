@@ -86,7 +86,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         ti.flush();
 
         Assert.assertNotNull(ti.tc.rcvMessage);
-        log.debug("recv msg: " + ti.tc.rcvMessage + " header " + Integer.toHexString(ti.tc.rcvMessage.getHeader()));
+        log.debug("recv msg: {} header {}", ti.tc.rcvMessage, Integer.toHexString(ti.tc.rcvMessage.getHeader()));
         CanMessage expected = new CanMessage(new byte[]{1,2,3,4,5,6,7,8}, 0x198F4C4C);
         expected.setExtended(true);
         Assert.assertEquals(expected, ti.tc.rcvMessage);
@@ -152,7 +152,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assert.assertEquals(Sensor.ACTIVE, t.getKnownState());
         ti.flush();
         Assert.assertNotNull(ti.tc.rcvMessage);
-        log.debug("recv msg: " + ti.tc.rcvMessage + " header " + Integer.toHexString(ti.tc.rcvMessage.getHeader()));
+        log.debug("recv msg: {} header {}", ti.tc.rcvMessage, Integer.toHexString(ti.tc.rcvMessage.getHeader()));
         checkOnMsgSent();
         ti.tc.rcvMessage = null;
         t.setKnownState(Sensor.INACTIVE);

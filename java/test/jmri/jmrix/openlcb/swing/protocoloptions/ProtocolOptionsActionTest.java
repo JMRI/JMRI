@@ -36,7 +36,10 @@ public class ProtocolOptionsActionTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        memo.dispose();
+        memo = null;
+        tcs.terminateThreads();
+        tcs = null;
         JUnitUtil.tearDown();
 
     }

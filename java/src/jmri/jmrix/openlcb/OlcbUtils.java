@@ -12,6 +12,11 @@ import jmri.NamedBean;
  */
 
 public final class OlcbUtils {
+
+    private OlcbUtils(){
+        //class of constants and static methods.
+    }
+
     public static final String PROPERTY_IS_AUTHORITATIVE = "IsAuthoritative";
     public static final String PROPERTY_IS_PRODUCER = "IsProducer";
     public static final String PROPERTY_IS_CONSUMER = "IsConsumer";

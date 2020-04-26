@@ -32,6 +32,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
 
     public MonitorPane() {
         super();
+        pm = InstanceManager.getDefault(UserPreferencesManager.class);
     }
 
     CanSystemConnectionMemo memo;
@@ -44,7 +45,8 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     final String nodeNameCheck = this.getClass().getName() + ".NodeName";
     final String eventCheck = this.getClass().getName() + ".Event";
     final String eventAllCheck = this.getClass().getName() + ".EventAll";
-    
+    private final UserPreferencesManager pm;
+
     @Override
     public void initContext(Object context) {
         if (context instanceof CanSystemConnectionMemo) {
@@ -76,9 +78,12 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
 
     @Override
     public void dispose() {
-        memo.getTrafficController().removeCanListener(this);
+        try {
+            memo.getTrafficController().removeCanListener(this);
+        } catch(NullPointerException npe){
+            log.debug("Null Pointer Exception while attempting to remove Can Listener",npe);
+        }
 
-        UserPreferencesManager pm = InstanceManager.getDefault(UserPreferencesManager.class);
         pm.setSimplePreferenceState(nodeNameCheck, nodeNameCheckBox.isSelected());
         pm.setSimplePreferenceState(eventCheck, eventCheckBox.isSelected());
         pm.setSimplePreferenceState(eventAllCheck, eventAllCheckBox.isSelected());
@@ -88,8 +93,6 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
 
     @Override
     protected void addCustomControlPanes(JPanel parent) {
-        UserPreferencesManager pm = InstanceManager.getDefault(UserPreferencesManager.class);
-
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
                 
