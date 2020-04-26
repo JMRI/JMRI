@@ -63,6 +63,8 @@ public class OlcbClockControl extends DefaultClockControl {
             case TimeProtocol.PROP_TIME_UPDATE:
                 jmriClock.setTime(new Date(hardwareClock.getTimeInMsec()));
                 break;
+            default:
+                // no default action.
         }
     }
 

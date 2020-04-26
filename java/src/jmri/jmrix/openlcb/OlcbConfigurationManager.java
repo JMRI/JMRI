@@ -430,7 +430,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 }
             }
             // terminating null byte.
-            contents.add(null);
+            contents.add((byte)0);
         }
 
         SimpleNodeIdentInfoHandler() {
