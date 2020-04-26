@@ -292,7 +292,7 @@ public class LayoutShape {
      * @return the maximum number of points
      */
     public int getMaxNumberPoints() {
-        return LayoutEditor.HitPointType.NUM_SHAPE_POINTS;
+        return HitPointType.NUM_SHAPE_POINTS;
     }
 
     /**
@@ -315,8 +315,8 @@ public class LayoutShape {
      *                      circles for hit testing
      * @return the hit point type for the point (or NONE)
      */
-    protected LayoutEditor.HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles) {
-        LayoutEditor.HitPointType result = LayoutEditor.HitPointType.NONE;  // assume point not on shape
+    protected HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles) {
+        HitPointType result = HitPointType.NONE;  // assume point not on shape
 
         if (useRectangles) {
             // rather than create rectangles for all the points below and
@@ -326,11 +326,11 @@ public class LayoutShape {
             Rectangle2D r = layoutEditor.layoutEditorControlRectAt(hitPoint);
 
             if (r.contains(getCoordsCenter())) {
-                result = LayoutEditor.HitPointType.SHAPE_CENTER;
+                result = HitPointType.SHAPE_CENTER;
             }
             for (int idx = 0; idx < shapePoints.size(); idx++) {
                 if (r.contains(shapePoints.get(idx).getPoint())) {
-                    result = LayoutEditor.HitPointType.shapePointIndexedValue(idx);
+                    result = HitPointType.shapePointIndexedValue(idx);
                     break;
                 }
             }
@@ -340,16 +340,16 @@ public class LayoutShape {
                 distance = MathUtil.distance(shapePoints.get(idx).getPoint(), hitPoint);
                 if (distance < minDistance) {
                     minDistance = distance;
-                    result = LayoutEditor.HitPointType.shapePointIndexedValue(idx);
+                    result = HitPointType.shapePointIndexedValue(idx);
                 }
             }
         }
         return result;
     }   // findHitPointType
 
-    public static boolean isShapeHitPointType(LayoutEditor.HitPointType t) {
-        return ((t == LayoutEditor.HitPointType.SHAPE_CENTER)
-                || LayoutEditor.HitPointType.isShapePointOffsetHitPointType(t));
+    public static boolean isShapeHitPointType(HitPointType t) {
+        return ((t == HitPointType.SHAPE_CENTER)
+                || HitPointType.isShapePointOffsetHitPointType(t));
     }
 
     /**
@@ -416,7 +416,7 @@ public class LayoutShape {
     private JPopupMenu popup = null;
 
     @Nonnull
-    protected JPopupMenu showShapePopUp(@CheckForNull MouseEvent mouseEvent, LayoutEditor.HitPointType hitPointType) {
+    protected JPopupMenu showShapePopUp(@CheckForNull MouseEvent mouseEvent, HitPointType hitPointType) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -480,7 +480,7 @@ public class LayoutShape {
             popup.add(shapeTypeMenu);
 
 // Add "Change Shape Type from {0} to..." menu
-            if (hitPointType == LayoutEditor.HitPointType.SHAPE_CENTER) {
+            if (hitPointType == HitPointType.SHAPE_CENTER) {
                 JMenu shapePointTypeMenu = new JMenu(Bundle.getMessage("ChangeAllShapePointTypesTo"));
                 jmi = shapePointTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapePointTypeStraight")) {
                     @Override
@@ -583,7 +583,7 @@ public class LayoutShape {
             });
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
-            if (hitPointType == LayoutEditor.HitPointType.SHAPE_CENTER) {
+            if (hitPointType == HitPointType.SHAPE_CENTER) {
                 jmi = popup.add(new AbstractAction(Bundle.getMessage("ShapeDuplicateMenuItemTitle")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {

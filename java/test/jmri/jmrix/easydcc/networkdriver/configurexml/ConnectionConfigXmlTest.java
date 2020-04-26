@@ -28,11 +28,12 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
         super.loadTest();
         // the port attribute for testing is "(none selected)", which isn't an int
         jmri.util.JUnitAppender.assertWarnMessage("Could not parse port attribute: [Attribute: port=\"(none selected)\"]");
-    }    
+    }
 
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;

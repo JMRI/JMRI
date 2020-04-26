@@ -27,8 +27,8 @@ public class TrackNodeTest {
         LayoutTurnout lt = new LayoutTurnout("T", MathUtil.zeroPoint2D, le);
         PositionablePoint p1 = new PositionablePoint("a", PositionablePoint.ANCHOR, new Point2D.Double(0.0, 0.0), le);
         PositionablePoint p2 = new PositionablePoint("b", PositionablePoint.ANCHOR, new Point2D.Double(1.0, 1.0), le);
-        TrackSegment ts = new TrackSegment("test", p1, LayoutEditor.HitPointType.POS_POINT, p2, LayoutEditor.HitPointType.POS_POINT, false, true, le);
-        TrackNode tn = new TrackNode(lt, LayoutEditor.HitPointType.TURNOUT_A, ts, false, 0);
+        TrackSegment ts = new TrackSegment("test", p1, HitPointType.POS_POINT, p2, HitPointType.POS_POINT, false, true, le);
+        TrackNode tn = new TrackNode(lt, HitPointType.TURNOUT_A, ts, false, 0);
         Assert.assertNotNull("exists", tn);
         JUnitUtil.dispose(le);
     }

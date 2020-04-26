@@ -216,8 +216,7 @@ public class CbusClockControl extends jmri.implementation.DefaultClockControl im
                 , month, day, hour, min, 0);
         }
         catch( java.time.DateTimeException e){
-            log.debug ("Unable to process FastClock date. {}  Incoming: {}"
-                ,e.getLocalizedMessage(),r);
+            log.debug ("Unable to process FastClock date. Incoming: {}", r, e);
         }
         if (specificDate==null) { // if unset, try just the times.
             try {

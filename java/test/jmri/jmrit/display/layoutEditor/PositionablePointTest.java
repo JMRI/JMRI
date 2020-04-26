@@ -226,12 +226,12 @@ public class PositionablePointTest {
         Assert.assertNotNull("exists", pp);
 
         // first, try hit
-        LayoutEditor.HitPointType hitType = pp.findHitPointType(thePoint, true, false);
-        Assert.assertTrue("pp.findHitPointType equals POS_POINT", hitType == LayoutEditor.HitPointType.POS_POINT);
+        HitPointType hitType = pp.findHitPointType(thePoint, true, false);
+        Assert.assertTrue("pp.findHitPointType equals POS_POINT", hitType == HitPointType.POS_POINT);
 
         // Now, try miss
         hitType = pp.findHitPointType(MathUtil.zeroPoint2D, true, false);
-        Assert.assertTrue("pp.findHitPointType equals NONE", hitType == LayoutEditor.HitPointType.NONE);
+        Assert.assertTrue("pp.findHitPointType equals NONE", hitType == HitPointType.NONE);
     }
 
     @Test
@@ -245,12 +245,12 @@ public class PositionablePointTest {
 
         // test failure
         Assert.assertEquals("pp.getCoordsForConnectionType(LayoutEditor.HitPointTypes.NONE) == {666.6, 999.9}",
-                thePoint, pp.getCoordsForConnectionType(LayoutEditor.HitPointType.NONE));
+                thePoint, pp.getCoordsForConnectionType(HitPointType.NONE));
         JUnitAppender.assertErrorMessage("test.getCoordsForConnectionType(NONE); Invalid Connection Type");
 
         // test success
         Assert.assertEquals("pp.getCoordsForConnectionType(LayoutEditor.HitPointTypes.POS_POINT) == {666.6, 999.9}",
-                thePoint, pp.getCoordsForConnectionType(LayoutEditor.HitPointType.POS_POINT));
+                thePoint, pp.getCoordsForConnectionType(HitPointType.POS_POINT));
     }
 
     @Test
@@ -264,7 +264,7 @@ public class PositionablePointTest {
         try {
             // test Invalid Connection Type
             Assert.assertNull("pp.getConnection(invalid type) is null",
-                    pp.getConnection(LayoutEditor.HitPointType.NONE));
+                    pp.getConnection(HitPointType.NONE));
             Assert.fail("No exception thrown on pp.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
@@ -273,7 +273,7 @@ public class PositionablePointTest {
         try {
             // test valid connection type (null value)
             Assert.assertNull("pp.getConnection(valid type) is null",
-                    pp.getConnection(LayoutEditor.HitPointType.POS_POINT));
+                    pp.getConnection(HitPointType.POS_POINT));
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on pp.getConnection(valid type)");
         }
@@ -289,7 +289,7 @@ public class PositionablePointTest {
 
         try {
             // test Invalid Connection Type
-            pp.setConnection(LayoutEditor.HitPointType.NONE, null, LayoutEditor.HitPointType.NONE);
+            pp.setConnection(HitPointType.NONE, null, HitPointType.NONE);
             Assert.fail("No exception thrown on pp.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
@@ -297,7 +297,7 @@ public class PositionablePointTest {
 
         try {
             // test invalid object type
-            pp.setConnection(LayoutEditor.HitPointType.POS_POINT, null, LayoutEditor.HitPointType.POS_POINT);
+            pp.setConnection(HitPointType.POS_POINT, null, HitPointType.POS_POINT);
             Assert.fail("No exception thrown on pp.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
@@ -305,7 +305,7 @@ public class PositionablePointTest {
 
         try {
             // test valid types
-            pp.setConnection(LayoutEditor.HitPointType.POS_POINT, null, LayoutEditor.HitPointType.NONE);
+            pp.setConnection(HitPointType.POS_POINT, null, HitPointType.NONE);
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on pp.setConnection(valid types)");
         }
@@ -321,12 +321,12 @@ public class PositionablePointTest {
 
         // test Invalid Connection Type
         Assert.assertFalse("pp.isDisconnected(invalid type) is null",
-                pp.isDisconnected(LayoutEditor.HitPointType.NONE));
+                pp.isDisconnected(HitPointType.NONE));
         JUnitAppender.assertErrorMessage("test.isDisconnected(NONE); Invalid Connection Type");
 
         // test valid connection type
         Assert.assertTrue("pp.isDisconnected(valid type) is null",
-                pp.isDisconnected(LayoutEditor.HitPointType.POS_POINT));
+                pp.isDisconnected(HitPointType.POS_POINT));
     }
 
     @Test
@@ -346,11 +346,11 @@ public class PositionablePointTest {
         PositionablePoint ppB = new PositionablePoint("B", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 10.0), le);
         PositionablePoint ppC = new PositionablePoint("C", PositionablePoint.ANCHOR, new Point2D.Double(20.0, 20.0), le);
         PositionablePoint ppD = new PositionablePoint("D", PositionablePoint.ANCHOR, new Point2D.Double(30.0, 30.0), le);
-        TrackSegment tsAB = new TrackSegment("testAB", ppA, LayoutEditor.HitPointType.POS_POINT, ppB, LayoutEditor.HitPointType.POS_POINT, false, false, le);
+        TrackSegment tsAB = new TrackSegment("testAB", ppA, HitPointType.POS_POINT, ppB, HitPointType.POS_POINT, false, false, le);
         Assert.assertNotNull("Track Segment AB exists", tsAB);
-        TrackSegment tsBC = new TrackSegment("testBC", ppB, LayoutEditor.HitPointType.POS_POINT, ppC, LayoutEditor.HitPointType.POS_POINT, false, false, le);
+        TrackSegment tsBC = new TrackSegment("testBC", ppB, HitPointType.POS_POINT, ppC, HitPointType.POS_POINT, false, false, le);
         Assert.assertNotNull("Track Segment BC exists", tsBC);
-        TrackSegment tsCD = new TrackSegment("testCD", ppC, LayoutEditor.HitPointType.POS_POINT, ppD, LayoutEditor.HitPointType.POS_POINT, false, false, le);
+        TrackSegment tsCD = new TrackSegment("testCD", ppC, HitPointType.POS_POINT, ppD, HitPointType.POS_POINT, false, false, le);
         Assert.assertNotNull("Track Segment CD exists", tsCD);
 
         // test non-null track segment
