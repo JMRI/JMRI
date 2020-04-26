@@ -183,7 +183,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         TURNTABLE_RAY_62(112), // /
         TURNTABLE_RAY_63(113); // offset for turntable connection points (maximum)
 
-        private final transient Integer xmlValue;
+        private final transient Integer xmlValue;  // access to this should be replaced by ordinal()
 
         /** 
          * @deprecated 4.19.6 - we are migrating away from integer access
@@ -194,10 +194,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         /** 
-         * @deprecated 4.19.6 - we are migrating away from integer access
+         * @deprecated 4.19.6 - we are migrating away from integer access, prefer .ordinal() for tests
          */
-        @Deprecated  // 4.19.6 - we are migrating away from integer access
-        public static HitPointType getValue(Integer xmlValue) {
+        @Deprecated  // 4.19.6 - we are migrating away from integer access, prefer .ordinal() for tests
+        private static HitPointType getValue(Integer xmlValue) {
             HitPointType result = null;
             for (HitPointType instance : HitPointType.values()) {
                 if (instance.xmlValue.equals(xmlValue)) {
@@ -209,25 +209,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         /** 
-         * @deprecated 4.19.6 - we are migrating away from integer access
+         * @deprecated 4.19.6 - we are migrating away from integer access, prefer .ordinal() for tests
          */
-        @Deprecated  // 4.19.6 - we are migrating away from integer access
-        private static HitPointType XgetValue(String name) {
-            HitPointType result = null;
-            for (HitPointType instance : HitPointType.values()) {
-                if (instance.name().equals(name)) {
-                    result = instance;
-                }
-            }
-            return result;
-        }
-
-        /** 
-         * @deprecated 4.19.6 - we are migrating away from integer access
-         */
-        @Deprecated  // 4.19.6 - we are migrating away from integer access
-        protected Integer getXmlValue() {
-            return xmlValue;
+        @Deprecated  // 4.19.6 - we are migrating away from integer access, prefer .ordinal() for tests
+        Integer getXmlValue() {
+           return xmlValue;
         }
 
         /**
@@ -235,7 +221,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
          * @return true if this is for a connection to a LayoutTrack
          */
         protected static boolean isConnectionHitType(HitPointType hitType) {
-            boolean result = false; // assume failure (pessimist!)
             switch (hitType) {
                 case POS_POINT:
                 case TURNOUT_A:
@@ -251,8 +236,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 case SLIP_B:
                 case SLIP_C:
                 case SLIP_D:
-                    result = true;  // these are all connection types
-                    break;
+                    return true;  // these are all connection types
                 case NONE:
                 case TURNOUT_CENTER:
                 case LEVEL_XING_CENTER:
@@ -265,17 +249,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 case SLIP_CENTER:
                 case SLIP_LEFT:
                 case SLIP_RIGHT:
+                    return false; // these are not
                 default:
-                    result = false; // these are not
                     break;
             }
             if (isBezierHitType(hitType)) {
-                result = false; // these are not
+                return false; // these are not
             } else if (isTurntableRayHitType(hitType)) {
-                result = true;  // these are all connection types
+                return true;  // these are all connection types
             }
-            return result;
-        }   // isConnectionHitType
+            return false;  // This is unexpected
+        }
 
         /**
          * @param hitType the hit point type
@@ -288,8 +272,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 case SLIP_CENTER:
                 case SLIP_LEFT:
                 case SLIP_RIGHT:
-                    result = true;  // these are all control types
-                    break;
+                    return true;  // these are all control types
                 case POS_POINT:
                 case TURNOUT_A:
                 case TURNOUT_B:
@@ -312,17 +295,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 case MULTI_SENSOR:
                 case MARKER:
                 case TRACK_CIRCLE_CENTRE:
+                    return false; // these are not
                 default:
-                    result = false; // these are not
                     break;
             }
             if (isBezierHitType(hitType)) {
-                result = false; // these are not control types
+                return false; // these are not control types
             } else if (isTurntableRayHitType(hitType)) {
-                result = true;  // these are all control types
+                return true;  // these are all control types
             }
-            return result;
-        }   // isControlHitType
+            return false;   // This is unexpected
+        }
 
         protected static boolean isTurnoutHitType(HitPointType hitType) {
             return ((hitType.compareTo(HitPointType.TURNOUT_A) >= 0)
@@ -365,8 +348,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 case TRACK_CIRCLE_CENTRE:
                 case TURNOUT_CENTER:
                 case TURNTABLE_CENTER:
-                    result = true;  // these are all popup hit types
-                    break;
+                    return true;
                 case LAYOUT_POS_JCOMP:
                 case LAYOUT_POS_LABEL:
                 case LEVEL_XING_A:
@@ -384,17 +366,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 case TURNOUT_B:
                 case TURNOUT_C:
                 case TURNOUT_D:
+                    return false; // these are not
                 default:
-                    result = false; // these are not
                     break;
             }
             if (isBezierHitType(hitType)) {
-                result = true; // these are all popup hit types
+                return true; // these are all popup hit types
             } else if (isTurntableRayHitType(hitType)) {
-                result = true;  // these are all popup hit types
+                return true;  // these are all popup hit types
             }
-            return result;
-        }   // isPopupHitType
+            return false;
+        }
        
        // *****************************************************************
        //    TURNTABLE_RAY support
@@ -5108,7 +5090,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
                         default: {
                             if (HitPointType.isBezierHitType(foundHitPointType)) {
-                                int index = selectedHitPointType.getXmlValue() - HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue();
+                                int index = selectedHitPointType.bezierPointIndex();
                                 ((TrackSegment) selectedObject).setBezierControlPoint(currentPoint, index);
                             } else if ((selectedHitPointType == HitPointType.SHAPE_CENTER)) {
                                 ((LayoutShape) selectedObject).setCoordsCenter(currentPoint);
