@@ -694,7 +694,7 @@ public class TrackSegment extends LayoutTrack {
                     if (distance < minDistance) {
                         minDistance = distance;
                         minPoint = p;
-                        result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue() + index);
+                        result = LayoutEditor.HitPointType.bezierPointIndexedValue(index);
                     }
                 }
             }
@@ -726,18 +726,9 @@ public class TrackSegment extends LayoutTrack {
         if (connectionType == LayoutEditor.HitPointType.TRACK_CIRCLE_CENTRE) {
             result = getCoordsCenterCircle();
         } else if (LayoutEditor.HitPointType.isBezierHitType(connectionType)) {
-            result = getBezierControlPoint(connectionType.getXmlValue() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue());
+            result = getBezierControlPoint(connectionType.bezierPointIndex());
         }
         return result;
-    }
-
-    /**
-     * get the maximum number of bezier points
-     *
-     * @return the maximum number of points
-     */
-    public int getMaxNumberBezierPoints() {
-        return LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_8.getXmlValue() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue() + 1;
     }
 
     /**
@@ -1792,7 +1783,7 @@ public class TrackSegment extends LayoutTrack {
      * Display popup menu for information and editing.
      */
     protected void showBezierPopUp(MouseEvent e, LayoutEditor.HitPointType hitPointType) {
-        int bezierControlPointIndex = hitPointType.getXmlValue() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue();
+        int bezierControlPointIndex = hitPointType.bezierPointIndex();
         if (popupMenu != null) {
             popupMenu.removeAll();
         } else {
@@ -1803,7 +1794,7 @@ public class TrackSegment extends LayoutTrack {
         jmi.setEnabled(false);
         popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
 
-        if (bezierControlPoints.size() <= getMaxNumberBezierPoints()) {
+        if (bezierControlPoints.size() <= LayoutEditor.HitPointType.NUM_BEZIER_CONTROL_POINTS) {
             popupMenu.add(new AbstractAction(Bundle.getMessage("AddBezierControlPointAfter")) {
 
                 @Override

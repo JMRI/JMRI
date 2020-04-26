@@ -40,5 +40,5 @@ public class RawTurnoutOperationXml extends CommonTurnoutOperationXml {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RawTurnoutOperation.class);
+    private final static Logger log = LoggerFactory.getLogger(RawTurnoutOperationXml.class);
 }

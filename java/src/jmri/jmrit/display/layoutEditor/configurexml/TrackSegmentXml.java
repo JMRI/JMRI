@@ -45,9 +45,9 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             element.setAttribute("blockname", p.getBlockName());
         }
         element.setAttribute("connect1name", p.getConnect1Name());
-        element.setAttribute("type1", "" + p.getType1().name());
+        element.setAttribute("type1", "" + htpMap.outputFromEnum(p.getType1()) );
         element.setAttribute("connect2name", p.getConnect2Name());
-        element.setAttribute("type2", "" + p.getType2().name());
+        element.setAttribute("type2", "" + htpMap.outputFromEnum(p.getType2()) );
         element.setAttribute("dashed", "" + (p.isDashed() ? "yes" : "no"));
         element.setAttribute("mainline", "" + (p.isMainline() ? "yes" : "no"));
         element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
@@ -249,8 +249,8 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                 if (attribute == null) {
                     throw new NullPointerException();
                 }
-                type1 = LayoutEditor.HitPointType.getValue(attribute.getIntValue());
-            } catch (DataConversionException | NullPointerException e1) {
+                type1 = htpMap.inputFromAttribute(attribute);
+            } catch (NullPointerException e1) {
                 log.error("failed to convert tracksegment type1 attribute");
             }
         }
@@ -264,8 +264,8 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                 if (attribute == null) {
                     throw new NullPointerException();
                 }
-                type2 = LayoutEditor.HitPointType.getValue(attribute.getIntValue());
-            } catch (DataConversionException | NullPointerException e1) {
+                type2 = htpMap.inputFromAttribute(attribute);
+            } catch (NullPointerException e1) {
                 log.error("failed to convert tracksegment type2 attribute");
             }
         }
@@ -619,6 +619,24 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         }
 
         p.getLayoutTracks().add(l);
+    }
+
+    // create the maps programmatically
+    static final EnumIO<LayoutEditor.HitPointType> htpMap;
+    
+    static {
+        // from map is names and numbers
+        HashMap<String, LayoutEditor.HitPointType> fromMap = new HashMap<>();
+        // to map is names
+        HashMap<LayoutEditor.HitPointType, String> toMap = new HashMap<>();
+
+        for (LayoutEditor.HitPointType h : LayoutEditor.HitPointType.values()) {
+            fromMap.put(h.toString(), h);
+            fromMap.put(""+h.ordinal(), h);  // tests insure equality
+            toMap.put(h, h.toString());
+        }
+        
+        htpMap = new EnumIoMapped<>(LayoutEditor.HitPointType.class, fromMap, toMap);
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrackSegmentXml.class);

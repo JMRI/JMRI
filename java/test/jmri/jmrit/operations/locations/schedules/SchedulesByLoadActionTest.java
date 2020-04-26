@@ -19,14 +19,14 @@ public class SchedulesByLoadActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        SchedulesByLoadAction t = new SchedulesByLoadAction("Test");
+        SchedulesByLoadAction t = new SchedulesByLoadAction();
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SchedulesByLoadAction a = new SchedulesByLoadAction("Test");
+        SchedulesByLoadAction a = new SchedulesByLoadAction();
         Assert.assertNotNull("exists", a);
         
         a.actionPerformed(new ActionEvent(this, 0, null));

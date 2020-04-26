@@ -49,9 +49,6 @@ public abstract class LayoutTrack {
 //     public static final int BEZIER_CONTROL_POINT_OFFSET_MIN = 30; // offset for TrackSegment Bezier control points (minimum)
 //     public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = 38; // offset for TrackSegment Bezier control points (maximum)
 //     public static final int SHAPE_CENTER = 39;
-//     public static final int SHAPE_POINT_OFFSET_MIN = 40; // offset for Shape points (minimum)
-//     public static final int SHAPE_POINT_OFFSET_MAX = 49; // offset for Shape points (maximum)
-//     public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
     // operational instance variables (not saved between sessions)
     protected LayoutEditor layoutEditor = null;
     protected String ident = "";

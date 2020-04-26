@@ -26,7 +26,7 @@ public class ShowTrainsServingLocationActionTest extends OperationsTestCase {
     public void testCTor() {
         Location l = new Location("Location Test Attridutes id", "Location Test Name");
         Track tr = new Track("Test id", "Test Name", "Test Type", l);
-        ShowTrainsServingLocationAction t = new ShowTrainsServingLocationAction("Test Action", l, tr);
+        ShowTrainsServingLocationAction t = new ShowTrainsServingLocationAction(l, tr);
         Assert.assertNotNull("exists", t);
     }
 
@@ -38,7 +38,7 @@ public class ShowTrainsServingLocationActionTest extends OperationsTestCase {
         Location l = lmanager.getLocationById("20");
         Track t = l.getTrackById("20s1");
 
-        ShowTrainsServingLocationAction a = new ShowTrainsServingLocationAction("Test Action", l, t);
+        ShowTrainsServingLocationAction a = new ShowTrainsServingLocationAction(l, t);
         Assert.assertNotNull("exists", a);
 
         a.actionPerformed(new ActionEvent(this, 0, null));

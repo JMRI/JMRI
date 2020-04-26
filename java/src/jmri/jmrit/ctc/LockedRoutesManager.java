@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class LockedRoutesManager {
-    private final static Logger log = LoggerFactory.getLogger(TrafficLocking.class);
+    private final static Logger log = LoggerFactory.getLogger(LockedRoutesManager.class);
     private final ArrayList<LockedRoute> _mArrayListOfLockedRoutes = new ArrayList<>();
 
 

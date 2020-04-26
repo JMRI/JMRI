@@ -761,18 +761,19 @@ public abstract class AbstractMRTrafficController {
             }
             controller = p;
             // and start threads
-            xmtThread = new Thread(xmtRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        transmitLoop();
-                    } catch(ThreadDeath td) {
-                        if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", td, td);
-                        // ThreadDeath must be thrown per Java API Javadocs
-                        throw td;
-                    } catch (Throwable e) {
-                        if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", e, e);
-                    }
+            xmtThread = jmri.util.ThreadingUtil.newThread(
+                xmtRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            transmitLoop();
+                        } catch(ThreadDeath td) {
+                            if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", td, td);
+                            // ThreadDeath must be thrown per Java API Javadocs
+                            throw td;
+                        } catch (Throwable e) {
+                            if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", e, e);
+                        }
                 }
             });
             
@@ -786,12 +787,13 @@ public abstract class AbstractMRTrafficController {
             xmtThread.setPriority(Thread.MAX_PRIORITY-1);      //bump up the priority
             xmtThread.start();
 
-            rcvThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    receiveLoop();
-                }
-            });
+            rcvThread = jmri.util.ThreadingUtil.newThread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        receiveLoop();
+                    }
+                });
             rcvThread.setName(
                 (packages.length>=2 ? packages[packages.length-2]+"." :"")
                 +(packages.length>=1 ? packages[packages.length-1] :"")

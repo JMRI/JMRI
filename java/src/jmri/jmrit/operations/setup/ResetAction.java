@@ -1,10 +1,12 @@
 package jmri.jmrit.operations.setup;
 
-import apps.Apps;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+
+import apps.Apps;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
@@ -20,8 +22,8 @@ import jmri.util.swing.UnexpectedExceptionContext;
  */
 public class ResetAction extends AbstractAction {
 
-    public ResetAction(String s) {
-        super(s);
+    public ResetAction() {
+        super(Bundle.getMessage("ResetOperations"));
     }
 
     @Override

@@ -21,7 +21,7 @@ public class ExportCarRosterActionTest extends OperationsTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarsTableFrame ctf = new CarsTableFrame(true, null, null);
-        ExportCarRosterAction t = new ExportCarRosterAction("Test Action",ctf);
+        ExportCarRosterAction t = new ExportCarRosterAction(ctf);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(ctf);
         JUnitOperationsUtil.checkOperationsShutDownTask();

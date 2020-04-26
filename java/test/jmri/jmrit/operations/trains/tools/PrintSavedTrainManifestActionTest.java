@@ -24,7 +24,7 @@ public class PrintSavedTrainManifestActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
-        PrintSavedTrainManifestAction t = new PrintSavedTrainManifestAction("Test Action", true, train1);
+        PrintSavedTrainManifestAction t = new PrintSavedTrainManifestAction(true, train1);
         Assert.assertNotNull("exists", t);
     }
 
@@ -42,7 +42,7 @@ public class PrintSavedTrainManifestActionTest extends OperationsTestCase {
         Assert.assertTrue(train1.build());
         train1.terminate();
 
-        PrintSavedTrainManifestAction pa = new PrintSavedTrainManifestAction("Test Action", true, train1);
+        PrintSavedTrainManifestAction pa = new PrintSavedTrainManifestAction(true, train1);
         Assert.assertNotNull("exists", pa);
 
         // should cause file chooser to appear

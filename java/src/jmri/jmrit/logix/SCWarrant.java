@@ -216,7 +216,7 @@ public class SCWarrant extends Warrant {
         allocateBlocksAndSetTurnouts(0);
         setTrainDirection();
         SCTrainRunner thread = new SCTrainRunner(this);
-        new Thread(thread).start();
+        jmri.util.ThreadingUtil.newThread(thread).start();
     }
     
     /**
