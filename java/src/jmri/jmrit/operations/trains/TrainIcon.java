@@ -5,10 +5,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LocoIcon;
@@ -18,8 +23,6 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
 import jmri.jmrit.throttle.ThrottleFrameManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An icon that displays the position of a train icon on a panel.
@@ -59,8 +62,8 @@ public class TrainIcon extends LocoIcon {
                 }
             });
             popup.add(makeTrainRouteMenu());
-            popup.add(new TrainConductorAction(Bundle.getMessage("TitleTrainConductor"), _train));
-            popup.add(new ShowCarsInTrainAction(Bundle.getMessage("MenuItemShowCarsInTrain"), _train));
+            popup.add(new TrainConductorAction(_train));
+            popup.add(new ShowCarsInTrainAction(_train));
             if (!isEditable()) {
                 popup.add(new AbstractAction(Bundle.getMessage("SetX&Y")) {
                     @Override

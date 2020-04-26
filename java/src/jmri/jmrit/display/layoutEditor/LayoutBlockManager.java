@@ -244,9 +244,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         try {
             new BlockValueFile().readBlockValues();
         } catch (org.jdom2.JDOMException jde) {
-            log.error("JDOM Exception when retreiving block values {}", jde);
+            log.error("JDOM Exception when retreiving block values", jde);
         } catch (java.io.IOException ioe) {
-            log.error("I/O Exception when retreiving block values {}", ioe);
+            log.error("I/O Exception when retreiving block values", ioe);
         }
 
         //special tests for getFacingSignalHead method - comment out next three lines unless using LayoutEditorTests
@@ -2530,7 +2530,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 //log.debug("Error setting stability indicator sensor");
             }
         };
-        thr = new Thread(r, "Routing stabilising timer");
+        thr = jmri.util.ThreadingUtil.newThread(r, "Routing stabilising timer");
         thr.start();
     }	//setRoutingStabilised
 

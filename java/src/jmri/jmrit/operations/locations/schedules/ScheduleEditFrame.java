@@ -191,7 +191,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         toolMenu.add(new ScheduleCopyAction(schedule));
         toolMenu.add(new ScheduleOptionsAction(this));
         toolMenu.add(new ScheduleResetHitsAction(schedule));
-        toolMenu.add(new SchedulesByLoadAction(Bundle.getMessage("MenuItemShowSchedulesByLoad")));
+        toolMenu.add(new SchedulesByLoadAction());
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true); // NOI18N
 

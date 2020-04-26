@@ -1142,6 +1142,6 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         inComboBox.setSelectedIndex(-1);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockBossLogic.class);
+    private final static Logger log = LoggerFactory.getLogger(BlockBossFrame.class);
 
 }

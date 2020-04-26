@@ -426,7 +426,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                                     }
                                 }
                             };
-                            Thread thr = new Thread(r, "Entry Exit Route: Turnout Setting");  // NOI18N
+                            Thread thr = jmri.util.ThreadingUtil.newThread(r, "Entry Exit Route: Turnout Setting");  // NOI18N
                             thr.start();
                             try {
                                 thr.join();
@@ -571,7 +571,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 //src.setMenuEnabled(true);
             }
         };
-        Thread thrMain = new Thread(setRouteRun, "Entry Exit Set Route");  // NOI18N
+        Thread thrMain = jmri.util.ThreadingUtil.newThread(setRouteRun, "Entry Exit Set Route");  // NOI18N
         thrMain.start();
         try {
             thrMain.join();
@@ -622,7 +622,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 }
             }
         };
-        Thread thr = new Thread(r, "Entry Exit Route: Release Mast");  // NOI18N
+        Thread thr = jmri.util.ThreadingUtil.newThread(r, "Entry Exit Route: Release Mast");  // NOI18N
         thr.start();
     }
 
@@ -732,7 +732,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             }
         }
         MessageTimeOut mt = new MessageTimeOut();
-        threadAutoClearFrame = new Thread(mt, "NX Button Clear Message Timeout ");  // NOI18N
+        threadAutoClearFrame = jmri.util.ThreadingUtil.newThread(mt, "NX Button Clear Message Timeout ");  // NOI18N
         threadAutoClearFrame.start();
         cancelClearFrame.setAlwaysOnTop(true);
         src.getPoint().getPanel().getGlassPane().setVisible(true);

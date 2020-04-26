@@ -84,6 +84,7 @@
             <li><a href="Details.shtml#c6">CAN Simulation</a></li>
             </ul>
         </li>
+        <li><a href="CbusFastClock.shtml">MERG CBUS Fast Clock</a></li>
         <li><a href="../index.shtml">JMRI CAN Support</a></li>
         <li><a href="../scripting.shtml">JMRI Scripting for CAN frames ( jython )</a></li>
         </ul>

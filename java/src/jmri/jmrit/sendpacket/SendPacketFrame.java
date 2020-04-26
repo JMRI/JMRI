@@ -255,6 +255,6 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     // private data
     private CommandStation cs = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SendPacketAction.class);
+    private final static Logger log = LoggerFactory.getLogger(SendPacketFrame.class);
 
 }

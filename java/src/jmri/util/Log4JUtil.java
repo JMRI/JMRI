@@ -55,21 +55,21 @@ public class Log4JUtil {
      */
     // Goal is to be lightweight and fast; this will only be used in a few places,
     // and only those should appear in data structure.
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_UNKNOWN_ARRAY",justification="Passing varargs array through")
     static public boolean warnOnce(@Nonnull Logger logger, @Nonnull String msg, Object... args) {
-        // the  Map<String, Boolean> is just being checked for existence; it's never False
-        Map<String, Boolean> loggerMap = warnedOnce.get(logger);
-        if (loggerMap == null) {  // if it exists, there was a prior warning given
-            loggerMap = new HashMap<>();
-            warnedOnce.put(logger, loggerMap);
-        } else {
-            if (Boolean.TRUE.equals(loggerMap.get(msg))) return false;
+        Set<String> loggerSet = warnedOnce.get(logger);
+        if (loggerSet == null) { 
+            loggerSet = new HashSet<>();
+            warnedOnce.put(logger, loggerSet);
+        } else {  // if it exists, there was a prior warning given
+            if (loggerSet.contains(msg)) return false;
         }
         warnOnceHasWarned = true;
-        loggerMap.put(msg, Boolean.TRUE);
+        loggerSet.add(msg);
         logger.warn(msg, args);
         return true;
     }
-    static private Map<Logger, Map<String, Boolean>> warnedOnce = new HashMap<>();
+    static private Map<Logger, Set<String>> warnedOnce = new HashMap<>();
     static private boolean warnOnceHasWarned = false;
     
     /**

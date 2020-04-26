@@ -48,7 +48,6 @@ public class TrainPrintUtilities {
             boolean isBuildReport, String logoURL, String printerName, String orientation, int fontSize) {
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
-        Frame mFrame = new Frame();
         boolean isLandScape = false;
         boolean printHeader = true;
         double margin = .5;
@@ -65,7 +64,7 @@ public class TrainPrintUtilities {
                     TrainCommon.getPageSize(orientation).height + TrainCommon.PAPER_MARGINS.height);
         }
         try {
-            writer = new HardcopyWriter(mFrame, name, fontSize, margin, margin, .5, .5,
+            writer = new HardcopyWriter(new Frame(), name, fontSize, margin, margin, .5, .5,
                     isPreview, printerName, isLandScape, printHeader, pagesize);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");

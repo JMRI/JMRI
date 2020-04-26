@@ -21,7 +21,7 @@ public class PrintRoutesActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PrintRoutesAction t = new PrintRoutesAction("Test Action", true);
+        PrintRoutesAction t = new PrintRoutesAction(true);
         Assert.assertNotNull("exists", t);
     }
 
@@ -30,7 +30,7 @@ public class PrintRoutesActionTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.createFiveLocationRoute();
         JUnitOperationsUtil.createThreeLocationRoute();
-        PrintRoutesAction pra = new PrintRoutesAction("Test Action", true);
+        PrintRoutesAction pra = new PrintRoutesAction(true);
         Assert.assertNotNull("exists", pra);
         pra.actionPerformed(new ActionEvent("Test Action", 0, null));
 

@@ -239,7 +239,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
 
     public void runStartUpScripts() {
         // use thread to prevent object (Train) thread lock
-        Thread scripts = new Thread(new Runnable() {
+        Thread scripts = jmri.util.ThreadingUtil.newThread(new Runnable() {
             @Override
             public void run() {
                 for (String scriptPathName : getStartUpScripts()) {
@@ -935,7 +935,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
 
     public void buildSelectedTrains(List<Train> trains) {
         // use a thread to allow table updates during build
-        Thread build = new Thread(new Runnable() {
+        Thread build = jmri.util.ThreadingUtil.newThread(new Runnable() {
             @Override
             public void run() {
                 for (Train train : trains) {

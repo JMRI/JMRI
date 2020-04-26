@@ -120,7 +120,7 @@ public class AbstractAutomaton implements Runnable {
         if (currentThread != null) {
             log.error("Start with currentThread not null!");
         }
-        currentThread = new Thread(this, name);
+        currentThread = jmri.util.ThreadingUtil.newThread(this, name);
         currentThread.start();
         summary.register(this);
         count = 0;

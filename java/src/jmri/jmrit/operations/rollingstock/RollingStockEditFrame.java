@@ -672,5 +672,5 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarEditFrame.class);
+    private final static Logger log = LoggerFactory.getLogger(RollingStockEditFrame.class);
 }

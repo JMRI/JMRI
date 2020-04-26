@@ -19,14 +19,14 @@ public class SchedulesTableActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        SchedulesTableAction t = new SchedulesTableAction("Test");
+        SchedulesTableAction t = new SchedulesTableAction();
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SchedulesTableAction a = new SchedulesTableAction("Test");
+        SchedulesTableAction a = new SchedulesTableAction();
         Assert.assertNotNull("exists", a);
         
         a.actionPerformed(new ActionEvent(this, 0, null));

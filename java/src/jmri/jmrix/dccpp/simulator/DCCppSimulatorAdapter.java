@@ -125,7 +125,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         // packets.startThreads();
         this.getSystemConnectionMemo().setDCCppTrafficController(packets);
 
-        sourceThread = new Thread(this);
+        sourceThread = jmri.util.ThreadingUtil.newThread(this);
         sourceThread.start();
 
         new DCCppInitializationManager(this.getSystemConnectionMemo());

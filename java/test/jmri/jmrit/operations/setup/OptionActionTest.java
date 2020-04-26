@@ -1,8 +1,9 @@
 package jmri.jmrit.operations.setup;
 
-import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
 import org.junit.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
 
 /**
  *
@@ -12,7 +13,7 @@ public class OptionActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        OptionAction t = new OptionAction("Test");
+        OptionAction t = new OptionAction();
         Assert.assertNotNull("exists",t);
     }
 

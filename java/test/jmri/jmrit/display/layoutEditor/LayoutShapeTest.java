@@ -56,7 +56,7 @@ public class LayoutShapeTest {
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutShape not null", ls);
 
-        Assert.assertTrue("ls.getType() is eOpen", ls.getType() == LayoutShapeType.eOpen);
+        Assert.assertTrue("ls.getType() is Open", ls.getType() == LayoutShapeType.Open);
     }
 
     @Test
@@ -68,14 +68,14 @@ public class LayoutShapeTest {
 // compiler won't let us pass invalid type (yay!)
 //        ls.setType(LayoutTurnout.NONE); // invalid type
 //        jmri.util.JUnitAppender.assertErrorMessage("Invalid Shape Type 0");
-        ls.setType(LayoutShapeType.eOpen);
-        Assert.assertTrue("ls.getType() is eOpen", ls.getType() == LayoutShapeType.eOpen);
+        ls.setType(LayoutShapeType.Open);
+        Assert.assertTrue("ls.getType() is Open", ls.getType() == LayoutShapeType.Open);
 
-        ls.setType(LayoutShapeType.eClosed);
-        Assert.assertTrue("ls.getType() is eClosed", ls.getType() == LayoutShapeType.eClosed);
+        ls.setType(LayoutShapeType.Closed);
+        Assert.assertTrue("ls.getType() is Closed", ls.getType() == LayoutShapeType.Closed);
 
-        ls.setType(LayoutShapeType.eFilled);
-        Assert.assertTrue("ls.getType() is eFilled", ls.getType() == LayoutShapeType.eFilled);
+        ls.setType(LayoutShapeType.Filled);
+        Assert.assertTrue("ls.getType() is eFilled", ls.getType() == LayoutShapeType.Filled);
     }
 
     @Test

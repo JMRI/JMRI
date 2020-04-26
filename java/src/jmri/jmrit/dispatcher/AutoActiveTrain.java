@@ -323,7 +323,7 @@ public class AutoActiveTrain implements ThrottleListener {
             log.error("Second Trottle for same loco[{}] - ignoring", _address);
         } else {
             _autoEngineer = new AutoEngineer();
-            new Thread(_autoEngineer, "Auto Engineer " + _address).start();
+            jmri.util.ThreadingUtil.newThread(_autoEngineer, "Auto Engineer " + _address).start();
             _activeTrain.setMode(ActiveTrain.AUTOMATIC);
             if (_resumingAutomatic) {
                 _resumingAutomatic = false;
@@ -1231,7 +1231,7 @@ public class AutoActiveTrain implements ThrottleListener {
         // even if no task is required it must be run
         // as cleanup happens after train stops.
         Runnable waitForStop = new WaitForTrainToStop(task);
-        Thread tWait = new Thread(waitForStop, "Wait for stop " + getActiveTrain().getActiveTrainName());
+        Thread tWait = jmri.util.ThreadingUtil.newThread(waitForStop, "Wait for stop " + getActiveTrain().getActiveTrainName());
         tWait.start();
     }
 
@@ -1551,7 +1551,7 @@ public class AutoActiveTrain implements ThrottleListener {
             return (null);
         }
         Runnable pauseTrain = new PauseTrain(fastMinutes);
-        Thread tPause = new Thread(pauseTrain, "pause train " + _activeTrain.getTrainName());
+        Thread tPause = jmri.util.ThreadingUtil.newThread(pauseTrain, "pause train " + _activeTrain.getTrainName());
         tPause.start();
         return tPause;
     }

@@ -1657,17 +1657,16 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         };
 
         synchronized (allocateBlocks) {
-            Thread doit = new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        javax.swing.SwingUtilities.invokeAndWait(allocateBlocks);
-                    }
-                    catch (Exception e) {
-                        log.error("Exception in allocateBlocks", e);
-                    }
-                }
-            };
+            Thread doit = jmri.util.ThreadingUtil.newThread(
+                    () -> {
+                        try {
+                            javax.swing.SwingUtilities.invokeAndWait(allocateBlocks);
+                        }
+                        catch (Exception e) {
+                            log.error("Exception in allocateBlocks", e);
+                        }
+                    },
+                    "Warrant doit");
             doit.start();
         }
         return true;
