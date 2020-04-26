@@ -30,35 +30,36 @@
  * 
  * <h3>Class Structure</h3>
  * <ul>
- * <li>The track is represented by a hierarchy of classes that's rooted in {@link LayoutTrack} and completely disconnected from 
+ * <li>The track is represented by a hierarchy of classes that's rooted in {@link jmri.jmrit.display.layoutEditor.LayoutTrack} and completely disconnected from 
  * the PanelEditor classes.<br>
  * <a href="doc-files/TrackHierarchy.png"><img src="doc-files/TrackHierarchy.png" alt="UML class diagram for track objects" height="33%" width="33%"></a>
- * <li>{@link LayoutBlock} and {@link LayoutBlockManager} are a {@link jmri.NamedBean NamedBean} pair. The {@link LayoutBlock} is a group
+ * <li>{@link jmri.jmrit.display.layoutEditor.LayoutBlock} and {@link jmri.jmrit.display.layoutEditor.LayoutBlockManager} are a {@link jmri.NamedBean NamedBean} pair. 
+ * The {@link jmri.jmrit.display.layoutEditor.LayoutBlock} is a group
  * of track segments and turnouts that corresponds to a 'block'. It may contain a {@link jmri.Memory} and/or {@link jmri.Sensor}. If present, the sensor 
  * defines occupancy for the LayoutBlock. Each LayoutBlock is paired 1-to-1
  * with a {@link jmri.Block} which it created; the Block has a specific form for its system name and the LayoutBlock's name as its user-name.
- * <li>{@link BlockContentsIcon}, {@link MemoryIcon} inherit from the equivalents in the {@link jmri.jmrit.display} package.
- * <li>{@link LayoutEditor} extends {@link jmri.jmrit.display.PanelEditor PanelEditor}
- * <li>Multiple classes, including {@link LayoutEditorAction}, {@link LayoutEditorComponent}, {@link LayoutEditorToolBarPanel}, 
- *      {@link MultiIconEditor}, and {@link} MultiSensorIconFrame.java, extend Swing or AWT components. (Although {@link LayoutEditorComponent}
- *       sounds like a base class for others, it's not; it's part of the {@link LayoutEditor} implementation.)
+ * <li>{@link jmri.jmrit.display.layoutEditor.BlockContentsIcon}, {@link jmri.jmrit.display.layoutEditor.MemoryIcon} inherit from the equivalents in the {@link jmri.jmrit.display} package.
+ * <li>{@link jmri.jmrit.display.layoutEditor.LayoutEditor} extends {@link jmri.jmrit.display.PanelEditor PanelEditor}
+ * <li>Multiple classes, including {@link jmri.jmrit.display.layoutEditor.LayoutEditorAction}, {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent}, {@link jmri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel}, 
+ *      {@link jmri.jmrit.display.layoutEditor.MultiIconEditor}, and {@link} jmri.jmrit.display.layoutEditor.MultiSensorIconFrame.java, extend Swing or AWT components. (Although {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent}
+ *       sounds like a base class for others, it's not; it's part of the {@link jmri.jmrit.display.layoutEditor.LayoutEditor} implementation.)
  * </ul>
  * 
  * <h3>Persistance</h3>
  * The classes that have ConfigureXML partner classes are:
  * <ul>
- * <li>{@link BlockContentsIcon}
- * <li>{@link LayoutBlockManager} (registered with ConfigurationManager)
- * <li>{@link LayoutEditor} (registered with ConfigurationManager)
- * <li>{@link LayoutShape}
- * <li>{@link LayoutSlip}
- * <li>{@link LayoutTrackDrawingOptions}
- * <li>{@link LayoutTurnout}
- * <li>{@link LayoutTurntable}
- * <li>{@link LevelXing}
- * <li>{@link MemoryIcon}
- * <li>{@link PositionablePoint}
- * <li>{@link TrackSegment}
+ * <li>{@link jmri.jmrit.display.layoutEditor.BlockContentsIcon}
+ * <li>{@link jmri.jmrit.display.layoutEditor.LayoutBlockManager} (registered with ConfigurationManager)
+ * <li>{@link jmri.jmrit.display.layoutEditor.LayoutEditor} (registered with ConfigurationManager)
+ * <li>{@link jmri.jmrit.display.layoutEditor.LayoutShape}
+ * <li>{@link jmri.jmrit.display.layoutEditor.LayoutSlip}
+ * <li>{@link jmri.jmrit.display.layoutEditor.LayoutTrackDrawingOptions}
+ * <li>{@link jmri.jmrit.display.layoutEditor.LayoutTurnout}
+ * <li>{@link jmri.jmrit.display.layoutEditor.LayoutTurntable}
+ * <li>{@link jmri.jmrit.display.layoutEditor.LevelXing}
+ * <li>{@link jmri.jmrit.display.layoutEditor.MemoryIcon}
+ * <li>{@link jmri.jmrit.display.layoutEditor.PositionablePoint}
+ * <li>{@link jmri.jmrit.display.layoutEditor.TrackSegment}
  * </ul>
  * Only LayoutBlockManager and LayoutEditor are registered with the {@link jmri.ConfigureManager}.
  * <p>
@@ -70,7 +71,7 @@
  * It is stored at the user level ("Store Panels...")
  * <p>
  * A {@link BlockValueFile} stores and loads the value (internal transient contents) of Block 
- * objects from the BlockManager. It doesn't reference {@link LayoutBlock} objects.
+ * objects from the BlockManager. It doesn't reference {@link jmri.jmrit.display.layoutEditor.LayoutBlock} objects.
  * <h3>More Info</h3>
  * User-level documentation is available 
  * <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/LayoutEditor.shtml">here</a>.
