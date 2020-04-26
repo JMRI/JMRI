@@ -1487,7 +1487,7 @@ public class LayoutEditorTools {
             }
             if (type == HitPointType.POS_POINT) {
                 PositionablePoint p = (PositionablePoint) connect;
-                if (p.getType() == PositionablePoint.END_BUMPER) {
+                if (p.getType() == PositionablePoint.PointType.END_BUMPER) {
                     hitEndBumper = true;
                     return null;
                 }
@@ -1825,7 +1825,7 @@ public class LayoutEditorTools {
     *	"point" is an anchor point serving as a block boundary.
      */
     public static boolean isAtWestEndOfAnchor(TrackSegment t, PositionablePoint p) {
-        if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {
+        if (p.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
             if (p.getConnect1() == t) {
                 if (p.getConnect1Dir() == Path.NORTH || p.getConnect1Dir() == Path.WEST) {
                     return false;
@@ -1957,7 +1957,7 @@ public class LayoutEditorTools {
         boundary = p;
 
         //if this is an edge connector...
-        if ((p.getType() == PositionablePoint.EDGE_CONNECTOR) && ((p.getLinkedPoint() == null)
+        if ((p.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) && ((p.getLinkedPoint() == null)
                 || (p.getLinkedPoint().getConnect1() == null))) {
             if (p.getConnect1Dir() == Path.EAST || p.getConnect1Dir() == Path.SOUTH) {
                 showWest = false;
@@ -2247,7 +2247,7 @@ public class LayoutEditorTools {
             }
             boundary = null;
             for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
-                if (p.getType() == PositionablePoint.ANCHOR || p.getType() == PositionablePoint.EDGE_CONNECTOR) {
+                if (p.getType() == PositionablePoint.PointType.ANCHOR || p.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
                     LayoutBlock bA = null;
                     LayoutBlock bB = null;
                     if (p.getConnect1() != null) {
@@ -2285,10 +2285,10 @@ public class LayoutEditorTools {
         }
         TrackSegment track2 = boundary.getConnect2();
 
-        if (boundary.getType() == PositionablePoint.END_BUMPER) {
+        if (boundary.getType() == PositionablePoint.PointType.END_BUMPER) {
             return true;
         }
-        if (boundary.getType() == PositionablePoint.EDGE_CONNECTOR) {
+        if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
             if (boundary.getConnect1Dir() == Path.EAST || boundary.getConnect1Dir() == Path.SOUTH) {
                 eastTrack = track2;
                 westTrack = track1;
@@ -2356,7 +2356,7 @@ public class LayoutEditorTools {
             }
         }
         if (!block.isOnPanel(layoutEditor)
-                && ((boundary == null) || boundary.getType() != PositionablePoint.EDGE_CONNECTOR)) {
+                && ((boundary == null) || boundary.getType() != PositionablePoint.PointType.EDGE_CONNECTOR)) {
             JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame,
                     Bundle.getMessage("SignalsError11",
                             new Object[]{theBlockName}), Bundle.getMessage("ErrorTitle"),
@@ -2414,7 +2414,7 @@ public class LayoutEditorTools {
             return;
         }
         PositionablePoint p = boundary;
-        if (boundary.getType() == PositionablePoint.EDGE_CONNECTOR && eastTrack != boundary.getConnect1()) {
+        if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR && eastTrack != boundary.getConnect1()) {
             p = boundary.getLinkedPoint();
         }
         String newEastBoundSignalName = eastBoundSignalHeadComboBox.getSelectedItemDisplayName();
@@ -2458,7 +2458,7 @@ public class LayoutEditorTools {
             return;
         }
         PositionablePoint p = boundary;
-        if (boundary.getType() == PositionablePoint.EDGE_CONNECTOR && westTrack != boundary.getConnect1()) {
+        if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR && westTrack != boundary.getConnect1()) {
             p = boundary.getLinkedPoint();
         }
         String newWestBoundSignalName = westBoundSignalHeadComboBox.getSelectedItemDisplayName();
@@ -7500,9 +7500,9 @@ public class LayoutEditorTools {
 
         sensorBlockPanel.removeAll();
 
-        if (boundary.getType() != PositionablePoint.END_BUMPER) {
+        if (boundary.getType() != PositionablePoint.PointType.END_BUMPER) {
             eastBoundSensor.setBoundaryTitle(Bundle.getMessage("East/SouthBound"));
-            if ((setSensorsAtBlockBoundaryFromMenuFlag) && (boundary.getType() == PositionablePoint.ANCHOR)) {
+            if ((setSensorsAtBlockBoundaryFromMenuFlag) && (boundary.getType() == PositionablePoint.PointType.ANCHOR)) {
                 if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
                     eastBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
                 } else {
@@ -7560,7 +7560,7 @@ public class LayoutEditorTools {
                     + Bundle.getMessage("Name")));
         }
         //boundary should never be null... however, just in case...
-        boolean enable = ((boundary != null) && (boundary.getType() != PositionablePoint.END_BUMPER));
+        boolean enable = ((boundary != null) && (boundary.getType() != PositionablePoint.PointType.END_BUMPER));
         block2NameLabel.setVisible(enable);
 
         if (!setSensorsAtBlockBoundaryOpenFlag) {
@@ -7807,7 +7807,7 @@ public class LayoutEditorTools {
         eastBoundSensor.setTextField(boundary.getEastBoundSensorName());
         westBoundSensor.setTextField(boundary.getWestBoundSensorName());
 
-        if (boundary.getType() != PositionablePoint.END_BUMPER) {
+        if (boundary.getType() != PositionablePoint.PointType.END_BUMPER) {
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
                 eastBoundSensor.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
             } else {
@@ -7986,7 +7986,7 @@ public class LayoutEditorTools {
             @Nonnull PositionablePoint p) {
         boundary = p;
         block1IDComboBox.setSelectedItem(boundary.getConnect1().getLayoutBlock().getBlock());
-        if (boundary.getType() != PositionablePoint.END_BUMPER) {
+        if (boundary.getType() != PositionablePoint.PointType.END_BUMPER) {
             block2IDComboBox.setSelectedItem(boundary.getConnect2().getLayoutBlock().getBlock());
         } else {
             block2IDComboBox.setSelectedItem(boundary.getConnect1().getLayoutBlock().getBlock());
@@ -8085,9 +8085,9 @@ public class LayoutEditorTools {
         westSignalMast.getCombo().setExcludedItems(new HashSet<>());
         signalMastBlockPanel.removeAll();
 
-        if (boundary.getType() != PositionablePoint.END_BUMPER) {   //Anchor points and Edge Connectors
+        if (boundary.getType() != PositionablePoint.PointType.END_BUMPER) {   //Anchor points and Edge Connectors
             eastSignalMast.setBoundaryTitle(Bundle.getMessage("East/SouthBound"));
-            if (boundary.getType() == PositionablePoint.EDGE_CONNECTOR) {
+            if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
                 eastSignalMast.setBoundaryTitle(Bundle.getMessage("West/NorthBound"));
             }
             if (setSignalMastsAtBlockBoundaryFromMenuFlag) {
@@ -8101,7 +8101,7 @@ public class LayoutEditorTools {
             signalMastBlockPanel.add(eastSignalMast.getDetailsPanel());
 
             westSignalMast.setBoundaryTitle(Bundle.getMessage("West/NorthBound"));
-            if (boundary.getType() == PositionablePoint.EDGE_CONNECTOR) {
+            if (boundary.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
                 westSignalMast.setBoundaryTitle(Bundle.getMessage("East/SouthBound"));
             }
             if (setSignalMastsAtBlockBoundaryFromMenuFlag) {
@@ -8329,7 +8329,7 @@ public class LayoutEditorTools {
         eastSignalMast.setTextField(boundary.getEastBoundSignalMastName());
         westSignalMast.setTextField(boundary.getWestBoundSignalMastName());
 
-        if (boundary.getType() != PositionablePoint.END_BUMPER) {
+        if (boundary.getType() != PositionablePoint.PointType.END_BUMPER) {
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
                 eastSignalMast.setBoundaryLabelText(Bundle.getMessage("ProtectingBlock") + boundary.getConnect2().getLayoutBlock().getDisplayName());
             } else {
@@ -8603,7 +8603,7 @@ public class LayoutEditorTools {
         //Track segment is used to determine the alignment, therefore this is opposite to the block that we are protecting
         TrackSegment t = boundary.getConnect2();
         boolean dir = true;
-        if (boundary.getType() == PositionablePoint.END_BUMPER) {
+        if (boundary.getType() == PositionablePoint.PointType.END_BUMPER) {
             t = boundary.getConnect1();
         } else {
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
@@ -8627,7 +8627,7 @@ public class LayoutEditorTools {
         //Track segment is used to determine the alignment, therefore this is opposite to the block that we are protecting
         TrackSegment t = boundary.getConnect1();
         boolean dir = false;
-        if (boundary.getType() != PositionablePoint.END_BUMPER) {
+        if (boundary.getType() != PositionablePoint.PointType.END_BUMPER) {
             if (isAtWestEndOfAnchor(boundary.getConnect1(), boundary)) {
                 t = boundary.getConnect2();
             }
@@ -11620,7 +11620,7 @@ public class LayoutEditorTools {
             if (block2 == null || (block1 == block2)) {
                 //find the 1st positionablePoint that's connect1'ed to block1
                 for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
-                    if (p.getType() == PositionablePoint.END_BUMPER) {
+                    if (p.getType() == PositionablePoint.PointType.END_BUMPER) {
                         if (p.getConnect1() != null && p.getConnect1().getLayoutBlock() == block1) {
                             boundary = p;
                             break;
@@ -11633,7 +11633,7 @@ public class LayoutEditorTools {
             //(if this fails boundary will still be set to the pp set if
             //block2 was null or equal to block1 above.)
             for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
-                if (p.getType() != PositionablePoint.END_BUMPER) {
+                if (p.getType() != PositionablePoint.PointType.END_BUMPER) {
                     LayoutBlock bA = null;
                     LayoutBlock bB = null;
                     if (p.getConnect1() != null) {

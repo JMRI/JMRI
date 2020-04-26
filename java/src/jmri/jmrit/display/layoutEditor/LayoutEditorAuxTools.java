@@ -551,7 +551,7 @@ public class LayoutEditorAuxTools {
                     // skip further if positionable point (possible anchor point)
                     if (typeCurConnection == HitPointType.POS_POINT) {
                         PositionablePoint pt = (PositionablePoint) curConnection;
-                        if (pt.getType() == PositionablePoint.END_BUMPER) {
+                        if (pt.getType() == PositionablePoint.PointType.END_BUMPER) {
                             // reached end of track
                             curConnection = null;
                         } else {

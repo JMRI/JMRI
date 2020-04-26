@@ -829,9 +829,9 @@ public class LayoutTrackEditorsTest {
             Point2D delta = new Point2D.Double(50.0, 10.0);
 
             // Track Segment
-            PositionablePoint pp1 = new PositionablePoint("a", PositionablePoint.ANCHOR, point, layoutEditor);
+            PositionablePoint pp1 = new PositionablePoint("a", PositionablePoint.PointType.ANCHOR, point, layoutEditor);
             point = MathUtil.add(point, delta);
-            PositionablePoint pp2 = new PositionablePoint("b", PositionablePoint.ANCHOR, point, layoutEditor);
+            PositionablePoint pp2 = new PositionablePoint("b", PositionablePoint.PointType.ANCHOR, point, layoutEditor);
             trackSegment = new TrackSegment("Segment", pp1, HitPointType.POS_POINT, pp2, HitPointType.POS_POINT, false, false, layoutEditor
             );
 

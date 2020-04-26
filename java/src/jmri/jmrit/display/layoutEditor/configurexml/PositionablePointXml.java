@@ -20,6 +20,8 @@ import org.slf4j.LoggerFactory;
  */
 public class PositionablePointXml extends AbstractXmlAdapter {
 
+    static final EnumIO<PositionablePoint.PointType> pTypeEnumMap = new EnumIoOrdinals<>(PositionablePoint.PointType.class);
+
     public PositionablePointXml() {
     }
 
@@ -38,7 +40,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 
         // include attributes
         element.setAttribute("ident", p.getId());
-        element.setAttribute("type", "" + p.getType());
+        element.setAttribute("type", pTypeEnumMap.outputFromEnum(p.getType()));
         Point2D coords = p.getCoordsCenter();
         element.setAttribute("x", "" + coords.getX());
         element.setAttribute("y", "" + coords.getY());
@@ -68,7 +70,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
         if (!p.getWestBoundSensorName().isEmpty()) {
             element.setAttribute("westboundsensor", p.getWestBoundSensorName());
         }
-        if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {
+        if (p.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
             element.setAttribute("linkedpanel", p.getLinkedEditorName());
             element.setAttribute("linkpointid", p.getLinkedPointId());
         }
@@ -97,13 +99,13 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 
         // get attributes
         String name = element.getAttribute("ident").getValue();
-        int type = PositionablePoint.ANCHOR;
+        PositionablePoint.PointType type = PositionablePoint.PointType.ANCHOR;
         double x = 0.0;
         double y = 0.0;
         try {
             x = element.getAttribute("x").getFloatValue();
             y = element.getAttribute("y").getFloatValue();
-            type = element.getAttribute("type").getIntValue();
+            type = pTypeEnumMap.inputFromAttribute(element.getAttribute("type"));
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert positionablepoint attribute");
         }
@@ -145,13 +147,13 @@ public class PositionablePointXml extends AbstractXmlAdapter {
             l.setWestBoundSensor(a.getValue());
         }
 
-        if (type == PositionablePoint.EDGE_CONNECTOR && element.getAttribute("linkedpanel") != null && element.getAttribute("linkpointid") != null) {
+        if (type == PositionablePoint.PointType.EDGE_CONNECTOR && element.getAttribute("linkedpanel") != null && element.getAttribute("linkpointid") != null) {
             String linkedEditorName = element.getAttribute("linkedpanel").getValue();
             LayoutEditor linkedEditor = (LayoutEditor) InstanceManager.getDefault(PanelMenu.class).getEditorByName(linkedEditorName);
             if (linkedEditor != null) {
                 String linkedPoint = element.getAttribute("linkpointid").getValue();
                 for (PositionablePoint point : linkedEditor.getPositionablePoints()) {
-                    if (point.getType() == PositionablePoint.EDGE_CONNECTOR && point.getId().equals(linkedPoint)) {
+                    if (point.getType() == PositionablePoint.PointType.EDGE_CONNECTOR && point.getId().equals(linkedPoint)) {
                         point.setLinkedPoint(l);
                         l.setLinkedPoint(point);
                         break;

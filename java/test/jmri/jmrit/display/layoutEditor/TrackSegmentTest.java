@@ -51,7 +51,7 @@ public class TrackSegmentTest {
             Assert.assertTrue("trackSegment.replaceTrackConnection(null, c1, t1) fail", trackSegment.replaceTrackConnection(null, c1, t1));
             Assert.assertEquals("trackSegment.replaceTrackConnection(null, c1, t1) fail", c1, trackSegment.getConnect1());
 
-            PositionablePoint a3 = new PositionablePoint("A3", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 10.0), layoutEditor);
+            PositionablePoint a3 = new PositionablePoint("A3", PositionablePoint.PointType.ANCHOR, new Point2D.Double(10.0, 10.0), layoutEditor);
             Assert.assertTrue("trackSegment.replaceTrackConnection(c1, a3, POS_POINT) fail", trackSegment.replaceTrackConnection(c1, a3, HitPointType.POS_POINT));
         }
     }
@@ -580,8 +580,8 @@ public class TrackSegmentTest {
         jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             if (layoutEditor != null) {
-                PositionablePoint p1 = new PositionablePoint("A1", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 20.0), layoutEditor);
-                PositionablePoint p2 = new PositionablePoint("A2", PositionablePoint.ANCHOR, new Point2D.Double(20.0, 33.0), layoutEditor);
+                PositionablePoint p1 = new PositionablePoint("A1", PositionablePoint.PointType.ANCHOR, new Point2D.Double(10.0, 20.0), layoutEditor);
+                PositionablePoint p2 = new PositionablePoint("A2", PositionablePoint.PointType.ANCHOR, new Point2D.Double(20.0, 33.0), layoutEditor);
                 trackSegment = new TrackSegment("TS1", p1, HitPointType.POS_POINT, p2, HitPointType.POS_POINT, false, true, layoutEditor);
             }
         }
