@@ -240,10 +240,10 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         String con1Name = element.getAttribute("connect1name").getValue();
         String con2Name = element.getAttribute("connect2name").getValue();
 
-        LayoutEditor.HitPointType type1 = LayoutEditor.HitPointType.NONE;
+        HitPointType type1 = HitPointType.NONE;
         try {
             attribute = element.getAttribute("type1");
-            type1 = LayoutEditor.HitPointType.valueOf(attribute.getValue());
+            type1 = HitPointType.valueOf(attribute.getValue());
         } catch (IllegalArgumentException | NullPointerException e) {
             try {
                 if (attribute == null) {
@@ -255,10 +255,10 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             }
         }
 
-        LayoutEditor.HitPointType type2 = LayoutEditor.HitPointType.NONE;
+        HitPointType type2 = HitPointType.NONE;
         try {
             attribute = element.getAttribute("type2");
-            type2 = LayoutEditor.HitPointType.valueOf(attribute.getValue());
+            type2 = HitPointType.valueOf(attribute.getValue());
         } catch (IllegalArgumentException | NullPointerException e) {
             try {
                 if (attribute == null) {
@@ -622,21 +622,21 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
     }
 
     // create the maps programmatically
-    static final EnumIO<LayoutEditor.HitPointType> htpMap;
+    static final EnumIO<HitPointType> htpMap;
     
     static {
         // from map is names and numbers
-        HashMap<String, LayoutEditor.HitPointType> fromMap = new HashMap<>();
+        HashMap<String, HitPointType> fromMap = new HashMap<>();
         // to map is names
-        HashMap<LayoutEditor.HitPointType, String> toMap = new HashMap<>();
+        HashMap<HitPointType, String> toMap = new HashMap<>();
 
-        for (LayoutEditor.HitPointType h : LayoutEditor.HitPointType.values()) {
+        for (HitPointType h : HitPointType.values()) {
             fromMap.put(h.toString(), h);
             fromMap.put(""+h.ordinal(), h);  // tests insure equality
             toMap.put(h, h.toString());
         }
         
-        htpMap = new EnumIoMapped<>(LayoutEditor.HitPointType.class, fromMap, toMap);
+        htpMap = new EnumIoMapped<>(HitPointType.class, fromMap, toMap);
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrackSegmentXml.class);

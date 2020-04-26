@@ -62,7 +62,7 @@ public class ConnectivityUtil {
     }
 
     private TrackSegment trackSegment = null;
-    private LayoutEditor.HitPointType prevConnectType = LayoutEditor.HitPointType.NONE;
+    private HitPointType prevConnectType = HitPointType.NONE;
     private LayoutTrack prevConnectTrack = null;
     private LayoutBlock currLayoutBlock = null;
     private LayoutBlock nextLayoutBlock = null;
@@ -156,7 +156,7 @@ public class ConnectivityUtil {
         }
 
         List<LayoutConnectivity> cList = auxTools.getConnectivityList(currLayoutBlock);
-        LayoutEditor.HitPointType cType;
+        HitPointType cType;
         // initialize the connectivity search, processing a turnout in this block if it is present
         boolean notFound = true;
         for (int i = 0; (i < cList.size()) && notFound; i++) {
@@ -175,11 +175,11 @@ public class ConnectivityUtil {
                         if (((TrackSegment) xt.getConnectA() != null) && (currLayoutBlock == ((TrackSegment) xt.getConnectA()).getLayoutBlock())) {
                             // block exits Xover at A
                             trackSegment = (TrackSegment) xt.getConnectA();
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_A;
+                            prevConnectType = HitPointType.TURNOUT_A;
                         } else if (((TrackSegment) xt.getConnectB() != null) && (currLayoutBlock == ((TrackSegment) xt.getConnectB()).getLayoutBlock())) {
                             // block exits Xover at B
                             trackSegment = (TrackSegment) xt.getConnectB();
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_B;
+                            prevConnectType = HitPointType.TURNOUT_B;
                         }
                         break;
                     }
@@ -188,11 +188,11 @@ public class ConnectivityUtil {
                         if (((TrackSegment) xt.getConnectC() != null) && (currLayoutBlock == ((TrackSegment) xt.getConnectC()).getLayoutBlock())) {
                             // block exits Xover at C
                             trackSegment = (TrackSegment) xt.getConnectC();
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_C;
+                            prevConnectType = HitPointType.TURNOUT_C;
                         } else if (((TrackSegment) xt.getConnectD() != null) && (currLayoutBlock == ((TrackSegment) xt.getConnectD()).getLayoutBlock())) {
                             // block exits Xover at D
                             trackSegment = (TrackSegment) xt.getConnectD();
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_D;
+                            prevConnectType = HitPointType.TURNOUT_D;
                         }
                         break;
                     }
@@ -200,11 +200,11 @@ public class ConnectivityUtil {
                         if (((TrackSegment) xt.getConnectA() != null) && (currLayoutBlock == ((TrackSegment) xt.getConnectA()).getLayoutBlock())) {
                             // block exits Xover at A
                             trackSegment = (TrackSegment) xt.getConnectA();
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_A;
+                            prevConnectType = HitPointType.TURNOUT_A;
                         } else if (((TrackSegment) xt.getConnectC() != null) && (currLayoutBlock == ((TrackSegment) xt.getConnectC()).getLayoutBlock())) {
                             // block exits Xover at C
                             trackSegment = (TrackSegment) xt.getConnectC();
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_C;
+                            prevConnectType = HitPointType.TURNOUT_C;
                         }
                         break;
                     }
@@ -212,11 +212,11 @@ public class ConnectivityUtil {
                         if (((TrackSegment) xt.getConnectB() != null) && (currLayoutBlock == ((TrackSegment) xt.getConnectB()).getLayoutBlock())) {
                             // block exits Xover at B
                             trackSegment = (TrackSegment) xt.getConnectB();
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_B;
+                            prevConnectType = HitPointType.TURNOUT_B;
                         } else if (((TrackSegment) xt.getConnectD() != null) && (currLayoutBlock == ((TrackSegment) xt.getConnectD()).getLayoutBlock())) {
                             // block exits Xover at D
                             trackSegment = (TrackSegment) xt.getConnectD();
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_D;
+                            prevConnectType = HitPointType.TURNOUT_D;
                         }
                         break;
                     }
@@ -230,8 +230,8 @@ public class ConnectivityUtil {
             } else if ((lc.getBlock1() == currLayoutBlock) && (lc.getBlock2() == prevLayoutBlock)) {
                 // no turnout or level crossing at the beginning of this block
                 trackSegment = lc.getTrackSegment();
-                if (lc.getConnectedType() == LayoutEditor.HitPointType.TRACK) {
-                    prevConnectType = LayoutEditor.HitPointType.POS_POINT;
+                if (lc.getConnectedType() == HitPointType.TRACK) {
+                    prevConnectType = HitPointType.POS_POINT;
                     prevConnectTrack = lc.getAnchor();
                 } else {
                     prevConnectType = lc.getConnectedType();
@@ -241,21 +241,21 @@ public class ConnectivityUtil {
             } else if ((lc.getBlock2() == currLayoutBlock) && (lc.getBlock1() == prevLayoutBlock)) {
                 cType = lc.getConnectedType();
                 // check for connection to a track segment
-                if (cType == LayoutEditor.HitPointType.TRACK) {
+                if (cType == HitPointType.TRACK) {
                     trackSegment = (TrackSegment) lc.getConnectedObject();
-                    prevConnectType = LayoutEditor.HitPointType.POS_POINT;
+                    prevConnectType = HitPointType.POS_POINT;
                     prevConnectTrack = lc.getAnchor();
                 } // check for a level crossing
-                else if (LayoutEditor.HitPointType.isLevelXingHitType(cType)) {
+                else if (HitPointType.isLevelXingHitType(cType)) {
                     // entering this Block at a level crossing, skip over it an initialize the next
                     //      TrackSegment if there is one in this Block
                     setupOpposingTrackSegment((LevelXing) lc.getConnectedObject(), cType);
                 } // check for turnout
-                else if (LayoutEditor.HitPointType.isTurnoutHitType(cType)) {
+                else if (HitPointType.isTurnoutHitType(cType)) {
                     // add turnout to list
                     result.add(new LayoutTrackExpectedState<>((LayoutTurnout) lc.getConnectedObject(),
                             getTurnoutSetting((LayoutTurnout) lc.getConnectedObject(), cType, suppress)));
-                } else if (LayoutEditor.HitPointType.isSlipHitType(cType)) {
+                } else if (HitPointType.isSlipHitType(cType)) {
                     result.add(new LayoutTrackExpectedState<>((LayoutTurnout) lc.getConnectedObject(),
                             getTurnoutSetting((LayoutTurnout) lc.getConnectedObject(), cType, suppress)));
                 }
@@ -293,7 +293,7 @@ public class ConnectivityUtil {
                 trackSegment = null;
                 break;
             }
-            if (cType == LayoutEditor.HitPointType.POS_POINT) {
+            if (cType == HitPointType.POS_POINT) {
                 // reached anchor point or end bumper
                 if (((PositionablePoint) cObject).getType() == PositionablePoint.END_BUMPER) {
                     // end of line
@@ -313,7 +313,7 @@ public class ConnectivityUtil {
                         prevConnectTrack = cObject;
                     }
                 }
-            } else if (LayoutEditor.HitPointType.isLevelXingHitType(cType)) {
+            } else if (HitPointType.isLevelXingHitType(cType)) {
                 // reached a level crossing, is it within this block?
                 switch (cType) {
                     case LEVEL_XING_A:
@@ -343,7 +343,7 @@ public class ConnectivityUtil {
                         break;
                     }
                 }
-            } else if (LayoutEditor.HitPointType.isTurnoutHitType(cType)) {
+            } else if (HitPointType.isTurnoutHitType(cType)) {
                 // reached a turnout
                 LayoutTurnout lt = (LayoutTurnout) cObject;
                 LayoutTurnout.TurnoutType tType = lt.getTurnoutType();
@@ -367,13 +367,13 @@ public class ConnectivityUtil {
                                 // block continues at B
                                 result.add(new LayoutTrackExpectedState<>((LayoutTurnout) cObject, Turnout.CLOSED));
                                 trackSegment = (TrackSegment) lt.getConnectB();
-                                prevConnectType = LayoutEditor.HitPointType.TURNOUT_B;
+                                prevConnectType = HitPointType.TURNOUT_B;
                                 prevConnectTrack = cObject;
                             } else if ((lt.getLayoutBlockC() == currLayoutBlock) && (tType != LayoutTurnout.TurnoutType.LH_XOVER)) {
                                 // block continues at C, either Double or RH
                                 result.add(new LayoutTrackExpectedState<>((LayoutTurnout) cObject, Turnout.THROWN));
                                 trackSegment = (TrackSegment) lt.getConnectC();
-                                prevConnectType = LayoutEditor.HitPointType.TURNOUT_C;
+                                prevConnectType = HitPointType.TURNOUT_C;
                                 prevConnectTrack = cObject;
                             } else if (lt.getLayoutBlock() == currLayoutBlock && currLayoutBlock == nextLayoutBlock) {
                                 //we are at our final destination so not an error such
@@ -402,13 +402,13 @@ public class ConnectivityUtil {
                                 // block continues at A
                                 result.add(new LayoutTrackExpectedState<>((LayoutTurnout) cObject, Turnout.CLOSED));
                                 trackSegment = (TrackSegment) lt.getConnectA();
-                                prevConnectType = LayoutEditor.HitPointType.TURNOUT_A;
+                                prevConnectType = HitPointType.TURNOUT_A;
                                 prevConnectTrack = cObject;
                             } else if ((lt.getLayoutBlockD() == currLayoutBlock) && (tType != LayoutTurnout.TurnoutType.RH_XOVER)) {
                                 // block continues at D, either Double or LH
                                 result.add(new LayoutTrackExpectedState<>((LayoutTurnout) cObject, Turnout.THROWN));
                                 trackSegment = (TrackSegment) lt.getConnectD();
-                                prevConnectType = LayoutEditor.HitPointType.TURNOUT_D;
+                                prevConnectType = HitPointType.TURNOUT_D;
                                 prevConnectTrack = cObject;
                             } else if (lt.getLayoutBlockB() == currLayoutBlock && currLayoutBlock == nextLayoutBlock) {
                                 //we are at our final destination so not an error such
@@ -437,13 +437,13 @@ public class ConnectivityUtil {
                                 // block continues at D
                                 result.add(new LayoutTrackExpectedState<>((LayoutTurnout) cObject, Turnout.CLOSED));
                                 trackSegment = (TrackSegment) lt.getConnectD();
-                                prevConnectType = LayoutEditor.HitPointType.TURNOUT_D;
+                                prevConnectType = HitPointType.TURNOUT_D;
                                 prevConnectTrack = cObject;
                             } else if ((lt.getLayoutBlock() == currLayoutBlock) && (tType != LayoutTurnout.TurnoutType.LH_XOVER)) {
                                 // block continues at A, either Double or RH
                                 result.add(new LayoutTrackExpectedState<>((LayoutTurnout) cObject, Turnout.THROWN));
                                 trackSegment = (TrackSegment) lt.getConnectA();
-                                prevConnectType = LayoutEditor.HitPointType.TURNOUT_A;
+                                prevConnectType = HitPointType.TURNOUT_A;
                                 prevConnectTrack = cObject;
                             } else if (lt.getLayoutBlockC() == currLayoutBlock && currLayoutBlock == nextLayoutBlock) {
                                 //we are at our final destination so not an error such
@@ -472,13 +472,13 @@ public class ConnectivityUtil {
                                 // block continues at C
                                 result.add(new LayoutTrackExpectedState<>((LayoutTurnout) cObject, Turnout.CLOSED));
                                 trackSegment = (TrackSegment) lt.getConnectC();
-                                prevConnectType = LayoutEditor.HitPointType.TURNOUT_C;
+                                prevConnectType = HitPointType.TURNOUT_C;
                                 prevConnectTrack = cObject;
                             } else if ((lt.getLayoutBlockB() == currLayoutBlock) && (tType != LayoutTurnout.TurnoutType.RH_XOVER)) {
                                 // block continues at B, either Double or LH
                                 result.add(new LayoutTrackExpectedState<>((LayoutTurnout) cObject, Turnout.THROWN));
                                 trackSegment = (TrackSegment) lt.getConnectB();
-                                prevConnectType = LayoutEditor.HitPointType.TURNOUT_B;
+                                prevConnectType = HitPointType.TURNOUT_B;
                                 prevConnectTrack = cObject;
                             } else if (lt.getLayoutBlockD() == currLayoutBlock && currLayoutBlock == nextLayoutBlock) {
                                 //we are at our final destination so not an error such
@@ -506,13 +506,13 @@ public class ConnectivityUtil {
                         result.add(new LayoutTrackExpectedState<>((LayoutTurnout) cObject, getTurnoutSetting(lt, cType, suppress)));
                     }
                 }
-            } else if (LayoutEditor.HitPointType.isSlipHitType(cType)) {
+            } else if (HitPointType.isSlipHitType(cType)) {
                 // reached a LayoutSlip
                 LayoutSlip ls = (LayoutSlip) cObject;
-                if (((cType == LayoutEditor.HitPointType.SLIP_A) && (ls.getLayoutBlock() != currLayoutBlock))
-                        || ((cType == LayoutEditor.HitPointType.SLIP_B) && (ls.getLayoutBlockB() != currLayoutBlock))
-                        || ((cType == LayoutEditor.HitPointType.SLIP_C) && (ls.getLayoutBlockC() != currLayoutBlock))
-                        || ((cType == LayoutEditor.HitPointType.SLIP_D) && (ls.getLayoutBlockD() != currLayoutBlock))) {
+                if (((cType == HitPointType.SLIP_A) && (ls.getLayoutBlock() != currLayoutBlock))
+                        || ((cType == HitPointType.SLIP_B) && (ls.getLayoutBlockB() != currLayoutBlock))
+                        || ((cType == HitPointType.SLIP_C) && (ls.getLayoutBlockC() != currLayoutBlock))
+                        || ((cType == HitPointType.SLIP_D) && (ls.getLayoutBlockD() != currLayoutBlock))) {
                     //Slip is outside of the current block
                     trackSegment = null;
                 } else {
@@ -1300,7 +1300,7 @@ public class ConnectivityUtil {
     @CheckForNull
     public TrackNode getTrackNode(
             @Nonnull LayoutTrack currentNode,
-            LayoutEditor.HitPointType currentNodeType,
+            HitPointType currentNodeType,
             @CheckForNull TrackSegment currentTrackSegment,
             int currentNodeState) {
         // initialize
@@ -1433,7 +1433,7 @@ public class ConnectivityUtil {
                                 //prevTrackType = LayoutEditor.HitPointType.TURNOUT_B;
                                 break;
                             case TRACKNODE_DIVERGING:
-                                if ((currentNodeType == LayoutEditor.HitPointType.TURNOUT_A)
+                                if ((currentNodeType == HitPointType.TURNOUT_A)
                                         && (!(lt.getTurnoutType() == LayoutTurnout.TurnoutType.LH_XOVER))) {
                                     nextTrackSegment = (TrackSegment) lt.getConnectC();
                                     //prevTrackType = LayoutEditor.HitPointType.TURNOUT_C;
@@ -1497,20 +1497,20 @@ public class ConnectivityUtil {
                     } else if (lt.isTurnoutTypeXover()) {
                         switch (currentNodeState) {
                             case TRACKNODE_CONTINUING:
-                                if (currentNodeType == LayoutEditor.HitPointType.TURNOUT_B) {
+                                if (currentNodeType == HitPointType.TURNOUT_B) {
                                     nextTrackSegment = (TrackSegment) lt.getConnectA();
                                     //prevTrackType = LayoutEditor.HitPointType.TURNOUT_A;
-                                } else if (currentNodeType == LayoutEditor.HitPointType.TURNOUT_C) {
+                                } else if (currentNodeType == HitPointType.TURNOUT_C) {
                                     nextTrackSegment = (TrackSegment) lt.getConnectD();
                                     //prevTrackType = LayoutEditor.HitPointType.TURNOUT_D;
                                 }
                                 break;
                             case TRACKNODE_DIVERGING:
-                                if ((currentNodeType == LayoutEditor.HitPointType.TURNOUT_C)
+                                if ((currentNodeType == HitPointType.TURNOUT_C)
                                         && (!(lt.getTurnoutType() == LayoutTurnout.TurnoutType.LH_XOVER))) {
                                     nextTrackSegment = (TrackSegment) lt.getConnectA();
                                     //prevTrackType = LayoutEditor.HitPointType.TURNOUT_A;
-                                } else if ((currentNodeType == LayoutEditor.HitPointType.TURNOUT_B)
+                                } else if ((currentNodeType == HitPointType.TURNOUT_B)
                                         && (!(lt.getTurnoutType() == LayoutTurnout.TurnoutType.RH_XOVER))) {
                                     nextTrackSegment = (TrackSegment) lt.getConnectD();
                                     //prevTrackType = LayoutEditor.HitPointType.TURNOUT_D;
@@ -1672,14 +1672,14 @@ public class ConnectivityUtil {
 
         // follow track to next node (anchor block boundary, turnout, or level crossing)
         LayoutTrack node = null;
-        LayoutEditor.HitPointType nodeType = LayoutEditor.HitPointType.NONE;
+        HitPointType nodeType = HitPointType.NONE;
         TrackSegment nodeTrackSegment = null;
 
         boolean hitEnd = false;
         boolean hasNode = false;
         while (!hasNode) {
             LayoutTrack nextLayoutTrack = null;
-            LayoutEditor.HitPointType nextType = LayoutEditor.HitPointType.NONE;
+            HitPointType nextType = HitPointType.NONE;
 
             if (nextTrackSegment.getConnect1() == prevTrack) {
                 nextLayoutTrack = nextTrackSegment.getConnect2();
@@ -1693,7 +1693,7 @@ public class ConnectivityUtil {
                 return null;
             }
 
-            if (nextType == LayoutEditor.HitPointType.POS_POINT) {
+            if (nextType == HitPointType.POS_POINT) {
                 PositionablePoint p = (PositionablePoint) nextLayoutTrack;
                 if (p.getType() == PositionablePoint.END_BUMPER) {
                     hitEnd = true;
@@ -1926,7 +1926,7 @@ public class ConnectivityUtil {
      * Block), and sets the prevConnectType.
      */
     private Integer getTurnoutSetting(
-            @Nonnull LayoutTurnout layoutTurnout, LayoutEditor.HitPointType cType, boolean suppress) {
+            @Nonnull LayoutTurnout layoutTurnout, HitPointType cType, boolean suppress) {
         prevConnectTrack = layoutTurnout;
         int setting = Turnout.THROWN;
         LayoutTurnout.TurnoutType tType = layoutTurnout.getTurnoutType();
@@ -1942,12 +1942,12 @@ public class ConnectivityUtil {
                 case SLIP_A:
                     if (nextLayoutBlock == layoutBlockC) {
                         // exiting block at C
-                        prevConnectType = LayoutEditor.HitPointType.SLIP_C;
+                        prevConnectType = HitPointType.SLIP_C;
                         setting = LayoutSlip.STATE_AC;
                         trackSegment = (TrackSegment) layoutSlip.getConnectC();
                     } else if (nextLayoutBlock == layoutBlockD) {
                         // exiting block at D
-                        prevConnectType = LayoutEditor.HitPointType.SLIP_D;
+                        prevConnectType = HitPointType.SLIP_D;
                         setting = LayoutSlip.STATE_AD;
                         trackSegment = (TrackSegment) layoutSlip.getConnectD();
                     } else if (currLayoutBlock == layoutBlockC
@@ -1955,21 +1955,21 @@ public class ConnectivityUtil {
                         // block continues at C only
                         trackSegment = (TrackSegment) layoutTurnout.getConnectC();
                         setting = LayoutSlip.STATE_AC;
-                        prevConnectType = LayoutEditor.HitPointType.SLIP_C;
+                        prevConnectType = HitPointType.SLIP_C;
 
                     } else if (currLayoutBlock == layoutBlockD
                             && currLayoutBlock != layoutBlockC) {
                         // block continues at D only
                         setting = LayoutSlip.STATE_AD;
                         trackSegment = (TrackSegment) layoutTurnout.getConnectD();
-                        prevConnectType = LayoutEditor.HitPointType.SLIP_D;
+                        prevConnectType = HitPointType.SLIP_D;
                     } else { // both connecting track segments continue in current block, must search further
                         if ((layoutSlip.getConnectC() != null) && trackSegmentLeadsTo((TrackSegment) layoutSlip.getConnectC(), layoutSlip)) {
-                            prevConnectType = LayoutEditor.HitPointType.SLIP_C;
+                            prevConnectType = HitPointType.SLIP_C;
                             setting = LayoutSlip.STATE_AC;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectC();
                         } else if ((layoutSlip.getConnectD() != null) && trackSegmentLeadsTo((TrackSegment) layoutSlip.getConnectD(), layoutSlip)) {
-                            prevConnectType = LayoutEditor.HitPointType.SLIP_D;
+                            prevConnectType = HitPointType.SLIP_D;
                             setting = LayoutSlip.STATE_AD;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectD();
                         } else {
@@ -1983,13 +1983,13 @@ public class ConnectivityUtil {
                 case SLIP_B:
                     if (nextLayoutBlock == layoutBlockD) {
                         // exiting block at D
-                        prevConnectType = LayoutEditor.HitPointType.SLIP_D;
+                        prevConnectType = HitPointType.SLIP_D;
                         setting = LayoutSlip.STATE_BD;
                         trackSegment = (TrackSegment) layoutSlip.getConnectD();
                     } else if (nextLayoutBlock == layoutBlockC
                             && tType == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
                         // exiting block at C
-                        prevConnectType = LayoutEditor.HitPointType.SLIP_C;
+                        prevConnectType = HitPointType.SLIP_C;
                         setting = LayoutSlip.STATE_BC;
                         trackSegment = (TrackSegment) layoutSlip.getConnectC();
                     } else {
@@ -1999,21 +1999,21 @@ public class ConnectivityUtil {
                                 //Found continuing at D only
                                 trackSegment = (TrackSegment) layoutTurnout.getConnectD();
                                 setting = LayoutSlip.STATE_BD;
-                                prevConnectType = LayoutEditor.HitPointType.SLIP_D;
+                                prevConnectType = HitPointType.SLIP_D;
 
                             } else if (currLayoutBlock == layoutBlockC
                                     && currLayoutBlock != layoutBlockD) {
                                 //Found continuing at C only
                                 trackSegment = (TrackSegment) layoutTurnout.getConnectC();
                                 setting = LayoutSlip.STATE_BC;
-                                prevConnectType = LayoutEditor.HitPointType.SLIP_C;
+                                prevConnectType = HitPointType.SLIP_C;
                             } else { // both connecting track segments continue in current block, must search further
                                 if ((layoutSlip.getConnectD() != null) && trackSegmentLeadsTo((TrackSegment) layoutSlip.getConnectD(), layoutSlip)) {
-                                    prevConnectType = LayoutEditor.HitPointType.SLIP_D;
+                                    prevConnectType = HitPointType.SLIP_D;
                                     setting = LayoutSlip.STATE_BD;
                                     trackSegment = (TrackSegment) layoutTurnout.getConnectD();
                                 } else if ((layoutSlip.getConnectC() != null) && trackSegmentLeadsTo((TrackSegment) layoutSlip.getConnectC(), layoutSlip)) {
-                                    prevConnectType = LayoutEditor.HitPointType.SLIP_C;
+                                    prevConnectType = HitPointType.SLIP_C;
                                     setting = LayoutSlip.STATE_BC;
                                     trackSegment = (TrackSegment) layoutTurnout.getConnectC();
                                 } else {
@@ -2028,7 +2028,7 @@ public class ConnectivityUtil {
                                 //Found continuing at D only
                                 trackSegment = (TrackSegment) layoutTurnout.getConnectD();
                                 setting = LayoutSlip.STATE_BD;
-                                prevConnectType = LayoutEditor.HitPointType.SLIP_D;
+                                prevConnectType = HitPointType.SLIP_D;
                             } else {
                                 trackSegment = null;
                             }
@@ -2038,13 +2038,13 @@ public class ConnectivityUtil {
                 case SLIP_C:
                     if (nextLayoutBlock == layoutBlockA) {
                         // exiting block at A
-                        prevConnectType = LayoutEditor.HitPointType.SLIP_A;
+                        prevConnectType = HitPointType.SLIP_A;
                         setting = LayoutSlip.STATE_AC;
                         trackSegment = (TrackSegment) layoutSlip.getConnectA();
                     } else if (nextLayoutBlock == layoutBlockB
                             && tType == LayoutSlip.TurnoutType.DOUBLE_SLIP) {
                         // exiting block at B
-                        prevConnectType = LayoutEditor.HitPointType.SLIP_B;
+                        prevConnectType = HitPointType.SLIP_B;
                         setting = LayoutSlip.STATE_BC;
                         trackSegment = (TrackSegment) layoutSlip.getConnectB();
                     } else {
@@ -2054,20 +2054,20 @@ public class ConnectivityUtil {
                                 //Found continuing at A only
                                 trackSegment = (TrackSegment) layoutTurnout.getConnectA();
                                 setting = LayoutSlip.STATE_AC;
-                                prevConnectType = LayoutEditor.HitPointType.SLIP_A;
+                                prevConnectType = HitPointType.SLIP_A;
                             } else if (currLayoutBlock == layoutBlockB
                                     && currLayoutBlock != layoutBlockA) {
                                 //Found continuing at B only
                                 trackSegment = (TrackSegment) layoutTurnout.getConnectB();
                                 setting = LayoutSlip.STATE_BC;
-                                prevConnectType = LayoutEditor.HitPointType.SLIP_B;
+                                prevConnectType = HitPointType.SLIP_B;
                             } else { // both connecting track segments continue in current block, must search further
                                 if ((layoutSlip.getConnectA() != null) && trackSegmentLeadsTo((TrackSegment) layoutSlip.getConnectA(), layoutSlip)) {
-                                    prevConnectType = LayoutEditor.HitPointType.SLIP_A;
+                                    prevConnectType = HitPointType.SLIP_A;
                                     setting = LayoutSlip.STATE_AC;
                                     trackSegment = (TrackSegment) layoutTurnout.getConnectA();
                                 } else if ((layoutSlip.getConnectB() != null) && trackSegmentLeadsTo((TrackSegment) layoutSlip.getConnectB(), layoutSlip)) {
-                                    prevConnectType = LayoutEditor.HitPointType.SLIP_B;
+                                    prevConnectType = HitPointType.SLIP_B;
                                     setting = LayoutSlip.STATE_BC;
                                     trackSegment = (TrackSegment) layoutTurnout.getConnectB();
                                 } else {
@@ -2082,7 +2082,7 @@ public class ConnectivityUtil {
                                 //Found continuing at A only
                                 trackSegment = (TrackSegment) layoutTurnout.getConnectA();
                                 setting = LayoutSlip.STATE_AC;
-                                prevConnectType = LayoutEditor.HitPointType.SLIP_A;
+                                prevConnectType = HitPointType.SLIP_A;
                             } else {
                                 trackSegment = null;
                             }
@@ -2092,12 +2092,12 @@ public class ConnectivityUtil {
                 case SLIP_D:
                     if (nextLayoutBlock == layoutBlockB) {
                         // exiting block at B
-                        prevConnectType = LayoutEditor.HitPointType.SLIP_B;
+                        prevConnectType = HitPointType.SLIP_B;
                         setting = LayoutSlip.STATE_BD;
                         trackSegment = (TrackSegment) layoutSlip.getConnectB();
                     } else if (nextLayoutBlock == layoutBlockA) {
                         // exiting block at B
-                        prevConnectType = LayoutEditor.HitPointType.SLIP_A;
+                        prevConnectType = HitPointType.SLIP_A;
                         setting = LayoutSlip.STATE_AD;
                         trackSegment = (TrackSegment) layoutSlip.getConnectA();
                     } else if (currLayoutBlock == layoutBlockB
@@ -2105,21 +2105,21 @@ public class ConnectivityUtil {
                         //Found continuing at B only
                         trackSegment = (TrackSegment) layoutTurnout.getConnectB();
                         setting = LayoutSlip.STATE_BD;
-                        prevConnectType = LayoutEditor.HitPointType.SLIP_B;
+                        prevConnectType = HitPointType.SLIP_B;
 
                     } else if (currLayoutBlock == layoutBlockA
                             && currLayoutBlock != layoutBlockB) {
                         //Found continuing at A only
                         setting = LayoutSlip.STATE_AD;
                         trackSegment = (TrackSegment) layoutTurnout.getConnectA();
-                        prevConnectType = LayoutEditor.HitPointType.SLIP_A;
+                        prevConnectType = HitPointType.SLIP_A;
                     } else { // both connecting track segments continue in current block, must search further
                         if ((layoutSlip.getConnectA() != null) && trackSegmentLeadsTo((TrackSegment) layoutSlip.getConnectA(), layoutSlip)) {
-                            prevConnectType = LayoutEditor.HitPointType.SLIP_A;
+                            prevConnectType = HitPointType.SLIP_A;
                             setting = LayoutSlip.STATE_AD;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectA();
                         } else if ((layoutSlip.getConnectB() != null) && trackSegmentLeadsTo((TrackSegment) layoutSlip.getConnectB(), layoutSlip)) {
-                            prevConnectType = LayoutEditor.HitPointType.SLIP_B;
+                            prevConnectType = HitPointType.SLIP_B;
                             setting = LayoutSlip.STATE_BD;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectB();
                         } else {
@@ -2148,42 +2148,42 @@ public class ConnectivityUtil {
                     // check for left-handed crossover
                     if (tType == LayoutTurnout.TurnoutType.LH_XOVER) {
                         // entering at a continuing track of a left-handed crossover
-                        prevConnectType = LayoutEditor.HitPointType.TURNOUT_B;
+                        prevConnectType = HitPointType.TURNOUT_B;
                         setting = Turnout.CLOSED;
                         trackSegment = (TrackSegment) layoutTurnout.getConnectB();
                     } // entering at a throat, determine exit by checking block of connected track segment
                     else if ((nextLayoutBlock == layoutTurnout.getLayoutBlockB()) || ((layoutTurnout.getConnectB() != null)
                             && (nextLayoutBlock == ((TrackSegment) layoutTurnout.getConnectB()).getLayoutBlock()))) {
                         // exiting block at continuing track
-                        prevConnectType = LayoutEditor.HitPointType.TURNOUT_B;
+                        prevConnectType = HitPointType.TURNOUT_B;
                         setting = Turnout.CLOSED;
                         trackSegment = (TrackSegment) layoutTurnout.getConnectB();
                     } else if ((nextLayoutBlock == layoutTurnout.getLayoutBlockC()) || ((layoutTurnout.getConnectC() != null)
                             && (nextLayoutBlock == ((TrackSegment) layoutTurnout.getConnectC()).getLayoutBlock()))) {
                         // exiting block at diverging track
-                        prevConnectType = LayoutEditor.HitPointType.TURNOUT_C;
+                        prevConnectType = HitPointType.TURNOUT_C;
                         trackSegment = (TrackSegment) layoutTurnout.getConnectC();
                     } // must stay in block after turnout - check if only one track continues in block
                     else if ((layoutTurnout.getConnectB() != null) && (currLayoutBlock == ((TrackSegment) layoutTurnout.getConnectB()).getLayoutBlock())
                             && (layoutTurnout.getConnectC() != null) && (currLayoutBlock != ((TrackSegment) layoutTurnout.getConnectC()).getLayoutBlock())) {
                         // continuing in block on continuing track only
-                        prevConnectType = LayoutEditor.HitPointType.TURNOUT_B;
+                        prevConnectType = HitPointType.TURNOUT_B;
                         setting = Turnout.CLOSED;
                         trackSegment = (TrackSegment) layoutTurnout.getConnectB();
                     } else if ((layoutTurnout.getConnectC() != null) && (currLayoutBlock == ((TrackSegment) layoutTurnout.getConnectC()).getLayoutBlock())
                             && (layoutTurnout.getConnectB() != null) && (currLayoutBlock != ((TrackSegment) layoutTurnout.getConnectB()).getLayoutBlock())) {
                         // continuing in block on diverging track only
-                        prevConnectType = LayoutEditor.HitPointType.TURNOUT_C;
+                        prevConnectType = HitPointType.TURNOUT_C;
                         trackSegment = (TrackSegment) layoutTurnout.getConnectC();
                     } else { // both connecting track segments continue in current block, must search further
                         // check if continuing track leads to the next block
                         if ((layoutTurnout.getConnectB() != null) && trackSegmentLeadsTo((TrackSegment) layoutTurnout.getConnectB(), layoutTurnout)) {
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_B;
+                            prevConnectType = HitPointType.TURNOUT_B;
                             setting = Turnout.CLOSED;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectB();
                         } // check if diverging track leads to the next block
                         else if ((layoutTurnout.getConnectC() != null) && trackSegmentLeadsTo((TrackSegment) layoutTurnout.getConnectC(), layoutTurnout)) {
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_C;
+                            prevConnectType = HitPointType.TURNOUT_C;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectC();
                         } else {
                             if (!suppress) {
@@ -2199,35 +2199,35 @@ public class ConnectivityUtil {
                         if ((nextLayoutBlock == layoutTurnout.getLayoutBlock()) || ((layoutTurnout.getConnectA() != null)
                                 && (nextLayoutBlock == ((TrackSegment) layoutTurnout.getConnectA()).getLayoutBlock()))) {
                             // exiting block at continuing track
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_A;
+                            prevConnectType = HitPointType.TURNOUT_A;
                             setting = Turnout.CLOSED;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectB();
                         } else if ((nextLayoutBlock == layoutTurnout.getLayoutBlockD()) || ((layoutTurnout.getConnectD() != null)
                                 && (nextLayoutBlock == ((TrackSegment) layoutTurnout.getConnectD()).getLayoutBlock()))) {
                             // exiting block at diverging track
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_D;
+                            prevConnectType = HitPointType.TURNOUT_D;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectD();
                         } // must stay in block after turnout
                         else if (((layoutTurnout.getConnectA() != null) && (currLayoutBlock == ((TrackSegment) layoutTurnout.getConnectA()).getLayoutBlock()))
                                 && ((layoutTurnout.getConnectD() != null) && (currLayoutBlock != ((TrackSegment) layoutTurnout.getConnectD()).getLayoutBlock()))) {
                             // continuing in block on continuing track only
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_A;
+                            prevConnectType = HitPointType.TURNOUT_A;
                             setting = Turnout.CLOSED;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectA();
                         } else if (((layoutTurnout.getConnectD() != null) && (currLayoutBlock == ((TrackSegment) layoutTurnout.getConnectD()).getLayoutBlock()))
                                 && ((layoutTurnout.getConnectA() != null) && (currLayoutBlock != ((TrackSegment) layoutTurnout.getConnectA()).getLayoutBlock()))) {
                             // continuing in block on diverging track only
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_D;
+                            prevConnectType = HitPointType.TURNOUT_D;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectD();
                         } else { // both connecting track segments continue in current block, must search further
                             // check if continuing track leads to the next block
                             if ((layoutTurnout.getConnectA() != null) && trackSegmentLeadsTo((TrackSegment) layoutTurnout.getConnectA(), layoutTurnout)) {
-                                prevConnectType = LayoutEditor.HitPointType.TURNOUT_A;
+                                prevConnectType = HitPointType.TURNOUT_A;
                                 setting = Turnout.CLOSED;
                                 trackSegment = (TrackSegment) layoutTurnout.getConnectA();
                             } // check if diverging track leads to the next block
                             else if ((layoutTurnout.getConnectD() != null) && trackSegmentLeadsTo((TrackSegment) layoutTurnout.getConnectD(), layoutTurnout)) {
-                                prevConnectType = LayoutEditor.HitPointType.TURNOUT_D;
+                                prevConnectType = HitPointType.TURNOUT_D;
                                 trackSegment = (TrackSegment) layoutTurnout.getConnectD();
                             } else {
                                 if (!suppress) {
@@ -2238,7 +2238,7 @@ public class ConnectivityUtil {
                         }
                     } else {
                         // entering at continuing track, must exit at throat
-                        prevConnectType = LayoutEditor.HitPointType.TURNOUT_A;
+                        prevConnectType = HitPointType.TURNOUT_A;
                         setting = Turnout.CLOSED;
                         trackSegment = (TrackSegment) layoutTurnout.getConnectA();
                     }
@@ -2249,35 +2249,35 @@ public class ConnectivityUtil {
                         if ((nextLayoutBlock == layoutTurnout.getLayoutBlockD()) || ((layoutTurnout.getConnectD() != null)
                                 && (nextLayoutBlock == ((TrackSegment) layoutTurnout.getConnectD()).getLayoutBlock()))) {
                             // exiting block at continuing track
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_D;
+                            prevConnectType = HitPointType.TURNOUT_D;
                             setting = Turnout.CLOSED;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectD();
                         } else if ((nextLayoutBlock == layoutTurnout.getLayoutBlock()) || ((layoutTurnout.getConnectA() != null)
                                 && (nextLayoutBlock == ((TrackSegment) layoutTurnout.getConnectA()).getLayoutBlock()))) {
                             // exiting block at diverging track
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_A;
+                            prevConnectType = HitPointType.TURNOUT_A;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectA();
                         } // must stay in block after turnout
                         else if (((layoutTurnout.getConnectD() != null) && (currLayoutBlock == ((TrackSegment) layoutTurnout.getConnectD()).getLayoutBlock()))
                                 && ((layoutTurnout.getConnectA() != null) && (currLayoutBlock != ((TrackSegment) layoutTurnout.getConnectA()).getLayoutBlock()))) {
                             // continuing in block on continuing track
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_D;
+                            prevConnectType = HitPointType.TURNOUT_D;
                             setting = Turnout.CLOSED;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectD();
                         } else if (((layoutTurnout.getConnectA() != null) && (currLayoutBlock == ((TrackSegment) layoutTurnout.getConnectA()).getLayoutBlock()))
                                 && ((layoutTurnout.getConnectD() != null) && (currLayoutBlock != ((TrackSegment) layoutTurnout.getConnectD()).getLayoutBlock()))) {
                             // continuing in block on diverging track
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_A;
+                            prevConnectType = HitPointType.TURNOUT_A;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectA();
                         } else { // both connecting track segments continue in current block, must search further
                             // check if continuing track leads to the next block
                             if ((layoutTurnout.getConnectD() != null) && trackSegmentLeadsTo((TrackSegment) layoutTurnout.getConnectD(), layoutTurnout)) {
-                                prevConnectType = LayoutEditor.HitPointType.TURNOUT_D;
+                                prevConnectType = HitPointType.TURNOUT_D;
                                 setting = Turnout.CLOSED;
                                 trackSegment = (TrackSegment) layoutTurnout.getConnectD();
                             } // check if diverging track leads to the next block
                             else if ((layoutTurnout.getConnectA() != null) && trackSegmentLeadsTo((TrackSegment) layoutTurnout.getConnectA(), layoutTurnout)) {
-                                prevConnectType = LayoutEditor.HitPointType.TURNOUT_A;
+                                prevConnectType = HitPointType.TURNOUT_A;
                                 trackSegment = (TrackSegment) layoutTurnout.getConnectA();
                             } else {
                                 if (!suppress) {
@@ -2288,12 +2288,12 @@ public class ConnectivityUtil {
                         }
                     } else if (tType == LayoutTurnout.TurnoutType.LH_XOVER) {
                         // entering at continuing track, must exit at throat
-                        prevConnectType = LayoutEditor.HitPointType.TURNOUT_D;
+                        prevConnectType = HitPointType.TURNOUT_D;
                         trackSegment = (TrackSegment) layoutTurnout.getConnectD();
                         setting = Turnout.CLOSED;
                     } else {
                         // entering at diverging track, must exit at throat
-                        prevConnectType = LayoutEditor.HitPointType.TURNOUT_A;
+                        prevConnectType = HitPointType.TURNOUT_A;
                         trackSegment = (TrackSegment) layoutTurnout.getConnectA();
                     }
                     break;
@@ -2303,35 +2303,35 @@ public class ConnectivityUtil {
                         if ((nextLayoutBlock == layoutTurnout.getLayoutBlockC()) || ((layoutTurnout.getConnectC() != null)
                                 && (nextLayoutBlock == ((TrackSegment) layoutTurnout.getConnectC()).getLayoutBlock()))) {
                             // exiting block at continuing track
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_C;
+                            prevConnectType = HitPointType.TURNOUT_C;
                             setting = Turnout.CLOSED;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectC();
                         } else if ((nextLayoutBlock == layoutTurnout.getLayoutBlockB()) || ((layoutTurnout.getConnectB() != null)
                                 && (nextLayoutBlock == ((TrackSegment) layoutTurnout.getConnectB()).getLayoutBlock()))) {
                             // exiting block at diverging track
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_B;
+                            prevConnectType = HitPointType.TURNOUT_B;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectB();
                         } // must stay in block after turnout
                         else if (((layoutTurnout.getConnectC() != null) && (currLayoutBlock == ((TrackSegment) layoutTurnout.getConnectC()).getLayoutBlock()))
                                 && ((layoutTurnout.getConnectB() != null) && (currLayoutBlock != ((TrackSegment) layoutTurnout.getConnectB()).getLayoutBlock()))) {
                             // continuing in block on continuing track
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_C;
+                            prevConnectType = HitPointType.TURNOUT_C;
                             setting = Turnout.CLOSED;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectC();
                         } else if (((layoutTurnout.getConnectB() != null) && (currLayoutBlock == ((TrackSegment) layoutTurnout.getConnectB()).getLayoutBlock()))
                                 && ((layoutTurnout.getConnectC() != null) && (currLayoutBlock != ((TrackSegment) layoutTurnout.getConnectC()).getLayoutBlock()))) {
                             // continuing in block on diverging track
-                            prevConnectType = LayoutEditor.HitPointType.TURNOUT_B;
+                            prevConnectType = HitPointType.TURNOUT_B;
                             trackSegment = (TrackSegment) layoutTurnout.getConnectB();
                         } else { // both connecting track segments continue in current block, must search further
                             // check if continuing track leads to the next block
                             if ((layoutTurnout.getConnectC() != null) && trackSegmentLeadsTo((TrackSegment) layoutTurnout.getConnectC(), layoutTurnout)) {
-                                prevConnectType = LayoutEditor.HitPointType.TURNOUT_C;
+                                prevConnectType = HitPointType.TURNOUT_C;
                                 setting = Turnout.CLOSED;
                                 trackSegment = (TrackSegment) layoutTurnout.getConnectC();
                             } // check if diverging track leads to the next block
                             else if ((layoutTurnout.getConnectB() != null) && trackSegmentLeadsTo((TrackSegment) layoutTurnout.getConnectB(), layoutTurnout)) {
-                                prevConnectType = LayoutEditor.HitPointType.TURNOUT_B;
+                                prevConnectType = HitPointType.TURNOUT_B;
                                 trackSegment = (TrackSegment) layoutTurnout.getConnectB();
                             } else {
                                 if (!suppress) {
@@ -2342,12 +2342,12 @@ public class ConnectivityUtil {
                         }
                     } else if (tType == LayoutTurnout.TurnoutType.RH_XOVER) {
                         // entering at through track of a right-handed crossover, must exit at throat
-                        prevConnectType = LayoutEditor.HitPointType.TURNOUT_C;
+                        prevConnectType = HitPointType.TURNOUT_C;
                         trackSegment = (TrackSegment) layoutTurnout.getConnectC();
                         setting = Turnout.CLOSED;
                     } else {
                         // entering at diverging track of a right-handed crossover, must exit at throat
-                        prevConnectType = LayoutEditor.HitPointType.TURNOUT_A;
+                        prevConnectType = HitPointType.TURNOUT_A;
                         trackSegment = (TrackSegment) layoutTurnout.getConnectA();
                     }
                     break;
@@ -2401,7 +2401,7 @@ public class ConnectivityUtil {
         List<TrackSegment> postTrackSegments = new ArrayList<>();
         List<LayoutTrack> postLayoutTracks = new ArrayList<>();
 
-        LayoutEditor.HitPointType conType;
+        HitPointType conType;
         LayoutTrack conLayoutTrack;
 
         // follow track to all exit points outside this block
@@ -2444,7 +2444,7 @@ public class ConnectivityUtil {
 
                 // follow track according to next destination type
                 // this is a positionable point
-                if (conType == LayoutEditor.HitPointType.POS_POINT) {
+                if (conType == HitPointType.POS_POINT) {
                     // reached anchor point or end bumper
                     if (((PositionablePoint) conLayoutTrack).getType() == PositionablePoint.END_BUMPER) {
                         // end of line without reaching 'nextLayoutBlock'
@@ -2462,16 +2462,16 @@ public class ConnectivityUtil {
                         }
                         curLayoutTrack = conLayoutTrack;
                     }
-                } else if (LayoutEditor.HitPointType.isLevelXingHitType(conType)) {
+                } else if (HitPointType.isLevelXingHitType(conType)) {
                     // reached a level crossing
-                    if ((conType == LayoutEditor.HitPointType.LEVEL_XING_A) || (conType == LayoutEditor.HitPointType.LEVEL_XING_C)) {
+                    if ((conType == HitPointType.LEVEL_XING_A) || (conType == HitPointType.LEVEL_XING_C)) {
                         if (((LevelXing) conLayoutTrack).getLayoutBlockAC() != currLayoutBlock) {
                             if (((LevelXing) conLayoutTrack).getLayoutBlockAC() == nextLayoutBlock) {
                                 return true;
                             } else {
                                 curTrackSegment = null;
                             }
-                        } else if (conType == LayoutEditor.HitPointType.LEVEL_XING_A) {
+                        } else if (conType == HitPointType.LEVEL_XING_A) {
                             curTrackSegment = (TrackSegment) ((LevelXing) conLayoutTrack).getConnectC();
                         } else {
                             curTrackSegment = (TrackSegment) ((LevelXing) conLayoutTrack).getConnectA();
@@ -2483,14 +2483,14 @@ public class ConnectivityUtil {
                             } else {
                                 curTrackSegment = null;
                             }
-                        } else if (conType == LayoutEditor.HitPointType.LEVEL_XING_B) {
+                        } else if (conType == HitPointType.LEVEL_XING_B) {
                             curTrackSegment = (TrackSegment) ((LevelXing) conLayoutTrack).getConnectD();
                         } else {
                             curTrackSegment = (TrackSegment) ((LevelXing) conLayoutTrack).getConnectB();
                         }
                     }
                     curLayoutTrack = conLayoutTrack;
-                } else if (LayoutEditor.HitPointType.isTurnoutHitType(conType)) {
+                } else if (HitPointType.isTurnoutHitType(conType)) {
                     // reached a turnout
                     LayoutTurnout lt = (LayoutTurnout) conLayoutTrack;
                     LayoutTurnout.TurnoutType tType = lt.getTurnoutType();
@@ -2603,7 +2603,7 @@ public class ConnectivityUtil {
                                 curTrackSegment = null;   //(nope) dead end
                             }
                         } else {
-                            if (conType == LayoutEditor.HitPointType.TURNOUT_A) {
+                            if (conType == HitPointType.TURNOUT_A) {
                                 // if the connect B or C are in the next block...
                                 if ((((TrackSegment) lt.getConnectB()).getLayoutBlock() == nextLayoutBlock)
                                         || (((TrackSegment) lt.getConnectC()).getLayoutBlock() == nextLayoutBlock)) {
@@ -2626,7 +2626,7 @@ public class ConnectivityUtil {
                             curLayoutTrack = conLayoutTrack;
                         }
                     }   // if RH, LH or WYE _TURNOUT
-                } else if (LayoutEditor.HitPointType.isSlipHitType(conType)) {
+                } else if (HitPointType.isSlipHitType(conType)) {
                     LayoutSlip ls = (LayoutSlip) conLayoutTrack;
                     LayoutTurnout.TurnoutType tType = ls.getTurnoutType();
 
@@ -2779,23 +2779,23 @@ public class ConnectivityUtil {
         return turnoutConnectivity;
     }
 
-    private void setupOpposingTrackSegment(@Nonnull LevelXing x, LayoutEditor.HitPointType cType) {
+    private void setupOpposingTrackSegment(@Nonnull LevelXing x, HitPointType cType) {
         switch (cType) {
             case LEVEL_XING_A:
                 trackSegment = (TrackSegment) x.getConnectC();
-                prevConnectType = LayoutEditor.HitPointType.LEVEL_XING_C;
+                prevConnectType = HitPointType.LEVEL_XING_C;
                 break;
             case LEVEL_XING_B:
                 trackSegment = (TrackSegment) x.getConnectD();
-                prevConnectType = LayoutEditor.HitPointType.LEVEL_XING_D;
+                prevConnectType = HitPointType.LEVEL_XING_D;
                 break;
             case LEVEL_XING_C:
                 trackSegment = (TrackSegment) x.getConnectA();
-                prevConnectType = LayoutEditor.HitPointType.LEVEL_XING_A;
+                prevConnectType = HitPointType.LEVEL_XING_A;
                 break;
             case LEVEL_XING_D:
                 trackSegment = (TrackSegment) x.getConnectB();
-                prevConnectType = LayoutEditor.HitPointType.LEVEL_XING_B;
+                prevConnectType = HitPointType.LEVEL_XING_B;
                 break;
             default:
                 break;
