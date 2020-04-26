@@ -11,6 +11,7 @@ import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
@@ -188,9 +189,10 @@ public class DefaultCabSignalIT {
     public void tearDown() {
         cs.dispose(); // verify no exceptions
         cs = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultCabSignalTest.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultCabSignalIT.class);
 
 }

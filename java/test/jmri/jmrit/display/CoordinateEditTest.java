@@ -1,6 +1,9 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -37,6 +40,7 @@ public class CoordinateEditTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 

@@ -2,6 +2,7 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 
 /**
@@ -12,8 +13,8 @@ import javax.swing.AbstractAction;
  */
 public class ChangeDepartureTimesAction extends AbstractAction {
 
-    public ChangeDepartureTimesAction(String s) {
-        super(s);
+    public ChangeDepartureTimesAction() {
+        super(Bundle.getMessage("TitleChangeDepartureTime"));
     }
 
     ChangeDepartureTimesFrame f = null;

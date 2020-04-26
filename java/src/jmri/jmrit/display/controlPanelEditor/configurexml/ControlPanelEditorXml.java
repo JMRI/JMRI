@@ -88,7 +88,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
                         panel.addContent(e);
                     }
                 } catch (RuntimeException e) {
-                    log.error("Error storing panel element: {}", e.getMessage(), e);
+                    log.error("Error storing panel element", e);
                 }
             }
         }
@@ -282,12 +282,12 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             } catch (ClassNotFoundException | InstantiationException
                     | jmri.configurexml.JmriConfigureXmlException | IllegalAccessException
                     | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
-                log.error("Exception while loading {}: {}", panelItem.getName(), e.getMessage(), e);
+                log.error("Exception while loading {}", panelItem.getName(), e);
                 result = false;
             }
         }
         if (icons != null) {
-            HashMap<String, NamedIcon> portalIconMap = new HashMap<String, NamedIcon>();
+            HashMap<String, NamedIcon> portalIconMap = new HashMap<>();
             portalIconMap.put(PortalIcon.VISIBLE, loadIcon("visible", icons, panel));
             portalIconMap.put(PortalIcon.PATH, loadIcon("path_edit", icons, panel));
             portalIconMap.put(PortalIcon.HIDDEN, loadIcon("hidden", icons, panel));

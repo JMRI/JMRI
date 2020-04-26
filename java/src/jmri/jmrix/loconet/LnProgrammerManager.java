@@ -61,7 +61,7 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
     /**
      * Programming for LocoNet System Variables using version 2 of the protocol.
      */
-    static final ProgrammingMode LOCONETSV2MODE    = new ProgrammingMode("LOCONETSV2MODE", Bundle.getMessage("LOCONETSV2MODE"));
+    public static final ProgrammingMode LOCONETSV2MODE    = new ProgrammingMode("LOCONETSV2MODE", Bundle.getMessage("LOCONETSV2MODE"));
 
     /**
      * Programming via LocoNet messages for Digitrax DS*, PM*, BDL*, SE* boards

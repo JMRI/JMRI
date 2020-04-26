@@ -96,9 +96,8 @@ public class MultiSensorIconXml extends PositionableLabelXml {
 
         // get the icon pairs & load
         List<Element> items = element.getChildren();
-        for (int i = 0; i < items.size(); i++) {
+        for (Element item : items) {
             // get the class, hence the adapter object to do loading
-            Element item = items.get(i);
             if (item.getAttribute("sensor") != null) {
                 String sensor = item.getAttribute("sensor").getValue();
                 if (item.getAttribute("url") != null) {

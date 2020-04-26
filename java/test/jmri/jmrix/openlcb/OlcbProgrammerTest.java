@@ -34,8 +34,6 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
                 programmer.getMode());        
     }
-    
-    @Test
 
     // The minimal setup for log4J
     @Override

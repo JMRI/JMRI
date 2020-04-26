@@ -1,5 +1,9 @@
 package jmri.configurexml;
 
+import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.Map;
+import org.jdom2.Attribute;
 import org.jdom2.Element;
 
 /**
@@ -33,13 +37,13 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
 
     /** {@inheritDoc} */
     @Override
-    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException { // may not need exception
+    public boolean load(@Nonnull Element shared, Element perNode) throws JmriConfigureXmlException { // may not need exception
         return this.load(shared);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void load(Element shared, Element perNode, Object o) throws JmriConfigureXmlException { // may not need exception
+    public void load(@Nonnull Element shared, Element perNode, Object o) throws JmriConfigureXmlException { // may not need exception
         this.load(shared, o);
     }
 
@@ -68,7 +72,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
 
     /** {@inheritDoc} */
     @Override
-    public Element store(Object o, boolean shared) {
+    public Element store(@Nonnull Object o, boolean shared) {
         if (shared) {
             return this.store(o);
         }
@@ -87,4 +91,168 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         return this.errorHandler;
     }
 
+
+    public static abstract class EnumIO <T extends Enum<T>> { // public to be usable by adapters in other configXML packages
+
+        /**
+         * Convert an enum value to a String for storage in an XML file.
+         */
+        @Nonnull
+        abstract public String outputFromEnum(@Nonnull T e);
+        
+        /**
+         * Convert a String value from an XML file to an enum value
+         */
+        @Nonnull
+        abstract public T inputFromString(@Nonnull String s);
+
+        /**
+         * Convert a JDOM Attribute from an XML file to an enum value
+         */
+        @Nonnull
+        public T inputFromAttribute(@Nonnull Attribute a) {
+            return inputFromString(a.getValue());
+        }
+    }
+    
+    /**
+     * Support for Enum I/O to XML using the enum's ordinal numbers in String form.<p>
+     * String or mapped I/LO should he preferred.<p>
+     * This converts to and from ordinal numbers
+     * so the order of definitions in the enum has to 
+     * match up with the (former) constant values.
+     */
+    public static class EnumIoOrdinals <T extends Enum<T>> extends EnumIO<T> { // public to be usable by adapters in other configXML packages
+    
+        public EnumIoOrdinals(@Nonnull Class<T> clazz) {
+            this.clazz = clazz;
+        }
+        Class<T> clazz;
+
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull
+        public String outputFromEnum(@Nonnull T e) {
+            int ordinal = e.ordinal();
+            return ""+ordinal;
+        }
+        
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull
+        public T inputFromString(@Nonnull String s) {
+            int content = Integer.parseInt(s);
+            return clazz.getEnumConstants()[content];
+        }
+
+    }
+
+    /**
+     * Support for Enum I/O to XML using the enum's element names.
+     */
+    public static class EnumIoNames <T extends Enum<T>> extends EnumIO<T> { // public to be usable by adapters in other configXML packages
+    
+        /**
+         * This constructor converts to and from strings
+         * using the enum element names.
+         */
+        public EnumIoNames(@Nonnull Class<T> clazz) {
+            this.clazz = clazz;
+            
+            mapToEnum = new HashMap<String, T>();
+            for (T t : clazz.getEnumConstants() ) {
+                mapToEnum.put(t.toString(), t);
+            }
+            
+        }
+
+        Class<T> clazz;
+        final Map<String, T> mapToEnum;
+        
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull
+        public String outputFromEnum(@Nonnull T e) {
+                String retval = e.toString();
+                log.trace("from {} make String {}} for {}", e, retval, clazz);
+                return retval;
+        }
+        
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull
+        public T inputFromString(@Nonnull String s) {
+                T retval = mapToEnum.get(s);
+                log.trace("from String {} get {}} for {}", s, retval, clazz);
+                return retval;
+        }
+    }
+
+    /**
+     * Support for Enum I/O to XML using explicit mapping.<p>
+     * This converts to and from ordinal numbers
+     * so the order of definitions in the enum has to 
+     * match up with the (former) constant values.
+     */
+    public static class EnumIoMapped <T extends Enum<T>> extends EnumIO<T> { // public to be usable by adapters in other configXML packages
+    
+        /**
+         * @param mapToEnum Substitutes an explicit mapping
+         * for mapping from Strings to enums; this could allow e.g.
+         * accepting both name and number versions. Multiple entries
+         * are OK: this can map both "1" and "Foo" to Foo for past-schema support.
+         * @param mapFromEnum Substitutes an explicit mapping
+         * enum entries to Strings; this determines what will
+         * be written out. 
+         */
+        public EnumIoMapped(@Nonnull Class<T> clazz, @Nonnull Map<String, T> mapToEnum, @Nonnull Map<T, String> mapFromEnum) {
+            this.clazz = clazz;
+            
+            this.mapToEnum = mapToEnum;
+            
+            this.mapFromEnum = mapFromEnum;
+        }
+
+        /**
+         * @param mapToEnum Substitutes an explicit mapping
+         * for mapping from Strings to enums; this could allow e.g.
+         * accepting both name and number versions. Multiple entries
+         * are OK: this can map both "1" and "Foo" to Foo for past-schema support.
+         * The mapping from enums to Strings uses the enum names.
+         */
+        public EnumIoMapped(@Nonnull Class<T> clazz, @Nonnull Map<String, T> mapToEnum) {
+            this.clazz = clazz;
+            
+            this.mapToEnum = mapToEnum;
+            
+            this.mapFromEnum = new HashMap<T, String>();
+            for (T t : clazz.getEnumConstants() ) {
+                this.mapFromEnum.put(t, t.toString());
+            }
+        }
+
+        Class<T> clazz;
+        final Map<T, String> mapFromEnum;
+        final Map<String, T> mapToEnum;
+        
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull
+        public String outputFromEnum(@Nonnull T e) {
+            String retval = mapFromEnum.get(e);
+            log.trace("from {} make String {}} for {}", e, retval, clazz);
+            return retval;
+        }
+        
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull
+        public T inputFromString(@Nonnull String s) {
+            T retval = mapToEnum.get(s);
+            log.trace("from String {} get {}} for {}", s, retval, clazz);
+            return retval;
+        }
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractXmlAdapter.class);
 }

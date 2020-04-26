@@ -122,14 +122,12 @@ public class LinkingLabelXml extends PositionableLabelXml {
             if (log.isDebugEnabled()) {
                 java.util.List<Attribute> attrs = element.getAttributes();
                 log.debug("\tElement Has " + attrs.size() + " Attributes:");
-                for (int i = 0; i < attrs.size(); i++) {
-                    Attribute a = attrs.get(i);
+                for (Attribute a : attrs) {
                     log.debug("\t\t" + a.getName() + " = " + a.getValue());
                 }
                 java.util.List<Element> kids = element.getChildren();
                 log.debug("\tElementHas " + kids.size() + " children:");
-                for (int i = 0; i < kids.size(); i++) {
-                    Element e = kids.get(i);
+                for (Element e : kids) {
                     log.debug("\t\t" + e.getName() + " = \"" + e.getValue() + "\"");
                 }
             }

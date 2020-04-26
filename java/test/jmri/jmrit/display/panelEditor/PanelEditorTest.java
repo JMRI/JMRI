@@ -1,6 +1,9 @@
 package jmri.jmrit.display.panelEditor;
 
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 
 import jmri.jmrit.display.AbstractEditorTestBase;
 import jmri.util.JUnitUtil;
@@ -49,6 +52,7 @@ public class PanelEditorTest extends AbstractEditorTestBase<PanelEditor> {
             JUnitUtil.dispose(e);
             e = null;
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

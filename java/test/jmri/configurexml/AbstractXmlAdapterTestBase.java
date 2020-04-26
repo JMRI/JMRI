@@ -3,7 +3,7 @@ package jmri.configurexml;
 import org.junit.*;
 
 /**
- * JUnit tests for the AbstractXmlAdapter class 
+ * Base class for tests of classes inheriting and implementing AbstractXmlAdapter
  *
  * @author Paul Bender Copyright (C) 2018 
  */

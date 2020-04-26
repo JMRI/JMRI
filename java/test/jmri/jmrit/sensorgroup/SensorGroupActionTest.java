@@ -8,6 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
@@ -47,6 +50,7 @@ public class SensorGroupActionTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

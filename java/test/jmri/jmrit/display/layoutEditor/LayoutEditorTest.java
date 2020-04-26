@@ -20,6 +20,7 @@ import org.netbeans.jemmy.operators.JMenuOperator;
  *
  * @author Paul Bender Copyright (C) 2016
  * @author George Warner Copyright (C) 2019
+ * @author Bob Jacobsen Copyright (C) 2020
  */
 public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
@@ -52,6 +53,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
             jfo.closeFrameWithConfirmations();
             e = null;
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
@@ -70,6 +72,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assert.assertNotNull("exists", e);
         JUnitUtil.dispose(e);
     }
+
 
     @Test
     @Ignore("Test fails to find and close dialog on Jenkins")
@@ -111,7 +114,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
             return !(misc1.isAlive());
         }, "misc1 finished");
         JUnitUtil.dispose(e);
-        e=null; // prevent closing the window using the operator in shutDown.
+        e = null; // prevent closing the window using the operator in shutDown.
     }
 
     @Test
@@ -136,7 +139,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Failing to set second zoom") 
+    @Ignore("Failing to set second zoom")
     public void testGetSetZoom() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((m) -> {
@@ -391,22 +394,22 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
         LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock("ILB999", "Test Block");
         Assert.assertNotNull("layoutBlock created", layoutBlock);
-        
+
         Assert.assertEquals("BlockTrackColor default", e.getDefaultTrackColorColor(), layoutBlock.getBlockTrackColor());
         layoutBlock.setBlockTrackColor(Color.pink);
         Assert.assertEquals("BlockTrackColor set to pink", Color.pink, layoutBlock.getBlockTrackColor());
-        
+
         Assert.assertEquals("BlockOccupiedColor default", e.getDefaultOccupiedTrackColorColor(), layoutBlock.getBlockOccupiedColor());
         layoutBlock.setBlockOccupiedColor(Color.pink);
         Assert.assertEquals("BlockOccupiedColor set to pink", Color.pink, layoutBlock.getBlockOccupiedColor());
-        
+
         Assert.assertEquals("BlockExtraColor default", e.getDefaultAlternativeTrackColorColor(), layoutBlock.getBlockExtraColor());
         layoutBlock.setBlockExtraColor(Color.pink);
         Assert.assertEquals("BlockExtraColor set to pink", Color.pink, layoutBlock.getBlockExtraColor());
 
         int changed = e.setAllTracksToDefaultColors();
         Assert.assertEquals("setAllTracksToDefaultColors changed one block", 1, changed);
-        
+
         Assert.assertEquals("BlockTrackColor back to default", e.getDefaultTrackColorColor(), layoutBlock.getBlockTrackColor());
         Assert.assertEquals("BlockOccupiedColor back to default", e.getDefaultOccupiedTrackColorColor(), layoutBlock.getBlockOccupiedColor());
         Assert.assertEquals("BlockExtraColor back to default", e.getDefaultAlternativeTrackColorColor(), layoutBlock.getBlockExtraColor());

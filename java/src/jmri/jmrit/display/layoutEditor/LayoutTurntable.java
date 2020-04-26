@@ -59,7 +59,7 @@ public class LayoutTurntable extends LayoutTrack {
     // persistent instance variables (saved between sessions)
     private boolean turnoutControlled = false;
     private double radius = 25.0;
-    private ArrayList<RayTrack> rayList = new ArrayList<>(); // list of Ray Track objects.
+    private final ArrayList<RayTrack> rayList = new ArrayList<>(); // list of Ray Track objects.
     private int lastKnownIndex = -1;
 
     /**
@@ -161,7 +161,7 @@ public class LayoutTurntable extends LayoutTrack {
      * Get the connection for the ray with this index.
      *
      * @param index the index
-     * @return the connection for the ray with this index
+     * @return the connection for the ray with this value of getConnectionIndex
      */
     public TrackSegment getRayConnectIndexed(int index) {
         TrackSegment result = null;
@@ -178,7 +178,7 @@ public class LayoutTurntable extends LayoutTrack {
      * Get the connection for the ray at the index in the rayList.
      *
      * @param i the index in the rayList
-     * @return the connection for the ray at that index in the rayList
+     * @return the connection for the ray at that index in the rayList or null
      */
     public TrackSegment getRayConnectOrdered(int i) {
         TrackSegment result = null;
@@ -460,13 +460,13 @@ public class LayoutTurntable extends LayoutTrack {
      * @return the coordinates
      */
     @Override
-    public Point2D getCoordsForConnectionType(int connectionType) {
+    public Point2D getCoordsForConnectionType(HitPointType connectionType) {
         Point2D result = getCoordsCenter();
-        if (TURNTABLE_CENTER == connectionType) {
+        if (HitPointType.TURNTABLE_CENTER == connectionType) {
             // nothing to see here, move along...
             // (results are already correct)
-        } else if (connectionType >= TURNTABLE_RAY_OFFSET) {
-            result = getRayCoordsIndexed(connectionType - TURNTABLE_RAY_OFFSET);
+        } else if (HitPointType.isTurntableRayHitType(connectionType)) {
+            result = getRayCoordsIndexed(connectionType.turntableTrackIndex());
         } else {
             log.error("{}.getCoordsForConnectionType({}); Invalid connection type",
                     getName(), connectionType); // NOI18N
@@ -478,10 +478,10 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(HitPointType connectionType) throws jmri.JmriException {
         LayoutTrack result = null;
-        if (connectionType >= TURNTABLE_RAY_OFFSET) {
-            result = getRayConnectIndexed(connectionType - TURNTABLE_RAY_OFFSET);
+        if (HitPointType.isTurntableRayHitType(connectionType)) {
+            result = getRayConnectIndexed(connectionType.turntableTrackIndex());
         } else {
             String errString = MessageFormat.format("{0}.getCoordsForConnectionType({1}); Invalid connection type",
                     getName(), connectionType); // NOI18N
@@ -495,16 +495,16 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
-        if ((type != TRACK) && (type != NONE)) {
+    public void setConnection(HitPointType connectionType, LayoutTrack o, HitPointType type) throws jmri.JmriException {
+        if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
             log.error(errString); // NOI18N
             throw new jmri.JmriException(errString);
         }
-        if (connectionType >= TURNTABLE_RAY_OFFSET) {
+        if (HitPointType.isTurntableRayHitType(connectionType)) {
             if ((o == null) || (o instanceof TrackSegment)) {
-                setRayConnect((TrackSegment) o, connectionType - TURNTABLE_RAY_OFFSET);
+                setRayConnect((TrackSegment) o, connectionType.turntableTrackIndex());
             } else {
                 String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid object: {4}",
                         getName(), connectionType, o.getName(),
@@ -614,8 +614,8 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        int result = NONE;  // assume point not on connection
+    protected HitPointType findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
+        HitPointType result = HitPointType.NONE;  // assume point not on connection
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
@@ -631,7 +631,7 @@ public class LayoutTurntable extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = TURNTABLE_CENTER;
+                result = HitPointType.TURNTABLE_CENTER;
             }
         }
 
@@ -642,13 +642,13 @@ public class LayoutTurntable extends LayoutTrack {
                 if (distance < minDistance) {
                     minDistance = distance;
                     minPoint = p;
-                    result = TURNTABLE_RAY_OFFSET + getRayIndex(k);
+                    result = HitPointType.turntableTrackIndexedValue(k);
                 }
             }
         }
         if ((useRectangles && !r.contains(minPoint))
                 || (!useRectangles && (minDistance > circleRadius))) {
-            result = NONE;
+            result = HitPointType.NONE;
         }
         return result;
     }
@@ -1210,9 +1210,12 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void highlightUnconnected(Graphics2D g2, int specificType) {
+    protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
         for (int j = 0; j < getNumberRays(); j++) {
-            if ((specificType == NONE) || (specificType == (TURNTABLE_RAY_OFFSET + j))) {
+            if (  (specificType == HitPointType.NONE)
+                    || (specificType == (HitPointType.turntableTrackIndexedValue(j)))
+                ) 
+            {
                 if (getRayConnectOrdered(j) == null) {
                     Point2D pt = getRayCoordsOrdered(j);
                     g2.fill(trackControlCircleAt(pt));
@@ -1266,7 +1269,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /*
-     * {@inheritDoc}
+    * {@inheritDoc}
      */
     @Override
     protected void reCheckBlockBoundary() {
@@ -1274,7 +1277,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /*
-     * {@inheritDoc}
+    * {@inheritDoc}
      */
     @Override
     protected List<LayoutConnectivity> getLayoutConnectivity() {
@@ -1286,12 +1289,12 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public List<Integer> checkForFreeConnections() {
-        List<Integer> result = new ArrayList<>();
+    public List<HitPointType> checkForFreeConnections() {
+        List<HitPointType> result = new ArrayList<>();
 
         for (int k = 0; k < getNumberRays(); k++) {
             if (getRayConnectOrdered(k) == null) {
-                result.add(Integer.valueOf(TURNTABLE_RAY_OFFSET + getRayIndex(k)));
+                result.add(HitPointType.turntableTrackIndexedValue(k));
             }
         }
         return result;
@@ -1315,16 +1318,16 @@ public class LayoutTurntable extends LayoutTrack {
     public void checkForNonContiguousBlocks(
             @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetsMap) {
         /*
-         * For each (non-null) blocks of this track do:
-         * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
-         * #2) If this track is already in the TrackNameSet for this block
-         *     then return (done!)
-         * #3) else add a new set (with this block/track) to
-         *     blockNamesToTrackNameSetMap and check all the connections in this
-         *     block (by calling the 2nd method below)
-         * <p>
-         *     Basically, we're maintaining contiguous track sets for each block found
-         *     (in blockNamesToTrackNameSetMap)
+        * For each (non-null) blocks of this track do:
+        * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
+        * #2) If this track is already in the TrackNameSet for this block
+        *     then return (done!)
+        * #3) else add a new set (with this block/track) to
+        *     blockNamesToTrackNameSetMap and check all the connections in this
+        *     block (by calling the 2nd method below)
+        * <p>
+        *     Basically, we're maintaining contiguous track sets for each block found
+        *     (in blockNamesToTrackNameSetMap)
          */
 
         // We're using a map here because it is convient to

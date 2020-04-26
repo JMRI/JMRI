@@ -220,7 +220,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
         pDestinationOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Destinations")));
         pDestinationOption.add(destinationOptionButton);
-        destinationOptionButton.addActionListener(new TrackDestinationEditAction(this));
+        destinationOptionButton.addActionListener(new TrackDestinationEditAction(_track));
 
         panelRoadAndLoadStatus.add(pRoadOption);
         panelRoadAndLoadStatus.add(pLoadOption);

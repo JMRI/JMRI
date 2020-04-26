@@ -1,8 +1,9 @@
 package jmri.jmrit.operations.setup;
 
-import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
 import org.junit.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
 
 /**
  *
@@ -12,7 +13,7 @@ public class ManageBackupsActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        ManageBackupsAction t = new ManageBackupsAction("Test");
+        ManageBackupsAction t = new ManageBackupsAction();
         Assert.assertNotNull("exists",t);
     }
 

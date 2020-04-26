@@ -9,6 +9,9 @@ import org.junit.Test;
 import jmri.util.JUnitUtil;
 
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 
 /**
  *
@@ -34,6 +37,7 @@ public class LayoutEditorComponentTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

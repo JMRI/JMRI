@@ -184,13 +184,15 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 LayoutBlock lBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(blk);
                 //If the block was previously active or inactive then we will
                 //reset the useExtraColor, but not if it was previously unknown or inconsistent.
+                if (lBlock==null){
+                    log.error("Unable to get layout block from block {}",blk);
+                    return;
+                }
                 lBlock.setUseExtraColor(false);
                 blk.removePropertyChangeListener(propertyBlockListener); //was this
                 removeBlockFromRoute(lBlock);
             } else {
-                if (log.isDebugEnabled()) {
-                    log.debug("state was " + now + " and did not go through reset");  // NOI18N
-                }
+                log.debug("state was {} and did not go through reset",now);  // NOI18N
             }
         }
     }
@@ -424,7 +426,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                                     }
                                 }
                             };
-                            Thread thr = new Thread(r, "Entry Exit Route: Turnout Setting");  // NOI18N
+                            Thread thr = jmri.util.ThreadingUtil.newThread(r, "Entry Exit Route: Turnout Setting");  // NOI18N
                             thr.start();
                             try {
                                 thr.join();
@@ -569,7 +571,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 //src.setMenuEnabled(true);
             }
         };
-        Thread thrMain = new Thread(setRouteRun, "Entry Exit Set Route");  // NOI18N
+        Thread thrMain = jmri.util.ThreadingUtil.newThread(setRouteRun, "Entry Exit Set Route");  // NOI18N
         thrMain.start();
         try {
             thrMain.join();
@@ -620,7 +622,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 }
             }
         };
-        Thread thr = new Thread(r, "Entry Exit Route: Release Mast");  // NOI18N
+        Thread thr = jmri.util.ThreadingUtil.newThread(r, "Entry Exit Route: Release Mast");  // NOI18N
         thr.start();
     }
 
@@ -730,7 +732,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             }
         }
         MessageTimeOut mt = new MessageTimeOut();
-        threadAutoClearFrame = new Thread(mt, "NX Button Clear Message Timeout ");  // NOI18N
+        threadAutoClearFrame = jmri.util.ThreadingUtil.newThread(mt, "NX Button Clear Message Timeout ");  // NOI18N
         threadAutoClearFrame.start();
         cancelClearFrame.setAlwaysOnTop(true);
         src.getPoint().getPanel().getGlassPane().setVisible(true);

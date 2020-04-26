@@ -21,7 +21,7 @@ public class AutoSave {
     public void start() {
         synchronized (this) {
             if (Setup.isAutoSaveEnabled() && autoSave == null) {
-                autoSave = new Thread(() -> {
+                autoSave = jmri.util.ThreadingUtil.newThread(() -> {
                     saveFiles();
                 });
                 autoSave.setName("Operations Auto Save"); // NOI18N

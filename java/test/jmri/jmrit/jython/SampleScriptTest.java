@@ -3,6 +3,10 @@ package jmri.jmrit.jython;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
+import jmri.util.JUnitUtil;
 
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -63,26 +67,27 @@ public class SampleScriptTest {
     
     @Before
     public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         
         // it's not really understood why, but doing these inside of the 
         // sample Python script doesn't always work; it's as if that
         // is working with a different InstanceManager. So we 
         // include a comprehensive set here.
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initConfigureManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.util.JUnitUtil.initDebugPowerManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDebugPowerManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initDebugThrottleManager();
     }
         
     @After 
     public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetWindows(false,false);
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 
     @AfterClass

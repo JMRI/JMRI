@@ -17,8 +17,8 @@ import jmri.InstanceManager;
 import jmri.server.json.schema.JsonSchemaServiceCache;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.*;
 
 /**
  * Common methods for JMRI JSON Service HTTP provider tests.
@@ -35,6 +35,7 @@ public class JsonHttpServiceTestBase<I extends JsonHttpService> {
     /**
      * @throws Exception to allow overriding methods to throw any exception
      */
+    @Before
     @OverridingMethodsMustInvokeSuper
     public void setUp() throws Exception {
         JUnitUtil.setUp();
@@ -47,6 +48,7 @@ public class JsonHttpServiceTestBase<I extends JsonHttpService> {
     /**
      * @throws Exception to allow overriding methods to throw any exception
      */
+    @After
     @OverridingMethodsMustInvokeSuper
     public void tearDown() throws Exception {
         service = null;

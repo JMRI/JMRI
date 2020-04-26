@@ -407,7 +407,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 return;
             }
             // use a thread to allow table updates during build
-            build = new Thread(new Runnable() {
+            build = jmri.util.ThreadingUtil.newThread(new Runnable() {
                 @Override
                 public void run() {
                     train.build();

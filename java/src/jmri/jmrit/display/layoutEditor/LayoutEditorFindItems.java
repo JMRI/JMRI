@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LayoutEditorFindItems {
 
-    private LayoutEditor layoutEditor;
+    private final LayoutEditor layoutEditor;
 
     public LayoutEditorFindItems(LayoutEditor editor) {
         layoutEditor = editor;
@@ -520,39 +520,38 @@ public class LayoutEditorFindItems {
     // a "type-less" system by replacing this routine with a type-less one:
     // (BTW: AFAICT this routine is only called by the setObjects routine in TrackSegment.java)
     //
-
     /*
-     * @deprecated since 4.7.1 use @link{findObjectByName()} instead.
+    * @deprecated since 4.7.1 use @link{findObjectByName()} instead.
      */
     @Deprecated
-    public LayoutTrack findObjectByTypeAndName(int type, String name) {
+    public LayoutTrack findObjectByTypeAndName(HitPointType type, String name) {
         if (name.isEmpty()) {
             return null;
         }
         switch (type) {
-            case LayoutTrack.NONE:
+            case NONE:
                 return null;
-            case LayoutTrack.POS_POINT:
+            case POS_POINT:
                 return findPositionablePointByName(name);
-            case LayoutTrack.TURNOUT_A:
-            case LayoutTrack.TURNOUT_B:
-            case LayoutTrack.TURNOUT_C:
-            case LayoutTrack.TURNOUT_D:
+            case TURNOUT_A:
+            case TURNOUT_B:
+            case TURNOUT_C:
+            case TURNOUT_D:
                 return findLayoutTurnoutByName(name);
-            case LayoutTrack.LEVEL_XING_A:
-            case LayoutTrack.LEVEL_XING_B:
-            case LayoutTrack.LEVEL_XING_C:
-            case LayoutTrack.LEVEL_XING_D:
+            case LEVEL_XING_A:
+            case LEVEL_XING_B:
+            case LEVEL_XING_C:
+            case LEVEL_XING_D:
                 return findLevelXingByName(name);
-            case LayoutTrack.SLIP_A:
-            case LayoutTrack.SLIP_B:
-            case LayoutTrack.SLIP_C:
-            case LayoutTrack.SLIP_D:
+            case SLIP_A:
+            case SLIP_B:
+            case SLIP_C:
+            case SLIP_D:
                 return findLayoutSlipByName(name);
-            case LayoutTrack.TRACK:
+            case TRACK:
                 return findTrackSegmentByName(name);
             default:
-                if (type >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
+                if (HitPointType.isTurntableRayHitType(type)) {
                     return findLayoutTurntableByName(name);
                 }
         }
@@ -623,7 +622,7 @@ public class LayoutEditorFindItems {
     /**
      * Determine the first unused object name...
      *
-     * @param inPrefix     ...with this prefix...
+     * @param inPrefix ...with this prefix...
      * @return the first unused object name
      */
     public String uniqueName(String inPrefix) {

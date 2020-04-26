@@ -204,12 +204,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             ButtonGroup clickButtonGroup = new ButtonGroup();
             JRadioButtonMenuItem r;
             r = new JRadioButtonMenuItem(Bundle.getMessage("ChangeAspect"));
-            r.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setClickMode(0);
-                }
-            });
+            r.addActionListener(e -> setClickMode(0));
             clickButtonGroup.add(r);
             if (clickMode == 0) {
                 r.setSelected(true);
@@ -219,12 +214,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             clickMenu.add(r);
 
             r = new JRadioButtonMenuItem(Bundle.getMessage("AlternateLit"));
-            r.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setClickMode(1);
-                }
-            });
+            r.addActionListener(e -> setClickMode(1));
             clickButtonGroup.add(r);
             if (clickMode == 1) {
                 r.setSelected(true);
@@ -233,12 +223,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             }
             clickMenu.add(r);
             r = new JRadioButtonMenuItem(Bundle.getMessage("AlternateHeld"));
-            r.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setClickMode(2);
-                }
-            });
+            r.addActionListener(e -> setClickMode(2));
             clickButtonGroup.add(r);
             if (clickMode == 2) {
                 r.setSelected(true);
@@ -253,12 +238,9 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             litButtonGroup = new ButtonGroup();
             r = new JRadioButtonMenuItem(Bundle.getMessage("ShowAppearance"));
             r.setIconTextGap(10);
-            r.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setLitMode(false);
-                    displayState(mastState());
-                }
+            r.addActionListener(e -> {
+                setLitMode(false);
+                displayState(mastState());
             });
             litButtonGroup.add(r);
             if (!litMode) {
@@ -269,12 +251,9 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             litMenu.add(r);
             r = new JRadioButtonMenuItem(Bundle.getMessage("ShowDarkIcon"));
             r.setIconTextGap(10);
-            r.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setLitMode(true);
-                    displayState(mastState());
-                }
+            r.addActionListener(e -> {
+                setLitMode(true);
+                displayState(mastState());
             });
             litButtonGroup.add(r);
             if (litMode) {
@@ -377,12 +356,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     private void setImageTypeList(ButtonGroup iconTypeGroup, JMenu iconSetMenu, final String item) {
         JRadioButtonMenuItem im;
         im = new JRadioButtonMenuItem(item);
-        im.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                useIconSet(item);
-            }
-        });
+        im.addActionListener(e -> useIconSet(item));
         iconTypeGroup.add(im);
         if (useIconSet.equals(item)) {
             im.setSelected(true);
@@ -417,12 +391,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                 Bundle.getMessage("BeanNameSignalMast")));
         _itemPanel = new SignalMastItemPanel(_paletteFrame, "SignalMast", getFamily(),
                 PickListModel.signalMastPickModelInstance());
-        ActionListener updateAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                updateItem();
-            }
-        };
+        ActionListener updateAction = a -> updateItem();
         // _iconMap keys with local names - Let SignalHeadItemPanel figure this out
         _itemPanel.init(updateAction, _iconMap);
         _itemPanel.setSelection(getSignalMast());

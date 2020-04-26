@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static java.awt.event.KeyEvent.KEY_PRESSED;
 import static jmri.jmrit.display.layoutEditor.LayoutEditor.setupComboBox;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -10,10 +11,14 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import jmri.*;
 import jmri.swing.NamedBeanComboBox;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.*;
 
 /**
@@ -372,9 +377,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         blockIDComboBox.setToolTipText(Bundle.getMessage("BlockIDToolTip"));
 
         highlightBlockCheckBox.setToolTipText(Bundle.getMessage("HighlightSelectedBlockToolTip"));
-        highlightBlockCheckBox.addActionListener((ActionEvent event) -> {
-            layoutEditor.setHighlightSelectedBlock(highlightBlockCheckBox.isSelected());
-        });
+        highlightBlockCheckBox.addActionListener((ActionEvent event) -> layoutEditor.setHighlightSelectedBlock(highlightBlockCheckBox.isSelected()));
         highlightBlockCheckBox.setSelected(layoutEditor.getHighlightSelectedBlock());
 
         //change the block name
@@ -530,6 +533,89 @@ public class LayoutEditorToolBarPanel extends JPanel {
     protected void layoutComponents() {
         log.error("layoutComponents called in LayoutEditorToolBarPanel base class");
     }
+
+    final Map<JRadioButton, String> quickKeyMap = new LinkedHashMap<JRadioButton, String>() {
+        {   //NOTE: These are in the order that the space bar will select thru
+            put(turnoutRHButton, Bundle.getMessage("TurnoutRH_QuickKeys"));
+            put(turnoutLHButton, Bundle.getMessage("TurnoutLH_QuickKeys"));
+            put(turnoutWYEButton, Bundle.getMessage("TurnoutWYE_QuickKeys"));
+            put(doubleXoverButton, Bundle.getMessage("DoubleXover_QuickKeys"));
+            put(rhXoverButton, Bundle.getMessage("RHXover_QuickKeys"));
+            put(lhXoverButton, Bundle.getMessage("LHXover_QuickKeys"));
+            put(layoutSingleSlipButton, Bundle.getMessage("LayoutSingleSlip_QuickKeys"));
+            put(layoutDoubleSlipButton, Bundle.getMessage("LayoutDoubleSlip_QuickKeys"));
+            put(levelXingButton, Bundle.getMessage("LevelXing_QuickKeys"));
+            put(trackButton, Bundle.getMessage("TrackSegment_QuickKeys"));
+            put(endBumperButton, Bundle.getMessage("EndBumper_QuickKeys"));
+            put(anchorButton, Bundle.getMessage("Anchor_QuickKeys"));
+            put(edgeButton, Bundle.getMessage("Edge_QuickKeys"));
+            put(textLabelButton, Bundle.getMessage("TextLabel_QuickKeys"));
+            put(memoryButton, Bundle.getMessage("Memory_QuickKeys"));
+            put(blockContentsButton, Bundle.getMessage("BlockContents_QuickKeys"));
+            put(multiSensorButton, Bundle.getMessage("MultiSensor_QuickKeys"));
+            put(sensorButton, Bundle.getMessage("Sensor_QuickKeys"));
+            put(signalMastButton, Bundle.getMessage("SignalMast_QuickKeys"));
+            put(signalButton, Bundle.getMessage("Signal_QuickKeys"));
+            put(iconLabelButton, Bundle.getMessage("IconLabel_QuickKeys"));
+            put(shapeButton, Bundle.getMessage("Shape_QuickKeys"));
+        }
+    };
+
+    public void keyPressed(@Nonnull KeyEvent event) {
+        //log.info("keyPressed({})", event);
+        if (layoutEditor.isEditable()) {
+            if (!event.isMetaDown() && !event.isAltDown() && !event.isControlDown()) {
+                if (event.getID() == KEY_PRESSED) {
+                    char keyChar = event.getKeyChar();
+                    String keyString = String.valueOf(keyChar);
+                    //log.info("KeyEvent.getKeyChar() == {}", KeyEvent.getKeyText(keyChar));
+
+                    //find last radio button
+                    JRadioButton lastRadioButton = null;
+                    for (Map.Entry<JRadioButton, String> entry : quickKeyMap.entrySet()) {
+                        JRadioButton thisRadioButton = entry.getKey();
+                        if (thisRadioButton.isSelected()) {
+                            lastRadioButton = thisRadioButton;
+                            //log.info("lastRadioButton is {}", lastRadioButton.getText());
+                            break;
+                        }
+                    }
+
+                    JRadioButton firstRadioButton = null;   // the first one that matches
+                    JRadioButton nextRadioButton = null;    // the next one to select
+                    boolean foundLast = false;
+                    for (Map.Entry<JRadioButton, String> entry : quickKeyMap.entrySet()) {
+                        String quickKeys = entry.getValue();
+                        if (keyString.equals(" ") || StringUtils.containsAny(keyString, quickKeys)) {    // found keyString
+                            JRadioButton thisRadioButton = entry.getKey();
+                            //log.info("Matched keyString to {}", thisRadioButton.getText());
+                            if (foundLast) {
+                                //log.info("Found next!");
+                                nextRadioButton = thisRadioButton;
+                                break;
+                            } else if (lastRadioButton == thisRadioButton) {
+                                //log.info("Found last!");
+                                foundLast = true;
+                            } else if (firstRadioButton == null) {
+                                //log.info("Found first!");
+                                firstRadioButton = thisRadioButton;
+                            }
+                        }
+                    }
+                    //if we didn't find the next one...
+                    if (nextRadioButton == null) {
+                        //...then use the first one
+                        nextRadioButton = firstRadioButton;
+                    }
+                    //if we found one...
+                    if (nextRadioButton != null) {
+                        //...then select it
+                        nextRadioButton.setSelected(true);
+                    }
+                }   // if KEY_PRESSED event
+            }   // if no modifier keys pressed
+        }   // if is in edit mode
+    }   //keyPressed
 
     //initialize logging
     private transient final static Logger log = LoggerFactory.getLogger(LayoutEditorToolBarPanel.class);

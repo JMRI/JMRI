@@ -198,6 +198,7 @@ public class WhereUsedFrameTest {
 
     @After
     public  void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
