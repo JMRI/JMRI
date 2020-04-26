@@ -39,9 +39,10 @@
  * defines occupancy for the LayoutBlock. Each LayoutBlock is paired 1-to-1
  * with a {@link jmri.Block} which it created; the Block has a specific form for its system name and the LayoutBlock's name as its user-name.
  * <li>{@link jmri.jmrit.display.layoutEditor.BlockContentsIcon}, {@link jmri.jmrit.display.layoutEditor.MemoryIcon} inherit from the equivalents in the {@link jmri.jmrit.display} package.
- * <li>{@link jmri.jmrit.display.layoutEditor.LayoutEditor} extends {@link jmri.jmrit.display.PanelEditor PanelEditor}
+ * <li>{@link jmri.jmrit.display.layoutEditor.LayoutEditor} extends {@link jmri.jmrit.display.panelEditor.PanelEditor PanelEditor}
  * <li>Multiple classes, including {@link jmri.jmrit.display.layoutEditor.LayoutEditorAction}, {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent}, {@link jmri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel}, 
- *      {@link jmri.jmrit.display.layoutEditor.MultiIconEditor}, and {@link} jmri.jmrit.display.layoutEditor.MultiSensorIconFrame.java, extend Swing or AWT components. (Although {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent}
+ *      {@link jmri.jmrit.display.layoutEditor.MultiIconEditor}, and {@link jmri.jmrit.display.layoutEditor.MultiSensorIconFrame}, extend Swing or AWT components. 
+ *      (Although {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent}
  *       sounds like a base class for others, it's not; it's part of the {@link jmri.jmrit.display.layoutEditor.LayoutEditor} implementation.)
  * </ul>
  * 
@@ -70,7 +71,7 @@
  * LayoutEditorXml handles the storing and loading of all the track and icon objects.
  * It is stored at the user level ("Store Panels...")
  * <p>
- * A {@link BlockValueFile} stores and loads the value (internal transient contents) of Block 
+ * A {@link jmri.jmrit.display.layoutEditor.BlockValueFile} stores and loads the value (internal transient contents) of Block 
  * objects from the BlockManager. It doesn't reference {@link jmri.jmrit.display.layoutEditor.LayoutBlock} objects.
  * <h3>More Info</h3>
  * User-level documentation is available 
