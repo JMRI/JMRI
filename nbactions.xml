@@ -74,9 +74,7 @@
                 <packaging>*</packaging>
             </packagings>
             <goals>
-                <goal>test-compile</goal>
-                <goal>jacoco:prepare-agent</goal>
-                <goal>surefire:test</goal>
+                <goal>test</goal>
                 <goal>jacoco:report</goal>
             </goals>
             <properties>

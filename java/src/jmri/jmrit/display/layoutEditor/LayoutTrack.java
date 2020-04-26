@@ -222,11 +222,11 @@ public abstract class LayoutTrack {
      * @param g2           the graphics context
      * @param specificType the specific connection to draw (or NONE for all)
      */
-    protected abstract void highlightUnconnected(Graphics2D g2, LayoutEditor.HitPointType specificType);
+    protected abstract void highlightUnconnected(Graphics2D g2, HitPointType specificType);
 
     // optional parameter specificType = NONE
     protected void highlightUnconnected(Graphics2D g2) {
-        highlightUnconnected(g2, LayoutEditor.HitPointType.NONE);
+        highlightUnconnected(g2, HitPointType.NONE);
     }
 
     /**
@@ -377,15 +377,15 @@ public abstract class LayoutTrack {
      * @return the location type for the point (or NONE)
      * @since 7.4.3
      */
-    protected abstract LayoutEditor.HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected);
+    protected abstract HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected);
 
     // optional useRectangles & requireUnconnected parameters default to false
-    protected LayoutEditor.HitPointType findHitPointType(@Nonnull Point2D p) {
+    protected HitPointType findHitPointType(@Nonnull Point2D p) {
         return findHitPointType(p, false, false);
     }
 
     // optional requireUnconnected parameter defaults to false
-    protected LayoutEditor.HitPointType findHitPointType(@Nonnull Point2D p, boolean useRectangles) {
+    protected HitPointType findHitPointType(@Nonnull Point2D p, boolean useRectangles) {
         return findHitPointType(p, useRectangles, false);
     }
 
@@ -396,7 +396,7 @@ public abstract class LayoutTrack {
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
-    public abstract Point2D getCoordsForConnectionType(LayoutEditor.HitPointType connectionType);
+    public abstract Point2D getCoordsForConnectionType(HitPointType connectionType);
 
     /**
      * @return the bounds of this track
@@ -450,7 +450,7 @@ public abstract class LayoutTrack {
      * @return the LayoutTrack connected at the specified connection type
      * @throws JmriException - if the connectionType is invalid
      */
-    public abstract LayoutTrack getConnection(LayoutEditor.HitPointType connectionType) throws JmriException;
+    public abstract LayoutTrack getConnection(HitPointType connectionType) throws JmriException;
 
     /**
      * set the LayoutTrack connected at the specified connection type
@@ -460,7 +460,7 @@ public abstract class LayoutTrack {
      * @param type           where on the LayoutTrack we are connected
      * @throws JmriException - if connectionType or type are invalid
      */
-    public abstract void setConnection(LayoutEditor.HitPointType connectionType, LayoutTrack o, LayoutEditor.HitPointType type) throws JmriException;
+    public abstract void setConnection(HitPointType connectionType, LayoutTrack o, HitPointType type) throws JmriException;
 
     /**
      * abstract method... subclasses should implement _IF_ they need to recheck
@@ -481,9 +481,9 @@ public abstract class LayoutTrack {
      * @param connectionType the connection type to test
      * @return true if the connection for this connection type is free
      */
-    public boolean isDisconnected(LayoutEditor.HitPointType connectionType) {
+    public boolean isDisconnected(HitPointType connectionType) {
         boolean result = false;
-        if (LayoutEditor.HitPointType.isConnectionHitType(connectionType)) {
+        if (HitPointType.isConnectionHitType(connectionType)) {
             try {
                 result = (null == getConnection(connectionType));
             } catch (JmriException e) {
@@ -505,7 +505,7 @@ public abstract class LayoutTrack {
      * if it's not empty.)
      */
     @Nonnull
-    public abstract List<LayoutEditor.HitPointType> checkForFreeConnections();
+    public abstract List<HitPointType> checkForFreeConnections();
 
     /**
      * determine if all the appropriate blocks have been assigned to this track

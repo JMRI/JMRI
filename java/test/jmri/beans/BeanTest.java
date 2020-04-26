@@ -141,6 +141,17 @@ public class BeanTest {
         assertThat(changed).isTrue();
     }
 
+    /**
+     * Test that {@link Bean#isNotifyOnEDT()}, which provides access to a final
+     * value is returning the expected final value for all construction scenarios.
+     */
+    @Test
+    public void testIsNotifyOnEDT() {
+        assertThat(new Bean() {}.isNotifyOnEDT()).isTrue();
+        assertThat(new Bean(true) {}.isNotifyOnEDT()).isTrue();
+        assertThat(new Bean(false) {}.isNotifyOnEDT()).isFalse();
+    }
+
     @BeforeEach
     public void setup() {
         JUnitUtil.setUp();
