@@ -1,6 +1,5 @@
 package jmri.util;
 
-import apps.SystemConsole;
 import java.awt.Container;
 import java.awt.Frame;
 import java.awt.Window;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
 
 import apps.SystemConsole;
 import apps.gui.GuiLafPreferencesManager;
-import java.awt.GraphicsEnvironment;
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.Editor;
