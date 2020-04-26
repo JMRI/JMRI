@@ -575,8 +575,11 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
+    public void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
         if (oldValue != newValue) {
             setDirty(true);
             setRestartRequired();
@@ -584,8 +587,11 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void firePropertyChange(String propertyName, int oldValue, int newValue) {
+    public void firePropertyChange(String propertyName, int oldValue, int newValue) {
         if (oldValue != newValue) {
             setDirty(true);
             setRestartRequired();
@@ -593,8 +599,11 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+    public void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
         if (oldValue == null || newValue == null || oldValue != newValue) {
             setDirty(true);
             setRestartRequired();
