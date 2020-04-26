@@ -442,6 +442,8 @@
             <fileset file=".ant-targets-build.xml"/>
             <fileset file=".run.sh"/>
             <fileset file="release.zip"/>
+            <fileset file="spotbugs.html"/>
+            <fileset file="spotbugs-check.html"/>
             <fileset dir="." includes="hs_err_pid*.log"/>
         </delete>
     </target>
