@@ -55,6 +55,7 @@ public class Log4JUtil {
      */
     // Goal is to be lightweight and fast; this will only be used in a few places,
     // and only those should appear in data structure.
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_UNKNOWN_ARRAY",justification="Passing varargs array through")
     static public boolean warnOnce(@Nonnull Logger logger, @Nonnull String msg, Object... args) {
         Set<String> loggerSet = warnedOnce.get(logger);
         if (loggerSet == null) { 

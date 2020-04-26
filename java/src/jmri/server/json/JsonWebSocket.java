@@ -75,7 +75,7 @@ public class JsonWebSocket {
                 this.onClose(StatusCode.ABNORMAL, thrwbl.getMessage());
             }
         } else {
-            log.error("Unanticipated error {}", thrwbl.getMessage(), thrwbl);
+            log.error("Unanticipated error", thrwbl);
         }
     }
 
