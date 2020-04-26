@@ -361,7 +361,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                                 try {
                                     JMDNS_SERVICES.put(address, JmDNS.create(address, name));
                                 } catch (IOException ex) {
-                                    log.warn("Unable to create JmDNS with error: {}", ex.getMessage(), ex);
+                                    log.warn("Unable to create JmDNS with error", ex);
                                 }
                             }
                         }
