@@ -6,14 +6,14 @@
  * <h3>Connectivity</h3>
  * This is coded and stored as the following: (Some graphical attributes removed, reordered)<br>
 <pre>
-    &lt;layoutturnout ident="TO1" type="1" continuing="2" ver="1" connectaname="T3" connectbname="T2" connectcname="T1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" /&gt;
-    &lt;layoutturnout ident="TO2" type="2" continuing="2" ver="1" connectaname="T4" connectbname="T2" connectcname="T1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" /&gt;
+    &lt;layoutturnout ident="TO1" type="RH_TURNOUT" continuing="2" ver="1" connectaname="T3" connectbname="T2" connectcname="T1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" /&gt;
+    &lt;layoutturnout ident="TO2" type="LH_TURNOUT" continuing="2" ver="1" connectaname="T4" connectbname="T2" connectcname="T1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" /&gt;
     &lt;tracksegment ident="T1" connect1name="TO1" type1="TURNOUT_C" connect2name="TO2" type2="TURNOUT_C" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" /&gt;
     &lt;tracksegment ident="T2" connect1name="TO1" type1="TURNOUT_B" connect2name="TO2" type2="TURNOUT_B" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" /&gt;
     &lt;tracksegment ident="T3" connect1name="EB1" type1="POS_POINT" connect2name="TO1" type2="TURNOUT_A" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" /&gt;
     &lt;tracksegment ident="T4" connect1name="TO2" type1="TURNOUT_A" connect2name="EC1" type2="POS_POINT" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" /&gt;
-    &lt;positionablepoint ident="EB1" type="2" connect1name="T3" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" /&gt;
-    &lt;positionablepoint ident="EC1" type="3" connect1name="T4" linkedpanel="" linkpointid="" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" /&gt;
+    &lt;positionablepoint ident="EB1" type="END_BUMPER" connect1name="T3" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" /&gt;
+    &lt;positionablepoint ident="EC1" type="EDGE_CONNECTOR" connect1name="T4" linkedpanel="" linkpointid="" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" /&gt;
 </pre>
 <p>
  * <a href="doc-files/SidingConnections.png"><img src="doc-files/SidingConnections.png" alt="Example interconnections" height="33%" width="33%"></a>
