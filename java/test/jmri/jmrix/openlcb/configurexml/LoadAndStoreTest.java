@@ -66,7 +66,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     }
 
     @After
-    public void localTearDown() throws Exception {
+    public void localTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
         }

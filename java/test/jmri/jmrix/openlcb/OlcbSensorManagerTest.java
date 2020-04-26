@@ -63,12 +63,12 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor t1 = l.provideSensor(getSystemName(getNumToTest1()));
         Sensor t2 = l.provideSensor(getSystemName(getNumToTest2()));
         t1.setUserName("UserName");
-        Assert.assertTrue(t1 == l.getByUserName("UserName"));
+        Assert.assertSame(t1, l.getByUserName("UserName"));
 
         t2.setUserName("UserName");
-        Assert.assertTrue(t2 == l.getByUserName("UserName"));
+        Assert.assertSame(t2, l.getByUserName("UserName"));
 
-        Assert.assertTrue(null == t1.getUserName());
+        Assert.assertNull(t1.getUserName());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @AfterClass
-    public static void postClassTearDown() throws Exception {
+    public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
         }

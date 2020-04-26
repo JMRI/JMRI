@@ -75,6 +75,7 @@ public class OlcbConfigurationManagerTest {
             scm.getInterface().dispose();
         }
         scm = null;
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

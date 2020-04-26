@@ -25,7 +25,7 @@ public class MonitorFrameTest {
     private CanSystemConnectionMemo memo = null;
 
     @Test
-    public void testFormatMsg() throws Exception {
+    public void testFormatMsg() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         MonitorPane f = new MonitorPane() {
@@ -51,7 +51,7 @@ public class MonitorFrameTest {
     }
 
     @Test
-    public void testFormatReply() throws Exception {
+    public void testFormatReply() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         MonitorPane f = new MonitorPane() {

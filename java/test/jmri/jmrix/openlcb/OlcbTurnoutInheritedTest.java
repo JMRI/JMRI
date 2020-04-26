@@ -46,13 +46,13 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
     }
 
     @Override
-    public void checkThrownMsgSent() throws InterruptedException {
+    public void checkThrownMsgSent() {
         tif.flush();
         tif.assertSentMessage(":X195B4C4CN0102030405060708;");
     }
 
     @Override
-    public void checkClosedMsgSent() throws InterruptedException {
+    public void checkClosedMsgSent() {
         tif.flush();
         tif.assertSentMessage(":X195B4C4CN0102030405060709;");
     }

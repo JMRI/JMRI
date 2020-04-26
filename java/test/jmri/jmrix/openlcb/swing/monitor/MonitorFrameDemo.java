@@ -44,7 +44,7 @@ public class MonitorFrameDemo {
     private OurScaffold tcs = null;
 
     @Test
-    public void testFireViaAction() throws Exception {
+    public void testFireViaAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         new MonitorAction().actionPerformed(null);
@@ -68,7 +68,7 @@ public class MonitorFrameDemo {
 
     @Test
     @Ignore("Duplicates Test in MonitorFrameTest")
-    public void XtestFormatMsg() throws Exception {
+    public void XtestFormatMsg() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         MonitorPane f = new MonitorPane() {
@@ -101,7 +101,7 @@ public class MonitorFrameDemo {
 
     @Test
     @Ignore("Duplicates Test in MonitorFrameTest")
-    public void XtestFormatReply() throws Exception {
+    public void XtestFormatReply() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         MonitorPane f = new MonitorPane() {
@@ -137,7 +137,7 @@ public class MonitorFrameDemo {
 
     // The minimal setup for log4J
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
@@ -149,7 +149,7 @@ public class MonitorFrameDemo {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         memo.dispose();
         memo = null;
         tcs.terminateThreads();

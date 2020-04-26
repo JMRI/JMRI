@@ -31,7 +31,7 @@ public class OlcbLightManagerXmlTest {
     }
 
     @Test
-    public void testSaveAndRestore() throws Exception {
+    public void testSaveAndRestore() {
         log.debug("FIRST START");
         t = new OlcbTestInterface(new OlcbTestInterface.CreateConfigurationManager());
         OlcbLightManager mgr = t.configurationManager.getLightManager();

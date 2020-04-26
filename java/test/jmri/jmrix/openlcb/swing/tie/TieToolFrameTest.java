@@ -12,7 +12,7 @@ import org.junit.*;
 public class TieToolFrameTest {
 
     @Test
-    public void testCreateAndShow() throws Exception {
+    public void testCreateAndShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         jmri.util.JmriJFrame f = new TieToolFrame();

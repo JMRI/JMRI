@@ -18,7 +18,7 @@ public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @Test
     @Override
     @Ignore("test requires further setup")
-    @ToDo("finish test setup and remove this overriden test so that the parent class test can run")
+    @ToDo("finish test setup and remove this overridden test so that the parent class test can run")
     public void testGetThrottleInfo() {
     }
 
@@ -49,6 +49,7 @@ public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManag
             m.getInterface().dispose();
         }
         m = null;
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

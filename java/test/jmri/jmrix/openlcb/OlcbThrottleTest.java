@@ -402,7 +402,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @AfterClass
-    public static void postClassTearDown() throws Exception {
+    public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
             memo.getTrafficController().terminateThreads();
             memo.getInterface().dispose();

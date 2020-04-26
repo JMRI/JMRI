@@ -93,7 +93,7 @@ public class OlcbSignalMastXmlTest {
     }
 
     @AfterClass
-    public static void postClassTearDown() throws Exception {
+    public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
         }

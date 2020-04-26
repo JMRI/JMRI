@@ -65,7 +65,7 @@ public class TreePaneDemo {
     MimicNodeStore store;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         store = new MimicNodeStore(connection, nid1);
         Message msg = new ProducerIdentifiedMessage(nid1, eventA, EventState.Unknown);
         store.put(msg, null);

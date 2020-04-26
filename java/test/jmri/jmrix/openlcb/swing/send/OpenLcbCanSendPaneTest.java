@@ -18,19 +18,19 @@ public class OpenLcbCanSendPaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Test
     @Override
-    public void testInitComponents() throws Exception{
+    public void testInitComponents() {
         // for now, just makes ure there isn't an exception.
         ((OpenLcbCanSendPane)panel).initComponents(memo);
     }
 
     @Test
-    public void testInitContext() throws Exception {
+    public void testInitContext() {
         // for now, just makes ure there isn't an exception.
         ((OpenLcbCanSendPane)panel).initContext(memo);
     }
 
     @Test
-    public void testEventId() throws Exception {
+    public void testEventId() {
         OpenLcbCanSendPane p = (OpenLcbCanSendPane) panel;
 
         p.sendEventField.setText("05 01 01 01 14 FF 01 02");
@@ -39,7 +39,7 @@ public class OpenLcbCanSendPaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Test
-    public void testEventIdDotted() throws Exception {
+    public void testEventIdDotted() {
         OpenLcbCanSendPane p = (OpenLcbCanSendPane) panel;
 
         p.sendEventField.setText("05.01.01.01.14.FF.01.02");

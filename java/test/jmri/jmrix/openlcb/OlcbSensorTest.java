@@ -71,13 +71,13 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         mInactive.setExtended(true);
 
         // check states
-        Assert.assertTrue(t.getKnownState() == Sensor.UNKNOWN);
+        Assert.assertEquals(t.getKnownState(), Sensor.UNKNOWN);
 
         ti.sendMessage(mActive);
-        Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
+        Assert.assertEquals(t.getKnownState(), Sensor.ACTIVE);
 
         ti.sendMessage(mInactive);
-        Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
+        Assert.assertEquals(t.getKnownState(), Sensor.INACTIVE);
 
     }
 
@@ -106,17 +106,17 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         mStateInactive.setExtended(true);
 
         // check states
-        Assert.assertTrue(t.getKnownState() == Sensor.UNKNOWN);
+        Assert.assertEquals(t.getKnownState(), Sensor.UNKNOWN);
 
         ti.sendMessage(mStateActive);
-        Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
+        Assert.assertEquals(t.getKnownState(), Sensor.ACTIVE);
 
         ti.sendMessage(mStateInactive);
-        Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
+        Assert.assertEquals(t.getKnownState(), Sensor.INACTIVE);
     }
 
     @Test
-    public void testMomentarySensor() throws Exception {
+    public void testMomentarySensor() {
         OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8", ti.iface);
         s.finishLoad();
     	    // message for Active and Inactive
@@ -127,10 +127,10 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         mActive.setExtended(true);
 
         // check states
-        Assert.assertTrue(s.getKnownState() == Sensor.UNKNOWN);
+        Assert.assertEquals(s.getKnownState(), Sensor.UNKNOWN);
 
         ti.sendMessage(mActive);
-        Assert.assertTrue(s.getKnownState() == Sensor.ACTIVE);
+        Assert.assertEquals(s.getKnownState(), Sensor.ACTIVE);
 
         JUnitUtil.waitFor( ()-> (s.getKnownState() != Sensor.ACTIVE));
 
@@ -138,7 +138,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
         // local flip
         s.setKnownState(Sensor.ACTIVE);
-        Assert.assertTrue(s.getKnownState() == Sensor.ACTIVE);
+        Assert.assertEquals(s.getKnownState(), Sensor.ACTIVE);
 
         JUnitUtil.waitFor( ()-> (s.getKnownState() != Sensor.ACTIVE));
 
@@ -326,7 +326,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
      * network out of order (U first then T).
      */
     @Test
-    public void testListenerOutOfOrder() throws JmriException {
+    public void testListenerOutOfOrder() {
         final OlcbSensor u = new OlcbSensor("M", "1.2.3.4.5.6.7.a;1.2.3.4.5.6.7.b", ti.iface);
         final OlcbSensor v = (OlcbSensor)t;
         u.finishLoad();

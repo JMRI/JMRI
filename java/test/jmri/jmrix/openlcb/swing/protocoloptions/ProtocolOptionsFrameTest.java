@@ -29,7 +29,6 @@ public class ProtocolOptionsFrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
-        scm.getTrafficController().terminateThreads();
         scm.dispose();
         scm = null;
         super.tearDown();

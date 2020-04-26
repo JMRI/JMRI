@@ -27,10 +27,6 @@ public class OlcbUtilsTest {
     }
 
     @Test
-    void overridePCFlagsFromProperties() {
-    }
-
-    @Test
     void isOlcbBean() {
         // we can't use an anonymous bean for the false case, so we create a bean from another package.
         XpaSystemConnectionMemo xpaMemo = Mockito.mock(XpaSystemConnectionMemo.class);

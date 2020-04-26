@@ -2,7 +2,6 @@ package jmri.jmrix.openlcb;
 
 import jmri.Light;
 import jmri.util.JUnitUtil;
-import jmri.util.PropertyChangeListenerScaffold;
 
 import org.junit.Test;
 import org.junit.After;
@@ -19,10 +18,9 @@ import org.slf4j.LoggerFactory;
 public class OlcbLightTest {
 
     private final static Logger log = LoggerFactory.getLogger(OlcbLightTest.class);
-    protected PropertyChangeListenerScaffold listener; 
 
     @Test
-    public void testLocalChangeSendsEvent() throws jmri.JmriException {
+    public void testLocalChangeSendsEvent() {
         OlcbLight l = new OlcbLight("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         l.finishLoad();
         t.waitForStartup();

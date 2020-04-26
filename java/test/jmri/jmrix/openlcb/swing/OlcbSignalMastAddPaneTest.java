@@ -126,7 +126,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
 
         // check aspect disabled
         Assert.assertTrue(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 1").isAspectDisabled("Approach Medium"));
-        Assert.assertTrue(! InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 1").isAspectDisabled("Clear"));
+        Assert.assertFalse(InstanceManager.getDefault(SignalMastManager.class).getByUserName("user name 1").isAspectDisabled("Clear"));
 
         // check correct eventid present
         OlcbSignalMast foundMast = (OlcbSignalMast)InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 1");
@@ -194,10 +194,10 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         // system name not checked, depends on history of how many SignalMast objects have been created
 
         // check correct aspects disabled
-        Assert.assertTrue(! InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Clear"));
+        Assert.assertFalse(InstanceManager.getDefault(SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Clear"));
         Assert.assertTrue(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Approach"));
         Assert.assertTrue(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Stop"));
-        Assert.assertTrue(! InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Unlit"));
+        Assert.assertFalse(InstanceManager.getDefault(SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Unlit"));
 
         // check correct eventid present
         OlcbSignalMast foundMast = (OlcbSignalMast)InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2");
@@ -264,7 +264,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     }
 
     @AfterClass
-    public static void postClassTearDown() throws Exception {
+    public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
         }
