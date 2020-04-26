@@ -103,7 +103,7 @@ import org.slf4j.*;
  * Signal Head names are saved here to keep track of where signals are.
  * LayoutTurnout only serves as a storage place for signal head names. The names
  * are placed here by tools, e.g., Set Signals at Turnout, and Set Signals at
- * Double Crossover.
+ * Double Crossover. Each connection point can have up to three SignalHeads and one SignalMast.
  * <p>
  * A LayoutTurnout may be linked to another LayoutTurnout to form a turnout
  * pair. Throat-To-Throat Turnouts - Two turnouts connected closely at their
