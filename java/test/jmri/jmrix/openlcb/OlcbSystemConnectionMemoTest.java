@@ -37,8 +37,9 @@ public class OlcbSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
     @Override
     @After
     public void tearDown() {
+        ((OlcbSystemConnectionMemo)scm).getTrafficController().terminateThreads();
+        scm.dispose();
         scm = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

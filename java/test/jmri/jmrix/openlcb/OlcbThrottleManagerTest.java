@@ -45,10 +45,10 @@ public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @AfterClass
     public static void postClassTearDown() {
         if(m != null && m.getInterface() !=null ) {
-           m.getInterface().dispose();
+            m.getTrafficController().terminateThreads();
+            m.getInterface().dispose();
         }
         m = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

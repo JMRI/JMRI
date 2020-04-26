@@ -61,7 +61,7 @@ public class OlcbSensorManagerXmlTest {
 
         s.setProperty(OlcbUtils.PROPERTY_QUERY_AT_STARTUP, false);
         s.setAuthoritative(false);
-        Assert.assertEquals(1, mgr.getSystemNameList().size());
+        Assert.assertEquals(1, mgr.getNamedBeanSet().size());
 
         Element stored = xmlmgr.store(mgr);
         Assert.assertNotNull(stored);
