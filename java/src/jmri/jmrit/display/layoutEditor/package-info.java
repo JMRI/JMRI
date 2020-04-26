@@ -44,7 +44,31 @@
  *      {@link jmri.jmrit.display.layoutEditor.MultiIconEditor}, and {@link jmri.jmrit.display.layoutEditor.MultiSensorIconFrame}, extend Swing or AWT components. 
  *      (Although {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent}
  *       sounds like a base class for others, it's not; it's part of the {@link jmri.jmrit.display.layoutEditor.LayoutEditor} implementation.)
+ * <li>Three subpackages provide specific services:
+ *   <ul>
+ *   <li>{@link jmri.jmrit.display.layoutEditor.blockRoutingTable}
+ *   <li>{@link jmri.jmrit.display.layoutEditor.LayoutEditorDialogs}
+ *   <li>{@link jmri.jmrit.display.layoutEditor.configurexml}
+ *   </ul>
  * </ul>
+ * 
+ * <h3>GUI</h3>
+ * The Layout Editor window consists of a menu bar and an upper tool-bar that are all made with 
+ * (basically) standard Swing components.  Below that is a JPane containing the 
+ * layout drawing itself.
+ * <p>
+ * The LayoutTrack tree defines <code>draw1</code> and <code>draw2</code> methods that 
+ * draw two different representations of the track elements.  These are only 
+ * invoked from {}@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent}. LayoutEditorComponent is 
+ * a JComponent with a {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent#paint} public method
+ * that invokes a series of internal private methods to display the layers of the layout drawing. That in turn is invoked via the usual repaint() mechanism.
+ * Each of those layer private methods sets up graphics and method options, then
+ * calls {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent#draw1}
+ * or {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent#draw2}. Those in turn
+ * loop through a list from {@link jmri.jmrit.display.layoutEditor.LayoutEditor#getLayoutTracks()}
+ * calling their individual {@link jmri.jmrit.display.layoutEditor.LayoutTrack#draw1} and {@link jmri.jmrit.display.layoutEditor.LayoutTrack#draw1}
+ * methods.
+ * 
  * 
  * <h3>Persistance</h3>
  * The classes that have ConfigureXML partner classes are:
