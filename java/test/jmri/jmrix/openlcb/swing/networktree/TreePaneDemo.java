@@ -40,17 +40,8 @@ public class TreePaneDemo {
 
     final NodeID nid1 = new NodeID(new byte[]{0, 0, 0, 0, 0, 1});
     final NodeID nid2 = new NodeID(new byte[]{0, 0, 0, 0, 0, 2});
-    NodeID nid3 = new NodeID(new byte[]{0, 0, 0, 0, 0, 3});
-    NodeID nid4 = new NodeID(new byte[]{0, 0, 0, 0, 0, 4});
-    NodeID nid5 = new NodeID(new byte[]{0, 0, 0, 0, 0, 5});
-    NodeID nid6 = new NodeID(new byte[]{0, 0, 0, 0, 0, 6});
-    NodeID nid7 = new NodeID(new byte[]{0, 0, 0, 0, 0, 7});
-    NodeID nid8 = new NodeID(new byte[]{0, 0, 0, 0, 0, 8});
-    NodeID nid9 = new NodeID(new byte[]{0, 0, 0, 0, 0, 9});
 
     final EventID eventA = new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0});
-    EventID eventB = new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0});
-    EventID eventC = new EventID(new byte[]{1, 0, 0, 0, 0, 0, 3, 0});
 
     final Message pipmsg = new ProtocolIdentificationReplyMessage(nid2, nid2, 0xF01800000000L);
 

@@ -28,11 +28,6 @@ import org.slf4j.LoggerFactory;
 public class OlcbSensorManagerXmlTest {
 
     @Test
-    public void testCtor(){
-      Assert.assertNotNull("OlcbSensorManagerXml constructor",new OlcbSensorManagerXml());
-    }
-
-    @Test
     public void testSaveAndRestoreWithProperties() throws Exception {
         log.debug("FIRST START");
         t = new OlcbTestInterface(new OlcbTestInterface.CreateConfigurationManager());

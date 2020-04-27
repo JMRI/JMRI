@@ -85,10 +85,8 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
                 @Override
                 public Enumeration<String> getAspects() {
                     return java.util.Collections.enumeration(
-                        java.util.Arrays.asList(
-                            new String[]{"Clear","Approach Medium","Advance Approach",
-                                    "Medium Clear", "Approach", "Slow Approach",
-                                    "Permissive", "Restricting", "Stop and Proceed", "Stop"}));
+                        java.util.Arrays.asList("Clear","Approach Medium","Advance Approach",
+                                "Medium Clear", "Approach", "Slow Approach", "Permissive", "Restricting", "Stop and Proceed", "Stop"));
                     }
             }
                 , InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic") );

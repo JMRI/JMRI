@@ -29,11 +29,6 @@ public class OlcbSignalMastXmlTest {
     static java.util.ArrayList<Message> messages;
 
     @Test
-    public void testCtor(){
-        Assert.assertNotNull("OlcbSignalMastXml constructor",new OlcbSignalMastXml());
-    }
-
-    @Test
     public void testStore(){
         OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs($1)");
         t.setLitEventId("1.2.3.4.5.6.7.1");

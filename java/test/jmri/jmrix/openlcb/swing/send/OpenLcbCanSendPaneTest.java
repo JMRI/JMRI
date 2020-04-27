@@ -26,7 +26,7 @@ public class OpenLcbCanSendPaneTest extends jmri.util.swing.JmriPanelTest {
     @Test
     public void testInitContext() {
         // for now, just makes ure there isn't an exception.
-        ((OpenLcbCanSendPane)panel).initContext(memo);
+        panel.initContext(memo);
     }
 
     @Test
