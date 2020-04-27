@@ -266,13 +266,13 @@ public class DefaultConditional extends AbstractNamedBean
                     result = dp.result;
                 } catch (NumberFormatException nfe) {
                     result = false;
-                    log.error("{} parseCalculation error antecedent= {}, ex= {}", getDisplayName(), _antecedent, nfe);  // NOI18N
+                    log.error("{} parseCalculation error antecedent= {}, ex= ", getDisplayName(), _antecedent, nfe);  // NOI18N
                 } catch (IndexOutOfBoundsException ioob) {
                     result = false;
-                    log.error("{} parseCalculation error antecedent= {}, ex= {}", getDisplayName(), _antecedent, ioob);  // NOI18N
+                    log.error("{} parseCalculation error antecedent= {}, ex= ", getDisplayName(), _antecedent, ioob);  // NOI18N
                 } catch (JmriException je) {
                     result = false;
-                    log.error("{} parseCalculation error antecedent= {}, ex= {}", getDisplayName(), _antecedent, je);  // NOI18N
+                    log.error("{} parseCalculation error antecedent= {}, ex= ", getDisplayName(), _antecedent, je);  // NOI18N
                 }
                 break;
             default:
