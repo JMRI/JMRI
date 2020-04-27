@@ -40,7 +40,6 @@ public class ShortAddrVariableValueTest {
         Assert.assertTrue(cv1.getValue() == 25);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

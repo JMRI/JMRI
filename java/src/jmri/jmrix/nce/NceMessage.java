@@ -617,7 +617,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
      * {@inheritDoc}
      */
     @Override
-    public String toMonitorString(){
-	    return nceMon.displayMessage(this);
+    public String toMonitorString() {
+        return nceMon.displayMessage(this);
     }
 }

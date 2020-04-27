@@ -178,7 +178,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     static DataOutputStream tistream; // tests write to this
     static DataInputStream istream;  // so the traffic controller can read from this
 
-    // The minimal setup for log4J
     @Override
     @Before
     public  void setUp() {

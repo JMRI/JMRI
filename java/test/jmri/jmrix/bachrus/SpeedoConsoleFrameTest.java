@@ -11,7 +11,6 @@ import org.junit.Before;
  */
 public class SpeedoConsoleFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

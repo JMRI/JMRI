@@ -48,7 +48,6 @@ public class EditPortalDirectionTest {
 //        JUnitUtil.dispose(dFrame);    // OK button should close dFrame
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

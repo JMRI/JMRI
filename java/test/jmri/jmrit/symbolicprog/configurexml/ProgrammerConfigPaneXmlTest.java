@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * ProgrammerConfigPaneXmlTest.java
  *
- * Description: tests for the ProgrammerConfigPaneXml class
+ * Test for the ProgrammerConfigPaneXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class ProgrammerConfigPaneXmlTest {
       Assert.assertNotNull("ProgrammerConfigPaneXml constructor",new ProgrammerConfigPaneXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

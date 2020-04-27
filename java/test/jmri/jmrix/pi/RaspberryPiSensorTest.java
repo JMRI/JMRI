@@ -10,7 +10,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTestBase {
 

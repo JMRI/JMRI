@@ -42,7 +42,6 @@ public class DrawCircleTest {
         JUnitUtil.dispose(frame);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

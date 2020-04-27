@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SerialLightManagerTest {
 
@@ -21,7 +21,6 @@ public class SerialLightManagerTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

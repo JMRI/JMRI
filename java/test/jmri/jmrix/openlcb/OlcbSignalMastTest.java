@@ -14,7 +14,7 @@ import org.junit.Test;
 /**
  * Tests for the OlcbSignalMast implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2013, 2017, 2018
+ * @author Bob Jacobsen Copyright (C) 2013, 2017, 2018
  * updated to JUnit4 2016
  */
 public class OlcbSignalMastTest {
@@ -339,7 +339,6 @@ public class OlcbSignalMastTest {
     static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
     static java.util.ArrayList<Message> messages;
     
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         messages = new java.util.ArrayList<>();

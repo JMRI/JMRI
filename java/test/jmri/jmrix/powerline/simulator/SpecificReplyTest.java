@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the simulator.SpecficReply class.
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2009, 2010 Converted to
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008, 2009, 2010 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */
@@ -34,8 +34,8 @@ public class SpecificReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @Override
     @Before
-    public void setUp(){
-	JUnitUtil.setUp();
+    public void setUp() {
+        JUnitUtil.setUp();
         memo = new SpecificSystemConnectionMemo();
         t = new SpecificTrafficController(memo);
         m = msg = new SpecificReply(t);

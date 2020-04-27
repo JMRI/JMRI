@@ -9,7 +9,7 @@ import org.junit.Before;
 
 /**
  *
- * @author	Bob Jacobsen Copyright 2014
+ * @author Bob Jacobsen Copyright 2014
  */
 public class JCBHandleTest {
 

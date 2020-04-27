@@ -10,14 +10,13 @@ import org.junit.*;
  */
 public class AddEntryExitPairFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new AddEntryExitPairFrame();
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new AddEntryExitPairFrame();
+        }
     }
 
     @After
@@ -27,5 +26,4 @@ public class AddEntryExitPairFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AddEntryExitPairFrameTest.class);
-
 }

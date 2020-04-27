@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the {@link jmri.jmrix.roco.z21.Z21XNetTurnout} class.
  *
- * @author	Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2016	
+ * @author Bob Jacobsen
+ * @author      Paul Bender Copyright (C) 2016
  */
 public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
 
@@ -126,7 +126,6 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         Assert.assertEquals("controller listeners remaining", 1, numListeners());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

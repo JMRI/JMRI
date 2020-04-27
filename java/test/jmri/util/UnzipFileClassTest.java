@@ -34,7 +34,6 @@ public class UnzipFileClassTest  {
         Assert.assertTrue(new File("temp/UnzipFileClass/UnzipFileClass.txt").exists());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

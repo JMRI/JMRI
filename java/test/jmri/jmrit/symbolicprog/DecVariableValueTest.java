@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author	Bob Jacobsen Copyright 2003, 2006
+ * @author Bob Jacobsen Copyright 2003, 2006
  */
 public class DecVariableValueTest extends AbstractVariableValueTestBase {
 

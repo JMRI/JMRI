@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * RpsReporterManagerXmlTest.java
  *
- * Description: tests for the RpsReporterManagerXml class
+ * Test for the RpsReporterManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class RpsReporterManagerXmlTest {
       Assert.assertNotNull("RpsReporterManagerXml constructor",new RpsReporterManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

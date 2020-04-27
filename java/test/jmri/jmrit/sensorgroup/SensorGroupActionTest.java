@@ -13,8 +13,8 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
- * @author	Bob Jacobsen Copyright 2003, 2007
- * @author Paul Bender Copyright (C) 2017	
+ * @author Bob Jacobsen Copyright 2003, 2007
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SensorGroupActionTest {
 
@@ -39,7 +39,6 @@ public class SensorGroupActionTest {
         JUnitUtil.dispose(frame);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * TamsTurnoutManagerXmlTest.java
  *
- * Description: tests for the TamsTurnoutManagerXml class
+ * Test for the TamsTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class TamsTurnoutManagerXmlTest {
       Assert.assertNotNull("TamsTurnoutManagerXml constructor",new TamsTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

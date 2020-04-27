@@ -51,7 +51,6 @@ public class TimerUtilTest {
             taskRan = true;
         }
     };
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

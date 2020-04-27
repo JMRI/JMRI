@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class ItemPaletteTest {
 

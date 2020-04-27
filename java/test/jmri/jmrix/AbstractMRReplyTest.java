@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Tests for AbstractMRReply.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class AbstractMRReplyTest extends AbstractMessageTestBase {
 
@@ -80,7 +80,6 @@ public class AbstractMRReplyTest extends AbstractMessageTestBase {
         Assert.assertEquals("match", 4, testMsg.match("foo"));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -95,7 +94,7 @@ public class AbstractMRReplyTest extends AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	m = testMsg = null;
+        m = testMsg = null;
         JUnitUtil.tearDown();
     }
 

@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Tests for TrackCircuitSection class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class TrackCircuitSectionTest {
 
@@ -85,7 +85,6 @@ public class TrackCircuitSectionTest {
     Turnout indicator;
     Sensor sensor;
     
-    // The minimal setup for log4J
     @org.junit.Before
     public void setUp() {
         JUnitUtil.setUp();

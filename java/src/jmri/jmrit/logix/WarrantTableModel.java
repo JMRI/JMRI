@@ -692,8 +692,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                 }
             }
             int row = getRow(bean);
-            if (row < 0) {	// warrant deleted
-            	return;
+            if (row < 0) { // warrant deleted
+                return;
             }
             if (property.equals("blockChange")) {
                 OBlock oldBlock = (OBlock) e.getOldValue();
@@ -723,9 +723,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                         bean.getTrainName(), speed, name),
                         Color.red, true);
             } else if (property.equals("SpeedChange")) {
-            	fireTableCellUpdated(row, CONTROL_COLUMN);
+                fireTableCellUpdated(row, CONTROL_COLUMN);
             } else if (property.equals("WaitForSync")) {
-            	fireTableCellUpdated(row, CONTROL_COLUMN);
+                fireTableCellUpdated(row, CONTROL_COLUMN);
             } else if (property.equals("runMode")) {
                 int oldMode = ((Integer) e.getOldValue()).intValue();
                 int newMode = ((Integer) e.getNewValue()).intValue();

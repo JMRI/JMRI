@@ -11,7 +11,6 @@ import org.junit.*;
  */
 public class SpeedProfileFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

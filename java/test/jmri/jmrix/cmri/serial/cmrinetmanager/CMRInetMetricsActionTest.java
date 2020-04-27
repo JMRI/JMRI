@@ -12,7 +12,7 @@ import java.awt.GraphicsEnvironment;
 /**
  * Test simple functioning of DiagnosticAction
  *
- * @author	Paul Bender Copyright (C) 2016, 2018
+ * @author Paul Bender Copyright (C) 2016, 2018
  */
 public class CMRInetMetricsActionTest {
 

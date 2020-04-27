@@ -11,14 +11,13 @@ import org.junit.*;
  */
 public class VSDManagerFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new VSDManagerFrame();
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new VSDManagerFrame();
+        }
     }
 
     @After

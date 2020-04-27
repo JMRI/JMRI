@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * TamsSensorManagerXmlTest.java
  *
- * Description: tests for the TamsSensorManagerXml class
+ * Test for the TamsSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class TamsSensorManagerXmlTest {
       Assert.assertNotNull("TamsSensorManagerXml constructor",new TamsSensorManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

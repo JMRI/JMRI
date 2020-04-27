@@ -17,7 +17,7 @@ import org.junit.rules.TemporaryFolder;
 /**
  * Test simple functioning of ConsistFile
  *
- * @author	Paul Bender Copyright (C) 2015
+ * @author Paul Bender Copyright (C) 2015
  */
 public class ConsistFileTest {
 
@@ -31,12 +31,12 @@ public class ConsistFileTest {
     }
 
     @Test
-    public void testDefaultFileLocation(){
-            String fileName = Roster.getDefault().getRosterLocation() +
-		"roster" + File.separator + 
-		"consist" + File.separator;
-        Assert.assertEquals("Consist File Location",fileName,
-			ConsistFile.getFileLocation());
+    public void testDefaultFileLocation() {
+        String fileName = Roster.getDefault().getRosterLocation()
+                + "roster" + File.separator
+                + "consist" + File.separator;
+        Assert.assertEquals("Consist File Location", fileName,
+                ConsistFile.getFileLocation());
     }
 
     @Test
@@ -50,41 +50,41 @@ public class ConsistFileTest {
     public void testWriteFile() throws java.io.IOException {
         ConsistFile file = new ConsistFile();
         ConsistManager cm = InstanceManager.getDefault(ConsistManager.class);
-        DccLocoAddress addr = new DccLocoAddress(5,false);
+        DccLocoAddress addr = new DccLocoAddress(5, false);
         Consist c = cm.getConsist(addr);
-        c.add(new DccLocoAddress(10,false),true);
-        c.add(new DccLocoAddress(1000,true),false);
+        c.add(new DccLocoAddress(10, false), true);
+        c.add(new DccLocoAddress(1000, true), false);
         String fileName = folder.newFolder().getPath() + File.separator + "consist.xml";
-        file.writeFile(cm.getConsistList(),fileName);
-        Assert.assertTrue("file created",(new File(fileName)).exists());
+        file.writeFile(cm.getConsistList(), fileName);
+        Assert.assertTrue("file created", (new File(fileName)).exists());
     }
 
     @Test
     public void testWriteDefaultFile() throws java.io.IOException {
         ConsistFile file = new ConsistFile();
         ConsistManager cm = InstanceManager.getDefault(ConsistManager.class);
-        DccLocoAddress addr = new DccLocoAddress(5,false);
+        DccLocoAddress addr = new DccLocoAddress(5, false);
         Consist c = cm.getConsist(addr);
-        c.add(new DccLocoAddress(10,false),true);
-        c.add(new DccLocoAddress(1000,true),false);
+        c.add(new DccLocoAddress(10, false), true);
+        c.add(new DccLocoAddress(1000, true), false);
         file.writeFile(cm.getConsistList());
         String fileName = ConsistFile.defaultConsistFilename();
-        Assert.assertTrue("file created",(new File(fileName)).exists());
+        Assert.assertTrue("file created", (new File(fileName)).exists());
     }
 
     @Before
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
         jmri.profile.Profile profile = new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE));
-        JUnitUtil.resetProfileManager(profile );
+        JUnitUtil.resetProfileManager(profile);
         JUnitUtil.initRosterConfigManager();
         Roster.getDefault().setRosterLocation("");
-        InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
+        InstanceManager.setDefault(ConsistPreferencesManager.class, new ConsistPreferencesManager());
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
 
     @After
     public void tearDown() {
-       JUnitUtil.tearDown();    
+        JUnitUtil.tearDown();
     }
 }

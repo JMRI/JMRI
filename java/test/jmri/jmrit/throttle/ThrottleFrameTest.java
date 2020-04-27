@@ -13,7 +13,7 @@ import org.junit.rules.TemporaryFolder;
 /**
  * Test simple functioning of ThrottleFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ThrottleFrameTest {
 
@@ -233,7 +233,7 @@ public class ThrottleFrameTest {
 
         to.setAddressValue(new DccLocoAddress(42, false));
 
-        to.pushForwardButton();	// need to verify this took effect.	
+        to.pushForwardButton(); // need to verify this took effect.
         Assert.assertTrue("Forward Direction", to.getAttachedThrottle().getIsForward());
 
         to.pushReleaseButton();
@@ -245,7 +245,7 @@ public class ThrottleFrameTest {
 
         to.setAddressValue(new DccLocoAddress(42, false));
 
-        to.pushReverseButton(); // need to verify this took effect.	
+        to.pushReverseButton(); // need to verify this took effect.
         Assert.assertFalse("Reverse Direction", to.getAttachedThrottle().getIsForward());
         to.pushReleaseButton();
     }
@@ -260,13 +260,13 @@ public class ThrottleFrameTest {
         Assert.assertEquals("Speed setting 28", 28, to.getSpeedSliderValue());
         float speed = to.getAttachedThrottle().getSpeedSetting();
 
-        to.pushForwardButton();	// need to verify this took effect.	
+        to.pushForwardButton(); // need to verify this took effect.
         Assert.assertTrue("Forward Direction", to.getAttachedThrottle().getIsForward());
         // and the absolute value of the speed is the same.
 
         Assert.assertEquals("Throttle Speed Setting after forward", Math.abs(speed), Math.abs(to.getAttachedThrottle().getSpeedSetting()), 0.0);
 
-        to.pushReverseButton();	// need to verify this took effect.	
+        to.pushReverseButton(); // need to verify this took effect.
         Assert.assertFalse("Reverse Direction", to.getAttachedThrottle().getIsForward());
         // and the absolute value of the speed is the same.
 

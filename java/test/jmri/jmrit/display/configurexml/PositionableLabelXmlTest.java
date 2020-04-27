@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * PositionableLabelXmlTest.java
  *
- * Description: tests for the PositionableLabelXml class
+ * Test for the PositionableLabelXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class PositionableLabelXmlTest {
       Assert.assertNotNull("PositionableLabelXml constructor",new PositionableLabelXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -98,6 +98,6 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
-    }		         
+    }
 
 }

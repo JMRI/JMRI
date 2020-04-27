@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.lenz.hornbyelite.EliteXNetTurnoutManager class.
  *
- * @author	Bob Jacobsen Copyright 2004
+ * @author Bob Jacobsen Copyright 2004
  */
 public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -102,7 +102,7 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
 
     @After
     public void tearDown() {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

@@ -9,7 +9,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.util.PropertyChangeEventQueue class.
  *
- * @author	Bob Jacobsen Copyright 2017
+ * @author Bob Jacobsen Copyright 2017
  */
 public class PropertyChangeEventQueueTest {
 
@@ -74,7 +74,6 @@ public class PropertyChangeEventQueueTest {
     Sensor is2;
     volatile boolean flag1;
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();

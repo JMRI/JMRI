@@ -14,7 +14,7 @@ import jmri.jmrix.tams.TamsTrafficController;
  *
  * Based on work by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements TamsListener {
 

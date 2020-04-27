@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * SRCPClockControlTest.java
  *
- * Description: tests for the jmri.jmrix.srcp.SRCPClockControl class
+ * Test for the jmri.jmrix.srcp.SRCPClockControl class
  *
  * @author Bob Jacobsen
  */

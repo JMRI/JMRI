@@ -18,7 +18,7 @@ import static org.junit.platform.engine.discovery.DiscoverySelectors.*;
 /**
  * Main method to launch a JUnit test class
  *
- * @author	Bob Jacobsen Copyright 2016
+ * @author Bob Jacobsen Copyright 2016
  */
 public class TestClassMainMethod {
 
@@ -59,8 +59,8 @@ public class TestClassMainMethod {
                 System.err.println(ex);
             }
         }
-	    // This shouldn't be necessary, but....
-	    System.exit(0);
+        // This shouldn't be necessary, but....
+        System.exit(0);
     }
 
     /**

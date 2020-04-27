@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * transmitters, we also flip the sign of Z coordinates to keep this bias
  * working for us.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class AlignmentPanel extends javax.swing.JPanel
         implements ReadingListener, Constants {

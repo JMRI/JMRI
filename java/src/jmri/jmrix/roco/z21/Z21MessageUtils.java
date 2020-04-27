@@ -3,7 +3,7 @@ package jmri.jmrix.roco.z21;
 /**
  * Package protected class containing common methods for Z21 Messages and Replies.
  *
- * @author	Paul Bender Copyright (C) 2019
+ * @author Paul Bender Copyright (C) 2019
  */
 class Z21MessageUtils {
 

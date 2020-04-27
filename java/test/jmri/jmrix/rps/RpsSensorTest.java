@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the RPS Sensor class.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class RpsSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -107,7 +107,7 @@ public class RpsSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @Override
     @Before
     public void setUp(){
-        JUnitUtil.setUp();	
+        JUnitUtil.setUp();
         t = new RpsSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)", "R");
     }
 

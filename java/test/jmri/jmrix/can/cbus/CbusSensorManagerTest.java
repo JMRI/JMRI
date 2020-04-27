@@ -17,8 +17,8 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2008
- * @author	Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen Copyright 2008
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -425,7 +425,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertEquals("No auto system names",0,tcis.numListeners());
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

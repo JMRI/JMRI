@@ -7,7 +7,7 @@ package jmri.jmrix.roco.z21;
  * of time, so any outgoing message should restart
  * the timer.
  *
- * @author	Paul Bender Copyright (C) 2019 
+ * @author Paul Bender Copyright (C) 2019 
  */
 public class Z21HeartBeat implements Z21Listener {
 

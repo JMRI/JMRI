@@ -10,7 +10,7 @@ import org.junit.*;
 /**
  * Unit tests for the DefaultCabSignal 
  *
- * @author Paul Bender Copyright (C) 2019	
+ * @author Paul Bender Copyright (C) 2019
  */
 public class DefaultCabSignalTest {
 
@@ -49,7 +49,6 @@ public class DefaultCabSignalTest {
         acs.dispose(); // verify no exceptions
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

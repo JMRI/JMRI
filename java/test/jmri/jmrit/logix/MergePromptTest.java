@@ -10,7 +10,7 @@ import org.junit.rules.Timeout;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MergePromptTest {
 
@@ -36,7 +36,6 @@ public class MergePromptTest {
         m.dispose();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

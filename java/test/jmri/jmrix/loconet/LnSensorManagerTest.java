@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorManagerTurnout class.
  *
- * @author	Bob Jacobsen Copyright 2001
+ * @author Bob Jacobsen Copyright 2001
  */
 public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -106,7 +106,6 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
                 "LnSensorManager.createSystemName(curAddress, prefix) support for curAddress using the '3:5' format is deprecated as of JMRI 4.17.4 and will be removed in a future JMRI release.  Use the curAddress format '37' instead.");
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

@@ -21,7 +21,6 @@ public class XpaPacketGenActionTest {
         Assert.assertNotNull("XpaPacketGenAction exists",new XpaPacketGenAction("Test",memo) );
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

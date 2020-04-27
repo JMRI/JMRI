@@ -6,19 +6,17 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class OsIndicatorFrameTest extends jmri.util.JmriJFrameTestBase {
 
-
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new OsIndicatorFrame();
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new OsIndicatorFrame();
+        }
     }
 
     @After
@@ -28,5 +26,4 @@ public class OsIndicatorFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(OsIndicatorFrameTest.class);
-
 }

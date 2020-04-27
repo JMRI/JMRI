@@ -9,10 +9,10 @@ import org.junit.Test;
 /**
  * IEEE802154SystemConnectionMemoTest.java
  *
- * Description:	tests for the
+ * Test for the
  * jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class IEEE802154SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -22,7 +22,6 @@ public class IEEE802154SystemConnectionMemoTest extends jmri.jmrix.SystemConnect
        Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

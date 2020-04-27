@@ -10,7 +10,6 @@ import org.junit.*;
  */
 public class SignalMastRepeaterJFrameTest extends jmri.util.JmriJFrameTest {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

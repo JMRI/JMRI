@@ -9,7 +9,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AcelaAddressTest {
 
@@ -20,7 +20,6 @@ public class AcelaAddressTest {
         Assert.assertTrue("valid format - AS2", NameValidity.VALID == AcelaAddress.validSystemNameFormat("AS2", 'S', "A"));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

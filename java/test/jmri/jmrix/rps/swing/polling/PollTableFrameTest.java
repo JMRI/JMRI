@@ -7,13 +7,12 @@ import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PollTableFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private RpsSystemConnectionMemo memo = null;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

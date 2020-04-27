@@ -247,9 +247,9 @@ public class JUnitUtil {
                         System.err.println("---- This stack ------");
                         Thread.dumpStack();
                         System.err.println("---- Last setUp stack ------");
-                        for (StackTraceElement e : lastSetUpStackTrace) System.err.println("	at "+e);
+                        for (StackTraceElement e : lastSetUpStackTrace) System.err.println("    at " + e);
                         System.err.println("---- Last tearDown stack ------");
-                        for (StackTraceElement e : lastTearDownStackTrace) System.err.println("	at "+e);
+                        for (StackTraceElement e : lastTearDownStackTrace) System.err.println("    at " + e);
                         System.err.println("----------------------");
                     }
                 }
@@ -312,9 +312,9 @@ public class JUnitUtil {
                         System.err.println("---- This stack ------");
                         Thread.dumpStack();
                         System.err.println("---- Last setUp stack ------");
-                        for (StackTraceElement e : lastSetUpStackTrace) System.err.println("	at "+e);
+                        for (StackTraceElement e : lastSetUpStackTrace) System.err.println("    at " + e);
                         System.err.println("---- Last tearDown stack ------");
-                        for (StackTraceElement e : lastTearDownStackTrace) System.err.println("	at "+e);
+                        for (StackTraceElement e : lastTearDownStackTrace) System.err.println("    at " + e);
                         System.err.println("----------------------");
                     }
                 }

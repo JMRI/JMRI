@@ -6,14 +6,14 @@
  * <h3>Connectivity</h3>
  * This is coded and stored as the following: (Some graphical attributes removed, reordered)<br>
 <pre>
-    &lt;layoutturnout ident="TO1" type="1" continuing="2" ver="1" connectaname="T3" connectbname="T2" connectcname="T1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" /&gt;
-    &lt;layoutturnout ident="TO2" type="2" continuing="2" ver="1" connectaname="T4" connectbname="T2" connectcname="T1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" /&gt;
+    &lt;layoutturnout ident="TO1" type="RH_TURNOUT" continuing="2" ver="1" connectaname="T3" connectbname="T2" connectcname="T1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" /&gt;
+    &lt;layoutturnout ident="TO2" type="LH_TURNOUT" continuing="2" ver="1" connectaname="T4" connectbname="T2" connectcname="T1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" /&gt;
     &lt;tracksegment ident="T1" connect1name="TO1" type1="TURNOUT_C" connect2name="TO2" type2="TURNOUT_C" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" /&gt;
     &lt;tracksegment ident="T2" connect1name="TO1" type1="TURNOUT_B" connect2name="TO2" type2="TURNOUT_B" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" /&gt;
     &lt;tracksegment ident="T3" connect1name="EB1" type1="POS_POINT" connect2name="TO1" type2="TURNOUT_A" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" /&gt;
     &lt;tracksegment ident="T4" connect1name="TO2" type1="TURNOUT_A" connect2name="EC1" type2="POS_POINT" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" /&gt;
-    &lt;positionablepoint ident="EB1" type="2" connect1name="T3" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" /&gt;
-    &lt;positionablepoint ident="EC1" type="3" connect1name="T4" linkedpanel="" linkpointid="" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" /&gt;
+    &lt;positionablepoint ident="EB1" type="END_BUMPER" connect1name="T3" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" /&gt;
+    &lt;positionablepoint ident="EC1" type="EDGE_CONNECTOR" connect1name="T4" linkedpanel="" linkpointid="" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" /&gt;
 </pre>
 <p>
  * <a href="doc-files/SidingConnections.png"><img src="doc-files/SidingConnections.png" alt="Example interconnections" height="33%" width="33%"></a>
@@ -44,7 +44,31 @@
  *      {@link jmri.jmrit.display.layoutEditor.MultiIconEditor}, and {@link jmri.jmrit.display.layoutEditor.MultiSensorIconFrame}, extend Swing or AWT components. 
  *      (Although {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent}
  *       sounds like a base class for others, it's not; it's part of the {@link jmri.jmrit.display.layoutEditor.LayoutEditor} implementation.)
+ * <li>Three subpackages provide specific services:
+ *   <ul>
+ *   <li>{@link jmri.jmrit.display.layoutEditor.blockRoutingTable}
+ *   <li>{@link jmri.jmrit.display.layoutEditor.LayoutEditorDialogs}
+ *   <li>{@link jmri.jmrit.display.layoutEditor.configurexml}
+ *   </ul>
  * </ul>
+ * 
+ * <h3>GUI</h3>
+ * The Layout Editor window consists of a menu bar and an upper tool-bar that are all made with 
+ * (basically) standard Swing components.  Below that is a JPane containing the 
+ * layout drawing itself.
+ * <p>
+ * The LayoutTrack tree defines <code>draw1</code> and <code>draw2</code> methods that 
+ * draw two different representations of the track elements.  These are only 
+ * invoked from {}@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent}. LayoutEditorComponent is 
+ * a JComponent with a {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent#paint} public method
+ * that invokes a series of internal private methods to display the layers of the layout drawing. That in turn is invoked via the usual repaint() mechanism.
+ * Each of those layer private methods sets up graphics and method options, then
+ * calls {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent#draw1}
+ * or {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent#draw2}. Those in turn
+ * loop through a list from {@link jmri.jmrit.display.layoutEditor.LayoutEditor#getLayoutTracks()}
+ * calling their individual {@link jmri.jmrit.display.layoutEditor.LayoutTrack#draw1} and {@link jmri.jmrit.display.layoutEditor.LayoutTrack#draw1}
+ * methods.
+ * 
  * 
  * <h3>Persistance</h3>
  * The classes that have ConfigureXML partner classes are:

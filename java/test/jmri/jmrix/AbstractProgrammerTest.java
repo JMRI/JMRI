@@ -61,7 +61,6 @@ public class AbstractProgrammerTest extends jmri.ProgrammerTestBase {
         }
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

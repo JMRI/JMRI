@@ -10,7 +10,7 @@ import org.junit.Before;
 /**
  * Tests for the Route interface
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2007
+ * @author Bob Jacobsen Copyright (C) 2006, 2007
  */
 public class RouteTest {
 

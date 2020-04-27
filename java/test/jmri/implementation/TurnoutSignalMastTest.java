@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TurnoutSignalMastTest {
 
@@ -130,7 +130,6 @@ public class TurnoutSignalMastTest {
         Assert.assertEquals(Turnout.THROWN, it3.getCommandedState());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

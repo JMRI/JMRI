@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * Uses (creates, modifies, destroys) files in the local preferences directory
  * and the custom <user.home>/temp/xml directory
  *
- * @author	Bob Jacobsen Copyright 2001
+ * @author Bob Jacobsen Copyright 2001
  */
 public class XmlFileTest {
 
@@ -252,7 +252,6 @@ public class XmlFileTest {
 
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

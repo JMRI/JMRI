@@ -1,9 +1,9 @@
 /**
  * JMRIClientInterfaceScaffold.java
  *
- * Description:	Stands in for the JMRIClientTrafficController class
+ * Stands in for the JMRIClientTrafficController class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.jmriclient;
 

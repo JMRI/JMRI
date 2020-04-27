@@ -14,7 +14,7 @@ import org.junit.Test;
  * Everything Consist: Everything Import: Everything EngineManager: Engine
  * register/deregister EngineManager: Consists
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class EngineModelsTest extends OperationsTestCase {
 

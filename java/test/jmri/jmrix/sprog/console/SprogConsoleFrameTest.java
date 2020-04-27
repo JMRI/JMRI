@@ -9,7 +9,7 @@ import org.junit.*;
 /**
  * Test simple functioning of SprogConsoleFrame.
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SprogConsoleFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -24,9 +24,9 @@ public class SprogConsoleFrameTest extends jmri.util.JmriJFrameTestBase {
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
         m.configureCommandStation();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new SprogConsoleFrame(m);
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new SprogConsoleFrame(m);
+        }
     }
 
     @After

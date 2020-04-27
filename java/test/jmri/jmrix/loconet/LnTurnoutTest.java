@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.loconet.LnTurnout class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 

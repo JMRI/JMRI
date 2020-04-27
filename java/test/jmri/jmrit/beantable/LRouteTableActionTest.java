@@ -27,7 +27,7 @@ import jmri.util.JUnitUtil;
 /**
  * Tests for the jmri.jmrit.beantable.LRouteTableAction class
  *
- * @author	Pete Cressman Copyright 2009
+ * @author Pete Cressman Copyright 2009
  */
 public class LRouteTableActionTest {
 

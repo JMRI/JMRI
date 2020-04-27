@@ -18,7 +18,6 @@ public class LnReporterManagerTest extends jmri.managers.AbstractReporterMgrTest
 
     private LnTrafficController tc = null;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

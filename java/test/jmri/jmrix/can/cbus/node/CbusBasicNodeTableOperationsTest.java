@@ -18,7 +18,6 @@ public class CbusBasicNodeTableOperationsTest {
         Assert.assertNotNull("exists",new CbusBasicNodeTableOperations(null,1,2));
     }
     
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

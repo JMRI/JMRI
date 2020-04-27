@@ -492,16 +492,16 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         if (index == internalSourceIndex) {
             clock.setInternalMaster(true, true);
         } else {
-	    // only change if new source is okay with current rate
-	    if (InstanceManager.getDefault(jmri.ClockControl.class).requiresIntegerRate()) {
-		double rate = clock.userGetRate();
-		double frac = rate - (int) rate;
-		if (frac > 0.001) {
-		    JOptionPane.showMessageDialog(this, Bundle.getMessage("NonIntegerErrorCantChangeSource"),
-		            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-		    timeSourceBox.setSelectedIndex(internalSourceIndex);
-		    return;
-		}
+            // only change if new source is okay with current rate
+            if (InstanceManager.getDefault(jmri.ClockControl.class).requiresIntegerRate()) {
+                double rate = clock.userGetRate();
+                double frac = rate - (int) rate;
+                if (frac > 0.001) {
+                    JOptionPane.showMessageDialog(this, Bundle.getMessage("NonIntegerErrorCantChangeSource"),
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    timeSourceBox.setSelectedIndex(internalSourceIndex);
+                    return;
+                }
             }
             clock.setInternalMaster(false, true);
         }

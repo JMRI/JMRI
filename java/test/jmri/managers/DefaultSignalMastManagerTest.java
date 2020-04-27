@@ -17,7 +17,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DefaultSignalMastManagerTest extends AbstractProvidingManagerTestBase<jmri.SignalMastManager,SignalMast> {
 
@@ -101,7 +101,6 @@ public class DefaultSignalMastManagerTest extends AbstractProvidingManagerTestBa
         jmri.util.JUnitAppender.assertErrorMessage("Signal repeater IM332:IM331 already exists the wrong way");
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

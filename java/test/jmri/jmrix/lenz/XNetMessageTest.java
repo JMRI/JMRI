@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.lenz.XNetMessage class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class XNetMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
@@ -1535,7 +1535,6 @@ public class XNetMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

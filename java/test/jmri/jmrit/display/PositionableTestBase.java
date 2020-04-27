@@ -16,7 +16,7 @@ import org.junit.Test;
 /**
  * Base class for tests for Positionable objects. 
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 abstract public class PositionableTestBase {
 

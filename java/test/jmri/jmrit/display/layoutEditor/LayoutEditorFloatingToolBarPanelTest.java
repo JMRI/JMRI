@@ -8,7 +8,7 @@ import org.junit.*;
 /**
  * Test simple functioning of LayoutEditorFloatingToolBarPanel
  *
- * @author	Bob Jacobsen Copyright (C) 2019
+ * @author Bob Jacobsen Copyright (C) 2019
  */
 public class LayoutEditorFloatingToolBarPanelTest {
 

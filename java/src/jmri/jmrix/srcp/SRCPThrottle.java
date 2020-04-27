@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * considered long addresses. This is not the NCE system standard, but is used
  * as an expedient here.
  *
- * @author	Bob Jacobsen Copyright (C) 2001,2008
+ * @author Bob Jacobsen Copyright (C) 2001,2008
  */
 public class SRCPThrottle extends AbstractThrottle {
 
@@ -179,20 +179,20 @@ public class SRCPThrottle extends AbstractThrottle {
         ((SRCPBusConnectionMemo) adapterMemo).getTrafficController().sendSRCPMessage(m, null);
     }
 
-    @Override	
-    public void setSpeedStepMode(SpeedStepMode Mode) {	
-        super.setSpeedStepMode(Mode);	
-        switch (Mode) {	
-            case NMRA_DCC_14:	
-            case NMRA_DCC_27:	
-            case NMRA_DCC_28:	
+    @Override
+    public void setSpeedStepMode(SpeedStepMode Mode) {
+        super.setSpeedStepMode(Mode);
+        switch (Mode) {
+            case NMRA_DCC_14:
+            case NMRA_DCC_27:
+            case NMRA_DCC_28:
             case NMRA_DCC_128:
                 maxsteps = Mode.numSteps;
-                break;	
-            default:	
-                maxsteps = 126;	
                 break;
-        }	
+            default:
+                maxsteps = 126;
+                break;
+        }
     }
 
     @Override

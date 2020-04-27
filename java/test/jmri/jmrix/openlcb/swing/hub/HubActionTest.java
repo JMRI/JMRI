@@ -24,7 +24,6 @@ public class HubActionTest {
         Assert.assertNotNull("Action object non-null", h);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

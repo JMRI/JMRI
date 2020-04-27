@@ -346,7 +346,14 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>
+	            Lots of internal work to improve Layout Editor structure
+	            so that new features can be added more reliably. Please
+	            keep an eye out for any new issues!
+	            <p>
+	            Note that files written by 4.19.6 may not be readable 
+	            by JMRI 4.19.5 and before.
+	        </li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>

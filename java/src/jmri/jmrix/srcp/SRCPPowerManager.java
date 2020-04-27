@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * PowerManager implementation for controlling layout power
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class SRCPPowerManager implements PowerManager, SRCPListener {
 

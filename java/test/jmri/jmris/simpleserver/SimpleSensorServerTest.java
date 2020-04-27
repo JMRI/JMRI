@@ -153,7 +153,6 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
          assertThat(sb.toString()).isEqualTo("SENSOR IS1 UNKNOWN\n").withFailMessage("sendStatus check");
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     @Override
     public void setUp() {

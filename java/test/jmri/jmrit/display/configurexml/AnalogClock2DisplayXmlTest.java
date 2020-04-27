@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * AnalogClock2DisplayXmlTest.java
  *
- * Description: tests for the AnalogClock2DisplayXml class
+ * Test for the AnalogClock2DisplayXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class AnalogClock2DisplayXmlTest {
       Assert.assertNotNull("AnalogClock2DisplayXml constructor",new AnalogClock2DisplayXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

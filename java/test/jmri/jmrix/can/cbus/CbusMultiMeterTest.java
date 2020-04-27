@@ -22,7 +22,6 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

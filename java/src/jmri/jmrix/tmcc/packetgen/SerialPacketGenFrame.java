@@ -11,7 +11,7 @@ import jmri.util.StringUtil;
 /**
  * Frame for user input of serial messages.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2002, 2003, 2006
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.tmcc.SerialListener {
 

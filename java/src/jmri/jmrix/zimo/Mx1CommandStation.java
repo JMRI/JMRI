@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 /**
  * Defines standard operations for Dcc command stations.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  *
  * Adapted by Sip Bosch for use with Zimo Mx-1
  *

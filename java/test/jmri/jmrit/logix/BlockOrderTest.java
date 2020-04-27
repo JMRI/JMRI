@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class BlockOrderTest {
 
@@ -64,7 +64,6 @@ public class BlockOrderTest {
         Assert.assertEquals(20, bo.getEntranceSpace(), 0);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();        _blkMgr = new OBlockManager();

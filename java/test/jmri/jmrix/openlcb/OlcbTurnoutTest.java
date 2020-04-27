@@ -26,7 +26,7 @@ import jmri.util.ThreadingUtil;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbTurnout class.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010, 2011
+ * @author Bob Jacobsen Copyright 2008, 2010, 2011
  */
 public class OlcbTurnoutTest {
     private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutTest.class);
@@ -389,7 +389,6 @@ public class OlcbTurnoutTest {
 
     private OlcbTestInterface t;
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

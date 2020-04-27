@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * JMRIClientReporterManagerXmlTest.java
  *
- * Description: tests for the JMRIClientReporterManagerXml class
+ * Test for the JMRIClientReporterManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class JMRIClientReporterManagerXmlTest {
       Assert.assertNotNull("JMRIClientReporterManagerXml constructor",new JMRIClientReporterManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

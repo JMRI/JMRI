@@ -12,7 +12,7 @@ import jmri.jmrix.AbstractThrottle;
  * Addresses of 99 and below are considered short addresses, and over 100 are
  * considered long addresses.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006
+ * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
 public class SerialThrottle extends AbstractThrottle {
 

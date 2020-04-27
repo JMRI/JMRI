@@ -6,7 +6,7 @@ import org.junit.Before;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class Dcc4PcReporterTest extends jmri.implementation.AbstractRailComReporterTest {
 

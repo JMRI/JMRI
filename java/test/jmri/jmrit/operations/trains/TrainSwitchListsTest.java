@@ -530,7 +530,6 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("Place engine on track", Track.OKAY, e1.setLocation(locationA, yardA));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

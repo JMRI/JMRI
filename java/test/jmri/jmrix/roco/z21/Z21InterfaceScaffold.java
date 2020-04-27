@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Use an object of this type as a Z21TrafficController in tests
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
  */
 public class Z21InterfaceScaffold extends Z21TrafficController {
 

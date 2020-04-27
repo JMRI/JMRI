@@ -1,7 +1,7 @@
 /**
  * XpaInterfaceScaffold.java
  *
- * Description:	Stands in for the XpaTrafficController class
+ * Stands in for the XpaTrafficController class
  *
  * @author Bob Jacobsen
  */

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * Neither Ashenfelter nor Bucher provide any guarantee as to the intellectual
  * property status of this algorithm. Use it at your own risk.
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class InitialAlgorithm implements Calculator {
 
@@ -152,9 +152,9 @@ public class InitialAlgorithm implements Calculator {
         double Ca, Cb, Cc, Cd, Ce, Cf, Ci, Cj, Cx, Cy, Cz;
         double r0i, r0j, r0k, r0l, r01, r02;//     sat. position, range:
         double x1, y1, z1, x2, y2, z2, e1, e2;//       xi, yi, zi, ri
-        //	  xj, yj, zj, rj
-        //	  xk, yk, zk, rk
-        //	  xl, yl, zl, rl (rel.)
+        // xj, yj, zj, rj
+        // xk, yk, zk, rk
+        // xl, yl, zl, rl (rel.)
 
         // in case of early error return, make it far away
         x0 = y0 = z0 = r0 = 9.9999999e99;
@@ -320,7 +320,7 @@ public class InitialAlgorithm implements Calculator {
                     + (r0k - r01) * (r0k - r01) + (r0l - r01) * (r0l - r01)) / 4);
             log.debug("e1 = " + e1);
             if (e1 > 1e-4) {
-                x1 = y1 = z1 = r01 = 9.9999999e99;//	  solution 1 NG
+                x1 = y1 = z1 = r01 = 9.9999999e99; // solution 1 NG
             }
             r0i = Math.sqrt((xi - x2) * (xi - x2) + (yi - y2) * (yi - y2) + (zi - z2) * (zi - z2)) - ri;
             r0j = Math.sqrt((xj - x2) * (xj - x2) + (yj - y2) * (yj - y2) + (zj - z2) * (zj - z2)) - rj;
@@ -331,7 +331,7 @@ public class InitialAlgorithm implements Calculator {
                     + (r0k - r02) * (r0k - r02) + (r0l - r02) * (r0l - r02)) / 4);
             log.debug("e2 = " + e2);
             if (e2 > 1e-4) {
-                x2 = y2 = z2 = r02 = 9.9999999e99; //	  solution 2 NG
+                x2 = y2 = z2 = r02 = 9.9999999e99; // solution 2 NG
             }
         } else { //   Invalid value of ngps
             log.warn("ngps no good: " + ngps);

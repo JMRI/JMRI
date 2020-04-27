@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * JMRIClientSensorManagerXmlTest.java
  *
- * Description: tests for the JMRIClientSensorManagerXml class
+ * Test for the JMRIClientSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class JMRIClientSensorManagerXmlTest {
       Assert.assertNotNull("JMRIClientSensorManagerXml constructor",new JMRIClientSensorManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

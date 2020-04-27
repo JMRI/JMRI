@@ -18,7 +18,7 @@ import jmri.util.JUnitUtil;
 /**
  * Tests for the Operations EnginesSetFrame class
  *
- * @author	Dan Boudreau Copyright (C) 2010
+ * @author Dan Boudreau Copyright (C) 2010
  *
  */
 public class EngineSetFrameTest extends OperationsTestCase {

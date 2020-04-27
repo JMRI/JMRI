@@ -13,7 +13,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PositionablePropertiesUtilTest {
 
@@ -50,7 +50,6 @@ public class PositionablePropertiesUtilTest {
         Assert.assertEquals("No Change Font",f,label.getFont());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

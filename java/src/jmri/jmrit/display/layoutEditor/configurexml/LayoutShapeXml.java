@@ -25,9 +25,9 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
     }
     
     // default mapping fine
-    EnumIoNames<LayoutShape.LayoutShapeType> sTypeEnumMap 
+    static final EnumIoNames<LayoutShape.LayoutShapeType> sTypeEnumMap 
             = new EnumIoNames<>(LayoutShape.LayoutShapeType.class);
-    EnumIoNames<LayoutShape.LayoutShapePointType> pTypeEnumMap 
+    static final EnumIoNames<LayoutShape.LayoutShapePointType> pTypeEnumMap 
             = new EnumIoNames<>(LayoutShape.LayoutShapePointType.class);
     
     /**

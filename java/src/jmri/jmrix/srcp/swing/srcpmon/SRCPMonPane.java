@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Pane displaying (and logging) SRCP command messages
  *
- * @author	Bob Jacobsen Copyright (C) 2008
- * @author	Paul Bender Copyright (C) 2018
+ * @author Bob Jacobsen Copyright (C) 2008
+ * @author Paul Bender Copyright (C) 2018
  */
 public class SRCPMonPane extends jmri.jmrix.AbstractMonPane implements SRCPListener {
 
@@ -39,7 +39,7 @@ public class SRCPMonPane extends jmri.jmrix.AbstractMonPane implements SRCPListe
             tc = _memo.getTrafficController();
             // connect to TrafficController
             tc.addSRCPListener(this);
-	}
+        }
     }
 
     @Override

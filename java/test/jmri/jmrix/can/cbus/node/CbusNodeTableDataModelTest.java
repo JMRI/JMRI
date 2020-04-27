@@ -367,7 +367,6 @@ public class CbusNodeTableDataModelTest {
     private TrafficControllerScaffold tcis;
     private CbusNodeTableDataModel t;
     
-    // The minimal setup for log4J
     @Before
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();

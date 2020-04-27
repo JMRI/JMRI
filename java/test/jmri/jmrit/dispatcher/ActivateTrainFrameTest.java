@@ -28,7 +28,6 @@ public class ActivateTrainFrameTest {
         JUnitUtil.dispose(d);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.loconet.sdfeditor.EditorPane class.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class EditorPaneTest {
 
@@ -26,7 +26,6 @@ public class EditorPaneTest {
         f.dispose();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

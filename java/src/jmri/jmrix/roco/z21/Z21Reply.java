@@ -12,8 +12,8 @@ import jmri.DccLocoAddress;
  * numeric data is sent in little endian format.
  * <p>
  *
- * @author	Bob Jacobsen Copyright (C) 2003
- * @author	Paul Bender Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2003
+ * @author Paul Bender Copyright (C) 2014
  */
 public class Z21Reply extends AbstractMRReply {
 

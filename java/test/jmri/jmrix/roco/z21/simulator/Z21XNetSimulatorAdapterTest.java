@@ -10,10 +10,10 @@ import org.junit.Test;
 
 /**
  * Z21XNetSimulatorAdapterTest.java
- * Description:	tests for the jmri.jmrix.roco.z21.simulator.z21XNetSimulatorAdapter
+ * Test for the jmri.jmrix.roco.z21.simulator.z21XNetSimulatorAdapter
  * class
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class Z21XNetSimulatorAdapterTest {
 
@@ -97,7 +97,6 @@ public class Z21XNetSimulatorAdapterTest {
     }
 
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

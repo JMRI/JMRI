@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JUnit tests for the SpecificTrafficController class
  *
- * @author	Bob Jacobsen Copyright 2005, 2007, 2008 Converted to multiple
+ * @author Bob Jacobsen Copyright 2005, 2007, 2008 Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
  */
@@ -232,7 +232,6 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
     static DataOutputStream tistream; // tests write to this
     static DataInputStream istream;  // so the traffic controller can read from this
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
