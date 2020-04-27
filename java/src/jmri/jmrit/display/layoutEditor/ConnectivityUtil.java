@@ -295,10 +295,10 @@ public class ConnectivityUtil {
             }
             if (cType == HitPointType.POS_POINT) {
                 // reached anchor point or end bumper
-                if (((PositionablePoint) cObject).getType() == PositionablePoint.END_BUMPER) {
+                if (((PositionablePoint) cObject).getType() == PositionablePoint.PointType.END_BUMPER) {
                     // end of line
                     trackSegment = null;
-                } else if (((PositionablePoint) cObject).getType() == PositionablePoint.ANCHOR || (((PositionablePoint) cObject).getType() == PositionablePoint.EDGE_CONNECTOR)) {
+                } else if (((PositionablePoint) cObject).getType() == PositionablePoint.PointType.ANCHOR || (((PositionablePoint) cObject).getType() == PositionablePoint.PointType.EDGE_CONNECTOR)) {
                     // proceed to next track segment if within the same Block
                     if (((PositionablePoint) cObject).getConnect1() == trackSegment) {
                         trackSegment = ((PositionablePoint) cObject).getConnect2();
@@ -1312,7 +1312,7 @@ public class ConnectivityUtil {
             case POS_POINT:
                 if (currentNode instanceof PositionablePoint) {
                     PositionablePoint p = (PositionablePoint) currentNode;
-                    if (p.getType() == PositionablePoint.END_BUMPER) {
+                    if (p.getType() == PositionablePoint.PointType.END_BUMPER) {
                         log.warn("Attempt to search beyond end of track");
                         return null;
                     }
@@ -1695,7 +1695,7 @@ public class ConnectivityUtil {
 
             if (nextType == HitPointType.POS_POINT) {
                 PositionablePoint p = (PositionablePoint) nextLayoutTrack;
-                if (p.getType() == PositionablePoint.END_BUMPER) {
+                if (p.getType() == PositionablePoint.PointType.END_BUMPER) {
                     hitEnd = true;
                     hasNode = true;
                 } else {
@@ -2446,14 +2446,14 @@ public class ConnectivityUtil {
                 // this is a positionable point
                 if (conType == HitPointType.POS_POINT) {
                     // reached anchor point or end bumper
-                    if (((PositionablePoint) conLayoutTrack).getType() == PositionablePoint.END_BUMPER) {
+                    if (((PositionablePoint) conLayoutTrack).getType() == PositionablePoint.PointType.END_BUMPER) {
                         // end of line without reaching 'nextLayoutBlock'
                         if (log.isDebugEnabled()) {
                             log.info("end of line without reaching {}", nextLayoutBlock.getId());
                         }
                         curTrackSegment = null;
-                    } else if (((PositionablePoint) conLayoutTrack).getType() == PositionablePoint.ANCHOR
-                            || ((PositionablePoint) conLayoutTrack).getType() == PositionablePoint.EDGE_CONNECTOR) {
+                    } else if (((PositionablePoint) conLayoutTrack).getType() == PositionablePoint.PointType.ANCHOR
+                            || ((PositionablePoint) conLayoutTrack).getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
                         // proceed to next track segment if within the same Block
                         if (((PositionablePoint) conLayoutTrack).getConnect1() == curTrackSegment) {
                             curTrackSegment = (((PositionablePoint) conLayoutTrack).getConnect2());

@@ -493,7 +493,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                     Object obj = nxPairs.getEndPointLocation((NamedBean) dest.get(row), panel);
                     if (obj instanceof PositionablePoint) {
                         PositionablePoint point = (PositionablePoint) obj;
-                        if (point.getType() == PositionablePoint.END_BUMPER) {
+                        if (point.getType() == PositionablePoint.PointType.END_BUMPER) {
                             JOptionPane.showMessageDialog(null, Bundle.getMessage("EndBumperPoint"));  // NOI18N
                             return false;
                         }

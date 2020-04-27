@@ -1277,7 +1277,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 if (t.getType1() == HitPointType.POS_POINT) {
                     p = (PositionablePoint) t.getConnect1();
 
-                    if (p.getType() == PositionablePoint.END_BUMPER) {
+                    if (p.getType() == PositionablePoint.PointType.END_BUMPER) {
                         if (p.getEastBoundSignalMast() != null) {
                             return p.getEastBoundSignalMast();
                         }
@@ -1291,7 +1291,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 if (t.getType2() == HitPointType.POS_POINT) {
                     p = (PositionablePoint) t.getConnect2();
 
-                    if (p.getType() == PositionablePoint.END_BUMPER) {
+                    if (p.getType() == PositionablePoint.PointType.END_BUMPER) {
                         if (p.getEastBoundSignalMast() != null) {
                             return p.getEastBoundSignalMast();
                         }
@@ -1343,7 +1343,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 if (t.getType1() == HitPointType.POS_POINT) {
                     p = (PositionablePoint) t.getConnect1();
 
-                    if (p.getType() == PositionablePoint.END_BUMPER) {
+                    if (p.getType() == PositionablePoint.PointType.END_BUMPER) {
                         if (p.getEastBoundSensor() != null) {
                             return p.getEastBoundSensor();
                         }
@@ -1357,7 +1357,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 if (t.getType2() == HitPointType.POS_POINT) {
                     p = (PositionablePoint) t.getConnect2();
 
-                    if (p.getType() == PositionablePoint.END_BUMPER) {
+                    if (p.getType() == PositionablePoint.PointType.END_BUMPER) {
                         if (p.getEastBoundSensor() != null) {
                             return p.getEastBoundSensor();
                         }

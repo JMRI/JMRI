@@ -134,7 +134,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         @Nonnull
         public String outputFromEnum(@Nonnull T e) {
             int ordinal = e.ordinal();
-            return ""+ordinal;
+            return Integer.toString(ordinal);
         }
         
         /** {@inheritDoc} */
@@ -185,6 +185,27 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
                 T retval = mapToEnum.get(s);
                 log.trace("from String {} get {}} for {}", s, retval, clazz);
                 return retval;
+        }
+    }
+
+    /**
+     * Support for Enum I/O to XML using the enum's element names;
+     * for backward compatibility, it will also accept ordinal 
+     * numbers when reading.
+     */
+    public static class EnumIoNamesNumbers <T extends Enum<T>> extends EnumIoNames<T> { // public to be usable by adapters in other configXML packages
+    
+        /**
+         * This constructor converts to and from strings
+         * using the enum element names and, on read only, ordinal numbers
+         */
+        public EnumIoNamesNumbers(@Nonnull Class<T> clazz) {
+            super(clazz);
+            
+            for (T t : clazz.getEnumConstants() ) { // append to existing map
+                mapToEnum.put(Integer.toString(t.ordinal()), t);
+            }
+            
         }
     }
 
