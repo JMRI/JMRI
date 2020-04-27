@@ -2,7 +2,6 @@ package jmri.jmrix.openlcb.swing.protocoloptions;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
-import jmri.jmrix.openlcb.swing.monitor.MonitorAction;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 

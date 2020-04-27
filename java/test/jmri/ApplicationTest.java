@@ -33,9 +33,9 @@ public class ApplicationTest {
         try {
             jmri.Application.setApplicationName(name);
         } catch (IllegalArgumentException ex) {
-            log.warn("Unable to set application name " + ex);
+            log.warn("Unable to set application name {}", ex);
         } catch (IllegalAccessException ex) {
-            log.warn("Unable to set application name " + ex);
+            log.warn("Unable to set application name {}", ex);
         }
     }
 

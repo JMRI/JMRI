@@ -3,7 +3,6 @@ package jmri.jmrit.beantable;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.*;
-import org.junit.Before;
 
 /**
  *

@@ -67,7 +67,7 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         try {
             t.setCommandedState(jmri.Turnout.CLOSED);
         } catch (Exception e) {
-            log.error("TO exception: " + e);
+            log.error("TO exception: {}", e);
         }
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 

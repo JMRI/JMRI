@@ -2,8 +2,6 @@ package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.display.DisplayFrame;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JUnitUtil;
 import org.junit.After;

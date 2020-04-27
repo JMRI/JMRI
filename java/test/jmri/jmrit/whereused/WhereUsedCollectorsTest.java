@@ -1,13 +1,9 @@
 package jmri.jmrit.whereused;
 
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
+
 import jmri.InstanceManager;
 import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.ShutDownManager;
-import jmri.jmrit.entryexit.DestinationPoints;
-import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;

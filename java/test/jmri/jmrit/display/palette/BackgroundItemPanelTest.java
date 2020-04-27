@@ -2,7 +2,6 @@ package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.display.DisplayFrame;
-import jmri.jmrit.display.EditorScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

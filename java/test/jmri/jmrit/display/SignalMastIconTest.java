@@ -6,7 +6,6 @@ import javax.swing.JLabel;
 import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.implementation.DefaultSignalHead;
-import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 

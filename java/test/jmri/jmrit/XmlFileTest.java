@@ -100,7 +100,7 @@ public class XmlFileTest {
                         log.debug(ex.toString());
                     }
 
-                    log.debug("DTD: "+theDTD+" SCHEMA: "+theSchema+" ("+validate+") expects "+passes+" was "+result+(passes!=result?" !!!!!!!!!!!!!!!!!!!!!!!!!":"") );
+                    log.debug("DTD: {} SCHEMA: {} ({}) expects {} was {}{}", theDTD, theSchema, validate, passes, result, passes != result ? " !!!!!!!!!!!!!!!!!!!!!!!!!" : "");
                     Assert.assertEquals("DTD: "+theDTD+" SCHEMA: "+theSchema+" ("+validate+")", passes, result);
 
                 }

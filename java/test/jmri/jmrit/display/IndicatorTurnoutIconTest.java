@@ -2,7 +2,7 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import jmri.jmrit.display.panelEditor.PanelEditor;
+
 import org.junit.*;
 
 /**

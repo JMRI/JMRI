@@ -4,7 +4,6 @@ import jmri.Block;
 import jmri.BlockManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
-import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 

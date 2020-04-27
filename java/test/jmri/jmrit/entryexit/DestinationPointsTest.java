@@ -2,11 +2,10 @@ package jmri.jmrit.entryexit;
 
 import java.awt.GraphicsEnvironment;
 import java.util.HashMap;
-import jmri.BlockManager;
+
 import jmri.InstanceManager;
 import jmri.MemoryManager;
 import jmri.SensorManager;
-import jmri.ShutDownManager;
 import jmri.TurnoutManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;

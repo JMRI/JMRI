@@ -26,7 +26,7 @@ public class TreeModelTest {
         try {
             Assert.assertNotNull("exists", TreeModel.instance());
         } catch (Throwable e) {
-            log.warn("TreeModelTest caught "+e);
+            log.warn("TreeModelTest caught {}", e);
             if (e instanceof UnsatisfiedLinkError) {
                 log.info("TreeModel.instance threw UnsatisfiedLinkError, which means we can't test on this platform");
                 return;

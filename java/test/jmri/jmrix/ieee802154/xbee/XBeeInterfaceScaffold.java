@@ -70,7 +70,7 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
     @Override
     public void sendXBeeMessage(XBeeMessage m, XBeeListener replyTo) {
         if (log.isDebugEnabled()) {
-            log.debug("sendXBeeMessage [" + m + "]");
+            log.debug("sendXBeeMessage [{}]", m);
         }
         // save a copy
         outbound.addElement(m);
@@ -83,7 +83,7 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
     public void sendTestMessage(XBeeReply m) {
         // forward a test message to XBeeListeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
+            log.debug("sendTestMessage    [{}]", m);
         }
         notifyReply(m, null);
         return;

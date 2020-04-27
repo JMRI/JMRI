@@ -2,9 +2,7 @@ package jmri.jmrix.rps;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Editor;
 import jmri.util.JUnitUtil;

@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.operators.*;
-import org.netbeans.jemmy.operators.JMenuOperator;
 
 
 /**

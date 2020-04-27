@@ -3,9 +3,7 @@ package jmri.jmrit.display.layoutEditor;
 import org.junit.*;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.util.JUnitUtil;
 
 /**

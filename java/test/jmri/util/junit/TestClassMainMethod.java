@@ -1,6 +1,5 @@
 package jmri.util.junit;
 
-import org.assertj.core.internal.Failures;
 import org.junit.platform.launcher.Launcher;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;
 import org.junit.platform.launcher.TestPlan;
@@ -9,11 +8,9 @@ import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
-import org.junit.runner.notification.Failure;
 
 import java.io.PrintWriter;
 import java.lang.reflect.*;
-import java.util.List;
 
 import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.*;

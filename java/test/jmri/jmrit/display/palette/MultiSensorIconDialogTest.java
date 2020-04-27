@@ -1,10 +1,8 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
-import jmri.InstanceManager;
+
 import jmri.Sensor;
-import jmri.ShutDownManager;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.picker.PickListModel;

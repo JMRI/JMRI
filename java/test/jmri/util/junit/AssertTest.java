@@ -23,7 +23,7 @@ public class AssertTest {
     @Test
     public void assertDisplay() {
         // show the assert status
-        log.info("AssertTest: assert are "+(assertsEnabled ? "enabled" : "disabled"));
+        log.info("AssertTest: assert are {}", assertsEnabled ? "enabled" : "disabled");
         System.err.println("AssertTest: asserts are "+(assertsEnabled ? "enabled" : "disabled"));
     }
 

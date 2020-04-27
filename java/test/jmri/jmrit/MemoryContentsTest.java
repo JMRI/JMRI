@@ -210,7 +210,7 @@ public class MemoryContentsTest {
 
         // attempt to delete the file if debug logging is not enabled.
         if (log.isDebugEnabled()) {
-            log.debug("Path to written hex file is: " + filename);
+            log.debug("Path to written hex file is: {}", filename);
         } else {
             MemoryContentsTestWrite_24AddrFile.delete();
         }

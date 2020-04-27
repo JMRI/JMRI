@@ -1,12 +1,11 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
-import jmri.ShutDownManager;
 import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;

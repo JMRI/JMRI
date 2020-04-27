@@ -16,9 +16,6 @@ import org.junit.*;
 import org.netbeans.jemmy.operators.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JTableOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
@@ -106,7 +103,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         am.dispose();
 
         // Open Speed pane to test Speed menu, which displays a JOptionPane
-        log.debug("Speed pane started at " + java.time.LocalTime.now()); // debug
+        log.debug("Speed pane started at {}", java.time.LocalTime.now()); // debug
         JFrameOperator main = new JFrameOperator(Bundle.getMessage("TitleTurnoutTable")); 
         // Use GUI menu to open Speeds pane:
 	

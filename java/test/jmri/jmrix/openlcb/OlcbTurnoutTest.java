@@ -85,7 +85,7 @@ public class OlcbTurnoutTest {
         JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
         Assert.assertEquals("called twice",2,l.getCallCount());
         Assert.assertTrue(s.getCommandedState() == Turnout.THROWN);
-        log.debug("recv msg: " + t.tc.rcvMessage + " header " + Integer.toHexString(t.tc.rcvMessage.getHeader()));
+        log.debug("recv msg: {} header {}", t.tc.rcvMessage, Integer.toHexString(t.tc.rcvMessage.getHeader()));
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.8").match(t.tc.rcvMessage));
 
         l.resetPropertyChanged();
