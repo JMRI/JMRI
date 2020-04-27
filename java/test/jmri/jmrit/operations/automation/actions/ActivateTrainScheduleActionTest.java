@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  *
  * @author Paul Bender Copyright (C) 2017
- * @author Dan Boudreau Copyright (C) 2018	
+ * @author Dan Boudreau Copyright (C) 2018
  */
 public class ActivateTrainScheduleActionTest extends OperationsTestCase {
 

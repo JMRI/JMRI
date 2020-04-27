@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * AcelaTurnoutManagerXmlTest.java
  *
- * Description: tests for the AcelaTurnoutManagerXml class
+ * Test for the AcelaTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class AcelaTurnoutManagerXmlTest {
       Assert.assertNotNull("AcelaTurnoutManagerXml constructor",new AcelaTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

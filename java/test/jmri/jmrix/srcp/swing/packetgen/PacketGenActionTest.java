@@ -21,7 +21,6 @@ public class PacketGenActionTest {
         Assert.assertNotNull("PacketGenAction exists",new PacketGenAction("Test",memo) );
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -10,9 +10,9 @@ import org.junit.Test;
 /**
  * XBeeReplyTest.java
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeReply class
+ * Test for the jmri.jmrix.ieee802154.xbee.XBeeReply class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class XBeeReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
@@ -78,7 +78,6 @@ public class XBeeReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("xbee response after set",xbresponse,msg.getXBeeResponse());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -88,7 +87,7 @@ public class XBeeReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	m = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 

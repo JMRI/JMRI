@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * SRCPTurnoutManagerXmlTest.java
  *
- * Description: tests for the SRCPTurnoutManagerXml class
+ * Test for the SRCPTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class SRCPTurnoutManagerXmlTest {
       Assert.assertNotNull("SRCPTurnoutManagerXml constructor",new SRCPTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

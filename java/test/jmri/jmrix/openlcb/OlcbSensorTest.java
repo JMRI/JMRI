@@ -28,7 +28,7 @@ import jmri.util.junit.rules.RetryRule;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensor class.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010
+ * @author Bob Jacobsen Copyright 2008, 2010
  */
 public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -36,10 +36,12 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public RetryRule retryRule = new RetryRule(3);  // allow 3 retries of tests
 
     private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class);
-    protected PropertyChangeListenerScaffold l; 
+    protected PropertyChangeListenerScaffold l;
 
     @Override
-    public int numListeners() {return 0;}
+    public int numListeners() {
+        return 0;
+    }
 
     @Override
     public void checkOnMsgSent() {
@@ -50,7 +52,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public void checkOffMsgSent() {
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(ti.tc.rcvMessage));
     }
-        
+
     @Override
     public void checkStatusRequestMsgSent() {
         ti.flush();
@@ -89,10 +91,9 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
         Assert.assertNotNull(ti.tc.rcvMessage);
         log.debug("recv msg: " + ti.tc.rcvMessage + " header " + Integer.toHexString(ti.tc.rcvMessage.getHeader()));
-        CanMessage expected = new CanMessage(new byte[]{1,2,3,4,5,6,7,8}, 0x198F4C4C);
+        CanMessage expected = new CanMessage(new byte[]{1, 2, 3, 4, 5, 6, 7, 8}, 0x198F4C4C);
         expected.setExtended(true);
         Assert.assertEquals(expected, ti.tc.rcvMessage);
-
 
         // message for Active and Inactive
         CanMessage mStateActive = new CanMessage(
@@ -121,7 +122,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public void testMomentarySensor() throws Exception {
         OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8", ti.iface);
         s.finishLoad();
-    	    // message for Active and Inactive
+        // message for Active and Inactive
         CanMessage mActive = new CanMessage(
                 new int[]{1, 2, 3, 4, 5, 6, 7, 8},
                 0x195B4123
@@ -134,7 +135,9 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         ti.sendMessage(mActive);
         Assert.assertTrue(s.getKnownState() == Sensor.ACTIVE);
 
-        JUnitUtil.waitFor( ()->{ return(s.getKnownState() != Sensor.ACTIVE); });
+        JUnitUtil.waitFor(() -> {
+            return (s.getKnownState() != Sensor.ACTIVE);
+        });
 
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
 
@@ -142,7 +145,9 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         s.setKnownState(Sensor.ACTIVE);
         Assert.assertTrue(s.getKnownState() == Sensor.ACTIVE);
 
-        JUnitUtil.waitFor( ()->{ return(s.getKnownState() != Sensor.ACTIVE); });
+        JUnitUtil.waitFor(() -> {
+            return (s.getKnownState() != Sensor.ACTIVE);
+        });
 
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
     }
@@ -189,7 +194,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assert.assertEquals(expected, ti.tc.rcvMessage);
         ti.tc.rcvMessage = null;
 
-        ((OlcbSensor)t).setAuthoritative(false);
+        ((OlcbSensor) t).setAuthoritative(false);
         t.setState(Sensor.INACTIVE);
         ti.flush();
 
@@ -200,7 +205,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         expected.setExtended(true);
         Assert.assertEquals(expected, ti.tc.rcvMessage);
     }
-    
+
     @Test
     public void testForgetState() throws JmriException {
         t.dispose(); // dispose of the existing sensor.
@@ -226,14 +231,16 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
                 ":X19544C4CN0102030405060708;");
         // Getting a state notify will not change state now.
         ti.sendMessage(":X19544123N0102030405060709;");
-        Assert.assertEquals("no call",0,l.getCallCount());
+        Assert.assertEquals("no call", 0, l.getCallCount());
         l.resetPropertyChanged();
         Assert.assertEquals(Sensor.ACTIVE, s.getKnownState());
 
         // Resets the turnout to unknown state
         s.setState(Sensor.UNKNOWN);
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
-        Assert.assertEquals("called once",1,l.getCallCount());
+        JUnitUtil.waitFor(() -> {
+            return l.getPropertyChanged();
+        });
+        Assert.assertEquals("called once", 1, l.getCallCount());
         l.resetPropertyChanged();
         ti.assertNoSentMessages();
 
@@ -242,8 +249,10 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
                 ":X19547C4CN0102030405060708;");
         // getting a state notify will change state
         ti.sendMessage(":X19544123N0102030405060709;");
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
-        Assert.assertEquals("called once",1,l.getCallCount());
+        JUnitUtil.waitFor(() -> {
+            return l.getPropertyChanged();
+        });
+        Assert.assertEquals("called once", 1, l.getCallCount());
         l.resetPropertyChanged();
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
 
@@ -253,7 +262,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
         // getting a state notify will not change state
         ti.sendMessage(":X19544123N0102030405060708;");
-        Assert.assertEquals("no call",0,l.getCallCount());
+        Assert.assertEquals("no call", 0, l.getCallCount());
         l.resetPropertyChanged();
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
     }
@@ -265,7 +274,6 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assert.assertEquals(Sensor.UNKNOWN, s.getState());
 
         // Default sensors listen to identified messages at all times.
-
         ti.sendMessage(":X19544123N0102030405060708;");
         Assert.assertEquals(Sensor.ACTIVE, s.getState());
 
@@ -320,12 +328,13 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     /**
-     * In this test we simulate the following scenario: A sensor T that is being changed locally
-     * by JMRI (e.g. due to a panel icon action), which triggers a Logix, and in that Logix there
-     * is an action that sets a second Sensor U.
-     * We check that the messages sent to the layout are in the order of T:=Active, U:=Active.
-     * There was a multiple-year-long regression that caused these two events to be sent to the
-     * network out of order (U first then T).
+     * In this test we simulate the following scenario: A sensor T that is being
+     * changed locally by JMRI (e.g. due to a panel icon action), which triggers
+     * a Logix, and in that Logix there is an action that sets a second Sensor
+     * U. We check that the messages sent to the layout are in the order of
+     * T:=Active, U:=Active. There was a multiple-year-long regression that
+     * caused these two events to be sent to the network out of order (U first
+     * then T).
      *
      * @throws JmriException
      */
@@ -344,7 +353,8 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
                 Assert.assertEquals(Sensor.ACTIVE, t.getKnownState());
                 try {
                     u.setKnownState(Sensor.ACTIVE);
-                } catch (JmriException e) {
+                }
+                catch (JmriException e) {
                     Assert.fail("failed sending dependent sensor message: " + e);
                     e.printStackTrace();
                 }
@@ -356,7 +366,8 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
             public void run() {
                 try {
                     t.setKnownState(Sensor.ACTIVE);
-                } catch (JmriException e) {
+                }
+                catch (JmriException e) {
                     Assert.fail("failed sending main sensor message: " + e);
                     e.printStackTrace();
                 }
@@ -399,14 +410,14 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
         // test by putting into a tree set, then extracting and checking order
         TreeSet<Sensor> set = new TreeSet<>(new NamedBeanComparator<>());
-        
+
         set.add(new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", ti.iface));
         set.add(new OlcbSensor("M", "X0501010114FF2000;X0501010114FF2011", ti.iface));
         set.add(new OlcbSensor("M", "X0501010114FF2000;X0501010114FF2001", ti.iface));
         set.add(new OlcbSensor("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", ti.iface));
-        
+
         Iterator<Sensor> it = set.iterator();
-        
+
         Assert.assertEquals("MS1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", it.next().getSystemName());
         Assert.assertEquals("MS1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", it.next().getSystemName());
         Assert.assertEquals("MSX0501010114FF2000;X0501010114FF2001", it.next().getSystemName());
@@ -415,7 +426,6 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     OlcbTestInterface ti;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -425,15 +435,15 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         ti = new OlcbTestInterface();
         ti.waitForStartup();
         t = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", ti.iface);
-        ((OlcbSensor)t).finishLoad();
+        ((OlcbSensor) t).finishLoad();
     }
 
     @After
     @Override
     public void tearDown() {
-	t.dispose();
+        t.dispose();
         l.resetPropertyChanged();
-	l = null;
+        l = null;
         ti.dispose();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

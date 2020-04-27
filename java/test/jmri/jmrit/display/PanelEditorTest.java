@@ -13,11 +13,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * PanelEditorTest.java
- * <p>
- * Description:
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class PanelEditorTest {
 
@@ -47,7 +44,6 @@ public class PanelEditorTest {
 
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * StandaloneReporterManagerXmlTest.java
  *
- * Description: tests for the StandaloneReporterManagerXml class
+ * Test for the StandaloneReporterManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class StandaloneReporterManagerXmlTest {
       Assert.assertNotNull("StandaloneReporterManagerXml constructor",new StandaloneReporterManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

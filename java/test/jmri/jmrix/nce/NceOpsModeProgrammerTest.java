@@ -6,13 +6,12 @@ import org.junit.Before;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class NceOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
     private NceTrafficControlScaffold tcis = null;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

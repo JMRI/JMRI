@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * RemoveObjectFromEcosTest.java
  *
- * Description: tests for the RemoveObjectFromEcos class
+ * Test for the RemoveObjectFromEcos class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class RemoveObjectFromEcosTest {
       Assert.assertNotNull("RemoveObjectFromEcos constructor",new RemoveObjectFromEcos());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

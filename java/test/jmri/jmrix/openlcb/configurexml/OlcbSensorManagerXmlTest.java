@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * OlcbSensorManagerXmlTest.java
  *
- * Description: tests for the OlcbSensorManagerXml class
+ * Test for the OlcbSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  *           Balazs Racz    (C) 2018
@@ -108,7 +108,6 @@ public class OlcbSensorManagerXmlTest {
     OlcbTestInterface t;
     private final static Logger log = LoggerFactory.getLogger(OlcbSensorManagerXmlTest.class);
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

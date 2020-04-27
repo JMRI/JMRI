@@ -6,7 +6,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MrcProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -38,7 +38,6 @@ public class MrcProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
     }    
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

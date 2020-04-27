@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Tests for the Path class
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class PathTest {
 

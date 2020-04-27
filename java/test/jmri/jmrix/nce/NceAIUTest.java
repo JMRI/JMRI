@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * JUnit tests for the NceAIU class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class NceAIUTest {
 

@@ -12,7 +12,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -407,7 +407,6 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     private TrafficControllerScaffold tc;
     private CanSystemConnectionMemo memo;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

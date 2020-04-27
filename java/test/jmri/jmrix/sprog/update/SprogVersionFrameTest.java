@@ -8,7 +8,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SprogVersionFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -23,9 +23,9 @@ public class SprogVersionFrameTest extends jmri.util.JmriJFrameTestBase {
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
         m.configureCommandStation();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new SprogVersionFrame(m);
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new SprogVersionFrame(m);
+        }
     }
 
     @After

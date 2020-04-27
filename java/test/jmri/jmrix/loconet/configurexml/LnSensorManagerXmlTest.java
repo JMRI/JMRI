@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * LnSensorManagerXmlTest.java
  *
- * Description: tests for the LnSensorManagerXml class
+ * Test for the LnSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class LnSensorManagerXmlTest {
       Assert.assertNotNull("LnSensorManagerXml constructor",new LnSensorManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

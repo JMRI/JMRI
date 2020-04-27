@@ -12,8 +12,6 @@ import org.junit.*;
 
 /**
  * Test the SignalMastIcon.
- * <p>
- * Description:
  *
  * @author Bob Jacobsen Copyright 2009
  */
@@ -74,7 +72,6 @@ public class SignalMastIconTest extends PositionableIconTest {
         JUnitUtil.dispose(jf);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

@@ -6,7 +6,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class BeanTableFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -14,9 +14,9 @@ public class BeanTableFrameTest extends jmri.util.JmriJFrameTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new BeanTableFrame();
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new BeanTableFrame();
+        }
     }
 
     @After

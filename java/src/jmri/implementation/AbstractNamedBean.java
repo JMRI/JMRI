@@ -327,23 +327,23 @@ public abstract class AbstractNamedBean implements NamedBean {
      */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void setProperty(@Nonnull String key,Object value){
-         if (parameters == null) {
-             parameters = new HashMap<>();
-         }
-         Set<String> keySet = getPropertyKeys();
-         if(keySet.contains(key)){
+    public void setProperty(@Nonnull String key, Object value) {
+        if (parameters == null) {
+            parameters = new HashMap<>();
+        }
+        Set<String> keySet = getPropertyKeys();
+        if (keySet.contains(key)) {
             // key already in the map, replace the value.
             Object oldValue = getProperty(key);
-            if(!Objects.equals(oldValue, value)){
-	          removeProperty(key); // make sure the old value is removed.
-              parameters.put(key, value);
-              firePropertyChange(key,oldValue,value);
+            if (!Objects.equals(oldValue, value)) {
+                removeProperty(key); // make sure the old value is removed.
+                parameters.put(key, value);
+                firePropertyChange(key, oldValue, value);
             }
-         } else {
+        } else {
             parameters.put(key, value);
-            firePropertyChange(key,null,value);
-         }
+            firePropertyChange(key, null, value);
+        }
     }
 
     @Override

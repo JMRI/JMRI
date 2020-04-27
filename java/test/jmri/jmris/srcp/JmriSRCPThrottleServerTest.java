@@ -112,8 +112,8 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
 
     @AfterEach
     public void tearDown() {
-	sb = null;
-	ats = null;
-	JUnitUtil.tearDown();
+        sb = null;
+        ats = null;
+        JUnitUtil.tearDown();
     }
 }

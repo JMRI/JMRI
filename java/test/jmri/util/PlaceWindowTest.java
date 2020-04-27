@@ -81,7 +81,6 @@ public class PlaceWindowTest {
         Assert.assertEquals("pt.y at screen top",0, pt.y);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

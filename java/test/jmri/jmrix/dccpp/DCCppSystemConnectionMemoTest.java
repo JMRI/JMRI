@@ -9,8 +9,8 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.dccpp.DCCppSystemConnectionMemo class.
  *
- * @author	Paul Bender
- * @author	Mark Underwood (C) 2015
+ * @author Paul Bender
+ * @author Mark Underwood (C) 2015
  */
 public class DCCppSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -44,7 +44,6 @@ public class DCCppSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
         Assert.assertNotNull(tc.getSystemConnectionMemo());
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

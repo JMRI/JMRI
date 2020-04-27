@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.duplexgroup.DuplexGroupMessageType;
 /**
  * Test simple functioning of LnDplxGrpInfoImpl
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  * @author      B. Milhaupt Copyright (C) 2018
  */
 public class LnDplxGrpInfoImplTest {

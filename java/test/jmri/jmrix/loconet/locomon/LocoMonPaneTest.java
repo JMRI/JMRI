@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.*;
  * 
  * Initially written to test filtering
  *
- * @author	Bob Jacobsen   Copyright 2015
+ * @author Bob Jacobsen   Copyright 2015
  */
 public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
@@ -111,7 +111,6 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     jmri.SensorManager s;
     jmri.ReporterManager r;
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

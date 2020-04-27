@@ -40,7 +40,6 @@ public class FnMapPanelESUTest {
         t.dispose();
     }
 
-    // The minimal setup for log4J
     jmri.Programmer p;
     CvTableModel cvtm;
     VariableTableModel tableModel;

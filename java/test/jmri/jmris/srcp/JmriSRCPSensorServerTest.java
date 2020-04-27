@@ -61,7 +61,6 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
 
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     @Override
     public void setUp() {

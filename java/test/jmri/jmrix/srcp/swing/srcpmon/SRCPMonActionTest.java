@@ -21,7 +21,6 @@ public class SRCPMonActionTest {
         Assert.assertNotNull("SRCPMonAction exists",new SRCPMonAction() );
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

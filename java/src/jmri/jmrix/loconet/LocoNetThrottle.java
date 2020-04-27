@@ -68,8 +68,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             super.updateFunction(i,slot.isFunction(i));
         }
         
-	// for LocoNet throttles, the default is f2 momentary (for the horn)
-	// all other functions are continuos (as set in AbstractThrottle).
+        // for LocoNet throttles, the default is f2 momentary (for the horn)
+        // all other functions are continuos (as set in AbstractThrottle).
         this.f2Momentary = true;
 
         this.address = slot.locoAddr();

@@ -19,7 +19,7 @@ import purejavacomm.SerialPort;
  * handled automatically, and are not included in the QsiMessage and QsiReply
  * content.
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 

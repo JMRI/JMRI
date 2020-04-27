@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Test the MultiIndexProgrammerFacade class.
  *
- * @author	Bob Jacobsen Copyright 2013
+ * @author Bob Jacobsen Copyright 2013
  * 
  */
 public class MultiIndexProgrammerFacadeTest {

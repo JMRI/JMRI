@@ -5,7 +5,7 @@ import org.junit.*;
 /**
  * Base tests for messages implementing the jmri.jmrix.Message interface.
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 abstract public class AbstractMessageTestBase {
 

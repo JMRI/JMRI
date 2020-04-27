@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of CabSignalAction
  *
- * @author	Paul Bender Copyright (C) 2019
+ * @author Paul Bender Copyright (C) 2019
  */
 public class CabSignalActionTest {
 

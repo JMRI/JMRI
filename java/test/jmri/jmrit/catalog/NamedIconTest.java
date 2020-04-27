@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  *
  * @author Paul Bender Copyright (C) 2017
- * @author Joe Comuzzi Copyright (C) 2018	
+ * @author Joe Comuzzi Copyright (C) 2018
  */
 public class NamedIconTest {
 
@@ -271,7 +271,6 @@ public class NamedIconTest {
         return pixels;
     }
      
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

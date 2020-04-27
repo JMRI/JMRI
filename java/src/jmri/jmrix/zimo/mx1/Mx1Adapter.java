@@ -21,7 +21,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * Provide access to Zimo's MX-1 on an attached serial com port. Adapted for
  * use with Zimo MX-1 by Sip Bosch.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  */
 public class Mx1Adapter extends Mx1PortController {
 

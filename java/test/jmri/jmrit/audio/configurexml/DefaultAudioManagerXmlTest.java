@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * DefaultAudioManagerXmlTest.java
  *
- * Description: tests for the DefaultAudioManagerXml class
+ * Test for the DefaultAudioManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class DefaultAudioManagerXmlTest {
       Assert.assertNotNull("DefaultAudioManagerXml constructor",new DefaultAudioManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

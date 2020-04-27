@@ -1,9 +1,6 @@
 /**
- * NmraPacketTest.java
  *
- * Description:
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri;
 

@@ -76,7 +76,7 @@ public class PanelServlet extends AbstractPanelServlet {
                     try {
                         panel.addContent(positionableElement(sub));
                     } catch (Exception ex) {
-                        log.error("Error storing panel element: {}", ex.getMessage(), ex);
+                        log.error("Error storing panel element", ex);
                     }
                 }
             }

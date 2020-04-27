@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table data model for display of slot manager contents.
  *
- * @author	Bob Jacobsen Copyright (C) 2001 
+ * @author Bob Jacobsen Copyright (C) 2001 
  * @author  Andrew Crosland (C) 2006 ported to SPROG
  */
 public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener {
@@ -296,7 +296,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
 //        // ensure the table rows, columns have enough room for buttons
 //        slotTable.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
 //        slotTable.getColumnModel().getColumn(column)
-//			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
+//                .setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
 //    }
 //
 //    void setColumnToHoldEStopButton(JTable slotTable, int column) {
@@ -313,7 +313,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
 //        // ensure the table rows, columns have enough room for buttons
 //        slotTable.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
 //        slotTable.getColumnModel().getColumn(column)
-//			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
+//                .setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
 //    }
     // methods to communicate with SprogSlotManager
     @Override

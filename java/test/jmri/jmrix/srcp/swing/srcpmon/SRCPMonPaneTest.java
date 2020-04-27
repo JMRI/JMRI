@@ -19,7 +19,6 @@ public class SRCPMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         Assert.assertNotNull(f);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -38,6 +37,6 @@ public class SRCPMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     public void tearDown() {
         panel = pane = null;
         jmri.InstanceManager.deregister(memo, jmri.jmrix.srcp.SRCPSystemConnectionMemo.class);
-    	super.tearDown();
+        super.tearDown();
     }
 }

@@ -15,7 +15,7 @@ import jmri.util.JUnitUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ShowCarsInTrainFrameTest extends OperationsTestCase {
 

@@ -60,15 +60,14 @@ public class PickFrameTest extends JmriJFrameTestBase {
         JUnitUtil.dispose(f);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new PickFrame("Pick Frame Test");
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new PickFrame("Pick Frame Test");
+        }
     }
 
     @After

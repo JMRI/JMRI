@@ -21,7 +21,6 @@ public class XpaConfigureActionTest {
         Assert.assertNotNull("XpaConfigureAction exists",new XpaConfigureAction("Test",memo) );
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

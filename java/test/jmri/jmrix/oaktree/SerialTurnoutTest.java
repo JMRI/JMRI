@@ -8,7 +8,7 @@ import org.junit.Before;
 /**
  * Tests for the jmri.jmrix.oaktree.SerialTurnout class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 

@@ -22,7 +22,6 @@ public class ProtocolOptionsActionTest {
         Assert.assertNotNull("exists",p);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

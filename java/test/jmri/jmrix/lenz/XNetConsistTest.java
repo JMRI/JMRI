@@ -9,9 +9,9 @@ import org.junit.*;
 /**
  * XNetConsistTest.java
  * <p>
- * Description:	tests for the jmri.jmrix.lenz.XNetConsist class
+ * Test for the jmri.jmrix.lenz.XNetConsist class
  *
- * @author	Paul Bender Copyright (C) 2010,2016,2017
+ * @author Paul Bender Copyright (C) 2010,2016,2017
  */
 public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase {
 
@@ -111,7 +111,6 @@ public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase
     public void checkAddRemoveWithRosterUpdateAdvanced() {
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -127,7 +126,7 @@ public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase
     @After
     @Override
     public void tearDown() {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
         tc = null;
         memo = null;

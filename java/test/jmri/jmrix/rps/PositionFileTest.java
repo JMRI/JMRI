@@ -14,7 +14,7 @@ import org.junit.Assert;
  * Stores a PositionFileTest.xml file in the temp directory below current
  * working directory.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class PositionFileTest {
 

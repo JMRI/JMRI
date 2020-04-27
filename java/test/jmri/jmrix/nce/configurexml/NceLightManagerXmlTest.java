@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * NceLightManagerXmlTest.java
  *
- * Description: tests for the NceLightManagerXml class
+ * Test for the NceLightManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class NceLightManagerXmlTest {
       Assert.assertNotNull("NceLightManagerXml constructor",new NceLightManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

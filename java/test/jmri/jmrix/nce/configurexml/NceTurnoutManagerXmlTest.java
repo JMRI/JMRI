@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * NceTurnoutManagerXmlTest.java
  *
- * Description: tests for the NceTurnoutManagerXml class
+ * Test for the NceTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -27,7 +27,6 @@ public class NceTurnoutManagerXmlTest {
        jmri.util.JUnitAppender.assertErrorMessage("Invalid method called");
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

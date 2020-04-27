@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AutomatTableDataModelTest {
 
@@ -32,7 +32,6 @@ public class AutomatTableDataModelTest {
                 ResourceBundle.getBundle("jmri.jmrit.automat.monitor.AutomatTableBundle").getString("ButtonKill"));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

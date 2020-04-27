@@ -7,13 +7,12 @@ import jmri.jmrix.easydcc.networkdriver.ConnectionConfig;
 /**
  * ConnectionConfigXmlTest.java
  *
- * Description: tests for the ConnectionConfigXml class
+ * Test for the ConnectionConfigXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -28,11 +27,12 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
         super.loadTest();
         // the port attribute for testing is "(none selected)", which isn't an int
         jmri.util.JUnitAppender.assertWarnMessage("Could not parse port attribute: [Attribute: port=\"(none selected)\"]");
-    }    
+    }
 
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;

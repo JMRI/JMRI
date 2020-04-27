@@ -76,7 +76,6 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
 
     // from here down is testing infrastructure
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -91,7 +90,7 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
     @After
     public void tearDown() {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

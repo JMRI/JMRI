@@ -60,7 +60,7 @@ public class LayoutEditorFindItems {
 
     public PositionablePoint findPositionableLinkPoint(LayoutBlock blk1) {
         for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
-            if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {
+            if (p.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
                 if ((p.getConnect1() != null && p.getConnect1().getLayoutBlock() == blk1)
                         || (p.getConnect2() != null && p.getConnect2().getLayoutBlock() == blk1)) {
                     return p;
@@ -524,7 +524,7 @@ public class LayoutEditorFindItems {
     * @deprecated since 4.7.1 use @link{findObjectByName()} instead.
      */
     @Deprecated
-    public LayoutTrack findObjectByTypeAndName(LayoutEditor.HitPointType type, String name) {
+    public LayoutTrack findObjectByTypeAndName(HitPointType type, String name) {
         if (name.isEmpty()) {
             return null;
         }
@@ -551,7 +551,7 @@ public class LayoutEditorFindItems {
             case TRACK:
                 return findTrackSegmentByName(name);
             default:
-                if (LayoutEditor.HitPointType.isTurntableRayHitType(type)) {
+                if (HitPointType.isTurntableRayHitType(type)) {
                     return findLayoutTurntableByName(name);
                 }
         }

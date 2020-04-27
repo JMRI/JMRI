@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Class to hold SPROG type
  *
- * @author	Andrew crosland Copyright (C) 2012
+ * @author Andrew crosland Copyright (C) 2012
  */
 public class SprogType {
 

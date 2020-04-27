@@ -248,7 +248,6 @@ public class CbusSendTest {
         tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

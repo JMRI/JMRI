@@ -1,7 +1,7 @@
 /**
  * SRCPInterfaceScaffold stands in for the SRCPTrafficController class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.srcp;
 

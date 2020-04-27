@@ -10,7 +10,7 @@ import jmri.util.JUnitUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TrainIconTest extends OperationsTestCase {
         
@@ -65,7 +65,6 @@ public class TrainIconTest extends OperationsTestCase {
         Assert.assertEquals("Six colors", 6, TrainIcon.getLocoColors().length);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

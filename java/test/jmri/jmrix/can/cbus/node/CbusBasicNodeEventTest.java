@@ -23,7 +23,6 @@ public class CbusBasicNodeEventTest {
     
     private CanSystemConnectionMemo memo;
     
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

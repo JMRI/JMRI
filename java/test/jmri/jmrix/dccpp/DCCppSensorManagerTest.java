@@ -11,8 +11,8 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.dccpp.DCCppSensorManager class.
  *
- * @author	Paul Bender Copyright (c) 2003,2016
- * @author	Mark Underwood Copyright (c) 2015
+ * @author Paul Bender Copyright (c) 2003,2016
+ * @author Mark Underwood Copyright (c) 2015
  */
 public class DCCppSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -83,7 +83,6 @@ public class DCCppSensorManagerTest extends jmri.managers.AbstractSensorMgrTestB
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppSensorManagerTest.class);
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

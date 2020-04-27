@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * AcelaLightManagerXmlTest.java
  *
- * Description: tests for the AcelaLightManagerXml class
+ * Test for the AcelaLightManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class AcelaLightManagerXmlTest {
       Assert.assertNotNull("AcelaLightManagerXml constructor",new AcelaLightManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

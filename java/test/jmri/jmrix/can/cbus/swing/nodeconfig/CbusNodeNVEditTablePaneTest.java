@@ -11,8 +11,8 @@ import org.junit.Test;
 /**
  * Test simple functioning of CbusNodeNVEditTablePane
  *
- * @author	Paul Bender Copyright (C) 2016
- * @author	Paul Bender Copyright (C) 2019
+ * @author Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2019
  */
 public class CbusNodeNVEditTablePaneTest {
 

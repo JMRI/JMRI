@@ -21,8 +21,8 @@ import org.netbeans.jemmy.operators.*;
 /**
  * Test simple functioning of LayoutEditorTools
  *
- * @author	Paul Bender Copyright (C) 2016
- * @author	George Warner Copyright (C) 2019
+ * @author Paul Bender Copyright (C) 2016
+ * @author George Warner Copyright (C) 2019
  */
 public class LayoutEditorToolsTest {
 
@@ -87,15 +87,15 @@ public class LayoutEditorToolsTest {
         Assert.assertNotNull("RH turnout for testSetSignalsAtTurnoutWithDone", layoutTurnout);
         layoutEditor.getLayoutTracks().add(layoutTurnout);
 
-        positionablePoint1 = new PositionablePoint("A1", PositionablePoint.ANCHOR, new Point2D.Double(250.0, 100.0), layoutEditor);
+        positionablePoint1 = new PositionablePoint("A1", PositionablePoint.PointType.ANCHOR, new Point2D.Double(250.0, 100.0), layoutEditor);
         Assert.assertNotNull("positionablePoint1 for testSetSignalsAtTurnoutWithDone", positionablePoint1);
         layoutEditor.getLayoutTracks().add(positionablePoint1);
 
-        positionablePoint2 = new PositionablePoint("A2", PositionablePoint.ANCHOR, new Point2D.Double(50.0, 100.0), layoutEditor);
+        positionablePoint2 = new PositionablePoint("A2", PositionablePoint.PointType.ANCHOR, new Point2D.Double(50.0, 100.0), layoutEditor);
         layoutEditor.getLayoutTracks().add(positionablePoint2);
         Assert.assertNotNull("positionablePoint2 for testSetSignalsAtTurnoutWithDone", positionablePoint2);
 
-        positionablePoint3 = new PositionablePoint("A3", PositionablePoint.ANCHOR, new Point2D.Double(250.0, 150.0), layoutEditor);
+        positionablePoint3 = new PositionablePoint("A3", PositionablePoint.PointType.ANCHOR, new Point2D.Double(250.0, 150.0), layoutEditor);
         layoutEditor.getLayoutTracks().add(positionablePoint3);
         Assert.assertNotNull("positionablePoint3 for testSetSignalsAtTurnoutWithDone", positionablePoint3);
 
@@ -265,16 +265,16 @@ public class LayoutEditorToolsTest {
 
         //define connection
         String uName = "T" + (idx + 1);
-        LayoutEditor.HitPointType types[] = {LayoutEditor.HitPointType.TURNOUT_B, LayoutEditor.HitPointType.TURNOUT_C, LayoutEditor.HitPointType.TURNOUT_A, LayoutEditor.HitPointType.TURNOUT_A};
+        HitPointType types[] = {HitPointType.TURNOUT_B, HitPointType.TURNOUT_C, HitPointType.TURNOUT_A, HitPointType.TURNOUT_A};
         PositionablePoint[] positionablePoints = {positionablePoint2, positionablePoint3, positionablePoint1, positionablePoint1};
         TrackSegment trackSegment = new TrackSegment(uName,
                 layoutTurnout, types[idx],
-                positionablePoints[idx], LayoutEditor.HitPointType.POS_POINT,
+                positionablePoints[idx], HitPointType.POS_POINT,
                 false, false, layoutEditor);
         Assert.assertNotNull("trackSegment not null", trackSegment);
         layoutEditor.getLayoutTracks().add(trackSegment);
         try {
-            layoutTurnout.setConnection(types[idx], trackSegment, LayoutEditor.HitPointType.TRACK);
+            layoutTurnout.setConnection(types[idx], trackSegment, HitPointType.TRACK);
         } catch (JmriException ex) {
             Logger.getLogger(LayoutEditorToolsTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -298,7 +298,7 @@ public class LayoutEditorToolsTest {
         });
 
         //change anchor to end bumper
-        positionablePoints[idx].setType(PositionablePoint.END_BUMPER);
+        positionablePoints[idx].setType(PositionablePoint.PointType.END_BUMPER);
 
         //pressing "Done" should throw up a "blocks have not been defined around this item."  (InfoMessage6)
         //error dialog... dismiss it
@@ -363,9 +363,9 @@ public class LayoutEditorToolsTest {
         trackSegment.setLayoutBlock(null);
         layoutBlocks.get(lbIndex[idx]).setOccupancySensorName(null);
         //le.removeTrackSegment(trackSegment);
-        positionablePoint1.setType(PositionablePoint.ANCHOR);
-        positionablePoint2.setType(PositionablePoint.ANCHOR);
-        positionablePoint3.setType(PositionablePoint.ANCHOR);
+        positionablePoint1.setType(PositionablePoint.PointType.ANCHOR);
+        positionablePoint2.setType(PositionablePoint.PointType.ANCHOR);
+        positionablePoint3.setType(PositionablePoint.PointType.ANCHOR);
     }
 
     @Test

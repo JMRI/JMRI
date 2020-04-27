@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author pete cressman
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PreviewDialogTest {
 
@@ -100,7 +100,6 @@ public class PreviewDialogTest {
         log.debug("End testPreviewDialog: elapsed time = {}ms",(System.currentTimeMillis()-time));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

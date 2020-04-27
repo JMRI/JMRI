@@ -17,7 +17,7 @@ import org.junit.*;
 /**
  * OlcbSignalMastXmlTest
  *
- * Description: tests for the OlcbSignalMastXml class
+ * Test for the OlcbSignalMastXml class
  *
  * @author   Bob Jacobsen Copyright (C) 2018
  */

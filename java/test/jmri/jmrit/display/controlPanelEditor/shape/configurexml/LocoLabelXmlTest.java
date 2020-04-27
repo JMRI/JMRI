@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * LocoLabelXmlTest.java
  *
- * Description: tests for the LocoLabelXml class
+ * Test for the LocoLabelXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class LocoLabelXmlTest {
       Assert.assertNotNull("LocoLabelXml constructor",new LocoLabelXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

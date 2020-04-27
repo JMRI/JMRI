@@ -10,7 +10,7 @@ import java.net.URI;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class FileDropEventTest {
 
@@ -27,7 +27,6 @@ public class FileDropEventTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

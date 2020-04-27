@@ -23,7 +23,7 @@ public class PositionablePointTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", le);
 
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.ANCHOR, MathUtil.zeroPoint2D, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp);
     }
 
@@ -33,9 +33,9 @@ public class PositionablePointTest {
         Assert.assertNotNull("LayoutEditor exists", le);
 
         // 2nd parameter is illegal type
-        PositionablePoint pp = new PositionablePoint("test", 0, MathUtil.zeroPoint2D, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.NONE, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp);
-        JUnitAppender.assertErrorMessage("Illegal type of PositionablePoint - 0");
+        JUnitAppender.assertErrorMessage("Illegal type of PositionablePoint - NONE");
     }
 
     @Test
@@ -43,15 +43,15 @@ public class PositionablePointTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", le);
 
-        PositionablePoint ppA = new PositionablePoint("test", PositionablePoint.ANCHOR, MathUtil.zeroPoint2D, le);
+        PositionablePoint ppA = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", ppA);
         Assert.assertEquals("Anchor 'test'", ppA.toString());
 
-        PositionablePoint ppEB = new PositionablePoint("test", PositionablePoint.END_BUMPER, MathUtil.zeroPoint2D, le);
+        PositionablePoint ppEB = new PositionablePoint("test", PositionablePoint.PointType.END_BUMPER, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", ppEB);
         Assert.assertEquals("End Bumper 'test'", ppEB.toString());
 
-        PositionablePoint ppEC = new PositionablePoint("test", PositionablePoint.EDGE_CONNECTOR, MathUtil.zeroPoint2D, le);
+        PositionablePoint ppEC = new PositionablePoint("test", PositionablePoint.PointType.EDGE_CONNECTOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", ppEC);
         Assert.assertEquals("Edge Connector 'test'", ppEC.toString());
     }
@@ -61,12 +61,12 @@ public class PositionablePointTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", le);
 
-        PositionablePoint pp1 = new PositionablePoint("test", PositionablePoint.ANCHOR, MathUtil.zeroPoint2D, le);
+        PositionablePoint pp1 = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp1);
         Assert.assertEquals("getCoordsCenter equal to zeroPoint2D", MathUtil.zeroPoint2D, pp1.getCoordsCenter());
 
         Point2D point2 = new Point2D.Double(666.6, 999.9);
-        PositionablePoint pp2 = new PositionablePoint("test", PositionablePoint.ANCHOR, point2, le);
+        PositionablePoint pp2 = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, point2, le);
         Assert.assertNotNull("exists", pp2);
         Assert.assertEquals("getCoordsCenter equal to {666.6, 999.9}", point2, pp2.getCoordsCenter());
     }
@@ -76,7 +76,7 @@ public class PositionablePointTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", le);
 
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.ANCHOR, MathUtil.zeroPoint2D, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp);
         Assert.assertEquals("getCoordsCenter equal to zeroPoint2D", MathUtil.zeroPoint2D, pp.getCoordsCenter());
 
@@ -91,7 +91,7 @@ public class PositionablePointTest {
         Assert.assertNotNull("LayoutEditor exists", le);
 
         Point2D point = new Point2D.Double(666.6, 999.9);
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.ANCHOR, point, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, point, le);
         Assert.assertNotNull("exists", pp);
         pp.scaleCoords(2.F, 2.F);
         Point2D pointX2 = MathUtil.granulize(MathUtil.multiply(point, 2.0), 1.0);
@@ -104,7 +104,7 @@ public class PositionablePointTest {
         Assert.assertNotNull("LayoutEditor exists", le);
 
         Point2D point = new Point2D.Double(666.6, 999.9);
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.ANCHOR, point, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, point, le);
         Assert.assertNotNull("exists", pp);
         Point2D delta = new Point2D.Float(333.3F, 444.4F);
         pp.translateCoords((float) delta.getX(), (float) delta.getY());
@@ -118,7 +118,7 @@ public class PositionablePointTest {
         Assert.assertNotNull("LayoutEditor exists", le);
 
         Point2D point = new Point2D.Double(666.6, 999.9);
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.ANCHOR, point, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, point, le);
         Assert.assertNotNull("exists", pp);
         Rectangle2D bounds = new Rectangle2D.Double(point.getX() - 0.5, point.getY() - 0.5, 1.0, 1.0);
         Assert.assertEquals("getBounds equal to {666.6, 999.9, 0.0, 0.0}", bounds, pp.getBounds());
@@ -129,7 +129,7 @@ public class PositionablePointTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", le);
 
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.EDGE_CONNECTOR, MathUtil.zeroPoint2D, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.EDGE_CONNECTOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp);
 
         Assert.assertNull("Default linked Editor is null", pp.getLinkedEditor());
@@ -143,7 +143,7 @@ public class PositionablePointTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", le);
 
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.EDGE_CONNECTOR, MathUtil.zeroPoint2D, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.EDGE_CONNECTOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp);
 
         pp.setLinkedPoint(pp);
@@ -163,12 +163,12 @@ public class PositionablePointTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", le);
 
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.EDGE_CONNECTOR, MathUtil.zeroPoint2D, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.EDGE_CONNECTOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp);
 
         pp.setLinkedPoint(pp);
 
-        PositionablePoint pp2 = new PositionablePoint("test2", PositionablePoint.EDGE_CONNECTOR, MathUtil.zeroPoint2D, le);
+        PositionablePoint pp2 = new PositionablePoint("test2", PositionablePoint.PointType.EDGE_CONNECTOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp2);
         pp.setLinkedPoint(pp2);
 
@@ -187,12 +187,12 @@ public class PositionablePointTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", le);
 
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.EDGE_CONNECTOR, MathUtil.zeroPoint2D, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.EDGE_CONNECTOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp);
 
         pp.setLinkedPoint(pp);
 
-        PositionablePoint pp2 = new PositionablePoint("test2", PositionablePoint.EDGE_CONNECTOR, MathUtil.zeroPoint2D, le);
+        PositionablePoint pp2 = new PositionablePoint("test2", PositionablePoint.PointType.EDGE_CONNECTOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp2);
         pp.setLinkedPoint(pp2);
 
@@ -209,7 +209,7 @@ public class PositionablePointTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", le);
 
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.EDGE_CONNECTOR, MathUtil.zeroPoint2D, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.EDGE_CONNECTOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp);
 
         Assert.assertTrue("maxWidth == 5", pp.maxWidth() == 5);
@@ -222,16 +222,16 @@ public class PositionablePointTest {
         Assert.assertNotNull("LayoutEditor exists", le);
 
         Point2D thePoint = new Point2D.Double(666.6, 999.9);
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.ANCHOR, thePoint, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, thePoint, le);
         Assert.assertNotNull("exists", pp);
 
         // first, try hit
-        LayoutEditor.HitPointType hitType = pp.findHitPointType(thePoint, true, false);
-        Assert.assertTrue("pp.findHitPointType equals POS_POINT", hitType == LayoutEditor.HitPointType.POS_POINT);
+        HitPointType hitType = pp.findHitPointType(thePoint, true, false);
+        Assert.assertTrue("pp.findHitPointType equals POS_POINT", hitType == HitPointType.POS_POINT);
 
         // Now, try miss
         hitType = pp.findHitPointType(MathUtil.zeroPoint2D, true, false);
-        Assert.assertTrue("pp.findHitPointType equals NONE", hitType == LayoutEditor.HitPointType.NONE);
+        Assert.assertTrue("pp.findHitPointType equals NONE", hitType == HitPointType.NONE);
     }
 
     @Test
@@ -240,17 +240,17 @@ public class PositionablePointTest {
         Assert.assertNotNull("LayoutEditor exists", le);
 
         Point2D thePoint = new Point2D.Double(666.6, 999.9);
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.ANCHOR, thePoint, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, thePoint, le);
         Assert.assertNotNull("exists", pp);
 
         // test failure
         Assert.assertEquals("pp.getCoordsForConnectionType(LayoutEditor.HitPointTypes.NONE) == {666.6, 999.9}",
-                thePoint, pp.getCoordsForConnectionType(LayoutEditor.HitPointType.NONE));
+                thePoint, pp.getCoordsForConnectionType(HitPointType.NONE));
         JUnitAppender.assertErrorMessage("test.getCoordsForConnectionType(NONE); Invalid Connection Type");
 
         // test success
         Assert.assertEquals("pp.getCoordsForConnectionType(LayoutEditor.HitPointTypes.POS_POINT) == {666.6, 999.9}",
-                thePoint, pp.getCoordsForConnectionType(LayoutEditor.HitPointType.POS_POINT));
+                thePoint, pp.getCoordsForConnectionType(HitPointType.POS_POINT));
     }
 
     @Test
@@ -258,13 +258,13 @@ public class PositionablePointTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", le);
 
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.ANCHOR, MathUtil.zeroPoint2D, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp);
 
         try {
             // test Invalid Connection Type
             Assert.assertNull("pp.getConnection(invalid type) is null",
-                    pp.getConnection(LayoutEditor.HitPointType.NONE));
+                    pp.getConnection(HitPointType.NONE));
             Assert.fail("No exception thrown on pp.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
@@ -273,7 +273,7 @@ public class PositionablePointTest {
         try {
             // test valid connection type (null value)
             Assert.assertNull("pp.getConnection(valid type) is null",
-                    pp.getConnection(LayoutEditor.HitPointType.POS_POINT));
+                    pp.getConnection(HitPointType.POS_POINT));
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on pp.getConnection(valid type)");
         }
@@ -284,12 +284,12 @@ public class PositionablePointTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", le);
 
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.ANCHOR, MathUtil.zeroPoint2D, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp);
 
         try {
             // test Invalid Connection Type
-            pp.setConnection(LayoutEditor.HitPointType.NONE, null, LayoutEditor.HitPointType.NONE);
+            pp.setConnection(HitPointType.NONE, null, HitPointType.NONE);
             Assert.fail("No exception thrown on pp.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
@@ -297,7 +297,7 @@ public class PositionablePointTest {
 
         try {
             // test invalid object type
-            pp.setConnection(LayoutEditor.HitPointType.POS_POINT, null, LayoutEditor.HitPointType.POS_POINT);
+            pp.setConnection(HitPointType.POS_POINT, null, HitPointType.POS_POINT);
             Assert.fail("No exception thrown on pp.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
@@ -305,7 +305,7 @@ public class PositionablePointTest {
 
         try {
             // test valid types
-            pp.setConnection(LayoutEditor.HitPointType.POS_POINT, null, LayoutEditor.HitPointType.NONE);
+            pp.setConnection(HitPointType.POS_POINT, null, HitPointType.NONE);
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on pp.setConnection(valid types)");
         }
@@ -316,17 +316,17 @@ public class PositionablePointTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", le);
 
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.ANCHOR, MathUtil.zeroPoint2D, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp);
 
         // test Invalid Connection Type
         Assert.assertFalse("pp.isDisconnected(invalid type) is null",
-                pp.isDisconnected(LayoutEditor.HitPointType.NONE));
+                pp.isDisconnected(HitPointType.NONE));
         JUnitAppender.assertErrorMessage("test.isDisconnected(NONE); Invalid Connection Type");
 
         // test valid connection type
         Assert.assertTrue("pp.isDisconnected(valid type) is null",
-                pp.isDisconnected(LayoutEditor.HitPointType.POS_POINT));
+                pp.isDisconnected(HitPointType.POS_POINT));
     }
 
     @Test
@@ -334,7 +334,7 @@ public class PositionablePointTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", le);
 
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.ANCHOR, MathUtil.zeroPoint2D, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, MathUtil.zeroPoint2D, le);
         Assert.assertNotNull("exists", pp);
 
         // test null track segment
@@ -342,15 +342,15 @@ public class PositionablePointTest {
                 pp.setTrackConnection(null));
         JUnitAppender.assertErrorMessage("test.replaceTrackConnection(null, null); Attempt to remove non-existant track connection");
 
-        PositionablePoint ppA = new PositionablePoint("A", PositionablePoint.ANCHOR, new Point2D.Double(0.0, 0.0), le);
-        PositionablePoint ppB = new PositionablePoint("B", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 10.0), le);
-        PositionablePoint ppC = new PositionablePoint("C", PositionablePoint.ANCHOR, new Point2D.Double(20.0, 20.0), le);
-        PositionablePoint ppD = new PositionablePoint("D", PositionablePoint.ANCHOR, new Point2D.Double(30.0, 30.0), le);
-        TrackSegment tsAB = new TrackSegment("testAB", ppA, LayoutEditor.HitPointType.POS_POINT, ppB, LayoutEditor.HitPointType.POS_POINT, false, false, le);
+        PositionablePoint ppA = new PositionablePoint("A", PositionablePoint.PointType.ANCHOR, new Point2D.Double(0.0, 0.0), le);
+        PositionablePoint ppB = new PositionablePoint("B", PositionablePoint.PointType.ANCHOR, new Point2D.Double(10.0, 10.0), le);
+        PositionablePoint ppC = new PositionablePoint("C", PositionablePoint.PointType.ANCHOR, new Point2D.Double(20.0, 20.0), le);
+        PositionablePoint ppD = new PositionablePoint("D", PositionablePoint.PointType.ANCHOR, new Point2D.Double(30.0, 30.0), le);
+        TrackSegment tsAB = new TrackSegment("testAB", ppA, HitPointType.POS_POINT, ppB, HitPointType.POS_POINT, false, false, le);
         Assert.assertNotNull("Track Segment AB exists", tsAB);
-        TrackSegment tsBC = new TrackSegment("testBC", ppB, LayoutEditor.HitPointType.POS_POINT, ppC, LayoutEditor.HitPointType.POS_POINT, false, false, le);
+        TrackSegment tsBC = new TrackSegment("testBC", ppB, HitPointType.POS_POINT, ppC, HitPointType.POS_POINT, false, false, le);
         Assert.assertNotNull("Track Segment BC exists", tsBC);
-        TrackSegment tsCD = new TrackSegment("testCD", ppC, LayoutEditor.HitPointType.POS_POINT, ppD, LayoutEditor.HitPointType.POS_POINT, false, false, le);
+        TrackSegment tsCD = new TrackSegment("testCD", ppC, HitPointType.POS_POINT, ppD, HitPointType.POS_POINT, false, false, le);
         Assert.assertNotNull("Track Segment CD exists", tsCD);
 
         // test non-null track segment

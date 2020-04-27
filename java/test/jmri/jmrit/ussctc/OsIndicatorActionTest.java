@@ -14,7 +14,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Tests for classes in the jmri.jmrit.ussctc.OsIndicatorAction class
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2010
+ * @author Bob Jacobsen Copyright 2003, 2007, 2010
  */
 public class OsIndicatorActionTest {
 

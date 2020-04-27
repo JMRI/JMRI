@@ -51,7 +51,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     int progState = 0;
     static final int NOTPROGRAMMING = 0;    // is notProgramming
     static final int COMMANDSENT = 2;       // read/write command sent, waiting reply
-    int _val;	// remember the value being read/written for confirmative reply
+    int _val; // remember the value being read/written for confirmative reply
 
     /** 
      * {@inheritDoc}

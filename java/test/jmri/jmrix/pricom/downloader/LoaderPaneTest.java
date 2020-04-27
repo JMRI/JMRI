@@ -5,7 +5,7 @@ import org.junit.*;
 /**
  * JUnit tests for the LoaderPane class.
  *
- * @author	Bob Jacobsen Copyright 2005
+ * @author Bob Jacobsen Copyright 2005
  */
 public class LoaderPaneTest {
 

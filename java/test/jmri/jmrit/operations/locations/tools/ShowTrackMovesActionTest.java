@@ -12,7 +12,7 @@ import jmri.jmrit.operations.setup.Setup;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ShowTrackMovesActionTest extends OperationsTestCase {
 

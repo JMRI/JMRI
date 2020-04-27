@@ -207,18 +207,18 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
 
     @Override
     public void packetReceived(XBeePacket response) {
-	// because of the XBee library architecture, we don't
-	// do anything here with the responses.
-        log.debug("packetReceived called with {}",response);
+        // because of the XBee library architecture, we don't
+        // do anything here with the responses.
+        log.debug("packetReceived called with {}", response);
     }
 
     // XBee IModemStatusReceiveListener interface methods
 
     @Override
     public void modemStatusEventReceived(ModemStatusEvent modemStatusEvent){
-	// because of the XBee library architecture, we don't
-	// do anything here with the responses.
-       log.debug("modemStatusEventReceived called with event {} ", modemStatusEvent);
+        // because of the XBee library architecture, we don't
+        // do anything here with the responses.
+        log.debug("modemStatusEventReceived called with event {} ", modemStatusEvent);
     }
 
     // XBee IDataReceiveListener interface methods
@@ -226,7 +226,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     @Override
     public void dataReceived(com.digi.xbee.api.models.XBeeMessage xbm){
         // because of the XBee library architecture, we don't
-	// do anything here with the responses.
+        // do anything here with the responses.
         log.debug("dataReceived called with message {} ", xbm);
     }
 

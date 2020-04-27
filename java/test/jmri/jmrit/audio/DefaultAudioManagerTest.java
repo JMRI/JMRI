@@ -13,8 +13,8 @@ import org.junit.Test;
 /**
  * Test simple functioning of DefaultAudioManager
  *
- * @author	Paul Bender Copyright (C) 2017
- * @author	Matthew Harris Copyright (C) 2019
+ * @author Paul Bender Copyright (C) 2017
+ * @author Matthew Harris Copyright (C) 2019
  */
 public class DefaultAudioManagerTest extends jmri.managers.AbstractManagerTestBase<jmri.AudioManager,jmri.Audio> {
 

@@ -16,7 +16,7 @@ import org.netbeans.jemmy.operators.*;
 /**
  * Tests for the jmri.jmrit.beantable.SignalHeadTableAction class
  *
- * @author	Bob Jacobsen Copyright 2004, 2007, 2008, 2009
+ * @author Bob Jacobsen Copyright 2004, 2007, 2008, 2009
  */
 public class SignalHeadTableActionTest extends AbstractTableActionBase<SignalHead> {
 
@@ -154,7 +154,6 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase<SignalHea
         return "Edit Signal Head";
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * TurnoutIconTest.java
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class TurnoutIconTest extends PositionableIconTest {
 
