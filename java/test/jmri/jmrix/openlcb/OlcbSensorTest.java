@@ -325,8 +325,6 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
      * T:=Active, U:=Active. There was a multiple-year-long regression that
      * caused these two events to be sent to the network out of order (U first
      * then T).
-     *
-     * @throws JmriException
      */
     @Test
     public void testListenerOutOfOrder() {
