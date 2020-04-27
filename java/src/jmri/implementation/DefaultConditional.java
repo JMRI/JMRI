@@ -1382,7 +1382,7 @@ public class DefaultConditional extends AbstractNamedBean
             try {
                 time = Integer.parseInt((String) mem.getValue());
             } catch (NumberFormatException ex) {
-                log.error("invalid action number variable from memory, \"{}\" ({}), value = {}, for Action \"{}\", in Conditional \"{}\" ({})", getUserName(), mem.getSystemName(), (String) mem.getValue(), action.getTypeString(), getUserName(), getSystemName());  // NOI18N
+                log.error("invalid action number variable from memory, \"{}\" ({}), value = {}, for Action \"{}\", in Conditional \"{}\" ({})", getUserName(), mem.getSystemName(), mem.getValue(), action.getTypeString(), getUserName(), getSystemName());  // NOI18N
                 return -1;
             }
         }
@@ -1418,7 +1418,7 @@ public class DefaultConditional extends AbstractNamedBean
                 time = -1;
             }
             if (time <= 0) {
-                log.error("invalid Millisecond value from memory, \"{}\" ({}), value = {}, for Action \"{}\", in Conditional \"{}\" ({})", getUserName(), mem.getSystemName(), (String) mem.getValue(), action.getTypeString(), getUserName(), getSystemName());  // NOI18N
+                log.error("invalid Millisecond value from memory, \"{}\" ({}), value = {}, for Action \"{}\", in Conditional \"{}\" ({})", getUserName(), mem.getSystemName(), mem.getValue(), action.getTypeString(), getUserName(), getSystemName());  // NOI18N
             }
         }
         return (int) (time * 1000);

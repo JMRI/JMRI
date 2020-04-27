@@ -558,7 +558,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                         fireTableRowsUpdated(row, row);
                     }
                 } catch (Exception ex) {
-                    log.error("getSensor({}) threw exception: {}", (String) value, ex);
+                    log.error("getSensor({}) threw exception: {}", value, ex);
                 }
                 if (!ok) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", (String) value),
@@ -575,7 +575,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                         fireTableRowsUpdated(row, row);
                     }
                 } catch (Exception ex) {
-                    log.error("No Reporter named \"{}\" found. threw exception: {}", (String) value, ex);
+                    log.error("No Reporter named \"{}\" found. threw exception: {}", value, ex);
                 }
                 if (rep == null) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchReporterErr", tempRow[REPORTERCOL]),
