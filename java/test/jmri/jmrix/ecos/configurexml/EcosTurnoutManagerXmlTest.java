@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * EcosTurnoutManagerXmlTest.java
  *
- * Description: tests for the EcosTurnoutManagerXml class
+ * Test for the EcosTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class EcosTurnoutManagerXmlTest {
       Assert.assertNotNull("EcosTurnoutManagerXml constructor",new EcosTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

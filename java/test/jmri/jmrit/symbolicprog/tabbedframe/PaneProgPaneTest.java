@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
+ * @author Bob Jacobsen Copyright 2001, 2002, 2003, 2004
  */
 public class PaneProgPaneTest {
 

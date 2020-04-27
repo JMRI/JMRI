@@ -8,7 +8,7 @@ import org.junit.Before;
 
 /**
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class JmriAbstractActionTest {
 

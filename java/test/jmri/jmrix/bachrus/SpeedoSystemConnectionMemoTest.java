@@ -9,9 +9,9 @@ import org.junit.Test;
 /**
  * SpeedoSystemConnectionMemoTest.java
  *
- * Description:	tests for the jmri.jmrix.bachrus.SpeedoSystemConnectionMemo class
+ * Test for the jmri.jmrix.bachrus.SpeedoSystemConnectionMemo class
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SpeedoSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -21,7 +21,6 @@ public class SpeedoSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionM
        Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

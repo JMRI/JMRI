@@ -7,9 +7,9 @@ import org.junit.*;
 /**
  * SRCPPowerManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPPowerManager class
+ * Test for the jmri.jmrix.srcp.SRCPPowerManager class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 
@@ -85,7 +85,6 @@ public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     public void testStateOff(){
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

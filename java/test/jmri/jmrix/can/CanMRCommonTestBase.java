@@ -11,7 +11,6 @@ import org.junit.Before;
  */
 public class CanMRCommonTestBase extends jmri.jmrix.AbstractMessageTestBase {
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -20,7 +19,7 @@ public class CanMRCommonTestBase extends jmri.jmrix.AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	m = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 

@@ -16,12 +16,12 @@ import jmri.jmrit.operations.locations.Track;
 /**
  * Tests for the Operations Locations class Last manually cross-checked on
  * 20090131
- *
+ * <p>
  * Still to do: ScheduleItem: XML read/write Schedule: Register, List, XML
  * read/write Track: AcceptsDropTrain, AcceptsDropRoute Track:
  * AcceptsPickupTrain, AcceptsPickupRoute Track: CheckScheduleValid Track: XML
  * read/write Location: Track support <-- I am here Location: XML read/write
- *
+ * <p>
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class ScheduleManagerTest extends OperationsTestCase {
@@ -72,7 +72,7 @@ public class ScheduleManagerTest extends OperationsTestCase {
         // now add a schedule to siding
         t.setSchedule(sch1);
 
-		// JComboBox box3 = sm.getSidingsByScheduleComboBox(s1);
+        // JComboBox box3 = sm.getSidingsByScheduleComboBox(s1);
         // LocationTrackPair ltp = (LocationTrackPair)box3.getItemAt(0);
         // Assert.assertEquals("Location track pair location", l, ltp.getLocation());
         // Assert.assertEquals("Location track pair track", t, ltp.getTrack());
@@ -152,7 +152,7 @@ public class ScheduleManagerTest extends OperationsTestCase {
         names = sm.getSchedulesByNameList();
         Assert.assertEquals("There should be no schedules", 0, names.size());
     }
-    
+
     @Test
     public void testScheduleComboBoxes() {
         LocationManager lm = InstanceManager.getDefault(LocationManager.class);

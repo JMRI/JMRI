@@ -11,8 +11,8 @@ import org.junit.Test;
 /**
  * JUnit tests for the SerialSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2003
- * @author	Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen Copyright 2003
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -86,7 +86,6 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
                 SerialNode.MAXSENSORS + 1);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -116,7 +115,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         if (stcs != null) stcs.terminateThreads();
         stcs = null;
         memo = null;
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2003, 2006
  */
 public class SerialTurnout extends AbstractTurnout {
 

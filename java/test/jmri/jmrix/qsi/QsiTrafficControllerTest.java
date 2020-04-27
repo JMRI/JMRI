@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JUnit tests for the QsiTrafficController class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class QsiTrafficControllerTest {
 
@@ -118,7 +118,7 @@ public class QsiTrafficControllerTest {
         m.setElement(1, '1');
         m.setElement(2, '2');
         c.sendQsiMessage(m, l);
-		// that's already tested, so don't do here.
+        // that's already tested, so don't do here.
 
         // now send reply
         tistream.write('S');
@@ -138,7 +138,8 @@ public class QsiTrafficControllerTest {
         while (rcvdReply == null && i++ < 100) {
             try {
                 Thread.sleep(10);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
             }
         }
         if (log.isDebugEnabled()) {
@@ -188,12 +189,12 @@ public class QsiTrafficControllerTest {
 
         @Override
         public String[] validBaudRates() {
-            return new String[] {};
+            return new String[]{};
         }
 
         @Override
         public int[] validBaudNumbers() {
-            return new int[] {};
+            return new int[]{};
         }
 
         protected QsiPortControllerScaffold() throws Exception {
@@ -235,7 +236,8 @@ public class QsiTrafficControllerTest {
     void wait(int msec) {
         try {
             super.wait(msec);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
         }
     }
 

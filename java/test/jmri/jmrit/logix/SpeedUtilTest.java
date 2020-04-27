@@ -9,7 +9,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SpeedUtilTest {
 
@@ -30,7 +30,6 @@ public class SpeedUtilTest {
         Assert.assertTrue("upRamp",ramp.isUpRamp());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

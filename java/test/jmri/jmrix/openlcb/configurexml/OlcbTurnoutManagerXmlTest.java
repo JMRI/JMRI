@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * OlcbTurnoutManagerXmlTest.java
  *
- * Description: tests for the OlcbTurnoutManagerXml class
+ * Test for the OlcbTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class OlcbTurnoutManagerXmlTest {
       Assert.assertNotNull("OlcbTurnoutManagerXml constructor",new OlcbTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

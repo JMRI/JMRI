@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * LevelXingXmlTest.java
  *
- * Description: tests for the LevelXingXml class
+ * Test for the LevelXingXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */

@@ -10,7 +10,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.jmrix.loconet.soundloader.LoaderEngine class.
  *
- * @author	Bob Jacobsen Copyright 2001, 2002, 2006
+ * @author Bob Jacobsen Copyright 2001, 2002, 2006
  */
 public class LoaderEngineTest {
 

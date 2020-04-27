@@ -51,7 +51,6 @@ public class GridConnectMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("standard format 2 byte", ":X00000123R12345678;", g.toString());
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -70,7 +69,7 @@ public class GridConnectMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	m = g = null;
+        m = g = null;
         JUnitUtil.tearDown();
     }
 }

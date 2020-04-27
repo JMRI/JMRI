@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensorManager class.
  *
- * @author	Paul Bender Copyright (c) 2003
+ * @author Paul Bender Copyright (c) 2003
  */
 public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -107,13 +107,12 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     @Test
     public void testProvideAddressAndPin() {
-        Assert.assertNotNull("Sensor XS99:3 provided",l.provideSensor("XS99:3"));
+        Assert.assertNotNull("Sensor XS99:3 provided", l.provideSensor("XS99:3"));
     }
 
     // from here down is testing infrastructure
     private final static Logger log = LoggerFactory.getLogger(XNetSensorManagerTest.class);
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -127,7 +126,7 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @After
     public void tearDown() {
         l.dispose();
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

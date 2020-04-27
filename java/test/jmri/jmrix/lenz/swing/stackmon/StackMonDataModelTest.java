@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.lenz.swing.stackmon.StackMonDataModel class
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class StackMonDataModelTest {
 
@@ -22,7 +22,6 @@ public class StackMonDataModelTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

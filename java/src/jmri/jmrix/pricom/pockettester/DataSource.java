@@ -30,7 +30,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * <p>
  * For more info on the product, see http://www.pricom.com
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
@@ -347,8 +347,8 @@ public class DataSource extends jmri.util.JmriJFrame {
 
             // NO hardware handshaking, but for consistancy, set the Modem Control Lines
             // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true); // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(true); // pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; None is needed or used
             activeSerialPort.setFlowControlMode(0);

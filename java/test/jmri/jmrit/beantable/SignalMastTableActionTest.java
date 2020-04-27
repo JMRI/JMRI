@@ -56,7 +56,6 @@ public class SignalMastTableActionTest extends AbstractTableActionBase<SignalMas
     public void testEditButton() {
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

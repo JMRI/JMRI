@@ -28,7 +28,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * Implements SerialPortAdapter for connecting to two sensors via the serial
  * port. Sensor "1" will be via DCD, and sensor "2" via DSR
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class SerialSensorAdapter extends AbstractSerialPortController {
 

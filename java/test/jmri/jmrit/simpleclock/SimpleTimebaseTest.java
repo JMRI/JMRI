@@ -16,7 +16,7 @@ import jmri.util.JUnitUtil;
 /**
  * Tests for the SimpleTimebase class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SimpleTimebaseTest {
 

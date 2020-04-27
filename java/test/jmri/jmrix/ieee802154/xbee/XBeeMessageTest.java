@@ -8,10 +8,10 @@ import org.junit.Test;
 
 /**
  * XBeeMessageTest.java
+ * <p>
+ * Test for the jmri.jmrix.ieee802154.xbee.XBeeMessage class
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeMessage class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XBeeMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
@@ -21,7 +21,6 @@ public class XBeeMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("length", 3, m.getNumDataElements());
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -31,7 +30,7 @@ public class XBeeMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	m = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 

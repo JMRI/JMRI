@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * XNetTurnoutManagerXmlTest.java
  *
- * Description: tests for the XNetTurnoutManagerXml class
+ * Test for the XNetTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class XNetTurnoutManagerXmlTest {
       Assert.assertNotNull("XNetTurnoutManagerXml constructor",new XNetTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

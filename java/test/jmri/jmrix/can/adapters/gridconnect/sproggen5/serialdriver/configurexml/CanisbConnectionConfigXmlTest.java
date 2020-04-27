@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * CanisbConnectionConfigXmlTest.java
  * 
- * Description: tests for the CanisbConnectionConfigXml class
+ * Test for the CanisbConnectionConfigXml class
  *
  * @author  Andrew Crosland  Copyright (C) 2020
  */
@@ -19,7 +19,6 @@ public class CanisbConnectionConfigXmlTest extends jmri.jmrix.configurexml.Abstr
         Assert.assertNotNull("exists",c);
     }
     
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

@@ -358,7 +358,6 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     private TrafficControllerScaffold tcis;
     private CanSystemConnectionMemo memo;
     
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

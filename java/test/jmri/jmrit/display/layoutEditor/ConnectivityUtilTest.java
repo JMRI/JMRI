@@ -14,7 +14,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of ConnectivityUtil
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ConnectivityUtilTest {
 

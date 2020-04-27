@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class Dcc4PcBoardManagerTest {
 
@@ -28,7 +28,6 @@ public class Dcc4PcBoardManagerTest {
         tm.dispose();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

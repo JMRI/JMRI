@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class CanSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -20,7 +20,6 @@ public class CanSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
        Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

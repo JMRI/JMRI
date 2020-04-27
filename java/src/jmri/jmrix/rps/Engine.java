@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * extension to the common Roster, and every entry in this class's collection
  * must be present in the Roster.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 public class Engine implements ReadingListener {
 

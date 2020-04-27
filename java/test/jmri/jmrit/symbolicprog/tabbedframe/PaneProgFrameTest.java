@@ -19,7 +19,7 @@ import org.junit.Test;
 /**
  * Tests for PaneProgFrame.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class PaneProgFrameTest {
 

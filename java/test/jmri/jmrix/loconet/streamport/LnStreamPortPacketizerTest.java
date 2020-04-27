@@ -29,7 +29,6 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
     
     private DataInputStream istream;   // so the traffic controller can read from this
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

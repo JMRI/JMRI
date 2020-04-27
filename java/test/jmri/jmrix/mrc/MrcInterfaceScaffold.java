@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 /**
  * MrcInterfaceScaffold.java
  *
- * Description:	Test scaffold implementation of MrcInterface
+ * Test scaffold implementation of MrcInterface
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
   *
  * Use an object of this type as a MrcTrafficController in tests
  */

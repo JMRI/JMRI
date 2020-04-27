@@ -13,7 +13,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LsDecSignalHeadTest extends AbstractSignalHeadTestBase {
 
@@ -56,7 +56,6 @@ public class LsDecSignalHeadTest extends AbstractSignalHeadTestBase {
         return new LsDecSignalHead("testSys","testUser",green,1,red,2,yellow,3,flashgreen,4,flashred,5,flashyellow,6,off,7);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();        jmri.util.JUnitUtil.initInternalTurnoutManager();

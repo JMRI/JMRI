@@ -5,8 +5,8 @@ import jmri.jmrix.xpa.XpaSystemConnectionMemo;
 /**
  * Provide access to Swing components for the XPA subsystem.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
- * @author	Paul Bender Copyright (C) 2010,2016
+ * @author Bob Jacobsen Copyright (C) 2010
+ * @author Paul Bender Copyright (C) 2010,2016
  * @since 4.3.6
  */
 public class XpaComponentFactory extends jmri.jmrix.swing.ComponentFactory {

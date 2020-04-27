@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * LightIconXmlTest.java
  *
- * Description: tests for the LightIconXml class
+ * Test for the LightIconXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class LightIconXmlTest {
       Assert.assertNotNull("LightIconXml constructor",new LightIconXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

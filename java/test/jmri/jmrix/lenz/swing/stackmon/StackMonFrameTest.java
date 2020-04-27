@@ -8,14 +8,13 @@ import org.junit.Before;
 /**
  * Tests for the jmri.jmrix.lenz.swing.stackmon.StackMonFrame class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class StackMonFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private jmri.jmrix.lenz.XNetInterfaceScaffold t = null;
     private jmri.jmrix.lenz.XNetSystemConnectionMemo memo = null;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

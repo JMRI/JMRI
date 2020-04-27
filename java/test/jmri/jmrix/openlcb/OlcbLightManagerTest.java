@@ -9,7 +9,7 @@ import org.openlcb.*;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbLightManager class.
  *
- * @author	Jeff Collell
+ * @author Jeff Collell
  */
 public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
@@ -109,7 +109,6 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Assert.assertNull(l.getLight(name.toLowerCase()));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

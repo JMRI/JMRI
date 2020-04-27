@@ -5,7 +5,7 @@ import org.junit.*;
 
 /**
  * Test the RetryRule
- * @author Bob Jacobsen Copyright 2018	
+ * @author Bob Jacobsen Copyright 2018
  */
 public class RetryRuleTest {
 
@@ -45,7 +45,6 @@ public class RetryRuleTest {
 
     // before entire class as retryrule messes with before/after
     @BeforeClass
-    // The minimal setup for log4J
     static public void setUp() {
         JUnitUtil.setUp();
     }

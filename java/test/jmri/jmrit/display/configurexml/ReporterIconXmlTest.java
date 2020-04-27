@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * ReporterIconXmlTest.java
  *
- * Description: tests for the ReporterIconXml class
+ * Test for the ReporterIconXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class ReporterIconXmlTest {
       Assert.assertNotNull("ReporterIconXml constructor",new ReporterIconXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

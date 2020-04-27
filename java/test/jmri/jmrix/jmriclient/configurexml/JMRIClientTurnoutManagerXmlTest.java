@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * JMRIClientTurnoutManagerXmlTest.java
  *
- * Description: tests for the JMRIClientTurnoutManagerXml class
+ * Test for the JMRIClientTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class JMRIClientTurnoutManagerXmlTest {
       Assert.assertNotNull("JMRIClientTurnoutManagerXml constructor",new JMRIClientTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

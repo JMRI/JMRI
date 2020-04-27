@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * Implements the jmri.Programmer interface via commands for the SRCP
  * powerstation
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
 
@@ -43,13 +43,13 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
 
     // members for handling the programmer interface
     int progState = 0;
-    static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int COMMANDSENT = 2; 	// read/write command sent, waiting reply
+    static final int NOTPROGRAMMING = 0; // is notProgramming
+    static final int COMMANDSENT = 2;    // read/write command sent, waiting reply
     boolean _progRead = false;
     boolean _progConfirm = false;
     int _confirmVal;  // remember the value to be confirmed for reply
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv;  // remember the cv being read/written
 
     /** 
      * {@inheritDoc}

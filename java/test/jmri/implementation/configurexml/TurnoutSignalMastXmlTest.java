@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * TurnoutSignalMastXmlTest.java
  *
- * Description: tests for the TurnoutSignalMastXml class
+ * Test for the TurnoutSignalMastXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class TurnoutSignalMastXmlTest {
       Assert.assertNotNull("TurnoutSignalMastXml constructor",new TurnoutSignalMastXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

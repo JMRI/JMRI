@@ -9,7 +9,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.managers.DefaultIdTagManager class.
  *
- * @author	Matthew Harris Copyright (C) 2011
+ * @author Matthew Harris Copyright (C) 2011
  */
 public class DefaultIdTagManagerTest extends AbstractProvidingManagerTestBase<IdTagManager,IdTag> {
 
@@ -114,7 +114,6 @@ public class DefaultIdTagManagerTest extends AbstractProvidingManagerTestBase<Id
         Assert.assertFalse("Non-matching IdTag returned via provideTag by tag ID", t1.equals(m.provideIdTag("0413275FCA")));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();

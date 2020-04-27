@@ -15,7 +15,7 @@ import org.junit.*;
 /**
  * Test simple functioning of LayoutShape
  *
- * @author	George Warner Copyright (C) 2019
+ * @author George Warner Copyright (C) 2019
  */
 public class LayoutShapeTest {
 

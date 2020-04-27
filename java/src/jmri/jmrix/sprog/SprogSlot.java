@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
  * Updated by Andrew Crosland February 2012 to allow slots to hold 28 step speed
  * packets
  *
- * @author	Andrew Crosland Copyright (C) 2006, 2012
- * @author	Andrew Berridge 2010
+ * @author Andrew Crosland Copyright (C) 2006, 2012
+ * @author Andrew Berridge 2010
  */
 public class SprogSlot {
 

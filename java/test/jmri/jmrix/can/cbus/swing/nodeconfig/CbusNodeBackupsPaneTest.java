@@ -19,8 +19,8 @@ import org.netbeans.jemmy.operators.*;
 /**
  * Test simple functioning of CbusNodeBackupsPane
  *
- * @author	Paul Bender Copyright (C) 2016
- * @author	Steve Young Copyright (C) 2019
+ * @author Paul Bender Copyright (C) 2016
+ * @author Steve Young Copyright (C) 2019
  */
 public class CbusNodeBackupsPaneTest {
 

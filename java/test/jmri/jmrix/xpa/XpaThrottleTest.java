@@ -9,9 +9,9 @@ import org.junit.Test;
 
 
 /**
- * Description:	tests for the jmri.jmrix.xpa.XpaThrottle class.
+ * Test for the jmri.jmrix.xpa.XpaThrottle class.
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XpaThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -208,7 +208,6 @@ public class XpaThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup3() {
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

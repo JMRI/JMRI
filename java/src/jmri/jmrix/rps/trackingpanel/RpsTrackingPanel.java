@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrix.rps.Model
  * @see jmri.jmrix.rps.Measurement
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 public class RpsTrackingPanel extends javax.swing.JPanel
         implements MeasurementListener {

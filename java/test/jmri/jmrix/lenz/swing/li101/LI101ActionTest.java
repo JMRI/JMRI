@@ -13,7 +13,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Tests for the jmri.jmrix.lenz.packetgen.LI101Action class
  *
- * @author	Bob Jacobsen Copyright (c) 2001, 2002
+ * @author Bob Jacobsen Copyright (c) 2001, 2002
  */
 public class LI101ActionTest {
 
@@ -60,7 +60,7 @@ public class LI101ActionTest {
 
     @After
     public void tearDown() {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

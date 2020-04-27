@@ -19,7 +19,6 @@ public class SerialDriverAdapterTest {
        Assert.assertNotNull(a);
    }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

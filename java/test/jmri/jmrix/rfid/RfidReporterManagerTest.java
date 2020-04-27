@@ -9,7 +9,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.jmrix.rfid.RfidReporterManager class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
@@ -81,7 +81,6 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     public void testReporterProvideByNumber() {
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

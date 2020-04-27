@@ -204,14 +204,14 @@ public class RailDriverMenuItem extends JMenuItem
             thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    byte[] buff_old = new byte[14];	// read buffer
+                    byte[] buff_old = new byte[14]; // read buffer
                     Arrays.fill(buff_old, (byte) 0);
 
                     while (!thread.isInterrupted()) {
                         if (!hidDevice.isOpen()) {
                             hidDevice.open();
                         }
-                        byte[] buff_new = new byte[14];	// read buffer
+                        byte[] buff_new = new byte[14]; // read buffer
                         int ret = hidDevice.read(buff_new);
                         if (ret >= 0) {
                             //log.debug("hidDevice.read: {}", buff_new);
@@ -351,8 +351,8 @@ public class RailDriverMenuItem extends JMenuItem
     // constants used to talk to RailDriver
     //
     // these are the report ID's
-    private final byte LEDCommand = (byte) 134;			// Command code to set the LEDs.
-    private final byte SpeakerCommand = (byte) 133;		// Command code to set the speaker state.
+    private final byte LEDCommand = (byte) 134; // Command code to set the LEDs.
+    private final byte SpeakerCommand = (byte) 133; // Command code to set the speaker state.
 
     // Seven segment lookup table for digits ('0' thru '9')
     private final byte SevenSegment[] = {
@@ -377,7 +377,7 @@ public class RailDriverMenuItem extends JMenuItem
 
     // Set the LEDS.
     public void setLEDs(@Nonnull String ledstring) {
-        byte[] buff = new byte[7];	// Segment buffer.
+        byte[] buff = new byte[7]; // Segment buffer.
         Arrays.fill(buff, (byte) 0);
 
         int outIdx = 2;
@@ -423,7 +423,7 @@ public class RailDriverMenuItem extends JMenuItem
     }   // setLEDs
 
     public void setSpeakerOn(boolean onFlag) {
-        byte[] buff = new byte[7];	// data buffer
+        byte[] buff = new byte[7]; // data buffer
         Arrays.fill(buff, (byte) 0);
 
         buff[5] = (byte) (onFlag ? 1 : 0);      // On / off

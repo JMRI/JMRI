@@ -10,9 +10,9 @@ import org.junit.Test;
 /**
  * SRCPThrottleTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPThrottle class
+ * Test for the jmri.jmrix.srcp.SRCPThrottle class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -385,7 +385,6 @@ public class SRCPThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

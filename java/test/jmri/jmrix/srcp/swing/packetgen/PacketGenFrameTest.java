@@ -11,7 +11,6 @@ public class PacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private jmri.jmrix.srcp.SRCPSystemConnectionMemo memo = null;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

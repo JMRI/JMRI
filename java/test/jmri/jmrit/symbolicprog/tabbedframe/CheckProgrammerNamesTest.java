@@ -6,7 +6,7 @@ import org.junit.*;
 /**
  * Check the names in an XML programmer file against the names.xml definitions
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2007, 2008
  * @see jmri.jmrit.XmlFile
  */
 public class CheckProgrammerNamesTest {

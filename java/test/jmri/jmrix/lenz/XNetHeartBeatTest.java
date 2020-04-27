@@ -8,7 +8,7 @@ import org.junit.Test;
 /**
  * XNetHeartBeat.java
  *
- * Description: tests for the jmri.jmrix.lenz.XNetHeartBeat class
+ * Test for the jmri.jmrix.lenz.XNetHeartBeat class
  *
  * @author  Paul Bender Copyright (C) 2019
  */

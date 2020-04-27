@@ -101,7 +101,6 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
         assertThat(sb.toString()).endsWith("411 ERROR unknown value\n\r").withFailMessage("send Unknown Status check");
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     @Override
     public void setUp() {

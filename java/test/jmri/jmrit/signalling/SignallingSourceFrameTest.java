@@ -6,18 +6,17 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SignallingSourceFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new SignallingSourceFrame();
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new SignallingSourceFrame();
+        }
     }
 
     @After
@@ -27,5 +26,4 @@ public class SignallingSourceFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SignallingSourceFrameTest.class);
-
 }
