@@ -12,7 +12,6 @@ public class LearnThrottleFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private WarrantFrame wf;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

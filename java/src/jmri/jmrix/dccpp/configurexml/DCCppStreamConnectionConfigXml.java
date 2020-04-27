@@ -36,9 +36,9 @@ public class DCCppStreamConnectionConfigXml extends AbstractStreamConnectionConf
 
     @Override
     protected void register() {
-	if(adapter!=null) {
-	   return; // already registered.
-	}
+        if (adapter != null) {
+            return; // already registered.
+        }
         this.register(new DCCppStreamConnectionConfig(adapter));
     }
 

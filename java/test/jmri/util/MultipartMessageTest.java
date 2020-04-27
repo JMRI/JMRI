@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MultipartMessageTest {
 
@@ -21,7 +21,6 @@ public class MultipartMessageTest {
         t.finish(); // make sure the port closes.
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         // we need a web server to test this, so start the JMRI webserver here

@@ -7,13 +7,12 @@ import org.junit.Before;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class CbusDccOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
     private TrafficControllerScaffold tcis;
     
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

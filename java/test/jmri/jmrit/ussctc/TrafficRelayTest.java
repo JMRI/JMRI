@@ -6,7 +6,7 @@ import org.junit.*;
 /**
  * Tests for TrafficRelay class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class TrafficRelayTest {
 
@@ -40,7 +40,6 @@ public class TrafficRelayTest {
         Assert.assertTrue(lock.isLockClear());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

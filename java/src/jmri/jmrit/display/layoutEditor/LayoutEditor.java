@@ -3766,7 +3766,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 case POS_POINT: {
                     PositionablePoint p2 = (PositionablePoint) foundTrack;
 
-                    if ((p2.getType() == PositionablePoint.ANCHOR) && p2.setTrackConnection(t)) {
+                    if ((p2.getType() == PositionablePoint.PointType.ANCHOR) && p2.setTrackConnection(t)) {
                         if (t.getConnect1() == p) {
                             t.setNewConnect1(p2, foundHitPointType);
                         } else {
@@ -4695,7 +4695,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //create object
         PositionablePoint o = new PositionablePoint(name,
-                PositionablePoint.ANCHOR, p, this);
+                PositionablePoint.PointType.ANCHOR, p, this);
 
         layoutTrackList.add(o);
         unionToPanelBounds(o.getBounds());
@@ -4713,7 +4713,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //create object
         PositionablePoint o = new PositionablePoint(name,
-                PositionablePoint.END_BUMPER, currentPoint, this);
+                PositionablePoint.PointType.END_BUMPER, currentPoint, this);
 
         layoutTrackList.add(o);
         unionToPanelBounds(o.getBounds());
@@ -4729,7 +4729,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //create object
         PositionablePoint o = new PositionablePoint(name,
-                PositionablePoint.EDGE_CONNECTOR, currentPoint, this);
+                PositionablePoint.PointType.EDGE_CONNECTOR, currentPoint, this);
 
         layoutTrackList.add(o);
         unionToPanelBounds(o.getBounds());

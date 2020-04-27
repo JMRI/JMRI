@@ -9,7 +9,7 @@ import org.junit.Before;
 /**
  * Test simple functioning of ListFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ListFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -20,16 +20,16 @@ public class ListFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         _memo = new MapleSystemConnectionMemo("K", "Maple");
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new ListFrame(_memo);
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new ListFrame(_memo);
+        }
     }
 
     @After
     @Override
     public void tearDown() {
-	    _memo = null;
+        _memo = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-    	super.tearDown();    
+        super.tearDown();
     }
 }

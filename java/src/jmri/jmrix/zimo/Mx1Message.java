@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * that bytes have, and because a Java char is actually a variable number of
  * bytes in Unicode.
  *
- * @author	Kevin Dickerson Copyright (C) 2014
+ * @author Kevin Dickerson Copyright (C) 2014
  *
  * Adapted by Sip Bosch for use with zimo MX-1
  *

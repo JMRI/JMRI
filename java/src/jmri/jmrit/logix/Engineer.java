@@ -371,7 +371,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 _ramp = new ThrottleRamp();
                 _ramp.start();
             } else {
-            	_ramp.quit(false);            	
+                _ramp.quit(false);
             }
             long time = 0;
             int waitTime = _speedUtil.getRampTimeIncrement() + 20;
@@ -452,7 +452,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             }
         }
         if (Math.abs(getSpeedSetting() - newSpeed) < .002) {
-        	setHalt(false);
+            setHalt(false);
             return false;
         }
         return true;

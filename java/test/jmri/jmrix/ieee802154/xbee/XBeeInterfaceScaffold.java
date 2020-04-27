@@ -9,10 +9,10 @@ import org.slf4j.LoggerFactory;
 /**
  * XBeeInterfaceScaffold.java
  *
- * Description:	Test scaffold implementation of XBeeInterface
+ * Test scaffold implementation of XBeeInterface
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
- * @author	Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Paul Bender Copyright (C) 2016
  *
  * Use an object of this type as a XBeeTrafficController in tests
  */

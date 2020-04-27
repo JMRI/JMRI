@@ -9,7 +9,7 @@ import org.junit.*;
 /**
  * Test simple functioning of SprogSlotMonFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SprogSlotMonFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -26,9 +26,9 @@ public class SprogSlotMonFrameTest extends jmri.util.JmriJFrameTestBase {
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
         m.configureCommandStation();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new SprogSlotMonFrame(m);
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new SprogSlotMonFrame(m);
+        }
     }
 
     @After

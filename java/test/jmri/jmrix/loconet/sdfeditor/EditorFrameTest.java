@@ -13,7 +13,6 @@ public class EditorFrameTest extends jmri.util.JmriJFrameTestBase {
            
     private SdfBuffer b;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

@@ -19,7 +19,7 @@ import org.junit.Before;
  * examples in their associated JUnit test classes:
  * {@link ThreadingUtilTest} and {@lnk WaitHandlerTest}.
  *
- * @author	Bob Jacobsen Copyright 2017
+ * @author Bob Jacobsen Copyright 2017
  */
 public class ThreadingDemoAndTest {
 

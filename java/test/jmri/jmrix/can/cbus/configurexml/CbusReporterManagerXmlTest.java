@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * CbusReporterManagerXmlTest.java
  *
- * Description: tests for the CbusReporterManagerXml class
+ * Test for the CbusReporterManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class CbusReporterManagerXmlTest {
       Assert.assertNotNull("CbusReporterManagerXml constructor",new CbusReporterManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -18,7 +18,6 @@ public class SerialTurnoutManagerXmlTest {
       Assert.assertNotNull("SerialTurnoutManagerXml constructor", new SerialTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

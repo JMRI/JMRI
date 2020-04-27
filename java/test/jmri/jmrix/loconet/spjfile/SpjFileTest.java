@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.jmrix.loconet.spjfile package
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class SpjFileTest {
 

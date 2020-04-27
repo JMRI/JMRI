@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * All index numbers here are 1-based, so they are the same as the RPS hardware
  * number.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class DebuggerTimePane extends JPanel
         implements ReadingListener, MeasurementListener {

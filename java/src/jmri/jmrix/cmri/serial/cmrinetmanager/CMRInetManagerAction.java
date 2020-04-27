@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a CMRInetManagerAction object
  *
- * @author	Chuck Catania Copyright (C) 2014, 2015, 2016, 2017
+ * @author Chuck Catania Copyright (C) 2014, 2015, 2016, 2017
  */
 public class CMRInetManagerAction extends AbstractAction {
 

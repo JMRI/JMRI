@@ -48,7 +48,6 @@ public class IndicatorTurnoutIconTest extends PositionableIconTest {
 
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

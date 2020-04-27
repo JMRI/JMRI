@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * z21/Z21 XpressNet implementation. It adds the appropriate Managers via the
  * Initialization Manager based on the Command Station Type.
  *
- * @author	Paul Bender Copyright (C) 2015
+ * @author Paul Bender Copyright (C) 2015
  */
 public class Z21XNetInitializationManager extends XNetInitializationManager {
 

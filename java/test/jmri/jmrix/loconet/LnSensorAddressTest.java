@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorAddress class.
  *
- * @author	Bob Jacobsen Copyright 2001, 2002
+ * @author Bob Jacobsen Copyright 2001, 2002
  */
 public class LnSensorAddressTest {
 
@@ -102,7 +102,6 @@ public class LnSensorAddressTest {
 
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

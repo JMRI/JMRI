@@ -19,7 +19,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     public AbstractTurnoutManager(SystemConnectionMemo memo) {
         super(memo);
-        InstanceManager.getDefault(TurnoutOperationManager.class);		// force creation of an instance
+        InstanceManager.getDefault(TurnoutOperationManager.class); // force creation of an instance
         InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
 

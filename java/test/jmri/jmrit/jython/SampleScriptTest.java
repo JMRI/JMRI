@@ -17,8 +17,8 @@ import org.junit.runners.Parameterized.Parameters;
 /**
  * Invokes Python-language scripts in jython/tests
  *
- * @author	Bob Jacobsen Copyright 2016
- * @author	Paul Bender Copyright (C) 2017
+ * @author Bob Jacobsen Copyright 2016
+ * @author Paul Bender Copyright (C) 2017
  * @since JMRI 4.3.6
  */
 @RunWith(Parameterized.class)

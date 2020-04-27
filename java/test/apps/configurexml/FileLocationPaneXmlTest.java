@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * FileLocationPaneXmlTest.java
  *
- * Description: tests for the FileLocationPaneXml class
+ * Test for the FileLocationPaneXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class FileLocationPaneXmlTest {
       Assert.assertNotNull("FileLocationPaneXml constructor",new FileLocationPaneXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -12,7 +12,6 @@ import jmri.jmrix.sprog.SprogCSStreamConnectionConfig;
  */
 public class SprogCSStreamConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractStreamConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

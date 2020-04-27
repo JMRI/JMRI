@@ -61,7 +61,6 @@ public class RpsReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
         Assert.assertEquals("R", l.getSystemPrefix());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

@@ -24,8 +24,8 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
    @Override
    public void tearDown(){
         cc = null;
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        JUnitUtil.tearDown();
+       JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+       JUnitUtil.tearDown();
    }
 
 }

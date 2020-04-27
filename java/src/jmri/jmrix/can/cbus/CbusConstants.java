@@ -3,7 +3,7 @@ package jmri.jmrix.can.cbus;
 /**
  * CbusConstants.java
  *
- * Description: Constants to represent CBUS protocol
+ * Constants to represent CBUS protocol
  *
  * @author Andrew Crosland Copyright (C) 2008
  */

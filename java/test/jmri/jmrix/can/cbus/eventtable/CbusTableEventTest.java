@@ -84,7 +84,6 @@ public class CbusTableEventTest {
         Assert.assertEquals(new jmri.jmrix.can.cbus.CbusEvent(null,123,456), new CbusTableEvent(null,123,456));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

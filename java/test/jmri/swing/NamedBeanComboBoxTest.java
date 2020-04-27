@@ -534,7 +534,6 @@ public class NamedBeanComboBoxTest {
         assertEquals("Manager has no listeners", 0, m.getPropertyChangeListeners().length);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

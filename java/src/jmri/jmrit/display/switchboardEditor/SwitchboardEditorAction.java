@@ -8,7 +8,7 @@ import jmri.jmrit.display.PanelMenu;
 /**
  * Start a SwitchboardEditor.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  * @see jmri.jmrit.display.switchboardEditor.SwitchboardEditor
  */
 public class SwitchboardEditorAction extends AbstractAction {

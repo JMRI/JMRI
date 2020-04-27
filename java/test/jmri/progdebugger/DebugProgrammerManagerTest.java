@@ -10,7 +10,7 @@ import org.junit.Before;
 /**
  * Test the DebugProgrammerManager class.
  *
- * @author	Bob Jacobsen Copyright 2002
+ * @author Bob Jacobsen Copyright 2002
  */
 public class DebugProgrammerManagerTest {
 

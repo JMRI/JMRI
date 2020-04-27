@@ -11,9 +11,9 @@ import org.junit.Test;
 /**
  * XNetPowerManagerTest.java
  * <p>
- * Description:	tests for the jmri.jmrix.lenz.XNetPowerManager class
+ * Test for the jmri.jmrix.lenz.XNetPowerManager class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 
@@ -280,7 +280,6 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
         Assert.assertTrue(p.implementsIdle());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -293,7 +292,7 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     @After
     public void tearDown() {
         p = pm = null;
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

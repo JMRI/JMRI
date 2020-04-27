@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class Mx1ThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
@@ -19,7 +19,6 @@ public class Mx1ThrottleManagerTest extends jmri.managers.AbstractThrottleManage
         Assert.assertNotNull("exists",tm);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

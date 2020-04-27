@@ -1329,7 +1329,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     LocoNetInterfaceScaffold lnis;
     LocoNetSystemConnectionMemo memo;
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

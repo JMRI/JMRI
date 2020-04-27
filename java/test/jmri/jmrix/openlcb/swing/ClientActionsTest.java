@@ -13,7 +13,7 @@ import org.openlcb.can.CanInterface;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ClientActionsTest {
 
@@ -34,7 +34,6 @@ public class ClientActionsTest {
         jmri.util.JUnitAppender.suppressWarnMessage("ool did not terminate");
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -8,7 +8,7 @@ import org.junit.*;
  * 
  * This should be run with and without the -ea (or -enableassertions) runtime option for complete coverage
  *
- * @author	Bob Jacobsen Copyright 2018
+ * @author Bob Jacobsen Copyright 2018
  */
 
 

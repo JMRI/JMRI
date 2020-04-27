@@ -26,8 +26,8 @@ import purejavacomm.SerialPortEventListener;
  * move everything off the swing thread. Use a blocking queue to handle
  * asynchronous messages from multiple sources.
  * 
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Andrew Crosland Copyright (C) 2018
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew Crosland Copyright (C) 2018
  */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener,
         Runnable {

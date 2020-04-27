@@ -13,7 +13,6 @@ import org.junit.Before;
  */
 public class DCCppEthernetPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketizerTest {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

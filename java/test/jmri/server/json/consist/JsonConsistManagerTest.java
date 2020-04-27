@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JsonConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
 
@@ -49,7 +49,6 @@ public class JsonConsistManagerTest extends jmri.implementation.AbstractConsistM
     }
     
     
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

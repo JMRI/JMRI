@@ -11,11 +11,10 @@ import org.junit.Before;
 /**
  * Tests for the jmri.jmrix.roco.RocoXNetThrottleManager class
  *
- * @author	Paul Bender Copyright (C) 2015,2016
+ * @author Paul Bender Copyright (C) 2015,2016
  */
 public class RocoXNetThrottleManagerTest extends XNetThrottleManagerTest {
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

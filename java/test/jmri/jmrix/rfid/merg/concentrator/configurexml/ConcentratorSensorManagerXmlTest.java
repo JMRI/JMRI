@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * ConcentratorSensorManagerXmlTest.java
  *
- * Description: tests for the ConcentratorSensorManagerXml class
+ * Test for the ConcentratorSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class ConcentratorSensorManagerXmlTest {
       Assert.assertNotNull("ConcentratorSensorManagerXml constructor",new ConcentratorSensorManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -10,7 +10,6 @@ import org.junit.*;
  */
 public class WarrantFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

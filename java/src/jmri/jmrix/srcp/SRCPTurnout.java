@@ -12,10 +12,10 @@ import org.slf4j.LoggerFactory;
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
  *
- * Description:	extend jmri.AbstractTurnout for SRCP layouts
+ * extend jmri.AbstractTurnout for SRCP layouts
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	Paul Bender Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Paul Bender Copyright (C) 2014
  */
 public class SRCPTurnout extends AbstractTurnout {
 

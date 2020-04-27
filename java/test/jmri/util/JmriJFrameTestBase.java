@@ -11,7 +11,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Base tests for JmriJFrame derived frames.
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 abstract public class JmriJFrameTestBase {
 

@@ -13,7 +13,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TripleOutputSignalHeadTest extends AbstractSignalHeadTestBase {
 
@@ -40,7 +40,6 @@ public class TripleOutputSignalHeadTest extends AbstractSignalHeadTestBase {
         return new TripleOutputSignalHead("Test Head",green,red,yellow);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();        jmri.util.JUnitUtil.initInternalTurnoutManager();

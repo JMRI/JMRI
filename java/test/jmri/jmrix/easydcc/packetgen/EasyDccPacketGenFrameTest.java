@@ -8,7 +8,7 @@ import org.junit.*;
  * Tests for the jmri.jmrix.easydcc.packetgen.EasyDccPacketGenFrame
  * class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class EasyDccPacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
 

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensor class.
  *
- * @author	Paul Bender Copyright 2004
+ * @author Paul Bender Copyright 2004
  */
 public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -21,13 +21,15 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @Override
-    public void checkOnMsgSent() {}
+    public void checkOnMsgSent() {
+    }
 
     @Override
-    public void checkOffMsgSent() {}
-        
+    public void checkOffMsgSent() {
+    }
+
     @Override
-    public void checkStatusRequestMsgSent(){
+    public void checkStatusRequestMsgSent() {
         Assert.assertEquals("Sensor Status Request Sent", "42 05 80 C7", xnis.outbound.elementAt(0).toString());
     }
 
@@ -40,15 +42,17 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assert.assertTrue(t.getKnownState() == jmri.Sensor.UNKNOWN);
 
         // notify the Sensor that somebody else changed it...
-	m = new XNetReply();
+        m = new XNetReply();
         m.setElement(0, 0x42);     // Opcode for feedback response
         m.setElement(1, 0x05);     // The feedback encoder address
         m.setElement(2, 0x42);     // A bit pattern telling which
         // bits of the lower nibble
         // are on in the message.
         m.setElement(3, 0x05);     // The XOR of everything above
-        ((XNetSensor)t).message(m);
-        jmri.util.JUnitUtil.waitFor(()->{return t.getState() == t.getRawState();}, "raw state = state");
+        ((XNetSensor) t).message(m);
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return t.getState() == t.getRawState();
+        }, "raw state = state");
         Assert.assertEquals("Known state after activate ", jmri.Sensor.ACTIVE, t.getKnownState());
 
         m = new XNetReply();
@@ -58,7 +62,7 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
         // bits of the lower nibble
         // are on in the message.
         m.setElement(3, 0x07);     // The XOR of everything above
-        ((XNetSensor)t).message(m);
+        ((XNetSensor) t).message(m);
 
         Assert.assertEquals("Known state after inactivate ", jmri.Sensor.INACTIVE, t.getKnownState());
 
@@ -88,14 +92,13 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @Override
     @Test
     public void testDispose() throws jmri.JmriException {
-        t.setState(jmri.Sensor.ACTIVE);  	// in case registration with TrafficController is deferred to after first use
+        t.setState(jmri.Sensor.ACTIVE); // in case registration with TrafficController is deferred to after first use
         Assert.assertEquals("controller listeners ", 1, numListeners());
         t.dispose();
-	// XPressNet leaves one listener after the dispose, should it?
+        // XPressNet leaves one listener after the dispose, should it?
         Assert.assertEquals("controller listeners remaining", 1, numListeners());
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -108,8 +111,8 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @After
     public void tearDown() {
         t.dispose();
-	    xnis=null;
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        xnis = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

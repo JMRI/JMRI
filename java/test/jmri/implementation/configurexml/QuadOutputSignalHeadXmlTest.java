@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * QuadOutputSignalHeadXmlTest.java
  *
- * Description: tests for the QuadOutputSignalHeadXml class
+ * Test for the QuadOutputSignalHeadXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class QuadOutputSignalHeadXmlTest {
       Assert.assertNotNull("QuadOutputSignalHeadXml constructor",new QuadOutputSignalHeadXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

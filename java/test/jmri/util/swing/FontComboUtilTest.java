@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.util.swing.FontComboUtil class.
  *
- * @author	Matthew Harris Copyright 2011
+ * @author Matthew Harris Copyright 2011
  */
 public class FontComboUtilTest {
 
@@ -84,7 +84,6 @@ public class FontComboUtilTest {
         Assert.assertTrue("List contains 'SansSerif'", fonts.contains("SansSerif"));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

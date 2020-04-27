@@ -99,7 +99,6 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
 
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

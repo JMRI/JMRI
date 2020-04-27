@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * JmriJFrame. By using reflection, this cuts the loader dependency on the
  * loaded class.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class JmriJFrameAction extends AbstractAction {
 

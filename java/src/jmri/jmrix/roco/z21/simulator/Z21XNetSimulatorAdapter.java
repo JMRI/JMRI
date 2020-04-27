@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * This shares some code with the XpressNet simulator, but it's
  * not a derived class because it isn't a real connection.
  *
- * @author	Paul Bender, Copyright (C) 2015
+ * @author Paul Bender, Copyright (C) 2015
  */
 public class Z21XNetSimulatorAdapter {
 

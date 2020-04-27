@@ -10,7 +10,7 @@ import org.openlcb.*;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010
+ * @author Bob Jacobsen Copyright 2008, 2010
  */
 public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -79,7 +79,6 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertEquals(t, l.getSensor(name));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

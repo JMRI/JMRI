@@ -875,7 +875,6 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     private SlotManager slotmanager;
     private LocoNetSystemConnectionMemo memo = null;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() throws Exception {

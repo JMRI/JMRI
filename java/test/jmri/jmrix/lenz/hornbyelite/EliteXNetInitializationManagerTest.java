@@ -11,7 +11,7 @@ import org.junit.Assert;
 /**
  * EliteXNetInitializationManagerTest.java
  *
- * Description: tests for the jmri.jmrix.lenz.EliteXNetInitializationManager
+ * Test for the jmri.jmrix.lenz.EliteXNetInitializationManager
  * class
  *
  * @author Paul Bender
@@ -46,7 +46,7 @@ public class EliteXNetInitializationManagerTest {
 
     @After
     public void tearDown() throws Exception {
-	    jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
     }
 

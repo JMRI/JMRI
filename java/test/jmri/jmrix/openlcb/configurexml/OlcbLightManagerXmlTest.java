@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * OlcbLightManagerXmlTest.java
  *
- * Description: tests for the OlcbLightManagerXml class
+ * Test for the OlcbLightManagerXml class
  *
  * @author   Jeff Collell
  */
@@ -71,7 +71,6 @@ public class OlcbLightManagerXmlTest {
     OlcbTestInterface t;
     private final static Logger log = LoggerFactory.getLogger(OlcbLightManagerXmlTest.class);
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

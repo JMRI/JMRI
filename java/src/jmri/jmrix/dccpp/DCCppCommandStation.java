@@ -75,25 +75,25 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     protected void setCommandStationMaxNumSlots(DCCppReply l) {
-	if (maxNumSlots != 0) {
-	    log.error("Command Station maxNumSlots already initialized");
-	    return;
-	}
+        if (maxNumSlots != 0) {
+            log.error("Command Station maxNumSlots already initialized");
+            return;
+        }
         maxNumSlots = l.getValueInt(1);
         log.debug("maxNumSlots set to {}", maxNumSlots);
     }
     protected void setCommandStationMaxNumSlots(int n) {
-	if (maxNumSlots != 0) {
-	    log.error("Command Station maxNumSlots already initialized");
-	    return;
-	}
+        if (maxNumSlots != 0) {
+            log.error("Command Station maxNumSlots already initialized");
+            return;
+        }
         maxNumSlots = n;
         log.debug("maxNumSlots set to {}", maxNumSlots);
     }
     protected int getCommandStationMaxNumSlots() {
-	if (maxNumSlots <= 0) {
-	    log.error("Command Station maxNumSlots not initialized yet");
-	}
+        if (maxNumSlots <= 0) {
+            log.error("Command Station maxNumSlots not initialized yet");
+        }
         return maxNumSlots;
     }
 
@@ -204,9 +204,9 @@ public class DCCppCommandStation implements jmri.CommandStation {
     private DCCppSystemConnectionMemo adaptermemo;
 
     private void creatermgr() {
-	if (rmgr == null) {
-	    rmgr = new DCCppRegisterManager(maxNumSlots);
-	}
+        if (rmgr == null) {
+            rmgr = new DCCppRegisterManager(maxNumSlots);
+        }
     }
 
     @Override
@@ -226,25 +226,25 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     public int requestNewRegister(int addr) {
-	creatermgr();
-	return(rmgr.requestRegister(addr));
+        creatermgr();
+        return (rmgr.requestRegister(addr));
     }
 
     public void releaseRegister(int addr) {
-	creatermgr();
-	rmgr.releaseRegister(addr);
+        creatermgr();
+        rmgr.releaseRegister(addr);
     }
 
     // Return DCCppConstants.NO_REGISTER_FREE if address is not in list
     public int getRegisterNum(int addr) {
-	creatermgr();
-	return(rmgr.getRegisterNum(addr));
+        creatermgr();
+        return (rmgr.getRegisterNum(addr));
     }
 
     // Return DCCppConstants.REGISTER_UNALLOCATED if register is unused.
     public int getRegisterAddress(int num) {
-	creatermgr();
-	return(rmgr.getRegisterAddress(num));
+        creatermgr();
+        return (rmgr.getRegisterAddress(num));
     }
 
     /*

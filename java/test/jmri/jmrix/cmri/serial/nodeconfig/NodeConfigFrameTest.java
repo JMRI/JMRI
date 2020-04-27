@@ -8,7 +8,7 @@ import org.junit.*;
 /**
  * Test simple functioning of NodeConfigFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -28,15 +28,15 @@ public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
         jmri.util.JUnitUtil.resetProfileManager();
 
         memo = new CMRISystemConnectionMemo();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new NodeConfigFrame(memo);
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new NodeConfigFrame(memo);
+        }
     }
 
     @After
     @Override
     public void tearDown() {
         jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-    	super.tearDown();
+        super.tearDown();
     }
 }

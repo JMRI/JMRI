@@ -22,7 +22,6 @@ public class NetworkTreePaneTest {
         Assert.assertNotNull("Pane object non-null", p);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

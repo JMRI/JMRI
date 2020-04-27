@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * from programming mode are now handled in the TrafficController code. Based on
  * work by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
 
@@ -43,12 +43,12 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
 
     // members for handling the programmer interface
     int progState = 0;
-    static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int COMMANDSENT = 2; 	// read/write command sent, waiting reply
-    static final int COMMANDSENT_2 = 4;	// ops programming mode, send msg twice
+    static final int NOTPROGRAMMING = 0; // is notProgramming
+    static final int COMMANDSENT = 2;    // read/write command sent, waiting reply
+    static final int COMMANDSENT_2 = 4;  // ops programming mode, send msg twice
     boolean _progRead = false;
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv;  // remember the cv being read/written
 
     /** 
      * {@inheritDoc}

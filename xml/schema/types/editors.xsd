@@ -269,6 +269,31 @@
       <xs:attribute name="text" type="xs:string"></xs:attribute>
     </xs:complexType>
 
+    <xs:simpleType name="PositionablePointType">
+      <xs:annotation>
+        <xs:documentation>
+          Represents values of PositionablePoint.??? enum,
+          both as 0-3 and as String names.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:union>
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="3"/>
+          </xs:restriction>
+        </xs:simpleType>
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="NONE"></xs:enumeration>
+            <xs:enumeration value="ANCHOR"></xs:enumeration>
+            <xs:enumeration value="END_BUMPER"></xs:enumeration>
+            <xs:enumeration value="EDGE_CONNECTOR"></xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:union>
+    </xs:simpleType>
+
     <xs:complexType name="EditorPositionablePointType">
       <xs:annotation>
         <xs:documentation>
@@ -276,6 +301,7 @@
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.PositionablePointXml
+          jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml
         </xs:appinfo>
       </xs:annotation>
 
@@ -298,7 +324,7 @@
       <xs:attribute name="ident" type="beanNameType" use="required">
         <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
       </xs:attribute>
-      <xs:attribute name="type" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="type" type="PositionablePointType" use="required"></xs:attribute>
       <xs:attribute name="x" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="y" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="connect1name" type="xs:string"></xs:attribute>
@@ -1134,6 +1160,37 @@
     </xs:complexType>
 
 
+    <xs:simpleType name="LayoutTurnoutType">
+      <xs:annotation>
+        <xs:documentation>
+          Represents values of LayoutTurnout.TurnoutType enum,
+          both as 0-63 and as String names.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:union>
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="8"/>
+          </xs:restriction>
+        </xs:simpleType>
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="NONE"></xs:enumeration>
+            <xs:enumeration value="RH_TURNOUT"></xs:enumeration>
+            <xs:enumeration value="LH_TURNOUT"></xs:enumeration>
+            <xs:enumeration value="WYE_TURNOUT"></xs:enumeration>
+            <xs:enumeration value="DOUBLE_XOVER"></xs:enumeration>
+            <xs:enumeration value="TURNOUT_D"></xs:enumeration>
+            <xs:enumeration value="RH_XOVER"></xs:enumeration>
+            <xs:enumeration value="LH_XOVER"></xs:enumeration>
+            <xs:enumeration value="SINGLE_SLIP"></xs:enumeration>
+            <xs:enumeration value="DOUBLE_SLIP"></xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:union>
+    </xs:simpleType>
+
     <xs:complexType name="EditorLayoutTurnoutType">
       <xs:annotation>
         <xs:documentation>
@@ -1159,7 +1216,7 @@
       <xs:attribute name="ident" type="beanNameType" use="required">
         <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
       </xs:attribute>
-      <xs:attribute name="type" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="type" type="LayoutTurnoutType" use="required"></xs:attribute>
       <xs:attribute name="continuing" type="xs:string" use="required"></xs:attribute>
 
       <xs:attribute name="xa" type="xs:float"></xs:attribute>
@@ -1201,6 +1258,7 @@
       <xs:attribute name="secondturnoutinverted" type="trueFalseType"></xs:attribute>
       <xs:attribute name="linktype" type="xs:string"></xs:attribute>
     </xs:complexType>
+
 
     <xs:complexType name="EditorLayoutSlipType">
       <xs:annotation>
@@ -1275,7 +1333,7 @@
       <xs:attribute name="ident" type="beanNameType" use="required">
         <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
       </xs:attribute>
-      <xs:attribute name="slipType" type="xs:string" use="required"></xs:attribute>
+      <xs:attribute name="slipType" type="LayoutTurnoutType" use="required"></xs:attribute>
 
       <xs:attribute name="xa" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="ya" type="xs:float" use="required"></xs:attribute>

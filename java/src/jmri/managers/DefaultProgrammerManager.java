@@ -29,16 +29,16 @@ import org.slf4j.LoggerFactory;
 public class DefaultProgrammerManager implements AddressedProgrammerManager, GlobalProgrammerManager {
 
     // For the record, these were the original numerical definitions:
-    //     public static final ProgrammingMode NONE	    =  new ProgrammingMode("NONE", 0);
-    //     public static final ProgrammingMode REGISTERMODE    = new ProgrammingMode("REGISTERMODE", 11);
-    //     public static final ProgrammingMode PAGEMODE        = new ProgrammingMode("PAGEMODE", 21);
-    //     public static final ProgrammingMode DIRECTBITMODE   = new ProgrammingMode("DIRECTBITMODE", 31);
-    //     public static final ProgrammingMode DIRECTBYTEMODE  = new ProgrammingMode("DIRECTBYTEMODE", 32);
-    //     public static final ProgrammingMode ADDRESSMODE     = new ProgrammingMode("ADDRESSMODE", 41);
-    //     public static final ProgrammingMode OPSBYTEMODE     = new ProgrammingMode("OPSBYTEMODE", 101);
-    //     public static final ProgrammingMode OPSBITMODE      = new ProgrammingMode("OPSBITMODE", 102);
-    //     public static final ProgrammingMode OPSACCBYTEMODE  = new ProgrammingMode("OPSACCBYTEMODE", 111);
-    //     public static final ProgrammingMode OPSACCBITMODE   = new ProgrammingMode("OPSACCBITMODE", 112);
+    //     public static final ProgrammingMode NONE              = new ProgrammingMode("NONE", 0);
+    //     public static final ProgrammingMode REGISTERMODE      = new ProgrammingMode("REGISTERMODE", 11);
+    //     public static final ProgrammingMode PAGEMODE          = new ProgrammingMode("PAGEMODE", 21);
+    //     public static final ProgrammingMode DIRECTBITMODE     = new ProgrammingMode("DIRECTBITMODE", 31);
+    //     public static final ProgrammingMode DIRECTBYTEMODE    = new ProgrammingMode("DIRECTBYTEMODE", 32);
+    //     public static final ProgrammingMode ADDRESSMODE       = new ProgrammingMode("ADDRESSMODE", 41);
+    //     public static final ProgrammingMode OPSBYTEMODE       = new ProgrammingMode("OPSBYTEMODE", 101);
+    //     public static final ProgrammingMode OPSBITMODE        = new ProgrammingMode("OPSBITMODE", 102);
+    //     public static final ProgrammingMode OPSACCBYTEMODE    = new ProgrammingMode("OPSACCBYTEMODE", 111);
+    //     public static final ProgrammingMode OPSACCBITMODE     = new ProgrammingMode("OPSACCBITMODE", 112);
     //     public static final ProgrammingMode OPSACCEXTBYTEMODE = new ProgrammingMode("OPSACCEXTBYTEMODE", 121);
     //     public static final ProgrammingMode OPSACCEXTBITMODE  = new ProgrammingMode("OPSACCEXTBITMODE", 122);
     private Programmer programmer;

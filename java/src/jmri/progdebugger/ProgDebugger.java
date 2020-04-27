@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * Only supports the DCC single-number address space, should be updated to handle
  * any string address.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2007, 2013
+ * @author Bob Jacobsen Copyright (C) 2001, 2007, 2013
  */
 public class ProgDebugger extends PropertyChangeSupport implements AddressedProgrammer {
 

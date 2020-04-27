@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.GlobalProgrammerManager
  * @see jmri.AddressedProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2014
  */
 public class DeferringProgrammerManager implements AddressedProgrammerManager, GlobalProgrammerManager {
 

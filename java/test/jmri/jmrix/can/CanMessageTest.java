@@ -226,7 +226,6 @@ public class CanMessageTest extends CanMRCommonTestBase {
         Assert.assertTrue("translated flag set",m.isTranslated());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

@@ -48,7 +48,6 @@ public class OpenLcbCanSendPaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

@@ -7,7 +7,7 @@ import org.junit.Before;
 /**
  * Test simple functioning of MrcMonPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class MrcSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 

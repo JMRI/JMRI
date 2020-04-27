@@ -22,7 +22,6 @@ public class CbusCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
     private CanSystemConnectionMemo memo;
     private TrafficController tc;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

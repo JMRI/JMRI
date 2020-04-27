@@ -33,7 +33,6 @@ public class AddNewBeanPanelTest {
         Assert.assertNotNull("exists", t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

@@ -11,7 +11,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
  * The current implementation only handles the 9,600 baud rate, and does not use
  * any other options at configuration time.
  *
- * @author	Andrew Crosland Copyright (C) 2006
+ * @author Andrew Crosland Copyright (C) 2006
  */
 public class SprogCSSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {

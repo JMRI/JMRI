@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class OlcbConfigurationManagerTest {
         

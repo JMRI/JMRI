@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * OlcbTurnoutManagerXmlTest.java
  *
- * Description: tests for the OlcbTurnoutManagerXml class
+ * Test for the OlcbTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */

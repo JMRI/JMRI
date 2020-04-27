@@ -6,11 +6,10 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AudioBufferFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -21,7 +20,7 @@ public class AudioBufferFrameTest extends jmri.util.JmriJFrameTestBase {
            // jmri.jmrit.beantable.AudioTableAction.AudioBufferTableDataModel
            // object
            frame = new AudioBufferFrame("Buffer Frame Test",null);
-	}
+        }
     }
 
     @After

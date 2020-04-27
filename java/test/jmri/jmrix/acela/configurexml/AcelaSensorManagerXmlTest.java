@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * AcelaSensorManagerXmlTest.java
  *
- * Description: tests for the AcelaSensorManagerXml class
+ * Test for the AcelaSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class AcelaSensorManagerXmlTest {
       Assert.assertNotNull("AcelaSensorManagerXml constructor",new AcelaSensorManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

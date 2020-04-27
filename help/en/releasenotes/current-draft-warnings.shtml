@@ -1,5 +1,7 @@
 
     <!-- contains new warnings for the release under development -->
     <li>
-        None yet
+        Layout Editor files stored by 4.19.6 may not be loadable 
+	    by JMRI 4.19.5 and before. This is in addition to the 
+	    changed in 4.19.5 that raised a similar issue for 4.19.4.
     </li>

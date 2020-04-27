@@ -10,9 +10,9 @@ import org.junit.Test;
 /**
  * SRCPTurnoutTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPTurnout class
+ * Test for the jmri.jmrix.srcp.SRCPTurnout class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  * @author  Paul Bender Copyright (C) 2017
  */
 public class SRCPTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
@@ -51,7 +51,6 @@ public class SRCPTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     }
 
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

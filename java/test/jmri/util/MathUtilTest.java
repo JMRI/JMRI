@@ -14,7 +14,7 @@ import org.python.modules.math;
 /**
  * Test simple functioning of MathUtil
  *
- * @author	George Warner Copyright (C) 2017
+ * @author George Warner Copyright (C) 2017
  */
 public class MathUtilTest {
 

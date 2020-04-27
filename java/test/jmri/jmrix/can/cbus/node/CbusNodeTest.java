@@ -706,7 +706,6 @@ public class CbusNodeTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
     
-    // The minimal setup for log4J
     @Before
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();

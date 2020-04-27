@@ -5,7 +5,7 @@ import javax.vecmath.Point3d;
 /**
  * Holds all the state information for a single receiver.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class Receiver {
 

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * MrcTurnoutManagerXmlTest.java
  *
- * Description: tests for the MrcTurnoutManagerXml class
+ * Test for the MrcTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class MrcTurnoutManagerXmlTest {
       Assert.assertNotNull("MrcTurnoutManagerXml constructor",new MrcTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

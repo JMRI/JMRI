@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * System names are "RSpppp", where ppp is a representation of the region, for
  * example "RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)".
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class RpsSensor extends AbstractSensor
         implements MeasurementListener {

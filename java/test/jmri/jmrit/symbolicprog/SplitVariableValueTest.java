@@ -112,7 +112,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     @Override
     @Test
     public void testVariableValueRead() {
-    }	// due to multi-cv nature of SplitAddr
+    } // due to multi-cv nature of SplitAddr
 
     @Override
     @Test

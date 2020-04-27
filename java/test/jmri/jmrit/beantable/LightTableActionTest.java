@@ -734,7 +734,6 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         Assert.assertEquals("Message did not appear", toTest, lblFeedback.getText());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

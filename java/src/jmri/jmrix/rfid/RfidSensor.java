@@ -10,7 +10,7 @@ import jmri.implementation.AbstractSensor;
  * <p>
  * System names are "FSpppp", where ppp is a representation of the RFID reader.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */

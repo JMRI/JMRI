@@ -130,7 +130,6 @@ public class CbusConfigurationManagerTest {
     private TrafficControllerScaffold tcis; // needed for DCC programming mgr?
     private CbusConfigurationManager t;
     
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

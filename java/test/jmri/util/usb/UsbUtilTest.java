@@ -64,7 +64,6 @@ public class UsbUtilTest {
         JUnitAppender.assertErrorMessageStartsWith("Unable to read data from ");
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

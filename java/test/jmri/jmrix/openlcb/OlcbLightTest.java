@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbLight class.
  *
- * @author	Jeff Collell
+ * @author Jeff Collell
  */
 public class OlcbLightTest {
 
