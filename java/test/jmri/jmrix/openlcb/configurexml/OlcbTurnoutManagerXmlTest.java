@@ -18,7 +18,7 @@ public class OlcbTurnoutManagerXmlTest {
 
     @Test
     public void testCtor(){
-        assertThat(new OlcbTurnoutManagerXmlTest()).withFailMessage("OlcbTurnoutManagerXml constructor").isNotNull();
+        assertThat(new OlcbTurnoutManagerXml()).withFailMessage("OlcbTurnoutManagerXml constructor").isNotNull();
     }
 
     // The minimal setup for log4J
