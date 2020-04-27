@@ -260,6 +260,7 @@ public class LayoutTurnout extends LayoutTrack {
         THROAT_TO_THROAT  // this turnout is one of two throat-to-throat
         // turnouts - no signals at throat
     }
+    
     // operational instance variables (not saved between sessions)
     public static final int UNKNOWN = Turnout.UNKNOWN;
     public static final int INCONSISTENT = Turnout.INCONSISTENT;
@@ -337,7 +338,7 @@ public class LayoutTurnout extends LayoutTrack {
     protected NamedBeanHandle<Sensor> sensorCNamed = null; // diverging
     protected NamedBeanHandle<Sensor> sensorDNamed = null; // single or double crossover only
 
-    public TurnoutType type = TurnoutType.RH_TURNOUT;
+    protected final TurnoutType type;
 
     public LayoutTrack connectA = null;      // throat of LH, RH, RH Xover, LH Xover, and WYE turnouts
     public LayoutTrack connectB = null;      // straight leg of LH and RH turnouts
@@ -365,7 +366,14 @@ public class LayoutTurnout extends LayoutTrack {
 
     protected LayoutTurnout(@Nonnull String id,
             @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
+        this(id, c, layoutEditor, TurnoutType.NONE);
+    }
+
+    protected LayoutTurnout(@Nonnull String id,
+            @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor, TurnoutType t) {
         super(id, c, layoutEditor);
+        
+        type = t;
     }
 
     public LayoutTurnout(@Nonnull String id, TurnoutType t,
@@ -376,7 +384,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * constructor method
+     * Main constructor method
      */
     public LayoutTurnout(@Nonnull String id, TurnoutType t, @Nonnull Point2D c, double rot,
             double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
