@@ -253,7 +253,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
             if (value instanceof javax.swing.plaf.FontUIResource && key.toString().equals("List.font")) {
                 Font f = UIManager.getFont(key);
-                log.debug("Key:" + key.toString() + " Font: " + f.getName());
+                log.debug("Key:{} Font: {}", key.toString(), f.getName());
                 defaultFont = f;
                 return;
             }
@@ -309,7 +309,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
             if (value instanceof javax.swing.plaf.FontUIResource && key.toString().equals("List.font")) {
                 Font f = UIManager.getFont(key);
-                log.debug("Key:" + key.toString() + " Font: " + f.getName() + " size: " + f.getSize());
+                log.debug("Key:{} Font: {} size: {}", key.toString(), f.getName(), f.getSize());
                 defaultFontSize = f.getSize();
                 return;
             }
@@ -467,7 +467,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                     log.error("Look and feel \"{}\" is not supported on this platform.", this.lookAndFeel);
                 }
             } else {
-                log.debug("Not updating look and feel {} matching existing look and feel" + lafClassName);
+                log.debug("Not updating look and feel {} matching existing look and feel{}", lafClassName);
             }
         }
     }
