@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * address; more than one Turnout object pointing to a single device is not
  * allowed.
  *
- * Description: extend jmri.AbstractTurnout for powerline serial layouts
+ * extend jmri.AbstractTurnout for powerline serial layouts
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
  * multiple connection

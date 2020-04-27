@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * IdentifyDecoderTest.java.
  * <p>
- * Description: tests for the jmrit.roster.IdentifyDecoder class
+ * Test for the jmrit.roster.IdentifyDecoder class
  *
  * @author Bob Jacobsen
  */

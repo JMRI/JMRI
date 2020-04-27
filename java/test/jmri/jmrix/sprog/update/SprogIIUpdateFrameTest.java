@@ -8,14 +8,13 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SprogIIUpdateFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private SprogTrafficControlScaffold stcs = null;
     private SprogSystemConnectionMemo m = null;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -24,9 +23,9 @@ public class SprogIIUpdateFrameTest extends jmri.util.JmriJFrameTestBase {
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
         m.configureCommandStation();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new SprogIIUpdateFrame(m);
-	    }
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new SprogIIUpdateFrame(m);
+        }
     }
 
     @After

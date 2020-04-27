@@ -218,7 +218,6 @@ public class SimpleReporterServerTest {
     }
 
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();

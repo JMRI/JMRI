@@ -56,11 +56,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
         treePane = new TreePane();
         treePane.setPreferredSize(new Dimension(300, 300));
 
-        treePane.initComponents(
-                (MimicNodeStore) memo.get(MimicNodeStore.class),
-                (Connection) memo.get(Connection.class),
-                (NodeID) memo.get(NodeID.class),
-                new ActionLoader(memo.get(OlcbInterface.class))
+        treePane.initComponents(memo.get(MimicNodeStore.class), memo.get(Connection.class), memo.get(NodeID.class), new ActionLoader(memo.get(OlcbInterface.class))
         );
         add(treePane);
 
@@ -85,9 +81,6 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
         return "OpenLCB Network Tree";
     }
 
-    protected void init() {
-    }
-
     @Override
     public void dispose() {
         memo.getTrafficController().removeCanListener(this);
@@ -107,7 +100,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
     /**
      * Nested class to open specific windows when proper tree element is picked.
      */
-    private class ActionLoader extends NodeTreeRep.SelectionKeyLoader {
+    private static class ActionLoader extends NodeTreeRep.SelectionKeyLoader {
 
         private final ClientActions actions;
 
@@ -117,8 +110,8 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
             this.mcs = iface.getMemoryConfigurationService();
         }
 
-        MimicNodeStore store;
-        MemoryConfigurationService mcs;
+        final MimicNodeStore store;
+        final MemoryConfigurationService mcs;
 
         @Override
         public NodeTreeRep.SelectionKey cdiKey(String name, NodeID node) {

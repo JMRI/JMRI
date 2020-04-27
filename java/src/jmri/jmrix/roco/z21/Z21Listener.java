@@ -3,7 +3,7 @@ package jmri.jmrix.roco.z21;
 /**
  * Interface for Z21 protocol Listeners
  *
- * @author	Paul Bender Copyright (C) 2014
+ * @author Paul Bender Copyright (C) 2014
  */
 public interface Z21Listener extends jmri.jmrix.AbstractMRListener {
 

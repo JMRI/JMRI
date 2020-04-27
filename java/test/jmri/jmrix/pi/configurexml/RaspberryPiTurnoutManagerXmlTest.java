@@ -18,7 +18,6 @@ public class RaspberryPiTurnoutManagerXmlTest {
       Assert.assertNotNull("RaspberryPiTurnoutManagerXml constructor", new RaspberryPiTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

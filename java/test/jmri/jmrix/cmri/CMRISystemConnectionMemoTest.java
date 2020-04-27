@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.cmri.CMRISystemConnectionMemo class.
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CMRISystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -66,7 +66,6 @@ public class CMRISystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
        Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

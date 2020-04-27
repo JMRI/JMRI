@@ -7,13 +7,12 @@ import jmri.jmrix.lenz.lzv200.ConnectionConfig;
 /**
  * ConnectionConfigXmlTest.java
  *
- * Description: tests for the ConnectionConfigXml class
+ * Test for the ConnectionConfigXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.lenz.configurexml.AbstractXNetSerialConnectionConfigXmlTest {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

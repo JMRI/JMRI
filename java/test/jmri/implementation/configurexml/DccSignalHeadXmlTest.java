@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * DccSignalHeadXmlTest.java
  *
- * Description: tests for the DccSignalHeadXml class
+ * Test for the DccSignalHeadXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class DccSignalHeadXmlTest {
       Assert.assertNotNull("DccSignalHeadXml constructor",new DccSignalHeadXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

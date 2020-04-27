@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Test simple functioning of MemoryContents
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  * @suthor B. Milhaupt Copyright (C) 2014
  */
 public class MemoryContentsTest {

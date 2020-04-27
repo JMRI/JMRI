@@ -3,8 +3,6 @@ package jmri.jmrix.openlcb.swing.networktree;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JTree;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import org.junit.After;
 import org.junit.Assert;
@@ -40,25 +38,16 @@ import org.openlcb.swing.networktree.TreePane;
  */
 public class TreePaneDemo {
 
-    NodeID nid1 = new NodeID(new byte[]{0, 0, 0, 0, 0, 1});
-    NodeID nid2 = new NodeID(new byte[]{0, 0, 0, 0, 0, 2});
-    NodeID nid3 = new NodeID(new byte[]{0, 0, 0, 0, 0, 3});
-    NodeID nid4 = new NodeID(new byte[]{0, 0, 0, 0, 0, 4});
-    NodeID nid5 = new NodeID(new byte[]{0, 0, 0, 0, 0, 5});
-    NodeID nid6 = new NodeID(new byte[]{0, 0, 0, 0, 0, 6});
-    NodeID nid7 = new NodeID(new byte[]{0, 0, 0, 0, 0, 7});
-    NodeID nid8 = new NodeID(new byte[]{0, 0, 0, 0, 0, 8});
-    NodeID nid9 = new NodeID(new byte[]{0, 0, 0, 0, 0, 9});
+    final NodeID nid1 = new NodeID(new byte[]{0, 0, 0, 0, 0, 1});
+    final NodeID nid2 = new NodeID(new byte[]{0, 0, 0, 0, 0, 2});
 
-    EventID eventA = new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0});
-    EventID eventB = new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0});
-    EventID eventC = new EventID(new byte[]{1, 0, 0, 0, 0, 0, 3, 0});
+    final EventID eventA = new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0});
 
-    Message pipmsg = new ProtocolIdentificationReplyMessage(nid2, nid2, 0xF01800000000L);
+    final Message pipmsg = new ProtocolIdentificationReplyMessage(nid2, nid2, 0xF01800000000L);
 
     JFrame frame;
     TreePane pane;
-    Connection connection = new AbstractConnection() {
+    final Connection connection = new AbstractConnection() {
         @Override
         public void put(Message msg, Connection sender) {
         }
@@ -67,7 +56,7 @@ public class TreePaneDemo {
     MimicNodeStore store;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         store = new MimicNodeStore(connection, nid1);
         Message msg = new ProducerIdentifiedMessage(nid1, eventA, EventState.Unknown);
         store.put(msg, null);
@@ -160,22 +149,19 @@ public class TreePaneDemo {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setTitle("listener test");
 
-        pane.addTreeSelectionListener(new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent e) {
-                JTree tree = (JTree) e.getSource();
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+        pane.addTreeSelectionListener(e -> {
+            JTree tree = (JTree) e.getSource();
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 
-                if (node == null) {
-                    return;
-                }
-                System.out.print("Test prints selected treenode " + node);
-                if (node.getUserObject() instanceof NodeTreeRep.SelectionKey) {
-                    System.out.println(" and invokes");
-                    ((NodeTreeRep.SelectionKey) node.getUserObject()).select(node);
-                } else {
-                    System.out.println();
-                }
+            if (node == null) {
+                return;
+            }
+            System.out.print("Test prints selected treenode " + node);
+            if (node.getUserObject() instanceof NodeTreeRep.SelectionKey) {
+                System.out.println(" and invokes");
+                ((NodeTreeRep.SelectionKey) node.getUserObject()).select(node);
+            } else {
+                System.out.println();
             }
         });
         Message msg;

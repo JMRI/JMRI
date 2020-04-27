@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.rfid.RfidSystemConnectionMemo class.
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class RfidSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -22,7 +22,6 @@ public class RfidSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
        Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp(){

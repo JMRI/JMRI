@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.util.IntlUtilities class.
  *
- * @author	Bob Jacobsen Copyright 2014
+ * @author Bob Jacobsen Copyright 2014
  */
 public class IntlUtilitiesTest {
 

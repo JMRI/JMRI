@@ -453,7 +453,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         }
         // Wait for throttle be correct and then run the profile
         throttleState = 0;
-        new Thread(new Runnable() {
+        jmri.util.ThreadingUtil.newThread(new Runnable() {
                 @Override
                 public void run() {
                     int count = 0;

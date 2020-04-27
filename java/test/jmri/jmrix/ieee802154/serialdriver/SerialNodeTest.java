@@ -10,10 +10,10 @@ import org.junit.Test;
 /**
  * SerialNodeTest.java
  *
- * Description:	tests for the jmri.jmrix.ieee802154.serialdriver.SerialNode
+ * Test for the jmri.jmrix.ieee802154.serialdriver.SerialNode
  * class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class SerialNodeTest {
 
@@ -71,7 +71,6 @@ public class SerialNodeTest {
 
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

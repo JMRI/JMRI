@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * XpaTrafficControllerTest.java
  *
- * Description: tests for the jmri.jmrix.xpa.XpaTrafficController class
+ * Test for the jmri.jmrix.xpa.XpaTrafficController class
  *
  * @author Paul Bender
  */

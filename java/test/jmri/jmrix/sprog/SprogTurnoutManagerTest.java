@@ -25,7 +25,6 @@ public class SprogTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
         Assert.assertNotNull(l);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

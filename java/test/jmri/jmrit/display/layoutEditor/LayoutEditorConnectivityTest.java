@@ -19,7 +19,7 @@ import org.junit.Test;
 /**
  * Swing tests for the LayoutEditor
  *
- * @author	Dave Duchamp Copyright 2011
+ * @author Dave Duchamp Copyright 2011
  */
 public class LayoutEditorConnectivityTest {
 
@@ -297,7 +297,6 @@ public class LayoutEditorConnectivityTest {
         to.closeFrameWithConfirmations();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();

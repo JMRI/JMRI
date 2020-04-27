@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * EcosPreferencesXmlTest.java
  *
- * Description: tests for the EcosPreferencesXml class
+ * Test for the EcosPreferencesXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class EcosPreferencesXmlTest {
       Assert.assertNotNull("EcosPreferencesXml constructor",new EcosPreferencesXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.vecmath.Point3d;
 import jmri.util.FileUtil;
-import org.junit.Test;
-import org.junit.Before;
+import org.junit.*;
 import org.jdom2.Element;
 import org.junit.Assert;
 
@@ -15,7 +14,7 @@ import org.junit.Assert;
  * Stores a PositionFileTest.xml file in the temp directory below current
  * working directory.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class PositionFileTest {
 
@@ -98,5 +97,9 @@ public class PositionFileTest {
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
-
+    
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
 }

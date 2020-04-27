@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.internal.InternalLightManager class.
  *
- * @author	Bob Jacobsen Copyright 2009
+ * @author Bob Jacobsen Copyright 2009
  */
 public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
@@ -61,7 +61,6 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         Assert.assertTrue(lm.newLight("IL21", "my name").isIntensityVariable());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

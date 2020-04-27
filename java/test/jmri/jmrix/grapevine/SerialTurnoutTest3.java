@@ -10,7 +10,7 @@ import org.junit.Before;
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class, high card and high
  * port on card
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SerialTurnoutTest3 extends AbstractTurnoutTestBase {
 

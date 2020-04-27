@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * transmitters, we also flip the sign of Z coordinates to keep this bias
  * working for us.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class AlignmentPanel extends javax.swing.JPanel
         implements ReadingListener, Constants {
@@ -626,6 +626,6 @@ public class AlignmentPanel extends javax.swing.JPanel
         double s1, s2, s3, s4, s5, s6;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RpsTrackingPanel.class);
+    private final static Logger log = LoggerFactory.getLogger(AlignmentPanel.class);
 
 }

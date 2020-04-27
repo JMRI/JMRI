@@ -11,9 +11,9 @@ import org.junit.Test;
 /**
  * XBeeTurnoutTest.java
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeTurnout class
+ * Test for the jmri.jmrix.ieee802154.xbee.XBeeTurnout class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XBeeTurnoutTest {
 
@@ -74,7 +74,6 @@ public class XBeeTurnoutTest {
         Assert.assertNotNull("exists", s);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

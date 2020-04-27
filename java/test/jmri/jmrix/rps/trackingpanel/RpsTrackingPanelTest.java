@@ -23,7 +23,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the rps.RpsTrackingPanel class.
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  */
 public class RpsTrackingPanelTest {
 

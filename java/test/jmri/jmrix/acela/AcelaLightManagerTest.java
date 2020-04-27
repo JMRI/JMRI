@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.acela.AcelaLightManager class.
  *
- * @author	Bob Coleman Copyright 2008
+ * @author Bob Coleman Copyright 2008
  */
 public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
@@ -52,7 +52,6 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
 
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

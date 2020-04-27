@@ -34,7 +34,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * each address up to the max receiver, even if some are missing (0 in that
  * case)
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2008
  */
 public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
 

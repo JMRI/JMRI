@@ -45,9 +45,9 @@ public class TrackSegment extends LayoutTrack {
 
     //persistent instances variables (saved between sessions)
     protected LayoutTrack connect1 = null;
-    protected LayoutEditor.HitPointType type1 = LayoutEditor.HitPointType.NONE;
+    protected HitPointType type1 = HitPointType.NONE;
     protected LayoutTrack connect2 = null;
-    protected LayoutEditor.HitPointType type2 = LayoutEditor.HitPointType.NONE;
+    protected HitPointType type2 = HitPointType.NONE;
     private boolean dashed = false;
     private boolean mainline = false;
     private boolean arc = false;
@@ -61,8 +61,8 @@ public class TrackSegment extends LayoutTrack {
     private final ArrayList<Point2D> bezierControlPoints = new ArrayList<>(); //list of control point displacements
 
     public TrackSegment(@Nonnull String id,
-            @CheckForNull LayoutTrack c1, LayoutEditor.HitPointType t1,
-            @CheckForNull LayoutTrack c2, LayoutEditor.HitPointType t2,
+            @CheckForNull LayoutTrack c1, HitPointType t1,
+            @CheckForNull LayoutTrack c2, HitPointType t2,
             boolean dash, boolean main,
             @Nonnull LayoutEditor layoutEditor) {
         super(id, MathUtil.zeroPoint2D, layoutEditor);
@@ -72,13 +72,13 @@ public class TrackSegment extends LayoutTrack {
             log.error("Invalid object in TrackSegment constructor call - " + id);
         }
 
-        if (LayoutEditor.HitPointType.isConnectionHitType(t1)) {
+        if (HitPointType.isConnectionHitType(t1)) {
             connect1 = c1;
             type1 = t1;
         } else {
             log.error("Invalid connect type 1 ('" + t1 + "') in TrackSegment constructor - " + id);
         }
-        if (LayoutEditor.HitPointType.isConnectionHitType(t2)) {
+        if (HitPointType.isConnectionHitType(t2)) {
             connect2 = c2;
             type2 = t2;
         } else {
@@ -98,8 +98,8 @@ public class TrackSegment extends LayoutTrack {
 
     //alternate constructor for loading layout editor panels
     public TrackSegment(@Nonnull String id,
-            @CheckForNull String c1Name, LayoutEditor.HitPointType t1,
-            @CheckForNull String c2Name, LayoutEditor.HitPointType t2,
+            @CheckForNull String c1Name, HitPointType t1,
+            @CheckForNull String c2Name, HitPointType t2,
             boolean dash, boolean main, boolean hide,
             @Nonnull LayoutEditor layoutEditor) {
         super(id, MathUtil.zeroPoint2D, layoutEditor);
@@ -141,11 +141,11 @@ public class TrackSegment extends LayoutTrack {
         return ((result == null) ? "" : result);
     }
 
-    public LayoutEditor.HitPointType getType1() {
+    public HitPointType getType1() {
         return type1;
     }
 
-    public LayoutEditor.HitPointType getType2() {
+    public HitPointType getType2() {
         return type2;
     }
 
@@ -163,7 +163,7 @@ public class TrackSegment extends LayoutTrack {
      * @param connectTrack   the track we want to connect to
      * @param connectionType where on that track we want to be connected
      */
-    protected void setNewConnect1(@CheckForNull LayoutTrack connectTrack, LayoutEditor.HitPointType connectionType) {
+    protected void setNewConnect1(@CheckForNull LayoutTrack connectTrack, HitPointType connectionType) {
         connect1 = connectTrack;
         type1 = connectionType;
     }
@@ -174,7 +174,7 @@ public class TrackSegment extends LayoutTrack {
      * @param connectTrack   the track we want to connect to
      * @param connectionType where on that track we want to be connected
      */
-    protected void setNewConnect2(@CheckForNull LayoutTrack connectTrack, LayoutEditor.HitPointType connectionType) {
+    protected void setNewConnect2(@CheckForNull LayoutTrack connectTrack, HitPointType connectionType) {
         connect2 = connectTrack;
         type2 = connectionType;
     }
@@ -186,7 +186,7 @@ public class TrackSegment extends LayoutTrack {
      * @param newTrack the new track connection
      * @return true if successful
      */
-    public boolean replaceTrackConnection(@CheckForNull LayoutTrack oldTrack, @CheckForNull LayoutTrack newTrack, LayoutEditor.HitPointType newType) {
+    public boolean replaceTrackConnection(@CheckForNull LayoutTrack oldTrack, @CheckForNull LayoutTrack newTrack, HitPointType newType) {
         boolean result = false; //assume failure (pessimist!)
         //trying to replace old track with null?
         if (newTrack == null) {
@@ -195,10 +195,10 @@ public class TrackSegment extends LayoutTrack {
             if (oldTrack != null) {
                 if (connect1 == oldTrack) {
                     connect1 = null;
-                    type1 = LayoutEditor.HitPointType.NONE;
+                    type1 = HitPointType.NONE;
                 } else if (connect2 == oldTrack) {
                     connect2 = null;
-                    type2 = LayoutEditor.HitPointType.NONE;
+                    type2 = HitPointType.NONE;
                 } else {
                     log.error("{}.replaceTrackConnection({}, null, {}); Attempt to remove invalid track connection",
                             getName(), oldTrack.getName(), newType);
@@ -429,7 +429,7 @@ public class TrackSegment extends LayoutTrack {
         return getConnectName(connect2, type2);
     }
 
-    private String getConnectName(@CheckForNull LayoutTrack layoutTrack, LayoutEditor.HitPointType type) {
+    private String getConnectName(@CheckForNull LayoutTrack layoutTrack, HitPointType type) {
         return (layoutTrack == null) ? null : layoutTrack.getName();
     }
 
@@ -441,7 +441,7 @@ public class TrackSegment extends LayoutTrack {
      */
     //only implemented here to suppress "does not override abstract method " error in compiler
     @Override
-    public LayoutTrack getConnection(LayoutEditor.HitPointType connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(HitPointType connectionType) throws jmri.JmriException {
         //nothing to see here, move along
         throw new jmri.JmriException("Use getConnect1() or getConnect2() instead.");
     }
@@ -454,7 +454,7 @@ public class TrackSegment extends LayoutTrack {
      */
     //only implemented here to suppress "does not override abstract method " error in compiler
     @Override
-    public void setConnection(LayoutEditor.HitPointType connectionType, @CheckForNull LayoutTrack o, LayoutEditor.HitPointType type) throws jmri.JmriException {
+    public void setConnection(HitPointType connectionType, @CheckForNull LayoutTrack o, HitPointType type) throws jmri.JmriException {
         //nothing to see here, move along
         throw new jmri.JmriException("Use setConnect1() or setConnect2() instead.");
     }
@@ -639,10 +639,10 @@ public class TrackSegment extends LayoutTrack {
         getConnect2().reCheckBlockBoundary();
     }
 
-    private LayoutBlock getBlock(LayoutTrack connect, LayoutEditor.HitPointType type) {
+    private LayoutBlock getBlock(LayoutTrack connect, HitPointType type) {
         LayoutBlock result = null;
         if (connect != null) {
-            if (type == LayoutEditor.HitPointType.POS_POINT) {
+            if (type == HitPointType.POS_POINT) {
                 PositionablePoint p = (PositionablePoint) connect;
                 if (p.getConnect1() != this) {
                     if (p.getConnect1() != null) {
@@ -664,8 +664,8 @@ public class TrackSegment extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected LayoutEditor.HitPointType findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        LayoutEditor.HitPointType result = LayoutEditor.HitPointType.NONE;  //assume point not on connection
+    protected HitPointType findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
+        HitPointType result = HitPointType.NONE;  //assume point not on connection
 
         if (!requireUnconnected) {
             //note: optimization here: instead of creating rectangles for all the
@@ -682,7 +682,7 @@ public class TrackSegment extends LayoutTrack {
                 if (distance < minDistance) {
                     minDistance = distance;
                     minPoint = p;
-                    result = LayoutEditor.HitPointType.TRACK_CIRCLE_CENTRE;
+                    result = HitPointType.TRACK_CIRCLE_CENTRE;
                 }
             } else if (isBezier()) {
                 // hit testing for the control points
@@ -692,7 +692,7 @@ public class TrackSegment extends LayoutTrack {
                     if (distance < minDistance) {
                         minDistance = distance;
                         minPoint = p;
-                        result = LayoutEditor.HitPointType.getValue(LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue() + index);
+                        result = HitPointType.bezierPointIndexedValue(index);
                     }
                 }
             }
@@ -702,11 +702,11 @@ public class TrackSegment extends LayoutTrack {
                 if (distance <= minDistance) {
                     minDistance = distance;
                     minPoint = p;
-                    result = LayoutEditor.HitPointType.TRACK;
+                    result = HitPointType.TRACK;
                 }
             }
-            if ((result != LayoutEditor.HitPointType.NONE) && (useRectangles ? !r.contains(minPoint) : (minDistance > circleRadius))) {
-                result = LayoutEditor.HitPointType.NONE;
+            if ((result != HitPointType.NONE) && (useRectangles ? !r.contains(minPoint) : (minDistance > circleRadius))) {
+                result = HitPointType.NONE;
             }
         }
         return result;
@@ -719,23 +719,14 @@ public class TrackSegment extends LayoutTrack {
      * @return the coordinates for the specified connection type
      */
     @Override
-    public Point2D getCoordsForConnectionType(LayoutEditor.HitPointType connectionType) {
+    public Point2D getCoordsForConnectionType(HitPointType connectionType) {
         Point2D result = getCentreSeg();
-        if (connectionType == LayoutEditor.HitPointType.TRACK_CIRCLE_CENTRE) {
+        if (connectionType == HitPointType.TRACK_CIRCLE_CENTRE) {
             result = getCoordsCenterCircle();
-        } else if (LayoutEditor.HitPointType.isBezierHitType(connectionType)) {
-            result = getBezierControlPoint(connectionType.getXmlValue() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue());
+        } else if (HitPointType.isBezierHitType(connectionType)) {
+            result = getBezierControlPoint(connectionType.bezierPointIndex());
         }
         return result;
-    }
-
-    /**
-     * get the maximum number of bezier points
-     *
-     * @return the maximum number of points
-     */
-    public int getMaxNumberBezierPoints() {
-        return LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_8.getXmlValue() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue() + 1;
     }
 
     /**
@@ -921,16 +912,16 @@ public class TrackSegment extends LayoutTrack {
         //arrows can only be added at edge connector
         //
         boolean hasEC1 = false;
-        if (type1 == LayoutEditor.HitPointType.POS_POINT) {
+        if (type1 == HitPointType.POS_POINT) {
             PositionablePoint pp = (PositionablePoint) connect1;
-            if (pp.getType() == PositionablePoint.EDGE_CONNECTOR) {
+            if (pp.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
                 hasEC1 = true;
             }
         }
         boolean hasEC2 = false;
-        if (type2 == LayoutEditor.HitPointType.POS_POINT) {
+        if (type2 == HitPointType.POS_POINT) {
             PositionablePoint pp = (PositionablePoint) connect2;
-            if (pp.getType() == PositionablePoint.EDGE_CONNECTOR) {
+            if (pp.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
                 hasEC2 = true;
             }
         }
@@ -958,8 +949,8 @@ public class TrackSegment extends LayoutTrack {
             arrowsCountMenu.add(jcbmi);
             jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
             jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == LayoutEditor.HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.EDGE_CONNECTOR));
-                setArrowEndStop((type2 == LayoutEditor.HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.EDGE_CONNECTOR));
+                setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
+                setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
                 setArrowStyle(1);
             });
             jcbmi.setSelected(arrowStyle == 1);
@@ -969,8 +960,8 @@ public class TrackSegment extends LayoutTrack {
             arrowsCountMenu.add(jcbmi);
             jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
             jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == LayoutEditor.HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.EDGE_CONNECTOR));
-                setArrowEndStop((type2 == LayoutEditor.HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.EDGE_CONNECTOR));
+                setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
+                setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
                 setArrowStyle(2);
             });
             jcbmi.setSelected(arrowStyle == 2);
@@ -980,8 +971,8 @@ public class TrackSegment extends LayoutTrack {
             arrowsCountMenu.add(jcbmi);
             jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
             jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == LayoutEditor.HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.EDGE_CONNECTOR));
-                setArrowEndStop((type2 == LayoutEditor.HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.EDGE_CONNECTOR));
+                setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
+                setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
                 setArrowStyle(3);
             });
             jcbmi.setSelected(arrowStyle == 3);
@@ -991,8 +982,8 @@ public class TrackSegment extends LayoutTrack {
             arrowsCountMenu.add(jcbmi);
             jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
             jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == LayoutEditor.HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.EDGE_CONNECTOR));
-                setArrowEndStop((type2 == LayoutEditor.HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.EDGE_CONNECTOR));
+                setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
+                setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
                 setArrowStyle(4);
             });
             jcbmi.setSelected(arrowStyle == 4);
@@ -1002,8 +993,8 @@ public class TrackSegment extends LayoutTrack {
             arrowsCountMenu.add(jcbmi);
             jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
             jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == LayoutEditor.HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.EDGE_CONNECTOR));
-                setArrowEndStop((type2 == LayoutEditor.HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.EDGE_CONNECTOR));
+                setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
+                setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
                 setArrowStyle(5);
             });
             jcbmi.setSelected(arrowStyle == 5);
@@ -1257,16 +1248,16 @@ public class TrackSegment extends LayoutTrack {
         //end bumper decorations can only be on end bumpers
         //
         boolean hasEB1 = false;
-        if (type1 == LayoutEditor.HitPointType.POS_POINT) {
+        if (type1 == HitPointType.POS_POINT) {
             PositionablePoint pp = (PositionablePoint) connect1;
-            if (pp.getType() == PositionablePoint.END_BUMPER) {
+            if (pp.getType() == PositionablePoint.PointType.END_BUMPER) {
                 hasEB1 = true;
             }
         }
         boolean hasEB2 = false;
-        if (type2 == LayoutEditor.HitPointType.POS_POINT) {
+        if (type2 == HitPointType.POS_POINT) {
             PositionablePoint pp = (PositionablePoint) connect2;
-            if (pp.getType() == PositionablePoint.END_BUMPER) {
+            if (pp.getType() == PositionablePoint.PointType.END_BUMPER) {
                 hasEB2 = true;
             }
         }
@@ -1321,10 +1312,10 @@ public class TrackSegment extends LayoutTrack {
 
                 endBumperMenu.add(enableCheckBoxMenuItem);
                 enableCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    if ((type1 == LayoutEditor.HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.END_BUMPER)) {
+                    if ((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.END_BUMPER)) {
                         setBumperEndStart(enableCheckBoxMenuItem.isSelected());
                     }
-                    if ((type2 == LayoutEditor.HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.END_BUMPER)) {
+                    if ((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.END_BUMPER)) {
                         setBumperEndStop(enableCheckBoxMenuItem.isSelected());
                     }
                 });
@@ -1588,11 +1579,11 @@ public class TrackSegment extends LayoutTrack {
     public boolean canRemove() {
         List<String> itemList = new ArrayList<>();
 
-        LayoutEditor.HitPointType type1 = getType1();
+        HitPointType type1 = getType1();
         LayoutTrack conn1 = getConnect1();
         itemList.addAll(getPointReferences(type1, conn1));
 
-        LayoutEditor.HitPointType type2 = getType2();
+        HitPointType type2 = getType2();
         LayoutTrack conn2 = getConnect2();
         itemList.addAll(getPointReferences(type2, conn2));
 
@@ -1602,10 +1593,10 @@ public class TrackSegment extends LayoutTrack {
         return itemList.isEmpty();
     }
 
-    public ArrayList<String> getPointReferences(LayoutEditor.HitPointType type, LayoutTrack conn) {
+    public ArrayList<String> getPointReferences(HitPointType type, LayoutTrack conn) {
         ArrayList<String> result = new ArrayList<>();
 
-        if (type == LayoutEditor.HitPointType.POS_POINT && conn instanceof PositionablePoint) {
+        if (type == HitPointType.POS_POINT && conn instanceof PositionablePoint) {
             PositionablePoint pt = (PositionablePoint) conn;
             if (!pt.getEastBoundSignal().isEmpty()) {
                 result.add(pt.getEastBoundSignal());
@@ -1625,12 +1616,12 @@ public class TrackSegment extends LayoutTrack {
             if (!pt.getWestBoundSensorName().isEmpty()) {
                 result.add(pt.getWestBoundSensorName());
             }
-            if (pt.getType() == PositionablePoint.EDGE_CONNECTOR && pt.getLinkedPoint() != null) {
+            if (pt.getType() == PositionablePoint.PointType.EDGE_CONNECTOR && pt.getLinkedPoint() != null) {
                 result.add(Bundle.getMessage("DeleteECisActive"));   // NOI18N
             }
         }
 
-        if (LayoutEditor.HitPointType.isTurnoutHitType(type) && conn instanceof LayoutTurnout) {
+        if (HitPointType.isTurnoutHitType(type) && conn instanceof LayoutTurnout) {
             LayoutTurnout lt = (LayoutTurnout) conn;
             switch (type) {
                 case TURNOUT_A: {
@@ -1655,7 +1646,7 @@ public class TrackSegment extends LayoutTrack {
             }
         }
 
-        if (LayoutEditor.HitPointType.isLevelXingHitType(type) && conn instanceof LevelXing) {
+        if (HitPointType.isLevelXingHitType(type) && conn instanceof LevelXing) {
             LevelXing lx = (LevelXing) conn;
             switch (type) {
                 case LEVEL_XING_A: {
@@ -1680,7 +1671,7 @@ public class TrackSegment extends LayoutTrack {
             }
         }
 
-        if (LayoutEditor.HitPointType.isSlipHitType(type) && conn instanceof LayoutSlip) {
+        if (HitPointType.isSlipHitType(type) && conn instanceof LayoutSlip) {
             LayoutSlip ls = (LayoutSlip) conn;
             switch (type) {
                 case SLIP_A: {
@@ -1716,14 +1707,14 @@ public class TrackSegment extends LayoutTrack {
         Point2D p = getCentreSeg();
         PositionablePoint newAnchor = layoutEditor.addAnchor(p);
         //link it to me
-        layoutEditor.setLink(newAnchor, LayoutEditor.HitPointType.POS_POINT, this, LayoutEditor.HitPointType.TRACK);
+        layoutEditor.setLink(newAnchor, HitPointType.POS_POINT, this, HitPointType.TRACK);
 
         //get unique name for a new track segment
         String name = layoutEditor.getFinder().uniqueName("T", 1);
 
         //create it between the new anchor and my connect2(/type2)
         TrackSegment newTrackSegment = new TrackSegment(name,
-                newAnchor, LayoutEditor.HitPointType.POS_POINT,
+                newAnchor, HitPointType.POS_POINT,
                 connect2, type2,
                 isDashed(), isMainline(), layoutEditor);
         //add it to known tracks
@@ -1764,15 +1755,15 @@ public class TrackSegment extends LayoutTrack {
             PositionablePoint pp = (PositionablePoint) connect2;
             pp.replaceTrackConnection(this, newTrackSegment);
         } else {
-            layoutEditor.setLink(connect2, type2, newTrackSegment, LayoutEditor.HitPointType.TRACK);
+            layoutEditor.setLink(connect2, type2, newTrackSegment, HitPointType.TRACK);
         }
 
         //link the new anchor to the new track segment
-        layoutEditor.setLink(newAnchor, LayoutEditor.HitPointType.POS_POINT, newTrackSegment, LayoutEditor.HitPointType.TRACK);
+        layoutEditor.setLink(newAnchor, HitPointType.POS_POINT, newTrackSegment, HitPointType.TRACK);
 
         //link me to the new newAnchor
         connect2 = newAnchor;
-        type2 = LayoutEditor.HitPointType.POS_POINT;
+        type2 = HitPointType.POS_POINT;
 
         //check on layout block
         LayoutBlock b = this.getLayoutBlock();
@@ -1789,8 +1780,8 @@ public class TrackSegment extends LayoutTrack {
     /**
      * Display popup menu for information and editing
      */
-    protected void showBezierPopUp(MouseEvent e, LayoutEditor.HitPointType hitPointType) {
-        int bezierControlPointIndex = hitPointType.getXmlValue() - LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue();
+    protected void showBezierPopUp(MouseEvent e, HitPointType hitPointType) {
+        int bezierControlPointIndex = hitPointType.bezierPointIndex();
         if (popupMenu != null) {
             popupMenu.removeAll();
         } else {
@@ -1801,7 +1792,7 @@ public class TrackSegment extends LayoutTrack {
         jmi.setEnabled(false);
         popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
 
-        if (bezierControlPoints.size() <= getMaxNumberBezierPoints()) {
+        if (bezierControlPoints.size() <= HitPointType.NUM_BEZIER_CONTROL_POINTS) {
             popupMenu.add(new AbstractAction(Bundle.getMessage("AddBezierControlPointAfter")) {
 
                 @Override
@@ -2403,7 +2394,7 @@ public class TrackSegment extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void highlightUnconnected(Graphics2D g2, LayoutEditor.HitPointType selectedType) {
+    protected void highlightUnconnected(Graphics2D g2, HitPointType selectedType) {
         //TrackSegments are always connected
         //nothing to see here... move along..
     }
@@ -3868,19 +3859,19 @@ public class TrackSegment extends LayoutTrack {
         //ensure that block is assigned
         if (lb1 != null) {
             //check first connection for turnout
-            if (LayoutEditor.HitPointType.isTurnoutHitType(type1)) {
+            if (HitPointType.isTurnoutHitType(type1)) {
                 //have connection to a turnout, is block different
                 LayoutTurnout lt = (LayoutTurnout) getConnect1();
                 lb2 = lt.getLayoutBlock();
                 if (lt.hasEnteringDoubleTrack()) {
                     //not RH, LH, or WYE turnout - other blocks possible
-                    if ((type1 == LayoutEditor.HitPointType.TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
+                    if ((type1 == HitPointType.TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
                         lb2 = lt.getLayoutBlockB();
                     }
-                    if ((type1 == LayoutEditor.HitPointType.TURNOUT_C) && (lt.getLayoutBlockC() != null)) {
+                    if ((type1 == HitPointType.TURNOUT_C) && (lt.getLayoutBlockC() != null)) {
                         lb2 = lt.getLayoutBlockC();
                     }
-                    if ((type1 == LayoutEditor.HitPointType.TURNOUT_D) && (lt.getLayoutBlockD() != null)) {
+                    if ((type1 == HitPointType.TURNOUT_D) && (lt.getLayoutBlockD() != null)) {
                         lb2 = lt.getLayoutBlockD();
                     }
                 }
@@ -3894,10 +3885,10 @@ public class TrackSegment extends LayoutTrack {
                             LayoutEditor.getCoords(getConnect1(), type1)));
                     results.add(lc);
                 }
-            } else if (LayoutEditor.HitPointType.isLevelXingHitType(type1)) {
+            } else if (HitPointType.isLevelXingHitType(type1)) {
                 //have connection to a level crossing
                 LevelXing lx = (LevelXing) getConnect1();
-                if ((type1 == LayoutEditor.HitPointType.LEVEL_XING_A) || (type1 == LayoutEditor.HitPointType.LEVEL_XING_C)) {
+                if ((type1 == HitPointType.LEVEL_XING_A) || (type1 == HitPointType.LEVEL_XING_C)) {
                     lb2 = lx.getLayoutBlockAC();
                 } else {
                     lb2 = lx.getLayoutBlockBD();
@@ -3912,7 +3903,7 @@ public class TrackSegment extends LayoutTrack {
                             LayoutEditor.getCoords(getConnect1(), type1)));
                     results.add(lc);
                 }
-            } else if (LayoutEditor.HitPointType.isSlipHitType(type1)) {
+            } else if (HitPointType.isSlipHitType(type1)) {
                 //have connection to a slip crossing
                 LayoutSlip ls = (LayoutSlip) getConnect1();
                 lb2 = ls.getLayoutBlock();
@@ -3927,19 +3918,19 @@ public class TrackSegment extends LayoutTrack {
                 }
             }
             //check second connection for turnout
-            if (LayoutEditor.HitPointType.isTurnoutHitType(type2)) {
+            if (HitPointType.isTurnoutHitType(type2)) {
                 //have connection to a turnout
                 LayoutTurnout lt = (LayoutTurnout) getConnect2();
                 lb2 = lt.getLayoutBlock();
                 if (lt.hasEnteringDoubleTrack()) {
                     //not RH, LH, or WYE turnout - other blocks possible
-                    if ((type2 == LayoutEditor.HitPointType.TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
+                    if ((type2 == HitPointType.TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
                         lb2 = lt.getLayoutBlockB();
                     }
-                    if ((type2 == LayoutEditor.HitPointType.TURNOUT_C) && (lt.getLayoutBlockC() != null)) {
+                    if ((type2 == HitPointType.TURNOUT_C) && (lt.getLayoutBlockC() != null)) {
                         lb2 = lt.getLayoutBlockC();
                     }
-                    if ((type2 == LayoutEditor.HitPointType.TURNOUT_D) && (lt.getLayoutBlockD() != null)) {
+                    if ((type2 == HitPointType.TURNOUT_D) && (lt.getLayoutBlockD() != null)) {
                         lb2 = lt.getLayoutBlockD();
                     }
                 }
@@ -3953,10 +3944,10 @@ public class TrackSegment extends LayoutTrack {
                             LayoutEditor.getCoords(getConnect2(), type2)));
                     results.add(lc);
                 }
-            } else if (LayoutEditor.HitPointType.isLevelXingHitType(type2)) {
+            } else if (HitPointType.isLevelXingHitType(type2)) {
                 //have connection to a level crossing
                 LevelXing lx = (LevelXing) getConnect2();
-                if ((type2 == LayoutEditor.HitPointType.LEVEL_XING_A) || (type2 == LayoutEditor.HitPointType.LEVEL_XING_C)) {
+                if ((type2 == HitPointType.LEVEL_XING_A) || (type2 == HitPointType.LEVEL_XING_C)) {
                     lb2 = lx.getLayoutBlockAC();
                 } else {
                     lb2 = lx.getLayoutBlockBD();
@@ -3971,7 +3962,7 @@ public class TrackSegment extends LayoutTrack {
                             LayoutEditor.getCoords(getConnect2(), type2)));
                     results.add(lc);
                 }
-            } else if (LayoutEditor.HitPointType.isSlipHitType(type2)) {
+            } else if (HitPointType.isSlipHitType(type2)) {
                 //have connection to a slip crossing
                 LayoutSlip ls = (LayoutSlip) getConnect2();
                 lb2 = ls.getLayoutBlock();
@@ -3997,8 +3988,8 @@ public class TrackSegment extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public List<LayoutEditor.HitPointType> checkForFreeConnections() {
-        //Track Segments always have all their connections so..
+    public List<HitPointType> checkForFreeConnections() {
+        //Track Segments always have all their connections so...
         //(nothing to see here... move along)
         return new ArrayList<>();
     }

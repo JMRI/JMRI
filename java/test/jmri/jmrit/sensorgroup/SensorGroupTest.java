@@ -9,8 +9,8 @@ import org.junit.Test;
 /**
  * Tests for classes in the SensorGroup class
  *
- * @author	Bob Jacobsen Copyright 2003, 2007
- * @author	Paul Bender Copyright (C) 2017
+ * @author Bob Jacobsen Copyright 2003, 2007
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SensorGroupTest {
 
@@ -20,7 +20,6 @@ public class SensorGroupTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();

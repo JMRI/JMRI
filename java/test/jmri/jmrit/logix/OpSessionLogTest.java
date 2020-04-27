@@ -7,7 +7,7 @@ import org.netbeans.jemmy.operators.JDialogOperator;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class OpSessionLogTest {
 
@@ -50,7 +50,6 @@ public class OpSessionLogTest {
        // make sure the log file is correctly chosen and created.
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

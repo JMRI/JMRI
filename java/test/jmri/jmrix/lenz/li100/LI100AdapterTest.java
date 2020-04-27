@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * LI100AdapterTest.java
  *
- * Description: tests for the jmri.jmrix.lenz.li100.LI100Adapter class
+ * Test for the jmri.jmrix.lenz.li100.LI100Adapter class
  *
  * @author Paul Bender
  */

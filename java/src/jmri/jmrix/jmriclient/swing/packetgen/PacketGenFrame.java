@@ -7,7 +7,7 @@ import jmri.jmrix.jmriclient.JMRIClientReply;
 import jmri.jmrix.jmriclient.JMRIClientTrafficController;
 
 /**
- * Description: Frame for user input of JMRIClient messages
+ * Frame for user input of JMRIClient messages
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */

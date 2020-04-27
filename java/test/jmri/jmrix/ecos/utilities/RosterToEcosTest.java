@@ -19,7 +19,6 @@ public class RosterToEcosTest {
         Assert.assertNotNull("RosterToEcos constructor", new RosterToEcos(new EcosSystemConnectionMemo()));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

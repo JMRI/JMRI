@@ -9,10 +9,7 @@ import jmri.JmriException;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
 import jmri.Turnout;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Abstract base class for Turnout tests in specific jmrix.* packages
@@ -21,14 +18,24 @@ import org.junit.Test;
  * Instead, this forms the base for test classes, including providing some
  * common tests.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public abstract class AbstractTurnoutTestBase {
 
-    // implementing classes must provide these abstract members:
+    /**
+     * Implementing classes must overload to load t with actual object; create scaffolds as needed
+     */
     @Before
-    abstract public void setUp();    	// load t with actual object; create scaffolds as needed
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
 
+    @After
+    public void tearDown() {
+        t = null; // to save space, as JU4 doesn't garbage collect this object
+        JUnitUtil.tearDown();
+    }
+    
     /** 
      * @return number of listeners registered with the TrafficController by the object under test
      */
@@ -38,7 +45,7 @@ public abstract class AbstractTurnoutTestBase {
 
     abstract public void checkClosedMsgSent() throws InterruptedException;
 
-    protected Turnout t = null;	// holds object under test; set by setUp()
+    protected Turnout t = null; // holds object under test; set by setUp()
 
     static protected boolean listenerResult = false;
     static protected int listenStatus = Turnout.UNKNOWN;
@@ -89,7 +96,7 @@ public abstract class AbstractTurnoutTestBase {
 
     @Test
     public void testDispose() {
-        t.setCommandedState(Turnout.CLOSED);  	// in case registration with TrafficController is deferred to after first use
+        t.setCommandedState(Turnout.CLOSED); // in case registration with TrafficController is deferred to after first use
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 0, numListeners());
     }
@@ -229,8 +236,8 @@ public abstract class AbstractTurnoutTestBase {
         t.setFeedbackMode(Turnout.TWOSENSOR); 
         Assert.assertEquals("known state for TWOSENSOR feedback (UNKNOWN,UNKNOWN)", Turnout.UNKNOWN, t.getKnownState());
 
-	    listenStatus = Turnout.UNKNOWN;
-	    t.addPropertyChangeListener(new Listen());
+        listenStatus = Turnout.UNKNOWN;
+        t.addPropertyChangeListener(new Listen());
 
         s1.setKnownState(Sensor.ACTIVE);
         s2.setKnownState(Sensor.INACTIVE);
@@ -262,25 +269,25 @@ public abstract class AbstractTurnoutTestBase {
     public void testDirectFeedback() throws Exception {
 
         // DIRECT mode is implemented in the AbstractTurnout class, so
-	// it is possible on all systems.
-	if(t.getFeedbackMode() != Turnout.DIRECT){
-		t.setFeedbackMode(Turnout.DIRECT);
-	}
+        // it is possible on all systems.
+        if (t.getFeedbackMode() != Turnout.DIRECT) {
+            t.setFeedbackMode(Turnout.DIRECT);
+        }
         Assert.assertEquals(Turnout.DIRECT, t.getFeedbackMode());
 
-	listenStatus = Turnout.UNKNOWN;
-	t.addPropertyChangeListener(new Listen());
+        listenStatus = Turnout.UNKNOWN;
+        t.addPropertyChangeListener(new Listen());
         
         // Check that state changes appropriately
         t.setCommandedState(Turnout.THROWN);
         checkThrownMsgSent();
         Assert.assertEquals(t.getState(), Turnout.THROWN);
-	Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.THROWN,listenStatus);
+        Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.THROWN, listenStatus);
 
-	t.setCommandedState(Turnout.CLOSED);
+        t.setCommandedState(Turnout.CLOSED);
         checkClosedMsgSent();
         Assert.assertEquals(t.getState(), Turnout.CLOSED);
-	Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.CLOSED,listenStatus);
+        Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.CLOSED, listenStatus);
     }
 
     @Test

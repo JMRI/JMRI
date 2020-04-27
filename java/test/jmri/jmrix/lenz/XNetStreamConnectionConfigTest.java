@@ -4,11 +4,10 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class XNetStreamConnectionConfigTest extends jmri.jmrix.AbstractConnectionConfigTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -19,7 +18,7 @@ public class XNetStreamConnectionConfigTest extends jmri.jmrix.AbstractConnectio
     @After
     @Override
     public void tearDown() {
-	cc = null;
+        cc = null;
         jmri.util.JUnitUtil.tearDown();
     }
 

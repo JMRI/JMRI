@@ -11,7 +11,7 @@ import jmri.jmrix.nce.NceTrafficController;
 /**
  * Test simple functioning of BoosterProgPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class BoosterProgPanelTest extends jmri.util.swing.JmriPanelTest {
 

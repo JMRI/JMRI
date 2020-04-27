@@ -8,7 +8,7 @@ import org.junit.Test;
 /**
  * Tests for the NamedBean interface
  *
- * @author	Bob Jacobsen Copyright (C) 2017
+ * @author Bob Jacobsen Copyright (C) 2017
  */
 public class NamedBeanTest {
 

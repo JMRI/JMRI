@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * Intended use is as an input format for new program code to be sent to a
  * hardware device via some bootloading process.
  *
- * @author	Andrew Crosland Copyright (C) 2010
+ * @author Andrew Crosland Copyright (C) 2010
  */
 public class SprogHexFile extends jmri.util.JmriJFrame {
 

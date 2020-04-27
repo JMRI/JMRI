@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * For more info on the product, see http://www.pricom.com
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
  */
 public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
 

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Panel for load/store of RPS setup.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class LoadStorePanel extends javax.swing.JPanel {
 

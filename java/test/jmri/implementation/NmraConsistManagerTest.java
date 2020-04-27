@@ -10,7 +10,6 @@ import org.junit.Before;
  */
 public class NmraConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

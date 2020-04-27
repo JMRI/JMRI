@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * LayoutTurnoutXmlTest.java
  *
- * Description: tests for the LayoutTurnoutXml class
+ * Test for the LayoutTurnoutXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -26,7 +26,7 @@ public class LayoutTurnoutXmlTest {
 
     @Test
     public void testFromEnum() {
-        LayoutTurnoutXml.EnumIO<LayoutTurnout.LinkType> enumMap = (new LayoutTurnoutXml()).linkEnumMap;
+        LayoutTurnoutXml.EnumIO<LayoutTurnout.LinkType> enumMap = LayoutTurnoutXml.linkEnumMap;
 
         Assert.assertEquals("0", enumMap.outputFromEnum(LayoutTurnout.LinkType.NO_LINK));
         Assert.assertEquals("2", enumMap.outputFromEnum(LayoutTurnout.LinkType.SECOND_3_WAY));
@@ -34,7 +34,7 @@ public class LayoutTurnoutXmlTest {
     
     @Test
     public void testToEnum() {
-        LayoutTurnoutXml.EnumIO<LayoutTurnout.LinkType> enumMap = (new LayoutTurnoutXml()).linkEnumMap;
+        LayoutTurnoutXml.EnumIO<LayoutTurnout.LinkType> enumMap = LayoutTurnoutXml.linkEnumMap;
         
         Assert.assertEquals(LayoutTurnout.LinkType.NO_LINK, enumMap.inputFromString("0"));
         Assert.assertEquals(LayoutTurnout.LinkType.SECOND_3_WAY, enumMap.inputFromString("2"));
@@ -44,7 +44,6 @@ public class LayoutTurnoutXmlTest {
         // Assert.assertEquals(null, enumMap.inputFromString(""));
     }
     
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

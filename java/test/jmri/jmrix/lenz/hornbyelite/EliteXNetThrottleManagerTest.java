@@ -8,13 +8,12 @@ import org.junit.Before;
 /**
  * EliteXNetThrottleManagerTest.java
  * <p>
- * Description:	tests for the jmri.jmrix.lenz.EliteXNetThrottleManager class
+ * Test for the jmri.jmrix.lenz.EliteXNetThrottleManager class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class EliteXNetThrottleManagerTest extends jmri.jmrix.lenz.XNetThrottleManagerTest {
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

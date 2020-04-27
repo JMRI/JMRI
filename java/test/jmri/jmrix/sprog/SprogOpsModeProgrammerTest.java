@@ -14,7 +14,6 @@ public class SprogOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
     private SprogTrafficControlScaffold stcs = null;
     private SprogSystemConnectionMemo m = null;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

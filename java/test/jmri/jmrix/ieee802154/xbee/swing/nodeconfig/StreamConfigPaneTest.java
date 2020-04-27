@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of StreamConfigPane 
  *
- * @author	Paul Bender Copyright (C) 2018
+ * @author Paul Bender Copyright (C) 2018
  */
 public class StreamConfigPaneTest {
 

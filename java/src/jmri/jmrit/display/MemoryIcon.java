@@ -395,7 +395,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     setText(((Reportable)val).toReportString());
                     setIcon(null);
                 } else {
-                    log.warn("can't display current value of {}, val= {} of Class ",
+                    log.warn("can't display current value of {}, val= {} of Class {}",
                             getNameString(), val, val.getClass().getName());
                 }
             } else {

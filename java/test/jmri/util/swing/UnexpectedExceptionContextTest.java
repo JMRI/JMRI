@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class UnexpectedExceptionContextTest extends ExceptionContextTest {
 
@@ -24,7 +24,6 @@ public class UnexpectedExceptionContextTest extends ExceptionContextTest {
         Assert.assertEquals("Title",Bundle.getMessage("UnexpectedExceptionOperationTitle",Exception.class.getSimpleName()),ec.getTitle());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

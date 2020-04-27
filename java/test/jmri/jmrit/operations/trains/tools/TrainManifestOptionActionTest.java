@@ -23,7 +23,7 @@ public class TrainManifestOptionActionTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
         TrainEditFrame tef = new TrainEditFrame(train1);
-        TrainManifestOptionAction t = new TrainManifestOptionAction("Test Action", tef);
+        TrainManifestOptionAction t = new TrainManifestOptionAction(tef);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(tef);
     }
@@ -33,7 +33,7 @@ public class TrainManifestOptionActionTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
         TrainEditFrame tef = new TrainEditFrame(train1);
-        TrainManifestOptionAction a = new TrainManifestOptionAction("Test Action", tef);
+        TrainManifestOptionAction a = new TrainManifestOptionAction(tef);
         Assert.assertNotNull("exists", a);
 
         a.actionPerformed(new ActionEvent(this, 0, null));

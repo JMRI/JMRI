@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Distributes Readings and the Measurements calculated from them.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 public class Distributor {
 

@@ -12,12 +12,12 @@ import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SwingShutDownTaskTest {
 
     private boolean modalDialogStopsTest = false;
-    private final static Logger log = LoggerFactory.getLogger(SwingShutDownTaskDemo.class);
+    private final static Logger log = LoggerFactory.getLogger(SwingShutDownTaskTest.class);
 
     @Test
     public void testCTor() {
@@ -77,7 +77,6 @@ public class SwingShutDownTaskTest {
         t.execute();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

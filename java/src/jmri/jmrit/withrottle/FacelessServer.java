@@ -67,7 +67,7 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
                 device = new DeviceServer(socket.accept(), this);  //blocks here until a connection is made
 
                 String threadName = "DeviceServer-" + threadNumber++;  // NOI18N
-                Thread t = new Thread(device, threadName);
+                Thread t = jmri.util.ThreadingUtil.newThread(device, threadName);
                 for (DeviceListener dl : deviceListenerList) {
                     device.addDeviceListener(dl);
                 }

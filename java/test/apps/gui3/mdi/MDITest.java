@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * Description: Tests for the MDI application.
+ * Tests for the MDI application.
  *
  * @author Paul Bender Copyright (C) 2016
  */
@@ -54,7 +54,6 @@ public class MDITest {
         AppsBase.handleQuit();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

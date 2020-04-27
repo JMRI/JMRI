@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.easydcc.EasyDccTurnoutManager class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 

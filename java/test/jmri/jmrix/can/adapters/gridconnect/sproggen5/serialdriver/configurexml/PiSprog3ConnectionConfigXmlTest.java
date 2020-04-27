@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * PiSprog3ConnectionConfigXmlTest.java
  * 
- * Description: tests for the PiSprog3ConnectionConfigXml class
+ * Test for the PiSprog3ConnectionConfigXml class
  *
  * @author  Andrew Crosland  Copyright (C) 2020
  */
@@ -19,7 +19,6 @@ public class PiSprog3ConnectionConfigXmlTest extends jmri.jmrix.configurexml.Abs
         Assert.assertNotNull("exists",c);
     }
     
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

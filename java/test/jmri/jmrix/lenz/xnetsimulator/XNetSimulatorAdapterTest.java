@@ -11,10 +11,10 @@ import org.junit.Test;
 /**
  * XNetSimulatorAdapterTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter
+ * Test for the jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter
  * class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetSimulatorAdapterTest {
 
@@ -410,7 +410,6 @@ public class XNetSimulatorAdapterTest {
     }
 
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

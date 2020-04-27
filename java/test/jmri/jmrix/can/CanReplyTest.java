@@ -205,7 +205,6 @@ public class CanReplyTest extends CanMRCommonTestBase {
     }
 
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -216,7 +215,7 @@ public class CanReplyTest extends CanMRCommonTestBase {
     @Override
     @After
     public void tearDown() {
-	m = msg = null;
+        m = msg = null;
         JUnitUtil.tearDown();
     }
 }

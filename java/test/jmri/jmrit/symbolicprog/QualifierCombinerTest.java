@@ -15,7 +15,7 @@ import org.junit.Test;
 
 /**
  *
- * @author	Bob Jacobsen, Copyright 2014
+ * @author Bob Jacobsen, Copyright 2014
  * @author Paul Bender, Copyright 2017
  */
 public class QualifierCombinerTest {
@@ -54,7 +54,6 @@ public class QualifierCombinerTest {
     }
 
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

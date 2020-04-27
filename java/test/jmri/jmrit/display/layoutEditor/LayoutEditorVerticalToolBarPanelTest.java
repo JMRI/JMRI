@@ -10,7 +10,7 @@ import org.junit.*;
 /**
  * Test simple functioning of LayoutEditorVerticalToolBarPanel
  *
- * @author	George Warner Copyright (C) 2019
+ * @author George Warner Copyright (C) 2019
  */
 public class LayoutEditorVerticalToolBarPanelTest {
 

@@ -18,7 +18,7 @@ import jmri.util.swing.JemmyUtil;
 /**
  * Tests for the Operations Routes GUI class
  *
- * @author	Dan Boudreau Copyright (C) 2009
+ * @author Dan Boudreau Copyright (C) 2009
  */
 public class OperationsRoutesGuiTest extends OperationsTestCase {
 

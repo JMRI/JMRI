@@ -119,7 +119,6 @@ public class CbusEventTest {
         assertThat(hash==new CbusEvent(4,4).hashCode()).isFalse();
     }
     
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
  */
 public class JmriServerFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
     @BeforeEach
     @Override
     public void setUp() {

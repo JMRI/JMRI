@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * XNetTimeSlotListenerTest.java
  *
- * Description: tests for the jmri.jmrix.lenz.XNetTimeSlotListener class
+ * Test for the jmri.jmrix.lenz.XNetTimeSlotListener class
  *
  * @author  Paul Bender Copyright (C) 2010,2016,2017
  */

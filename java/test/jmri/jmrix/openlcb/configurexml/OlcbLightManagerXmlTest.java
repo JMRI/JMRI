@@ -19,19 +19,14 @@ import org.slf4j.LoggerFactory;
 /**
  * OlcbLightManagerXmlTest.java
  *
- * Description: tests for the OlcbLightManagerXml class
+ * Test for the OlcbLightManagerXml class
  *
  * @author   Jeff Collell
  */
 public class OlcbLightManagerXmlTest {
 
     @Test
-    public void testCtor(){
-      Assert.assertNotNull("OlcbLightManagerXml constructor",new OlcbLightManagerXml());
-    }
-
-    @Test
-    public void testSaveAndRestore() throws Exception {
+    public void testSaveAndRestore() {
         log.debug("FIRST START");
         t = new OlcbTestInterface(new OlcbTestInterface.CreateConfigurationManager());
         OlcbLightManager mgr = t.configurationManager.getLightManager();
@@ -76,7 +71,6 @@ public class OlcbLightManagerXmlTest {
     OlcbTestInterface t;
     private final static Logger log = LoggerFactory.getLogger(OlcbLightManagerXmlTest.class);
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -19,14 +19,14 @@ public class SetupExcelProgramFrameActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        SetupExcelProgramFrameAction t = new SetupExcelProgramFrameAction("test action");
+        SetupExcelProgramFrameAction t = new SetupExcelProgramFrameAction();
         Assert.assertNotNull("exists", t);
     }
 
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SetupExcelProgramFrameAction sepfa = new SetupExcelProgramFrameAction("test action");
+        SetupExcelProgramFrameAction sepfa = new SetupExcelProgramFrameAction();
         Assert.assertNotNull("exists", sepfa);
         
         sepfa.actionPerformed(new ActionEvent(this, 0, null));

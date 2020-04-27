@@ -25,7 +25,7 @@ import org.netbeans.jemmy.util.NameComponentChooser;
 /**
  * Swing tests for the light table.
  *
- * @author	Bob Jacobsen Copyright 2009, 2010, 2017
+ * @author Bob Jacobsen Copyright 2009, 2010, 2017
  */
 public class LightTableWindowTest {
 

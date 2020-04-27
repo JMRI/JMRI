@@ -22,7 +22,7 @@ import org.junit.rules.Timeout;
 /**
  * JUnit tests for the EasyDccSimulatorTrafficController class
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2015
+ * @author Bob Jacobsen Copyright (C) 2003, 2007, 2015
  */
 public class EasyDccSimulatorTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
@@ -60,9 +60,8 @@ public class EasyDccSimulatorTrafficControllerTest extends jmri.jmrix.AbstractMR
         ostream.flush();
         JUnitUtil.waitFor(()->{return tostream.available() == 4;}, "total length");
         
-		// test the result of sending
-
-		Assert.assertEquals("total length ", 4, tostream.available());
+        // test the result of sending
+        Assert.assertEquals("total length ", 4, tostream.available());
         Assert.assertEquals("Char 0", '0', tostream.readByte());
         Assert.assertEquals("Char 1", '1', tostream.readByte());
         Assert.assertEquals("Char 2", '2', tostream.readByte());
@@ -165,7 +164,6 @@ public class EasyDccSimulatorTrafficControllerTest extends jmri.jmrix.AbstractMR
     DataOutputStream tistream; // tests write to this
     DataInputStream istream;   // so the traffic controller can read from this
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

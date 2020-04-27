@@ -859,6 +859,11 @@
    </p>
 
    <p>
+    You can quickly set the <a href="#SetTrainIconCoordinates">train icon coordinates</a> for your panel using tools in
+    the Routes and <a href="#EditRoute">Edit Route</a> windows.
+   </p>
+
+   <p>
     <img src="images/PanelWithMarkers.png">
    </p>
 
@@ -3911,12 +3916,15 @@
    </p>
 
    <p>
-    The X and Y are the coordinates on your dispatcher's panel for the optional train icon. You can set the coordinates
-    here, use the <a href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a> tool, or use the "SetX&amp;Y" <a
-     href="#PanelOptionsTrainIcons">train icon</a> popup menu to teach the program where you want the train icon placed
-    when the train is at the specified location. Leave the X and Y coordinates at zero if you want to manually move the
-    icon or you're not using the icon feature.
+    The X and Y are the coordinates on your dispatcher's panel for the optional <a href="#PanelOptionsTrainIcons">train
+     icon.</a> You can set the coordinates directly in the table by double clicking on the X or Y cells, or use the <a
+     href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a> tool if you want to change all of your routes at
+    once, or use the "Set Train Icon Coordinates for this Route" tool if you only want to adjust one route, or use the
+    "SetX&amp;Y" <a href="#PanelOptionsTrainIcons">train icon</a> popup menu to teach the program where you want the
+    train icon placed when the train is at the specified location. Leave the X and Y coordinates at zero if you want to
+    manually move the icon or you're not using the icon feature.
    </p>
+
    <a name="RouteComment" id="RouteComment"></a>
 
    <p>Each location in the route can also have an optional comment that will appear in the

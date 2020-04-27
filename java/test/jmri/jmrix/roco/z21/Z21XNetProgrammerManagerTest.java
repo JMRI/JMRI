@@ -6,9 +6,9 @@ import org.junit.*;
 /**
  * Z21XNetProgrammerManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.roco.z21.Z21XNetProgrammerManager class
+ * Test for the jmri.jmrix.roco.z21.Z21XNetProgrammerManager class
  *
- * @author	Paul Bender Copyright (C) 2012,2018
+ * @author Paul Bender Copyright (C) 2012,2018
  */
 public class Z21XNetProgrammerManagerTest {
 
@@ -34,7 +34,6 @@ public class Z21XNetProgrammerManagerTest {
         Assert.assertNotNull(t.getAddressedProgrammer(false,42));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

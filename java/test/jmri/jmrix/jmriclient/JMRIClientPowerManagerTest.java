@@ -8,9 +8,9 @@ import org.junit.Before;
 /**
  * JMRIClientPowerManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientPowerManager class
+ * Test for the jmri.jmrix.jmriclient.JMRIClientPowerManager class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  * @author  Paul Bender Copyright (C) 2017
  */
 public class JMRIClientPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
@@ -73,7 +73,6 @@ public class JMRIClientPowerManagerTest extends jmri.jmrix.AbstractPowerManagerT
         return ((stc.outbound.elementAt(index))).toString().equals("POWER IDLE\n");
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

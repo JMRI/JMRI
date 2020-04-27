@@ -18,7 +18,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Swing tests for the SensorIcon
  *
- * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author Bob Jacobsen Copyright 2009, 2010
  * @author  Paul Bender Copyright 2017
  */
 public class SensorIconWindowTest {
@@ -37,7 +37,7 @@ public class SensorIconWindowTest {
         icon.setSensor("IS1");
         icon.setIcon("BeanStateUnknown", new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
-        icon.setDisplayLevel(Editor.SENSORS);	//daboudreau added this for Win7
+        icon.setDisplayLevel(Editor.SENSORS); //daboudreau added this for Win7
 
         panel.setVisible(true);
 
@@ -134,7 +134,6 @@ public class SensorIconWindowTest {
         to.closeFrameWithConfirmations();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();

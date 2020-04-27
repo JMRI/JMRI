@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -32,7 +32,6 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
         Assert.assertNotNull("exists",t2);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -45,7 +44,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
     @Override
     @After
     public void tearDown() {
-	t.dispose();
+        t.dispose();
         JUnitUtil.tearDown();
     }
 

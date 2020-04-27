@@ -22,7 +22,7 @@ import jmri.util.swing.JemmyUtil;
 /**
  * Tests for the Operations EnginesTableFrame class
  *
- * @author	Dan Boudreau Copyright (C) 2010
+ * @author Dan Boudreau Copyright (C) 2010
  *
  */
 public class EnginesTableFrameTest extends OperationsTestCase {

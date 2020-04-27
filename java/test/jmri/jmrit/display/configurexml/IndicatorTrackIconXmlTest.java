@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * IndicatorTrackIconXmlTest.java
  *
- * Description: tests for the IndicatorTrackIconXml class
+ * Test for the IndicatorTrackIconXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class IndicatorTrackIconXmlTest {
       Assert.assertNotNull("IndicatorTrackIconXml constructor",new IndicatorTrackIconXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

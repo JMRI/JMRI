@@ -12,9 +12,9 @@ import org.junit.Test;
 /**
  * XNetOpsModeProgrammerTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.XNetOpsModeProgrammer class
+ * Test for the jmri.jmrix.lenz.XNetOpsModeProgrammer class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
@@ -144,7 +144,6 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         Assert.assertEquals("status",jmri.ProgListener.UnknownError,lastStatus);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -175,7 +174,7 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         op = null;
         pl = null;
         programmer = null;
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

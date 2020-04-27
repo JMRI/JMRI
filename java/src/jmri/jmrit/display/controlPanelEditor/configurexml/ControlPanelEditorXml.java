@@ -88,7 +88,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
                         panel.addContent(e);
                     }
                 } catch (RuntimeException e) {
-                    log.error("Error storing panel element: {}", e.getMessage(), e);
+                    log.error("Error storing panel element", e);
                 }
             }
         }
@@ -282,7 +282,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             } catch (ClassNotFoundException | InstantiationException
                     | jmri.configurexml.JmriConfigureXmlException | IllegalAccessException
                     | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
-                log.error("Exception while loading {}: {}", panelItem.getName(), e.getMessage(), e);
+                log.error("Exception while loading {}", panelItem.getName(), e);
                 result = false;
             }
         }

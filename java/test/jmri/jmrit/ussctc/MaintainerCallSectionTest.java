@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Tests for MaintainerCallSection class in the jmri.jmrit.ussctc package.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class MaintainerCallSectionTest {
 
@@ -58,7 +58,6 @@ public class MaintainerCallSectionTest {
     Turnout mcLayoutTurnout;
     Sensor panelSensor;
     
-    // The minimal setup for log4J
     @org.junit.Before
     public void setUp() {
         JUnitUtil.setUp();

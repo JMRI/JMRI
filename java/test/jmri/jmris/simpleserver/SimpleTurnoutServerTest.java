@@ -102,7 +102,6 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
             assertThat(sb.toString()).isEqualTo("TURNOUT IT1 UNKNOWN\n").withFailMessage("Send Error Status check");
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     @Override
     public void setUp() {

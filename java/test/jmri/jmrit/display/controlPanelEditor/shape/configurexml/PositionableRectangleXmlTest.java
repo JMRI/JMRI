@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * PositionableRectangleXmlTest.java
  *
- * Description: tests for the PositionableRectangleXml class
+ * Test for the PositionableRectangleXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class PositionableRectangleXmlTest {
       Assert.assertNotNull("PositionableRectangleXml constructor",new PositionableRectangleXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

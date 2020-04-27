@@ -37,8 +37,8 @@ import org.slf4j.*;
  * the crossing, A-B (and C-D for crossovers) is a straight segment (continuing
  * route). A-C (and B-D for crossovers) is the diverging route. B-C (and A-D for
  * crossovers) is an illegal condition.
- * <p>
- * {@literal
+ * <br>
+ * <pre>
  *           Turnouts
  * Right-hand       Left-hand
  *
@@ -69,7 +69,7 @@ import org.slf4j.*;
  *              XX
  *             //\\
  *        D ==**==**== C
- * literal}
+ * </pre>
  * <p>
  * A LayoutTurnout carries Block information. For right-handed, left-handed, and
  * wye turnouts, the entire turnout is in one block, however, a block border may
@@ -103,7 +103,7 @@ import org.slf4j.*;
  * Signal Head names are saved here to keep track of where signals are.
  * LayoutTurnout only serves as a storage place for signal head names. The names
  * are placed here by tools, e.g., Set Signals at Turnout, and Set Signals at
- * Double Crossover.
+ * Double Crossover. Each connection point can have up to three SignalHeads and one SignalMast.
  * <p>
  * A LayoutTurnout may be linked to another LayoutTurnout to form a turnout
  * pair. Throat-To-Throat Turnouts - Two turnouts connected closely at their
@@ -1366,7 +1366,7 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public LayoutTrack getConnection(LayoutEditor.HitPointType connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(HitPointType connectionType) throws jmri.JmriException {
         LayoutTrack result = null;
         switch (connectionType) {
             case TURNOUT_A: {
@@ -1399,8 +1399,8 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public void setConnection(LayoutEditor.HitPointType connectionType, LayoutTrack o, LayoutEditor.HitPointType type) throws jmri.JmriException {
-        if ((type != LayoutEditor.HitPointType.TRACK) && (type != LayoutEditor.HitPointType.NONE)) {
+    public void setConnection(HitPointType connectionType, LayoutTrack o, HitPointType type) throws jmri.JmriException {
+        if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); unexpected type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
             log.error(errString);
@@ -1427,33 +1427,33 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    public void setConnectA(LayoutTrack o, LayoutEditor.HitPointType type) {
+    public void setConnectA(LayoutTrack o, HitPointType type) {
         connectA = o;
-        if ((type != LayoutEditor.HitPointType.TRACK) && (type != LayoutEditor.HitPointType.NONE)) {
+        if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             log.error("{}.setConnectA({}, {}); unexpected type",
                     getName(), (o == null) ? "null" : o.getName(), type);
         }
     }
 
-    public void setConnectB(LayoutTrack o, LayoutEditor.HitPointType type) {
+    public void setConnectB(LayoutTrack o, HitPointType type) {
         connectB = o;
-        if ((type != LayoutEditor.HitPointType.TRACK) && (type != LayoutEditor.HitPointType.NONE)) {
+        if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             log.error("{}.setConnectB({}, {}); unexpected type",
                     getName(), (o == null) ? "null" : o.getName(), type);
         }
     }
 
-    public void setConnectC(LayoutTrack o, LayoutEditor.HitPointType type) {
+    public void setConnectC(LayoutTrack o, HitPointType type) {
         connectC = o;
-        if ((type != LayoutEditor.HitPointType.TRACK) && (type != LayoutEditor.HitPointType.NONE)) {
+        if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             log.error("{}.setConnectC({}, {}); unexpected type",
                     getName(), (o == null) ? "null" : o.getName(), type);
         }
     }
 
-    public void setConnectD(LayoutTrack o, LayoutEditor.HitPointType type) {
+    public void setConnectD(LayoutTrack o, HitPointType type) {
         connectD = o;
-        if ((type != LayoutEditor.HitPointType.TRACK) && (type != LayoutEditor.HitPointType.NONE)) {
+        if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             log.error("{}.setConnectD({}, {}); unexpected type",
                     getName(), (o == null) ? "null" : o.getName(), type);
         }
@@ -1514,7 +1514,7 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public Point2D getCoordsForConnectionType(LayoutEditor.HitPointType connectionType) {
+    public Point2D getCoordsForConnectionType(HitPointType connectionType) {
         Point2D result = center;
         switch (connectionType) {
             case TURNOUT_CENTER:
@@ -1885,11 +1885,11 @@ public class LayoutTurnout extends LayoutTrack {
      * @since 4.11.6
      */
     void setTrackSegmentBlocks() {
-        setTrackSegmentBlock(LayoutEditor.HitPointType.TURNOUT_A, false);
-        setTrackSegmentBlock(LayoutEditor.HitPointType.TURNOUT_B, false);
-        setTrackSegmentBlock(LayoutEditor.HitPointType.TURNOUT_C, false);
+        setTrackSegmentBlock(HitPointType.TURNOUT_A, false);
+        setTrackSegmentBlock(HitPointType.TURNOUT_B, false);
+        setTrackSegmentBlock(HitPointType.TURNOUT_C, false);
         if (hasEnteringDoubleTrack()) {
-            setTrackSegmentBlock(LayoutEditor.HitPointType.TURNOUT_D, false);
+            setTrackSegmentBlock(HitPointType.TURNOUT_D, false);
         }
     }
 
@@ -1910,7 +1910,7 @@ public class LayoutTurnout extends LayoutTrack {
      *                    connections which require a track segment length
      *                    calculation.
      */
-    void setTrackSegmentBlock(LayoutEditor.HitPointType pointType, boolean isAutomatic) {
+    void setTrackSegmentBlock(HitPointType pointType, boolean isAutomatic) {
         TrackSegment trkSeg;
         Point2D pointCoord;
         LayoutBlock blockA = getLayoutBlock();
@@ -2136,8 +2136,8 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected LayoutEditor.HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        LayoutEditor.HitPointType result = LayoutEditor.HitPointType.NONE;  // assume point not on connection
+    protected HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
+        HitPointType result = HitPointType.NONE;  // assume point not on connection
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
@@ -2154,7 +2154,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = LayoutEditor.HitPointType.TURNOUT_CENTER;
+                result = HitPointType.TURNOUT_CENTER;
             }
         }
 
@@ -2165,7 +2165,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = LayoutEditor.HitPointType.TURNOUT_A;
+                result = HitPointType.TURNOUT_A;
             }
         }
 
@@ -2176,7 +2176,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = LayoutEditor.HitPointType.TURNOUT_B;
+                result = HitPointType.TURNOUT_B;
             }
         }
 
@@ -2187,7 +2187,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = LayoutEditor.HitPointType.TURNOUT_C;
+                result = HitPointType.TURNOUT_C;
             }
         }
 
@@ -2199,13 +2199,13 @@ public class LayoutTurnout extends LayoutTrack {
                 if (distance < minDistance) {
                     minDistance = distance;
                     minPoint = p;
-                    result = LayoutEditor.HitPointType.TURNOUT_D;
+                    result = HitPointType.TURNOUT_D;
                 }
             }
         }
         if ((useRectangles && !r.contains(minPoint))
                 || (!useRectangles && (minDistance > circleRadius))) {
-            result = LayoutEditor.HitPointType.NONE;
+            result = HitPointType.NONE;
         }
         return result;
     }   // findHitPointType
@@ -4446,23 +4446,23 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void highlightUnconnected(Graphics2D g2, LayoutEditor.HitPointType specificType) {
-        if (((specificType == LayoutEditor.HitPointType.NONE) || (specificType == LayoutEditor.HitPointType.TURNOUT_A))
+    protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
+        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.TURNOUT_A))
                 && (getConnectA() == null)) {
             g2.fill(trackControlCircleAt(getCoordsA()));
         }
 
-        if (((specificType == LayoutEditor.HitPointType.NONE) || (specificType == LayoutEditor.HitPointType.TURNOUT_B))
+        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.TURNOUT_B))
                 && (getConnectB() == null)) {
             g2.fill(trackControlCircleAt(getCoordsB()));
         }
 
-        if (((specificType == LayoutEditor.HitPointType.NONE) || (specificType == LayoutEditor.HitPointType.TURNOUT_C))
+        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.TURNOUT_C))
                 && (getConnectC() == null)) {
             g2.fill(trackControlCircleAt(getCoordsC()));
         }
         if (isTurnoutTypeXover()) {
-            if (((specificType == LayoutEditor.HitPointType.NONE) || (specificType == LayoutEditor.HitPointType.TURNOUT_D))
+            if (((specificType == HitPointType.NONE) || (specificType == HitPointType.TURNOUT_D))
                     && (getConnectD() == null)) {
                 g2.fill(trackControlCircleAt(getCoordsD()));
             }
@@ -4839,28 +4839,28 @@ public class LayoutTurnout extends LayoutTrack {
      */
     @Override
     public @Nonnull
-    List<LayoutEditor.HitPointType> checkForFreeConnections() {
-        List<LayoutEditor.HitPointType> result = new ArrayList<>();
+    List<HitPointType> checkForFreeConnections() {
+        List<HitPointType> result = new ArrayList<>();
 
         //check the A connection point
         if (getConnectA() == null) {
-            result.add(LayoutEditor.HitPointType.TURNOUT_A);
+            result.add(HitPointType.TURNOUT_A);
         }
 
         //check the B connection point
         if (getConnectB() == null) {
-            result.add(LayoutEditor.HitPointType.TURNOUT_B);
+            result.add(HitPointType.TURNOUT_B);
         }
 
         //check the C connection point
         if (getConnectC() == null) {
-            result.add(LayoutEditor.HitPointType.TURNOUT_C);
+            result.add(HitPointType.TURNOUT_C);
         }
 
         //check the D connection point
         if (isTurnoutTypeXover()) {
             if (getConnectD() == null) {
-                result.add(LayoutEditor.HitPointType.TURNOUT_D);
+                result.add(HitPointType.TURNOUT_D);
             }
         }
         return result;

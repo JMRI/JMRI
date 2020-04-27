@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Adapted by Sip Bosch for use with zimo Mx-1.
  * 
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  */
 public abstract class Mx1TrafficController implements Mx1Interface {
 

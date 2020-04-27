@@ -23,7 +23,6 @@ public class JLogoutputFrameTest {
         t.getMainFrame().dispose();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

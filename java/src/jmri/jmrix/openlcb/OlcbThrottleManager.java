@@ -34,7 +34,7 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
             return;
         }
         DccLocoAddress address = (DccLocoAddress) a;
-        log.debug("new debug throttle for " + address);
+        log.debug("new debug throttle for {}", address);
         notifyThrottleKnown(new OlcbThrottle(address, adapterMemo), a);
     }
 

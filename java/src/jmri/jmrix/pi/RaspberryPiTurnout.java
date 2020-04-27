@@ -117,7 +117,7 @@ public class RaspberryPiTurnout extends AbstractTurnout implements java.io.Seria
            // will remove it from the <GpioPin> pins list in _gpio
        } catch (com.pi4j.io.gpio.exception.GpioPinNotProvisionedException npe){
            log.trace("Pin not provisioned, was this turnout already disposed?");
-       }	
+       }
        super.dispose();
    }
 

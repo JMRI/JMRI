@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 
 /**
@@ -11,12 +12,8 @@ import javax.swing.AbstractAction;
  */
 public class CarsTableAction extends AbstractAction {
 
-    public CarsTableAction(String s) {
-        super(s);
-    }
-
     public CarsTableAction() {
-        this(Bundle.getMessage("MenuCars")); // NOI18N
+        super(Bundle.getMessage("MenuCars")); // NOI18N
     }
 
     @Override

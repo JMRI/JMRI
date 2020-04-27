@@ -94,13 +94,13 @@ public class SerialDriverAdapter extends SprogPortController {
             // set RTS high, DTR high
             boolean doNotlog = false; // if using socat to forward serial port though network, following
             try {                     // commands will fail, as well as bellow logging
-                activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-                activeSerialPort.setDTR(true);	
+                activeSerialPort.setRTS(true); // not connected in some serial ports and adapters
+                activeSerialPort.setDTR(true);
             } catch (PureJavaIllegalStateException e) {
                 log.info("Cannot setRTS/DTR will continue anyway");
                 doNotlog = true;
             }
-            	// pin 1 in DIN8; on main connector, this is DTR
+            // pin 1 in DIN8; on main connector, this is DTR
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             //AJB: Removed Jan 2010 -
             //Setting flow control mode to zero kills comms - SPROG doesn't send data

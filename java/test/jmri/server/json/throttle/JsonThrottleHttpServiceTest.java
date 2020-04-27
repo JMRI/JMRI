@@ -15,7 +15,7 @@ import org.junit.Test;
 /**
  *
  * @author Paul Bender Copyright (C) 2017
- * @author Randall Wood Copyright (C) 2019	
+ * @author Randall Wood Copyright (C) 2019
  */
 public class JsonThrottleHttpServiceTest extends JsonHttpServiceTestBase<JsonThrottleHttpService> {
 

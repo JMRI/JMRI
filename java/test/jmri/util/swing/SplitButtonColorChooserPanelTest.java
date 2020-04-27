@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2018	
+ * @author Paul Bender Copyright (C) 2018
  */
 public class SplitButtonColorChooserPanelTest {
 
@@ -24,7 +24,6 @@ public class SplitButtonColorChooserPanelTest {
         Assert.assertEquals("display name",Bundle.getMessage("SplitButtonColorChooserName"),panel.getDisplayName());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

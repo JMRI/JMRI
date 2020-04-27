@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the QsiReplyclass
  *
- * @author	Bob Jacobsen Copyright 2006, 2007
+ * @author Bob Jacobsen Copyright 2006, 2007
  *
  */
 public class QsiReplyTest extends jmri.jmrix.AbstractMessageTestBase {
@@ -69,9 +69,9 @@ public class QsiReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         memo = new QsiSystemConnectionMemo();
-        tc = new QsiTrafficControlScaffold(){
+        tc = new QsiTrafficControlScaffold() {
             @Override
-            public boolean isSIIBootMode(){
+            public boolean isSIIBootMode() {
                 return true;
             }
         };
@@ -81,9 +81,9 @@ public class QsiReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	memo = null;
-	tc = null;
-	m = msg = null;
+        memo = null;
+        tc = null;
+        m = msg = null;
         JUnitUtil.tearDown();
     }
 
