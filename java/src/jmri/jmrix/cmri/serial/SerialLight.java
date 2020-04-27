@@ -76,7 +76,7 @@ public class SerialLight extends AbstractLight {
             } else if (newState == OFF) {
                 mNode.setOutputBit(mBit, true);
             } else {
-                log.warn("illegal state requested for Light: " + getSystemName());
+                log.warn("illegal state requested for Light: {}", getSystemName());
             }
         }
     }

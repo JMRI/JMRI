@@ -78,7 +78,7 @@ public class OlcbAddress {
             // dotted form, 7 dots
             String[] terms = s.split("\\.");
             if (terms.length != 8) {
-                log.error("unexpected number of terms: " + terms.length);
+                log.error("unexpected number of terms: {}", terms.length);
             }
             int[] tFrame = new int[terms.length];
             try {

@@ -1,7 +1,6 @@
 package jmri.implementation;
 
 import java.util.*;
-import java.util.List;
 import javax.annotation.*;
 import jmri.InstanceManager;
 import jmri.SignalAppearanceMap;

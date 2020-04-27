@@ -422,7 +422,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         //Translate the speed sent in to the max allowed by any set speed limit
         speedSlider.setValue(java.lang.Math.round(speed / speedIncrement));
         if (log.isDebugEnabled()) {
-            log.debug("SpeedSlider value: " + speedSlider.getValue());
+            log.debug("SpeedSlider value: {}", speedSlider.getValue());
         }
         // Spinner Speed should be the raw integer speed value
         if (speedSpinner != null) {
@@ -657,7 +657,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                             if (doIt) {
                                 float newSpeed = (speedSlider.getValue() / (intSpeedSteps * 1.0f));
                                 if (log.isDebugEnabled()) {
-                                    log.debug("stateChanged: slider pos: " + speedSlider.getValue() + " speed: " + newSpeed);
+                                    log.debug("stateChanged: slider pos: {} speed: {}", speedSlider.getValue(), newSpeed);
                                 }
                                 if (sliderPanel.isVisible() && throttle != null) {
                                     throttle.setSpeedSetting(newSpeed);
@@ -716,7 +716,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                 float newSpeed = (java.lang.Math.abs(speedSliderContinuous.getValue()) / (intSpeedSteps * 1.0f));
                                 boolean newDir = (speedSliderContinuous.getValue() >= 0);
                                 if (log.isDebugEnabled()) {
-                                    log.debug("stateChanged: slider pos: " + speedSliderContinuous.getValue() + " speed: " + newSpeed + " dir: " + newDir);
+                                    log.debug("stateChanged: slider pos: {} speed: {} dir: {}", speedSliderContinuous.getValue(), newSpeed, newDir);
                                 }
                                 if (speedSliderContinuousPanel.isVisible() && throttle != null) {
                                     throttle.setSpeedSetting(newSpeed);
@@ -748,7 +748,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                         if (!internalAdjust) {
                             float newSpeed = ((Integer) speedSpinner.getValue()).floatValue() / (intSpeedSteps * 1.0f);
                             if (log.isDebugEnabled()) {
-                                log.debug("stateChanged: spinner pos: " + speedSpinner.getValue() + " speed: " + newSpeed);
+                                log.debug("stateChanged: spinner pos: {} speed: {}", speedSpinner.getValue(), newSpeed);
                             }
                             if (throttle != null) {
                                 if (spinnerPanel.isVisible()) {
@@ -763,7 +763,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                     }
                                 }
                             } else {
-                                log.warn("no throttle object in stateChanged, ignoring change of speed to " + newSpeed);
+                                log.warn("no throttle object in stateChanged, ignoring change of speed to {}", newSpeed);
                             }
                         }
                     }
@@ -1110,7 +1110,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             //slider setting.
             int newSliderSetting = java.lang.Math.round(speed * maxSpeed);
             if (log.isDebugEnabled()) {
-                log.debug("propertyChange: new speed float: " + speed + " slider pos: " + newSliderSetting);
+                log.debug("propertyChange: new speed float: {} slider pos: {}", speed, newSliderSetting);
             }
             speedSlider.setValue(newSliderSetting);
             if (speedSpinner != null) {
@@ -1142,7 +1142,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("Property change event received " + e.getPropertyName() + " / " + e.getNewValue());
+            log.debug("Property change event received {} / {}", e.getPropertyName(), e.getNewValue());
         }
     }
 
@@ -1182,9 +1182,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         @Override
         public void mousePressed(MouseEvent e) {
             if (log.isDebugEnabled()) {
-                log.debug("pressed " + (e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) + " " + e.isPopupTrigger()
-                        + " " + (e.getModifiersEx() & (MouseEvent.ALT_DOWN_MASK + MouseEvent.META_DOWN_MASK + MouseEvent.CTRL_DOWN_MASK))
-                        + (" " + MouseEvent.ALT_DOWN_MASK + "/" + MouseEvent.META_DOWN_MASK + "/" + MouseEvent.CTRL_DOWN_MASK));
+                log.debug("pressed {} {} {}" + (" " + MouseEvent.ALT_DOWN_MASK + "/" + MouseEvent.META_DOWN_MASK + "/" + MouseEvent.CTRL_DOWN_MASK), e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK, e.isPopupTrigger(), e.getModifiersEx() & (MouseEvent.ALT_DOWN_MASK + MouseEvent.META_DOWN_MASK + MouseEvent.CTRL_DOWN_MASK));
             }
             if (e.isPopupTrigger() && parentFrame.isSelected()) {
                 try {
@@ -1207,8 +1205,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         @Override
         public void mouseReleased(MouseEvent e) {
             if (log.isDebugEnabled()) {
-                log.debug("released " + (e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) + " " + e.isPopupTrigger()
-                        + " " + (e.getModifiersEx() & (MouseEvent.ALT_DOWN_MASK + InputEvent.META_DOWN_MASK + MouseEvent.CTRL_DOWN_MASK)));
+                log.debug("released {} {} {}", e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK, e.isPopupTrigger(), e.getModifiersEx() & (MouseEvent.ALT_DOWN_MASK + InputEvent.META_DOWN_MASK + MouseEvent.CTRL_DOWN_MASK));
             }
             if (e.isPopupTrigger()) {
                 try {
@@ -1259,7 +1256,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         try {
             this.setSpeedController(e.getAttribute("displaySpeedSlider").getIntValue());
         } catch (org.jdom2.DataConversionException ex) {
-            log.error("DataConverstionException in setXml: " + ex);
+            log.error("DataConverstionException in setXml: {}", ex);
         } catch (Exception em) {
             // in this case, recover by displaying the speed slider.
             this.setSpeedController(SLIDERDISPLAY);
@@ -1331,7 +1328,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         this.throttle.addPropertyChangeListener(this);
         if (log.isDebugEnabled()) {
             jmri.DccLocoAddress Address = (jmri.DccLocoAddress) throttle.getLocoAddress();
-            log.debug("new address is " + Address.toString());
+            log.debug("new address is {}", Address.toString());
         }
 
         if ((addressPanel != null) && (addressPanel.getRosterEntry() != null) && (addressPanel.getRosterEntry().getShuntingFunction() != null)) {
@@ -1377,7 +1374,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 }
 
             } catch (IllegalAccessException|NoSuchMethodException|java.lang.reflect.InvocationTargetException ex) {
-                log.debug("Exception in setSwitchSliderFunction: " + ex + " while looking for function " + switchSliderFunction);
+                log.debug("Exception in setSwitchSliderFunction: {} while looking for function {}", ex, switchSliderFunction);
             }
         }
     }

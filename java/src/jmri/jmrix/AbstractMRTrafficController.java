@@ -1021,9 +1021,9 @@ public abstract class AbstractMRTrafficController {
             }
         } catch (InterruptedException ie) {
             if(threadStopRequest) return;
-            log.error("Unexpected exception in invokeAndWait: {}" + ie.toString(), ie);
+            log.error("Unexpected exception in invokeAndWait: {}{}", ie, ie.toString());
         } catch (java.lang.reflect.InvocationTargetException| RuntimeException e) {
-            log.error("Unexpected exception in invokeAndWait: {}" + e.toString(), e);
+            log.error("Unexpected exception in invokeAndWait: {}{}", e, e.toString());
             return;
         }
         log.debug("dispatch thread invoked");

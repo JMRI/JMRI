@@ -222,7 +222,7 @@ public class PositionablePopupUtil {
     public void setFixedWidth(int w) {
         fixedWidth = w;
         if (log.isDebugEnabled()) {
-            log.debug("setFixedWidth()=" + getFixedWidth());
+            log.debug("setFixedWidth()={}", getFixedWidth());
         }
         _parent.updateSize();
     }

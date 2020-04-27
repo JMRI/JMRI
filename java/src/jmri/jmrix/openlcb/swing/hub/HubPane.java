@@ -148,7 +148,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
     public synchronized void message(CanMessage l) {  // receive a message and log it
         GridConnectMessage gm = new GridConnectMessage(l);
         if (log.isDebugEnabled()) {
-            log.debug("message " + gm.toString());
+            log.debug("message {}", gm.toString());
         }
         hub.putLine(gm.toString());
     }
@@ -158,7 +158,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         if (reply != workingReply) {
             GridConnectMessage gm = new GridConnectMessage(new CanMessage(reply));
             if (log.isDebugEnabled()) {
-                log.debug("reply " + gm.toString());
+                log.debug("reply {}", gm.toString());
             }
             hub.putLine(gm.toString());
         }

@@ -475,8 +475,7 @@ public class DccConsist implements Consist, ProgListener {
             return;
         }
         if (log.isDebugEnabled()) {
-            log.debug("loadDecoderFile from " + DecoderFile.fileLocation
-                    + " " + df.getFileName());
+            log.debug("loadDecoderFile from {} {}", DecoderFile.fileLocation, df.getFileName());
         }
 
         Element decoderRoot = null;
@@ -484,7 +483,7 @@ public class DccConsist implements Consist, ProgListener {
         try {
             decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFileName());
         } catch (JDOMException | IOException e) {
-            log.error("Exception while loading decoder XML file: " + df.getFileName(), e);
+            log.error("Exception while loading decoder XML file: {}", df.getFileName(), e);
         }
         // load variables from decoder tree
         df.getProductID();

@@ -36,7 +36,7 @@ public class CanisbSerialDriverAdapter extends GcSerialDriverAdapter {
         try {
             tc.setCanId(Integer.parseInt(getOptionState(option2Name)));
         } catch (Exception e) {
-            log.error("Cannot parse CAN ID - check your preference settings " + e);
+            log.error("Cannot parse CAN ID - check your preference settings {}", e);
             log.error("Now using default CAN ID");
         }
 

@@ -67,7 +67,7 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
      * Set config info from the command station type enum.
      */
     public void setCommandStationType(int value) {
-        log.debug("setCommandStationType: {}" + Integer.toString(value));
+        log.debug("setCommandStationType: {}{}", Integer.toString(value));
         commandStationType = value;
     }
     
@@ -83,8 +83,8 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
         if (value.equals("Spread") || value.equals("Both")) {
             mTurnoutExtraSpace = true;
         }
-        log.debug("turnout no retry: " + mTurnoutNoRetry);
-        log.debug("turnout extra space: " + mTurnoutExtraSpace);
+        log.debug("turnout no retry: {}", mTurnoutNoRetry);
+        log.debug("turnout extra space: {}", mTurnoutExtraSpace);
     }
 
     /**
@@ -94,7 +94,7 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
     @Override
     public void configureOption3(String value) {
         super.configureOption3(value);
-        log.debug("configureOption3: " + value);
+        log.debug("configureOption3: {}", value);
         setTurnoutHandling(value);
     }
 

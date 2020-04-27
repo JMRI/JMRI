@@ -619,7 +619,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     @Override
     public void setOpCode(int i) {
         if (i > 0xFF || i < 0) {
-            log.error("Opcode invalid: " + i);
+            log.error("Opcode invalid: {}", i);
         }
         opcode = (char) (i & 0xFF);
         myMessage.setCharAt(0, opcode);

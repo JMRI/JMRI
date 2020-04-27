@@ -425,7 +425,7 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
         } else {
             B nB = getByUserName(value);
             if (nB != null) {
-                log.error("User name is not unique " + value); // NOI18N
+                log.error("User name is not unique {}", value); // NOI18N
                 String msg;
                 msg = java.text.MessageFormat.format(Bundle.getMessage("WarningUserName"),
                         new Object[]{("" + value)});

@@ -555,7 +555,7 @@ public class LayoutEditorFindItems {
                     return findLayoutTurntableByName(name);
                 }
         }
-        log.error("did not find Object '" + name + "' of type " + type);
+        log.error("did not find Object '{}' of type {}", name, type);
         return null;
     }
 

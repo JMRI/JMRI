@@ -545,7 +545,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 

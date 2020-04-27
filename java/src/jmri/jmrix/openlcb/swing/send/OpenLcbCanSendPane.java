@@ -380,13 +380,13 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         CanMessage m = createPacket(packetTextField.getText());
-        log.debug("sendButtonActionPerformed: " + m);
+        log.debug("sendButtonActionPerformed: {}", m);
         tc.sendCanMessage(m, this);
     }
 
     public void sendCimPerformed(java.awt.event.ActionEvent e) {
         String data = "[10700" + srcAliasField.getText() + "]";  // NOI18N
-        log.debug("|" + data + "|");
+        log.debug("|{}|", data);
         CanMessage m = createPacket(data);
         log.debug("sendCimPerformed");
         tc.sendCanMessage(m, this);
@@ -450,7 +450,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
                 length, new MemoryConfigurationService.McsReadHandler() {
                     @Override
                     public void handleReadData(NodeID dest, int space, long address, byte[] data) {
-                        log.debug("Read data received " + data.length + " bytes");
+                        log.debug("Read data received {} bytes", data.length);
                         readDataField.setText(jmri.util.StringUtil.hexStringFromBytes(data));
                     }
 

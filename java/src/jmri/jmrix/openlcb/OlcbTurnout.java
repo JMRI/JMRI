@@ -74,7 +74,7 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
         OlcbAddress a = new OlcbAddress(address);
         OlcbAddress[] v = a.split();
         if (v == null) {
-            log.error("Did not find usable system name: " + address);
+            log.error("Did not find usable system name: {}", address);
             return;
         }
         switch (v.length) {
@@ -83,7 +83,7 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
                 addrClosed = v[1];
                 break;
             default:
-                log.error("Can't parse OpenLCB Turnout system name: " + address);
+                log.error("Can't parse OpenLCB Turnout system name: {}", address);
                 return;
         }
     }

@@ -89,7 +89,7 @@ public class TrainPrintUtilities {
         if (!isBuildReport && logoURL != null && !logoURL.equals(Setup.NONE)) {
             ImageIcon icon = new ImageIcon(logoURL);
             if (icon.getIconWidth() == -1) {
-                log.error("Logo not found: " + logoURL);
+                log.error("Logo not found: {}", logoURL);
             } else {
                 writer.write(icon.getImage(), new JLabel(icon));
             }
@@ -350,7 +350,7 @@ public class TrainPrintUtilities {
             }
             return buf.toString();
         } else {
-            log.debug("ERROR first characters of build report not valid (" + line + ")");
+            log.debug("ERROR first characters of build report not valid ({})", line);
             return "ERROR " + line; // NOI18N
         }
     }

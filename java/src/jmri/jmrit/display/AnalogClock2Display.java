@@ -231,7 +231,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
                     clock.userSetRate(r);
                     rate = r;
                 } catch (TimebaseRateException t) {
-                    log.error("TimebaseRateException for rate= " + r + ". " + t);
+                    log.error("TimebaseRateException for rate= {}. {}", r, t);
                 }
             }
         });
@@ -440,7 +440,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
 
     @Override
     public void doMouseClicked(MouseEvent event) {
-        log.debug("click to " + _url);
+        log.debug("click to {}", _url);
         if (_url == null || _url.trim().length() == 0) {
             return;
         }

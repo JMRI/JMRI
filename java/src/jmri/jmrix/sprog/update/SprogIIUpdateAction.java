@@ -29,7 +29,7 @@ public class SprogIIUpdateAction extends SprogUpdateAction {
             try {
                 f.initComponents();
             } catch (Exception ex) {
-                log.warn("SprogIIUpdateAction starting SprogIIUpdateFrame: Exception: " + ex.toString());
+                log.warn("SprogIIUpdateAction starting SprogIIUpdateFrame: Exception: {}", ex.toString());
             }
             f.setVisible(true);
         }

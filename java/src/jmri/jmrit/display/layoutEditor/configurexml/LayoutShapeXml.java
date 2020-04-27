@@ -155,7 +155,7 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
                         try {
                             pointType = pTypeEnumMap.inputFromAttribute(relem.getAttribute("type"));
                         } catch (java.lang.NullPointerException e) {
-                            log.error("Layout Shape Point #" + i + " type attribute not found.", e);
+                            log.error("Layout Shape Point #{} type attribute not found.", i, e);
                         }
                         double x = 0.0;
                         double y = 0.0;
@@ -163,7 +163,7 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
                             x = (relem.getAttribute("x")).getFloatValue();
                             y = (relem.getAttribute("y")).getFloatValue();
                         } catch (DataConversionException e) {
-                            log.error("failed to convert Layout Shape point #" + i + "coordinates attributes");
+                            log.error("failed to convert Layout Shape point #{}coordinates attributes", i);
                         }
                         s.addPoint(pointType, new Point2D.Double(x, y));
                     }

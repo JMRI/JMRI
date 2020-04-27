@@ -43,7 +43,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         try {
             result = super.load(shared, perNode);
             if (log.isDebugEnabled()) {
-                log.debug("result " + result);
+                log.debug("result {}", result);
             }
         } catch (NullPointerException ex) {
             // If the standard configuration fails, try the original 

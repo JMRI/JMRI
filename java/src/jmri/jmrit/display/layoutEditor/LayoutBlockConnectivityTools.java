@@ -389,7 +389,7 @@ public class LayoutBlockConnectivityTools {
             return false;
         }
         if (log.isDebugEnabled()) {
-            log.debug("facing : {} protecting : {} dest {}" + facing.getDisplayName(), protecting.getDisplayName(), dest.getBean().getDisplayName());
+            log.debug("facing : {} protecting : {} dest {}{}", protecting.getDisplayName(), dest.getBean().getDisplayName(), facing.getDisplayName());
         }
         try {
             //In this instance it doesn't matter what the destination protecting block is so we get the first
@@ -453,7 +453,7 @@ public class LayoutBlockConnectivityTools {
 
         Block nextBlock = protectingLayoutBlock.getBlock();
         if (log.isDebugEnabled()) {
-            log.debug("s:" + sourceLayoutBlock.getDisplayName() + " p:" + protectingLayoutBlock.getDisplayName() + " d:" + destinationLayoutBlock.getDisplayName());
+            log.debug("s:{} p:{} d:{}", sourceLayoutBlock.getDisplayName(), protectingLayoutBlock.getDisplayName(), destinationLayoutBlock.getDisplayName());
         }
         List<BlocksTested> blocksInRoute = new ArrayList<>();
         blocksInRoute.add(new BlocksTested(sourceLayoutBlock));
@@ -493,7 +493,7 @@ public class LayoutBlockConnectivityTools {
             if (nextBlockIndex != -1) {
                 bt.addIndex(nextBlockIndex);
                 if (log.isDebugEnabled()) {
-                    log.debug("block index returned " + nextBlockIndex + " Blocks in route size " + blocksInRoute.size());
+                    log.debug("block index returned {} Blocks in route size {}", nextBlockIndex, blocksInRoute.size());
                 }
                 //Sets the old next block to be our current block.
                 LayoutBlock currentLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(nextBlock);
@@ -626,7 +626,7 @@ public class LayoutBlockConnectivityTools {
         LayoutBlock currentLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(currentBlock);
         List<Integer> blkIndexTested = new ArrayList<>(5);
         if (log.isDebugEnabled()) {
-            log.debug("In find best hop current " + currentLBlock.getDisplayName() + " previous " + preBlock.getDisplayName());
+            log.debug("In find best hop current {} previous {}", currentLBlock.getDisplayName(), preBlock.getDisplayName());
         }
         while (blockindex != -1) {
             if (currentBlock == preBlock) {
@@ -635,7 +635,7 @@ public class LayoutBlockConnectivityTools {
                 blockindex = currentLBlock.getConnectedBlockRouteIndex(destBlock, direction);
             } else {
                 if (log.isDebugEnabled()) {
-                    log.debug("Off Set " + offSet);
+                    log.debug("Off Set {}", offSet);
                 }
                 blockindex = currentLBlock.getNextBestBlock(preBlock, destBlock, offSet, METRIC);
             }
@@ -654,8 +654,8 @@ public class LayoutBlockConnectivityTools {
                     log.debug(lastErrorMessage);
                 } else if ((validateOnly) || ((checkForDoubleCrossover(preBlock, currentLBlock, blocktoCheck) && checkForLevelCrossing(currentLBlock)) && canLBlockBeUsed(lBlock))) {
                     if (log.isDebugEnabled()) {
-                        log.debug(block.getDisplayName() + " not occupied & not reserved but we need to check if the anchor point between the two contains a signal or not");
-                        log.debug(currentBlock.getDisplayName() + " " + block.getDisplayName());
+                        log.debug("{} not occupied & not reserved but we need to check if the anchor point between the two contains a signal or not", block.getDisplayName());
+                        log.debug("{} {}", currentBlock.getDisplayName(), block.getDisplayName());
                     }
 
                     jmri.NamedBean foundBean = null;
@@ -765,9 +765,9 @@ public class LayoutBlockConnectivityTools {
             for (Block block : fp.getProtectingBlocks()) {
                 if (log.isDebugEnabled()) {
                     try {
-                        log.debug("\nSource " + fp.getBean().getDisplayName());
-                        log.debug("facing " + fp.getFacing().getDisplayName());
-                        log.debug("protecting " + block.getDisplayName());
+                        log.debug("\nSource {}", fp.getBean().getDisplayName());
+                        log.debug("facing {}", fp.getFacing().getDisplayName());
+                        log.debug("protecting {}", block.getDisplayName());
                     } catch (java.lang.NullPointerException e) {
                         //Can be considered normal if the signalmast is assigned to an end bumper.
                     }
@@ -801,7 +801,7 @@ public class LayoutBlockConnectivityTools {
      */
     public List<NamedBean> discoverPairDest(NamedBean source, LayoutEditor editor, Class<?> T, int pathMethod) throws JmriException {
         if (log.isDebugEnabled()) {
-            log.debug("discover pairs from source " + source.getDisplayName());
+            log.debug("discover pairs from source {}", source.getDisplayName());
         }
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         LayoutBlock lFacing = lbm.getFacingBlockByNamedBean(source, editor);
@@ -831,22 +831,22 @@ public class LayoutBlockConnectivityTools {
             if (facingProtecting.getBean() != source) {
                 NamedBean destObj = facingProtecting.getBean();
                 if (log.isDebugEnabled()) {
-                    log.debug("looking for pair " + source.getDisplayName() + " " + destObj.getDisplayName());
+                    log.debug("looking for pair {} {}", source.getDisplayName(), destObj.getDisplayName());
                 }
                 try {
                     if (checkValidDest(lFacing, lProtecting, facingProtecting, pathMethod)) {
                         if (log.isDebugEnabled()) {
-                            log.debug("Valid pair " + source.getDisplayName() + " " + destObj.getDisplayName());
+                            log.debug("Valid pair {} {}", source.getDisplayName(), destObj.getDisplayName());
                         }
                         LayoutBlock ldstBlock = lbm.getLayoutBlock(facingProtecting.getFacing());
                         try {
                             List<LayoutBlock> lblks = getLayoutBlocks(lFacing, ldstBlock, lProtecting, true, pathMethod);
                             if (log.isDebugEnabled()) {
-                                log.debug("Adding block " + destObj.getDisplayName() + " to paths, current size " + lblks.size());
+                                log.debug("Adding block {} to paths, current size {}", destObj.getDisplayName(), lblks.size());
                             }
                             validDestBean.add(destObj);
                         } catch (JmriException e) {  // Considered normal if route not found.
-                            log.debug("not a valid route through " + source.getDisplayName() + " - " + destObj.getDisplayName());
+                            log.debug("not a valid route through {} - {}", source.getDisplayName(), destObj.getDisplayName());
                         }
                     }
                 } catch (JmriException ex) {
@@ -880,7 +880,7 @@ public class LayoutBlockConnectivityTools {
                         bean = lbm.getFacingSignalMast(curBlk, blk, useEdit);
                         if (bean != null) {
                             if (log.isDebugEnabled()) {
-                                log.debug("Get list of protecting blocks for " + bean.getDisplayName() + " facing " + curBlk.getDisplayName());
+                                log.debug("Get list of protecting blocks for {} facing {}", bean.getDisplayName(), curBlk.getDisplayName());
                             }
                             List<LayoutBlock> lProBlk = lbm.getProtectingBlocksByNamedBean(bean, useEdit);
                             for (LayoutBlock lb : lProBlk) {
@@ -893,7 +893,7 @@ public class LayoutBlockConnectivityTools {
                         bean = lbm.getFacingSensor(curBlk, blk, useEdit);
                         if (bean != null) {
                             if (log.isDebugEnabled()) {
-                                log.debug("Get list of protecting blocks for " + bean.getDisplayName());
+                                log.debug("Get list of protecting blocks for {}", bean.getDisplayName());
                             }
                             List<LayoutBlock> lProBlk = lbm.getProtectingBlocksByNamedBean(bean, useEdit);
                             for (LayoutBlock lb : lProBlk) {
@@ -903,7 +903,7 @@ public class LayoutBlockConnectivityTools {
                             }
                         }
                     } else {
-                        log.error("Past bean type is unknown " + T);
+                        log.error("Past bean type is unknown {}", T);
                     }
                     if (bean != null) {
                         FacingProtecting toadd = new FacingProtecting(curBlk, proBlk, bean);
@@ -922,7 +922,7 @@ public class LayoutBlockConnectivityTools {
                 if (noNeigh == 1) {
                     NamedBean bean = null;
                     if (log.isDebugEnabled()) {
-                        log.debug("We have a dead end " + curBlk.getDisplayName());
+                        log.debug("We have a dead end {}", curBlk.getDisplayName());
                     }
                     if (T == null) {
                         bean = lbm.getNamedBeanAtEndBumper(curBlk, useEdit);
@@ -931,7 +931,7 @@ public class LayoutBlockConnectivityTools {
                     } else if (T.equals(Sensor.class)) {
                         bean = lbm.getSensorAtEndBumper(curBlk, useEdit);
                     } else {
-                        log.error("Past bean type is unknown " + T);
+                        log.error("Past bean type is unknown {}", T);
                     }
                     if (bean != null) {
                         FacingProtecting toadd = new FacingProtecting(curBlk, null, bean);

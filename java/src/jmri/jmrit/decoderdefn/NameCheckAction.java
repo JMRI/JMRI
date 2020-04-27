@@ -81,15 +81,11 @@ public class NameCheckAction extends AbstractAction {
                         item = itemAttr.getValue();
                     }
                     if (log.isDebugEnabled()) {
-                        log.debug("Variable called \""
-                                + ((label != null) ? label : "<none>") + "\" \""
-                                + ((item != null) ? item : "<none>")); // NOI18N
+                        log.debug("Variable called \"{}\" \"{}", (label != null) ? label : "<none>", (item != null) ? item : "<none>"); // NOI18N
                     }
                     if (!(label == null ? false : nfile.checkName(label))
                             && !(item == null ? false : nfile.checkName(item))) {
-                        log.warn("Variable not found: label=\""
-                                + ((label != null) ? label : "<none>") + "\" item=\""
-                                + ((item != null) ? label : "<none>") + "\""); // NOI18N
+                        log.warn("Variable not found: label=\"{}\" item=\"{}\"", (label != null) ? label : "<none>", (item != null) ? label : "<none>"); // NOI18N
                         warnings += "Variable not found: label=\""
                                 + ((label != null) ? label : "<none>") + "\" item=\""
                                 + ((item != null) ? item : "<none>") + "\"\n"; // TODO I18N

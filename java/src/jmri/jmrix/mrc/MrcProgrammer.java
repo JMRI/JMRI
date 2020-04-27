@@ -155,7 +155,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer); // NOI18N
+                log.info("programmer already in use by {}", _usingProgrammer); // NOI18N
             }
             throw new jmri.ProgrammerException("programmer in use"); // NOI18N
         } else {
@@ -220,17 +220,17 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
             progState = NOTPROGRAMMING;
             //Currently we have no way to know if the write was sucessful or not.
             if (_progRead) {
-                log.debug("prog Read " + _cv);
+                log.debug("prog Read {}", _cv);
                 // read was in progress - get return value
                 _val = m.value();
             }
             // if this was a read, we retrieved the value above.  If its a
             // write, we're to return the original write value
-            log.debug("Has value " + _val); // NOI18N
+            log.debug("Has value {}", _val); // NOI18N
             notifyProgListenerEnd(_val, jmri.ProgListener.OK);
 
         } else {
-            log.debug("reply in un-decoded state cv:" + _cv + " " + m.toString()); // NOI18N
+            log.debug("reply in un-decoded state cv:{} {}", _cv, m.toString()); // NOI18N
         }
     }
 
@@ -243,7 +243,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     protected synchronized void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop
-            log.debug("timeout!" + _cv);
+            log.debug("timeout!{}", _cv);
             // perhaps no loco present? Fail back to end of programming
             progState = NOTPROGRAMMING;
             cleanup();

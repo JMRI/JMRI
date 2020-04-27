@@ -371,7 +371,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                         log.warn(errStr);
                         break;
                     case CbusConstants.ERR_LOCO_NOT_FOUND:
-                        log.warn(Bundle.getMessage("ERR_LOCO_NOT_FOUND") + " {}", handle);
+                        log.warn("{} {}", Bundle.getMessage("ERR_LOCO_NOT_FOUND"), handle);
                         break;
                     case CbusConstants.ERR_CAN_BUS_ERROR:
                         log.error(Bundle.getMessage("ERR_CAN_BUS_ERROR"));
@@ -421,7 +421,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                         }
                         break;
                     default:
-                        log.error(Bundle.getMessage("ERR_UNKNOWN") + " error code: {}", errCode);
+                        log.error("{} error code: {}", Bundle.getMessage("ERR_UNKNOWN"), errCode);
                         break;
                 }
                 break;
@@ -754,7 +754,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
      */
     @Override
     public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
-        log.debug("disposeThrottle called for " + t);
+        log.debug("disposeThrottle called for {}", t);
         if (t instanceof CbusThrottle) {
             log.debug("Cbus Dispose calling abstract Throttle manager dispose");
             if (super.disposeThrottle(t, l)) {

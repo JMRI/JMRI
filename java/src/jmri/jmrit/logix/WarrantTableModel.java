@@ -603,7 +603,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             }
             break;
         default:
-           log.error("Invalid Column " + col + " requested.");
+            log.error("Invalid Column {} requested.", col);
            throw new java.lang.IllegalArgumentException("Invalid Column " + col + " requested.");
         }
         if (msg != null) {
@@ -676,7 +676,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         } else if (e.getSource() instanceof Warrant) {
             // a value changed. Find it, to avoid complete redraw
             Warrant bean = (Warrant) e.getSource();
-            log.debug("source is warrant "+bean.getDisplayName());
+            log.debug("source is warrant {}", bean.getDisplayName());
             for (int i = 0; i < _warList.size(); i++) {
                 if (bean.equals(_warList.get(i))) {
 

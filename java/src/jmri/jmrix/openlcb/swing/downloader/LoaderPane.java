@@ -165,7 +165,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             @Override
             public void run() {
                 if (log.isDebugEnabled()) {
-                    log.debug("updateGUI with " + value);
+                    log.debug("updateGUI with {}", value);
                 }
                 // update progress bar
                 bar.setValue(value);
@@ -194,8 +194,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         File file = new File(filename);
         try (FileInputStream fis = new FileInputStream(file)) {
 
-            log.info("Total file size to read (in bytes) : "
-                    + fis.available());
+            log.info("Total file size to read (in bytes) : {}", fis.available());
             fdata = new byte[fis.available()];
             int i = 0;
             int content;

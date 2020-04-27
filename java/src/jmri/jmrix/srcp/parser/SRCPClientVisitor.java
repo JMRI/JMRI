@@ -54,15 +54,15 @@ public class SRCPClientVisitor extends SRCPClientParserDefaultVisitor {
                 ((jmri.jmrix.srcp.SRCPPowerManager) busMemo.getPowerManager()).reply(node);
             }
         } else if (group instanceof ASTtime) {
-            log.debug("INFO Response for TIME group with bus " + bus);
+            log.debug("INFO Response for TIME group with bus {}", bus);
         } else if (group instanceof ASTsession) {
-            log.debug("INFO Response for SESSION group with bus " + bus);
+            log.debug("INFO Response for SESSION group with bus {}", bus);
         } else if (group instanceof ASTserver) {
-            log.debug("INFO Response for SERVER group with bus " + bus);
+            log.debug("INFO Response for SERVER group with bus {}", bus);
         } else if (group instanceof ASTdescription) {
-            log.debug("INFO Response for DESCRIPTION group with bus " + bus);
+            log.debug("INFO Response for DESCRIPTION group with bus {}", bus);
         } else if (group instanceof ASTlock) {
-            log.debug("INFO Response for LOCK group with bus " + bus);
+            log.debug("INFO Response for LOCK group with bus {}", bus);
         }
         return data;
     }

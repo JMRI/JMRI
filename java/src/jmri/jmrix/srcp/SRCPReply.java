@@ -29,7 +29,7 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
         super();
         log.debug("Parser Constructor called with node type " + n.getClass() + " and " + n.jjtGetNumChildren() + " children.");
         String s = inOrderTraversal(n);
-        log.debug("Parser Constructor built :" + s);
+        log.debug("Parser Constructor built :{}", s);
         _nDataChars = s.length();
         for (int i = 0; i < _nDataChars; i++) {
             _dataChars[i] = s.charAt(i);
@@ -92,7 +92,7 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
             int tmp = Integer.valueOf(part[7], 10).intValue();
             val = tmp;  // don't do this assign until now in case the conversion throws
         } catch (Exception e) {
-            log.error("Unable to get number from reply: \"" + s + "\"");
+            log.error("Unable to get number from reply: \"{}\"", s);
         }
         return val;
     }

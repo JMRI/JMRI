@@ -1662,7 +1662,7 @@ public class Track extends PropertyChangeSupport {
         }
         Schedule schedule = getSchedule();
         if (schedule == null) {
-            log.error("No name schedule for id: " + getScheduleId());
+            log.error("No name schedule for id: {}", getScheduleId());
             return NONE;
         }
         return schedule.getName();
@@ -1674,7 +1674,7 @@ public class Track extends PropertyChangeSupport {
         }
         Schedule schedule = InstanceManager.getDefault(ScheduleManager.class).getScheduleById(getScheduleId());
         if (schedule == null) {
-            log.error("No schedule for id: " + getScheduleId());
+            log.error("No schedule for id: {}", getScheduleId());
         }
         return schedule;
     }
@@ -1696,7 +1696,7 @@ public class Track extends PropertyChangeSupport {
         if (_scheduleId.equals(NONE) && !_scheduleName.equals(NONE)) {
             Schedule schedule = InstanceManager.getDefault(ScheduleManager.class).getScheduleByName(_scheduleName);
             if (schedule == null) {
-                log.error("No schedule for name: " + _scheduleName);
+                log.error("No schedule for name: {}", _scheduleName);
             } else {
                 _scheduleId = schedule.getId();
             }
@@ -1782,7 +1782,7 @@ public class Track extends PropertyChangeSupport {
     public ScheduleItem getNextScheduleItem() {
         Schedule sch = getSchedule();
         if (sch == null) {
-            log.warn("Can not find schedule (" + getScheduleId() + ") assigned to track (" + getName() + ")");
+            log.warn("Can not find schedule ({}) assigned to track ({})", getScheduleId(), getName());
             return null;
         }
         List<ScheduleItem> items = sch.getItemsBySequenceList();
@@ -2164,7 +2164,7 @@ public class Track extends PropertyChangeSupport {
                             car.getLoadName(), currentSi.getTypeName(), currentTrainScheduleName, currentSi.getRoadName(),
                             currentSi.getReceiveLoadName()});
         } else {
-            log.error("ERROR Track " + getName() + " current schedule item is null!");
+            log.error("ERROR Track {} current schedule item is null!", getName());
             return SCHEDULE + " ERROR Track " + getName() + " current schedule item is null!"; // NOI18N
         }
         return OKAY;

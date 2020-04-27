@@ -178,12 +178,12 @@ public class Ash2_0Algorithm extends AbstractCalculator {
                 code = -Tr.length;
                 break;
             default:
-                log.error("Unexpected error code: " + result.code);
+                log.error("Unexpected error code: {}", result.code);
                 code = 0;
         }
-        log.debug("old code=" + result.code + " new code=" + code);
+        log.debug("old code={} new code={}", result.code, code);
 
-        log.debug("x = " + Xt + " y = " + Yt + " z0 = " + Zt + " code = " + code);
+        log.debug("x = {} y = {} z0 = {} code = {}", Xt, Yt, Zt, code);
         return new Measurement(r, Xt, Yt, Zt, Vs, code, "Ash2_0Algorithm");
     }
 

@@ -93,7 +93,7 @@ public abstract class Mx1TrafficController implements Mx1Interface {
             v = (Vector<Mx1Listener>) listeners.clone();
         }
         if (log.isDebugEnabled()) {
-            log.debug("notify of incoming packet: " + m.toString());
+            log.debug("notify of incoming packet: {}", m.toString());
         }
         // forward to all listeners
         int cnt = v.size();

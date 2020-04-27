@@ -70,7 +70,7 @@ public class DnDTableImportExportHandler extends DnDTableExportHandler {
             table.getModel().setValueAt(obj, row, col);
             return true;
         } catch (UnsupportedFlavorException | IOException ufe) {
-            log.warn("DnDStringImportHandler.importData: " + ufe.getMessage());
+            log.warn("DnDStringImportHandler.importData: {}", ufe.getMessage());
         }
         return false;
     }

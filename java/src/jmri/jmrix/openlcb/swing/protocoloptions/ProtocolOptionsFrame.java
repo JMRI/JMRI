@@ -111,7 +111,7 @@ public class ProtocolOptionsFrame extends JmriJFrame {
         valueField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                log.warn("Entry changed: " + protocolKey + " " + optionKey + " = " + valueField.getText());
+                log.warn("Entry changed: {} {} = {}", protocolKey, optionKey, valueField.getText());
             }
         });
     }

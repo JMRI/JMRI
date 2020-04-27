@@ -32,7 +32,7 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
             
             // The SPROG protocol doesn't require an interaction with the command
             // station for this, so immediately trigger the callback
-            log.debug("new SprogThrottle for " + a);
+            log.debug("new SprogThrottle for {}", a);
             notifyThrottleKnown(new SprogCSThrottle((SprogSystemConnectionMemo) adapterMemo, a), a);
         }
         else {

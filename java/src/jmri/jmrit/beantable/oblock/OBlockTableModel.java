@@ -433,7 +433,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                                 block.setReportingCurrent(tempRow[REPORT_CURRENTCOL].equals(Bundle.getMessage("Current")));
                             }
                         } catch (Exception ex) {
-                            log.error("No Reporter named \"" + tempRow[REPORTERCOL] + "\" found. threw exception: " + ex);
+                            log.error("No Reporter named \"{}\" found. threw exception: {}", tempRow[REPORTERCOL], ex);
                         }
                         if (rep == null) {
                             JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchReporterErr", tempRow[REPORTERCOL]),
@@ -558,7 +558,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                         fireTableRowsUpdated(row, row);
                     }
                 } catch (Exception ex) {
-                    log.error("getSensor(" + (String) value + ") threw exception: " + ex);
+                    log.error("getSensor({}) threw exception: {}", (String) value, ex);
                 }
                 if (!ok) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", (String) value),
@@ -575,7 +575,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                         fireTableRowsUpdated(row, row);
                     }
                 } catch (Exception ex) {
-                    log.error("No Reporter named \"" + (String) value + "\" found. threw exception: " + ex);
+                    log.error("No Reporter named \"{}\" found. threw exception: {}", (String) value, ex);
                 }
                 if (rep == null) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchReporterErr", tempRow[REPORTERCOL]),

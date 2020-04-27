@@ -88,11 +88,11 @@ public class OlcbSignalMast extends AbstractSignalMast {
         // split out the basic information
         String[] parts = systemName.split(":");
         if (parts.length < 3) {
-            log.error("SignalMast system name needs at least three parts: " + systemName);
+            log.error("SignalMast system name needs at least three parts: {}", systemName);
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
         if (!parts[0].endsWith(mastType)) {
-            log.warn("First part of SignalMast system name is incorrect " + systemName + " : " + mastType);
+            log.warn("First part of SignalMast system name is incorrect {} : {}", systemName, mastType);
         } else {
             String systemPrefix = parts[0].substring(0, parts[0].indexOf("$") - 1);
             java.util.List<SystemConnectionMemo> memoList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
@@ -102,14 +102,14 @@ public class OlcbSignalMast extends AbstractSignalMast {
                     if (memo instanceof jmri.jmrix.can.CanSystemConnectionMemo) {
                         systemMemo = (jmri.jmrix.can.CanSystemConnectionMemo) memo;
                     } else {
-                        log.error("Can't create mast \""+systemName+"\" because system \"" + systemPrefix + "\" is not CanSystemConnectionMemo but rather "+memo.getClass());
+                        log.error("Can't create mast \"{}\" because system \"{}\" is not CanSystemConnectionMemo but rather {}", systemName, systemPrefix, memo.getClass());
                     }
                     break;
                 }
             }
 
             if (systemMemo == null) {
-                log.error("No OpenLCB connection found for system prefix \"" + systemPrefix + "\", so mast \""+systemName+"\" will not function");
+                log.error("No OpenLCB connection found for system prefix \"{}\", so mast \"{}\" will not function", systemPrefix, systemName);
             }
         }
         String system = parts[1];
@@ -161,7 +161,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
     public String getOutputForAppearance(String appearance) {
         String retval = aspectMachine.getEventStringForState(appearance);
         if (retval == null) {
-            log.error("Trying to get appearance " + appearance + " but it has not been configured");
+            log.error("Trying to get appearance {} but it has not been configured", appearance);
             return "";
         }
         return retval;

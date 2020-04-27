@@ -191,14 +191,14 @@ public class TrainIcon extends LocoIcon {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            log.debug("Route location selected " + _rl.getName());
+            log.debug("Route location selected {}", _rl.getName());
             Route route = _train.getRoute();
             List<RouteLocation> routeList = route.getLocationsBySequenceList();
             // determine where the train is in the route
             for (int r = 0; r < routeList.size(); r++) {
                 RouteLocation rl = routeList.get(r);
                 if (_train.getCurrentLocation() == rl) {
-                    log.debug("Train is at location " + rl.getName());
+                    log.debug("Train is at location {}", rl.getName());
                     // Is train at this route location?
                     if (rl == _rl) {
                         break;
@@ -233,14 +233,14 @@ public class TrainIcon extends LocoIcon {
      */
     @Override
     public void doMouseDragged(MouseEvent event) {
-        log.debug("Mouse dragged, X=" + getX() + " Y=" + getY());
+        log.debug("Mouse dragged, X={} Y={}", getX(), getY());
         if (_train != null) {
             RouteLocation next = _train.getNextLocation(_train.getCurrentLocation());
             if (next != null) {
                 Point nextPoint = next.getTrainIconCoordinates();
-                log.debug("Next location (" + next.getName() + "), X=" + nextPoint.x + " Y=" + nextPoint.y);
+                log.debug("Next location ({}), X={} Y={}", next.getName(), nextPoint.x, nextPoint.y);
                 if (Math.abs(getX() - nextPoint.x) < next.getTrainIconRangeX() && Math.abs(getY() - nextPoint.y) < next.getTrainIconRangeY()) {
-                    log.debug("Train icon (" + _train.getName() + ") within range of (" + next.getName() + ")");
+                    log.debug("Train icon ({}) within range of ({})", _train.getName(), next.getName());
                     if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("MoveTrainTo"),
                             new Object[]{next.getName()}), MessageFormat.format(Bundle.getMessage("MoveTrain"),
                             new Object[]{_train.getIconName()}), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {

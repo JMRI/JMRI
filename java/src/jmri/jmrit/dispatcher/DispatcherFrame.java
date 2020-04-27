@@ -903,7 +903,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             return false;
         }
         if (at.getEndBlockSection() != s) {
-            log.error("Active trains end section " + at.getEndBlockSection().getDisplayName(USERSYS) + " is not the same as the requested section to remove " + s.getDisplayName(USERSYS));
+            log.error("Active trains end section {} is not the same as the requested section to remove {}", at.getEndBlockSection().getDisplayName(USERSYS), s.getDisplayName(USERSYS));
             return false;
         }
         if (!at.getTransit().removeLastTemporarySection(s)) {
@@ -1319,7 +1319,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 // Active Train is in the first Section, go ahead and allocate it
                 AllocatedSection als = allocateSection(ar, null);
                 if (als == null) {
-                    log.error("Problem allocating the first Section of the Active Train - " + at.getActiveTrainName());
+                    log.error("Problem allocating the first Section of the Active Train - {}", at.getActiveTrainName());
                 }
             }
         }
@@ -1438,7 +1438,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         "Error17"), new Object[]{activeTrain.getActiveTrainName()}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
-            log.error("Missing Section specification in allocation request from " + activeTrain.getActiveTrainName());
+            log.error("Missing Section specification in allocation request from {}", activeTrain.getActiveTrainName());
             return false;
         }
         if (((seqNumber <= 0) || (seqNumber > (activeTrain.getTransit().getMaxSequence()))) && (seqNumber != -99)) {
@@ -1456,7 +1456,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         "Error18"), new Object[]{"" + direction, activeTrain.getActiveTrainName()}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
-            log.error("Invalid direction '" + direction + "' specification in allocation request");
+            log.error("Invalid direction '{}' specification in allocation request", direction);
             return false;
         }
         // check if this allocation has already been requested

@@ -85,7 +85,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                     n.addContent(makeParameter("StreamConfig",
                             cf.getClass().getName()));
                     String adapter = ConfigXmlManager.adapterName(cf);
-                    log.debug("forward to " + adapter);
+                    log.debug("forward to {}", adapter);
                     try {
                         XmlAdapter x = (XmlAdapter) Class.forName(adapter).getDeclaredConstructor().newInstance();
                         n.addContent(x.store(cf));

@@ -38,8 +38,7 @@ public class CatalogTreeIndex extends AbstractCatalogTree {
             newNode = new CatalogTreeNode(pName);
         }
         if (log.isDebugEnabled()) {
-            log.debug("insertNodeInto: newNode= " + newNode.getUserObject()
-                    + ", into parent= " + pParent.getUserObject());
+            log.debug("insertNodeInto: newNode= {}, into parent= {}", newNode.getUserObject(), pParent.getUserObject());
         }
         insertNodeInto(newNode, pParent, pParent.getChildCount());
     }

@@ -2144,17 +2144,17 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 throw e;
             }
             if (log.isDebugEnabled()) {
-                log.debug(destination.getDisplayName() + " face " + facingBlock);
-                log.debug(destination.getDisplayName() + " prot " + protectingBlock);
-                log.debug(destination.getDisplayName() + " dest " + destinationBlock);
+                log.debug("{} face {}", destination.getDisplayName(), facingBlock);
+                log.debug("{} prot {}", destination.getDisplayName(), protectingBlock);
+                log.debug("{} dest {}", destination.getDisplayName(), destinationBlock);
             }
 
             if (destinationBlock != null && protectingBlock != null && facingBlock != null) {
                 setAutoMasts(null, true);
                 if (log.isDebugEnabled()) {
-                    log.debug(destination.getDisplayName() + " face " + facingBlock.getDisplayName());
-                    log.debug(destination.getDisplayName() + " prot " + protectingBlock.getDisplayName());
-                    log.debug(destination.getDisplayName() + " dest " + destinationBlock.getDisplayName());
+                    log.debug("{} face {}", destination.getDisplayName(), facingBlock.getDisplayName());
+                    log.debug("{} prot {}", destination.getDisplayName(), protectingBlock.getDisplayName());
+                    log.debug("{} dest {}", destination.getDisplayName(), destinationBlock.getDisplayName());
                 }
 
                 try {
@@ -2247,12 +2247,12 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                                          lt.getTurnoutType() == LayoutTurnout.TurnoutType.WYE_TURNOUT) 
                                         && (!lt.getBlockName().equals(""))) {
                                     log.debug("turnout in list is straight left/right wye");
-                                    log.debug("turnout block Name " + lt.getBlockName());
-                                    log.debug("current " + lblks.get(i).getBlock().getDisplayName() + " - pre " + lblks.get(preBlk).getBlock().getDisplayName());
-                                    log.debug("A " + lt.getConnectA());
-                                    log.debug("B " + lt.getConnectB());
-                                    log.debug("C " + lt.getConnectC());
-                                    log.debug("D " + lt.getConnectD());
+                                    log.debug("turnout block Name {}", lt.getBlockName());
+                                    log.debug("current {} - pre {}", lblks.get(i).getBlock().getDisplayName(), lblks.get(preBlk).getBlock().getDisplayName());
+                                    log.debug("A {}", lt.getConnectA());
+                                    log.debug("B {}", lt.getConnectB());
+                                    log.debug("C {}", lt.getConnectC());
+                                    log.debug("D {}", lt.getConnectD());
                                 }
                             }
                             if (turnout != null ) {
@@ -2517,7 +2517,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
 
             Set<Block> autoBlockKeys = autoBlocks.keySet();
             for (Block key : autoBlockKeys) {
-                log.debug(destination.getDisplayName() + " auto block add list " + key.getDisplayName());
+                log.debug("{} auto block add list {}", destination.getDisplayName(), key.getDisplayName());
                 if (!isBlockIncluded(key)) {
                     if (((key.getSpeedLimit() < minimumBlockSpeed) || (minimumBlockSpeed == 0)) && (key.getSpeedLimit() != -1)) {
                         minimumBlockSpeed = key.getSpeedLimit();

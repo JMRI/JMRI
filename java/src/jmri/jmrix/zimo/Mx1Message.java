@@ -34,7 +34,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage {
         this.protocol = protocol;
         if (!protocol) {
             if (len > 15 || len < 0) {
-                log.error("Invalid length in ctor: " + len);
+                log.error("Invalid length in ctor: {}", len);
             }
         }
     }

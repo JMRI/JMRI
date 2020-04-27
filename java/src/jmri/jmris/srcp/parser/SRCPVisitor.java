@@ -27,7 +27,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
             jmri.jmrix.SystemConnectionMemo memo
                     = InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class).get(bus - 1);
             if (memo != null) {
-                log.debug("devicegroup " + devicegroup);
+                log.debug("devicegroup {}", devicegroup);
                 if (devicegroup.equals("FB")) {
                     if (memo.provides(jmri.SensorManager.class)) {
                         return true;
@@ -242,7 +242,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
                 // that have no addresses.
                 String devicegroup = (String) ((SimpleNode) descriptionnode.jjtGetChild(0)).jjtGetValue();
                 outputString = "100 INFO " + bus;
-                log.debug("devicegroup " + devicegroup);
+                log.debug("devicegroup {}", devicegroup);
                 if (devicegroup.equals("FB") && isSupported(bus, devicegroup)) {
                     outputString = "419 ERROR list too short";
                 } else if (devicegroup.equals("GA") && isSupported(bus, devicegroup)) {
@@ -445,7 +445,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
     public Object visit(ASTterm node, Object data) {
         SimpleNode target = (SimpleNode) node.jjtGetChild(1);
         int bus = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(0)).jjtGetValue()));
-        log.debug("TERM " + bus + " " + target.jjtGetValue());
+        log.debug("TERM {} {}", bus, target.jjtGetValue());
         if (target.jjtGetValue().equals("SERVER")) {
             // for the TERM <bus> SERVER request, the protocol requries that
             // we terminate all connections and reset the state to the initial

@@ -54,7 +54,7 @@ public class GcTrafficController extends TrafficController {
 
     public void setgcState(int s) {
         gcState = s;
-        log.debug("Setting gcState " + s);
+        log.debug("Setting gcState {}", s);
     }
 
     public boolean isBootMode() {
@@ -66,7 +66,7 @@ public class GcTrafficController extends TrafficController {
      */
     @Override
     public void sendCanMessage(CanMessage m, CanListener reply) {
-        log.debug("GcTrafficController sendCanMessage() " + m.toString());
+        log.debug("GcTrafficController sendCanMessage() {}", m.toString());
         sendMessage(m, reply);
     }
 
@@ -75,7 +75,7 @@ public class GcTrafficController extends TrafficController {
      */
     @Override
     public void sendCanReply(CanReply r, CanListener reply) {
-        log.debug("TrafficController sendCanReply() " + r.toString());
+        log.debug("TrafficController sendCanReply() {}", r.toString());
         notifyReply(r, reply);
     }
 
@@ -199,7 +199,7 @@ public class GcTrafficController extends TrafficController {
             //if (log.isDebugEnabled()) log.debug("char: "+(char1&0xFF)+" i: "+i);
             // if there was a timeout, flush any char received and start over
             if (flushReceiveChars) {
-                log.warn("timeout flushes receive buffer: " + msg.toString());
+                log.warn("timeout flushes receive buffer: {}", msg.toString());
                 msg.flush();
                 i = 0;  // restart
                 flushReceiveChars = false;
@@ -211,7 +211,7 @@ public class GcTrafficController extends TrafficController {
                 }
             } else {
                 i--; // flush char
-                log.error("unsolicited character received: " + Integer.toHexString(char1));
+                log.error("unsolicited character received: {}", Integer.toHexString(char1));
             }
         }
     }

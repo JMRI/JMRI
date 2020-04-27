@@ -1620,7 +1620,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         try {
             currentDuration = Long.parseLong(currentDurationString);
         } catch (NumberFormatException e) {
-            log.warn("current stored duration is not a valid number \"" + currentDurationString + " \"");
+            log.warn("current stored duration is not a valid number \"{} \"", currentDurationString);
         }
         currentDuration = currentDuration + durationRunning;
         re.putAttribute("OperatingDuration", "" + currentDuration);

@@ -42,7 +42,7 @@ public class OlcbLight extends AbstractLight {
         OlcbAddress a = new OlcbAddress(address);
         OlcbAddress[] v = a.split();
         if (v == null) {
-            log.error("Did not find usable system name: " + address);
+            log.error("Did not find usable system name: {}", address);
             return;
         }
         switch (v.length) {
@@ -51,7 +51,7 @@ public class OlcbLight extends AbstractLight {
                 addrOff = v[1];
                 break;
             default:
-                log.error("Can't parse OpenLCB Light system name: " + address);
+                log.error("Can't parse OpenLCB Light system name: {}", address);
                 return;
         }
     }

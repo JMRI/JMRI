@@ -484,7 +484,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 train.terminate();
             }
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR)) {
-            log.debug("Enable conductor for train (" + train.getName() + ")");
+            log.debug("Enable conductor for train ({})", train.getName());
             launchConductor(train);
         }
     }

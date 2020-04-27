@@ -6,7 +6,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
@@ -653,7 +652,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                     }
                 } catch (Exception exc) {
                     if (log.isDebugEnabled()) {
-                        log.debug("Got exception, can ignore :" + exc);
+                        log.debug("Got exception, can ignore :{}", exc);
                     }
                 }
             }

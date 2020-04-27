@@ -1,10 +1,6 @@
 package jmri.jmrit.whereused;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
-import java.util.SortedSet;
-import javax.swing.JTextArea;
 
 import jmri.*;
 import jmri.jmrit.blockboss.BlockBossLogic;

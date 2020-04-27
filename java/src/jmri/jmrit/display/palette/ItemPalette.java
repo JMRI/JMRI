@@ -173,7 +173,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         for (Entry<String, HashMap<String, HashMap<String, NamedIcon>>> entry : _iconMaps.entrySet()) {
             root.add(store3levelMap(entry.getKey(), entry.getValue()));
             if (log.isDebugEnabled()) {
-                log.debug("Add type node " + entry.getKey());
+                log.debug("Add type node {}", entry.getKey());
             }
         }
 
@@ -583,7 +583,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     public void closePanels(java.awt.event.WindowEvent e) {
         java.awt.Component[] comps = _tabPane.getComponents();
         if (log.isDebugEnabled()) {
-            log.debug("closePanels: tab count= " + _tabPane.getTabCount());
+            log.debug("closePanels: tab count= {}", _tabPane.getTabCount());
         }
         for (Component comp : comps) {
             javax.swing.JViewport vp = (javax.swing.JViewport) ((JScrollPane) comp).getComponent(0);

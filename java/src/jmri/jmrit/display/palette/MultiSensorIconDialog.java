@@ -81,7 +81,7 @@ public class MultiSensorIconDialog extends IconDialog {
      */
     private boolean addNewIcon(String name) {
         if (log.isDebugEnabled()) {
-            log.debug("addNewIcon Action: iconMap.size()= " + _iconMap.size());
+            log.debug("addNewIcon Action: iconMap.size()= {}", _iconMap.size());
         }
         if (name == null || name.length() == 0) {
             JOptionPane.showMessageDialog(_parent._frame, Bundle.getMessage("NoIconName"),
@@ -104,7 +104,7 @@ public class MultiSensorIconDialog extends IconDialog {
      */
     private boolean deleteIcon() {
         if (log.isDebugEnabled()) {
-            log.debug("deleteSensor Action: iconMap.size()= " + _iconMap.size());
+            log.debug("deleteSensor Action: iconMap.size()= {}", _iconMap.size());
         }
         if (_iconMap.size() < 4) {
             return false;

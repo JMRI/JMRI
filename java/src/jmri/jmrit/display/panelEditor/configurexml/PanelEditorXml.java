@@ -65,7 +65,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         // include contents
         List<Positionable> contents = p.getContents();
         if (log.isDebugEnabled()) {
-            log.debug("N elements: " + contents.size());
+            log.debug("N elements: {}", contents.size());
         }
         for (Positionable sub : contents) {
             if (sub != null && sub.storeItem()) {

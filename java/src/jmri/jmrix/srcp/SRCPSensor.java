@@ -48,7 +48,7 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
             // first look for the double case, which we can't handle
             if ((s & Sensor.INACTIVE) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both ACTIVE and INACTIVE " + s);
+                log.error("Cannot command both ACTIVE and INACTIVE {}", s);
                 return;
             } else {
                 // send an ACTIVE command
@@ -92,7 +92,7 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
     @Override
     public void reply(SRCPReply m) {
         String message = m.toString();
-        log.debug("Message Received: " + m);
+        log.debug("Message Received: {}", m);
         if (!message.contains(_bus + " FB " + _number)) {
             return; // not for us
         }

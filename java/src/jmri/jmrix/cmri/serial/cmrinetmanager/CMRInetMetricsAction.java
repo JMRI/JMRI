@@ -32,7 +32,7 @@ public class CMRInetMetricsAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("SerialFilterAction starting CMRInetMetricsAction: Exception: " + ex.toString());
+            log.warn("SerialFilterAction starting CMRInetMetricsAction: Exception: {}", ex.toString());
         }
         f.setVisible(true);
     }

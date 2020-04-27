@@ -38,7 +38,7 @@ public class SprogType {
      */
     public SprogType(int type) {
         if (log.isDebugEnabled()) {
-            log.debug("SprogType(int) ctor, type: " + type);
+            log.debug("SprogType(int) ctor, type: {}", type);
         }
         sprogType = type;
     }

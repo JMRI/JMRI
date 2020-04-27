@@ -7,7 +7,6 @@ import java.util.ListIterator;
 import javax.annotation.concurrent.GuardedBy;
 
 import jmri.*;
-import jmri.NamedBeanUsageReport;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.ThreadingUtil;
 
