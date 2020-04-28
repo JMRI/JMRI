@@ -170,7 +170,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                         ex.getLocalizedMessage(),
                         jmri.Application.getApplicationName(),
                         JOptionPane.ERROR_MESSAGE);
-                log.error(ex.getMessage());
+                log.error("{}",ex.getMessage());
             }
         }
         log.trace("about to try getStartingProfile");
@@ -1138,6 +1138,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      *
      * @param name Program/application name as known by the user
      */
+    @SuppressFBWarnings(value = "SLF4J_SIGN_ONLY_FORMAT",justification = "info message contains context information")
     protected static void setStartupInfo(String name) {
         // Set the application name
         try {
@@ -1147,7 +1148,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }
 
         // Log the startup information
-        log.info(Log4JUtil.startupInfo(name));
+        log.info("{}",Log4JUtil.startupInfo(name));
     }
 
     @Override
