@@ -170,7 +170,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                         ex.getLocalizedMessage(),
                         jmri.Application.getApplicationName(),
                         JOptionPane.ERROR_MESSAGE);
-                log.error("{}",ex.getMessage());
+                log.error("Exception migrating configuration to profiles: {}",ex.getMessage());
             }
         }
         log.trace("about to try getStartingProfile");
@@ -276,7 +276,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
-                log.error(e.getLocalizedMessage(), e);
+                log.error("{}",e.getLocalizedMessage(), e);
             }
         }
 
@@ -292,7 +292,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                log.error(e.getLocalizedMessage(), e);
+                log.error("{}",e.getLocalizedMessage(), e);
             }
         }
         // Now load deferred config items
