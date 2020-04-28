@@ -837,12 +837,10 @@ public class LayoutTrackEditorsTest {
 
             // RH Turnout
             point = MathUtil.add(point, delta);
-            rightHandLayoutTurnout = new LayoutTurnout("RH Turnout",
-                    LayoutTurnout.TurnoutType.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
+            rightHandLayoutTurnout = new LayoutRHTurnout("RH Turnout", point, 33.0, 1.1, 1.2, layoutEditor);
 
             // Double crossover
-            doubleXoverLayoutTurnout = new LayoutTurnout("Double Xover",
-                    LayoutTurnout.TurnoutType.DOUBLE_XOVER, point, 33.0, 1.1, 1.2, layoutEditor);
+            doubleXoverLayoutTurnout = new LayoutDoubleXOver("Double Xover", point, 33.0, 1.1, 1.2, layoutEditor);
 
             // Single doubleLayoutSlip
             point = MathUtil.add(point, delta);

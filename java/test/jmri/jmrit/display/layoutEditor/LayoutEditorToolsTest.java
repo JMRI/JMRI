@@ -81,8 +81,8 @@ public class LayoutEditorToolsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         //create a new Layout Turnout
-        layoutTurnout = new LayoutTurnout("Right Hand",
-                LayoutTurnout.TurnoutType.RH_TURNOUT, new Point2D.Double(150.0, 100.0),
+        layoutTurnout = new LayoutRHTurnout("Right Hand",
+                new Point2D.Double(150.0, 100.0),
                 33.0, 1.1, 1.2, layoutEditor);
         Assert.assertNotNull("RH turnout for testSetSignalsAtTurnoutWithDone", layoutTurnout);
         layoutEditor.getLayoutTracks().add(layoutTurnout);
@@ -373,8 +373,8 @@ public class LayoutEditorToolsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
             Point2D point = new Point2D.Double(150.0, 100.0);
-            LayoutTurnout to = new LayoutTurnout("Right Hand",
-                    LayoutTurnout.TurnoutType.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
+            LayoutTurnout to = new LayoutRHTurnout("Right Hand",
+                    point, 33.0, 1.1, 1.2, layoutEditor);
             to.setTurnout(turnouts.get(0).getSystemName());
             layoutEditor.getLayoutTracks().add(to);
 
@@ -397,8 +397,8 @@ public class LayoutEditorToolsTest {
 
         ThreadingUtil.runOnLayoutEventually(() -> {
             Point2D point = new Point2D.Double(150.0, 100.0);
-            LayoutTurnout to = new LayoutTurnout("Right Hand",
-                    LayoutTurnout.TurnoutType.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
+            LayoutTurnout to = new LayoutRHTurnout("Right Hand",
+                    point, 33.0, 1.1, 1.2, layoutEditor);
             to.setTurnout(turnouts.get(0).getSystemName());
             layoutEditor.getLayoutTracks().add(to);
             //this causes a "set Signal Heads Turnout" dialog to be displayed.

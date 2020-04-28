@@ -119,7 +119,7 @@ import org.slf4j.*;
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author George Warner Copyright (c) 2017-2019
  */
-public class LayoutTurnout extends LayoutTrack {
+abstract public class LayoutTurnout extends LayoutTrack {
 
     // defined constants - turnout types
     //public static final int NONE = 0;
