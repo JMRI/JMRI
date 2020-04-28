@@ -397,7 +397,7 @@ public class AlignTablePane extends javax.swing.JPanel {
                     flag.setModifiedFlag(true);
                     break;
                 default:
-                    log.error("setValueAt of column " + c);
+                    log.error("setValueAt of column {}", c);
             }
         }
     }

@@ -74,7 +74,7 @@ public class PositionablePoint extends LayoutTrack {
         if ((t == PointType.ANCHOR) || (t == PointType.END_BUMPER) || (t == PointType.EDGE_CONNECTOR)) {
             type = t;
         } else {
-            log.error("Illegal type of PositionablePoint - " + t);
+            log.error("Illegal type of PositionablePoint - {}", t);
             type = PointType.ANCHOR;
         }
     }

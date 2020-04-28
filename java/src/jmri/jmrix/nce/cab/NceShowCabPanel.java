@@ -343,7 +343,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         if (src == refreshButton) {
             refreshPanel();
         } else {
-            log.error("unknown action performed: " + src);
+            log.error("unknown action performed: {}", src);
         }
     }
 
@@ -356,19 +356,19 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         } else if (src == checkBoxAutoRefresh) {
             autoRefreshPanel();
         } else {
-            log.error("unknown checkbox action performed: " + src);
+            log.error("unknown checkbox action performed: {}", src);
         }
     }
 
     public void purgeCab(int cab) {
         if (cab < minCabNum || cab > maxCabNum) {
-            log.error(Bundle.getMessage("ErrorValueRange") + cab);
+            log.error("{}{}", Bundle.getMessage("ErrorValueRange"), cab);
             return;
         }
         // if id is active
         int act = cabFlag1Array[cab] & NceCmdStationMemory.FLAGS1_MASK_CABISACTIVE;
         if (act != NceCmdStationMemory.FLAGS1_CABISACTIVE) {
-            log.error(Bundle.getMessage("ErrorCabNotActive") + cab);
+            log.error("{}{}", Bundle.getMessage("ErrorCabNotActive"), cab);
         }
         // clear bit for active and cab type details
         cabFlag1Array[cab] = 0;
@@ -449,7 +449,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     public void cabPurgeSerial() {
         if (purgeCabId <= minCabNum || purgeCabId >= maxCabNum) {
-            log.error("purgeCabId out of range: " + purgeCabId);
+            log.error("purgeCabId out of range: {}", purgeCabId);
         }
         if (firstTime) {
             try {
@@ -471,7 +471,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     public void cabPurgeUsb() {
         if (purgeCabId <= minCabNum || purgeCabId >= maxCabNum) {
-            log.error("purgeCabId out of range: " + purgeCabId);
+            log.error("purgeCabId out of range: {}", purgeCabId);
         }
         if (firstTime) {
             try {
@@ -521,7 +521,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                 return;
             }
             if (log.isDebugEnabled()) {
-                log.debug("ID = " + currCabId + " Read flag1 character " + recChar);
+                log.debug("ID = {} Read flag1 character {}", currCabId, recChar);
             }
             // test it really changed
             if (recChar != -1) {
@@ -529,7 +529,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                 if (recChar != cabFlag1Array[currCabId]) {
                     foundChange++;
                     if (log.isDebugEnabled()) {
-                        log.debug(currCabId + ": Flag1 " + recChar + "<->" + cabFlag1Array[currCabId]);
+                        log.debug("{}: Flag1 {}<->{}", currCabId, recChar, cabFlag1Array[currCabId]);
                     }
                 }
                 cabFlag1Array[currCabId] = recChar;
@@ -576,12 +576,12 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     if (cabSpeedArray[currCabId] != readChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": Speed " + readChar + "<->" + cabSpeedArray[currCabId]);
+                            log.debug("{}: Speed {}<->{}", currCabId, readChar, cabSpeedArray[currCabId]);
                         }
                     }
                     cabSpeedArray[currCabId] = readChar;
                     if (log.isDebugEnabled()) {
-                        log.debug("Read speed character " + Integer.toString(readChar));
+                        log.debug("Read speed character {}", Integer.toString(readChar));
                     }
                     cabData[currCabId].locoSpeed = readChar;
 
@@ -590,7 +590,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     if (cabFlagsArray[currCabId] != readChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": Flags " + readChar + "<->" + cabFlagsArray[currCabId]);
+                            log.debug("{}: Flags {}<->{}", currCabId, readChar, cabFlagsArray[currCabId]);
                         }
                     }
                     cabFlagsArray[currCabId] = readChar;
@@ -614,14 +614,14 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     // create loco address, read the high address byte
                     readChar = recChars[CabMemorySerial.CAB_ADDR_H - CabMemorySerial.CAB_CURR_SPEED];
                     if (log.isDebugEnabled()) {
-                        log.debug("Read address high character " + readChar);
+                        log.debug("Read address high character {}", readChar);
                     }
                     int locoAddress = (readChar & 0x3F) * 256;
                     boolean aType = ((readChar & 0xC0) == 0xC0);
                     if (cabLongShortArray[currCabId] != aType) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": Long " + aType + "<->" + cabLongShortArray[currCabId]);
+                            log.debug("{}: Long {}<->{}", currCabId, aType, cabLongShortArray[currCabId]);
                         }
                     }
                     cabLongShortArray[currCabId] = aType;
@@ -633,13 +633,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     // read the low address byte
                     readChar = recChars[CabMemorySerial.CAB_ADDR_L - CabMemorySerial.CAB_CURR_SPEED];
                     if (log.isDebugEnabled()) {
-                        log.debug("Read address low character " + readChar);
+                        log.debug("Read address low character {}", readChar);
                     }
                     locoAddress = locoAddress + (readChar & 0xFF);
                     if (cabLocoArray[currCabId] != locoAddress) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": Loco " + locoAddress + "<->" + cabLocoArray[currCabId]);
+                            log.debug("{}: Loco {}<->{}", currCabId, locoAddress, cabLocoArray[currCabId]);
                         }
                     }
                     cabLocoArray[currCabId] = locoAddress;
@@ -650,7 +650,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     if (cabConsistArray[currCabId] != readChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": Consist " + readChar + "<->" + cabConsistArray[currCabId]);
+                            log.debug("{}: Consist {}<->{}", currCabId, readChar, cabConsistArray[currCabId]);
                         }
                     }
                     cabConsistArray[currCabId] = readChar;
@@ -672,12 +672,12 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     if (cabF0Array[currCabId] != readChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": F0 " + readChar + "<->" + cabF0Array[currCabId]);
+                            log.debug("{}: F0 {}<->{}", currCabId, readChar, cabF0Array[currCabId]);
                         }
                     }
                     cabF0Array[currCabId] = readChar;
                     if (log.isDebugEnabled()) {
-                        log.debug("Function low character " + readChar);
+                        log.debug("Function low character {}", readChar);
                     }
                     procFunctions0_4(currCabId, readChar);
 
@@ -686,12 +686,12 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     if (cabF5Array[currCabId] != readChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": F5 " + readChar + "<->" + cabF5Array[currCabId]);
+                            log.debug("{}: F5 {}<->{}", currCabId, readChar, cabF5Array[currCabId]);
                         }
                     }
                     cabF5Array[currCabId] = readChar;
                     if (log.isDebugEnabled()) {
-                        log.debug("Function high character " + readChar);
+                        log.debug("Function high character {}", readChar);
                     }
                     procFunctions5_12(currCabId, readChar);
 
@@ -703,7 +703,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     if (cabF13Array[currCabId] != recChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": F13 " + recChar + "<->" + cabF13Array[currCabId]);
+                            log.debug("{}: F13 {}<->{}", currCabId, recChar, cabF13Array[currCabId]);
                         }
                     }
                     cabF13Array[currCabId] = recChar;
@@ -717,7 +717,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     if (cabF21Array[currCabId] != recChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": F21 " + recChar + "<->" + cabF21Array[currCabId]);
+                            log.debug("{}: F21 {}<->{}", currCabId, recChar, cabF21Array[currCabId]);
                         }
                     }
                     cabF21Array[currCabId] = recChar;
@@ -734,13 +734,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine1Array[currCabId][i] != recChars[i]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId
-                                        + ": CabLine1["
-                                        + i
-                                        + "] "
-                                        + recChars[i]
-                                        + "<->"
-                                        + cabLine1Array[currCabId][i]);
+                                log.debug("{}: CabLine1[{}] {}<->{}", currCabId, i, recChars[i], cabLine1Array[currCabId][i]);
                             }
                         }
                         cabLine1Array[currCabId][i] = recChars[i];
@@ -753,7 +747,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     }
                     cabData[currCabId].text1 = text1.toString();
                     if (log.isDebugEnabled()) {
-                        log.debug("TextLine1Debug: " + debug1);
+                        log.debug("TextLine1Debug: {}", debug1);
                     }
 
                     readCabMemory16(currCabId, CabMemorySerial.CAB_LINE_2);
@@ -766,13 +760,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine2Array[currCabId][i] != recChars[i]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId
-                                        + ": CabLine2["
-                                        + i
-                                        + "] "
-                                        + recChars[i]
-                                        + "<->"
-                                        + cabLine2Array[currCabId][i]);
+                                log.debug("{}: CabLine2[{}] {}<->{}", currCabId, i, recChars[i], cabLine2Array[currCabId][i]);
                             }
                         }
                         cabLine2Array[currCabId][i] = recChars[i];
@@ -785,7 +773,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     }
                     cabData[currCabId].text2 = text2.toString();
                     if (log.isDebugEnabled()) {
-                        log.debug("TextLine2Debug: " + debug2);
+                        log.debug("TextLine2Debug: {}", debug2);
                     }
 
                     Calendar now = Calendar.getInstance();
@@ -853,7 +841,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                 return;
             }
             if (log.isDebugEnabled()) {
-                log.debug("ID = " + currCabId + " Read flag1 character " + recChar);
+                log.debug("ID = {} Read flag1 character {}", currCabId, recChar);
             }
             // test it really changed
             if (recChar != -1) {
@@ -861,7 +849,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                 if (recChar != cabFlag1Array[currCabId]) {
                     foundChange++;
                     if (log.isDebugEnabled()) {
-                        log.debug(currCabId + ": Flag1 " + recChar + "<->" + cabFlag1Array[currCabId]);
+                        log.debug("{}: Flag1 {}<->{}", currCabId, recChar, cabFlag1Array[currCabId]);
                     }
                 }
                 cabFlag1Array[currCabId] = recChar;
@@ -915,12 +903,12 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     if (cabSpeedArray[currCabId] != readChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": Speed " + readChar + "<->" + cabSpeedArray[currCabId]);
+                            log.debug("{}: Speed {}<->{}", currCabId, readChar, cabSpeedArray[currCabId]);
                         }
                     }
                     cabSpeedArray[currCabId] = readChar;
                     if (log.isDebugEnabled()) {
-                        log.debug("Read speed character " + Integer.toString(readChar));
+                        log.debug("Read speed character {}", Integer.toString(readChar));
                     }
                     cabData[currCabId].locoSpeed = readChar;
 
@@ -931,14 +919,14 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     }
                     readChar = recChar;
                     if (log.isDebugEnabled()) {
-                        log.debug("Read address high character " + readChar);
+                        log.debug("Read address high character {}", readChar);
                     }
                     int locoAddress = (readChar & 0x3F) * 256;
                     boolean aType = ((readChar & 0xC0) == 0xC0);
                     if (cabLongShortArray[currCabId] != aType) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": Long " + aType + "<->" + cabLongShortArray[currCabId]);
+                            log.debug("{}: Long {}<->{}", currCabId, aType, cabLongShortArray[currCabId]);
                         }
                     }
                     cabLongShortArray[currCabId] = aType;
@@ -954,13 +942,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     }
                     readChar = recChar;
                     if (log.isDebugEnabled()) {
-                        log.debug("Read address low character " + readChar);
+                        log.debug("Read address low character {}", readChar);
                     }
                     locoAddress = locoAddress + (readChar & 0xFF);
                     if (cabLocoArray[currCabId] != locoAddress) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": Loco " + locoAddress + "<->" + cabLocoArray[currCabId]);
+                            log.debug("{}: Loco {}<->{}", currCabId, locoAddress, cabLocoArray[currCabId]);
                         }
                     }
                     cabLocoArray[currCabId] = locoAddress;
@@ -975,7 +963,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     if (cabFlagsArray[currCabId] != readChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": Flags " + readChar + "<->" + cabFlagsArray[currCabId]);
+                            log.debug("{}: Flags {}<->{}", currCabId, readChar, cabFlagsArray[currCabId]);
                         }
                     }
                     cabFlagsArray[currCabId] = readChar;
@@ -1005,12 +993,12 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     if (cabF0Array[currCabId] != readChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": F0 " + readChar + "<->" + cabF0Array[currCabId]);
+                            log.debug("{}: F0 {}<->{}", currCabId, readChar, cabF0Array[currCabId]);
                         }
                     }
                     cabF0Array[currCabId] = readChar;
                     if (log.isDebugEnabled()) {
-                        log.debug("Function low character " + readChar);
+                        log.debug("Function low character {}", readChar);
                     }
                     procFunctions0_4(currCabId, readChar);
 
@@ -1023,12 +1011,12 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     if (cabF5Array[currCabId] != readChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": F5 " + readChar + "<->" + cabF5Array[currCabId]);
+                            log.debug("{}: F5 {}<->{}", currCabId, readChar, cabF5Array[currCabId]);
                         }
                     }
                     cabF5Array[currCabId] = readChar;
                     if (log.isDebugEnabled()) {
-                        log.debug("Function high character " + readChar);
+                        log.debug("Function high character {}", readChar);
                     }
                     procFunctions5_12(currCabId, readChar);
 
@@ -1041,7 +1029,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     if (cabConsistArray[currCabId] != readChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": Consist " + readChar + "<->" + cabConsistArray[currCabId]);
+                            log.debug("{}: Consist {}<->{}", currCabId, readChar, cabConsistArray[currCabId]);
                         }
                     }
                     cabConsistArray[currCabId] = readChar;
@@ -1070,7 +1058,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     if (cabF13Array[currCabId] != recChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": F13 " + recChar + "<->" + cabF13Array[currCabId]);
+                            log.debug("{}: F13 {}<->{}", currCabId, recChar, cabF13Array[currCabId]);
                         }
                     }
                     cabF13Array[currCabId] = recChar;
@@ -1084,7 +1072,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     if (cabF21Array[currCabId] != recChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
-                            log.debug(currCabId + ": F21 " + recChar + "<->" + cabF21Array[currCabId]);
+                            log.debug("{}: F21 {}<->{}", currCabId, recChar, cabF21Array[currCabId]);
                         }
                     }
                     cabF21Array[currCabId] = recChar;
@@ -1107,13 +1095,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine1Array[currCabId][ptrCabLine] != recChars[ptrData]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId
-                                        + ": CabLine1["
-                                        + ptrCabLine
-                                        + "] "
-                                        + recChars[ptrData]
-                                        + "<->"
-                                        + cabLine1Array[currCabId][ptrCabLine]);
+                                log.debug("{}: CabLine1[{}] {}<->{}", currCabId, ptrCabLine, recChars[ptrData], cabLine1Array[currCabId][ptrCabLine]);
                             }
                         }
                         cabLine1Array[currCabId][ptrCabLine] = recChars[ptrData];
@@ -1132,13 +1114,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine1Array[currCabId][ptrCabLine] != recChars[ptrData]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId
-                                        + ": CabLine1["
-                                        + ptrCabLine
-                                        + "] "
-                                        + recChars[ptrData]
-                                        + "<->"
-                                        + cabLine1Array[currCabId][ptrCabLine]);
+                                log.debug("{}: CabLine1[{}] {}<->{}", currCabId, ptrCabLine, recChars[ptrData], cabLine1Array[currCabId][ptrCabLine]);
                             }
                         }
                         cabLine1Array[currCabId][ptrCabLine] = recChars[ptrData];
@@ -1157,13 +1133,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine1Array[currCabId][ptrCabLine] != recChars[ptrData]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId
-                                        + ": CabLine1["
-                                        + ptrCabLine
-                                        + "] "
-                                        + recChars[ptrData]
-                                        + "<->"
-                                        + cabLine1Array[currCabId][ptrCabLine]);
+                                log.debug("{}: CabLine1[{}] {}<->{}", currCabId, ptrCabLine, recChars[ptrData], cabLine1Array[currCabId][ptrCabLine]);
                             }
                         }
                         cabLine1Array[currCabId][ptrCabLine] = recChars[ptrData];
@@ -1182,13 +1152,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine1Array[currCabId][ptrCabLine] != recChars[ptrData]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId
-                                        + ": CabLine1["
-                                        + ptrCabLine
-                                        + "] "
-                                        + recChars[ptrData]
-                                        + "<->"
-                                        + cabLine1Array[currCabId][ptrCabLine]);
+                                log.debug("{}: CabLine1[{}] {}<->{}", currCabId, ptrCabLine, recChars[ptrData], cabLine1Array[currCabId][ptrCabLine]);
                             }
                         }
                         cabLine1Array[currCabId][ptrCabLine] = recChars[ptrData];
@@ -1201,7 +1165,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     }
                     cabData[currCabId].text1 = text1.toString();
                     if (log.isDebugEnabled()) {
-                        log.debug("TextLine1Debug: " + debug1);
+                        log.debug("TextLine1Debug: {}", debug1);
                     }
 
                     readUsbCabMemoryN(4);
@@ -1215,13 +1179,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine2Array[currCabId][ptrCabLine] != recChars[ptrData]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId
-                                        + ": CabLine2["
-                                        + ptrCabLine
-                                        + "] "
-                                        + recChars[ptrData]
-                                        + "<->"
-                                        + cabLine2Array[currCabId][ptrCabLine]);
+                                log.debug("{}: CabLine2[{}] {}<->{}", currCabId, ptrCabLine, recChars[ptrData], cabLine2Array[currCabId][ptrCabLine]);
                             }
                         }
                         cabLine2Array[currCabId][ptrCabLine] = recChars[ptrData];
@@ -1240,13 +1198,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine2Array[currCabId][ptrCabLine] != recChars[ptrData]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId
-                                        + ": CabLine2["
-                                        + ptrCabLine
-                                        + "] "
-                                        + recChars[ptrData]
-                                        + "<->"
-                                        + cabLine2Array[currCabId][ptrCabLine]);
+                                log.debug("{}: CabLine2[{}] {}<->{}", currCabId, ptrCabLine, recChars[ptrData], cabLine2Array[currCabId][ptrCabLine]);
                             }
                         }
                         cabLine2Array[currCabId][ptrCabLine] = recChars[ptrData];
@@ -1265,13 +1217,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine2Array[currCabId][ptrCabLine] != recChars[ptrData]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId
-                                        + ": CabLine2["
-                                        + ptrCabLine
-                                        + "] "
-                                        + recChars[ptrData]
-                                        + "<->"
-                                        + cabLine2Array[currCabId][ptrCabLine]);
+                                log.debug("{}: CabLine2[{}] {}<->{}", currCabId, ptrCabLine, recChars[ptrData], cabLine2Array[currCabId][ptrCabLine]);
                             }
                         }
                         cabLine2Array[currCabId][ptrCabLine] = recChars[ptrData];
@@ -1290,13 +1236,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine2Array[currCabId][ptrCabLine] != recChars[ptrData]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId
-                                        + ": CabLine2["
-                                        + ptrCabLine
-                                        + "] "
-                                        + recChars[ptrData]
-                                        + "<->"
-                                        + cabLine2Array[currCabId][ptrCabLine]);
+                                log.debug("{}: CabLine2[{}] {}<->{}", currCabId, ptrCabLine, recChars[ptrData], cabLine2Array[currCabId][ptrCabLine]);
                             }
                         }
                         cabLine2Array[currCabId][ptrCabLine] = recChars[ptrData];
@@ -1309,7 +1249,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     }
                     cabData[currCabId].text2 = text2.toString();
                     if (log.isDebugEnabled()) {
-                        log.debug("TextLine2Debug: " + debug2);
+                        log.debug("TextLine2Debug: {}", debug2);
                     }
 
                     // add log time stamp
@@ -1463,7 +1403,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             log.debug("Receive character");
         }
         if (waiting <= 0) {
-            log.error("unexpected response. Len: " + r.getNumDataElements() + " code: " + r.getElement(0));
+            log.error("unexpected response. Len: {} code: {}", r.getNumDataElements(), r.getElement(0));
             return;
         }
         waiting--;
@@ -1777,7 +1717,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                 return null; // no active rows
             }
             if (cabId < minCabNum || cabId > maxCabNum) {
-                log.error("getCabIdForRow(" + row + ") returned " + cabId);
+                log.error("getCabIdForRow({}) returned {}", row, cabId);
                 return null;
             }
             DataRow r = cabData[cabId];

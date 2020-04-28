@@ -42,7 +42,7 @@ public class TamsPowerManager implements PowerManager, TamsListener {
         TamsMessage tm = TamsMessage.getXStatus();
         tc.sendTamsMessage(tm, this);
         tc.addPollMessage(tm, this);
-        log.debug("TamsMessage added to pollqueue = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType());
+        log.debug("TamsMessage added to pollqueue = {} {} and replyType = {}", jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, ""), jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, ""), tm.getReplyType());
     }
 
     TamsTrafficController tc;
@@ -141,7 +141,7 @@ public class TamsPowerManager implements PowerManager, TamsListener {
         if ((TamsTrafficController.replyType == 'P')){
             log.debug("*** Tams Power Reply ***");
             //log.debug("TamsMessage = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType());
-            log.debug("TamsReply = " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(0) & 0xFF, ""));
+            log.debug("TamsReply = {}", jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(0) & 0xFF, ""));
             boolean valid = false;
             if (TamsTrafficController.replyBinary) {//Reply related to Poll Message
                 log.debug("Reply to Poll Message");
@@ -178,7 +178,7 @@ public class TamsPowerManager implements PowerManager, TamsListener {
             }
             if (valid == false) {
                 power = UNKNOWN;
-                log.debug("Unknown reply in power manager " + tr.toString());
+                log.debug("Unknown reply in power manager {}", tr.toString());
             }
         tm = myDummy();
         }

@@ -31,7 +31,7 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
     @Override
     public void sendz21Message(Z21Message m, Z21Listener replyTo) {
         if (log.isDebugEnabled()) {
-            log.debug("sendZ21Message [" + m + "]");
+            log.debug("sendZ21Message [{}]", m);
         }
         // save a copy
         outbound.addElement(m);
@@ -45,7 +45,7 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
     public void sendTestMessage(Z21Reply m) {
         // forward a test message to Z21Listeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
+            log.debug("sendTestMessage    [{}]", m);
         }
         notifyReply(m, null);
     }

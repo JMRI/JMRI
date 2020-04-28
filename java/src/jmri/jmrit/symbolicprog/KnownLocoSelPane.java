@@ -148,13 +148,13 @@ public class KnownLocoSelPane extends LocoSelPane {
         List<RosterEntry> l = Roster.getDefault().matchingList(null, null, Integer.toString(dccAddress),
                 null, null, null, null);
         if (log.isDebugEnabled()) {
-            log.debug("selectLoco found " + l.size() + " matches");
+            log.debug("selectLoco found {} matches", l.size());
         }
         if (l.size() > 0) {
             RosterEntry r = l.get(0);
             String id = r.getId();
             if (log.isDebugEnabled()) {
-                log.debug("Loco id is " + id);
+                log.debug("Loco id is {}", id);
             }
             String group = locoBox.getSelectedRosterGroup();
             if (group != null && !group.equals(Roster.ALLENTRIES)) {
@@ -168,7 +168,7 @@ public class KnownLocoSelPane extends LocoSelPane {
                 locoBox.setSelectedRosterEntry(r);
             }
         } else {
-            log.warn("Read address " + dccAddress + ", but no such loco in roster");
+            log.warn("Read address {}, but no such loco in roster", dccAddress);
         }
     }
 

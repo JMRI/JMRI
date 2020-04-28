@@ -343,7 +343,7 @@ public class RailDriverMenuItem extends JMenuItem
         try {
             TimeUnit.MILLISECONDS.sleep((long) (delay * 1000.0));
         } catch (InterruptedException ex) {
-            log.debug("TimeUnit.sleep InterruptedException: " + ex);
+            log.debug("TimeUnit.sleep InterruptedException: {}", ex);
         }
     }
 
@@ -462,7 +462,7 @@ public class RailDriverMenuItem extends JMenuItem
                 log.error("hidDevice.write error: {}", hidDevice.getLastErrorMessage());
             }
         } catch (IllegalStateException ex) {
-            log.error("hidDevice.write Exception : " + ex);
+            log.error("hidDevice.write Exception : {}", ex);
         }
     }
 
@@ -641,7 +641,7 @@ public class RailDriverMenuItem extends JMenuItem
                 // switch, this is also an analog input w/detents, not a switch!
                 // Small values (much less than 0.5) are off, values near 0.5 are
                 // slow, and larger values are full.
-                log.info("WIPER value: " + value);
+                log.info("WIPER value: {}", value);
             } else {
                 log.info("FUNCTION {} value: {}", oldValue, value);
                 if (functionPanel != null) {

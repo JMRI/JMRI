@@ -62,11 +62,11 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
             }
         });
         
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);}, "Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0), "Initialization Complete message");
     }
 
     @After
-    public void localTearDown() throws Exception {
+    public void localTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
         }

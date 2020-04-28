@@ -28,7 +28,7 @@ public abstract class StatusAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("starting StatusFrame caught exception: " + ex.toString());
+            log.error("starting StatusFrame caught exception: {}", ex.toString());
         }
         connect(f);
         f.setVisible(true);

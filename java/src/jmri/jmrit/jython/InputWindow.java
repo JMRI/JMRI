@@ -197,7 +197,7 @@ public class InputWindow extends JPanel {
                 results = true;
 
             } catch (IOException e) {
-                log.error("Unhandled problem in loadFile: " + e);
+                log.error("Unhandled problem in loadFile: {}", e);
             }
         } else {
             results = true;   // We assume that as the file is null then the user has clicked cancel.
@@ -235,7 +235,7 @@ public class InputWindow extends JPanel {
                 results = true;
 
             } catch (HeadlessException | IOException e) {
-                log.error("Unhandled problem in storeFile: " + e);
+                log.error("Unhandled problem in storeFile: {}", e);
             }
         } else {
             results = true;   // If the file is null then the user has clicked cancel.
@@ -250,7 +250,7 @@ public class InputWindow extends JPanel {
             return null;  // give up if no file selected
         }
         if (log.isDebugEnabled()) {
-            log.debug("Open file: " + fileChooser.getSelectedFile().getPath());
+            log.debug("Open file: {}", fileChooser.getSelectedFile().getPath());
         }
         return fileChooser.getSelectedFile();
     }
@@ -263,7 +263,7 @@ public class InputWindow extends JPanel {
         boolean results = loadFile(userFileChooser);
         log.debug(results ? "load was successful" : "load failed");
         if (!results) {
-            log.warn("Not loading file: " + userFileChooser.getSelectedFile().getPath());
+            log.warn("Not loading file: {}", userFileChooser.getSelectedFile().getPath());
         }
     }
 
@@ -275,7 +275,7 @@ public class InputWindow extends JPanel {
         boolean results = storeFile(userFileChooser);
         log.debug(results ? "store was successful" : "store failed");
         if (!results) {
-            log.warn("Not storing file: " + userFileChooser.getSelectedFile().getPath());
+            log.warn("Not storing file: {}", userFileChooser.getSelectedFile().getPath());
         }
     }
 

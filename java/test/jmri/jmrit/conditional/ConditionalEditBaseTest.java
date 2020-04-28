@@ -12,10 +12,7 @@ import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 
-import jmri.BlockManager;
 import jmri.Conditional;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
 
 /*
 * Tests for the ConditionalEditBase Class

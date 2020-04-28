@@ -2,10 +2,8 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
-import jmri.BlockManager;
-import jmri.InstanceManager;
+
 import jmri.JmriException;
-import jmri.ShutDownManager;
 import jmri.util.*;
 import org.junit.*;
 import org.netbeans.jemmy.operators.Operator;

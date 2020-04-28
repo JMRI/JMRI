@@ -167,7 +167,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      */
     @Override
     public void notifyThrottleFound(DccThrottle t) {
-        log.debug("Asked for " + currentAddress.getNumber() + " got " + t.getLocoAddress());
+        log.debug("Asked for {} got {}", currentAddress.getNumber(), t.getLocoAddress());
         if (consistAddress != null
                 && ((DccLocoAddress) t.getLocoAddress()).getNumber() == consistAddress.getNumber()) {
             // notify the listeners that a throttle was found
@@ -177,7 +177,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             return;
         }
         if (((DccLocoAddress) t.getLocoAddress()).getNumber() != currentAddress.getNumber()) {
-            log.warn("Not correct address, asked for " + currentAddress.getNumber() + " got " + t.getLocoAddress() + ", requesting again...");
+            log.warn("Not correct address, asked for {} got {}, requesting again...", currentAddress.getNumber(), t.getLocoAddress());
             boolean requestOK
                     = InstanceManager.throttleManagerInstance().requestThrottle(currentAddress, this, true);
             if (!requestOK) {
@@ -222,7 +222,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         for (int i = 0; i < listeners.size(); i++) {
             AddressListener l = listeners.get(i);
             if (log.isDebugEnabled()) {
-                log.debug("Notify address listener of throttle acquired " + l.getClass());
+                log.debug("Notify address listener of throttle acquired {}", l.getClass());
             }
             if (currentAddress != null) {
                 l.notifyAddressThrottleFound(throttle);
@@ -327,7 +327,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         for (int i = 0; i < listeners.size(); i++) {
             AddressListener l = listeners.get(i);
             if (log.isDebugEnabled()) {
-                log.debug("Notify address listener of address change " + l.getClass());
+                log.debug("Notify address listener of address change {}", l.getClass());
             }
             l.notifyConsistAddressThrottleFound(t);
         }
@@ -521,7 +521,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             if (0 < cA && cA < 128) {
                 consistAddress = new DccLocoAddress(cA, false);
             } else {
-                log.warn("consist number missing " + nceConsistRosterEntry.getLoco1DccAddress());
+                log.warn("consist number missing {}", nceConsistRosterEntry.getLoco1DccAddress());
                 JOptionPane.showMessageDialog(mainPanel,
                         Bundle.getMessage("ConsistNumberHasNotBeenAssigned"),
                         Bundle.getMessage("NeedsConsistNumber"),

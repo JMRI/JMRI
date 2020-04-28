@@ -180,7 +180,7 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
                 break;
 
             default:
-                log.error("Unexpected state on reply: " + state);
+                log.error("Unexpected state on reply: {}", state);
                 // clean up as much as possible
                 _usingProgrammer = null;
                 state = ProgState.NOTPROGRAMMING;

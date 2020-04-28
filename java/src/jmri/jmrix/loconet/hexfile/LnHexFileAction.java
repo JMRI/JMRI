@@ -23,7 +23,7 @@ public class LnHexFileAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("starting HexFileFrame exception: " + ex.toString());
+            log.error("starting HexFileFrame exception: {}", ex.toString());
         }
         f.pack();
         f.setVisible(true);

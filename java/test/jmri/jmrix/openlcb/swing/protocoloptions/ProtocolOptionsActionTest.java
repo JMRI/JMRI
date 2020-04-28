@@ -2,7 +2,6 @@ package jmri.jmrix.openlcb.swing.protocoloptions;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
-import jmri.jmrix.openlcb.swing.monitor.MonitorAction;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -36,7 +35,10 @@ public class ProtocolOptionsActionTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        memo.dispose();
+        memo = null;
+        tcs.terminateThreads();
+        tcs = null;
         JUnitUtil.tearDown();
 
     }

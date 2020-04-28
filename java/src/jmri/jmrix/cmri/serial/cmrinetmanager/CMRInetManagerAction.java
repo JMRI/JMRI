@@ -30,7 +30,7 @@ public class CMRInetManagerAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("CMRInetManagerAction-C2: " + ex.toString());
+            log.error("CMRInetManagerAction-C2: {}", ex.toString());
         }
         f.setLocation(20, 40);
         f.setVisible(true);

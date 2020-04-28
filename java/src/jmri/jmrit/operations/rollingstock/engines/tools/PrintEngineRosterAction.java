@@ -158,7 +158,7 @@ public class PrintEngineRosterAction extends AbstractAction {
                 writer.write(s + NEW_LINE);
             }
         } catch (IOException we) {
-            log.error("Error printing ConsistRosterEntry: " + we);
+            log.error("Error printing ConsistRosterEntry: {}", we);
         }
         // and force completion of the printing
         writer.close();

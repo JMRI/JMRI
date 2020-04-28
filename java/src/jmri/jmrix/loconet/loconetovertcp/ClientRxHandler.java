@@ -90,9 +90,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
                             case 3: // N byte message
 
                                 if (byte2 < 2) {
-                                    log.error("ClientRxHandler: LocoNet message length invalid: "
-                                            + byte2 + " opcode: "
-                                            + Integer.toHexString(opCode));
+                                    log.error("ClientRxHandler: LocoNet message length invalid: {} opcode: {}", byte2, Integer.toHexString(opCode));
                                 }
                                 msg = new LocoNetMessage(byte2);
                                 break;

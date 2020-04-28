@@ -70,9 +70,7 @@ public class TamsReply extends jmri.jmrix.AbstractMRReply {
                 val = Integer.parseInt(s);
             }
             catch (Exception e) {
-                log.error("Unable to get number from reply: \"" + s
-                        + "\" index: " + index + " message: \"" + toString()
-                        + "\"");
+                log.error("Unable to get number from reply: \"{}\" index: {} message: \"{}\"", s, index, toString());
             }
             log.info(Integer.toString(val));
             return val;

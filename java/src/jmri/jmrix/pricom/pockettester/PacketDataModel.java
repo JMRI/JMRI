@@ -128,7 +128,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
                     f.setFilter((String) getValueAt(row, ADDRESSCOLUMN));
                     source.addListener(f);
                 } catch (Exception ex) {
-                    log.error("starting MonitorFrame caught exception: " + ex.toString());
+                    log.error("starting MonitorFrame caught exception: {}", ex.toString());
                 }
                 f.setVisible(true);
 

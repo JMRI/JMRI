@@ -95,7 +95,7 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
         Pattern p = Pattern.compile("" + tm.getSystemPrefix() + tm.typeLetter() + "(\\d+)");
         Matcher m = p.matcher(cr.getTagID());
         if (m.find()) {
-            log.debug("Parsed address: " + m.group(1));
+            log.debug("Parsed address: {}", m.group(1));
             // I have no idea what kind of loco address an Ecos reporter uses,
             // so we'll default to DCC for now.
             return (new DccLocoAddress(Integer.parseInt(m.group(1)), LocoAddress.Protocol.DCC));

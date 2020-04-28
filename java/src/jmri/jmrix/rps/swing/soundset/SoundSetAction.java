@@ -31,7 +31,7 @@ public class SoundSetAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("starting frame: Exception: " + ex.toString());
+            log.warn("starting frame: Exception: {}", ex.toString());
         }
         f.setVisible(true);
 

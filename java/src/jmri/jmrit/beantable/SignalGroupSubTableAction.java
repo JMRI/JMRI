@@ -105,7 +105,7 @@ public class SignalGroupSubTableAction {
         int result = jmri.util.StringUtil.getStateFromName(mode, operValues, oper);
 
         if (result < 0) {
-            log.warn("unexpected mode string in Signal Head Appearance Mode: " + mode);
+            log.warn("unexpected mode string in Signal Head Appearance Mode: {}", mode);
             throw new IllegalArgumentException();
         }
         if (result == 0) {
@@ -138,7 +138,7 @@ public class SignalGroupSubTableAction {
         }
 
         if (result < 0) {
-            log.warn("unexpected mode string in signalHeadMode: " + mode);
+            log.warn("unexpected mode string in signalHeadMode: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -173,7 +173,7 @@ public class SignalGroupSubTableAction {
         int result = jmri.util.StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
 
         if (result < 0) {
-            log.warn("unexpected mode string in Signal Head Appearance: " + mode);
+            log.warn("unexpected mode string in Signal Head Appearance: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -207,7 +207,7 @@ public class SignalGroupSubTableAction {
         int result = jmri.util.StringUtil.getStateFromName(mode, turnoutInputModeValues, turnoutInputModes);
 
         if (result < 0) {
-            log.warn("unexpected mode string in turnoutMode: " + mode);
+            log.warn("unexpected mode string in turnoutMode: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;

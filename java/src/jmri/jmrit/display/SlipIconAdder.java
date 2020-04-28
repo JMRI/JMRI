@@ -500,8 +500,7 @@ public class SlipIconAdder extends IconAdder {
         }
         String key = _iconOrderList.get(index);
         if (log.isDebugEnabled()) {
-            log.debug("delete(" + index + ") Sizes: _iconMap= " + _iconMap.size()
-                    + ", _iconOrderList= " + _iconOrderList.size());
+            log.debug("delete({}) Sizes: _iconMap= {}, _iconOrderList= {}", index, _iconMap.size(), _iconOrderList.size());
         }
         _iconMap.remove(key);
         _iconOrderList.remove(index);
@@ -632,8 +631,7 @@ public class SlipIconAdder extends IconAdder {
                         }
                         e.dropComplete(true);
                         if (log.isDebugEnabled()) {
-                            log.debug("DropPanel.drop COMPLETED for "
-                                    + comp.getName());
+                            log.debug("DropPanel.drop COMPLETED for {}", comp.getName());
                         }
                     } else {
                         if (log.isDebugEnabled()) {

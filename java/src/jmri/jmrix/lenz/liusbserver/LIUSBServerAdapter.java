@@ -208,8 +208,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                         break; // then exit the for loop.
                     }
                     if (log.isDebugEnabled()) {
-                        log.debug("Network Adapter Received Reply: "
-                                + r.toString());
+                        log.debug("Network Adapter Received Reply: {}", r.toString());
                     }
                     r.setUnsolicited(); // Anything coming through the
                     // broadcast port is an

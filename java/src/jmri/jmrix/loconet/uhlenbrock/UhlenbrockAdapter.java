@@ -98,11 +98,7 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
 
         configureLeadsAndFlowControl(activeSerialPort, SerialPort.FLOWCONTROL_NONE);
 
-        log.info("Uhlenbrock adapter"
-                + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
-                + activeSerialPort.getFlowControlMode()
-                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
-                + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN);
+        log.info("Uhlenbrock adapter{}{} RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN, activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=", activeSerialPort.getFlowControlMode());
     }
 
     /**

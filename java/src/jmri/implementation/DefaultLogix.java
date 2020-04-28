@@ -243,7 +243,7 @@ public class DefaultLogix extends AbstractNamedBean
             cName = _conditionalSystemNames.get(i);
             c = getConditional(cName);
             if (c == null) {
-                log.error("Invalid conditional system name when calculating Logix - " + cName);  // NOI18N
+                log.error("Invalid conditional system name when calculating Logix - {}", cName);  // NOI18N
             } else {
                 // calculate without taking any action unless Logix is enabled
                 c.calculate(mEnabled, null);
@@ -592,9 +592,7 @@ public class DefaultLogix extends AbstractNamedBean
                                 break;
                             default:
                                 if (!LRouteTableAction.LOGIX_INITIALIZER.equals(varName)) {
-                                    log.error("Unknown (new) Variable Listener type= " + varListenerType + ", for varName= "  // NOI18N
-                                            + varName + ", varType= " + varType + " in Conditional, "  // NOI18N
-                                            + _conditionalSystemNames.get(i));
+                                    log.error("Unknown (new) Variable Listener type= {}, for varName= {}, varType= {} in Conditional, {}", varListenerType, varName, varType, _conditionalSystemNames.get(i));
                                 }
                                 continue;
                         }
@@ -632,9 +630,7 @@ public class DefaultLogix extends AbstractNamedBean
                                 }
                                 break;
                             default:
-                                log.error("Unknown (old) Variable Listener type= " + varListenerType + ", for varName= "  // NOI18N
-                                        + varName + ", varType= " + varType + " in Conditional, "  // NOI18N
-                                        + _conditionalSystemNames.get(i));
+                                log.error("Unknown (old) Variable Listener type= {}, for varName= {}, varType= {} in Conditional, {}", varListenerType, varName, varType, _conditionalSystemNames.get(i));
                         }
                     }
                     // addition listeners needed for memory compare
@@ -654,7 +650,7 @@ public class DefaultLogix extends AbstractNamedBean
                                         conditional);
                                 _listeners.add(listener);
                             } catch (IllegalArgumentException ex) {
-                                log.error("invalid memory name= \"" + name + "\" in state variable");  // NOI18N
+                                log.error("invalid memory name= \"{}\" in state variable", name);  // NOI18N
                                 break;
                             }
                         } else {
@@ -664,9 +660,7 @@ public class DefaultLogix extends AbstractNamedBean
                     }
                 }
             } else {
-                log.error("invalid conditional system name in Logix \"" + getSystemName()  // NOI18N
-                        + "\" assembleListenerList DELETING "  // NOI18N
-                        + _conditionalSystemNames.get(i) + " from Conditional list.");  // NOI18N
+                log.error("invalid conditional system name in Logix \"{}\" assembleListenerList DELETING {} from Conditional list.", getSystemName(), _conditionalSystemNames.get(i));  // NOI18N
                 _conditionalSystemNames.remove(i);
 
             }
@@ -932,8 +926,7 @@ public class DefaultLogix extends AbstractNamedBean
         } catch (Exception ex) {
             log.error("Bad name for listener on \"{}\": ", listener.getDevName(), ex);  // NOI18N
         }
-        log.error("Bad name for " + msg + " listener on \"" + listener.getDevName()  // NOI18N
-                + "\" when removing");  // NOI18N
+        log.error("Bad name for {} listener on \"{}\" when removing", msg, listener.getDevName());  // NOI18N
     }
 
     /* /**

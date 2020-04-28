@@ -48,16 +48,16 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
         Light o = l.newLight("GL1105", "my name");
 
         if (log.isDebugEnabled()) {
-            log.debug("received light value " + o);
+            log.debug("received light value {}", o);
         }
         Assert.assertTrue(null != (SerialLight) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("GL1105"));
+            log.debug("by system name: {}", l.getBySystemName("GL1105"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
+            log.debug("by user name:   {}", l.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != l.getBySystemName("GL1105"));

@@ -2,12 +2,10 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import jmri.BlockManager;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.ShutDownManager;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;

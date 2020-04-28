@@ -409,15 +409,10 @@ public class LocoIOData extends PropertyChangeSupport
                             // type = 0 for cv, 1 for value1, 2 for value2
                             // We can't update the mode until we have all three values
                             // Sequence (from state machine below) is V2, V1, Mode
-                            log.debug("... updating port " + channel // NOI18N
-                                    + " SV" + type // NOI18N
-                                    + "(" // NOI18N
-                                    + (type == 1 ? "value1" // NOI18N
-                                            : type == 2 ? "value2" // NOI18N
-                                                    : type == 0 ? "mode" // NOI18N
-                                                            : "unknown") // NOI18N
-                                    + ") = 0x" // NOI18N
-                                    + Integer.toHexString(data));
+                            log.debug("... updating port {} SV{}({}) = 0x{}", channel, type, type == 1 ? "value1" // NOI18N
+                                    : type == 2 ? "value2" // NOI18N
+                                    : type == 0 ? "mode" // NOI18N
+                                    : "unknown", Integer.toHexString(data));
                             if (type == 2) {            // v2
                                 setV2(channel, data);
                                 setMode(channel, "<none>"); // NOI18N
@@ -436,11 +431,7 @@ public class LocoIOData extends PropertyChangeSupport
                                     setMode(channel, lim.getFullMode());
                                     setAddr(channel, validmodes.valuesToAddress(lim.getOpCode(), getSV(channel), getV1(channel), getV2(channel)));
                                 }
-                                log.debug("... decoded address (" // NOI18N
-                                        + "cv=" + Integer.toHexString(getSV(channel)) + " " // NOI18N
-                                        + "v1=" + Integer.toHexString(getV1(channel)) + " " // NOI18N
-                                        + "v2=" + Integer.toHexString(getV2(channel)) + ") " // NOI18N
-                                        + "is " + getAddr(channel) + "(0x" + Integer.toHexString(getAddr(channel)) + ")"); // NOI18N
+                                log.debug("... decoded address (cv={} v1={} v2={}) is {}(0x{})", Integer.toHexString(getSV(channel)), Integer.toHexString(getV1(channel)), Integer.toHexString(getV2(channel)), getAddr(channel), Integer.toHexString(getAddr(channel))); // NOI18N
                             } else {
                                 log.warn("OPC_PEER_XFR: Type ({}) is not {0,1,2} for channel {}", type, channel); // NOI18N
                             }

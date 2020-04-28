@@ -58,7 +58,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     synchronized public void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("writeCV " + CV + " listens " + p);
+            log.debug("writeCV {} listens {}", CV, p);
         }
         useProgrammer(p);
         _progRead = false;
@@ -94,7 +94,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     synchronized public void confirmCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("confirmCV " + CV + " val " + val + " listens " + p);
+            log.debug("confirmCV {} val {} listens {}", CV, val, p);
         }
         useProgrammer(p);
         _progRead = false;
@@ -130,7 +130,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("readCV " + CV + " listens " + p);
+            log.debug("readCV {} listens {}", CV, p);
         }
         useProgrammer(p);
         _progRead = true;
@@ -166,7 +166,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isDebugEnabled()) {
-                log.debug("programmer already in use by " + _usingProgrammer);
+                log.debug("programmer already in use by {}", _usingProgrammer);
             }
             throw new jmri.ProgrammerException("programmer in use");
         } else {
@@ -179,7 +179,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
      */
     @Override
     public void message(SRCPMessage m) {
-        log.error("message received unexpectedly: " + m.toString());
+        log.error("message received unexpectedly: {}", m.toString());
     }
 
     /** 
@@ -193,7 +193,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
                 log.debug("reply in NOTPROGRAMMING state");
             }
             if (!m.isResponseOK()) {
-                log.warn("Reply \"" + m.toString() + "\"");
+                log.warn("Reply \"{}\"", m.toString());
             }
         } else if (progState == COMMANDSENT) {
             if (log.isDebugEnabled()) {
@@ -204,9 +204,9 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
             // check for errors
             if (!m.isResponseOK()) {
                 if (log.isDebugEnabled()) {
-                    log.debug("handle error reply " + m);
+                    log.debug("handle error reply {}", m);
                 }
-                log.warn("Reply \"" + m.toString() + "\"");
+                log.warn("Reply \"{}\"", m.toString());
                 if (_progConfirm && m.getResponseCode().equals("412")) {
                     // handle the Verify return message "412 ERROR wrong value"
                     notifyProgListenerEnd(_val, jmri.ProgListener.ConfirmFailed);
@@ -236,7 +236,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     @Override
     synchronized public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {
         if (log.isDebugEnabled()) {
-            log.debug("reply called with simpleNode " + n.jjtGetValue());
+            log.debug("reply called with simpleNode {}", n.jjtGetValue());
         }
         if (n.jjtGetChild(3) instanceof jmri.jmrix.srcp.parser.ASTsm) {
             reply(new SRCPReply(n));
@@ -275,7 +275,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     // internal method to notify of the final result
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) {
-            log.debug("notifyProgListenerEnd value " + value + " status " + status);
+            log.debug("notifyProgListenerEnd value {} status {}", value, status);
         }
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_

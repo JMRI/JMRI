@@ -84,7 +84,7 @@ public class PushbuttonPacket {
             }
             return bl;
         } else {
-            log.error("Invalid decoder name for turnout " + turnoutNum);
+            log.error("Invalid decoder name for turnout {}", turnoutNum);
             throw new IllegalArgumentException("Illegal decoder name");
         }
     }
@@ -120,9 +120,7 @@ public class PushbuttonPacket {
                 } else if (CVP_2Bname.equals(t.getDecoderName())) {
                     button = twoButton;
                 } else {
-                    log.warn("Turnout " + modTurnoutNum
-                            + ", all CVP turnouts on one decoder should be "
-                            + CVP_1Bname + " or " + CVP_2Bname);
+                    log.warn("Turnout {}, all CVP turnouts on one decoder should be " + CVP_1Bname + " or " + CVP_2Bname, modTurnoutNum);
                 }
                 // zero out the bits if the turnout is locked
                 if (t.getLocked(Turnout.PUSHBUTTONLOCKOUT)) {

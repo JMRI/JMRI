@@ -76,7 +76,7 @@ public class MomentarySoundEvent extends SoundEvent {
     protected ButtonTrigger setupButtonAction(Element te) {
         bt = new ButtonTrigger(te.getAttributeValue("name"));
         button_trigger_list.put(bt.getName(), bt);
-        log.debug("new ButtonTrigger " + bt.getName() + " type " + buttontype.toString());
+        log.debug("new ButtonTrigger {} type {}", bt.getName(), buttontype.toString());
         button.addMouseListener(bt);
         return (bt);  // cast OK since we just instantiated it up above.
     }

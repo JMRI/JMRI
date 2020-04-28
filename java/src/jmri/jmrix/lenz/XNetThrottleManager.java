@@ -41,7 +41,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements XNet
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         XNetThrottle throttle;
         if (log.isDebugEnabled()) {
-            log.debug("Requesting Throttle: " + address);
+            log.debug("Requesting Throttle: {}", address);
         }
         // range check for LH200 and Compact/Commander
         if (tc.getCommandStation().getCommandStationType() == 0x01 ||

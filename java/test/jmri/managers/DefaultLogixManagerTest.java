@@ -1,6 +1,5 @@
 package jmri.managers;
 
-import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -10,7 +9,6 @@ import org.junit.Test;
 
 import jmri.Logix;
 import jmri.LogixManager;
-import jmri.ShutDownManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**

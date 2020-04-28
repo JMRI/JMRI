@@ -14,6 +14,7 @@ public class GuiLafPreferencesManagerTest {
 
     @Test
     public void testCTor() {
+        @SuppressWarnings("deprecation")
         GuiLafPreferencesManager t = new GuiLafPreferencesManager();
         Assert.assertNotNull("exists",t);
     }

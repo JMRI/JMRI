@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Vector;
 import javax.annotation.Nonnull;
 import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;

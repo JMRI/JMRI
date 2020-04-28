@@ -11,7 +11,7 @@ import java.util.Enumeration;
 
 import javax.swing.JFrame;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.InstanceManager;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;

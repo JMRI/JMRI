@@ -110,9 +110,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
      */
     public void finishLoad() {
         synchronized (pendingTurnouts) {
-            pendingTurnouts.forEach((t) -> {
-                t.finishLoad();
-            });
+            pendingTurnouts.forEach(OlcbTurnout::finishLoad);
             pendingTurnouts.clear();
             isLoading = false;
         }

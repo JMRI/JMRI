@@ -68,7 +68,7 @@ public class ExportEngines extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete: " + e);
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}", e);
         }
     }
 
@@ -129,12 +129,12 @@ public class ExportEngines extends XmlFile {
             }
             fileOut.flush();
             fileOut.close();
-            log.info("Exported " + engineList.size() + " engines to file " + defaultOperationsFilename());
+            log.info("Exported {} engines to file {}", engineList.size(), defaultOperationsFilename());
             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedEnginesToFile"),
                     new Object[]{engineList.size(), defaultOperationsFilename()}), Bundle.getMessage("ExportComplete"),
                     JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
-            log.error("Can not open export engines CSV file: " + file.getName());
+            log.error("Can not open export engines CSV file: {}", file.getName());
             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedEnginesToFile"),
                     new Object[]{0, defaultOperationsFilename()}), Bundle.getMessage("ExportFailed"),
                     JOptionPane.ERROR_MESSAGE);

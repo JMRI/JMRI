@@ -44,7 +44,7 @@ public class SwingShutDownTaskTest {
                 null) {
                     @Override
                     public boolean checkPromptNeeded() {
-                        log.debug("mDST " + modalDialogStopsTest);
+                        log.debug("mDST {}", modalDialogStopsTest);
                         return !modalDialogStopsTest;
                     }
                 };
@@ -63,7 +63,7 @@ public class SwingShutDownTaskTest {
                 null) {
                     @Override
                     public boolean checkPromptNeeded() {
-                        log.debug("mDST " + modalDialogStopsTest);
+                        log.debug("mDST {}", modalDialogStopsTest);
                         return !modalDialogStopsTest;
                     }
 

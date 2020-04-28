@@ -35,9 +35,8 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         // set closed
         try {
             t.setCommandedState(jmri.Turnout.CLOSED);
-        }
-        catch (Exception e) {
-            log.error("TO exception: " + e);
+        } catch (Exception e) {
+            log.error("TO exception: {}", e);
         }
 
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);

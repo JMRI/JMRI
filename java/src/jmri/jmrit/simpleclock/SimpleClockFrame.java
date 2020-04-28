@@ -434,7 +434,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, (Bundle.getMessage("ParseRateError") + "\n" + e),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            log.error("Exception when parsing user-entered rate: " + e);
+            log.error("Exception when parsing user-entered rate: {}", e);
             return null;
         }
         if (rate < 0.0) {
@@ -468,7 +468,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         } catch (TimebaseRateException e) {
             JOptionPane.showMessageDialog(this, (Bundle.getMessage("SetRateError") + "\n" + e),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            log.error("Exception when setting timebase rate: " + e);
+            log.error("Exception when setting timebase rate: {}", e);
         }
         changed = true;
     }
@@ -545,7 +545,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, (Bundle.getMessage("HoursError") + "\n" + e),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            log.error("Exception when parsing hours Field: " + e);
+            log.error("Exception when parsing hours Field: {}", e);
             return;
         }
         if ((hours < 0) || (hours > 23)) {
@@ -559,7 +559,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, (Bundle.getMessage("MinutesError") + "\n" + e),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            log.error("Exception when parsing Minutes Field: " + e);
+            log.error("Exception when parsing Minutes Field: {}", e);
             return;
         }
         if ((minutes < 0) || (minutes > 59)) {
@@ -620,7 +620,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, (Bundle.getMessage("HoursError") + "\n" + e),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            log.error("Exception when parsing hours Field: " + e);
+            log.error("Exception when parsing hours Field: {}", e);
             return;
         }
         if ((hours < 0) || (hours > 23)) {
@@ -634,7 +634,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, (Bundle.getMessage("MinutesError") + "\n" + e),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            log.error("Exception when parsing Minutes Field: " + e);
+            log.error("Exception when parsing Minutes Field: {}", e);
             return;
         }
         if ((minutes < 0) || (minutes > 59)) {

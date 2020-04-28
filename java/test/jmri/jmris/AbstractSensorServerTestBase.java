@@ -1,7 +1,6 @@
 package jmri.jmris;
 
 import jmri.InstanceManager;
-import jmri.Sensor;
 import jmri.SensorManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

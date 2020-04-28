@@ -134,7 +134,7 @@ public class SRCPPowerManager implements PowerManager, SRCPListener {
     @Override
     public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {
         if (log.isDebugEnabled()) {
-            log.debug("reply called with simpleNode " + n.jjtGetValue());
+            log.debug("reply called with simpleNode {}", n.jjtGetValue());
         }
         reply(new SRCPReply(n));
     }

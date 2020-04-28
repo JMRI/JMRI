@@ -585,7 +585,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         int result = jmri.util.StringUtil.getStateFromName(mode, turnoutStateValues, turnoutStates);
 
         if (result < 0) {
-            log.warn("unexpected mode string in turnoutMode: " + mode);
+            log.warn("unexpected mode string in turnoutMode: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -597,7 +597,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         } else if (state == iTurnoutStates[1]) {
             box.setSelectedIndex(1);
         } else {
-            log.error("unexpected turnout state value: " + state);
+            log.error("unexpected turnout state value: {}", state);
         }
     }
 
@@ -606,7 +606,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         int result = jmri.util.StringUtil.getStateFromName(mode, signalStatesValues, signalStates);
 
         if (result < 0) {
-            log.warn("unexpected mode string in signalMode: " + mode);
+            log.warn("unexpected mode string in signalMode: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -642,7 +642,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 box.setSelectedIndex(8);
                 break;
             default:
-                log.error("unexpected Signal state value: " + state);
+                log.error("unexpected Signal state value: {}", state);
         }
 
         /*if (state==iSignalStates[0]) box.setSelectedIndex(0);
@@ -655,7 +655,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         int result = jmri.util.StringUtil.getStateFromName(mode, signalheadTypeValues, signalheadTypes);
 
         if (result < 0) {
-            log.warn("unexpected mode string in signalhead appearance type: " + mode);
+            log.warn("unexpected mode string in signalhead appearance type: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -671,7 +671,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         } else if (state == iSignalheadTypes[3]) {
             box.setSelectedIndex(3);
         } else {
-            log.error("unexpected signalhead type value: " + state);
+            log.error("unexpected signalhead type value: {}", state);
         }
     }
 
@@ -684,7 +684,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         } else if (box.getSelectedIndex() == 2) {
             return 4;
         } else {
-            log.warn("unexpected appearance" + box.getSelectedItem());
+            log.warn("unexpected appearance{}", box.getSelectedItem());
             throw new IllegalArgumentException();
         }
     }
@@ -697,7 +697,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         } else if (val == 4) {
             box.setSelectedIndex(2);
         } else {
-            log.error("Unexpected Signal Appearance" + val);
+            log.error("Unexpected Signal Appearance{}", val);
         }
     }
 
@@ -708,7 +708,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         } else if (box.getSelectedIndex() == 1) {
             return "Distant"; // NOI18N
         } else {
-            log.warn("unexpected appearance" + box.getSelectedItem());
+            log.warn("unexpected appearance{}", box.getSelectedItem());
             throw new IllegalArgumentException();
         }
     }
@@ -719,7 +719,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         } else if (val.equals(ukSignalType[1])) {
             box.setSelectedIndex(1);
         } else {
-            log.error("Unexpected Signal Type " + val);
+            log.error("Unexpected Signal Type {}", val);
         }
     }
 
@@ -1156,7 +1156,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             });
 
         } else {
-            log.error("Unexpected type in typeChanged: " + typeBox.getSelectedItem());
+            log.error("Unexpected type in typeChanged: {}", typeBox.getSelectedItem());
         }
 
         // make sure size OK
@@ -1202,7 +1202,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             //Need to check that the Systemname doesn't already exists as a UserName
             SignalHead nB = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(sysName);
             if (nB != null) {
-                log.error("System name is not unique " + sysName + " It already exists as a User name");
+                log.error("System name is not unique {} It already exists as a User name", sysName);
                 String msg = Bundle.getMessage("WarningSystemNameAsUser", new Object[]{("" + sysName)});
                 JOptionPane.showMessageDialog(editFrame, msg,
                         Bundle.getMessage("WarningTitle"),
@@ -1212,7 +1212,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             return true;
         }
         // inform the user if signal head already exists, and return false so creation can be bypassed
-        log.warn("Attempt to create signal with duplicate system name " + sysName);
+        log.warn("Attempt to create signal with duplicate system name {}", sysName);
         String msg = Bundle.getMessage("DuplicateSignalSystemName", new Object[]{sysName});
         JOptionPane.showMessageDialog(addFrame, msg,
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
@@ -1251,7 +1251,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     }*/
 
     private void addTurnoutMessage(String s1, String s2) {
-        log.warn("Could not provide turnout " + s2);
+        log.warn("Could not provide turnout {}", s2);
         String msg = Bundle.getMessage("AddNoTurnout", s1, s2);
         JOptionPane.showMessageDialog(addFrame, msg,
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
@@ -1326,7 +1326,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                         sh.setOutputSignalHeadType(headnumber, AcelaNode.WIGWAG);
                         break;
                     default:
-                        log.warn("Unexpected Acela Aspect type: " + st);
+                        log.warn("Unexpected Acela Aspect type: {}", st);
                         sh.setOutputSignalHeadType(headnumber, AcelaNode.UKNOWN);
                         break;  // default to triple
                 }
@@ -1371,7 +1371,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                         addTurnoutMessage(v4Border.getTitle(), to4.getDisplayName());
                     }
                     if (t4 == null || t3 == null || t2 == null || t1 == null) {
-                        log.warn("skipping creation of signal " + systemNameTextField.getText() + " due to error");
+                        log.warn("skipping creation of signal {} due to error", systemNameTextField.getText());
                         return;
                     }
                     s = new jmri.implementation.QuadOutputSignalHead(systemNameTextField.getText(), userNameTextField.getText(),
@@ -1398,7 +1398,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                         addTurnoutMessage(v3Border.getTitle(), to3.getDisplayName());
                     }
                     if (t3 == null || t2 == null || t1 == null) {
-                        log.warn("skipping creation of signal " + systemNameTextField.getText() + " due to error");
+                        log.warn("skipping creation of signal {} due to error", systemNameTextField.getText());
                         return;
                     }
 
@@ -1425,7 +1425,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                         addTurnoutMessage(v3Border.getTitle(), to3.getDisplayName());
                     }
                     if (t3 == null || t2 == null || t1 == null) {
-                        log.warn("skipping creation of signal " + systemNameTextField.getText() + " due to error");
+                        log.warn("skipping creation of signal {} due to error", systemNameTextField.getText());
                         return;
                     }
 
@@ -1448,7 +1448,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                         addTurnoutMessage(v2Border.getTitle(), to2.getDisplayName());
                     }
                     if (t2 == null || t1 == null) {
-                        log.warn("skipping creation of signal " + systemNameTextField.getText() + " due to error");
+                        log.warn("skipping creation of signal {} due to error", systemNameTextField.getText());
                         return;
                     }
 
@@ -1469,7 +1469,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                         addTurnoutMessage(v1Border.getTitle(), to1.getDisplayName());
                     }
                     if (t1 == null) {
-                        log.warn("skipping creation of signal " + systemNameTextField.getText() + " due to error");
+                        log.warn("skipping creation of signal {} due to error", systemNameTextField.getText());
                         return;
                     }
 
@@ -1522,7 +1522,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                         addTurnoutMessage(v7Border.getTitle(), to7.getDisplayName());
                     }
                     if (t7 == null || t6 == null || t5 == null || t4 == null || t3 == null || t2 == null || t1 == null) {
-                        log.warn("skipping creation of signal " + systemNameTextField.getText() + " due to error");
+                        log.warn("skipping creation of signal {} due to error", systemNameTextField.getText());
                         return;
                     }
                     s = new jmri.implementation.LsDecSignalHead(systemNameTextField.getText(),
@@ -1541,7 +1541,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             } else if (mergSignalDriver.equals(typeBox.getSelectedItem())) {
                 handleMergSignalDriverOkPressed();
             } else {
-                log.error("Unexpected type: " + typeBox.getSelectedItem());
+                log.error("Unexpected type: {}", typeBox.getSelectedItem());
             }
 
         } catch (NumberFormatException ex) {
@@ -1707,7 +1707,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                             (Bundle.getMessage("OutputComment", Bundle.getMessage("BeanNameSignalHead"), systemNameTextField.getText(), Bundle.getMessage("InputNum", "3"))));
                     if (t3 == null) {
                         addTurnoutMessage(v5Border.getTitle(), to5.getDisplayName());
-                        log.warn("skipping creation of signal " + systemNameTextField.getText() + " due to error");
+                        log.warn("skipping creation of signal {} due to error", systemNameTextField.getText());
                         return;
                     } else {
                         nbt3 = nbhm.getNamedBeanHandle(to5.getDisplayName(), t3);
@@ -1719,7 +1719,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                             (Bundle.getMessage("OutputComment", Bundle.getMessage("BeanNameSignalHead"), systemNameTextField.getText(), Bundle.getMessage("InputNum", "2"))));
                     if (t2 == null) {
                         addTurnoutMessage(v4Border.getTitle(), to4.getDisplayName());
-                        log.warn("skipping creation of signal " + systemNameTextField.getText() + " due to error");
+                        log.warn("skipping creation of signal {} due to error", systemNameTextField.getText());
                         return;
                     } else {
                         nbt2 = nbhm.getNamedBeanHandle(to4.getDisplayName(), t2);
@@ -1730,7 +1730,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                             (Bundle.getMessage("OutputComment", Bundle.getMessage("BeanNameSignalHead"), systemNameTextField.getText(), Bundle.getMessage("InputNum", "1"))));
                     if (t1 == null) {
                         addTurnoutMessage(v3Border.getTitle(), to3.getDisplayName());
-                        log.warn("skipping creation of signal " + systemNameTextField.getText() + " due to error");
+                        log.warn("skipping creation of signal {} due to error", systemNameTextField.getText());
                         return;
                     } else {
                         nbt1 = nbhm.getNamedBeanHandle(to3.getDisplayName(), t1);
@@ -1824,7 +1824,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             }
         };
         if (log.isDebugEnabled()) {
-            log.debug("editPressed started for " + eSName);
+            log.debug("editPressed started for {}", eSName);
         }
         javax.swing.SwingUtilities.invokeLater(t);
     }
@@ -1839,7 +1839,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             if (eSName.equals(editSysName)) {
                 editFrame.setVisible(true);
             } else {
-                log.error("Attempt to edit two signal heads at the same time-" + editSysName + "-and-" + eSName + "-");
+                log.error("Attempt to edit two signal heads at the same time-{}-and-{}-", editSysName, eSName);
                 String msg = Bundle.getMessage("WarningEdit", new Object[]{editSysName, eSName});
                 JOptionPane.showMessageDialog(editFrame, msg,
                         Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
@@ -2208,7 +2208,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             AcelaNode tNode = AcelaAddress.getNodeFromSystemName(curS.getSystemName(), jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
             if (tNode == null) {
                 // node does not exist, ignore call
-                log.error("Can't find new Acela Signal with name '" + curS.getSystemName());
+                log.error("Can't find new Acela Signal with name '{}", curS.getSystemName());
                 return;
             }
             int headnumber = Integer.parseInt(curS.getSystemName().substring(2, curS.getSystemName().length()));
@@ -2282,7 +2282,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             });
             ukAspectChange(true);
         } else {
-            log.error("Cannot edit SignalHead of unrecognized type: " + className);
+            log.error("Cannot edit SignalHead of unrecognized type: {}", className);
         }
         // finish up
         editFrame.pack();
@@ -2611,7 +2611,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             ((DccSignalHead) curS).useAddressOffSet(dccOffSetAddressEdt.isSelected());
             ((DccSignalHead) curS).setDccSignalHeadPacketSendCount(((int) dccPacketSendCountSpinner.getValue()));
         } else {
-            log.error("Internal error - cannot update signal of type " + className);
+            log.error("Internal error - cannot update signal of type {}", className);
         }
         // successful
         editFrame.setVisible(false);
@@ -2623,7 +2623,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             // user name changed, check if new name already exists
             NamedBean nB = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(nam);
             if (nB != null) {
-                log.error("User name is not unique " + nam);
+                log.error("User name is not unique {}", nam);
                 String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + nam)});
                 JOptionPane.showMessageDialog(editFrame, msg,
                         Bundle.getMessage("WarningTitle"),
@@ -2633,7 +2633,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             //Check to ensure that the username doesn't exist as a systemname.
             nB = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(nam);
             if (nB != null) {
-                log.error("User name is not unique " + nam + " It already exists as a System name");
+                log.error("User name is not unique {} It already exists as a System name", nam);
                 String msg = Bundle.getMessage("WarningUserNameAsSystem", new Object[]{("" + nam)});
                 JOptionPane.showMessageDialog(editFrame, msg,
                         Bundle.getMessage("WarningTitle"),
@@ -2646,7 +2646,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     }
 
     private void noTurnoutMessage(String s1, String s2) {
-        log.warn("Could not provide turnout " + s2);
+        log.warn("Could not provide turnout {}", s2);
         String msg = Bundle.getMessage("WarningNoTurnout", s1, s2);
         JOptionPane.showMessageDialog(editFrame, msg,
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
@@ -2815,7 +2815,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         try {
             return bp.getNamedBean();
         } catch (jmri.JmriException ex) {
-            log.warn("skipping creation of turnout not found for " + reference);
+            log.warn("skipping creation of turnout not found for {}", reference);
             return null;
         }
     }

@@ -347,7 +347,7 @@ abstract public class AbstractPortController implements PortAdapter {
         try {
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
-            log.error("Sleep Exception raised during reconnection attempt" + s);
+            log.error("Sleep Exception raised during reconnection attempt{}", s);
         }
     }
 
@@ -379,7 +379,7 @@ abstract public class AbstractPortController implements PortAdapter {
      @SuppressFBWarnings(value = "SR_NOT_CHECKED", justification = "skipping all, don't care what skip() returns")
      protected void purgeStream(@Nonnull java.io.InputStream serialStream) throws java.io.IOException {
         int count = serialStream.available();
-        log.debug("input stream shows " + count + " bytes available");
+         log.debug("input stream shows {} bytes available", count);
         while (count > 0) {
             serialStream.skip(count);
             count = serialStream.available();

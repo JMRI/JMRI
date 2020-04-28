@@ -125,7 +125,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             f.initComponents();
         }
         catch (Exception ex) {
-            log.warn("SerialMonFrame starting SerialFilterFrame: Exception: " + ex.toString());
+            log.warn("SerialMonFrame starting SerialFilterFrame: Exception: {}", ex.toString());
         }
         f.setVisible(true);
     }

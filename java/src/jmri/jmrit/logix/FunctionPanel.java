@@ -103,8 +103,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     @Override
     public void notifyFunctionStateChanged(int functionNumber, boolean isSet) {
         if (log.isDebugEnabled()) {
-            log.debug("notifyFunctionStateChanged: functionNumber= "
-                    + functionNumber + " isSet= " + isSet);
+            log.debug("notifyFunctionStateChanged: functionNumber= {} isSet= {}", functionNumber, isSet);
         }
         switch (functionNumber) {
             case 0:
@@ -208,8 +207,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     @Override
     public void notifyFunctionLockableChanged(int functionNumber, boolean isLockable) {
         if (log.isDebugEnabled()) {
-            log.debug("notifyFunctionLockableChanged: functionNumber= "
-                    + functionNumber + " isLockable= " + isLockable);
+            log.debug("notifyFunctionLockableChanged: functionNumber= {} isLockable= {}", functionNumber, isLockable);
         }
         if (_throttle == null) {
             // throttle can be null when loading throttle layout
@@ -459,7 +457,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         @Override
         public void keyPressed(KeyEvent e) {
             if (log.isDebugEnabled()) {
-                log.debug("keyPressed: KeyCode= " + e.getKeyCode());
+                log.debug("keyPressed: KeyCode= {}", e.getKeyCode());
             }
             if (keyReleased) {
                 if (log.isDebugEnabled()) {
@@ -482,7 +480,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         @Override
         public void keyReleased(KeyEvent e) {
             if (log.isDebugEnabled()) {
-                log.debug("keyReleased: KeyCode= " + e.getKeyCode());
+                log.debug("keyReleased: KeyCode= {}", e.getKeyCode());
             }
             for (int i = 0; i < NUM_FUNCTION_BUTTONS; i++) {
                 if (functionButton[i].checkKeyCode(e.getKeyCode())) {

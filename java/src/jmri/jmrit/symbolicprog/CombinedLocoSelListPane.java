@@ -173,13 +173,11 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
         DecoderFile df = InstanceManager.getDefault(DecoderIndexFile.class)
                 .fileFromTitle(mDecoderList.getSelectedValue());
         if (log.isDebugEnabled()) {
-            log.debug("decoder selection changed to "
-                    + mDecoderList.getSelectedValue());
+            log.debug("decoder selection changed to {}", mDecoderList.getSelectedValue());
         }
         if (df != null) {
             if (log.isDebugEnabled()) {
-                log.debug("matching mfg is "
-                        + df.getMfg());
+                log.debug("matching mfg is {}", df.getMfg());
             }
             updateMfgListWithoutTrigger(df.getMfg());
         }
@@ -230,7 +228,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
         // try to select all decoders from that MFG
         JComboBox<String> temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingComboBox(null, null, Integer.toString(pMfgID), null, null, null);
         if (log.isDebugEnabled()) {
-            log.debug("mfg-only selectDecoder found " + temp.getItemCount() + " matches");
+            log.debug("mfg-only selectDecoder found {} matches", temp.getItemCount());
         }
         // install all those in the JComboBox in place of the longer, original list
         mDecoderList.setModel(temp.getModel());

@@ -139,7 +139,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
     public Object getValueAt(int row, int col) {
         SprogSlot s = _memo.getCommandStation().slot(slotNum(row));
         if (s == null) {
-            log.error("slot pointer was null for slot row: " + row + " col: " + col);
+            log.error("slot pointer was null for slot row: {} col: {}", row, col);
         }
 
         switch (col) {
@@ -246,7 +246,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         // check for in use
         SprogSlot s = _memo.getCommandStation().slot(slotNum(row));
         if (s == null) {
-            log.error("slot pointer was null for slot row: " + row + " col: " + col);
+            log.error("slot pointer was null for slot row: {} col: {}", row, col);
             return;
         }
 //        if (col == ESTOPCOLUMN) {
@@ -324,7 +324,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         if (_allSlots) {          // this will be row until we show only active slots
             slotNum = s.getSlotNumber();  // and we are displaying the System slots
         }
-        log.debug("Received notification of changed slot: " + slotNum);
+        log.debug("Received notification of changed slot: {}", slotNum);
         // notify the JTable object that a row has changed; do that in the Swing thread!
         Runnable r = new Notify(slotNum, this);   // -1 in first arg means all
         javax.swing.SwingUtilities.invokeLater(r);

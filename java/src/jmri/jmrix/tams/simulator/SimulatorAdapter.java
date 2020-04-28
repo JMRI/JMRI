@@ -52,7 +52,7 @@ public class SimulatorAdapter extends TamsPortController implements Runnable {
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());
+            log.error("init (pipe): Exception: {}", e.toString());
         }
         opened = true;
         return null; // indicates OK return
@@ -217,7 +217,7 @@ public class SimulatorAdapter extends TamsPortController implements Runnable {
     private TamsReply generateReply(TamsMessage m) {
         TamsReply reply = new TamsReply();
         int i = 0;
-        log.debug("Rec " + m.toString());
+        log.debug("Rec {}", m.toString());
         if (m.toString().startsWith("xY")) {
             reply.setElement(i++, 0x00);
         } else if (m.toString().startsWith("xSR")) {

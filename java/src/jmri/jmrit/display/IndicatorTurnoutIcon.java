@@ -51,7 +51,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
 
     public IndicatorTurnoutIcon(Editor editor) {
         super(editor);
-        log.debug("IndicatorTurnoutIcon ctor: isIcon()= " + isIcon() + ", isText()= " + isText());
+        log.debug("IndicatorTurnoutIcon ctor: isIcon()= {}, isText()= {}", isIcon(), isText());
         _pathUtil = new IndicatorTrackPaths();
         _status = "DontUseTrack";
         _iconMaps = initMaps();
@@ -116,7 +116,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
                 setOccSensorHandle(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
             } catch (IllegalArgumentException ex) {
-                log.error("Occupancy Sensor '" + pName + "' not available, icon won't see changes");
+                log.error("Occupancy Sensor '{}' not available, icon won't see changes", pName);
             }
         } else {
             log.error("No SensorManager for this protocol, block icons won't see changes");
@@ -168,7 +168,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             setOccBlockHandle(InstanceManager.getDefault(NamedBeanHandleManager.class)
                     .getNamedBeanHandle(pName, block));
         } else {
-            log.error("Detection OBlock '" + pName + "' not available, icon won't see changes");
+            log.error("Detection OBlock '{}' not available, icon won't see changes", pName);
         }
     }
 
@@ -250,8 +250,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
      */
     public void setIcon(String status, String stateName, NamedIcon icon) {
         if (log.isDebugEnabled()) {
-            log.debug("setIcon for status \"" + status + "\", stateName= \""
-                    + stateName + " icom= " + icon.getURL());
+            log.debug("setIcon for status \"{}\", stateName= \"{} icom= {}", status, stateName, icon.getURL());
         }
 //                                            ") state= "+_name2stateMap.get(stateName)+
 //                                            " icon: w= "+icon.getIconWidth()+" h= "+icon.getIconHeight());
@@ -266,7 +265,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
      * Get icon by its localized bean state name
      */
     public NamedIcon getIcon(String status, int state) {
-        log.debug("getIcon: status= " + status + ", state= " + state);
+        log.debug("getIcon: status= {}, state= {}", status, state);
         HashMap<Integer, NamedIcon> map = _iconMaps.get(status);
         if (map == null) {
             return null;
@@ -356,7 +355,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     @Override
     public void displayState(int state) {
         if (getNamedTurnout() == null) {
-            log.debug("Display state " + state + ", disconnected");
+            log.debug("Display state {}, disconnected", state);
         } else {
             if (_status != null && _iconMaps != null) {
                 NamedIcon icon = getIcon(_status, state);
@@ -385,8 +384,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) {
-            log.debug("property change: " + getNameString() + " property \"" + evt.getPropertyName() + "\"= "
-                    + evt.getNewValue() + " from " + evt.getSource().getClass().getName());
+            log.debug("property change: {} property \"{}\"= {} from {}", getNameString(), evt.getPropertyName(), evt.getNewValue(), evt.getSource().getClass().getName());
         }
 
         Object source = evt.getSource();
@@ -469,7 +467,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     @Override
     void updateItem() {
         if (log.isDebugEnabled()) {
-            log.debug("updateItem: " + getNameString() + " family= " + _itemPanel.getFamilyName());
+            log.debug("updateItem: {} family= {}", getNameString(), _itemPanel.getFamilyName());
         }
         setTurnout(_itemPanel.getTableSelection().getSystemName());
         setOccSensor(_itemPanel.getOccSensor());
@@ -484,7 +482,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
                 HashMap<Integer, NamedIcon> oldMap = _iconMaps.get(entry.getKey());
                 for (Entry<String, NamedIcon> ent : entry.getValue().entrySet()) {
                     if (log.isDebugEnabled()) {
-                        log.debug("key= " + ent.getKey());
+                        log.debug("key= {}", ent.getKey());
                     }
                     NamedIcon newIcon = cloneIcon(ent.getValue(), this);
                     NamedIcon oldIcon = oldMap.get(_name2stateMap.get(ent.getKey()));

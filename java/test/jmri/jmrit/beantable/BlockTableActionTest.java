@@ -1,14 +1,12 @@
 package jmri.jmrit.beantable;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import jmri.Block;
-import jmri.BlockManager;
 import jmri.InstanceManager;
-import jmri.ShutDownManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JUnitUtil;
