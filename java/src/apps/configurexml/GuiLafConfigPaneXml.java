@@ -1,7 +1,7 @@
 package apps.configurexml;
 
 import apps.GuiLafConfigPane;
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.Font;
 import java.util.Enumeration;
 import java.util.Locale;
