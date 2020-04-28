@@ -28,11 +28,6 @@ import org.slf4j.LoggerFactory;
 public class OlcbSensorManagerXmlTest {
 
     @Test
-    public void testCtor(){
-      Assert.assertNotNull("OlcbSensorManagerXml constructor",new OlcbSensorManagerXml());
-    }
-
-    @Test
     public void testSaveAndRestoreWithProperties() throws Exception {
         log.debug("FIRST START");
         t = new OlcbTestInterface(new OlcbTestInterface.CreateConfigurationManager());
@@ -61,7 +56,7 @@ public class OlcbSensorManagerXmlTest {
 
         s.setProperty(OlcbUtils.PROPERTY_QUERY_AT_STARTUP, false);
         s.setAuthoritative(false);
-        Assert.assertEquals(1, mgr.getSystemNameList().size());
+        Assert.assertEquals(1, mgr.getNamedBeanSet().size());
 
         Element stored = xmlmgr.store(mgr);
         Assert.assertNotNull(stored);
