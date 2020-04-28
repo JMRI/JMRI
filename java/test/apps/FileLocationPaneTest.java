@@ -1,10 +1,7 @@
 package apps;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
@@ -14,7 +11,7 @@ public class FileLocationPaneTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
         
         FileLocationPane t = new FileLocationPane();
         Assert.assertNotNull("exists",t);
