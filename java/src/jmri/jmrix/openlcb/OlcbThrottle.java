@@ -58,9 +58,9 @@ public class OlcbThrottle extends AbstractThrottle {
         oti.start();
     }
 
-    ThrottleImplementation oti;
+    final ThrottleImplementation oti;
 
-    DccLocoAddress address;
+    final DccLocoAddress address;
 
     @Override
     public LocoAddress getLocoAddress() {

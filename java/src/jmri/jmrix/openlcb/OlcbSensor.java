@@ -24,11 +24,11 @@ import org.slf4j.LoggerFactory;
  */
 public class OlcbSensor extends AbstractSensor {
 
-    static int ON_TIME = 500; // time that sensor is active after being tripped
+    static final int ON_TIME = 500; // time that sensor is active after being tripped
 
     OlcbAddress addrActive;    // go to active state
     OlcbAddress addrInactive;  // go to inactive state
-    OlcbInterface iface;
+    final OlcbInterface iface;
 
     VersionedValueListener<Boolean> sensorListener;
     BitProducerConsumer pc;
@@ -72,7 +72,6 @@ public class OlcbSensor extends AbstractSensor {
                 break;
             default:
                 log.error("Can't parse OpenLCB Sensor system name: {}", address);
-                return;
         }
 
     }
@@ -163,7 +162,7 @@ public class OlcbSensor extends AbstractSensor {
      *
      */
     @Override
-    public void setKnownState(int s) throws jmri.JmriException {
+    public void setKnownState(int s) {
         if (s == Sensor.ACTIVE) {
             sensorListener.setFromOwnerWithForceNotify(true);
             if (addrInactive == null) {
@@ -188,13 +187,7 @@ public class OlcbSensor extends AbstractSensor {
             @Override
             public void run() {
                 timerTask = null;
-                jmri.util.ThreadingUtil.runOnGUI(() -> {
-                    try {
-                        setKnownState(Sensor.INACTIVE);
-                    } catch (jmri.JmriException e) {
-                        log.error("error setting momentary sensor INACTIVE", e);
-                    }
-                });
+                jmri.util.ThreadingUtil.runOnGUI(() -> setKnownState(Sensor.INACTIVE));
             }
         };
         jmri.util.TimerUtil.schedule(timerTask, ON_TIME);
@@ -227,10 +220,10 @@ public class OlcbSensor extends AbstractSensor {
     }
 
     @Override
-    public void setProperty(String key, Object value) {
+    public void setProperty(@Nonnull String key, Object value) {
         Object old = getProperty(key);
         super.setProperty(key, value);
-        if (old != null && value.equals(old)) return;
+        if (value.equals(old)) return;
         if (pc == null) return;
         finishLoad();
     }

@@ -1,7 +1,5 @@
 package jmri.jmrix.openlcb;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Iterator;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
@@ -75,13 +73,13 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         mInactive.setExtended(true);
 
         // check states
-        Assert.assertTrue(t.getKnownState() == Sensor.UNKNOWN);
+        Assert.assertEquals(t.getKnownState(), Sensor.UNKNOWN);
 
         ti.sendMessage(mActive);
-        Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
+        Assert.assertEquals(t.getKnownState(), Sensor.ACTIVE);
 
         ti.sendMessage(mInactive);
-        Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
+        Assert.assertEquals(t.getKnownState(), Sensor.INACTIVE);
 
     }
 
@@ -109,17 +107,17 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         mStateInactive.setExtended(true);
 
         // check states
-        Assert.assertTrue(t.getKnownState() == Sensor.UNKNOWN);
+        Assert.assertEquals(t.getKnownState(), Sensor.UNKNOWN);
 
         ti.sendMessage(mStateActive);
-        Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
+        Assert.assertEquals(t.getKnownState(), Sensor.ACTIVE);
 
         ti.sendMessage(mStateInactive);
-        Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
+        Assert.assertEquals(t.getKnownState(), Sensor.INACTIVE);
     }
 
     @Test
-    public void testMomentarySensor() throws Exception {
+    public void testMomentarySensor() {
         OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8", ti.iface);
         s.finishLoad();
         // message for Active and Inactive
@@ -130,24 +128,20 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         mActive.setExtended(true);
 
         // check states
-        Assert.assertTrue(s.getKnownState() == Sensor.UNKNOWN);
+        Assert.assertEquals(s.getKnownState(), Sensor.UNKNOWN);
 
         ti.sendMessage(mActive);
-        Assert.assertTrue(s.getKnownState() == Sensor.ACTIVE);
+        Assert.assertEquals(s.getKnownState(), Sensor.ACTIVE);
 
-        JUnitUtil.waitFor(() -> {
-            return (s.getKnownState() != Sensor.ACTIVE);
-        });
+        JUnitUtil.waitFor( ()-> (s.getKnownState() != Sensor.ACTIVE));
 
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
 
         // local flip
         s.setKnownState(Sensor.ACTIVE);
-        Assert.assertTrue(s.getKnownState() == Sensor.ACTIVE);
+        Assert.assertEquals(s.getKnownState(), Sensor.ACTIVE);
 
-        JUnitUtil.waitFor(() -> {
-            return (s.getKnownState() != Sensor.ACTIVE);
-        });
+        JUnitUtil.waitFor( ()-> (s.getKnownState() != Sensor.ACTIVE));
 
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
     }
@@ -237,10 +231,8 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
         // Resets the turnout to unknown state
         s.setState(Sensor.UNKNOWN);
-        JUnitUtil.waitFor(() -> {
-            return l.getPropertyChanged();
-        });
-        Assert.assertEquals("called once", 1, l.getCallCount());
+        JUnitUtil.waitFor( () -> l.getPropertyChanged());
+        Assert.assertEquals("called once",1,l.getCallCount());
         l.resetPropertyChanged();
         ti.assertNoSentMessages();
 
@@ -249,10 +241,8 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
                 ":X19547C4CN0102030405060708;");
         // getting a state notify will change state
         ti.sendMessage(":X19544123N0102030405060709;");
-        JUnitUtil.waitFor(() -> {
-            return l.getPropertyChanged();
-        });
-        Assert.assertEquals("called once", 1, l.getCallCount());
+        JUnitUtil.waitFor( () -> l.getPropertyChanged());
+        Assert.assertEquals("called once",1,l.getCallCount());
         l.resetPropertyChanged();
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
 
@@ -335,44 +325,23 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
      * T:=Active, U:=Active. There was a multiple-year-long regression that
      * caused these two events to be sent to the network out of order (U first
      * then T).
-     *
-     * @throws JmriException
      */
     @Test
-    public void testListenerOutOfOrder() throws JmriException {
+    public void testListenerOutOfOrder() {
         final OlcbSensor u = new OlcbSensor("M", "1.2.3.4.5.6.7.a;1.2.3.4.5.6.7.b", ti.iface);
+        final OlcbSensor v = (OlcbSensor)t;
         u.finishLoad();
-        t.setKnownState(Sensor.INACTIVE);
+        v.setKnownState(Sensor.INACTIVE);
         u.setKnownState(Sensor.INACTIVE);
 
         ti.clearSentMessages();
 
-        t.addPropertyChangeListener("KnownState", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-                Assert.assertEquals(Sensor.ACTIVE, t.getKnownState());
-                try {
-                    u.setKnownState(Sensor.ACTIVE);
-                }
-                catch (JmriException e) {
-                    Assert.fail("failed sending dependent sensor message: " + e);
-                    e.printStackTrace();
-                }
-            }
+        v.addPropertyChangeListener("KnownState", propertyChangeEvent -> {
+            Assert.assertEquals(Sensor.ACTIVE, t.getKnownState());
+            u.setKnownState(Sensor.ACTIVE);
         });
 
-        ThreadingUtil.runOnLayout(new ThreadingUtil.ThreadAction() {
-            @Override
-            public void run() {
-                try {
-                    t.setKnownState(Sensor.ACTIVE);
-                }
-                catch (JmriException e) {
-                    Assert.fail("failed sending main sensor message: " + e);
-                    e.printStackTrace();
-                }
-            }
-        });
+        ThreadingUtil.runOnLayout(() -> v.setKnownState(Sensor.ACTIVE));
 
         Assert.assertEquals(Sensor.ACTIVE, t.getKnownState());
         Assert.assertEquals(Sensor.ACTIVE, u.getKnownState());

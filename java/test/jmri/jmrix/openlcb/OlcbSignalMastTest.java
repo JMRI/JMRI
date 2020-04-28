@@ -101,17 +101,17 @@ public class OlcbSignalMastTest {
         t.setOutputForAppearance("Stop", "0.0.0.0.0.0.0.0");
         Assert.assertEquals("Init sent nothing", 0, messages.size());    
         messages = new java.util.ArrayList<>(); // reset test message queue
-        
-        Assert.assertEquals("lit defaults true", true, t.getLit());
+
+        Assert.assertTrue("lit defaults true", t.getLit());
         
         org.openlcb.Message msg;
         msg = new org.openlcb.ProducerConsumerEventReportMessage(new NodeID(), new OlcbAddress("1.2.3.4.5.6.7.2").toEventID());
         t.handleMessage(msg);
-        Assert.assertEquals("lit false", false, t.getLit());
+        Assert.assertFalse("lit false", t.getLit());
         
         msg = new org.openlcb.ProducerConsumerEventReportMessage(new NodeID(), new OlcbAddress("1.2.3.4.5.6.7.1").toEventID());
         t.handleMessage(msg);
-        Assert.assertEquals("lit true", true, t.getLit());                           
+        Assert.assertTrue("lit true", t.getLit());
 
         Assert.assertEquals("none sent", 0, messages.size());
     }
@@ -131,14 +131,14 @@ public class OlcbSignalMastTest {
 
         Assert.assertEquals("Init sent for 8 events", 32, messages.size());      
         messages = new java.util.ArrayList<>(); // reset test message queue
-        
-        Assert.assertEquals("lit defaults true", true, t.getLit());
+
+        Assert.assertTrue("lit defaults true", t.getLit());
         
         org.openlcb.Message msg;
         msg = new org.openlcb.IdentifyProducersMessage(new NodeID(), new OlcbAddress("1.2.3.4.5.6.7.2").toEventID());
         t.handleMessage(msg);
 
-        Assert.assertEquals("lit still true", true, t.getLit());
+        Assert.assertTrue("lit still true", t.getLit());
 
         Assert.assertEquals("reply sent", 1, messages.size());
     }
@@ -159,34 +159,34 @@ public class OlcbSignalMastTest {
         Assert.assertEquals("Init sent for 8 events", 32, messages.size());      
         messages = new java.util.ArrayList<>(); // reset test message queue
 
-        Assert.assertEquals("lit defaults true", true, t.getLit());
+        Assert.assertTrue("lit defaults true", t.getLit());
         
         org.openlcb.Message msg;
         msg = new org.openlcb.ProducerIdentifiedMessage(new NodeID(), new OlcbAddress(t.getNotLitEventId()).toEventID(), org.openlcb.EventState.Invalid);
         t.handleMessage(msg);
-        Assert.assertEquals("lit true", true, t.getLit()); // default
+        Assert.assertTrue("lit true", t.getLit()); // default
         msg = new org.openlcb.ProducerIdentifiedMessage(new NodeID(), new OlcbAddress(t.getNotLitEventId()).toEventID(), org.openlcb.EventState.Unknown);
         t.handleMessage(msg);
-        Assert.assertEquals("lit true", true, t.getLit());
+        Assert.assertTrue("lit true", t.getLit());
         msg = new org.openlcb.ProducerIdentifiedMessage(new NodeID(), new OlcbAddress("FF.2.3.4.5.6.7.2").toEventID(), org.openlcb.EventState.Valid); // wrong event
         t.handleMessage(msg);
-        Assert.assertEquals("lit true", true, t.getLit());
+        Assert.assertTrue("lit true", t.getLit());
         msg = new org.openlcb.ProducerIdentifiedMessage(new NodeID(), new OlcbAddress(t.getNotLitEventId()).toEventID(), org.openlcb.EventState.Valid);
         t.handleMessage(msg);
-        Assert.assertEquals("lit false", false, t.getLit());
+        Assert.assertFalse("lit false", t.getLit());
         
         msg = new org.openlcb.ProducerIdentifiedMessage(new NodeID(), new OlcbAddress(t.getLitEventId()).toEventID(), org.openlcb.EventState.Invalid);
         t.handleMessage(msg);
-        Assert.assertEquals("lit false", false, t.getLit());                           
+        Assert.assertFalse("lit false", t.getLit());
         msg = new org.openlcb.ProducerIdentifiedMessage(new NodeID(), new OlcbAddress(t.getLitEventId()).toEventID(), org.openlcb.EventState.Unknown);
         t.handleMessage(msg);
-        Assert.assertEquals("lit false", false, t.getLit());                           
+        Assert.assertFalse("lit false", t.getLit());
         msg = new org.openlcb.ProducerIdentifiedMessage(new NodeID(), new OlcbAddress("FF.2.3.4.5.6.7.1").toEventID(), org.openlcb.EventState.Valid); // wrong event
         t.handleMessage(msg);
-        Assert.assertEquals("lit false", false, t.getLit());                           
+        Assert.assertFalse("lit false", t.getLit());
         msg = new org.openlcb.ProducerIdentifiedMessage(new NodeID(), new OlcbAddress(t.getLitEventId()).toEventID(), org.openlcb.EventState.Valid);
         t.handleMessage(msg);
-        Assert.assertEquals("lit true", true, t.getLit());                           
+        Assert.assertTrue("lit true", t.getLit());
 
         Assert.assertEquals("none sent", 0, messages.size());
     }
@@ -367,7 +367,7 @@ public class OlcbSignalMastTest {
             }
         });
         
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
     @After
@@ -376,7 +376,7 @@ public class OlcbSignalMastTest {
     }
 
     @AfterClass
-    public static void postClassTearDown() throws Exception {
+    public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
         }
