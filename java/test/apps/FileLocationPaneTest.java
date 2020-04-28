@@ -14,6 +14,8 @@ public class FileLocationPaneTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
         FileLocationPane t = new FileLocationPane();
         Assert.assertNotNull("exists",t);
     }
