@@ -31,8 +31,8 @@
  * <h3>Class Structure</h3>
  * <ul>
  * <li>The track is represented by a hierarchy of classes that's rooted in {@link jmri.jmrit.display.layoutEditor.LayoutTrack} and completely disconnected from 
- * the PanelEditor classes.<br>
- * <a href="doc-files/TrackHierarchy.png"><img src="doc-files/TrackHierarchy.png" alt="UML class diagram for track objects" height="33%" width="33%"></a>
+ * the PanelEditor classes. New classes are being added to represent the specific types previously implemented via type variables and conditional code.<br>
+ * <a href="doc-files/NewTurnoutClassDiagram.png"><img src="doc-files/NewTurnoutClassDiagram.png" alt="UML class diagram for track objects" height="67%" width="67%"></a>
  * <li>{@link jmri.jmrit.display.layoutEditor.LayoutBlock} and {@link jmri.jmrit.display.layoutEditor.LayoutBlockManager} are a {@link jmri.NamedBean NamedBean} pair. 
  * The {@link jmri.jmrit.display.layoutEditor.LayoutBlock} is a group
  * of track segments and turnouts that corresponds to a 'block'. It may contain a {@link jmri.Memory} and/or {@link jmri.Sensor}. If present, the sensor 
