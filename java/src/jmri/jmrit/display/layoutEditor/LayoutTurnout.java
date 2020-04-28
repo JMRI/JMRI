@@ -70,6 +70,8 @@ import org.slf4j.*;
  *             //\\
  *        D ==**==**== C
  * </pre>
+ * (The {@link LayoutSlip} track objects follow a different pattern. They put A-D in 
+ * different places and have AD and BC as the normal-continuance parallel paths)
  * <p>
  * A LayoutTurnout carries Block information. For right-handed, left-handed, and
  * wye turnouts, the entire turnout is in one block, however, a block border may

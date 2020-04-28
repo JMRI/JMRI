@@ -846,13 +846,13 @@ public class LayoutTrackEditorsTest {
 
             // Single doubleLayoutSlip
             point = MathUtil.add(point, delta);
-            singleLayoutSlip = new LayoutSlip("Single Slip",
-                    point, 0.0, layoutEditor, LayoutTurnout.TurnoutType.SINGLE_SLIP);
+            singleLayoutSlip = new LayoutSingleSlip("Single Slip",
+                    point, 0.0, layoutEditor);
 
             // Double doubleLayoutSlip
             point = MathUtil.add(point, delta);
-            doubleLayoutSlip = new LayoutSlip("Double Slip",
-                    point, 0.0, layoutEditor, LayoutTurnout.TurnoutType.DOUBLE_SLIP);
+            doubleLayoutSlip = new LayoutDoubleSlip("Double Slip",
+                    point, 0.0, layoutEditor);
 
             // Level crossing
             point = MathUtil.add(point, delta);

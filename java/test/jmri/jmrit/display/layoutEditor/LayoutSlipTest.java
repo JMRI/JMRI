@@ -686,8 +686,8 @@ public class LayoutSlipTest {
     public void setUp() {
         jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            lts = new LayoutSlip("single", new Point2D.Double(50.0, 100.0), +45.0, layoutEditor, LayoutTurnout.TurnoutType.SINGLE_SLIP);
-            ltd = new LayoutSlip("double", new Point2D.Double(100.0, 50.0), -45.0, layoutEditor, LayoutTurnout.TurnoutType.DOUBLE_SLIP);
+            lts = new LayoutSingleSlip("single", new Point2D.Double(50.0, 100.0), +45.0, layoutEditor);
+            ltd = new LayoutDoubleSlip("double", new Point2D.Double(100.0, 50.0), -45.0, layoutEditor);
         }
     }
 

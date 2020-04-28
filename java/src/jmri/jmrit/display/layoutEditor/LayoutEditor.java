@@ -4852,7 +4852,19 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         String name = finder.uniqueName("SL", ++numLayoutSlips);
 
         //create object
-        LayoutSlip o = new LayoutSlip(name, currentPoint, rot, this, type);
+        LayoutSlip o; 
+        switch(type) {
+            case DOUBLE_SLIP :
+                o = new LayoutDoubleSlip(name, currentPoint, rot, this);
+                break;
+            case SINGLE_SLIP :
+                o = new LayoutSingleSlip(name, currentPoint, rot, this);
+                break;
+            default:
+                log.error("can't create slip {} with type {}", name, type);
+                return; // without creating
+        }
+
         layoutTrackList.add(o);
         unionToPanelBounds(o.getBounds());
         setDirty();

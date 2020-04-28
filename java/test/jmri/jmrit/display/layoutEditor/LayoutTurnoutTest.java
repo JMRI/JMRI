@@ -1105,28 +1105,22 @@ public class LayoutTurnoutTest {
             Point2D point = new Point2D.Double(150.0, 100.0);
             Point2D delta = new Point2D.Double(50.0, 75.0);
 
-            ltRH = new LayoutTurnout("Right Hand",
-                    LayoutTurnout.TurnoutType.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
+            ltRH = new LayoutRHTurnout("Right Hand", point, 33.0, 1.1, 1.2, layoutEditor);
 
             point = MathUtil.add(point, delta);
-            ltLH = new LayoutTurnout("Left Hand",
-                    LayoutTurnout.TurnoutType.LH_TURNOUT, point, 66.0, 1.3, 1.4, layoutEditor);
+            ltLH = new LayoutLHTurnout("Left Hand", point, 66.0, 1.3, 1.4, layoutEditor);
 
             point = MathUtil.add(point, delta);
-            ltWY = new LayoutTurnout("Wye",
-                    LayoutTurnout.TurnoutType.WYE_TURNOUT, point, 99.0, 1.5, 1.6, layoutEditor);
+            ltWY = new LayoutWye("Wye", point, 99.0, 1.5, 1.6, layoutEditor);
 
             point = MathUtil.add(point, delta);
-            ltDX = new LayoutTurnout("Double XOver",
-                    LayoutTurnout.TurnoutType.DOUBLE_XOVER, point, 132.0, 1.7, 1.8, layoutEditor);
+            ltDX = new LayoutDoubleXOver("Double XOver", point, 132.0, 1.7, 1.8, layoutEditor);
 
             point = MathUtil.add(point, delta);
-            ltRX = new LayoutTurnout("Right Hand XOver",
-                    LayoutTurnout.TurnoutType.RH_XOVER, point, 165.0, 1.9, 2.0, layoutEditor);
+            ltRX = new LayoutRHXOver("Right Hand XOver", point, 165.0, 1.9, 2.0, layoutEditor);
 
             point = MathUtil.add(point, delta);
-            ltLX = new LayoutTurnout("Left Hand XOver",
-                    LayoutTurnout.TurnoutType.LH_XOVER, point, 198.0, 2.1, 2.2, layoutEditor);
+            ltLX = new LayoutLHXOver("Left Hand XOver", point, 198.0, 2.1, 2.2, layoutEditor);
         }
     }
 
@@ -1164,5 +1158,5 @@ public class LayoutTurnoutTest {
         }
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LayoutSlipTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(LayoutTurnoutTest.class);
 }

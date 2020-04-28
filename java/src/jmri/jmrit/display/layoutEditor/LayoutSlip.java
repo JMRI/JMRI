@@ -48,7 +48,7 @@ import org.slf4j.*;
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author George Warner Copyright (c) 2017-2019
  */
-public class LayoutSlip extends LayoutTurnout {
+abstract public class LayoutSlip extends LayoutTurnout {
 
     public int currentState = UNKNOWN;
 
