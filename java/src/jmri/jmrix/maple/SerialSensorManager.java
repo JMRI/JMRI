@@ -88,7 +88,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         }
         // check configured
         if (!SerialAddress.validSystemNameConfig(sName, 'S', getMemo())) {
-            log.warn("Sensor system Name '" + sName + "' does not address configured hardware.");
+            log.warn("Sensor system Name '{}' does not address configured hardware.", sName);
             javax.swing.JOptionPane.showMessageDialog(null, "WARNING - The Sensor just added, "
                     + sName + ", refers to an unconfigured input bit.", "Configuration Warning",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE, null);

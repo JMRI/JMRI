@@ -63,7 +63,7 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
             is1.setKnownState(Sensor.ACTIVE);
             is2.setKnownState(Sensor.INACTIVE);
         } catch (jmri.JmriException reason) {
-            log.warn("Exception flipping sensor is1: " + reason);
+            log.warn("Exception flipping sensor is1: {}", reason);
         }
 
         // set graphic state column display preference to false, read by createModel()

@@ -25,7 +25,7 @@ public class EcosOpsModeProgrammer extends EcosProgrammer implements AddressedPr
 
     public EcosOpsModeProgrammer(EcosTrafficController tc, int pAddress, boolean pLongAddr) {
         super(tc);
-        log.debug("ECoS ops mode programmer " + pAddress + " " + pLongAddr);
+        log.debug("ECoS ops mode programmer {} {}", pAddress, pLongAddr);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
         ecosObject = 7;

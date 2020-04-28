@@ -5,7 +5,6 @@ import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
-import jmri.Throttle;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
@@ -51,7 +50,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
         ecosretry = 0;
 
-        log.debug("EcosDccThrottle constructor " + address);
+        log.debug("EcosDccThrottle constructor {}", address);
 
         //We go on a hunt to find an object with the dccaddress sent by our controller.
         if (address.getNumber() < EcosLocoAddress.MFX_DCCAddressOffset) {
@@ -466,10 +465,10 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
                 }
             } else if (replyType.equals("release")) {
-                log.debug("Released " + this.objectNumber + " from the Ecos");
+                log.debug("Released {} from the Ecos", this.objectNumber);
                 _haveControl = false;
             } else if (replyType.equals("request")) {
-                log.debug("We have control over " + this.objectNumber + " from the Ecos");
+                log.debug("We have control over {} from the Ecos", this.objectNumber);
                 ecosretry = 0;
                 if (_control) {
                     _haveControl = true;
@@ -498,7 +497,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
              */
             retryControl();
         } else if (resultCode == 15) {
-            log.info("Loco can not be accessed via the Ecos Object Id " + this.objectNumber);
+            log.info("Loco can not be accessed via the Ecos Object Id {}", this.objectNumber);
             try {
                 javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("UnknownLocoDialog", this.address),
                         Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
@@ -507,7 +506,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
             }
             jmri.InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
         } else {
-            log.debug("Last Message resulted in an END code we do not understand " + resultCode);
+            log.debug("Last Message resulted in an END code we do not understand {}", resultCode);
         }
     }
 
@@ -559,7 +558,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
             String message = "request(" + this.objectNumber + ", view, control)";
             EcosMessage ms = new EcosMessage(message);
             tc.sendEcosMessage(ms, this);
-            log.error("We have no control over the ecos object " + this.objectNumber + " Retrying Attempt " + ecosretry);
+            log.error("We have no control over the ecos object {} Retrying Attempt {}", this.objectNumber, ecosretry);
         } else if (ecosretry == 3) {
             ecosretry++;
             int val = 0;
@@ -580,7 +579,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                 String message = "request(" + this.objectNumber + ", view, control, force)";
                 EcosMessage ms = new EcosMessage(message);
                 tc.sendEcosMessage(ms, this);
-                log.error("We have no control over the ecos object " + this.objectNumber + "Trying a forced control");
+                log.error("We have no control over the ecos object {}Trying a forced control", this.objectNumber);
             } else {
                 if (_hadControl) {
                     firePropertyChange("LostControl", 0, 0);

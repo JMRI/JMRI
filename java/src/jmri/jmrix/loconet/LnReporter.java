@@ -144,7 +144,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
                 entrySet.remove(idTag);
             }
         }
-        log.debug("Tag: " + idTag);
+        log.debug("Tag: {}", idTag);
         notify(idTag);
         setState(enter ? loco : -1);
     }
@@ -182,7 +182,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
         } else {
            idTag.setProperty("seen", "seen southbound");
         }
-        log.debug("Tag: " + idTag);
+        log.debug("Tag: {}", idTag);
         notify(idTag);
         setState(loco);
     }

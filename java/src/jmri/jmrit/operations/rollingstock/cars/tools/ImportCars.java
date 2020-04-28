@@ -332,7 +332,7 @@ public class ImportCars extends ImportRollingStock {
                 }
                 Car existingCar = manager.getByRoadAndNumber(carRoad, carNumber);
                 if (existingCar != null) {
-                    log.info("Can not add, car number (" + carNumber + ") road (" + carRoad + ") already exists!"); // NOI18N
+                    log.info("Can not add, car number ({}) road ({}) already exists!", carNumber, carRoad); // NOI18N
                 } else {
                     if (inputLine.length > base + CAR_OWNER) {
                         carOwner = inputLine[base + CAR_OWNER];
@@ -770,11 +770,11 @@ public class ImportCars extends ImportRollingStock {
                     car.setKernel(kernel);
                     carsAdded++;
                 } else {
-                    log.info("Car number (" + carNumber + ") road (" + carRoad + ") does not exist!"); // NOI18N
+                    log.info("Car number ({}) road ({}) does not exist!", carNumber, carRoad); // NOI18N
                     break;
                 }
             } else if (!line.isEmpty()) {
-                log.info("Car import line " + lineNum + " missing attributes: " + line);
+                log.info("Car import line {} missing attributes: {}", lineNum, line);
                 JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportMissingAttributes"),
                         new Object[]{lineNum}) +
                         NEW_LINE +

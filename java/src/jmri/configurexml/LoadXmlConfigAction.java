@@ -57,7 +57,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                     }
                 }
             } catch (JmriException e) {
-                log.error("Unhandled problem in loadFile: " + e);
+                log.error("Unhandled problem in loadFile: {}", e);
             }
         } else {
             results = true;   // We assume that as the file is null then the user has clicked cancel.
@@ -77,7 +77,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
             return null;  // give up if no file selected
         }
         if (log.isDebugEnabled()) {
-            log.debug("Open file: " + fileChooser.getSelectedFile().getPath());
+            log.debug("Open file: {}", fileChooser.getSelectedFile().getPath());
         }
         return fileChooser.getSelectedFile();
     }

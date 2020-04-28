@@ -446,11 +446,11 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         // *** Check for error reply
         switch (state) {
             case IDLE:
-                log.debug("reply in IDLE state: " + replyString);
+                log.debug("reply in IDLE state: {}", replyString);
                 break;
             case CURRENTQUERYSENT:
                 // Look for an "I=" reply
-                log.debug("reply in CURRENTQUERYSENT state: " + replyString);
+                log.debug("reply in CURRENTQUERYSENT state: {}", replyString);
                 if (replyString.contains("I=")) {
                     stopTimer();
                     int valueLength = 4;
@@ -459,7 +459,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                     }
                     tmpString = replyString.substring(replyString.indexOf("=")
                             + 1, replyString.indexOf("=") + valueLength);
-                    log.debug("Current limit string: " + tmpString);
+                    log.debug("Current limit string: {}", tmpString);
                     try {
                         currentLimitFromHardware = Integer.parseInt(tmpString);
                     }
@@ -471,8 +471,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                     }
                     // Value written is scaled from hardware units to mA
                     currentLimit = (int) (currentLimitFromHardware * sv.sprogType.getCurrentMultiplier());
-                    log.debug("Current limit scale factor: " + sv.sprogType.getCurrentMultiplier());
-                    log.debug("Current limit from hardware: " + currentLimitFromHardware + " scaled to: " + currentLimit + "mA");
+                    log.debug("Current limit scale factor: {}", sv.sprogType.getCurrentMultiplier());
+                    log.debug("Current limit from hardware: {} scaled to: {}mA", currentLimitFromHardware, currentLimit);
                     currentTextField.setText(String.valueOf(currentLimit));
                     currentTextField.setEnabled(true);
 
@@ -486,7 +486,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 }
                 break;
             case MODEQUERYSENT:
-                log.debug("reply in MODEQUERYSENT state: " + replyString);
+                log.debug("reply in MODEQUERYSENT state: {}", replyString);
                 if (replyString.contains("M=")) {
                     stopTimer();
                     tmpString = replyString.substring(replyString.indexOf("=")
@@ -520,7 +520,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 break;
             case CURRENTSENT:
                 // Any reply will do here
-                log.debug("reply in CURRENTSENT state: " + replyString);
+                log.debug("reply in CURRENTSENT state: {}", replyString);
                 // Get new mode word - assume 128 steps
                 modeWord = SprogConstants.STEP128_BIT;
                 if (speed14Button.isSelected()) {
@@ -552,7 +552,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 break;
             case MODESENT:
                 // Any reply will do here
-                log.debug("reply in MODESENT state: " + replyString);
+                log.debug("reply in MODESENT state: {}", replyString);
                 // Write to EEPROM
                 state = State.WRITESENT;
                 msg = new SprogMessage("W");
@@ -561,7 +561,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 break;
             case WRITESENT:
                 // Any reply will do here
-                log.debug("reply in WRITESENT state: " + replyString);
+                log.debug("reply in WRITESENT state: {}", replyString);
                 // All done
                 state = State.IDLE;
                 break;

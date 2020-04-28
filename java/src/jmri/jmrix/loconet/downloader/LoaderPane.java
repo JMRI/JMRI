@@ -570,7 +570,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                             + (control & HW_FLAGS_MSK));
             }
         } catch (NumberFormatException ex) {
-            log.error("Invalid Option value: " + text); // NOI18N
+            log.error("Invalid Option value: {}", text); // NOI18N
             throw new NumberFormatException(ex.getLocalizedMessage());
         }
     }

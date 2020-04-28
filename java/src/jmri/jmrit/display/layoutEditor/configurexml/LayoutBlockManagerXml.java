@@ -133,7 +133,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
 
         List<Element> layoutblockList = layoutblocks.getChildren("layoutblock");
         if (log.isDebugEnabled()) {
-            log.debug("Found {} layoutblocks" + layoutblockList.size());
+            log.debug("Found {} layoutblocks{}", layoutblockList.size());
         }
 
         for (Element e : layoutblockList) {

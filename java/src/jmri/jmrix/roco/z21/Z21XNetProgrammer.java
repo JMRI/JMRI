@@ -40,7 +40,7 @@ public class Z21XNetProgrammer extends XNetProgrammer {
     @Override
     public boolean getCanRead(String addr) {
         if (log.isDebugEnabled()) {
-            log.debug("check mode " + getMode() + " CV " + addr);
+            log.debug("check mode {} CV {}", getMode(), addr);
         }
         if (!getCanRead()) {
             return false; // check basic implementation first
@@ -68,8 +68,8 @@ public class Z21XNetProgrammer extends XNetProgrammer {
     @Override
     public boolean getCanWrite(String addr) {
         if (log.isDebugEnabled()) {
-            log.debug("check CV " + addr);
-            log.debug("cs Type: " + controller().getCommandStation().getCommandStationType() + " CS Version: " + controller().getCommandStation().getCommandStationSoftwareVersion());
+            log.debug("check CV {}", addr);
+            log.debug("cs Type: {} CS Version: {}", controller().getCommandStation().getCommandStationType(), controller().getCommandStation().getCommandStationSoftwareVersion());
         }
         if (!getCanWrite()) {
             return false; // check basic implementation first
@@ -90,7 +90,7 @@ public class Z21XNetProgrammer extends XNetProgrammer {
         if (getMode().equals(ProgrammingMode.DIRECTBITMODE)
                 || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             if (log.isDebugEnabled()) {
-                log.debug("writeCV " + CV + " listens " + p);
+                log.debug("writeCV {} listens {}", CV, p);
             }
             useProgrammer(p);
             _progRead = false;
@@ -118,7 +118,7 @@ public class Z21XNetProgrammer extends XNetProgrammer {
         if (getMode().equals(ProgrammingMode.DIRECTBITMODE)
                 || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             if (log.isDebugEnabled()) {
-                log.debug("readCV " + CV + " listens " + p);
+                log.debug("readCV {} listens {}", CV, p);
             }
 
             useProgrammer(p);

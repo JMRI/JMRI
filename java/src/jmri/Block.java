@@ -731,13 +731,9 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                         }
                     } else if (log.isDebugEnabled()) {
                         if (null != _timeLastInactive) {
-                            log.debug("not restoring previous value, block {} has been inactive for too long ("
-                                    + (tn.toEpochMilli() - _timeLastInactive.toEpochMilli()) + "ms) and layout power has not just been restored ("
-                                    + bm.timeSinceLastLayoutPowerOn() + "ms ago)", getDisplayName());
+                            log.debug("not restoring previous value, block {} has been inactive for too long ({}ms) and layout power has not just been restored ({}ms ago)", getDisplayName(), tn.toEpochMilli() - _timeLastInactive.toEpochMilli(), bm.timeSinceLastLayoutPowerOn());
                         } else {
-                            log.debug("not restoring previous value, block {} has been inactive since the start " +
-                                    "of this session and layout power has not just been restored ("
-                                    + bm.timeSinceLastLayoutPowerOn() + "ms ago)", getDisplayName());
+                            log.debug("not restoring previous value, block {} has been inactive since the start of this session and layout power has not just been restored ({}ms ago)", getDisplayName(), bm.timeSinceLastLayoutPowerOn());
                         }
                     }
                 } else {

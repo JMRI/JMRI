@@ -213,7 +213,7 @@ public class DefaultSignalMastLogicManager
             try {
                 sml.useLayoutEditor(false, mast);
             } catch (JmriException e) {
-                log.error("Error occurred while trying to disable layout editor use " + e);
+                log.error("Error occurred while trying to disable layout editor use {}", e);
             }
         }
     }
@@ -441,7 +441,7 @@ public class DefaultSignalMastLogicManager
                     }
                 }
             } else {
-                log.info("No facing block found " + sml.getSourceMast().getDisplayName());
+                log.info("No facing block found {}", sml.getSourceMast().getDisplayName());
             }
         }
     }

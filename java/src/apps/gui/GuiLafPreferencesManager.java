@@ -12,5 +12,4 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 // apps-gui to jmri-util-gui in profile/profile.properties
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Deprecated by refactoring; retaining unchanged until removal")
 public class GuiLafPreferencesManager extends jmri.util.gui.GuiLafPreferencesManager {
-
 }

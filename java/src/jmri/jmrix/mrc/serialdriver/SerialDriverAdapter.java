@@ -51,7 +51,7 @@ public class SerialDriverAdapter extends MrcPortController {
             try {
                 activeSerialPort.setSerialPortParams(currentBaudNumber(getCurrentBaudRate()), SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_ODD);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());// NOI18N
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());// NOI18N
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();// NOI18N
             }
 
@@ -60,9 +60,8 @@ public class SerialDriverAdapter extends MrcPortController {
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.info("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());// NOI18N
-            log.info("input buffer " + activeSerialPort.getInputBufferSize());// NOI18N
+            log.info("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());// NOI18N
+            log.info("input buffer {}", activeSerialPort.getInputBufferSize());// NOI18N
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
 
@@ -71,14 +70,7 @@ public class SerialDriverAdapter extends MrcPortController {
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud, sees "
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );// NOI18N
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());// NOI18N
             }
 
             opened = true;
@@ -131,7 +123,7 @@ public class SerialDriverAdapter extends MrcPortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);// NOI18N
+            log.error("getOutputStream exception: {}", e);// NOI18N
         }
         return null;
     }

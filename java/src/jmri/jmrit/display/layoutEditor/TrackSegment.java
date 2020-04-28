@@ -69,20 +69,20 @@ public class TrackSegment extends LayoutTrack {
 
         //validate input
         if ((c1 == null) || (c2 == null)) {
-            log.error("Invalid object in TrackSegment constructor call - " + id);
+            log.error("Invalid object in TrackSegment constructor call - {}", id);
         }
 
         if (HitPointType.isConnectionHitType(t1)) {
             connect1 = c1;
             type1 = t1;
         } else {
-            log.error("Invalid connect type 1 ('" + t1 + "') in TrackSegment constructor - " + id);
+            log.error("Invalid connect type 1 ('{}') in TrackSegment constructor - {}", t1, id);
         }
         if (HitPointType.isConnectionHitType(t2)) {
             connect2 = c2;
             type2 = t2;
         } else {
-            log.error("Invalid connect type 2 ('" + t2 + "') in TrackSegment constructor - " + id);
+            log.error("Invalid connect type 2 ('{}') in TrackSegment constructor - {}", t2, id);
         }
 
         mainline = main;
@@ -3302,7 +3302,7 @@ public class TrackSegment extends LayoutTrack {
                             String valueString = value.substring(value.lastIndexOf("=") + 1);
                             length = Integer.parseInt(valueString);
                         } else {
-                            log.debug("bumper value ignored: " + value);
+                            log.debug("bumper value ignored: {}", value);
                         }
                     }
                     atStop |= !atStart;   //if atStart is false make atStop true
@@ -3350,7 +3350,7 @@ public class TrackSegment extends LayoutTrack {
                             String valueString = value.substring(value.lastIndexOf("=") + 1);
                             floorWidth = Integer.parseInt(valueString);
                         } else {
-                            log.debug("tunnel value ignored: " + value);
+                            log.debug("tunnel value ignored: {}", value);
                         }
                     }
                     //these both can't be false
@@ -3368,7 +3368,7 @@ public class TrackSegment extends LayoutTrack {
                     setTunnelFloorWidth(floorWidth);
                 } //if (tunnelValue != null)
                 else {
-                    log.debug("Unknown decoration key: " + key + ", value: " + entry.getValue());
+                    log.debug("Unknown decoration key: {}, value: {}", key, entry.getValue());
                 }
             }   //for (Map.Entry<String, String> entry : decorations.entrySet())
         } //if (decorathions != null)

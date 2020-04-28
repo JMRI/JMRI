@@ -71,7 +71,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                         provideTurnout(pName);
                 setTurnout(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, turnout), turn);
             } catch (IllegalArgumentException e) {
-                log.error("Turnout '" + pName + "' not available, icon won't see changes");
+                log.error("Turnout '{}' not available, icon won't see changes", pName);
             }
         } else {
             log.error("No TurnoutManager for this protocol, icon won't see changes");
@@ -476,8 +476,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("property change: " + getNameString() + " " + e.getPropertyName() + " is now "
-                    + e.getNewValue());
+            log.debug("property change: {} {} is now {}", getNameString(), e.getPropertyName(), e.getNewValue());
         }
 
         // when there's feedback, transition through inconsistent icon for better
@@ -589,7 +588,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      */
     void displayState(int state) {
         //This needs to be worked on
-        log.debug(getNameString() + " displayState " + state);
+        log.debug("{} displayState {}", getNameString(), state);
         updateSize();
         // we have to make some adjustments if we are using a single slip, three way point
         // or scissor arrangement to make sure that we get the correct representation.
@@ -1185,7 +1184,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         try {
             f.initComponents(this, name);
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: {}", ex.toString());
         }
         f.setVisible(true);
     }

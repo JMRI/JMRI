@@ -43,7 +43,7 @@ public class SprogVersionQuery implements SprogListener {
 
     public SprogVersionQuery(SprogSystemConnectionMemo memo) {
         if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
+            log.debug("setting instance: {}", this);
         }
         _memo = memo;
         tc = _memo.getSprogTrafficController();
@@ -88,7 +88,7 @@ public class SprogVersionQuery implements SprogListener {
     synchronized public void requestVersion(SprogVersionListener l) {
         SprogMessage m;
         if (log.isDebugEnabled()) {
-            log.debug("SprogVersion requested by " + l.toString());
+            log.debug("SprogVersion requested by {}", l.toString());
         }
         if (state == QueryState.DONE) {
             // Reply immediately
@@ -169,7 +169,7 @@ public class SprogVersionQuery implements SprogListener {
                     String[] splits = replyString.split("\n");
                     splits = splits[1].split(" ");
                     int index = 1;
-                    log.debug("Elements in version reply: " + splits.length);
+                    log.debug("Elements in version reply: {}", splits.length);
                     log.debug("First element: <{}>", splits[0]);
                     if (splits[0].contains("Pi-SPROG")) {
                         log.debug("Found a Pi-SPROG {}", splits[index]);

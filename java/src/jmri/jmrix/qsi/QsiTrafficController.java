@@ -74,7 +74,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
                 try {
                     client.message(m);
                 } catch (Exception e) {
-                    log.warn("notify: During dispatch to " + client + "\nException " + e);
+                    log.warn("notify: During dispatch to {}\nException {}", client, e);
                 }
             }
         }
@@ -139,7 +139,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
                     client.reply(r);
                 }
             } catch (Exception e) {
-                log.warn("notify: During dispatch to " + client + "\nException " + e);
+                log.warn("notify: During dispatch to {}\nException {}", client, e);
             }
         }
 
@@ -205,7 +205,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
                 log.warn("sendMessage: no connection established");
             }
         } catch (Exception e) {
-            log.warn("sendMessage: Exception: " + e.toString());
+            log.warn("sendMessage: Exception: {}", e.toString());
         }
     }
 
@@ -253,7 +253,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
             try {
                 handleOneIncomingReply();
             } catch (java.io.IOException e) {
-                log.warn("run: Exception: " + e.toString());
+                log.warn("run: Exception: {}", e.toString());
             }
         }
     }

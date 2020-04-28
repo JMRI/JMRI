@@ -883,8 +883,7 @@ public class CircuitBuilder {
 
             List<Positionable> icons = getCircuitIcons(block);
             if (log.isDebugEnabled()) {
-                log.debug("checkCircuits: block " + block.getDisplayName()
-                        + " has " + icons.size() + " icons.");
+                log.debug("checkCircuits: block {} has {} icons.", block.getDisplayName(), icons.size());
             }
             if (icons.isEmpty()) {
                 _bareBlock.add(block);
@@ -1126,7 +1125,7 @@ public class CircuitBuilder {
 
     protected void deletePortalIcon(PortalIcon icon) {
         if (log.isDebugEnabled()) {
-            log.debug("deletePortalIcon: " + icon.getName());
+            log.debug("deletePortalIcon: {}", icon.getName());
         }
         Portal portal = icon.getPortal();
         if (portal != null) {
@@ -1232,7 +1231,7 @@ public class CircuitBuilder {
                 if (icon != null) {
                     String fileName = icon.getURL();
                     if (log.isDebugEnabled()) {
-                        log.debug("isUnconvertedTrack Test: url= " + fileName);
+                        log.debug("isUnconvertedTrack Test: url= {}", fileName);
                     }
                     // getURL() returns Unix separatorChar= "/" even on windows
                     // so don't use java.io.File.separatorChar

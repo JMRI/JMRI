@@ -142,7 +142,7 @@ public class EcosTurnout extends AbstractTurnout
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
+                log.error("Cannot command both CLOSED and THROWN {}", s);
                 return;
             } else {
                 // send a CLOSED command
@@ -320,7 +320,7 @@ public class EcosTurnout extends AbstractTurnout
             return; //message is not for our turnout address
         }
         if (msg.contains("switching[0]")) {
-            log.debug("Turnout switched - new state="+newstate);
+            log.debug("Turnout switched - new state={}", newstate);
             /*log.debug("see new state "+newstate+" for "+_number);*/
             //newCommandedState(newstate);
             /*Using newKnownState, as any changes made on the ecos do not show
@@ -351,9 +351,9 @@ public class EcosTurnout extends AbstractTurnout
                     } else if (val.equals("1")) {
                         newstate = THROWN;
                     } else {
-                        log.warn("val |" + val + "| from " + msg);
+                        log.warn("val |{}| from {}", val, msg);
                     }
-                    log.debug("newstate found: "+newstate);
+                    log.debug("newstate found: {}", newstate);
                     if (m.getReplyType().equals("set")) {
                        // wait to set the state until ECOS tells us to (by an event with the contents "switching[0]")
                     } else {

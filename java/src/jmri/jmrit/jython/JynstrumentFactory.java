@@ -47,13 +47,13 @@ public class JynstrumentFactory {
                 fr.close();
             }
         } catch (java.io.IOException | javax.script.ScriptException ex) {
-            log.error("Exception while creating Jynstrument: " + ex);
+            log.error("Exception while creating Jynstrument: {}", ex);
             return null;
         }
         jyns.setClassName(className);
         jyns.setContext(context);
         if (!jyns.validateContext()) {  // check validity of this Jynstrument for that extended context
-            log.error("Invalid context for Jynstrument, host is " + context.getClass() + " and " + jyns.getExpectedContextClassName() + " kind of host is expected");
+            log.error("Invalid context for Jynstrument, host is {} and {} kind of host is expected", context.getClass(), jyns.getExpectedContextClassName());
             return null;
         }
         jyns.setJythonFile(jyFile);

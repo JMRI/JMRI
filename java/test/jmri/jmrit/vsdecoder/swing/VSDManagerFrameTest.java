@@ -1,9 +1,7 @@
 package jmri.jmrit.vsdecoder.swing;
 
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.util.JUnitUtil;
 import org.junit.*;
 

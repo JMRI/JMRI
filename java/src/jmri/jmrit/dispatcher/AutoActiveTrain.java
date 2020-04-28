@@ -894,7 +894,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     useSpeed = signalSpeed;
                 }
 
-                log.trace("BlockSpeed[" + blockSpeed + "] SignalSpeed[" + signalSpeed + "]");
+                log.trace("BlockSpeed[{}] SignalSpeed[{}]", blockSpeed, signalSpeed);
                 if (useSpeed < 0.01f) {
                     // check to to see if its allocated to us!!!
                     //      check Block occupancy sensor if it is in an allocated block, which must change before signal.

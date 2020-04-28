@@ -118,7 +118,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
                 if (col == CLEARCOL) {
                     IdTag t = getBySystemName(sysNameList.get(row));
                     if (log.isDebugEnabled()) {
-                        log.debug("Clear where & when last seen for " + t.getSystemName());
+                        log.debug("Clear where & when last seen for {}", t.getSystemName());
                     }
                     t.setWhereLastSeen(null);
                     fireTableRowsUpdated(row, row);

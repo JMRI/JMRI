@@ -1,10 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
 import jmri.Block;
-import jmri.BlockManager;
-import jmri.InstanceManager;
 import jmri.Memory;
-import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

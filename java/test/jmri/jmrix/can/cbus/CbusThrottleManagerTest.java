@@ -486,7 +486,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -538,7 +538,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
             @Override
             public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -632,7 +632,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
             @Override
             public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -706,7 +706,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
             @Override
             public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -787,7 +787,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
             @Override
             public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -861,7 +861,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
             @Override
             public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             

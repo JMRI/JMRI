@@ -93,7 +93,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
                         provideMemory(pName);
                 setMemory(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, memory));
             } catch (IllegalArgumentException e) {
-                log.error("Memory '" + pName + "' not available, icon won't see changes");
+                log.error("Memory '{}' not available, icon won't see changes", pName);
             }
         } else {
             log.error("No MemoryManager for this protocol, icon won't see changes");

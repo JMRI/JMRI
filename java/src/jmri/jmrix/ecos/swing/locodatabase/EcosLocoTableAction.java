@@ -191,7 +191,7 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
                         if ((re.getAttribute(getRosterAttribute()) != null && !re.getAttribute(getRosterAttribute()).equals(""))) {
                             JOptionPane.showMessageDialog(f,
                                     Bundle.getMessage("EcosEditAssignedDialog", ecosObjectNo));
-                            log.error(ecosObjectNo + " This roster entry already has an ECoS loco assigned to it");
+                            log.error("{} This roster entry already has an ECoS loco assigned to it", ecosObjectNo);
                             return;
                         }
                         String oldRoster = getByEcosObject(ecosObjectNo).getRosterId();

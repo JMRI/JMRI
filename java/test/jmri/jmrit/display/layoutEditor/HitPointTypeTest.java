@@ -1,19 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.Color;
-import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
-import java.io.File;
-import jmri.*;
-import jmri.jmrit.display.*;
 import jmri.util.*;
-import jmri.util.junit.rules.*;
-import jmri.util.swing.JemmyUtil;
 import org.junit.*;
 import org.junit.Test;
-import org.junit.rules.Timeout;
-import org.netbeans.jemmy.*;
-import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
  * Test simple functioning of HitPointType.

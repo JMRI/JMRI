@@ -3493,7 +3493,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             } else if (HitPointType.isTurnoutHitType(foundHitPointType)) {
                 // don't curently have edit popup for these
             } else {
-                log.warn("Unknown foundPointType:" + foundHitPointType);
+                log.warn("Unknown foundPointType:{}", foundHitPointType);
             }
         } else {
             do {

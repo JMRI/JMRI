@@ -90,10 +90,10 @@ public class VSDecoder implements PropertyChangeListener {
                 initialized = false;
             }
         } catch (java.util.zip.ZipException e) {
-            log.error("ZipException loading VSDecoder from " + config.getVSDPath());
+            log.error("ZipException loading VSDecoder from {}", config.getVSDPath());
             // would be nice to pop up a dialog here...
         } catch (java.io.IOException ioe) {
-            log.error("IOException loading VSDecoder from " + config.getVSDPath());
+            log.error("IOException loading VSDecoder from {}", config.getVSDPath());
             // would be nice to pop up a dialog here...
         }
 
@@ -150,10 +150,10 @@ public class VSDecoder implements PropertyChangeListener {
                 initialized = false;
             }
         } catch (java.util.zip.ZipException e) {
-            log.error("ZipException loading VSDecoder from " + path);
+            log.error("ZipException loading VSDecoder from {}", path);
             // would be nice to pop up a dialog here...
         } catch (java.io.IOException ioe) {
-            log.error("IOException loading VSDecoder from " + path);
+            log.error("IOException loading VSDecoder from {}", path);
             // would be nice to pop up a dialog here...
         }
     }

@@ -431,13 +431,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
             if (_comboboxName.equals(ROAD)) {
                 for (RollingStock rs : InstanceManager.getDefault(EngineManager.class).getList()) {
                     if (rs.getRoadName().equals(item)) {
-                        log.info("Engine (" +
-                                rs.getRoadName() +
-                                " " +
-                                rs.getNumber() +
-                                ") has assigned road name (" +
-                                item +
-                                ")"); // NOI18N
+                        log.info("Engine ({} {}) has assigned road name ({})", rs.getRoadName(), rs.getNumber(), item); // NOI18N
                         return;
                     }
                 }

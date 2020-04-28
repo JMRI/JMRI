@@ -89,7 +89,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     @Override
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (log.isDebugEnabled()) {
-            log.debug("forwardToPort message: [" + m + "]");
+            log.debug("forwardToPort message: [{}]", m);
         }
         // remember who sent this
         mLastSender = reply;
@@ -106,7 +106,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         try {
             xbee.sendPacketAsync(((XBeeMessage) m).getXBeeRequest());
         } catch (XBeeException xbe) {
-            log.error("Error Sending message to XBee: " + xbe);
+            log.error("Error Sending message to XBee: {}", xbe);
         }
     }
 
@@ -264,7 +264,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         msgQueue.addLast(m);
         listenerQueue.addLast(reply);
         if (m != null) {
-            log.debug("just notified transmit thread with message " + m.toString());
+            log.debug("just notified transmit thread with message {}", m.toString());
         }
     }
 

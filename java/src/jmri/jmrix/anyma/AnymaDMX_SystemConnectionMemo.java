@@ -248,7 +248,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
                 if (num > 0) {
                     result = num;
                 } else {
-                    log.warn("invalid anyma dmx system name: " + systemName);
+                    log.warn("invalid anyma dmx system name: {}", systemName);
                 }
             } else {
                 log.error("invalid character in header field of system name: {}", systemName);

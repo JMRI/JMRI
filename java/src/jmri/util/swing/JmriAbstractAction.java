@@ -94,7 +94,7 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
             try {
                 cache = makePanel();
             } catch (Exception ex) {
-                log.error("Exception creating panel: " + ex);
+                log.error("Exception creating panel: {}", ex);
                 return;
             }
             if (cache == null) {

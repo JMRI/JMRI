@@ -125,17 +125,15 @@ public class SprogThrottle extends AbstractThrottle {
             mode |= (InstanceManager.getDefault(jmri.PowerManager.class).getPower() == SprogPowerManager.ON)
                     ? SprogConstants.POWER_BIT : 0;
         } catch (Exception e) {
-            log.error("Exception from InstanceManager.getDefault(jmri.PowerManager.class): " + e);
+            log.error("Exception from InstanceManager.getDefault(jmri.PowerManager.class): {}", e);
         }
         if (log.isDebugEnabled()) {
-            log.debug("Speed Step Mode Change to Mode: " + Mode
-                    + " Current mode is: " + this.speedStepMode);
+            log.debug("Speed Step Mode Change to Mode: {} Current mode is: {}", Mode, this.speedStepMode);
         }
         if (Mode == SpeedStepMode.NMRA_DCC_14) {
             mode += 0x200;
         } else if (Mode == SpeedStepMode.NMRA_DCC_27) {
-            log.error("Requested Speed Step Mode 27 not supported Current mode is: "
-                    + this.speedStepMode);
+            log.error("Requested Speed Step Mode 27 not supported Current mode is: {}", this.speedStepMode);
             return;
         } else if (Mode == SpeedStepMode.NMRA_DCC_28) {
             mode += 0x400;
@@ -167,7 +165,7 @@ public class SprogThrottle extends AbstractThrottle {
             this.speedSetting = speed;
             int value = Math.round((31 - 3) * speed);     // -3 for rescale to avoid estopx2 and stop
 
-            log.debug("Speed: " + speed + " value: " + value);
+            log.debug("Speed: {} value: {}", speed, value);
 
             if (value > 0) {
                 value = value + 3;  // skip estopx2 and stop

@@ -362,8 +362,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     setText(str);
                     updateIcon(null);
                     if (log.isDebugEnabled()) {
-                        log.debug("String str= \"" + str + "\" str.trim().length()= " + str.trim().length());
-                        log.debug("  maxWidth()= " + maxWidth() + ", maxHeight()= " + maxHeight());
+                        log.debug("String str= \"{}\" str.trim().length()= {}", str, str.trim().length());
+                        log.debug("  maxWidth()= {}, maxHeight()= {}", maxWidth(), maxHeight());
                         log.debug("  getBackground(): {}", getBackground());
                         log.debug("  _editor.getTargetPanel().getBackground(): {}", _editor.getTargetPanel().getBackground());
                         log.debug("  setAttributes to getPopupUtility({}) with", getPopupUtility());

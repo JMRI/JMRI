@@ -54,7 +54,7 @@ public class EasyDccTurnout extends AbstractTurnout {
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
+                log.error("Cannot command both CLOSED and THROWN {}", s);
             } else {
                 // send a CLOSED command
                 sendMessage(true ^ getInverted());
@@ -77,10 +77,7 @@ public class EasyDccTurnout extends AbstractTurnout {
         // get the packet
         byte[] bl = NmraPacket.accDecoderPkt(_number, closed);
         if (log.isDebugEnabled()) {
-            log.debug("packet: "
-                    + Integer.toHexString(0xFF & bl[0])
-                    + " " + Integer.toHexString(0xFF & bl[1])
-                    + " " + Integer.toHexString(0xFF & bl[2]));
+            log.debug("packet: {} {} {}", Integer.toHexString(0xFF & bl[0]), Integer.toHexString(0xFF & bl[1]), Integer.toHexString(0xFF & bl[2]));
         }
 
         EasyDccMessage m = new EasyDccMessage(13);

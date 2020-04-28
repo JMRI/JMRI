@@ -4,8 +4,6 @@ import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.Block;
 import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
 import jmri.Turnout;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.EditorFrameOperator;

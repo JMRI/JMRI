@@ -101,7 +101,7 @@ public class PortalIconXml extends PositionableLabelXml {
             try {
                 scale = a.getDoubleValue();
             } catch (org.jdom2.DataConversionException dce) {
-                log.error(l.getNameString() + " can't convert scale " + dce);
+                log.error("{} can't convert scale {}", l.getNameString(), dce);
             }
         }
         l.setScale(scale);
@@ -112,7 +112,7 @@ public class PortalIconXml extends PositionableLabelXml {
             try {
                 deg = a.getIntValue();
             } catch (org.jdom2.DataConversionException dce) {
-                log.error(l.getNameString() + " can't convert rotate " + dce);
+                log.error("{} can't convert rotate {}", l.getNameString(), dce);
             }
         }
         l.rotate(deg);

@@ -308,7 +308,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
 
     protected String setTrainInfo(String name) {
         if (log.isDebugEnabled()) {
-            log.debug("setTrainInfo for: " + name);
+            log.debug("setTrainInfo for: {}", name);
         }
         setTrainName(name);
         _dccNumBox.setText(_speedUtil.getAddress());
@@ -1065,7 +1065,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
 //        _dirty = true;
         _routeModel.fireTableDataChanged();
         if (log.isDebugEnabled()) {
-            log.debug("showRoute: Route has " + _orders.size() + " orders.");
+            log.debug("showRoute: Route has {} orders.", _orders.size());
         }
     }
 

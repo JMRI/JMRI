@@ -1,7 +1,6 @@
 package jmri.jmris.srcp;
 
 import jmri.util.JUnitUtil;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;

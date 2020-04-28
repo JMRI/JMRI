@@ -649,7 +649,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                     id = item.getAttribute("name").getValue();
                     log.debug("Load {} for [{}] via {}", id, panel.getName(), adapterName);
                 } catch (NullPointerException e) {
-                    log.debug("Load layout object for [" + panel.getName() + "] via " + adapterName);
+                    log.debug("Load layout object for [{}] via {}", panel.getName(), adapterName);
                     log.debug("Load layout object for [{}] via {}", panel.getName(), adapterName);
                 } catch (RuntimeException e) {
                     throw e;

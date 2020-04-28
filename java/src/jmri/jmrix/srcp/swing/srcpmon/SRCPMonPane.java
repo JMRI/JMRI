@@ -62,7 +62,7 @@ public class SRCPMonPane extends jmri.jmrix.AbstractMonPane implements SRCPListe
     @Override
     public synchronized void reply(jmri.jmrix.srcp.parser.SimpleNode n) {  // receive a reply message and log it
         if (log.isDebugEnabled()) {
-            log.debug("reply called with simpleNode " + n.jjtGetValue());
+            log.debug("reply called with simpleNode {}", n.jjtGetValue());
         }
         reply(new SRCPReply(n));
     }

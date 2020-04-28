@@ -334,7 +334,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                                 l.setBezierControlPoint(new Point2D.Double(x, y), index);
                             }
                         } else {
-                            log.error("Track segment Bezier two controlpoint elements not found. (found " + elementList.size() + ")");
+                            log.error("Track segment Bezier two controlpoint elements not found. (found {})", elementList.size());
                         }
                     } else {
                         log.error("Track segment Bezier controlpoint elements not found.");

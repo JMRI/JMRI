@@ -79,7 +79,7 @@ public class DefaultShutDownManager implements ShutDownManager {
         if (!this.tasks.contains(s)) {
             this.tasks.add(s);
         } else {
-            log.debug("already contains " + s);
+            log.debug("already contains {}", s);
         }
     }
 

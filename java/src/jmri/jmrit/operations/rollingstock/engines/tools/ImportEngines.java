@@ -493,7 +493,7 @@ public class ImportEngines extends ImportRollingStock {
                     // log.debug("No location for engine ("+engineRoad+" "+engineNumber+")");
                 }
             } else if (!line.isEmpty()) {
-                log.info("Engine import line " + lineNum + " missing attributes: " + line);
+                log.info("Engine import line {} missing attributes: {}", lineNum, line);
                 JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportMissingAttributes"),
                         new Object[]{lineNum}), Bundle.getMessage("EngineAttributeMissing"),
                         JOptionPane.ERROR_MESSAGE);

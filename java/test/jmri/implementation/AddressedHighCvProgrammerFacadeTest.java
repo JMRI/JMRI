@@ -33,7 +33,7 @@ public class AddressedHighCvProgrammerFacadeTest {
         ProgListener l = new ProgListener() {
             @Override
             public void programmingOpReply(int value, int status) {
-                log.debug("callback value=" + value + " status=" + status);
+                log.debug("callback value={} status={}", value, status);
                 replied = true;
                 readValue = value;
             }
@@ -61,7 +61,7 @@ public class AddressedHighCvProgrammerFacadeTest {
         ProgListener l = new ProgListener() {
             @Override
             public void programmingOpReply(int value, int status) {
-                log.debug("callback value=" + value + " status=" + status);
+                log.debug("callback value={} status={}", value, status);
                 replied = true;
                 readValue = value;
             }
@@ -89,7 +89,7 @@ public class AddressedHighCvProgrammerFacadeTest {
         ProgListener l = new ProgListener() {
             @Override
             public void programmingOpReply(int value, int status) {
-                log.debug("callback value=" + value + " status=" + status);
+                log.debug("callback value={} status={}", value, status);
                 replied = true;
                 readValue = value;
             }
@@ -119,7 +119,7 @@ public class AddressedHighCvProgrammerFacadeTest {
         ProgListener l = new ProgListener() {
             @Override
             public void programmingOpReply(int value, int status) {
-                log.debug("callback value=" + value + " status=" + status);
+                log.debug("callback value={} status={}", value, status);
                 replied = true;
                 readValue = value;
             }

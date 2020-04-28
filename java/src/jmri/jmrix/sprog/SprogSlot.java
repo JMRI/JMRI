@@ -347,10 +347,10 @@ public class SprogSlot {
 
     private int doRepeat() {
         if (repeat > 0) {
-            log.debug("Slot " + slot + " repeats");
+            log.debug("Slot {} repeats", slot);
             repeat--;
             if (repeat == 0) {
-                log.debug("Clear slot " + slot + " due to repeats exhausted");
+                log.debug("Clear slot {} due to repeats exhausted", slot);
                 this.clear();
             }
         }

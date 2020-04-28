@@ -1,7 +1,5 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
-import javax.annotation.Nonnull;
-
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.util.JUnitUtil;
 

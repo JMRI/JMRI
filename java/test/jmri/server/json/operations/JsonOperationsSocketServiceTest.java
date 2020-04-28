@@ -21,7 +21,6 @@ import org.junit.Test;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.beans.PropertyChangeProvider;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;

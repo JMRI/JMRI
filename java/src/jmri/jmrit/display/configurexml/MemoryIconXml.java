@@ -90,7 +90,7 @@ public class MemoryIconXml extends PositionableLabelXml {
             ed = (Editor) o;
             l = new MemoryIcon("", ed);
         } else {
-            log.error("Unrecognizable class - " + o.getClass().getName());
+            log.error("Unrecognizable class - {}", o.getClass().getName());
             return;
         }
 
@@ -110,7 +110,7 @@ public class MemoryIconXml extends PositionableLabelXml {
         if (m != null) {
             l.setMemory(name);
         } else {
-            log.error("Memory named '" + attr.getValue() + "' not found.");
+            log.error("Memory named '{}' not found.", attr.getValue());
             ed.loadFailed();
         }
 
@@ -140,7 +140,7 @@ public class MemoryIconXml extends PositionableLabelXml {
             if (icon == null) {
                 icon = ed.loadFailed("Memory " + name, iconName);
                 if (icon == null) {
-                    log.info("Memory \"" + name + "\" icon removed for url= " + iconName);
+                    log.info("Memory \"{}\" icon removed for url= {}", name, iconName);
                 }
             }
             if (icon != null) {

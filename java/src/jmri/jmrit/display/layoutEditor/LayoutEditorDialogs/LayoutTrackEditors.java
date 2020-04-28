@@ -65,7 +65,7 @@ public class LayoutTrackEditors {
         } else if (layoutTrack instanceof LayoutTurntable) {
             editLayoutTurntable((LayoutTurntable) layoutTrack);
         } else {
-            log.error("editLayoutTrack unknown LayoutTrack subclass:" + layoutTrack.getClass().getName());  // NOI18N
+            log.error("editLayoutTrack unknown LayoutTrack subclass:{}", layoutTrack.getClass().getName());  // NOI18N
         }
     }
 
@@ -1831,7 +1831,7 @@ public class LayoutTrackEditors {
                     double ang = Float.parseFloat(rayAngleTextField.getText());
                     rayTrack.setAngle(ang);
                 } catch (Exception e) {
-                    log.error("Angle is not in correct format so will skip " + rayAngleTextField.getText());  // NOI18N
+                    log.error("Angle is not in correct format so will skip {}", rayAngleTextField.getText());  // NOI18N
                 }
             }
         }

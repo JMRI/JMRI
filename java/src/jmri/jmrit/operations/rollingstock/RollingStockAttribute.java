@@ -83,9 +83,9 @@ public abstract class RollingStockAttribute extends PropertyChangeSupport {
             for (int i = 0; i < lengths.length; i++) {
                 try {
                     Integer.parseInt(lengths[i]);
-                    log.error("length " + i + " = " + lengths[i]);
+                    log.error("length {} = {}", i, lengths[i]);
                 } catch (NumberFormatException ee) {
-                    log.error("length " + i + " = " + lengths[i] + " is not a valid number!");
+                    log.error("length {} = {} is not a valid number!", i, lengths[i]);
                 }
             }
         }

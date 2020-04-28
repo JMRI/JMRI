@@ -66,7 +66,7 @@ public class ExportCars extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete: " + e);
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}", e);
         }
     }
 
@@ -152,7 +152,7 @@ public class ExportCars extends XmlFile {
             }
             fileOut.flush();
             fileOut.close();
-            log.info("Exported " + _carList.size() + " cars to file " + defaultOperationsFilename());
+            log.info("Exported {} cars to file {}", _carList.size(), defaultOperationsFilename());
             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedCarsToFile"), new Object[]{
                 _carList.size(), defaultOperationsFilename()}), Bundle.getMessage("ExportComplete"),
                     JOptionPane.INFORMATION_MESSAGE);

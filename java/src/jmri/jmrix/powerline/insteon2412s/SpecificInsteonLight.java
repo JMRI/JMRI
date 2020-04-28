@@ -56,7 +56,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
         if (maxHops <= Constants.FLAG_MASK_MAXHOPS && maxHops >= 0) {
             this.maxHops = maxHops;
         } else {
-            log.error("setMaxHops out of range: " + maxHops);
+            log.error("setMaxHops out of range: {}", maxHops);
         }
     }
 
@@ -97,7 +97,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
     @Override
     protected void initIntensity(double intensity) {
         if (log.isDebugEnabled()) {
-            log.debug("initIntensity(" + intensity + ")");
+            log.debug("initIntensity({})", intensity);
         }
     }
 
@@ -110,7 +110,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
     @Override
     protected void sendIntensity(double intensity) {
         if (log.isDebugEnabled()) {
-            log.debug("sendIntensity(" + intensity + ")" + " lastOutputStep: " + lastOutputStep + " maxDimStep: " + maxDimStep);
+            log.debug("sendIntensity({}) lastOutputStep: {} maxDimStep: {}", intensity, lastOutputStep, maxDimStep);
         }
 
         // find the new correct dim count
@@ -118,20 +118,20 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
 
         // check for errors
         if ((newStep < 0) || (newStep > maxDimStep)) {
-            log.error("newStep wrong: " + newStep + " intensity: " + intensity);
+            log.error("newStep wrong: {} intensity: {}", newStep, intensity);
         }
 
         // do we have any change to make
         if (newStep == lastOutputStep) {
             // nothing to do!
             if (log.isDebugEnabled()) {
-                log.debug("intensity " + intensity + " within current step, return");
+                log.debug("intensity {} within current step, return", intensity);
             }
             return;
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("function set Intensity " + intensity);
+            log.debug("function set Intensity {}", intensity);
         }
 
         // create output sequence of address, then function
@@ -141,7 +141,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
         tc.sendInsteonSequence(out, null);
 
         if (log.isDebugEnabled()) {
-            log.debug("sendIntensity(" + intensity + ") addr " + idhighbyte + idmiddlebyte + idlowbyte + " newStep " + newStep);
+            log.debug("sendIntensity({}) addr {}{}{} newStep {}", intensity, idhighbyte, idmiddlebyte, idlowbyte, newStep);
         }
 
         lastOutputStep = newStep;
@@ -162,7 +162,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
     @Override
     protected void sendOnOffCommand(int newState) {
         if (log.isDebugEnabled()) {
-            log.debug("start sendOnOff(" + newState + ") Current: " + mState);
+            log.debug("start sendOnOff({}) Current: {}", newState, mState);
         }
 
         // figure out command 
@@ -172,12 +172,12 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
         } else if (newState == OFF) {
             command1 = Constants.CMD_LIGHT_OFF_FAST;
         } else {
-            log.warn("illegal state requested for Light: " + getSystemName());
+            log.warn("illegal state requested for Light: {}", getSystemName());
             return;
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("set state " + newState + " " + getSystemName());
+            log.debug("set state {} {}", newState, getSystemName());
         }
 
         // create output sequence of just address and function together
@@ -187,7 +187,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
         tc.sendInsteonSequence(out, null);
 
         if (log.isDebugEnabled()) {
-            log.debug("end sendOnOff(" + newState + ")  insteon " + StringUtil.twoHexFromInt(idhighbyte) + "." + StringUtil.twoHexFromInt(idmiddlebyte) + "." + StringUtil.twoHexFromInt(idlowbyte) + " cmd1: " + command1);
+            log.debug("end sendOnOff({})  insteon {}.{}.{} cmd1: {}", newState, StringUtil.twoHexFromInt(idhighbyte), StringUtil.twoHexFromInt(idmiddlebyte), StringUtil.twoHexFromInt(idlowbyte), command1);
         }
     }
 

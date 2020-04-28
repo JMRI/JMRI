@@ -257,7 +257,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             }
             if (s == null) {
                 // serious trouble, log error and ignore
-                log.error("Cannot find Node " + nodeID + " in list of configured Nodes.");
+                log.error("Cannot find Node {} in list of configured Nodes.", nodeID);
                 return;
             }
             // have node, initialize for new node
@@ -602,7 +602,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
                     w.write("\n");
                     lineString = new StringBuilder();
                 } catch (IOException e) {
-                    log.warn("error during printing: " + e);
+                    log.warn("error during printing: {}", e);
                 }
             }
         }

@@ -2,12 +2,10 @@ package jmri.managers;
 
 import static org.junit.Assert.assertNotNull;
 
-import jmri.BlockManager;
 import jmri.Conditional;
 import jmri.ConditionalManager;
 import jmri.InstanceManager;
 import jmri.Logix;
-import jmri.ShutDownManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;

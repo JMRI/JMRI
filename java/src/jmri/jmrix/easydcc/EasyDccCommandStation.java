@@ -29,7 +29,7 @@ public class EasyDccCommandStation implements CommandStation {
             repeats = 9;
         }
         if (repeats < 0) {
-            log.error("repeat count out of range: " + repeats);
+            log.error("repeat count out of range: {}", repeats);
             repeats = 1;
         }
 

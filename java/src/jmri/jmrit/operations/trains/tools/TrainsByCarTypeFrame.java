@@ -225,9 +225,9 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
             }
         } else {
             JCheckBox cb = (JCheckBox) ae.getSource();
-            log.debug("Checkbox " + cb.getName() + " text: " + cb.getText());
+            log.debug("Checkbox {} text: {}", cb.getName(), cb.getText());
             if (trainList.contains(cb)) {
-                log.debug("Checkbox train " + cb.getText());
+                log.debug("Checkbox train {}", cb.getText());
             } else {
                 log.error("Error checkbox not found");
             }

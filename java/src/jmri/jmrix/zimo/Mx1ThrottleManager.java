@@ -35,7 +35,7 @@ public class Mx1ThrottleManager extends AbstractThrottleManager {
         if (a instanceof DccLocoAddress ) {
             //We do interact
             DccLocoAddress address = (DccLocoAddress) a;
-            log.debug("new Mx1Throttle for " + address); // NOI18N
+            log.debug("new Mx1Throttle for {}", address); // NOI18N
             notifyThrottleKnown(new Mx1Throttle((Mx1SystemConnectionMemo) adapterMemo, address), address);
         }
         else {

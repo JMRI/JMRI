@@ -29,7 +29,7 @@ public abstract class MonitorAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("starting MonitorFrame caught exception: " + ex.toString());
+            log.error("starting MonitorFrame caught exception: {}", ex.toString());
         }
         connect(f);
         f.setVisible(true);
