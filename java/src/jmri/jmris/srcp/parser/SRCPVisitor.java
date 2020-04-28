@@ -80,7 +80,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
 
     @Override
     public Object visit(ASTgo node, Object data) {
-        log.debug("Go " + node.jjtGetValue());
+        log.debug("Go {}", node.jjtGetValue());
         jmri.jmris.srcp.JmriSRCPServiceHandler handle = (jmri.jmris.srcp.JmriSRCPServiceHandler) data;
         // The GO command should switch the server into runmode, but
         // only if the client has set the protocol version.  (if no mode
@@ -124,7 +124,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
 
     @Override
     public Object visit(ASTget node, Object data) {
-        log.debug("Get " + ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
+        log.debug("Get {}", ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
         int bus = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(0)).jjtGetValue()));
         if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("POWER")
                 && isSupported(bus, "POWER")) {
@@ -342,7 +342,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
     public Object visit(ASTset node, Object data) {
         SimpleNode target = (SimpleNode) node.jjtGetChild(1);
 
-        log.debug("Set " + target.jjtGetValue());
+        log.debug("Set {}", target.jjtGetValue());
         int bus = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(0)).jjtGetValue()));
 
         if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("POWER")
@@ -478,7 +478,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
 
     @Override
     public Object visit(ASTreset node, java.lang.Object data) {
-        log.debug("RESET " + ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
+        log.debug("RESET {}", ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
         if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("SERVER")) {
             // for the RESET <bus> SERVER request, the protocol requries that
             // we re-initialize the server.  Since we may have a local GUI
@@ -495,7 +495,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
     @Override
     public Object visit(ASTinit node, java.lang.Object data) {
         int bus = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(0)).jjtGetValue()));
-        log.debug("INIT " + ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
+        log.debug("INIT {}", ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
         if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("POWER")
                 && isSupported(bus, "POWER")) {
             /* Power really has nothing to do in JMRI */
@@ -572,7 +572,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
 
     @Override
     public Object visit(ASTwait_cmd node, Object data) {
-        log.debug("Received WAIT CMD " + node.jjtGetValue());
+        log.debug("Received WAIT CMD {}", node.jjtGetValue());
         if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("TIME")) {
             long julday = Long.parseLong((String) ((SimpleNode) node.jjtGetChild(2)).jjtGetValue());
             int Hour = Integer.parseInt((String) ((SimpleNode) node.jjtGetChild(3)).jjtGetValue());

@@ -14,13 +14,13 @@ public class SRCPClientVisitor extends SRCPClientParserDefaultVisitor {
 
     @Override
     public Object visit(ASTinfo node, Object data) {
-        log.debug("Info Response " + node.jjtGetValue());
+        log.debug("Info Response {}", node.jjtGetValue());
         int bus = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(0)).jjtGetValue()));
         SRCPBusConnectionMemo busMemo = ((SRCPSystemConnectionMemo) data).getMemo(bus);
 
         SimpleNode group = (SimpleNode) node.jjtGetChild(1);
 
-        log.debug("Info Response Group: " + group.jjtGetValue());
+        log.debug("Info Response Group: {}", group.jjtGetValue());
 
         if (group instanceof ASTfb) {
             if (busMemo.provides(jmri.SensorManager.class)) {
@@ -69,7 +69,7 @@ public class SRCPClientVisitor extends SRCPClientParserDefaultVisitor {
 
     @Override
     public Object visit(ASTok node, Object data) {
-        log.debug("Ok Response " + node.jjtGetValue());
+        log.debug("Ok Response {}", node.jjtGetValue());
         SRCPSystemConnectionMemo memo = (SRCPSystemConnectionMemo) data;
         if (((String) ((SimpleNode) node).jjtGetValue()).contains("GO")) {
             memo.setMode(jmri.jmrix.srcp.SRCPTrafficController.RUNMODE);

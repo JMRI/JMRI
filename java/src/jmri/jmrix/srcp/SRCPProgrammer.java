@@ -236,7 +236,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     @Override
     synchronized public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {
         if (log.isDebugEnabled()) {
-            log.debug("reply called with simpleNode " + n.jjtGetValue());
+            log.debug("reply called with simpleNode {}", n.jjtGetValue());
         }
         if (n.jjtGetChild(3) instanceof jmri.jmrix.srcp.parser.ASTsm) {
             reply(new SRCPReply(n));

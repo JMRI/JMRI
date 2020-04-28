@@ -27,7 +27,7 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
     // from a parser message node.
     public SRCPReply(SimpleNode n) {
         super();
-        log.debug("Parser Constructor called with node type " + n.getClass() + " and " + n.jjtGetNumChildren() + " children.");
+        log.debug("Parser Constructor called with node type {} and {} children.", n.getClass(), n.jjtGetNumChildren());
         String s = inOrderTraversal(n);
         log.debug("Parser Constructor built :{}", s);
         _nDataChars = s.length();
