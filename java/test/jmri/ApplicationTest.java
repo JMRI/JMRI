@@ -61,6 +61,4 @@ public class ApplicationTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ApplicationTest.class);
-
 }
