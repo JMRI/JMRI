@@ -276,7 +276,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
-                log.error("{}",e.getLocalizedMessage(), e);
+                log.error("", e);
             }
         }
 
@@ -292,7 +292,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                log.error("{}",e.getLocalizedMessage(), e);
+                log.error("",e);
             }
         }
         // Now load deferred config items
