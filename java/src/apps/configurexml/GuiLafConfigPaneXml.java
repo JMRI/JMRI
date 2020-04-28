@@ -1,7 +1,7 @@
 package apps.configurexml;
 
 import apps.GuiLafConfigPane;
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.Font;
 import java.util.Enumeration;
 import java.util.Locale;
@@ -25,7 +25,11 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
  * @see apps.GuiLafConfigPane
  * @since 2.9.5
+ * @deprecated since 4.19.6 without replacement; this class supports reading
+ * preferences from JMRI version earlier than 4.1.4; from which a direct update
+ * is not supported
  */
+@Deprecated
 public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public GuiLafConfigPaneXml() {

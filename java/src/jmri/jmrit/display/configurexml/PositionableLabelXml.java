@@ -1,6 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.Color;
 import java.awt.Font;
 import jmri.InstanceManager;
