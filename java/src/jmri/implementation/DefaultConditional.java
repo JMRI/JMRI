@@ -264,15 +264,9 @@ public class DefaultConditional extends AbstractNamedBean
                 try {
                     DataPair dp = parseCalculate(new String(ch, 0, n), _variableList);
                     result = dp.result;
-                } catch (NumberFormatException nfe) {
+                } catch (NumberFormatException | IndexOutOfBoundsException | JmriException e) {
                     result = false;
-                    log.error("{} parseCalculation error antecedent= {}, ex= ", getDisplayName(), _antecedent, nfe);  // NOI18N
-                } catch (IndexOutOfBoundsException ioob) {
-                    result = false;
-                    log.error("{} parseCalculation error antecedent= {}, ex= ", getDisplayName(), _antecedent, ioob);  // NOI18N
-                } catch (JmriException je) {
-                    result = false;
-                    log.error("{} parseCalculation error antecedent= {}, ex= ", getDisplayName(), _antecedent, je);  // NOI18N
+                    log.error("{} parseCalculation error antecedent= {}, ex= {}", getDisplayName(), _antecedent, e,e);  // NOI18N
                 }
                 break;
             default:
