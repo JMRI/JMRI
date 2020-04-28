@@ -459,7 +459,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     _targetPanel.add(layoutEditorComponent, Integer.valueOf(3));
                     _targetPanel.moveToFront(layoutEditorComponent);
                 } catch (Exception e) {
-                    log.warn("paintTargetPanelBefore: Exception {}", e);
+                    log.warn("paintTargetPanelBefore: ", e);
                 }
             }
         });

@@ -1398,7 +1398,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
             default: {
                 String errString = MessageFormat.format("{0}.getConnection({1}); Invalid Connection Type",
                         getName(), connectionType); //I18IN
-                log.error(errString);
+                log.error("will throw {}", errString);
                 throw new jmri.JmriException(errString);
             }
         }
@@ -1413,7 +1413,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); unexpected type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
-            log.error(errString);
+            log.error("will throw {}", errString);
             throw new jmri.JmriException(errString);
         }
         switch (connectionType) {
@@ -1432,7 +1432,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
             default:
                 String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid Connection Type",
                         getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
-                log.error(errString);
+                log.error("will throw {}", errString);
                 throw new jmri.JmriException(errString);
         }
     }

@@ -485,7 +485,7 @@ public class LayoutTurntable extends LayoutTrack {
         } else {
             String errString = MessageFormat.format("{0}.getCoordsForConnectionType({1}); Invalid connection type",
                     getName(), connectionType); // NOI18N
-            log.error(errString); // NOI18N
+            log.error("will throw {}", errString); // NOI18N
             throw new jmri.JmriException(errString);
         }
         return result;
@@ -499,7 +499,7 @@ public class LayoutTurntable extends LayoutTrack {
         if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
-            log.error(errString); // NOI18N
+            log.error("will throw {}", errString); // NOI18N
             throw new jmri.JmriException(errString);
         }
         if (HitPointType.isTurntableRayHitType(connectionType)) {
@@ -509,13 +509,13 @@ public class LayoutTurntable extends LayoutTrack {
                 String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid object: {4}",
                         getName(), connectionType, o.getName(),
                         type, o.getClass().getName()); // NOI18N
-                log.error(errString); // NOI18N
+                log.error("will throw {}", errString); // NOI18N
                 throw new jmri.JmriException(errString);
             }
         } else {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid connection type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
-            log.error(errString); // NOI18N
+            log.error("will throw {}", errString); // NOI18N
             throw new jmri.JmriException(errString);
         }
     }
