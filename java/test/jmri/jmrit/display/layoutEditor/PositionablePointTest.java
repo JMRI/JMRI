@@ -291,7 +291,7 @@ public class PositionablePointTest {
             Assert.fail("No exception thrown on pp.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("test.setConnection(NONE, null, NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw test.setConnection(NONE, null, NONE); Invalid Connection Type");
 
         try {
             // test invalid object type
@@ -299,7 +299,7 @@ public class PositionablePointTest {
             Assert.fail("No exception thrown on pp.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("test.setConnection(POS_POINT, null, POS_POINT); unexpected type");
+        JUnitAppender.assertErrorMessage("will throw test.setConnection(POS_POINT, null, POS_POINT); unexpected type");
 
         try {
             // test valid types

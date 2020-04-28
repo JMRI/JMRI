@@ -574,7 +574,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltRH.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Right Hand.getConnection(NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw Right Hand.getConnection(NONE); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltLH.getConnection(invalid type) is null",
@@ -582,7 +582,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltLH.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Left Hand.getConnection(NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw Left Hand.getConnection(NONE); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltWY.getConnection(invalid type) is null",
@@ -590,7 +590,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltWY.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Wye.getConnection(NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw Wye.getConnection(NONE); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltDX.getConnection(invalid type) is null",
@@ -598,7 +598,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltDX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Double XOver.getConnection(NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw Double XOver.getConnection(NONE); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltRX.getConnection(invalid type) is null",
@@ -606,7 +606,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltRX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Right Hand XOver.getConnection(NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw Right Hand XOver.getConnection(NONE); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltLX.getConnection(invalid type) is null",
@@ -614,7 +614,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltLX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Left Hand XOver.getConnection(NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw Left Hand XOver.getConnection(NONE); Invalid Connection Type");
     }
 
     @Test
@@ -676,7 +676,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltRH.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Right Hand.setConnection(NONE, null, NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw Right Hand.setConnection(NONE, null, NONE); Invalid Connection Type");
 
         try {
             // test unexpected type
@@ -684,7 +684,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltRH.setConnection(unexpected type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Right Hand.setConnection(POS_POINT, null, POS_POINT); unexpected type");
+        JUnitAppender.assertErrorMessage("will throw Right Hand.setConnection(POS_POINT, null, POS_POINT); unexpected type");
 
         try {
             // test valid types
