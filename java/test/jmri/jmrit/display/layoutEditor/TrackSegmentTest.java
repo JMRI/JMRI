@@ -36,6 +36,8 @@ public class TrackSegmentTest {
 
     @Test
     public void testConstructionLinesRead () {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         trackSegment.showConstructionLine = 0;
         Assert.assertTrue("From 0", trackSegment.isShowConstructionLines());
         Assert.assertTrue("From 0", trackSegment.hideConstructionLines());
@@ -60,6 +62,8 @@ public class TrackSegmentTest {
     
     @Test
     public void hideConstructionLinesOfInt() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         trackSegment.showConstructionLine = 0;
         trackSegment.hideConstructionLines(TrackSegment.SHOWCON);
         Assert.assertEquals(trackSegment.showConstructionLine, TrackSegment.SHOWCON);
