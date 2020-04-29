@@ -27,7 +27,7 @@ public class JmriSRCPServerPreferencesTest {
 
     @Test public void defaultPort() {
         JmriSRCPServerPreferences a = new JmriSRCPServerPreferences();
-        assertThat(a.getDefaultPort()).isEqualTo(4303).withFailMessage("Default Port");
+        assertThat(a.getDefaultPort()).withFailMessage("Default Port").isEqualTo(4303);
     }
 
     @BeforeEach public void setUp() {
