@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the TurnoutManager class
  *
- * @author	Bob Jacobsen  Copyright 2013, 2016
+ * @author Bob Jacobsen  Copyright 2013, 2016
  */
 public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -50,16 +50,16 @@ public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Turnout o = l.newTurnout("TT21", "my name");
 
         if (log.isDebugEnabled()) {
-            log.debug("received turnout value " + o);
+            log.debug("received turnout value {}", o);
         }
         Assert.assertTrue(null != (TamsTurnout) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("TT21"));
+            log.debug("by system name: {}", l.getBySystemName("TT21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
+            log.debug("by user name:   {}", l.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != l.getBySystemName("TT21"));

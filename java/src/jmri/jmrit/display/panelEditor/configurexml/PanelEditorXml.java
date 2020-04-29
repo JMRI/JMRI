@@ -65,7 +65,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         // include contents
         List<Positionable> contents = p.getContents();
         if (log.isDebugEnabled()) {
-            log.debug("N elements: " + contents.size());
+            log.debug("N elements: {}", contents.size());
         }
         for (Positionable sub : contents) {
             if (sub != null && sub.storeItem()) {
@@ -133,7 +133,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         }
 
         // If available, override location and size with machine dependent values
-        if (!InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
+        if (!InstanceManager.getDefault(jmri.util.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
             jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
             if (prefsMgr != null) {
 

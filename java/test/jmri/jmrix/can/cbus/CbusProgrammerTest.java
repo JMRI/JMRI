@@ -10,7 +10,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusProgrammer class.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         
@@ -76,7 +76,6 @@ public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         Assert.assertEquals("value", 5, testListener.getRcvdValue());
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -92,9 +91,9 @@ public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     public void tearDown() {
         programmer = p = null;
         tc = null;
-	    testListener = null;
+        testListener = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-    	JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

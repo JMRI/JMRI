@@ -18,10 +18,10 @@ import org.slf4j.LoggerFactory;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010 copied from NCE into PowerLine for
+ * @author Bob Jacobsen Copyright (C) 2010 copied from NCE into PowerLine for
  * multiple connections by
- * @author	Ken Cameron Copyright (C) 2011 copied from PowerLine into z21 by
- * @author	Paul Bender Copyright (C) 2013,2019
+ * @author Ken Cameron Copyright (C) 2011 copied from PowerLine into z21 by
+ * @author Paul Bender Copyright (C) 2013,2019
  */
 public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

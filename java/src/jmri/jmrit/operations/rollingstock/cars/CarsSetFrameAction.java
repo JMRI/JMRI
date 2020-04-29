@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.JTable;
 
@@ -12,15 +13,10 @@ import javax.swing.JTable;
  */
 public class CarsSetFrameAction extends AbstractAction {
 
-    CarsTableModel _carsTableModel;
     JTable _carsTable;
 
-    public CarsSetFrameAction(String s) {
-        super(s);
-    }
-
     public CarsSetFrameAction(JTable carsTable) {
-        this(Bundle.getMessage("TitleSetCars"));
+        super(Bundle.getMessage("TitleSetCars"));
         _carsTable = carsTable;
     }
 

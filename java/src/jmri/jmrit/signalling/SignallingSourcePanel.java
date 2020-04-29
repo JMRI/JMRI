@@ -291,7 +291,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 case DEL_COLUMN: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
                     return new JTextField(22).getPreferredSize().width;
                 default:
-                    log.warn("Unexpected column in getPreferredWidth: " + col);  // NOI18N
+                    log.warn("Unexpected column in getPreferredWidth: {}", col);  // NOI18N
                     return new JTextField(8).getPreferredSize().width;
             }
         }

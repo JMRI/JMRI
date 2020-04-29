@@ -65,321 +65,9 @@ import jmri.util.swing.*;
 @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
 public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
-    // hit point types
-    public enum HitPointType {
-        NONE(0),
-        POS_POINT(1),
-        TURNOUT_A(2), // throat for RH, LH, and WYE turnouts
-        TURNOUT_B(3), // continuing route for RH and LH turnouts
-        TURNOUT_C(4), // diverging route for RH and LH turnouts
-        TURNOUT_D(5), // 4th route for crossovers
-        LEVEL_XING_A(6),
-        LEVEL_XING_B(7),
-        LEVEL_XING_C(8),
-        LEVEL_XING_D(9),
-        TRACK(10),
-        TURNOUT_CENTER(11), // non-connection points should be last
-        LEVEL_XING_CENTER(12),
-        TURNTABLE_CENTER(13),
-        LAYOUT_POS_LABEL(14),
-        LAYOUT_POS_JCOMP(15),
-        MULTI_SENSOR(16),
-        MARKER(17),
-        TRACK_CIRCLE_CENTRE(18),
-        UNUSED_19(19),
-        @Deprecated //(use SLIP_LEFT & SLIP_RIGHT instead)
-        SLIP_CENTER(20),
-        SLIP_A(21),
-        SLIP_B(22),
-        SLIP_C(23),
-        SLIP_D(24),
-        SLIP_LEFT(25),
-        SLIP_RIGHT(26),
-        UNUSED_27(27),
-        UNUSED_28(28),
-        UNUSED_29(29),
-        BEZIER_CONTROL_POINT_0(30), // offset for TrackSegment Bezier control points (minimum)
-        BEZIER_CONTROL_POINT_1(31), //  \
-        BEZIER_CONTROL_POINT_2(32), //   \
-        BEZIER_CONTROL_POINT_3(33), //    \
-        BEZIER_CONTROL_POINT_4(34), //     } -- DON'T USE THESE; PLACEHOLDERS ONLY
-        BEZIER_CONTROL_POINT_5(35), //    /
-        BEZIER_CONTROL_POINT_6(36), //   /
-        BEZIER_CONTROL_POINT_7(37), //  /
-        BEZIER_CONTROL_POINT_8(38), // offset for TrackSegment Bezier control points (maximum)
-        SHAPE_CENTER(39),
-        SHAPE_POINT_0(40), // offset for Shape points (minimum)
-        SHAPE_POINT_1(41), //  \
-        SHAPE_POINT_2(42), //   \
-        SHAPE_POINT_3(43), //    \
-        SHAPE_POINT_4(44), //     \ __ DON'T USE THESE; PLACEHOLDERS ONLY
-        SHAPE_POINT_5(45), //     /
-        SHAPE_POINT_6(46), //    /
-        SHAPE_POINT_7(47), //   /
-        SHAPE_POINT_8(48), //  /
-        SHAPE_POINT_9(49), // offset for Shape points (maximum)
-        TURNTABLE_RAY_0(50), // offset for turntable connection points (minimum)
-        TURNTABLE_RAY_1(51), // \
-        TURNTABLE_RAY_2(52), //  \
-        TURNTABLE_RAY_3(53), //   \
-        TURNTABLE_RAY_4(54), //    \
-        TURNTABLE_RAY_5(55), //     \
-        TURNTABLE_RAY_6(56), //      \
-        TURNTABLE_RAY_7(57), //       |
-        TURNTABLE_RAY_8(58), //       |
-        TURNTABLE_RAY_9(59), //       |
-        TURNTABLE_RAY_10(60), //      |
-        TURNTABLE_RAY_11(61), //      |
-        TURNTABLE_RAY_12(62), //      |
-        TURNTABLE_RAY_13(63), //      |
-        TURNTABLE_RAY_14(64), //      |
-        TURNTABLE_RAY_15(65), //      |
-        TURNTABLE_RAY_16(66), //      |
-        TURNTABLE_RAY_17(67), //      |
-        TURNTABLE_RAY_18(68), //      |
-        TURNTABLE_RAY_19(69), //      |
-        TURNTABLE_RAY_20(70), //      |
-        TURNTABLE_RAY_21(71), //      |
-        TURNTABLE_RAY_22(72), //      |
-        TURNTABLE_RAY_23(73), //      |
-        TURNTABLE_RAY_24(74), //      |
-        TURNTABLE_RAY_25(75), //      |
-        TURNTABLE_RAY_26(76), //      |
-        TURNTABLE_RAY_27(77), //      |
-        TURNTABLE_RAY_28(78), //      |
-        TURNTABLE_RAY_29(79), //      |
-        TURNTABLE_RAY_30(80), //      |
-        TURNTABLE_RAY_31(81), //      |
-        TURNTABLE_RAY_32(82), //      |
-        TURNTABLE_RAY_33(83), //      |
-        TURNTABLE_RAY_34(84), //      |
-        TURNTABLE_RAY_35(85), //      |
-        TURNTABLE_RAY_36(86), //      |
-        TURNTABLE_RAY_37(87), //      |
-        TURNTABLE_RAY_38(88), //      |
-        TURNTABLE_RAY_39(89), //      |
-        TURNTABLE_RAY_40(90), //      |
-        TURNTABLE_RAY_41(91), //      |
-        TURNTABLE_RAY_42(92), //      |
-        TURNTABLE_RAY_43(93), //      |
-        TURNTABLE_RAY_44(94), //      |
-        TURNTABLE_RAY_45(95), //      | -- DON'T USE THESE; PLACEHOLDERS ONLY
-        TURNTABLE_RAY_46(96), //      |
-        TURNTABLE_RAY_47(97), //      |
-        TURNTABLE_RAY_48(98), //      |
-        TURNTABLE_RAY_49(99), //      |
-        TURNTABLE_RAY_50(100), //      |
-        TURNTABLE_RAY_51(101), //      |
-        TURNTABLE_RAY_52(102), //      |
-        TURNTABLE_RAY_53(103), //      |
-        TURNTABLE_RAY_54(104), //      |
-        TURNTABLE_RAY_55(105), //      |
-        TURNTABLE_RAY_56(106), //      |
-        TURNTABLE_RAY_57(107), //      |
-        TURNTABLE_RAY_58(108), //     /
-        TURNTABLE_RAY_59(109), //    /
-        TURNTABLE_RAY_60(110), //   /
-        TURNTABLE_RAY_61(111), //  /
-        TURNTABLE_RAY_62(112), // /
-        TURNTABLE_RAY_63(113); // offset for turntable connection points (maximum)
 
-        private final transient Integer xmlValue;
 
-        HitPointType(Integer xmlValue) {
-            this.xmlValue = xmlValue;
-        }
 
-        public static HitPointType getValue(Integer xmlValue) {
-            HitPointType result = null;
-            for (HitPointType instance : HitPointType.values()) {
-                if (instance.xmlValue.equals(xmlValue)) {
-                    result = instance;
-                    break;
-                }
-            }
-            return result;
-        }
-
-        public static HitPointType getValue(String name) {
-            HitPointType result = null;
-            for (HitPointType instance : HitPointType.values()) {
-                if (instance.name().equals(name)) {
-                    result = instance;
-                }
-            }
-            return result;
-        }
-
-        public Integer getXmlValue() {
-            return xmlValue;
-        }
-
-        /**
-         * @param hitType the hit point type
-         * @return true if this is for a connection to a LayoutTrack
-         */
-        protected static boolean isConnectionHitType(HitPointType hitType) {
-            boolean result = false; // assume failure (pessimist!)
-            switch (hitType) {
-                case POS_POINT:
-                case TURNOUT_A:
-                case TURNOUT_B:
-                case TURNOUT_C:
-                case TURNOUT_D:
-                case LEVEL_XING_A:
-                case LEVEL_XING_B:
-                case LEVEL_XING_C:
-                case LEVEL_XING_D:
-                case TRACK:
-                case SLIP_A:
-                case SLIP_B:
-                case SLIP_C:
-                case SLIP_D:
-                    result = true;  // these are all connection types
-                    break;
-                case NONE:
-                case TURNOUT_CENTER:
-                case LEVEL_XING_CENTER:
-                case TURNTABLE_CENTER:
-                case LAYOUT_POS_LABEL:
-                case LAYOUT_POS_JCOMP:
-                case MULTI_SENSOR:
-                case MARKER:
-                case TRACK_CIRCLE_CENTRE:
-                case SLIP_CENTER:
-                case SLIP_LEFT:
-                case SLIP_RIGHT:
-                default:
-                    result = false; // these are not
-                    break;
-            }
-            if (isBezierHitType(hitType)) {
-                result = false; // these are not
-            } else if (isTurntableRayHitType(hitType)) {
-                result = true;  // these are all connection types
-            }
-            return result;
-        }   // isConnectionHitType
-
-        /**
-         * @param hitType the hit point type
-         * @return true if this hit type is for a layout control
-         */
-        protected static boolean isControlHitType(HitPointType hitType) {
-            boolean result = false; // assume failure (pessimist!)
-            switch (hitType) {
-                case TURNOUT_CENTER:
-                case SLIP_CENTER:
-                case SLIP_LEFT:
-                case SLIP_RIGHT:
-                    result = true;  // these are all control types
-                    break;
-                case POS_POINT:
-                case TURNOUT_A:
-                case TURNOUT_B:
-                case TURNOUT_C:
-                case TURNOUT_D:
-                case LEVEL_XING_A:
-                case LEVEL_XING_B:
-                case LEVEL_XING_C:
-                case LEVEL_XING_D:
-                case TRACK:
-                case SLIP_A:
-                case SLIP_B:
-                case SLIP_C:
-                case SLIP_D:
-                case NONE:
-                case LEVEL_XING_CENTER:
-                case TURNTABLE_CENTER:
-                case LAYOUT_POS_LABEL:
-                case LAYOUT_POS_JCOMP:
-                case MULTI_SENSOR:
-                case MARKER:
-                case TRACK_CIRCLE_CENTRE:
-                default:
-                    result = false; // these are not
-                    break;
-            }
-            if (isBezierHitType(hitType)) {
-                result = false; // these are not control types
-            } else if (isTurntableRayHitType(hitType)) {
-                result = true;  // these are all control types
-            }
-            return result;
-        }   // isControlHitType
-
-        protected static boolean isTurnoutHitType(HitPointType hitType) {
-            return ((hitType.compareTo(HitPointType.TURNOUT_A) >= 0)
-                    && (hitType.compareTo(HitPointType.TURNOUT_D) <= 0));
-        }
-
-        protected static boolean isSlipHitType(HitPointType hitType) {
-            return ((hitType.compareTo(HitPointType.SLIP_A) >= 0)
-                    && (hitType.compareTo(HitPointType.SLIP_RIGHT) <= 0));
-        }
-
-        protected static boolean isBezierHitType(HitPointType hitType) {
-            return ((hitType.compareTo(HitPointType.BEZIER_CONTROL_POINT_0) >= 0)
-                    && (hitType.compareTo(HitPointType.BEZIER_CONTROL_POINT_8) <= 0));
-        }
-
-        protected static boolean isLevelXingHitType(HitPointType hitType) {
-            return ((hitType.compareTo(HitPointType.LEVEL_XING_A) >= 0)
-                    && (hitType.compareTo(HitPointType.LEVEL_XING_D) <= 0));
-        }
-
-        protected static boolean isTurntableRayHitType(HitPointType hitType) {
-            return ((hitType.compareTo(HitPointType.TURNTABLE_RAY_0) >= 0)
-                    && (hitType.compareTo(HitPointType.TURNTABLE_RAY_63) <= 0));
-        }
-
-        /**
-         * @param hitType the hit point type
-         * @return true if this is for a popup menu
-         */
-        protected static boolean isPopupHitType(HitPointType hitType) {
-            boolean result = false; // assume failure (pessimist!)
-            switch (hitType) {
-                case LEVEL_XING_CENTER:
-                case POS_POINT:
-                case SLIP_CENTER:
-                case SLIP_LEFT:
-                case SLIP_RIGHT:
-                case TRACK:
-                case TRACK_CIRCLE_CENTRE:
-                case TURNOUT_CENTER:
-                case TURNTABLE_CENTER:
-                    result = true;  // these are all popup hit types
-                    break;
-                case LAYOUT_POS_JCOMP:
-                case LAYOUT_POS_LABEL:
-                case LEVEL_XING_A:
-                case LEVEL_XING_B:
-                case LEVEL_XING_C:
-                case LEVEL_XING_D:
-                case MARKER:
-                case MULTI_SENSOR:
-                case NONE:
-                case SLIP_A:
-                case SLIP_B:
-                case SLIP_C:
-                case SLIP_D:
-                case TURNOUT_A:
-                case TURNOUT_B:
-                case TURNOUT_C:
-                case TURNOUT_D:
-                default:
-                    result = false; // these are not
-                    break;
-            }
-            if (isBezierHitType(hitType)) {
-                result = true; // these are all popup hit types
-            } else if (isTurntableRayHitType(hitType)) {
-                result = true;  // these are all popup hit types
-            }
-            return result;
-        }   // isPopupHitType
-    }
 
     //Operational instance variables - not saved to disk
     private transient JmriJFrame floatingEditToolBoxFrame = null;
@@ -658,7 +346,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         setSaveSize(true);
         layoutName = name;
 
-        editorUseOldLocSize = InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize();
+        editorUseOldLocSize = InstanceManager.getDefault(jmri.util.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize();
 
         //initialise keycode map
         initStringsToVTCodes();
@@ -3218,7 +2906,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 selectedObject = null;  // assume we're adding...
                 for (LayoutShape ls : layoutShapes) {
                     selectedHitPointType = ls.findHitPointType(dLoc, true);
-                    if (LayoutShape.isShapePointOffsetHitPointType(selectedHitPointType)) {
+                    if (HitPointType.isShapePointOffsetHitPointType(selectedHitPointType)) {
                         //log.warn("extend selectedObject: ", lt);
                         selectedObject = ls;    // nope, we're extending
                         beginLocation.setLocation(dLoc);
@@ -3624,7 +3312,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                     } else {
                         LayoutShape ls = (LayoutShape) selectedObject;
-                        ls.addPoint(currentPoint, selectedHitPointType.getXmlValue() - HitPointType.SHAPE_POINT_0.getXmlValue());
+                        ls.addPoint(currentPoint, selectedHitPointType.shapePointIndex());
                     }
                 } else if (leToolBarPanel.signalMastButton.isSelected()) {
                     addSignalMast();
@@ -3657,7 +3345,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     && !event.isShiftDown() && !event.isControlDown()) {
                 //controlling turntable, in edit mode
                 LayoutTurntable t = (LayoutTurntable) selectedObject;
-                t.setPosition(selectedHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+                t.setPosition(selectedHitPointType.turntableTrackIndex());
             } else if ((selectedObject != null) && ((selectedHitPointType == HitPointType.TURNOUT_CENTER)
                     || (selectedHitPointType == HitPointType.SLIP_CENTER)
                     || (selectedHitPointType == HitPointType.SLIP_LEFT)
@@ -3706,7 +3394,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling turntable out of edit mode
             LayoutTurntable t = (LayoutTurntable) selectedObject;
-            t.setPosition(selectedHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+            t.setPosition( selectedHitPointType.turntableTrackIndex() );
         } else if ((event.isPopupTrigger() || delayedPopupTrigger) && (!isDragging)) {
             // requesting marker popup out of edit mode
             LocoIcon lo = checkMarkerPopUps(dLoc);
@@ -3798,14 +3486,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             } else if (HitPointType.isTurntableRayHitType(foundHitPointType)) {
                 LayoutTurntable t = (LayoutTurntable) foundTrack;
                 if (t.isTurnoutControlled()) {
-                    ((LayoutTurntable) foundTrack).showRayPopUp(event, foundHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+                    ((LayoutTurntable) foundTrack).showRayPopUp(event, foundHitPointType.turntableTrackIndex());
                 }
             } else if (HitPointType.isPopupHitType(foundHitPointType)) {
                 foundTrack.showPopup(event);
             } else if (HitPointType.isTurnoutHitType(foundHitPointType)) {
                 // don't curently have edit popup for these
             } else {
-                log.warn("Unknown foundPointType:" + foundHitPointType);
+                log.warn("Unknown foundPointType:{}", foundHitPointType);
             }
         } else {
             do {
@@ -4078,7 +3766,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 case POS_POINT: {
                     PositionablePoint p2 = (PositionablePoint) foundTrack;
 
-                    if ((p2.getType() == PositionablePoint.ANCHOR) && p2.setTrackConnection(t)) {
+                    if ((p2.getType() == PositionablePoint.PointType.ANCHOR) && p2.setTrackConnection(t)) {
                         if (t.getConnect1() == p) {
                             t.setNewConnect1(p2, foundHitPointType);
                         } else {
@@ -4128,7 +3816,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 default: {
                     if (HitPointType.isTurntableRayHitType(foundHitPointType)) {
                         LayoutTurntable tt = (LayoutTurntable) foundTrack;
-                        int ray = foundHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue();
+                        int ray = foundHitPointType.turntableTrackIndex();
 
                         if (tt.getRayConnectIndexed(ray) == null) {
                             tt.setRayConnect(t, ray);
@@ -4944,17 +4632,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
                         default: {
                             if (HitPointType.isBezierHitType(foundHitPointType)) {
-                                int index = selectedHitPointType.getXmlValue() - HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue();
+                                int index = selectedHitPointType.bezierPointIndex();
                                 ((TrackSegment) selectedObject).setBezierControlPoint(currentPoint, index);
                             } else if ((selectedHitPointType == HitPointType.SHAPE_CENTER)) {
                                 ((LayoutShape) selectedObject).setCoordsCenter(currentPoint);
-                            } else if (LayoutShape.isShapePointOffsetHitPointType(selectedHitPointType)) {
-                                int index = selectedHitPointType.getXmlValue() - HitPointType.SHAPE_POINT_0.getXmlValue();
+                            } else if (HitPointType.isShapePointOffsetHitPointType(selectedHitPointType)) {
+                                int index = selectedHitPointType.shapePointIndex();
                                 ((LayoutShape) selectedObject).setPoint(index, currentPoint);
                             } else if (HitPointType.isTurntableRayHitType(selectedHitPointType)) {
                                 LayoutTurntable turn = (LayoutTurntable) selectedObject;
                                 turn.setRayCoordsIndexed(currentPoint.getX(), currentPoint.getY(),
-                                        selectedHitPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+                                        selectedHitPointType.turntableTrackIndex());
                             }
                             break;
                         }
@@ -5007,7 +4695,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //create object
         PositionablePoint o = new PositionablePoint(name,
-                PositionablePoint.ANCHOR, p, this);
+                PositionablePoint.PointType.ANCHOR, p, this);
 
         layoutTrackList.add(o);
         unionToPanelBounds(o.getBounds());
@@ -5025,7 +4713,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //create object
         PositionablePoint o = new PositionablePoint(name,
-                PositionablePoint.END_BUMPER, currentPoint, this);
+                PositionablePoint.PointType.END_BUMPER, currentPoint, this);
 
         layoutTrackList.add(o);
         unionToPanelBounds(o.getBounds());
@@ -5041,7 +4729,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //create object
         PositionablePoint o = new PositionablePoint(name,
-                PositionablePoint.EDGE_CONNECTOR, currentPoint, this);
+                PositionablePoint.PointType.EDGE_CONNECTOR, currentPoint, this);
 
         layoutTrackList.add(o);
         unionToPanelBounds(o.getBounds());
@@ -5481,7 +5169,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             default: {
                 if (HitPointType.isTurntableRayHitType(fromPointType)) {
                     ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
-                            fromPointType.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+                            fromPointType.turntableTrackIndex() );
                 }
                 break;
             }
@@ -6362,7 +6050,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             default: {
                 if (HitPointType.isTurntableRayHitType(type)) {
-                    ((LayoutTurntable) o).setRayConnect(null, type.getXmlValue() - HitPointType.TURNTABLE_RAY_0.getXmlValue());
+                    ((LayoutTurntable) o).setRayConnect(null, type.turntableTrackIndex());
                 }
                 break;
             }
@@ -7551,7 +7239,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".highlightSelectedBlock", highlightSelectedBlockFlag));
 
             // thread this so it won't break the AppVeyor checks
-            new Thread(() -> {
+            jmri.util.ThreadingUtil.newThread(() -> {
                 if (highlightSelectedBlockFlag) {
                     //use the "Extra" color to highlight the selected block
                     if (!highlightBlockInComboBox(leToolBarPanel.blockIDComboBox)) {

@@ -36,7 +36,6 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
     }
 
     // from here down is testing infrastructure
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

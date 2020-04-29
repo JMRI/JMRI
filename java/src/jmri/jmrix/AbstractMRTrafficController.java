@@ -761,18 +761,19 @@ public abstract class AbstractMRTrafficController {
             }
             controller = p;
             // and start threads
-            xmtThread = new Thread(xmtRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        transmitLoop();
-                    } catch(ThreadDeath td) {
-                        if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", td, td);
-                        // ThreadDeath must be thrown per Java API Javadocs
-                        throw td;
-                    } catch (Throwable e) {
-                        if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", e, e);
-                    }
+            xmtThread = jmri.util.ThreadingUtil.newThread(
+                xmtRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            transmitLoop();
+                        } catch(ThreadDeath td) {
+                            if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", td, td);
+                            // ThreadDeath must be thrown per Java API Javadocs
+                            throw td;
+                        } catch (Throwable e) {
+                            if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", e, e);
+                        }
                 }
             });
             
@@ -786,12 +787,13 @@ public abstract class AbstractMRTrafficController {
             xmtThread.setPriority(Thread.MAX_PRIORITY-1);      //bump up the priority
             xmtThread.start();
 
-            rcvThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    receiveLoop();
-                }
-            });
+            rcvThread = jmri.util.ThreadingUtil.newThread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        receiveLoop();
+                    }
+                });
             rcvThread.setName(
                 (packages.length>=2 ? packages[packages.length-2]+"." :"")
                 +(packages.length>=1 ? packages[packages.length-1] :"")
@@ -936,9 +938,9 @@ public abstract class AbstractMRTrafficController {
      * @throws java.io.IOException if unable to read
      */
     protected byte readByteProtected(DataInputStream istream) throws IOException {
-	if(istream == null) {
-                throw new IOException("Input Stream NULL when reading");
-	}
+        if (istream == null) {
+            throw new IOException("Input Stream NULL when reading");
+        }
         while (true) { // loop will repeat until character found
             int nchars;
             nchars = istream.read(rcvBuffer, 0, 1);
@@ -1019,9 +1021,9 @@ public abstract class AbstractMRTrafficController {
             }
         } catch (InterruptedException ie) {
             if(threadStopRequest) return;
-            log.error("Unexpected exception in invokeAndWait: {}" + ie.toString(), ie);
+            log.error("Unexpected exception in invokeAndWait: {}{}", ie, ie.toString());
         } catch (java.lang.reflect.InvocationTargetException| RuntimeException e) {
-            log.error("Unexpected exception in invokeAndWait: {}" + e.toString(), e);
+            log.error("Unexpected exception in invokeAndWait: {}{}", e, e.toString());
             return;
         }
         log.debug("dispatch thread invoked");

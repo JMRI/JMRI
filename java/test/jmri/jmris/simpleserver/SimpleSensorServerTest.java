@@ -1,17 +1,10 @@
 package jmri.jmris.simpleserver;
 
 import jmri.*;
-import jmri.implementation.AbstractSensor;
-import jmri.jmrix.SystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import jmri.util.PreferNumericComparator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
-import javax.annotation.Nonnull;
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -160,7 +153,6 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
          assertThat(sb.toString()).isEqualTo("SENSOR IS1 UNKNOWN\n").withFailMessage("sendStatus check");
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     @Override
     public void setUp() {

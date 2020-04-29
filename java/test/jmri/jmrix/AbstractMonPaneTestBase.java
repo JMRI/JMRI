@@ -97,6 +97,7 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
     @Test
     public void testFreezeButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         AbstractMonPaneScaffold s = new AbstractMonPaneScaffold(pane);
 
         // for Jemmy to work, we need the pane inside of a frame
@@ -119,6 +120,8 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
         s.enterTextInEntryField("foo");
         s.clickEnterButton();
         s.clickFreezeButton();
+        
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         assertThat(s.getFreezeButtonState()).isTrue();
 
         s.enterTextInEntryField("bar");
@@ -136,7 +139,6 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
 
     @Test
     public void testFilterFormatting() {
-
         Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
 

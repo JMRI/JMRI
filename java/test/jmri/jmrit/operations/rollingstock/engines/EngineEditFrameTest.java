@@ -28,7 +28,7 @@ import jmri.util.swing.JemmyUtil;
 /**
  * Tests for the Operations EngineEditFrame class
  *
- * @author	Dan Boudreau Copyright (C) 2010
+ * @author Dan Boudreau Copyright (C) 2010
  *
  */
 public class EngineEditFrameTest extends OperationsTestCase {

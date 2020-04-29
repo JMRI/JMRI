@@ -170,7 +170,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                         ex.getLocalizedMessage(),
                         jmri.Application.getApplicationName(),
                         JOptionPane.ERROR_MESSAGE);
-                log.error(ex.getMessage());
+                log.error("Exception migrating configuration to profiles: {}",ex.getMessage());
             }
         }
         log.trace("about to try getStartingProfile");
@@ -188,7 +188,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             }
 
             // rapid language set; must follow up later with full setting as part of preferences
-            apps.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
+            jmri.util.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
@@ -276,7 +276,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
-                log.error(e.getLocalizedMessage(), e);
+                log.error("", e);
             }
         }
 
@@ -292,7 +292,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                log.error(e.getLocalizedMessage(), e);
+                log.error("",e);
             }
         }
         // Now load deferred config items
@@ -1144,6 +1144,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      *
      * @param name Program/application name as known by the user
      */
+    @SuppressFBWarnings(value = "SLF4J_SIGN_ONLY_FORMAT",justification = "info message contains context information")
     protected static void setStartupInfo(String name) {
         // Set the application name
         try {
@@ -1153,7 +1154,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }
 
         // Log the startup information
-        log.info(Log4JUtil.startupInfo(name));
+        log.info("{}",Log4JUtil.startupInfo(name));
     }
 
     @Override

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the SerialSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2003, 2007
+ * @author Bob Jacobsen Copyright 2003, 2007
  * @author Paul Bender Copyright (C) 2016
  */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
@@ -56,7 +56,6 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         Assert.assertTrue("3rd UA 2", n0.getSensorsActive());
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

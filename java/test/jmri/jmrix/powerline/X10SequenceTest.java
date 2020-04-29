@@ -9,8 +9,8 @@ import org.junit.Assert;
 /**
  * JUnit tests for the X10Sequence class.
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008
- * @author	Dave Duchamp multi-node extensions 2003
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008
+ * @author Dave Duchamp multi-node extensions 2003
  */
 public class X10SequenceTest {
 

@@ -30,9 +30,9 @@ public class Z21XNetProgrammer extends XNetProgrammer {
                 this);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
-     *
+     * <p>
      * Can we read from a specific CV in the specified mode? Answer may not be
      * correct if the command station type and version sent by the command
      * station mimics one of the known command stations.
@@ -40,7 +40,7 @@ public class Z21XNetProgrammer extends XNetProgrammer {
     @Override
     public boolean getCanRead(String addr) {
         if (log.isDebugEnabled()) {
-            log.debug("check mode " + getMode() + " CV " + addr);
+            log.debug("check mode {} CV {}", getMode(), addr);
         }
         if (!getCanRead()) {
             return false; // check basic implementation first
@@ -58,9 +58,9 @@ public class Z21XNetProgrammer extends XNetProgrammer {
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
-     *
+     * <p>
      * Can we write to a specific CV in the specified mode? Answer may not be
      * correct if the command station type and version sent by the command
      * station mimics one of the known command stations.
@@ -68,8 +68,8 @@ public class Z21XNetProgrammer extends XNetProgrammer {
     @Override
     public boolean getCanWrite(String addr) {
         if (log.isDebugEnabled()) {
-            log.debug("check CV " + addr);
-            log.debug("cs Type: " + controller().getCommandStation().getCommandStationType() + " CS Version: " + controller().getCommandStation().getCommandStationSoftwareVersion());
+            log.debug("check CV {}", addr);
+            log.debug("cs Type: {} CS Version: {}", controller().getCommandStation().getCommandStationType(), controller().getCommandStation().getCommandStationSoftwareVersion());
         }
         if (!getCanWrite()) {
             return false; // check basic implementation first
@@ -81,7 +81,7 @@ public class Z21XNetProgrammer extends XNetProgrammer {
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -90,7 +90,7 @@ public class Z21XNetProgrammer extends XNetProgrammer {
         if (getMode().equals(ProgrammingMode.DIRECTBITMODE)
                 || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             if (log.isDebugEnabled()) {
-                log.debug("writeCV " + CV + " listens " + p);
+                log.debug("writeCV {} listens {}", CV, p);
             }
             useProgrammer(p);
             _progRead = false;
@@ -109,7 +109,7 @@ public class Z21XNetProgrammer extends XNetProgrammer {
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -118,7 +118,7 @@ public class Z21XNetProgrammer extends XNetProgrammer {
         if (getMode().equals(ProgrammingMode.DIRECTBITMODE)
                 || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             if (log.isDebugEnabled()) {
-                log.debug("readCV " + CV + " listens " + p);
+                log.debug("readCV {} listens {}", CV, p);
             }
 
             useProgrammer(p);
@@ -138,7 +138,7 @@ public class Z21XNetProgrammer extends XNetProgrammer {
 
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -158,7 +158,7 @@ public class Z21XNetProgrammer extends XNetProgrammer {
                 int sent_cv = (m.getElement(2) << 8) + m.getElement(3) + 1;
                 if (sent_cv != _cv) {
                     return; // not for us.
-                }			    // see why waiting
+                } // see why waiting
                 if (_progRead) {
                     // read was in progress - get return value
                     _val = m.getElement(4);

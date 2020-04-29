@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import jmri.ProgListener;
-import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 
 /**
@@ -55,7 +54,7 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
     @Override
     @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> retval = new ArrayList<ProgrammingMode>();
+        List<ProgrammingMode> retval = new ArrayList<>();
         retval.add(OlcbProgrammerManager.OPENLCBMODE);
         return retval;
     }
@@ -70,21 +69,21 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
      * {@inheritDoc}
      */
     @Override
-    public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
+    public void writeCV(String CV, int val, ProgListener p) {
     }
 
     /** 
      * {@inheritDoc}
      */
     @Override
-    public void readCV(String CV, ProgListener p) throws ProgrammerException {
+    public void readCV(String CV, ProgListener p) {
     }
 
     /** 
      * {@inheritDoc}
      */
     @Override
-    public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
+    public void confirmCV(String CV, int val, ProgListener p) {
     }
     
     /** 

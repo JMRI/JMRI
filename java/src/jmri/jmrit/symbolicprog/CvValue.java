@@ -38,7 +38,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         _num = num;
         _cvName = cvName;
         if (cvName == null) {
-            log.error("cvName == null in ctor num: " + num); // NOI18N
+            log.error("cvName == null in ctor num: {}", num); // NOI18N
         }
         mProgrammer = pProgrammer;
         _tableEntry = new JTextField("0", 3);
@@ -121,7 +121,7 @@ public class CvValue extends AbstractValue implements ProgListener {
      */
     public void setState(int state) {
         if (log.isDebugEnabled()) {  // stateToString overhead
-            log.debug("cv " + number() + " set state from " + stateToString(_state) + " to " + stateToString(state)); // NOI18N
+            log.debug("cv {} set state from {} to {}", number(), stateToString(_state), stateToString(state)); // NOI18N
         }
         int oldstate = _state;
         _state = state;
@@ -148,7 +148,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                 setColor(COLOR_DIFF);
                 break;
             default:
-                log.error("Inconsistent state: " + _state); // NOI18N
+                log.error("Inconsistent state: {}", _state); // NOI18N
         }
         if (oldstate != state) {
             prop.firePropertyChange("State", Integer.valueOf(oldstate), Integer.valueOf(state));
@@ -175,7 +175,7 @@ public class CvValue extends AbstractValue implements ProgListener {
             case DIFF:
                 return "DIFF";
             default:
-                log.error("Inconsistent state: " + _state); // NOI18N
+                log.error("Inconsistent state: {}", _state); // NOI18N
                 return "ERROR!!";
         }
     }
@@ -347,7 +347,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                                     new Object[]{e.toString()}));
                 }
 
-                log.warn("Exception during CV read: " + e); // NOI18N
+                log.warn("Exception during CV read: {}", e); // NOI18N
                 setBusy(false);
             }
         } else {
@@ -384,7 +384,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                                     Bundle.getMessage("StateExceptionDuringConfirm"),
                                     new Object[]{e.toString()}));
                 }
-                log.warn("Exception during CV confirm: " + e); // NOI18N
+                log.warn("Exception during CV confirm: {}", e); // NOI18N
                 setBusy(false);
             }
         } else {
@@ -423,7 +423,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                                     Bundle.getMessage("StateExceptionDuringWrite"),
                                     new Object[]{e.toString()}));
                 }
-                log.warn("Exception during write CV '" + _num + "' to '" + _value + "'", e); // NOI18N
+                log.warn("Exception during write CV '{}' to '{}'", _num, _value, e); // NOI18N
                 setBusy(false);
             }
         } else {
@@ -437,10 +437,7 @@ public class CvValue extends AbstractValue implements ProgListener {
     @Override
     public void programmingOpReply(int value, int retval) {
         if (log.isDebugEnabled()) {
-            log.debug("CV progOpReply for CV " + _num + " with retval " + retval
-                    + " during "
-                    + (_reading ? "read sequence"
-                            : (_confirm ? "confirm sequence" : "write sequence")));  // NOI18N
+            log.debug("CV progOpReply for CV {} with retval {} during {}", _num, retval, _reading ? "read sequence" : (_confirm ? "confirm sequence" : "write sequence"));  // NOI18N
         }
         if (!_busy) {
             log.error("opReply when not busy!"); // NOI18N

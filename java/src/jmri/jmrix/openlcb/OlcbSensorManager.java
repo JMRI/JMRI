@@ -91,7 +91,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {
@@ -134,9 +134,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     public void finishLoad() {
         log.debug("Sensor manager : finish load");
         synchronized (pendingSensors) {
-            pendingSensors.forEach((s) -> {
-                s.finishLoad();
-            });
+            pendingSensors.forEach(OlcbSensor::finishLoad);
             pendingSensors.clear();
             isLoading = false;
         }
@@ -165,7 +163,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         return curAddress;
     }
 
-    void validateAddressFormat(String address) throws IllegalArgumentException {
+    void validateAddressFormat(String address) {
         OlcbAddress a = new OlcbAddress(address);
         OlcbAddress[] v = a.split();
         if (v == null) {
@@ -173,7 +171,6 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         }
         switch (v.length) {
             case 1:
-                break;
             case 2:
                 break;
             default:
@@ -208,9 +205,10 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
      */
     @Override
     public void updateAll() {
+        // no current mechanisim to request status updates from all layout sensors
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbSensorManager.class);
+    private static final Logger log = LoggerFactory.getLogger(OlcbSensorManager.class);
 
 }
 

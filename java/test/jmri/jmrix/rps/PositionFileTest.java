@@ -6,7 +6,6 @@ import javax.vecmath.Point3d;
 import jmri.util.FileUtil;
 import org.junit.*;
 import org.jdom2.Element;
-import org.junit.Assert;
 
 /**
  * JUnit tests for the rps.PositionFile class.
@@ -14,7 +13,7 @@ import org.junit.Assert;
  * Stores a PositionFileTest.xml file in the temp directory below current
  * working directory.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class PositionFileTest {
 

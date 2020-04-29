@@ -20,7 +20,7 @@ public class CarLoadAttributeActionTest extends OperationsTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarLoadEditFrame f = new CarLoadEditFrame();
-        CarLoadAttributeAction t = new CarLoadAttributeAction("Test Action", f);
+        CarLoadAttributeAction t = new CarLoadAttributeAction(f);
         Assert.assertNotNull("exists", t);
     }
 
@@ -29,7 +29,7 @@ public class CarLoadAttributeActionTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarLoadEditFrame clef = new CarLoadEditFrame();
         clef.initComponents("Boxcar", "");
-        CarLoadAttributeAction a = new CarLoadAttributeAction("Test Action", clef);
+        CarLoadAttributeAction a = new CarLoadAttributeAction(clef);
         Assert.assertNotNull("exists", a);
         
         Assert.assertFalse("toggle state", clef.showQuanity);

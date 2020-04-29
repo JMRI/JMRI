@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Z21XNetInitializationManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.roco.z21.z21XNetInitializationManager
+ * Test for the jmri.jmrix.roco.z21.z21XNetInitializationManager
  * class
  *
  * @author Paul Bender Copyright (C) 2015
@@ -42,7 +42,6 @@ public class Z21XNetInitializationManagerTest {
         Assert.assertNotNull("exists", memo);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();

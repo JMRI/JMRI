@@ -785,7 +785,6 @@ public class CbusFilterTest {
         Assert.assertTrue("node max 44",t.getNdMax()==44);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

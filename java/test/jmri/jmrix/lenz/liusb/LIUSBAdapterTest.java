@@ -9,9 +9,9 @@ import org.junit.Assert;
 /**
  * LIUSBAdapterTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.liusb.LIUSBAdapter class
+ * Test for the jmri.jmrix.lenz.liusb.LIUSBAdapter class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LIUSBAdapterTest {
 

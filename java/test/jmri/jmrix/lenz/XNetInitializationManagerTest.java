@@ -9,9 +9,9 @@ import org.junit.Test;
 /**
  * XNetInitializationManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.XNetInitializationManager class
+ * Test for the jmri.jmrix.lenz.XNetInitializationManager class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetInitializationManagerTest {
 
@@ -44,7 +44,7 @@ public class XNetInitializationManagerTest {
 
     @After 
     public void tearDown() throws Exception {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

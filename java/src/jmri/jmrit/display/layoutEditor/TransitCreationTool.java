@@ -73,7 +73,7 @@ public class TransitCreationTool {
         String transitName = "From " + list.get(0).getDisplayName() + " to " + list.get(list.size() - 1).getDisplayName();
         Transit t = tm.createNewTransit(transitName);
         if (t == null) {
-            log.error("Unable to create transit " + transitName);
+            log.error("Unable to create transit {}", transitName);
             throw new JmriException(Bundle.getMessage("TCTErrorUnableToCreate", transitName));
         }
 

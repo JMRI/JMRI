@@ -28,7 +28,7 @@ import org.junit.Test;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  * @author B. Milhaupt Copyright (C) 2018
  */
 public class LocoNetMessageTest {

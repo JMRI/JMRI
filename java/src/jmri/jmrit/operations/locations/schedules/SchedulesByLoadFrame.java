@@ -14,7 +14,6 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.tools.LocationsByCarTypeFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.tools.PrintCarLoadsAction;
@@ -90,8 +89,8 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new PrintCarLoadsAction(true, this));
-        toolMenu.add(new PrintCarLoadsAction(false, this));
+        toolMenu.add(new PrintCarLoadsAction(true));
+        toolMenu.add(new PrintCarLoadsAction(false));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_ShowSchedulesByCarTypeAndLoad", true); // NOI18N
@@ -246,6 +245,6 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationsByCarTypeFrame.class);
+    private final static Logger log = LoggerFactory.getLogger(SchedulesByLoadFrame.class);
 
 }

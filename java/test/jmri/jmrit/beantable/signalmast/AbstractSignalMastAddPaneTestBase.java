@@ -13,7 +13,7 @@ import org.junit.Test;
  * See {@link SignalMastAddPaneTest} for tests of the overall
  * operation of {@link SignalMastAddPane} services.
  * 
- * @author	Bob Jacobsen Copyright 2018
+ * @author Bob Jacobsen Copyright 2018
  */
 abstract public class AbstractSignalMastAddPaneTestBase {
 

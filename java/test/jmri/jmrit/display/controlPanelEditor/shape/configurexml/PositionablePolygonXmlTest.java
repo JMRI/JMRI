@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * PositionablePolygonXmlTest.java
  *
- * Description: tests for the PositionablePolygonXml class
+ * Test for the PositionablePolygonXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class PositionablePolygonXmlTest {
       Assert.assertNotNull("PositionablePolygonXml constructor",new PositionablePolygonXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

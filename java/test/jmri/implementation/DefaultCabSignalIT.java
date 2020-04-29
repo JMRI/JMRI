@@ -11,7 +11,6 @@ import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
-import jmri.ShutDownManager;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
@@ -23,7 +22,7 @@ import org.junit.*;
 /**
  * Integration Tests for DefaultCabSignal
  *
- * @author Paul Bender Copyright (C) 2019	
+ * @author Paul Bender Copyright (C) 2019
  */
 public class DefaultCabSignalIT {
 
@@ -168,7 +167,6 @@ public class DefaultCabSignalIT {
         }
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -193,6 +191,6 @@ public class DefaultCabSignalIT {
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultCabSignalTest.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultCabSignalIT.class);
 
 }

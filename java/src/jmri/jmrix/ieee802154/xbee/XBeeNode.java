@@ -327,7 +327,7 @@ public class XBeeNode extends IEEE802154Node {
     public XBeeIOStream getIOStream() {
         if (mStream == null) {
             mStream = new XBeeIOStream(this, tc);
-	        mStream.configure(); // start the threads for the stream.
+            mStream.configure(); // start the threads for the stream.
         }
         return mStream;
     }

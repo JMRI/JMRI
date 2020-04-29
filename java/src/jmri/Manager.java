@@ -514,7 +514,8 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
         return getByUserName(userName);
     }
 
-    // needed for deprecationWarning call above
+    // needed for deprecationWarning calls above, remove with them
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_LOGGER_SHOULD_BE_PRIVATE",justification="Private not available in interface; just needed for deprecation")
     static final org.slf4j.Logger deprecatedManagerLogger = org.slf4j.LoggerFactory.getLogger(Manager.class);
 
     /**

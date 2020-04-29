@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * 
  * Based on work by Bob Jacobsen 
  *
- * @author	Kevin Dickerson
+ * @author Kevin Dickerson
  * 
  */
 public class TamsThrottleManager extends AbstractThrottleManager implements TamsListener {
@@ -49,7 +49,7 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
             /*Here we do not set notifythrottle, we simply create a new Tams throttle.
             The Tams throttle in turn will notify the throttle manager of a successful or
             unsuccessful throttle connection. */
-            log.info("new TamsThrottle for " + address);
+            log.info("new TamsThrottle for {}", address);
             notifyThrottleKnown(new TamsThrottle((TamsSystemConnectionMemo) adapterMemo, (DccLocoAddress) address), address);
         }
         else {

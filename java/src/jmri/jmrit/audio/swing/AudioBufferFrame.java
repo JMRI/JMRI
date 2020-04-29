@@ -281,12 +281,12 @@ public class AudioBufferFrame extends AbstractAudioFrame {
             b.setStreamed(stream.isSelected());
             if (newBuffer || !b.getURL().equals(url.getText())) {
                 b.setURL(url.getText());
-                log.debug("After load, end loop point = " + b.getEndLoopPoint());
+                log.debug("After load, end loop point = {}", b.getEndLoopPoint());
                 //b.setStartLoopPoint((Long)loopStart.getValue());
                 //b.setEndLoopPoint((Long)loopEnd.getValue());
             } else {
                 if (!b.getURL().equals(url.getText())) {
-                    log.debug("Sound changed from: " + b.getURL());
+                    log.debug("Sound changed from: {}", b.getURL());
                     b.setURL(url.getText());
                 }
             }

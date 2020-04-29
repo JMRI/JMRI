@@ -34,7 +34,6 @@ public class Dcc4PcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgr
                 ((Dcc4PcOpsModeProgrammer)programmer).getBestMode());        
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

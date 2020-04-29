@@ -12,7 +12,6 @@ import jmri.jmrix.rfid.RfidStreamConnectionConfig;
  */
 public class RfidStreamConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractStreamConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

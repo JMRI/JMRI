@@ -2,7 +2,9 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
 import jmri.jmrit.operations.locations.Location;
 
 /**
@@ -14,7 +16,7 @@ import jmri.jmrit.operations.locations.Location;
 public class ModifyLocationsCarLoadsAction extends AbstractAction {
 
     public ModifyLocationsCarLoadsAction(Location location) {
-        super(Bundle.getMessage("TitleModifyLocationLoad"));
+        this();
         _location = location;
     }
 
@@ -23,7 +25,6 @@ public class ModifyLocationsCarLoadsAction extends AbstractAction {
     }
 
     Location _location;
-
     LocationsByCarLoadFrame f = null;
 
     @Override

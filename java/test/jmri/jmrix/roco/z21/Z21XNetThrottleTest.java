@@ -10,7 +10,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.jmrix.roco.z21.z21XNetThrottle class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
 
@@ -264,7 +264,6 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
     }
 
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() throws Exception {

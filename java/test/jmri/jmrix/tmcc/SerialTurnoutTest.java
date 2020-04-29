@@ -46,7 +46,6 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 //       Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROUGH (CLOSED) message
     }
 
-    // The minimal setup for log4J
     @After
     public void tearDown() {
         t.dispose();

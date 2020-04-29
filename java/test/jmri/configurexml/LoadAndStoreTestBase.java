@@ -239,8 +239,8 @@ public class LoadAndStoreTestBase {
                 log.error("match failed in LoadAndStoreTest:");
                 log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
                 log.error("    file2:line {}: \"{}\"", lineNumber2, line2);
-                log.error("  comparing file1:\"" + inFile1.getPath() + "\"");
-                log.error("         to file2:\"" + inFile2.getPath() + "\"");
+                log.error("  comparing file1:\"{}\"", inFile1.getPath());
+                log.error("         to file2:\"{}\"", inFile2.getPath());
                 Assert.assertEquals(line1, line2);
             }
             line1 = next1;
@@ -348,6 +348,6 @@ public class LoadAndStoreTestBase {
         System.setProperty("jmri.test.no-dialogs", "false");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LoadAndStoreTest.class);
+    private final static Logger log = LoggerFactory.getLogger(LoadAndStoreTestBase.class);
 
 }

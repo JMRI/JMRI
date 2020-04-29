@@ -205,7 +205,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
             s = "0" + s;  // handle one digit
         }
         if (s.length() > 2) {
-            log.error("can't add as two hex digits: " + s);
+            log.error("can't add as two hex digits: {}", s);
         }
         setElement(offset, s.charAt(0));
         setElement(offset + 1, s.charAt(1));
@@ -218,7 +218,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     public void addIntAsThreeHex(int val, int offset) {
         String s = ("" + Integer.toHexString(val)).toUpperCase();
         if (s.length() > 3) {
-            log.error("can't add as three hex digits: " + s);
+            log.error("can't add as three hex digits: {}", s);
         }
         if (s.length() != 3) {
             s = "0" + s;
@@ -238,7 +238,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     public void addIntAsFourHex(int val, int offset) {
         String s = ("" + Integer.toHexString(val)).toUpperCase();
         if (s.length() > 4) {
-            log.error("can't add as three hex digits: " + s);
+            log.error("can't add as three hex digits: {}", s);
         }
         if (s.length() != 4) {
             s = "0" + s;

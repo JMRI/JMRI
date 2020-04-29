@@ -95,10 +95,10 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         InstanceManager.store(this, OlcbConfigurationManager.class);
     }
 
-    jmri.jmrix.swing.ComponentFactory cf = null;
+    final jmri.jmrix.swing.ComponentFactory cf;
 
     private void initializeFastClock() {
-        boolean isMaster = true;
+        boolean isMaster;
         String enableOption = adapterMemo.getProtocolOption(OPT_PROTOCOL_FASTCLOCK, OPT_FASTCLOCK_ENABLE);
         if (OPT_FASTCLOCK_ENABLE_GENERATOR.equals(enableOption)) {
             isMaster = true;
@@ -423,16 +423,14 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
          * @param contents represents the byte stream that will be sent.
          */
         private void  addStringPart(String value, List<Byte> contents) {
-            if (value == null || value.isEmpty()) {
-                contents.add((byte)0);
-            } else {
+            if (value != null && !value.isEmpty()) {
                 byte[] bb = value.getBytes(StandardCharsets.UTF_8);
                 for (byte b : bb) {
                     contents.add(b);
                 }
-                // terminating null byte.
-                contents.add((byte)0);
             }
+            // terminating null byte.
+            contents.add((byte)0);
         }
 
         SimpleNodeIdentInfoHandler() {
@@ -597,13 +595,16 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    new Thread(() -> {
-                        // N.B. during JUnit testing, the following call tends to hang
-                        // on semaphore acquisition in org.openlcb.can.CanInterface.initialize()
-                        // near line 109 in openlcb lib 0.7.22, which leaves
-                        // the thread hanging around forever.
-                        olcbCanInterface.initialize();
-                    }, "olcbCanInterface.initialize").start();
+                    Thread t = jmri.util.ThreadingUtil.newThread(
+                                    () -> { 
+                                        // N.B. during JUnit testing, the following call tends to hang
+                                        // on semaphore acquisition in org.openlcb.can.CanInterface.initialize()
+                                        // near line 109 in openlcb lib 0.7.22, which leaves
+                                        // the thread hanging around forever.
+                                        olcbCanInterface.initialize();
+                                    },
+                                "olcbCanInterface.initialize");
+                    t.start();
                 }
             });
             timer.setRepeats(false);

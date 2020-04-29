@@ -1,9 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
 
 import jmri.jmrit.display.AbstractEditorTestBase;
 import jmri.util.JUnitUtil;

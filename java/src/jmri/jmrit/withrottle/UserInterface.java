@@ -280,7 +280,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         }
 
         if (numConnected != null) {
-        	numConnected.setText(Bundle.getMessage("LabelClients") + " " + deviceList.size());
+            numConnected.setText(Bundle.getMessage("LabelClients") + " " + deviceList.size());
         }
         if (withrottlesListModel != null) {
             withrottlesListModel.updateDeviceList(deviceList);

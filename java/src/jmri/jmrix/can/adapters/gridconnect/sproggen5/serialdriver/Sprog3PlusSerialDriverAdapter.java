@@ -36,7 +36,7 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
         try {
             tc.setCanId(127);
         } catch (Exception e) {
-            log.error("Cannot parse CAN ID - check your preference settings " + e);
+            log.error("Cannot parse CAN ID - check your preference settings {}", e);
             log.error("Now using default CAN ID");
         }
 

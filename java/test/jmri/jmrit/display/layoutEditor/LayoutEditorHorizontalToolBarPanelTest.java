@@ -1,16 +1,14 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
  * Test simple functioning of LayoutEditorHorizontalToolBarPanel
  *
- * @author	George Warner Copyright (C) 2019
+ * @author George Warner Copyright (C) 2019
  */
 public class LayoutEditorHorizontalToolBarPanelTest {
 

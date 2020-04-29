@@ -10,7 +10,7 @@ import org.junit.Test;
  * Tests for the Operations RollingStock Cars class Last manually cross-checked
  * on 20090131
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class CarOwnersTest extends OperationsTestCase {
 

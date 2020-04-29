@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table data model for display of DCC packet contents
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
  */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel {
 
@@ -128,7 +128,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
                     f.setFilter((String) getValueAt(row, ADDRESSCOLUMN));
                     source.addListener(f);
                 } catch (Exception ex) {
-                    log.error("starting MonitorFrame caught exception: " + ex.toString());
+                    log.error("starting MonitorFrame caught exception: {}", ex.toString());
                 }
                 f.setVisible(true);
 

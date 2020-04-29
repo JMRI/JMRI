@@ -128,7 +128,7 @@ public class TrainBuilder extends TrainCommon {
             _buildReport = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),
                     StandardCharsets.UTF_8)), true);
         } catch (IOException e) {
-            log.error("Can not open build report file: " + file.getName());
+            log.error("Can not open build report file: {}", file.getName());
             return;
         }
         
@@ -3489,12 +3489,7 @@ public class TrainBuilder extends TrainCommon {
                 !car.getLoadName().equals(carLoads.getDefaultEmptyName()) ||
                 car.getDestination() != null ||
                 car.getFinalDestination() != null) {
-            log.debug("No load generation for car ({}) isAddLoadsAnySpurEnabled: " // NOI18N
-                    +
-                    (car.getTrack().isAddCustomLoadsAnySpurEnabled() ? "true" : "false") // NOI18N
-                    +
-                    ", car load ({}) destination ({}) final destination ({})", // NOI18N
-                    car.toString(), car.getLoadName(), car.getDestinationName(), car.getFinalDestinationName()); // NOI18N
+            log.debug("No load generation for car ({}) isAddLoadsAnySpurEnabled: {}, car load ({}) destination ({}) final destination ({})", car.toString(), car.getTrack().isAddCustomLoadsAnySpurEnabled() ? "true" : "false", car.getLoadName(), car.getDestinationName(), car.getFinalDestinationName()); // NOI18N
             // if car has a destination or final destination add "no load generated" message to report
             if (car.getTrack() != null &&
                     car.getTrack().isStaging() &&
@@ -3606,12 +3601,7 @@ public class TrainBuilder extends TrainCommon {
                 !car.getLoadName().equals(carLoads.getDefaultEmptyName()) ||
                 car.getDestination() != null ||
                 car.getFinalDestination() != null) {
-            log.debug("No load generation for car ({}) isAddCustomLoadsAnyStagingTrackEnabled: " // NOI18N
-                    +
-                    (car.getTrack().isAddCustomLoadsAnyStagingTrackEnabled() ? "true" : "false") // NOI18N
-                    +
-                    ", car load ({}) destination ({}) final destination ({})", // NOI18N
-                    car.toString(), car.getLoadName(), car.getDestinationName(), car.getFinalDestinationName());
+            log.debug("No load generation for car ({}) isAddCustomLoadsAnyStagingTrackEnabled: {}, car load ({}) destination ({}) final destination ({})", car.toString(), car.getTrack().isAddCustomLoadsAnyStagingTrackEnabled() ? "true" : "false", car.getLoadName(), car.getDestinationName(), car.getFinalDestinationName());
             return false;
         }
         List<Track> tracks = locationManager.getTracks(Track.STAGING);

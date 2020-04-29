@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * PortalIconXmlTest.java
  *
- * Description: tests for the PortalIconXml class
+ * Test for the PortalIconXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class PortalIconXmlTest {
       Assert.assertNotNull("PortalIconXml constructor",new PortalIconXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

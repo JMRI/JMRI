@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Dcc4PcReporterManagerXmlTest.java
  *
- * Description: tests for the Dcc4PcReporterManagerXml class
+ * Test for the Dcc4PcReporterManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class Dcc4PcReporterManagerXmlTest {
       Assert.assertNotNull("Dcc4PcReporterManagerXml constructor",new Dcc4PcReporterManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

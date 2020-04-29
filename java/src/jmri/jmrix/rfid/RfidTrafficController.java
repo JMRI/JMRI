@@ -137,7 +137,7 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
     @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (logDebug) {
-            log.debug("forward " + m);
+            log.debug("forward {}", m);
         }
         sendInterlock = ((RfidMessage) m).getInterlocked();
         super.forwardToPort(m, reply);

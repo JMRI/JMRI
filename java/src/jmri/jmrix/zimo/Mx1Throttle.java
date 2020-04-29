@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
 
@@ -81,7 +81,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         // Always need speed command before function group command to reset consist pointer
         /*int data = 0x00 |
          (f8 ? 0x08 : 0) |
-         (f7 ? 0x04 : 0)	|
+         (f7 ? 0x04 : 0) |
          (f6 ? 0x02 : 0) |
          (f5 ? 0x01 : 0);
         
@@ -200,7 +200,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
                 value = 2; // emergency stop
             }
             int speedC = (value & 0x1F) >> 1;
-            int c = (value & 0x01) << 4;	// intermediate speed step
+            int c = (value & 0x01) << 4; // intermediate speed step
 
             speedC = speedC + c;
             value = (isForward ? 0x60 : 0x40) | speedC;

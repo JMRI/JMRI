@@ -6,13 +6,12 @@ import org.junit.Before;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class StandaloneReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     private StandaloneTrafficController tc = null;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -25,13 +24,12 @@ public class StandaloneReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	m = null;
-	tc = null;
+        m = null;
+        tc = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }
 
     // private final static Logger log = LoggerFactory.getLogger(StandaloneReplyTest.class);
-
 }

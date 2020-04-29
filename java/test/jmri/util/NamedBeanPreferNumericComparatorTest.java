@@ -120,7 +120,6 @@ public class NamedBeanPreferNumericComparatorTest {
         Assert.assertFalse(hit);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -1138,7 +1138,7 @@ public class AcelaNode extends AbstractNode {
                 }
             }
         } catch (JmriException e) {
-            log.error("exception in markChanges: " + e);
+            log.error("exception in markChanges: {}", e);
         }
     }
 

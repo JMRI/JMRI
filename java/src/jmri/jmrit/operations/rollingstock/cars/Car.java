@@ -873,7 +873,7 @@ public class Car extends RollingStock {
                     _kernel.setLead(this);
                 }
             } else {
-                log.error("Kernel " + a.getValue() + " does not exist");
+                log.error("Kernel {} does not exist", a.getValue());
             }
         }
         if ((a = e.getAttribute(Xml.LOAD)) != null) {

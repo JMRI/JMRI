@@ -8,9 +8,9 @@ import org.junit.Test;
 /**
  * XBeeSensorTest.java
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeSensor class
+ * Test for the jmri.jmrix.ieee802154.xbee.XBeeSensor class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class XBeeSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -69,7 +69,6 @@ public class XBeeSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assert.assertNotNull("exists", s);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -84,9 +83,10 @@ public class XBeeSensorTest extends jmri.implementation.AbstractSensorTestBase {
             @Override
             public void requestUpdateFromLayout() {
             }
-	    @Override
-	    public PullResistance getPullResistance(){
-		    return PullResistance.PULL_OFF;
+
+            @Override
+            public PullResistance getPullResistance() {
+                return PullResistance.PULL_OFF;
             }
         };
     }
@@ -94,11 +94,10 @@ public class XBeeSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @After
     @Override
     public void tearDown() {
-	t.dispose();
+        t.dispose();
         tc.terminate();
         jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
-
     }
 
 }

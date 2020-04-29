@@ -34,7 +34,7 @@ public class NceThrottleManager extends AbstractThrottleManager {
             // the NCE protocol doesn't require an interaction with the command
             // station for this, so immediately trigger the callback.
             DccLocoAddress address = (DccLocoAddress) a;
-            log.debug("new NceThrottle for " + address);
+            log.debug("new NceThrottle for {}", address);
             notifyThrottleKnown(new NceThrottle((NceSystemConnectionMemo) adapterMemo, address), address);
         }
         else {

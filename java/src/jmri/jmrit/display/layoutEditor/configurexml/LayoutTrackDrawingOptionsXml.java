@@ -122,7 +122,7 @@ public class LayoutTrackDrawingOptionsXml extends AbstractXmlAdapter {
         ltdo.setSideTieWidth(getElementInt(element, "sideTieWidth", ltdo.getSideTieWidth()));
 
         p.setLayoutTrackDrawingOptions(ltdo);
-    }	// load
+    } // load
 
     @CheckReturnValue
     private Color getElementColor(@Nonnull Element el, @Nonnull String child, @CheckForNull Color defVal) {

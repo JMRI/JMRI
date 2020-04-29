@@ -88,7 +88,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
                         panel.addContent(e);
                     }
                 } catch (RuntimeException e) {
-                    log.error("Error storing panel element: {}", e.getMessage(), e);
+                    log.error("Error storing panel element", e);
                 }
             }
         }
@@ -154,7 +154,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         }
 
         // If available, override location and size with machine dependent values
-        if (!InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
+        if (!InstanceManager.getDefault(jmri.util.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
             jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
             if (prefsMgr != null) {
                 String windowFrameRef = "jmri.jmrit.display.controlPanelEditor.ControlPanelEditor:" + name;
@@ -282,7 +282,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             } catch (ClassNotFoundException | InstantiationException
                     | jmri.configurexml.JmriConfigureXmlException | IllegalAccessException
                     | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
-                log.error("Exception while loading {}: {}", panelItem.getName(), e.getMessage(), e);
+                log.error("Exception while loading {}", panelItem.getName(), e);
                 result = false;
             }
         }

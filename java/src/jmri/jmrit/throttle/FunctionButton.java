@@ -287,7 +287,7 @@ public class FunctionButton extends JToggleButton implements ActionListener {
      */
     public void changeState(boolean newState) {
         if (log.isDebugEnabled()) {
-            log.debug("Change state to " + newState);
+            log.debug("Change state to {}", newState);
         }
         isOn = newState;
         this.setSelected(isOn);
@@ -521,7 +521,7 @@ public class FunctionButton extends JToggleButton implements ActionListener {
             }
             updateLnF();
         } catch (org.jdom2.DataConversionException ex) {
-            log.error("DataConverstionException in setXml: " + ex);
+            log.error("DataConverstionException in setXml: {}", ex);
         }
     }
 

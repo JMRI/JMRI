@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract partial implementation of a ReporterManager.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         implements ReporterManager {

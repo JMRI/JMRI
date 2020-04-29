@@ -172,7 +172,7 @@ public class Automation extends PropertyChangeSupport implements java.beans.Prop
             log.debug("Perform action ({}) item id: {}", item.getAction().getName(), item.getId());
             item.getAction().removePropertyChangeListener(this);
             item.getAction().addPropertyChangeListener(this);
-            Thread runAction = new Thread(() -> {
+            Thread runAction = jmri.util.ThreadingUtil.newThread(() -> {
                 item.getAction().doAction();
             });
             runAction.setName("Run action item: " + item.getId()); // NOI18N

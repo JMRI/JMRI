@@ -273,7 +273,7 @@ public class NodeIdentity {
                 }
             }
         } catch (SocketException ex) {
-            log.error("Error accessing interface: {}", ex.getLocalizedMessage(), ex);
+            log.error("Error accessing interface", ex);
         }
         return false;
     }

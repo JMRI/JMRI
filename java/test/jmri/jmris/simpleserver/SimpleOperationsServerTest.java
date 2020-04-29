@@ -151,7 +151,6 @@ public class SimpleOperationsServerTest {
         assertThat(sb.toString()).isEqualTo("OPERATIONS , LOCATIONS=North End Staging\nOPERATIONS , LOCATIONS=North Industries\nOPERATIONS , LOCATIONS=South End Staging\n").withFailMessage("Locations Command Response Check");
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();

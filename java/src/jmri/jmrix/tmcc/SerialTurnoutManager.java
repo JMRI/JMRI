@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * System names are "TTnnn", where T is the user configurable system prefix,
  * nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2003, 2006
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager implements SerialListener {
 

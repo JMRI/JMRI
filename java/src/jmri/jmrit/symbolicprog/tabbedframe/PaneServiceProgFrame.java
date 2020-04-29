@@ -58,8 +58,7 @@ public class PaneServiceProgFrame extends PaneProgFrame {
         pack();
 
         if (log.isDebugEnabled()) {
-            log.debug("PaneServiceProgFrame \"" + name
-                    + "\" constructed");
+            log.debug("PaneServiceProgFrame \"{}\" constructed", name);
         }
     }
 

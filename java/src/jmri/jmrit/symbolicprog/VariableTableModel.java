@@ -76,7 +76,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     @Override
     public String getColumnName(int col) {
         if (log.isDebugEnabled()) {
-            log.debug("getColumnName " + col);
+            log.debug("getColumnName {}", col);
         }
         return Bundle.getMessage(headers[col]); // I18N
     }
@@ -99,7 +99,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     @Override
     public boolean isCellEditable(int row, int col) {
         if (log.isDebugEnabled()) {
-            log.debug("isCellEditable " + col);
+            log.debug("isCellEditable {}", col);
         }
         if (headers[col].equals("Value")) {
             return true;
@@ -139,7 +139,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     public void setState(int row, int val) {
         if (log.isDebugEnabled()) {
-            log.debug("setState row: " + row + " val: " + val);
+            log.debug("setState row: {} val: {}", row, val);
         }
         (rowVector.elementAt(row)).setState(val);
     }
@@ -217,7 +217,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     @Override
     public void setValueAt(Object value, int row, int col) {
         if (log.isDebugEnabled()) {
-            log.debug("setvalueAt " + row + " " + col + " " + value);
+            log.debug("setvalueAt {} {} {}", row, col, value);
         }
         setFileDirty(true);
     }
@@ -255,7 +255,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         _df = df;
         String name = LocaleSelector.getAttribute(e, "label");  // Note the name variable is actually the label attribute
         if (log.isDebugEnabled()) {
-            log.debug("Starting to setRow \"" + name + "\"");
+            log.debug("Starting to setRow \"{}\"", name);
         }
         String item = (e.getAttribute("item") != null
                 ? e.getAttribute("item").getValue()
@@ -263,12 +263,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         // as a special case, if no item, use label
         if (item == null) {
             item = name;
-            log.debug("no item attribute, used label \"" + name + "\"");
+            log.debug("no item attribute, used label \"{}\"", name);
         }
         // as a special case, if no label, use item
         if (name == null) {
             name = item;
-            log.debug("no label attribute, used item attribute \"" + item + "\"");
+            log.debug("no label attribute, used item attribute \"{}\"", item);
         }
 
         String comment = LocaleSelector.getAttribute(e, "comment");
@@ -868,7 +868,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         // get the values for the VariableValue ctor
         String stdname = e.getAttribute("item").getValue();
         if (log.isDebugEnabled()) {
-            log.debug("Starting to setConstant \"" + stdname + "\"");
+            log.debug("Starting to setConstant \"{}\"", stdname);
         }
 
         String name = LocaleSelector.getAttribute(e, "label");
@@ -897,7 +897,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = e.getAttribute("default")) != null) {
             String val = a.getValue();
             if (log.isDebugEnabled()) {
-                log.debug("Found default value: " + val + " for " + stdname);
+                log.debug("Found default value: {} for {}", val, stdname);
             }
             defaultVal = Integer.parseInt(val);
         }
@@ -916,7 +916,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = e.getAttribute("default")) != null) {
             String val = a.getValue();
             if (log.isDebugEnabled()) {
-                log.debug("Found default value: " + val + " for " + name);
+                log.debug("Found default value: {} for {}", val, name);
             }
             v.setIntValue(defaultVal);
         }
@@ -956,13 +956,13 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     @Override
     public void actionPerformed(ActionEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("action performed,  command: " + e.getActionCommand());
+            log.debug("action performed,  command: {}", e.getActionCommand());
         }
         setFileDirty(true);
         char b = e.getActionCommand().charAt(0);
         int row = Integer.parseInt(e.getActionCommand().substring(1));
         if (log.isDebugEnabled()) {
-            log.debug("event on " + b + " row " + row);
+            log.debug("event on {} row {}", b, row);
         }
         if (b == 'R') {
             // read command
@@ -996,10 +996,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("prop changed " + e.getPropertyName()
-                    + " new value: " + e.getNewValue()
-                    + (e.getPropertyName().equals("State") ? (" (" + VariableValue.stateNameFromValue(((Integer) e.getNewValue())) + ") ") : " ")
-                    + " Source " + e.getSource());
+            log.debug("prop changed {} new value: {}{} Source {}", e.getPropertyName(), e.getNewValue(), e.getPropertyName().equals("State") ? (" (" + VariableValue.stateNameFromValue(((Integer) e.getNewValue())) + ") ") : " ", e.getSource());
         }
         if (e.getNewValue() == null) {
             log.error("new value of {} should not be null!", e.getPropertyName(), new Exception());

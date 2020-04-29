@@ -424,7 +424,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                 case TYPECOL:
                     return new JTextField(10).getPreferredSize().width;
                 default:
-                    log.warn("Unexpected column in getPreferredWidth: " + col);  // NOI18N
+                    log.warn("Unexpected column in getPreferredWidth: {}", col);  // NOI18N
                     return new JTextField(8).getPreferredSize().width;
             }
         }
@@ -493,7 +493,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                     Object obj = nxPairs.getEndPointLocation((NamedBean) dest.get(row), panel);
                     if (obj instanceof PositionablePoint) {
                         PositionablePoint point = (PositionablePoint) obj;
-                        if (point.getType() == PositionablePoint.END_BUMPER) {
+                        if (point.getType() == PositionablePoint.PointType.END_BUMPER) {
                             JOptionPane.showMessageDialog(null, Bundle.getMessage("EndBumperPoint"));  // NOI18N
                             return false;
                         }

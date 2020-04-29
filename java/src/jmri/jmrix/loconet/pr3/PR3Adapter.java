@@ -47,11 +47,7 @@ public class PR3Adapter extends LocoBufferAdapter {
         }
         configureLeadsAndFlowControl(activeSerialPort, flow);
 
-        log.info("PR3 adapter"
-                + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
-                + activeSerialPort.getFlowControlMode()
-                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
-                + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN);
+        log.info("PR3 adapter{}{} RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN, activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=", activeSerialPort.getFlowControlMode());
     }
 
     /**

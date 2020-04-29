@@ -1,4 +1,4 @@
-package jmri.jmrix.openlcb;
+package jmri.util.gui;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -8,13 +8,13 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017 
  */
-public class OlcbConstantsTest {
+public class GuiLafPreferencesManagerTest {
 
     @Test
     public void testCTor() {
-        OlcbConstants t = new OlcbConstants();
+        GuiLafPreferencesManager t = new GuiLafPreferencesManager();
         Assert.assertNotNull("exists",t);
     }
 
@@ -29,6 +29,6 @@ public class OlcbConstantsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OlcbConstantsTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(GuiLafPreferencesManagerTest.class);
 
 }

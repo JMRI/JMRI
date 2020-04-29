@@ -37,7 +37,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         log.debug("Getting {} for {}", getPanelType(), name);
         LayoutEditor editor = (LayoutEditor) getEditor(name);
         if (editor == null) {
-            log.warn("Requested LayoutPanel [" + name + "] does not exist.");
+            log.warn("Requested LayoutPanel [{}] does not exist.", name);
             return "ERROR Requested panel [" + name + "] does not exist.";
         }
         Element panel = new Element("panel");
@@ -151,7 +151,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                     panel.addContent(e);
                 }
             } catch (Exception e) {
-                log.error("Error storing panel LayoutTrack element: " + e);
+                log.error("Error storing panel LayoutTrack element: {}", e);
             }
         }
 
@@ -164,7 +164,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                     panel.addContent(e);
                 }
             } catch (Exception e) {
-                log.error("Error storing panel LayoutShape element: " + e);
+                log.error("Error storing panel LayoutShape element: {}", e);
             }
         }
         log.debug("Number of LayoutShape elements: {}", layoutShapes.size());

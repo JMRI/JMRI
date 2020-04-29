@@ -1,9 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
 
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
@@ -49,7 +46,6 @@ public class EditCircuitPathsTest {
         JUnitUtil.dispose(pFrame);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

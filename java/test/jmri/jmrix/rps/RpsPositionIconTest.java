@@ -2,9 +2,7 @@ package jmri.jmrix.rps;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Editor;
 import jmri.util.JUnitUtil;
@@ -17,7 +15,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the rps.Reading class.
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  */
 public class RpsPositionIconTest {
 

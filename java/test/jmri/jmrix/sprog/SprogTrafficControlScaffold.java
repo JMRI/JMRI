@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Stands in for the SprogTrafficController class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SprogTrafficControlScaffold extends SprogTrafficController {
 
@@ -68,7 +68,7 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
     protected void sendTestMessage(SprogMessage m, SprogListener l) {
         // forward a test message to NceListeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
+            log.debug("sendTestMessage    [{}]", m);
         }
         notifyMessage(m, l);
         return;
@@ -80,7 +80,7 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
     protected void sendTestReply(SprogReply m) {
         // forward a test message to NceListeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestReply [" + m + "]");
+            log.debug("sendTestReply [{}]", m);
         }
         notifyReply(m);
         try {

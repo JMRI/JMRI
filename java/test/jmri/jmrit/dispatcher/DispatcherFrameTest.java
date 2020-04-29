@@ -2,9 +2,7 @@ package jmri.jmrit.dispatcher;
 
 import java.awt.GraphicsEnvironment;
 
-import jmri.BlockManager;
 import jmri.InstanceManager;
-import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -17,7 +15,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Swing tests for dispatcher options
  *
- * @author	Dave Duchamp
+ * @author Dave Duchamp
  * @author  Paul Bender Copyright(C) 2017
  */
 public class DispatcherFrameTest {

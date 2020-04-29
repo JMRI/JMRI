@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * XBeeLightManagerXmlTest.java
  *
- * Description: tests for the XBeeLightManagerXml class
+ * Test for the XBeeLightManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class XBeeLightManagerXmlTest {
       Assert.assertNotNull("XBeeLightManagerXml constructor",new XBeeLightManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

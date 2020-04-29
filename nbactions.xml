@@ -68,4 +68,27 @@
                 <skipTests>true</skipTests>
             </properties>
         </action>
+        <action>
+            <actionName>test.single</actionName>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>test</goal>
+                <goal>jacoco:report</goal>
+            </goals>
+            <properties>
+                <test>${packageClassName}</test>
+            </properties>
+        </action>
+        <action>
+            <actionName>test</actionName>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>test</goal>
+                <goal>jacoco:report</goal>
+            </goals>
+        </action>
     </actions>

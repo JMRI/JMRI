@@ -2,10 +2,9 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import jmri.BlockManager;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assume;
@@ -13,11 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * PanelEditorTest.java
- * <p>
- * Description:
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class PanelEditorTest {
 
@@ -47,7 +43,6 @@ public class PanelEditorTest {
 
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

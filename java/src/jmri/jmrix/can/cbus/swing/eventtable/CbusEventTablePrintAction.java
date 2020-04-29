@@ -204,7 +204,7 @@ public class CbusEventTablePrintAction extends AbstractAction {
                 w.write(lineString);
                 lineString = "";
             } catch (IOException e) {
-                log.warn("error during printing: " + e);
+                log.warn("error during printing: {}", e);
             }
         }
     }

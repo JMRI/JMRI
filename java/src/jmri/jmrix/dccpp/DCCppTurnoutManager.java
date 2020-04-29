@@ -152,7 +152,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 

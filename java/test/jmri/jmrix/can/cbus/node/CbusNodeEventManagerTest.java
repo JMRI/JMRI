@@ -160,7 +160,6 @@ public class CbusNodeEventManagerTest {
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
     
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

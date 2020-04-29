@@ -11,8 +11,6 @@ import org.netbeans.jemmy.operators.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ResourceBundle;
-import jmri.BlockManager;
-import jmri.ShutDownManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -260,7 +258,6 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
         JUnitUtil.dispose(f);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

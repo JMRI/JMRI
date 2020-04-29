@@ -5,7 +5,7 @@ import jmri.CommandStation;
 /**
  * Mock to provide a CommandStation object for tests
  *
- * @author	Bob Jacobsen Copyright 2018
+ * @author Bob Jacobsen Copyright 2018
  *
  */
 

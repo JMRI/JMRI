@@ -13,7 +13,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Tests for the jmri.jmrix.lenz.lv102.LV102Action class
  *
- * @author	Bob Jacobsen Copyright (c) 2001, 2002
+ * @author Bob Jacobsen Copyright (c) 2001, 2002
  */
 public class LV102ActionTest {
 

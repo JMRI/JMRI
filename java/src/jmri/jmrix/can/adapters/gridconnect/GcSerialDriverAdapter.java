@@ -84,14 +84,7 @@ public class GcSerialDriverAdapter extends GcPortController {
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud, sees "
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
 
             opened = true;
@@ -145,7 +138,7 @@ public class GcSerialDriverAdapter extends GcPortController {
         AsyncBufferInputStream(InputStream inputStream, String portName) {
             super(inputStream);
             this.portName = portName;
-            Thread rt = new Thread(this::readThreadBody);
+            Thread rt = jmri.util.ThreadingUtil.newThread(this::readThreadBody);
             rt.setName("GcSerialPort InputBufferThread " + portName);
             rt.setDaemon(true);
             rt.setPriority(Thread.MAX_PRIORITY);

@@ -2,12 +2,10 @@ package jmri.managers;
 
 import static org.junit.Assert.assertNotNull;
 
-import jmri.BlockManager;
 import jmri.Conditional;
 import jmri.ConditionalManager;
 import jmri.InstanceManager;
 import jmri.Logix;
-import jmri.ShutDownManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -18,7 +16,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.managers.DefaultConditionalManager class.
  *
- * @author	Bob Jacobsen Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2015
  */
 public class DefaultConditionalManagerTest extends AbstractManagerTestBase<jmri.ConditionalManager,jmri.Conditional> {
 

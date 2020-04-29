@@ -10,7 +10,7 @@ import jmri.jmrix.loconet.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LocoIOModeListTest {
 
@@ -38,17 +38,12 @@ public class LocoIOModeListTest {
                         int v1A = addressToValue1(m, i);
                         int v2A = addressToValue2(m, i);
 
-                        log.debug(m.getFullMode() + "=> Address " + Integer.toHexString(i) // NOI18N
-                                + " encodes into " // NOI18N
-                                + LnConstants.OPC_NAME(m.getOpCode()) + " "
-                                + Integer.toHexString(svA) + " "
-                                + Integer.toHexString(v1A) + " "
-                                + Integer.toHexString(v2A));
+                        log.debug("{}=> Address {} encodes into {} {} {} {}", m.getFullMode(), Integer.toHexString(i), LnConstants.OPC_NAME(m.getOpCode()), Integer.toHexString(svA), Integer.toHexString(v1A), Integer.toHexString(v2A));
 
                         LocoIOMode lim = getLocoIOModeFor(svA, v1A, v2A);
                         if (lim == null) {
                             if (haderror == 0) {
-                                log.error("Testing " + m.getFullMode() + "      ERROR:"); // NOI18N
+                                log.error("Testing {}      ERROR:", m.getFullMode()); // NOI18N
                             }
                             String err
                                     = "    Could Not find mode for Packet: " // NOI18N
@@ -61,7 +56,7 @@ public class LocoIOModeListTest {
                             int decodedaddress = valuesToAddress(lim.getOpCode(), svA, v1A, v2A);
                             if ((i) != decodedaddress) {
                                 if (haderror == 0) {
-                                    log.error("Testing " + m.getFullMode() + "      ERROR:"); // NOI18N
+                                    log.error("Testing {}      ERROR:", m.getFullMode()); // NOI18N
                                 }
                                 String err
                                         = "    Could Not Match Address: (" // NOI18N
@@ -83,7 +78,6 @@ public class LocoIOModeListTest {
         };
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

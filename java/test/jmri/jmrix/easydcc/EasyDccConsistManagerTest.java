@@ -111,7 +111,6 @@ public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsi
        Assert.assertTrue("CS Consist Needs Seperate Address",cm.csConsistNeedsSeperateAddress());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

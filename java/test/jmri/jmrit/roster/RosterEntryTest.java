@@ -14,7 +14,7 @@ import org.junit.*;
 /**
  * Tests for the jmrit.roster.RosterEntry class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2018
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2018
  */
 public class RosterEntryTest {
 

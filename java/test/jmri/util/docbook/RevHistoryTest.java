@@ -9,7 +9,7 @@ import org.junit.Before;
 /**
  * Tests for the jmri.util.docbook.RevHistory class.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class RevHistoryTest {
 

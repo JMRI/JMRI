@@ -24,7 +24,7 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         InstanceManager.store(this, OlcbSystemConnectionMemo.class); // also register as specific type
     }
 
-    jmri.jmrix.swing.ComponentFactory cf = null;
+    final jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**
      * Tells which managers this class provides.

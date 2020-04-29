@@ -10,9 +10,9 @@ import org.junit.*;
 /**
  * LZV100FrameTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.swing.lzv100.LZV100Frame class
+ * Test for the jmri.jmrix.lenz.swing.lzv100.LZV100Frame class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LZV100FrameTest extends jmri.util.JmriJFrameTestBase {
         

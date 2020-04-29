@@ -1,23 +1,12 @@
 package jmri.jmris.srcp;
 
-import jmri.*;
-import jmri.implementation.AbstractSensor;
-import jmri.jmrix.SystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import jmri.util.PreferNumericComparator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.picocontainer.behaviors.Stored;
 
-import javax.annotation.Nonnull;
 import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPSensorServer class
@@ -61,7 +50,6 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
 
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     @Override
     public void setUp() {

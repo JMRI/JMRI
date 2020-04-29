@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * LsDecSignalHeadXmlTest.java
  *
- * Description: tests for the LsDecSignalHeadXml class
+ * Test for the LsDecSignalHeadXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class LsDecSignalHeadXmlTest {
       Assert.assertNotNull("LsDecSignalHeadXml constructor",new LsDecSignalHeadXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

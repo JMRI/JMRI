@@ -11,22 +11,22 @@ import org.junit.Test;
  * itself a test class, e.g. should not be added to a suite. Instead, this forms
  * the base for test classes, including providing some common tests.
  *
- * @author	Bob Jacobsen 2002, 2004, 2005, 2007, 2008
+ * @author Bob Jacobsen 2002, 2004, 2005, 2007, 2008
  */
 public abstract class AbstractLightTestBase {
 
     // implementing classes must provide these abstract members:
     //
     @Before
-    abstract public void setUp();    	// load t with actual object; create scaffolds as needed
+    abstract public void setUp();       // load t with actual object; create scaffolds as needed
 
-    abstract public int numListeners();	// return number of listeners registered with the TrafficController
+    abstract public int numListeners(); // return number of listeners registered with the TrafficController
 
     abstract public void checkOnMsgSent();
 
     abstract public void checkOffMsgSent();
 
-    protected Light t = null;	// holds objects under test
+    protected Light t = null; // holds objects under test
 
     static protected boolean listenerResult = false;
 
@@ -70,8 +70,8 @@ public abstract class AbstractLightTestBase {
 
     @Test
     public void testDispose() {
-        t.setState(Light.ON);  	// in case registration with TrafficController
-        //is deferred to after first use
+        t.setState(Light.ON); // in case registration with TrafficController
+                              // is deferred to after first use
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 0, numListeners());
     }

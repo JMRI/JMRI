@@ -16,7 +16,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of CbusConsolePane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
 

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * LayoutBlockManagerXmlTest.java
  *
- * Description: tests for the LayoutBlockManagerXml class
+ * Test for the LayoutBlockManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class LayoutBlockManagerXmlTest {
       Assert.assertNotNull("LayoutBlockManagerXml constructor",new LayoutBlockManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

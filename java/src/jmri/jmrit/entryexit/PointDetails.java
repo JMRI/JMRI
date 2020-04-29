@@ -363,7 +363,7 @@ public class PointDetails {
             }
         }
         ButtonTimeOut t = new ButtonTimeOut();
-        nxButtonTimeOutThr = new Thread(t, "NX Button Timeout " + getSensor().getDisplayName());  // NOI18N
+        nxButtonTimeOutThr = jmri.util.ThreadingUtil.newThread(t, "NX Button Timeout " + getSensor().getDisplayName());  // NOI18N
 
         nxButtonTimeOutThr.start();
     }

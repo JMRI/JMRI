@@ -7,29 +7,19 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarColors;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarOwners;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.davidflanagan.HardcopyWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action to print a summary of the Roster contents
@@ -43,16 +33,16 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintCarRosterAction extends AbstractAction {
 
-    public PrintCarRosterAction(String actionName, boolean preview, CarsTableFrame pWho) {
-        super(actionName);
-        isPreview = preview;
+    public PrintCarRosterAction(boolean isPreview, CarsTableFrame pWho) {
+        super(isPreview ? Bundle.getMessage("MenuItemPreview") : Bundle.getMessage("MenuItemPrint"));
+        _isPreview = isPreview;
         panel = pWho;
     }
 
     /**
      * Variable to set whether this is to be printed or previewed
      */
-    boolean isPreview;
+    boolean _isPreview;
     CarsTableFrame panel;
     CarPrintOptionFrame cpof = null;
 
@@ -82,7 +72,7 @@ public class PrintCarRosterAction extends AbstractAction {
         HardcopyWriter writer = null;
         try {
             writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleCarRoster"), fontSize, .5, .5, .5, .5,
-                    isPreview, "", landscape, true, null);
+                    _isPreview, "", landscape, true, null);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
@@ -196,7 +186,8 @@ public class PrintCarRosterAction extends AbstractAction {
                 if (printCarRfid.isSelected()) {
                     rfid = padAttribute(car.getRfid().trim(), Control.max_len_string_attibute);
                 }
-                if (printCarTrain.isSelected()) // pad out train to half of its maximum
+                if (printCarTrain.isSelected()) // pad out train to half of its
+                                                // maximum
                 {
                     train = padAttribute(car.getTrainName().trim(), Control.max_len_string_train_name / 2);
                 }
@@ -480,7 +471,7 @@ public class PrintCarRosterAction extends AbstractAction {
 
         @Override
         public void initComponents() {
-            if (isPreview) {
+            if (_isPreview) {
                 setTitle(Bundle.getMessage("MenuItemPreview"));
             } else {
                 setTitle(Bundle.getMessage("MenuItemPrint"));
@@ -507,7 +498,7 @@ public class PrintCarRosterAction extends AbstractAction {
         public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
             updateLocationCheckboxes();
         }
-        
+
         private void updateLocationCheckboxes() {
             if (sortByComboBox.getSelectedItem() != null &&
                     sortByComboBox.getSelectedItem()

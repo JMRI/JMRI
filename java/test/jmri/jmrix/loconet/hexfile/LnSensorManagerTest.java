@@ -14,7 +14,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.loconet.hexfile.LnSensorManagerTurnout class.
  *
- * @author	Bob Jacobsen Copyright 2001
+ * @author Bob Jacobsen Copyright 2001
  */
 public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -83,7 +83,6 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnSensorManagerTest.class);
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

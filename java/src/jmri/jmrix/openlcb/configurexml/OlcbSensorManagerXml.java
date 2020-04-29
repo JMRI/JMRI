@@ -35,7 +35,7 @@ public class OlcbSensorManagerXml extends jmri.managers.configurexml.AbstractSen
 
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
-        boolean result = true;
+        boolean result;
         // We tell the Sensor managers that we will be loading Sensors from XML and they should
         // expect additional property set sequences. This is somewhat tricky in the face of
         // possibly multiple OpenLCB buses registered.

@@ -21,7 +21,7 @@ import jmri.Sensor;
 /**
  * Tests for the jmri.jmrix.ieee802154.xbee.XBeeSensorManager class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 

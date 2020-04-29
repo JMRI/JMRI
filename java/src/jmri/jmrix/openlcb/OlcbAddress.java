@@ -43,7 +43,7 @@ public class OlcbAddress {
         return hCode;
     }
     
-    String aString = null;
+    String aString;
     int[] aFrame = null;
     boolean match = false;
 
@@ -73,12 +73,11 @@ public class OlcbAddress {
         // This is done manually, rather than via regular expressions, for performance reasons.
         if (aString.contains(";")) {
             // multi-part address; leave match false and aFrame null
-            return;
         } else if (aString.contains(".")) {
             // dotted form, 7 dots
             String[] terms = s.split("\\.");
             if (terms.length != 8) {
-                log.error("unexpected number of terms: " + terms.length);
+                log.error("unexpected number of terms: {}", terms.length);
             }
             int[] tFrame = new int[terms.length];
             try {
@@ -132,8 +131,8 @@ public class OlcbAddress {
     @Override
     public int hashCode() {
         int ret = 0;
-        for (int i = 0; i < this.aFrame.length; i++) {
-            ret += this.aFrame[i];
+        for (int value : this.aFrame) {
+            ret += value;
         }
         return ret;
     }
@@ -184,10 +183,7 @@ public class OlcbAddress {
         if (!r.isExtended()) {
             return false;
         }
-        if ((r.getHeader() & 0x1FFFF000) != 0x195B4000) {
-            return false;
-        }
-        return true;
+        return (r.getHeader() & 0x1FFFF000) == 0x195B4000;
     }
 
     boolean match(CanMessage r) {
@@ -204,10 +200,7 @@ public class OlcbAddress {
         if (!r.isExtended()) {
             return false;
         }
-        if ((r.getHeader() & 0x1FFFF000) != 0x195B4000) {
-            return false;
-        }
-        return true;
+        return (r.getHeader() & 0x1FFFF000) == 0x195B4000;
     }
 
     /**
@@ -260,8 +253,8 @@ public class OlcbAddress {
 
     public String toCanonicalString() {
         String retval = "x";
-        for (int i = 0; i < aFrame.length; i++) {
-            retval = jmri.util.StringUtil.appendTwoHexFromInt(aFrame[i], retval);
+        for (int value : aFrame) {
+            retval = jmri.util.StringUtil.appendTwoHexFromInt(value, retval);
         }
         return retval;
     }
@@ -271,9 +264,10 @@ public class OlcbAddress {
      */
     public String toDottedString() {
         String retval = "";
-        for (int i = 0; i < aFrame.length; i++) {
-            if (! retval.isEmpty()) retval += ".";
-            retval = jmri.util.StringUtil.appendTwoHexFromInt(aFrame[i], retval);
+        for (int value : aFrame) {
+            if (!retval.isEmpty())
+                retval += ".";
+            retval = jmri.util.StringUtil.appendTwoHexFromInt(value, retval);
         }
         return retval;
     }

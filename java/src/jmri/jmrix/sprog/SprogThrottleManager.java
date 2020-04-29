@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SprogThrottleManager extends AbstractThrottleManager {
 
@@ -53,7 +53,7 @@ public class SprogThrottleManager extends AbstractThrottleManager {
             DccLocoAddress address = (DccLocoAddress) a;
         if (!throttleInUse) {
             throttleInUse = true;
-            log.debug("new SprogThrottle for " + address);
+            log.debug("new SprogThrottle for {}", address);
             String addr = "" + address.getNumber() + ( address.isLongAddress() ? " 0" : "");
             SprogMessage m = new SprogMessage(2 + addr.length());
             int i = 0;

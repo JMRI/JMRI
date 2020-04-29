@@ -6,7 +6,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.jmrix.jmriclient.JMRIClientReporter class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class JMRIClientReporterTest extends jmri.implementation.AbstractReporterTestBase{
 
@@ -32,7 +32,7 @@ public class JMRIClientReporterTest extends jmri.implementation.AbstractReporter
     @After
     @Override
     public void tearDown() {
-	r = null;
+        r = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }

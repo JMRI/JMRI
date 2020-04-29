@@ -6,7 +6,7 @@ import org.junit.Assert;
 /**
  * Tests for the jmri.jmrix.loconet.sdf.Play class.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class PlayTest {
 

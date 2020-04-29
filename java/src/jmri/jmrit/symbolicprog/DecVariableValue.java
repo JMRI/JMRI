@@ -289,7 +289,7 @@ public class DecVariableValue extends VariableValue
         if (value < _minVal) value = _minVal;
         if (value > _maxVal) value = _maxVal;
         if (log.isDebugEnabled()) {
-            log.debug("setValue with new value " + value + " old value " + oldVal);
+            log.debug("setValue with new value {} old value {}", value, oldVal);
         }
         if (oldVal != value) {
             _value.setText(valueToText(value));
@@ -332,7 +332,7 @@ public class DecVariableValue extends VariableValue
     public boolean isChanged() {
         CvValue cv = _cvMap.get(getCvNum());
         if (log.isDebugEnabled()) {
-            log.debug("isChanged for " + getCvNum() + " state " + cv.getState());
+            log.debug("isChanged for {} state {}", getCvNum(), cv.getState());
         }
         return considerChanged(cv);
     }
@@ -374,7 +374,7 @@ public class DecVariableValue extends VariableValue
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // notification from CV; check for Value being changed
         if (log.isDebugEnabled()) {
-            log.debug("Property changed: " + e.getPropertyName());
+            log.debug("Property changed: {}", e.getPropertyName());
         }
         if (e.getPropertyName().equals("Busy")) {
             if (((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {

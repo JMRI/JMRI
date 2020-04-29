@@ -11,7 +11,6 @@ import org.junit.*;
  */
 public class RaspberryPiConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

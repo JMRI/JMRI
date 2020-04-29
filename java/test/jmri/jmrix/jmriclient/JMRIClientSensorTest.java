@@ -7,9 +7,9 @@ import org.junit.Before;
 /**
  * JMRIClientSensorTest.java
  *
- * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientSensor class
+ * Test for the jmri.jmrix.jmriclient.JMRIClientSensor class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  * @author      Paul Bender Copyright (C) 2018
  */
 public class JMRIClientSensorTest extends jmri.implementation.AbstractSensorTestBase {
@@ -26,7 +26,6 @@ public class JMRIClientSensorTest extends jmri.implementation.AbstractSensorTest
     @Override
     public void checkStatusRequestMsgSent() {}
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -44,7 +43,7 @@ public class JMRIClientSensorTest extends jmri.implementation.AbstractSensorTest
     @After
     @Override
     public void tearDown() {
-	    t.dispose();
+        t.dispose();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }

@@ -53,7 +53,7 @@ public class SensorGroup {
     }
 
     void addPressed() {
-        log.debug("start with " + sensorList.size() + " lines");
+        log.debug("start with {} lines", sensorList.size());
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
         String group = name;
 

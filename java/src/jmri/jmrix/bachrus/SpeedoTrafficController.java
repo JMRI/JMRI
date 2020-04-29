@@ -78,7 +78,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
                     client.reply(r);
                 }
             } catch (Exception e) {
-                log.warn("notify: During dispatch to " + client + "\nException " + e);
+                log.warn("notify: During dispatch to {}\nException {}", client, e);
             }
         }
 

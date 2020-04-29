@@ -54,7 +54,7 @@ public class SerialDriverAdapter extends SerialPortController {
                 log.debug("Serial framing was observed as: {} {}", activeSerialPort.isReceiveFramingEnabled(),
                         activeSerialPort.getReceiveFramingByte());
             } catch (Exception ef) {
-                log.debug("failed to set serial framing: " + ef);
+                log.debug("failed to set serial framing: {}", ef);
             }
 
             // set timeout; framing should work before this anyway
