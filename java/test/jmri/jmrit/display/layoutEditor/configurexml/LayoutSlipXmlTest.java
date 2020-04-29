@@ -17,7 +17,7 @@ public class LayoutSlipXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("LayoutSlipXml constructor",new LayoutSlipXml());
+      Assert.assertNotNull("LayoutSlipXml constructor", new LayoutSlipXml());
     }
 
     @Before

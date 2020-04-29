@@ -22,7 +22,7 @@ public class TrackNodeTest {
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor le = new LayoutEditor();
-        LayoutTurnout lt = new LayoutTurnout("T", MathUtil.zeroPoint2D, le);
+        LayoutTurnout lt = new LayoutRHTurnout("T", MathUtil.zeroPoint2D, 0., 1., 1., le);
         PositionablePoint p1 = new PositionablePoint("a", PositionablePoint.PointType.ANCHOR, new Point2D.Double(0.0, 0.0), le);
         PositionablePoint p2 = new PositionablePoint("b", PositionablePoint.PointType.ANCHOR, new Point2D.Double(1.0, 1.0), le);
         TrackSegment ts = new TrackSegment("test", p1, HitPointType.POS_POINT, p2, HitPointType.POS_POINT, false, true, le);

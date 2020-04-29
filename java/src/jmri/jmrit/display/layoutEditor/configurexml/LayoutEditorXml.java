@@ -133,7 +133,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 panel.addContent(e);
             }
         } catch (Exception e) {
-            log.error("Error storing contents element: {}", e);
+            log.error("Error storing contents element: ", e);
         }
 
         // note: moving zoom attribute into per-window user preference
@@ -150,7 +150,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                         panel.addContent(e);
                     }
                 } catch (Exception e) {
-                    log.error("Error storing contents element: {}", e);
+                    log.error("Error storing contents element: ", e);
                 }
             } else {
                 log.warn("Null entry found when storing panel contents.");
@@ -211,7 +211,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                     panel.addContent(e);
                 }
             } catch (Exception e) {
-                log.error("Error storing layoutturnout element: {}", e);
+                log.error("Error storing layoutturnout element: ", e);
             }
         }
 
@@ -223,7 +223,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                     panel.addContent(e);
                 }
             } catch (Exception e) {
-                log.error("Error storing layout shape element: {}", e);
+                log.error("Error storing layout shape element: ", e);
             }
         }
 

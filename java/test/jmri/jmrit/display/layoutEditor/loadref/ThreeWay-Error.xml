@@ -262,7 +262,7 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="3:57 PM">
+    <memory value="12:53 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -692,8 +692,8 @@
       </icons>
       <iconmaps />
     </signalheadicon>
-    <layoutturnout ident="TO1" type="1" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="200.0" ycen="100.0" xa="180.0" ya="100.0" xb="220.0" yb="100.0" xc="220.0" yc="110.0" xd="180.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="WestSwitch" linkedturnoutname="EastSwitch" linktype="1" blockname="Switch-B" connectaname="T2" connectbname="T1" connectcname="T3" signala1name="Switch-Th-C" signala2name="Switch-Th-S" signala3name="Switch-Th-N" signalc1name="Switch-S" />
-    <layoutturnout ident="TO2" type="2" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="240.0" ycen="100.0" xa="220.0" ya="100.0" xb="260.0" yb="100.0" xc="260.0" yc="90.0" xd="220.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="EastSwitch" linkedturnoutname="WestSwitch" linktype="2" blockname="Switch-B" connectaname="T1" connectbname="T4" connectcname="T5" signalb1name="Switch-C" signalc1name="Switch-N" />
+    <layoutturnout ident="TO1" type="RH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="200.0" ycen="100.0" xa="180.0" ya="100.0" xb="220.0" yb="100.0" xc="220.0" yc="110.0" xd="180.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutRHTurnoutXml" turnoutname="WestSwitch" linkedturnoutname="EastSwitch" linktype="FIRST_3_WAY" blockname="Switch-B" connectaname="T2" connectbname="T1" connectcname="T3" signala1name="Switch-Th-C" signala2name="Switch-Th-S" signala3name="Switch-Th-N" signalc1name="Switch-S" />
+    <layoutturnout ident="TO2" type="LH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="240.0" ycen="100.0" xa="220.0" ya="100.0" xb="260.0" yb="100.0" xc="260.0" yc="90.0" xd="220.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutLHTurnoutXml" turnoutname="EastSwitch" linkedturnoutname="WestSwitch" linktype="SECOND_3_WAY" blockname="Switch-B" connectaname="T1" connectbname="T4" connectcname="T5" signalb1name="Switch-C" signalc1name="Switch-N" />
     <tracksegment ident="T1" blockname="Switch-B" connect1name="TO2" type1="TURNOUT_A" connect2name="TO1" type2="TURNOUT_B" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="T2" blockname="West-B" connect1name="EB1" type1="POS_POINT" connect2name="TO1" type2="TURNOUT_A" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="T3" blockname="SouthEast-B" connect1name="TO1" type1="TURNOUT_C" connect2name="EB2" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
@@ -707,7 +707,7 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Sun Apr 26 15:57:58 PDT 2020</date>
+      <date>Tue Apr 28 12:53:53 PDT 2020</date>
       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/ThreeWay-Error.xml</filename>
       <filehistory>
         <operation>
@@ -753,9 +753,9 @@
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sun Apr 26 15:57:58 PDT 2020</date>
+      <date>Tue Apr 28 12:53:53 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.6ish+jake+20200426T2255Z+R6c02d72f3a on Sun Apr 26 15:57:58 PDT 2020-->
+  <!--Written by JMRI version 4.19.6ish+jake+20200428T1945Z+R49ac2358e8 on Tue Apr 28 12:53:53 PDT 2020-->
 </layout-config>
