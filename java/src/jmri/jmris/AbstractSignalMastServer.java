@@ -25,7 +25,7 @@ abstract public class AbstractSignalMastServer {
     static private final Logger log = LoggerFactory.getLogger(AbstractSignalMastServer.class);
 
     public AbstractSignalMastServer(){
-        signalMasts = new HashMap<String, SignalMastListener>();
+        signalMasts = new HashMap<>();
     }
 
     /*

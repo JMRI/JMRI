@@ -18,7 +18,7 @@ public class JmriSRCPTimeServerTest extends jmri.jmris.AbstractTimeServerTestBas
     private StringBuilder sb = null;
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void confirmErrorStatusSent(){
@@ -26,7 +26,7 @@ public class JmriSRCPTimeServerTest extends jmri.jmris.AbstractTimeServerTestBas
     }
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void confirmStatusSent(){
@@ -53,7 +53,7 @@ public class JmriSRCPTimeServerTest extends jmri.jmris.AbstractTimeServerTestBas
         sb = new StringBuilder();
         OutputStream output = new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 };
