@@ -1985,7 +1985,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * @returns true if SHOWCON is not set
+     * @return true if SHOWCON is not set
      */
     public boolean hideConstructionLines() {
         return ((showConstructionLine & SHOWCON) != SHOWCON);
