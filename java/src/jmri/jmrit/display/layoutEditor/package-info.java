@@ -28,11 +28,12 @@
  * <p>
  * Turnouts also have a <code>type</code> variable to represent their geometry, i.e. RH, LH, Wye, etc.
  * 
- * <h3>Class Structure</h3>
+ * 
+ * <h3>Class Hierarchy</h3>
  * <ul>
  * <li>The track is represented by a hierarchy of classes that's rooted in {@link jmri.jmrit.display.layoutEditor.LayoutTrack} and completely disconnected from 
- * the PanelEditor classes. New classes are being added to represent the specific types previously implemented via type variables and conditional code.<br>
- * <a href="doc-files/NewTurnoutClassDiagram.png"><img src="doc-files/NewTurnoutClassDiagram.png" alt="UML class diagram for track objects" height="67%" width="67%"></a>
+ * the PanelEditor classes. New classes are being added to represent the specific types previously implemented via type variables and conditional code.
+ * <br><a href="doc-files/NewTurnoutClassDiagram.png"><img src="doc-files/NewTurnoutClassDiagram.png" alt="UML class diagram for track objects" height="67%" width="67%"></a><br>
  * <li>{@link jmri.jmrit.display.layoutEditor.LayoutBlock} and {@link jmri.jmrit.display.layoutEditor.LayoutBlockManager} are a {@link jmri.NamedBean NamedBean} pair. 
  * The {@link jmri.jmrit.display.layoutEditor.LayoutBlock} is a group
  * of track segments and turnouts that corresponds to a 'block'. It may contain a {@link jmri.Memory} and/or {@link jmri.Sensor}. If present, the sensor 
@@ -51,6 +52,11 @@
  *   <li>{@link jmri.jmrit.display.layoutEditor.configurexml}
  *   </ul>
  * </ul>
+ *
+ * <h3>Class Relationships</h3>
+ * The LayoutBlock class is at the heart of the navigation web for layout-representing objects.
+ * <br><a href="doc-files/LayoutBlockInterconnections.png"><img src="doc-files/LayoutBlockInterconnections.png" alt="UML class diagram for track objects" height="67%" width="67%"></a><br>
+ * 
  * 
  * <h3>GUI</h3>
  * The Layout Editor window consists of a menu bar and an upper tool-bar that are all made with 
