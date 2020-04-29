@@ -5371,15 +5371,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     protected boolean remove(@Nonnull Object s) {
         boolean found = false;
 
-        if (sensorImage.contains(s) || sensorList.contains(s)) {
-            if (removeNxSensor((SensorIcon) s)) {
-                sensorImage.remove(s);
-                sensorList.remove(s);
-                found = true;
-            } else {
-                return false;
-            }
-        }
         if (backgroundImage.contains(s)) {
             backgroundImage.remove(s);
             found = true;
@@ -5392,10 +5383,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             blockContentsLabelList.remove(s);
             found = true;
         }
-        if (signalList.contains(s)) {
-            signalList.remove(s);
-            found = true;
-        }
         if (multiSensors.contains(s)) {
             multiSensors.remove(s);
             found = true;
@@ -5404,20 +5391,43 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             clocks.remove(s);
             found = true;
         }
-        if (signalHeadImage.contains(s)) {
-            signalHeadImage.remove(s);
-            found = true;
-        }
         if (labelImage.contains(s)) {
             labelImage.remove(s);
             found = true;
         }
-        for (int i = 0; i < signalMastList.size(); i++) {
-            if (s == signalMastList.get(i)) {
-                if (removeSignalMast((SignalMastIcon) s)) {
-                    signalMastList.remove(i);
+
+        if (sensorImage.contains(s) || sensorList.contains(s)) {
+            Sensor sensor = ((SensorIcon) s).getSensor();
+            if (sensor != null) {
+                if (removeAttachedBean((sensor))) {
+                    sensorImage.remove(s);
+                    sensorList.remove(s);
                     found = true;
-                    break;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        if (signalHeadImage.contains(s) || signalList.contains(s)) {
+            SignalHead head = ((SignalHeadIcon) s).getSignalHead();
+            if (head != null) {
+                if (removeAttachedBean((head))) {
+                    signalHeadImage.remove(s);
+                    signalList.remove(s);
+                    found = true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        if (signalMastList.contains(s)) {
+            SignalMast mast = ((SignalMastIcon) s).getSignalMast();
+            if (mast != null) {
+                if (removeAttachedBean((mast))) {
+                    signalMastList.remove(s);
+                    found = true;
                 } else {
                     return false;
                 }
@@ -5438,7 +5448,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return remove(l);
     }
 
-    private String findBeanUsage(@Nonnull NamedBean sm) {
+    private String findBeanUsage(@Nonnull NamedBean bean) {
         PositionablePoint pe;
         PositionablePoint pw;
         LayoutTurnout lt;
@@ -5448,31 +5458,28 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         StringBuilder sb = new StringBuilder();
         String msgKey = "DeleteReference";  // NOI18N
         String beanKey = "None";  // NOI18N
-        String beanValue = sm.getDisplayName();
+        String beanValue = bean.getDisplayName();
 
-        if (sm instanceof SignalMast) {
+        if (bean instanceof SignalMast) {
             beanKey = "BeanNameSignalMast";  // NOI18N
 
-            if (InstanceManager.getDefault(SignalMastLogicManager.class
-            )
-                    .isSignalMastUsed((SignalMast) sm)) {
+            if (InstanceManager.getDefault(SignalMastLogicManager.class).isSignalMastUsed((SignalMast) bean)) {
                 SignalMastLogic sml = InstanceManager.getDefault(
-                        SignalMastLogicManager.class).getSignalMastLogic((SignalMast) sm);
-                if ((sml
-                        != null) && sml.useLayoutEditor(sml.getDestinationList().get(0))) {
+                        SignalMastLogicManager.class).getSignalMastLogic((SignalMast) bean);
+                if ((sml != null) && sml.useLayoutEditor(sml.getDestinationList().get(0))) {
                     msgKey = "DeleteSmlReference";  // NOI18N
                 }
             }
-        } else if (sm instanceof Sensor) {
+        } else if (bean instanceof Sensor) {
             beanKey = "BeanNameSensor";  // NOI18N
-        } else if (sm instanceof SignalHead) {
+        } else if (bean instanceof SignalHead) {
             beanKey = "BeanNameSignalHead";  // NOI18N
         }
         if (!beanKey.equals("None")) {  // NOI18N
             sb.append(Bundle.getMessage(msgKey, Bundle.getMessage(beanKey), beanValue));
         }
 
-        if ((pw = finder.findPositionablePointByWestBoundBean(sm)) != null) {
+        if ((pw = finder.findPositionablePointByWestBoundBean(bean)) != null) {
             TrackSegment t1 = pw.getConnect1();
             TrackSegment t2 = pw.getConnect2();
             if (t1 != null) {
@@ -5486,7 +5493,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             found = true;
         }
 
-        if ((pe = finder.findPositionablePointByEastBoundBean(sm)) != null) {
+        if ((pe = finder.findPositionablePointByEastBoundBean(bean)) != null) {
             TrackSegment t1 = pe.getConnect1();
             TrackSegment t2 = pe.getConnect2();
 
@@ -5501,17 +5508,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             found = true;
         }
 
-        if ((lt = finder.findLayoutTurnoutByBean(sm)) != null) {
+        if ((lt = finder.findLayoutTurnoutByBean(bean)) != null) {
             sb.append(Bundle.getMessage("DeleteAtOther", Bundle.getMessage("BeanNameTurnout"), lt.getTurnoutName()));   // NOI18N
             found = true;
         }
 
-        if ((lx = finder.findLevelXingByBean(sm)) != null) {
+        if ((lx = finder.findLevelXingByBean(bean)) != null) {
             sb.append(Bundle.getMessage("DeleteAtOther", Bundle.getMessage("LevelCrossing"), lx.getId()));   // NOI18N
             found = true;
         }
 
-        if ((ls = finder.findLayoutSlipByBean(sm)) != null) {
+        if ((ls = finder.findLayoutSlipByBean(bean)) != null) {
             sb.append(Bundle.getMessage("DeleteAtOther", Bundle.getMessage("Slip"), ls.getTurnoutName()));   // NOI18N
             found = true;
         }
@@ -5522,9 +5529,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return sb.toString();
     }
 
-    private boolean removeSignalMast(@Nonnull SignalMastIcon si) {
-        SignalMast sm = si.getSignalMast();
-        String usage = findBeanUsage(sm);
+    /**
+     * NX Sensors, Signal Heads and Signal Masts can be attached to positional points,
+     * turnouts and level crossings.  If an attachment exists, present an option to cancel
+     * the remove action, remove the attachement or retain the attachment.
+     * @param bean The named bean to be removed.
+     * @return true if OK to remove the related icon.
+     */
+    private boolean removeAttachedBean(@Nonnull NamedBean bean) {
+        String usage = findBeanUsage(bean);
 
         if (usage != null) {
             usage = String.format("<html>%s</html>", usage);
@@ -5543,62 +5556,41 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             if (selectedValue == JOptionPane.CANCEL_OPTION) {
                 return false; //do not delete the item
             }
-            removeBeanRefs(sm);
+            if (bean instanceof Sensor) {
+                // Additional actions for NX sensor pairs
+                return getLETools().removeSensorAssignment((Sensor) bean);
+            } else {
+                removeBeanRefs(bean);
+            }
         }
         return true;
     }
 
-    private boolean removeNxSensor(@Nonnull SensorIcon si) {
-        Sensor sn = si.getSensor();
-        String usage = findBeanUsage(sn);
-
-        if (usage != null) {
-            usage = String.format("<html>%s</html>", usage);
-            int selectedValue = JOptionPane.showOptionDialog(this,
-                    usage, Bundle.getMessage("WarningTitle"),
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{Bundle.getMessage("ButtonYes"),
-                        Bundle.getMessage("ButtonNo"),
-                        Bundle.getMessage("ButtonCancel")},
-                    Bundle.getMessage("ButtonYes"));
-
-            if (selectedValue == JOptionPane.NO_OPTION) {
-                return true; //return leaving the references in place but allow the icon to be deleted.
-            }
-
-            if (selectedValue == JOptionPane.CANCEL_OPTION) {
-                return false; //do not delete the item
-            }
-            return getLETools().removeSensorAssignment(sn);
-        }
-        return true;
-    }
-
-    private void removeBeanRefs(@Nonnull NamedBean sm) {
+    private void removeBeanRefs(@Nonnull NamedBean bean) {
         PositionablePoint pe;
         PositionablePoint pw;
         LayoutTurnout lt;
         LevelXing lx;
         LayoutSlip ls;
 
-        if ((pw = finder.findPositionablePointByWestBoundBean(sm)) != null) {
-            pw.removeBeanReference(sm);
+        if ((pw = finder.findPositionablePointByWestBoundBean(bean)) != null) {
+            pw.removeBeanReference(bean);
         }
 
-        if ((pe = finder.findPositionablePointByEastBoundBean(sm)) != null) {
-            pe.removeBeanReference(sm);
+        if ((pe = finder.findPositionablePointByEastBoundBean(bean)) != null) {
+            pe.removeBeanReference(bean);
         }
 
-        if ((lt = finder.findLayoutTurnoutByBean(sm)) != null) {
-            lt.removeBeanReference(sm);
+        if ((lt = finder.findLayoutTurnoutByBean(bean)) != null) {
+            lt.removeBeanReference(bean);
         }
 
-        if ((lx = finder.findLevelXingByBean(sm)) != null) {
-            lx.removeBeanReference(sm);
+        if ((lx = finder.findLevelXingByBean(bean)) != null) {
+            lx.removeBeanReference(bean);
         }
 
-        if ((ls = finder.findLayoutSlipByBean(sm)) != null) {
-            ls.removeBeanReference(sm);
+        if ((ls = finder.findLayoutSlipByBean(bean)) != null) {
+            ls.removeBeanReference(bean);
         }
     }
 
@@ -7014,6 +7006,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     public void setLayoutDimensions(int windowWidth, int windowHeight, int windowX, int windowY, int panelWidth, int panelHeight, boolean merge) {
+
         upperLeftX = windowX;
         upperLeftY = windowY;
         setLocation(upperLeftX, upperLeftY);
