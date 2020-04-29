@@ -211,7 +211,7 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

@@ -122,7 +122,7 @@ public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase
         _base = actionDigitalActionPluginSocket;
         _baseMaleSocket = maleSocket;
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

@@ -160,7 +160,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         _base = actionTimer;
         _baseMaleSocket = maleSocket;
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

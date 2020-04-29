@@ -485,7 +485,7 @@ public class FormulaTest extends AbstractAnalogExpressionTestBase {
         MaleSocket socketAnalogActionMemory = InstanceManager.getDefault(AnalogActionManager.class).registerAction(analogActionMemory);
         doAnalogAction.getChild(1).connect(socketAnalogActionMemory);
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

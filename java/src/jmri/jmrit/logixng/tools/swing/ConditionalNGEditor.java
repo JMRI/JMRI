@@ -892,7 +892,7 @@ public final class ConditionalNGEditor extends JmriJFrame {
         private final Comparator<E> comparator;
 
         /*
-	 *  Create an empty model that will use the specified Comparator
+         *  Create an empty model that will use the specified Comparator
          */
         public SortedComboBoxModel(@Nonnull Comparator<E> comparator) {
             super();

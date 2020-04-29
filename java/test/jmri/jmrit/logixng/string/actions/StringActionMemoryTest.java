@@ -270,7 +270,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         _base = stringActionMemory;
         _baseMaleSocket = maleSocketStringActionMemory;
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

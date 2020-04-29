@@ -330,7 +330,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         _base = actionLight;
         _baseMaleSocket = socket;
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

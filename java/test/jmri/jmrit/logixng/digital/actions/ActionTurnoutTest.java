@@ -329,7 +329,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         _base = actionTurnout;
         _baseMaleSocket = socket;
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

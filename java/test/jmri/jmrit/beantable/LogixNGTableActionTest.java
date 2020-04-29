@@ -89,7 +89,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         Assert.assertNull("LogixNG does not exist", logixNG);
         
         // find the "Add... " button and press it.
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
         new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
@@ -149,7 +149,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         new JMenuBarOperator(editConditionalNGFrameOperator).pushMenu("File|Close Window", "|");
         
         Assert.assertNotNull(frame);
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(frame),Bundle.getMessage("ButtonDone"));
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(frame),Bundle.getMessage("ButtonDone"));
         JUnitUtil.dispose(frame);
     }
 

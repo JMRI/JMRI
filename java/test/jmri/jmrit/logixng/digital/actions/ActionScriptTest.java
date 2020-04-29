@@ -517,7 +517,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         _base = actionScript;
         _baseMaleSocket = socketActionScript;
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

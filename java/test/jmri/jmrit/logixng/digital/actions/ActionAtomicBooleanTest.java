@@ -215,7 +215,7 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
         _base = actionAtomicBoolean;
         _baseMaleSocket = socket;
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

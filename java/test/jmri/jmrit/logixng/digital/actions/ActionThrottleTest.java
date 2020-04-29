@@ -413,7 +413,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         _base = actionThrottle;
         _baseMaleSocket = maleSocket;
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

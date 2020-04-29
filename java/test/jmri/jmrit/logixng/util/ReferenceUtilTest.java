@@ -276,28 +276,28 @@ public class ReferenceUtilTest {
         // tab character.
         
         String yardTableData =
-                "	Yard table\n" +
-                "	North yard	East yard	South yard	West yard" + _nl +
-                "Leftmost turnout	IT101	IT201	IT301	IT401" + _nl +
-                "Left turnout	Turnout 111	IT203	IT303	IT403" + _nl +
-                "Right turnout	IT104	Memory 333	IT304	IT404" + _nl +
-                "Rightmost turnout	Turnout 222	IM15	IT302	IT402" + _nl +
-                "Other turnout	IT1	IT2	IT3	IT4" + _nl;
+                "\tYard table\n" +
+                "\tNorth yard\tEast yard\tSouth yard\tWest yard" + _nl +
+                "Leftmost turnout\tIT101\tIT201\tIT301\tIT401" + _nl +
+                "Left turnout\tTurnout 111\tIT203\tIT303\tIT403" + _nl +
+                "Right turnout\tIT104\tMemory 333\tIT304\tIT404" + _nl +
+                "Rightmost turnout\tTurnout 222\tIM15\tIT302\tIT402" + _nl +
+                "Other turnout\tIT1\tIT2\tIT3\tIT4" + _nl;
         
         String turnoutTableData =
-                "	Turnout table\n" +
-                "	Column" + _nl +
-                "Green turnout	IT101" + _nl +
-                "Red turnout	Turnout" + _nl +
-                "Yellow turnout	Right turnout" + _nl +
-                "Blue turnout	Turnout 222" + _nl;
+                "\tTurnout table\n" +
+                "\tColumn" + _nl +
+                "Green turnout\tIT101" + _nl +
+                "Red turnout\tTurnout" + _nl +
+                "Yellow turnout\tRight turnout" + _nl +
+                "Blue turnout\tTurnout 222" + _nl;
         
         String otherYardTableData =
-                "	Other yard table\n" +
-                "	Yellow yard	Green yard	Blue yard	Red yard" + _nl +
-                "Turnouts	West yard	East yard	IT301	IT401" + _nl +
-                "Sensors	Turnout 111	IT203	IT303	IT403" + _nl +
-                "Lights	IT104	IT204	IT304	IT404" + _nl;
+                "\tOther yard table\n" +
+                "\tYellow yard\tGreen yard\tBlue yard\tRed yard" + _nl +
+                "Turnouts\tWest yard\tEast yard\tIT301\tIT401" + _nl +
+                "Sensors\tTurnout 111\tIT203\tIT303\tIT403" + _nl +
+                "Lights\tIT104\tIT204\tIT304\tIT404" + _nl;
         
         yardTable = _tableManager.loadTableFromCSV(yardTableData);
         _tableManager.loadTableFromCSV(turnoutTableData);

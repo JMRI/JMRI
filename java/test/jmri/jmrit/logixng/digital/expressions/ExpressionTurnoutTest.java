@@ -429,7 +429,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         expressionTurnout.setTurnout(turnout);
         turnout.setCommandedState(Turnout.THROWN);
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

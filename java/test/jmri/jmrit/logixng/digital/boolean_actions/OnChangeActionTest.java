@@ -142,7 +142,7 @@ public class OnChangeActionTest extends AbstractBaseTestBase {
         _base = actionOnChange;
         _baseMaleSocket = maleSocketActionOnChange;
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

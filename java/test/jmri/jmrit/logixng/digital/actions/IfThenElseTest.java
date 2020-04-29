@@ -176,7 +176,7 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         _base = actionIfThenElse;
         _baseMaleSocket = maleSocket;
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

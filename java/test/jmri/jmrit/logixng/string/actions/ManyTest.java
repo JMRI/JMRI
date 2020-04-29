@@ -154,7 +154,7 @@ public class ManyTest extends AbstractStringActionTestBase {
         _base = action;
         _baseMaleSocket = maleSocket;
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

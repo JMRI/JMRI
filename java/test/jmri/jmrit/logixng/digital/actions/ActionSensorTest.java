@@ -329,7 +329,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         _base = actionSensor;
         _baseMaleSocket = socket;
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

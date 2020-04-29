@@ -323,7 +323,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         _base = actionMemory;
         _baseMaleSocket = socket;
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

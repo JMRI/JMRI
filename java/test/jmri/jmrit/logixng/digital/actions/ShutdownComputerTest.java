@@ -141,7 +141,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         _base = actionShutdownComputer;
         _baseMaleSocket = maleSocket;
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
         JUnitAppender.assertErrorMessageStartsWith("Shutdown failed");

@@ -471,7 +471,7 @@ public class ExpressionTimerTest extends AbstractDigitalExpressionTestBase {
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(_actionAtomicBoolean);
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
         
-	_logixNG.setParentForAllChildren();
+        _logixNG.setParentForAllChildren();
         _logixNG.setEnabled(true);
         _logixNG.activateLogixNG();
     }

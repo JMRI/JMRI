@@ -137,7 +137,7 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
         _base = actionDoAnalogAction;
         _baseMaleSocket = maleSocket;
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

@@ -437,7 +437,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         expressionSensor.setSensor(sensor);
         sensor.setCommandedState(Sensor.ACTIVE);
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

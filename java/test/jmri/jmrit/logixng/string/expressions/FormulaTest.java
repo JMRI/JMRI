@@ -484,7 +484,7 @@ public class FormulaTest extends AbstractStringExpressionTestBase {
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(StringActionManager.class).registerAction(stringActionMemory);
         doStringAction.getChild(1).connect(socketAtomicBoolean);
         
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

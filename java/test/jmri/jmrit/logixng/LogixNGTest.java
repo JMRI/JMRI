@@ -317,7 +317,7 @@ public class LogixNGTest {
         MyConditionalNG conditionalNG_3 = new MyConditionalNG("IQC3", null);
         logixNG.addConditionalNG(conditionalNG_3);
         conditionalNG_3.setEnabled(false);
-	logixNG.setParentForAllChildren();
+        logixNG.setParentForAllChildren();
         
         Assert.assertFalse("listeners for conditionalNG_1 are not registered", conditionalNG_1.listenersAreRegistered);
         Assert.assertFalse("listeners for conditionalNG_2 are not registered", conditionalNG_2.listenersAreRegistered);
