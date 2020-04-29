@@ -1488,6 +1488,13 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
+     * Draw track decorations.
+     * 
+     * This type of track has none, so this method is empty.
+     */
+    protected void drawDecorations(Graphics2D g2) {}
+
+    /**
      * Draw this level crossing.
      *
      * @param g2 the graphics port to draw to

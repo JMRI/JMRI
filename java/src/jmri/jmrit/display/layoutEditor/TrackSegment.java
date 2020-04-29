@@ -3022,6 +3022,13 @@ public class TrackSegment extends LayoutTrack {
     /*======================*\
     |* decoration accessors *|
     \*======================*/
+    
+    // Although the superclass LayoutTrack stores decorators in a Map,
+    // here we store them in specific variables like arrowStyle, bridgeSideRight, etc.
+    // We convert to and from the map during the getDecorations, setDecorations 
+    // and hasDecorations calls.
+    
+    /** @inheritDoc */
     @Override
     public boolean hasDecorations() {
         return ((arrowStyle > 0)
@@ -3030,11 +3037,7 @@ public class TrackSegment extends LayoutTrack {
                 || (tunnelSideLeft || tunnelSideRight));
     }
 
-    /**
-     * Get decorations.
-     *
-     * @return decorations to set
-     */
+    /** @inheritDoc */
     @Override
     public Map<String, String> getDecorations() {
         if (decorations == null) {
@@ -3152,13 +3155,9 @@ public class TrackSegment extends LayoutTrack {
             decorations.put("tunnel", String.join(";", tunnelValues));
         }   //if (tunnelSideLeft || tunnelSideRight)
         return decorations;
-    } //getDecorations
+    } 
 
-    /**
-     * Set decorations.
-     *
-     * @param decorations to set
-     */
+    /** @inheritDoc */
     @Override
     public void setDecorations(Map<String, String> decorations) {
         Color defaultTrackColor = layoutEditor.getDefaultTrackColorColor();
