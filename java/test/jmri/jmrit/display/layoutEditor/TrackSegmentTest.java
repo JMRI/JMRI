@@ -35,6 +35,143 @@ public class TrackSegmentTest {
     }
 
     @Test
+    public void testConstructionLinesRead () {
+        trackSegment.showConstructionLine = 0;
+        Assert.assertTrue("From 0", trackSegment.isShowConstructionLines());
+        Assert.assertTrue("From 0", trackSegment.hideConstructionLines());
+
+        trackSegment.showConstructionLine = trackSegment.HIDECONALL;
+        Assert.assertFalse("HIDECONALL", trackSegment.isShowConstructionLines());
+        Assert.assertTrue("HIDECONALL", trackSegment.hideConstructionLines());
+        
+        trackSegment.showConstructionLine = trackSegment.HIDECON;
+        Assert.assertFalse("HIDECON", trackSegment.isShowConstructionLines());
+        Assert.assertTrue("HIDECON", trackSegment.hideConstructionLines());
+        
+        trackSegment.showConstructionLine = trackSegment.SHOWCON;
+        Assert.assertTrue("SHOWCON", trackSegment.isShowConstructionLines());
+        Assert.assertFalse("SHOWCON", trackSegment.hideConstructionLines());
+        
+        trackSegment.showConstructionLine = trackSegment.SHOWCON | trackSegment.HIDECON | trackSegment.HIDECONALL;
+        Assert.assertFalse("all", trackSegment.isShowConstructionLines());
+        Assert.assertFalse("all", trackSegment.hideConstructionLines());
+        
+    }
+    
+    @Test
+    public void hideConstructionLinesOfInt() {
+        trackSegment.showConstructionLine = 0;
+        trackSegment.hideConstructionLines(trackSegment.SHOWCON);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.SHOWCON);
+        
+        trackSegment.showConstructionLine = 0;
+        trackSegment.hideConstructionLines(trackSegment.HIDECON);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.HIDECON );
+        
+        trackSegment.showConstructionLine = 0;
+        trackSegment.hideConstructionLines(trackSegment.HIDECONALL);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.HIDECONALL);
+        
+        // ----
+        
+        trackSegment.showConstructionLine = trackSegment.SHOWCON;
+        trackSegment.hideConstructionLines(trackSegment.SHOWCON);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.SHOWCON);
+        
+        trackSegment.showConstructionLine = trackSegment.SHOWCON;
+        trackSegment.hideConstructionLines(trackSegment.HIDECON);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.HIDECON);
+        
+        trackSegment.showConstructionLine = trackSegment.SHOWCON;
+        trackSegment.hideConstructionLines(trackSegment.HIDECONALL);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.SHOWCON | trackSegment.HIDECONALL);
+        
+        // ----
+                
+        trackSegment.showConstructionLine = trackSegment.HIDECON;
+        trackSegment.hideConstructionLines(trackSegment.SHOWCON);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.SHOWCON);
+        
+        trackSegment.showConstructionLine = trackSegment.HIDECON;
+        trackSegment.hideConstructionLines(trackSegment.HIDECON);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.HIDECON);
+        
+        trackSegment.showConstructionLine = trackSegment.HIDECON;
+        trackSegment.hideConstructionLines(trackSegment.HIDECONALL);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.HIDECON |trackSegment.HIDECONALL);
+        
+        // ----
+                
+        trackSegment.showConstructionLine = trackSegment.HIDECONALL;
+        trackSegment.hideConstructionLines(trackSegment.SHOWCON);
+        Assert.assertEquals(trackSegment.showConstructionLine, 0);
+        
+        trackSegment.showConstructionLine = trackSegment.HIDECONALL;
+        trackSegment.hideConstructionLines(trackSegment.HIDECON);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.HIDECON );
+        
+        trackSegment.showConstructionLine = trackSegment.HIDECONALL;
+        trackSegment.hideConstructionLines(trackSegment.HIDECONALL);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.HIDECONALL);
+        
+        // ----
+                
+        trackSegment.showConstructionLine = trackSegment.HIDECON |trackSegment.HIDECONALL;
+        trackSegment.hideConstructionLines(trackSegment.SHOWCON);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.HIDECON);
+        
+        trackSegment.showConstructionLine = trackSegment.HIDECON |trackSegment.HIDECONALL;
+        trackSegment.hideConstructionLines(trackSegment.HIDECON);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.HIDECON );
+        
+        trackSegment.showConstructionLine = trackSegment.HIDECON |trackSegment.HIDECONALL;
+        trackSegment.hideConstructionLines(trackSegment.HIDECONALL);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.HIDECON | trackSegment.HIDECONALL);
+        
+        // ----
+                
+        trackSegment.showConstructionLine = trackSegment.SHOWCON | trackSegment.HIDECONALL;
+        trackSegment.hideConstructionLines(trackSegment.SHOWCON);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.SHOWCON );
+        
+        trackSegment.showConstructionLine = trackSegment.SHOWCON | trackSegment.HIDECONALL;
+        trackSegment.hideConstructionLines(trackSegment.HIDECON);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.HIDECON);
+        
+        trackSegment.showConstructionLine = trackSegment.SHOWCON | trackSegment.HIDECONALL;
+        trackSegment.hideConstructionLines(trackSegment.HIDECONALL);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.SHOWCON |trackSegment.HIDECONALL);
+
+        // ----
+                
+        trackSegment.showConstructionLine = trackSegment.SHOWCON | trackSegment.HIDECON;
+        trackSegment.hideConstructionLines(trackSegment.SHOWCON);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.SHOWCON);
+        
+        trackSegment.showConstructionLine = trackSegment.SHOWCON | trackSegment.HIDECON;
+        trackSegment.hideConstructionLines(trackSegment.HIDECON);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.HIDECON);
+        
+        trackSegment.showConstructionLine = trackSegment.SHOWCON | trackSegment.HIDECON;
+        trackSegment.hideConstructionLines(trackSegment.HIDECONALL);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.SHOWCON | trackSegment.HIDECON |trackSegment.HIDECONALL);
+      
+        // ----
+                
+        trackSegment.showConstructionLine = trackSegment.SHOWCON | trackSegment.HIDECON |trackSegment.HIDECONALL;
+        trackSegment.hideConstructionLines(trackSegment.SHOWCON);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.SHOWCON | trackSegment.HIDECON );
+        
+        trackSegment.showConstructionLine = trackSegment.SHOWCON | trackSegment.HIDECON |trackSegment.HIDECONALL;
+        trackSegment.hideConstructionLines(trackSegment.HIDECON);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.HIDECON);
+        
+        trackSegment.showConstructionLine = trackSegment.SHOWCON | trackSegment.HIDECON |trackSegment.HIDECONALL;
+        trackSegment.hideConstructionLines(trackSegment.HIDECONALL);
+        Assert.assertEquals(trackSegment.showConstructionLine, trackSegment.SHOWCON | trackSegment.HIDECON |trackSegment.HIDECONALL);      
+    }
+
+    @Test
     public void testReplaceTrackConnection() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
