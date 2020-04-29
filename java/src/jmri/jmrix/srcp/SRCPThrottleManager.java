@@ -30,7 +30,7 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
 
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
-        log.debug("new SRCPThrottle for " + address);
+        log.debug("new SRCPThrottle for {}", address);
         // Notify ready to go (without waiting for OK?)
         if(address instanceof DccLocoAddress) {
            notifyThrottleKnown(new SRCPThrottle((SRCPBusConnectionMemo) adapterMemo, (DccLocoAddress) address), address);

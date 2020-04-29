@@ -2,10 +2,8 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.*;
-import jmri.BlockManager;
-import jmri.InstanceManager;
+
 import jmri.JmriException;
-import jmri.ShutDownManager;
 import jmri.util.*;
 import jmri.util.junit.annotations.*;
 import org.junit.*;
@@ -65,42 +63,6 @@ public class LayoutSlipTest {
 
         Assert.assertTrue("lts.getSlipType() is SINGLE_SLIP", lts.getSlipType() == LayoutTurnout.TurnoutType.SINGLE_SLIP);
         Assert.assertTrue("ltd.getSlipType() is DOUBLE_SLIP", ltd.getSlipType() == LayoutTurnout.TurnoutType.DOUBLE_SLIP);
-    }
-
-    @Test
-    public void testSetSlipType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
-        Assert.assertNotNull("LayoutSlip single not null", lts);
-        Assert.assertNotNull("LayoutSlip double not null", ltd);
-
-        lts.setSlipType(LayoutTurnout.TurnoutType.NONE); // invalid type
-        JUnitAppender.assertErrorMessage("single.setSlipType(NONE); invalid slip type");
-        ltd.setSlipType(LayoutTurnout.TurnoutType.NONE); // invalid type
-        JUnitAppender.assertErrorMessage("double.setSlipType(NONE); invalid slip type");
-
-        lts.setSlipType(LayoutTurnout.TurnoutType.DOUBLE_SLIP);
-        Assert.assertTrue("lts.getSlipType() is DOUBLE_SLIP", lts.getSlipType() == LayoutTurnout.TurnoutType.DOUBLE_SLIP);
-        ltd.setSlipType(LayoutTurnout.TurnoutType.SINGLE_SLIP);
-        Assert.assertTrue("ltd.getSlipType() is SINGLE_SLIP", ltd.getSlipType() == LayoutTurnout.TurnoutType.SINGLE_SLIP);
-    }
-
-    @Test
-    public void testSetTurnoutType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
-        Assert.assertNotNull("LayoutSlip single not null", lts);
-        Assert.assertNotNull("LayoutSlip double not null", ltd);
-
-        lts.setTurnoutType(LayoutTurnout.TurnoutType.NONE); // invalid type
-        JUnitAppender.assertErrorMessage("single.setSlipType(NONE); invalid slip type");
-        ltd.setTurnoutType(LayoutTurnout.TurnoutType.NONE); // invalid type
-        JUnitAppender.assertErrorMessage("double.setSlipType(NONE); invalid slip type");
-
-        lts.setTurnoutType(LayoutTurnout.TurnoutType.DOUBLE_SLIP);
-        Assert.assertTrue("lts.getSlipType() is DOUBLE_SLIP", lts.getSlipType() == LayoutTurnout.TurnoutType.DOUBLE_SLIP);
-        ltd.setTurnoutType(LayoutTurnout.TurnoutType.SINGLE_SLIP);
-        Assert.assertTrue("ltd.getSlipType() is SINGLE_SLIP", ltd.getSlipType() == LayoutTurnout.TurnoutType.SINGLE_SLIP);
     }
 
     @Test

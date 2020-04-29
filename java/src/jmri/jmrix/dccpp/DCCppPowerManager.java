@@ -119,7 +119,7 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
     @Override
     public void message(DCCppReply m) {
         if (log.isDebugEnabled()) {
-            log.debug("Message received: " + m.toString());
+            log.debug("Message received: {}", m.toString());
         }
         if (m.isPowerReply()) {
             if (m.getPowerBool()) {
@@ -142,7 +142,7 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
     @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 

@@ -301,7 +301,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         }
         catch (UnsatisfiedLinkError e1) {
             log.error("UnsatisfiedLinkError - the serial library has not been installed properly");
-            log.error("java.library.path=" + System.getProperty("java.library.path", "<unknown>"));
+            log.error("java.library.path={}", System.getProperty("java.library.path", "<unknown>"));
             JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorComLibLoad"));
             return;
         }

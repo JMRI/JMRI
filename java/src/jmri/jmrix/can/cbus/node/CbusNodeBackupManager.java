@@ -277,11 +277,11 @@ public class CbusNodeBackupManager {
 
 
             } catch (JDOMException ex) {
-                log.error("File invalid: " + ex);  // NOI18N
+                log.error("File invalid: {}", ex, ex);  // NOI18N
                 return;
             } catch (IOException ex) {
                 // file might not yet exist as 1st time Node on Network
-                log.debug("Possible Error reading file: {}", ex);  // NOI18N
+                log.debug("Possible Error reading file: ", ex);  // NOI18N
                 return;
             }
             // make sure ArrayList is most recent at start array index 0, oldest at end
@@ -390,10 +390,10 @@ public class CbusNodeBackupManager {
         try {
             x.writeXML(file, doc);
         } catch (FileNotFoundException ex) {
-            log.error("File not found when writing: " + ex);  // NOI18N
+            log.error("File not found when writing: ", ex);  // NOI18N
             return false;
         } catch (IOException ex) {
-            log.error("IO Exception when writing: " + ex);  // NOI18N
+            log.error("IO Exception when writing: ", ex);  // NOI18N
             return false;
         }
 

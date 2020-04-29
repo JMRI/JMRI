@@ -164,8 +164,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
                     return;
                 }
             } else {
-                log.warn("TransferHandler.importData: supported DataFlavors not avaialable at table from "
-                        + tr.getClass().getName());
+                log.warn("TransferHandler.importData: supported DataFlavors not avaialable at table from {}", tr.getClass().getName());
             }
         } catch (IOException ioe) {
             log.warn("caught IOException", ioe);
@@ -392,7 +391,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
                     }
                 }
             } catch (UnsupportedFlavorException | IOException ex) {
-                log.warn("DnDHandler.importData: at table e= " + ex);
+                log.warn("DnDHandler.importData: at table e= {}", ex);
             }
             return false;
         }

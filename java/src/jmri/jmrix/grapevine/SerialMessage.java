@@ -99,7 +99,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     public void setBank(int b) {
         if ((b > 7) || (b < 0)) {
-            log.error("Setting back to bad value: " + b);
+            log.error("Setting back to bad value: {}", b);
         }
         int old = getElement(3) & 0xF;
         setElement(3, old | ((b & 0x7) << 4));

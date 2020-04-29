@@ -79,7 +79,7 @@ public class TrackPowerController extends AbstractController implements Property
             } else if (pwrMgr.getPower() == PowerManager.UNKNOWN) {
                 message = "PPA2";
             } else {
-                log.error("Unexpected state value: +" + pwrMgr.getPower());
+                log.error("Unexpected state value: +{}", pwrMgr.getPower());
             }
         } catch (JmriException e) {
             log.error("Power Manager exception");

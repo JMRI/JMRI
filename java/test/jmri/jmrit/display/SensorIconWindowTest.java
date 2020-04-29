@@ -1,10 +1,8 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
-import jmri.InstanceManager;
+
 import jmri.Sensor;
-import jmri.ShutDownManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitUtil;
 import org.junit.After;

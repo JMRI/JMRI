@@ -7,10 +7,9 @@ import java.awt.GraphicsEnvironment;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
-import jmri.BlockManager;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.ShutDownManager;
 import jmri.server.json.JsonServerPreferences;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;

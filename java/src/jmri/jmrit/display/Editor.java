@@ -656,8 +656,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                super.paint(g);
                paintTargetPanel(g);
             } catch (Exception e) {
-                log.error("paint failed in thread "+
-                    Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": ", e);
+                log.error("paint failed in thread {} {}: ", Thread.currentThread().getName(), Thread.currentThread().getId(), e);
             }
 
             Stroke stroke = new BasicStroke();

@@ -156,7 +156,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
             return; // only watch clock slot
         }
         if (log.isDebugEnabled()) {
-            log.debug("slot update " + s); // NOI18N
+            log.debug("slot update {}", s); // NOI18N
         }
 
         // update GUI from the new slot contents

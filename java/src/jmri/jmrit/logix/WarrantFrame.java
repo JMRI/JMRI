@@ -1598,7 +1598,7 @@ public class WarrantFrame extends WarrantRoute {
                                     float speed = Float.parseFloat(ts.getValue());                                
                                     return formatter.format(speed);                               
                                 } catch (NumberFormatException npe) {
-                                    log.error("Null value in ThrottleSetting: "+ ts.toString());
+                                    log.error("Null value in ThrottleSetting: {}", ts.toString());
                                 }
                             }
                         }

@@ -5,7 +5,6 @@ import javax.annotation.CheckForNull;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
-import jmri.Throttle;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
@@ -721,7 +720,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 LocoNetMessage msg = new LocoNetMessage(4);
                 msg.setOpCode(LnConstants.OPC_LOCO_SPD);
                 msg.setElement(1, slot.getSlot());
-                log.debug("setSpeedSetting: float speed: " + speed + " LocoNet speed: " + new_spd);
+                log.debug(""setSpeedSetting: float speed: {} LocoNet speed: {}", speed, new_spd);
                 msg.setElement(2, new_spd);
                 network.sendLocoNetMessage(msg);
             } else {

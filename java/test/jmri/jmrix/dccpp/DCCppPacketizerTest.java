@@ -115,8 +115,7 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
             jmri.util.JUnitUtil.releaseThread(this);
         }
         if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i
-                    + " reply=" + l.rcvdRply);
+            log.debug("past loop, i={} reply={}", i, l.rcvdRply);
         }
         if (i == 0) {
             log.warn("waitForReply saw an immediate return; is threading right?");

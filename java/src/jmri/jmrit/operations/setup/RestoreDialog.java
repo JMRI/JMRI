@@ -237,7 +237,7 @@ public class RestoreDialog extends JDialog {
             new ExceptionDisplayFrame(context, this).setVisible(true);
 
         } catch (Exception ex) {
-            log.error("Doing restore from " + setName, ex);
+            log.error("Doing restore from {}", setName, ex);
 
             UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
                     Bundle.getMessage("RestoreDialog.restoring") + " " + setName);

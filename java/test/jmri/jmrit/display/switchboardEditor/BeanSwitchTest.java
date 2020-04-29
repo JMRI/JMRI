@@ -2,9 +2,7 @@ package jmri.jmrit.display.switchboardEditor;
 
 import org.junit.*;
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.util.JUnitUtil;
 
 /**

@@ -99,7 +99,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             log.debug("Could not find Warrant preferences file.  Normal if preferences have not been saved before.");
             root = null;
         } catch (IOException | JDOMException eb) {
-            log.error("Exception while loading warrant preferences: " + eb);
+            log.error("Exception while loading warrant preferences: {}", eb);
             root = null;
         }
         if (root != null) {

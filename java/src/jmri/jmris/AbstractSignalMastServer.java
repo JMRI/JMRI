@@ -123,7 +123,7 @@ abstract public class AbstractSignalMastServer {
                 } catch (IOException ie) {
                     // if we get an error, de-register
                     if (log.isDebugEnabled()) {
-                        log.debug("Unable to send status, removing listener from signalMast " + name);
+                        log.debug("Unable to send status, removing listener from signalMast {}", name);
                     }
                     signalMast.removePropertyChangeListener(this);
                     removeSignalMastFromList(name);

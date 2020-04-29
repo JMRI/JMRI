@@ -71,7 +71,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     @Override
     public boolean getCanRead(String addr) {
         if (log.isDebugEnabled()) {
-            log.debug("check mode " + getMode() + " CV " + addr);
+            log.debug("check mode {} CV {}", getMode(), addr);
         }
         if (!getCanRead()) {
             return false; // check basic implementation first
@@ -93,9 +93,9 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     @Override
     public boolean getCanWrite(String addr) {
         if (log.isDebugEnabled()) {
-            log.debug("check CV " + addr);
+            log.debug("check CV {}", addr);
         }
-        log.debug("cs Type: " + controller().getCommandStation().getBaseStationType() + " CS Version: " + controller().getCommandStation().getCodeBuildDate());
+        log.debug("cs Type: {} CS Version: {}", controller().getCommandStation().getBaseStationType(), controller().getCommandStation().getCodeBuildDate());
         if (!getCanWrite()) {
             return false; // check basic implementation first
         }
@@ -131,7 +131,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     synchronized public void writeCV(String CVname, int val, ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("writeCV " + CV + " listens " + p);
+            log.debug("writeCV {} listens {}", CV, p);
         }
         useProgrammer(p);
         _progRead = false;
@@ -176,7 +176,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     synchronized public void readCV(String CVname, ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("readCV " + CV + " listens " + p);
+            log.debug("readCV {} listens {}", CV, p);
         }
         // If can't read (e.g. multiMaus CS), this shouldnt be invoked, but
         // still we need to do something rational by returning a NotImplemented error
@@ -218,7 +218,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
+                log.info("programmer already in use by {}", _usingProgrammer);
             }
             throw new jmri.ProgrammerException("programmer in use");
         } else {
@@ -265,7 +265,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 
@@ -300,7 +300,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     // internal method to notify of the final result
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) {
-            log.debug("notifyProgListenerEnd value " + value + " status " + status);
+            log.debug("notifyProgListenerEnd value {} status {}", value, status);
         }
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_

@@ -41,7 +41,7 @@ import javax.swing.table.TableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import com.alexandriasoftware.swing.Validation;
 import jmri.InstanceManager;
 import jmri.Light;

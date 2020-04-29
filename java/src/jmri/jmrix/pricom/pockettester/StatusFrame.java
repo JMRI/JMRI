@@ -101,7 +101,7 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
             String id = m.substring(1, 3);
             String value = m.substring(4 + addOne, 14 + addOne);
             if (log.isDebugEnabled()) {
-                log.debug("set var " + id + ":" + value);
+                log.debug("set var {}:{}", id, value);
             }
             JLabel label = displayHash.get(id);
             String format = formatHash.get(id);

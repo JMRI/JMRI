@@ -67,9 +67,8 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         // set closed
         try {
             t.setCommandedState(Turnout.CLOSED);
-        }
-        catch (Exception e) {
-            log.error("TO exception: " + e);
+        } catch (Exception e) {
+            log.error("TO exception: {}", e);
         }
 
         Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
@@ -131,9 +130,8 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         // set thrown
         try {
             t.setCommandedState(Turnout.THROWN);
-        }
-        catch (Exception e) {
-            log.error("TO exception: " + e);
+        } catch (Exception e) {
+            log.error("TO exception: {}", e);
         }
         Assert.assertTrue(t.getCommandedState() == Turnout.THROWN);
 
@@ -142,15 +140,13 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         try {
             s.setState(jmri.Sensor.INACTIVE);
             t.provideFirstFeedbackSensor("IS1");
-        }
-        catch (Exception x1) {
-            log.error("TO exception: " + x1);
+        } catch (Exception x1) {
+            log.error("TO exception: {}", x1);
         }
         try {
             s.setState(jmri.Sensor.ACTIVE);
-        }
-        catch (Exception x) {
-            log.error("TO exception: " + x);
+        } catch (Exception x) {
+            log.error("TO exception: {}", x);
         }
         // check to see if the turnout state changes.
         jmri.util.JUnitUtil.waitFor(() -> {

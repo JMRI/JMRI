@@ -5,7 +5,6 @@ import java.util.List;
 import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.ReporterManager;
-import jmri.ShutDownManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;

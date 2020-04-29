@@ -16,7 +16,6 @@ import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.ProvidingManager;
-import jmri.Reportable;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
 import jmri.server.json.JsonRequest;

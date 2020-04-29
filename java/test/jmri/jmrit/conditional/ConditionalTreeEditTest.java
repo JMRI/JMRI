@@ -2,11 +2,9 @@ package jmri.jmrit.conditional;
 
 import java.awt.GraphicsEnvironment;
 
-import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

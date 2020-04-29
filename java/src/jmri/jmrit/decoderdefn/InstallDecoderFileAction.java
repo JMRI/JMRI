@@ -47,12 +47,12 @@ public class InstallDecoderFileAction extends InstallDecoderURLAction {
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fci.getSelectedFile();
             if (log.isDebugEnabled()) {
-                log.debug("located file " + file + " for XML processing");
+                log.debug("located file {} for XML processing", file);
             }
             try {
                 return new URL("file:" + file.getCanonicalPath());
             } catch (Exception e) {
-                log.error("Unexpected exception in new URL: " + e);
+                log.error("Unexpected exception in new URL: {}", e);
                 return null;
             }
         } else {

@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.netbeans.jemmy.operators.JDialogOperator;
-import org.junit.Rule;
 import org.junit.rules.Timeout;
 
 /**

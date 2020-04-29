@@ -238,8 +238,7 @@ public class SpjFile {
                     if (headers[i].getHandle() == headers[j].getHandle()
                             && headers[i].getType() == 1
                             && headers[j].getType() == 1) {
-                        log.error("Duplicate handle number in records " + i + "(" + headers[i].getHandle() + ") and "
-                                + j + "(" + headers[j].getHandle() + ")");
+                        log.error("Duplicate handle number in records {}({}) and {}({})", i, headers[i].getHandle(), j, headers[j].getHandle());
                     }
                 }
                 if (headers[i].getType() > 6) {

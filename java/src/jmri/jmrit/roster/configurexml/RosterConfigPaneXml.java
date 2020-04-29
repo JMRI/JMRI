@@ -59,7 +59,7 @@ public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         if (shared.getAttribute("directory") != null) {
             InstanceManager.getDefault(RosterConfigManager.class).setDirectory(project, shared.getAttribute("directory").getValue());
             if (log.isDebugEnabled()) {
-                log.debug("set roster location (1): " + shared.getAttribute("directory").getValue());
+                log.debug("set roster location (1): {}", shared.getAttribute("directory").getValue());
             }
         }
         if (shared.getAttribute("ownerDefault") != null) {
@@ -81,7 +81,7 @@ public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
     @Override
     public void load(Element element, Object o) {
         if (log.isDebugEnabled()) {
-            log.debug("set roster location (2): " + element.getAttribute("directory").getValue());
+            log.debug("set roster location (2): {}", element.getAttribute("directory").getValue());
         }
         if (element.getAttribute("directory") != null) {
             Roster.getDefault().setRosterLocation(element.getAttribute("directory").getValue());

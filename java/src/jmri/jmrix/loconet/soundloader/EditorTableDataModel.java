@@ -161,7 +161,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
                     return null;
                 }
             default:
-                log.error("internal state inconsistent with table requst for " + row + " " + col);
+                log.error("internal state inconsistent with table requst for {} {}", row, col);
                 return null;
         }
     }
@@ -189,7 +189,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
                 b = new JTextField((String) getValueAt(1, REPLACEBUTTONCOL));
                 return b.getPreferredSize().width + 30;
             default:
-                log.warn("Unexpected column in getPreferredWidth: " + col);
+                log.warn("Unexpected column in getPreferredWidth: {}", col);
                 return new JTextField(8).getPreferredSize().width;
         }
     }
@@ -239,7 +239,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         try {
             buff = new jmri.jmrit.sound.WavBuffer(chooser.getSelectedFile());
         } catch (Exception e) {
-            log.error("Exception loading file: " + e);
+            log.error("Exception loading file: {}", e);
             return;
         }
         // store to memory

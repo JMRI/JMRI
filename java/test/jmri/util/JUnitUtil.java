@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import apps.SystemConsole;
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.Editor;
@@ -1404,9 +1404,9 @@ public class JUnitUtil {
                         if (name.startsWith("Thread-")) {
                             Exception ex = new Exception("traceback of numbered thread");
                             ex.setStackTrace(Thread.getAllStackTraces().get(t));
-                            log.warn(action+" remnant thread \"{}\" in group \"{}\" after {}", name, group, getTestClassName(), ex);
+                            log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName(), ex);
                         } else {
-                            log.warn(action+" remnant thread \"{}\" in group \"{}\" after {}", name, group, getTestClassName());
+                            log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName());
                         }
                         if (kill) {
                             System.err.println(topState+" "+t.getState());

@@ -357,7 +357,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     private void reportScheduleExists(String s) {
-        log.info("Can not " + s + ", schedule already exists");
+        log.info("Can not {}, schedule already exists", s);
         JOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
                 MessageFormat.format(Bundle.getMessage("CanNotSchedule"), new Object[]{s}),
                 JOptionPane.ERROR_MESSAGE);

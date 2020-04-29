@@ -149,7 +149,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
             }
 
             if (activeBlock[currentBlock]) {
-                log.trace("found turnouts block " + currentBlock);
+                log.trace("found turnouts block {}", currentBlock);
 
                 // Read NCE CS memory
                 int nceAccAddress = CS_ACCY_MEMORY + currentBlock * BLOCK_LEN;
@@ -326,7 +326,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
                 rControlTurnout.getFeedbackMode());
 
         // Show the byte read from NCE CS
-        log.trace("memory byte: " + Integer.toHexString(recMemByte & 0xFF));
+        log.trace("memory byte: {}", Integer.toHexString(recMemByte & 0xFF));
 
         // test for closed or thrown, normally 0 = closed, 1 = thrown
         int nceAccState = (recMemByte >> bit) & 0x01;
@@ -407,7 +407,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
 
             } else {
 
-                log.debug("turnout discrepancy, NT" + NTnum + " KnownState is now CLOSED");
+                log.debug("turnout discrepancy, NT{} KnownState is now CLOSED", NTnum);
                 // change JMRI's knowledge of the turnout state to match observed
                 rControlTurnout.setKnownStateFromCS(Turnout.CLOSED);
             }

@@ -1,6 +1,6 @@
 package apps;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import apps.startup.StartupActionModelUtil;
 import apps.startup.StartupModel;
 import apps.startup.StartupModelFactory;

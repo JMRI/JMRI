@@ -61,7 +61,7 @@ public class LayoutSlip extends LayoutTurnout {
      * constructor method
      */
     public LayoutSlip(String id, Point2D c, double rot, LayoutEditor layoutEditor, TurnoutType type) {
-        super(id, c, layoutEditor);
+        super(id, c, layoutEditor, type);
 
         dispA = new Point2D.Double(-20.0, 0.0);
         pointA = MathUtil.add(center, dispA);
@@ -70,7 +70,17 @@ public class LayoutSlip extends LayoutTurnout {
         pointB = MathUtil.add(center, dispB);
         pointD = MathUtil.subtract(center, dispB);
 
-        setSlipType(type);
+        turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
+        turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
+        turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
+        if (type == TurnoutType.SINGLE_SLIP) {
+            turnoutStates.remove(STATE_BC);
+        } else if (type == TurnoutType.DOUBLE_SLIP) {
+            turnoutStates.put(STATE_BC, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
+        } else {
+            log.error("{}.setSlipType({}); invalid slip type", getName(), type); //I18IN
+        }
+        
         rotateCoords(rot);
     }
 
@@ -78,26 +88,6 @@ public class LayoutSlip extends LayoutTurnout {
     @Override
     public String toString() {
         return String.format("LayoutSlip %s (%s)", getId(), getSlipStateString(getSlipState()));
-    }
-
-    public void setTurnoutType(LayoutTurnout.TurnoutType slipType) {
-        setSlipType(slipType);
-    }
-
-    public void setSlipType(TurnoutType slipType) {
-        if (type != slipType) {
-            type = slipType;
-            turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
-            turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
-            turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
-            if (type == TurnoutType.SINGLE_SLIP) {
-                turnoutStates.remove(STATE_BC);
-            } else if (type == TurnoutType.DOUBLE_SLIP) {
-                turnoutStates.put(STATE_BC, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
-            } else {
-                log.error("{}.setSlipType({}); invalid slip type", getName(), slipType); //I18IN
-            }
-        }
     }
 
     public TurnoutType getSlipType() {

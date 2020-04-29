@@ -34,7 +34,7 @@ public class SdfBufferTest {
             }
             in.close();
         } catch (IOException e) {
-            log.error("exception reading golden file: " + e);
+            log.error("exception reading golden file: {}", e);
             System.out.println("exception reading golden file: " + e);
         }
 

@@ -129,7 +129,7 @@ public class SerialAddress {
             if (num > 0) {
                 n = num - ((num / 1000) * 1000);
             } else {
-                log.error("invalid system name: " + systemName);
+                log.error("invalid system name: {}", systemName);
                 return (0);
             }
         } else {

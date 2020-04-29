@@ -25,17 +25,17 @@ public class DebugProgrammerTest {
         ProgListener l = new ProgListener() {
             @Override
             public void programmingOpReply(int value, int status) {
-                log.debug("callback value=" + value + " status=" + status);
+                log.debug("callback value={} status={}", value, status);
                 replied = true;
                 readValue = value;
             }
         };
         p.writeCV("4", 12, l);
         waitReply();
-        log.debug("readValue is " + readValue);
+        log.debug("readValue is {}", readValue);
         p.readCV("4", l);
         waitReply();
-        log.debug("readValue is " + readValue);
+        log.debug("readValue is {}", readValue);
         Assert.assertEquals("read back", 12, readValue);
     }
 
@@ -54,7 +54,7 @@ public class DebugProgrammerTest {
         ProgListener l = new ProgListener() {
             @Override
             public void programmingOpReply(int value, int status) {
-                log.debug("callback value=" + value + " status=" + status);
+                log.debug("callback value={} status={}", value, status);
                 replied = true;
                 readValue = value;
             }

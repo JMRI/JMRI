@@ -29,7 +29,7 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
     @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
         if (log.isDebugEnabled()) {
-            log.debug("sendSerialMessage [" + m + "]");
+            log.debug("sendSerialMessage [{}]", m);
         }
         // save a copy
         outbound.addElement(m);
@@ -44,7 +44,7 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
     protected void sendTestMessage(SerialMessage m, SerialListener l) {
         // forward a test message to NceListeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
+            log.debug("sendTestMessage    [{}]", m);
         }
         notifyMessage(m, l);
         return;

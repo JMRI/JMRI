@@ -551,7 +551,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
             }
         } catch (ClassNotFoundException cnfe) {
-            log.error("selectType Menu " + cnfe.toString());
+            log.error("selectType Menu {}", cnfe.toString());
         }
         _targetPanel.repaint();
     }
@@ -1856,8 +1856,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                     log.debug("DnD Add {}", pos.getNameString());
                 }
             } else {
-                log.warn("Editor DropTargetListener  supported DataFlavors not avaialable at drop from "
-                        + tr.getClass().getName());
+                log.warn("Editor DropTargetListener  supported DataFlavors not avaialable at drop from {}", tr.getClass().getName());
             }
         } catch (IOException ioe) {
             log.warn("Editor DropTarget caught IOException", ioe);

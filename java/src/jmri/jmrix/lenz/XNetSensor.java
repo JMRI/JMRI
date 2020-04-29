@@ -126,7 +126,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     @Override
     public synchronized void message(XNetReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("received message: " + l);
+            log.debug("received message: {}", l);
         }
         if (l.isFeedbackBroadcastMessage()) {
             int numDataBytes = l.getElement(0) & 0x0f;
@@ -135,10 +135,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
                         && baseaddress == l.getFeedbackEncoderMsgAddr(i)
                         && nibble == (l.getElement(i + 1) & 0x10)) {
                     if (log.isDebugEnabled()) {
-                        log.debug("Message for sensor " + systemName
-                                + " (Address " + baseaddress
-                                + " position " + (address - (baseaddress * 8))
-                                + ")");
+                        log.debug("Message for sensor {} (Address {} position {})", systemName, baseaddress, address - (baseaddress * 8));
                     }
                     if (statusRequested && l.isUnsolicited()) {
                         l.resetUnsolicited();
@@ -168,7 +165,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 

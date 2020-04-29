@@ -268,7 +268,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
         }
         catch (Exception ex)
             {
-                log.info("Exception-C2: "+ex.toString());
+                log.info("Exception-C2: {}", ex.toString());
             }
     }
     
@@ -283,7 +283,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
         }
         catch (Exception ex)
             {
-                log.info("Exception-C2: "+ex.toString());
+                log.info("Exception-C2: {}", ex.toString());
             }
     }
     
