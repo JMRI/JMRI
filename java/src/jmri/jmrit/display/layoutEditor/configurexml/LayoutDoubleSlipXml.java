@@ -25,5 +25,5 @@ public class LayoutDoubleSlipXml extends LayoutSlipXml {
     public LayoutDoubleSlipXml() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutDoubleSlipXml.class);
+    // private final static Logger log = LoggerFactory.getLogger(LayoutDoubleSlipXml.class);
 }

@@ -26,5 +26,5 @@ public class LayoutRHXOverXml extends LayoutXOverXml {
     public LayoutRHXOverXml() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutRHXOverXml.class);
+    // private final static Logger log = LoggerFactory.getLogger(LayoutRHXOverXml.class);
 }

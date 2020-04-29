@@ -26,5 +26,5 @@ public class LayoutRHTurnoutXml extends LayoutTurnoutXml {
     public LayoutRHTurnoutXml() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutRHTurnoutXml.class);
+    // private final static Logger log = LoggerFactory.getLogger(LayoutRHTurnoutXml.class);
 }

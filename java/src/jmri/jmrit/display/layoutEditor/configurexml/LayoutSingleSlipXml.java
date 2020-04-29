@@ -26,5 +26,5 @@ public class LayoutSingleSlipXml extends LayoutSlipXml {
     public LayoutSingleSlipXml() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutSingleSlipXml.class);
+    // private final static Logger log = LoggerFactory.getLogger(LayoutSingleSlipXml.class);
 }

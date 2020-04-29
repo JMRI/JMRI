@@ -57,5 +57,5 @@ public class LayoutSingleSlip extends LayoutSlip {
         super(id, c, rot, layoutEditor, TurnoutType.SINGLE_SLIP);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutSingleSlip.class);
+    // private final static Logger log = LoggerFactory.getLogger(LayoutSingleSlip.class);
 }

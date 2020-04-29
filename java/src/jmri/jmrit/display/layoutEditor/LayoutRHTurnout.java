@@ -134,5 +134,5 @@ public class LayoutRHTurnout extends LayoutTurnout {
         super(id, TurnoutType.RH_TURNOUT, c, rot, xFactor, yFactor, layoutEditor, 1);
     }
     
-    private final static Logger log = LoggerFactory.getLogger(LayoutRHTurnout.class);
+    // private final static Logger log = LoggerFactory.getLogger(LayoutRHTurnout.class);
 }

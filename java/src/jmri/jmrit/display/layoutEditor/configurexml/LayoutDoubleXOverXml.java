@@ -29,5 +29,5 @@ public class LayoutDoubleXOverXml extends LayoutXOverXml {
     public LayoutDoubleXOverXml() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutDoubleXOverXml.class);
+    // private final static Logger log = LoggerFactory.getLogger(LayoutDoubleXOverXml.class);
 }

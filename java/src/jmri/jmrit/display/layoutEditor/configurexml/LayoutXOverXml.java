@@ -26,5 +26,5 @@ public class LayoutXOverXml extends LayoutTurnoutXml {
     public LayoutXOverXml() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutXOverXml.class);
+    // private final static Logger log = LoggerFactory.getLogger(LayoutXOverXml.class);
 }
