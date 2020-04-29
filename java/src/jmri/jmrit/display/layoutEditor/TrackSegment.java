@@ -3028,7 +3028,7 @@ public class TrackSegment extends LayoutTrack {
     // We convert to and from the map during the getDecorations, setDecorations 
     // and hasDecorations calls.
     
-    /** @inheritDoc */
+    /** {@inheritDoc} */
     @Override
     public boolean hasDecorations() {
         return ((arrowStyle > 0)
@@ -3037,7 +3037,7 @@ public class TrackSegment extends LayoutTrack {
                 || (tunnelSideLeft || tunnelSideRight));
     }
 
-    /** @inheritDoc */
+    /** {@inheritDoc} */
     @Override
     public Map<String, String> getDecorations() {
         if (decorations == null) {
@@ -3157,7 +3157,7 @@ public class TrackSegment extends LayoutTrack {
         return decorations;
     } 
 
-    /** @inheritDoc */
+    /** {@inheritDoc} */
     @Override
     public void setDecorations(Map<String, String> decorations) {
         Color defaultTrackColor = layoutEditor.getDefaultTrackColorColor();
