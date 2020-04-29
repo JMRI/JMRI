@@ -1816,6 +1816,7 @@ public class PositionablePoint extends LayoutTrack {
      * 
      * This type of track has none, so this method is empty.
      */
+    @Override
     protected void drawDecorations(Graphics2D g2) {}
 
     /**
