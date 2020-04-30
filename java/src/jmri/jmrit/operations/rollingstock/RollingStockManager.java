@@ -9,12 +9,14 @@ import java.util.List;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.trains.Train;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrit.operations.trains.TrainCommon;
 
 /**
  * Base class for rolling stock managers car and engine.
@@ -239,7 +241,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
             } catch (NumberFormatException e) {
                 // maybe rolling stock number in the format nnnn-N
                 try {
-                    String[] number = rs.getNumber().split("-");
+                    String[] number = rs.getNumber().split(TrainCommon.HYPHEN);
                     rsNumber = Integer.parseInt(number[0]);
                     rs.number = rsNumber;
                 } catch (NumberFormatException e2) {
@@ -291,7 +293,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
                         outRsNumber = Integer.parseInt(out.get(j).getNumber());
                     } catch (NumberFormatException e) {
                         try {
-                            String[] number = out.get(j).getNumber().split("-");
+                            String[] number = out.get(j).getNumber().split(TrainCommon.HYPHEN);
                             outRsNumber = Integer.parseInt(number[0]);
                         } catch (NumberFormatException e2) {
                             // force add
@@ -517,7 +519,11 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
         }
     }
 
-    private String convertBuildDate(String date) {
+    /*
+     * Converts build date into consistent String. Three build date formats; Two
+     * digits YY becomes 19YY. MM-YY becomes 19YY. MM-YYYY becomes YYYY.
+     */
+    public static String convertBuildDate(String date) {
         String[] built = date.split("-");
         if (built.length == 2) {
             try {
