@@ -13,8 +13,11 @@ import javax.swing.border.*;
  */
 public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
 
-    private JPanel floatEditTabsPanel;
-    private JTabbedPane floatEditTabsPane;
+    // private JPanel floatEditTabsPanel = new JPanel();
+    // private JTabbedPane floatEditTabsPane = new JTabbedPane();
+
+    private JPanel floatEditTabsPanel = null;
+    private JTabbedPane floatEditTabsPane =null;
 
     /**
      * constructor for LayoutEditorFloatingToolBarPanel
@@ -22,8 +25,8 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
      * @param layoutEditor the layout editor that this is for
      */
     public LayoutEditorFloatingToolBarPanel(@Nonnull LayoutEditor layoutEditor) {
-        super(layoutEditor);
-    }   //constructor
+        super(layoutEditor);        
+    }
 
     /**
      * {@inheritDoc}
@@ -31,7 +34,7 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
     @Override
     protected void setupComponents() {
         super.setupComponents();
-
+        
         floatEditTabsPanel = new JPanel();
         floatEditTabsPane = new JTabbedPane();
     }

@@ -266,7 +266,7 @@ public class PositionablePointTest {
             Assert.fail("No exception thrown on pp.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("test.getConnection(NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw test.getConnection(NONE); Invalid Connection Type");
 
         try {
             // test valid connection type (null value)
