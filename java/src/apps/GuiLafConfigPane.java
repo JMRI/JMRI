@@ -29,7 +29,6 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.gui.GuiLafPreferencesManager;
-import jmri.util.swing.SwingSettings;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -94,7 +93,6 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     void doClickSelection(JPanel panel) {
         panel.setLayout(new FlowLayout());
         mouseEvent = new JCheckBox(ConfigBundle.getMessage("GUIButtonNonStandardRelease"));
-        mouseEvent.setSelected(SwingSettings.getNonStandardMouseEvent());
         mouseEvent.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(mouseEvent.isSelected());
         });
