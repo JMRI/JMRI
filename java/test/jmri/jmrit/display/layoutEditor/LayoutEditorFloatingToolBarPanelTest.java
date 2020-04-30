@@ -31,5 +31,5 @@ public class LayoutEditorFloatingToolBarPanelTest {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    // private final static Logger log = LoggerFactory.getLogger(LayoutEditorFloatingToolBarPanelTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorFloatingToolBarPanelTest.class);
 }
