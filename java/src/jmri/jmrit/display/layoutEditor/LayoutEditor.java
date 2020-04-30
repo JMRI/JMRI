@@ -7584,6 +7584,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     public @Nonnull
+    List<PositionablePointView> getPositionablePointViews() {
+        List<PositionablePointView> list = new ArrayList<>();
+        for (PositionablePoint p : getPositionablePoints()) {
+            list.add(new PositionablePointView(p));
+        }
+        return list;
+    }
+
+    public @Nonnull
     List<PositionablePoint> getPositionablePoints() {
         return getLayoutTracksOfClass(PositionablePoint.class
         )
@@ -7597,6 +7606,23 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         )
                 .map(LayoutSlip.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    // temporarily\y creates list on the fly
+    // instead of keeping one
+    public @Nonnull
+    List<LayoutTrackView> getLayoutTrackViews() {
+        List<LayoutTrackView> list = new ArrayList<>() ;
+        for (LayoutTrack t : getLayoutTracks()) {
+            if (t instanceof PositionablePoint) {
+                list.add(new PositionablePointView((PositionablePoint)t));
+            } else if (t instanceof TrackSegment) {
+                list.add(new TrackSegmentView((TrackSegment)t));
+            } else {
+                list.add(new LayoutTrackView(t));
+            }
+        }
+        return list;
     }
 
     public @Nonnull
