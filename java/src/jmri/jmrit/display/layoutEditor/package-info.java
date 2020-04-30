@@ -76,6 +76,10 @@
  * loop through a list from {@link jmri.jmrit.display.layoutEditor.LayoutEditor#getLayoutTracks()}
  * calling their individual {@link jmri.jmrit.display.layoutEditor.LayoutTrack#draw1} and {@link jmri.jmrit.display.layoutEditor.LayoutTrack#draw1}
  * methods.
+ * <p>
+ * <br><a href="doc-files/NMVCmodel.png"><img src="doc-files/MVCmodel.png" alt="MVC object diagram" height="67%" width="67%"></a><br>
+ * The goal is a MVC-like structure, with modifications to account for the mix of 
+ * swing components and AWT-style paint operations.
  * 
  * 
  * <h3>Persistance</h3>
