@@ -16,9 +16,9 @@ It's in no particular order, items are removed as done, so please don't consider
             LayoutSlip.java LayoutSingleSlip.java LayoutDoubleSlip.java 
             LayoutXOver.java LayoutDoubleXOver.java LayoutLHXOver.java LayoutRHXOver.java
         LayoutTrackEditors has separate code remaining for
-            LayoutTurnout (all kinds), LayoutSlip (ditto), Level Xing, Turntable (and Rays)
+            LayoutTurnout (all kinds, if'd for XOver), LayoutSlip (ditto), Level Xing, Turntable (and Rays)
         
-MVC: LayoutEditorComponent is the JComponent in which the *Views live 
+MVC: LayoutEditorComponent is the JComponent in which the *View code lives now
     gets data from LE with
         layoutEditor.getLayoutTracks()  
     List<LayoutTrack> getLayoutTracks()
@@ -29,7 +29,7 @@ MVC: LayoutEditorComponent is the JComponent in which the *Views live
         layoutEditor.getLayoutShapes()
     (future problem)
 
- - Editors are being invoked via LayoutTrackEditors (note final 's'). Track down uses as how "notification" is done and restructure
+ - Editors are being invoked via LayoutTrackEditors (note final 's'). Check uses of it to figure out how "notification" is done and restructure
  
 ## Code Pushes
 
@@ -55,8 +55,12 @@ isDisconnected in LayoutTrack (base) and PositionablePoint (subclass) seem very 
  
  - LayoutTurnoutTest was taken whole into the test subtypes, should be sorted out to have type-specific tests in subclasses (to reduce duplication)
 
+ - Make sure there's a one-to-one mapping of source files and test files, even if some of the tests are empty initially
+ 
+ - Run a cleanup on imports via NetBeans; you've left quite a few behind...
 
-
+ - Remove all the `transient` tags, serial annotations
+ 
 ==================
 
  TrackSegment HIDECON as an EnumSet
@@ -97,6 +101,7 @@ TrackSegment.java:        //nothing to see here, move along
 
    
  =============
+ 
  The LayoutTrack classes ($LETRK) use these from LayoutEditor
  layoutEditor.setDirty();
  layoutEditor.redrawPanel();   {just calls repaint?} see .paintTargetPanel abstract in ../Editor; LayoutEditor extends PanelEditor
