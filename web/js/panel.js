@@ -24,7 +24,6 @@
  *
  *  DONE: draw dashed curves
  *  DONE: handle drawn ellipse (see LMRC APB)
- *  DONE: connect turnouts to layoutturntable rays and make clickable (see WhichWay)
  *  DONE: address color differences between java panel and javascript panel (e.g. lightGray)
  *  DONE: make turnout, levelXing occupancy work like LE panels (more than just checking A)
  *
@@ -83,14 +82,14 @@ var LUNAR = 0x40;
 var FLASHLUNAR = 0x80;
 var HELD = 0x0100;  //additional to deal with "Held" pseudo-state
 
-var RH_TURNOUT = 1; //named constants for turnout types
-var LH_TURNOUT = 2;
-var WYE_TURNOUT = 3;
-var DOUBLE_XOVER = 4;
-var RH_XOVER = 5;
-var LH_XOVER = 6;
-var SINGLE_SLIP = 7;
-var DOUBLE_SLIP = 8;
+var RH_TURNOUT = "RH_TURNOUT"; //named constants for turnout types
+var LH_TURNOUT = "LH_TURNOUT";
+var WYE_TURNOUT = "WYE_TURNOUT";
+var DOUBLE_XOVER = "DOUBLE_XOVER";
+var RH_XOVER = "RH_XOVER";
+var LH_XOVER = "LH_XOVER";
+var SINGLE_SLIP = "SINGLE_SLIP";
+var DOUBLE_SLIP = "DOUBLE_SLIP";
 
 var jmri = null;
 
@@ -1435,14 +1434,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                         case "positionablepoint" :
                             //jmri.log("#### Positionable Point ####");
                             //just store these points in persistent variable for use when drawing tracksegments and layoutturnouts
-                            //id is ident plus ".type", e.g. "A4.POS_POINT"
-                            //$gPts[$widget.ident + "." + $widget.type] = $widget;
+                            //End bumpers and Connectors use wrong type, so always store as .POS_POINT
                             $gPts[$widget.ident + ".POS_POINT"] = $widget;
-                            //End bumpers and Connectors use wrong type, so also store type 1
-                            //if (($widget.ident.substring(0, 2) == "EB") ||
-                            //     ($widget.ident.substring(0, 2) == "EC")) {
-                            //        $gPts[$widget.ident + ".POS_POINT"] = $widget;
-                            //}
                             break;
                         case "layoutblock" :
                             $widget['state'] = UNKNOWN;  //add a state member for this block
