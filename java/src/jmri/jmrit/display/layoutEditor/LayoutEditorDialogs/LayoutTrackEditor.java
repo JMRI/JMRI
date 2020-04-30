@@ -13,11 +13,7 @@ import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.*;
 
 /**
- * MVC Editor component for PositionablePoint objects.
- *
- * Note there might not be anything for this class to do;
- * LayoutTrackEditors has a comment saying that PositionablePoint
- * doesn't have an editor.
+ * MVC Editor component for LayoutTrack hierarchy objects.
  *
  * @author Bob Jacobsen  Copyright (c) 2020
  * 
