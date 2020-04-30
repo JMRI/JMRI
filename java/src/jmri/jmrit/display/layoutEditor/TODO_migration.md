@@ -4,8 +4,6 @@ It's in no particular order, items are removed as done, so please don't consider
 ----
 
 ## MVC work
- -  make a diagram for documentation
-
  -  *View, LayoutEditorDialogs/*Editor need a complete set of clases
     Still to do (mark off when present)
         View: LayoutTrack.java LayoutTurntable.java LevelXing.java LayoutTurnout.java LayoutWye.java
@@ -17,9 +15,10 @@ It's in no particular order, items are removed as done, so please don't consider
             LayoutLHTurnout.java LayoutRHTurnout.java 
             LayoutSlip.java LayoutSingleSlip.java LayoutDoubleSlip.java 
             LayoutXOver.java LayoutDoubleXOver.java LayoutLHXOver.java LayoutRHXOver.java
-            (The e)
-
-MVC: LayoutEditorComponent is the JComponent
+        LayoutTrackEditors has separate code remaining for
+            LayoutTurnout (all kinds), LayoutSlip (ditto), Level Xing, Turntable (and Rays)
+        
+MVC: LayoutEditorComponent is the JComponent in which the *Views live 
     gets data from LE with
         layoutEditor.getLayoutTracks()  
     List<LayoutTrack> getLayoutTracks()
@@ -30,7 +29,8 @@ MVC: LayoutEditorComponent is the JComponent
         layoutEditor.getLayoutShapes()
     (future problem)
 
-
+ - Editors are being invoked via LayoutTrackEditors (note final 's'). Track down uses as how "notification" is done and restructure
+ 
 ## Code Pushes
 
  - Operational code in the LayoutTrack tree needs to be pushed up and down.
@@ -45,7 +45,10 @@ isDisconnected in LayoutTrack (base) and PositionablePoint (subclass) seem very 
 - Why is this considered common code by CI?
     import static java.lang.Float.POSITIVE_INFINITY; 
 
+## Further items
 
+ - Role of LayoutShape  (handled in LayoutEditorComponent similar to i.e. LayoutTracks, needs a view? but they're _shapes_)
+ 
 ## Minor Cleanups 
 
  - Add a NUM_ARROW_TYPES constant for use in TrackSegment.java, PositionablePoint.java
