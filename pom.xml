@@ -198,7 +198,11 @@
                                         <sourceDirectory>${basedir}</sourceDirectory>
                                     </sourceDirectories>
                                     <includes>**/*</includes>
-                                    <excludes>**/*.jpg,**/*.jar,web/app/node_modules/**,.git/**,target/**</excludes>
+                                    <excludes>**/*.jpg,**/*.PNG,**/*.jar,**/*.dll,**/*.dylib,**/*.so,**/*.exe,
+                                        **/*.zip,**/*.icns,**/*.bat,**/*.ttf,**/*.vsd,**/*.wav,**/*.spj,
+                                        **/*.pdf,.metadata/.plugins/org.eclipse.core.resources/**,
+                                        help/en/JavaHelpSearch/**,help/fr/JavaHelpSearch/**,
+                                        web/app/node_modules/**,.git/**,target/**</excludes>
                                     <!-- only show errors, not warnings or infos -->
                                     <violationSeverity>error</violationSeverity>
                                 </configuration>
@@ -850,7 +854,11 @@
                         <sourceDirectory>${basedir}</sourceDirectory>
                     </sourceDirectories>
                     <includes>**/*</includes>
-                    <excludes>**/*.jpg,**/*.jar,web/app/node_modules/**,.git/**,target/**</excludes>
+                    <excludes>**/*.jpg,**/*.PNG,**/*.jar,**/*.dll,**/*.dylib,**/*.so,**/*.exe,
+                        **/*.zip,**/*.icns,**/*.bat,**/*.ttf,**/*.vsd,**/*.wav,**/*.spj,
+                        **/*.pdf,.metadata/.plugins/org.eclipse.core.resources/**,
+                        help/en/JavaHelpSearch/**,help/fr/JavaHelpSearch/**,
+                        web/app/node_modules/**,.git/**,target/**</excludes>
                     <!-- show errors, warnings, and infos -->
                     <violationSeverity>info</violationSeverity>
                 </configuration>

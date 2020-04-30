@@ -389,7 +389,7 @@ public class LayoutBlockConnectivityTools {
             return false;
         }
         if (log.isDebugEnabled()) {
-            log.debug("facing : {} protecting : {} dest {}{}", protecting.getDisplayName(), dest.getBean().getDisplayName(), facing.getDisplayName());
+            log.debug("facing : {} protecting : {} dest {}", protecting.getDisplayName(), dest.getBean().getDisplayName(), facing.getDisplayName());
         }
         try {
             //In this instance it doesn't matter what the destination protecting block is so we get the first
@@ -463,12 +463,12 @@ public class LayoutBlockConnectivityTools {
                 blocksInRoute.add(new BlocksTested(protectingLayoutBlock));
             } else {
                 lastErrorMessage = "Block we are protecting is already occupied or reserved";
-                log.debug(lastErrorMessage);
+                log.debug("will throw {}", lastErrorMessage);
                 throw new jmri.JmriException(lastErrorMessage);
             }
             if (!canLBlockBeUsed(destinationLayoutBlock)) {
                 lastErrorMessage = "Destination Block is already occupied or reserved";
-                log.debug(lastErrorMessage);
+                log.debug("will throw {}", lastErrorMessage);
                 throw new jmri.JmriException(lastErrorMessage);
             }
         } else {
@@ -534,7 +534,7 @@ public class LayoutBlockConnectivityTools {
                         log.debug("arrived at destination block");
                         log.debug("{} Return as Long", sourceLayoutBlock.getDisplayName());
                         for (LayoutBlock returnBlock : returnBlocks) {
-                            log.debug(returnBlock.getDisplayName());
+                            log.debug("  return block {}", returnBlock.getDisplayName());
                         }
                         log.debug("Finished List");
                     }
@@ -651,7 +651,7 @@ public class LayoutBlockConnectivityTools {
 
                 if ((block == currentBlock) && (currentLBlock.getThroughPathIndex(preBlock, destBlock) == -1)) {
                     lastErrorMessage = "block " + block.getDisplayName() + " is directly attached, however the route to the destination block " + destBlock.getDisplayName() + " can not be directly used";
-                    log.debug(lastErrorMessage);
+                    log.debug("continue after {}", lastErrorMessage);
                 } else if ((validateOnly) || ((checkForDoubleCrossover(preBlock, currentLBlock, blocktoCheck) && checkForLevelCrossing(currentLBlock)) && canLBlockBeUsed(lBlock))) {
                     if (log.isDebugEnabled()) {
                         log.debug("{} not occupied & not reserved but we need to check if the anchor point between the two contains a signal or not", block.getDisplayName());
@@ -684,11 +684,11 @@ public class LayoutBlockConnectivityTools {
                         return blockindex;
                     } else {
                         lastErrorMessage = "Signal " + foundBean.getDisplayName() + " already exists between blocks " + currentBlock.getDisplayName() + " and " + blocktoCheck.getDisplayName() + " in the same direction on this path";
-                        log.debug(lastErrorMessage);
+                        log.debug("continue after {}", lastErrorMessage);
                     }
                 } else {
                     lastErrorMessage = "block " + block.getDisplayName() + " found not to be not usable";
-                    log.debug(lastErrorMessage);
+                    log.debug("continue after {}", lastErrorMessage);
                 }
                 if (blkIndexTested.contains(blockindex)) {
                     lastErrorMessage = ("No valid free path found");
@@ -778,7 +778,7 @@ public class LayoutBlockConnectivityTools {
                 try {
                     retPairs.put(source, discoverPairDest(source, lProtecting, lFacing, beanList, pathMethod));
                 } catch (JmriException ex) {
-                    log.error(ex.toString());
+                    log.error("exception in retPairs.put", ex);
                 }
             }
         }
@@ -850,7 +850,7 @@ public class LayoutBlockConnectivityTools {
                         }
                     }
                 } catch (JmriException ex) {
-                    log.debug(ex.toString());
+                    log.debug("caught exception in discoverPairsDest", ex);
                 }
             }
         }
