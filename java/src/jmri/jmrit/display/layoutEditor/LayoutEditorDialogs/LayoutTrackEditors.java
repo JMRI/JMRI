@@ -47,16 +47,17 @@ public class LayoutTrackEditors {
     }
 
     final TrackSegmentEditor trackSegmentEditor;
-    /*=================*\
-    | Edit Layout Track |
-    \*=================*/
+    
+    /*======================*\
+    | Edit Layout Track Types|
+    \*======================*/
     @InvokeOnGuiThread
     public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
         sensorList.clear();
         if (layoutTrack instanceof PositionablePoint) {
             // PositionablePoint's don't have an editor...
         } else if (layoutTrack instanceof TrackSegment) {
-            trackSegmentEditor.editTrackSegment((TrackSegment) layoutTrack);
+            trackSegmentEditor.editTrackSegment((TrackSegment) layoutTrack); // partly converted
         } else // this has to be before LayoutTurnout
         if (layoutTrack instanceof LayoutSlip) {
             editLayoutSlip((LayoutSlip) layoutTrack);
@@ -78,8 +79,8 @@ public class LayoutTrackEditors {
         trackSegmentEditor.editTrackSegment(layoutTrack);
     }
     
-    /*******   Common parts ********************/
-    
+    /*******   Common parts, being moved upward in *Editor hierarchy ***************/
+     
     List<String> sensorList = new ArrayList<>();
 
     /**
@@ -192,6 +193,7 @@ public class LayoutTrackEditors {
 
     /**
      * Edit a Layout Turnout.
+     * Invoked for any of the subtypes, has conditional code for crossovers
      */
     public void editLayoutTurnout(@Nonnull LayoutTurnout layoutTurnout) {
         this.layoutTurnout = layoutTurnout;
@@ -638,8 +640,8 @@ public class LayoutTrackEditors {
     }
 
     /*================*\
-                    | Edit Layout Slip |
-                    \*================*/
+    | Edit Layout Slip |
+    \*================*/
     // variables for Edit slip Crossing pane
     private LayoutSlip layoutSlip = null;
 
@@ -1478,8 +1480,8 @@ public class LayoutTrackEditors {
     }
 
     /*===================*\
-                    | Turntable Ray Panel |
-                    \*===================*/
+    | Turntable Ray Panel |
+    \*===================*/
     public class TurntableRayPanel extends JPanel {
 
         // variables for Edit Turntable ray pane
