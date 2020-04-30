@@ -73,11 +73,26 @@ public interface Throttle extends PropertyChangeProvider {
     public static final String F27 = "F27"; // NOI18N
     public static final String F28 = "F28"; // NOI18N
 
+    /**
+     * String array containing Function constants.
+     * e.g. "F0","F1","F2","F3" .. "F27","F28".
+     */
     public static final String[] FUNCTION_STRING_ARRAY = new String[]{
         F0, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14,
         F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28
     };
-
+    
+    /**
+     * Constants to represent Function Groups.
+     * <p>
+     * The are the same groupings for both normal Functions and Momentary.
+     */
+    public static final int[] FUNCTION_GROUPS = new int[]{ 1, 1, 1, 1, 1, /** 0-4 */
+        2, 2, 2, 2, /** 5-8 */   3, 3, 3, 3, /** 9-12 */
+        4, 4, 4, 4, 4, 4, 4, 4, /** 13-20 */ 5, 5, 5, 5, 5, 5, 5, 5 /** 14-28 */ 
+        
+    };
+    
     /**
      * Constants to represent the functions F0 through F28.
      */
@@ -111,6 +126,19 @@ public interface Throttle extends PropertyChangeProvider {
     public static final String F27Momentary = "F27Momentary"; // NOI18N
     public static final String F28Momentary = "F28Momentary"; // NOI18N
 
+    /**
+     * String array containing Momentary Function constants.
+     * e.g. "F0Momentary", "F1Momentary" .. "F28Momentary".
+     */
+    public static final String[] FUNCTION_MOMENTARY_STRING_ARRAY = new String[]{
+        F0Momentary, F1Momentary, F2Momentary, F3Momentary, F4Momentary, 
+        F5Momentary, F6Momentary, F7Momentary, F8Momentary,
+        F9Momentary, F10Momentary, F11Momentary, F12Momentary,
+        F13Momentary, F14Momentary, F15Momentary, F16Momentary,
+        F17Momentary, F18Momentary, F19Momentary, F20Momentary,
+        F21Momentary, F22Momentary, F23Momentary, F24Momentary,
+        F25Momentary, F26Momentary, F27Momentary, F28Momentary };
+    
     /**
      * Speed - expressed as a value {@literal 0.0 -> 1.0.} Negative means
      * emergency stop. This is an bound property.
@@ -155,244 +183,975 @@ public interface Throttle extends PropertyChangeProvider {
      */
     public boolean getIsForward();
 
+    /**
+     * Set direction.
+     *
+     * @param forward true if forward, false if reverse or undefined
+     */
     public void setIsForward(boolean forward);
 
     // functions - note that we use the naming for DCC, though that's not the implication;
     // see also DccThrottle interface
-    public boolean getF0();
+    
+    /**
+     * Set Loco Function and send to Layout.
+     * @param functionNum Function Number, 0-28
+     * @param newState New Function State. True on, false off.
+     */
+    public abstract void setFunction(int functionNum, boolean newState);
+    
+    /**
+     * Get Loco Function status.
+     * @param functionNum Function Number, 0-28
+     * @return Function State. True on, false off.
+     */
+    public boolean getFunction(int functionNum);
+    
+    /**
+     * Set Momentary Loco Function and send to Layout.
+     * @param momFuncNum Momentary Function Number, 0-28
+     * @param state New Function State. True on, false off.
+     */
+    public void setFunctionMomentary(int momFuncNum, boolean state);
+    
+    /**
+     * Get the Momentary Function Value.
+     * @param fN Momentary function number
+     * @return true if momentary function is on, else false.
+     */
+    public boolean getFunctionMomentary(int fN);
+            
+    /**
+     * Get Function 0 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF0() {
+        return getFunction(0);
+    }
 
-    public void setF0(boolean f0);
+    /**
+     * Get Function 1 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF1() {
+        return getFunction(1);
+    }
 
-    public boolean getF1();
+    /**
+     * Get Function 2 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF2() {
+        return getFunction(2);
+    }
 
-    public void setF1(boolean f1);
+    /**
+     * Get Function 3 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF3() {
+        return getFunction(3);
+    }
 
-    public boolean getF2();
+    /**
+     * Get Function 4 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF4() {
+        return getFunction(4);
+    }
 
-    public void setF2(boolean f2);
+    /**
+     * Get Function 5 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF5() {
+        return getFunction(5);
+    }
 
-    public boolean getF3();
+    /**
+     * Get Function 6 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF6() {
+        return getFunction(6);
+    }
 
-    public void setF3(boolean f3);
+    /**
+     * Get Function 7 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF7() {
+        return getFunction(7);
+    }
 
-    public boolean getF4();
+    /**
+     * Get Function 8 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF8() {
+        return getFunction(8);
+    }
 
-    public void setF4(boolean f4);
+    /**
+     * Get Function 9 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF9() {
+        return getFunction(9);
+    }
+    
+    /**
+     * Get Function 10 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF10() {
+        return getFunction(10);
+    }
+    
+    /**
+     * Get Function 11 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF11() {
+        return getFunction(11);
+    }
+        
+    /**
+     * Get Function 12 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF12() {
+        return getFunction(12);
+    }
+    
+    /**
+     * Get Function 13 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF13() {
+        return getFunction(13);
+    }
+        
+    /**
+     * Get Function 14 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF14() {
+        return getFunction(14);
+    }
+    
+    /**
+     * Get Function 15 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF15() {
+        return getFunction(15);
+    }
+    
+    /**
+     * Get Function 16 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF16() {
+        return getFunction(16);
+    }
+    
+    /**
+     * Get Function 17 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF17() {
+        return getFunction(17);
+    }
+    
+    /**
+     * Get Function 18 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF18() {
+        return getFunction(18);
+    }
+    
+    /**
+     * Get Function 19 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF19() {
+        return getFunction(19);
+    }
+    
+    /**
+     * Get Function 20 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF20() {
+        return getFunction(20);
+    }
+    
+    /**
+     * Get Function 21 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF21() {
+        return getFunction(21);
+    }
+    
+    /**
+     * Get Function 22 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF22() {
+        return getFunction(22);
+    }
+    
+    /**
+     * Get Function 23 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF23() {
+        return getFunction(23);
+    }
+    
+    /**
+     * Get Function 24 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF24() {
+        return getFunction(24);
+    }
+    
+    /**
+     * Get Function 25 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF25() {
+        return getFunction(25);
+    }
+    
+    /**
+     * Get Function 26 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF26() {
+        return getFunction(26);
+    }
+    
+    /**
+     * Get Function 27 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF27() {
+        return getFunction(27);
+    }
+    
+    /**
+     * Get Function 28 Status.
+     * @return true for Function On, false for Function Off.
+     */
+    default boolean getF28() {
+        return getFunction(28);
+    }
 
-    public boolean getF5();
+    /**
+     * Set Function 0 Status.
+     * @param f0 true for Function On, false for Function Off.
+     */
+    default void setF0(boolean f0) {
+        setFunction(0,f0);
+    }
 
-    public void setF5(boolean f5);
+    /**
+     * Set Function 1 Status.
+     * @param f1 true for Function On, false for Function Off.
+     */
+    default void setF1(boolean f1) {
+        setFunction(1,f1);
+    }
 
-    public boolean getF6();
+    /**
+     * Set Function 2 Status.
+     * @param f2 true for Function On, false for Function Off.
+     */
+    default void setF2(boolean f2) {
+        setFunction(2,f2);
+    }
 
-    public void setF6(boolean f6);
+    /**
+     * Set Function 3 Status.
+     * @param f3 true for Function On, false for Function Off.
+     */
+    default void setF3(boolean f3) {
+        setFunction(3,f3);
+    }
 
-    public boolean getF7();
+    /**
+     * Set Function 4 Status.
+     * @param f4 true for Function On, false for Function Off.
+     */
+    default void setF4(boolean f4) {
+        setFunction(4,f4);
+    }
 
-    public void setF7(boolean f7);
+    /**
+     * Set Function 5 Status.
+     * @param f5 true for Function On, false for Function Off.
+     */
+    default void setF5(boolean f5) {
+        setFunction(5,f5);
+    }
 
-    public boolean getF8();
+    /**
+     * Set Function 6 Status.
+     * @param f6 true for Function On, false for Function Off.
+     */
+    default void setF6(boolean f6) {
+        setFunction(6,f6);
+    }
 
-    public void setF8(boolean f8);
+    /**
+     * Set Function 7 Status.
+     * @param f7 true for Function On, false for Function Off.
+     */
+    default void setF7(boolean f7) {
+        setFunction(7,f7);
+    }
 
-    public boolean getF9();
+    /**
+     * Set Function 8 Status.
+     * @param f8 true for Function On, false for Function Off.
+     */
+    default void setF8(boolean f8) {
+        setFunction(8,f8);
+    }
 
-    public void setF9(boolean f9);
+    /**
+     * Set Function 9 Status.
+     * @param f9 true for Function On, false for Function Off.
+     */
+    default void setF9(boolean f9) {
+        setFunction(9,f9);
+    }
 
-    public boolean getF10();
+    /**
+     * Set Function 10 Status.
+     * @param f10 true for Function On, false for Function Off.
+     */
+    default void setF10(boolean f10) {
+        setFunction(10,f10);
+    }
 
-    public void setF10(boolean f10);
+    /**
+     * Set Function 11 Status.
+     * @param f11 true for Function On, false for Function Off.
+     */
+    default void setF11(boolean f11) {
+        setFunction(11,f11);
+    }
 
-    public boolean getF11();
+    /**
+     * Set Function 12 Status.
+     * @param f12 true for Function On, false for Function Off.
+     */
+    default void setF12(boolean f12) {
+        setFunction(12,f12);
+    }
 
-    public void setF11(boolean f11);
+    /**
+     * Set Function 13 Status.
+     * @param f13 true for Function On, false for Function Off.
+     */
+    default void setF13(boolean f13) {
+        setFunction(13,f13);
+    }
 
-    public boolean getF12();
+    /**
+     * Set Function 14 Status.
+     * @param f14 true for Function On, false for Function Off.
+     */
+    default void setF14(boolean f14) {
+        setFunction(14,f14);
+    }
 
-    public void setF12(boolean f12);
+    /**
+     * Set Function 15 Status.
+     * @param f15 true for Function On, false for Function Off.
+     */
+    default void setF15(boolean f15) {
+        setFunction(15,f15);
+    }
 
-    public boolean getF13();
+    /**
+     * Set Function 16 Status.
+     * @param f16 true for Function On, false for Function Off.
+     */
+    default void setF16(boolean f16) {
+        setFunction(16,f16);
+    }
 
-    public void setF13(boolean f13);
+    /**
+     * Set Function 17 Status.
+     * @param f17 true for Function On, false for Function Off.
+     */
+    default void setF17(boolean f17) {
+        setFunction(17,f17);
+    }
 
-    public boolean getF14();
+    /**
+     * Set Function 18 Status.
+     * @param f18 true for Function On, false for Function Off.
+     */
+    default void setF18(boolean f18) {
+        setFunction(18,f18);
+    }
 
-    public void setF14(boolean f14);
+    /**
+     * Set Function 19 Status.
+     * @param f19 true for Function On, false for Function Off.
+     */
+    default void setF19(boolean f19) {
+        setFunction(19,f19);
+    }
 
-    public boolean getF15();
+    /**
+     * Set Function 20 Status.
+     * @param f20 true for Function On, false for Function Off.
+     */
+    default void setF20(boolean f20) {
+        setFunction(20,f20);
+    }
 
-    public void setF15(boolean f15);
+    /**
+     * Set Function 21 Status.
+     * @param f21 true for Function On, false for Function Off.
+     */
+    default void setF21(boolean f21) {
+        setFunction(21,f21);
+    }
 
-    public boolean getF16();
+    /**
+     * Set Function 22 Status.
+     * @param f22 true for Function On, false for Function Off.
+     */
+    default void setF22(boolean f22) {
+        setFunction(22,f22);
+    }
 
-    public void setF16(boolean f16);
+    /**
+     * Set Function 23 Status.
+     * @param f23 true for Function On, false for Function Off.
+     */
+    default void setF23(boolean f23) {
+        setFunction(23,f23);
+    }
 
-    public boolean getF17();
+    /**
+     * Set Function 24 Status.
+     * @param f24 true for Function On, false for Function Off.
+     */
+    default void setF24(boolean f24) {
+        setFunction(24,f24);
+    }
 
-    public void setF17(boolean f17);
+    /**
+     * Set Function 25 Status.
+     * @param f25 true for Function On, false for Function Off.
+     */
+    default void setF25(boolean f25) {
+        setFunction(25,f25);
+    }
 
-    public boolean getF18();
+    /**
+     * Set Function 26 Status.
+     * @param f26 true for Function On, false for Function Off.
+     */
+    default void setF26(boolean f26) {
+        setFunction(26,f26);
+    }
 
-    public void setF18(boolean f18);
+    /**
+     * Set Function 27 Status.
+     * @param f27 true for Function On, false for Function Off.
+     */
+    default void setF27(boolean f27) {
+        setFunction(27,f27);
+    }
 
-    public boolean getF19();
-
-    public void setF19(boolean f19);
-
-    public boolean getF20();
-
-    public void setF20(boolean f20);
-
-    public boolean getF21();
-
-    public void setF21(boolean f21);
-
-    public boolean getF22();
-
-    public void setF22(boolean f22);
-
-    public boolean getF23();
-
-    public void setF23(boolean f23);
-
-    public boolean getF24();
-
-    public void setF24(boolean f24);
-
-    public boolean getF25();
-
-    public void setF25(boolean f25);
-
-    public boolean getF26();
-
-    public void setF26(boolean f26);
-
-    public boolean getF27();
-
-    public void setF27(boolean f27);
-
-    public boolean getF28();
-
-    public void setF28(boolean f28);
-
+    /**
+     * Set Function 28 Status.
+     * @param f28 true for Function On, false for Function Off.
+     */
+    default void setF28(boolean f28) {
+        setFunction(28,f28);
+    }
+    
     // functions momentary status - note that we use the naming for DCC,
     // though that's not the implication;
     // see also DccThrottle interface
-    public boolean getF0Momentary();
+    
+    /**
+     * Get Momentary Function 0 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF0Momentary() {
+        return getFunctionMomentary(0);
+    }
+    
+    /**
+     * Get Momentary Function 1 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF1Momentary() {
+        return getFunctionMomentary(1);
+    }
+    
+    /**
+     * Get Momentary Function 2 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF2Momentary() {
+        return getFunctionMomentary(2);
+    }
+    
+    /**
+     * Get Momentary Function 3 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF3Momentary() {
+        return getFunctionMomentary(3);
+    }
+    
+    /**
+     * Get Momentary Function 4 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF4Momentary() {
+        return getFunctionMomentary(4);
+    }
+    
+    /**
+     * Get Momentary Function 5 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF5Momentary() {
+        return getFunctionMomentary(5);
+    }
+    
+    /**
+     * Get Momentary Function 6 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF6Momentary() {
+        return getFunctionMomentary(6);
+    }
+    
+    /**
+     * Get Momentary Function 7 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF7Momentary() {
+        return getFunctionMomentary(7);
+    }
+    
+    /**
+     * Get Momentary Function 8 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF8Momentary() {
+        return getFunctionMomentary(8);
+    }
+    
+    /**
+     * Get Momentary Function 9 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF9Momentary() {
+        return getFunctionMomentary(9);
+    }
+    
+    /**
+     * Get Momentary Function 10 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF10Momentary() {
+        return getFunctionMomentary(10);
+    }
+    
+    /**
+     * Get Momentary Function 11 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF11Momentary() {
+        return getFunctionMomentary(11);
+    }
+    
+    /**
+     * Get Momentary Function 12 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF12Momentary() {
+        return getFunctionMomentary(12);
+    }
+    
+    /**
+     * Get Momentary Function 13 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF13Momentary() {
+        return getFunctionMomentary(13);
+    }
+    
+    /**
+     * Get Momentary Function 14 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF14Momentary() {
+        return getFunctionMomentary(14);
+    }
+    
+    /**
+     * Get Momentary Function 15 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF15Momentary() {
+        return getFunctionMomentary(15);
+    }
+    
+    /**
+     * Get Momentary Function 16 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF16Momentary() {
+        return getFunctionMomentary(16);
+    }
+    
+    /**
+     * Get Momentary Function 17 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF17Momentary() {
+        return getFunctionMomentary(17);
+    }
+    
+    /**
+     * Get Momentary Function 18 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF18Momentary() {
+        return getFunctionMomentary(18);
+    }
+    
+    /**
+     * Get Momentary Function 19 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF19Momentary() {
+        return getFunctionMomentary(19);
+    }
+    
+    /**
+     * Get Momentary Function 20 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF20Momentary() {
+        return getFunctionMomentary(20);
+    }
+    
+    /**
+     * Get Momentary Function 21 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF21Momentary() {
+        return getFunctionMomentary(21);
+    }
+    
+    /**
+     * Get Momentary Function 22 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF22Momentary() {
+        return getFunctionMomentary(22);
+    }
+    
+    /**
+     * Get Momentary Function 23 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF23Momentary() {
+        return getFunctionMomentary(23);
+    }
+    
+    /**
+     * Get Momentary Function 24 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF24Momentary() {
+        return getFunctionMomentary(24);
+    }
+    
+    /**
+     * Get Momentary Function 25 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF25Momentary() {
+        return getFunctionMomentary(25);
+    }
+    
+    /**
+     * Get Momentary Function 26 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF26Momentary() {
+        return getFunctionMomentary(26);
+    }
+    
+    /**
+     * Get Momentary Function 27 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF27Momentary() {
+        return getFunctionMomentary(27);
+    }
+    
+    /**
+     * Get Momentary Function 28 Status.
+     * @return true for Momentary Function On, else false.
+     */
+    default boolean getF28Momentary() {
+        return getFunctionMomentary(28);
+    }
+    
+    /**
+     * Set Momentary Function 0 Status.
+     * @param f0Momentary true for Momentary Function On, else false.
+     */
+    default void setF0Momentary(boolean f0Momentary) {
+        setFunctionMomentary(0,f0Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 1 Status.
+     * @param f1Momentary true for Momentary Function On, else false.
+     */
+    default void setF1Momentary(boolean f1Momentary) {
+        setFunctionMomentary(1,f1Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 2 Status.
+     * @param f2Momentary true for Momentary Function On, else false.
+     */
+    default void setF2Momentary(boolean f2Momentary) {
+        setFunctionMomentary(2,f2Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 3 Status.
+     * @param f3Momentary true for Momentary Function On, else false.
+     */
+    default void setF3Momentary(boolean f3Momentary) {
+        setFunctionMomentary(3,f3Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 4 Status.
+     * @param f4Momentary true for Momentary Function On, else false.
+     */
+    default void setF4Momentary(boolean f4Momentary) {
+        setFunctionMomentary(4,f4Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 5 Status.
+     * @param f5Momentary true for Momentary Function On, else false.
+     */
+    default void setF5Momentary(boolean f5Momentary) {
+        setFunctionMomentary(5,f5Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 6 Status.
+     * @param f6Momentary true for Momentary Function On, else false.
+     */
+    default void setF6Momentary(boolean f6Momentary) {
+        setFunctionMomentary(6,f6Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 7 Status.
+     * @param f7Momentary true for Momentary Function On, else false.
+     */
+    default void setF7Momentary(boolean f7Momentary) {
+        setFunctionMomentary(7,f7Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 8 Status.
+     * @param f8Momentary true for Momentary Function On, else false.
+     */
+    default void setF8Momentary(boolean f8Momentary) {
+        setFunctionMomentary(8,f8Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 9 Status.
+     * @param f9Momentary true for Momentary Function On, else false.
+     */
+    default void setF9Momentary(boolean f9Momentary) {
+        setFunctionMomentary(9,f9Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 10 Status.
+     * @param f10Momentary true for Momentary Function On, else false.
+     */
+    default void setF10Momentary(boolean f10Momentary) {
+        setFunctionMomentary(10,f10Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 11 Status.
+     * @param f11Momentary true for Momentary Function On, else false.
+     */
+    default void setF11Momentary(boolean f11Momentary) {
+        setFunctionMomentary(11,f11Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 12 Status.
+     * @param f12Momentary true for Momentary Function On, else false.
+     */
+    default void setF12Momentary(boolean f12Momentary) {
+        setFunctionMomentary(12,f12Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 13 Status.
+     * @param f13Momentary true for Momentary Function On, else false.
+     */
+    default void setF13Momentary(boolean f13Momentary) {
+        setFunctionMomentary(13,f13Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 14 Status.
+     * @param f14Momentary true for Momentary Function On, else false.
+     */
+    default void setF14Momentary(boolean f14Momentary) {
+        setFunctionMomentary(14,f14Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 15 Status.
+     * @param f15Momentary true for Momentary Function On, else false.
+     */
+    default void setF15Momentary(boolean f15Momentary) {
+        setFunctionMomentary(15,f15Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 16 Status.
+     * @param f16Momentary true for Momentary Function On, else false.
+     */
+    default void setF16Momentary(boolean f16Momentary) {
+        setFunctionMomentary(16,f16Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 17 Status.
+     * @param f17Momentary true for Momentary Function On, else false.
+     */
+    default void setF17Momentary(boolean f17Momentary) {
+        setFunctionMomentary(17,f17Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 18 Status.
+     * @param f18Momentary true for Momentary Function On, else false.
+     */
+    default void setF18Momentary(boolean f18Momentary) {
+        setFunctionMomentary(18,f18Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 19 Status.
+     * @param f19Momentary true for Momentary Function On, else false.
+     */
+    default void setF19Momentary(boolean f19Momentary) {
+        setFunctionMomentary(19,f19Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 20 Status.
+     * @param f20Momentary true for Momentary Function On, else false.
+     */
+    default void setF20Momentary(boolean f20Momentary) {
+        setFunctionMomentary(20,f20Momentary);
+    }
 
-    public void setF0Momentary(boolean f0Momentary);
-
-    public boolean getF1Momentary();
-
-    public void setF1Momentary(boolean f1Momentary);
-
-    public boolean getF2Momentary();
-
-    public void setF2Momentary(boolean f2Momentary);
-
-    public boolean getF3Momentary();
-
-    public void setF3Momentary(boolean f3Momentary);
-
-    public boolean getF4Momentary();
-
-    public void setF4Momentary(boolean f4Momentary);
-
-    public boolean getF5Momentary();
-
-    public void setF5Momentary(boolean f5Momentary);
-
-    public boolean getF6Momentary();
-
-    public void setF6Momentary(boolean f6Momentary);
-
-    public boolean getF7Momentary();
-
-    public void setF7Momentary(boolean f7Momentary);
-
-    public boolean getF8Momentary();
-
-    public void setF8Momentary(boolean f8Momentary);
-
-    public boolean getF9Momentary();
-
-    public void setF9Momentary(boolean f9Momentary);
-
-    public boolean getF10Momentary();
-
-    public void setF10Momentary(boolean f10Momentary);
-
-    public boolean getF11Momentary();
-
-    public void setF11Momentary(boolean f11Momentary);
-
-    public boolean getF12Momentary();
-
-    public void setF12Momentary(boolean f12Momentary);
-
-    public boolean getF13Momentary();
-
-    public void setF13Momentary(boolean f13Momentary);
-
-    public boolean getF14Momentary();
-
-    public void setF14Momentary(boolean f14Momentary);
-
-    public boolean getF15Momentary();
-
-    public void setF15Momentary(boolean f15Momentary);
-
-    public boolean getF16Momentary();
-
-    public void setF16Momentary(boolean f16Momentary);
-
-    public boolean getF17Momentary();
-
-    public void setF17Momentary(boolean f17Momentary);
-
-    public boolean getF18Momentary();
-
-    public void setF18Momentary(boolean f18Momentary);
-
-    public boolean getF19Momentary();
-
-    public void setF19Momentary(boolean f19Momentary);
-
-    public boolean getF20Momentary();
-
-    public void setF20Momentary(boolean f20Momentary);
-
-    public boolean getF21Momentary();
-
-    public void setF21Momentary(boolean f21Momentary);
-
-    public boolean getF22Momentary();
-
-    public void setF22Momentary(boolean f22Momentary);
-
-    public boolean getF23Momentary();
-
-    public void setF23Momentary(boolean f23Momentary);
-
-    public boolean getF24Momentary();
-
-    public void setF24Momentary(boolean f24Momentary);
-
-    public boolean getF25Momentary();
-
-    public void setF25Momentary(boolean f25Momentary);
-
-    public boolean getF26Momentary();
-
-    public void setF26Momentary(boolean f26Momentary);
-
-    public boolean getF27Momentary();
-
-    public void setF27Momentary(boolean f27Momentary);
-
-    public boolean getF28Momentary();
-
-    public void setF28Momentary(boolean f28Momentary);
+    /**
+     * Set Momentary Function 21 Status.
+     * @param f21Momentary true for Momentary Function On, else false.
+     */
+    default void setF21Momentary(boolean f21Momentary) {
+        setFunctionMomentary(21,f21Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 22 Status.
+     * @param f22Momentary true for Momentary Function On, else false.
+     */
+    default void setF22Momentary(boolean f22Momentary) {
+        setFunctionMomentary(22,f22Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 23 Status.
+     * @param f23Momentary true for Momentary Function On, else false.
+     */
+    default void setF23Momentary(boolean f23Momentary) {
+        setFunctionMomentary(23,f23Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 24 Status.
+     * @param f24Momentary true for Momentary Function On, else false.
+     */
+    default void setF24Momentary(boolean f24Momentary) {
+        setFunctionMomentary(24,f24Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 25 Status.
+     * @param f25Momentary true for Momentary Function On, else false.
+     */
+    default void setF25Momentary(boolean f25Momentary) {
+        setFunctionMomentary(25,f25Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 26 Status.
+     * @param f26Momentary true for Momentary Function On, else false.
+     */
+    default void setF26Momentary(boolean f26Momentary) {
+        setFunctionMomentary(26,f26Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 27 Status.
+     * @param f27Momentary true for Momentary Function On, else false.
+     */
+    default void setF27Momentary(boolean f27Momentary) {
+        setFunctionMomentary(27,f27Momentary);
+    }
+    
+    /**
+     * Set Momentary Function 28 Status.
+     * @param f28Momentary true for Momentary Function On, else false.
+     */
+    default void setF28Momentary(boolean f28Momentary) {
+        setFunctionMomentary(28,f28Momentary);
+    }
 
     /**
      * Locomotive address. The exact format is defined by the specific
