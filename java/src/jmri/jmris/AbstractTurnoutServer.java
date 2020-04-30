@@ -24,7 +24,7 @@ abstract public class AbstractTurnoutServer {
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutServer.class);
 
     public AbstractTurnoutServer(){
-        turnouts = new HashMap<String, TurnoutListener>();
+        turnouts = new HashMap<>();
     }
 
     /*

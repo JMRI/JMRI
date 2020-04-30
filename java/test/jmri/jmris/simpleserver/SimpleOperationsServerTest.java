@@ -152,7 +152,7 @@ public class SimpleOperationsServerTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
@@ -167,7 +167,7 @@ public class SimpleOperationsServerTest {
         output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
             @Override
-            public void write(int b) throws java.io.IOException {
+            public void write(int b) {
                 sb.append((char) b);
             }
         });
@@ -175,7 +175,7 @@ public class SimpleOperationsServerTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }

@@ -21,7 +21,7 @@ public class SimpleSignalHeadServerTest {
                     // null output string drops characters
                     // could be replaced by one that checks for specific outputs
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                     }
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
@@ -35,7 +35,7 @@ public class SimpleSignalHeadServerTest {
                     // null output string drops characters
                     // could be replaced by one that checks for specific outputs
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                     }
                 });
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);        
@@ -49,7 +49,7 @@ public class SimpleSignalHeadServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -57,7 +57,7 @@ public class SimpleSignalHeadServerTest {
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(jcs);
         // NOTE: this test uses reflection to test a private method.
         Throwable thrown = catchThrowable(() -> {
-            java.lang.reflect.Method sendMessageMethod=null;
+            java.lang.reflect.Method sendMessageMethod;
             sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
             // override the default permissions.
             sendMessageMethod.setAccessible(true);
@@ -73,7 +73,7 @@ public class SimpleSignalHeadServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -81,7 +81,7 @@ public class SimpleSignalHeadServerTest {
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(input, output);
         // NOTE: this test uses reflection to test a private method.
         Throwable thrown = catchThrowable(() -> {
-           java.lang.reflect.Method sendMessageMethod=null;
+           java.lang.reflect.Method sendMessageMethod;
            sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
            // override the default permissions.
             sendMessageMethod.setAccessible(true);
@@ -98,7 +98,7 @@ public class SimpleSignalHeadServerTest {
                 new java.io.OutputStream() {
 
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -115,7 +115,7 @@ public class SimpleSignalHeadServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -130,7 +130,7 @@ public class SimpleSignalHeadServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -147,7 +147,7 @@ public class SimpleSignalHeadServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -164,7 +164,7 @@ public class SimpleSignalHeadServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -181,7 +181,7 @@ public class SimpleSignalHeadServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -201,7 +201,7 @@ public class SimpleSignalHeadServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -221,7 +221,7 @@ public class SimpleSignalHeadServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -239,7 +239,7 @@ public class SimpleSignalHeadServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -252,7 +252,7 @@ public class SimpleSignalHeadServerTest {
         assertThat(sb.toString()).isEqualTo("SIGNALHEAD IH1 DARK\n").withFailMessage("parse blank check");
     }
 
-    @BeforeEach public void setUp() throws Exception {
+    @BeforeEach public void setUp() {
         JUnitUtil.setUp();
 
         JUnitUtil.initInternalTurnoutManager();
@@ -263,7 +263,7 @@ public class SimpleSignalHeadServerTest {
         jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(new jmri.implementation.VirtualSignalHead("IH1","Head 1"));
     }
 
-    @AfterEach public void tearDown() throws Exception {
+    @AfterEach public void tearDown() {
         JUnitUtil.tearDown();
     }
 

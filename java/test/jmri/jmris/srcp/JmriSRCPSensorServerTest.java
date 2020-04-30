@@ -18,7 +18,7 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
     private ByteArrayOutputStream output;
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void checkErrorStatusSent(){
@@ -26,7 +26,7 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
     }
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void checkSensorActiveSent(){
@@ -34,7 +34,7 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
     }
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void checkSensorInActiveSent(){
@@ -42,7 +42,7 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
     }
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void checkSensorUnknownSent(){
@@ -61,7 +61,7 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
         ss = new JmriSRCPSensorServer(input, output);
     }
 
-    @AfterEach public void tearDown() throws Exception {
+    @AfterEach public void tearDown() {
         ss.dispose();
         ss = null;
         JUnitUtil.tearDown();
