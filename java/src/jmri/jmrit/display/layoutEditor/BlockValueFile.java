@@ -209,7 +209,7 @@ public class BlockValueFile extends XmlFile {
                     // write content to file
                     writeXML(findFile(defaultFileName), doc);
                 } catch (IOException ioe) {
-                    log.error("IO Exception {}", ioe);
+                    log.error("While writing block value file ", ioe);
                     throw (ioe);
                 }
             }

@@ -1,7 +1,5 @@
 package jmri.jmris;
 
-import java.io.IOException;
-import jmri.JmriException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,11 +23,11 @@ public class ServiceHandlerTest {
     public void testSetAndGetPowerServer(){
         AbstractPowerServer ps = new AbstractPowerServer(){
             @Override
-            public void sendStatus(int Status) throws IOException{}
+            public void sendStatus(int Status) {}
             @Override
-            public void sendErrorStatus() throws IOException {}
+            public void sendErrorStatus() {}
             @Override
-            public void parseStatus(String statusString) throws JmriException,IOException {}
+            public void parseStatus(String statusString) {}
         };
         ServiceHandler a = new ServiceHandler();
         // set the value
@@ -42,11 +40,11 @@ public class ServiceHandlerTest {
     public void testSetAndGetTurnoutServer(){
         AbstractTurnoutServer ts = new AbstractTurnoutServer(){
             @Override
-            public void sendStatus(String message, int Status) throws IOException{}
+            public void sendStatus(String message, int Status) {}
             @Override
-            public void sendErrorStatus(String status) throws IOException {}
+            public void sendErrorStatus(String status) {}
             @Override
-            public void parseStatus(String statusString) throws JmriException,IOException {}
+            public void parseStatus(String statusString) {}
         };
         ServiceHandler a = new ServiceHandler();
         // set the value
@@ -59,11 +57,11 @@ public class ServiceHandlerTest {
     public void testSetAndGetSensorServer(){
         AbstractSensorServer ts = new AbstractSensorServer(){
             @Override
-            public void sendStatus(String message, int Status) throws IOException{}
+            public void sendStatus(String message, int Status) {}
             @Override
-            public void sendErrorStatus(String status) throws IOException {}
+            public void sendErrorStatus(String status) {}
             @Override
-            public void parseStatus(String statusString) throws JmriException,IOException {}
+            public void parseStatus(String statusString) {}
         };
         ServiceHandler a = new ServiceHandler();
         // set the value
@@ -77,11 +75,11 @@ public class ServiceHandlerTest {
     public void testSetAndGetLightServer(){
         AbstractLightServer ts = new AbstractLightServer(){
             @Override
-            public void sendStatus(String lightName, int Status) throws IOException{}
+            public void sendStatus(String lightName, int Status) {}
             @Override
-            public void sendErrorStatus(String lightName) throws IOException {}
+            public void sendErrorStatus(String lightName) {}
             @Override
-            public void parseStatus(String statusString) throws JmriException,IOException {}
+            public void parseStatus(String statusString) {}
         };
         ServiceHandler a = new ServiceHandler();
         // set the value
@@ -94,11 +92,11 @@ public class ServiceHandlerTest {
     public void testSetAndGetProgrammerServer(){
         AbstractProgrammerServer ts = new AbstractProgrammerServer(){
             @Override
-            public void sendStatus(int CV, int value, int status) throws IOException{}
+            public void sendStatus(int CV, int value, int status) {}
             @Override
-            public void sendNotAvailableStatus() throws IOException{}
+            public void sendNotAvailableStatus() {}
             @Override
-            public void parseRequest(String statusString) throws JmriException,IOException {}
+            public void parseRequest(String statusString) {}
         };
         ServiceHandler a = new ServiceHandler();
         // set the value
@@ -111,17 +109,17 @@ public class ServiceHandlerTest {
     public void testSetAndGetTimeServer(){
         AbstractTimeServer ts = new AbstractTimeServer(){
             @Override
-            public void sendTime() throws IOException{}
+            public void sendTime() {}
             @Override
-            public void sendRate() throws IOException{}
+            public void sendRate() {}
             @Override
-            public void sendStatus() throws IOException{}
+            public void sendStatus() {}
             @Override
-            public void sendErrorStatus() throws IOException {}
+            public void sendErrorStatus() {}
             @Override
-            public void parseTime(String status) throws IOException {}
+            public void parseTime(String status) {}
             @Override
-            public void parseRate(String status) throws IOException {}
+            public void parseRate(String status) {}
         };
         ServiceHandler a = new ServiceHandler();
         // set the value
@@ -131,12 +129,12 @@ public class ServiceHandlerTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
 
     }

@@ -24,7 +24,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
                     // null output string drops characters
                     // could be replaced by one that checks for specific outputs
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                     }
                 });
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
@@ -36,7 +36,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     @Test public void testSendMessage() {
         // NOTE: this test uses reflection to test a private method.
         Throwable thrown = catchThrowable( () -> {
-            java.lang.reflect.Method sendMessageMethod=null;
+            java.lang.reflect.Method sendMessageMethod;
             sendMessageMethod = ss.getClass().getDeclaredMethod("sendMessage", String.class);
             // override the default permissions.
             sendMessageMethod.setAccessible(true);
@@ -51,7 +51,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -59,7 +59,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
         SimpleSensorServer a = new SimpleSensorServer(jcs);
         // NOTE: this test uses reflection to test a private method.
         Throwable thrown = catchThrowable( () -> {
-           java.lang.reflect.Method sendMessageMethod=null;
+           java.lang.reflect.Method sendMessageMethod;
            sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
            // override the default permissions.
            sendMessageMethod.setAccessible(true);
@@ -162,7 +162,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -170,7 +170,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
         ss = new SimpleSensorServer(input, output);
     }
 
-    @AfterEach public void tearDown() throws Exception {
+    @AfterEach public void tearDown() {
         ss.dispose();
         ss = null;
         sb = null;
