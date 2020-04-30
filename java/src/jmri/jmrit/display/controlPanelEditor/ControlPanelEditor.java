@@ -74,6 +74,7 @@ import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.HelpUtil;
 import jmri.util.SystemType;
+import jmri.util.gui.GuiLafPreferencesManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1215,7 +1216,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _selectRect = null;
 
         // if not sending MouseClicked, do it here
-        if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent()) {
+        if (InstanceManager.getDefault(GuiLafPreferencesManager.class).isNonStandardMouseEvent()) {
             mouseClicked(event);
         }
 
@@ -1232,7 +1233,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     @Override
     public void mouseClicked(MouseEvent event) {
-        if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent()) {
+        if (InstanceManager.getDefault(GuiLafPreferencesManager.class).isNonStandardMouseEvent()) {
             long time = System.currentTimeMillis();
             if (time - _clickTime < 20) {
                 return;
