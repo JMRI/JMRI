@@ -107,7 +107,7 @@
  * LayoutEditorXml handles the storing and loading of all the track and icon objects.
  * It is stored at the user level ("Store Panels...")
  * <p>
- * A {@link jmri.jmrit.display.layoutEditor.BlockValueFile} stores and loads the value (internal transient contents) of Block 
+ * A {@link jmri.jmrit.display.layoutEditor.BlockValueFile} stores and loads the value (internal temporary contents) of Block 
  * objects from the BlockManager. It doesn't reference {@link jmri.jmrit.display.layoutEditor.LayoutBlock} objects.
  * <h2>More Info</h2>
  * User-level documentation is available 

@@ -38,7 +38,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         }
     }
 
-    private transient LayoutBlock lBlock = null;
+    private LayoutBlock lBlock = null;
 
     public LayoutBlock getLayoutBlock() {
         return lBlock;

@@ -27,121 +27,119 @@ import org.slf4j.*;
  *
  * @author George Warner Copyright: (c) 2017-2019
  */
-@SuppressWarnings("serial")
-@SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
 public class LayoutEditorToolBarPanel extends JPanel {
 
     protected LayoutEditor layoutEditor = null;
 
     //top row of radio buttons
-    protected transient JLabel turnoutLabel = new JLabel();
-    protected transient JRadioButton turnoutRHButton = new JRadioButton(Bundle.getMessage("RightHandAbbreviation"));
-    protected transient JRadioButton turnoutLHButton = new JRadioButton(Bundle.getMessage("LeftHandAbbreviation"));
-    protected transient JRadioButton turnoutWYEButton = new JRadioButton(Bundle.getMessage("WYEAbbreviation"));
-    protected transient JRadioButton doubleXoverButton = new JRadioButton(Bundle.getMessage("DoubleCrossoverAbbreviation"));
-    protected transient JRadioButton rhXoverButton = new JRadioButton(Bundle.getMessage("RightCrossover")); //key is also used by Control Panel
+    protected JLabel turnoutLabel = new JLabel();
+    protected JRadioButton turnoutRHButton = new JRadioButton(Bundle.getMessage("RightHandAbbreviation"));
+    protected JRadioButton turnoutLHButton = new JRadioButton(Bundle.getMessage("LeftHandAbbreviation"));
+    protected JRadioButton turnoutWYEButton = new JRadioButton(Bundle.getMessage("WYEAbbreviation"));
+    protected JRadioButton doubleXoverButton = new JRadioButton(Bundle.getMessage("DoubleCrossoverAbbreviation"));
+    protected JRadioButton rhXoverButton = new JRadioButton(Bundle.getMessage("RightCrossover")); //key is also used by Control Panel
     //Editor, placed in DisplayBundle
-    protected transient JRadioButton lhXoverButton = new JRadioButton(Bundle.getMessage("LeftCrossover")); //idem
-    protected transient JRadioButton layoutSingleSlipButton = new JRadioButton(Bundle.getMessage("LayoutSingleSlip"));
-    protected transient JRadioButton layoutDoubleSlipButton = new JRadioButton(Bundle.getMessage("LayoutDoubleSlip"));
+    protected JRadioButton lhXoverButton = new JRadioButton(Bundle.getMessage("LeftCrossover")); //idem
+    protected JRadioButton layoutSingleSlipButton = new JRadioButton(Bundle.getMessage("LayoutSingleSlip"));
+    protected JRadioButton layoutDoubleSlipButton = new JRadioButton(Bundle.getMessage("LayoutDoubleSlip"));
 
     //Default flow layout definitions for JPanels
-    protected transient FlowLayout leftRowLayout = new FlowLayout(FlowLayout.LEFT, 5, 0);       //5 pixel gap between items, no vertical gap
-    protected transient FlowLayout centerRowLayout = new FlowLayout(FlowLayout.CENTER, 5, 0);   //5 pixel gap between items, no vertical gap
-    protected transient FlowLayout rightRowLayout = new FlowLayout(FlowLayout.RIGHT, 5, 0);     //5 pixel gap between items, no vertical gap
+    protected FlowLayout leftRowLayout = new FlowLayout(FlowLayout.LEFT, 5, 0);       //5 pixel gap between items, no vertical gap
+    protected FlowLayout centerRowLayout = new FlowLayout(FlowLayout.CENTER, 5, 0);   //5 pixel gap between items, no vertical gap
+    protected FlowLayout rightRowLayout = new FlowLayout(FlowLayout.RIGHT, 5, 0);     //5 pixel gap between items, no vertical gap
 
     //top row of check boxes
-    protected transient NamedBeanComboBox<Turnout> turnoutNameComboBox = new NamedBeanComboBox<>(
+    protected NamedBeanComboBox<Turnout> turnoutNameComboBox = new NamedBeanComboBox<>(
             InstanceManager.turnoutManagerInstance(), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
-    protected transient JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Name")));
-    protected transient JPanel turnoutNamePanel = new JPanel(leftRowLayout);
-    protected transient JPanel extraTurnoutPanel = new JPanel(leftRowLayout);
-    protected transient NamedBeanComboBox<Turnout> extraTurnoutNameComboBox = new NamedBeanComboBox<>(
+    protected JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Name")));
+    protected JPanel turnoutNamePanel = new JPanel(leftRowLayout);
+    protected JPanel extraTurnoutPanel = new JPanel(leftRowLayout);
+    protected NamedBeanComboBox<Turnout> extraTurnoutNameComboBox = new NamedBeanComboBox<>(
             InstanceManager.turnoutManagerInstance(), null, NamedBean.DisplayOptions.DISPLAYNAME);
-    protected transient JComboBox<String> rotationComboBox = null;
-    protected transient JPanel rotationPanel = new JPanel(leftRowLayout);
+    protected JComboBox<String> rotationComboBox = null;
+    protected JPanel rotationPanel = new JPanel(leftRowLayout);
 
     //2nd row of radio buttons
-    protected transient JLabel trackLabel = new JLabel();
-    protected transient JRadioButton levelXingButton = new JRadioButton(Bundle.getMessage("LevelCrossing"));
-    protected transient JRadioButton trackButton = new JRadioButton(Bundle.getMessage("TrackSegment"));
+    protected JLabel trackLabel = new JLabel();
+    protected JRadioButton levelXingButton = new JRadioButton(Bundle.getMessage("LevelCrossing"));
+    protected JRadioButton trackButton = new JRadioButton(Bundle.getMessage("TrackSegment"));
 
     //2nd row of check boxes
-    protected transient JPanel trackSegmentPropertiesPanel = new JPanel(leftRowLayout);
-    protected transient JCheckBox mainlineTrack = new JCheckBox(Bundle.getMessage("MainlineBox"));
-    protected transient JCheckBox dashedLine = new JCheckBox(Bundle.getMessage("Dashed"));
+    protected JPanel trackSegmentPropertiesPanel = new JPanel(leftRowLayout);
+    protected JCheckBox mainlineTrack = new JCheckBox(Bundle.getMessage("MainlineBox"));
+    protected JCheckBox dashedLine = new JCheckBox(Bundle.getMessage("Dashed"));
 
-    protected transient JLabel blockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockID")));
-    protected transient NamedBeanComboBox<Block> blockIDComboBox = new NamedBeanComboBox<>(
+    protected JLabel blockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockID")));
+    protected NamedBeanComboBox<Block> blockIDComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
-    protected transient JCheckBox highlightBlockCheckBox = new JCheckBox(Bundle.getMessage("HighlightSelectedBlockTitle"));
+    protected JCheckBox highlightBlockCheckBox = new JCheckBox(Bundle.getMessage("HighlightSelectedBlockTitle"));
 
-    protected transient JLabel blockSensorLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockSensorName")));
-    protected transient NamedBeanComboBox<Sensor> blockSensorComboBox = new NamedBeanComboBox<>(
+    protected JLabel blockSensorLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockSensorName")));
+    protected NamedBeanComboBox<Sensor> blockSensorComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SensorManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
     //3rd row of radio buttons (and any associated text fields)
-    protected transient JRadioButton endBumperButton = new JRadioButton(Bundle.getMessage("EndBumper"));
-    protected transient JRadioButton anchorButton = new JRadioButton(Bundle.getMessage("Anchor"));
-    protected transient JRadioButton edgeButton = new JRadioButton(Bundle.getMessage("EdgeConnector"));
+    protected JRadioButton endBumperButton = new JRadioButton(Bundle.getMessage("EndBumper"));
+    protected JRadioButton anchorButton = new JRadioButton(Bundle.getMessage("Anchor"));
+    protected JRadioButton edgeButton = new JRadioButton(Bundle.getMessage("EdgeConnector"));
 
-    protected transient JLabel labelsLabel = new JLabel();
-    protected transient JRadioButton textLabelButton = new JRadioButton(Bundle.getMessage("TextLabel"));
-    protected transient JTextField textLabelTextField = new JTextField(12);
+    protected JLabel labelsLabel = new JLabel();
+    protected JRadioButton textLabelButton = new JRadioButton(Bundle.getMessage("TextLabel"));
+    protected JTextField textLabelTextField = new JTextField(12);
 
-    protected transient JRadioButton memoryButton = new JRadioButton(Bundle.getMessage("BeanNameMemory"));
-    protected transient NamedBeanComboBox<Memory> textMemoryComboBox = new NamedBeanComboBox<>(
+    protected JRadioButton memoryButton = new JRadioButton(Bundle.getMessage("BeanNameMemory"));
+    protected NamedBeanComboBox<Memory> textMemoryComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(MemoryManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
-    protected transient JRadioButton blockContentsButton = new JRadioButton(Bundle.getMessage("BlockContentsLabel"));
-    protected transient NamedBeanComboBox<Block> blockContentsComboBox = new NamedBeanComboBox<>(
+    protected JRadioButton blockContentsButton = new JRadioButton(Bundle.getMessage("BlockContentsLabel"));
+    protected NamedBeanComboBox<Block> blockContentsComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
     //4th row of radio buttons (and any associated text fields)
-    protected transient JRadioButton multiSensorButton = new JRadioButton(Bundle.getMessage("MultiSensor") + "...");
+    protected JRadioButton multiSensorButton = new JRadioButton(Bundle.getMessage("MultiSensor") + "...");
 
-    protected transient JRadioButton signalMastButton = new JRadioButton(Bundle.getMessage("SignalMastIcon"));
-    protected transient NamedBeanComboBox<SignalMast> signalMastComboBox = new NamedBeanComboBox<>(
+    protected JRadioButton signalMastButton = new JRadioButton(Bundle.getMessage("SignalMastIcon"));
+    protected NamedBeanComboBox<SignalMast> signalMastComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalMastManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
-    protected transient JRadioButton sensorButton = new JRadioButton(Bundle.getMessage("SensorIcon"));
-    protected transient NamedBeanComboBox<Sensor> sensorComboBox = new NamedBeanComboBox<>(
+    protected JRadioButton sensorButton = new JRadioButton(Bundle.getMessage("SensorIcon"));
+    protected NamedBeanComboBox<Sensor> sensorComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SensorManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
-    protected transient JRadioButton signalButton = new JRadioButton(Bundle.getMessage("SignalIcon"));
-    protected transient NamedBeanComboBox<SignalHead> signalHeadComboBox = new NamedBeanComboBox<>(
+    protected JRadioButton signalButton = new JRadioButton(Bundle.getMessage("SignalIcon"));
+    protected NamedBeanComboBox<SignalHead> signalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
-    protected transient JRadioButton iconLabelButton = new JRadioButton(Bundle.getMessage("IconLabel"));
-    protected transient JRadioButton shapeButton = new JRadioButton(Bundle.getMessage("LayoutShape"));
+    protected JRadioButton iconLabelButton = new JRadioButton(Bundle.getMessage("IconLabel"));
+    protected JRadioButton shapeButton = new JRadioButton(Bundle.getMessage("LayoutShape"));
 
-    protected transient JButton changeIconsButton = new JButton(Bundle.getMessage("ChangeIcons") + "...");
+    protected JButton changeIconsButton = new JButton(Bundle.getMessage("ChangeIcons") + "...");
 
-    protected transient MultiIconEditor sensorIconEditor = null;
-    protected transient JFrame sensorFrame = null;
+    protected MultiIconEditor sensorIconEditor = null;
+    protected JFrame sensorFrame = null;
 
-    protected transient MultiIconEditor signalIconEditor = null;
-    protected transient JFrame signalFrame = null;
+    protected MultiIconEditor signalIconEditor = null;
+    protected JFrame signalFrame = null;
 
-    protected transient MultiIconEditor iconEditor = null;
-    protected transient JFrame iconFrame = null;
+    protected MultiIconEditor iconEditor = null;
+    protected JFrame iconFrame = null;
 
-    protected transient MultiSensorIconFrame multiSensorFrame = null;
+    protected MultiSensorIconFrame multiSensorFrame = null;
 
-    protected transient JLabel xLabel = new JLabel("00");
-    protected transient JLabel yLabel = new JLabel("00");
+    protected JLabel xLabel = new JLabel("00");
+    protected JLabel yLabel = new JLabel("00");
 
-    protected transient JPanel zoomPanel = new JPanel();
-    protected transient JLabel zoomLabel = new JLabel("x1");
+    protected JPanel zoomPanel = new JPanel();
+    protected JLabel zoomLabel = new JLabel("x1");
 
-    protected transient JPanel locationPanel = new JPanel();
+    protected JPanel locationPanel = new JPanel();
 
-    protected transient JPanel blockPropertiesPanel = null;
+    protected JPanel blockPropertiesPanel = null;
 
     //non-GUI variables
-    protected transient boolean toolBarIsWide = true;
-    protected transient ButtonGroup itemGroup = null;
+    protected boolean toolBarIsWide = true;
+    protected ButtonGroup itemGroup = null;
 
     /**
      * constructor for LayoutEditorToolBarPanel
@@ -618,5 +616,5 @@ public class LayoutEditorToolBarPanel extends JPanel {
     }   //keyPressed
 
     //initialize logging
-    private transient final static Logger log = LoggerFactory.getLogger(LayoutEditorToolBarPanel.class);
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditorToolBarPanel.class);
 }

@@ -61,15 +61,10 @@ import jmri.util.swing.*;
  * @author Dave Duchamp Copyright: (c) 2004-2007
  * @author George Warner Copyright: (c) 2017-2019
  */
-@SuppressWarnings("serial")
-@SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
 public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
 
-
-
-
-    //Operational instance variables - not saved to disk
+    // Operational instance variables - not saved to disk
     private  JmriJFrame floatingEditToolBoxFrame = null;
     private  JScrollPane floatingEditContentScrollPane = null;
     private  JPanel floatEditHelpPanel = null;
@@ -89,7 +84,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return leToolBarPanel;
     }
 
-    //end of main panel controls
+    // end of main panel controls
     private  boolean delayedPopupTrigger = false;
     private  Point2D currentPoint = new Point2D.Double(100.0, 100.0);
     private  Point2D dLoc = new Point2D.Double(0.0, 0.0);
@@ -103,7 +98,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private  int gridSize1st = 10;    //grid size in pixels
     private  int gridSize2nd = 10;    // secondary grid
 
-    //size of point boxes
+    // size of point boxes
     protected static final double SIZE = 3.0;
     protected static final double SIZE2 = SIZE * 2.; //must be twice SIZE
 
@@ -112,21 +107,21 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     protected boolean turnoutFillControlCircles = false;
     protected int turnoutCircleSize = 4; //matches earlier versions
 
-    //use turnoutCircleSize when you need an int and these when you need a double
-    //note: these only change when setTurnoutCircleSize is called
-    //using these avoids having to call getTurnoutCircleSize() and
-    //the multiply (x2) and the int -> double conversion overhead
+    // use turnoutCircleSize when you need an int and these when you need a double
+    // note: these only change when setTurnoutCircleSize is called
+    // using these avoids having to call getTurnoutCircleSize() and
+    // the multiply (x2) and the int -> double conversion overhead
     protected  double circleRadius = SIZE * getTurnoutCircleSize();
     protected  double circleDiameter = 2.0 * circleRadius;
 
-    //selection variables
+    // selection variables
     protected  boolean selectionActive = false;
     private  double selectionX = 0.0;
     private  double selectionY = 0.0;
     protected  double selectionWidth = 0.0;
     protected  double selectionHeight = 0.0;
 
-    //Option menu items
+    // Option menu items
     private  JCheckBoxMenuItem editModeCheckBoxMenuItem = null;
 
     private  JRadioButtonMenuItem toolBarSideTopButton = null;
@@ -167,7 +162,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private  boolean turnoutDrawUnselectedLeg = true;
     private  boolean autoAssignBlocks = false;
 
-    //Tools menu items
+    // Tools menu items
     private final  JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
     private final  JRadioButtonMenuItem zoom025Item = new JRadioButtonMenuItem("x 0.25");
     private final  JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
@@ -185,7 +180,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private final  JMenuItem undoTranslateSelectionMenuItem = new JMenuItem(Bundle.getMessage("UndoTranslateSelection"));
     private final  JMenuItem assignBlockToSelectionMenuItem = new JMenuItem(Bundle.getMessage("AssignBlockToSelectionTitle") + "...");
 
-    //Selected point information
+    // Selected point information
     private final  Point2D startDelta = new Point2D.Double(0.0, 0.0); //starting delta coordinates
     protected  Object selectedObject = null;       //selected object, null if nothing selected
     protected  Object prevSelectedObject = null;   //previous selected object, for undo
@@ -194,7 +189,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     protected  LayoutTrack foundTrack = null;      //found object, null if nothing found
     protected  Point2D foundLocation = new Point2D.Double(0.0, 0.0); //location of found object
     protected  HitPointType foundHitPointType = HitPointType.NONE;          //connection type within the found object
-    ///private  boolean foundNeedsConnect = false;    //true if found point needs a connection
 
     protected  LayoutTrack beginTrack = null;      //begin track segment connection object, null if none
     protected  Point2D beginLocation = new Point2D.Double(0.0, 0.0); //location of begin object
@@ -202,8 +196,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     protected  Point2D currentLocation = new Point2D.Double(0.0, 0.0); //current location
 
-    //Lists of items that describe the Layout, and allow it to be drawn
-    //Each of the items must be saved to disk over sessions
+    // Lists of items that describe the Layout, and allow it to be drawn
+    // Each of the items must be saved to disk over sessions
     private  List<AnalogClock2Display> clocks = new ArrayList<>();           //fast clocks
     private  List<LocoIcon> markerImage = new ArrayList<>();                 //marker images
     private  List<MultiSensorIcon> multiSensors = new ArrayList<>();         //multi-sensor images

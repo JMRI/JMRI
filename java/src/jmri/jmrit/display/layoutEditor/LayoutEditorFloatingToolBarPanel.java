@@ -11,12 +11,10 @@ import javax.swing.border.*;
  *
  * @author George Warner Copyright: (c) 2017-2019
  */
-@SuppressWarnings("serial")
-@SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
 public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
 
-    private transient JPanel floatEditTabsPanel;
-    private transient JTabbedPane floatEditTabsPane;
+    private JPanel floatEditTabsPanel;
+    private JTabbedPane floatEditTabsPane;
 
     /**
      * constructor for LayoutEditorFloatingToolBarPanel
@@ -216,5 +214,5 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
     }
 
     //initialize logging
-    //private transient final static Logger log = LoggerFactory.getLogger(LayoutEditorFloatingToolBarPanel.class);
+    //private final static Logger log = LoggerFactory.getLogger(LayoutEditorFloatingToolBarPanel.class);
 }
