@@ -268,7 +268,6 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
      * Save Metrics button handler Metric data is saved to a text file named
      * CMRInetMetrics_YYYYMMDD_HHMMSS The file is text lines, one for each
      * metric displayed and the count
-     * <p>
      */
     public void saveMetricsButtonActionPerformed(ActionEvent e) {
         String fileName = "CMRInetMetrics_";

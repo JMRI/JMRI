@@ -459,7 +459,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     _targetPanel.add(layoutEditorComponent, Integer.valueOf(3));
                     _targetPanel.moveToFront(layoutEditorComponent);
                 } catch (Exception e) {
-                    log.warn("paintTargetPanelBefore: Exception {}", e);
+                    log.warn("paintTargetPanelBefore: ", e);
                 }
             }
         });
@@ -4852,7 +4852,19 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         String name = finder.uniqueName("SL", ++numLayoutSlips);
 
         //create object
-        LayoutSlip o = new LayoutSlip(name, currentPoint, rot, this, type);
+        LayoutSlip o; 
+        switch(type) {
+            case DOUBLE_SLIP :
+                o = new LayoutDoubleSlip(name, currentPoint, rot, this);
+                break;
+            case SINGLE_SLIP :
+                o = new LayoutSingleSlip(name, currentPoint, rot, this);
+                break;
+            default:
+                log.error("can't create slip {} with type {}", name, type);
+                return; // without creating
+        }
+
         layoutTrackList.add(o);
         unionToPanelBounds(o.getBounds());
         setDirty();
@@ -4944,8 +4956,43 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //get unique name
         String name = finder.uniqueName("TO", ++numLayoutTurnouts);
 
-        //create object
-        LayoutTurnout o = new LayoutTurnout(name, type, currentPoint, rot, xScale, yScale, this);
+        // create object - check all types, although not clear all actually reach here
+        LayoutTurnout o; 
+        switch(type) {
+
+            case RH_TURNOUT :
+                o = new LayoutRHTurnout(name, currentPoint, rot, xScale, yScale, this);
+                break;
+            case LH_TURNOUT :
+                o = new LayoutLHTurnout(name, currentPoint, rot, xScale, yScale, this);
+                break;
+            case WYE_TURNOUT :
+                o = new LayoutWye(name, currentPoint, rot, xScale, yScale, this);
+                break;
+            case DOUBLE_XOVER :
+                o = new LayoutDoubleXOver(name, currentPoint, rot, xScale, yScale, this);
+                break;
+            case RH_XOVER :
+                o = new LayoutRHXOver(name, currentPoint, rot, xScale, yScale, this);
+                break;
+            case LH_XOVER :
+                o = new LayoutLHXOver(name, currentPoint, rot, xScale, yScale, this);
+                break;
+
+            case DOUBLE_SLIP :
+                o = new LayoutDoubleSlip(name, currentPoint, rot, this);
+                log.error("Found SINGLE_SLIP in addLayoutTurnout for element {}", name);
+                break;
+            case SINGLE_SLIP :
+                o = new LayoutSingleSlip(name, currentPoint, rot, this);
+                log.error("Found SINGLE_SLIP in addLayoutTurnout for element {}", name);
+                break;
+
+            default:
+                log.error("can't create LayoutTrack {} with type {}", name, type);
+                return; // without creating
+        }
+        
         layoutTrackList.add(o);
         unionToPanelBounds(o.getBounds());
         setDirty();

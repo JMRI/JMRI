@@ -689,7 +689,7 @@ public class ConnectivityUtil {
                     txt.append("???");
                 }
             }
-            log.error(txt.toString());
+            log.error("Turnouts for Block {}", txt.toString());
         }
         return result;
     }
