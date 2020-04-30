@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.ConfigureManager;
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -99,14 +100,14 @@ public class WebServerAcceptanceSteps implements En {
                     webDriver.findElement(By.xpath(cellPath)).click();
                 });
 
-        After( firefoxtags, () -> {
+        After(tags, () -> {
             LogEntries logEntries = webDriver.manage().logs().get(LogType.BROWSER);
 
+            SoftAssertions softly = new SoftAssertions();
             for (LogEntry logEntry : logEntries) {
-                // Get log message, timestamp and level.
-                log.error("Error log from firefox Entry: {}",logEntry.getMessage());
-                //assertThat(logEntry).withFailMessage(logEntry.getMessage()).isNull();
+                softly.assertThat(logEntry.getMessage()).withFailMessage(logEntry.getMessage()).doesNotStartWith("Javascript error");
             }
+            softly.assertAll();
         });
 
 

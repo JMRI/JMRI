@@ -67,6 +67,10 @@ public class BrowserFactory {
                     } else {
                         chromeOptions.addArguments("--log-level=3");
                     }
+                    LoggingPreferences logPrefs = new LoggingPreferences();
+                    logPrefs.enable(LogType.BROWSER, Level.SEVERE);
+                    chromeOptions.setCapability(CapabilityType.LOGGING_PREFS,logPrefs);
+
                     driver = new EventFiringWebDriver(new ChromeDriver(chromeOptions));
                     driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     drivers.put("Chrome", driver);
