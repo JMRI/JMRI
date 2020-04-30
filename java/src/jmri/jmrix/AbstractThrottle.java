@@ -312,7 +312,8 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
-     * {@inheritDoc}
+     * Dispose when finished with this Throttle.
+     * Abstract Throttles normally call finishRecord(); here.
      */
     abstract protected void throttleDispose();
 
