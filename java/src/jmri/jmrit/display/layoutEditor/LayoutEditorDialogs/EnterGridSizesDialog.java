@@ -31,13 +31,13 @@ public class EnterGridSizesDialog {
     |* Dialog box to enter new grid sizes *|
     \*====================================*/
     //operational variables for enter grid sizes pane
-    private transient JmriJFrame enterGridSizesFrame = null;
+    private JmriJFrame enterGridSizesFrame = null;
     private boolean enterGridSizesOpen = false;
     private boolean gridSizesChange = false;
-    private final transient JTextField primaryGridSizeField = new JTextField(6);
-    private final transient JTextField secondaryGridSizeField = new JTextField(6);
-    private transient JButton gridSizesDone;
-    private transient JButton gridSizesCancel;
+    private final JTextField primaryGridSizeField = new JTextField(6);
+    private final JTextField secondaryGridSizeField = new JTextField(6);
+    private JButton gridSizesDone;
+    private JButton gridSizesCancel;
 
     //display dialog for entering grid sizes
     @InvokeOnGuiThread

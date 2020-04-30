@@ -153,7 +153,7 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
         return jmri.InstanceManager.getDefault(LayoutBlockManager.class);
     }
 
-    private transient LayoutBlock lBlock = null;
+    private LayoutBlock lBlock = null;
 
     private final static Logger log = LoggerFactory.getLogger(LayoutBlockNeighbourTableModel.class);
 }

@@ -1487,7 +1487,7 @@ public class LayoutTrackEditors {
         // variables for Edit Turntable ray pane
         private RayTrack rayTrack = null;
         private final JPanel rayTurnoutPanel;
-        private final transient NamedBeanComboBox<Turnout> turnoutNameComboBox;
+        private final NamedBeanComboBox<Turnout> turnoutNameComboBox;
         private final TitledBorder rayTitledBorder;
         private final JComboBox<String> rayTurnoutStateComboBox;
         private final JLabel rayTurnoutStateLabel;
