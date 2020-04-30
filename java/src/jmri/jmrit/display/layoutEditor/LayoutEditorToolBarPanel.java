@@ -19,7 +19,6 @@ import javax.swing.*;
 import jmri.*;
 import jmri.swing.NamedBeanComboBox;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.*;
 
 /**
  * This is the base class for the horizontal, vertical and floating toolbar
@@ -29,26 +28,26 @@ import org.slf4j.*;
  */
 public class LayoutEditorToolBarPanel extends JPanel {
 
-    protected LayoutEditor layoutEditor = null;
+    final protected LayoutEditor layoutEditor; // initialized in constuctor
 
-    //top row of radio buttons
+    // top row of radio buttons
     protected JLabel turnoutLabel = new JLabel();
     protected JRadioButton turnoutRHButton = new JRadioButton(Bundle.getMessage("RightHandAbbreviation"));
     protected JRadioButton turnoutLHButton = new JRadioButton(Bundle.getMessage("LeftHandAbbreviation"));
     protected JRadioButton turnoutWYEButton = new JRadioButton(Bundle.getMessage("WYEAbbreviation"));
     protected JRadioButton doubleXoverButton = new JRadioButton(Bundle.getMessage("DoubleCrossoverAbbreviation"));
     protected JRadioButton rhXoverButton = new JRadioButton(Bundle.getMessage("RightCrossover")); //key is also used by Control Panel
-    //Editor, placed in DisplayBundle
+    // Editor, placed in DisplayBundle
     protected JRadioButton lhXoverButton = new JRadioButton(Bundle.getMessage("LeftCrossover")); //idem
     protected JRadioButton layoutSingleSlipButton = new JRadioButton(Bundle.getMessage("LayoutSingleSlip"));
     protected JRadioButton layoutDoubleSlipButton = new JRadioButton(Bundle.getMessage("LayoutDoubleSlip"));
 
-    //Default flow layout definitions for JPanels
+    // Default flow layout definitions for JPanels
     protected FlowLayout leftRowLayout = new FlowLayout(FlowLayout.LEFT, 5, 0);       //5 pixel gap between items, no vertical gap
     protected FlowLayout centerRowLayout = new FlowLayout(FlowLayout.CENTER, 5, 0);   //5 pixel gap between items, no vertical gap
     protected FlowLayout rightRowLayout = new FlowLayout(FlowLayout.RIGHT, 5, 0);     //5 pixel gap between items, no vertical gap
 
-    //top row of check boxes
+    // top row of check boxes
     protected NamedBeanComboBox<Turnout> turnoutNameComboBox = new NamedBeanComboBox<>(
             InstanceManager.turnoutManagerInstance(), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
@@ -60,12 +59,12 @@ public class LayoutEditorToolBarPanel extends JPanel {
     protected JComboBox<String> rotationComboBox = null;
     protected JPanel rotationPanel = new JPanel(leftRowLayout);
 
-    //2nd row of radio buttons
+    // 2nd row of radio buttons
     protected JLabel trackLabel = new JLabel();
     protected JRadioButton levelXingButton = new JRadioButton(Bundle.getMessage("LevelCrossing"));
     protected JRadioButton trackButton = new JRadioButton(Bundle.getMessage("TrackSegment"));
 
-    //2nd row of check boxes
+    // 2nd row of check boxes
     protected JPanel trackSegmentPropertiesPanel = new JPanel(leftRowLayout);
     protected JCheckBox mainlineTrack = new JCheckBox(Bundle.getMessage("MainlineBox"));
     protected JCheckBox dashedLine = new JCheckBox(Bundle.getMessage("Dashed"));
@@ -79,7 +78,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
     protected NamedBeanComboBox<Sensor> blockSensorComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SensorManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
-    //3rd row of radio buttons (and any associated text fields)
+    // 3rd row of radio buttons (and any associated text fields)
     protected JRadioButton endBumperButton = new JRadioButton(Bundle.getMessage("EndBumper"));
     protected JRadioButton anchorButton = new JRadioButton(Bundle.getMessage("Anchor"));
     protected JRadioButton edgeButton = new JRadioButton(Bundle.getMessage("EdgeConnector"));
@@ -96,7 +95,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
     protected NamedBeanComboBox<Block> blockContentsComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
-    //4th row of radio buttons (and any associated text fields)
+    // 4th row of radio buttons (and any associated text fields)
     protected JRadioButton multiSensorButton = new JRadioButton(Bundle.getMessage("MultiSensor") + "...");
 
     protected JRadioButton signalMastButton = new JRadioButton(Bundle.getMessage("SignalMastIcon"));
@@ -137,12 +136,19 @@ public class LayoutEditorToolBarPanel extends JPanel {
 
     protected JPanel blockPropertiesPanel = null;
 
-    //non-GUI variables
+    // non-GUI variables
     protected boolean toolBarIsWide = true;
     protected ButtonGroup itemGroup = null;
 
     /**
-     * constructor for LayoutEditorToolBarPanel
+     * Constructor for LayoutEditorToolBarPanel.
+     * 
+     * Note an unusual design feature: Since this calls the 
+     * {@link #setupComponents()} and {@link #layoutComponents()}
+     * non-final methods in the constructor, any subclass
+     * reimplementing those must provide versions that 
+     * will work before the subclasses own initializers and constructor 
+     * is run.
      *
      * @param layoutEditor the layout editor that this is for
      */
@@ -150,12 +156,11 @@ public class LayoutEditorToolBarPanel extends JPanel {
         this.layoutEditor = layoutEditor;
 
         setupComponents();
-
         layoutComponents();
-    }   //constructor
+    }
 
     protected void setupComponents() {
-        //setup group for radio buttons selecting items to add and line style
+        // setup group for radio buttons selecting items to add and line style
         itemGroup = new ButtonGroup();
         itemGroup.add(turnoutRHButton);
         itemGroup.add(turnoutLHButton);
@@ -180,7 +185,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         itemGroup.add(iconLabelButton);
         itemGroup.add(shapeButton);
 
-        //This is used to enable/disable property controls depending on which (radio) button is selected
+        // This is used to enable/disable property controls depending on which (radio) button is selected
         ActionListener selectionListAction = (ActionEvent event) -> {
             //turnout properties
             boolean e = (turnoutRHButton.isSelected()
@@ -219,7 +224,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
                 i.setEnabled(e);
             }
 
-            //block properties
+            // block properties
             e = (turnoutRHButton.isSelected()
                     || turnoutLHButton.isSelected()
                     || turnoutWYEButton.isSelected()
@@ -250,17 +255,17 @@ public class LayoutEditorToolBarPanel extends JPanel {
                 blockSensorComboBox.setEnabled(e);
             }
 
-            //enable/disable text label, memory & block contents text fields
+            // enable/disable text label, memory & block contents text fields
             textLabelTextField.setEnabled(textLabelButton.isSelected());
             textMemoryComboBox.setEnabled(memoryButton.isSelected());
             blockContentsComboBox.setEnabled(blockContentsButton.isSelected());
 
-            //enable/disable signal mast, sensor & signal head text fields
+            // enable/disable signal mast, sensor & signal head text fields
             signalMastComboBox.setEnabled(signalMastButton.isSelected());
             sensorComboBox.setEnabled(sensorButton.isSelected());
             signalHeadComboBox.setEnabled(signalButton.isSelected());
 
-            //changeIconsButton
+            // changeIconsButton
             e = (sensorButton.isSelected()
                     || signalButton.isSelected()
                     || iconLabelButton.isSelected());
@@ -291,8 +296,8 @@ public class LayoutEditorToolBarPanel extends JPanel {
         iconLabelButton.addActionListener(selectionListAction);
         shapeButton.addActionListener(selectionListAction);
 
-        //first row of edit tool bar items
-        //turnout items
+        // first row of edit tool bar items
+        // turnout items
         turnoutRHButton.setSelected(true);
         turnoutRHButton.setToolTipText(Bundle.getMessage("RHToolTip"));
         turnoutLHButton.setToolTipText(Bundle.getMessage("LHToolTip"));
@@ -321,7 +326,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         // extraTurnoutNameComboBox.setEnabledColor(Color.green.darker().darker());
         // extraTurnoutNameComboBox.setDisabledColor(Color.red);
 
-        //this is enabled/disabled via selectionListAction above
+        // this is enabled/disabled via selectionListAction above
         JLabel extraTurnoutLabel = new JLabel(Bundle.getMessage("SecondName"));
         extraTurnoutLabel.setEnabled(false);
         extraTurnoutPanel.add(extraTurnoutLabel);
@@ -354,11 +359,11 @@ public class LayoutEditorToolBarPanel extends JPanel {
         locationPanel.add(yLabel);
         locationPanel.add(new JLabel("}    "));
 
-        //second row of edit tool bar items
+        // second row of edit tool bar items
         levelXingButton.setToolTipText(Bundle.getMessage("LevelCrossingToolTip"));
         trackButton.setToolTipText(Bundle.getMessage("TrackSegmentToolTip"));
 
-        //this is enabled/disabled via selectionListAction above
+        // this is enabled/disabled via selectionListAction above
         trackSegmentPropertiesPanel.add(mainlineTrack);
 
         mainlineTrack.setSelected(false);
@@ -370,7 +375,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         dashedLine.setEnabled(false);
         dashedLine.setToolTipText(Bundle.getMessage("DashedCheckBoxTip"));
 
-        //the blockPanel is enabled/disabled via selectionListAction above
+        // the blockPanel is enabled/disabled via selectionListAction above
         setupComboBox(blockIDComboBox, false, true, true);
         blockIDComboBox.setToolTipText(Bundle.getMessage("BlockIDToolTip"));
 
@@ -378,7 +383,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         highlightBlockCheckBox.addActionListener((ActionEvent event) -> layoutEditor.setHighlightSelectedBlock(highlightBlockCheckBox.isSelected()));
         highlightBlockCheckBox.setSelected(layoutEditor.getHighlightSelectedBlock());
 
-        //change the block name
+        // change the block name
         blockIDComboBox.addActionListener((ActionEvent event) -> {
             //use the "Extra" color to highlight the selected block
             if (layoutEditor.highlightSelectedBlockFlag) {
@@ -405,7 +410,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         setupComboBox(blockSensorComboBox, false, true, false);
         blockSensorComboBox.setToolTipText(Bundle.getMessage("OccupancySensorToolTip"));
 
-        //third row of edit tool bar items
+        // third row of edit tool bar items
         endBumperButton.setToolTipText(Bundle.getMessage("EndBumperToolTip"));
         anchorButton.setToolTipText(Bundle.getMessage("AnchorToolTip"));
         edgeButton.setToolTipText(Bundle.getMessage("EdgeConnectorToolTip"));
@@ -424,21 +429,21 @@ public class LayoutEditorToolBarPanel extends JPanel {
         setupComboBox(blockContentsComboBox, true, false, false);
         blockContentsComboBox.setToolTipText(Bundle.getMessage("BlockContentsButtonToolTip"));
         blockContentsComboBox.addActionListener((ActionEvent event) -> {
-            //use the "Extra" color to highlight the selected block
+            // use the "Extra" color to highlight the selected block
             if (layoutEditor.highlightSelectedBlockFlag) {
                 layoutEditor.highlightBlockInComboBox(blockContentsComboBox);
             }
         });
 
-        //fourth row of edit tool bar items
-        //multi sensor...
+        // fourth row of edit tool bar items
+        // multi sensor...
         multiSensorButton.setToolTipText(Bundle.getMessage("MultiSensorToolTip"));
 
-        //Signal Mast & text
+        // Signal Mast & text
         signalMastButton.setToolTipText(Bundle.getMessage("SignalMastButtonToolTip"));
         setupComboBox(signalMastComboBox, true, false, false);
 
-        //sensor icon & text
+        // sensor icon & text
         sensorButton.setToolTipText(Bundle.getMessage("SensorButtonToolTip"));
 
         setupComboBox(sensorComboBox, true, false, false);
@@ -455,7 +460,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif");
         sensorIconEditor.complete();
 
-        //Signal icon & text
+        // Signal icon & text
         signalButton.setToolTipText(Bundle.getMessage("SignalButtonToolTip"));
 
         setupComboBox(signalHeadComboBox, true, false, false);
@@ -493,12 +498,12 @@ public class LayoutEditorToolBarPanel extends JPanel {
         signalFrame.pack();
         signalFrame.setVisible(false);
 
-        //icon label
+        // icon label
         iconLabelButton.setToolTipText(Bundle.getMessage("IconLabelToolTip"));
         shapeButton.setToolTipText(Bundle.getMessage("LayoutShapeToolTip"));
 
-        //change icons...
-        //this is enabled/disabled via selectionListAction above
+        // change icons...
+        // this is enabled/disabled via selectionListAction above
         changeIconsButton.addActionListener((ActionEvent event) -> {
             if (sensorButton.isSelected()) {
                 sensorFrame.setVisible(true);
@@ -516,14 +521,14 @@ public class LayoutEditorToolBarPanel extends JPanel {
         changeIconsButton.setToolTipText(Bundle.getMessage("ChangeIconToolTip"));
         changeIconsButton.setEnabled(false);
 
-        //??
+        // ??
         iconEditor = new MultiIconEditor(1);
         iconEditor.setIcon(0, "", "resources/icons/smallschematics/tracksegments/block.gif");
         iconEditor.complete();
         iconFrame = new JFrame(Bundle.getMessage("EditIcon"));
         iconFrame.getContentPane().add(iconEditor);
         iconFrame.pack();
-    }   //setupComponents()
+    }
 
     /**
      * layout the components in this panel
@@ -533,7 +538,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
     }
 
     final Map<JRadioButton, String> quickKeyMap = new LinkedHashMap<JRadioButton, String>() {
-        {   //NOTE: These are in the order that the space bar will select thru
+        {   // NOTE: These are in the order that the space bar will select thru
             put(turnoutRHButton, Bundle.getMessage("TurnoutRH_QuickKeys"));
             put(turnoutLHButton, Bundle.getMessage("TurnoutLH_QuickKeys"));
             put(turnoutWYEButton, Bundle.getMessage("TurnoutWYE_QuickKeys"));
@@ -560,21 +565,20 @@ public class LayoutEditorToolBarPanel extends JPanel {
     };
 
     public void keyPressed(@Nonnull KeyEvent event) {
-        //log.info("keyPressed({})", event);
         if (layoutEditor.isEditable()) {
             if (!event.isMetaDown() && !event.isAltDown() && !event.isControlDown()) {
                 if (event.getID() == KEY_PRESSED) {
                     char keyChar = event.getKeyChar();
                     String keyString = String.valueOf(keyChar);
-                    //log.info("KeyEvent.getKeyChar() == {}", KeyEvent.getKeyText(keyChar));
+                    log.trace("KeyEvent.getKeyChar() == {}", KeyEvent.getKeyText(keyChar));
 
-                    //find last radio button
+                    // find last radio button
                     JRadioButton lastRadioButton = null;
                     for (Map.Entry<JRadioButton, String> entry : quickKeyMap.entrySet()) {
                         JRadioButton thisRadioButton = entry.getKey();
                         if (thisRadioButton.isSelected()) {
                             lastRadioButton = thisRadioButton;
-                            //log.info("lastRadioButton is {}", lastRadioButton.getText());
+                            log.trace("lastRadioButton is {}", lastRadioButton.getText());
                             break;
                         }
                     }
@@ -586,35 +590,32 @@ public class LayoutEditorToolBarPanel extends JPanel {
                         String quickKeys = entry.getValue();
                         if (keyString.equals(" ") || StringUtils.containsAny(keyString, quickKeys)) {    // found keyString
                             JRadioButton thisRadioButton = entry.getKey();
-                            //log.info("Matched keyString to {}", thisRadioButton.getText());
+                            log.trace("Matched keyString to {}", thisRadioButton.getText());
                             if (foundLast) {
-                                //log.info("Found next!");
                                 nextRadioButton = thisRadioButton;
                                 break;
                             } else if (lastRadioButton == thisRadioButton) {
-                                //log.info("Found last!");
                                 foundLast = true;
                             } else if (firstRadioButton == null) {
-                                //log.info("Found first!");
                                 firstRadioButton = thisRadioButton;
                             }
                         }
                     }
-                    //if we didn't find the next one...
+                    // if we didn't find the next one...
                     if (nextRadioButton == null) {
-                        //...then use the first one
+                        // ...then use the first one
                         nextRadioButton = firstRadioButton;
                     }
-                    //if we found one...
+                    // if we found one...
                     if (nextRadioButton != null) {
-                        //...then select it
+                        // ...then select it
                         nextRadioButton.setSelected(true);
                     }
                 }   // if KEY_PRESSED event
             }   // if no modifier keys pressed
         }   // if is in edit mode
-    }   //keyPressed
+    } 
 
     //initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorToolBarPanel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorToolBarPanel.class);
 }
