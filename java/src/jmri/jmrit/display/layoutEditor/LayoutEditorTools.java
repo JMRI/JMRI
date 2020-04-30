@@ -9026,8 +9026,8 @@ public class LayoutEditorTools {
             double x_dist_to_Icon = bpa + to;
             double y_dist_to_Icon = (bpo - ta) - (l.maxHeight() - iconAdjOpp);
 
-            log.debug(Double.toString((bpo - ta) - (l.maxHeight() - iconAdjOpp)));
-            log.debug(Double.toString(bpo - (iconAdj + ta)));
+            log.debug("ydist {}", Double.toString((bpo - ta) - (l.maxHeight() - iconAdjOpp)));
+            log.debug("   and {}",Double.toString(bpo - (iconAdj + ta)));
             /*if(angleDeg<45){
     y_dist_to_Icon = (bpo-ta)-(l.maxHeight()-iconAdjOpp);
     } else {

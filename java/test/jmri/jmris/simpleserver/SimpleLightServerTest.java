@@ -18,7 +18,6 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
         
     private StringBuilder sb = null;
     private java.io.DataOutputStream output = null;
-    private java.io.DataInputStream input = null;
 
     @Test
     public void testConnectionCtor() {
@@ -143,11 +142,11 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
             // null output string drops characters
             // could be replaced by one that checks for specific outputs
             @Override
-            public void write(int b) throws java.io.IOException {
+            public void write(int b) {
                 sb.append((char) b);
             }
         });
-        input = new java.io.DataInputStream(System.in);
+        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         ls = new SimpleLightServer(input, output);
     }
 

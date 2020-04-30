@@ -20,7 +20,7 @@ public class JmriConnectionTest {
                     // null output string drops characters
                     // could be replaced by one that checks for specific outputs
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                     }
                 });
         JmriConnection a = new JmriConnection(output);
@@ -28,12 +28,12 @@ public class JmriConnectionTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
 
     }
