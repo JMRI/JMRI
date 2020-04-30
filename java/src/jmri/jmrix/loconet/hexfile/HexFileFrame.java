@@ -186,7 +186,7 @@ public class HexFileFrame extends JmriJFrame {
         }
         //get the maxSlots value from the connection options
         try {
-            maxSlots = Integer.valueOf(port.getOptionState("MaxSlots"));
+            maxSlots = Integer.parseInt(port.getOptionState("MaxSlots"));
         } catch (NumberFormatException e) {
             //ignore missing or invalid option and leave at the default value
         }
