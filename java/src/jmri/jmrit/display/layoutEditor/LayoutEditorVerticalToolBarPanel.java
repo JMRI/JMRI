@@ -222,5 +222,5 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
     }   //layoutComponents
 
     //initialize logging
-    //private final static Logger log = LoggerFactory.getLogger(LayoutEditorVerticalToolBarPanel.class);
+    //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorVerticalToolBarPanel.class);
 }

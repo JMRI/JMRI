@@ -169,6 +169,6 @@ public class MoveSelectionDialog {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(
+    //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(
     //        MoveSelectionDialog.class);
 }

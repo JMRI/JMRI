@@ -4671,6 +4671,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         return Bundle.getMessage("BeanNameLayoutBlock");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlock.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlock.class);
 
 }

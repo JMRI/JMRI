@@ -1618,6 +1618,6 @@ public class LayoutTrackEditors {
         }
     }   // class TurntableRayPanel
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTrackEditors.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrackEditors.class);
 
 }

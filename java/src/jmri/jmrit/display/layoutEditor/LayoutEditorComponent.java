@@ -700,5 +700,5 @@ class LayoutEditorComponent extends JComponent {
     }
 
     //initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorComponent.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorComponent.class);
 }

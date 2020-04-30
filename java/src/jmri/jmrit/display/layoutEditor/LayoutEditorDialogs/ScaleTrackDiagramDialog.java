@@ -244,6 +244,6 @@ public class ScaleTrackDiagramDialog {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(
             ScaleTrackDiagramDialog.class);
 }

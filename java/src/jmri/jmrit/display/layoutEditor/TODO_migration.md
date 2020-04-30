@@ -58,8 +58,6 @@ isDisconnected in LayoutTrack (base) and PositionablePoint (subclass) seem very 
  - Make sure there's a one-to-one mapping of source files and test files, even if some of the tests are empty initially
  
  - Run a cleanup on imports via NetBeans; you've left quite a few behind...
-
- - Remove all the `transient` tags, serial annotations
  
 ==================
 

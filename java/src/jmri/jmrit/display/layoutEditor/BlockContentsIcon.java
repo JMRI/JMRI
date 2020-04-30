@@ -98,5 +98,5 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockContentsIcon.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockContentsIcon.class);
 }
