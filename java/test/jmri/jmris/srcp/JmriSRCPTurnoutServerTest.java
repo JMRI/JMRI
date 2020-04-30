@@ -49,7 +49,7 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
     }
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void checkErrorStatusSent(){
@@ -57,7 +57,7 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
     }
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void checkTurnoutThrownSent(){
@@ -65,7 +65,7 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
     }
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void checkTurnoutClosedSent() {
@@ -73,7 +73,7 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
     }
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void checkTurnoutUnknownSent() {
@@ -96,7 +96,7 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
         sb = new StringBuilder();
         OutputStream output = new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 };
@@ -105,7 +105,7 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         ts.dispose();
         ts = null;
         sb = null;

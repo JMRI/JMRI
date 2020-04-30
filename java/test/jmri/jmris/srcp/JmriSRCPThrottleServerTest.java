@@ -41,9 +41,7 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
 
     @Test
     public void requestThrottleBadBusTest(){
-        Throwable thrown = catchThrowable( () -> {
-          ((JmriSRCPThrottleServer)ats).initThrottle(44,42,false,128,28);
-        });
+        Throwable thrown = catchThrowable( () -> ((JmriSRCPThrottleServer)ats).initThrottle(44,42,false,128,28));
         assertThat(thrown).withFailMessage("failed requesting throttle").isNull();
         assertThat(sb.toString()).endsWith("412 ERROR wrong value\n\r").withFailMessage("wrong value");
     }
@@ -102,7 +100,7 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
         sb = new StringBuilder();
         OutputStream output = new OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 };

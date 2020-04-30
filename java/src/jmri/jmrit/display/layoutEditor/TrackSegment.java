@@ -1944,17 +1944,30 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public static final int SHOWCON = 0x01;
-    public static final int HIDECON = 0x02;     //flag set on a segment basis.
-    public static final int HIDECONALL = 0x04;  //Used by layout editor for hiding all
+    public static final int HIDECON = 0x02;     // flag set on a segment basis.
+    public static final int HIDECONALL = 0x04;  // Used by layout editor for hiding all
 
     public int showConstructionLine = SHOWCON;
 
+    /**
+     * @return true if HIDECON is not set and HIDECONALL is not set
+     */
     public boolean isShowConstructionLines() {
         return (((showConstructionLine & HIDECON) != HIDECON)
                 && ((showConstructionLine & HIDECONALL) != HIDECONALL));
     }
 
-    //Methods used by Layout Editor
+    /**
+     * Method used by LayoutEditor.
+     * <p>
+     * If the argument is 
+     * <ul>
+     * <li>HIDECONALL then set HIDECONALL
+     * <li>SHOWCON reset HIDECONALL is set, other wise set SHOWCON
+     * <li>HIDECON or otherwise set HIDECON
+     * </ul>
+     * Then always redraw the LayoutEditor panel and set it dirty.
+     */
     public void hideConstructionLines(int hide) {
         if (hide == HIDECONALL) {
             showConstructionLine |= HIDECONALL;
@@ -1971,6 +1984,9 @@ public class TrackSegment extends LayoutTrack {
         layoutEditor.setDirty();
     }
 
+    /**
+     * @return true if SHOWCON is not set
+     */
     public boolean hideConstructionLines() {
         return ((showConstructionLine & SHOWCON) != SHOWCON);
     }
@@ -3006,6 +3022,13 @@ public class TrackSegment extends LayoutTrack {
     /*======================*\
     |* decoration accessors *|
     \*======================*/
+    
+    // Although the superclass LayoutTrack stores decorators in a Map,
+    // here we store them in specific variables like arrowStyle, bridgeSideRight, etc.
+    // We convert to and from the map during the getDecorations, setDecorations 
+    // and hasDecorations calls.
+    
+    /** {@inheritDoc} */
     @Override
     public boolean hasDecorations() {
         return ((arrowStyle > 0)
@@ -3014,11 +3037,7 @@ public class TrackSegment extends LayoutTrack {
                 || (tunnelSideLeft || tunnelSideRight));
     }
 
-    /**
-     * Get decorations.
-     *
-     * @return decorations to set
-     */
+    /** {@inheritDoc} */
     @Override
     public Map<String, String> getDecorations() {
         if (decorations == null) {
@@ -3136,13 +3155,9 @@ public class TrackSegment extends LayoutTrack {
             decorations.put("tunnel", String.join(";", tunnelValues));
         }   //if (tunnelSideLeft || tunnelSideRight)
         return decorations;
-    } //getDecorations
+    } 
 
-    /**
-     * Set decorations.
-     *
-     * @param decorations to set
-     */
+    /** {@inheritDoc} */
     @Override
     public void setDecorations(Map<String, String> decorations) {
         Color defaultTrackColor = layoutEditor.getDefaultTrackColorColor();
@@ -3374,13 +3389,22 @@ public class TrackSegment extends LayoutTrack {
         } //if (decorathions != null)
     }   //setDirections
 
-    //
-    //arrow decoration accessors
-    //
+    /** 
+     * Arrow decoration accessor.
+     * The 0 (none) and 1 through 5 arrow decorations are keyed to 
+     * files like program:resources/icons/decorations/ArrowStyle1.png
+     * et al.
+     */
     public int getArrowStyle() {
         return arrowStyle;
     }
 
+    /** 
+     * Set the arrow decoration.
+     * The 0 (none) and 1 through 5 arrow decorations are keyed to 
+     * files like program:resources/icons/decorations/ArrowStyle1.png
+     * et al.
+     */
     public void setArrowStyle(int newVal) {
         if (arrowStyle != newVal) {
             if (newVal > 0) {

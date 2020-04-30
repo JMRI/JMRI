@@ -257,7 +257,7 @@ public class SRCPTokenizerTest {
         String cmd = "this should fail";
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         SRCPParserTokenManager stm = new SRCPParserTokenManager(cs);
-        Throwable caught = catchThrowable( () -> stm.getNextToken() );  // called to invoke TokenMgrError
+        Throwable caught = catchThrowable(stm::getNextToken);  // called to invoke TokenMgrError
         assertThat(caught).isNotNull().isInstanceOf(TokenMgrError.class);
     }
 

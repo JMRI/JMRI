@@ -25,7 +25,7 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
                     // null output string drops characters
                     // could be replaced by one that checks for specific outputs
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                     }
                 });
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
@@ -53,7 +53,7 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -115,7 +115,7 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -124,7 +124,7 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         ts = null;
         sb = null;
         JUnitUtil.tearDown();

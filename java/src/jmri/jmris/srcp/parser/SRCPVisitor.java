@@ -411,7 +411,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
             // setup the array list of function values.
 
             int numFunctions = node.jjtGetNumChildren() - 6;
-            java.util.ArrayList<Boolean> functionList = new java.util.ArrayList<Boolean>();
+            java.util.ArrayList<Boolean> functionList = new java.util.ArrayList<>();
             for(int i = 0; i < numFunctions;i++){
                 // the functions start at the 7th child (index 6) of the node.
                 String functionMode = (String) ((SimpleNode) node.jjtGetChild(i+6)).jjtGetValue();

@@ -89,6 +89,11 @@ public class JsonRosterSocketServiceTest {
         this.connection.sendMessage(null, 0);
         instance.onMessage(JsonRoster.ROSTER_GROUPS, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         JsonNode message = this.connection.getMessage();
+        if (this.connection.getMessages().size() !=1) { // error, but first log why
+            connection.getMessages().forEach((msg)->{
+                log.warn(" message {}", msg);
+            });
+        }
         Assert.assertEquals("Single message sent", 1, this.connection.getMessages().size());
         Assert.assertNotNull("Message was sent", message);
         Assert.assertTrue("Message is array", message.isArray());
@@ -344,4 +349,5 @@ public class JsonRosterSocketServiceTest {
         });
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonRosterSocketServiceTest.class);
 }

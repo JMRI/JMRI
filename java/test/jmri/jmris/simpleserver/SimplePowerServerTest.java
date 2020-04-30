@@ -24,7 +24,7 @@ public class SimplePowerServerTest extends jmri.jmris.AbstractPowerServerTestBas
             // null output string drops characters
             // could be replaced by one that checks for specific outputs
             @Override
-            public void write(int b) throws java.io.IOException {
+            public void write(int b) {
             }
         });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
@@ -42,7 +42,7 @@ public class SimplePowerServerTest extends jmri.jmris.AbstractPowerServerTestBas
             // null output string drops characters
             // could be replaced by one that checks for specific outputs
             @Override
-            public void write(int b) throws java.io.IOException {
+            public void write(int b) {
             }
         });
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
@@ -63,7 +63,7 @@ public class SimplePowerServerTest extends jmri.jmris.AbstractPowerServerTestBas
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
             @Override
-            public void write(int b) throws java.io.IOException {
+            public void write(int b) {
                 sb.append((char) b);
             }
         });
@@ -145,7 +145,7 @@ public class SimplePowerServerTest extends jmri.jmris.AbstractPowerServerTestBas
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
             @Override
-            public void write(int b) throws java.io.IOException {
+            public void write(int b) {
                 sb.append((char) b);
             }
         });
@@ -154,7 +154,7 @@ public class SimplePowerServerTest extends jmri.jmris.AbstractPowerServerTestBas
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         ps.dispose();
         ps = null;
         sb = null;

@@ -2227,7 +2227,23 @@
             <!-- should match maven checkstyle configs -->
             <fileset dir="${basedir}">
                 <exclude name="**/*.jpg" />
+                <exclude name="**/*.PNG" />
                 <exclude name="**/*.jar" />
+                <exclude name="**/*.dll" />
+                <exclude name="**/*.dylib" />
+                <exclude name="**/*.so" />
+                <exclude name="**/*.exe" />
+                <exclude name="**/*.zip" />
+                <exclude name="**/*.icns" />
+                <exclude name="**/*.bat" />
+                <exclude name="**/*.ttf" />
+                <exclude name="**/*.vsd" />
+                <exclude name="**/*.wav" />
+                <exclude name="**/*.spj" />
+                <exclude name="**/*.pdf" />
+                <exclude name=".metadata/.plugins/org.eclipse.core.resources/**" />
+                <exclude name="help/en/JavaHelpSearch/**" />
+                <exclude name="help/fr/JavaHelpSearch/**" />
                 <exclude name="web/app/node_modules/**" />
                 <exclude name=".git/**" />
                 <exclude name="target/**" />

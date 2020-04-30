@@ -1768,13 +1768,13 @@ public class PositionablePoint extends LayoutTrack {
         if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); unexpected type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
-            log.error(errString); //I18IN
+            log.error("will throw {}", errString); //I18IN
             throw new jmri.JmriException(errString);
         }
         if (connectionType != HitPointType.POS_POINT) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid Connection Type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
-            log.error(errString); //I18IN
+            log.error("will throw {}", errString); //I18IN
             throw new jmri.JmriException(errString);
         }
     }
@@ -1810,6 +1810,14 @@ public class PositionablePoint extends LayoutTrack {
         }
         return result;
     }
+
+    /**
+     * Draw track decorations.
+     * 
+     * This type of track has none, so this method is empty.
+     */
+    @Override
+    protected void drawDecorations(Graphics2D g2) {}
 
     /**
      * {@inheritDoc}
