@@ -2,6 +2,10 @@ package jmri.util.web;
 
 import java.util.Map;
 import java.util.HashMap;
+
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
@@ -11,6 +15,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import java.awt.GraphicsEnvironment;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.LoggingPermission;
 
 /**
  * Provide browsers for use in web tests. Adapted from:
@@ -41,6 +47,11 @@ public class BrowserFactory {
                     firefoxBinary.addCommandLineOptions("--headless");
                     firefoxOptions.setBinary(firefoxBinary);
                     firefoxOptions.setLogLevel(org.openqa.selenium.firefox.FirefoxDriverLogLevel.ERROR);
+
+                    LoggingPreferences logPrefs = new LoggingPreferences();
+                    logPrefs.enable(LogType.BROWSER, Level.SEVERE);
+                    firefoxOptions.setCapability(CapabilityType.LOGGING_PREFS,logPrefs);
+
                     driver = new EventFiringWebDriver(new FirefoxDriver(firefoxOptions));
                     driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     drivers.put("Firefox", driver);

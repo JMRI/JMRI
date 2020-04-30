@@ -9,6 +9,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -93,6 +96,16 @@ public class WebServerAcceptanceSteps implements En {
                     //click on the target cell
                     webDriver.findElement(By.xpath(cellPath)).click();
                 });
+
+        After( firefoxtags, () -> {
+            LogEntries logEntries = webDriver.manage().logs().get(LogType.BROWSER);
+
+            for (LogEntry logEntry : logEntries) {
+                // Get log message, timestamp and level.
+                assertThat(logEntry).withFailMessage(logEntry.getMessage()).isNull();
+            }
+        });
+
 
         After(paneltags, () -> {
             // navigate back home to prevent the webpage from reloading.
