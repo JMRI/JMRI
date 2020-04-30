@@ -104,7 +104,7 @@ public class WebServerAcceptanceSteps implements En {
 
             for (LogEntry logEntry : logEntries) {
                 // Get log message, timestamp and level.
-                log.Error("Error log from firefox Entry: {}",logEntry.getMessage());
+                log.error("Error log from firefox Entry: {}",logEntry.getMessage());
                 //assertThat(logEntry).withFailMessage(logEntry.getMessage()).isNull();
             }
         });
