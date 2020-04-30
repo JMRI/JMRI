@@ -1,7 +1,7 @@
 /**
- * The Layout Editor represents both structure and graphical display through a single set of objects.
- * <p>
- * A small sample layout:<br>
+ * <h1>Layout Editor</h1> represents both structure and graphical display through a single set of objects.
+ * <h2>Example</h2>
+ * A small example layout:<br>
  * <a href="doc-files/SidingImage.png"><img src="doc-files/SidingImage.png" alt="Simple layout example" height="25%" width="25%"></a>
  * <h3>Connectivity</h3>
  * This is coded and stored as the following: (Some graphical attributes removed, reordered)<br>
@@ -28,7 +28,7 @@
  * <p>
  * Turnouts also have a <code>type</code> variable to represent their geometry, i.e. RH, LH, Wye, etc.
  * 
- * 
+ * <h2>Internals</h2>
  * <h3>Class Hierarchy</h3>
  * <ul>
  * <li>The track is represented by a hierarchy of classes that's rooted in {@link jmri.jmrit.display.layoutEditor.LayoutTrack} and completely disconnected from 
@@ -67,7 +67,9 @@
  * draw two different representations of the track elements.  These are only 
  * invoked from {}@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent}. LayoutEditorComponent is 
  * a JComponent with a {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent#paint} public method
- * that invokes a series of internal private methods to display the layers of the layout drawing. That in turn is invoked via the usual repaint() mechanism.
+ * that invokes a series of internal private methods to display the layers of the layout drawing. 
+ * That in turn is invoked via the usual repaint() mechanism, although it's often kicked
+ * off by a call to {@link jmri.jmrit.display.layoutEditor.LayoutEditor#redrawPanel()}.
  * Each of those layer private methods sets up graphics and method options, then
  * calls {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent#draw1}
  * or {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent#draw2}. Those in turn
@@ -103,7 +105,7 @@
  * <p>
  * A {@link jmri.jmrit.display.layoutEditor.BlockValueFile} stores and loads the value (internal transient contents) of Block 
  * objects from the BlockManager. It doesn't reference {@link jmri.jmrit.display.layoutEditor.LayoutBlock} objects.
- * <h3>More Info</h3>
+ * <h2>More Info</h2>
  * User-level documentation is available 
  * <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/LayoutEditor.shtml">here</a>.
  * <!-- Put @see and @since tags down here. -->
