@@ -409,6 +409,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo = null;
         connection = null;
         nodeID = null;
+        JUnitUtil.clearShutDownManager(); // put in place because Block Manager was not terminated properly
         JUnitUtil.tearDown();
 
     }
