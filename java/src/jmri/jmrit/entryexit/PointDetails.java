@@ -68,7 +68,7 @@ public class PointDetails {
         this.panel = panel;
         // find the panel that actually contains this sensor, default to the supplied panel
         for (LayoutEditor layout : InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList()) {
-            for (SensorIcon si : layout.sensorList) {
+            for (SensorIcon si : layout.getSensorList()) {
                 if (sensor == si.getNamedBean()) {
                     this.panel = layout;
                     return;
@@ -378,7 +378,7 @@ public class PointDetails {
     boolean extendedtime = false;
 
     public void flashSensor() {
-        for (SensorIcon si : getPanel().sensorList) {
+        for (SensorIcon si : getPanel().getSensorList()) {
             if (si.getSensor() == getSensor()) {
                 si.flashSensor(2, Sensor.ACTIVE, Sensor.INACTIVE);
             }
@@ -386,7 +386,7 @@ public class PointDetails {
     }
 
     public void stopFlashSensor() {
-        for (SensorIcon si : getPanel().sensorList) {
+        for (SensorIcon si : getPanel().getSensorList()) {
             if (si.getSensor() == getSensor()) {
                 si.stopFlash();
             }

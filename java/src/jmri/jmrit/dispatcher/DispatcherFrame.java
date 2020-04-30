@@ -1212,8 +1212,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     }
                 }
                 // get Maximum line speed once. We need to use this when the current signal mast is null.
-                for (int iSM = 0; iSM <_LE.signalMastList.size();  iSM++ )  {
-                    float msl = _LE.signalMastList.get(iSM).getSignalMast().getSignalSystem().getMaximumLineSpeed();
+                for (int iSM = 0; iSM <_LE.getSignalMastList().size();  iSM++ )  {
+                    float msl = _LE.getSignalMastList().get(iSM).getSignalMast().getSignalSystem().getMaximumLineSpeed();
                     if ( msl > maximumLineSpeed ) {
                         maximumLineSpeed = msl;
                     }

@@ -387,7 +387,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             boolean updateall = false;
             boolean found = false;
             for (LayoutEditor panel : panels) {
-                for (MemoryIcon memIcon : panel.memoryLabelList) {
+                for (MemoryIcon memIcon : panel.getMemoryLabelList()) {
                     if (memIcon.getLayoutBlock() == this) {
                         if (!updateall && !found) {
                             int n = JOptionPane.showConfirmDialog(
