@@ -12,22 +12,14 @@ public class XNetFeedbackMessageCache implements XNetListener {
 
     protected XNetTrafficController tc = null;
 
-    private XNetReply[][] messageCache; // an to hold each of the 512 possible
+    private final XNetReply[] messageCache = new XNetReply[512]; // an to hold each of the 512 possible
     // reply messages for the turnouts.
 
-    private boolean[][] messagePending; // hold pending status for each of
-    // the possible status request messages.
+    private final byte[] messagePending = new byte[512 / 8]; // hold pending status for each of
+    // the possible status request messages (bitfield)
 
     // ctor has to register for XNet events
     public XNetFeedbackMessageCache(XNetTrafficController controller) {
-        messageCache = new XNetReply[256][2];
-        for (int i = 0; i < 256; i++) {
-            messageCache[i][0] = messageCache[i][1] = null;
-        }
-        messagePending = new boolean[256][2];
-        for (int i = 0; i < 256; i++) {
-            messagePending[i][0] = messagePending[i][1] = false;
-        }
         tc = controller;
         tc.addXNetListener(XNetInterface.FEEDBACK, this);
     }
@@ -36,22 +28,11 @@ public class XNetFeedbackMessageCache implements XNetListener {
     // provide any cached state to the turnout.  Otherwise, call the turnout's 
     // requestUpdateFromLayout() method.
     // @param turnout  the XNetTurnout object we are requesting data for.
-    public synchronized void requestCachedStateFromLayout(XNetTurnout turnout) {
+    public void requestCachedStateFromLayout(XNetTurnout turnout) {
         int pNumber = turnout.getNumber();
         log.debug("asking for cached feedback for turnout {}.",pNumber);
-        if (messagePending[(pNumber - 1) / 4][((pNumber - 1) % 4) < 2 ? 0 : 1]) {
-            return;
-        }
-        try {
-            if (messageCache[(pNumber - 1) / 4][((pNumber - 1) % 4) < 2 ? 0 : 1] != null) {
-                log.debug("Message for turnout {} found in cache.",pNumber);
-                turnout.message(messageCache[(pNumber - 1) / 4][((pNumber - 1) % 4) < 2 ? 0 : 1]);
-            } else {
-                messagePending[(pNumber - 1) / 4][((pNumber - 1) % 4) < 2 ? 0 : 1] = true;
-                turnout.requestUpdateFromLayout();
-            }
-        } catch (java.lang.NullPointerException npe) {
-            messagePending[(pNumber - 1) / 4][((pNumber - 1) % 4) < 2 ? 0 : 1] = true;
+        pNumber--;
+        if (requestCachedState(2, pNumber, turnout)) {
             turnout.requestUpdateFromLayout();
         }
     }
@@ -65,20 +46,33 @@ public class XNetFeedbackMessageCache implements XNetListener {
     public synchronized void requestCachedStateFromLayout(XNetSensor sensor) {
         int pNumber = sensor.getNumber();
         log.debug("asking for cached feedback for sensor {}.",pNumber);
-        if (messagePending[sensor.getBaseAddress()][sensor.getNibble() >> 4]) {
-            return;
-        }
-        try {
-            if (messageCache[sensor.getBaseAddress()][sensor.getNibble() >> 4] != null) {
-                log.debug("Message for sensor {} found in cache.",pNumber);
-                sensor.message(messageCache[sensor.getBaseAddress()][sensor.getNibble() >> 4]);
-            } else {
-                messagePending[sensor.getBaseAddress()][sensor.getNibble() >> 4] = true;
-                sensor.requestUpdateFromLayout();
-            }
-        } catch (java.lang.NullPointerException npe) {
-            messagePending[sensor.getBaseAddress()][sensor.getNibble() >> 4] = true;
+        pNumber--;
+        if (requestCachedState(4, pNumber, sensor)) {
             sensor.requestUpdateFromLayout();
+        }
+    }
+    
+    private boolean requestCachedState(int statesPerNibble, int pNumber, XNetListener target) {
+        int replyIndex = pNumber / statesPerNibble;
+        int bitIdx = replyIndex / 8;
+        int bitMask = pNumber % 8;
+        XNetReply cached;
+        
+        // do not extend the lock to code execution:
+        synchronized (this) {
+            if ((messagePending[bitIdx] & (1 << (bitMask))) > 0) {
+                return false;
+            }
+             cached = messageCache[replyIndex];
+             if (cached == null) {
+                messagePending[bitIdx] |= bitMask;
+             }
+        }
+        if (cached != null) {
+            target.message(cached);
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -90,13 +84,14 @@ public class XNetFeedbackMessageCache implements XNetListener {
         if (log.isDebugEnabled()) {
             log.debug("received message: {}",l);
         }
-        if (l.isFeedbackBroadcastMessage()) {
-            int numDataBytes = l.getElement(0) & 0x0f;
-            for (int i = 1; i < numDataBytes; i += 2) {
-                // cache the message for later requests
-                messageCache[l.getElement(1)][(l.getElement(2) & 0x10) >> 4] = l;
-                messagePending[l.getElement(1)][(l.getElement(2) & 0x10) >> 4] = false;
-            }
+        if (!l.isFeedbackBroadcastMessage()) {
+            return;
+        }
+        int numDataBytes = l.getElement(0) & 0x0f;
+        for (int i = 1; i < numDataBytes; i += 2) {
+            // cache the message for later requests
+            int nibbleIndex = l.getElement(i) * 2 + (l.getElement(i + 1) & 0x10) >> 4;
+            messageCache[nibbleIndex] = l;
         }
     }
 
