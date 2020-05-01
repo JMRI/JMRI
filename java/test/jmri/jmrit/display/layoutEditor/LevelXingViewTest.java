@@ -19,7 +19,7 @@ public class LevelXingViewTest extends LayoutTrackViewTest {
 
     @Test
     void testCtor() {
-        new LevelXingViewTest(null);
+        new LevelXingView(null);
     }
 
 }

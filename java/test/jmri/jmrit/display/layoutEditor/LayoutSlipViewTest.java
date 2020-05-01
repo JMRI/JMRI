@@ -19,7 +19,7 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
 
     @Test
     void testCtor() {
-        new LayoutSlipViewTest(null);
+        new LayoutSlipView(null);
     }
 
 }
