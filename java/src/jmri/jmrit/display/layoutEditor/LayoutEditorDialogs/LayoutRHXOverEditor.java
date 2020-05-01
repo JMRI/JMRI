@@ -13,21 +13,17 @@ import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.*;
 
 /**
- * MVC Editor component for LayoutWye objects.
- *
- * Note there might not be anything for this class to do;
- * LayoutTrackEditors has a comment saying that PositionablePoint
- * doesn't have an editor.
+ * MVC Editor component for LayoutRHXOver objects.
  *
  * @author Bob Jacobsen  Copyright (c) 2020
  * 
  */
-public class LayoutWyeEditor extends LayoutTurnoutEditor {
+public class LayoutRHXOverEditor extends LayoutXOverEditor {
 
     /**
      * constructor method
      */
-    public LayoutWyeEditor(@Nonnull LayoutEditor layoutEditor) {
+    public LayoutRHXOverEditor(@Nonnull LayoutEditor layoutEditor) {
         super(layoutEditor);
     }
 
@@ -35,5 +31,5 @@ public class LayoutWyeEditor extends LayoutTurnoutEditor {
     // expand and the code will be brought here
     
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutWyeEditor.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutRHXOverEditor.class);
 }
