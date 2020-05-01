@@ -18,7 +18,7 @@ import org.junit.Test;
 public class LevelXingViewTest extends LayoutTrackViewTest {
 
     @Test
-    void testCtor() {
+    public void testCtor() {
         new LevelXingView(null);
     }
 

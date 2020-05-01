@@ -18,7 +18,7 @@ import org.junit.Test;
 public class LayoutTrackViewTest {
 
     @Test
-    void testCtor() {
+    public void testCtor() {
         new LayoutTrackView(null);
     }
 

@@ -18,7 +18,7 @@ import org.junit.Test;
 public class TrackSegmentViewTest extends LayoutTrackViewTest {
 
     @Test
-    void testCtor() {
+    public void testCtor() {
         new TrackSegmentView(null);
     }
 }

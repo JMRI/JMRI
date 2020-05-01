@@ -18,7 +18,7 @@ import org.junit.Test;
 public class LayoutSingleSlipViewTest extends LayoutSlipViewTest {
 
     @Test
-    void testCtor() {
+    public void testCtor() {
         new LayoutSingleSlipView(null);
     }
 }

@@ -18,7 +18,7 @@ import org.junit.Test;
 public class LayoutTurntableViewTest extends LayoutTrackViewTest {
 
     @Test
-    void testCtor() {
+    public void testCtor() {
         new LayoutTurntableView(null);
     }
 }

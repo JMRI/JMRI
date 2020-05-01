@@ -18,7 +18,7 @@ import org.junit.Test;
 public class  LayoutRHXOverViewTest extends  LayoutXOverViewTest {
 
     @Test
-    void testCtor() {
+    public void testCtor() {
         new LayoutRHXOverView(null);
     }
 
