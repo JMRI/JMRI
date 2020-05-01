@@ -1895,5 +1895,5 @@ abstract public class LayoutSlip extends LayoutTurnout {
     //      and collectContiguousTracksNamesInBlockNamed methods
     //      inherited from LayoutTurnout
     //
-    private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlip.class);
 }

@@ -420,5 +420,5 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         return "";
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurnoutXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnoutXml.class);
 }

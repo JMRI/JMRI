@@ -33,7 +33,7 @@ public class ServiceHandlerTest {
         // set the value
         a.setPowerServer(ps);
         // make sure we can retrieve it.
-        assertThat(a.getPowerServer()).isEqualTo(ps).withFailMessage("Power Server Get or Set failed");
+        assertThat(a.getPowerServer()).withFailMessage("Power Server Get or Set failed").isEqualTo(ps);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class ServiceHandlerTest {
         // set the value
         a.setTurnoutServer(ts);
         // make sure we can retrieve it.
-        assertThat(a.getTurnoutServer()).isEqualTo(ts).withFailMessage("Turnout Server Get or Set failed");
+        assertThat(a.getTurnoutServer()).withFailMessage("Turnout Server Get or Set failed").isEqualTo(ts);
    }
 
     @Test
@@ -67,7 +67,7 @@ public class ServiceHandlerTest {
         // set the value
         a.setSensorServer(ts);
         // make sure we can retrieve it.
-        assertThat(a.getSensorServer()).isEqualTo(ts).withFailMessage("Sensor Server Get or Set failed");
+        assertThat(a.getSensorServer()).withFailMessage("Sensor Server Get or Set failed").isEqualTo(ts);
 
    }
 
@@ -85,7 +85,7 @@ public class ServiceHandlerTest {
         // set the value
         a.setLightServer(ts);
         // make sure we can retrieve it.
-        assertThat(a.getLightServer()).isEqualTo(ts).withFailMessage("Light Server Get or Set failed");
+        assertThat(a.getLightServer()).withFailMessage("Light Server Get or Set failed").isEqualTo(ts);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class ServiceHandlerTest {
         // set the value
         a.setProgrammerServer(ts);
         // make sure we can retrieve it.
-        assertThat(a.getProgrammerServer()).isEqualTo(ts).withFailMessage("Programmer Server Get or Set failed");
+        assertThat(a.getProgrammerServer()).withFailMessage("Programmer Server Get or Set failed").isEqualTo(ts);
     }
 
     @Test
@@ -125,7 +125,7 @@ public class ServiceHandlerTest {
         // set the value
         a.setTimeServer(ts);
         // make sure we can retrieve it.
-        assertThat(a.getTimeServer()).isEqualTo(ts).withFailMessage("Light Server Get or Set failed");
+        assertThat(a.getTimeServer()).withFailMessage("Light Server Get or Set failed").isEqualTo(ts);
     }
 
     @BeforeEach

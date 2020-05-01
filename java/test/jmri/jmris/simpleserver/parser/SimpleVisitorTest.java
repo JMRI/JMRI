@@ -16,7 +16,7 @@ public class SimpleVisitorTest {
     @Test
     public void testCTor() {
         SimpleVisitor t = new SimpleVisitor();
-        assertThat(t).isNotNull().withFailMessage("exists");
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
     @BeforeEach

@@ -108,7 +108,6 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         Attribute clickAttr = shared.getAttribute("nonStandardMouseEvent");
         if (clickAttr != null) {
             boolean nonStandardMouseEvent = clickAttr.getValue().equals("yes");
-            jmri.util.swing.SwingSettings.setNonStandardMouseEvent(nonStandardMouseEvent);
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(nonStandardMouseEvent);
         }
         Attribute graphicAttr = shared.getAttribute("graphicTableState");

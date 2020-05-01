@@ -30,21 +30,21 @@ public class SRCPParserTest {
     public void testSetPowerOn() throws ParseException {
         String code = "SET 1 POWER ON\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        assertThat(p.command()).isNotNull().withFailMessage("SET Power On");
+        assertThat(p.command()).withFailMessage("SET Power On").isNotNull();
     }
 
     @Test
     public void testSetPowerOff() throws ParseException {
         String code = "SET 1 POWER OFF\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        assertThat(p.command()).isNotNull().withFailMessage("SET Power Off");
+        assertThat(p.command()).withFailMessage("SET Power Off").isNotNull();
     }
 
     @Test
     public void testCheckPowerOff() throws ParseException {
         String code = "CHECK 1 POWER OFF\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        assertThat(p.command()).isNotNull().withFailMessage("Check Power Off");
+        assertThat(p.command()).withFailMessage("Check Power Off").isNotNull();
     }
 
     @Test
@@ -385,7 +385,7 @@ public class SRCPParserTest {
         String code = "GO\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
         SimpleNode n = p.handshakecommand();
-        assertThat(n).isNotNull().withFailMessage("Go node");
+        assertThat(n).withFailMessage("Go node").isNotNull();
     }
 
     // test the "SET" command
@@ -394,7 +394,7 @@ public class SRCPParserTest {
         String code = "SET PROTOCOL SRCP 1.2.3\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
         SimpleNode n = p.handshakecommand();
-        assertThat(n).isNotNull().withFailMessage("Set node");
+        assertThat(n).withFailMessage("Set node").isNotNull();
     }
 
     @Test
@@ -402,7 +402,7 @@ public class SRCPParserTest {
         String code = "SET CONNECTIONMODE SRCP COMMAND\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
         SimpleNode n = p.handshakecommand();
-        assertThat(n).isNotNull().withFailMessage("Set node");
+        assertThat(n).withFailMessage("Set node").isNotNull();
     }
 
     @Test
@@ -410,7 +410,7 @@ public class SRCPParserTest {
         String code = "SET CONNECTIONMODE SRCP INFO\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
         SimpleNode n = p.handshakecommand();
-        assertThat(n).isNotNull().withFailMessage("Set node");
+        assertThat(n).withFailMessage("Set node").isNotNull();
     }
 
     @BeforeEach

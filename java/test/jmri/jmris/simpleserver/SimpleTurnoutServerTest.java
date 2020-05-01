@@ -44,7 +44,7 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
             sendMessageMethod.invoke(ts, "Hello World");
         });
         assertThat(thrown).withFailMessage("Error calling sendMessage with reflection").isNull();
-        assertThat(sb.toString()).isEqualTo("Hello World").withFailMessage("SendMessage Check");
+        assertThat(sb.toString()).withFailMessage("SendMessage Check").isEqualTo("Hello World");
     }
 
     @Test
@@ -67,7 +67,7 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
             sendMessageMethod.invoke(a,"Hello World");
         });
         assertThat(thrown).withFailMessage("Error calling sendMessage with reflection").isNull();
-        assertThat(jcs.getOutput()).isEqualTo("Hello World").withFailMessage("SendMessage Check");
+        assertThat(jcs.getOutput()).withFailMessage("SendMessage Check").isEqualTo("Hello World");
     }
 
     /**
@@ -75,7 +75,7 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
      */
     @Override
     public void checkErrorStatusSent(){
-            assertThat(sb.toString()).isEqualTo("TURNOUT ERROR\n").withFailMessage("Send Error Status check");
+            assertThat(sb.toString()).withFailMessage("Send Error Status check").isEqualTo("TURNOUT ERROR\n");
     }
 
     /**
@@ -83,7 +83,7 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
      */
     @Override
     public void checkTurnoutThrownSent(){
-            assertThat(sb.toString()).isEqualTo("TURNOUT IT1 THROWN\n").withFailMessage("Send Thrown Status check");
+            assertThat(sb.toString()).withFailMessage("Send Thrown Status check").isEqualTo("TURNOUT IT1 THROWN\n");
     }
 
     /**
@@ -91,7 +91,7 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
      */
     @Override
     public void checkTurnoutClosedSent() {
-            assertThat(sb.toString()).isEqualTo("TURNOUT IT1 CLOSED\n").withFailMessage("Send Closed Status check");
+            assertThat(sb.toString()).withFailMessage("Send Closed Status check").isEqualTo("TURNOUT IT1 CLOSED\n");
     }
 
     /**
@@ -99,7 +99,7 @@ public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTes
      */
     @Override
     public void checkTurnoutUnknownSent() {
-            assertThat(sb.toString()).isEqualTo("TURNOUT IT1 UNKNOWN\n").withFailMessage("Send Error Status check");
+            assertThat(sb.toString()).withFailMessage("Send Error Status check").isEqualTo("TURNOUT IT1 UNKNOWN\n");
     }
 
     @BeforeEach

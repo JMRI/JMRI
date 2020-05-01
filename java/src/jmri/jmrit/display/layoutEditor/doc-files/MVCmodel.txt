@@ -1,0 +1,37 @@
+@startuml
+
+class LayoutWye {
+getConnect1() : LayoutTrack 
+getType1() : HitPointType
+getConnect2() : LayoutTrack 
+getType2() : HitPointType
+}
+
+class LayoutWyeView {
+setCoordsCenter(p : Point2D)
+setBezierControlPoint(p : Point2D, index : int)
+}
+note bottom of LayoutWyeView: Geometry is of display,\nnot layout.\nNotification at first goes\nvia LayoutEditor#redrawPanel
+
+class LayoutWyeEditor {
+}
+
+class javax.swing.SwingStuff
+class layoutEditor.ConnectivityStuff
+class java.awt.Graphics2
+
+LayoutWyeEditor *- javax.swing.SwingStuff
+javax.swing.SwingStuff *- LayoutWyeEditor
+
+LayoutWye *-- layoutEditor.ConnectivityStuff : modify\nand pull
+LayoutWye .* layoutEditor.ConnectivityStuff : notifies >
+
+LayoutWyeEditor -* LayoutWye : modifies structure >
+LayoutWyeEditor -* LayoutWyeView : modifies graphics >
+
+java.awt.Graphics2 *-- LayoutWyeView : < paints
+
+LayoutWye *- LayoutWyeView : pulls content >
+LayoutWye .* LayoutWyeView : notifies >
+
+@end

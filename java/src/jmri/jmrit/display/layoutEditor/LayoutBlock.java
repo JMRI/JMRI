@@ -387,7 +387,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             boolean updateall = false;
             boolean found = false;
             for (LayoutEditor panel : panels) {
-                for (MemoryIcon memIcon : panel.memoryLabelList) {
+                for (MemoryIcon memIcon : panel.getMemoryLabelList()) {
                     if (memIcon.getLayoutBlock() == this) {
                         if (!updateall && !found) {
                             int n = JOptionPane.showConfirmDialog(
@@ -2785,7 +2785,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         log.info("Adjacencies for block {}", this.getDisplayName());
         log.info("Neighbour, Direction, mutual, relationship, metric");
         for (Adjacencies neighbour : neighbours) {
-            log.info(" > {}, {}, {}, {}, {}",neighbour.getBlock().getDisplayName(), Path.decodeDirection(neighbour.getDirection()), neighbour.isMutual(), decodePacketFlow(neighbour.getPacketFlow()), neighbour.getMetric());
+            log.info(" neighbor: {}, {}, {}, {}, {}",neighbour.getBlock().getDisplayName(), Path.decodeDirection(neighbour.getDirection()), neighbour.isMutual(), decodePacketFlow(neighbour.getPacketFlow()), neighbour.getMetric());
         }
     }
 
@@ -2807,7 +2807,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 activeString = ", *";
             }
 
-            log.info(" > {}, {}, {}, {}, {}, {}{}", (r.getDestBlock()).getDisplayName(), nexthop, r.getHopCount(), Path.decodeDirection(r.getDirection()), r.getState(), r.getMetric(), activeString);
+            log.info(" neighbor: {}, {}, {}, {}, {}, {}{}", (r.getDestBlock()).getDisplayName(), nexthop, r.getHopCount(), Path.decodeDirection(r.getDirection()), r.getState(), r.getMetric(), activeString);
         }
     }
 
@@ -2902,7 +2902,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         for (int i = offSet; i < routes.size(); i++) {
             Routes ro = routes.get(i);
             if ((ro.getDestBlock() == destBlock)) {
-                log.info("getNextBlockByIndex", Integer.toString(ro.getDirection() & direction));
+                log.info("getNextBlockByIndex {}", Integer.toString(ro.getDirection() & direction));
                 if ((ro.getDirection() & direction) != 0) {
                     return i;
                 }
@@ -3597,7 +3597,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         if (enableAddRouteLogging) {
             log.info("From {} ===== valid from size path {} ==== (addroutetoneigh)", this.getDisplayName(), validFromPath.size());
 
-            validFromPath.forEach((valid) -> log.info("-> {}", valid.getDisplayName()));
+            validFromPath.forEach((valid) -> log.info("fromPath: {}", valid.getDisplayName()));
             log.info("Next Hop {}", nextHop.getDisplayName());
         }
         RoutingPacket update = new RoutingPacket(ADDITION, ro.getDestBlock(), ro.getHopCount() + 1,
@@ -4671,6 +4671,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         return Bundle.getMessage("BeanNameLayoutBlock");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlock.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlock.class);
 
 }

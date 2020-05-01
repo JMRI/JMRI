@@ -29,7 +29,7 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
             ((JmriSRCPTurnoutServer) ts).initTurnout(1,1,"N");
             jmri.InstanceManager.getDefault(jmri.TurnoutManager.class)
                             .provideTurnout("IT1").setState(jmri.Turnout.THROWN);
-            assertThat(sb.toString()).endsWith("101 INFO 1 GA 1 N\n\r").withFailMessage("Thrown Message Sent");
+            assertThat(sb.toString()).withFailMessage("Thrown Message Sent").endsWith("101 INFO 1 GA 1 N\n\r");
         });
         assertThat(thrown).withFailMessage("Exception setting Status").isNull();
     }
@@ -43,7 +43,7 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
             ((JmriSRCPTurnoutServer) ts).initTurnout(1,1,"N");
             jmri.InstanceManager.getDefault(jmri.TurnoutManager.class)
                             .provideTurnout("IT1").setState(jmri.Turnout.CLOSED);
-            assertThat(sb.toString()).endsWith("101 INFO 1 GA 0 N\n\r").withFailMessage("Closed Message Sent");
+            assertThat(sb.toString()).withFailMessage("Closed Message Sent").endsWith("101 INFO 1 GA 0 N\n\r");
         });
         assertThat(thrown).withFailMessage("Exception setting Status").isNull();
     }
@@ -53,7 +53,7 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
      */
     @Override
     public void checkErrorStatusSent(){
-        assertThat(sb.toString()).endsWith("499 ERROR unspecified error\n\r").withFailMessage("Active Message Sent");
+        assertThat(sb.toString()).withFailMessage("Active Message Sent").endsWith("499 ERROR unspecified error\n\r");
     }
 
     /**
@@ -61,7 +61,7 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
      */
     @Override
     public void checkTurnoutThrownSent(){
-        assertThat(sb.toString()).endsWith("499 ERROR unspecified error\n\r").withFailMessage("Active Message Sent");
+        assertThat(sb.toString()).withFailMessage("Active Message Sent").endsWith("499 ERROR unspecified error\n\r");
     }
 
     /**
@@ -69,7 +69,7 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
      */
     @Override
     public void checkTurnoutClosedSent() {
-        assertThat(sb.toString()).endsWith("499 ERROR unspecified error\n\r").withFailMessage("Active Message Sent");
+        assertThat(sb.toString()).withFailMessage("Active Message Sent").endsWith("499 ERROR unspecified error\n\r");
     }
 
     /**
@@ -77,7 +77,7 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
      */
     @Override
     public void checkTurnoutUnknownSent() {
-        assertThat(sb.toString()).endsWith("499 ERROR unspecified error\n\r").withFailMessage("Active Message Sent");
+        assertThat(sb.toString()).withFailMessage("Active Message Sent").endsWith("499 ERROR unspecified error\n\r");
     }
 
     @BeforeEach
