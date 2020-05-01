@@ -22,7 +22,7 @@ public class SimpleServerManagerTest {
     @Test
     public void testGetPreferences(){
         SimpleServerManager a = SimpleServerManager.getInstance();
-        assertThat(a.getPreferences()).isNotNull().withFailMessage("preferences not created");
+        assertThat(a.getPreferences()).withFailMessage("preferences not created").isNotNull();
     }
 
     @BeforeEach
