@@ -9,8 +9,9 @@ import org.junit.Before;
  * <p>
  *
  * @author Paul Bender Copyright 2018
+ * @author Bob Jacobsen Copyright 2018
  */
-public class AbstractLayoutTrackTestBase {
+abstract public class AbstractLayoutTrackTestBase {
 
     @Before
     public void setUp() {
