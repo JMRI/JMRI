@@ -12,9 +12,7 @@ import org.junit.*;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class PositionablePointTest {
-
-    private LayoutEditor le = null;
+public class PositionablePointTest extends LayoutTrackTest {
 
     @Test
     public void testCtor() {
@@ -377,20 +375,12 @@ public class PositionablePointTest {
 
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
-        if (!GraphicsEnvironment.isHeadless()) {
-            le = new LayoutEditor();
-        }
+        super.setUp();
     }
 
     @After
     public void tearDown() {
-        if (le != null) {
-            JUnitUtil.dispose(le);
-        }
-        le = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 }

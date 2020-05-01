@@ -11,7 +11,7 @@ import org.junit.*;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class LayoutTurnoutTest {
+public class LayoutTurnoutTest extends LayoutTrackTest {
 
     private static LayoutEditor layoutEditor = null;
     private LayoutTurnout ltRH = null;
@@ -1099,7 +1099,7 @@ public class LayoutTurnoutTest {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             Point2D point = new Point2D.Double(150.0, 100.0);
@@ -1125,7 +1125,7 @@ public class LayoutTurnoutTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         if (ltRH != null) {
             ltRH.remove();
             ltRH.dispose();
