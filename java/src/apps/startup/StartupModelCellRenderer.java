@@ -1,5 +1,6 @@
 package apps.startup;
 
+import jmri.util.startup.StartupModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**

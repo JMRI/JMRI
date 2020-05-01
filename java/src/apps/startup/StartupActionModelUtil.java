@@ -1,6 +1,7 @@
 package apps.startup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
@@ -154,17 +155,23 @@ public class StartupActionModelUtil extends Bean {
                     log.error("Did not find class \"{}\"", key);
                 }
             });
-            ServiceLoader<StartupActionFactory> loader = ServiceLoader.load(StartupActionFactory.class);
-            loader.forEach(factory -> {
-                for (Class<?> clazz : factory.getActionClasses()) {
-                    ActionAttributes attrs = new ActionAttributes(factory.getTitle(clazz), clazz);
-                    this.actions.put(clazz, attrs);
-                    for (String overridden : factory.getOverriddenClasses(clazz)) {
-                        this.overrides.put(overridden, clazz);
-                    }
-                }
+            @SuppressWarnings("deprecation")
+            ServiceLoader<apps.startup.StartupActionFactory> asLoader = ServiceLoader.load(apps.startup.StartupActionFactory.class);
+            asLoader.forEach(factory -> {
+                Arrays.stream(factory.getActionClasses()).forEach(clazz -> {
+                    this.actions.put(clazz, new ActionAttributes(factory.getTitle(clazz), clazz));
+                    Arrays.stream(factory.getOverriddenClasses(clazz)).forEach(overridden -> this.overrides.put(overridden, clazz));
+                });
             });
-            loader.reload(); // allow factories to be garbage collected
+            asLoader.reload(); // allow factories to be garbage collected
+            ServiceLoader<jmri.util.startup.StartupActionFactory> jusLoader = ServiceLoader.load(jmri.util.startup.StartupActionFactory.class);
+            jusLoader.forEach(factory -> {
+                Arrays.stream(factory.getActionClasses()).forEach(clazz -> {
+                    this.actions.put(clazz, new ActionAttributes(factory.getTitle(clazz), clazz));
+                    Arrays.stream(factory.getOverriddenClasses(clazz)).forEach(overridden -> this.overrides.put(overridden, clazz));
+                });
+            });
+            jusLoader.reload(); // allow factories to be garbage collected
         }
     }
 

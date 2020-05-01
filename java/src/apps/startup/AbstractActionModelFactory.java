@@ -17,6 +17,7 @@ import jmri.InstanceManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.swing.SystemConnectionAction;
 import jmri.util.ConnectionNameFromSystemName;
+import jmri.util.startup.StartupModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

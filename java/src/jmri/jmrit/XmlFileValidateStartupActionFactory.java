@@ -1,12 +1,12 @@
 package jmri.jmrit;
 
-import apps.startup.AbstractStartupActionFactory;
-import apps.startup.StartupActionFactory;
+import jmri.util.startup.AbstractStartupActionFactory;
+import jmri.util.startup.StartupActionFactory;
 import java.util.Locale;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * {@link apps.startup.StartupActionFactory} implementation to allow
+ * {@link jmri.util.startup.StartupActionFactory} implementation to allow
  * {@link jmri.jmrit.XmlFileValidateAction} to be included as a startup action.
  *
  * @author Randall Wood Copyright (C) 2016

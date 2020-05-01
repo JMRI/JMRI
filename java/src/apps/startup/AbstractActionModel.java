@@ -1,5 +1,6 @@
 package apps.startup;
 
+import jmri.util.startup.StartupModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,10 +18,10 @@ import org.slf4j.LoggerFactory;
  * Provide services for invoking actions during configuration and startup.
  * <p>
  * The action classes and corresponding human-readable names are provided by
- * {@link apps.startup.StartupActionFactory} instances.
+ * {@link jmri.util.startup.StartupActionFactory} instances.
  *
  * @author Bob Jacobsen Copyright 2003, 2007, 2014
- * @see apps.startup.AbstractActionModelFactory
+ * @see jmri.util.startup.AbstractActionModelFactory
  */
 public abstract class AbstractActionModel implements StartupModel {
 

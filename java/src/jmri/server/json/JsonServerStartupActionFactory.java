@@ -2,7 +2,7 @@ package jmri.server.json;
 
 import java.util.Locale;
 
-import apps.startup.AbstractStartupActionFactory;
+import jmri.util.startup.AbstractStartupActionFactory;
 
 public class JsonServerStartupActionFactory extends AbstractStartupActionFactory {
 

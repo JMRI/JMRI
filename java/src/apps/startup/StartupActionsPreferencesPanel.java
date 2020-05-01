@@ -1,5 +1,6 @@
 package apps.startup;
 
+import jmri.util.startup.StartupModel;
 import apps.ConfigBundle;
 import apps.StartupActionsManager;
 import java.awt.Component;
