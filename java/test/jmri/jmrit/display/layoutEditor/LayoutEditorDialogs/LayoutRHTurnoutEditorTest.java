@@ -16,16 +16,6 @@ public class LayoutRHTurnoutEditorTest extends LayoutTurnoutEditorTest  {
     public void testCtor() {
         new LayoutRHTurnoutEditor(null);
     }
-    
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-    }
-
-    @After
-    public void tearDown()  {
-        JUnitUtil.tearDown();
-    }
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutRHTurnoutEditorTest.class);
 }

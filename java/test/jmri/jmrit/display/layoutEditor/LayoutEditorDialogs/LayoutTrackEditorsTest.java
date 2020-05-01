@@ -50,27 +50,6 @@ public class LayoutTrackEditorsTest {
     }
 
     @Test
-    public void testHasNxSensorPairsNull() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertFalse("null block NxSensorPairs", layoutTrackEditors.hasNxSensorPairs(null));
-    }
-
-    @Test
-    public void testHasNxSensorPairsDisconnectedBlock() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutBlock b = new LayoutBlock("test", "test");
-        Assert.assertFalse("disconnected block NxSensorPairs", layoutTrackEditors.hasNxSensorPairs(b));
-    }
-
-    @Test
-    public void testShowSensorMessage() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        layoutTrackEditors.sensorList.add("Test");
-        Assert.assertFalse(layoutTrackEditors.sensorList.isEmpty());
-        layoutTrackEditors.showSensorMessage();
-    }
-
-    @Test
     public void testEditTrackSegmentDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
