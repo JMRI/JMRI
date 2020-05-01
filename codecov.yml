@@ -7,6 +7,10 @@ coverage:
   status:
     project:
       default:
+        # allow a 1% project drop to reduce noise
+        threshold: 1%
+    patch:
+      default:
         # allow a 1% drop to reduce noise
         threshold: 1%
   
