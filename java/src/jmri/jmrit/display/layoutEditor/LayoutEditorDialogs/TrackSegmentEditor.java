@@ -355,5 +355,5 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegmentEditor.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegmentEditor.class);
 }
