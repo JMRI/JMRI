@@ -17,4 +17,8 @@ import org.junit.Test;
  */
 public class LayoutWyeViewTest extends LayoutTurnoutViewTest {
 
+    @Test
+    void testCtor() {
+        new LayoutWyeView(null);
+    }
 }

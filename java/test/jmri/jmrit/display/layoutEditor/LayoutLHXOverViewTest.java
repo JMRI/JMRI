@@ -17,4 +17,8 @@ import org.junit.Test;
  */
 public class  LayoutLHXOverViewTest extends  LayoutXOverViewTest {
 
+    @Test
+    void testCtor() {
+        new LayoutLHXOverView(null);
+    }
 }

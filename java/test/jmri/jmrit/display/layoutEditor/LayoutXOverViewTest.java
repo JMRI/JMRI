@@ -17,4 +17,9 @@ import org.junit.Test;
  */
 public class LayoutXOverViewTest extends LayoutTurnoutViewTest {
 
+    @Test
+    void testCtor() {
+        new LayoutXOverView(null);
+    }
+
 }

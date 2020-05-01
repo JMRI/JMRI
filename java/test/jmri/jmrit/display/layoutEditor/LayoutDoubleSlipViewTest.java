@@ -17,4 +17,8 @@ import org.junit.Test;
  */
 public class LayoutDoubleSlipViewTest extends LayoutSlipViewTest {
 
+    @Test
+    void testCtor() {
+        new LayoutDoubleSlipView(null);
+    }
 }

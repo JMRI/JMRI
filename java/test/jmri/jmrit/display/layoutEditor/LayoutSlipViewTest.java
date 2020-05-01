@@ -17,4 +17,9 @@ import org.junit.Test;
  */
 public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
 
+    @Test
+    void testCtor() {
+        new LayoutSlipViewTest(null);
+    }
+
 }

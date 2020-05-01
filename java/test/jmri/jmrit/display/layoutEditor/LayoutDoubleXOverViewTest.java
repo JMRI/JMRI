@@ -17,4 +17,8 @@ import org.junit.Test;
  */
 public class  LayoutDoubleXOverViewTest extends  LayoutXOverViewTest {
 
+    @Test
+    void testCtor() {
+        new LayoutDoubleXOverView(null);
+    }
 }

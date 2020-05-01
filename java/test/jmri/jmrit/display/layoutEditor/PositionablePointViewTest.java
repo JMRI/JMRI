@@ -17,4 +17,9 @@ import org.junit.Test;
  */
 public class PositionablePointViewTest extends LayoutTrackViewTest {
 
+    @Test
+    void testCtor() {
+        new PositionablePointView(null);
+    }
+
 }
