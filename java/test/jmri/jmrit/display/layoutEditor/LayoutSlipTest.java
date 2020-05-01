@@ -702,5 +702,5 @@ public class LayoutSlipTest {
             ltd = null;
         }
     }
-    //private final static Logger log = LoggerFactory.getLogger(LayoutSlipTest.class);
+    //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipTest.class);
 }

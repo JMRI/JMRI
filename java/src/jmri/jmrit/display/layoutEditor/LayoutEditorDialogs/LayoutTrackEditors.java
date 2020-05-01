@@ -43,18 +43,21 @@ public class LayoutTrackEditors {
      */
     public LayoutTrackEditors(@Nonnull LayoutEditor layoutEditor) {
         this.layoutEditor = layoutEditor;
+        this.trackSegmentEditor = new TrackSegmentEditor(layoutEditor);
     }
 
-    /*=================*\
-    | Edit Layout Track |
-    \*=================*/
+    final TrackSegmentEditor trackSegmentEditor;
+    
+    /*======================*\
+    | Edit Layout Track Types|
+    \*======================*/
     @InvokeOnGuiThread
     public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
         sensorList.clear();
         if (layoutTrack instanceof PositionablePoint) {
             // PositionablePoint's don't have an editor...
         } else if (layoutTrack instanceof TrackSegment) {
-            editTrackSegment((TrackSegment) layoutTrack);
+            trackSegmentEditor.editTrackSegment((TrackSegment) layoutTrack); // partly converted
         } else // this has to be before LayoutTurnout
         if (layoutTrack instanceof LayoutSlip) {
             editLayoutSlip((LayoutSlip) layoutTrack);
@@ -69,6 +72,15 @@ public class LayoutTrackEditors {
         }
     }
 
+    // temporary pass-through for call from TrackSegment itself, which
+    // should eventually be architected away via MVC
+    
+    public void editTrackSegment(TrackSegment layoutTrack) {
+        trackSegmentEditor.editTrackSegment(layoutTrack);
+    }
+    
+    /*******   Common parts, being moved upward in *Editor hierarchy ***************/
+     
     List<String> sensorList = new ArrayList<>();
 
     /**
@@ -125,29 +137,6 @@ public class LayoutTrackEditors {
                         "BlockSensorMessage");  // NOI18N
     }
 
-    /*==================*\
-                    | Edit Track Segment |
-                    \*==================*/
-    // variables for Edit Track Segment pane
-    private TrackSegment trackSegment;
-
-    private JmriJFrame editTrackSegmentFrame = null;
-    private final JComboBox<String> editTrackSegmentMainlineComboBox = new JComboBox<>();
-//    private JCheckBox editTrackSegmentMainlineCheckBox = new JCheckBox(Bundle.getMessage("Mainline"));
-    private final JComboBox<String> editTrackSegmentDashedComboBox = new JComboBox<>();
-    private final JCheckBox editTrackSegmentHiddenCheckBox = new JCheckBox(Bundle.getMessage("HideTrack"));  // NOI18N
-    private final NamedBeanComboBox<Block> editTrackSegmentBlockNameComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
-    private final JTextField editTrackSegmentArcTextField = new JTextField(5);
-    private JButton editTrackSegmentSegmentEditBlockButton;
-
-    private int editTrackSegmentMainlineTrackIndex;
-    private int editTrackSegmentSideTrackIndex;
-    private int editTrackSegmentDashedIndex;
-    private int editTrackSegmentSolidIndex;
-    private boolean editTrackSegmentOpen = false;
-    private boolean editTrackSegmentNeedsRedraw = false;
-
     private void addDoneCancelButtons(JPanel target, JRootPane rp, ActionListener doneCallback, ActionListener cancelCallback) {
         // Done
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
@@ -167,228 +156,11 @@ public class LayoutTrackEditors {
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "close"); // NOI18N
     }
 
-    /**
-     * Edit a Track Segment.
-     */
-    @InvokeOnGuiThread
-    public void editTrackSegment(@Nonnull TrackSegment trackSegment) {
-        this.trackSegment = trackSegment;
-        sensorList.clear();
-
-        if (editTrackSegmentOpen) {
-            editTrackSegmentFrame.setVisible(true);
-        } else if (editTrackSegmentFrame == null) { // Initialize if needed
-            editTrackSegmentFrame = new JmriJFrame(Bundle.getMessage("EditTrackSegment"), false, true); // key moved to DisplayBundle to be found by CircuitBuilder.java   // NOI18N
-            editTrackSegmentFrame.addHelpMenu("package.jmri.jmrit.display.EditTrackSegment", true);  // NOI18N
-            editTrackSegmentFrame.setLocation(50, 30);
-            Container contentPane = editTrackSegmentFrame.getContentPane();
-            contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-
-            // add dashed choice
-            JPanel panel31 = new JPanel();
-            panel31.setLayout(new FlowLayout());
-            editTrackSegmentDashedComboBox.removeAllItems();
-            editTrackSegmentDashedComboBox.addItem(Bundle.getMessage("Solid"));  // NOI18N
-            editTrackSegmentSolidIndex = 0;
-            editTrackSegmentDashedComboBox.addItem(Bundle.getMessage("Dashed"));  // NOI18N
-            editTrackSegmentDashedIndex = 1;
-            editTrackSegmentDashedComboBox.setToolTipText(Bundle.getMessage("DashedToolTip"));  // NOI18N
-            JLabel label31a = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Style")));
-            panel31.add(label31a);
-            label31a.setLabelFor(editTrackSegmentDashedComboBox);
-            panel31.add(editTrackSegmentDashedComboBox);
-            contentPane.add(panel31);
-
-            // add mainline choice
-            JPanel panel32 = new JPanel();
-            panel32.setLayout(new FlowLayout());
-
-            editTrackSegmentMainlineComboBox.removeAllItems();
-            editTrackSegmentMainlineComboBox.addItem(Bundle.getMessage("Mainline"));  // NOI18N
-            editTrackSegmentMainlineTrackIndex = 0;
-            editTrackSegmentMainlineComboBox.addItem(Bundle.getMessage("NotMainline"));  // NOI18N
-            editTrackSegmentSideTrackIndex = 1;
-            editTrackSegmentMainlineComboBox.setToolTipText(Bundle.getMessage("MainlineToolTip"));  // NOI18N
-            editTrackSegmentMainlineComboBox.setName(Bundle.getMessage("Mainline"));
-            panel32.add(editTrackSegmentMainlineComboBox);
-            contentPane.add(panel32);
-
-            // add hidden choice
-            JPanel panel33 = new JPanel();
-            panel33.setLayout(new FlowLayout());
-            editTrackSegmentHiddenCheckBox.setToolTipText(Bundle.getMessage("HiddenToolTip"));  // NOI18N
-            panel33.add(editTrackSegmentHiddenCheckBox);
-            contentPane.add(panel33);
-
-            // setup block name
-            JPanel panel2 = new JPanel();
-            panel2.setLayout(new FlowLayout());
-            JLabel blockNameLabel = new JLabel(Bundle.getMessage("BlockID"));  // NOI18N
-            panel2.add(blockNameLabel);
-            blockNameLabel.setLabelFor(editTrackSegmentBlockNameComboBox);
-            LayoutEditor.setupComboBox(editTrackSegmentBlockNameComboBox, false, true, true);
-            editTrackSegmentBlockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
-
-            panel2.add(editTrackSegmentBlockNameComboBox);
-
-            contentPane.add(panel2);
-
-            JPanel panel20 = new JPanel();
-            panel20.setLayout(new FlowLayout());
-            JLabel arcLabel = new JLabel(Bundle.getMessage("SetArcAngle"));  // NOI18N
-            panel20.add(arcLabel);
-            arcLabel.setLabelFor(editTrackSegmentArcTextField);
-            panel20.add(editTrackSegmentArcTextField);
-            editTrackSegmentArcTextField.setToolTipText(Bundle.getMessage("SetArcAngleHint"));  // NOI18N
-            contentPane.add(panel20);
-
-            // set up Edit Block, Done and Cancel buttons
-            JPanel panel5 = new JPanel();
-            panel5.setLayout(new FlowLayout());
-
-            // Edit Block
-            panel5.add(editTrackSegmentSegmentEditBlockButton = new JButton(Bundle.getMessage("EditBlock", "")));  // NOI18N
-            editTrackSegmentSegmentEditBlockButton.addActionListener(this::editTrackSegmentEditBlockPressed);
-            editTrackSegmentSegmentEditBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
-
-            addDoneCancelButtons(panel5, editTrackSegmentFrame.getRootPane(),
-                    this::editTracksegmentDonePressed, this::editTrackSegmentCancelPressed);
-            contentPane.add(panel5);
-        }
-        // Set up for Edit
-        if (trackSegment.isMainline()) {
-            editTrackSegmentMainlineComboBox.setSelectedIndex(editTrackSegmentMainlineTrackIndex);
-        } else {
-            editTrackSegmentMainlineComboBox.setSelectedIndex(editTrackSegmentSideTrackIndex);
-        }
-        if (trackSegment.isDashed()) {
-            editTrackSegmentDashedComboBox.setSelectedIndex(editTrackSegmentDashedIndex);
-        } else {
-            editTrackSegmentDashedComboBox.setSelectedIndex(editTrackSegmentSolidIndex);
-        }
-        editTrackSegmentHiddenCheckBox.setSelected(trackSegment.isHidden());
-        Block block = InstanceManager.getDefault(BlockManager.class).getBlock(trackSegment.getBlockName());
-        editTrackSegmentBlockNameComboBox.getEditor().setItem(block);   // Select the item via the editor, empty text field if null
-        editTrackSegmentBlockNameComboBox.setEnabled(!hasNxSensorPairs(trackSegment.getLayoutBlock()));
-
-        if (trackSegment.isArc() && trackSegment.isCircle()) {
-            editTrackSegmentArcTextField.setText("" + trackSegment.getAngle());
-            editTrackSegmentArcTextField.setEnabled(true);
-        } else {
-            editTrackSegmentArcTextField.setEnabled(false);
-        }
-
-        editTrackSegmentFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                editTrackSegmentCancelPressed(null);
-            }
-        });
-        editTrackSegmentFrame.pack();
-        editTrackSegmentFrame.setVisible(true);
-        editTrackSegmentOpen = true;
-
-        showSensorMessage();
-    }   // editTrackSegment
-
-    @InvokeOnGuiThread
-    private void editTrackSegmentEditBlockPressed(ActionEvent a) {
-        // check if a block name has been entered
-        String newName = editTrackSegmentBlockNameComboBox.getSelectedItemDisplayName();
-        if (newName == null) {
-            newName = "";
-        }
-        if ((trackSegment.getBlockName().isEmpty())
-                || !trackSegment.getBlockName().equals(newName)) {
-            // get new block, or null if block has been removed
-            trackSegment.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
-            editTrackSegmentNeedsRedraw = true;
-            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-            trackSegment.updateBlockInfo();
-        }
-        // check if a block exists to edit
-        if (trackSegment.getLayoutBlock() == null) {
-            JOptionPane.showMessageDialog(editTrackSegmentFrame,
-                    Bundle.getMessage("Error1"), // NOI18N
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
-            return;
-        }
-        trackSegment.getLayoutBlock().editLayoutBlock(editTrackSegmentFrame);
-        layoutEditor.setDirty();
-        editTrackSegmentNeedsRedraw = true;
-    }
-
-    @InvokeOnGuiThread
-    private void editTracksegmentDonePressed(ActionEvent a) {
-        // set dashed
-        boolean oldDashed = trackSegment.isDashed();
-        trackSegment.setDashed(editTrackSegmentDashedComboBox.getSelectedIndex() == editTrackSegmentDashedIndex);
-
-        // set mainline
-        boolean oldMainline = trackSegment.isMainline();
-        trackSegment.setMainline(editTrackSegmentMainlineComboBox.getSelectedIndex() == editTrackSegmentMainlineTrackIndex);
-
-        // set hidden
-        boolean oldHidden = trackSegment.isHidden();
-        trackSegment.setHidden(editTrackSegmentHiddenCheckBox.isSelected());
-
-        if (trackSegment.isArc()) {
-            try {
-                double newAngle = Double.parseDouble(editTrackSegmentArcTextField.getText());
-                trackSegment.setAngle(newAngle);
-                editTrackSegmentNeedsRedraw = true;
-            } catch (NumberFormatException e) {
-                editTrackSegmentArcTextField.setText("" + trackSegment.getAngle());
-            }
-        }
-        // check if anything changed
-        if ((oldDashed != trackSegment.isDashed())
-                || (oldMainline != trackSegment.isMainline())
-                || (oldHidden != trackSegment.isHidden())) {
-            editTrackSegmentNeedsRedraw = true;
-        }
-        // check if Block changed
-        String newName = editTrackSegmentBlockNameComboBox.getSelectedItemDisplayName();
-        if (newName == null) {
-            newName = "";
-        }
-        if ((trackSegment.getBlockName().isEmpty())
-                || !trackSegment.getBlockName().equals(newName)) {
-            // get new block, or null if block has been removed
-            trackSegment.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
-            editTrackSegmentNeedsRedraw = true;
-            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-            trackSegment.updateBlockInfo();
-        }
-        editTrackSegmentOpen = false;
-
-        editTrackSegmentFrame.setVisible(false);
-        editTrackSegmentFrame.dispose();
-        editTrackSegmentFrame = null;
-
-        if (editTrackSegmentNeedsRedraw) {
-            layoutEditor.redrawPanel();
-            editTrackSegmentNeedsRedraw = false;
-        }
-        layoutEditor.setDirty();
-    }
-
-    @InvokeOnGuiThread
-    private void editTrackSegmentCancelPressed(ActionEvent a) {
-        editTrackSegmentOpen = false;
-        editTrackSegmentFrame.setVisible(false);
-        editTrackSegmentFrame.dispose();
-        editTrackSegmentFrame = null;
-        if (editTrackSegmentNeedsRedraw) {
-            layoutEditor.setDirty();
-            layoutEditor.redrawPanel();
-            editTrackSegmentNeedsRedraw = false;
-        }
-    }
-
+    /*=============== Type-specific parts ===============*/
+    
     /*===================*\
-                    | Edit Layout Turnout |
-                    \*===================*/
+    | Edit Layout Turnout |
+    \*===================*/
     // variables for Edit Layout Turnout pane
     private LayoutTurnout layoutTurnout = null;
 
@@ -421,6 +193,7 @@ public class LayoutTrackEditors {
 
     /**
      * Edit a Layout Turnout.
+     * Invoked for any of the subtypes, has conditional code for crossovers
      */
     public void editLayoutTurnout(@Nonnull LayoutTurnout layoutTurnout) {
         this.layoutTurnout = layoutTurnout;
@@ -867,8 +640,8 @@ public class LayoutTrackEditors {
     }
 
     /*================*\
-                    | Edit Layout Slip |
-                    \*================*/
+    | Edit Layout Slip |
+    \*================*/
     // variables for Edit slip Crossing pane
     private LayoutSlip layoutSlip = null;
 
@@ -1285,8 +1058,8 @@ public class LayoutTrackEditors {
     }
 
     /*===============*\
-                    | Edit Level Xing |
-                    \*===============*/
+    | Edit Level Xing |
+    \*===============*/
     // variables for Edit Track Segment pane
     private LevelXing levelXing;
 
@@ -1505,8 +1278,8 @@ public class LayoutTrackEditors {
     }
 
     /*==============*\
-                    | Edit Turntable |
-                    \*==============*/
+    | Edit Turntable |
+    \*==============*/
     // variables for Edit Turntable pane
     private LayoutTurntable layoutTurntable = null;
 
@@ -1707,14 +1480,14 @@ public class LayoutTrackEditors {
     }
 
     /*===================*\
-                    | Turntable Ray Panel |
-                    \*===================*/
+    | Turntable Ray Panel |
+    \*===================*/
     public class TurntableRayPanel extends JPanel {
 
         // variables for Edit Turntable ray pane
         private RayTrack rayTrack = null;
         private final JPanel rayTurnoutPanel;
-        private final transient NamedBeanComboBox<Turnout> turnoutNameComboBox;
+        private final NamedBeanComboBox<Turnout> turnoutNameComboBox;
         private final TitledBorder rayTitledBorder;
         private final JComboBox<String> rayTurnoutStateComboBox;
         private final JLabel rayTurnoutStateLabel;
@@ -1845,6 +1618,6 @@ public class LayoutTrackEditors {
         }
     }   // class TurntableRayPanel
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTrackEditors.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrackEditors.class);
 
 }

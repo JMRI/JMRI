@@ -9,11 +9,14 @@ import org.junit.*;
 import org.netbeans.jemmy.operators.Operator;
 
 /**
- * Test simple functioning of TrackSegment
+ * Test simple functioning of TrackSegment.
+ *
+ * Note this uses <code>@BeforeClass</code> and <code>@AfterClass</code>
+ * to do static setup.
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class TrackSegmentTest {
+public class TrackSegmentTest extends LayoutTrackTest {
 
     static private LayoutEditor layoutEditor = null;
     static private TrackSegment trackSegment = null;
