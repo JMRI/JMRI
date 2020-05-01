@@ -23,10 +23,10 @@ public class LayoutTurnoutView extends LayoutTrackView {
      */
     public LayoutTurnoutView(@Nonnull LayoutTurnout turnout) {
         super(turnout);
-        this.turnout = turnout;
+        // this.turnout = turnout;
     }
         
-    final private LayoutTurnout turnout;
+    // final private LayoutTurnout turnout;
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnoutView.class);
 }

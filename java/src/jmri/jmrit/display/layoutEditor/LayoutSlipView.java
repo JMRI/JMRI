@@ -23,10 +23,10 @@ public class LayoutSlipView extends LayoutTurnoutView {
      */
     public LayoutSlipView(@Nonnull LayoutSlip slip) {
         super(slip);
-        this.slip = slip;
+        // this.slip = slip;
     }
         
-    final private LayoutSlip slip;
+    // final private LayoutSlip slip;
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipView.class);
 }

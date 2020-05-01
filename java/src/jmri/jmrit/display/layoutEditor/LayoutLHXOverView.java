@@ -23,10 +23,10 @@ public class LayoutLHXOverView extends LayoutXOverView {
      */
     public LayoutLHXOverView(@Nonnull LayoutLHXOver xover) {
         super(xover);
-        this.xover = xover;
+        // this.xover = xover;
     }
         
-    final private LayoutLHXOver xover;
+    // final private LayoutLHXOver xover;
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutLHXOverView.class);
 }

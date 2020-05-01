@@ -31,6 +31,7 @@ public class PositionablePointView extends LayoutTrackView {
     // These now reflect to code in the base class; eventually this heirarchy will
     // expand and the code will be brought here
     
+    @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
         positionablePoint.draw1(g2, isMain, isBlock);
     }

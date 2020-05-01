@@ -23,10 +23,10 @@ public class LevelXingView extends LayoutTrackView {
      */
     public LevelXingView(@Nonnull LevelXing xing) {
         super(xing);
-        this.xing = xing;
+        // this.xing = xing;
     }
     
-    final private LevelXing xing;
+    // final private LevelXing xing;
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LevelXingView.class);
 }

@@ -23,10 +23,10 @@ public class LayoutXOverView extends LayoutTurnoutView {
      */
     public LayoutXOverView(@Nonnull LayoutXOver xover) {
         super(xover);
-        this.xover = xover;
+        // this.xover = xover;
     }
         
-    final private LayoutXOver xover;
+    // final private LayoutXOver xover;
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutXOverView.class);
 }

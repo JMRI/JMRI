@@ -23,10 +23,10 @@ public class LayoutSingleSlipView extends LayoutSlipView {
      */
     public LayoutSingleSlipView(@Nonnull LayoutSingleSlip slip) {
         super(slip);
-        this.slip = slip;
+        // this.slip = slip;
     }
         
-    final private LayoutSingleSlip slip;
+    // final private LayoutSingleSlip slip;
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSingleSlipView.class);
 }

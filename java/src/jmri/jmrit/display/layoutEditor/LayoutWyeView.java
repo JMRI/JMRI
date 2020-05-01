@@ -23,10 +23,10 @@ public class LayoutWyeView extends LayoutTurnoutView {
      */
     public LayoutWyeView(@Nonnull LayoutWye wye) {
         super(wye);
-        this.wye = wye;
+        // this.wye = wye;
     }
         
-    final private LayoutWye wye;
+    // final private LayoutWye wye;
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutWyeView.class);
 }

@@ -23,10 +23,10 @@ public class LayoutDoubleXOverView extends LayoutXOverView {
      */
     public LayoutDoubleXOverView(@Nonnull LayoutDoubleXOver xover) {
         super(xover);
-        this.xover = xover;
+        // this.xover = xover;
     }
         
-    final private LayoutDoubleXOver xover;
+    // final private LayoutDoubleXOver xover;
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleXOverView.class);
 }
