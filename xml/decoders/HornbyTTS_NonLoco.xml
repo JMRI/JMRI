@@ -227,7 +227,7 @@
                 <decVal max="8"/>
                 <label>Telephone Ring = System Channel Occupancy Warning</label>	
             </variable>
-	    <-- HORNBY VENT VAN 2-->
+	    <-- HORNBY VENT VAN 2 -->
 	    <variable CV="160" default="4" item="Sound Setting 1" tooltip="F0 Volume" comment="Range 0-8" include="3">
                 <decVal max="8"/>
                 <label>large Busy Main railway station ambient sounds </label>	
