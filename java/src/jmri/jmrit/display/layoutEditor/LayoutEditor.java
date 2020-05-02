@@ -6703,16 +6703,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return auxTools;
     }
 
-    private  LayoutTrackEditors layoutTrackEditors = null;
-
-    @Nonnull
-    public LayoutTrackEditors getLayoutTrackEditors() {
-        if (layoutTrackEditors == null) {
-            layoutTrackEditors = new LayoutTrackEditors(this);
-        }
-        return layoutTrackEditors;
-    }
-
     private  LayoutEditorChecks layoutEditorChecks = null;
 
     @Nonnull

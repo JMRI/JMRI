@@ -60,6 +60,9 @@ public class TrackSegment extends LayoutTrack {
     //for Bezier
     private final ArrayList<Point2D> bezierControlPoints = new ArrayList<>(); //list of control point displacements
 
+    // temporary reference to the Editor that will eventually be part of View
+    private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor editor;
+
     public TrackSegment(@Nonnull String id,
             @CheckForNull LayoutTrack c1, HitPointType t1,
             @CheckForNull LayoutTrack c2, HitPointType t2,
@@ -94,6 +97,8 @@ public class TrackSegment extends LayoutTrack {
         circle = false;
         bezier = false;
         setupDefaultBumperSizes(layoutEditor);
+
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
     }
 
     //alternate constructor for loading layout editor panels
@@ -114,6 +119,8 @@ public class TrackSegment extends LayoutTrack {
         hidden = hide;
 
         setupDefaultBumperSizes(layoutEditor);
+        
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
     }
 
     /**
@@ -1446,7 +1453,7 @@ public class TrackSegment extends LayoutTrack {
         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                layoutEditor.getLayoutTrackEditors().editTrackSegment(TrackSegment.this);
+                editor.editLayoutTrack(TrackSegment.this);
             }
         });
         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
@@ -1949,7 +1956,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * The following are used only as a temporary store after a circle or arc
+     * The following are used only as a local store after a circle or arc
      * has been calculated. This prevents the need to recalculate the values
      * each time a re-draw is required.
      */

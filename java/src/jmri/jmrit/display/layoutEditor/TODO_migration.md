@@ -61,25 +61,22 @@ isDisconnected in LayoutTrack (base) and PositionablePoint (subclass) seem very 
  
 ==================
 
-These should be a single contravarient method?
-
-        layoutTurnoutEditor.editLayoutTurnout(layoutTurnout);
-
-        trackSegmentEditor.editTrackSegment(layoutTrack);
-
-        layoutTurntableEditor.editLayoutTurntable(layoutTurntable);
-
-        layoutSlipEditor.editLayoutSlip(layoutSlip);
-
         levelXingEditor.editLevelXing(levelXing);
 
 Make sure the code is at the right level, i.e. SlipEditor not Double or Single, etc
 
+XOver doesn't have an editor implementation at any level?
+Neither does PositionablePoint
 Are XOver tests done in right place? (Might be in TurnoutEditorTest)
  
-===================
-Remove layoutEditor/LayoutEditorDialogs/LayoutTrackEditors and correct references
-    Then remove layoutEditor/LayoutEditorDialogs/LayoutTrackEditorsTest
+This needs to get hooked up again:
+    [javac] /Users/jake/Documents/Trains/JMRI/projects/JMRI/java/src/jmri/jmrit/display/layoutEditor/LayoutEditorChecks.java:378: error: cannot find symbol
+    [javac]             layoutEditor.getLayoutTrackEditors().editLayoutTrack(layoutTrack);
+    [javac]                         ^
+    [javac]   symbol:   method getLayoutTrackEditors()
+    [javac]   location: variable layoutEditor of type LayoutEditor
+
+
 ===================
 
  TrackSegment HIDECON as an EnumSet

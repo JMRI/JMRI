@@ -78,8 +78,12 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
      * Edit a Layout Turnout.
      * Invoked for any of the subtypes, has conditional code for crossovers
      */
-    public void editLayoutTurnout(@Nonnull LayoutTurnout layoutTurnout) {
-        this.layoutTurnout = layoutTurnout;
+    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
+        if ( layoutTrack instanceof LayoutTurnout ) {
+            this.layoutTurnout = (LayoutTurnout) layoutTrack;
+        } else {
+            log.error("editLayoutTrack called with wrong type {}", layoutTurnout, new Exception("traceback"));
+        }
         sensorList.clear();
 
         if (editLayoutTurnoutOpen) {
@@ -523,5 +527,5 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
     }
     
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnoutEditor.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnoutEditor.class);
 }

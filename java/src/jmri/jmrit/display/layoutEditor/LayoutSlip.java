@@ -56,6 +56,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
     private NamedBeanHandle<Turnout> namedTurnoutB = null;
 
     private java.beans.PropertyChangeListener mTurnoutListener = null;
+    private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutSlipEditor editor;
 
     /**
      * constructor method
@@ -82,6 +83,8 @@ abstract public class LayoutSlip extends LayoutTurnout {
         }
         
         rotateCoords(rot);
+
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutSlipEditor(layoutEditor);
     }
 
     // this should only be used for debugging...
@@ -823,7 +826,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    layoutEditor.getLayoutTrackEditors().editLayoutSlip(LayoutSlip.this);
+                    editor.editLayoutTrack(LayoutSlip.this);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {

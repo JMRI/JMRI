@@ -280,7 +280,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     protected NamedBeanHandle<Turnout> secondNamedTurnout = null;
 
     private java.beans.PropertyChangeListener mTurnoutListener = null;
-
+    
     // persistent instances variables (saved between sessions)
     // these should be the system or user name of an existing physical turnout
     private String turnoutName = "";
@@ -351,17 +351,21 @@ abstract public class LayoutTurnout extends LayoutTrack {
     public LinkType linkType = LinkType.NO_LINK;
 
     private final boolean useBlockSpeed = false;
-
-    protected LayoutTurnout(@Nonnull String id,
-            @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
-        this(id, c, layoutEditor, TurnoutType.NONE);
-    }
+    
+    // temporary reference to the Editor that will eventually be part of View
+    private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor editor;
 
     protected LayoutTurnout(@Nonnull String id,
             @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor, TurnoutType t) {
         super(id, c, layoutEditor);
         
         type = t;
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor(layoutEditor);
+    }
+
+    protected LayoutTurnout(@Nonnull String id,
+            @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
+        this(id, c, layoutEditor, TurnoutType.NONE);
     }
 
     public LayoutTurnout(@Nonnull String id, TurnoutType t,
@@ -441,6 +445,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
         pt = new Point2D.Double(Math.round(dispA.getX() * xFactor),
                 Math.round(dispA.getY() * yFactor));
         dispA = pt;
+
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor(layoutEditor);
     }
 
     /**
@@ -2944,7 +2950,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    layoutEditor.getLayoutTrackEditors().editLayoutTurnout(LayoutTurnout.this);
+                    editor.editLayoutTrack(LayoutTurnout.this);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {

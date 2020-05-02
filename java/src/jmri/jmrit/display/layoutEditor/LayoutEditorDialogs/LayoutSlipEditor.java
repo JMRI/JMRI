@@ -62,8 +62,12 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
     /**
      * Edit a Slip.
      */
-    public void editLayoutSlip(LayoutSlip layoutSlip) {
-        this.layoutSlip = layoutSlip;
+    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
+        if ( layoutTrack instanceof LayoutSlip ) {
+            this.layoutSlip = (LayoutSlip) layoutTrack;
+        } else {
+            log.error("editLayoutTrack called with wrong type {}", layoutTrack, new Exception("traceback"));
+        }
         sensorList.clear();
 
         if (editLayoutSlipOpen) {
@@ -460,5 +464,5 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
     }
     
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipEditor.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipEditor.class);
 }
