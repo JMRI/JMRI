@@ -42,7 +42,7 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
         TrackSegmentEditor editor = new TrackSegmentEditor(layoutEditor);
         
         // Edit the track trackSegment
-        editor.editTrackSegment(trackSegment);
+        editor.editLayoutTrack(trackSegment);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
         // Select dashed
@@ -96,7 +96,7 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
         TrackSegmentEditor editor = new TrackSegmentEditor(layoutEditor);
         
         // Edit the track trackSegment
-        editor.editTrackSegment(trackSegment);
+        editor.editLayoutTrack(trackSegment);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
         // Create empty block edit dialog
@@ -119,7 +119,7 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
         TrackSegmentEditor editor = new TrackSegmentEditor(layoutEditor);
         
         // Edit the track trackSegment
-        editor.editTrackSegment(trackSegment);
+        editor.editLayoutTrack(trackSegment);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
@@ -135,7 +135,7 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
         TrackSegmentEditor editor = new TrackSegmentEditor(layoutEditor);
         
         // Edit the track trackSegment
-        editor.editTrackSegment(trackSegment);
+        editor.editLayoutTrack(trackSegment);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
         // Set arc angle

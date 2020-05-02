@@ -41,7 +41,7 @@ public class LevelXingEditorTest extends LayoutTrackEditorTest {
         LevelXingEditor editor = new LevelXingEditor(layoutEditor);
 
         // Edit the level crossing
-        editor.editLevelXing(levelXing);
+        editor.editLayoutTrack(levelXing);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXing"));
 
         // Select AC block
@@ -97,7 +97,7 @@ public class LevelXingEditorTest extends LayoutTrackEditorTest {
         LevelXingEditor editor = new LevelXingEditor(layoutEditor);
 
         // Edit the level crossing
-        editor.editLevelXing(levelXing);
+        editor.editLayoutTrack(levelXing);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXing"));
 
         // Invoke layout block editor with no block assigned
@@ -128,7 +128,7 @@ public class LevelXingEditorTest extends LayoutTrackEditorTest {
         LevelXingEditor editor = new LevelXingEditor(layoutEditor);
 
         // Edit the level crossing
-        editor.editLevelXing(levelXing);
+        editor.editLayoutTrack(levelXing);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXing"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();

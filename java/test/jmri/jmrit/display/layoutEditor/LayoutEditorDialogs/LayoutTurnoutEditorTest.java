@@ -41,7 +41,7 @@ public class LayoutTurnoutEditorTest extends LayoutTrackEditorTest {
         LayoutTurnoutEditor editor = new LayoutTurnoutEditor(layoutEditor);
 
         // Edit the double crossover
-        editor.editLayoutTurnout(doubleXoverLayoutTurnout);
+        editor.editLayoutTrack(doubleXoverLayoutTurnout);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXover"));
 
         // Select main turnout
@@ -137,7 +137,7 @@ public class LayoutTurnoutEditorTest extends LayoutTrackEditorTest {
         LayoutTurnoutEditor editor = new LayoutTurnoutEditor(layoutEditor);
 
         // Edit the rh turnout
-        editor.editLayoutTurnout(rightHandLayoutTurnout);
+        editor.editLayoutTrack(rightHandLayoutTurnout);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurnout"));
 
         // Select main turnout
@@ -183,7 +183,7 @@ public class LayoutTurnoutEditorTest extends LayoutTrackEditorTest {
         LayoutTurnoutEditor editor = new LayoutTurnoutEditor(layoutEditor);
 
         // Edit the double crossover
-        editor.editLayoutTurnout(doubleXoverLayoutTurnout);
+        editor.editLayoutTrack(doubleXoverLayoutTurnout);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXover"));
 
         // Invoke layout block editor with no block assigned
@@ -230,7 +230,7 @@ public class LayoutTurnoutEditorTest extends LayoutTrackEditorTest {
         LayoutTurnoutEditor editor = new LayoutTurnoutEditor(layoutEditor);
 
         // Edit the double crossover
-        editor.editLayoutTurnout(doubleXoverLayoutTurnout);
+        editor.editLayoutTrack(doubleXoverLayoutTurnout);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXover"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
