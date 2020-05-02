@@ -553,7 +553,7 @@ public class LayoutBlockConnectivityTools {
                         log.debug("{} Return as Long", sourceLayoutBlock.getDisplayName());
                         returnBlocks.forEach((returnBlock) -> {
                             log.debug("  return block {}", returnBlock.getDisplayName());
-                        };
+                        });
                         log.debug("Finished List");
                     }
                     return returnBlocks;
