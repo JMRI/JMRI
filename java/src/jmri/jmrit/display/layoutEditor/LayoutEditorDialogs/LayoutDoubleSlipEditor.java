@@ -18,7 +18,7 @@ import jmri.util.*;
  * @author Bob Jacobsen  Copyright (c) 2020
  * 
  */
-public class LayoutDoubleSlipEditor extends LayoutTrackEditor {
+public class LayoutDoubleSlipEditor extends LayoutSlipEditor {
 
     /**
      * constructor method

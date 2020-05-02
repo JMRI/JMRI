@@ -71,5 +71,48 @@ public class LayoutTrackEditorTest {
         JUnitUtil.tearDown();
     }
 
+    protected Turnout turnout0 = null;
+    protected Turnout turnout1 = null;
+    
+    /*
+     * This is used to find a component by matching against its tooltip
+     */
+    protected static class ToolTipComponentChooser implements ComponentChooser {
+
+        private String buttonTooltip;
+        private StringComparator comparator = Operator.getDefaultStringComparator();
+
+        public ToolTipComponentChooser(String buttonTooltip) {
+            this.buttonTooltip = buttonTooltip;
+        }
+
+        public boolean checkComponent(Component comp) {
+            return comparator.equals(((JComponent) comp).getToolTipText(), buttonTooltip);
+        }
+
+        public String getDescription() {
+            return "Component with tooltip \"" + buttonTooltip + "\".";
+        }
+    }
+
+
+    protected void createTurnouts() {
+        turnout0 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT101");
+        turnout0.setUserName("Turnout 101");
+        turnout0.setCommandedState(Turnout.CLOSED);
+
+        turnout1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT102");
+        turnout1.setUserName("Turnout 102");
+        turnout1.setCommandedState(Turnout.CLOSED);
+    }
+
+    protected void createBlocks() {
+        Block block1 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
+        block1.setUserName("Blk 1");
+        Block block2 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB2");
+        block2.setUserName("Blk 2");
+    }
+
+
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrackEditorTest.class);
 }
