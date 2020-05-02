@@ -50,7 +50,7 @@ public class CarRoads extends RollingStockAttribute implements InstanceManagerAu
 
     /**
      * Get the maximum character length of a road name when printing on a
-     * manifest or switch list. Characters after the "-" are ignored.
+     * manifest or switch list. Characters after the hyphen are ignored.
      *
      * @return the maximum character length of a car road name
      */

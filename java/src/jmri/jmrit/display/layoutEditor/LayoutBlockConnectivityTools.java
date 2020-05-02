@@ -510,7 +510,7 @@ public class LayoutBlockConnectivityTools {
                 LayoutBlock nextLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(nextBlock);
                 if (log.isDebugEnabled()) {
                     log.debug("Blocks in route size {}", blocksInRoute.size());
-                    log.debug("{} {}", nextBlock.getDisplayName(), destBlock.getDisplayName());
+                    log.debug("next: {} dest: {}", nextBlock.getDisplayName(), destBlock.getDisplayName());
                 }
                 if (nextBlock == currentBlock) {
                     nextBlock = currentLBlock.getRouteDestBlockAtIndex(nextBlockIndex);
@@ -655,7 +655,7 @@ public class LayoutBlockConnectivityTools {
                 } else if ((validateOnly) || ((checkForDoubleCrossover(preBlock, currentLBlock, blocktoCheck) && checkForLevelCrossing(currentLBlock)) && canLBlockBeUsed(lBlock))) {
                     if (log.isDebugEnabled()) {
                         log.debug("{} not occupied & not reserved but we need to check if the anchor point between the two contains a signal or not", block.getDisplayName());
-                        log.debug("{} {}", currentBlock.getDisplayName(), block.getDisplayName());
+                        log.debug("  current {} {}", currentBlock.getDisplayName(), block.getDisplayName());
                     }
 
                     jmri.NamedBean foundBean = null;

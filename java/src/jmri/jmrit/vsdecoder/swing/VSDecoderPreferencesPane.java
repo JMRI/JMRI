@@ -24,6 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Pane to show VSDecoder Preferences.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -37,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyChangeListener {
 
@@ -68,7 +70,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
     }
 
     public VSDecoderPreferencesPane() {
-        this(jmri.jmrit.vsdecoder.VSDecoderManager.instance().getVSDecoderPreferences());
+        this(VSDecoderManager.instance().getVSDecoderPreferences());
     }
 
     private GridBagConstraints setConstraints(Insets i, int x, int y, int width, int fill) {
@@ -79,7 +81,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         gbc.gridwidth = width;
         gbc.anchor = GridBagConstraints.LINE_START;
         gbc.fill = fill;
-        return (gbc);
+        return gbc;
     }
 
     private void initComponents() {
@@ -235,7 +237,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         } else if (audioModeHeadphoneButton.isSelected()) {
             tp.setAudioMode(VSDecoderPreferences.AudioMode.HEADPHONES);
         }
-
+        tp.setMasterVolume(VSDecoderManager.instance().getVSDecoderPreferences().getMasterVolume());
         return tp;
     }
 
@@ -313,24 +315,24 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
     }
 
     private void jbApplyActionPerformed(java.awt.event.ActionEvent evt) {
-        jmri.jmrit.vsdecoder.VSDecoderManager.instance().getVSDecoderPreferences().set(getVSDecoderPreferences());
+        VSDecoderManager.instance().getVSDecoderPreferences().set(getVSDecoderPreferences());
     }
 
     public void jbSaveActionPerformed(java.awt.event.ActionEvent evt) {
-        jmri.jmrit.vsdecoder.VSDecoderManager.instance().getVSDecoderPreferences().set(getVSDecoderPreferences());
-        jmri.jmrit.vsdecoder.VSDecoderManager.instance().getVSDecoderPreferences().save();
+        VSDecoderManager.instance().getVSDecoderPreferences().set(getVSDecoderPreferences());
+        VSDecoderManager.instance().getVSDecoderPreferences().save();
         if (m_container != null) {
-            jmri.jmrit.vsdecoder.VSDecoderManager.instance().getVSDecoderPreferences().removePropertyChangeListener(this);
+            VSDecoderManager.instance().getVSDecoderPreferences().removePropertyChangeListener(this);
             m_container.setVisible(false); // should do with events...
             m_container.dispose();
         }
     }
 
     private void jbCancelActionPerformed(java.awt.event.ActionEvent evt) {
-        setComponents(jmri.jmrit.vsdecoder.VSDecoderManager.instance().getVSDecoderPreferences());
+        setComponents(VSDecoderManager.instance().getVSDecoderPreferences());
         checkConsistency();
         if (m_container != null) {
-            jmri.jmrit.vsdecoder.VSDecoderManager.instance().getVSDecoderPreferences().removePropertyChangeListener(this);
+            VSDecoderManager.instance().getVSDecoderPreferences().removePropertyChangeListener(this);
             m_container.setVisible(false); // should do with events...
             m_container.dispose();
         }
@@ -347,14 +349,14 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         if ((evt == null) || (evt.getPropertyName() == null)) {
             return;
         }
-        if (evt.getPropertyName().compareTo("VSDecoderPreferences") == 0) {
-            if ((evt.getNewValue() == null) || (!(evt.getNewValue() instanceof VSDecoderPreferences))) {
-                return;
+        if (evt.getPropertyName().equals("VSDecoderPreferences")) {
+            if ((evt.getNewValue() != null) && (evt.getNewValue() instanceof VSDecoderPreferences)) {
+                setComponents((VSDecoderPreferences) evt.getNewValue());
+                checkConsistency();
             }
-            setComponents((VSDecoderPreferences) evt.getNewValue());
-            checkConsistency();
         }
     }
 
     private static final Logger log = LoggerFactory.getLogger(VSDecoderPreferencesPane.class);
+
 }

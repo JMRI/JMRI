@@ -300,26 +300,26 @@ public class TrainPrintUtilities {
         if (inputLine.length == 0) {
             return "";
         }
-        if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-") ||
-                inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-") ||
-                inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-") ||
-                inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + "-")) {
+        if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + TrainCommon.BUILD_REPORT_CHAR) ||
+                inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + TrainCommon.BUILD_REPORT_CHAR) ||
+                inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + TrainCommon.BUILD_REPORT_CHAR) ||
+                inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + TrainCommon.BUILD_REPORT_CHAR)) {
 
             if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_MINIMAL)) {
-                if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-") ||
-                        inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-") ||
-                        inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")) {
+                if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + TrainCommon.BUILD_REPORT_CHAR) ||
+                        inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + TrainCommon.BUILD_REPORT_CHAR) ||
+                        inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + TrainCommon.BUILD_REPORT_CHAR)) {
                     return ""; // don't print this line
                 }
             }
             if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL)) {
-                if (inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-") ||
-                        inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")) {
+                if (inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + TrainCommon.BUILD_REPORT_CHAR) ||
+                        inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + TrainCommon.BUILD_REPORT_CHAR)) {
                     return ""; // don't print this line
                 }
             }
             if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED)) {
-                if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")) {
+                if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + TrainCommon.BUILD_REPORT_CHAR)) {
                     return ""; // don't print this line
                 }
             }
@@ -327,13 +327,13 @@ public class TrainPrintUtilities {
             int start = 0;
             if (indent) {
                 // indent lines based on level
-                if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")) {
+                if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + TrainCommon.BUILD_REPORT_CHAR)) {
                     inputLine[0] = "   ";
-                } else if (inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")) {
+                } else if (inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + TrainCommon.BUILD_REPORT_CHAR)) {
                     inputLine[0] = "  ";
-                } else if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-")) {
+                } else if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + TrainCommon.BUILD_REPORT_CHAR)) {
                     inputLine[0] = " ";
-                } else if (inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + "-")) {
+                } else if (inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + TrainCommon.BUILD_REPORT_CHAR)) {
                     inputLine[0] = "";
                 }
             } else {

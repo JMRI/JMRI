@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.*;
 import java.util.*;
 import javax.annotation.*;
-import javax.swing.JPopupMenu;
+import javax.swing.*;
 import jmri.*;
 import jmri.util.*;
 
@@ -219,6 +219,19 @@ public abstract class LayoutTrack {
         //nothing to do here... move along...
     }
 
+    /**
+     * Load a file for a specific arrow ending.
+     * @return An item for the arrow menu
+     */
+    public JCheckBoxMenuItem loadArrowImageToJCBItem(int n, JMenu arrowsCountMenu) {
+            ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle"+n+".png"));
+            JCheckBoxMenuItem jcbmi = new JCheckBoxMenuItem(imageIcon);
+            arrowsCountMenu.add(jcbmi);
+            jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+            // can't set selected here because the ActionListener has to be set first
+            return jcbmi;
+    }
+    
     /**
      * highlight unconnected connections
      *
@@ -496,13 +509,12 @@ public abstract class LayoutTrack {
      * return a list of the available connections for this layout track
      *
      * @return the list of available connections
-     * <p>
-     * note: used by LayoutEditorChecks.setupCheckUnConnectedTracksMenu()
-     * <p>
-     * (This could have just returned a boolean but I thought a list might be
-     * more useful (eventually... not currently being used; we just check to see
-     * if it's not empty.)
      */
+     // note: used by LayoutEditorChecks.setupCheckUnConnectedTracksMenu()
+     //
+     // This could have just returned a boolean but I thought a list might be
+     // more useful (eventually... not currently being used; we just check to see
+     // if it's not empty.)
     @Nonnull
     public abstract List<HitPointType> checkForFreeConnections();
 
@@ -510,9 +522,9 @@ public abstract class LayoutTrack {
      * determine if all the appropriate blocks have been assigned to this track
      *
      * @return true if all appropriate blocks have been assigned
-     * <p>
-     * note: used by LayoutEditorChecks.setupCheckUnBlockedTracksMenu()
      */
+     // note: used by LayoutEditorChecks.setupCheckUnBlockedTracksMenu()
+     //
     public abstract boolean checkForUnAssignedBlocks();
 
     /**
@@ -529,9 +541,9 @@ public abstract class LayoutTrack {
      *
      * @param blockNamesToTrackNameSetMaps hashmap of key:block names to lists
      *                                     of track name sets for those blocks
-     * <p>
-     * note: used by LayoutEditorChecks.setupCheckNonContiguousBlocksMenu()
      */
+     // note: used by LayoutEditorChecks.setupCheckNonContiguousBlocksMenu()
+     //
     public abstract void checkForNonContiguousBlocks(
             @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetMaps);
 

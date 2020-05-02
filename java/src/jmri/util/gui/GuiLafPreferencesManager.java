@@ -20,7 +20,6 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
 import jmri.util.prefs.InitializationException;
-import jmri.util.swing.SwingSettings;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -123,7 +122,6 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
             this.applyLookAndFeel();
             this.applyFontSize();
-            SwingSettings.setNonStandardMouseEvent(this.isNonStandardMouseEvent());
             this.setDirty(migrate);
             this.initialized = true;
         }
