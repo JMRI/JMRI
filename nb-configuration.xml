@@ -32,5 +32,6 @@ Any value defined here will override the pom.xml file value but is only applicab
         <com-junichi11-netbeans-changelf.enable>true</com-junichi11-netbeans-changelf.enable>
         <com-junichi11-netbeans-changelf.use-project>true</com-junichi11-netbeans-changelf.use-project>
         <com-junichi11-netbeans-changelf.use-global>false</com-junichi11-netbeans-changelf.use-global>
+        <org-netbeans-spi-editor-hints-projects.perProjectHintSettingsEnabled>true</org-netbeans-spi-editor-hints-projects.perProjectHintSettingsEnabled>
     </properties>
 </project-shared-configuration>
