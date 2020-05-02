@@ -40,7 +40,7 @@ public class LayoutTrackEditors {
      * constructor method
      */
     public LayoutTrackEditors(@Nonnull LayoutEditor layoutEditor) {
-        this.layoutEditor = layoutEditor;
+        // this.layoutEditor = layoutEditor;
         this.trackSegmentEditor = new TrackSegmentEditor(layoutEditor);
         this.layoutTurnoutEditor = new LayoutTurnoutEditor(layoutEditor);
         this.layoutTurntableEditor = new LayoutTurntableEditor(layoutEditor);
