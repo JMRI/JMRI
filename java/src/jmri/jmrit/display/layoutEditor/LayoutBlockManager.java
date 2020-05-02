@@ -69,7 +69,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @CheckForNull String systemName,
             String userName) {
         // Check that LayoutBlock does not already exist
-        LayoutBlock result = null;
+        LayoutBlock result;
 
         if ((userName == null) || userName.isEmpty()) {
             log.error("Attempt to create a LayoutBlock with no user name");
@@ -120,14 +120,11 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckReturnValue
     @CheckForNull
     public LayoutBlock createNewLayoutBlock() {
-        boolean found = true;
-
-        while (found) {
+        while (true) {
             String sName = "ILB" + blkNum;
             LayoutBlock block = getBySystemName(sName);
 
             if (block == null) {
-                found = false;
                 String uName = "AUTOBLK:" + blkNum;
                 block = new LayoutBlock(sName, uName);
                 register(block);
@@ -136,7 +133,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
             blkNum++;
         }
-        return null;
     }
 
     /**
@@ -352,9 +348,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         //blocks are connected, get connection item types
-        LayoutTurnout lt = null;
+        LayoutTurnout lt;
         TrackSegment tr = lc.getTrackSegment();
-        int boundaryType = 0;
+        int boundaryType;
 
         if (tr == null) {
             // this is an internal crossover block boundary
@@ -1272,7 +1268,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
         for (TrackSegment t : panel.getTrackSegments()) {
             if (t.getLayoutBlock() == fLayoutBlock) {
-                PositionablePoint p = null;
+                PositionablePoint p;
 
                 if (t.getType1() == HitPointType.POS_POINT) {
                     p = (PositionablePoint) t.getConnect1();
@@ -1523,7 +1519,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
             return null;
         }
-        LayoutTurnout lt = null;
+        LayoutTurnout lt;
         LayoutTrack connected = lc.getConnectedObject();
 
         TrackSegment tr = lc.getTrackSegment();
@@ -1895,7 +1891,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundBean(bean);
-        TrackSegment tr = null;
+        TrackSegment tr;
         boolean east = true;
 
         if (pp == null) {
@@ -2108,8 +2104,12 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckForNull
     public LayoutBlock getFacingBlockBySensor(@Nonnull String sensorName,
             @CheckForNull LayoutEditor panel) {
-        Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(sensorName);
-        return (sensor == null) ? null : getFacingBlockBySensor(sensor, panel);
+        LayoutBlock result = null;  //assume failure (pessimist!)
+        if (panel != null) {
+            Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+            result = (sensor == null) ? null : getFacingBlockBySensor(sensor, panel);
+        }
+        return result;
     }
 
     /**
@@ -2158,7 +2158,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @Nonnull NamedBean bean,
             @Nonnull LayoutEditor panel) {
         PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundBean(bean);
-        TrackSegment tr = null;
+        TrackSegment tr;
         boolean east = true;
 
         //Don't think that the logic for this is the right way round
@@ -2313,13 +2313,16 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckForNull
     public LayoutBlock getProtectedBlock(
             @Nonnull SignalHead signalHead, @CheckForNull LayoutEditor panel) {
-        String userName = signalHead.getUserName();
-        LayoutBlock protect = (userName == null) ? null : getProtectedBlock(userName, panel);
+        LayoutBlock result = null;  //assume failure (pessimist!)
+        if (panel != null) {
+            String userName = signalHead.getUserName();
+            result = (userName == null) ? null : getProtectedBlock(userName, panel);
 
-        if (protect == null) {
-            protect = getProtectedBlock(signalHead.getSystemName(), panel);
+            if (result == null) {
+                result = getProtectedBlock(signalHead.getSystemName(), panel);
+            }
         }
-        return protect;
+        return result;
     }
 
     /**
@@ -2355,12 +2358,15 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckForNull
     public LayoutBlock getFacingBlock(
             @Nonnull SignalHead signalHead, @CheckForNull LayoutEditor panel) {
-        String userName = signalHead.getUserName();
-        LayoutBlock facing = (userName == null) ? null : getFacingBlock(userName, panel);
-        if (facing == null) {
-            facing = getFacingBlock(signalHead.getSystemName(), panel);
+        LayoutBlock result = null;  //assume failure (pessimist!)
+        if (panel != null) {
+            String userName = signalHead.getUserName();
+            result = (userName == null) ? null : getFacingBlock(userName, panel);
+            if (result == null) {
+                result = getFacingBlock(signalHead.getSystemName(), panel);
+            }
         }
-        return facing;
+        return result;
     }
 
     /**

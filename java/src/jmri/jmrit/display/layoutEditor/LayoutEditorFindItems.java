@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SignalHead;
@@ -26,7 +27,8 @@ public class LayoutEditorFindItems {
         layoutEditor = editor;
     }
 
-    public TrackSegment findTrackSegmentByName(String name) {
+    @CheckReturnValue
+    public TrackSegment findTrackSegmentByName(@Nonnull String name) {
         if (!name.isEmpty()) {
             for (TrackSegment t : layoutEditor.getTrackSegments()) {
                 if (t.getId().equals(name)) {
@@ -37,7 +39,7 @@ public class LayoutEditorFindItems {
         return null;
     }
 
-    public PositionablePoint findPositionablePointByName(String name) {
+    public PositionablePoint findPositionablePointByName(@Nonnull String name) {
         if (!name.isEmpty()) {
             for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
                 if (p.getId().equals(name)) {

@@ -18,21 +18,21 @@ import org.slf4j.*;
 
 /**
  * TrackSegment is a segment of track on a layout linking two nodes of the
- * layout. A node may be a LayoutTurnout, a LevelXing or a PositionablePoint.
+ * layout. A node may be a LayoutTurnout, a LevelXing or a PositionablePoint
  * <p>
  * PositionablePoints have 1 or 2 connection points. LayoutTurnouts have 3 or 4
  * (crossovers) connection points, designated A, B, C, and D. LevelXing's have 4
- * connection points, designated A, B, C, and D.
+ * connection points, designated A, B, C, and D
  * <p>
  * TrackSegments carry the connectivity information between the three types of
  * nodes. Track Segments serve as the lines in a graph which shows layout
  * connectivity. For the connectivity graph to be valid, all connections between
- * nodes must be via TrackSegments.
+ * nodes must be via TrackSegments
  * <p>
- * TrackSegments carry Block information, as do LayoutTurnouts and LevelXings.
+ * TrackSegments carry Block information, as do LayoutTurnouts and LevelXings
  * <p>
  * TrackSegments may be drawn as dashed lines or solid lines. In addition
- * TrackSegments may be hidden when the panel is not in EditMode.
+ * TrackSegments may be hidden when the panel is not in EditMode
  *
  * @author Dave Duchamp Copyright (p) 2004-2009
  * @author George Warner Copyright (c) 2017-2019
@@ -117,7 +117,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Get debugging string for the TrackSegment.
+     * Get debugging string for the TrackSegment
      *
      * @return text showing id and connections of this segment
      */
@@ -292,7 +292,7 @@ public class TrackSegment extends LayoutTrack {
                 //if it was a bezier
                 if (bezier) {
                     //then use control point to calculate arc
-                    // adjacent connections must be defined...
+                    // adjacent connections must be defined..
                     if ((connect1 != null) && (connect2 != null)) {
                         Point2D end1 = LayoutEditor.getCoords(connect1, type1);
                         Point2D end2 = LayoutEditor.getCoords(connect2, type2);
@@ -378,7 +378,7 @@ public class TrackSegment extends LayoutTrack {
      * Get the direction from end point 1 to 2
      * <p>
      * Note: Goes CW from east (0) to south (PI/2) to west (PI) to north
-     * (PI*3/2), etc.
+     * (PI*3/2), etc
      *
      * @return the direction (in radians)
      */
@@ -397,7 +397,7 @@ public class TrackSegment extends LayoutTrack {
      * Get the direction from end point 1 to 2
      * <p>
      * Note: Goes CW from east (0) to south (90) to west (180) to north (270),
-     * etc.
+     * etc
      *
      * @return the direction (in degrees)
      */
@@ -407,7 +407,7 @@ public class TrackSegment extends LayoutTrack {
 
     /**
      * Determine if we need to redraw a curved piece of track. Saves having to
-     * recalculate the circle details each time.
+     * recalculate the circle details each time
      */
     public boolean trackNeedsRedraw() {
         return changed;
@@ -437,7 +437,7 @@ public class TrackSegment extends LayoutTrack {
      * {@inheritDoc}
      * <p>
      * This implementation returns null because {@link #getConnect1} and
-     * {@link #getConnect2} should be used instead.
+     * {@link #getConnect2} should be used instead
      */
     //only implemented here to suppress "does not override abstract method " error in compiler
     @Override
@@ -450,7 +450,7 @@ public class TrackSegment extends LayoutTrack {
      * {@inheritDoc}
      * <p>
      * This implementation does nothing because {@link #setNewConnect1} and
-     * {@link #setNewConnect2} should be used instead.
+     * {@link #setNewConnect2} should be used instead
      */
     //only implemented here to suppress "does not override abstract method " error in compiler
     @Override
@@ -492,9 +492,10 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Set up a Layout Block for a Track Segment.
+     * Set up a LayoutBlock for this Track Segment
+     *
+     * @param newLayoutBlock the LayoutBlock to set
      */
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
     public void setLayoutBlock(@CheckForNull LayoutBlock newLayoutBlock) {
         LayoutBlock layoutBlock = getLayoutBlock();
         if (layoutBlock != newLayoutBlock) {
@@ -502,19 +503,29 @@ public class TrackSegment extends LayoutTrack {
             if (layoutBlock != null) {
                 layoutBlock.decrementUse();
             }
+            namedLayoutBlock = null;
             if (newLayoutBlock != null) {
-                namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
-            } else {
-                namedLayoutBlock = null;
+                String newName = newLayoutBlock.getUserName();
+                if ((newName != null) && !newName.isEmpty()) {
+                    namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newName, newLayoutBlock);
+                }
             }
         }
     }
 
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
+    /**
+     * Set up a LayoutBlock for this Track Segment
+     *
+     * @param name the name of the new LayoutBlock
+     */
     public void setLayoutBlockByName(@CheckForNull String name) {
         if ((name != null) && !name.isEmpty()) {
             LayoutBlock b = layoutEditor.provideLayoutBlock(name);
-            namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(b.getUserName(), b);
+            if (b != null) {
+                namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, b);
+            } else {
+                namedLayoutBlock = null;
+            }
         } else {
             namedLayoutBlock = null;
         }
@@ -584,11 +595,10 @@ public class TrackSegment extends LayoutTrack {
     /**
      * Initialization method. The above variables are initialized by
      * PositionablePointXml, then the following method is called after the
-     * entire LayoutEditor is loaded to set the specific TrackSegment objects.
+     * entire LayoutEditor is loaded to set the specific TrackSegment objects
+     *
+     * @param p the layout editor panel
      */
-    @SuppressWarnings("deprecation")
-    //NOTE: findObjectByTypeAndName is @Deprecated;
-    //we're using it here for backwards compatibility until it can be removed
     @Override
     @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null check performed before using return value")
     public void setObjects(LayoutEditor p) {
@@ -607,20 +617,8 @@ public class TrackSegment extends LayoutTrack {
             tLayoutBlockName = null; //release this memory
         }
 
-        //NOTE: testing "type-less" connects
-        //(read comments for findObjectByName in LayoutEditorFindItems.java)
         connect1 = p.getFinder().findObjectByName(tConnect1Name);
-        if (null == connect1) { //findObjectByName failed... try findObjectByTypeAndName
-            log.warn("{}.setObjects(...); Unknown connect1 object prefix: '{}' of type {}.",
-                    getName(), tConnect1Name, type1);
-            connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
-        }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
-        if (null == connect2) { //findObjectByName failed; try findObjectByTypeAndName
-            log.warn("{}.setObjects(...); Unknown connect2 object prefix: '{}' of type {}.",
-                    getName(), tConnect2Name, type2);
-            connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
-        }
     }
 
     public void updateBlockInfo() {
@@ -672,7 +670,7 @@ public class TrackSegment extends LayoutTrack {
         if (!requireUnconnected) {
             //note: optimization here: instead of creating rectangles for all the
             // points to check below, we create a rectangle for the test point
-            // and test if the points below are in that rectangle instead.
+            // and test if the points below are in that rectangle instead
             Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
             Point2D p, minPoint = MathUtil.zeroPoint2D;
             double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
@@ -715,7 +713,7 @@ public class TrackSegment extends LayoutTrack {
     }   //findHitPointType
 
     /**
-     * Get the coordinates for a specified connection type.
+     * Get the coordinates for a specified connection type
      *
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
@@ -759,7 +757,7 @@ public class TrackSegment extends LayoutTrack {
     private final JCheckBoxMenuItem flippedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("FlippedCheckBoxMenuItemTitle"));
 
     /**
-     * Maximum length of the bumper decoration.
+     * Maximum length of the bumper decoration
      */
     public static final int MAX_BUMPER_LENGTH = 40;
     public static final int MAX_BUMPER_WIDTH = 10;
@@ -777,14 +775,14 @@ public class TrackSegment extends LayoutTrack {
 
     /**
      * Helper method, which adds "Set value" item to the menu. The value can be
-     * optionally range-checked. Item will be appended at the end of the menu.
+     * optionally range-checked. Item will be appended at the end of the menu
      *
-     * @param menu       the target menu.
+     * @param menu       the target menu
      * @param titleKey   bundle key for the menu title/dialog title
      * @param toolTipKey bundle key for the menu item tooltip
      * @param val        value getter
      * @param set        value setter
-     * @param predicate  checking predicate, possibly null.
+     * @param predicate  checking predicate, possibly null
      */
     private void addNumericMenuItem(@Nonnull JMenu menu,
             @Nonnull String titleKey, @Nonnull String toolTipKey,
@@ -851,7 +849,7 @@ public class TrackSegment extends LayoutTrack {
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorFindItems lf = layoutEditor.getFinder();
                         LayoutTrack lt = lf.findObjectByName(connect1.getName());
-                        //this shouldn't ever be null... however...
+                        //this shouldn't ever be null... however..
                         if (lt != null) {
                             layoutEditor.setSelectionRect(lt.getBounds());
                             lt.showPopup();
@@ -865,7 +863,7 @@ public class TrackSegment extends LayoutTrack {
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorFindItems lf = layoutEditor.getFinder();
                         LayoutTrack lt = lf.findObjectByName(connect2.getName());
-                        //this shouldn't ever be null... however...
+                        //this shouldn't ever be null... however..
                         if (lt != null) {
                             layoutEditor.setSelectionRect(lt.getBounds());
                             lt.showPopup();
@@ -1703,7 +1701,7 @@ public class TrackSegment extends LayoutTrack {
                     d.put(k, v);                    //copy it to new track
                     this.setBumperEndStop(false);   //and remove it from this track
                 }
-            } else {                                //otherwise...
+            } else {                                //otherwise..
                 d.put(k, v);                        //copy to new track
             }
         });
@@ -1737,7 +1735,7 @@ public class TrackSegment extends LayoutTrack {
     }   //splitTrackSegment
 
     /**
-     * Display popup menu for information and editing.
+     * Display popup menu for information and editing
      */
     protected void showBezierPopUp(MouseEvent e, HitPointType hitPointType) {
         int bezierControlPointIndex = hitPointType.bezierPointIndex();
@@ -1869,9 +1867,9 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Clean up when this object is no longer needed.
+     * Clean up when this object is no longer needed
      * <p>
-     * Should not be called while the object is still displayed.
+     * Should not be called while the object is still displayed
      *
      * @see #remove()
      */
@@ -1883,7 +1881,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Remove this object from display and persistance.
+     * Remove this object from display and persistance
      */
     public void remove() {
         //remove from persistance by flagging inactive
@@ -1894,7 +1892,7 @@ public class TrackSegment extends LayoutTrack {
 
     /**
      * Get state. "active" means that the object is still displayed, and should
-     * be stored.
+     * be stored
      */
     public boolean isActive() {
         return active;
@@ -1951,7 +1949,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * The following are used only as a temporary store after a circle or arc
      * has been calculated. This prevents the need to recalculate the values
-     * each time a re-draw is required.
+     * each time a re-draw is required
      */
     private Point2D pt1;
     private Point2D pt2;
@@ -2165,7 +2163,7 @@ public class TrackSegment extends LayoutTrack {
 
     /*
     * Called when the user changes the angle dynamically in edit mode
-    * by dragging the centre of the cirle.
+    * by dragging the centre of the cirle
      */
     protected void reCalculateTrackSegmentAngle(double x, double y) {
         if (!isBezier()) {
@@ -2205,7 +2203,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /*
-    * Calculate the initally parameters for drawing a circular track segment.
+    * Calculate the initally parameters for drawing a circular track segment
      */
     protected void calculateTrackSegmentAngle() {
         Point2D pt1, pt2;
@@ -2371,7 +2369,7 @@ public class TrackSegment extends LayoutTrack {
     @Override
     protected void highlightUnconnected(Graphics2D g2, HitPointType selectedType) {
         //TrackSegments are always connected
-        //nothing to see here... move along...
+        //nothing to see here... move along..
     }
 
     @Override
@@ -2386,7 +2384,7 @@ public class TrackSegment extends LayoutTrack {
                 g2.draw(new Line2D.Double(circleCenterPoint, ep1));
                 g2.draw(new Line2D.Double(circleCenterPoint, ep2));
                 //Draw a circle and square at the circles centre, that
-                //allows the user to change the angle by dragging the mouse.
+                //allows the user to change the angle by dragging the mouse
                 g2.draw(trackEditControlCircleAt(circleCenterPoint));
                 g2.draw(layoutEditor.layoutEditorControlRectAt(circleCenterPoint));
             } else if (isBezier()) {
@@ -2405,8 +2403,8 @@ public class TrackSegment extends LayoutTrack {
 
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {
-        //TrackSegments don't have turnout controls...
-        //nothing to see here... move along...
+        //TrackSegments don't have turnout controls..
+        //nothing to see here... move along..
     }
 
     /**
@@ -2414,7 +2412,7 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public void reCheckBlockBoundary() {
-        //nothing to see here... move along...
+        //nothing to see here... move along..
     }
 
     /**
@@ -2537,7 +2535,7 @@ public class TrackSegment extends LayoutTrack {
                     Point2D ep2L = MathUtil.subtract(ep2, vector);
                     g2.draw(new Line2D.Double(ep1L, ep2L));
                 }
-            }   //if isArc() {} else if isBezier() {} else...
+            }   //if isArc() {} else if isBezier() {} else..
 
             if (isFlip()) {
                 boolean temp = bridgeSideRight;
@@ -2671,7 +2669,7 @@ public class TrackSegment extends LayoutTrack {
                     Point2D ep2R = MathUtil.subtract(ep2, vector);
                     g2.draw(new Line2D.Double(ep1R, ep2R));
                 }
-            }   //if isArc() {} else if isBezier() {} else...
+            }   //if isArc() {} else if isBezier() {} else..
 
             g2.setStroke(new BasicStroke(tunnelLineWidth,
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
@@ -4045,7 +4043,7 @@ public class TrackSegment extends LayoutTrack {
                 if (TrackNameSet.add(getName())) {
                     log.debug("*    Add track ''{}''for block ''{}''", getName(), blockName);
                 }
-                //these should never be null... but just in case...
+                //these should never be null... but just in case..
                 //it's time to play... flood your neighbours!
                 if (connect1 != null) {
                     connect1.collectContiguousTracksNamesInBlockNamed(blockName, TrackNameSet);

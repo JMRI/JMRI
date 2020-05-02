@@ -1,7 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import jmri.Block;
 import jmri.InstanceManager;
@@ -55,8 +55,8 @@ public class LayoutBlockConnectivityTools {
     public final static int ANY = 0x08;
 
     /**
-     * Constant used in the getLayoutBlocks to indicate that the system
-     * should not check for signal masts or heads on the path.
+     * Constant used in the getLayoutBlocks to indicate that the system should
+     * not check for signal masts or heads on the path.
      */
     public final static int NONE = 0x00;
 
@@ -71,11 +71,13 @@ public class LayoutBlockConnectivityTools {
      * Called by {@link jmri.jmrit.signalling.SignallingPanel} using MASTTOMAST.
      * <p>
      * Search all of the layout editor panels to find the facing and protecting
-     * layout blocks for each bean.  Call the 3 block+list version of checkValidDest() to finish the checks.
+     * layout blocks for each bean. Call the 3 block+list version of
+     * checkValidDest() to finish the checks.
      * <p>
      * @param sourceBean The source bean.
      * @param destBean   The destination bean.
-     * @param pathMethod Indicates the type of path:  Signal head, signal mast or sensor.
+     * @param pathMethod Indicates the type of path: Signal head, signal mast or
+     *                   sensor.
      * @return true if source and destination beans are reachable.
      * @throws jmri.JmriException if no blocks can be found that related to the
      *                            named beans.
@@ -132,19 +134,19 @@ public class LayoutBlockConnectivityTools {
      * protectingLayoutBlock or sourceLayoutBlock+1, a direction of travel can
      * then be determined, eg east to west, south to north etc.
      * <p>
-     * @param sourceBean    The source bean (SignalHead, SignalMast or Sensor)
+     * @param sourceBean   The source bean (SignalHead, SignalMast or Sensor)
      *                     assigned to a block boundary that we are starting
      *                     from.
-     * @param destBean      The destination bean.
-     * @param validateOnly  When set false, the system will not use layout
-     *                     blocks that are set as either reserved(useExtraColor
-     *                     set) or occupied, if it finds any then it will try to
-     *                     find an alternative path When set false, no block
-     *                     state checking is performed.
-     * @param pathMethod    Performs a check to see if any signal heads/masts
-     *                     are in the path, if there are then the system will
-     *                     try to find an alternative path. If set to NONE, then
-     *                     no checking is performed.
+     * @param destBean     The destination bean.
+     * @param validateOnly When set false, the system will not use layout blocks
+     *                     that are set as either reserved(useExtraColor set) or
+     *                     occupied, if it finds any then it will try to find an
+     *                     alternative path When set false, no block state
+     *                     checking is performed.
+     * @param pathMethod   Performs a check to see if any signal heads/masts are
+     *                     in the path, if there are then the system will try to
+     *                     find an alternative path. If set to NONE, then no
+     *                     checking is performed.
      * @return an List of all the layoutblocks in the path.
      * @throws jmri.JmriException if it can not find a valid path or the routing
      *                            has not been enabled.
@@ -186,7 +188,7 @@ public class LayoutBlockConnectivityTools {
 
     /**
      * Returns a list of NamedBeans (Signalhead, Signalmast or Sensor) that are
-     * assinged to block boundaries in a given list
+     * assigned to block boundaries in a given list
      *
      * @param blocklist The list of block in order that need to be checked.
      * @param panel     (Optional) panel that the blocks need to be checked
@@ -194,6 +196,7 @@ public class LayoutBlockConnectivityTools {
      * @param T         (Optional) the class that we want to check against,
      *                  either Sensor, SignalMast or SignalHead, set null will
      *                  return any.
+     * @return the list of NamedBeans
      */
     public List<NamedBean> getBeansInPath(List<LayoutBlock> blocklist, LayoutEditor panel, Class<?> T) {
         List<NamedBean> beansInPath = new ArrayList<>();
@@ -224,18 +227,25 @@ public class LayoutBlockConnectivityTools {
      * Determines if one set of blocks is reachable from another set of blocks
      * based upon the directions of the set of blocks.
      * <ul>
-     * <li>Called by {@link jmri.implementation.DefaultSignalMastLogic} using MASTTOMAST.</li>
-     * <li>Called by {@link jmri.jmrit.entryexit.DestinationPoints} using SENSORTOSENSOR.</li>
-     * <li>Called by {@link jmri.jmrit.entryexit.EntryExitPairs} using SENSORTOSENSOR.</li>
+     * <li>Called by {@link jmri.implementation.DefaultSignalMastLogic} using
+     * MASTTOMAST.</li>
+     * <li>Called by {@link jmri.jmrit.entryexit.DestinationPoints} using
+     * SENSORTOSENSOR.</li>
+     * <li>Called by {@link jmri.jmrit.entryexit.EntryExitPairs} using
+     * SENSORTOSENSOR.</li>
      * </ul>
-     * Convert the destination protected block to an array list.
-     * Call the 3 block+list version of checkValidDest() to finish the checks.
+     * Convert the destination protected block to an array list. Call the 3
+     * block+list version of checkValidDest() to finish the checks.
      * <p>
-     * @param currentBlock The facing layout block for the source signal or sensor.
-     * @param nextBlock    The protected layout block for the source signal or sensor.
-     * @param destBlock    The facing layout block for the destination signal mast or sensor.
+     * @param currentBlock The facing layout block for the source signal or
+     *                     sensor.
+     * @param nextBlock    The protected layout block for the source signal or
+     *                     sensor.
+     * @param destBlock    The facing layout block for the destination signal
+     *                     mast or sensor.
      * @param destProBlock The protected destination block.
-     * @param pathMethod   Indicates the type of path:  Signal head, signal mast or sensor.
+     * @param pathMethod   Indicates the type of path: Signal head, signal mast
+     *                     or sensor.
      * @return true if a path to the destination is valid.
      * @throws jmri.JmriException if any Block is null;
      */
@@ -265,17 +275,22 @@ public class LayoutBlockConnectivityTools {
      * of travel. Given the destBlock and the next block on, we can determine
      * the whether the destBlock comes before the destBlock+1.
      * <p>
-     * Note:  This version is internally called by other versions that pre-process
-     * external calls.
+     * Note: This version is internally called by other versions that
+     * pre-process external calls.
      * <p>
-     * @param currentBlock The facing layout block for the source signal or sensor.
-     * @param nextBlock    The protected layout block for the source signal or sensor.
-     * @param destBlock    The facing layout block for the destination signal mast or sensor.
-     * @param destBlockn1  A list of protected destination blocks.  Can be empty if the
-     *                     destination is at an end bumper.
-     * @param pathMethod   Indicates the type of path:  Signal head, signal mast or sensor.
+     * @param currentBlock The facing layout block for the source signal or
+     *                     sensor.
+     * @param nextBlock    The protected layout block for the source signal or
+     *                     sensor.
+     * @param destBlock    The facing layout block for the destination signal
+     *                     mast or sensor.
+     * @param destBlockn1  A list of protected destination blocks. Can be empty
+     *                     if the destination is at an end bumper.
+     * @param pathMethod   Indicates the type of path: Signal head, signal mast
+     *                     or sensor.
      * @return true if a path to the destination is valid.
-     * @throws jmri.JmriException if any layout block is null or advanced routing is not enabled.
+     * @throws jmri.JmriException if any layout block is null or advanced
+     *                            routing is not enabled.
      */
     public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, List<LayoutBlock> destBlockn1, int pathMethod) throws jmri.JmriException {
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
@@ -289,9 +304,9 @@ public class LayoutBlockConnectivityTools {
                 log.debug("faci {}", currentBlock.getDisplayName());
                 log.debug("next {}", nextBlock.getDisplayName());
                 log.debug("dest {}", destBlock.getDisplayName());
-                for (LayoutBlock dp : destBlockn1) {
+                destBlockn1.forEach((dp) -> {
                     log.debug("dest + 1 {}", dp.getDisplayName());
-                }
+                });
             } catch (java.lang.NullPointerException e) {
 
             }
@@ -341,8 +356,7 @@ public class LayoutBlockConnectivityTools {
              We also need to perform a more advanced check if the destBlockn1
              is null as this indicates that the destination signal mast is assigned
              on an end bumper*/
-
-            if (pathMethod == SENSORTOSENSOR && destBlockn1.size() == 0) {
+            if (pathMethod == SENSORTOSENSOR && destBlockn1.isEmpty()) {
                 // Change the pathMethod to accept the NX sensor at the end bumper.
                 pathMethod = NONE;
             }
@@ -359,7 +373,7 @@ public class LayoutBlockConnectivityTools {
                     return false;
                 }
             }
-                /*Work on the basis that if you get the blocks from source to dest
+            /*Work on the basis that if you get the blocks from source to dest
                  then the dest+1 block should not be included*/
             log.debug("Signal mast in the correct direction");
             return true;
@@ -382,7 +396,9 @@ public class LayoutBlockConnectivityTools {
      * @param facing     Layout Block that is considered our first block
      * @param protecting Layout Block that is considered first block +1
      * @param dest       Layout Block that we want to get to
-     * @return true if valid.
+     * @param pathMethod the path method
+     * @return true if valid
+     * @throws JmriException
      */
     public boolean checkValidDest(LayoutBlock facing, LayoutBlock protecting, FacingProtecting dest, int pathMethod) throws JmriException {
         if (facing == null || protecting == null || dest == null) {
@@ -399,9 +415,9 @@ public class LayoutBlockConnectivityTools {
              //log.info(dest.getProtectingBlocks());
              }*/
             List<LayoutBlock> destList = new ArrayList<>();
-            for (Block b : dest.getProtectingBlocks()) {
+            dest.getProtectingBlocks().forEach((b) -> {
                 destList.add(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(b));
-            }
+            });
             return checkValidDest(facing, protecting, InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(dest.getFacing()), destList, pathMethod);
         } catch (jmri.JmriException e) {
             throw e;
@@ -415,20 +431,20 @@ public class LayoutBlockConnectivityTools {
      * protectingLayoutBlock or sourceLayoutBlock+1, a direction of travel can
      * then be determined, eg east to west, south to north etc.
      * <p>
-     * @param sourceLayoutBlock       The layout block that we are starting
-     *                               from, can also be considered as the block
-     *                               facing a signal.
-     * @param destinationLayoutBlock  The layout block that we want to get to
-     * @param protectingLayoutBlock   The next layout block connected to the
+     * @param sourceLayoutBlock      The layout block that we are starting from,
+     *                               can also be considered as the block facing
+     *                               a signal.
+     * @param destinationLayoutBlock The layout block that we want to get to
+     * @param protectingLayoutBlock  The next layout block connected to the
      *                               source block, this can also be considered
      *                               as the block being protected by a signal
-     * @param validateOnly            When set false, the system will not use
+     * @param validateOnly           When set false, the system will not use
      *                               layout blocks that are set as either
      *                               reserved(useExtraColor set) or occupied, if
      *                               it finds any then it will try to find an
      *                               alternative path When set true, no block
      *                               state checking is performed.
-     * @param pathMethod              Performs a check to see if any signal
+     * @param pathMethod             Performs a check to see if any signal
      *                               heads/masts are in the path, if there are
      *                               then the system will try to find an
      *                               alternative path. If set to NONE, then no
@@ -476,9 +492,9 @@ public class LayoutBlockConnectivityTools {
         }
         if (destinationLayoutBlock == protectingLayoutBlock) {
             List<LayoutBlock> returnBlocks = new ArrayList<>();
-            for (BlocksTested blocksTested : blocksInRoute) {
+            blocksInRoute.forEach((blocksTested) -> {
                 returnBlocks.add(blocksTested.getBlock());
-            }
+            });
             return returnBlocks;
         }
 
@@ -497,8 +513,8 @@ public class LayoutBlockConnectivityTools {
                 }
                 //Sets the old next block to be our current block.
                 LayoutBlock currentLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(nextBlock);
-                if (currentLBlock==null){
-                    log.error("Unable to get block :{}: from instancemanager",nextBlock);
+                if (currentLBlock == null) {
+                    log.error("Unable to get block :{}: from instancemanager", nextBlock);
                     continue;
                 }
                 offSet.clear();
@@ -516,7 +532,9 @@ public class LayoutBlockConnectivityTools {
                     nextBlock = currentLBlock.getRouteDestBlockAtIndex(nextBlockIndex);
                     log.debug("the next block to our destination we are looking for is directly connected to this one");
                 } else if (protectingLayoutBlock != nextLBlock) {
-                    log.debug("Add block {}", nextLBlock.getDisplayName());
+                    if (nextLBlock != null) {
+                        log.debug("Add block {}", nextLBlock.getDisplayName());
+                    }
                     bt = new BlocksTested(nextLBlock);
                     blocksInRoute.add(bt);
                 }
@@ -525,17 +543,17 @@ public class LayoutBlockConnectivityTools {
                         throw new jmri.JmriException("Destination block is in conflict on a crossover");
                     }
                     List<LayoutBlock> returnBlocks = new ArrayList<>();
-                    for (BlocksTested blocksTested : blocksInRoute) {
+                    blocksInRoute.forEach((blocksTested) -> {
                         returnBlocks.add(blocksTested.getBlock());
-                    }
+                    });
                     returnBlocks.add(destinationLayoutBlock);
                     if (log.isDebugEnabled()) {
                         log.debug("Adding destination Block {}", destinationLayoutBlock.getDisplayName());
                         log.debug("arrived at destination block");
                         log.debug("{} Return as Long", sourceLayoutBlock.getDisplayName());
-                        for (LayoutBlock returnBlock : returnBlocks) {
+                        returnBlocks.forEach((returnBlock) -> {
                             log.debug("  return block {}", returnBlock.getDisplayName());
-                        }
+                        };
                         log.debug("Finished List");
                     }
                     return returnBlocks;
@@ -611,36 +629,37 @@ public class LayoutBlockConnectivityTools {
         if (lBlock.getBlock().getPermissiveWorking()) {
             return true;
         }
-        if (lBlock.getState() == Block.OCCUPIED) {
-            return false;
-        }
-        return true;
+        return (lBlock.getState() != Block.OCCUPIED);
     }
 
     String lastErrorMessage = "Unknown Error Occured";
 
     //We need to take into account if the returned block has a signalmast attached.
     int findBestHop(final Block preBlock, final Block currentBlock, Block destBlock, int direction, List<Integer> offSet, boolean validateOnly, int pathMethod) {
-        int blockindex = 0;
-        Block block;
+        int result = 0;
+
         LayoutBlock currentLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(currentBlock);
+        if (currentLBlock == null) {
+            return -1;
+        }
         List<Integer> blkIndexTested = new ArrayList<>(5);
         if (log.isDebugEnabled()) {
             log.debug("In find best hop current {} previous {}", currentLBlock.getDisplayName(), preBlock.getDisplayName());
         }
-        while (blockindex != -1) {
+        Block block;
+        while (result != -1) {
             if (currentBlock == preBlock) {
                 //Basically looking for the connected block, which there should only be one of!
                 log.debug("At get ConnectedBlockRoute");
-                blockindex = currentLBlock.getConnectedBlockRouteIndex(destBlock, direction);
+                result = currentLBlock.getConnectedBlockRouteIndex(destBlock, direction);
             } else {
                 if (log.isDebugEnabled()) {
                     log.debug("Off Set {}", offSet);
                 }
-                blockindex = currentLBlock.getNextBestBlock(preBlock, destBlock, offSet, METRIC);
+                result = currentLBlock.getNextBestBlock(preBlock, destBlock, offSet, METRIC);
             }
-            if (blockindex != -1) {
-                block = currentLBlock.getRouteNextBlockAtIndex(blockindex);
+            if (result != -1) {
+                block = currentLBlock.getRouteNextBlockAtIndex(result);
                 LayoutBlock lBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(block);
 
                 Block blocktoCheck = block;
@@ -681,7 +700,7 @@ public class LayoutBlockConnectivityTools {
                     MDC.remove("loggingDisabled");
                     if (foundBean == null) {
                         log.debug("No object found so okay to return");
-                        return blockindex;
+                        return result;
                     } else {
                         lastErrorMessage = "Signal " + foundBean.getDisplayName() + " already exists between blocks " + currentBlock.getDisplayName() + " and " + blocktoCheck.getDisplayName() + " in the same direction on this path";
                         log.debug("continue after {}", lastErrorMessage);
@@ -690,12 +709,12 @@ public class LayoutBlockConnectivityTools {
                     lastErrorMessage = "block " + block.getDisplayName() + " found not to be not usable";
                     log.debug("continue after {}", lastErrorMessage);
                 }
-                if (blkIndexTested.contains(blockindex)) {
+                if (blkIndexTested.contains(result)) {
                     lastErrorMessage = ("No valid free path found");
                     return -1;
                 }
-                blkIndexTested.add(blockindex);
-                offSet.add(blockindex);
+                blkIndexTested.add(result);
+                offSet.add(result);
             } else {
                 log.debug("At this point the getNextBextBlock() has returned a -1");
             }
@@ -738,9 +757,13 @@ public class LayoutBlockConnectivityTools {
                         && (lx.getLayoutBlockBD() != null)
                         && (lx.getLayoutBlockAC() != lx.getLayoutBlockBD())) {
                     if (lx.getLayoutBlockAC() == curBlock) {
-                        if (!canLBlockBeUsed(lx.getLayoutBlockBD())) return false;
+                        if (!canLBlockBeUsed(lx.getLayoutBlockBD())) {
+                            return false;
+                        }
                     } else if (lx.getLayoutBlockBD() == curBlock) {
-                        if (!canLBlockBeUsed(lx.getLayoutBlockAC())) return false;
+                        if (!canLBlockBeUsed(lx.getLayoutBlockAC())) {
+                            return false;
+                        }
                     }
                 }
             }
@@ -753,16 +776,19 @@ public class LayoutBlockConnectivityTools {
      * bean type is provided, then either SignalMasts or Sensors are discovered
      * If no editor is provided, then all editors are considered
      *
+     * @param editor     the layout editor panel
+     * @param T          the type
      * @param pathMethod Determine whether or not we should reject pairs if
      *                   there are other beans in the way. Constant values of
      *                   NONE, ANY, MASTTOMAST, HEADTOHEAD
+     * @return the valid pairs
      */
-    public Hashtable<NamedBean, List<NamedBean>> discoverValidBeanPairs(LayoutEditor editor, Class<?> T, int pathMethod) {
+    public HashMap<NamedBean, List<NamedBean>> discoverValidBeanPairs(LayoutEditor editor, Class<?> T, int pathMethod) {
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
-        Hashtable<NamedBean, List<NamedBean>> retPairs = new Hashtable<>();
+        HashMap<NamedBean, List<NamedBean>> retPairs = new HashMap<>();
         List<FacingProtecting> beanList = generateBlocksWithBeans(editor, T);
-        for (FacingProtecting fp : beanList) {
-            for (Block block : fp.getProtectingBlocks()) {
+        beanList.forEach((fp) -> {
+            fp.getProtectingBlocks().stream().map((block) -> {
                 if (log.isDebugEnabled()) {
                     try {
                         log.debug("\nSource {}", fp.getBean().getDisplayName());
@@ -772,6 +798,8 @@ public class LayoutBlockConnectivityTools {
                         //Can be considered normal if the signalmast is assigned to an end bumper.
                     }
                 }
+                return block;
+            }).forEachOrdered((block) -> {
                 LayoutBlock lFacing = lbm.getLayoutBlock(fp.getFacing());
                 LayoutBlock lProtecting = lbm.getLayoutBlock(block);
                 NamedBean source = fp.getBean();
@@ -780,8 +808,8 @@ public class LayoutBlockConnectivityTools {
                 } catch (JmriException ex) {
                     log.error("exception in retPairs.put", ex);
                 }
-            }
-        }
+            });
+        });
         return retPairs;
     }
 

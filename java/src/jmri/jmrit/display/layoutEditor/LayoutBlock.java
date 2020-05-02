@@ -2441,7 +2441,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             MDC.put("loggingDisabled", connection.getClass().getCanonicalName());
             stod = connection.getTurnoutList(block, srcBlock, dstBlock, true);
             MDC.remove("loggingDisabled");
-        } catch (java.lang.NullPointerException ex) {
+        }
+        catch (java.lang.NullPointerException ex) {
             MDC.remove("loggingDisabled");
             if (enableAddRouteLogging) {
                 log.error("Exception ({}) caught while trying to discover turnout connectivity\nBlock: {}, srcBlock ({}) to dstBlock ({})", ex.toString(), block.getDisplayName(), srcBlock.getDisplayName(), dstBlock.getDisplayName());
@@ -2459,7 +2460,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             MDC.put("loggingDisabled", connection.getClass().getName());
             tmpdtos = connection.getTurnoutList(block, dstBlock, srcBlock, true);
             MDC.remove("loggingDisabled");
-        } catch (java.lang.NullPointerException ex) {
+        }
+        catch (java.lang.NullPointerException ex) {
             MDC.remove("loggingDisabled");
             if (enableAddRouteLogging) {
                 log.error("Exception ({}) caught while trying to discover turnout connectivity\nBlock: {}, dstBlock ({}) to  srcBlock ({})", ex.toString(), block.getDisplayName(), dstBlock.getDisplayName(), srcBlock.getDisplayName());
@@ -2801,7 +2803,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     public void printRoutes() {
         log.info("Routes for block {}", this.getDisplayName());
         log.info("Destination, Next Block, Hop Count, Direction, State, Metric");
-        for (Routes r : routes) {
+        routes.forEach((r) -> {
             String nexthop = r.getNextBlock().getDisplayName();
 
             if (r.getNextBlock() == this.getBlock()) {
@@ -2811,7 +2813,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             if (r.isRouteCurrentlyValid()) {
                 activeString = ", *";
             }
-
             log.info(" neighbor: {}, {}, {}, {}, {}, {}{}", (r.getDestBlock()).getDisplayName(), nexthop, r.getHopCount(), Path.decodeDirection(r.getDirection()), r.getState(), r.getMetric(), activeString);
         }
     }
@@ -2969,9 +2970,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 lastValue = routes.get(excludeBlock.get(excludeBlock.size() - 1)).getHopCount();
             }
 
-            for (int i : excludeBlock) {
+            excludeBlock.forEach((i) -> {
                 nextBlocks.add(routes.get(i).getNextBlock());
-            }
+            });
 
             if (enableSearchRouteLogging) {
                 log.info("last index is {} {}", excludeBlock.get(excludeBlock.size() - 1),
@@ -3492,7 +3493,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     void updateRoutesToNeighbours(List<Block> messageRecipients, Routes ro, RoutingPacket update) {
-        for (Block messageRecipient : messageRecipients) {
+        messageRecipients.forEach((messageRecipient) -> {
             Adjacencies adj = getAdjacency(messageRecipient);
             if (adj.advertiseRouteToNeighbour(ro)) {
                 adj.addRouteAdvertisedToNeighbour(ro);
@@ -3501,7 +3502,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     recipient.updateRoutingInfo(this, update);
                 }
             }
-        }
+        });
     }
 
     Routes getBestRouteByMetric(Block dest) {
@@ -3609,7 +3610,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 ro.getMetric() + metric,
                 (ro.getLength() + getBlock().getLengthMm()), -1, getNextPacketID());
 
-        for (LayoutBlock layoutBlock : validFromPath) {
+        validFromPath.forEach((layoutBlock) -> {
             Adjacencies adj = getAdjacency(layoutBlock.getBlock());
             if (adj.advertiseRouteToNeighbour(ro)) {
                 //getBestRouteByHop(destBlock).getHopCount()+1, ((getBestRouteByMetric(destBlock).getMetric())+metric),
@@ -3620,7 +3621,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 adj.addRouteAdvertisedToNeighbour(ro);
                 layoutBlock.addRouteFromNeighbour(this, update);
             }
-        }
+        });
     }
 
     void addRouteFromNeighbour(LayoutBlock src, RoutingPacket update) {
@@ -4455,7 +4456,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 return;
             }
             _turnouts = new HashMap<>(turnouts.size());
-            for (LayoutTrackExpectedState<LayoutTurnout> turnout : turnouts) {
+            turnouts.forEach((turnout) -> {
                 if (turnout.getObject() instanceof LayoutSlip) {
                     int slipState = turnout.getExpectedState();
                     LayoutSlip ls = (LayoutSlip) turnout.getObject();
@@ -4475,7 +4476,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                         log.error("{} has no physical turnout allocated, block = {}", lt, block.getDisplayName());
                     }
                 }
-            }
+            });
         }
 
         @Override
