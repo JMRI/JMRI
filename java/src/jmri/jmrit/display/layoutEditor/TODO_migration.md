@@ -61,6 +61,27 @@ isDisconnected in LayoutTrack (base) and PositionablePoint (subclass) seem very 
  
 ==================
 
+These should be a single contravarient method?
+
+        layoutTurnoutEditor.editLayoutTurnout(layoutTurnout);
+
+        trackSegmentEditor.editTrackSegment(layoutTrack);
+
+        layoutTurntableEditor.editLayoutTurntable(layoutTurntable);
+
+        layoutSlipEditor.editLayoutSlip(layoutSlip);
+
+        levelXingEditor.editLevelXing(levelXing);
+
+Make sure the code is at the right level, i.e. SlipEditor not Double or Single, etc
+
+Are XOver tests done in right place? (Might be in TurnoutEditorTest)
+ 
+===================
+Remove layoutEditor/LayoutEditorDialogs/LayoutTrackEditors and correct references
+    Then remove layoutEditor/LayoutEditorDialogs/LayoutTrackEditorsTest
+===================
+
  TrackSegment HIDECON as an EnumSet
  https://docs.oracle.com/javase/7/docs/api/java/util/EnumSet.html
  

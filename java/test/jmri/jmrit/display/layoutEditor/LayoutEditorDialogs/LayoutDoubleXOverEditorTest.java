@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
+import java.awt.GraphicsEnvironment;
+
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.*;
 
@@ -15,17 +17,9 @@ public class LayoutDoubleXOverEditorTest extends LayoutXOverEditorTest {
     @Test
     public void testCtor() {
         new LayoutDoubleXOverEditor(null);
-    }
-    
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-    }
 
-    @After
-    public void tearDown()  {
-        JUnitUtil.tearDown();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
     }
-
+ 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleXOverEditorTest.class);
 }
