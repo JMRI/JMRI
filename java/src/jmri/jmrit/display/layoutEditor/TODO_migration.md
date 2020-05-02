@@ -98,6 +98,12 @@ This needs to get hooked up again:
 
 ===================
 
+Add a control property for writing out the image files in 
+./runtest.csh java/test/jmri/jmrit/display/layoutEditor/LoadAndStoreTest
+
+Consider moving the write up once it's controlled.
+===================
+
  TrackSegment HIDECON as an EnumSet
  https://docs.oracle.com/javase/7/docs/api/java/util/EnumSet.html
  
