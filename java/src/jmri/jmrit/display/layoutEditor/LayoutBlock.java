@@ -2786,14 +2786,14 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     public void printAdjacencies() {
         log.info("Adjacencies for block {}", this.getDisplayName());
         log.info("Neighbour, Direction, mutual, relationship, metric");
-        for (Adjacencies neighbour : neighbours) {
+        neighbours.forEach((neighbour) -> {
             log.info(" neighbor: {}, {}, {}, {}, {}",
                     neighbour.getBlock().getDisplayName(),
                     Path.decodeDirection(neighbour.getDirection()),
                     neighbour.isMutual(),
                     decodePacketFlow(neighbour.getPacketFlow()),
                     neighbour.getMetric());
-        }
+        });
     }
 
     /**

@@ -826,6 +826,7 @@ public class LayoutBlockConnectivityTools {
      *                   there are other beans in the way. Constant values of
      *                   NONE, ANY, MASTTOMAST, HEADTOHEAD
      * @return A list of all reachable NamedBeans
+     * @throws jmri.JmriException
      */
     public List<NamedBean> discoverPairDest(NamedBean source, LayoutEditor editor, Class<?> T, int pathMethod) throws JmriException {
         if (log.isDebugEnabled()) {
