@@ -61,49 +61,44 @@ import jmri.util.swing.*;
  * @author Dave Duchamp Copyright: (c) 2004-2007
  * @author George Warner Copyright: (c) 2017-2019
  */
-@SuppressWarnings("serial")
-@SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
 public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
 
+    // Operational instance variables - not saved to disk
+    private  JmriJFrame floatingEditToolBoxFrame = null;
+    private  JScrollPane floatingEditContentScrollPane = null;
+    private  JPanel floatEditHelpPanel = null;
 
+    private  JPanel editToolBarContainerPanel = null;
+    private  JScrollPane editToolBarScrollPane = null;
 
+    private  JPanel helpBarPanel = null;
+    private final  JPanel helpBar = new JPanel();
 
-    //Operational instance variables - not saved to disk
-    private transient JmriJFrame floatingEditToolBoxFrame = null;
-    private transient JScrollPane floatingEditContentScrollPane = null;
-    private transient JPanel floatEditHelpPanel = null;
+    private final  boolean editorUseOldLocSize;
 
-    private transient JPanel editToolBarContainerPanel = null;
-    private transient JScrollPane editToolBarScrollPane = null;
-
-    private transient JPanel helpBarPanel = null;
-    private final transient JPanel helpBar = new JPanel();
-
-    private final transient boolean editorUseOldLocSize;
-
-    private transient LayoutEditorToolBarPanel leToolBarPanel = null;
+    private  LayoutEditorToolBarPanel leToolBarPanel = null;
 
     @Nonnull
     public LayoutEditorToolBarPanel getLayoutEditorToolBarPanel() {
         return leToolBarPanel;
     }
 
-    //end of main panel controls
-    private transient boolean delayedPopupTrigger = false;
-    private transient Point2D currentPoint = new Point2D.Double(100.0, 100.0);
-    private transient Point2D dLoc = new Point2D.Double(0.0, 0.0);
+    // end of main panel controls
+    private  boolean delayedPopupTrigger = false;
+    private  Point2D currentPoint = new Point2D.Double(100.0, 100.0);
+    private  Point2D dLoc = new Point2D.Double(0.0, 0.0);
 
-    private transient int toolbarHeight = 100;
-    private transient int toolbarWidth = 100;
+    private  int toolbarHeight = 100;
+    private  int toolbarWidth = 100;
 
-    private transient TrackSegment newTrack = null;
-    private transient boolean panelChanged = false;
+    private  TrackSegment newTrack = null;
+    private  boolean panelChanged = false;
 
-    private transient int gridSize1st = 10;    //grid size in pixels
-    private transient int gridSize2nd = 10;    // secondary grid
+    private  int gridSize1st = 10;    //grid size in pixels
+    private  int gridSize2nd = 10;    // secondary grid
 
-    //size of point boxes
+    // size of point boxes
     protected static final double SIZE = 3.0;
     protected static final double SIZE2 = SIZE * 2.; //must be twice SIZE
 
@@ -112,129 +107,153 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     protected boolean turnoutFillControlCircles = false;
     protected int turnoutCircleSize = 4; //matches earlier versions
 
-    //use turnoutCircleSize when you need an int and these when you need a double
-    //note: these only change when setTurnoutCircleSize is called
-    //using these avoids having to call getTurnoutCircleSize() and
-    //the multiply (x2) and the int -> double conversion overhead
-    protected transient double circleRadius = SIZE * getTurnoutCircleSize();
-    protected transient double circleDiameter = 2.0 * circleRadius;
+    // use turnoutCircleSize when you need an int and these when you need a double
+    // note: these only change when setTurnoutCircleSize is called
+    // using these avoids having to call getTurnoutCircleSize() and
+    // the multiply (x2) and the int -> double conversion overhead
+    protected  double circleRadius = SIZE * getTurnoutCircleSize();
+    protected  double circleDiameter = 2.0 * circleRadius;
 
-    //selection variables
-    protected transient boolean selectionActive = false;
-    private transient double selectionX = 0.0;
-    private transient double selectionY = 0.0;
-    protected transient double selectionWidth = 0.0;
-    protected transient double selectionHeight = 0.0;
+    // selection variables
+    protected  boolean selectionActive = false;
+    private  double selectionX = 0.0;
+    private  double selectionY = 0.0;
+    protected  double selectionWidth = 0.0;
+    protected  double selectionHeight = 0.0;
 
-    //Option menu items
-    private transient JCheckBoxMenuItem editModeCheckBoxMenuItem = null;
+    // Option menu items
+    private  JCheckBoxMenuItem editModeCheckBoxMenuItem = null;
 
-    private transient JRadioButtonMenuItem toolBarSideTopButton = null;
-    private transient JRadioButtonMenuItem toolBarSideLeftButton = null;
-    private transient JRadioButtonMenuItem toolBarSideBottomButton = null;
-    private transient JRadioButtonMenuItem toolBarSideRightButton = null;
-    private transient JRadioButtonMenuItem toolBarSideFloatButton = null;
+    private  JRadioButtonMenuItem toolBarSideTopButton = null;
+    private  JRadioButtonMenuItem toolBarSideLeftButton = null;
+    private  JRadioButtonMenuItem toolBarSideBottomButton = null;
+    private  JRadioButtonMenuItem toolBarSideRightButton = null;
+    private  JRadioButtonMenuItem toolBarSideFloatButton = null;
 
-    private final transient JCheckBoxMenuItem wideToolBarCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ToolBarWide"));
+    private final  JCheckBoxMenuItem wideToolBarCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ToolBarWide"));
 
-    private transient JCheckBoxMenuItem positionableCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem controlCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem animationCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem showHelpCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem showGridCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem autoAssignBlocksCheckBoxMenuItem = null;
-    private transient JMenu scrollMenu = null;
-    private transient JRadioButtonMenuItem scrollBothMenuItem = null;
-    private transient JRadioButtonMenuItem scrollNoneMenuItem = null;
-    private transient JRadioButtonMenuItem scrollHorizontalMenuItem = null;
-    private transient JRadioButtonMenuItem scrollVerticalMenuItem = null;
-    private transient JMenu tooltipMenu = null;
-    private transient JRadioButtonMenuItem tooltipAlwaysMenuItem = null;
-    private transient JRadioButtonMenuItem tooltipNoneMenuItem = null;
-    private transient JRadioButtonMenuItem tooltipInEditMenuItem = null;
-    private transient JRadioButtonMenuItem tooltipNotInEditMenuItem = null;
+    private  JCheckBoxMenuItem positionableCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem controlCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem animationCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem showHelpCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem showGridCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem autoAssignBlocksCheckBoxMenuItem = null;
+    private  JMenu scrollMenu = null;
+    private  JRadioButtonMenuItem scrollBothMenuItem = null;
+    private  JRadioButtonMenuItem scrollNoneMenuItem = null;
+    private  JRadioButtonMenuItem scrollHorizontalMenuItem = null;
+    private  JRadioButtonMenuItem scrollVerticalMenuItem = null;
+    private  JMenu tooltipMenu = null;
+    private  JRadioButtonMenuItem tooltipAlwaysMenuItem = null;
+    private  JRadioButtonMenuItem tooltipNoneMenuItem = null;
+    private  JRadioButtonMenuItem tooltipInEditMenuItem = null;
+    private  JRadioButtonMenuItem tooltipNotInEditMenuItem = null;
 
-    private transient JCheckBoxMenuItem snapToGridOnAddCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem snapToGridOnMoveCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem antialiasingOnCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem turnoutCirclesOnCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem turnoutDrawUnselectedLegCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem turnoutFillControlCirclesCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem hideTrackSegmentConstructionLinesCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem useDirectTurnoutControlCheckBoxMenuItem = null;
-    private transient ButtonGroup turnoutCircleSizeButtonGroup = null;
+    private  JCheckBoxMenuItem snapToGridOnAddCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem snapToGridOnMoveCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem antialiasingOnCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem turnoutCirclesOnCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem turnoutDrawUnselectedLegCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem turnoutFillControlCirclesCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem hideTrackSegmentConstructionLinesCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem useDirectTurnoutControlCheckBoxMenuItem = null;
+    private  ButtonGroup turnoutCircleSizeButtonGroup = null;
 
-    private transient boolean turnoutDrawUnselectedLeg = true;
-    private transient boolean autoAssignBlocks = false;
+    private  boolean turnoutDrawUnselectedLeg = true;
+    private  boolean autoAssignBlocks = false;
 
-    //Tools menu items
-    private final transient JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
-    private final transient JRadioButtonMenuItem zoom025Item = new JRadioButtonMenuItem("x 0.25");
-    private final transient JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
-    private final transient JRadioButtonMenuItem zoom075Item = new JRadioButtonMenuItem("x 0.75");
-    private final transient JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(Bundle.getMessage("NoZoom"));
-    private final transient JRadioButtonMenuItem zoom15Item = new JRadioButtonMenuItem("x 1.5");
-    private final transient JRadioButtonMenuItem zoom20Item = new JRadioButtonMenuItem("x 2.0");
-    private final transient JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
-    private final transient JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
-    private final transient JRadioButtonMenuItem zoom50Item = new JRadioButtonMenuItem("x 5.0");
-    private final transient JRadioButtonMenuItem zoom60Item = new JRadioButtonMenuItem("x 6.0");
-    private final transient JRadioButtonMenuItem zoom70Item = new JRadioButtonMenuItem("x 7.0");
-    private final transient JRadioButtonMenuItem zoom80Item = new JRadioButtonMenuItem("x 8.0");
+    // Tools menu items
+    private final  JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
+    private final  JRadioButtonMenuItem zoom025Item = new JRadioButtonMenuItem("x 0.25");
+    private final  JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
+    private final  JRadioButtonMenuItem zoom075Item = new JRadioButtonMenuItem("x 0.75");
+    private final  JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(Bundle.getMessage("NoZoom"));
+    private final  JRadioButtonMenuItem zoom15Item = new JRadioButtonMenuItem("x 1.5");
+    private final  JRadioButtonMenuItem zoom20Item = new JRadioButtonMenuItem("x 2.0");
+    private final  JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
+    private final  JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
+    private final  JRadioButtonMenuItem zoom50Item = new JRadioButtonMenuItem("x 5.0");
+    private final  JRadioButtonMenuItem zoom60Item = new JRadioButtonMenuItem("x 6.0");
+    private final  JRadioButtonMenuItem zoom70Item = new JRadioButtonMenuItem("x 7.0");
+    private final  JRadioButtonMenuItem zoom80Item = new JRadioButtonMenuItem("x 8.0");
 
-    private final transient JMenuItem undoTranslateSelectionMenuItem = new JMenuItem(Bundle.getMessage("UndoTranslateSelection"));
-    private final transient JMenuItem assignBlockToSelectionMenuItem = new JMenuItem(Bundle.getMessage("AssignBlockToSelectionTitle") + "...");
+    private final  JMenuItem undoTranslateSelectionMenuItem = new JMenuItem(Bundle.getMessage("UndoTranslateSelection"));
+    private final  JMenuItem assignBlockToSelectionMenuItem = new JMenuItem(Bundle.getMessage("AssignBlockToSelectionTitle") + "...");
 
-    //Selected point information
-    private final transient Point2D startDelta = new Point2D.Double(0.0, 0.0); //starting delta coordinates
-    protected transient Object selectedObject = null;       //selected object, null if nothing selected
-    protected transient Object prevSelectedObject = null;   //previous selected object, for undo
-    private transient HitPointType selectedHitPointType = HitPointType.NONE;         //hit point type within the selected object
+    // Selected point information
+    private final  Point2D startDelta = new Point2D.Double(0.0, 0.0); //starting delta coordinates
+    protected  Object selectedObject = null;       //selected object, null if nothing selected
+    protected  Object prevSelectedObject = null;   //previous selected object, for undo
+    private  HitPointType selectedHitPointType = HitPointType.NONE;         //hit point type within the selected object
 
-    protected transient LayoutTrack foundTrack = null;      //found object, null if nothing found
-    protected transient Point2D foundLocation = new Point2D.Double(0.0, 0.0); //location of found object
-    protected transient HitPointType foundHitPointType = HitPointType.NONE;          //connection type within the found object
-    ///private transient boolean foundNeedsConnect = false;    //true if found point needs a connection
+    protected  LayoutTrack foundTrack = null;      //found object, null if nothing found
+    protected  Point2D foundLocation = new Point2D.Double(0.0, 0.0); //location of found object
+    protected  HitPointType foundHitPointType = HitPointType.NONE;          //connection type within the found object
 
-    protected transient LayoutTrack beginTrack = null;      //begin track segment connection object, null if none
-    protected transient Point2D beginLocation = new Point2D.Double(0.0, 0.0); //location of begin object
-    protected transient HitPointType beginHitPointType = HitPointType.NONE; //connection type within begin connection object
+    protected  LayoutTrack beginTrack = null;      //begin track segment connection object, null if none
+    protected  Point2D beginLocation = new Point2D.Double(0.0, 0.0); //location of begin object
+    protected  HitPointType beginHitPointType = HitPointType.NONE; //connection type within begin connection object
 
-    protected transient Point2D currentLocation = new Point2D.Double(0.0, 0.0); //current location
+    protected  Point2D currentLocation = new Point2D.Double(0.0, 0.0); //current location
 
-    //Lists of items that describe the Layout, and allow it to be drawn
-    //Each of the items must be saved to disk over sessions
-    public transient List<AnalogClock2Display> clocks = new ArrayList<>();           //fast clocks
-    public transient List<LocoIcon> markerImage = new ArrayList<>();                 //marker images
-    public transient List<MultiSensorIcon> multiSensors = new ArrayList<>();         //multi-sensor images
-    public transient List<PositionableLabel> backgroundImage = new ArrayList<>();    //background images
-    public transient List<PositionableLabel> labelImage = new ArrayList<>();         //positionable label images
-    public transient List<SensorIcon> sensorImage = new ArrayList<>();               //sensor images
-    public transient List<SignalHeadIcon> signalHeadImage = new ArrayList<>();       //signal head images
+    // Lists of items that describe the Layout, and allow it to be drawn
+    // Each of the items must be saved to disk over sessions
+    private  List<AnalogClock2Display> clocks = new ArrayList<>();           //fast clocks
+    private  List<LocoIcon> markerImage = new ArrayList<>();                 //marker images
+    private  List<MultiSensorIcon> multiSensors = new ArrayList<>();         //multi-sensor images
+    private  List<PositionableLabel> backgroundImage = new ArrayList<>();    //background images
+    private  List<PositionableLabel> labelImage = new ArrayList<>();         //positionable label images
+    private  List<SensorIcon> sensorImage = new ArrayList<>();               //sensor images
+    private  List<SignalHeadIcon> signalHeadImage = new ArrayList<>();       //signal head images
 
-    private final transient List<LayoutTrack> layoutTrackList = new ArrayList<>();         // LayoutTrack list
+    private final  List<LayoutTrack> layoutTrackList = new ArrayList<>();         // LayoutTrack list
 
     // PositionableLabel's
-    public transient List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); //BlockContentsIcon Label List
-    public transient List<MemoryIcon> memoryLabelList = new ArrayList<>();               //Memory Label List
-    public transient List<SensorIcon> sensorList = new ArrayList<>();                    //Sensor Icons
-    public transient List<SignalHeadIcon> signalList = new ArrayList<>();                //Signal Head Icons
-    public transient List<SignalMastIcon> signalMastList = new ArrayList<>();            //Signal Mast Icons
+    private  List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); //BlockContentsIcon Label List
+    private  List<MemoryIcon> memoryLabelList = new ArrayList<>();               //Memory Label List
+    private  List<SensorIcon> sensorList = new ArrayList<>();                    //Sensor Icons
+    private  List<SignalHeadIcon> signalList = new ArrayList<>();                //Signal Head Icons
+    private  List<SignalMastIcon> signalMastList = new ArrayList<>();            //Signal Mast Icons
 
-    private final transient List<LayoutShape> layoutShapes = new ArrayList<>();               // LayoutShap list
+    @Nonnull
+    public List<SensorIcon> getSensorList() {
+        return sensorList;
+    }
+
+    @Nonnull
+    public List<BlockContentsIcon> getBlockContentsLabelList() {
+        return blockContentsLabelList;
+    }
+
+    @Nonnull
+    public List<MemoryIcon> getMemoryLabelList() {
+        return memoryLabelList;
+    }
+
+    @Nonnull
+    public List<SignalHeadIcon> getSignalList() {
+        return signalList;
+    }
+
+    @Nonnull
+    public List<SignalMastIcon> getSignalMastList() {
+        return signalMastList;
+    }
+
+    private final  List<LayoutShape> layoutShapes = new ArrayList<>();               // LayoutShap list
 
     // counts used to determine unique internal names
-    private transient int numAnchors = 0;
-    private transient int numEndBumpers = 0;
-    private transient int numEdgeConnectors = 0;
-    private transient int numTrackSegments = 0;
-    private transient int numLevelXings = 0;
-    private transient int numLayoutSlips = 0;
-    private transient int numLayoutTurnouts = 0;
-    private transient int numLayoutTurntables = 0;
-    private transient int numShapes = 0;
+    private  int numAnchors = 0;
+    private  int numEndBumpers = 0;
+    private  int numEdgeConnectors = 0;
+    private  int numTrackSegments = 0;
+    private  int numLevelXings = 0;
+    private  int numLayoutSlips = 0;
+    private  int numLayoutTurnouts = 0;
+    private  int numLayoutTurntables = 0;
+    private  int numShapes = 0;
 
-    public transient LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
+    protected  LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
 
     @Nonnull
     public LayoutEditorFindItems getFinder() {
@@ -242,65 +261,65 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     //persistent instance variables - saved to disk with Save Panel
-    private transient int upperLeftX = 0; // Note: These are _WINDOW_ upper left x & y
-    private transient int upperLeftY = 0; // (not panel)
+    private  int upperLeftX = 0; // Note: These are _WINDOW_ upper left x & y
+    private  int upperLeftY = 0; // (not panel)
 
-    private transient int windowWidth = 0;
-    private transient int windowHeight = 0;
+    private  int windowWidth = 0;
+    private  int windowHeight = 0;
 
-    protected transient int panelWidth = 0;
-    protected transient int panelHeight = 0;
+    protected  int panelWidth = 0;
+    protected  int panelHeight = 0;
 
-    protected transient float mainlineTrackWidth = 4.0F;
-    protected transient float sidelineTrackWidth = 2.0F;
+    protected  float mainlineTrackWidth = 4.0F;
+    protected  float sidelineTrackWidth = 2.0F;
 
-    protected transient Color mainlineTrackColor = Color.DARK_GRAY;
-    protected transient Color sidelineTrackColor = Color.DARK_GRAY;
-    protected transient Color defaultTrackColor = Color.DARK_GRAY;
-    protected transient Color defaultOccupiedTrackColor = Color.red;
-    protected transient Color defaultAlternativeTrackColor = Color.white;
-    private transient Color defaultTextColor = Color.black;
+    protected  Color mainlineTrackColor = Color.DARK_GRAY;
+    protected  Color sidelineTrackColor = Color.DARK_GRAY;
+    protected  Color defaultTrackColor = Color.DARK_GRAY;
+    protected  Color defaultOccupiedTrackColor = Color.red;
+    protected  Color defaultAlternativeTrackColor = Color.white;
+    private  Color defaultTextColor = Color.black;
 
-    private transient String layoutName = "";
-    private transient double xScale = 1.0;
-    private transient double yScale = 1.0;
-    private transient boolean animatingLayout = true;
-    private transient boolean showHelpBar = true;
-    private transient boolean drawGrid = true;
+    private  String layoutName = "";
+    private  double xScale = 1.0;
+    private  double yScale = 1.0;
+    private  boolean animatingLayout = true;
+    private  boolean showHelpBar = true;
+    private  boolean drawGrid = true;
 
-    private transient boolean snapToGridOnAdd = false;
-    private transient boolean snapToGridOnMove = false;
-    private transient boolean snapToGridInvert = false;
+    private  boolean snapToGridOnAdd = false;
+    private  boolean snapToGridOnMove = false;
+    private  boolean snapToGridInvert = false;
 
-    protected transient boolean antialiasingOn = false;
-    protected transient boolean highlightSelectedBlockFlag = false;
+    protected  boolean antialiasingOn = false;
+    protected  boolean highlightSelectedBlockFlag = false;
 
-    protected transient boolean turnoutCirclesWithoutEditMode = false;
-    private transient boolean tooltipsWithoutEditMode = false;
-    private transient boolean tooltipsInEditMode = true;
+    protected  boolean turnoutCirclesWithoutEditMode = false;
+    private  boolean tooltipsWithoutEditMode = false;
+    private  boolean tooltipsInEditMode = true;
 
     //turnout size parameters - saved with panel
-    private transient double turnoutBX = LayoutTurnout.turnoutBXDefault; //RH, LH, WYE
-    private transient double turnoutCX = LayoutTurnout.turnoutCXDefault;
-    private transient double turnoutWid = LayoutTurnout.turnoutWidDefault;
-    private transient double xOverLong = LayoutTurnout.xOverLongDefault; //DOUBLE_XOVER, RH_XOVER, LH_XOVER
-    private transient double xOverHWid = LayoutTurnout.xOverHWidDefault;
-    private transient double xOverShort = LayoutTurnout.xOverShortDefault;
-    private transient boolean useDirectTurnoutControl = false; //Uses Left click for closing points, Right click for throwing.
+    private  double turnoutBX = LayoutTurnout.turnoutBXDefault; //RH, LH, WYE
+    private  double turnoutCX = LayoutTurnout.turnoutCXDefault;
+    private  double turnoutWid = LayoutTurnout.turnoutWidDefault;
+    private  double xOverLong = LayoutTurnout.xOverLongDefault; //DOUBLE_XOVER, RH_XOVER, LH_XOVER
+    private  double xOverHWid = LayoutTurnout.xOverHWidDefault;
+    private  double xOverShort = LayoutTurnout.xOverShortDefault;
+    private  boolean useDirectTurnoutControl = false; //Uses Left click for closing points, Right click for throwing.
 
     //saved state of options when panel was loaded or created
-    private transient boolean savedEditMode = true;
-    private transient boolean savedPositionable = true;
-    private transient boolean savedControlLayout = true;
-    private transient boolean savedAnimatingLayout = true;
-    private transient boolean savedShowHelpBar = true;
+    private  boolean savedEditMode = true;
+    private  boolean savedPositionable = true;
+    private  boolean savedControlLayout = true;
+    private  boolean savedAnimatingLayout = true;
+    private  boolean savedShowHelpBar = true;
 
     //zoom
-    private transient double minZoom = 0.25;
-    private final transient double maxZoom = 8.0;
+    private  double minZoom = 0.25;
+    private final  double maxZoom = 8.0;
 
     //A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
-    protected transient HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
+    protected  HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
 
     protected enum ToolBarSide {
         eTOP("top"),
@@ -309,8 +328,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         eRIGHT("right"),
         eFLOAT("float");
 
-        private final transient String name;
-        private transient static final Map<String, ToolBarSide> ENUM_MAP;
+        private final  String name;
+        private  static final Map<String, ToolBarSide> ENUM_MAP;
 
         ToolBarSide(String name) {
             this.name = name;
@@ -335,7 +354,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
-    private transient ToolBarSide toolBarSide = ToolBarSide.eTOP;
+    private  ToolBarSide toolBarSide = ToolBarSide.eTOP;
 
     public LayoutEditor() {
         this("My Layout");
@@ -1365,7 +1384,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /*============================================*\
     |* LayoutTrackDrawingOptions accessor methods *|
     \*============================================*/
-    private transient LayoutTrackDrawingOptions layoutTrackDrawingOptions = null;
+    private  LayoutTrackDrawingOptions layoutTrackDrawingOptions = null;
 
     /**
      *
@@ -1815,7 +1834,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
     }   // setupZoomMenu
 
-    private transient MouseWheelListener[] mouseWheelListeners;
+    private  MouseWheelListener[] mouseWheelListeners;
 
     // scroll bar listener to update x & y coordinates in toolbar on scroll
     public void scrollBarAdjusted(AdjustmentEvent event) {
@@ -2374,7 +2393,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return changed;
     }
 
-    private transient Rectangle2D undoRect;
+    private  Rectangle2D undoRect;
     private boolean canUndoMoveSelection = false;
     private Point2D undoDelta = MathUtil.zeroPoint2D;
 
@@ -4062,9 +4081,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         be.setCoordsCenter(offset);
     }
 
-    protected transient List<Positionable> _positionableSelection = new ArrayList<>();
-    protected transient List<LayoutTrack> _layoutTrackSelection = new ArrayList<>();
-    protected transient List<LayoutShape> _layoutShapeSelection = new ArrayList<>();
+    protected  List<Positionable> _positionableSelection = new ArrayList<>();
+    protected  List<LayoutTrack> _layoutTrackSelection = new ArrayList<>();
+    protected  List<LayoutShape> _layoutShapeSelection = new ArrayList<>();
 
     protected void createSelectionGroups() {
         Rectangle2D selectionRect = getSelectionRect();
@@ -6654,7 +6673,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //
     // singleton (one per-LayoutEditor) accessors
     //
-    private transient ConnectivityUtil conTools = null;
+    private  ConnectivityUtil conTools = null;
 
     @Nonnull
     public ConnectivityUtil getConnectivityUtil() {
@@ -6664,7 +6683,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return conTools;
     }
 
-    private transient LayoutEditorTools tools = null;
+    private  LayoutEditorTools tools = null;
 
     @Nonnull
     public LayoutEditorTools getLETools() {
@@ -6674,7 +6693,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return tools;
     }
 
-    private transient LayoutEditorAuxTools auxTools = null;
+    private  LayoutEditorAuxTools auxTools = null;
 
     @Nonnull
     public LayoutEditorAuxTools getLEAuxTools() {
@@ -6684,7 +6703,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return auxTools;
     }
 
-    private transient LayoutTrackEditors layoutTrackEditors = null;
+    private  LayoutTrackEditors layoutTrackEditors = null;
 
     @Nonnull
     public LayoutTrackEditors getLayoutTrackEditors() {
@@ -6694,7 +6713,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return layoutTrackEditors;
     }
 
-    private transient LayoutEditorChecks layoutEditorChecks = null;
+    private  LayoutEditorChecks layoutEditorChecks = null;
 
     @Nonnull
     public LayoutEditorChecks getLEChecks() {
@@ -7577,6 +7596,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     public @Nonnull
+    List<PositionablePointView> getPositionablePointViews() {
+        List<PositionablePointView> list = new ArrayList<>();
+        for (PositionablePoint p : getPositionablePoints()) {
+            list.add(new PositionablePointView(p));
+        }
+        return list;
+    }
+
+    public @Nonnull
     List<PositionablePoint> getPositionablePoints() {
         return getLayoutTracksOfClass(PositionablePoint.class
         )
@@ -7590,6 +7618,23 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         )
                 .map(LayoutSlip.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    // temporarily\y creates list on the fly
+    // instead of keeping one
+    public @Nonnull
+    List<LayoutTrackView> getLayoutTrackViews() {
+        List<LayoutTrackView> list = new ArrayList<>() ;
+        for (LayoutTrack t : getLayoutTracks()) {
+            if (t instanceof PositionablePoint) {
+                list.add(new PositionablePointView((PositionablePoint)t));
+            } else if (t instanceof TrackSegment) {
+                list.add(new TrackSegmentView((TrackSegment)t));
+            } else {
+                list.add(new LayoutTrackView(t));
+            }
+        }
+        return list;
     }
 
     public @Nonnull
@@ -8258,6 +8303,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     //initialize logging
-    private transient final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditor.class
+    private  final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditor.class
     );
 }

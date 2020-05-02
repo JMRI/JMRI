@@ -946,60 +946,17 @@ public class TrackSegment extends LayoutTrack {
             });
             jcbmi.setSelected(arrowStyle == 0);
 
-            ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle1.png"));
-            jcbmi = new JCheckBoxMenuItem(imageIcon);
-            arrowsCountMenu.add(jcbmi);
-            jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowStyle(1);
-            });
-            jcbmi.setSelected(arrowStyle == 1);
-
-            imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle2.png"));
-            jcbmi = new JCheckBoxMenuItem(imageIcon);
-            arrowsCountMenu.add(jcbmi);
-            jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowStyle(2);
-            });
-            jcbmi.setSelected(arrowStyle == 2);
-
-            imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle3.png"));
-            jcbmi = new JCheckBoxMenuItem(imageIcon);
-            arrowsCountMenu.add(jcbmi);
-            jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowStyle(3);
-            });
-            jcbmi.setSelected(arrowStyle == 3);
-
-            imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle4.png"));
-            jcbmi = new JCheckBoxMenuItem(imageIcon);
-            arrowsCountMenu.add(jcbmi);
-            jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowStyle(4);
-            });
-            jcbmi.setSelected(arrowStyle == 4);
-
-            imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle5.png"));
-            jcbmi = new JCheckBoxMenuItem(imageIcon);
-            arrowsCountMenu.add(jcbmi);
-            jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowStyle(5);
-            });
-            jcbmi.setSelected(arrowStyle == 5);
+            // configure the arrows
+            for (int i = 1; i<=5; i++) {
+                jcbmi = loadArrowImageToJCBItem(i, arrowsCountMenu);
+                final int n = i;
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
+                    setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
+                    setArrowStyle(n);
+                });
+                jcbmi.setSelected(arrowStyle == i);            
+            }
 
             if (hasEC1 && hasEC2) {
                 JMenu arrowsEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
@@ -4002,9 +3959,6 @@ public class TrackSegment extends LayoutTrack {
                             LayoutEditor.getCoords(getConnect2(), type2)));
                     results.add(lc);
                 }
-            } else {
-                //this is routinely reached in normal operations
-                //(nothing to see here... move along)
             }
         }   //if (lb1 != null)
         return results;
@@ -4015,8 +3969,6 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public List<HitPointType> checkForFreeConnections() {
-        //Track Segments always have all their connections so...
-        //(nothing to see here... move along)
         return new ArrayList<>();
     }
 
@@ -4113,5 +4065,5 @@ public class TrackSegment extends LayoutTrack {
         setLayoutBlock(layoutBlock);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegment.class);
 }

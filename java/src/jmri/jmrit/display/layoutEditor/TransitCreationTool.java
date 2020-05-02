@@ -111,5 +111,5 @@ public class TransitCreationTool {
         return !list.isEmpty();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TransitCreationTool.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitCreationTool.class);
 }

@@ -992,7 +992,6 @@ function processPanelXML($returnedData, $success, $xhr) {
     });
     $("#panel-area").width($gPanel.panelwidth);
     $("#panel-area").height($gPanel.panelheight);
-    setTitle($gPanel["name"]);
 
     //insert the canvas layer and set up context used by layouteditor "drawn" objects, set some defaults
     if ($gPanel.paneltype == "LayoutPanel") {
@@ -3785,7 +3784,8 @@ var requestPanelXML = function(panelName) {
         type: "GET",
         url: "/panel/" + panelName + "?format=xml", //request proper url
         success: function(data, textStatus, jqXHR) {
-            processPanelXML(data, textStatus, jqXHR);
+            processPanelXML(data, textStatus, jqXHR);          
+            setTitle($gPanel["name"]);  //set final title once load completes, helps with testing  
         },
         error: function( jqXHR, textStatus, errorThrown) {
             alert("Error retrieving panel xml from server.  Please press OK to retry.\n\nDetails: " + textStatus + " - " + errorThrown);
@@ -4159,7 +4159,7 @@ $(document).ready(function() {
         $("#panel-area").addClass("show").removeClass("hidden");
 
         // include name of panel in page title. Will be updated to userName later
-        setTitle(panelName);
+        setTitle("Loading " + panelName + "...");
 
         //get updates to fast clock rate
         getRateFactor();
