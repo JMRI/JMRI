@@ -766,8 +766,8 @@ public class LayoutShape {
      */
     public static class LayoutShapePoint {
 
-        private transient LayoutShapePointType type;
-        private transient Point2D point;
+        private LayoutShapePointType type;
+        private Point2D point;
 
         /**
          * constructor method

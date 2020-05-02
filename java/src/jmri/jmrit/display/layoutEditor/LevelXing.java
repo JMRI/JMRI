@@ -1028,7 +1028,7 @@ public class LevelXing extends LayoutTrack {
                     lb.incrementUse();
                 }
             } else {
-                log.error("{}.setObjects(); bad blockname AC ''{}''", tLayoutBlockNameAC);
+                log.error("LevelXing.setObjects(); bad blockname AC ''{}''", tLayoutBlockNameAC);
                 namedLayoutBlockAC = null;
             }
             tLayoutBlockNameAC = null; //release this memory
@@ -1834,5 +1834,5 @@ public class LevelXing extends LayoutTrack {
         setLayoutBlockBD(layoutBlock);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LevelXing.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LevelXing.class);
 }

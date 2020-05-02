@@ -521,7 +521,9 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Added a separate volume control for each decoder. See
+            <a href="https://groups.io/g/jmriusers/topic/vsdecoder_enhancement_request/73168521">
+            more details</a>.</li>
         </ul>
 
     <h3>Miscellaneous</h3>

@@ -28,18 +28,13 @@ class LayoutEditorComponent extends JComponent {
     private final LayoutEditor layoutEditor;
 
     //Antialiasing rendering
-    protected transient static final RenderingHints antialiasing = new RenderingHints(
+    protected static final RenderingHints antialiasing = new RenderingHints(
             RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON);
 
     protected LayoutEditorComponent(@Nonnull final LayoutEditor LayoutEditor) {
         super();
         this.layoutEditor = LayoutEditor;
-    }
-
-    // not actually used anywhere
-    protected LayoutEditor getLayoutEditor() {
-        return layoutEditor;
     }
 
     /*
@@ -106,6 +101,8 @@ class LayoutEditorComponent extends JComponent {
                     drawTurnoutControls(g2);
                 }
             }
+        } else {
+            log.error("LayoutEditor drawing requires Graphics2D");
         }
     }
 
@@ -433,15 +430,15 @@ class LayoutEditorComponent extends JComponent {
             boolean isBlock,
             boolean isHidden,
             boolean isDashed) {
-        for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
-            if (!(layoutTrack instanceof PositionablePoint)) {
-                if (isHidden == layoutTrack.isHidden()) {
-                    if ((layoutTrack instanceof TrackSegment)) {
-                        if (((TrackSegment) layoutTrack).isDashed() == isDashed) {
-                            layoutTrack.draw1(g2, isMain, isBlock);
+        for (LayoutTrackView layoutTrackView : layoutEditor.getLayoutTrackViews()) {
+            if (!(layoutTrackView instanceof PositionablePointView)) {
+                if (isHidden == layoutTrackView.isHidden()) {
+                    if ((layoutTrackView instanceof TrackSegmentView)) {
+                        if (((TrackSegmentView) layoutTrackView).isDashed() == isDashed) {
+                            layoutTrackView.draw1(g2, isMain, isBlock);
                         }
                     } else if (!isDashed) {
-                        layoutTrack.draw1(g2, isMain, isBlock);
+                        layoutTrackView.draw1(g2, isMain, isBlock);
                     }
                 }
             }
@@ -450,8 +447,8 @@ class LayoutEditorComponent extends JComponent {
 
     // draw positionable points
     private void drawPositionablePoints(Graphics2D g2, boolean isMain) {
-        for (PositionablePoint positionablePoint : layoutEditor.getPositionablePoints()) {
-            positionablePoint.draw1(g2, isMain, false);
+        for (PositionablePointView positionablePointView : layoutEditor.getPositionablePointViews()) {
+            positionablePointView.draw1(g2, isMain, false);
         }
     }
 
@@ -463,20 +460,20 @@ class LayoutEditorComponent extends JComponent {
     // draw parallel lines (rails)
     private void draw2(Graphics2D g2, boolean isMain,
             float railDisplacement, boolean isDashed) {
-        for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
-            if ((layoutTrack instanceof TrackSegment)) {
-                if (((TrackSegment) layoutTrack).isDashed() == isDashed) {
-                    layoutTrack.draw2(g2, isMain, railDisplacement);
+        for (LayoutTrackView layoutTrackView : layoutEditor.getLayoutTrackViews()) {
+            if ((layoutTrackView instanceof TrackSegmentView)) {
+                if (((TrackSegmentView) layoutTrackView).isDashed() == isDashed) {
+                    layoutTrackView.draw2(g2, isMain, railDisplacement);
                 }
             } else if (!isDashed) {
-                layoutTrack.draw2(g2, isMain, railDisplacement);
+                layoutTrackView.draw2(g2, isMain, railDisplacement);
             }
         }
     }
 
     // draw decorations
     private void drawDecorations(Graphics2D g2) {
-        layoutEditor.getLayoutTracks().forEach((tr) -> tr.drawDecorations(g2));
+        layoutEditor.getLayoutTrackViews().forEach((tr) -> tr.drawDecorations(g2));
     }
 
     // draw shapes
@@ -588,14 +585,14 @@ class LayoutEditorComponent extends JComponent {
         g2.setColor(layoutEditor.defaultTrackColor);
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
-        layoutEditor.memoryLabelList.forEach((l) -> g2.draw(new Rectangle2D.Double(l.getX(), l.getY(), l.getSize().width, l.getSize().height)));
+        layoutEditor.getMemoryLabelList().forEach((l) -> g2.draw(new Rectangle2D.Double(l.getX(), l.getY(), l.getSize().width, l.getSize().height)));
     }
 
     private void drawBlockContentsRects(Graphics2D g2) {
         g2.setColor(layoutEditor.defaultTrackColor);
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
-        layoutEditor.blockContentsLabelList.forEach((l) -> g2.draw(new Rectangle2D.Double(l.getX(), l.getY(), l.getSize().width, l.getSize().height)));
+        layoutEditor.getBlockContentsLabelList().forEach((l) -> g2.draw(new Rectangle2D.Double(l.getX(), l.getY(), l.getSize().width, l.getSize().height)));
     }
 
     private void highLightSelection(Graphics2D g) {
@@ -703,5 +700,5 @@ class LayoutEditorComponent extends JComponent {
     }
 
     //initialize logging
-    private transient final static Logger log = LoggerFactory.getLogger(LayoutEditorComponent.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorComponent.class);
 }

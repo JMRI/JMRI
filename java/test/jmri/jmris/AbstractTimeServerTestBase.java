@@ -26,9 +26,9 @@ abstract public class AbstractTimeServerTestBase {
         jmri.Timebase t = jmri.InstanceManager.getDefault(jmri.Timebase.class);
         int n = t.getMinuteChangeListeners().length;
         a.listenToTimebase(true);
-        assertThat(t.getMinuteChangeListeners().length).isEqualTo(n + 1).withFailMessage("added listener");
+        assertThat(t.getMinuteChangeListeners().length).withFailMessage("added listener").isEqualTo(n + 1);
         a.listenToTimebase(false);
-        assertThat(t.getMinuteChangeListeners().length).isEqualTo(n).withFailMessage("removed listener");
+        assertThat(t.getMinuteChangeListeners().length).withFailMessage("removed listener").isEqualTo(n);
     }
 
     @Test
@@ -68,14 +68,14 @@ abstract public class AbstractTimeServerTestBase {
      * confirm the timebase was started; class under test may send client status
      */
     public void confirmTimeStarted() {
-        assertThat(jmri.InstanceManager.getDefault(jmri.Timebase.class).getRun()).isTrue().withFailMessage("Timebase started");
+        assertThat(jmri.InstanceManager.getDefault(jmri.Timebase.class).getRun()).withFailMessage("Timebase started").isTrue();
     }
 
     /**
      * confirm the timebase was stoped; class under test may send client status
      */
     public void confirmTimeStopped() {
-        assertThat(jmri.InstanceManager.getDefault(jmri.Timebase.class).getRun()).isFalse().withFailMessage("Timebase stopped");
+        assertThat(jmri.InstanceManager.getDefault(jmri.Timebase.class).getRun()).withFailMessage("Timebase stopped").isFalse();
     }
 
     @BeforeEach

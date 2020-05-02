@@ -1427,6 +1427,6 @@ public class LayoutTurntable extends LayoutTrack {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntable.class);
 
 }

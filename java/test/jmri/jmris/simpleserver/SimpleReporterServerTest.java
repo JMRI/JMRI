@@ -68,7 +68,7 @@ public class SimpleReporterServerTest {
             sendMessageMethod.invoke(a,"Hello World");
         });
         assertThat(thrown).withFailMessage("Exception sending Status").isNull();
-        assertThat(sb.toString()).isEqualTo("Hello World").withFailMessage("SendMessage Check");
+        assertThat(sb.toString()).withFailMessage("SendMessage Check").isEqualTo("Hello World");
     }
 
     @Test
@@ -93,7 +93,7 @@ public class SimpleReporterServerTest {
             sendMessageMethod.invoke(a, "Hello World");
         });
         assertThat(thrown).withFailMessage("Exception sending Status").isNull();
-        assertThat(jcs.getOutput()).isEqualTo("Hello World").withFailMessage("SendMessage Check");
+        assertThat(jcs.getOutput()).withFailMessage("SendMessage Check").isEqualTo("Hello World");
     }
 
 
@@ -112,7 +112,7 @@ public class SimpleReporterServerTest {
         SimpleReporterServer a = new SimpleReporterServer(input, output);
         Throwable thrown = catchThrowable( () -> a.sendErrorStatus("IT1"));
         assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
-        assertThat(sb.toString()).isEqualTo("REPORTER ERROR\n").withFailMessage("sendErrorStatus check");
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER ERROR\n");
     }
 
     @Test
@@ -133,7 +133,7 @@ public class SimpleReporterServerTest {
             a.sendReport("IR1", "Hello World");
         });
         assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
-        assertThat(sb.toString()).isEqualTo("REPORTER IR1 Hello World\n").withFailMessage("sendErrorStatus check");
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER IR1 Hello World\n");
     }
 
     @Test
@@ -154,7 +154,7 @@ public class SimpleReporterServerTest {
             a.sendReport("IR1", new jmri.implementation.DefaultIdTag("ID1234", "Hello World"));
         });
         assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
-        assertThat(sb.toString()).isEqualTo("REPORTER IR1 Hello World\n").withFailMessage("sendErrorStatus check");
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER IR1 Hello World\n");
     }
 
     @Test
@@ -176,7 +176,7 @@ public class SimpleReporterServerTest {
         });
         // null report, sends back the reporter name only.
         assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
-        assertThat(sb.toString()).isEqualTo("REPORTER IR1\n").withFailMessage("sendErrorStatus check");
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER IR1\n");
     }
 
     @Test
@@ -195,7 +195,7 @@ public class SimpleReporterServerTest {
         Throwable thrown = catchThrowable( () ->
             a.parseStatus("REPORTER IR1 Hello World\n\r"));
         assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
-        assertThat(sb.toString()).isEqualTo("REPORTER IR1 Hello World\n").withFailMessage("sendErrorStatus check");
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER IR1 Hello World\n");
     }
 
     @Test
@@ -214,7 +214,7 @@ public class SimpleReporterServerTest {
         Throwable thrown = catchThrowable( () -> 
             a.parseStatus("REPORTER IR1\n\r"));
         assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
-        assertThat(sb.toString()).isEqualTo("REPORTER IR1\n").withFailMessage("sendErrorStatus check");
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER IR1\n");
     }
 
 
