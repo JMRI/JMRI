@@ -2223,7 +2223,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         // calculate the bounds for the scroll pane
         JScrollPane scrollPane = getPanelScrollPane();
-        Rectangle2D scrollBounds = scrollPane.getViewportBorderBounds();
+        Rectangle2D scrollBounds; // = scrollPane.getViewportBorderBounds();
 
         // don't let origin go negative
         ///scrollBounds = scrollBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
