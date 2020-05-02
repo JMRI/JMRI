@@ -14,6 +14,8 @@ public class LayoutWyeEditorTest extends LayoutTurnoutEditorTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         new LayoutWyeEditor(null);
     }
     

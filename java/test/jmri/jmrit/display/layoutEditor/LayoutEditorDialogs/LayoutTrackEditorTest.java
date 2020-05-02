@@ -27,6 +27,8 @@ public class LayoutTrackEditorTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         new LayoutTrackEditor(null);
     }
 

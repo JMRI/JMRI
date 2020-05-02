@@ -14,6 +14,8 @@ public class LayoutSlipEditorTest extends LayoutTurnoutEditorTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         new LayoutSlipEditor(null);
     }
     

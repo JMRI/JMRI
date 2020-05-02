@@ -15,6 +15,8 @@ public class LayoutLHXOverEditorTest extends LayoutXOverEditorTest {
     @Test
     public void testCtor() {
         new LayoutLHXOverEditor(null);
+
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
     }
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutLHXOverEditorTest.class);

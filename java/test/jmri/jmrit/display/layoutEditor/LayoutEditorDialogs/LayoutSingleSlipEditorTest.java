@@ -26,6 +26,8 @@ public class LayoutSingleSlipEditorTest extends LayoutSlipEditorTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         new LayoutSingleSlipEditor(null);
     }
 

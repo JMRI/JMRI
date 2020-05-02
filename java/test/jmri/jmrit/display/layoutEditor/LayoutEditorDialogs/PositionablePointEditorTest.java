@@ -14,6 +14,7 @@ public class PositionablePointEditorTest extends LayoutTrackEditorTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new PositionablePointEditor(null);
     }
     

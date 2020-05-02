@@ -14,6 +14,8 @@ public class LayoutRHTurnoutEditorTest extends LayoutTurnoutEditorTest  {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         new LayoutRHTurnoutEditor(null);
     }
 

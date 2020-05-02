@@ -26,6 +26,8 @@ public class LayoutXOverEditorTest extends LayoutTurnoutEditorTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         new LayoutXOverEditor(null);
     }
 
