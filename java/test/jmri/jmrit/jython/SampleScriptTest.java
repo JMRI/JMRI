@@ -3,9 +3,7 @@ package jmri.jmrit.jython;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.util.JUnitUtil;
 
 import org.junit.*;

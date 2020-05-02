@@ -64,7 +64,7 @@ public class DefaultIdTag extends AbstractIdTag {
         try {
             setState(state);
         } catch (JmriException ex) {
-            log.warn("Problem setting state of IdTag " + getSystemName());
+            log.warn("Problem setting state of IdTag {}", getSystemName());
         }
     }
 
@@ -106,7 +106,7 @@ public class DefaultIdTag extends AbstractIdTag {
     public void load(Element e) {
         if (e.getName().equals("idtag")) { // NOI18N
             if (log.isDebugEnabled()) {
-                log.debug("Load IdTag element for " + this.getSystemName());
+                log.debug("Load IdTag element for {}", this.getSystemName());
             }
             if (e.getChild("userName") != null) // NOI18N
             {
@@ -127,15 +127,15 @@ public class DefaultIdTag extends AbstractIdTag {
                 }
             }
             if (e.getChild("whenLastSeen") != null) { // NOI18N
-                log.debug("When Last Seen: " + e.getChild("whenLastSeen").getText());
+                log.debug("When Last Seen: {}", e.getChild("whenLastSeen").getText());
                 try {
                     this.whenLastSeen = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).parse(e.getChild("whenLastSeen").getText()); // NOI18N
                 } catch (ParseException ex) {
-                    log.warn("Error parsing when last seen: " + ex);
+                    log.warn("Error parsing when last seen: {}", ex);
                 }
             }
         } else {
-            log.error("Not an IdTag element: " + e.getName());
+            log.error("Not an IdTag element: {}", e.getName());
         }
     }
 

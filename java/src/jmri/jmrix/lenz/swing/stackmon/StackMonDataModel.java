@@ -122,7 +122,7 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         log.debug("setValueAt called for row: {} column: {}", row, col);
         switch (col) {
             case DELCOLUMN:
-                log.debug("Delete Called for row " + row);
+                log.debug("Delete Called for row {}", row);
                 fireTableRowsDeleted(row, row);
                 // delete address from table
                 XNetMessage msg = XNetMessage.getDeleteAddressOnStackMsg((_addressList.get(row)).intValue());

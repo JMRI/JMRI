@@ -220,9 +220,9 @@ public class Log4JUtil {
         while (e.hasMoreElements()) {
             Appender a = (Appender) e.nextElement();
             if (a instanceof RollingFileAppender) {
-                log.info("This log is appended to file: " + ((RollingFileAppender) a).getFile());
+                log.info("This log is appended to file: {}", ((RollingFileAppender) a).getFile());
             } else if (a instanceof FileAppender) {
-                log.info("This log is stored in file: " + ((FileAppender) a).getFile());
+                log.info("This log is stored in file: {}", ((FileAppender) a).getFile());
             }
         }
         return (program + " version " + jmri.Version.name()

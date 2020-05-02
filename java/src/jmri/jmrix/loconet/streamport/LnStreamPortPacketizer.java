@@ -138,10 +138,7 @@ public class LnStreamPortPacketizer extends LnPacketizer {
     @Override
     public void startThreads() {
         int priority = Thread.currentThread().getPriority();
-        log.debug("startThreads current priority = " + priority // NOI18N
-                + " max available = " + Thread.MAX_PRIORITY // NOI18N
-                + " default = " + Thread.NORM_PRIORITY // NOI18N
-                + " min available = " + Thread.MIN_PRIORITY); // NOI18N
+        log.debug("startThreads current priority = {} max available = " + Thread.MAX_PRIORITY + " default = " + Thread.NORM_PRIORITY + " min available = " + Thread.MIN_PRIORITY, priority); // NOI18N
 
         // make sure that the xmt priority is no lower than the current priority
         int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);

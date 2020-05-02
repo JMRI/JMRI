@@ -176,7 +176,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         Block blk = (Block) e.getSource();
         if (e.getPropertyName().equals("state")) {  // NOI18N
             if (log.isDebugEnabled()) {
-                log.debug(getUserName() + "  We have a change of state on the block " + blk.getDisplayName());  // NOI18N
+                log.debug("{}  We have a change of state on the block {}", getUserName(), blk.getDisplayName());  // NOI18N
             }
             int now = ((Integer) e.getNewValue()).intValue();
 
@@ -209,7 +209,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     lBlock.getBlock().removePropertyChangeListener(propertyBlockListener);
                     return;
                 } else {
-                    log.error("Block " + lBlock.getDisplayName() + " went active but it is not part of our NX path");  // NOI18N
+                    log.error("Block {} went active but it is not part of our NX path", lBlock.getDisplayName());  // NOI18N
                 }
             }
             if (routeDetails.indexOf(lBlock) != 0) {
@@ -218,7 +218,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 if (routeDetails.indexOf(lBlock) != -1) {
                     while (routeDetails.indexOf(lBlock) != 0) {
                         LayoutBlock tbr = routeDetails.get(0);
-                        log.debug("Block skipped " + tbr.getDisplayName() + " and removed from list");  // NOI18N
+                        log.debug("Block skipped {} and removed from list", tbr.getDisplayName());  // NOI18N
                         tbr.getBlock().removePropertyChangeListener(propertyBlockListener);
                         tbr.setUseExtraColor(false);
                         routeDetails.remove(0);
@@ -237,12 +237,12 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     }
                 }
             } else {
-                log.error("Block " + lBlock.getDisplayName() + " that went Occupied was not in the routeDetails list");  // NOI18N
+                log.error("Block {} that went Occupied was not in the routeDetails list", lBlock.getDisplayName());  // NOI18N
             }
             if (log.isDebugEnabled()) {
-                log.debug("Route details contents " + routeDetails);  // NOI18N
+                log.debug("Route details contents {}", routeDetails);  // NOI18N
                 for (int i = 0; i < routeDetails.size(); i++) {
-                    log.debug("      " + routeDetails.get(i).getDisplayName());
+                    log.debug("      {}", routeDetails.get(i).getDisplayName());
                 }
             }
             if ((routeDetails.size() == 1) && (routeDetails.contains(destination))) {
@@ -265,7 +265,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
     //For a clear down we need to add a message, if it is a cancel, manual clear down or I didn't mean it.
     void setRoute(boolean state) {
         if (log.isDebugEnabled()) {
-            log.debug("Set route " + src.getPoint().getDisplayName());  // NOI18N
+            log.debug("Set route {}", src.getPoint().getDisplayName());  // NOI18N
         }
         if (disposed) {
             log.error("Set route called even though interlock has been disposed of");  // NOI18N
@@ -305,7 +305,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     break;
             }
             if (log.isDebugEnabled()) {
-                log.debug("Exit " + src.getPoint().getDisplayName());
+                log.debug("Exit {}", src.getPoint().getDisplayName());
             }
             return;
         }
@@ -442,7 +442,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                             if (src.getStart().getState() == Block.OCCUPIED) {
                                 src.getStart().removePropertyChangeListener(propertyBlockListener);
                                 lastSeenActiveBlockObject = src.getStart().getBlock().getValue();
-                                log.debug("Last seen value " + lastSeenActiveBlockObject);
+                                log.debug("Last seen value {}", lastSeenActiveBlockObject);
                             }
                         }
                         if ((src.sourceSignal instanceof SignalMast) && (getSignal() instanceof SignalMast)) {
@@ -576,10 +576,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         try {
             thrMain.join();
         } catch (InterruptedException e) {
-            log.error("Interuption exception " + e.toString());  // NOI18N
+            log.error("Interuption exception {}", e.toString());  // NOI18N
         }
         if (log.isDebugEnabled()) {
-            log.debug("finish route " + src.getPoint().getDisplayName());  // NOI18N
+            log.debug("finish route {}", src.getPoint().getDisplayName());  // NOI18N
         }
     }
 
@@ -828,15 +828,15 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         if (cancelClear == EntryExitPairs.CLEARROUTE) {
             if (routeDetails.size() == 0) {
                 if (log.isDebugEnabled()) {
-                    log.debug(getUserName() + "  all blocks have automatically been cleared down");  // NOI18N
+                    log.debug("{}  all blocks have automatically been cleared down", getUserName());  // NOI18N
                 }
             } else {
                 if (log.isDebugEnabled()) {
-                    log.debug(getUserName() + "  No blocks were cleared down " + routeDetails.size());  // NOI18N
+                    log.debug("{}  No blocks were cleared down {}", getUserName(), routeDetails.size());  // NOI18N
                 }
                 try {
                     if (log.isDebugEnabled()) {
-                        log.debug(getUserName() + "  set first block as active so that we can manually clear this down " + routeDetails.get(0).getBlock().getUserName());  // NOI18N
+                        log.debug("{}  set first block as active so that we can manually clear this down {}", getUserName(), routeDetails.get(0).getBlock().getUserName());  // NOI18N
                     }
                     if (routeDetails.get(0).getOccupancySensor() != null) {
                         routeDetails.get(0).getOccupancySensor().setState(Sensor.ACTIVE);
@@ -850,14 +850,14 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                         src.getStart().getBlock().goingInactive();
                     }
                 } catch (java.lang.NullPointerException e) {
-                    log.error("error in clear route A " + e);  // NOI18N
+                    log.error("error in clear route A {}", e);  // NOI18N
                 } catch (JmriException e) {
-                    log.error("error in clear route A " + e);  // NOI18N
+                    log.error("error in clear route A {}", e);  // NOI18N
                 }
                 if (log.isDebugEnabled()) {
-                    log.debug(getUserName() + "  Going to clear routeDetails down " + routeDetails.size());  // NOI18N
+                    log.debug("{}  Going to clear routeDetails down {}", getUserName(), routeDetails.size());  // NOI18N
                     for (int i = 0; i < routeDetails.size(); i++) {
-                        log.debug("Block at " + i + " " + routeDetails.get(i).getDisplayName());
+                        log.debug("Block at {} {}", i, routeDetails.get(i).getDisplayName());
                     }
                 }
                 if (routeDetails.size() > 1) {
@@ -865,7 +865,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     //Should we just be usrc.pdating the block status and not the sensor
                     for (int i = 1; i < routeDetails.size() - 1; i++) {
                         if (log.isDebugEnabled()) {
-                            log.debug(getUserName() + " in loop Set active " + routeDetails.get(i).getDisplayName() + " " + routeDetails.get(i).getBlock().getSystemName());  // NOI18N
+                            log.debug("{} in loop Set active {} {}", getUserName(), routeDetails.get(i).getDisplayName(), routeDetails.get(i).getBlock().getSystemName());  // NOI18N
                         }
                         try {
                             if (routeDetails.get(i).getOccupancySensor() != null) {
@@ -875,7 +875,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                             }
 
                             if (log.isDebugEnabled()) {
-                                log.debug(getUserName() + " in loop Set inactive " + routeDetails.get(i - 1).getDisplayName() + " " + routeDetails.get(i - 1).getBlock().getSystemName());  // NOI18N
+                                log.debug("{} in loop Set inactive {} {}", getUserName(), routeDetails.get(i - 1).getDisplayName(), routeDetails.get(i - 1).getBlock().getSystemName());  // NOI18N
                             }
                             if (routeDetails.get(i - 1).getOccupancySensor() != null) {
                                 routeDetails.get(i - 1).getOccupancySensor().setState(Sensor.INACTIVE);
@@ -890,7 +890,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     }
                     try {
                         if (log.isDebugEnabled()) {
-                            log.debug(getUserName() + " out of loop Set active " + routeDetails.get(routeDetails.size() - 1).getDisplayName() + " " + routeDetails.get(routeDetails.size() - 1).getBlock().getSystemName());  // NOI18N
+                            log.debug("{} out of loop Set active {} {}", getUserName(), routeDetails.get(routeDetails.size() - 1).getDisplayName(), routeDetails.get(routeDetails.size() - 1).getBlock().getSystemName());  // NOI18N
                         }
                         //Get the last block an set it active.
                         if (routeDetails.get(routeDetails.size() - 1).getOccupancySensor() != null) {
@@ -899,7 +899,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                             routeDetails.get(routeDetails.size() - 1).getBlock().goingActive();
                         }
                         if (log.isDebugEnabled()) {
-                            log.debug(getUserName() + " out of loop Set inactive " + routeDetails.get(routeDetails.size() - 2).getUserName() + " " + routeDetails.get(routeDetails.size() - 2).getBlock().getSystemName());  // NOI18N
+                            log.debug("{} out of loop Set inactive {} {}", getUserName(), routeDetails.get(routeDetails.size() - 2).getUserName(), routeDetails.get(routeDetails.size() - 2).getBlock().getSystemName());  // NOI18N
                         }
                         if (routeDetails.get(routeDetails.size() - 2).getOccupancySensor() != null) {
                             routeDetails.get(routeDetails.size() - 2).getOccupancySensor().setState(Sensor.INACTIVE);
@@ -907,11 +907,11 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                             routeDetails.get(routeDetails.size() - 2).getBlock().goingInactive();
                         }
                     } catch (java.lang.NullPointerException e) {
-                        log.error("error in clear route c " + e);  // NOI18N
+                        log.error("error in clear route c {}", e);  // NOI18N
                     } catch (java.lang.ArrayIndexOutOfBoundsException e) {
-                        log.error("error in clear route c " + e);  // NOI18N
+                        log.error("error in clear route c {}", e);  // NOI18N
                     } catch (JmriException e) {
-                        log.error("error in clear route c " + e);  // NOI18N
+                        log.error("error in clear route c {}", e);  // NOI18N
                     }
                 }
             }
@@ -960,13 +960,13 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 log.debug("A disabled entry exit has been called will bomb out");  // NOI18N
                 return;
             }
-            log.debug(getUserName() + "  We have a valid match on our end point so we can clear down");  // NOI18N
+            log.debug("{}  We have a valid match on our end point so we can clear down", getUserName());  // NOI18N
             //setRouteTo(false);
             //src.pd.setRouteFrom(false);
             setRoute(false);
         } else {
             if (isRouteToPointSet()) {
-                log.debug(getUserName() + "  route to this point is set therefore can not set another to it " /*+ destPoint.src.getPoint().getID()*/);  // NOI18N
+                log.debug("{}  route to this point is set therefore can not set another to it ", getUserName());  // NOI18N
                 if (showMessage && !manager.isRouteStacked(this, false)) {
                     handleNoCurrentRoute(reverseDirection, "Route already set to the destination point");  // NOI18N
                 }
@@ -1042,7 +1042,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
                         destinationLBlock = src.getStart();
                         if (log.isDebugEnabled()) {
-                            log.debug("reverse set destination is set going for " + startlBlock.getDisplayName() + " " + destinationLBlock.getDisplayName() + " " + protectLBlock.getDisplayName());  // NOI18N
+                            log.debug("reverse set destination is set going for {} {} {}", startlBlock.getDisplayName(), destinationLBlock.getDisplayName(), protectLBlock.getDisplayName());  // NOI18N
                         }
                         try {
                             LayoutBlock srcPro = src.getSourceProtecting().get(0);  //Don't care what block the facing is protecting
@@ -1051,7 +1051,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                                 startlBlock = getFacing();
                                 protectLBlock = srcProLBlock;
                                 if (log.isDebugEnabled()) {
-                                    log.debug("That didn't work so try  " + startlBlock.getDisplayName() + " " + destinationLBlock.getDisplayName() + " " + protectLBlock.getDisplayName());  // NOI18N
+                                    log.debug("That didn't work so try  {} {} {}", startlBlock.getDisplayName(), destinationLBlock.getDisplayName(), protectLBlock.getDisplayName());  // NOI18N
                                 }
                                 if (!InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(startlBlock, protectLBlock, srcPro, src.getStart(), LayoutBlockConnectivityTools.SENSORTOSENSOR)) {
                                     log.error("No route found");  // NOI18N
@@ -1106,7 +1106,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                                 pathList.add(toadd);
                             }
                         } catch (jmri.JmriException ex) {
-                            log.error("Exception " + ex.getMessage());  // NOI18N
+                            log.error("Exception {}", ex.getMessage());  // NOI18N
                             if (showMessage) {
                                 JOptionPane.showMessageDialog(null, ex.getMessage());
                             }

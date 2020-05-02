@@ -2,9 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -17,7 +15,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class LayoutTurntableTest {
+public class LayoutTurntableTest extends LayoutTrackTest {
 
     LayoutEditor layoutEditor = null;
     LayoutTurntable lt = null;
@@ -39,7 +37,7 @@ public class LayoutTurntableTest {
 
     // from here down is testing infrastructure
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
 
@@ -53,7 +51,7 @@ public class LayoutTurntableTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         if(layoutEditor!=null){
            JUnitUtil.dispose(layoutEditor);
         }

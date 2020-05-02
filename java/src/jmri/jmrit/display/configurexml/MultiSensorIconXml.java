@@ -106,7 +106,7 @@ public class MultiSensorIconXml extends PositionableLabelXml {
                     if (icon == null) {
                         icon = pe.loadFailed("MultiSensor \"" + l.getNameString() + "\" ", name);
                         if (icon == null) {
-                            log.error("MultiSensor \"" + l.getNameString() + "\" removed for url= " + name);
+                            log.error("MultiSensor \"{}\" removed for url= {}", l.getNameString(), name);
                             return;
                         }
                     }
@@ -137,7 +137,7 @@ public class MultiSensorIconXml extends PositionableLabelXml {
                     if (icon == null) {
                         icon = pe.loadFailed("MultiSensor \"" + l.getNameString(), name);
                         if (icon == null) {
-                            log.info("MultiSensor \"" + l.getNameString() + " removed for url= " + name);
+                            log.info("MultiSensor \"{} removed for url= {}", l.getNameString(), name);
                             return;
                         }
                     }
@@ -164,17 +164,17 @@ public class MultiSensorIconXml extends PositionableLabelXml {
                 if (icon == null) {
                     icon = ed.loadFailed(msg, iconName);
                     if (icon == null) {
-                        log.info(msg + " removed for url= " + iconName);
+                        log.info("{} removed for url= {}", msg, iconName);
                     }
                 } else {
                     icon.setRotation(rotation, l);
                 }
             } else {
-                log.warn("did not locate " + state + " for Multisensor icon file");
+                log.warn("did not locate {} for Multisensor icon file", state);
             }
         }
         if (icon == null) {
-            log.info("MultiSensor Icon \"" + l.getNameString() + "\": icon \"" + state + "\" removed");
+            log.info("MultiSensor Icon \"{}\": icon \"{}\" removed", l.getNameString(), state);
         }
         return icon;
     }

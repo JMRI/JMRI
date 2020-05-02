@@ -61,45 +61,43 @@ import jmri.util.swing.*;
  * @author Dave Duchamp Copyright: (c) 2004-2007
  * @author George Warner Copyright: (c) 2017-2020
  */
-@SuppressWarnings("serial")
-@SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
 public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
-  //Operational instance variables - not saved to disk
-    private transient JmriJFrame floatingEditToolBoxFrame = null;
-    private transient JScrollPane floatingEditContentScrollPane = null;
-    private transient JPanel floatEditHelpPanel = null;
+    // Operational instance variables - not saved to disk
+    private  JmriJFrame floatingEditToolBoxFrame = null;
+    private  JScrollPane floatingEditContentScrollPane = null;
+    private  JPanel floatEditHelpPanel = null;
 
-    private transient JPanel editToolBarContainerPanel = null;
-    private transient JScrollPane editToolBarScrollPane = null;
+    private  JPanel editToolBarContainerPanel = null;
+    private  JScrollPane editToolBarScrollPane = null;
 
-    private transient JPanel helpBarPanel = null;
-    private final transient JPanel helpBar = new JPanel();
+    private  JPanel helpBarPanel = null;
+    private final  JPanel helpBar = new JPanel();
 
-    private final transient boolean editorUseOldLocSize;
+    private final  boolean editorUseOldLocSize;
 
-    private transient LayoutEditorToolBarPanel leToolBarPanel = null;
+    private  LayoutEditorToolBarPanel leToolBarPanel = null;
 
     @Nonnull
     public LayoutEditorToolBarPanel getLayoutEditorToolBarPanel() {
         return leToolBarPanel;
     }
 
-    //end of main panel controls
-    private transient boolean delayedPopupTrigger = false;
-    private transient Point2D currentPoint = new Point2D.Double(100.0, 100.0);
-    private transient Point2D dLoc = new Point2D.Double(0.0, 0.0);
+    // end of main panel controls
+    private  boolean delayedPopupTrigger = false;
+    private  Point2D currentPoint = new Point2D.Double(100.0, 100.0);
+    private  Point2D dLoc = new Point2D.Double(0.0, 0.0);
 
-    private transient int toolbarHeight = 100;
-    private transient int toolbarWidth = 100;
+    private  int toolbarHeight = 100;
+    private  int toolbarWidth = 100;
 
-    private transient TrackSegment newTrack = null;
-    private transient boolean panelChanged = false;
+    private  TrackSegment newTrack = null;
+    private  boolean panelChanged = false;
 
-    private transient int gridSize1st = 10;    //grid size in pixels
-    private transient int gridSize2nd = 10;    // secondary grid
+    private  int gridSize1st = 10;    //grid size in pixels
+    private  int gridSize2nd = 10;    // secondary grid
 
-    //size of point boxes
+    // size of point boxes
     protected static final double SIZE = 3.0;
     protected static final double SIZE2 = SIZE * 2.; //must be twice SIZE
 
@@ -108,129 +106,153 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     protected boolean turnoutFillControlCircles = false;
     protected int turnoutCircleSize = 4; //matches earlier versions
 
-    //use turnoutCircleSize when you need an int and these when you need a double
-    //note: these only change when setTurnoutCircleSize is called
-    //using these avoids having to call getTurnoutCircleSize() and
-    //the multiply (x2) and the int -> double conversion overhead
-    protected transient double circleRadius = SIZE * getTurnoutCircleSize();
-    protected transient double circleDiameter = 2.0 * circleRadius;
+    // use turnoutCircleSize when you need an int and these when you need a double
+    // note: these only change when setTurnoutCircleSize is called
+    // using these avoids having to call getTurnoutCircleSize() and
+    // the multiply (x2) and the int -> double conversion overhead
+    protected  double circleRadius = SIZE * getTurnoutCircleSize();
+    protected  double circleDiameter = 2.0 * circleRadius;
 
-    //selection variables
-    protected transient boolean selectionActive = false;
-    private transient double selectionX = 0.0;
-    private transient double selectionY = 0.0;
-    protected transient double selectionWidth = 0.0;
-    protected transient double selectionHeight = 0.0;
+    // selection variables
+    protected  boolean selectionActive = false;
+    private  double selectionX = 0.0;
+    private  double selectionY = 0.0;
+    protected  double selectionWidth = 0.0;
+    protected  double selectionHeight = 0.0;
 
-    //Option menu items
-    private transient JCheckBoxMenuItem editModeCheckBoxMenuItem = null;
+    // Option menu items
+    private  JCheckBoxMenuItem editModeCheckBoxMenuItem = null;
 
-    private transient JRadioButtonMenuItem toolBarSideTopButton = null;
-    private transient JRadioButtonMenuItem toolBarSideLeftButton = null;
-    private transient JRadioButtonMenuItem toolBarSideBottomButton = null;
-    private transient JRadioButtonMenuItem toolBarSideRightButton = null;
-    private transient JRadioButtonMenuItem toolBarSideFloatButton = null;
+    private  JRadioButtonMenuItem toolBarSideTopButton = null;
+    private  JRadioButtonMenuItem toolBarSideLeftButton = null;
+    private  JRadioButtonMenuItem toolBarSideBottomButton = null;
+    private  JRadioButtonMenuItem toolBarSideRightButton = null;
+    private  JRadioButtonMenuItem toolBarSideFloatButton = null;
 
-    private final transient JCheckBoxMenuItem wideToolBarCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ToolBarWide"));
+    private final  JCheckBoxMenuItem wideToolBarCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ToolBarWide"));
 
-    private transient JCheckBoxMenuItem positionableCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem controlCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem animationCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem showHelpCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem showGridCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem autoAssignBlocksCheckBoxMenuItem = null;
-    private transient JMenu scrollMenu = null;
-    private transient JRadioButtonMenuItem scrollBothMenuItem = null;
-    private transient JRadioButtonMenuItem scrollNoneMenuItem = null;
-    private transient JRadioButtonMenuItem scrollHorizontalMenuItem = null;
-    private transient JRadioButtonMenuItem scrollVerticalMenuItem = null;
-    private transient JMenu tooltipMenu = null;
-    private transient JRadioButtonMenuItem tooltipAlwaysMenuItem = null;
-    private transient JRadioButtonMenuItem tooltipNoneMenuItem = null;
-    private transient JRadioButtonMenuItem tooltipInEditMenuItem = null;
-    private transient JRadioButtonMenuItem tooltipNotInEditMenuItem = null;
+    private  JCheckBoxMenuItem positionableCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem controlCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem animationCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem showHelpCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem showGridCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem autoAssignBlocksCheckBoxMenuItem = null;
+    private  JMenu scrollMenu = null;
+    private  JRadioButtonMenuItem scrollBothMenuItem = null;
+    private  JRadioButtonMenuItem scrollNoneMenuItem = null;
+    private  JRadioButtonMenuItem scrollHorizontalMenuItem = null;
+    private  JRadioButtonMenuItem scrollVerticalMenuItem = null;
+    private  JMenu tooltipMenu = null;
+    private  JRadioButtonMenuItem tooltipAlwaysMenuItem = null;
+    private  JRadioButtonMenuItem tooltipNoneMenuItem = null;
+    private  JRadioButtonMenuItem tooltipInEditMenuItem = null;
+    private  JRadioButtonMenuItem tooltipNotInEditMenuItem = null;
 
-    private transient JCheckBoxMenuItem snapToGridOnAddCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem snapToGridOnMoveCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem antialiasingOnCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem turnoutCirclesOnCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem turnoutDrawUnselectedLegCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem turnoutFillControlCirclesCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem hideTrackSegmentConstructionLinesCheckBoxMenuItem = null;
-    private transient JCheckBoxMenuItem useDirectTurnoutControlCheckBoxMenuItem = null;
-    private transient ButtonGroup turnoutCircleSizeButtonGroup = null;
+    private  JCheckBoxMenuItem snapToGridOnAddCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem snapToGridOnMoveCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem antialiasingOnCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem turnoutCirclesOnCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem turnoutDrawUnselectedLegCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem turnoutFillControlCirclesCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem hideTrackSegmentConstructionLinesCheckBoxMenuItem = null;
+    private  JCheckBoxMenuItem useDirectTurnoutControlCheckBoxMenuItem = null;
+    private  ButtonGroup turnoutCircleSizeButtonGroup = null;
 
-    private transient boolean turnoutDrawUnselectedLeg = true;
-    private transient boolean autoAssignBlocks = false;
+    private  boolean turnoutDrawUnselectedLeg = true;
+    private  boolean autoAssignBlocks = false;
 
-    //Tools menu items
-    private final transient JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
-    private final transient JRadioButtonMenuItem zoom025Item = new JRadioButtonMenuItem("x 0.25");
-    private final transient JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
-    private final transient JRadioButtonMenuItem zoom075Item = new JRadioButtonMenuItem("x 0.75");
-    private final transient JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(Bundle.getMessage("NoZoom"));
-    private final transient JRadioButtonMenuItem zoom15Item = new JRadioButtonMenuItem("x 1.5");
-    private final transient JRadioButtonMenuItem zoom20Item = new JRadioButtonMenuItem("x 2.0");
-    private final transient JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
-    private final transient JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
-    private final transient JRadioButtonMenuItem zoom50Item = new JRadioButtonMenuItem("x 5.0");
-    private final transient JRadioButtonMenuItem zoom60Item = new JRadioButtonMenuItem("x 6.0");
-    private final transient JRadioButtonMenuItem zoom70Item = new JRadioButtonMenuItem("x 7.0");
-    private final transient JRadioButtonMenuItem zoom80Item = new JRadioButtonMenuItem("x 8.0");
+    // Tools menu items
+    private final  JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
+    private final  JRadioButtonMenuItem zoom025Item = new JRadioButtonMenuItem("x 0.25");
+    private final  JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
+    private final  JRadioButtonMenuItem zoom075Item = new JRadioButtonMenuItem("x 0.75");
+    private final  JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(Bundle.getMessage("NoZoom"));
+    private final  JRadioButtonMenuItem zoom15Item = new JRadioButtonMenuItem("x 1.5");
+    private final  JRadioButtonMenuItem zoom20Item = new JRadioButtonMenuItem("x 2.0");
+    private final  JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
+    private final  JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
+    private final  JRadioButtonMenuItem zoom50Item = new JRadioButtonMenuItem("x 5.0");
+    private final  JRadioButtonMenuItem zoom60Item = new JRadioButtonMenuItem("x 6.0");
+    private final  JRadioButtonMenuItem zoom70Item = new JRadioButtonMenuItem("x 7.0");
+    private final  JRadioButtonMenuItem zoom80Item = new JRadioButtonMenuItem("x 8.0");
 
-    private final transient JMenuItem undoTranslateSelectionMenuItem = new JMenuItem(Bundle.getMessage("UndoTranslateSelection"));
-    private final transient JMenuItem assignBlockToSelectionMenuItem = new JMenuItem(Bundle.getMessage("AssignBlockToSelectionTitle") + "...");
+    private final  JMenuItem undoTranslateSelectionMenuItem = new JMenuItem(Bundle.getMessage("UndoTranslateSelection"));
+    private final  JMenuItem assignBlockToSelectionMenuItem = new JMenuItem(Bundle.getMessage("AssignBlockToSelectionTitle") + "...");
 
-    //Selected point information
-    private final transient Point2D startDelta = new Point2D.Double(0.0, 0.0); //starting delta coordinates
-    protected transient Object selectedObject = null;       //selected object, null if nothing selected
-    protected transient Object prevSelectedObject = null;   //previous selected object, for undo
-    private transient HitPointType selectedHitPointType = HitPointType.NONE;         //hit point type within the selected object
+    // Selected point information
+    private final  Point2D startDelta = new Point2D.Double(0.0, 0.0); //starting delta coordinates
+    protected  Object selectedObject = null;       //selected object, null if nothing selected
+    protected  Object prevSelectedObject = null;   //previous selected object, for undo
+    private  HitPointType selectedHitPointType = HitPointType.NONE;         //hit point type within the selected object
 
-    protected transient LayoutTrack foundTrack = null;      //found object, null if nothing found
-    protected transient Point2D foundLocation = new Point2D.Double(0.0, 0.0); //location of found object
-    protected transient HitPointType foundHitPointType = HitPointType.NONE;          //connection type within the found object
-    ///private transient boolean foundNeedsConnect = false;    //true if found point needs a connection
+    protected  LayoutTrack foundTrack = null;      //found object, null if nothing found
+    protected  Point2D foundLocation = new Point2D.Double(0.0, 0.0); //location of found object
+    protected  HitPointType foundHitPointType = HitPointType.NONE;          //connection type within the found object
 
-    protected transient LayoutTrack beginTrack = null;      //begin track segment connection object, null if none
-    protected transient Point2D beginLocation = new Point2D.Double(0.0, 0.0); //location of begin object
-    protected transient HitPointType beginHitPointType = HitPointType.NONE; //connection type within begin connection object
+    protected  LayoutTrack beginTrack = null;      //begin track segment connection object, null if none
+    protected  Point2D beginLocation = new Point2D.Double(0.0, 0.0); //location of begin object
+    protected  HitPointType beginHitPointType = HitPointType.NONE; //connection type within begin connection object
 
-    protected transient Point2D currentLocation = new Point2D.Double(0.0, 0.0); //current location
+    protected  Point2D currentLocation = new Point2D.Double(0.0, 0.0); //current location
 
-    //Lists of items that describe the Layout, and allow it to be drawn
-    //Each of the items must be saved to disk over sessions
-    public transient List<AnalogClock2Display> clocks = new ArrayList<>();           //fast clocks
-    public transient List<LocoIcon> markerImage = new ArrayList<>();                 //marker images
-    public transient List<MultiSensorIcon> multiSensors = new ArrayList<>();         //multi-sensor images
-    public transient List<PositionableLabel> backgroundImage = new ArrayList<>();    //background images
-    public transient List<PositionableLabel> labelImage = new ArrayList<>();         //positionable label images
-    public transient List<SensorIcon> sensorImage = new ArrayList<>();               //sensor images
-    public transient List<SignalHeadIcon> signalHeadImage = new ArrayList<>();       //signal head images
+    // Lists of items that describe the Layout, and allow it to be drawn
+    // Each of the items must be saved to disk over sessions
+    private  List<AnalogClock2Display> clocks = new ArrayList<>();           //fast clocks
+    private  List<LocoIcon> markerImage = new ArrayList<>();                 //marker images
+    private  List<MultiSensorIcon> multiSensors = new ArrayList<>();         //multi-sensor images
+    private  List<PositionableLabel> backgroundImage = new ArrayList<>();    //background images
+    private  List<PositionableLabel> labelImage = new ArrayList<>();         //positionable label images
+    private  List<SensorIcon> sensorImage = new ArrayList<>();               //sensor images
+    private  List<SignalHeadIcon> signalHeadImage = new ArrayList<>();       //signal head images
 
-    private final transient List<LayoutTrack> layoutTrackList = new ArrayList<>();         // LayoutTrack list
+    private final  List<LayoutTrack> layoutTrackList = new ArrayList<>();         // LayoutTrack list
 
     // PositionableLabel's
-    public transient List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); //BlockContentsIcon Label List
-    public transient List<MemoryIcon> memoryLabelList = new ArrayList<>();               //Memory Label List
-    public transient List<SensorIcon> sensorList = new ArrayList<>();                    //Sensor Icons
-    public transient List<SignalHeadIcon> signalList = new ArrayList<>();                //Signal Head Icons
-    public transient List<SignalMastIcon> signalMastList = new ArrayList<>();            //Signal Mast Icons
+    private  List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); //BlockContentsIcon Label List
+    private  List<MemoryIcon> memoryLabelList = new ArrayList<>();               //Memory Label List
+    private  List<SensorIcon> sensorList = new ArrayList<>();                    //Sensor Icons
+    private  List<SignalHeadIcon> signalList = new ArrayList<>();                //Signal Head Icons
+    private  List<SignalMastIcon> signalMastList = new ArrayList<>();            //Signal Mast Icons
 
-    private final transient List<LayoutShape> layoutShapes = new ArrayList<>();               // LayoutShap list
+    @Nonnull
+    public List<SensorIcon> getSensorList() {
+        return sensorList;
+    }
+
+    @Nonnull
+    public List<BlockContentsIcon> getBlockContentsLabelList() {
+        return blockContentsLabelList;
+    }
+
+    @Nonnull
+    public List<MemoryIcon> getMemoryLabelList() {
+        return memoryLabelList;
+    }
+
+    @Nonnull
+    public List<SignalHeadIcon> getSignalList() {
+        return signalList;
+    }
+
+    @Nonnull
+    public List<SignalMastIcon> getSignalMastList() {
+        return signalMastList;
+    }
+
+    private final  List<LayoutShape> layoutShapes = new ArrayList<>();               // LayoutShap list
 
     // counts used to determine unique internal names
-    private transient int numAnchors = 0;
-    private transient int numEndBumpers = 0;
-    private transient int numEdgeConnectors = 0;
-    private transient int numTrackSegments = 0;
-    private transient int numLevelXings = 0;
-    private transient int numLayoutSlips = 0;
-    private transient int numLayoutTurnouts = 0;
-    private transient int numLayoutTurntables = 0;
-    private transient int numShapes = 0;
+    private  int numAnchors = 0;
+    private  int numEndBumpers = 0;
+    private  int numEdgeConnectors = 0;
+    private  int numTrackSegments = 0;
+    private  int numLevelXings = 0;
+    private  int numLayoutSlips = 0;
+    private  int numLayoutTurnouts = 0;
+    private  int numLayoutTurntables = 0;
+    private  int numShapes = 0;
 
-    public transient LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
+    protected  LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
 
     @Nonnull
     public LayoutEditorFindItems getFinder() {
@@ -238,65 +260,65 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     //persistent instance variables - saved to disk with Save Panel
-    private transient int upperLeftX = 0; // Note: These are _WINDOW_ upper left x & y
-    private transient int upperLeftY = 0; // (not panel)
+    private  int upperLeftX = 0; // Note: These are _WINDOW_ upper left x & y
+    private  int upperLeftY = 0; // (not panel)
 
-    private transient int windowWidth = 0;
-    private transient int windowHeight = 0;
+    private  int windowWidth = 0;
+    private  int windowHeight = 0;
 
-    protected transient int panelWidth = 0;
-    protected transient int panelHeight = 0;
+    protected  int panelWidth = 0;
+    protected  int panelHeight = 0;
 
-    protected transient float mainlineTrackWidth = 4.0F;
-    protected transient float sidelineTrackWidth = 2.0F;
+    protected  float mainlineTrackWidth = 4.0F;
+    protected  float sidelineTrackWidth = 2.0F;
 
-    protected transient Color mainlineTrackColor = Color.DARK_GRAY;
-    protected transient Color sidelineTrackColor = Color.DARK_GRAY;
-    protected transient Color defaultTrackColor = Color.DARK_GRAY;
-    protected transient Color defaultOccupiedTrackColor = Color.red;
-    protected transient Color defaultAlternativeTrackColor = Color.white;
-    private transient Color defaultTextColor = Color.black;
+    protected  Color mainlineTrackColor = Color.DARK_GRAY;
+    protected  Color sidelineTrackColor = Color.DARK_GRAY;
+    protected  Color defaultTrackColor = Color.DARK_GRAY;
+    protected  Color defaultOccupiedTrackColor = Color.red;
+    protected  Color defaultAlternativeTrackColor = Color.white;
+    private  Color defaultTextColor = Color.black;
 
-    private transient String layoutName = "";
-    private transient double xScale = 1.0;
-    private transient double yScale = 1.0;
-    private transient boolean animatingLayout = true;
-    private transient boolean showHelpBar = true;
-    private transient boolean drawGrid = true;
+    private  String layoutName = "";
+    private  double xScale = 1.0;
+    private  double yScale = 1.0;
+    private  boolean animatingLayout = true;
+    private  boolean showHelpBar = true;
+    private  boolean drawGrid = true;
 
-    private transient boolean snapToGridOnAdd = false;
-    private transient boolean snapToGridOnMove = false;
-    private transient boolean snapToGridInvert = false;
+    private  boolean snapToGridOnAdd = false;
+    private  boolean snapToGridOnMove = false;
+    private  boolean snapToGridInvert = false;
 
-    protected transient boolean antialiasingOn = false;
-    protected transient boolean highlightSelectedBlockFlag = false;
+    protected  boolean antialiasingOn = false;
+    protected  boolean highlightSelectedBlockFlag = false;
 
-    protected transient boolean turnoutCirclesWithoutEditMode = false;
-    private transient boolean tooltipsWithoutEditMode = false;
-    private transient boolean tooltipsInEditMode = true;
+    protected  boolean turnoutCirclesWithoutEditMode = false;
+    private  boolean tooltipsWithoutEditMode = false;
+    private  boolean tooltipsInEditMode = true;
 
     //turnout size parameters - saved with panel
-    private transient double turnoutBX = LayoutTurnout.turnoutBXDefault; //RH, LH, WYE
-    private transient double turnoutCX = LayoutTurnout.turnoutCXDefault;
-    private transient double turnoutWid = LayoutTurnout.turnoutWidDefault;
-    private transient double xOverLong = LayoutTurnout.xOverLongDefault; //DOUBLE_XOVER, RH_XOVER, LH_XOVER
-    private transient double xOverHWid = LayoutTurnout.xOverHWidDefault;
-    private transient double xOverShort = LayoutTurnout.xOverShortDefault;
-    private transient boolean useDirectTurnoutControl = false; //Uses Left click for closing points, Right click for throwing
+    private  double turnoutBX = LayoutTurnout.turnoutBXDefault; //RH, LH, WYE
+    private  double turnoutCX = LayoutTurnout.turnoutCXDefault;
+    private  double turnoutWid = LayoutTurnout.turnoutWidDefault;
+    private  double xOverLong = LayoutTurnout.xOverLongDefault; //DOUBLE_XOVER, RH_XOVER, LH_XOVER
+    private  double xOverHWid = LayoutTurnout.xOverHWidDefault;
+    private  double xOverShort = LayoutTurnout.xOverShortDefault;
+    private  boolean useDirectTurnoutControl = false; //Uses Left click for closing points, Right click for throwing.
 
     //saved state of options when panel was loaded or created
-    private transient boolean savedEditMode = true;
-    private transient boolean savedPositionable = true;
-    private transient boolean savedControlLayout = true;
-    private transient boolean savedAnimatingLayout = true;
-    private transient boolean savedShowHelpBar = true;
+    private  boolean savedEditMode = true;
+    private  boolean savedPositionable = true;
+    private  boolean savedControlLayout = true;
+    private  boolean savedAnimatingLayout = true;
+    private  boolean savedShowHelpBar = true;
 
     //zoom
-    private transient double minZoom = 0.25;
-    private final transient double maxZoom = 8.0;
+    private  double minZoom = 0.25;
+    private final  double maxZoom = 8.0;
 
     //A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
-    protected transient HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
+    protected  HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
 
     protected enum ToolBarSide {
         eTOP("top"),
@@ -305,8 +327,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         eRIGHT("right"),
         eFLOAT("float");
 
-        private final transient String name;
-        private transient static final Map<String, ToolBarSide> ENUM_MAP;
+        private final  String name;
+        private  static final Map<String, ToolBarSide> ENUM_MAP;
 
         ToolBarSide(String name) {
             this.name = name;
@@ -331,7 +353,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
-    private transient ToolBarSide toolBarSide = ToolBarSide.eTOP;
+    private  ToolBarSide toolBarSide = ToolBarSide.eTOP;
 
     public LayoutEditor() {
         this("My Layout");
@@ -342,7 +364,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         setSaveSize(true);
         layoutName = name;
 
-        editorUseOldLocSize = InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize();
+        editorUseOldLocSize = InstanceManager.getDefault(jmri.util.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize();
 
         //initialise keycode map
         initStringsToVTCodes();
@@ -454,9 +476,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     _targetPanel.remove(layoutEditorComponent);
                     _targetPanel.add(layoutEditorComponent, Integer.valueOf(3));
                     _targetPanel.moveToFront(layoutEditorComponent);
-                }
-                catch (Exception e) {
-                    log.warn("paintTargetPanelBefore: Exception {}", e);
+                } catch (Exception e) {
+                    log.warn("paintTargetPanelBefore: ", e);
                 }
             }
         });
@@ -1363,7 +1384,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /*============================================*\
     |* LayoutTrackDrawingOptions accessor methods *|
     \*============================================*/
-    private transient LayoutTrackDrawingOptions layoutTrackDrawingOptions = null;
+    private  LayoutTrackDrawingOptions layoutTrackDrawingOptions = null;
 
     /**
      *
@@ -1813,7 +1834,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
     }   // setupZoomMenu
 
-    private transient MouseWheelListener[] mouseWheelListeners;
+    private  MouseWheelListener[] mouseWheelListeners;
 
     // scroll bar listener to update x & y coordinates in toolbar on scroll
     public void scrollBarAdjusted(AdjustmentEvent event) {
@@ -2372,7 +2393,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return changed;
     }
 
-    private transient Rectangle2D undoRect;
+    private  Rectangle2D undoRect;
     private boolean canUndoMoveSelection = false;
     private Point2D undoDelta = MathUtil.zeroPoint2D;
 
@@ -3493,7 +3514,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             } else if (HitPointType.isTurnoutHitType(foundHitPointType)) {
                 // don't curently have edit popup for these
             } else {
-                log.warn("Unknown foundPointType:" + foundHitPointType);
+                log.warn("Unknown foundPointType:{}", foundHitPointType);
             }
         } else {
             do {
@@ -4064,9 +4085,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         be.setCoordsCenter(offset);
     }
 
-    protected transient List<Positionable> _positionableSelection = new ArrayList<>();
-    protected transient List<LayoutTrack> _layoutTrackSelection = new ArrayList<>();
-    protected transient List<LayoutShape> _layoutShapeSelection = new ArrayList<>();
+    protected  List<Positionable> _positionableSelection = new ArrayList<>();
+    protected  List<LayoutTrack> _layoutTrackSelection = new ArrayList<>();
+    protected  List<LayoutShape> _layoutShapeSelection = new ArrayList<>();
 
     protected void createSelectionGroups() {
         Rectangle2D selectionRect = getSelectionRect();
@@ -4855,7 +4876,19 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         String name = finder.uniqueName("SL", ++numLayoutSlips);
 
         //create object
-        LayoutSlip o = new LayoutSlip(name, currentPoint, rot, this, type);
+        LayoutSlip o; 
+        switch(type) {
+            case DOUBLE_SLIP :
+                o = new LayoutDoubleSlip(name, currentPoint, rot, this);
+                break;
+            case SINGLE_SLIP :
+                o = new LayoutSingleSlip(name, currentPoint, rot, this);
+                break;
+            default:
+                log.error("can't create slip {} with type {}", name, type);
+                return; // without creating
+        }
+
         layoutTrackList.add(o);
         unionToPanelBounds(o.getBounds());
         setDirty();
@@ -4948,8 +4981,43 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //get unique name
         String name = finder.uniqueName("TO", ++numLayoutTurnouts);
 
-        //create object
-        LayoutTurnout o = new LayoutTurnout(name, type, currentPoint, rot, xScale, yScale, this);
+        // create object - check all types, although not clear all actually reach here
+        LayoutTurnout o; 
+        switch(type) {
+
+            case RH_TURNOUT :
+                o = new LayoutRHTurnout(name, currentPoint, rot, xScale, yScale, this);
+                break;
+            case LH_TURNOUT :
+                o = new LayoutLHTurnout(name, currentPoint, rot, xScale, yScale, this);
+                break;
+            case WYE_TURNOUT :
+                o = new LayoutWye(name, currentPoint, rot, xScale, yScale, this);
+                break;
+            case DOUBLE_XOVER :
+                o = new LayoutDoubleXOver(name, currentPoint, rot, xScale, yScale, this);
+                break;
+            case RH_XOVER :
+                o = new LayoutRHXOver(name, currentPoint, rot, xScale, yScale, this);
+                break;
+            case LH_XOVER :
+                o = new LayoutLHXOver(name, currentPoint, rot, xScale, yScale, this);
+                break;
+
+            case DOUBLE_SLIP :
+                o = new LayoutDoubleSlip(name, currentPoint, rot, this);
+                log.error("Found SINGLE_SLIP in addLayoutTurnout for element {}", name);
+                break;
+            case SINGLE_SLIP :
+                o = new LayoutSingleSlip(name, currentPoint, rot, this);
+                log.error("Found SINGLE_SLIP in addLayoutTurnout for element {}", name);
+                break;
+
+            default:
+                log.error("can't create LayoutTrack {} with type {}", name, type);
+                return; // without creating
+        }
+        
         layoutTrackList.add(o);
         unionToPanelBounds(o.getBounds());
         setDirty();
@@ -5329,15 +5397,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     protected boolean remove(@Nonnull Object s) {
         boolean found = false;
 
-        if (sensorImage.contains(s) || sensorList.contains(s)) {
-            if (removeNxSensor((SensorIcon) s)) {
-                sensorImage.remove(s);
-                sensorList.remove(s);
-                found = true;
-            } else {
-                return false;
-            }
-        }
         if (backgroundImage.contains(s)) {
             backgroundImage.remove(s);
             found = true;
@@ -5350,10 +5409,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             blockContentsLabelList.remove(s);
             found = true;
         }
-        if (signalList.contains(s)) {
-            signalList.remove(s);
-            found = true;
-        }
         if (multiSensors.contains(s)) {
             multiSensors.remove(s);
             found = true;
@@ -5362,20 +5417,43 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             clocks.remove(s);
             found = true;
         }
-        if (signalHeadImage.contains(s)) {
-            signalHeadImage.remove(s);
-            found = true;
-        }
         if (labelImage.contains(s)) {
             labelImage.remove(s);
             found = true;
         }
-        for (int i = 0; i < signalMastList.size(); i++) {
-            if (s == signalMastList.get(i)) {
-                if (removeSignalMast((SignalMastIcon) s)) {
-                    signalMastList.remove(i);
+
+        if (sensorImage.contains(s) || sensorList.contains(s)) {
+            Sensor sensor = ((SensorIcon) s).getSensor();
+            if (sensor != null) {
+                if (removeAttachedBean((sensor))) {
+                    sensorImage.remove(s);
+                    sensorList.remove(s);
                     found = true;
-                    break;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        if (signalHeadImage.contains(s) || signalList.contains(s)) {
+            SignalHead head = ((SignalHeadIcon) s).getSignalHead();
+            if (head != null) {
+                if (removeAttachedBean((head))) {
+                    signalHeadImage.remove(s);
+                    signalList.remove(s);
+                    found = true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        if (signalMastList.contains(s)) {
+            SignalMast mast = ((SignalMastIcon) s).getSignalMast();
+            if (mast != null) {
+                if (removeAttachedBean((mast))) {
+                    signalMastList.remove(s);
+                    found = true;
                 } else {
                     return false;
                 }
@@ -5396,7 +5474,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return remove(l);
     }
 
-    private String findBeanUsage(@Nonnull NamedBean sm) {
+    private String findBeanUsage(@Nonnull NamedBean bean) {
         PositionablePoint pe;
         PositionablePoint pw;
         LayoutTurnout lt;
@@ -5406,31 +5484,28 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         StringBuilder sb = new StringBuilder();
         String msgKey = "DeleteReference";  // NOI18N
         String beanKey = "None";  // NOI18N
-        String beanValue = sm.getDisplayName();
+        String beanValue = bean.getDisplayName();
 
-        if (sm instanceof SignalMast) {
+        if (bean instanceof SignalMast) {
             beanKey = "BeanNameSignalMast";  // NOI18N
 
-            if (InstanceManager.getDefault(SignalMastLogicManager.class
-            )
-                    .isSignalMastUsed((SignalMast) sm)) {
+            if (InstanceManager.getDefault(SignalMastLogicManager.class).isSignalMastUsed((SignalMast) bean)) {
                 SignalMastLogic sml = InstanceManager.getDefault(
-                        SignalMastLogicManager.class).getSignalMastLogic((SignalMast) sm);
-                if ((sml
-                        != null) && sml.useLayoutEditor(sml.getDestinationList().get(0))) {
+                        SignalMastLogicManager.class).getSignalMastLogic((SignalMast) bean);
+                if ((sml != null) && sml.useLayoutEditor(sml.getDestinationList().get(0))) {
                     msgKey = "DeleteSmlReference";  // NOI18N
                 }
             }
-        } else if (sm instanceof Sensor) {
+        } else if (bean instanceof Sensor) {
             beanKey = "BeanNameSensor";  // NOI18N
-        } else if (sm instanceof SignalHead) {
+        } else if (bean instanceof SignalHead) {
             beanKey = "BeanNameSignalHead";  // NOI18N
         }
         if (!beanKey.equals("None")) {  // NOI18N
             sb.append(Bundle.getMessage(msgKey, Bundle.getMessage(beanKey), beanValue));
         }
 
-        if ((pw = finder.findPositionablePointByWestBoundBean(sm)) != null) {
+        if ((pw = finder.findPositionablePointByWestBoundBean(bean)) != null) {
             TrackSegment t1 = pw.getConnect1();
             TrackSegment t2 = pw.getConnect2();
             if (t1 != null) {
@@ -5444,7 +5519,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             found = true;
         }
 
-        if ((pe = finder.findPositionablePointByEastBoundBean(sm)) != null) {
+        if ((pe = finder.findPositionablePointByEastBoundBean(bean)) != null) {
             TrackSegment t1 = pe.getConnect1();
             TrackSegment t2 = pe.getConnect2();
 
@@ -5459,17 +5534,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             found = true;
         }
 
-        if ((lt = finder.findLayoutTurnoutByBean(sm)) != null) {
+        if ((lt = finder.findLayoutTurnoutByBean(bean)) != null) {
             sb.append(Bundle.getMessage("DeleteAtOther", Bundle.getMessage("BeanNameTurnout"), lt.getTurnoutName()));   // NOI18N
             found = true;
         }
 
-        if ((lx = finder.findLevelXingByBean(sm)) != null) {
+        if ((lx = finder.findLevelXingByBean(bean)) != null) {
             sb.append(Bundle.getMessage("DeleteAtOther", Bundle.getMessage("LevelCrossing"), lx.getId()));   // NOI18N
             found = true;
         }
 
-        if ((ls = finder.findLayoutSlipByBean(sm)) != null) {
+        if ((ls = finder.findLayoutSlipByBean(bean)) != null) {
             sb.append(Bundle.getMessage("DeleteAtOther", Bundle.getMessage("Slip"), ls.getTurnoutName()));   // NOI18N
             found = true;
         }
@@ -5480,9 +5555,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return sb.toString();
     }
 
-    private boolean removeSignalMast(@Nonnull SignalMastIcon si) {
-        SignalMast sm = si.getSignalMast();
-        String usage = findBeanUsage(sm);
+    /**
+     * NX Sensors, Signal Heads and Signal Masts can be attached to positional points,
+     * turnouts and level crossings.  If an attachment exists, present an option to cancel
+     * the remove action, remove the attachement or retain the attachment.
+     * @param bean The named bean to be removed.
+     * @return true if OK to remove the related icon.
+     */
+    private boolean removeAttachedBean(@Nonnull NamedBean bean) {
+        String usage = findBeanUsage(bean);
 
         if (usage != null) {
             usage = String.format("<html>%s</html>", usage);
@@ -5501,62 +5582,41 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             if (selectedValue == JOptionPane.CANCEL_OPTION) {
                 return false; //do not delete the item
             }
-            removeBeanRefs(sm);
+            if (bean instanceof Sensor) {
+                // Additional actions for NX sensor pairs
+                return getLETools().removeSensorAssignment((Sensor) bean);
+            } else {
+                removeBeanRefs(bean);
+            }
         }
         return true;
     }
 
-    private boolean removeNxSensor(@Nonnull SensorIcon si) {
-        Sensor sn = si.getSensor();
-        String usage = findBeanUsage(sn);
-
-        if (usage != null) {
-            usage = String.format("<html>%s</html>", usage);
-            int selectedValue = JOptionPane.showOptionDialog(this,
-                    usage, Bundle.getMessage("WarningTitle"),
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{Bundle.getMessage("ButtonYes"),
-                        Bundle.getMessage("ButtonNo"),
-                        Bundle.getMessage("ButtonCancel")},
-                    Bundle.getMessage("ButtonYes"));
-
-            if (selectedValue == JOptionPane.NO_OPTION) {
-                return true; //return leaving the references in place but allow the icon to be deleted
-            }
-
-            if (selectedValue == JOptionPane.CANCEL_OPTION) {
-                return false; //do not delete the item
-            }
-            return getLETools().removeSensorAssignment(sn);
-        }
-        return true;
-    }
-
-    private void removeBeanRefs(@Nonnull NamedBean sm) {
+    private void removeBeanRefs(@Nonnull NamedBean bean) {
         PositionablePoint pe;
         PositionablePoint pw;
         LayoutTurnout lt;
         LevelXing lx;
         LayoutSlip ls;
 
-        if ((pw = finder.findPositionablePointByWestBoundBean(sm)) != null) {
-            pw.removeBeanReference(sm);
+        if ((pw = finder.findPositionablePointByWestBoundBean(bean)) != null) {
+            pw.removeBeanReference(bean);
         }
 
-        if ((pe = finder.findPositionablePointByEastBoundBean(sm)) != null) {
-            pe.removeBeanReference(sm);
+        if ((pe = finder.findPositionablePointByEastBoundBean(bean)) != null) {
+            pe.removeBeanReference(bean);
         }
 
-        if ((lt = finder.findLayoutTurnoutByBean(sm)) != null) {
-            lt.removeBeanReference(sm);
+        if ((lt = finder.findLayoutTurnoutByBean(bean)) != null) {
+            lt.removeBeanReference(bean);
         }
 
-        if ((lx = finder.findLevelXingByBean(sm)) != null) {
-            lx.removeBeanReference(sm);
+        if ((lx = finder.findLevelXingByBean(bean)) != null) {
+            lx.removeBeanReference(bean);
         }
 
-        if ((ls = finder.findLayoutSlipByBean(sm)) != null) {
-            ls.removeBeanReference(sm);
+        if ((ls = finder.findLayoutSlipByBean(bean)) != null) {
+            ls.removeBeanReference(bean);
         }
     }
 
@@ -6621,7 +6681,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //
     // singleton (one per-LayoutEditor) accessors
     //
-    private transient ConnectivityUtil conTools = null;
+    private  ConnectivityUtil conTools = null;
 
     @Nonnull
     public ConnectivityUtil getConnectivityUtil() {
@@ -6631,7 +6691,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return conTools;
     }
 
-    private transient LayoutEditorTools tools = null;
+    private  LayoutEditorTools tools = null;
 
     @Nonnull
     public LayoutEditorTools getLETools() {
@@ -6641,7 +6701,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return tools;
     }
 
-    private transient LayoutEditorAuxTools auxTools = null;
+    private  LayoutEditorAuxTools auxTools = null;
 
     @Nonnull
     public LayoutEditorAuxTools getLEAuxTools() {
@@ -6651,7 +6711,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return auxTools;
     }
 
-    private transient LayoutTrackEditors layoutTrackEditors = null;
+    private  LayoutTrackEditors layoutTrackEditors = null;
 
     @Nonnull
     public LayoutTrackEditors getLayoutTrackEditors() {
@@ -6661,7 +6721,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return layoutTrackEditors;
     }
 
-    private transient LayoutEditorChecks layoutEditorChecks = null;
+    private  LayoutEditorChecks layoutEditorChecks = null;
 
     @Nonnull
     public LayoutEditorChecks getLEChecks() {
@@ -6973,6 +7033,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     public void setLayoutDimensions(int windowWidth, int windowHeight, int windowX, int windowY, int panelWidth, int panelHeight, boolean merge) {
+
         upperLeftX = windowX;
         upperLeftY = windowY;
         setLocation(upperLeftX, upperLeftY);
@@ -7543,6 +7604,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     public @Nonnull
+    List<PositionablePointView> getPositionablePointViews() {
+        List<PositionablePointView> list = new ArrayList<>();
+        for (PositionablePoint p : getPositionablePoints()) {
+            list.add(new PositionablePointView(p));
+        }
+        return list;
+    }
+
+    public @Nonnull
     List<PositionablePoint> getPositionablePoints() {
         return getLayoutTracksOfClass(PositionablePoint.class
         )
@@ -7556,6 +7626,23 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         )
                 .map(LayoutSlip.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    // temporarily\y creates list on the fly
+    // instead of keeping one
+    public @Nonnull
+    List<LayoutTrackView> getLayoutTrackViews() {
+        List<LayoutTrackView> list = new ArrayList<>() ;
+        for (LayoutTrack t : getLayoutTracks()) {
+            if (t instanceof PositionablePoint) {
+                list.add(new PositionablePointView((PositionablePoint)t));
+            } else if (t instanceof TrackSegment) {
+                list.add(new TrackSegmentView((TrackSegment)t));
+            } else {
+                list.add(new LayoutTrackView(t));
+            }
+        }
+        return list;
     }
 
     public @Nonnull
@@ -8224,6 +8311,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     //initialize logging
-    private transient final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditor.class
+    private  final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditor.class
     );
 }

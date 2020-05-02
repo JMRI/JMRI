@@ -56,7 +56,7 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
             // first look for the double case, which we can't handle
             if ((s & Light.OFF) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both ON and OFF " + s);
+                log.error("Cannot command both ON and OFF {}", s);
                 return;
             } else {
                 // send a ON command

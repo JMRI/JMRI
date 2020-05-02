@@ -2,10 +2,9 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import jmri.BlockManager;
+
 import jmri.InstanceManager;
 import jmri.Logix;
-import jmri.ShutDownManager;
 
 import jmri.util.*;
 import jmri.util.junit.rules.*;

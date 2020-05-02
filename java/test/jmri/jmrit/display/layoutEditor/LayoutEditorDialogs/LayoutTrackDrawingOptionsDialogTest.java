@@ -1,9 +1,7 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.util.JUnitUtil;
 
 import jmri.jmrit.display.EditorFrameOperator;

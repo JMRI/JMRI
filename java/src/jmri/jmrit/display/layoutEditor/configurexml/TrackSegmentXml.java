@@ -334,7 +334,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                                 l.setBezierControlPoint(new Point2D.Double(x, y), index);
                             }
                         } else {
-                            log.error("Track segment Bezier two controlpoint elements not found. (found " + elementList.size() + ")");
+                            log.error("Track segment Bezier two controlpoint elements not found. (found {})", elementList.size());
                         }
                     } else {
                         log.error("Track segment Bezier controlpoint elements not found.");
@@ -623,5 +623,5 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
 
     static final EnumIO<HitPointType> htpMap = new EnumIoNamesNumbers<>(HitPointType.class);
     
-    private final static Logger log = LoggerFactory.getLogger(TrackSegmentXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegmentXml.class);
 }

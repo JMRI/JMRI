@@ -615,7 +615,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     private void reportTrainExists(String s) {
-        log.info("Can not " + s + ", train already exists");
+        log.info("Can not {}, train already exists", s);
         JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameExists"), MessageFormat.format(Bundle
                 .getMessage("CanNot"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
     }
@@ -708,7 +708,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
     public void locationCheckBoxActionPerformed(java.awt.event.ActionEvent ae) {
         JCheckBox b = (JCheckBox) ae.getSource();
-        log.debug("checkbox change " + b.getText());
+        log.debug("checkbox change {}", b.getText());
         if (_train == null) {
             return;
         }
@@ -861,7 +861,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
     public void typeCheckBoxActionPerformed(java.awt.event.ActionEvent ae) {
         JCheckBox b = (JCheckBox) ae.getSource();
-        log.debug("checkbox change " + b.getText());
+        log.debug("checkbox change {}", b.getText());
         if (_train == null) {
             return;
         }

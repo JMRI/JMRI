@@ -529,7 +529,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             }
             if (s == null) {
                 // serious trouble, log error and ignore
-                log.error("Cannot find Node " + nodeID + " in list of configured Nodes.");
+                log.error("Cannot find Node {} in list of configured Nodes.", nodeID);
                 return;
             }
             // have node, initialize for new node

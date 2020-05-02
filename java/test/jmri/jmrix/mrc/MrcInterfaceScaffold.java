@@ -32,7 +32,7 @@ public class MrcInterfaceScaffold extends MrcTrafficController {
     @Override
     public void sendMrcMessage(MrcMessage m) {
         if (log.isDebugEnabled()) {
-            log.debug("sendMrcMessage [" + m + "]");
+            log.debug("sendMrcMessage [{}]", m);
         }
         // save a copy
         outbound.addElement(m);

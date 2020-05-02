@@ -27,7 +27,7 @@ public class SprogMonAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("SprogMonAction starting SprogMonFrame: Exception: " + ex.toString());
+            log.warn("SprogMonAction starting SprogMonFrame: Exception: {}", ex.toString());
         }
         f.setVisible(true);
     }

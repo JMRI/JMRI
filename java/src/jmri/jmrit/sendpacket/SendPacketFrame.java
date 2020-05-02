@@ -214,7 +214,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
             if (m != null) {
                 cs.sendPacket(m, 1);
             } else {
-                log.warn("Message invalid: " + mPacketField[mNextSequenceElement].getText());
+                log.warn("Message invalid: {}", mPacketField[mNextSequenceElement].getText());
             }
             // and queue the rest of the sequence if we're continuing
             if (mRunButton.isSelected()) {

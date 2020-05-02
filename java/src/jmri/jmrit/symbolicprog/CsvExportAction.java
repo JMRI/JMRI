@@ -47,7 +47,7 @@ public class CsvExportAction extends AbstractAction {
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             if (log.isDebugEnabled()) {
-                log.debug("start to export to CSV file " + file);
+                log.debug("start to export to CSV file {}", file);
             }
 
             try (CSVPrinter str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
@@ -60,7 +60,7 @@ public class CsvExportAction extends AbstractAction {
                 }
                 str.flush();
             } catch (IOException ex) {
-                log.error("Error writing file: " + ex);
+                log.error("Error writing file: {}", ex);
             }
         }
     }

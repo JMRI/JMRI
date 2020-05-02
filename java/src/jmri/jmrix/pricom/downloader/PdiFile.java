@@ -67,7 +67,7 @@ public class PdiFile {
         low = (buffIn.read() & 0xFF);
         address = high * 256 + low;
         if (log.isDebugEnabled()) {
-            log.debug("address " + high + " " + low);
+            log.debug("address {} {}", high, low);
         }
 
         // get last address to write
@@ -75,15 +75,13 @@ public class PdiFile {
         low = (buffIn.read() & 0xFF);
         lastAddress = high * 256 + low;
         if (log.isDebugEnabled()) {
-            log.debug("length " + high + " " + low);
+            log.debug("length {} {}", high, low);
         }
 
         fileLength = (int) file.length() - 6 - commentLength;
 
         if (log.isDebugEnabled()) {
-            log.debug("lengths: file " + (int) file.length()
-                    + ", comment " + commentLength
-                    + ", data " + lastAddress);
+            log.debug("lengths: file {}, comment {}, data {}", (int) file.length(), commentLength, lastAddress);
         }
     }
 
@@ -135,7 +133,7 @@ public class PdiFile {
                 buffer[3 + i] = (byte) (rd & 0xFF);             // tuck the byte
             }
         } catch (IOException e) {
-            log.error("IO exception reading file: " + e);
+            log.error("IO exception reading file: {}", e);
         }
         return buffer;
     }

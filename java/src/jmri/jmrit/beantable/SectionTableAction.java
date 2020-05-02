@@ -1164,7 +1164,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() -1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
         int offset = 1;
-        log.debug("setMenuBar number of menu items = " + pos);
+        log.debug("setMenuBar number of menu items = {}", pos);
         for (int i = 0; i <= pos; i++) {
             if (menuBar.getComponent(i) instanceof JMenu) {
                 if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {

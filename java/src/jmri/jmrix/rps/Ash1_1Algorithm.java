@@ -149,7 +149,7 @@ public class Ash1_1Algorithm implements Calculator {
 
         int nr = r.getNValues();
         if (nr != sensors.length) {
-            log.error("Mismatch: " + nr + " readings, " + sensors.length + " receivers");
+            log.error("Mismatch: {} readings, {} receivers", nr, sensors.length);
         }
         nr = Math.min(nr, sensors.length); // accept the shortest
 
@@ -170,7 +170,7 @@ public class Ash1_1Algorithm implements Calculator {
         Zt = result.z;
         Vs = result.vs;
 
-        log.debug("x = " + Xt + " y = " + Yt + " z0 = " + Zt + " code = " + result.code);
+        log.debug("x = {} y = {} z0 = {} code = {}", Xt, Yt, Zt, result.code);
         return new Measurement(r, Xt, Yt, Zt, Vs, result.code, "Ash1_1Algorithm");
     }
 

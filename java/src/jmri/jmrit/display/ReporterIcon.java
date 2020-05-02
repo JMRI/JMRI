@@ -68,7 +68,7 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
                     provideReporter(pName);
                 setReporter(reporter);
             } catch (IllegalArgumentException e) {
-                log.error("Reporter '" + pName + "' not available, icon won't see changes");
+                log.error("Reporter '{}' not available, icon won't see changes", pName);
             }
         } else {
             log.error("No ReporterManager for this protocol, icon won't see changes");
@@ -94,9 +94,7 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("property change: "
-                    + e.getPropertyName()
-                    + " is now " + e.getNewValue());
+            log.debug("property change: {} is now {}", e.getPropertyName(), e.getNewValue());
         }
         displayState();
     }

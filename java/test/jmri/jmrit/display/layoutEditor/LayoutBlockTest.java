@@ -1,10 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
 import jmri.Block;
-import jmri.BlockManager;
-import jmri.InstanceManager;
 import jmri.Memory;
-import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -131,5 +128,5 @@ public class LayoutBlockTest {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    // private final static Logger log = LoggerFactory.getLogger(LayoutBlockTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlockTest.class);
 }

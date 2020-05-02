@@ -198,7 +198,11 @@
                                         <sourceDirectory>${basedir}</sourceDirectory>
                                     </sourceDirectories>
                                     <includes>**/*</includes>
-                                    <excludes>**/*.jpg,**/*.jar,web/app/node_modules/**,.git/**,target/**</excludes>
+                                    <excludes>**/*.jpg,**/*.PNG,**/*.jar,**/*.dll,**/*.dylib,**/*.so,**/*.exe,
+                                        **/*.zip,**/*.icns,**/*.bat,**/*.ttf,**/*.vsd,**/*.wav,**/*.spj,
+                                        **/*.pdf,.metadata/.plugins/org.eclipse.core.resources/**,
+                                        help/en/JavaHelpSearch/**,help/fr/JavaHelpSearch/**,
+                                        web/app/node_modules/**,.git/**,target/**</excludes>
                                     <!-- only show errors, not warnings or infos -->
                                     <violationSeverity>error</violationSeverity>
                                 </configuration>
@@ -702,6 +706,22 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>default-cli</id>
+                        <goals>
+                            <goal>merge</goal>
+                        </goals>
+                        <configuration>
+                            <fileSets>
+                                <fileSet>
+                                    <directory>${jacoco.reportDir}</directory>
+                                    <includes>
+                                        <File>**/*.exec</File>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>report</id>
                         <goals>
                             <goal>report</goal>
@@ -834,7 +854,11 @@
                         <sourceDirectory>${basedir}</sourceDirectory>
                     </sourceDirectories>
                     <includes>**/*</includes>
-                    <excludes>**/*.jpg,**/*.jar,web/app/node_modules/**,.git/**,target/**</excludes>
+                    <excludes>**/*.jpg,**/*.PNG,**/*.jar,**/*.dll,**/*.dylib,**/*.so,**/*.exe,
+                        **/*.zip,**/*.icns,**/*.bat,**/*.ttf,**/*.vsd,**/*.wav,**/*.spj,
+                        **/*.pdf,.metadata/.plugins/org.eclipse.core.resources/**,
+                        help/en/JavaHelpSearch/**,help/fr/JavaHelpSearch/**,
+                        web/app/node_modules/**,.git/**,target/**</excludes>
                     <!-- show errors, warnings, and infos -->
                     <violationSeverity>info</violationSeverity>
                 </configuration>

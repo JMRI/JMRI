@@ -143,8 +143,7 @@ public class QsiTrafficControllerTest {
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i
-                    + " reply=" + rcvdReply);
+            log.debug("past loop, i={} reply={}", i, rcvdReply);
         }
         return i < 100;
     }

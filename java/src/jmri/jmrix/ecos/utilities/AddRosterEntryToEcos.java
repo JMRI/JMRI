@@ -47,15 +47,14 @@ public class AddRosterEntryToEcos extends AbstractAction {
                 Bundle.getMessage("AddToEcosTitle"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), rosterEntry}, null);
-        log.debug("Dialog value " + retval + " selected, "
-                + rosterEntry.getSelectedIndex() + ":" + rosterEntry.getSelectedItem());
+        log.debug("Dialog value {} selected, {}:{}", retval, rosterEntry.getSelectedIndex(), rosterEntry.getSelectedItem());
         if (retval != 1 || rosterEntry.getItemCount() == 0) {
             return;
         }
 
         String selEntry = (String) rosterEntry.getSelectedItem();
         RosterEntry re = roster.entryFromTitle(selEntry);
-        log.debug("Add " + re.getId() + " to ECoS");
+        log.debug("Add {} to ECoS", re.getId());
         RosterToEcos rosterToEcos = new RosterToEcos(adaptermemo);
         rosterToEcos.createEcosLoco(re);
     }
@@ -69,7 +68,7 @@ public class AddRosterEntryToEcos extends AbstractAction {
             String DccAddress = r.getDccAddress();
             EcosLocoAddress EcosAddress = null;
             if (DccAddress != null) {
-                log.debug("DccAddress=" + DccAddress);
+                log.debug("DccAddress={}", DccAddress);
                 try {
                     EcosAddress = objEcosLocoManager.getByDccAddress(Integer.parseInt(DccAddress));
                 } catch (NullPointerException npe) {

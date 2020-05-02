@@ -37,18 +37,18 @@ public class UsbLightManagerTest extends AbstractLightMgrTestBase {
         Light tl = l.newLight(systemName, userName);
 
         if (log.isDebugEnabled()) {
-            log.debug("new light value: " + tl);
+            log.debug("new light value: {}", tl);
         }
         Assert.assertNotNull(tl);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName(systemName));
+            log.debug("by system name: {}", l.getBySystemName(systemName));
         }
         Assert.assertNotNull(l.getBySystemName(systemName));
 
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName(userName));
+            log.debug("by user name:   {}", l.getByUserName(userName));
         }
         Assert.assertNotNull(l.getByUserName(userName));
     }

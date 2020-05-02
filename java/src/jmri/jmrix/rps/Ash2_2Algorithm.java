@@ -200,7 +200,7 @@ public class Ash2_2Algorithm extends AbstractCalculator {
         Zt = result.z;
         Vs = result.vs;
 
-        log.debug("x = " + Xt + " y = " + Yt + " z0 = " + Zt + " code = " + result.code);
+        log.debug("x = {} y = {} z0 = {} code = {}", Xt, Yt, Zt, result.code);
         return new Measurement(r, Xt, Yt, Zt, Vs, result.code, "Ash2_2Algorithm");
     }
 

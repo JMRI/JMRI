@@ -200,7 +200,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
                 initReply(value, retcode);
                 break;
             default:
-                log.warn("unexpected mode: " + mode);
+                log.warn("unexpected mode: {}", mode);
                 break;
         }
     }
@@ -210,7 +210,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
             case IDLE:
             default:
                 // shouldn't happen, reset and ignore
-                log.warn("Unexpected search programming reply: " + value + " " + retcode);
+                log.warn("Unexpected search programming reply: {} {}", value, retcode);
                 state = IDLE;
                 break;
             case WROTECV15:
@@ -221,12 +221,12 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
                 // was it OK?
                 String result = Bundle.getMessage("ButtonOK");
                 if (retcode != ProgListener.OK) {
-                    log.debug("Readback error: " + retcode + " " + value);
+                    log.debug("Readback error: {} {}", retcode, value);
                     labels[next].setEnabled(false);
                     buttons[next].setEnabled(false);
                     result = "Could not confirm: " + modePane.getProgrammer().decodeErrorCode(retcode);
                 } else if (value != next) {
-                    log.debug("Readback error: " + retcode + " " + value);
+                    log.debug("Readback error: {} {}", retcode, value);
                     if (scanning) {
                         labels[next].setEnabled(false);
                         buttons[next].setEnabled(false);

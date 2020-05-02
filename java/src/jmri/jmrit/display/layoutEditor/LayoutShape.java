@@ -11,7 +11,6 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.*;
 import javax.swing.*;
 import jmri.util.*;
@@ -131,7 +130,7 @@ public class LayoutShape {
                     layoutShapeType = t;
                     break;
                 default:    // You shouldn't ever have any invalid LayoutShapeTypes
-                    log.error("Invalid Shape Type " + t); //I18IN
+                    log.error("Invalid Shape Type {}", t); //I18IN
             }
         }
     }
@@ -767,8 +766,8 @@ public class LayoutShape {
      */
     public static class LayoutShapePoint {
 
-        private transient LayoutShapePointType type;
-        private transient Point2D point;
+        private LayoutShapePointType type;
+        private Point2D point;
 
         /**
          * constructor method

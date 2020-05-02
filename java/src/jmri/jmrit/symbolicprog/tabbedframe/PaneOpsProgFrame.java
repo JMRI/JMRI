@@ -47,8 +47,7 @@ public class PaneOpsProgFrame extends PaneProgFrame {
         super(decoderFile, r, name, file, p, true);
 
         if (log.isDebugEnabled()) {
-            log.debug("PaneOpsProgFrame \"" + name
-                    + "\" constructed");
+            log.debug("PaneOpsProgFrame \"{}\" constructed", name);
         }
     }
 

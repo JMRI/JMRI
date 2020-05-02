@@ -1275,7 +1275,7 @@ public class LayoutEditorTools {
      * Returns true if an icon for the specified SignalHead is on the panel
      */
     public boolean isHeadOnPanel(@Nonnull SignalHead head) {
-        for (SignalHeadIcon h : layoutEditor.signalList) {
+        for (SignalHeadIcon h : layoutEditor.getSignalList()) {
             if (h.getSignalHead() == head) {
                 return true;
             }
@@ -1803,7 +1803,7 @@ public class LayoutEditorTools {
                 return (TrackSegment) to.getConnectC();
             }
         }
-        log.error("Bad connection type around turnout " + to.getTurnoutName());
+        log.error("Bad connection type around turnout {}", to.getTurnoutName());
         return null;
     }
 
@@ -5905,7 +5905,7 @@ public class LayoutEditorTools {
         try {
             InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         } catch (IllegalArgumentException ex) {
-            log.error("Trouble creating sensor " + sensorName + " while setting up Logix.");
+            log.error("Trouble creating sensor {} while setting up Logix.", sensorName);
             return "";
 
         }
@@ -5915,7 +5915,7 @@ public class LayoutEditorTools {
             Logix x = InstanceManager.getDefault(LogixManager.class
             ).createNewLogix(logixName, "");
             if (x == null) {
-                log.error("Trouble creating logix " + logixName + " while setting up signal logic.");
+                log.error("Trouble creating logix {} while setting up signal logic.", logixName);
                 return "";
             }
             String cName = x.getSystemName() + "C1";
@@ -5923,7 +5923,7 @@ public class LayoutEditorTools {
             ).
                     createNewConditional(cName, "");
             if (c == null) {
-                log.error("Trouble creating conditional " + cName + " while setting up Logix.");
+                log.error("Trouble creating conditional {} while setting up Logix.", cName);
                 return "";
             }
             Conditional.Type type = Conditional.Type.TURNOUT_THROWN;
@@ -5982,7 +5982,7 @@ public class LayoutEditorTools {
             } else if (logic.getSensor5() == null) {
                 logic.setSensor5(name);
             } else {
-                log.error("Error - could not add sensor to SSL for signal head " + logic.getDrivenSignal());
+                log.error("Error - could not add sensor to SSL for signal head {}", logic.getDrivenSignal());
             }
         }
     }
@@ -7785,14 +7785,14 @@ public class LayoutEditorTools {
 
         SensorIcon h = null;
         int index = -1;
-        for (int i = 0; (i < layoutEditor.sensorList.size()) && (index == -1); i++) {
-            h = layoutEditor.sensorList.get(i);
+        for (int i = 0; (i < layoutEditor.getSensorList().size()) && (index == -1); i++) {
+            h = layoutEditor.getSensorList().get(i);
             if (h.getSensor() == sensor) {
                 index = i;
             }
         }
         if ((h != null) && (index != -1)) {
-            layoutEditor.sensorList.remove(index);
+            layoutEditor.getSensorList().remove(index);
             h.remove();
             h.dispose();
             needRedraw = true;
@@ -7958,7 +7958,7 @@ public class LayoutEditorTools {
     }
 
     public boolean isSensorOnPanel(@Nonnull Sensor sensor) {
-        for (SensorIcon s : layoutEditor.sensorList) {
+        for (SensorIcon s : layoutEditor.getSensorList()) {
             if (s.getSensor() == sensor) {
                 return true;
             }
@@ -8307,14 +8307,14 @@ public class LayoutEditorTools {
         removeSignalMastAssignment(signalMast);
         SignalMastIcon h = null;
         int index = -1;
-        for (int i = 0; (i < layoutEditor.signalMastList.size()) && (index == -1); i++) {
-            h = layoutEditor.signalMastList.get(i);
+        for (int i = 0; (i < layoutEditor.getSignalMastList().size()) && (index == -1); i++) {
+            h = layoutEditor.getSignalMastList().get(i);
             if ((h != null) && (h.getSignalMast() == signalMast)) {
                 index = i;
             }
         }
         if ((h != null) && (index != -1)) {
-            layoutEditor.signalMastList.remove(index);
+            layoutEditor.getSignalMastList().remove(index);
             h.remove();
             h.dispose();
             needRedraw = true;
@@ -8654,7 +8654,7 @@ public class LayoutEditorTools {
         int triY = (int) Math.round(pt2y - pt1y);
 
         if (log.isDebugEnabled()) {
-            log.debug("X " + triX + " Y " + triY);
+            log.debug("X {} Y {}", triX, triY);
         }
         Point loc;
         if (triX == 0 || triX == 360) {
@@ -8689,15 +8689,15 @@ public class LayoutEditorTools {
 
             double radAngleFromDatum = Math.acos((rsq + rsq - Math.pow(chord, 2)) / (2 * rsq));
             if (log.isDebugEnabled()) {
-                log.debug("radius " + radius + " Chord " + chord);
-                log.debug("Angle from datum line " + Math.toDegrees(radAngleFromDatum));
+                log.debug("radius {} Chord {}", radius, chord);
+                log.debug("Angle from datum line {}", Math.toDegrees(radAngleFromDatum));
             }
 
             int rotateDEG = ((int) Math.toDegrees(radAngleFromDatum));
             if (log.isDebugEnabled()) {
                 double tanx = o / a;
                 double angletanRAD = Math.atan2(o, a);
-                log.debug(Math.toDegrees(angletanRAD) + " = atan2(" + o + ", " + a + ") (" + tanx + ")");
+                log.debug("{} = atan2({}, {}) ({})", Math.toDegrees(angletanRAD), o, a, tanx);
             }
 
             int oldHeight = l.maxHeight();
@@ -8808,14 +8808,14 @@ public class LayoutEditorTools {
         double to = Math.sin(oppAngRAD) * offSetFromPoint;
 
         if (log.isDebugEnabled()) {
-            log.debug("north east to south west " + angleDEG);
-            log.debug("oldWidth " + oldWidth + " oldHeight " + oldHeight);
-            log.debug("newWidth " + l.maxWidth() + " newHeight " + l.maxHeight());
-            log.debug("Icon adj: " + iconAdj + " opp adj: " + iconAdjOpp);
-            log.debug("boundary point opp " + bpo);
-            log.debug("boundary point adj " + bpa);
-            log.debug("track opp " + to);
-            log.debug("track adj " + ta);
+            log.debug("north east to south west {}", angleDEG);
+            log.debug("oldWidth {} oldHeight {}", oldWidth, oldHeight);
+            log.debug("newWidth {} newHeight {}", l.maxWidth(), l.maxHeight());
+            log.debug("Icon adj: {} opp adj: {}", iconAdj, iconAdjOpp);
+            log.debug("boundary point opp {}", bpo);
+            log.debug("boundary point adj {}", bpa);
+            log.debug("track opp {}", to);
+            log.debug("track adj {}", ta);
         }
         int xpos = 0;
         int ypos = 0;
@@ -8826,7 +8826,7 @@ public class LayoutEditorTools {
             double x_dist_to_Icon = (iconAdjOpp) - (bpa - to);
             double y_dist_to_Icon = ta + bpo + l.maxHeight();
 
-            log.debug("x dist " + x_dist_to_Icon + ", y dist " + y_dist_to_Icon);
+            log.debug("x dist {}, y dist {}", x_dist_to_Icon, y_dist_to_Icon);
 
             xpos = (int) (p.getX() - x_dist_to_Icon);
             ypos = (int) (p.getY() - y_dist_to_Icon);
@@ -8836,15 +8836,15 @@ public class LayoutEditorTools {
             double x_dist_to_Icon = to + bpa;
             //double y_dist_to_Icon = (l.maxHeight()-iconAdj)-(ta-bpo);
             //double x_dist_to_Icon = bpa+to;
-            log.debug("x dist " + x_dist_to_Icon + ", y dist " + y_dist_to_Icon);
+            log.debug("x dist {}, y dist {}", x_dist_to_Icon, y_dist_to_Icon);
 
             xpos = (int) (p.getX() + x_dist_to_Icon);
             ypos = (int) (p.getY() - y_dist_to_Icon);
 
         }
         if (log.isDebugEnabled()) {
-            log.debug("xpos " + xpos);
-            log.debug("yPos " + ypos);
+            log.debug("xpos {}", xpos);
+            log.debug("yPos {}", ypos);
         }
         return new Point(xpos, ypos);
 
@@ -8873,14 +8873,14 @@ public class LayoutEditorTools {
         double to = Math.sin(oppAngRAD) * offSetFromPoint;
 
         if (log.isDebugEnabled()) {
-            log.debug("south west to north east " + angleDEG);
-            log.debug("oldWidth " + oldWidth + " oldHeight " + oldHeight);
-            log.debug("newWidth " + l.maxWidth() + " newHeight " + l.maxHeight());
-            log.debug("Icon adj: " + iconAdj + " opp adj: " + iconAdjOpp);
-            log.debug("boundary point opp " + bpo);
-            log.debug("boundary point adj " + bpa);
-            log.debug("track opp " + to);
-            log.debug("track adj " + ta);
+            log.debug("south west to north east {}", angleDEG);
+            log.debug("oldWidth {} oldHeight {}", oldWidth, oldHeight);
+            log.debug("newWidth {} newHeight {}", l.maxWidth(), l.maxHeight());
+            log.debug("Icon adj: {} opp adj: {}", iconAdj, iconAdjOpp);
+            log.debug("boundary point opp {}", bpo);
+            log.debug("boundary point adj {}", bpa);
+            log.debug("track opp {}", to);
+            log.debug("track adj {}", ta);
         }
 
         int xpos;
@@ -8889,24 +8889,24 @@ public class LayoutEditorTools {
         if (right) {
             double x_dist_to_Icon = iconAdj + (bpa - to);
             double y_dist_to_Icon = ta + bpo;
-            log.debug("x dist " + x_dist_to_Icon + ", y dist " + y_dist_to_Icon);
+            log.debug("x dist {}, y dist {}", x_dist_to_Icon, y_dist_to_Icon);
 
             xpos = (int) (p.getX() - x_dist_to_Icon);
-            log.debug("xpos " + xpos);
+            log.debug("xpos {}", xpos);
             ypos = (int) (p.getY() + y_dist_to_Icon);
-            log.debug("yPos " + ypos);
+            log.debug("yPos {}", ypos);
         } else {
             double x_dist_to_Icon = (bpa + to) + l.maxWidth();
             //double y_dist_to_Icon = (iconAdj+(ta-bpo));
             double y_dist_to_Icon = (bpo - ta) - (l.maxHeight() - iconAdjOpp);
             //double y_dist_to_Icon = (iconAdj+(ta-bpo));
-            log.debug("x dist " + x_dist_to_Icon + ", y dist " + y_dist_to_Icon);
+            log.debug("x dist {}, y dist {}", x_dist_to_Icon, y_dist_to_Icon);
             xpos = (int) (p.getX() - x_dist_to_Icon);
             ypos = (int) (p.getY() + y_dist_to_Icon);
         }
         if (log.isDebugEnabled()) {
-            log.debug("xpos " + xpos);
-            log.debug("yPos " + ypos);
+            log.debug("xpos {}", xpos);
+            log.debug("yPos {}", ypos);
         }
         return new Point(xpos, ypos);
 
@@ -8914,18 +8914,18 @@ public class LayoutEditorTools {
 
     //Working FOR SM140, SM81, sm120
     Point northWestToSouthEast(Point2D p, PositionableIcon l, int oldWidth, int oldHeight, double angleDEG, boolean right, double fromPoint) {
-        log.debug("angle before " + angleDEG);
+        log.debug("angle before {}", angleDEG);
         angleDEG = 180 - angleDEG;
         angleDEG = 90 - angleDEG;
-        log.debug("north west to south east " + angleDEG);
+        log.debug("north west to south east {}", angleDEG);
         if (angleDEG < 45) {
             //Because of the angle things get shifted about.
             int tmpWidth = oldWidth;
             oldWidth = oldHeight;
             oldHeight = tmpWidth;
         }
-        log.debug("oldWidth " + oldWidth + " oldHeight " + oldHeight);
-        log.debug("newWidth " + l.maxWidth() + " newHeight " + l.maxHeight());
+        log.debug("oldWidth {} oldHeight {}", oldWidth, oldHeight);
+        log.debug("newWidth {} newHeight {}", l.maxWidth(), l.maxHeight());
         //double ang = angle;
         double oppAng = 90 - angleDEG;
         double angleRAD = Math.toRadians(angleDEG);
@@ -8939,14 +8939,14 @@ public class LayoutEditorTools {
         double to = Math.sin(oppAngRAD) * offSetFromPoint;
 
         if (log.isDebugEnabled()) {
-            log.debug("north west to south east " + angleDEG);
-            log.debug("oldWidth " + oldWidth + " oldHeight " + oldHeight);
-            log.debug("newWidth " + l.maxWidth() + " newHeight " + l.maxHeight());
-            log.debug("Icon adj: " + iconAdj + " opp adj: " + iconAdjOpp);
-            log.debug("boundary point opp " + bpo);
-            log.debug("boundary point adj " + bpa);
-            log.debug("track opp " + to);
-            log.debug("track adj " + ta);
+            log.debug("north west to south east {}", angleDEG);
+            log.debug("oldWidth {} oldHeight {}", oldWidth, oldHeight);
+            log.debug("newWidth {} newHeight {}", l.maxWidth(), l.maxHeight());
+            log.debug("Icon adj: {} opp adj: {}", iconAdj, iconAdjOpp);
+            log.debug("boundary point opp {}", bpo);
+            log.debug("boundary point adj {}", bpa);
+            log.debug("track opp {}", to);
+            log.debug("track adj {}", ta);
         }
         int xpos = 0;
         int ypos = 0;
@@ -8956,7 +8956,7 @@ public class LayoutEditorTools {
             double x_dist_to_Icon = (l.maxWidth() + ta + bpo);
             double y_dist_to_Icon = iconAdj + (bpa - to);
 
-            log.debug("right x dist " + x_dist_to_Icon + ", y dist " + y_dist_to_Icon);
+            log.debug("right x dist {}, y dist {}", x_dist_to_Icon, y_dist_to_Icon);
 
             xpos = (int) (p.getX() - x_dist_to_Icon);
             ypos = (int) (p.getY() - y_dist_to_Icon); //was +
@@ -8970,14 +8970,14 @@ public class LayoutEditorTools {
             //double y_dist_to_Icon = ta+bpo+l.maxHeight();
             double x_dist_to_Icon = (iconAdjOpp) + (bpo - ta);
             //double x_dist_to_Icon = iconAdj+(bpa-to);
-            log.debug("left x dist " + x_dist_to_Icon + ", y dist " + y_dist_to_Icon);
+            log.debug("left x dist {}, y dist {}", x_dist_to_Icon, y_dist_to_Icon);
 
             xpos = (int) (p.getX() - x_dist_to_Icon);
             ypos = (int) (p.getY() - y_dist_to_Icon);
         }
         if (log.isDebugEnabled()) {
-            log.debug(p.getX() + " xpos " + xpos);
-            log.debug(p.getY() + " yPos " + ypos);
+            log.debug("{} xpos {}", p.getX(), xpos);
+            log.debug("{} yPos {}", p.getY(), ypos);
         }
         return new Point(xpos, ypos);
     }
@@ -9009,14 +9009,14 @@ public class LayoutEditorTools {
         double ta = Math.sin(angleRAD) * offSetFromPoint; //distance from track
         double to = Math.sin(oppAngRAD) * offSetFromPoint;
         if (log.isDebugEnabled()) {
-            log.debug("south east to north west " + angleDEG);
-            log.debug("oldWidth " + oldWidth + " oldHeight " + oldHeight);
-            log.debug("newWidth " + l.maxWidth() + " newHeight " + l.maxHeight());
-            log.debug("Icon adj: " + iconAdj + " opp adj: " + iconAdjOpp);
-            log.debug("boundary point opp " + bpo);
-            log.debug("boundary point adj " + bpa);
-            log.debug("track opp " + to);
-            log.debug("track adj " + ta);
+            log.debug("south east to north west {}", angleDEG);
+            log.debug("oldWidth {} oldHeight {}", oldWidth, oldHeight);
+            log.debug("newWidth {} newHeight {}", l.maxWidth(), l.maxHeight());
+            log.debug("Icon adj: {} opp adj: {}", iconAdj, iconAdjOpp);
+            log.debug("boundary point opp {}", bpo);
+            log.debug("boundary point adj {}", bpa);
+            log.debug("track opp {}", to);
+            log.debug("track adj {}", ta);
         }
         int xpos = 0;
         int ypos = 0;
@@ -9026,8 +9026,8 @@ public class LayoutEditorTools {
             double x_dist_to_Icon = bpa + to;
             double y_dist_to_Icon = (bpo - ta) - (l.maxHeight() - iconAdjOpp);
 
-            log.debug(Double.toString((bpo - ta) - (l.maxHeight() - iconAdjOpp)));
-            log.debug(Double.toString(bpo - (iconAdj + ta)));
+            log.debug("ydist {}", Double.toString((bpo - ta) - (l.maxHeight() - iconAdjOpp)));
+            log.debug("   and {}",Double.toString(bpo - (iconAdj + ta)));
             /*if(angleDeg<45){
     y_dist_to_Icon = (bpo-ta)-(l.maxHeight()-iconAdjOpp);
     } else {
@@ -9036,7 +9036,7 @@ public class LayoutEditorTools {
             //double y_dist_to_Icon = (l.maxHeight()-iconAdj)+(bpo-ta);
             xpos = (int) (p.getX() + x_dist_to_Icon);
             ypos = (int) (p.getY() + y_dist_to_Icon);
-            log.debug("right x dist " + x_dist_to_Icon + ", y dist " + y_dist_to_Icon);
+            log.debug("right x dist {}, y dist {}", x_dist_to_Icon, y_dist_to_Icon);
         } else {
             //double x_dist_to_Icon = l.maxWidth()-(iconAdj+(bpa-bpo));
             //double y_dist_to_Icon = bpa+bpo;
@@ -9046,18 +9046,18 @@ public class LayoutEditorTools {
 
             xpos = (int) (p.getX() + x_dist_to_Icon);
             ypos = (int) (p.getY() + y_dist_to_Icon);
-            log.debug("left x dist " + x_dist_to_Icon + ", y dist " + y_dist_to_Icon);
+            log.debug("left x dist {}, y dist {}", x_dist_to_Icon, y_dist_to_Icon);
         }
         if (log.isDebugEnabled()) {
-            log.debug(p.getX() + " xpos " + xpos);
-            log.debug(p.getY() + " yPos " + ypos);
+            log.debug("{} xpos {}", p.getX(), xpos);
+            log.debug("{} yPos {}", p.getY(), ypos);
         }
 
         return new Point(xpos, ypos);
     }
 
     public boolean isSignalMastOnPanel(@Nonnull SignalMast signalMast) {
-        for (SignalMastIcon s : layoutEditor.signalMastList) {
+        for (SignalMastIcon s : layoutEditor.getSignalMastList()) {
             if (s.getSignalMast() == signalMast) {
                 return true;
             }
@@ -9640,7 +9640,7 @@ public class LayoutEditorTools {
                 isEast = true;
             }
 
-            log.debug("East set is " + isEast);
+            log.debug("East set is {}", isEast);
             setIconOnPanel(ts, icon, isEast, p, endPoint, isRightSide, fromPoint);
         }
     }
@@ -13494,7 +13494,7 @@ public class LayoutEditorTools {
         try {
             InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         } catch (IllegalArgumentException ex) {
-            log.error("Trouble creating sensor " + sensorName + " while setting up Logix.");
+            log.error("Trouble creating sensor {} while setting up Logix.", sensorName);
             return "";
         }
         boolean newConditional = false;
@@ -13506,7 +13506,7 @@ public class LayoutEditorTools {
             ).createNewLogix(logixName, "");
             newConditional = true;
             if (x == null) {
-                log.error("Trouble creating logix " + logixName + " while setting up signal logic.");
+                log.error("Trouble creating logix {} while setting up signal logic.", logixName);
                 return "";
             }
             x.setComment("Layout Slip, Signalhead logic");
@@ -13523,7 +13523,7 @@ public class LayoutEditorTools {
                     createNewConditional(cName, "");
             newConditional = true;
             if (c == null) {
-                log.error("Trouble creating conditional " + cName + " while setting up Logix.");
+                log.error("Trouble creating conditional {} while setting up Logix.", cName);
                 return "";
             }
         }
@@ -13591,7 +13591,7 @@ public class LayoutEditorTools {
             } else if (logic.getSensor5() == null) {
                 logic.setSensor5(name);
             } else {
-                log.error("Error - could not add sensor to SSL for signal head " + logic.getDrivenSignal());
+                log.error("Error - could not add sensor to SSL for signal head {}", logic.getDrivenSignal());
             }
         }
     }
@@ -13874,5 +13874,5 @@ public class LayoutEditorTools {
         return result;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorTools.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorTools.class);
 }

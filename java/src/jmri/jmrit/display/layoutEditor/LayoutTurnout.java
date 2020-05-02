@@ -22,14 +22,15 @@ import jmri.util.MathUtil;
 import org.slf4j.*;
 
 /**
- * A LayoutTurnout corresponds to a turnout on the layout. A LayoutTurnout is an
+ * LayoutTurnout is the abstract base for classes representing various types of turnout on the layout. 
+ * A LayoutTurnout is an
  * extension of the standard Turnout object with drawing and connectivity
  * information added.
  * <p>
- * Six types are supported: right-hand, left-hand, wye, double crossover,
+ * Specific forms are represented: right-hand, left-hand, wye, double crossover,
  * right-handed single crossover, and left-handed single crossover. Note that
  * double-slip turnouts can be handled as two turnouts, throat to throat, and
- * three-way turnouts can be handles as two turnouts, left-hand and right-hand,
+ * three-way turnouts can be handled as two turnouts, left-hand and right-hand,
  * arranged throat to continuing route.
  * <p>
  * A LayoutTurnout has three or four connection points, designated A, B, C, and
@@ -70,6 +71,8 @@ import org.slf4j.*;
  *             //\\
  *        D ==**==**== C
  * </pre>
+ * (The {@link LayoutSlip} track objects follow a different pattern. They put A-D in 
+ * different places and have AD and BC as the normal-continuance parallel paths)
  * <p>
  * A LayoutTurnout carries Block information. For right-handed, left-handed, and
  * wye turnouts, the entire turnout is in one block, however, a block border may
@@ -116,19 +119,13 @@ import org.slf4j.*;
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author George Warner Copyright (c) 2017-2019
+ * @author Bob Jacobsen Copyright (c) 2020
  */
-public class LayoutTurnout extends LayoutTrack {
+abstract public class LayoutTurnout extends LayoutTrack {
 
-    // defined constants - turnout types
-    //public static final int NONE = 0;
-    //public static final int RH_TURNOUT = 1;
-    //public static final int LH_TURNOUT = 2;
-    //public static final int WYE_TURNOUT = 3;
-    //public static final int DOUBLE_XOVER = 4;
-    //public static final int RH_XOVER = 5;
-    //public static final int LH_XOVER = 6;
-    //public static final int SINGLE_SLIP = 7;    // used for LayoutSlip which extends this class
-    //public static final int DOUBLE_SLIP = 8;    // used for LayoutSlip which extends this class
+    // Defined constants for turnout types
+    // This is being replaced by subclasses; do not add more
+    // references to it.
     public enum TurnoutType {
         NONE,
         RH_TURNOUT,
@@ -260,6 +257,7 @@ public class LayoutTurnout extends LayoutTrack {
         THROAT_TO_THROAT  // this turnout is one of two throat-to-throat
         // turnouts - no signals at throat
     }
+    
     // operational instance variables (not saved between sessions)
     public static final int UNKNOWN = Turnout.UNKNOWN;
     public static final int INCONSISTENT = Turnout.INCONSISTENT;
@@ -305,15 +303,6 @@ public class LayoutTurnout extends LayoutTrack {
     protected NamedBeanHandle<SignalHead> signalD1HeadNamed = null; // single or double crossover only
     protected NamedBeanHandle<SignalHead> signalD2HeadNamed = null; // LH_Xover and double crossover only
 
-    // public static final int POINTA1 = 0x01;
-    // public static final int POINTA2 = 0x03;
-    // public static final int POINTA3 = 0x05;
-    // public static final int POINTB1 = 0x10;
-    // public static final int POINTB2 = 0x12;
-    // public static final int POINTC1 = 0x20;
-    // public static final int POINTC2 = 0x22;
-    // public static final int POINTD1 = 0x30;
-    // public static final int POINTD2 = 0x32;
     public enum Geometry {
         NONE,
         POINTA1,
@@ -337,7 +326,7 @@ public class LayoutTurnout extends LayoutTrack {
     protected NamedBeanHandle<Sensor> sensorCNamed = null; // diverging
     protected NamedBeanHandle<Sensor> sensorDNamed = null; // single or double crossover only
 
-    public TurnoutType type = TurnoutType.RH_TURNOUT;
+    protected final TurnoutType type;
 
     public LayoutTrack connectA = null;      // throat of LH, RH, RH Xover, LH Xover, and WYE turnouts
     public LayoutTrack connectB = null;      // straight leg of LH and RH turnouts
@@ -365,7 +354,14 @@ public class LayoutTurnout extends LayoutTrack {
 
     protected LayoutTurnout(@Nonnull String id,
             @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
+        this(id, c, layoutEditor, TurnoutType.NONE);
+    }
+
+    protected LayoutTurnout(@Nonnull String id,
+            @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor, TurnoutType t) {
         super(id, c, layoutEditor);
+        
+        type = t;
     }
 
     public LayoutTurnout(@Nonnull String id, TurnoutType t,
@@ -376,7 +372,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * constructor method
+     * Main constructor method
      */
     public LayoutTurnout(@Nonnull String id, TurnoutType t, @Nonnull Point2D c, double rot,
             double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
@@ -1388,7 +1384,7 @@ public class LayoutTurnout extends LayoutTrack {
             default: {
                 String errString = MessageFormat.format("{0}.getConnection({1}); Invalid Connection Type",
                         getName(), connectionType); //I18IN
-                log.error(errString);
+                log.error("will throw {}", errString);
                 throw new jmri.JmriException(errString);
             }
         }
@@ -1403,7 +1399,7 @@ public class LayoutTurnout extends LayoutTrack {
         if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); unexpected type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
-            log.error(errString);
+            log.error("will throw {}", errString);
             throw new jmri.JmriException(errString);
         }
         switch (connectionType) {
@@ -1422,7 +1418,7 @@ public class LayoutTurnout extends LayoutTrack {
             default:
                 String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid Connection Type",
                         getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
-                log.error(errString);
+                log.error("will throw {}", errString);
                 throw new jmri.JmriException(errString);
         }
     }
@@ -3426,6 +3422,14 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
+     * Draw track decorations.
+     * 
+     * This type of track has none, so this method is empty.
+     */
+    @Override
+    protected void drawDecorations(Graphics2D g2) {}
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -5015,5 +5019,5 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurnout.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnout.class);
 }

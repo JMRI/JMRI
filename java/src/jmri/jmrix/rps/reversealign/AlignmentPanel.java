@@ -21,7 +21,6 @@ import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.PositionFile;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.ReadingListener;
-import jmri.jmrix.rps.trackingpanel.RpsTrackingPanel;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -150,7 +149,7 @@ public class AlignmentPanel extends javax.swing.JPanel
             if (retVal == JFileChooser.APPROVE_OPTION) {
                 File file = fci.getSelectedFile();
                 if (log.isInfoEnabled()) {
-                    log.info("located file " + file + " for load");
+                    log.info("located file {} for load", file);
                 }
                 // handle the file
                 PositionFile pf = new PositionFile();
@@ -176,7 +175,7 @@ public class AlignmentPanel extends javax.swing.JPanel
                 log.info("load cancelled in open dialog");
             }
         } catch (Exception e) {
-            log.error("exception during load: " + e);
+            log.error("exception during load: {}", e);
         }
     }
 
@@ -189,7 +188,7 @@ public class AlignmentPanel extends javax.swing.JPanel
             if (retVal == JFileChooser.APPROVE_OPTION) {
                 File file = fci.getSelectedFile();
                 if (log.isInfoEnabled()) {
-                    log.info("located file " + file + " for load");
+                    log.info("located file {} for load", file);
                 }
                 // handle the file
                 PositionFile pf = new PositionFile();
@@ -210,7 +209,7 @@ public class AlignmentPanel extends javax.swing.JPanel
                 log.info("load cancelled in open dialog");
             }
         } catch (Exception e) {
-            log.error("exception during load: " + e);
+            log.error("exception during load: {}", e);
         }
     }
 

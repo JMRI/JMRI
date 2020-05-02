@@ -92,7 +92,7 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
                 }
             }
         } catch (IOException we) {
-            log.error("Error printing PrintLocationAction: " + we);
+            log.error("Error printing PrintLocationAction: {}", we);
         }
         // and force completion of the printing
         writer.close();

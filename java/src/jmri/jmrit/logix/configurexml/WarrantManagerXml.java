@@ -240,7 +240,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                 try {
                     timeToPlatform = TTP.getLongValue();
                 } catch (DataConversionException e) {
-                    log.debug("ignoring DataConversionException (and reverting to default value): "+e.toString());
+                    log.debug("ignoring DataConversionException (and reverting to default value): {}", e.toString());
                 }
             }
 

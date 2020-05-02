@@ -34,7 +34,7 @@ public class NodeConfigManagerAction extends AbstractAction {
               f.initComponents();
             }
         catch (Exception ex) {
-            log.error("NodeConfigManagerAction Exception-C2: "+ex.toString());
+            log.error("NodeConfigManagerAction Exception-C2: {}", ex.toString());
             }
         f.setLocation(20,40);
         f.setVisible(true);

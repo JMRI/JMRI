@@ -60,7 +60,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     synchronized public void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("writeCV " + CV + " mode " + getMode() + " listens " + p);
+            log.debug("writeCV {} mode {} listens {}", CV, getMode(), p);
         }
         useProgrammer(p);
         _val = val;
@@ -82,7 +82,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("readCV " + CV + " mode " + getMode() + " listens " + p);
+            log.debug("readCV {} mode {} listens {}", CV, getMode(), p);
         }
         useProgrammer(p);
         _val = -1;
@@ -118,7 +118,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
+                log.info("programmer already in use by {}", _usingProgrammer);
             }
             throw new jmri.ProgrammerException("programmer in use");
         } else {
@@ -154,20 +154,20 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
-            log.debug("reply in NOTPROGRAMMING state" + " [" + reply + "]");
+            log.debug("reply in NOTPROGRAMMING state [{}]", reply);
             return;
         } else if (progState == COMMANDSENT) {
-            log.debug("reply in COMMANDSENT state" + " [" + reply + "]");
+            log.debug("reply in COMMANDSENT state [{}]", reply);
             // operation done, capture result, then have to leave programming mode
             progState = NOTPROGRAMMING;
             // check for errors
             if (reply.match("No Ack") >= 0) {
-                log.debug("handle No Ack reply " + reply);
+                log.debug("handle No Ack reply {}", reply);
                 // perhaps no loco present? Fail back to end of programming
                 progState = NOTPROGRAMMING;
                 notifyProgListenerEnd(-1, jmri.ProgListener.NoLocoDetected);
             } else if (reply.match("!O") >= 0) {
-                log.debug("handle !O reply " + reply);
+                log.debug("handle !O reply {}", reply);
                 // Overload. Fail back to end of programming
                 progState = NOTPROGRAMMING;
                 notifyProgListenerEnd(-1, jmri.ProgListener.ProgrammingShort);
@@ -212,7 +212,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
     // internal method to notify of the final result
     protected void notifyProgListenerEnd(int value, int status) {
-        log.debug("notifyProgListenerEnd value " + value + " status " + status);
+        log.debug("notifyProgListenerEnd value {} status {}", value, status);
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;

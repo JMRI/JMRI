@@ -1,9 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -33,5 +31,5 @@ public class LayoutEditorHorizontalToolBarPanelTest {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    // private final static Logger log = LoggerFactory.getLogger(LayoutEditorHorizontalToolBarPanelTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorHorizontalToolBarPanelTest.class);
 }

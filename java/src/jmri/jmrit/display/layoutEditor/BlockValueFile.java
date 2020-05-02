@@ -190,7 +190,7 @@ public class BlockValueFile extends XmlFile {
                         valuesFound = true;
                     }
                 } else {
-                    log.error("Block " + sname + " was not found.");
+                    log.error("Block {} was not found.", sname);
                 }
             }
             root.addContent(values);
@@ -209,7 +209,7 @@ public class BlockValueFile extends XmlFile {
                     // write content to file
                     writeXML(findFile(defaultFileName), doc);
                 } catch (IOException ioe) {
-                    log.error("IO Exception " + ioe);
+                    log.error("While writing block value file ", ioe);
                     throw (ioe);
                 }
             }
@@ -217,6 +217,6 @@ public class BlockValueFile extends XmlFile {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(BlockValueFile.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockValueFile.class);
 
 }

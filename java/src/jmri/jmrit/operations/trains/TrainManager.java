@@ -471,9 +471,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
      *         destination.
      */
     public Train getTrainForCar(Car car, Train excludeTrain, PrintWriter buildReport) {
-        log.debug("Find train for car (" + car.toString() + ") location (" + car.getLocationName() + ", " // NOI18N
-                + car.getTrackName() + ") destination (" + car.getDestinationName() + ", " // NOI18N
-                + car.getDestinationTrackName() + ")"); // NOI18N
+        log.debug("Find train for car ({}) location ({}, {}) destination ({}, {})", car.toString(), car.getLocationName(), car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()); // NOI18N
         if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED)) {
             TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, TrainCommon.BLANK_LINE);
             TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, MessageFormat.format(Bundle

@@ -128,7 +128,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     public void incrementAcelaSensorInitCount() {
         acelaSensorInitCount++;
-        log.debug("Number of Acela sensors initialized: " + getAcelaSensorInitCount());
+        log.debug("Number of Acela sensors initialized: {}", getAcelaSensorInitCount());
     }
 
     public int getAcelaSensorInitCount() {
@@ -148,7 +148,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     public void setReallyReadyToPoll(boolean newstate) {
-        log.debug("setting really ready to poll (nodes): " + newstate);
+        log.debug("setting really ready to poll (nodes): {}", newstate);
         reallyReadyToPoll = newstate;
     }
 
@@ -282,7 +282,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                 }
                 curAcelaNodeIndex = SPECIALNODE;
                 AcelaMessage m = AcelaMessage.getAcelaResetMsg();
-                log.debug("send Acela reset (init step 1) message: " + m);
+                log.debug("send Acela reset (init step 1) message: {}", m);
                 m.setTimeout(1000);  // wait for init to finish (milliseconds)
                 mCurrentMode = NORMALMODE;
                 needToCreateNodesState++;
@@ -290,7 +290,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
             }
             if (needToCreateNodesState == 1) {
                 AcelaMessage m = AcelaMessage.getAcelaOnlineMsg();
-                log.debug("send Acela Online (init step 2) message: " + m);
+                log.debug("send Acela Online (init step 2) message: {}", m);
                 m.setTimeout(1000);  // wait for init to finish (milliseconds)
                 mCurrentMode = NORMALMODE;
                 needToCreateNodesState++;
@@ -299,7 +299,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
             if (needToPollNodes) {
                 if (needToCreateNodesState == 2) {
                     AcelaMessage m = AcelaMessage.getAcelaPollNodesMsg();
-                    log.debug("send Acela poll nodes message: " + m);
+                    log.debug("send Acela poll nodes message: {}", m);
                     m.setTimeout(100);  // wait for init to finish (milliseconds)
                     mCurrentMode = NORMALMODE;
                     needToInitAcelaNetwork = false;
@@ -333,7 +333,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                     byte tempbaddr = (byte) (tempiaddr);
                     m.setElement(2, tempbaddr);
                     m.setElement(3, node.sensorConfigArray[s]);
-                    log.debug("send Acela Config Sensor message: " + m);
+                    log.debug("send Acela Config Sensor message: {}", m);
                     incrementAcelaSensorInitCount();
                     m.setTimeout(100);  // wait for init to finish (milliseconds)
                     mCurrentMode = NORMALMODE;
@@ -349,7 +349,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
             getNode(curAcelaNodeIndex).resetMustSend();
             AbstractMRMessage m = getNode(curAcelaNodeIndex).createOutPacket();
             m.setTimeout(100);  // no need to wait for output to answer
-            log.debug("request write command to send: " + m);
+            log.debug("request write command to send: {}", m);
             mCurrentMode = NORMALMODE;
             return m;
         }
@@ -364,7 +364,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
         if (acelaSensorsState) {    //  Flag to indicate whether we have an active sensor and therefore need to poll
             AcelaMessage m = AcelaMessage.getAcelaPollSensorsMsg();
-            log.debug("send Acela poll sensors message: " + m);
+            log.debug("send Acela poll sensors message: {}", m);
             m.setTimeout(100);  // wait for init to finish (milliseconds)
             mCurrentMode = NORMALMODE;
             return m;

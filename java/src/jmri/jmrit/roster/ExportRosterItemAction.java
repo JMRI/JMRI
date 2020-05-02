@@ -61,7 +61,7 @@ public class ExportRosterItemAction extends AbstractRosterItemAction {
         try {
             lroot = lf.rootFromName(mFullFromFilename).clone();
         } catch (Exception e) {
-            log.error("Exception while loading loco XML file: " + mFullFromFilename + " exception: " + e);
+            log.error("Exception while loading loco XML file: {} exception: {}", mFullFromFilename, e);
             return false;
         }
 

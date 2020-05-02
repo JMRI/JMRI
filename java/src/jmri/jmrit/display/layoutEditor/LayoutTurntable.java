@@ -551,7 +551,7 @@ public class LayoutTurntable extends LayoutTrack {
         } else {
             String errString = MessageFormat.format("{0}.getCoordsForConnectionType({1}); Invalid connection type",
                     getName(), connectionType); // NOI18N
-            log.error(errString); // NOI18N
+            log.error("will throw {}", errString); // NOI18N
             throw new jmri.JmriException(errString);
         }
         return result;
@@ -565,7 +565,7 @@ public class LayoutTurntable extends LayoutTrack {
         if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
-            log.error(errString); // NOI18N
+            log.error("will throw {}", errString); // NOI18N
             throw new jmri.JmriException(errString);
         }
         if (HitPointType.isTurntableRayHitType(connectionType)) {
@@ -575,13 +575,13 @@ public class LayoutTurntable extends LayoutTrack {
                 String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid object: {4}",
                         getName(), connectionType, o.getName(),
                         type, o.getClass().getName()); // NOI18N
-                log.error(errString); // NOI18N
+                log.error("will throw {}", errString); // NOI18N
                 throw new jmri.JmriException(errString);
             }
         } else {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid connection type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
-            log.error(errString); // NOI18N
+            log.error("will throw {}", errString); // NOI18N
             throw new jmri.JmriException(errString);
         }
     }
@@ -1218,6 +1218,14 @@ public class LayoutTurntable extends LayoutTrack {
     }   // class RayTrack
 
     /**
+     * Draw track decorations.
+     * 
+     * This type of track has none, so this method is empty.
+     */
+    @Override
+    protected void drawDecorations(Graphics2D g2) {}
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -1554,6 +1562,6 @@ public class LayoutTurntable extends LayoutTrack {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntable.class);
 
 }

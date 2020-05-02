@@ -290,6 +290,8 @@
 
 <mapID target="package.jmri.jmrit.beantable.SensorAddEdit_properties" url="package/jmri/jmrit/beantable/SensorAddEdit.shtml#properties"/>
 
+<mapID target="html.hardware.SidebarNew" url="html/hardware/SidebarNew.shtml"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_CopyTrack" url="package/jmri/jmrit/operations/Operations.shtml#CopyTrack"/>
 
 <mapID target="manual.DecoderPro.Main_Help" url="manual/DecoderPro/Main_Help.shtml"/>
@@ -807,6 +809,8 @@
 <mapID target="package.jmri.jmrit.operations.Operations_LoadOptions" url="package/jmri/jmrit/operations/Operations.shtml#LoadOptions"/>
 
 <mapID target="manual.DecoderPro3.dp3_Main_Throttle_List_Top" url="manual/DecoderPro3/dp3_Main_Throttle_List.shtml#Top"/>
+
+<mapID target="html.hardware.can.cbus.CbusFastClock_inbound" url="html/hardware/can/cbus/CbusFastClock.shtml#inbound"/>
 
 <mapID target="html.doc.Technical.CVSFAQ_update1" url="html/doc/Technical/CVSFAQ.shtml#update1"/>
 
@@ -3356,6 +3360,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_OperationsWebAccess" url="package/jmri/jmrit/operations/Operations.shtml#OperationsWebAccess"/>
 
+<mapID target="html.hardware.can.cbus.CbusFastClock_outbound" url="html/hardware/can/cbus/CbusFastClock.shtml#outbound"/>
+
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_AddTrain_Top" url="manual/JMRI_OPS_UsersGuide/Ops_AddTrain.shtml#Top"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EditLocation" url="manual/JMRI_OPS_UsersGuide/Ops_EditLocation.shtml"/>
@@ -3630,6 +3636,8 @@
 
 <mapID target="html.tools.Lights_ref" url="html/tools/Lights.shtml#ref"/>
 
+<mapID target="html.hardware.can.cbus.CbusFastClock" url="html/hardware/can/cbus/CbusFastClock.shtml"/>
+
 <mapID target="html.hardware.USBtoSerial_LI101" url="html/hardware/USBtoSerial.shtml#LI101"/>
 
 <mapID target="html.hardware.USBtoSerial_LI100" url="html/hardware/USBtoSerial.shtml#LI100"/>
@@ -3797,6 +3805,8 @@
 <mapID target="package.jmri.jmrit.operations.Operations_newUserAdvice" url="package/jmri/jmrit/operations/Operations.shtml#newUserAdvice"/>
 
 <mapID target="html.hardware.can.cbus.Names_turnout" url="html/hardware/can/cbus/Names.shtml#turnout"/>
+
+<mapID target="html.hardware.indexnew" url="html/hardware/indexnew.shtml"/>
 
 <mapID target="html.hardware.openlcb.OlcbSignalMast" url="html/hardware/openlcb/OlcbSignalMast.shtml"/>
 

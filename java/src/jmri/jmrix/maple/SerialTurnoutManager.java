@@ -64,7 +64,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         // does system name correspond to configured hardware
         if (!SerialAddress.validSystemNameConfig(sName, 'T', getMemo())) {
             // system name does not correspond to configured hardware
-            log.warn("Turnout '" + sName + "' refers to an unconfigured output bit.");
+            log.warn("Turnout '{}' refers to an unconfigured output bit.", sName);
             javax.swing.JOptionPane.showMessageDialog(null, "WARNING - The Turnout just added, "
                     + sName + ", refers to an unconfigured output bit.", "Configuration Warning",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE, null);

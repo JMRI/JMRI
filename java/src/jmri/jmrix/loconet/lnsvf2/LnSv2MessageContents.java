@@ -280,7 +280,7 @@ public class LnSv2MessageContents {
             int msgCmd = m.getElement(SV2_SV_CMD_ELEMENT_INDEX);
             for (Sv2Command s: Sv2Command.values()) {
                 if (s.getCmd() == msgCmd) {
-                    log.debug("LocoNet message has SV2 message command " + msgCmd);  // NOI18N
+                    log.debug("LocoNet message has SV2 message command {}", msgCmd);  // NOI18N
                     return s;
                 }
             }
@@ -311,7 +311,7 @@ public class LnSv2MessageContents {
      */
     public String toString(Locale locale) {
         String returnString;
-        log.debug("interpreting an SV2 message - cmd is "+sv_cmd);  // NOI18N
+        log.debug("interpreting an SV2 message - cmd is {}", sv_cmd);  // NOI18N
         
         switch (sv_cmd) {
             case (SV_CMD_WRITE_ONE):
@@ -518,8 +518,8 @@ public class LnSv2MessageContents {
             default:
                 return Bundle.getMessage(locale, "SV2_UNDEFINED_MESSAGE");
         }
-        
-        log.debug("interpreted: " + returnString);  // NOI18N
+
+        log.debug("interpreted: {}", returnString);  // NOI18N
         return returnString+"\n";  // NOI18N
     }
 

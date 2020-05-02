@@ -1,7 +1,7 @@
 /**
- * The Layout Editor represents both structure and graphical display through a single set of objects.
- * <p>
- * A small sample layout:<br>
+ * <h1>Layout Editor</h1> represents both structure and graphical display through a single set of objects.
+ * <h2>Example</h2>
+ * A small example layout:<br>
  * <a href="doc-files/SidingImage.png"><img src="doc-files/SidingImage.png" alt="Simple layout example" height="25%" width="25%"></a>
  * <h3>Connectivity</h3>
  * This is coded and stored as the following: (Some graphical attributes removed, reordered)<br>
@@ -28,11 +28,12 @@
  * <p>
  * Turnouts also have a <code>type</code> variable to represent their geometry, i.e. RH, LH, Wye, etc.
  * 
- * <h3>Class Structure</h3>
+ * <h2>Internals</h2>
+ * <h3>Class Hierarchy</h3>
  * <ul>
  * <li>The track is represented by a hierarchy of classes that's rooted in {@link jmri.jmrit.display.layoutEditor.LayoutTrack} and completely disconnected from 
- * the PanelEditor classes.<br>
- * <a href="doc-files/TrackHierarchy.png"><img src="doc-files/TrackHierarchy.png" alt="UML class diagram for track objects" height="33%" width="33%"></a>
+ * the PanelEditor classes. New classes are being added to represent the specific types previously implemented via type variables and conditional code.
+ * <br><a href="doc-files/NewTurnoutClassDiagram.png"><img src="doc-files/NewTurnoutClassDiagram.png" alt="UML class diagram for track objects" height="67%" width="67%"></a><br>
  * <li>{@link jmri.jmrit.display.layoutEditor.LayoutBlock} and {@link jmri.jmrit.display.layoutEditor.LayoutBlockManager} are a {@link jmri.NamedBean NamedBean} pair. 
  * The {@link jmri.jmrit.display.layoutEditor.LayoutBlock} is a group
  * of track segments and turnouts that corresponds to a 'block'. It may contain a {@link jmri.Memory} and/or {@link jmri.Sensor}. If present, the sensor 
@@ -51,6 +52,11 @@
  *   <li>{@link jmri.jmrit.display.layoutEditor.configurexml}
  *   </ul>
  * </ul>
+ *
+ * <h3>Class Relationships</h3>
+ * The LayoutBlock class is at the heart of the navigation web for layout-representing objects.
+ * <br><a href="doc-files/LayoutBlockInterconnections.png"><img src="doc-files/LayoutBlockInterconnections.png" alt="UML class diagram for track objects" height="67%" width="67%"></a><br>
+ * 
  * 
  * <h3>GUI</h3>
  * The Layout Editor window consists of a menu bar and an upper tool-bar that are all made with 
@@ -61,13 +67,19 @@
  * draw two different representations of the track elements.  These are only 
  * invoked from {}@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent}. LayoutEditorComponent is 
  * a JComponent with a {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent#paint} public method
- * that invokes a series of internal private methods to display the layers of the layout drawing. That in turn is invoked via the usual repaint() mechanism.
+ * that invokes a series of internal private methods to display the layers of the layout drawing. 
+ * That in turn is invoked via the usual repaint() mechanism, although it's often kicked
+ * off by a call to {@link jmri.jmrit.display.layoutEditor.LayoutEditor#redrawPanel()}.
  * Each of those layer private methods sets up graphics and method options, then
  * calls {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent#draw1}
  * or {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent#draw2}. Those in turn
  * loop through a list from {@link jmri.jmrit.display.layoutEditor.LayoutEditor#getLayoutTracks()}
  * calling their individual {@link jmri.jmrit.display.layoutEditor.LayoutTrack#draw1} and {@link jmri.jmrit.display.layoutEditor.LayoutTrack#draw1}
  * methods.
+ * <p>
+ * <br><a href="doc-files/NMVCmodel.png"><img src="doc-files/MVCmodel.png" alt="MVC object diagram" height="67%" width="67%"></a><br>
+ * The goal is a MVC-like structure, with modifications to account for the mix of 
+ * swing components and AWT-style paint operations.
  * 
  * 
  * <h3>Persistance</h3>
@@ -95,9 +107,9 @@
  * LayoutEditorXml handles the storing and loading of all the track and icon objects.
  * It is stored at the user level ("Store Panels...")
  * <p>
- * A {@link jmri.jmrit.display.layoutEditor.BlockValueFile} stores and loads the value (internal transient contents) of Block 
+ * A {@link jmri.jmrit.display.layoutEditor.BlockValueFile} stores and loads the value (internal temporary contents) of Block 
  * objects from the BlockManager. It doesn't reference {@link jmri.jmrit.display.layoutEditor.LayoutBlock} objects.
- * <h3>More Info</h3>
+ * <h2>More Info</h2>
  * User-level documentation is available 
  * <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/LayoutEditor.shtml">here</a>.
  * <!-- Put @see and @since tags down here. -->

@@ -584,7 +584,7 @@ public class LevelXing extends LayoutTrack {
                 break;
         }
         String errstring = MessageFormat.format("{0}.getConnection({1}); invalid connection type", getName(), connectionType); //I18IN
-        log.error(errstring);
+        log.error("will throw {}", errstring);
         throw new jmri.JmriException(errstring);
     }
 
@@ -596,7 +596,7 @@ public class LevelXing extends LayoutTrack {
         if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); invalid type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type);
-            log.error(errString);
+            log.error("will throw {}", errString);
             throw new jmri.JmriException(errString);
         }
         switch (connectionType) {
@@ -615,7 +615,7 @@ public class LevelXing extends LayoutTrack {
             default:
                 String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); invalid connection type",
                         getName(), connectionType, (o == null) ? "null" : o.getName(), type);
-                log.error(errString);
+                log.error("will throw {}", errString);
                 throw new jmri.JmriException(errString);
         }
     }
@@ -1028,7 +1028,7 @@ public class LevelXing extends LayoutTrack {
                     lb.incrementUse();
                 }
             } else {
-                log.error("{}.setObjects(); bad blockname AC ''{}''", tLayoutBlockNameAC);
+                log.error("LevelXing.setObjects(); bad blockname AC ''{}''", tLayoutBlockNameAC);
                 namedLayoutBlockAC = null;
             }
             tLayoutBlockNameAC = null; //release this memory
@@ -1488,6 +1488,14 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
+     * Draw track decorations.
+     * 
+     * This type of track has none, so this method is empty.
+     */
+    @Override
+    protected void drawDecorations(Graphics2D g2) {}
+
+    /**
      * Draw this level crossing.
      *
      * @param g2 the graphics port to draw to
@@ -1826,5 +1834,5 @@ public class LevelXing extends LayoutTrack {
         setLayoutBlockBD(layoutBlock);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LevelXing.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LevelXing.class);
 }

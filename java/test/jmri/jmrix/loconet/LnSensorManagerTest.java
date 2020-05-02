@@ -74,16 +74,16 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         Sensor o = t.newSensor("LS21", "my name");
 
         if (log.isDebugEnabled()) {
-            log.debug("received sensor value " + o);
+            log.debug("received sensor value {}", o);
         }
         Assert.assertTrue(null != (LnSensor) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + t.getBySystemName("LS21"));
+            log.debug("by system name: {}", t.getBySystemName("LS21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + t.getByUserName("my name"));
+            log.debug("by user name:   {}", t.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != t.getBySystemName("LS21"));

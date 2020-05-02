@@ -48,7 +48,7 @@ import org.slf4j.*;
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author George Warner Copyright (c) 2017-2019
  */
-public class LayoutSlip extends LayoutTurnout {
+abstract public class LayoutSlip extends LayoutTurnout {
 
     public int currentState = UNKNOWN;
 
@@ -61,7 +61,7 @@ public class LayoutSlip extends LayoutTurnout {
      * constructor method
      */
     public LayoutSlip(String id, Point2D c, double rot, LayoutEditor layoutEditor, TurnoutType type) {
-        super(id, c, layoutEditor);
+        super(id, c, layoutEditor, type);
 
         dispA = new Point2D.Double(-20.0, 0.0);
         pointA = MathUtil.add(center, dispA);
@@ -70,7 +70,17 @@ public class LayoutSlip extends LayoutTurnout {
         pointB = MathUtil.add(center, dispB);
         pointD = MathUtil.subtract(center, dispB);
 
-        setSlipType(type);
+        turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
+        turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
+        turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
+        if (type == TurnoutType.SINGLE_SLIP) {
+            turnoutStates.remove(STATE_BC);
+        } else if (type == TurnoutType.DOUBLE_SLIP) {
+            turnoutStates.put(STATE_BC, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
+        } else {
+            log.error("{}.setSlipType({}); invalid slip type", getName(), type); //I18IN
+        }
+        
         rotateCoords(rot);
     }
 
@@ -78,26 +88,6 @@ public class LayoutSlip extends LayoutTurnout {
     @Override
     public String toString() {
         return String.format("LayoutSlip %s (%s)", getId(), getSlipStateString(getSlipState()));
-    }
-
-    public void setTurnoutType(LayoutTurnout.TurnoutType slipType) {
-        setSlipType(slipType);
-    }
-
-    public void setSlipType(TurnoutType slipType) {
-        if (type != slipType) {
-            type = slipType;
-            turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
-            turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
-            turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
-            if (type == TurnoutType.SINGLE_SLIP) {
-                turnoutStates.remove(STATE_BC);
-            } else if (type == TurnoutType.DOUBLE_SLIP) {
-                turnoutStates.put(STATE_BC, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
-            } else {
-                log.error("{}.setSlipType({}); invalid slip type", getName(), slipType); //I18IN
-            }
-        }
     }
 
     public TurnoutType getSlipType() {
@@ -170,7 +160,7 @@ public class LayoutSlip extends LayoutTurnout {
             default:
                 String errString = MessageFormat.format("{0}.getConnection({1}); Invalid Connection Type",
                         getName(), connectionType); //I18IN
-                log.error(errString);
+                log.error("will throw {}", errString);
                 throw new jmri.JmriException(errString);
         }
     }
@@ -183,7 +173,7 @@ public class LayoutSlip extends LayoutTurnout {
         if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
-            log.error(errString);
+            log.error("will throw {}", errString);
             throw new jmri.JmriException(errString);
         }
         switch (connectionType) {
@@ -202,7 +192,7 @@ public class LayoutSlip extends LayoutTurnout {
             default:
                 String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid Connection Type",
                         getName(), connectionType, (o == null) ? "null" : o.getName(), type); //I18IN
-                log.error(errString);
+                log.error("will throw {}", errString);
                 throw new jmri.JmriException(errString);
         }
     }
@@ -1905,5 +1895,5 @@ public class LayoutSlip extends LayoutTurnout {
     //      and collectContiguousTracksNamesInBlockNamed methods
     //      inherited from LayoutTurnout
     //
-    private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlip.class);
 }

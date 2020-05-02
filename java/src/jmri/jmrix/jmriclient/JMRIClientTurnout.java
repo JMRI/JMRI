@@ -93,7 +93,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
+                log.error("Cannot command both CLOSED and THROWN {}", s);
                 return;
             } else {
                 // send a CLOSED command
@@ -124,7 +124,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton " + prefix + _number);
+            log.debug("Send command to {} Pushbutton {}{}", _pushButtonLockout ? "Lock" : "Unlock", prefix, _number);
         }
     }
 

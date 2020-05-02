@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.*;
 import java.util.*;
 import javax.annotation.*;
-import javax.swing.JPopupMenu;
+import javax.swing.*;
 import jmri.*;
 import jmri.util.*;
 
@@ -54,9 +54,6 @@ public abstract class LayoutTrack {
     protected String ident = "";
     protected Point2D center = new Point2D.Double(50.0, 50.0);
 
-    // dashed line parameters (unused)
-    //protected static int minNumDashes = 3;
-    //protected static double maxDashLength = 10;
     protected boolean hidden = false;
 
     /**
@@ -71,11 +68,11 @@ public abstract class LayoutTrack {
     /**
      * accessor methods
      */
-    public String getId() {
+    final public String getId() {
         return ident;
     }
 
-    public String getName() {
+    final public String getName() {
         return ident;
     }
 
@@ -84,13 +81,15 @@ public abstract class LayoutTrack {
      *
      * @return the center coordinates
      */
-    public Point2D getCoordsCenter() {
+    final public Point2D getCoordsCenter() {
         return center;
     }
 
     /**
-     * set center coordinates
-     *
+     * Set center coordinates.
+     * <p>
+     * Some subtypes may reimplement this is "center" is a more complicated
+     * idea, i.e. for Bezier curves
      * @param p the coordinates to set
      */
     public void setCoordsCenter(@Nonnull Point2D p) {
@@ -105,7 +104,7 @@ public abstract class LayoutTrack {
     }
 
     /**
-     * get decorations
+     * Get current decorations
      *
      * @return the decorations
      */
@@ -114,9 +113,13 @@ public abstract class LayoutTrack {
     }
 
     /**
-     * set decorations
+     * Set new decorations 
      *
-     * @param decorations to set
+     * This is a complete replacement of the decorations, not an appending.
+     *
+     * @param decorations A map from strings ("arrow", "bridge", "bumper",..)
+     *          to specific value strings ("single", "entry;right", ), perhaps
+     *          including multiple values separated by semicolons.
      */
     public void setDecorations(Map<String, String> decorations) {
         this.decorations = decorations;
@@ -129,32 +132,32 @@ public abstract class LayoutTrack {
      * @return the layout editor's toolbar panel
      */
     @Nonnull
-    public LayoutEditorToolBarPanel getLayoutEditorToolBarPanel() {
+    final public LayoutEditorToolBarPanel getLayoutEditorToolBarPanel() {
         return layoutEditor.getLayoutEditorToolBarPanel();
     }
 
     //these are convenience methods to return circles & rectangle used to draw onscreen
     //
     //compute the control point rect at inPoint; use the turnout circle size
-    public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
+    final public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
         return trackControlCircleAt(inPoint);
     }
 
     //compute the turnout circle at inPoint (used for drawing)
-    public Ellipse2D trackControlCircleAt(@Nonnull Point2D inPoint) {
+    final public Ellipse2D trackControlCircleAt(@Nonnull Point2D inPoint) {
         return new Ellipse2D.Double(inPoint.getX() - layoutEditor.circleRadius,
                 inPoint.getY() - layoutEditor.circleRadius,
                 layoutEditor.circleDiameter, layoutEditor.circleDiameter);
     }
 
     //compute the turnout circle control rect at inPoint
-    public Rectangle2D trackControlCircleRectAt(@Nonnull Point2D inPoint) {
+    final public Rectangle2D trackControlCircleRectAt(@Nonnull Point2D inPoint) {
         return new Rectangle2D.Double(inPoint.getX() - layoutEditor.circleRadius,
                 inPoint.getY() - layoutEditor.circleRadius,
                 layoutEditor.circleDiameter, layoutEditor.circleDiameter);
     }
 
-    protected Color getColorForTrackBlock(
+    final protected Color getColorForTrackBlock(
             @CheckForNull LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
         Color result = ColorUtil.CLEAR;  // transparent
         if (layoutBlock != null) {
@@ -168,11 +171,11 @@ public abstract class LayoutTrack {
     }
 
     // optional parameter forceTrack = false
-    protected Color getColorForTrackBlock(@CheckForNull LayoutBlock lb) {
+    final protected Color getColorForTrackBlock(@CheckForNull LayoutBlock lb) {
         return getColorForTrackBlock(lb, false);
     }
 
-    protected Color setColorForTrackBlock(Graphics2D g2,
+    final protected Color setColorForTrackBlock(Graphics2D g2,
             @CheckForNull LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
         Color result = getColorForTrackBlock(layoutBlock, forceBlockTrackColor);
         g2.setColor(result);
@@ -180,7 +183,7 @@ public abstract class LayoutTrack {
     }
 
     // optional parameter forceTrack = false
-    protected Color setColorForTrackBlock(Graphics2D g2, @CheckForNull LayoutBlock lb) {
+    final protected Color setColorForTrackBlock(Graphics2D g2, @CheckForNull LayoutBlock lb) {
         return setColorForTrackBlock(g2, lb, false);
     }
 
@@ -212,10 +215,23 @@ public abstract class LayoutTrack {
     //protected abstract void drawHidden(Graphics2D g2);
     //note: placeholder until I get this implemented in all sub-classes
     //TODO: replace with abstract declaration (above)
-    protected void drawHidden(Graphics2D g2) {
+    final protected void drawHidden(Graphics2D g2) {
         //nothing to do here... move along...
     }
 
+    /**
+     * Load a file for a specific arrow ending.
+     * @return An item for the arrow menu
+     */
+    public JCheckBoxMenuItem loadArrowImageToJCBItem(int n, JMenu arrowsCountMenu) {
+            ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle"+n+".png"));
+            JCheckBoxMenuItem jcbmi = new JCheckBoxMenuItem(imageIcon);
+            arrowsCountMenu.add(jcbmi);
+            jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+            // can't set selected here because the ActionListener has to be set first
+            return jcbmi;
+    }
+    
     /**
      * highlight unconnected connections
      *
@@ -225,7 +241,7 @@ public abstract class LayoutTrack {
     protected abstract void highlightUnconnected(Graphics2D g2, HitPointType specificType);
 
     // optional parameter specificType = NONE
-    protected void highlightUnconnected(Graphics2D g2) {
+    final protected void highlightUnconnected(Graphics2D g2) {
         highlightUnconnected(g2, HitPointType.NONE);
     }
 
@@ -237,34 +253,29 @@ public abstract class LayoutTrack {
     protected abstract void drawEditControls(Graphics2D g2);
 
     /**
-     * draw the turnout controls
+     * Draw the turnout controls
      *
      * @param g2 the graphics context
      */
     protected abstract void drawTurnoutControls(Graphics2D g2);
 
     /**
-     * draw track decorations
+     * Draw track decorations
      *
      * @param g2 the graphics context
      */
-    //protected abstract void drawDecorations(Graphics2D g2);
-    //note: placeholder until I get this implemented in all sub-classes
-    //TODO: replace with abstract declaration (above)
-    protected void drawDecorations(Graphics2D g2) {
-        //nothing to do here... move along...
-    }
+    abstract protected void drawDecorations(Graphics2D g2);
 
     /**
      * Get the hidden state of the track element.
      *
      * @return true if hidden; false otherwise
      */
-    public boolean isHidden() {
+    final public boolean isHidden() {
         return hidden;
     }
 
-    public void setHidden(boolean hide) {
+    final public void setHidden(boolean hide) {
         if (hidden != hide) {
             hidden = hide;
             if (layoutEditor != null) {
@@ -282,7 +293,7 @@ public abstract class LayoutTrack {
      * @param turnoutState of the turnout
      * @return the turnout state string
      */
-    public String getTurnoutStateString(int turnoutState) {
+    final public String getTurnoutStateString(int turnoutState) {
         String result = "";
         if (turnoutState == Turnout.CLOSED) {
             result = Bundle.getMessage("TurnoutStateClosed");
@@ -311,7 +322,7 @@ public abstract class LayoutTrack {
      * @param itemList A list of the attached heads, masts and/or sensors.
      * @param typeKey  The object type such as Turnout, Level Crossing, etc.
      */
-    public void displayRemoveWarningDialog(List<String> itemList, String typeKey) {
+    final public void displayRemoveWarningDialog(List<String> itemList, String typeKey) {
         itemList.sort(null);
         StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel", // NOI18N
                 Bundle.getMessage("DeleteTrackItem", Bundle.getMessage(typeKey))));  // NOI18N
@@ -356,7 +367,7 @@ public abstract class LayoutTrack {
      */
     public abstract void rotateCoords(double angleDEG);
 
-    protected Point2D rotatePoint(@Nonnull Point2D p, double sineRot, double cosineRot) {
+    final protected Point2D rotatePoint(@Nonnull Point2D p, double sineRot, double cosineRot) {
         double cX = center.getX();
         double cY = center.getY();
         double deltaX = p.getX() - cX;
@@ -380,12 +391,12 @@ public abstract class LayoutTrack {
     protected abstract HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected);
 
     // optional useRectangles & requireUnconnected parameters default to false
-    protected HitPointType findHitPointType(@Nonnull Point2D p) {
+    final protected HitPointType findHitPointType(@Nonnull Point2D p) {
         return findHitPointType(p, false, false);
     }
 
     // optional requireUnconnected parameter defaults to false
-    protected HitPointType findHitPointType(@Nonnull Point2D p, boolean useRectangles) {
+    final protected HitPointType findHitPointType(@Nonnull Point2D p, boolean useRectangles) {
         return findHitPointType(p, useRectangles, false);
     }
 
@@ -419,7 +430,7 @@ public abstract class LayoutTrack {
      * @return the popup menu for this layout track
      */
     @Nonnull
-    protected JPopupMenu showPopup(Point2D where) {
+    final protected JPopupMenu showPopup(Point2D where) {
         return this.showPopup(new MouseEvent(
                 layoutEditor.getTargetPanel(), // source
                 MouseEvent.MOUSE_CLICKED, // id
@@ -437,7 +448,7 @@ public abstract class LayoutTrack {
      * @return the popup menu for this layout track
      */
     @Nonnull
-    protected JPopupMenu showPopup() {
+    final protected JPopupMenu showPopup() {
         Point2D where = MathUtil.multiply(getCoordsCenter(),
                 layoutEditor.getZoom());
         return this.showPopup(where);
@@ -488,6 +499,7 @@ public abstract class LayoutTrack {
                 result = (null == getConnection(connectionType));
             } catch (JmriException e) {
                 // this should never happen because isConnectionType() above would have caught an invalid connectionType.
+                log.error("Unexpected exception", e);
             }
         }
         return result;
@@ -497,13 +509,12 @@ public abstract class LayoutTrack {
      * return a list of the available connections for this layout track
      *
      * @return the list of available connections
-     * <p>
-     * note: used by LayoutEditorChecks.setupCheckUnConnectedTracksMenu()
-     * <p>
-     * (This could have just returned a boolean but I thought a list might be
-     * more useful (eventually... not currently being used; we just check to see
-     * if it's not empty.)
      */
+     // note: used by LayoutEditorChecks.setupCheckUnConnectedTracksMenu()
+     //
+     // This could have just returned a boolean but I thought a list might be
+     // more useful (eventually... not currently being used; we just check to see
+     // if it's not empty.)
     @Nonnull
     public abstract List<HitPointType> checkForFreeConnections();
 
@@ -511,9 +522,9 @@ public abstract class LayoutTrack {
      * determine if all the appropriate blocks have been assigned to this track
      *
      * @return true if all appropriate blocks have been assigned
-     * <p>
-     * note: used by LayoutEditorChecks.setupCheckUnBlockedTracksMenu()
      */
+     // note: used by LayoutEditorChecks.setupCheckUnBlockedTracksMenu()
+     //
     public abstract boolean checkForUnAssignedBlocks();
 
     /**
@@ -530,9 +541,9 @@ public abstract class LayoutTrack {
      *
      * @param blockNamesToTrackNameSetMaps hashmap of key:block names to lists
      *                                     of track name sets for those blocks
-     * <p>
-     * note: used by LayoutEditorChecks.setupCheckNonContiguousBlocksMenu()
      */
+     // note: used by LayoutEditorChecks.setupCheckNonContiguousBlocksMenu()
+     //
     public abstract void checkForNonContiguousBlocks(
             @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetMaps);
 
@@ -554,5 +565,5 @@ public abstract class LayoutTrack {
      */
     public abstract void setAllLayoutBlocks(LayoutBlock layoutBlock);
 
-    //private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrack.class);
 }

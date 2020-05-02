@@ -69,20 +69,20 @@ public class TrackSegment extends LayoutTrack {
 
         //validate input
         if ((c1 == null) || (c2 == null)) {
-            log.error("Invalid object in TrackSegment constructor call - " + id);
+            log.error("Invalid object in TrackSegment constructor call - {}", id);
         }
 
         if (HitPointType.isConnectionHitType(t1)) {
             connect1 = c1;
             type1 = t1;
         } else {
-            log.error("Invalid connect type 1 ('" + t1 + "') in TrackSegment constructor - " + id);
+            log.error("Invalid connect type 1 ('{}') in TrackSegment constructor - {}", t1, id);
         }
         if (HitPointType.isConnectionHitType(t2)) {
             connect2 = c2;
             type2 = t2;
         } else {
-            log.error("Invalid connect type 2 ('" + t2 + "') in TrackSegment constructor - " + id);
+            log.error("Invalid connect type 2 ('{}') in TrackSegment constructor - {}", t2, id);
         }
 
         mainline = main;
@@ -944,60 +944,17 @@ public class TrackSegment extends LayoutTrack {
             });
             jcbmi.setSelected(arrowStyle == 0);
 
-            ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle1.png"));
-            jcbmi = new JCheckBoxMenuItem(imageIcon);
-            arrowsCountMenu.add(jcbmi);
-            jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowStyle(1);
-            });
-            jcbmi.setSelected(arrowStyle == 1);
-
-            imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle2.png"));
-            jcbmi = new JCheckBoxMenuItem(imageIcon);
-            arrowsCountMenu.add(jcbmi);
-            jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowStyle(2);
-            });
-            jcbmi.setSelected(arrowStyle == 2);
-
-            imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle3.png"));
-            jcbmi = new JCheckBoxMenuItem(imageIcon);
-            arrowsCountMenu.add(jcbmi);
-            jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowStyle(3);
-            });
-            jcbmi.setSelected(arrowStyle == 3);
-
-            imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle4.png"));
-            jcbmi = new JCheckBoxMenuItem(imageIcon);
-            arrowsCountMenu.add(jcbmi);
-            jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowStyle(4);
-            });
-            jcbmi.setSelected(arrowStyle == 4);
-
-            imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle5.png"));
-            jcbmi = new JCheckBoxMenuItem(imageIcon);
-            arrowsCountMenu.add(jcbmi);
-            jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                setArrowStyle(5);
-            });
-            jcbmi.setSelected(arrowStyle == 5);
+            // configure the arrows
+            for (int i = 1; i<=5; i++) {
+                jcbmi = loadArrowImageToJCBItem(i, arrowsCountMenu);
+                final int n = i;
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
+                    setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
+                    setArrowStyle(n);
+                });
+                jcbmi.setSelected(arrowStyle == i);            
+            }
 
             if (hasEC1 && hasEC2) {
                 JMenu arrowsEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
@@ -1942,17 +1899,30 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public static final int SHOWCON = 0x01;
-    public static final int HIDECON = 0x02;     //flag set on a segment basis
-    public static final int HIDECONALL = 0x04;  //Used by layout editor for hiding all
+    public static final int HIDECON = 0x02;     // flag set on a segment basis.
+    public static final int HIDECONALL = 0x04;  // Used by layout editor for hiding all
 
     public int showConstructionLine = SHOWCON;
 
+    /**
+     * @return true if HIDECON is not set and HIDECONALL is not set
+     */
     public boolean isShowConstructionLines() {
         return (((showConstructionLine & HIDECON) != HIDECON)
                 && ((showConstructionLine & HIDECONALL) != HIDECONALL));
     }
 
-    //Methods used by Layout Editor
+    /**
+     * Method used by LayoutEditor.
+     * <p>
+     * If the argument is 
+     * <ul>
+     * <li>HIDECONALL then set HIDECONALL
+     * <li>SHOWCON reset HIDECONALL is set, other wise set SHOWCON
+     * <li>HIDECON or otherwise set HIDECON
+     * </ul>
+     * Then always redraw the LayoutEditor panel and set it dirty.
+     */
     public void hideConstructionLines(int hide) {
         if (hide == HIDECONALL) {
             showConstructionLine |= HIDECONALL;
@@ -1969,6 +1939,9 @@ public class TrackSegment extends LayoutTrack {
         layoutEditor.setDirty();
     }
 
+    /**
+     * @return true if SHOWCON is not set
+     */
     public boolean hideConstructionLines() {
         return ((showConstructionLine & SHOWCON) != SHOWCON);
     }
@@ -3004,6 +2977,13 @@ public class TrackSegment extends LayoutTrack {
     /*======================*\
     |* decoration accessors *|
     \*======================*/
+    
+    // Although the superclass LayoutTrack stores decorators in a Map,
+    // here we store them in specific variables like arrowStyle, bridgeSideRight, etc.
+    // We convert to and from the map during the getDecorations, setDecorations 
+    // and hasDecorations calls.
+    
+    /** {@inheritDoc} */
     @Override
     public boolean hasDecorations() {
         return ((arrowStyle > 0)
@@ -3012,11 +2992,7 @@ public class TrackSegment extends LayoutTrack {
                 || (tunnelSideLeft || tunnelSideRight));
     }
 
-    /**
-     * Get decorations
-     *
-     * @return decorations to set
-     */
+    /** {@inheritDoc} */
     @Override
     public Map<String, String> getDecorations() {
         if (decorations == null) {
@@ -3134,13 +3110,9 @@ public class TrackSegment extends LayoutTrack {
             decorations.put("tunnel", String.join(";", tunnelValues));
         }   //if (tunnelSideLeft || tunnelSideRight)
         return decorations;
-    } //getDecorations
+    } 
 
-    /**
-     * Set decorations
-     *
-     * @param decorations to set
-     */
+    /** {@inheritDoc} */
     @Override
     public void setDecorations(Map<String, String> decorations) {
         Color defaultTrackColor = layoutEditor.getDefaultTrackColorColor();
@@ -3300,7 +3272,7 @@ public class TrackSegment extends LayoutTrack {
                             String valueString = value.substring(value.lastIndexOf("=") + 1);
                             length = Integer.parseInt(valueString);
                         } else {
-                            log.debug("bumper value ignored: " + value);
+                            log.debug("bumper value ignored: {}", value);
                         }
                     }
                     atStop |= !atStart;   //if atStart is false make atStop true
@@ -3348,7 +3320,7 @@ public class TrackSegment extends LayoutTrack {
                             String valueString = value.substring(value.lastIndexOf("=") + 1);
                             floorWidth = Integer.parseInt(valueString);
                         } else {
-                            log.debug("tunnel value ignored: " + value);
+                            log.debug("tunnel value ignored: {}", value);
                         }
                     }
                     //these both can't be false
@@ -3366,19 +3338,28 @@ public class TrackSegment extends LayoutTrack {
                     setTunnelFloorWidth(floorWidth);
                 } //if (tunnelValue != null)
                 else {
-                    log.debug("Unknown decoration key: " + key + ", value: " + entry.getValue());
+                    log.debug("Unknown decoration key: {}, value: {}", key, entry.getValue());
                 }
             }   //for (Map.Entry<String, String> entry : decorations.entrySet())
         } //if (decorathions != null)
     }   //setDirections
 
-    //
-    //arrow decoration accessors
-    //
+    /** 
+     * Arrow decoration accessor.
+     * The 0 (none) and 1 through 5 arrow decorations are keyed to 
+     * files like program:resources/icons/decorations/ArrowStyle1.png
+     * et al.
+     */
     public int getArrowStyle() {
         return arrowStyle;
     }
 
+    /** 
+     * Set the arrow decoration.
+     * The 0 (none) and 1 through 5 arrow decorations are keyed to 
+     * files like program:resources/icons/decorations/ArrowStyle1.png
+     * et al.
+     */
     public void setArrowStyle(int newVal) {
         if (arrowStyle != newVal) {
             if (newVal > 0) {
@@ -3976,9 +3957,6 @@ public class TrackSegment extends LayoutTrack {
                             LayoutEditor.getCoords(getConnect2(), type2)));
                     results.add(lc);
                 }
-            } else {
-                //this is routinely reached in normal operations
-                //(nothing to see here... move along)
             }
         }   //if (lb1 != null)
         return results;
@@ -3989,8 +3967,6 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public List<HitPointType> checkForFreeConnections() {
-        //Track Segments always have all their connections so...
-        //(nothing to see here... move along)
         return new ArrayList<>();
     }
 
@@ -4087,5 +4063,5 @@ public class TrackSegment extends LayoutTrack {
         setLayoutBlock(layoutBlock);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegment.class);
 }

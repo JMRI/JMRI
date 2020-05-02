@@ -167,7 +167,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                 }
                 bb = BlockBossLogic.getStoppedObject(signalName);
             } catch (Exception e) {
-                log.error("An error occurred trying to find the signal for the signal elements for " + block.getAttributeValue("signal"), e);
+                log.error("An error occurred trying to find the signal for the signal elements for {}", block.getAttributeValue("signal"), e);
                 result = false;
             }
             if (bb != null) {
@@ -175,7 +175,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                     try {
                         bb.setApproachSensor1(block.getAttributeValue("approachsensor1"));
                     } catch (java.lang.IllegalArgumentException e) {
-                        log.error("An error occurred loading the approach sensor for the signal elements for " + bb.getDrivenSignal());
+                        log.error("An error occurred loading the approach sensor for the signal elements for {}", bb.getDrivenSignal());
                         result = false;
                     }
                 }
@@ -183,7 +183,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                     try {
                         bb.setSensor1(block.getAttributeValue("watchedsensor"));
                     } catch (java.lang.IllegalArgumentException e) {
-                        log.error("An error occurred loading the watched sensor in the SSL for " + bb.getDrivenSignal());
+                        log.error("An error occurred loading the watched sensor in the SSL for {}", bb.getDrivenSignal());
                         result = false;
                     }
                 }
@@ -217,7 +217,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                         bb.setSensor1(sl.get(0).getText());
                     }
                 } catch (java.lang.IllegalArgumentException e) {
-                    log.error("An error occurred loading the sensor1 list in the SSL for " + bb.getDrivenSignal());
+                    log.error("An error occurred loading the sensor1 list in the SSL for {}", bb.getDrivenSignal());
                     result = false;
                 }
 
@@ -226,7 +226,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                         bb.setSensor2(sl.get(1).getText());
                     }
                 } catch (java.lang.IllegalArgumentException e) {
-                    log.error("An error occurred loading the sensor2 list in the SSL for " + bb.getDrivenSignal());
+                    log.error("An error occurred loading the sensor2 list in the SSL for {}", bb.getDrivenSignal());
                     result = false;
                 }
 
@@ -235,7 +235,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                         bb.setSensor3(sl.get(2).getText());
                     }
                 } catch (java.lang.IllegalArgumentException e) {
-                    log.error("An error occurred loading the sensor3 list in the SSL for " + bb.getDrivenSignal());
+                    log.error("An error occurred loading the sensor3 list in the SSL for {}", bb.getDrivenSignal());
                     result = false;
                 }
 
@@ -244,7 +244,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                         bb.setSensor4(sl.get(3).getText());
                     }
                 } catch (java.lang.IllegalArgumentException e) {
-                    log.error("An error occurred loading the sensor4 list in the SSL for " + bb.getDrivenSignal());
+                    log.error("An error occurred loading the sensor4 list in the SSL for {}", bb.getDrivenSignal());
                     result = false;
                 }
 
@@ -253,7 +253,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                         bb.setSensor5(sl.get(4).getText());
                     }
                 } catch (java.lang.IllegalArgumentException e) {
-                    log.error("An error occurred loading the sensor5 list in the SSL for " + bb.getDrivenSignal());
+                    log.error("An error occurred loading the sensor5 list in the SSL for {}", bb.getDrivenSignal());
                     result = false;
                 }
 
@@ -279,7 +279,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                             bb.setTurnout(block.getAttributeValue("watchedturnout"));
                         }
                     } catch (java.lang.IllegalArgumentException e) {
-                        log.error("An error occurred in retrieving the watched turnout (" + block.getAttributeValue("watchedturnout") + ")element attribute list for " + bb.getDrivenSignal());
+                        log.error("An error occurred in retrieving the watched turnout ({})element attribute list for {}", block.getAttributeValue("watchedturnout"), bb.getDrivenSignal());
                         result = false;
                     }
 
@@ -289,7 +289,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                                     block.getAttribute("useflashyellow").getBooleanValue());
                         }
                     } catch (java.lang.IllegalArgumentException e) {
-                        log.error("An error occurred in retrieving the watched signal 1 (" + block.getAttributeValue("watchedsignal1") + ")element attribute list for " + bb.getDrivenSignal());
+                        log.error("An error occurred in retrieving the watched signal 1 ({})element attribute list for {}", block.getAttributeValue("watchedsignal1"), bb.getDrivenSignal());
                         result = false;
                     }
 
@@ -298,7 +298,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                             bb.setWatchedSignal1Alt(block.getAttributeValue("watchedsignal1alt"));
                         }
                     } catch (java.lang.IllegalArgumentException e) {
-                        log.error("An error occurred in retrieving the watched signal 1 alt (" + block.getAttributeValue("watchedsignal1alt") + ")element attribute list for " + bb.getDrivenSignal());
+                        log.error("An error occurred in retrieving the watched signal 1 alt ({})element attribute list for {}", block.getAttributeValue("watchedsignal1alt"), bb.getDrivenSignal());
                         result = false;
                     }
 
@@ -308,7 +308,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                         }
 
                     } catch (java.lang.IllegalArgumentException e) {
-                        log.error("An error occurred in retrieving the watched signal 2 (" + block.getAttributeValue("watchedsignal2") + ")element attribute list for " + bb.getDrivenSignal());
+                        log.error("An error occurred in retrieving the watched signal 2 ({})element attribute list for {}", block.getAttributeValue("watchedsignal2"), bb.getDrivenSignal());
                         result = false;
                     }
 
@@ -317,7 +317,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                             bb.setWatchedSignal2Alt(block.getAttributeValue("watchedsignal2alt"));
                         }
                     } catch (java.lang.IllegalArgumentException e) {
-                        log.error("An error occurred in retrieving the watched signal 2 alt (" + block.getAttributeValue("watchedsignal2alt") + ") element attribute list for " + bb.getDrivenSignal());
+                        log.error("An error occurred in retrieving the watched signal 2 alt ({}) element attribute list for {}", block.getAttributeValue("watchedsignal2alt"), bb.getDrivenSignal());
                         result = false;
                     }
 
@@ -326,7 +326,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                             bb.setWatchedSensor1(block.getAttributeValue("watchedsensor1"));
                         }
                     } catch (java.lang.IllegalArgumentException e) {
-                        log.error("An error occurred in retrieving the watched sensor 1 (" + block.getAttributeValue("watchedsensor1") + ") element attribute list for " + bb.getDrivenSignal());
+                        log.error("An error occurred in retrieving the watched sensor 1 ({}) element attribute list for {}", block.getAttributeValue("watchedsensor1"), bb.getDrivenSignal());
                         result = false;
                     }
 
@@ -335,7 +335,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                             bb.setWatchedSensor1Alt(block.getAttributeValue("watchedsensor1alt"));
                         }
                     } catch (java.lang.IllegalArgumentException e) {
-                        log.error("An error occurred in retrieving the watched sensor 1 alt (" + block.getAttributeValue("watchedsensor1alt") + ") element attribute list for " + bb.getDrivenSignal());
+                        log.error("An error occurred in retrieving the watched sensor 1 alt ({}) element attribute list for {}", block.getAttributeValue("watchedsensor1alt"), bb.getDrivenSignal());
                         result = false;
                     }
                     try {
@@ -343,7 +343,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                             bb.setWatchedSensor2(block.getAttributeValue("watchedsensor2"));
                         }
                     } catch (java.lang.IllegalArgumentException e) {
-                        log.error("An error occurred in retrieving the watched sensor 2 (" + block.getAttributeValue("watchedsensor2") + ") element attribute list for " + bb.getDrivenSignal());
+                        log.error("An error occurred in retrieving the watched sensor 2 ({}) element attribute list for {}", block.getAttributeValue("watchedsensor2"), bb.getDrivenSignal());
                         result = false;
                     }
                     try {
@@ -351,7 +351,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                             bb.setWatchedSensor2Alt(block.getAttributeValue("watchedsensor2alt"));
                         }
                     } catch (java.lang.IllegalArgumentException e) {
-                        log.error("An error occurred in retrieving the watched sensor 2 alt (" + block.getAttributeValue("watchedsensor2alt") + ")element attribute list for " + bb.getDrivenSignal());
+                        log.error("An error occurred in retrieving the watched sensor 2 alt ({})element attribute list for {}", block.getAttributeValue("watchedsensor2alt"), bb.getDrivenSignal());
                         result = false;
                     }
                     // load comment, if present
@@ -361,7 +361,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                     }
 
                 } catch (org.jdom2.DataConversionException e) {
-                    log.warn("error reading blocks from file" + e);
+                    log.warn("error reading blocks from file{}", e);
                     result = false;
                 } catch (java.lang.IllegalArgumentException e) {
                     log.error("An error occurred in the signal element attribute list");
@@ -371,7 +371,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
                     bb.retain();
                     bb.start();
                 } catch (java.lang.NullPointerException e) {
-                    log.error("An error occurred trying to start the signal logic " + bb.getDrivenSignal());
+                    log.error("An error occurred trying to start the signal logic {}", bb.getDrivenSignal());
                     result = false;
                 }
             }

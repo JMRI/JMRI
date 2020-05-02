@@ -165,5 +165,5 @@ public class PositionablePointXml extends AbstractXmlAdapter {
         p.getLayoutTracks().add(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePointXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointXml.class);
 }

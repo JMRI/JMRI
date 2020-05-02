@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Vector;
 import javax.annotation.Nonnull;
 import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
@@ -832,7 +831,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             return false;
         }
         if (t.getPropertyChangeListeners().length > 0) {
-            log.debug("Throttle {} still has active propertyChangeListeners registered to the throttle",t.getLocoAddress());
+            log.debug("Throttle {} still has {} active propertyChangeListeners registered to the throttle",t.getLocoAddress(), t.getPropertyChangeListeners().length);
             return false;
         }
         if (addressThrottles.containsKey(la)) {

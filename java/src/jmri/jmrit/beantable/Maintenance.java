@@ -437,7 +437,7 @@ public class Maintenance {
     static boolean search(String name, JTextArea text) {
         String[] names = getTypeAndNames(name);
         if (log.isDebugEnabled()) {
-            log.debug("search for " + name + " as " + names[0] + " \"" + names[1] + "\" (" + names[2] + ")");
+            log.debug("search for {} as {} \"{}\" ({})", name, names[0], names[1], names[2]);
         }
         if (names[0].length() == 0) {
             if (text != null) {
@@ -461,7 +461,7 @@ public class Maintenance {
             String sName = iter1.next();
             Logix x = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(sName);
             if (x == null) {
-                log.error("Error getting Logix  - " + sName);
+                log.error("Error getting Logix  - {}", sName);
                 break;
             }
             tempText = new StringBuilder();
@@ -476,7 +476,7 @@ public class Maintenance {
                 }
                 Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(sName);
                 if (c == null) {
-                    log.error("Invalid conditional system name - " + sName);
+                    log.error("Invalid conditional system name - {}", sName);
                     break;
                 }
                 uName = c.getUserName();
@@ -580,7 +580,7 @@ public class Maintenance {
             String sName = iter1.next();
             jmri.Route r = routeManager.getBySystemName(sName);
             if (r == null) {
-                log.error("Error getting Route  - " + sName);
+                log.error("Error getting Route  - {}", sName);
                 break;
             }
             String uName = r.getUserName();
@@ -647,7 +647,7 @@ public class Maintenance {
             String sName = iter1.next();
             jmri.Transit transit = transitManager.getBySystemName(sName);
             if (transit == null) {
-                log.error("Error getting Transit - " + sName);
+                log.error("Error getting Transit - {}", sName);
                 break;
             }
             String uName = transit.getUserName();
@@ -763,7 +763,7 @@ public class Maintenance {
             String sName = iter1.next();
             jmri.Section section = sectionManager.getBySystemName(sName);
             if (section == null) {
-                log.error("Error getting Section - " + sName);
+                log.error("Error getting Section - {}", sName);
                 break;
             }
             String uName = section.getUserName();
@@ -900,7 +900,7 @@ public class Maintenance {
             String sName = iter1.next();
             jmri.jmrit.display.layoutEditor.LayoutBlock lb = lbm.getBySystemName(sName);
             if (lb == null) {
-                log.error("Error getting LayoutBlock - " + sName);
+                log.error("Error getting LayoutBlock - {}", sName);
                 break;
             }
             String uName = lb.getUserName();
@@ -1055,7 +1055,7 @@ public class Maintenance {
             String sName = iter1.next();
             jmri.Conditional c = conditionalManager.getBySystemName(sName);
             if (c == null) {
-                log.error("Error getting Condition - " + sName);
+                log.error("Error getting Condition - {}", sName);
                 break;
             }
             String uName = c.getUserName();

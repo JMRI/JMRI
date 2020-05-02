@@ -2,10 +2,8 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.*;
-import jmri.BlockManager;
-import jmri.InstanceManager;
+
 import jmri.JmriException;
-import jmri.ShutDownManager;
 import jmri.util.*;
 import org.junit.*;
 
@@ -14,9 +12,7 @@ import org.junit.*;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class PositionablePointTest {
-
-    private LayoutEditor le = null;
+public class PositionablePointTest extends LayoutTrackTest {
 
     @Test
     public void testCtor() {
@@ -268,7 +264,7 @@ public class PositionablePointTest {
             Assert.fail("No exception thrown on pp.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("test.getConnection(NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw test.getConnection(NONE); Invalid Connection Type");
 
         try {
             // test valid connection type (null value)
@@ -293,7 +289,7 @@ public class PositionablePointTest {
             Assert.fail("No exception thrown on pp.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("test.setConnection(NONE, null, NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw test.setConnection(NONE, null, NONE); Invalid Connection Type");
 
         try {
             // test invalid object type
@@ -301,7 +297,7 @@ public class PositionablePointTest {
             Assert.fail("No exception thrown on pp.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("test.setConnection(POS_POINT, null, POS_POINT); unexpected type");
+        JUnitAppender.assertErrorMessage("will throw test.setConnection(POS_POINT, null, POS_POINT); unexpected type");
 
         try {
             // test valid types
@@ -379,20 +375,12 @@ public class PositionablePointTest {
 
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
-        if (!GraphicsEnvironment.isHeadless()) {
-            le = new LayoutEditor();
-        }
+        super.setUp();
     }
 
     @After
     public void tearDown() {
-        if (le != null) {
-            JUnitUtil.dispose(le);
-        }
-        le = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 }

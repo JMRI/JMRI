@@ -52,8 +52,8 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
     public Measurement convert(Reading r) {
 
         if (log.isDebugEnabled()) {
-            log.debug("Reading: " + r.toString());
-            log.debug("Sensors: " + sensors.length);
+            log.debug("Reading: {}", r.toString());
+            log.debug("Sensors: {}", sensors.length);
             if (sensors.length >= 1 && sensors[0] != null) {
                 log.debug("Sensor[0]: {},{},{}", sensors[0].x, sensors[0].y, sensors[0].z);
             }
@@ -75,7 +75,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
 
         nr = r.getNValues();
         if (nr != sensors.length - 1) {
-            log.error("Mismatch: " + nr + " readings, " + (sensors.length - 1) + " receivers");
+            log.error("Mismatch: {} readings, {} receivers", nr, sensors.length - 1);
         }
         nr = Math.min(nr, sensors.length - 1); // accept the shortest
 
@@ -108,7 +108,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
         Zt = result[2];
 
         // Vs = result.vs;
-        log.debug("Result x = " + Xt + " y = " + Yt + " z0 = " + Zt + " time offset=" + result[3]);
+        log.debug("Result x = {} y = {} z0 = {} time offset={}", Xt, Yt, Zt, result[3]);
         return new Measurement(r, Xt, Yt, Zt, Vs, nr, "Analytic_A");
     }
 
@@ -257,7 +257,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
 
             // display how close
             if (log.isDebugEnabled()) {
-                log.debug("  after " + it + ", delta is " + ((Math.abs(D[0]) + Math.abs(D[1]) + Math.abs(D[2]))));
+                log.debug("  after {}, delta is {}", it, Math.abs(D[0]) + Math.abs(D[1]) + Math.abs(D[2]));
             }
         } while ((it < 6) //there is something wrong if more than 6 iterations are required
                 && ((Math.abs(D[0]) + Math.abs(D[1]) + Math.abs(D[2])) >= 1.0E-2));  //iteration criterion
@@ -265,7 +265,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
         double Cr = D[3]; //receiver clock error
 
         if (it >= 6) {
-            log.error("Can't solve, iteration limit exceeded.  it = " + it);
+            log.error("Can't solve, iteration limit exceeded.  it = {}", it);
             return null;
         }
 

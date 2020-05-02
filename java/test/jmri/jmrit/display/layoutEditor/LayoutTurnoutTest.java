@@ -11,7 +11,7 @@ import org.junit.*;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class LayoutTurnoutTest {
+public class LayoutTurnoutTest extends LayoutTrackTest {
 
     private static LayoutEditor layoutEditor = null;
     private LayoutTurnout ltRH = null;
@@ -574,7 +574,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltRH.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Right Hand.getConnection(NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw Right Hand.getConnection(NONE); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltLH.getConnection(invalid type) is null",
@@ -582,7 +582,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltLH.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Left Hand.getConnection(NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw Left Hand.getConnection(NONE); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltWY.getConnection(invalid type) is null",
@@ -590,7 +590,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltWY.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Wye.getConnection(NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw Wye.getConnection(NONE); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltDX.getConnection(invalid type) is null",
@@ -598,7 +598,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltDX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Double XOver.getConnection(NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw Double XOver.getConnection(NONE); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltRX.getConnection(invalid type) is null",
@@ -606,7 +606,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltRX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Right Hand XOver.getConnection(NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw Right Hand XOver.getConnection(NONE); Invalid Connection Type");
 
         try {
             Assert.assertNull("ltLX.getConnection(invalid type) is null",
@@ -614,7 +614,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltLX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Left Hand XOver.getConnection(NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw Left Hand XOver.getConnection(NONE); Invalid Connection Type");
     }
 
     @Test
@@ -676,7 +676,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltRH.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Right Hand.setConnection(NONE, null, NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw Right Hand.setConnection(NONE, null, NONE); Invalid Connection Type");
 
         try {
             // test unexpected type
@@ -684,7 +684,7 @@ public class LayoutTurnoutTest {
             Assert.fail("No exception thrown on ltRH.setConnection(unexpected type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("Right Hand.setConnection(POS_POINT, null, POS_POINT); unexpected type");
+        JUnitAppender.assertErrorMessage("will throw Right Hand.setConnection(POS_POINT, null, POS_POINT); unexpected type");
 
         try {
             // test valid types
@@ -1099,39 +1099,33 @@ public class LayoutTurnoutTest {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             Point2D point = new Point2D.Double(150.0, 100.0);
             Point2D delta = new Point2D.Double(50.0, 75.0);
 
-            ltRH = new LayoutTurnout("Right Hand",
-                    LayoutTurnout.TurnoutType.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
+            ltRH = new LayoutRHTurnout("Right Hand", point, 33.0, 1.1, 1.2, layoutEditor);
 
             point = MathUtil.add(point, delta);
-            ltLH = new LayoutTurnout("Left Hand",
-                    LayoutTurnout.TurnoutType.LH_TURNOUT, point, 66.0, 1.3, 1.4, layoutEditor);
+            ltLH = new LayoutLHTurnout("Left Hand", point, 66.0, 1.3, 1.4, layoutEditor);
 
             point = MathUtil.add(point, delta);
-            ltWY = new LayoutTurnout("Wye",
-                    LayoutTurnout.TurnoutType.WYE_TURNOUT, point, 99.0, 1.5, 1.6, layoutEditor);
+            ltWY = new LayoutWye("Wye", point, 99.0, 1.5, 1.6, layoutEditor);
 
             point = MathUtil.add(point, delta);
-            ltDX = new LayoutTurnout("Double XOver",
-                    LayoutTurnout.TurnoutType.DOUBLE_XOVER, point, 132.0, 1.7, 1.8, layoutEditor);
+            ltDX = new LayoutDoubleXOver("Double XOver", point, 132.0, 1.7, 1.8, layoutEditor);
 
             point = MathUtil.add(point, delta);
-            ltRX = new LayoutTurnout("Right Hand XOver",
-                    LayoutTurnout.TurnoutType.RH_XOVER, point, 165.0, 1.9, 2.0, layoutEditor);
+            ltRX = new LayoutRHXOver("Right Hand XOver", point, 165.0, 1.9, 2.0, layoutEditor);
 
             point = MathUtil.add(point, delta);
-            ltLX = new LayoutTurnout("Left Hand XOver",
-                    LayoutTurnout.TurnoutType.LH_XOVER, point, 198.0, 2.1, 2.2, layoutEditor);
+            ltLX = new LayoutLHXOver("Left Hand XOver", point, 198.0, 2.1, 2.2, layoutEditor);
         }
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         if (ltRH != null) {
             ltRH.remove();
             ltRH.dispose();
@@ -1164,5 +1158,5 @@ public class LayoutTurnoutTest {
         }
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LayoutSlipTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnoutTest.class);
 }

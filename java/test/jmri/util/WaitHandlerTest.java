@@ -180,7 +180,7 @@ public class WaitHandlerTest {
         Assert.assertTrue("ended", flag2);
 
         if (THREAD_DELAY <= endTime - startTime) {
-            log.error("run time not shortened: " + (endTime - startTime));
+            log.error("run time not shortened: {}", endTime - startTime);
         }
         Assert.assertTrue("run time shortened", THREAD_DELAY > endTime - startTime);
     }

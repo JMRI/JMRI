@@ -34,7 +34,7 @@ public class XpaThrottle extends AbstractThrottle {
         this.speedvalue = 0;
         tc = t;
         if (log.isDebugEnabled()) {
-            log.debug("XpaThrottle constructor called for address " + address);
+            log.debug("XpaThrottle constructor called for address {}", address);
         }
     }
 

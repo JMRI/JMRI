@@ -475,7 +475,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             }
             RosterEntry rosterEntry = addressPanel.getRosterEntry();
             if ((rosterEntry != null) && (log.isDebugEnabled())) {
-                log.debug("RosterEntry found: " + rosterEntry.getId());
+                log.debug("RosterEntry found: {}", rosterEntry.getId());
             }
             int maxi = 0; // the number of function buttons defined for this entry
             for (int i = 0; i < FunctionPanel.NUM_FUNCTION_BUTTONS; i++) {
@@ -488,11 +488,11 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                             (Object[]) null);
                     functionButton[i].setState(state.booleanValue()); // reset button state
                 } catch (java.lang.NoSuchMethodException ex1) {
-                    log.warn("Exception in notifyThrottleFound: " + ex1);
+                    log.warn("Exception in notifyThrottleFound: {}", ex1);
                 } catch (java.lang.IllegalAccessException ex2) {
-                    log.warn("Exception in notifyThrottleFound: " + ex2);
+                    log.warn("Exception in notifyThrottleFound: {}", ex2);
                 } catch (java.lang.reflect.InvocationTargetException ex3) {
-                    log.warn("Exception in notifyThrottleFound: " + ex3);
+                    log.warn("Exception in notifyThrottleFound: {}", ex3);
                 }
                 if (rosterEntry != null) { // from here, update button text with roster data
                     String text = rosterEntry.getFunctionLabel(i);

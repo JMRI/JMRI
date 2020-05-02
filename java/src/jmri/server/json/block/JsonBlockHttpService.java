@@ -17,7 +17,6 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.ProvidingManager;
-import jmri.Reportable;
 import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.Sensor;

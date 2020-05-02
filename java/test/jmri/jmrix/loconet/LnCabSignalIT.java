@@ -3,7 +3,6 @@ package jmri.jmrix.loconet;
 import jmri.BlockManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
-import jmri.ShutDownManager;
 import jmri.SignalMastManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;

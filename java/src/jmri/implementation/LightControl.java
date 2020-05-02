@@ -508,8 +508,7 @@ public class LightControl {
                             provideTurnout(_controlTurnoutName);
                 } catch (IllegalArgumentException e) {
                     // control turnout does not exist
-                    log.error("Light " + _parentLight.getSystemName()
-                            + " is linked to a Turnout that does not exist: " + _controlSensorName);
+                    log.error("Light {} is linked to a Turnout that does not exist: {}", _parentLight.getSystemName(), _controlSensorName);
                     return;
                 }
                 // set light based on current turnout state if known
@@ -540,8 +539,7 @@ public class LightControl {
                     _active = true;
                 } else {
                     // timed control sensor does not exist
-                    log.error("Light " + _parentLight.getSystemName()
-                            + " is linked to a Sensor that does not exist: " + _timedSensorName);
+                    log.error("Light {} is linked to a Sensor that does not exist: {}", _parentLight.getSystemName(), _timedSensorName);
                 }
                 break;
             case Light.TWO_SENSOR_CONTROL:
@@ -566,8 +564,7 @@ public class LightControl {
                     _active = true;
                 } else {
                     // at least one control sensor does not exist
-                    log.error("Light " + _parentLight.getSystemName()
-                            + " with 2 Sensor Control is linked to a Sensor that does not exist.");
+                    log.error("Light {} with 2 Sensor Control is linked to a Sensor that does not exist.", _parentLight.getSystemName());
                 }
                 break;
             default:

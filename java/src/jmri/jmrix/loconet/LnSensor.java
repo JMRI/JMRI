@@ -96,8 +96,7 @@ public class LnSensor extends AbstractSensor  {
                     // save the state
                     boolean state = ((sw2 & 0x10) != 0) ^ _inverted;
                     if (log.isDebugEnabled()) {
-                        log.debug("INPUT_REP received with valid address, old state "
-                                + getRawState() + " new packet " + state); // NOI18N
+                        log.debug("INPUT_REP received with valid address, old state {} new packet {}", getRawState(), state); // NOI18N
                     }
                     if (state && getRawState() != Sensor.ACTIVE) {
                         if (log.isDebugEnabled()) {

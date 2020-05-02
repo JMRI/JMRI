@@ -16,7 +16,7 @@ public class JsonServerPreferencesPanelTest {
     @Test
     public void testCTor() {
         JsonServerPreferencesPanel t = new JsonServerPreferencesPanel();
-        assertThat(t).isNotNull().withFailMessage("exists");
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
     @BeforeEach

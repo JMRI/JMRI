@@ -35,13 +35,13 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     public XNetOpsModeProgrammer(int pAddress, XNetTrafficController controller) {
         tc = controller;
         if (log.isDebugEnabled()) {
-            log.debug("Creating Ops Mode Programmer for Address " + pAddress);
+            log.debug("Creating Ops Mode Programmer for Address {}", pAddress);
         }
         mAddressLow = LenzCommandStation.getDCCAddressLow(pAddress);
         mAddressHigh = LenzCommandStation.getDCCAddressHigh(pAddress);
         mAddress = pAddress;
         if (log.isDebugEnabled()) {
-            log.debug("High Address: " + mAddressHigh + " Low Address: " + mAddressLow);
+            log.debug("High Address: {} Low Address: {}", mAddressHigh, mAddressLow);
         }
         // register as a listener
         tc.addXNetListener(XNetInterface.COMMINFO | XNetInterface.CS_INFO, this);
@@ -209,7 +209,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 

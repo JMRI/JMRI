@@ -557,7 +557,7 @@ public class LayoutEditorFindItems {
                     return findLayoutTurntableByName(name);
                 }
         }
-        log.error("did not find Object '" + name + "' of type " + type);
+        log.error("did not find Object '{}' of type {}", name, type);
         return null;
     }
 
@@ -631,5 +631,5 @@ public class LayoutEditorFindItems {
         return uniqueName(inPrefix, 1);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorFindItems.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorFindItems.class);
 }

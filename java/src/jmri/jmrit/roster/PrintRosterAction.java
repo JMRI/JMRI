@@ -93,12 +93,12 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
                 writer.write(s, 0, s.length());
             }
         } catch (IOException ex) {
-            log.warn("error during printing: " + ex);
+            log.warn("error during printing: {}", ex);
         }
 
         // Loop through the Roster, printing as needed
         List<RosterEntry> l = r.matchingList(null, null, null, null, null, null, null); // take all
-        log.debug("Roster list size: " + l.size());
+        log.debug("Roster list size: {}", l.size());
         for (RosterEntry re : l) {
             if (rosterGroup != null) {
                 if (re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)) != null

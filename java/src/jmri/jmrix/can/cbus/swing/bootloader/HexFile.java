@@ -160,7 +160,7 @@ public class HexFile {
         try {
             return buffIn.read();
         } catch (IOException e) {
-            log.error("I/O Error reading hex file!"+ e.toString());
+            log.error("I/O Error reading hex file!{}", e.toString());
             return 0;
         }
     }
@@ -202,7 +202,7 @@ public class HexFile {
                 throw new IOException(Bundle.getMessage("HexInvalidDigit" + lineNo));
             }
         } catch (IOException e) {
-            log.error("I/O Error reading hex file!"+ e.toString());
+            log.error("I/O Error reading hex file!{}", e.toString());
         }
         return (byte) b;
     }
