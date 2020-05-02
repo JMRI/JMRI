@@ -136,12 +136,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         alt1Button.setEnabled(isEnabled);
         alt2Button.setEnabled(isEnabled);
     }
-    
-    /*   protected void resetFuncButtons(){
-    functionButton = null;
-    initGUI();
-    setEnabled(true);
-    } */
 
     /**
      * Place and initialize all the buttons.

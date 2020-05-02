@@ -411,9 +411,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         }
         if (speedSliderContinuous != null) {
             if (forwardButton.isSelected()) {
-                speedSliderContinuous.setValue(((Integer) speedSlider.getValue()));
+                speedSliderContinuous.setValue(( speedSlider.getValue()));
             } else {
-                speedSliderContinuous.setValue(-((Integer) speedSlider.getValue()));
+                speedSliderContinuous.setValue(-( speedSlider.getValue()));
             }
         }
         internalAdjust = false;
@@ -639,9 +639,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     }
                     if (speedSliderContinuous != null) {
                         if (forwardButton.isSelected()) {
-                            speedSliderContinuous.setValue(((Integer) speedSlider.getValue()));
+                            speedSliderContinuous.setValue(( speedSlider.getValue()));
                         } else {
-                            speedSliderContinuous.setValue(-((Integer) speedSlider.getValue()));
+                            speedSliderContinuous.setValue(-( speedSlider.getValue()));
                         }
                     }
                 }
@@ -1061,9 +1061,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
             if (speedSliderContinuous != null) {
                 if (forwardButton.isSelected()) {
-                    speedSliderContinuous.setValue(((Integer) speedSlider.getValue()));
+                    speedSliderContinuous.setValue(( speedSlider.getValue()));
                 } else {
-                    speedSliderContinuous.setValue(-((Integer) speedSlider.getValue()));
+                    speedSliderContinuous.setValue(-( speedSlider.getValue()));
                 }
             }
             internalAdjust = false;
