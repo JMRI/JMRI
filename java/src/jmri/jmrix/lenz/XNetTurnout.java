@@ -1,8 +1,8 @@
 package jmri.jmrix.lenz;
 
-import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Queue;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -134,7 +134,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         _prefix = prefix;
         mNumber = pNumber;
 
-        requestList = new ArrayDeque<>();
+        requestList = new LinkedList<>();
 
         /* Add additiona feedback types information */
         _validFeedbackTypes |= MONITORING | EXACT | SIGNAL;
@@ -655,7 +655,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     // A queue to hold outstanding messages
     @GuardedBy("this")
-    protected final Deque<RequestMessage> requestList;
+    protected final Queue<RequestMessage> requestList;
 
     /**
      * Send message from queue.
@@ -687,7 +687,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         log.debug("adding message {} to message queue.  Current Internal State {}",m,internalState);
         // put the message in the queue
         RequestMessage msg = new RequestMessage(m, s, l);
-        requestList.offer(msg);
+        // the queue is unbounded; can't throw exceptions 
+        requestList.add(msg);
         // if the state is idle, trigger the message send
         if (internalState == IDLE ) {
             sendQueuedMessage();

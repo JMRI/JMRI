@@ -1,7 +1,6 @@
 package jmri.jmrix.lenz;
 
 import javax.annotation.CheckForNull;
-import javax.annotation.Nullable;
 import jmri.Turnout;
 
 /**
@@ -157,7 +156,6 @@ public class FeedbackItem {
      * item. Returns {@code null} for non-accessory feedbacks.
      * @return instance for the paired accessory, or {@code null}.
      */
-    @Nullable
     public FeedbackItem pairedAccessoryItem() {
         if (!isAccessory()) {
             return null;
