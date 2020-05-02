@@ -79,10 +79,7 @@ No editor for XOver? Not in old code....
             log.error("editLayoutTrack unknown LayoutTrack subclass:" + layoutTrack.getClass().getName());  // NOI18N
         }
 
-<<<<<<< HEAD
 =======
-==================
->>>>>>> test-tools
         levelXingEditor.editLevelXing(levelXing);
 
 Make sure the code is at the right level, i.e. SlipEditor not Double or Single, etc
