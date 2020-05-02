@@ -34,7 +34,7 @@ import jmri.util.MathUtil;
  */
 public class LayoutTrackEditors {
 
-    private LayoutEditor layoutEditor = null;
+    // private LayoutEditor layoutEditor = null;
 
     /**
      * constructor method
