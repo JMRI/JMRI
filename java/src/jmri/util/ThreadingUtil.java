@@ -131,8 +131,8 @@ public class ThreadingUtil {
      * Typical uses:
      * <p>
      * {@code
-     * ThreadingUtil.runOnGUI(() -> {
-     *     mine.setVisible();
+     * Boolean retval = ThreadingUtil.runOnGUIwithReturn(() -> {
+     *     return mine.isVisible();
      * });
      * }
      * <p>
@@ -195,7 +195,7 @@ public class ThreadingUtil {
      * Typical uses:
      * <p>
      * {@code 
-     * ThreadingUtil.runOnGUIEventually( ()->{ 
+     * ThreadingUtil.runOnGUIDelayed( ()->{ 
      *  mine.setVisible(); 
      * }, 1000);
      * }
