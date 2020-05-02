@@ -144,8 +144,6 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Assert.assertFalse("F27 off",(boolean) tm.getThrottleInfo(addr,Throttle.F27));
         Assert.assertFalse("F28 off",(boolean) tm.getThrottleInfo(addr,Throttle.F28));
         
-        JUnitAppender.assertErrorMessageStartsWith("Unrecognised function group");
-        
     }
     
     @Test

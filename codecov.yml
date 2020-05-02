@@ -1,5 +1,17 @@
 codecov:
   ci:
     - !appveyor # ignore CI builds by AppVeyor
-
+coverage:
+  precision: 1
+  round: up
+  status:
+    project:
+      default:
+        # allow a 1% project drop to reduce noise
+        threshold: 1%
+    patch:
+      default:
+        # allow a 1% drop to reduce noise
+        threshold: 1%
+  
 # see https://docs.codecov.io/docs/codecov-yaml#section-default-yaml for defaults
