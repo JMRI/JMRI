@@ -60,10 +60,12 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
      */
     @InvokeOnGuiThread
     public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
-        if ( trackSegment instanceof TrackSegment ) {
+        if ( layoutTrack instanceof TrackSegment ) {
             this.trackSegment = (TrackSegment) layoutTrack;
         } else {
-            log.error("editLayoutTrack called with wrong type {}", layoutTrack, new Exception("traceback"));
+            log.error("editLayoutTrack received type {} content {}", 
+                    layoutTrack.getClass(), layoutTrack, 
+                    new Exception("traceback"));
         }
         sensorList.clear();
 
