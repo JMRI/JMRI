@@ -402,7 +402,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
             dispA.setLocation(layoutEditor.getTurnoutBX(), -0.5 * layoutEditor.getTurnoutWid());
         } else if (type == TurnoutType.DOUBLE_XOVER) {
             if (version == 2) {
-                center = new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
+                super.setCoordsCenter(new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid()));
                 pointB.setLocation(layoutEditor.getXOverLong() * 2, 0);
                 pointC.setLocation(layoutEditor.getXOverLong() * 2, (layoutEditor.getXOverHWid() * 2));
                 pointD.setLocation(0, (layoutEditor.getXOverHWid() * 2));
@@ -413,10 +413,10 @@ abstract public class LayoutTurnout extends LayoutTrack {
             }
         } else if (type == TurnoutType.RH_XOVER) {
             if (version == 2) {
-                center = new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
+                super.setCoordsCenter(new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid()));
                 pointB.setLocation((layoutEditor.getXOverShort() + layoutEditor.getXOverLong()), 0);
                 pointC.setLocation(layoutEditor.getXOverLong() * 2, (layoutEditor.getXOverHWid() * 2));
-                pointD.setLocation((center.getX() - layoutEditor.getXOverShort()), (layoutEditor.getXOverHWid() * 2));
+                pointD.setLocation((getCoordsCenter().getX() - layoutEditor.getXOverShort()), (layoutEditor.getXOverHWid() * 2));
                 setCoordsCenter(c);
             } else {
                 dispB.setLocation(layoutEditor.getXOverShort(), -layoutEditor.getXOverHWid());
@@ -424,9 +424,9 @@ abstract public class LayoutTurnout extends LayoutTrack {
             }
         } else if (type == TurnoutType.LH_XOVER) {
             if (version == 2) {
-                center = new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
+                super.setCoordsCenter(new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid()));
 
-                pointA.setLocation((center.getX() - layoutEditor.getXOverShort()), 0);
+                pointA.setLocation((getCoordsCenter().getX() - layoutEditor.getXOverShort()), 0);
                 pointB.setLocation((layoutEditor.getXOverLong() * 2), 0);
                 pointC.setLocation(layoutEditor.getXOverLong() + layoutEditor.getXOverShort(), (layoutEditor.getXOverHWid() * 2));
                 pointD.setLocation(0, (layoutEditor.getXOverHWid() * 2));
@@ -1482,11 +1482,11 @@ abstract public class LayoutTurnout extends LayoutTrack {
             if (version == 2) {
                 return pointA;
             }
-            return MathUtil.subtract(center, dispA);
+            return MathUtil.subtract(getCoordsCenter(), dispA);
         } else if (getTurnoutType() == TurnoutType.WYE_TURNOUT) {
-            return MathUtil.subtract(center, MathUtil.midPoint(dispB, dispA));
+            return MathUtil.subtract(getCoordsCenter(), MathUtil.midPoint(dispB, dispA));
         } else {
-            return MathUtil.subtract(center, dispB);
+            return MathUtil.subtract(getCoordsCenter(), dispB);
         }
     }
 
@@ -1494,14 +1494,14 @@ abstract public class LayoutTurnout extends LayoutTrack {
         if ((version == 2) && isTurnoutTypeXover()) {
             return pointB;
         }
-        return MathUtil.add(center, dispB);
+        return MathUtil.add(getCoordsCenter(), dispB);
     }
 
     public Point2D getCoordsC() {
         if ((version == 2) && isTurnoutTypeXover()) {
             return pointC;
         }
-        return MathUtil.add(center, dispA);
+        return MathUtil.add(getCoordsCenter(), dispA);
     }
 
     public Point2D getCoordsD() {
@@ -1509,7 +1509,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
             return pointD;
         }
         // only allowed for single and double crossovers
-        return MathUtil.subtract(center, dispB);
+        return MathUtil.subtract(getCoordsCenter(), dispB);
     }
 
     /**
@@ -1517,7 +1517,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
      */
     @Override
     public Point2D getCoordsForConnectionType(HitPointType connectionType) {
-        Point2D result = center;
+        Point2D result = getCoordsCenter();
         switch (connectionType) {
             case TURNOUT_CENTER:
                 break;
@@ -2220,16 +2220,16 @@ abstract public class LayoutTurnout extends LayoutTrack {
      */
     @Override
     public void setCoordsCenter(@Nonnull Point2D p) {
-        Point2D offset = MathUtil.subtract(p, center);
+        Point2D offset = MathUtil.subtract(p, getCoordsCenter());
         pointA = MathUtil.add(pointA, offset);
         pointB = MathUtil.add(pointB, offset);
         pointC = MathUtil.add(pointC, offset);
         pointD = MathUtil.add(pointD, offset);
-        center = p;
+        super.setCoordsCenter(p);
     }
 
     private void reCalculateCenter() {
-        center = MathUtil.midPoint(pointA, pointC);
+        super.setCoordsCenter(MathUtil.midPoint(pointA, pointC));
     }
 
     public void setCoordsA(@Nonnull Point2D p) {
@@ -2237,8 +2237,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
         if (version == 2) {
             reCalculateCenter();
         }
-        double x = center.getX() - p.getX();
-        double y = center.getY() - p.getY();
+        double x = getCoordsCenter().getX() - p.getX();
+        double y = getCoordsCenter().getY() - p.getY();
         if (getTurnoutType() == TurnoutType.DOUBLE_XOVER) {
             dispA = new Point2D.Double(x, y);
             // adjust to maintain rectangle
@@ -2288,8 +2288,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     public void setCoordsB(Point2D p) {
         pointB = p;
-        double x = center.getX() - p.getX();
-        double y = center.getY() - p.getY();
+        double x = getCoordsCenter().getX() - p.getX();
+        double y = getCoordsCenter().getY() - p.getY();
         dispB = new Point2D.Double(-x, -y);
         if ((getTurnoutType() == TurnoutType.DOUBLE_XOVER)
                 || (getTurnoutType() == TurnoutType.WYE_TURNOUT)) {
@@ -2332,8 +2332,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
         if (version == 2) {
             reCalculateCenter();
         }
-        double x = center.getX() - p.getX();
-        double y = center.getY() - p.getY();
+        double x = getCoordsCenter().getX() - p.getX();
+        double y = getCoordsCenter().getY() - p.getY();
         dispA = new Point2D.Double(-x, -y);
         if ((getTurnoutType() == TurnoutType.DOUBLE_XOVER)
                 || (getTurnoutType() == TurnoutType.WYE_TURNOUT)) {
@@ -2375,8 +2375,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
         pointD = p;
 
         // only used for crossovers
-        double x = center.getX() - p.getX();
-        double y = center.getY() - p.getY();
+        double x = getCoordsCenter().getX() - p.getX();
+        double y = getCoordsCenter().getY() - p.getY();
         dispB = new Point2D.Double(x, y);
         if (getTurnoutType() == TurnoutType.DOUBLE_XOVER) {
             // adjust to maintain rectangle
@@ -2413,7 +2413,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     @Override
     public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
+        super.setCoordsCenter(MathUtil.granulize(MathUtil.multiply(getCoordsCenter(), factor), 1.0));
 
         dispA = MathUtil.granulize(MathUtil.multiply(dispA, factor), 1.0);
         dispB = MathUtil.granulize(MathUtil.multiply(dispB, factor), 1.0);
@@ -2430,7 +2430,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     @Override
     public void translateCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        center = MathUtil.add(center, factor);
+        super.setCoordsCenter(MathUtil.add(getCoordsCenter(), factor));
         pointA = MathUtil.add(pointA, factor);
         pointB = MathUtil.add(pointB, factor);
         pointC = MathUtil.add(pointC, factor);
@@ -2448,11 +2448,11 @@ abstract public class LayoutTurnout extends LayoutTrack {
         double cosineRot = Math.cos(rotRAD);
 
         // rotate displacements around origin {0, 0}
-        Point2D center_temp = center;
-        center = MathUtil.zeroPoint2D;
+        Point2D center_temp = getCoordsCenter();
+        super.setCoordsCenter(MathUtil.zeroPoint2D);
         dispA = rotatePoint(dispA, sineRot, cosineRot);
         dispB = rotatePoint(dispB, sineRot, cosineRot);
-        center = center_temp;
+        super.setCoordsCenter(center_temp);
 
         pointA = rotatePoint(pointA, sineRot, cosineRot);
         pointB = rotatePoint(pointB, sineRot, cosineRot);
@@ -2877,7 +2877,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
             JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
-            hiddenCheckBoxMenuItem.setSelected(hidden);
+            hiddenCheckBoxMenuItem.setSelected(isHidden());
             popup.add(hiddenCheckBoxMenuItem);
             hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e1) -> {
                 JCheckBoxMenuItem o = (JCheckBoxMenuItem) e1.getSource();
@@ -4492,9 +4492,9 @@ abstract public class LayoutTurnout extends LayoutTrack {
                 g2.setColor(g2.getBackground());
             }
             if (layoutEditor.isTurnoutFillControlCircles()) {
-                g2.fill(trackControlCircleAt(center));
+                g2.fill(trackControlCircleAt(getCoordsCenter()));
             } else {
-                g2.draw(trackControlCircleAt(center));
+                g2.draw(trackControlCircleAt(getCoordsCenter()));
             }
             //if turnout is not continuing state
             if (getState() != continuingSense) {

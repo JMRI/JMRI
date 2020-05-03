@@ -4,33 +4,71 @@ It's in no particular order, items are removed as done, so please don't consider
 ----
 
 ## MVC work
- -  *View  need a complete set of clases
-    Still to do (mark off when present)
-        View: LayoutTrack.java LayoutTurntable.java LevelXing.java LayoutTurnout.java LayoutWye.java
-            LayoutLHTurnout.java LayoutRHTurnout.java 
-            LayoutSlip.java LayoutSingleSlip.java LayoutDoubleSlip.java 
-            LayoutXOver.java LayoutDoubleXOver.java LayoutLHXOver.java LayoutRHXOver.java
- - prototype the access process - `new` is done in two basic places
- 
- java/src//jmri/jmrit/display/layoutEditor/configurexml/LayoutTurnoutXml.java:                l = new LayoutRHXOver(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
- java/src//jmri/jmrit/display/layoutEditor/LayoutEditor.java:                o = new LayoutRHXOver(name, currentPoint, rot, xScale, yScale, this);
- 
- java/src//jmri/jmrit/display/layoutEditor/configurexml/LayoutTurntableXml.java:        LayoutTurntable l = new LayoutTurntable(name, new Point2D.Double(x, y), p);
- java/src//jmri/jmrit/display/layoutEditor/LayoutEditor.java:        LayoutTurntable lt = new LayoutTurntable(name, pt, this);
+ -  *View  present and running, now start to move code for those methods
+        rename methods left behind to ensure not accessed
 
-(another thing to move out of LayoutEditor class...)
-
-MVC: LayoutEditorComponent is the JComponent in which the *View code lives now
-    gets data from LE with
-        layoutEditor.getLayoutTracks()  
-    List<LayoutTrack> getLayoutTracks()
+MVC: LayoutEditorComponent needs to get Views for PositionablePoints
     
         layoutEditor.getPositionablePoints()
      List<PositionablePoint> getPositionablePoints()
-     
+
+LayoutEditorComponent and LayoutShapes as future problem
         layoutEditor.getLayoutShapes()
-    (future problem)
  
+ 
+============================================================
+
+Encapsulations:
+    LayoutTrack
+        hidden 
+        center
+        ident
+
+Usages from LayoutTrackView:
+
+protected abstract void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
+
+    java/src/jmri/jmrit/display/layoutEditor/LayoutTurnout.java:3442
+    java/src/jmri/jmrit/display/layoutEditor/LayoutTurntable.java:1136
+    java/src/jmri/jmrit/display/layoutEditor/TrackSegment.java:2295
+    java/src/jmri/jmrit/display/layoutEditor/PositionablePoint.java:1760
+    java/src/jmri/jmrit/display/layoutEditor/LevelXing.java:1508
+    java/src/jmri/jmrit/display/layoutEditor/LayoutEditorChecks.java:379
+    java/src/jmri/jmrit/display/layoutEditor/LayoutSlip.java:1093
+
+
+abstract protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement)
+
+    java/src/jmri/jmrit/display/layoutEditor/LayoutTurnout.java:3781
+    java/src/jmri/jmrit/display/layoutEditor/LayoutTurntable.java:1187
+    java/src/jmri/jmrit/display/layoutEditor/TrackSegment.java:2328
+    java/src/jmri/jmrit/display/layoutEditor/PositionablePoint.java:1768
+    java/src/jmri/jmrit/display/layoutEditor/LevelXing.java:1527
+    java/src/jmri/jmrit/display/layoutEditor/LayoutSlip.java:1267
+    (others inherited)    
+    
+abstract protected void drawEditControls(Graphics2D g2);
+
+    java/src/jmri/jmrit/display/layoutEditor/LayoutTurnout.java:4511
+    java/src/jmri/jmrit/display/layoutEditor/LayoutTurntable.java:1266
+    java/src/jmri/jmrit/display/layoutEditor/TrackSegment.java:2385
+    java/src/jmri/jmrit/display/layoutEditor/PositionablePoint.java:1789
+    java/src/jmri/jmrit/display/layoutEditor/LevelXing.java:1632
+
+   
+abstract protected void drawDecorations(Graphics2D g2);
+    java/src/jmri/jmrit/display/layoutEditor/LayoutTurnout.java:3436
+    java/src/jmri/jmrit/display/layoutEditor/LayoutTurntable.java:1130
+    java/src/jmri/jmrit/display/layoutEditor/TrackSegment.java:2431
+    java/src/jmri/jmrit/display/layoutEditor/PositionablePoint.java:1754
+    java/src/jmri/jmrit/display/layoutEditor/LevelXing.java:1500
+    java/src/jmri/jmrit/display/layoutEditor/LayoutEditorChecks.java:379
+
+
+getId vs getName vs ident?
+
+=========================================================
+
 ## Code Pushes
 
  - Operational code in the LayoutTrack tree needs to be pushed up and down.
@@ -44,6 +82,8 @@ isDisconnected in LayoutTrack (base) and PositionablePoint (subclass) seem very 
     
 - Why is this considered common code by CI?
     import static java.lang.Float.POSITIVE_INFINITY; 
+    
+    
 
 ## Further items
 
@@ -52,7 +92,7 @@ isDisconnected in LayoutTrack (base) and PositionablePoint (subclass) seem very 
 ## Minor Cleanups 
  - Sort out comments at the top of LayoutTrack & subclasses
  - Run a cleanup on imports via NetBeans; you've left quite a few behind...
- 
+
 ==================
 
 LayoutTrackDrawingOptions holds things like ballast color, etc.

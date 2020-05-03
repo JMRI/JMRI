@@ -65,11 +65,11 @@ abstract public class LayoutSlip extends LayoutTurnout {
         super(id, c, layoutEditor, type);
 
         dispA = new Point2D.Double(-20.0, 0.0);
-        pointA = MathUtil.add(center, dispA);
-        pointC = MathUtil.subtract(center, dispA);
+        pointA = MathUtil.add(getCoordsCenter(), dispA);
+        pointC = MathUtil.subtract(getCoordsCenter(), dispA);
         dispB = new Point2D.Double(-14.0, 14.0);
-        pointB = MathUtil.add(center, dispB);
-        pointD = MathUtil.subtract(center, dispB);
+        pointB = MathUtil.add(getCoordsCenter(), dispB);
+        pointD = MathUtil.subtract(getCoordsCenter(), dispB);
 
         turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
         turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
@@ -427,15 +427,15 @@ abstract public class LayoutSlip extends LayoutTurnout {
     protected Point2D getCoordsLeft() {
         Point2D leftCenter = MathUtil.midPoint(getCoordsA(), getCoordsB());
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-        double leftFract = circleRadius / center.distance(leftCenter);
-        return MathUtil.lerp(center, leftCenter, leftFract);
+        double leftFract = circleRadius / getCoordsCenter().distance(leftCenter);
+        return MathUtil.lerp(getCoordsCenter(), leftCenter, leftFract);
     }
 
     protected Point2D getCoordsRight() {
         Point2D rightCenter = MathUtil.midPoint(getCoordsC(), getCoordsD());
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-        double rightFract = circleRadius / center.distance(rightCenter);
-        return MathUtil.lerp(center, rightCenter, rightFract);
+        double rightFract = circleRadius / getCoordsCenter().distance(rightCenter);
+        return MathUtil.lerp(getCoordsCenter(), rightCenter, rightFract);
     }
 
     /**
@@ -446,7 +446,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
      */
     @Override
     public Point2D getCoordsForConnectionType(HitPointType connectionType) {
-        Point2D result = center;
+        Point2D result = getCoordsCenter();
         switch (connectionType) {
             case SLIP_A:
                 result = getCoordsA();
@@ -621,39 +621,39 @@ abstract public class LayoutSlip extends LayoutTurnout {
      */
     @Override
     public void setCoordsCenter(@Nonnull Point2D p) {
-        center = p;
-        pointA = MathUtil.add(center, dispA);
-        pointB = MathUtil.add(center, dispB);
-        pointC = MathUtil.subtract(center, dispA);
-        pointD = MathUtil.subtract(center, dispB);
+        super.setCoordsCenter(p);
+        pointA = MathUtil.add(getCoordsCenter(), dispA);
+        pointB = MathUtil.add(getCoordsCenter(), dispB);
+        pointC = MathUtil.subtract(getCoordsCenter(), dispA);
+        pointD = MathUtil.subtract(getCoordsCenter(), dispB);
     }
 
     @Override
     public void setCoordsA(@Nonnull Point2D p) {
         pointA = p;
-        dispA = MathUtil.subtract(pointA, center);
-        pointC = MathUtil.subtract(center, dispA);
+        dispA = MathUtil.subtract(pointA, getCoordsCenter());
+        pointC = MathUtil.subtract(getCoordsCenter(), dispA);
     }
 
     @Override
     public void setCoordsB(@Nonnull Point2D p) {
         pointB = p;
-        dispB = MathUtil.subtract(pointB, center);
-        pointD = MathUtil.subtract(center, dispB);
+        dispB = MathUtil.subtract(pointB, getCoordsCenter());
+        pointD = MathUtil.subtract(getCoordsCenter(), dispB);
     }
 
     @Override
     public void setCoordsC(@Nonnull Point2D p) {
         pointC = p;
-        dispA = MathUtil.subtract(center, pointC);
-        pointA = MathUtil.add(center, dispA);
+        dispA = MathUtil.subtract(getCoordsCenter(), pointC);
+        pointA = MathUtil.add(getCoordsCenter(), dispA);
     }
 
     @Override
     public void setCoordsD(@Nonnull Point2D p) {
         pointD = p;
-        dispB = MathUtil.subtract(center, pointD);
-        pointB = MathUtil.add(center, dispB);
+        dispB = MathUtil.subtract(getCoordsCenter(), pointD);
+        pointB = MathUtil.add(getCoordsCenter(), dispB);
     }
 
     JPopupMenu popup = null;
@@ -800,7 +800,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
             JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
-            hiddenCheckBoxMenuItem.setSelected(hidden);
+            hiddenCheckBoxMenuItem.setSelected(isHidden());
             popup.add(hiddenCheckBoxMenuItem);
             hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e1) -> {
                 JCheckBoxMenuItem o = (JCheckBoxMenuItem) e1.getSource();

@@ -133,7 +133,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     private void setTypeAnchor() {
-        ident = layoutEditor.getFinder().uniqueName("A", 1);
+        setIdent(layoutEditor.getFinder().uniqueName("A", 1));
         type = PointType.ANCHOR;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
@@ -158,7 +158,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     private void setTypeEndBumper() {
-        ident = layoutEditor.getFinder().uniqueName("EB", 1);
+        setIdent(layoutEditor.getFinder().uniqueName("EB", 1));
         type = PointType.END_BUMPER;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
@@ -173,7 +173,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     private void setTypeEdgeConnector() {
-        ident = layoutEditor.getFinder().uniqueName("EC", 1);
+        setIdent(layoutEditor.getFinder().uniqueName("EC", 1));
         type = PointType.EDGE_CONNECTOR;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
@@ -202,7 +202,7 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
+        setCoordsCenter(MathUtil.granulize(MathUtil.multiply(getCoordsCenter(), factor), 1.0));
     }
 
     /**
@@ -211,7 +211,7 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     public void translateCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        center = MathUtil.add(center, factor);
+        setCoordsCenter(MathUtil.add(getCoordsCenter(), factor));
     }
 
     /**

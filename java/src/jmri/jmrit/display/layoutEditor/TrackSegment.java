@@ -116,7 +116,7 @@ public class TrackSegment extends LayoutTrack {
 
         mainline = main;
         dashed = dash;
-        hidden = hide;
+        setHidden(hide);
 
         setupDefaultBumperSizes(layoutEditor);
         
@@ -390,7 +390,7 @@ public class TrackSegment extends LayoutTrack {
      * @return the direction (in radians)
      */
     public double getDirectionRAD() {
-        Point2D ep1 = center, ep2 = center;
+        Point2D ep1 = getCoordsCenter(), ep2 = getCoordsCenter();
         if (connect1 != null) {
             ep1 = LayoutEditor.getCoords(connect1, getType1());
         }
@@ -471,7 +471,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public Point2D getBezierControlPoint(int index) {
-        Point2D result = center;
+        Point2D result = getCoordsCenter();
         if (index < 0) {
             index += bezierControlPoints.size();
         }
@@ -536,7 +536,7 @@ public class TrackSegment extends LayoutTrack {
     @Override
     public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        center = MathUtil.multiply(center, factor);
+        super.setCoordsCenter(MathUtil.multiply(getCoordsCenter(), factor));
         if (isBezier()) {
             for (Point2D p : bezierControlPoints) {
                 p.setLocation(MathUtil.multiply(p, factor));
@@ -549,7 +549,7 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public void translateCoords(double xFactor, double yFactor) {
-        setCoordsCenter(MathUtil.add(center, new Point2D.Double(xFactor, yFactor)));
+        setCoordsCenter(MathUtil.add(getCoordsCenter(), new Point2D.Double(xFactor, yFactor)));
     }
 
     /**
@@ -559,7 +559,7 @@ public class TrackSegment extends LayoutTrack {
     public void rotateCoords(double angleDEG) {
         if (isBezier()) {
             for (Point2D p : bezierControlPoints) {
-                p.setLocation(MathUtil.rotateDEG(p, center, angleDEG));
+                p.setLocation(MathUtil.rotateDEG(p, getCoordsCenter(), angleDEG));
             }
         }
     }
@@ -571,14 +571,14 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public void setCoordsCenter(@Nonnull Point2D newCenterPoint) {
-        if (center != newCenterPoint) {
+        if (getCoordsCenter() != newCenterPoint) {
             if (isBezier()) {
-                Point2D delta = MathUtil.subtract(newCenterPoint, center);
+                Point2D delta = MathUtil.subtract(newCenterPoint, getCoordsCenter());
                 for (Point2D p : bezierControlPoints) {
                     p.setLocation(MathUtil.add(p, delta));
                 }
             }
-            center = newCenterPoint;
+            super.setCoordsCenter(newCenterPoint);
         }
     }
 
@@ -745,7 +745,7 @@ public class TrackSegment extends LayoutTrack {
     public Rectangle2D getBounds() {
         Rectangle2D result;
 
-        Point2D ep1 = center, ep2 = center;
+        Point2D ep1 = getCoordsCenter(), ep2 = getCoordsCenter();
         if (getConnect1() != null) {
             ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
         }
@@ -893,7 +893,7 @@ public class TrackSegment extends LayoutTrack {
         popupMenu.add(hiddenCheckBoxMenuItem);
         hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setHidden(hiddenCheckBoxMenuItem.isSelected()));
         hiddenCheckBoxMenuItem.setToolTipText(Bundle.getMessage("HiddenCheckBoxMenuItemToolTip"));
-        hiddenCheckBoxMenuItem.setSelected(hidden);
+        hiddenCheckBoxMenuItem.setSelected(isHidden());
 
         popupMenu.add(dashedCheckBoxMenuItem);
         dashedCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setDashed(dashedCheckBoxMenuItem.isSelected()));
@@ -2031,13 +2031,13 @@ public class TrackSegment extends LayoutTrack {
         this.startAdj = startAdj;
     }
 
-    //this is the center of the track segment (it is "on" the track segment)
+    // this is the center of the track segment (it is "on" the track segment)
     public double getCentreSegX() {
         return getCentreSeg().getX();
     }
 
     public void setCentreSegX(double x) {
-        center.setLocation(x, getCentreSeg().getY());
+        setCoordsCenter(new Point2D.Double(x, getCentreSeg().getY()));
     }
 
     public double getCentreSegY() {
@@ -2045,7 +2045,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public void setCentreSegY(double y) {
-        center.setLocation(getCentreSeg().getX(), y);
+        super.setCoordsCenter(new Point2D.Double(getCentreSeg().getX(), y));
     }
 
     /**
@@ -2060,9 +2060,9 @@ public class TrackSegment extends LayoutTrack {
             Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
 
             if (isCircle()) {
-                result = center; //new Point2D.Double(centreX, centreY);
+                result = getCoordsCenter(); // new Point2D.Double(centreX, centreY);
             } else if (isArc()) {
-                center = MathUtil.midPoint(getBounds());
+                setCoordsCenter(MathUtil.midPoint(getBounds()));
                 if (isFlip()) {
                     Point2D t = ep1;
                     ep1 = ep2;
@@ -2075,10 +2075,10 @@ public class TrackSegment extends LayoutTrack {
                 } else {
                     delta = MathUtil.divide(delta, -5.0, +5.0);
                 }
-                result = MathUtil.add(center, delta);
+                result = MathUtil.add(getCoordsCenter(), delta);
             } else if (isBezier()) {
-                //compute result Bezier point for (t == 0.5);
-                //copy all the control points (including end points) into an array
+                // compute result Bezier point for (t == 0.5);
+                // copy all the control points (including end points) into an array
                 int len = bezierControlPoints.size() + 2;
                 Point2D[] points = new Point2D[len];
                 points[0] = ep1;
@@ -2087,7 +2087,7 @@ public class TrackSegment extends LayoutTrack {
                 }
                 points[len - 1] = ep2;
 
-                //calculate midpoints of all points (len - 1 order times)
+                // calculate midpoints of all points (len - 1 order times)
                 for (int idx = len - 1; idx > 0; idx--) {
                     for (int jdx = 0; jdx < idx; jdx++) {
                         points[jdx] = MathUtil.midPoint(points[jdx], points[jdx + 1]);
@@ -2097,16 +2097,16 @@ public class TrackSegment extends LayoutTrack {
             } else {
                 result = MathUtil.midPoint(ep1, ep2);
             }
-            center = result;
+            super.setCoordsCenter(result);
         }
         return result;
     }
 
     public void setCentreSeg(Point2D p) {
-        center = p;
+        super.setCoordsCenter(p);
     }
 
-    //this is the center of the track segment when configured as a circle
+    // this is the center of the track segment when configured as a circle
     private double centreX;
 
     public double getCentreX() {
@@ -2491,10 +2491,10 @@ public class TrackSegment extends LayoutTrack {
                     offset = drawArrow(g2, ep2, stopAngleRAD, true, offset);
                 }
             }
-        }   //arrow decoration
+        }   // arrow decoration
 
 //
-//bridge decorations
+// bridge decorations
 //
         if (bridgeSideLeft || bridgeSideRight) {
             float halfWidth = bridgeDeckWidth / 2.F;
@@ -2544,7 +2544,7 @@ public class TrackSegment extends LayoutTrack {
                     Point2D ep2L = MathUtil.subtract(ep2, vector);
                     g2.draw(new Line2D.Double(ep1L, ep2L));
                 }
-            }   //if isArc() {} else if isBezier() {} else...
+            }   // if isArc() {} else if isBezier() {} else...
 
             if (isFlip()) {
                 boolean temp = bridgeSideRight;
@@ -2585,7 +2585,7 @@ public class TrackSegment extends LayoutTrack {
                 }
             }
 
-            //if necessary flip these back
+            // if necessary flip these back
             if (isFlip()) {
                 boolean temp = bridgeSideRight;
                 bridgeSideRight = bridgeSideLeft;
@@ -2594,7 +2594,7 @@ public class TrackSegment extends LayoutTrack {
         }
 
 //
-//end bumper decorations
+// end bumper decorations
 //
         if (bumperEndStart || bumperEndStop) {
             g2.setStroke(new BasicStroke(bumperLineWidth,
@@ -2609,7 +2609,7 @@ public class TrackSegment extends LayoutTrack {
                 stopAngleRAD = temp;
             }
 
-            //common points
+            // common points
             p1 = new Point2D.Double(0.F, -halfLength);
             p2 = new Point2D.Double(0.F, +halfLength);
 
@@ -2628,7 +2628,7 @@ public class TrackSegment extends LayoutTrack {
         }   //if (bumperEndStart || bumperEndStop)
 
 //
-//tunnel decorations
+// tunnel decorations
 //
         if (tunnelSideRight || tunnelSideLeft) {
             float halfWidth = tunnelFloorWidth / 2.F;

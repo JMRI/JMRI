@@ -15,46 +15,12 @@ import jmri.util.*;
  * TrackSegment, LayoutTurnout, LayoutSlip, LevelXing and LayoutTurntable)
  *
  * @author Dave Duchamp Copyright (C) 2009
- * @author George Warner Copyright (c) 2017-2018
+ * @author George Warner Copyright (c) 2017-2020
+ * @author Bob Jacobsen Copyright (c)  2020
  */
 abstract public class LayoutTrack {
 
-    // hit point types
-//     public static final int NONE = 0;
-//     public static final int POS_POINT = 1;
-//     public static final int TURNOUT_A = 2;  // throat for RH, LH, and WYE turnouts
-//     public static final int TURNOUT_B = 3;  // continuing route for RH and LH turnouts
-//     public static final int TURNOUT_C = 4;  // diverging route for RH and LH turnouts
-//     public static final int TURNOUT_D = 5;  // 4th route for crossovers;
-//     public static final int LEVEL_XING_A = 6;
-//     public static final int LEVEL_XING_B = 7;
-//     public static final int LEVEL_XING_C = 8;
-//     public static final int LEVEL_XING_D = 9;
-//     public static final int TRACK = 10;
-//     public static final int TURNOUT_CENTER = 11; // non-connection points should be last
-//     public static final int LEVEL_XING_CENTER = 12;
-//     public static final int TURNTABLE_CENTER = 13;
-//     public static final int LAYOUT_POS_LABEL = 14;
-//     public static final int LAYOUT_POS_JCOMP = 15;
-//     public static final int MULTI_SENSOR = 16;
-//     public static final int MARKER = 17;
-//     public static final int TRACK_CIRCLE_CENTRE = 18;
-//     public static final int SLIP_CENTER = 20;   //should be @Deprecated (use SLIP_LEFT & SLIP_RIGHT instead)
-//     public static final int SLIP_A = 21;
-//     public static final int SLIP_B = 22;
-//     public static final int SLIP_C = 23;
-//     public static final int SLIP_D = 24;
-//     public static final int SLIP_LEFT = 25;
-//     public static final int SLIP_RIGHT = 26;
-//     public static final int BEZIER_CONTROL_POINT_OFFSET_MIN = 30; // offset for TrackSegment Bezier control points (minimum)
-//     public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = 38; // offset for TrackSegment Bezier control points (maximum)
-//     public static final int SHAPE_CENTER = 39;
-    // operational instance variables (not saved between sessions)
     protected LayoutEditor layoutEditor = null;
-    protected String ident = "";
-    protected Point2D center = new Point2D.Double(50.0, 50.0);
-
-    protected boolean hidden = false;
 
     /**
      * constructor method
@@ -68,20 +34,28 @@ abstract public class LayoutTrack {
     /**
      * accessor methods
      */
+    @Nonnull 
     final public String getId() {
         return ident;
     }
 
+    @Nonnull 
     final public String getName() {
         return ident;
     }
 
+    private String ident = "";
+
+    final protected void setIdent(@Nonnull String ident) {
+        this.ident = ident;
+    }
+    
     /**
-     * get center coordinates
+     * Set center coordinates
      *
      * @return the center coordinates
      */
-    final public Point2D getCoordsCenter() {
+    final public Point2D getCoordsCenter() { // final for efficiency
         return center;
     }
 
@@ -92,9 +66,11 @@ abstract public class LayoutTrack {
      * idea, i.e. for Bezier curves
      * @param p the coordinates to set
      */
-    public void setCoordsCenter(@Nonnull Point2D p) {
+    protected void setCoordsCenter(@Nonnull Point2D p) {
         center = p;
     }
+
+    private Point2D center = new Point2D.Double(50.0, 50.0);
 
     /**
      * @return true if this track segment has decorations
