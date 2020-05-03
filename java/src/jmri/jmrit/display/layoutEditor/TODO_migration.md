@@ -12,10 +12,11 @@ MVC: LayoutEditorComponent needs to get Views for PositionablePoints
         layoutEditor.getPositionablePoints()
      List<PositionablePoint> getPositionablePoints()
 
-LayoutEditorComponent and LayoutShapes as future problem
+LayoutEditorComponent support of LayoutShapes, Memories, Blocks, etc as future problem
         layoutEditor.getLayoutShapes()
  
- 
+LayoutEditorComponent.drawTrackSegmentInProgress still uses LayoutTrack not LayoutTrackView
+
 ============================================================
 
 Usages from LayoutTrackView:
