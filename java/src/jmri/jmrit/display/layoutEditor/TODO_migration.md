@@ -30,8 +30,6 @@ MVC: LayoutEditorComponent is the JComponent in which the *View code lives now
      
         layoutEditor.getLayoutShapes()
     (future problem)
-
- - Editors are being invoked via LayoutTrackEditors (note final 's'). Check uses of it to figure out how "notification" is done and restructure
  
 ## Code Pushes
 
@@ -52,47 +50,24 @@ isDisconnected in LayoutTrack (base) and PositionablePoint (subclass) seem very 
  - Role of LayoutShape  (handled in LayoutEditorComponent similar to i.e. LayoutTracks, needs a view? but they're _shapes_)
  
 ## Minor Cleanups 
-
- - Add a NUM_ARROW_TYPES constant for use in TrackSegment.java, PositionablePoint.java
- 
- - LayoutTurnoutTest was taken whole into the test subtypes, should be sorted out to have type-specific tests in subclasses (to reduce duplication)
-
- - Make sure there's a one-to-one mapping of source files and test files, even if some of the tests are empty initially
- 
+ - Sort out comments at the top of LayoutTrack & subclasses
  - Run a cleanup on imports via NetBeans; you've left quite a few behind...
  
 ==================
-No editor for XOver? Not in old code explicitly:
 
-        if (layoutTrack instanceof PositionablePoint) {
-            // PositionablePoint's don't have an editor...
-        } else if (layoutTrack instanceof TrackSegment) {
-            editTrackSegment((TrackSegment) layoutTrack);
-        } else // this has to be before LayoutTurnout
-        if (layoutTrack instanceof LayoutSlip) {
-            editLayoutSlip((LayoutSlip) layoutTrack);
-        } else if (layoutTrack instanceof LayoutTurnout) {
-            editLayoutTurnout((LayoutTurnout) layoutTrack);
-        } else if (layoutTrack instanceof LevelXing) {
-            editLevelXing((LevelXing) layoutTrack);
-        } else if (layoutTrack instanceof LayoutTurntable) {
-            editLayoutTurntable((LayoutTurntable) layoutTrack);
-        } else {
-            log.error("editLayoutTrack unknown LayoutTrack subclass:" + layoutTrack.getClass().getName());  // NOI18N
-        }
+LayoutTrackDrawingOptions holds things like ballast color, etc.
+Persisted by configurexml/LayoutTrackDrawingOptionsXml.java
+Accessed and maintained by LayoutEditor.java
+Accessed by LayoutEditor, maybe set?
+Edited by LayoutEditorDialogs/LayoutTrackDrawingOptionsDialog
+    Options -> Track Options -> Set Track Options that opens a window
+There's also a Options -> Turnout Options that says in a sub menu
+==================
 
-
-Also PositionablePoint editors for End Bumper, etc
+Where do the PositionablePoint editors for End Bumper, etc live?
 =======
-        levelXingEditor.editLevelXing(levelXing);
-
-Make sure the code is at the right level, i.e. SlipEditor not Double or Single, etc
-
-XOver doesn't have an editor implementation at any level?
-Neither does PositionablePoint
-Are XOver tests done in right place? (Might be in TurnoutEditorTest)
  
-This needs to get hooked up again:
+This needs to get hooked up properly:
     [javac] /Users/jake/Documents/Trains/JMRI/projects/JMRI/java/src/jmri/jmrit/display/layoutEditor/LayoutEditorChecks.java:378: error: cannot find symbol
     [javac]             layoutEditor.getLayoutTrackEditors().editLayoutTrack(layoutTrack);
     [javac]                         ^
@@ -145,6 +120,14 @@ TrackSegment.java:        //nothing to see here, move along
 TrackSegment.java:        //nothing to see here, move along
 
    
+   =================
+   
+   Consider moving list management entirely out of Layout Manager to decrease size & complexity.
+   
+=============
+   although it's deferring to the View classes mostly, LayoutComponent is
+   still messing with i.e. isDisabled, isHidden instead of defettnig that to the objects
+   
  =============
  
  The LayoutTrack classes ($LETRK) use these from LayoutEditor
@@ -172,6 +155,10 @@ TrackSegment.java:        //nothing to see here, move along
  layoutEditor.setXOverLong
  layoutEditor.setXOverHWid
  layoutEditor.setXOverShort
+ 
+ The above are presisted to XML.  LayoutTurnout#setUpDefaultSize sets them from a specific
+ turnout, depending on type, and is only invoked from "Use Size as Default" selection in 
+ interface.  Also, are the if statements in setUpDefaultSize structured right?
  
  layoutEditor.isTurnoutFillControlCircles
  LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
@@ -279,3 +266,8 @@ TrackSegment 436
     }
 
 (Searching for "nothing to see here" is interesting)
+
+=====
+LayoutTrackDrawingOptions is mutable and doesn't have a constant hash
+
+
