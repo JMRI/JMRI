@@ -17,7 +17,7 @@ import jmri.util.*;
  * @author Dave Duchamp Copyright (C) 2009
  * @author George Warner Copyright (c) 2017-2018
  */
-public abstract class LayoutTrack {
+abstract public class LayoutTrack {
 
     // hit point types
 //     public static final int NONE = 0;
@@ -187,7 +187,7 @@ public abstract class LayoutTrack {
         return setColorForTrackBlock(g2, lb, false);
     }
 
-    public abstract boolean isMainline();
+    abstract public boolean isMainline();
 
     /**
      * draw one line (Ballast, ties, center or 3rd rail, block lines)
@@ -196,7 +196,7 @@ public abstract class LayoutTrack {
      * @param isMain  true if drawing mainlines
      * @param isBlock true if drawing block lines
      */
-    protected abstract void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
+    abstract protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
 
     /**
      * draw two lines (rails)
@@ -205,14 +205,14 @@ public abstract class LayoutTrack {
      * @param isMain           true if drawing mainlines
      * @param railDisplacement the offset from center to draw the lines
      */
-    protected abstract void draw2(Graphics2D g2, boolean isMain, float railDisplacement);
+    abstract protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement);
 
     /**
      * draw hidden track
      *
      * @param g2 the graphics context
      */
-    //protected abstract void drawHidden(Graphics2D g2);
+    //abstract protected void drawHidden(Graphics2D g2);
     //note: placeholder until I get this implemented in all sub-classes
     //TODO: replace with abstract declaration (above)
     final protected void drawHidden(Graphics2D g2) {
@@ -239,7 +239,7 @@ public abstract class LayoutTrack {
      * @param g2           the graphics context
      * @param specificType the specific connection to draw (or NONE for all)
      */
-    protected abstract void highlightUnconnected(Graphics2D g2, HitPointType specificType);
+    abstract protected void highlightUnconnected(Graphics2D g2, HitPointType specificType);
 
     // optional parameter specificType = NONE
     final protected void highlightUnconnected(Graphics2D g2) {
@@ -251,14 +251,14 @@ public abstract class LayoutTrack {
      *
      * @param g2 the graphics context
      */
-    protected abstract void drawEditControls(Graphics2D g2);
+    abstract protected void drawEditControls(Graphics2D g2);
 
     /**
      * Draw the turnout controls
      *
      * @param g2 the graphics context
      */
-    protected abstract void drawTurnoutControls(Graphics2D g2);
+    abstract protected void drawTurnoutControls(Graphics2D g2);
 
     /**
      * Draw track decorations
@@ -284,6 +284,8 @@ public abstract class LayoutTrack {
             }
         }
     }
+
+    private boolean hidden = false;
 
     /*
     * non-accessor methods
@@ -315,7 +317,7 @@ public abstract class LayoutTrack {
      *
      * @return true if the layout track object can be deleted.
      */
-    public abstract boolean canRemove();
+    abstract public boolean canRemove();
 
     /**
      * Display the attached items that prevent removing the layout track item.
@@ -343,7 +345,7 @@ public abstract class LayoutTrack {
      *
      * @param le the layout editor
      */
-    public abstract void setObjects(@Nonnull LayoutEditor le);
+    abstract public void setObjects(@Nonnull LayoutEditor le);
 
     /**
      * scale this LayoutTrack's coordinates by the x and y factors
@@ -351,7 +353,7 @@ public abstract class LayoutTrack {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
-    public abstract void scaleCoords(double xFactor, double yFactor);
+    abstract public void scaleCoords(double xFactor, double yFactor);
 
     /**
      * translate this LayoutTrack's coordinates by the x and y factors
@@ -359,14 +361,14 @@ public abstract class LayoutTrack {
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
-    public abstract void translateCoords(double xFactor, double yFactor);
+    abstract public void translateCoords(double xFactor, double yFactor);
 
     /**
      * rotate this LayoutTrack's coordinates by angleDEG's
      *
      * @param angleDEG the amount to rotate in degrees
      */
-    public abstract void rotateCoords(double angleDEG);
+    abstract public void rotateCoords(double angleDEG);
 
     final protected Point2D rotatePoint(@Nonnull Point2D p, double sineRot, double cosineRot) {
         double cX = center.getX();
@@ -389,7 +391,7 @@ public abstract class LayoutTrack {
      * @return the location type for the point (or NONE)
      * @since 7.4.3
      */
-    protected abstract HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected);
+    abstract protected HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected);
 
     // optional useRectangles & requireUnconnected parameters default to false
     final protected HitPointType findHitPointType(@Nonnull Point2D p) {
@@ -408,12 +410,12 @@ public abstract class LayoutTrack {
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
-    public abstract Point2D getCoordsForConnectionType(HitPointType connectionType);
+    abstract public Point2D getCoordsForConnectionType(HitPointType connectionType);
 
     /**
      * @return the bounds of this track
      */
-    public abstract Rectangle2D getBounds();
+    abstract public Rectangle2D getBounds();
 
     /**
      * show the popup menu for this layout track
@@ -422,7 +424,7 @@ public abstract class LayoutTrack {
      * @return the popup menu for this layout track
      */
     @Nonnull
-    protected abstract JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent);
+    abstract protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent);
 
     /**
      * show the popup menu for this layout track
@@ -462,7 +464,7 @@ public abstract class LayoutTrack {
      * @return the LayoutTrack connected at the specified connection type
      * @throws JmriException - if the connectionType is invalid
      */
-    public abstract LayoutTrack getConnection(HitPointType connectionType) throws JmriException;
+    abstract public LayoutTrack getConnection(HitPointType connectionType) throws JmriException;
 
     /**
      * set the LayoutTrack connected at the specified connection type
@@ -472,20 +474,20 @@ public abstract class LayoutTrack {
      * @param type           where on the LayoutTrack we are connected
      * @throws JmriException - if connectionType or type are invalid
      */
-    public abstract void setConnection(HitPointType connectionType, LayoutTrack o, HitPointType type) throws JmriException;
+    abstract public void setConnection(HitPointType connectionType, LayoutTrack o, HitPointType type) throws JmriException;
 
     /**
      * abstract method... subclasses should implement _IF_ they need to recheck
      * their block boundaries
      */
-    protected abstract void reCheckBlockBoundary();
+    abstract protected void reCheckBlockBoundary();
 
     /**
      * get the layout connectivity for this track
      *
      * @return the list of Layout Connectivity objects
      */
-    protected abstract List<LayoutConnectivity> getLayoutConnectivity();
+    abstract protected List<LayoutConnectivity> getLayoutConnectivity();
 
     /**
      * return true if this connection type is disconnected
@@ -517,7 +519,7 @@ public abstract class LayoutTrack {
      // more useful (eventually... not currently being used; we just check to see
      // if it's not empty.)
     @Nonnull
-    public abstract List<HitPointType> checkForFreeConnections();
+    abstract public List<HitPointType> checkForFreeConnections();
 
     /**
      * determine if all the appropriate blocks have been assigned to this track
@@ -526,7 +528,7 @@ public abstract class LayoutTrack {
      */
      // note: used by LayoutEditorChecks.setupCheckUnBlockedTracksMenu()
      //
-    public abstract boolean checkForUnAssignedBlocks();
+    abstract public boolean checkForUnAssignedBlocks();
 
     /**
      * check this track and its neighbors for non-contiguous blocks
@@ -545,7 +547,7 @@ public abstract class LayoutTrack {
      */
      // note: used by LayoutEditorChecks.setupCheckNonContiguousBlocksMenu()
      //
-    public abstract void checkForNonContiguousBlocks(
+    abstract public void checkForNonContiguousBlocks(
             @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetMaps);
 
     /**
@@ -554,7 +556,7 @@ public abstract class LayoutTrack {
      * @param blockName    the block that we're checking for
      * @param TrackNameSet the set of track names in this block
      */
-    public abstract void collectContiguousTracksNamesInBlockNamed(
+    abstract public void collectContiguousTracksNamesInBlockNamed(
             @Nonnull String blockName,
             @Nonnull Set<String> TrackNameSet);
 
@@ -564,7 +566,7 @@ public abstract class LayoutTrack {
      * @param layoutBlock to this layout block (used by the Tools menu's "Assign
      *                    block to selection" item)
      */
-    public abstract void setAllLayoutBlocks(LayoutBlock layoutBlock);
+    abstract public void setAllLayoutBlocks(LayoutBlock layoutBlock);
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrack.class);
 }
