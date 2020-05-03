@@ -1208,11 +1208,7 @@ public class PositionablePoint extends LayoutTrack {
                             }
 
                             // remove connect2 from the layoutEditor's list of layout tracks
-                            if (layoutEditor.getLayoutTracks().contains(connect2)) {
-                                layoutEditor.getLayoutTracks().remove(connect2);
-                                layoutEditor.setDirty();
-                                layoutEditor.redrawPanel();
-                            }
+                            layoutEditor.removeLayoutTrackAndRedraw(connect2);
 
                             //update affected block
                             LayoutBlock block = connect2.getLayoutBlock();
@@ -1235,11 +1231,7 @@ public class PositionablePoint extends LayoutTrack {
                             }
 
                             // remove pp_this from the layoutEditor's list of layout tracks
-                            if (layoutEditor.getLayoutTracks().contains(pp_this)) {
-                                layoutEditor.getLayoutTracks().remove(pp_this);
-                                layoutEditor.setDirty();
-                                layoutEditor.redrawPanel();
-                            }
+                            layoutEditor.removeLayoutTrackAndRedraw(pp_this);
                             pp_this.remove();
                             pp_this.dispose();
 

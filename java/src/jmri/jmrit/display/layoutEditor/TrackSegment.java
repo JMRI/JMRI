@@ -1684,7 +1684,7 @@ public class TrackSegment extends LayoutTrack {
                 connect2, type2,
                 isDashed(), isMainline(), layoutEditor);
         //add it to known tracks
-        layoutEditor.getLayoutTracks().add(newTrackSegment);
+        layoutEditor.addLayoutTrack(newTrackSegment);
         layoutEditor.setDirty();
 
         //copy attributes to new track segment

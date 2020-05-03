@@ -2151,7 +2151,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         }
 
-        for (LayoutTrack o : layoutTrackList) {
+        for (LayoutTrack o : getLayoutTracks()) {
             if (result.isEmpty()) {
                 result = o.getBounds();
             } else {
@@ -2350,7 +2350,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     public boolean translateTrack(float xDel, float yDel) {
         Point2D delta = new Point2D.Double(xDel, yDel);
-        layoutTrackList.forEach((lt) -> lt.setCoordsCenter(MathUtil.add(lt.getCoordsCenter(), delta)));
+        getLayoutTracks().forEach((lt) -> lt.setCoordsCenter(MathUtil.add(lt.getCoordsCenter(), delta)));
         resizePanelBounds(true);
         return true;
     }
@@ -2362,7 +2362,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param yFactor the amount to scale Y coordinates
      */
     public boolean scaleTrack(float xFactor, float yFactor) {
-        layoutTrackList.forEach((lt) -> lt.scaleCoords(xFactor, yFactor));
+        getLayoutTracks().forEach((lt) -> lt.scaleCoords(xFactor, yFactor));
 
         //update the overall scale factors
         xScale *= xFactor;
@@ -2549,7 +2549,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         }
 
-        for (LayoutTrack lt : layoutTrackList) {
+        for (LayoutTrack lt : getLayoutTracks()) {
             try {
                 Point2D newPoint = MathUtil.subtract(MathUtil.rotateDEG(lt.getCoordsCenter(), lowerLeft, 90), lowerLeft);
                 lt.setCoordsCenter(newPoint);
@@ -2587,7 +2587,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //do this to remove duplicates that may be in more than one list
         positionables = positionables.stream().distinct().collect(Collectors.toList());
-        alignToGrid(positionables, layoutTrackList, layoutShapes);
+        alignToGrid(positionables, getLayoutTracks(), layoutShapes);
     }
 
     /**
@@ -2713,7 +2713,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         String name = finder.uniqueName("TUR", ++numLayoutTurntables);
         LayoutTurntable lt = new LayoutTurntable(name, pt, this);
 
-        layoutTrackList.add(lt);
+        addLayoutTrack(lt);
 
         lt.addRay(0.0);
         lt.addRay(90.0);
@@ -3025,14 +3025,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * selectedHitPointType is left referring to the results of the checking the
      * last track on the list.
      * <p>
-     * Refers to the current value of {@link #layoutTrackList} and
+     * Refers to the current value of {@link #getLayoutTracks()} and
      * {@link #dLoc}.
      *
      * @param useRectangles set true to use rectangle; false for circles.
      */
     private void checkControls(boolean useRectangles) {
         selectedObject = null;  // deliberate side-effect
-        for (LayoutTrack theTrack : layoutTrackList) {
+        for (LayoutTrack theTrack : getLayoutTracks()) {
             selectedHitPointType = theTrack.findHitPointType(dLoc, useRectangles); // deliberate side-effect
             if (HitPointType.isControlHitType(selectedHitPointType)) {
                 selectedObject = theTrack; // deliberate side-effect
@@ -3058,7 +3058,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         foundTrack = null;
         foundHitPointType = HitPointType.NONE;
-        Optional<LayoutTrack> opt = layoutTrackList.stream().filter(layoutTrack -> {
+        Optional<LayoutTrack> opt = getLayoutTracks().stream().filter(layoutTrack -> {
             if ((layoutTrack != avoid) && (layoutTrack != selectedObject)) {
                 foundHitPointType = layoutTrack.findHitPointType(loc, false, requireUnconnected);
             }
@@ -4096,7 +4096,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         });
 
-        layoutTrackList.forEach((lt) -> {
+        getLayoutTracks().forEach((lt) -> {
             Point2D center = lt.getCoordsCenter();
             if (selectionRect.contains(center)) {
                 if (!_layoutTrackSelection.contains(lt)) {
@@ -4716,7 +4716,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         PositionablePoint o = new PositionablePoint(name,
                 PositionablePoint.PointType.ANCHOR, p, this);
 
-        layoutTrackList.add(o);
+        addLayoutTrack(o);
         unionToPanelBounds(o.getBounds());
         setDirty();
 
@@ -4734,7 +4734,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         PositionablePoint o = new PositionablePoint(name,
                 PositionablePoint.PointType.END_BUMPER, currentPoint, this);
 
-        layoutTrackList.add(o);
+        addLayoutTrack(o);
         unionToPanelBounds(o.getBounds());
         setDirty();
     }
@@ -4750,7 +4750,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         PositionablePoint o = new PositionablePoint(name,
                 PositionablePoint.PointType.EDGE_CONNECTOR, currentPoint, this);
 
-        layoutTrackList.add(o);
+        addLayoutTrack(o);
         unionToPanelBounds(o.getBounds());
         setDirty();
     }
@@ -4767,7 +4767,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 foundTrack, foundHitPointType, leToolBarPanel.dashedLine.isSelected(),
                 leToolBarPanel.mainlineTrack.isSelected(), this);
 
-        layoutTrackList.add(newTrack);
+        addLayoutTrack(newTrack);
         unionToPanelBounds(newTrack.getBounds());
         setDirty();
 
@@ -4813,7 +4813,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //create object
         LevelXing o = new LevelXing(name, currentPoint, this);
 
-        layoutTrackList.add(o);
+        addLayoutTrack(o);
         unionToPanelBounds(o.getBounds());
         setDirty();
 
@@ -4884,7 +4884,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 return; // without creating
         }
 
-        layoutTrackList.add(o);
+        addLayoutTrack(o);
         unionToPanelBounds(o.getBounds());
         setDirty();
 
@@ -5012,7 +5012,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 return; // without creating
         }
         
-        layoutTrackList.add(o);
+        addLayoutTrack(o);
         unionToPanelBounds(o.getBounds());
         setDirty();
 
@@ -5667,12 +5667,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             //delete from array
         }
 
-        if (layoutTrackList.contains(o)) {
-            layoutTrackList.remove(o);
-            setDirty();
-            redrawPanel();
-            return true;
-        }
+        if (removeLayoutTrackAndRedraw(o)) return true;
+
         return false;
     }
 
@@ -5762,13 +5758,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         }
 
-        //delete from array
-        if (layoutTrackList.contains(o)) {
-            layoutTrackList.remove(o);
-            setDirty();
-            redrawPanel();
-            return true;
-        }
+        // delete from array
+        if (removeLayoutTrackAndRedraw(o)) return true;
+
         return false;
     }
 
@@ -5858,14 +5850,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             lb.decrementUse();
         }
 
-        //delete from array
-        if (layoutTrackList.contains(o)) {
-            layoutTrackList.remove(o);
-            o.remove();
-            setDirty();
-            redrawPanel();
-            return true;
-        }
+        // delete from array
+        if (removeLayoutTrackAndRedraw(o)) return true;
+
         return false;
     }
 
@@ -5940,14 +5927,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             lb.decrementUse();
         }
 
-        //delete from array
-        if (layoutTrackList.contains(o)) {
-            layoutTrackList.remove(o);
-            o.remove();
-            setDirty();
-            redrawPanel();
-            return true;
-        }
+        if (removeLayoutTrackAndRedraw(o)) return true;
+
         return false;
     }
 
@@ -5998,14 +5979,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         }
 
-        //delete from array
-        if (layoutTrackList.contains(o)) {
-            layoutTrackList.remove(o);
-            o.remove();
-            setDirty();
-            redrawPanel();
-            return true;
-        }
+        if (removeLayoutTrackAndRedraw(o)) return true;
+
         return false;
     }
 
@@ -6059,9 +6034,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         //delete from array
-        if (layoutTrackList.contains(o)) {
-            layoutTrackList.remove(o);
-        }
+        removeLayoutTrack(o);
 
         //update affected blocks
         if (block != null) {
@@ -6722,7 +6695,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (!super.deletePanel()) {
             return false; //return without deleting if "No" response
         }
-        layoutTrackList.clear();
+        clearLayoutTracks();
         return true;
     }
 
@@ -7467,7 +7440,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     //final initialization routine for loading a LayoutEditor
     public void setConnections() {
-        layoutTrackList.forEach((lt) -> lt.setObjects(this));
+        getLayoutTracks().forEach((lt) -> lt.setObjects(this));
         getLEAuxTools().initializeBlockConnectivity();
         log.debug("Initializing Block Connectivity for {}", getLayoutName());
 
@@ -7555,7 +7528,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /*
     //TODO: This compiles but I can't get the syntax correct to pass the (sub-)class
     public List<LayoutTrack> getLayoutTracksOfClass(@Nonnull Class<LayoutTrack> layoutTrackClass) {
-    return layoutTrackList.stream()
+    return getLayoutTracks().stream()
     .filter(item -> item instanceof PositionablePoint)
     .filter(layoutTrackClass::isInstance)
     //.map(layoutTrackClass::cast)  // TODO: Do we need this? if not dead-code-strip
@@ -7564,7 +7537,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     //TODO: This compiles but I can't get the syntax correct to pass the array of (sub-)classes
     public List<LayoutTrack> getLayoutTracksOfClasses(@Nonnull List<Class<? extends LayoutTrack>> layoutTrackClasses) {
-    return layoutTrackList.stream()
+    return getLayoutTracks().stream()
     .filter(o -> layoutTrackClasses.contains(o.getClass()))
     .collect(Collectors.toList());
     }
@@ -7580,7 +7553,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     private @Nonnull
     Stream<LayoutTrack> getLayoutTracksOfClass(Class<? extends LayoutTrack> layoutTrackClass) {
-        return layoutTrackList.stream()
+        return getLayoutTracks().stream()
                 .filter(layoutTrackClass::isInstance)
                 .map(layoutTrackClass::cast);
     }
@@ -7637,7 +7610,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     public @Nonnull
     List<LayoutTurnout> getLayoutTurnouts() {
-        return layoutTrackList.stream() // next line excludes LayoutSlips
+        return getLayoutTracks().stream() // next line excludes LayoutSlips
                 .filter((o) -> (!(o instanceof LayoutSlip) && (o instanceof LayoutTurnout)))
                 .map(LayoutTurnout.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -7659,11 +7632,65 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public @Nonnull
-    List<LayoutTrack> getLayoutTracks() {
-        return layoutTrackList;
+    /**
+     * Read-only access to the list of 
+     * LayoutTrack family objects. The returned
+     * list will throw UnsupportedOperationException
+     * if you attempt to modify it.
+     */
+    @Nonnull
+    final public List<LayoutTrack> getLayoutTracks() {
+        return Collections.unmodifiableList(layoutTrackList);
     }
 
+    /**
+     * Add a LayoutTrack to the list of 
+     * LayoutTrack family objects.
+     */
+    @Nonnull
+    final public void addLayoutTrack(@Nonnull LayoutTrack trk) {
+        log.trace("addLayoutTrack {}", trk);
+        if (layoutTrackList.contains(trk)) log.warn("LayoutTrack {} already being maintained", trk.getName());
+        layoutTrackList.add(trk);
+    }
+
+    /**
+     * If item present, delete from the list of LayoutTracks
+     * and force a dirty redraw
+     *
+     * @return true is item was deleted and a redraw done.
+     */
+    final public boolean removeLayoutTrackAndRedraw(@Nonnull LayoutTrack trk) {
+        if (layoutTrackList.contains(trk)) {
+            layoutTrackList.remove(trk);
+            setDirty();
+            redrawPanel();
+            log.trace("removeLayoutTrackAndRedraw present {}", trk);
+            return true;
+        }
+        log.trace("removeLayoutTrackAndRedraw absent {}", trk);
+        return false;
+    }
+    
+    /**
+     * If item present, delete from the list of LayoutTracks
+     * and force a dirty redraw
+     *
+     * @return true is item was deleted and a redraw done.
+     */
+    final public void removeLayoutTrack(@Nonnull LayoutTrack trk) {
+        log.trace("removeLayoutTrack {}", trk);
+        layoutTrackList.remove(trk);
+    }
+    
+    /**
+     * Clear the list of layout tracks. Not intended for general use.
+     *
+     */
+    private void clearLayoutTracks() {
+        layoutTrackList.clear();
+    }
+     
     public @Nonnull
     List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
         return getLayoutTracksOfClass(LayoutTurnout.class
