@@ -6,18 +6,7 @@ It's in no particular order, items are removed as done, so please don't consider
 ## MVC work
  -  *View  present and running, now start to move code for those methods
         rename methods left behind to ensure not accessed
-
-MVC: LayoutEditorComponent needs to get Views for PositionablePoints
-    
-        layoutEditor.getPositionablePoints()
-     List<PositionablePoint> getPositionablePoints()
-
-LayoutEditorComponent support of LayoutShapes, Memories, Blocks, etc as future problem
-        layoutEditor.getLayoutShapes()
- 
-LayoutEditorComponent.drawTrackSegmentInProgress still uses LayoutTrack not LayoutTrackView
-
-============================================================
+ - once moved to View, break down to subclasses to removing dynamic typing
 
 Usages from LayoutTrackView:
 
@@ -28,9 +17,9 @@ protected abstract void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
     java/src/jmri/jmrit/display/layoutEditor/TrackSegment.java:2295
     java/src/jmri/jmrit/display/layoutEditor/PositionablePoint.java:1760
     java/src/jmri/jmrit/display/layoutEditor/LevelXing.java:1508
-    java/src/jmri/jmrit/display/layoutEditor/LayoutEditorChecks.java:379
     java/src/jmri/jmrit/display/layoutEditor/LayoutSlip.java:1093
 
+    java/src/jmri/jmrit/display/layoutEditor/LayoutEditorChecks.java:379
 
 abstract protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement)
 
@@ -57,9 +46,23 @@ abstract protected void drawDecorations(Graphics2D g2);
     java/src/jmri/jmrit/display/layoutEditor/TrackSegment.java:2431
     java/src/jmri/jmrit/display/layoutEditor/PositionablePoint.java:1754
     java/src/jmri/jmrit/display/layoutEditor/LevelXing.java:1500
+
     java/src/jmri/jmrit/display/layoutEditor/LayoutEditorChecks.java:379
 
+
+=======
+
+Where do the PositionablePoint editors for End Bumper, etc live?
+
 =========================================================
+
+LayoutEditorComponent support of LayoutShapes, Memories, Blocks, etc as future problem
+        layoutEditor.getLayoutShapes()
+ 
+LayoutEditorComponent.drawTrackSegmentInProgress still uses LayoutTrack not LayoutTrackView
+    but what does it actually do? calls to LayoutTrack.highlightUnconnected(..) in two forms
+
+============================================================
 
 - [ ] getId vs getName why? getName (257) much more common than getId (35), but is it right?
 
@@ -109,9 +112,6 @@ Edited by LayoutEditorDialogs/LayoutTrackDrawingOptionsDialog
     Options -> Track Options -> Set Track Options that opens a window
 There's also a Options -> Turnout Options that says in a sub menu
 ==================
-
-Where do the PositionablePoint editors for End Bumper, etc live?
-=======
  
 This needs to get hooked up properly:
     [javac] /Users/jake/Documents/Trains/JMRI/projects/JMRI/java/src/jmri/jmrit/display/layoutEditor/LayoutEditorChecks.java:378: error: cannot find symbol
@@ -125,6 +125,8 @@ This needs to get hooked up properly:
 
 Add a control property for writing out the image files in 
 ./runtest.csh java/test/jmri/jmrit/display/layoutEditor/LoadAndStoreTest
+
+Drop status output to System.err
 
 Consider moving the write up once it's controlled.
 ===================

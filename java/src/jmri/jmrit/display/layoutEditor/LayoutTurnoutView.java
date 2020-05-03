@@ -10,6 +10,8 @@ import javax.swing.JPopupMenu;
 import jmri.*;
 import jmri.util.*;
 
+import jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType;
+
 /**
  * MVC View component for the LayoutTurnout class.
  *
@@ -33,6 +35,30 @@ public class LayoutTurnoutView extends LayoutTrackView {
     
     protected boolean isDisabled() {
         return turnout.isDisabled();
+    }
+    public Point2D getCoordsA() {
+        return turnout.getCoordsA();
+    }
+    public Point2D getCoordsB() {
+        return turnout.getCoordsB();
+    }
+    public Point2D getCoordsC() {
+        return turnout.getCoordsC();
+    }
+    public Point2D getCoordsD() {
+        return turnout.getCoordsD();
+    }
+    public boolean isMainlineA() {
+        return turnout.isMainlineA();
+    }
+    public boolean isMainlineB() {
+        return turnout.isMainlineB();
+    }
+    public boolean isMainlineC() {
+        return turnout.isMainlineC();
+    }
+    public boolean isMainlineD() {
+        return turnout.isMainlineD();
     }
 
     protected void drawTurnoutControls(Graphics2D g2) {

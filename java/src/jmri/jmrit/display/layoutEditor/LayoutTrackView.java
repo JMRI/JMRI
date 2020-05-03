@@ -69,6 +69,27 @@ public class LayoutTrackView {
     // These now reflect to code in the base class; eventually this heirarchy will
     // expand and the code will be brought here
     
+    public boolean hasDecorations() {
+        return layoutTrack.hasDecorations();
+    }
+    final public Point2D getCoordsCenter() { // final for efficiency
+        return layoutTrack.getCoordsCenter();
+    }
+    @Nonnull 
+    final public String getId() {
+        return layoutTrack.getId();
+    }
+    @Nonnull 
+    final public String getName() {
+        return layoutTrack.getName();
+    }
+    public Map<String, String> getDecorations() {
+        return layoutTrack.getDecorations();
+    }
+    public boolean isMainline() {
+        return layoutTrack.isMainline();
+    }
+    
     protected void drawEditControls(Graphics2D g2) {
         layoutTrack.drawEditControls(g2);
     }
