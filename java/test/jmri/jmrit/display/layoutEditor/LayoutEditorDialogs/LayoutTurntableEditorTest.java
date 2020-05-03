@@ -42,7 +42,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
         LayoutTurntableEditor editor = new LayoutTurntableEditor(layoutEditor);
 
         // Edit the layoutTurntable
-        editor.editLayoutTurntable(layoutTurntable);
+        editor.editLayoutTrack(layoutTurntable);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         // Set good radius
@@ -140,7 +140,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
         LayoutTurntableEditor editor = new LayoutTurntableEditor(layoutEditor);
 
         // Edit the Turntable
-        editor.editLayoutTurntable(layoutTurntable);
+        editor.editLayoutTrack(layoutTurntable);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();
@@ -154,7 +154,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
         LayoutTurntableEditor editor = new LayoutTurntableEditor(layoutEditor);
 
         // Edit the Turntable
-        editor.editLayoutTurntable(layoutTurntable);
+        editor.editLayoutTrack(layoutTurntable);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
@@ -168,7 +168,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
         LayoutTurntableEditor editor = new LayoutTurntableEditor(layoutEditor);
 
         // Edit the layoutTurntable
-        editor.editLayoutTurntable(layoutTurntable);
+        editor.editLayoutTrack(layoutTurntable);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         // Ray angle

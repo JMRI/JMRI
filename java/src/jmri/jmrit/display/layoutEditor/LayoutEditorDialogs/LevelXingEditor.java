@@ -69,7 +69,7 @@ public class LevelXingEditor extends LayoutTurntableEditor {
     /**
      * Edit a Level Crossing.
      */
-    public void editLevelXing(LevelXing levelXing) {
+    public void editLayoutTrack(LevelXing levelXing) {
         sensorList.clear();
 
         this.levelXing = levelXing;

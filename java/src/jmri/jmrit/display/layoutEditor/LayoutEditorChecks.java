@@ -375,7 +375,8 @@ public class LayoutEditorChecks {
             layoutEditor.clearSelectionGroups();
             layoutEditor.amendSelectionGroup(layoutTrack);
 
-            layoutEditor.getLayoutTrackEditors().editLayoutTrack(layoutTrack);
+            // temporary call, should be replaced by access through View class
+            jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTrackEditor.makeTrackEditor(layoutTrack, layoutEditor);
         } else {
             layoutEditor.clearSelectionGroups();
         }
