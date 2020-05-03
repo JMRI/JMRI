@@ -68,6 +68,7 @@ abstract public class LayoutTrackEditor {
         
         log.error("makeTrackEditor did not match type of {}", layoutTrack, new Exception("traceback"));
         return new LayoutTrackEditor(layoutEditor){
+            @Override
             public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
                 log.error("Not a valid LayoutTrackEditor implementation", new Exception("traceback"));
             }
