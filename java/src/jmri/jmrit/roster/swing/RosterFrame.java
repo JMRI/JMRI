@@ -1,6 +1,5 @@
 package jmri.jmrit.roster.swing;
 
-import apps.AppsBase;
 import apps.gui3.Apps3;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -736,10 +735,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     prefsMgr.setSimplePreferenceState(rememberWindowClose, true);
                 }
                 if (result == JOptionPane.YES_OPTION) {
-                    AppsBase.handleQuit();
+                    handleQuit();
                 }
             } else {
-                AppsBase.handleQuit();
+                handleQuit();
             }
         } else if (frameInstances.size() > 1) {
             final String rememberWindowClose = this.getClass().getName() + ".closeMultipleDP3prompt";
@@ -759,12 +758,20 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     prefsMgr.setSimplePreferenceState(rememberWindowClose, true);
                 }
                 if (result == JOptionPane.YES_OPTION) {
-                    AppsBase.handleQuit();
+                    handleQuit();
                 }
             } else {
-                AppsBase.handleQuit();
+                handleQuit();
             }
             //closeWindow(null);
+        }
+    }
+
+    private void handleQuit(){
+        try {
+            InstanceManager.getDefault(jmri.ShutDownManager.class).shutdown();
+        } catch (Exception e) {
+            log.error("Continuing after error in handleQuit", e);
         }
     }
 
