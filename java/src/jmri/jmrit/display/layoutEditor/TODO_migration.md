@@ -60,6 +60,43 @@ isDisconnected in LayoutTrack (base) and PositionablePoint (subclass) seem very 
  - Run a cleanup on imports via NetBeans; you've left quite a few behind...
  
 ==================
+No editor for XOver? Not in old code....
+
+        if (layoutTrack instanceof PositionablePoint) {
+            // PositionablePoint's don't have an editor...
+        } else if (layoutTrack instanceof TrackSegment) {
+            editTrackSegment((TrackSegment) layoutTrack);
+        } else // this has to be before LayoutTurnout
+        if (layoutTrack instanceof LayoutSlip) {
+            editLayoutSlip((LayoutSlip) layoutTrack);
+        } else if (layoutTrack instanceof LayoutTurnout) {
+            editLayoutTurnout((LayoutTurnout) layoutTrack);
+        } else if (layoutTrack instanceof LevelXing) {
+            editLevelXing((LevelXing) layoutTrack);
+        } else if (layoutTrack instanceof LayoutTurntable) {
+            editLayoutTurntable((LayoutTurntable) layoutTrack);
+        } else {
+            log.error("editLayoutTrack unknown LayoutTrack subclass:" + layoutTrack.getClass().getName());  // NOI18N
+        }
+
+==================
+        levelXingEditor.editLevelXing(levelXing);
+
+Make sure the code is at the right level, i.e. SlipEditor not Double or Single, etc
+
+XOver doesn't have an editor implementation at any level?
+Neither does PositionablePoint
+Are XOver tests done in right place? (Might be in TurnoutEditorTest)
+ 
+This needs to get hooked up again:
+    [javac] /Users/jake/Documents/Trains/JMRI/projects/JMRI/java/src/jmri/jmrit/display/layoutEditor/LayoutEditorChecks.java:378: error: cannot find symbol
+    [javac]             layoutEditor.getLayoutTrackEditors().editLayoutTrack(layoutTrack);
+    [javac]                         ^
+    [javac]   symbol:   method getLayoutTrackEditors()
+    [javac]   location: variable layoutEditor of type LayoutEditor
+
+
+===================
 
  TrackSegment HIDECON as an EnumSet
  https://docs.oracle.com/javase/7/docs/api/java/util/EnumSet.html
