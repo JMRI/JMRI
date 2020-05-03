@@ -62,6 +62,7 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
     /**
      * Edit a Slip.
      */
+    @Override
     public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
         if ( layoutTrack instanceof LayoutSlip ) {
             this.layoutSlip = (LayoutSlip) layoutTrack;

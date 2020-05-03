@@ -59,6 +59,7 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
      * Edit a Track Segment.
      */
     @InvokeOnGuiThread
+    @Override
     public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
         if ( layoutTrack instanceof TrackSegment ) {
             this.trackSegment = (TrackSegment) layoutTrack;

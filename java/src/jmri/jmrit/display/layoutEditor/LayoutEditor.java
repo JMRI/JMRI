@@ -7673,14 +7673,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * If item present, delete from the list of LayoutTracks
      * and force a dirty redraw
-     *
-     * @return true is item was deleted and a redraw done.
      */
     final public void removeLayoutTrack(@Nonnull LayoutTrack trk) {
         log.trace("removeLayoutTrack {}", trk);
         layoutTrackList.remove(trk);
         LayoutTrackView v = trkToView.get(trk);
-        layoutTrackViewList.remove(trk);
+        layoutTrackViewList.remove(v);
         trkToView.remove(trk);
         viewToTrk.remove(v);
     }

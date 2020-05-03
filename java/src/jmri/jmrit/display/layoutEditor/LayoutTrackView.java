@@ -28,7 +28,7 @@ public class LayoutTrackView {
     // temporary method to get a correct-type *View or subclass.
     // Eventually, this will go away once *View's are created
     // in a type-specific way with their underlying model objects
-    @Deprecated // should be made not necessary
+    // @Deprecated // should be made not necessary
     @Nonnull
     static public LayoutTrackView makeTrackView(@Nonnull LayoutTrack trk) {
     

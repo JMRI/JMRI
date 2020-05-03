@@ -54,6 +54,7 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
     /**
      * Edit a Turntable.
      */
+    @Override
     public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
         if ( layoutTrack instanceof LayoutTurntable ) {
             this.layoutTurntable = (LayoutTurntable) layoutTrack;

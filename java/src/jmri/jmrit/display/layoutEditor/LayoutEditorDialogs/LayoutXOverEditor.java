@@ -44,6 +44,7 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
     /**
      * Edit a XOver
      */
+    @Override
     public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
         log.trace("XOver editors are an extension of superclass LayoutTrackEditor");
         super.editLayoutTrack(layoutTrack);
@@ -51,9 +52,11 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
     
 
     // not used by crossover
+    @Override
     protected void extendAddContinuingStateChoice(Container contentPane) {
     }
 
+    @Override
     protected void extendBlockBCDSetup(Container contentPane) {
         JPanel panel21 = new JPanel();
         panel21.setLayout(new FlowLayout());
@@ -96,6 +99,7 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
         contentPane.add(panel23);
     }
     
+    @Override
     protected void configureCheckBoxes(BlockManager bm) {
         editLayoutTurnoutBlockBNameComboBox.getEditor().setItem(bm.getBlock(layoutTurnout.getBlockBName()));
         editLayoutTurnoutBlockCNameComboBox.getEditor().setItem(bm.getBlock(layoutTurnout.getBlockCName()));
@@ -106,13 +110,16 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
     }
 
     // Set up for Edit
+    @Override
     protected void setUpForEdit() {
             editLayoutTurnoutFrame.setTitle(Bundle.getMessage("EditXover"));
             editLayoutTurnoutHiddenCheckBox.setText(Bundle.getMessage("HideXover"));
     }
 
+    @Override
     protected void setUpContinuingSense() {}
 
+    @Override
     protected void donePressedSecondTurnoutName(String newName) {
         // turnout has changed
         if (layoutEditor.validatePhysicalTurnout(
@@ -126,6 +133,7 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
         editLayoutTurnoutNeedRedraw = true;
     }
 
+    @Override
      protected void checkBlock234Changed() {
         String newName;
         // check if Block 2 changed

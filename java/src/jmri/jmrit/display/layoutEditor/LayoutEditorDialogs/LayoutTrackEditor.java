@@ -34,7 +34,7 @@ abstract public class LayoutTrackEditor {
     // temporary method to get a correct-type *Editor or subclass.
     // Eventually, this will go away once *Editor's are created
     // in type-specific *View classes
-    @Deprecated // should be made not necessary
+    // @Deprecated // should be made not necessary
     @Nonnull
     static public LayoutTrackEditor makeTrackEditor(@Nonnull LayoutTrack layoutTrack, @Nonnull LayoutEditor layoutEditor) {
     

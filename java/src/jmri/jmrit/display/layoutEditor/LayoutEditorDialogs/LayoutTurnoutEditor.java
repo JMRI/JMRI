@@ -78,6 +78,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
      * Edit a Layout Turnout.
      * Invoked for any of the subtypes, has conditional code for crossovers
      */
+    @Override
     public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
         if ( layoutTrack instanceof LayoutTurnout ) {
             this.layoutTurnout = (LayoutTurnout) layoutTrack;

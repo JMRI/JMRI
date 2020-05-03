@@ -28,6 +28,7 @@ public class LayoutRHTurnoutEditor extends LayoutTurnoutEditor {
     }
 
     // set the continuing route Turnout State
+    @Override
     protected void setContinuingRouteTurnoutState() {
         if ((layoutTurnout.getTurnoutType() == LayoutTurnout.TurnoutType.RH_TURNOUT)
                 || (layoutTurnout.getTurnoutType() == LayoutTurnout.TurnoutType.LH_TURNOUT)
