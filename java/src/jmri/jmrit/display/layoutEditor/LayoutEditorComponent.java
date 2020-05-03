@@ -530,7 +530,7 @@ class LayoutEditorComponent extends JComponent {
     private void drawLayoutTrackEditControls(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
-        layoutEditor.getLayoutTracks().forEach((tr) -> tr.drawEditControls(g2));
+        layoutEditor.getLayoutTrackViews().forEach((tr) -> tr.drawEditControls(g2));
     }
 
     private void drawShapeEditControls(Graphics2D g2) {
@@ -546,14 +546,14 @@ class LayoutEditorComponent extends JComponent {
 
         // loop over all turnouts
         boolean editable = layoutEditor.isEditable();
-        layoutEditor.getLayoutTracks().forEach((tr) -> {
-            if (tr instanceof LayoutTurnout) {  //<== this includes LayoutSlips
-                LayoutTurnout lt = (LayoutTurnout) tr;
+        layoutEditor.getLayoutTrackViews().forEach((tr) -> {
+            if (tr instanceof LayoutTurnoutView) {  //<== this includes LayoutSlips
+                LayoutTurnoutView lt = (LayoutTurnoutView) tr;
                 if (editable || !(lt.isHidden() || lt.isDisabled())) {
                     lt.drawTurnoutControls(g2);
                 }
-            } else if (tr instanceof LayoutTurntable) {
-                LayoutTurntable lt = (LayoutTurntable) tr;
+            } else if (tr instanceof LayoutTurntableView) {
+                LayoutTurntableView lt = (LayoutTurntableView) tr;
                 if (editable || !lt.isHidden()) {
                     lt.drawTurnoutControls(g2);
                 }

@@ -206,8 +206,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private  List<SensorIcon> sensorImage = new ArrayList<>();               //sensor images
     private  List<SignalHeadIcon> signalHeadImage = new ArrayList<>();       //signal head images
 
-    private final  List<LayoutTrack> layoutTrackList = new ArrayList<>();         // LayoutTrack list
-
     // PositionableLabel's
     private  List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); //BlockContentsIcon Label List
     private  List<MemoryIcon> memoryLabelList = new ArrayList<>();               //Memory Label List
@@ -7417,7 +7415,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return xOverShort;
     }
 
-    //reset turnout sizes to program defaults
+    // reset turnout sizes to program defaults
     protected void resetTurnoutSize() {
         turnoutBX = LayoutTurnout.turnoutBXDefault;
         turnoutCX = LayoutTurnout.turnoutCXDefault;
@@ -7433,7 +7431,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         useDirectTurnoutControlCheckBoxMenuItem.setSelected(useDirectTurnoutControl);
     }
 
-    //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getDirectTurnoutControl() {
         return useDirectTurnoutControl;
     }
@@ -7448,8 +7446,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         resetDirty();
     }
 
-    //these are convenience methods to return rectangles
-    //to use when (hit point-in-rect testing
+    // these are convenience methods to return rectangles
+    // to use when (hit point-in-rect testing
     //
     //compute the control point rect at inPoint
     public @Nonnull
@@ -7569,41 +7567,21 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     public @Nonnull
     List<PositionablePoint> getPositionablePoints() {
-        return getLayoutTracksOfClass(PositionablePoint.class
-        )
+        return getLayoutTracksOfClass(PositionablePoint.class)
                 .map(PositionablePoint.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public @Nonnull
     List<LayoutSlip> getLayoutSlips() {
-        return getLayoutTracksOfClass(LayoutSlip.class
-        )
+        return getLayoutTracksOfClass(LayoutSlip.class)
                 .map(LayoutSlip.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    // temporarily\y creates list on the fly
-    // instead of keeping one
-    public @Nonnull
-    List<LayoutTrackView> getLayoutTrackViews() {
-        List<LayoutTrackView> list = new ArrayList<>() ;
-        for (LayoutTrack t : getLayoutTracks()) {
-            if (t instanceof PositionablePoint) {
-                list.add(new PositionablePointView((PositionablePoint)t));
-            } else if (t instanceof TrackSegment) {
-                list.add(new TrackSegmentView((TrackSegment)t));
-            } else {
-                list.add(new LayoutTrackView(t));
-            }
-        }
-        return list;
-    }
-
     public @Nonnull
     List<TrackSegment> getTrackSegments() {
-        return getLayoutTracksOfClass(TrackSegment.class
-        )
+        return getLayoutTracksOfClass(TrackSegment.class)
                 .map(TrackSegment.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
@@ -7618,16 +7596,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     public @Nonnull
     List<LayoutTurntable> getLayoutTurntables() {
-        return getLayoutTracksOfClass(LayoutTurntable.class
-        )
+        return getLayoutTracksOfClass(LayoutTurntable.class)
                 .map(LayoutTurntable.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public @Nonnull
     List<LevelXing> getLevelXings() {
-        return getLayoutTracksOfClass(LevelXing.class
-        )
+        return getLayoutTracksOfClass(LevelXing.class)
                 .map(LevelXing.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
@@ -7644,6 +7620,40 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
+     * Read-only access to the list of 
+     * LayoutTrackView family objects. The returned
+     * list will throw UnsupportedOperationException
+     * if you attempt to modify it.
+     */
+    @Nonnull
+    final public List<LayoutTrackView> getLayoutTrackViews() {
+        return Collections.unmodifiableList(layoutTrackViewList);
+    }
+
+    // temporarily\y creates list on the fly
+    // instead of keeping one
+    public @Nonnull
+    List<LayoutTrackView> XgetLayoutTrackViews() {
+        List<LayoutTrackView> list = new ArrayList<>() ;
+        for (LayoutTrack t : getLayoutTracks()) {
+            if (t instanceof PositionablePoint) {
+                list.add(new PositionablePointView((PositionablePoint)t));
+            } else if (t instanceof TrackSegment) {
+                list.add(new TrackSegmentView((TrackSegment)t));
+            } else {
+                list.add(new LayoutTrackView(t));
+            }
+        }
+        return list;
+    }
+
+
+    private final List<LayoutTrack> layoutTrackList = new ArrayList<>();
+    private final List<LayoutTrackView> layoutTrackViewList = new ArrayList<>();
+    private final Map<LayoutTrack, LayoutTrackView> trkToView = new HashMap<>();
+    private final Map<LayoutTrackView, LayoutTrack> viewToTrk = new HashMap<>();
+
+    /**
      * Add a LayoutTrack to the list of 
      * LayoutTrack family objects.
      */
@@ -7652,6 +7662,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         log.trace("addLayoutTrack {}", trk);
         if (layoutTrackList.contains(trk)) log.warn("LayoutTrack {} already being maintained", trk.getName());
         layoutTrackList.add(trk);
+        
+        // create the view on the fly
+        LayoutTrackView v = LayoutTrackView.makeTrackView(trk);
+        layoutTrackViewList.add(v);
+        trkToView.put(trk, v);
+        viewToTrk.put(v, trk);
     }
 
     /**
@@ -7662,7 +7678,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     final public boolean removeLayoutTrackAndRedraw(@Nonnull LayoutTrack trk) {
         if (layoutTrackList.contains(trk)) {
-            layoutTrackList.remove(trk);
+            removeLayoutTrack(trk);
             setDirty();
             redrawPanel();
             log.trace("removeLayoutTrackAndRedraw present {}", trk);
@@ -7681,6 +7697,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     final public void removeLayoutTrack(@Nonnull LayoutTrack trk) {
         log.trace("removeLayoutTrack {}", trk);
         layoutTrackList.remove(trk);
+        LayoutTrackView v = trkToView.get(trk);
+        layoutTrackViewList.remove(trk);
+        trkToView.remove(trk);
+        viewToTrk.remove(v);
     }
     
     /**
@@ -7689,6 +7709,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     private void clearLayoutTracks() {
         layoutTrackList.clear();
+        layoutTrackViewList.clear();
+        trkToView.clear();
+        viewToTrk.clear();
     }
      
     public @Nonnull
