@@ -4,20 +4,22 @@ It's in no particular order, items are removed as done, so please don't consider
 ----
 
 ## MVC work
- -  *View, LayoutEditorDialogs/*Editor need a complete set of clases
+ -  *View  need a complete set of clases
     Still to do (mark off when present)
         View: LayoutTrack.java LayoutTurntable.java LevelXing.java LayoutTurnout.java LayoutWye.java
             LayoutLHTurnout.java LayoutRHTurnout.java 
             LayoutSlip.java LayoutSingleSlip.java LayoutDoubleSlip.java 
             LayoutXOver.java LayoutDoubleXOver.java LayoutLHXOver.java LayoutRHXOver.java
+ - prototype the access process - `new` is done in two basic places
+ 
+ java/src//jmri/jmrit/display/layoutEditor/configurexml/LayoutTurnoutXml.java:                l = new LayoutRHXOver(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+ java/src//jmri/jmrit/display/layoutEditor/LayoutEditor.java:                o = new LayoutRHXOver(name, currentPoint, rot, xScale, yScale, this);
+ 
+ java/src//jmri/jmrit/display/layoutEditor/configurexml/LayoutTurntableXml.java:        LayoutTurntable l = new LayoutTurntable(name, new Point2D.Double(x, y), p);
+ java/src//jmri/jmrit/display/layoutEditor/LayoutEditor.java:        LayoutTurntable lt = new LayoutTurntable(name, pt, this);
 
-        Editor: LayoutTurntable.java LevelXing.java LayoutTurnout.java LayoutWye.java 
-            LayoutLHTurnout.java LayoutRHTurnout.java 
-            LayoutSlip.java LayoutSingleSlip.java LayoutDoubleSlip.java 
-            LayoutXOver.java LayoutDoubleXOver.java LayoutLHXOver.java LayoutRHXOver.java
-        LayoutTrackEditors has separate code remaining for
-            LayoutTurnout (all kinds, if'd for XOver), LayoutSlip (ditto), Level Xing, Turntable (and Rays)
-        
+(another thing to move out of LayoutEditor class...)
+
 MVC: LayoutEditorComponent is the JComponent in which the *View code lives now
     gets data from LE with
         layoutEditor.getLayoutTracks()  
@@ -60,7 +62,7 @@ isDisconnected in LayoutTrack (base) and PositionablePoint (subclass) seem very 
  - Run a cleanup on imports via NetBeans; you've left quite a few behind...
  
 ==================
-No editor for XOver? Not in old code....
+No editor for XOver? Not in old code explicitly:
 
         if (layoutTrack instanceof PositionablePoint) {
             // PositionablePoint's don't have an editor...
@@ -79,6 +81,8 @@ No editor for XOver? Not in old code....
             log.error("editLayoutTrack unknown LayoutTrack subclass:" + layoutTrack.getClass().getName());  // NOI18N
         }
 
+
+Also PositionablePoint editors for End Bumper, etc
 =======
         levelXingEditor.editLevelXing(levelXing);
 

@@ -231,6 +231,7 @@ public abstract class LayoutTrack {
             // can't set selected here because the ActionListener has to be set first
             return jcbmi;
     }
+    protected static final int NUM_ARROW_TYPES = 6;
     
     /**
      * highlight unconnected connections

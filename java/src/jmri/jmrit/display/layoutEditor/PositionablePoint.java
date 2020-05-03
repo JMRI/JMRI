@@ -973,7 +973,7 @@ public class PositionablePoint extends LayoutTrack {
                 jcbmi.setSelected((connect1.getArrowStyle() == 0) || !etherEnd);
 
                 // configure the arrows
-                for (int i = 1; i<=5; i++) {
+                for (int i = 1; i < NUM_ARROW_TYPES; i++) {
                     jcbmi = loadArrowImageToJCBItem(i, arrowsCountMenu);
                     final int n = i;
                     jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
