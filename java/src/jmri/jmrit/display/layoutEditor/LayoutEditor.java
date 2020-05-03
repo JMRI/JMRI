@@ -7630,24 +7630,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return Collections.unmodifiableList(layoutTrackViewList);
     }
 
-    // temporarily\y creates list on the fly
-    // instead of keeping one
-    public @Nonnull
-    List<LayoutTrackView> XgetLayoutTrackViews() {
-        List<LayoutTrackView> list = new ArrayList<>() ;
-        for (LayoutTrack t : getLayoutTracks()) {
-            if (t instanceof PositionablePoint) {
-                list.add(new PositionablePointView((PositionablePoint)t));
-            } else if (t instanceof TrackSegment) {
-                list.add(new TrackSegmentView((TrackSegment)t));
-            } else {
-                list.add(new LayoutTrackView(t));
-            }
-        }
-        return list;
-    }
-
-
     private final List<LayoutTrack> layoutTrackList = new ArrayList<>();
     private final List<LayoutTrackView> layoutTrackViewList = new ArrayList<>();
     private final Map<LayoutTrack, LayoutTrackView> trkToView = new HashMap<>();
