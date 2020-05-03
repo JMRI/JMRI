@@ -112,21 +112,21 @@ abstract public class LayoutTrack {
         return layoutEditor.getLayoutEditorToolBarPanel();
     }
 
-    //these are convenience methods to return circles & rectangle used to draw onscreen
+    // these are convenience methods to return circles & rectangle used to draw onscreen
     //
-    //compute the control point rect at inPoint; use the turnout circle size
+    // compute the control point rect at inPoint; use the turnout circle size
     final public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
         return trackControlCircleAt(inPoint);
     }
 
-    //compute the turnout circle at inPoint (used for drawing)
+    // compute the turnout circle at inPoint (used for drawing)
     final public Ellipse2D trackControlCircleAt(@Nonnull Point2D inPoint) {
         return new Ellipse2D.Double(inPoint.getX() - layoutEditor.circleRadius,
                 inPoint.getY() - layoutEditor.circleRadius,
                 layoutEditor.circleDiameter, layoutEditor.circleDiameter);
     }
 
-    //compute the turnout circle control rect at inPoint
+    // compute the turnout circle control rect at inPoint
     final public Rectangle2D trackControlCircleRectAt(@Nonnull Point2D inPoint) {
         return new Rectangle2D.Double(inPoint.getX() - layoutEditor.circleRadius,
                 inPoint.getY() - layoutEditor.circleRadius,
@@ -188,11 +188,11 @@ abstract public class LayoutTrack {
      *
      * @param g2 the graphics context
      */
-    //abstract protected void drawHidden(Graphics2D g2);
-    //note: placeholder until I get this implemented in all sub-classes
-    //TODO: replace with abstract declaration (above)
+    // abstract protected void drawHidden(Graphics2D g2);
+    // note: placeholder until I get this implemented in all sub-classes
+    // TODO: replace with abstract declaration (above)
     final protected void drawHidden(Graphics2D g2) {
-        //nothing to do here... move along...
+        // nothing to do here... move along...
     }
 
     /**

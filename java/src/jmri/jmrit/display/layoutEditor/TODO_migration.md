@@ -18,12 +18,6 @@ LayoutEditorComponent and LayoutShapes as future problem
  
 ============================================================
 
-Encapsulations:
-    LayoutTrack
-        hidden 
-        center
-        ident
-
 Usages from LayoutTrackView:
 
 protected abstract void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
@@ -64,8 +58,19 @@ abstract protected void drawDecorations(Graphics2D g2);
     java/src/jmri/jmrit/display/layoutEditor/LevelXing.java:1500
     java/src/jmri/jmrit/display/layoutEditor/LayoutEditorChecks.java:379
 
+=========================================================
 
-getId vs getName vs ident?
+- [ ] getId vs getName why? getName (257) much more common than getId (35), but is it right?
+
+% grep -r 'String getName\(\)' java/src/jmri/jmrit/display/layoutEditor/
+java/src/jmri/jmrit/display/layoutEditor//LayoutTrackDrawingOptions.java:    public String getName() {
+java/src/jmri/jmrit/display/layoutEditor//LayoutShape.java:    public String getName() {
+java/src/jmri/jmrit/display/layoutEditor//LayoutEditor.java:        public String getName() {
+java/src/jmri/jmrit/display/layoutEditor//LayoutTrack.java:    final public String getName() {
+
+% grep -r 'String getId\(\)' java/src/jmri/jmrit/display/layoutEditor/
+java/src/jmri/jmrit/display/layoutEditor//LayoutBlock.java:    public String getId() {
+java/src/jmri/jmrit/display/layoutEditor//LayoutTrack.java:    final public String getId() {
 
 =========================================================
 
@@ -159,8 +164,11 @@ PositionablePoint.java:        //nothing to see here... move along...
 TrackSegment.java:        //nothing to see here, move along
 TrackSegment.java:        //nothing to see here, move along
 
+=================
+
+Fix `//([a-zA-Z])` comments with `// \1`
    
-   =================
+=================
    
    Consider moving list management entirely out of Layout Manager to decrease size & complexity.
    

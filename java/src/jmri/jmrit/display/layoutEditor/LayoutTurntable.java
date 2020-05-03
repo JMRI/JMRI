@@ -155,7 +155,7 @@ public class LayoutTurntable extends LayoutTrack {
     // the following method is only for use in loading layout turntables
     public void addRayTrack(double angle, int index, String name) {
         RayTrack rt = new RayTrack(angle, index);
-        //if (ray!=null) {
+        // if (ray!=null) {
         rayList.add(rt);
         rt.connectName = name;
         //}
@@ -620,7 +620,7 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     protected HitPointType findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         HitPointType result = HitPointType.NONE;  // assume point not on connection
-        //note: optimization here: instead of creating rectangles for all the
+        // note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
         Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
@@ -629,7 +629,7 @@ public class LayoutTurntable extends LayoutTrack {
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
         double distance, minDistance = POSITIVE_INFINITY;
         if (!requireUnconnected) {
-            //check the center point
+            // check the center point
             p = getCoordsCenter();
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
@@ -1021,7 +1021,7 @@ public class LayoutTurntable extends LayoutTrack {
         public String connectName = "";
 
         private NamedBeanHandle<Turnout> namedTurnout;
-        //Turnout t;
+        // Turnout t;
         private int turnoutState;
         private PropertyChangeListener mTurnoutListener;
 
