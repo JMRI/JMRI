@@ -195,6 +195,7 @@ class Diesel3Sound extends EngineSound {
             sb = new D3Notch();
             int nn = Integer.parseInt(el.getChildText("notch"));
             sb.setNotch(nn);
+            sb.setIdleNotch(false);
             if ((idle_notch != null) && (nn == idle_notch)) {
                 sb.setIdleNotch(true);
                 log.debug("Notch {} set to Idle.", nn);
@@ -488,6 +489,7 @@ class Diesel3Sound extends EngineSound {
             if (_parent.isEngineStarted()) {
                 if (t < 0.0f) {
                     t = 0.0f;
+                    is_in_rampup_mode = false; // interrupt ramp-up
                 }
                 _throttle = t;
             }

@@ -59,8 +59,15 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
      * Edit a Track Segment.
      */
     @InvokeOnGuiThread
-    public void editTrackSegment(@Nonnull TrackSegment trackSegment) {
-        this.trackSegment = trackSegment;
+    @Override
+    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
+        if ( layoutTrack instanceof TrackSegment ) {
+            this.trackSegment = (TrackSegment) layoutTrack;
+        } else {
+            log.error("editLayoutTrack received type {} content {}", 
+                    layoutTrack.getClass(), layoutTrack, 
+                    new Exception("traceback"));
+        }
         sensorList.clear();
 
         if (editTrackSegmentOpen) {
@@ -275,5 +282,5 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
     }
 
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegmentEditor.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegmentEditor.class);
 }

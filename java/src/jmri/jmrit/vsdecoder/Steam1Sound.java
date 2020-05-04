@@ -674,6 +674,7 @@ class Steam1Sound extends EngineSound {
             if (_parent.isEngineStarted()) {
                 if (t < 0.0f) {
                     // DO something to shut down
+                    is_in_rampup_mode = false; // interrupt ramp-up
                     setRpmNominal(0);
                     _parent.accdectime = 0;
                     _parent.startAccDecTimer();

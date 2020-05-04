@@ -26,16 +26,11 @@ import org.netbeans.jemmy.util.NameComponentChooser;
 public class LayoutTrackEditorTest {
 
     @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        new LayoutTrackEditor(null);
-    }
-
-    @Test
     public void testHasNxSensorPairsNull() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(null);
+        LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(null) { // core of abstract class
+            public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {}
+        };
 
         Assert.assertFalse("null block NxSensorPairs", layoutTrackEditor.hasNxSensorPairs(null));
     }
@@ -43,7 +38,9 @@ public class LayoutTrackEditorTest {
     @Test
     public void testHasNxSensorPairsDisconnectedBlock() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(null);
+        LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(null) { // core of abstract class
+            public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {}
+        };
 
         LayoutBlock b = new LayoutBlock("test", "test");
         Assert.assertFalse("disconnected block NxSensorPairs", layoutTrackEditor.hasNxSensorPairs(b));
@@ -52,7 +49,9 @@ public class LayoutTrackEditorTest {
     @Test
     public void testShowSensorMessage() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(null);
+        LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(null) { // core of abstract class
+            public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {}
+        };
 
         layoutTrackEditor.sensorList.add("Test");
         Assert.assertFalse(layoutTrackEditor.sensorList.isEmpty());

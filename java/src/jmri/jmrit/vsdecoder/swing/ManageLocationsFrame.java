@@ -22,7 +22,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.event.EventListenerList;
 import javax.swing.table.AbstractTableModel;
 import jmri.Block;
 import jmri.BlockManager;
@@ -40,6 +39,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * GUI to manage Reporters, Locations and Listener attributes. 
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -70,8 +71,6 @@ public class ManageLocationsFrame extends JmriJFrame {
         Mnemonics.put("CloseButton", KeyEvent.VK_O); // NOI18N
         Mnemonics.put("SaveButton", KeyEvent.VK_S); // NOI18N
     }
-
-    protected EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
     private JTabbedPane tabbedPane;
     private JPanel listenerPanel;

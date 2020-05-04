@@ -727,14 +727,14 @@ public class RailDriverMenuItem extends JMenuItem
                         case 34: {  // Gear Shift Up
                             if (isDown) {
                                 // shuntFn
-                                functionButtons[3].changeState(false);
+                                functionButtons[3].setSelected(false);
                             }
                             break;
                         }
                         case 35: {  // Gear Shift Down
                             if (isDown) {
                                 // shuntFn
-                                functionButtons[3].changeState(true);
+                                functionButtons[3].setSelected(true);
                             }
                             break;
                         }
@@ -784,10 +784,10 @@ public class RailDriverMenuItem extends JMenuItem
                         if (button != null) {
                             if (button.getIsLockable()) {
                                 if (isDown) {
-                                    button.changeState(!button.getState());
+                                    button.setSelected(!button.getState());
                                 }
                             } else {
-                                button.changeState(isDown);
+                                button.setSelected(isDown);
                             }
                         }
                     }

@@ -27,7 +27,7 @@ class LayoutEditorComponent extends JComponent {
 
     private final LayoutEditor layoutEditor;
 
-    //Antialiasing rendering
+    // Antialiasing rendering
     protected static final RenderingHints antialiasing = new RenderingHints(
             RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON);
@@ -43,7 +43,7 @@ class LayoutEditorComponent extends JComponent {
     @Override
     public void paint(Graphics g) {
         if (g instanceof Graphics2D) {
-            //layoutEditor.draw((Graphics2D) g);
+            // layoutEditor.draw((Graphics2D) g);
 
             Graphics2D g2 = (Graphics2D) g;
 
@@ -52,12 +52,12 @@ class LayoutEditorComponent extends JComponent {
                     g2.setClip(clipBounds);
                 }
             }
-            //Optional antialising, to eliminate (reduce) staircase on diagonal lines
+            // Optional antialising, to eliminate (reduce) staircase on diagonal lines
             if (layoutEditor.antialiasingOn) {
                 g2.setRenderingHints(antialiasing);
             }
 
-            //drawPositionableLabelBorder(g2);
+            // drawPositionableLabelBorder(g2);
             // things that only get drawn in edit mode
             if (layoutEditor.isEditable()) {
                 if (layoutEditor.getDrawGrid()) {
@@ -126,7 +126,7 @@ class LayoutEditorComponent extends JComponent {
         g2.setColor(Color.gray);
         g2.setStroke(narrow);
 
-        //draw horizontal lines
+        // draw horizontal lines
         for (int y = minY; y <= maxY; y += layoutEditor.getGridSize()) {
             startPt.setLocation(minX, y);
             stopPt.setLocation(maxX, y);
@@ -140,7 +140,7 @@ class LayoutEditorComponent extends JComponent {
             }
         }
 
-        //draw vertical lines
+        // draw vertical lines
         for (int x = minX; x <= maxX; x += layoutEditor.getGridSize()) {
             startPt.setLocation(x, minY);
             stopPt.setLocation(x, maxY);
@@ -165,7 +165,7 @@ class LayoutEditorComponent extends JComponent {
                 BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
                 new float[]{6.F, 4.F}, 0);
 
-        //setup for drawing hidden sideline rails
+        // setup for drawing hidden sideline rails
         g2.setColor(ltdo.getSideRailColor());
         g2.setStroke(stroke);
         boolean main = false, block = false, hidden = true, dashed = false;
@@ -173,7 +173,7 @@ class LayoutEditorComponent extends JComponent {
         g2.setStroke(dashedStroke);
         draw1(g2, main, block, hidden, dashed = true);
 
-        //setup for drawing mainline rails
+        // setup for drawing mainline rails
         main = true;
         g2.setColor(ltdo.getMainRailColor());
         g2.setStroke(stroke);
@@ -191,7 +191,7 @@ class LayoutEditorComponent extends JComponent {
         boolean main = false, block = false, hidden = false, dashed = true;
 
         if (ltdo.getSideRailCount() > 0) {
-            //setup for drawing dashed sideline rails
+            // setup for drawing dashed sideline rails
             int railWidth = ltdo.getSideRailWidth();
             float[] dashArray = new float[]{6.F + railWidth, 4.F + railWidth};
             g2.setStroke(new BasicStroke(
@@ -209,7 +209,7 @@ class LayoutEditorComponent extends JComponent {
         }
 
         if (ltdo.getMainRailCount() > 0) {
-            //setup for drawing dashed mainline rails
+            // setup for drawing dashed mainline rails
             main = true;
             int railWidth = ltdo.getMainRailWidth();
             float[] dashArray = new float[]{6.F + railWidth, 4.F + railWidth};
@@ -235,7 +235,7 @@ class LayoutEditorComponent extends JComponent {
         LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
         boolean main = false, block = false, hidden = false, dashed = false;
 
-        //setup for drawing sideline ballast
+        // setup for drawing sideline ballast
         int ballastWidth = ltdo.getSideBallastWidth();
         if (ballastWidth > 0) {
             g2.setStroke(new BasicStroke(ballastWidth,
@@ -244,7 +244,7 @@ class LayoutEditorComponent extends JComponent {
             draw1(g2, main, block, hidden, dashed);
         }
 
-        //setup for drawing mainline ballast
+        // setup for drawing mainline ballast
         ballastWidth = ltdo.getMainBallastWidth();
         if (ballastWidth > 0) {
             g2.setStroke(new BasicStroke(ballastWidth,
@@ -297,7 +297,7 @@ class LayoutEditorComponent extends JComponent {
         boolean main = false, block = false, hidden = false, dashed = false;
 
         if (ltdo.getSideRailCount() > 1) {
-            //setup for drawing sideline rails
+            // setup for drawing sideline rails
             float railDisplacement = railWidth + (ltdo.getSideRailGap() / 2.F);
             g2.setStroke(new BasicStroke(railWidth,
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
@@ -306,7 +306,7 @@ class LayoutEditorComponent extends JComponent {
         }
 
         if ((ltdo.getSideRailCount() & 1) == 1) {
-            //setup for drawing sideline rails
+            // setup for drawing sideline rails
             g2.setStroke(new BasicStroke(
                     railWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
@@ -319,7 +319,7 @@ class LayoutEditorComponent extends JComponent {
         railWidth = ltdo.getMainRailWidth();
         railColor = ltdo.getMainRailColor();
         if (ltdo.getMainRailCount() > 1) {
-            //setup for drawing mainline rails
+            // setup for drawing mainline rails
             float railDisplacement = railWidth + (ltdo.getMainRailGap() / 2.F);
             g2.setStroke(new BasicStroke(railWidth,
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
@@ -327,7 +327,7 @@ class LayoutEditorComponent extends JComponent {
             draw2(g2, main, railDisplacement);
         }
         if ((ltdo.getMainRailCount() & 1) == 1) {
-            //setup for drawing mainline rails
+            // setup for drawing mainline rails
             g2.setStroke(new BasicStroke(
                     railWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
@@ -343,7 +343,7 @@ class LayoutEditorComponent extends JComponent {
     private void drawLayoutTracksBlockLines(Graphics2D g2) {
         LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
 
-        //setup for drawing sideline block lines
+        // setup for drawing sideline block lines
         int blockLineWidth = ltdo.getSideBlockLineWidth();
         float[] dashArray = new float[]{6.F + blockLineWidth, 4.F + blockLineWidth};
 
@@ -368,13 +368,13 @@ class LayoutEditorComponent extends JComponent {
                     10.F, dashArray, 0));
         }
 
-        //note: color is set in layout track's draw1 when isBlock is true
+        // note: color is set in layout track's draw1 when isBlock is true
         boolean main = false, block = true, hidden = false, dashed = true;
         draw1(g2, main, block, hidden, dashed);
         g2.setStroke(blockLineStroke);
         draw1(g2, main, block, hidden, dashed = false);
 
-        //setup for drawing mainline block lines
+        // setup for drawing mainline block lines
         blockLineWidth = ltdo.getMainBlockLineWidth();
         dashArray = new float[]{6.F + blockLineWidth, 4.F + blockLineWidth};
 
@@ -397,7 +397,7 @@ class LayoutEditorComponent extends JComponent {
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND,
                     10.F, dashArray, 0));
         }
-        //note: color is set in layout track's draw1 when isBlock is true
+        // note: color is set in layout track's draw1 when isBlock is true
         draw1(g2, main = true, block, hidden, dashed = true);
         g2.setStroke(blockLineStroke);
         dashed = false;
@@ -487,7 +487,7 @@ class LayoutEditorComponent extends JComponent {
 
     // draw track segment (in progress)
     private void drawTrackSegmentInProgress(Graphics2D g2) {
-        //check for segment in progress
+        // check for segment in progress
         if (layoutEditor.isEditable() && (layoutEditor.beginTrack != null) && layoutEditor.getLayoutEditorToolBarPanel().trackButton.isSelected()) {
             g2.setColor(layoutEditor.defaultTrackColor);
             g2.setStroke(new BasicStroke(layoutEditor.sidelineTrackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
@@ -515,9 +515,9 @@ class LayoutEditorComponent extends JComponent {
 
     // draw shape (in progress)
     private void drawShapeInProgress(Graphics2D g2) {
-        //check for segment in progress
+        // check for segment in progress
         if (layoutEditor.getLayoutEditorToolBarPanel().shapeButton.isSelected()) {
-            //log.warn("drawShapeInProgress: selectedObject: " + selectedObject);
+            // log.warn("drawShapeInProgress: selectedObject: " + selectedObject);
             if ((layoutEditor.selectedObject != null)) {
                 g2.setColor(Color.DARK_GRAY);
                 g2.setStroke(new BasicStroke(3.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
@@ -530,7 +530,7 @@ class LayoutEditorComponent extends JComponent {
     private void drawLayoutTrackEditControls(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
-        layoutEditor.getLayoutTracks().forEach((tr) -> tr.drawEditControls(g2));
+        layoutEditor.getLayoutTrackViews().forEach((tr) -> tr.drawEditControls(g2));
     }
 
     private void drawShapeEditControls(Graphics2D g2) {
@@ -546,14 +546,14 @@ class LayoutEditorComponent extends JComponent {
 
         // loop over all turnouts
         boolean editable = layoutEditor.isEditable();
-        layoutEditor.getLayoutTracks().forEach((tr) -> {
-            if (tr instanceof LayoutTurnout) {  //<== this includes LayoutSlips
-                LayoutTurnout lt = (LayoutTurnout) tr;
+        layoutEditor.getLayoutTrackViews().forEach((tr) -> {
+            if (tr instanceof LayoutTurnoutView) {  //<== this includes LayoutSlips
+                LayoutTurnoutView lt = (LayoutTurnoutView) tr;
                 if (editable || !(lt.isHidden() || lt.isDisabled())) {
                     lt.drawTurnoutControls(g2);
                 }
-            } else if (tr instanceof LayoutTurntable) {
-                LayoutTurntable lt = (LayoutTurntable) tr;
+            } else if (tr instanceof LayoutTurntableView) {
+                LayoutTurntableView lt = (LayoutTurntableView) tr;
                 if (editable || !lt.isHidden()) {
                     lt.drawTurnoutControls(g2);
                 }
@@ -699,6 +699,6 @@ class LayoutEditorComponent extends JComponent {
         this.clipBounds = clipBounds;
     }
 
-    //initialize logging
+    // initialize logging
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorComponent.class);
 }

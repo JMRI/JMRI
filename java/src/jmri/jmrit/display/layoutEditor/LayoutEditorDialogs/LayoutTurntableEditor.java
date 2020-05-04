@@ -54,8 +54,13 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
     /**
      * Edit a Turntable.
      */
-    public void editLayoutTurntable(LayoutTurntable layoutTurntable) {
-        this.layoutTurntable = layoutTurntable;
+    @Override
+    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
+        if ( layoutTrack instanceof LayoutTurntable ) {
+            this.layoutTurntable = (LayoutTurntable) layoutTrack;
+        } else {
+            log.error("editLayoutTrack called with wrong type {}", layoutTrack, new Exception("traceback"));
+        }
         sensorList.clear();
 
         if (editLayoutTurntableOpen) {

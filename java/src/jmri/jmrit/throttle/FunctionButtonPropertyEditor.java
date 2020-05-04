@@ -8,15 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import jmri.util.FileUtil;
 import jmri.util.swing.EditableResizableImagePanel;
 
@@ -41,11 +33,11 @@ public class FunctionButtonPropertyEditor extends JDialog {
      */
     public FunctionButtonPropertyEditor() {
         initGUI();
-        pack();
+        super.pack();
     }
 
     /**
-     * Create, initilize, and place the GUI objects.
+     * Create, initialise, and place the GUI objects.
      */
     private void initGUI() {
         this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
@@ -138,20 +130,10 @@ public class FunctionButtonPropertyEditor extends JDialog {
         buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
 
         JButton saveButton = new JButton(Bundle.getMessage("ButtonOK"));
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveProperties();
-            }
-        });
+        saveButton.addActionListener(this::saveProperties);
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                finishEdit();
-            }
-        });
+        cancelButton.addActionListener(this::finishEdit);
 
         buttonPanel.add(saveButton);
         buttonPanel.add(cancelButton);
@@ -162,8 +144,9 @@ public class FunctionButtonPropertyEditor extends JDialog {
     }
 
     /**
-     * Set the FunctionButton this dialog will edit. Method will initialize GUI
-     * from button properties.
+     * Set the FunctionButton this dialog will edit. 
+     * <p>
+     * Method will initialize GUI from button properties.
      *
      * @param button The FunctionButton to edit.
      */
@@ -181,8 +164,9 @@ public class FunctionButtonPropertyEditor extends JDialog {
 
     /**
      * Save the user-modified properties back to the FunctionButton.
+     * @param e unused
      */
-    private void saveProperties() {
+    private void saveProperties(ActionEvent e) {
         if (isDataValid()) {
             button.setButtonLabel(textField.getText());
             button.setIsLockable(lockableCheckBox.isSelected());
@@ -197,19 +181,21 @@ public class FunctionButtonPropertyEditor extends JDialog {
             button.setSelectedIconPath(_imagePressedFilePath.getImagePath());
             button.setDirty(true);
             button.updateLnF();
-            finishEdit();
+            finishEdit(null);
         }
     }
 
     /**
      * Finish the editing process. Hide the dialog.
+     * @param e unused.
      */
-    private void finishEdit() {
+    private void finishEdit(ActionEvent e) {
         this.setVisible(false);
     }
 
     /**
      * Verify the data on the dialog. If invalid, notify user of errors.
+     * @return true if valid, else false.
      */
     private boolean isDataValid() {
         StringBuffer errors = new StringBuffer();
@@ -221,8 +207,8 @@ public class FunctionButtonPropertyEditor extends JDialog {
                 throw new NumberFormatException("");
             }
         } catch (NumberFormatException ex) {
-            errors.append(String.valueOf(++errorNumber));
-            errors.append(". " + Bundle.getMessage("ErrorFunctionKeyRange") + "\n");
+            errors.append(String.valueOf(++errorNumber)).append(". ");
+            errors.append(Bundle.getMessage("ErrorFunctionKeyRange")).append("\n");
         }
 
         /* font > 0 */
@@ -232,13 +218,13 @@ public class FunctionButtonPropertyEditor extends JDialog {
                 throw new NumberFormatException("");
             }
         } catch (NumberFormatException ex) {
-            errors.append(String.valueOf(++errorNumber));
-            errors.append(". " + Bundle.getMessage("ErrorFontSize"));
+            errors.append(String.valueOf(++errorNumber)).append(". ");
+            errors.append( Bundle.getMessage("ErrorFontSize"));
         }
 
         if (errorNumber > 0) {
             JOptionPane.showMessageDialog(this, errors,
-                    "Errors on page", JOptionPane.ERROR_MESSAGE);
+                Bundle.getMessage("ErrorOnPage"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;

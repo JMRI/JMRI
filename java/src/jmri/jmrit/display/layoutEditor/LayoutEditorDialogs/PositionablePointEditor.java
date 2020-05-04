@@ -31,9 +31,14 @@ public class PositionablePointEditor extends LayoutTrackEditor {
         super(layoutEditor);
     }
 
-    // These now reflect to code in the base class; eventually this heirarchy will
-    // expand and the code will be brought here
+    /**
+     * Edit a PositionablePoint
+     */
+    @Override
+    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
+        log.error("no editor installed for PositionablePoint", new Exception("traceback"));
+    }
     
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointEditor.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointEditor.class);
 }
