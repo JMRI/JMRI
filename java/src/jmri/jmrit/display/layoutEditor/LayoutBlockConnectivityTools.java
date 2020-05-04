@@ -26,7 +26,6 @@ import org.slf4j.MDC;
 public class LayoutBlockConnectivityTools {
 
     public LayoutBlockConnectivityTools() {
-
     }
 
     /**
@@ -383,41 +382,41 @@ public class LayoutBlockConnectivityTools {
     /**
      * This uses the layout editor to check if the destination location is
      * reachable from the source location.<br>
-     * Note: No known references to this method.
+     * Only used internally to the class.
      * <p>
      * @param facing     Layout Block that is considered our first block
      * @param protecting Layout Block that is considered first block +1
      * @param dest       Layout Block that we want to get to
      * @param pathMethod the path method
      * @return true if valid
-     * @throws JmriException
+     * @throws JmriException during nested getProtectingBlocks operation
      */
-    public boolean checkValidDest(LayoutBlock facing, LayoutBlock protecting, FacingProtecting dest, int pathMethod) throws JmriException {
+    private boolean checkValidDest(LayoutBlock facing, LayoutBlock protecting, FacingProtecting dest, int pathMethod) throws JmriException {
         if (facing == null || protecting == null || dest == null) {
             return false;
         }
         if (log.isDebugEnabled()) {
             log.debug("facing : {} protecting : {} dest {}", protecting.getDisplayName(), dest.getBean().getDisplayName(), facing.getDisplayName());
         }
-        try {
-            // In this instance it doesn't matter what the destination protecting block is so we get the first
-            /*LayoutBlock destProt = null;
-             if(!dest.getProtectingBlocks().isEmpty()){
-             destProt = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(dest.getProtectingBlocks().get(0));
-             // log.info(dest.getProtectingBlocks());
-             }*/
-            List<LayoutBlock> destList = new ArrayList<>();
-            dest.getProtectingBlocks().forEach((b) -> {
-                destList.add(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(b));
-            });
-            return checkValidDest(facing, protecting, InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(dest.getFacing()), destList, pathMethod);
-        } catch (jmri.JmriException e) {
-            throw e;
-        }
+
+        // In this instance it doesn't matter what the destination protecting block is so we get the first
+        /*LayoutBlock destProt = null;
+         if(!dest.getProtectingBlocks().isEmpty()){
+         destProt = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(dest.getProtectingBlocks().get(0));
+         // log.info(dest.getProtectingBlocks());
+         }*/
+         
+        List<LayoutBlock> destList = new ArrayList<>();
+
+         // may throw JmriException here
+        dest.getProtectingBlocks().forEach((b) -> {
+            destList.add(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(b));
+        });
+        return checkValidDest(facing, protecting, InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(dest.getFacing()), destList, pathMethod);
     }
 
     /**
-     * The is used in conjunction with the layout block routing protocol, to
+     * This used in conjunction with the layout block routing protocol, to
      * discover a clear path from a source layout block through to a destination
      * layout block. By specifying the sourceLayoutBlock and
      * protectingLayoutBlock or sourceLayoutBlock+1, a direction of travel can
@@ -448,6 +447,7 @@ public class LayoutBlockConnectivityTools {
     public List<LayoutBlock> getLayoutBlocks(LayoutBlock sourceLayoutBlock, LayoutBlock destinationLayoutBlock, LayoutBlock protectingLayoutBlock, boolean validateOnly, int pathMethod) throws jmri.JmriException {
         lastErrorMessage = "Unknown Error Occured";
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
+        
         if (!lbm.isAdvancedRoutingEnabled()) {
             log.debug("Advanced routing has not been enabled therefore we cannot use this function");
             throw new jmri.JmriException("Advanced routing has not been enabled therefore we cannot use this function");
@@ -818,7 +818,7 @@ public class LayoutBlockConnectivityTools {
      *                   there are other beans in the way. Constant values of
      *                   NONE, ANY, MASTTOMAST, HEADTOHEAD
      * @return A list of all reachable NamedBeans
-     * @throws jmri.JmriException
+     * @throws jmri.JmriException occurring during nested readAll operation
      */
     public List<NamedBean> discoverPairDest(NamedBean source, LayoutEditor editor, Class<?> T, int pathMethod) throws JmriException {
         if (log.isDebugEnabled()) {
@@ -829,12 +829,10 @@ public class LayoutBlockConnectivityTools {
         List<LayoutBlock> lProtecting = lbm.getProtectingBlocksByNamedBean(source, editor);
         List<NamedBean> ret = new ArrayList<>();
         List<FacingProtecting> beanList = generateBlocksWithBeans(editor, T);
-        try {
-            for (LayoutBlock lb : lProtecting) {
-                ret.addAll(discoverPairDest(source, lb, lFacing, beanList, pathMethod));
-            }
-        } catch (JmriException e) {
-            throw e;
+        
+        // may throw JmriException here
+        for (LayoutBlock lb : lProtecting) {
+            ret.addAll(discoverPairDest(source, lb, lFacing, beanList, pathMethod));
         }
         return ret;
     }
