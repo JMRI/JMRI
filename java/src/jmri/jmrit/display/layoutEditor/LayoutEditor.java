@@ -7639,7 +7639,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Add a LayoutTrack to the list of 
      * LayoutTrack family objects.
      */
-    @Nonnull
     final public void addLayoutTrack(@Nonnull LayoutTrack trk) {
         log.trace("addLayoutTrack {}", trk);
         if (layoutTrackList.contains(trk)) log.warn("LayoutTrack {} already being maintained", trk.getName());
