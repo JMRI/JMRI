@@ -1,6 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.io.File;
+import jmri.util.*;
 import org.junit.runners.Parameterized;
 import org.junit.*;
 import jmri.util.JUnitUtil;
@@ -30,6 +31,46 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         super(file, pass, SaveType.User, true); // isGUEonly, as these contain panels, no not headless
     }
 
+    static boolean done;
+
+    /**
+     * Also writes out image files from these
+     * for later offline checking.  This can't be 
+     * (easily) automated, as the images vary from platform
+     * to platform.
+     */
+    @Test
+    @Override
+    public void loadLoadStoreFileCheck() throws Exception {
+        super.loadLoadStoreFileCheck();
+
+        done = false;
+        jmri.util.ThreadingUtil.runOnGUIDelayed(()->{ 
+                done = true;
+            }, 2500);
+        jmri.util.JUnitUtil.waitFor(()->{return done;});
+        storeImage(this.file);
+    }
+    
+    // store image(s) of any JFrames
+    public static void storeImage(java.io.File inFile) throws Exception {
+        int index = 0;
+        for (jmri.util.JmriJFrame frame : jmri.util.JmriJFrame.getFrameList() ) {
+            index++;
+            if (frame instanceof LayoutEditor) {
+                LayoutEditor le = (LayoutEditor) frame;
+
+                String name = inFile.getName();
+                FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
+                File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name+"."+index+".png");
+                System.out.println(outFile);
+                jmri.util.JUnitSwingUtil.writeDisplayedContentToFile(le.getTargetPanel(), 
+                                            le.getTargetPanel().size(), new java.awt.Point(0, 0),
+                                            outFile);
+            }
+        }
+    }
+    
     @Before
     @Override
     public void setUp() {

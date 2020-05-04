@@ -336,7 +336,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
                         bc.getChild("turnoutB").getText());
             }
         }
-        p.getLayoutTracks().add(l);
+        p.addLayoutTrack(l);
     }
 
     String getElement(Element el, String child) {

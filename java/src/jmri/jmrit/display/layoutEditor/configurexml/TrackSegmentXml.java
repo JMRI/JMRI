@@ -618,7 +618,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             l.tLayoutBlockName = a.getValue();
         }
 
-        p.getLayoutTracks().add(l);
+        p.addLayoutTrack(l);
     }
 
     static final EnumIO<HitPointType> htpMap = new EnumIoNamesNumbers<>(HitPointType.class);
