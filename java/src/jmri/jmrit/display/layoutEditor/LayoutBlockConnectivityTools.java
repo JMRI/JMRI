@@ -186,7 +186,7 @@ public class LayoutBlockConnectivityTools {
 
     /**
      * Returns a list of NamedBeans (Signalhead, Signalmast or Sensor) that are
-     * assigned to block boundaries in a given list
+     * assigned to block boundaries in a given list.
      *
      * @param blocklist The list of block in order that need to be checked.
      * @param panel     (Optional) panel that the blocks need to be checked
@@ -400,11 +400,11 @@ public class LayoutBlockConnectivityTools {
             log.debug("facing : {} protecting : {} dest {}", protecting.getDisplayName(), dest.getBean().getDisplayName(), facing.getDisplayName());
         }
         try {
-            //In this instance it doesn't matter what the destination protecting block is so we get the first
+            // In this instance it doesn't matter what the destination protecting block is so we get the first
             /*LayoutBlock destProt = null;
              if(!dest.getProtectingBlocks().isEmpty()){
              destProt = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(dest.getProtectingBlocks().get(0));
-             //log.info(dest.getProtectingBlocks());
+             // log.info(dest.getProtectingBlocks());
              }*/
             List<LayoutBlock> destList = new ArrayList<>();
             dest.getProtectingBlocks().forEach((b) -> {
@@ -503,7 +503,7 @@ public class LayoutBlockConnectivityTools {
                 if (log.isDebugEnabled()) {
                     log.debug("block index returned {} Blocks in route size {}", nextBlockIndex, blocksInRoute.size());
                 }
-                //Sets the old next block to be our current block.
+                // Sets the old next block to be our current block.
                 LayoutBlock currentLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(nextBlock);
                 if (currentLBlock == null) {
                     log.error("Unable to get block :{}: from instancemanager", nextBlock);
@@ -552,9 +552,9 @@ public class LayoutBlockConnectivityTools {
                 }
             } else {
                 //-1 is returned when there are no more valid besthop valids found
-                //Block index is -1, so we need to go back a block and find another way.
+                // Block index is -1, so we need to go back a block and find another way.
 
-                //So we have gone back as far as our starting block so we better return.
+                // So we have gone back as far as our starting block so we better return.
                 int birSize = blocksInRoute.size();
                 log.debug("block in route size {}", birSize);
                 if (birSize <= 2) {
@@ -626,7 +626,7 @@ public class LayoutBlockConnectivityTools {
 
     String lastErrorMessage = "Unknown Error Occured";
 
-    //We need to take into account if the returned block has a signalmast attached.
+    // We need to take into account if the returned block has a signalmast attached.
     int findBestHop(final Block preBlock, final Block currentBlock, Block destBlock, int direction, List<Integer> offSet, boolean validateOnly, int pathMethod) {
         int result = 0;
 
@@ -641,7 +641,7 @@ public class LayoutBlockConnectivityTools {
         Block block;
         while (result != -1) {
             if (currentBlock == preBlock) {
-                //Basically looking for the connected block, which there should only be one of!
+                // Basically looking for the connected block, which there should only be one of!
                 log.debug("At get ConnectedBlockRoute");
                 result = currentLBlock.getConnectedBlockRouteIndex(destBlock, direction);
             } else {
@@ -787,7 +787,7 @@ public class LayoutBlockConnectivityTools {
                         log.debug("facing {}", fp.getFacing().getDisplayName());
                         log.debug("protecting {}", block.getDisplayName());
                     } catch (java.lang.NullPointerException e) {
-                        //Can be considered normal if the signalmast is assigned to an end bumper.
+                        // Can be considered normal if the signalmast is assigned to an end bumper.
                     }
                 }
                 return block;

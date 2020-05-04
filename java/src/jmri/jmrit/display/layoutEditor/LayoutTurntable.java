@@ -81,8 +81,8 @@ public class LayoutTurntable extends LayoutTrack {
 
     //
     /**
-     * Get a string that represents this object (this should only be used for
-     * debugging)
+     * Get a string that represents this object. This should only be used for
+     * debugging.
      *
      * @return the string
      */
@@ -95,7 +95,7 @@ public class LayoutTurntable extends LayoutTrack {
     // Accessor methods
     //
     /**
-     * Get the radius for this turntable
+     * Get the radius for this turntable.
      *
      * @return the radius for this turntable
      */
@@ -104,7 +104,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Set the radius for this turntable
+     * Set the radius for this turntable.
      *
      * @param r the radius for this turntable
      */
@@ -133,14 +133,14 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Set up a LayoutBlock for this LayoutTurntable
+     * Set up a LayoutBlock for this LayoutTurntable.
      *
      * @param newLayoutBlock the LayoutBlock to set
      */
     public void setLayoutBlock(@CheckForNull LayoutBlock newLayoutBlock) {
         LayoutBlock layoutBlock = getLayoutBlock();
         if (layoutBlock != newLayoutBlock) {
-            //block has changed, if old block exists, decrement use
+            /// block has changed, if old block exists, decrement use
             if (layoutBlock != null) {
                 layoutBlock.decrementUse();
             }
@@ -158,7 +158,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Set up a LayoutBlock for this LayoutTurntable
+     * Set up a LayoutBlock for this LayoutTurntable.
      *
      * @param name the name of the new LayoutBlock
      */
@@ -172,7 +172,7 @@ public class LayoutTurntable extends LayoutTrack {
      * non-accessor methods
      */
     /**
-     * @return the bounds of this turntable
+     * @return the bounds of this turntable.
      */
     @Override
     public Rectangle2D getBounds() {
@@ -186,7 +186,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Add a ray at the specified angle
+     * Add a ray at the specified angle.
      *
      * @param angle the angle
      * @return the RayTrack
@@ -219,14 +219,14 @@ public class LayoutTurntable extends LayoutTrack {
     // the following method is only for use in loading layout turntables
     public void addRayTrack(double angle, int index, String name) {
         RayTrack rt = new RayTrack(angle, index);
-        //if (ray!=null) {
+        /// if (ray!=null) {
         rayTrackList.add(rt);
         rt.connectName = name;
         //}
     }
 
     /**
-     * Get the connection for the ray with this index
+     * Get the connection for the ray with this index.
      *
      * @param index the index
      * @return the connection for the ray with this value of getConnectionIndex
@@ -261,7 +261,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Set the connection for the ray at the index in the rayTrackList
+     * Set the connection for the ray at the index in the rayTrackList.
      *
      * @param ts    the connection
      * @param index the index in the rayTrackList
@@ -612,7 +612,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Test if ray at this index is a mainline track or not
+     * Test if ray at this index is a mainline track or not.
      * <p>
      * Defaults to false (not mainline) if connecting track segment is missing
      *
@@ -727,7 +727,7 @@ public class LayoutTurntable extends LayoutTrack {
      * Initialization method The name of each track segment connected to a ray
      * track is initialized by by LayoutTurntableXml, then the following method
      * is called after the entire LayoutEditor is loaded to set the specific
-     * TrackSegment objects
+     * TrackSegment objects.
      *
      * @param p the layout editor
      */
@@ -736,7 +736,7 @@ public class LayoutTurntable extends LayoutTrack {
         if (tLayoutBlockName != null && !tLayoutBlockName.isEmpty()) {
             setLayoutBlockByName(tLayoutBlockName);
         }
-        tLayoutBlockName = null; //release this memory
+        tLayoutBlockName = null; /// release this memory
 
         rayTrackList.forEach((rt) -> {
             rt.setConnect(p.getFinder().findTrackSegmentByName(rt.connectName));
@@ -787,7 +787,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
         jmi.setEnabled(false);
 
-        //if there are any track connections
+        /// if there are any track connections
         if (!rayTrackList.isEmpty()) {
             JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections"));
             rayTrackList.forEach((rt) -> {
@@ -892,7 +892,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Set turntable position to the ray with this index
+     * Set turntable position to the ray with this index.
      *
      * @param index the index
      */
@@ -950,7 +950,7 @@ public class LayoutTurntable extends LayoutTrack {
 
     /**
      * Clean up when this object is no longer needed. Should not be called while
-     * the object is still displayed; see remove()
+     * the object is still displayed; see remove().
      */
     public void dispose() {
         if (popupMenu != null) {
@@ -963,7 +963,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Remove this object from display and persistance
+     * Remove this object from display and persistance.
      */
     public void remove() {
         // remove from persistance by flagging inactive
@@ -1063,7 +1063,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * set the track segment connected to this ray
+         * Set the track segment connected to this ray.
          *
          * @param ts the track segment to connect to this ray
          */
@@ -1072,7 +1072,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * get the angle for this ray
+         * Get the angle for this ray.
          *
          * @return the angle for this ray
          */
@@ -1081,7 +1081,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * set the angle for this ray
+         * Set the angle for this ray.
          *
          * @param an the angle for this ray
          */
@@ -1090,7 +1090,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * get the connection index for this ray
+         * Get the connection index for this ray.
          *
          * @return the connection index for this ray
          */
@@ -1099,7 +1099,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * is this ray occupied?
+         * Is this ray occupied?
          *
          * @return true if occupied
          */
@@ -1293,7 +1293,7 @@ public class LayoutTurntable extends LayoutTrack {
                 g2.draw(new Line2D.Double(pt1, pt2));
             }
             if (color != null) {
-                g2.setColor(color); //restore previous color
+                g2.setColor(color); /// restore previous color
             }
         }
     }
@@ -1347,7 +1347,7 @@ public class LayoutTurntable extends LayoutTrack {
                 g2.draw(new Line2D.Double(pt1R, pt2R));
             }
 //            if (c != null) {
-//                g2.setColor(c); //restore previous color
+//                g2.setColor(c); /// restore previous color
 //            }
         }
     }
@@ -1414,16 +1414,16 @@ public class LayoutTurntable extends LayoutTrack {
         }
     }
 
-    /*
-    * {@inheritDoc}
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected void reCheckBlockBoundary() {
         // nothing to see here... move along...
     }
 
-    /*
-    * {@inheritDoc}
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected List<LayoutConnectivity> getLayoutConnectivity() {
@@ -1468,7 +1468,7 @@ public class LayoutTurntable extends LayoutTrack {
         * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
         * #2) If this track is already in the TrackNameSet for this block
         *     then return (done!)
-        * #3) else add a new set (with this block/track) to
+        * #3) else add a new set (with this block// track) to
         *     blockNamesToTrackNameSetMap and check all the connections in this
         *     block (by calling the 2nd method below)
         * <p>

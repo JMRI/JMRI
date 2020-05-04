@@ -499,7 +499,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Set up a LayoutBlock for this Track Segment
+     * Set up a LayoutBlock for this Track Segment.
      *
      * @param newLayoutBlock the LayoutBlock to set
      */
@@ -521,7 +521,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Set up a LayoutBlock for this Track Segment
+     * Set up a LayoutBlock for this Track Segment.
      *
      * @param name the name of the new LayoutBlock
      */
@@ -576,7 +576,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * set center coordinates
+     * Set center coordinates.
      *
      * @param newCenterPoint the coordinates to set
      */
