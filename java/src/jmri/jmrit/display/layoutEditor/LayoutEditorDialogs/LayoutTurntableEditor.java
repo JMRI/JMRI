@@ -189,13 +189,14 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
              ///layoutTurntable.updateBlockInfo();
          }
          // check if a block exists to edit
-         if (layoutTurntable.getLayoutBlock() == null) {
+         LayoutBlock blockToEdit = layoutTurntable.getLayoutBlock();
+         if (blockToEdit == null) {
              JOptionPane.showMessageDialog(editLayoutTurntableFrame,
                      Bundle.getMessage("Error1"), // NOI18N
                      Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
              return;
          }
-         layoutTurntable.getLayoutBlock().editLayoutBlock(editLayoutTurntableFrame);
+         blockToEdit.editLayoutBlock(editLayoutTurntableFrame);
          layoutEditor.setDirty();
          editLayoutTurntableNeedsRedraw = true;
      }
