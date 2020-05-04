@@ -560,7 +560,7 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public void translateCoords(double xFactor, double yFactor) {
-        setCoordsCenter(MathUtil.add(getCoordsCenter(), new Point2D.Double(xFactor, yFactor)));
+        super.setCoordsCenter(MathUtil.add(getCoordsCenter(), new Point2D.Double(xFactor, yFactor)));
     }
 
     /**
@@ -2036,7 +2036,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public void setCentreSegX(double x) {
-        setCoordsCenter(new Point2D.Double(x, getCentreSeg().getY()));
+        super.setCoordsCenter(new Point2D.Double(x, getCentreSeg().getY()));
     }
 
     public double getCentreSegY() {
@@ -2061,7 +2061,7 @@ public class TrackSegment extends LayoutTrack {
             if (isCircle()) {
                 result = getCoordsCenter(); // new Point2D.Double(centreX, centreY);
             } else if (isArc()) {
-                setCoordsCenter(MathUtil.midPoint(getBounds()));
+                super.setCoordsCenter(MathUtil.midPoint(getBounds()));
                 if (isFlip()) {
                     Point2D t = ep1;
                     ep1 = ep2;

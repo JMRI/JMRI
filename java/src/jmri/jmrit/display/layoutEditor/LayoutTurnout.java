@@ -406,7 +406,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                 pointB.setLocation(layoutEditor.getXOverLong() * 2, 0);
                 pointC.setLocation(layoutEditor.getXOverLong() * 2, (layoutEditor.getXOverHWid() * 2));
                 pointD.setLocation(0, (layoutEditor.getXOverHWid() * 2));
-                setCoordsCenter(c);
+                super.setCoordsCenter(c);
             } else {
                 dispB.setLocation(layoutEditor.getXOverLong(), -layoutEditor.getXOverHWid());
                 dispA.setLocation(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
@@ -417,7 +417,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                 pointB.setLocation((layoutEditor.getXOverShort() + layoutEditor.getXOverLong()), 0);
                 pointC.setLocation(layoutEditor.getXOverLong() * 2, (layoutEditor.getXOverHWid() * 2));
                 pointD.setLocation((getCoordsCenter().getX() - layoutEditor.getXOverShort()), (layoutEditor.getXOverHWid() * 2));
-                setCoordsCenter(c);
+                super.setCoordsCenter(c);
             } else {
                 dispB.setLocation(layoutEditor.getXOverShort(), -layoutEditor.getXOverHWid());
                 dispA.setLocation(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
@@ -431,7 +431,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                 pointC.setLocation(layoutEditor.getXOverLong() + layoutEditor.getXOverShort(), (layoutEditor.getXOverHWid() * 2));
                 pointD.setLocation(0, (layoutEditor.getXOverHWid() * 2));
 
-                setCoordsCenter(c);
+                super.setCoordsCenter(c);
             } else {
                 dispB.setLocation(layoutEditor.getXOverLong(), -layoutEditor.getXOverHWid());
                 dispA.setLocation(layoutEditor.getXOverShort(), layoutEditor.getXOverHWid());
