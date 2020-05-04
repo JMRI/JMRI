@@ -128,6 +128,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         }
         log.debug("Float speed = {} Int speed = ", speed, value);
         firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        record(speed);
     }
 
     /**
@@ -186,6 +187,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     @Override
     protected void throttleDispose() {
         active = false;
+         finishRecord();
     }
 
     @Override
