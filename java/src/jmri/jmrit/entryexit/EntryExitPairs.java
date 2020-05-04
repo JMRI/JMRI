@@ -47,10 +47,7 @@ import org.slf4j.LoggerFactory;
 public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault,
         PropertyChangeListener {
 
-    public int routingMethod = LayoutBlockConnectivityTools.METRIC;
-
-    final static int HOPCOUNT = LayoutBlockConnectivityTools.HOPCOUNT;
-    final static int METRIC = LayoutBlockConnectivityTools.METRIC;
+    public LayoutBlockConnectivityTools.Metric routingMethod = LayoutBlockConnectivityTools.Metric.METRIC;
 
     public final static int NXBUTTONSELECTED = 0x08;
     public final static int NXBUTTONACTIVE = Sensor.ACTIVE;
@@ -486,9 +483,9 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
                 if (!toPd.getProtecting().isEmpty()) {
                     toProt = toPd.getProtecting().get(0);
                 }
-                boolean result = lbm.getLayoutBlockConnectivityTools().checkValidDest(fromPd.getFacing(), pro, toPd.getFacing(), toProt, LayoutBlockConnectivityTools.SENSORTOSENSOR);
+                boolean result = lbm.getLayoutBlockConnectivityTools().checkValidDest(fromPd.getFacing(), pro, toPd.getFacing(), toProt, LayoutBlockConnectivityTools.Routing.SENSORTOSENSOR);
                 if (result) {
-                    List<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, cleardown, LayoutBlockConnectivityTools.NONE);
+                    List<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, cleardown, LayoutBlockConnectivityTools.Routing.NONE);
                     if (!blkList.isEmpty()) {
                         if (log.isDebugEnabled()) {
                             for (LayoutBlock blk : blkList) {
@@ -1322,7 +1319,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
             return;
         }
         HashMap<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().
-                discoverValidBeanPairs(null, Sensor.class, LayoutBlockConnectivityTools.SENSORTOSENSOR);
+                discoverValidBeanPairs(null, Sensor.class, LayoutBlockConnectivityTools.Routing.SENSORTOSENSOR);
         EntryExitPairs eep = this;
         for (Entry<NamedBean, List<NamedBean>> entry : validPaths.entrySet()) {
             NamedBean key = entry.getKey();

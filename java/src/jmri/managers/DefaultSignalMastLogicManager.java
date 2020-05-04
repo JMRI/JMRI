@@ -301,7 +301,7 @@ public class DefaultSignalMastLogicManager
             throw new JmriException("routing not stabilised");
         }
         try {
-            validPaths.put(source, lbm.getLayoutBlockConnectivityTools().discoverPairDest(source, layout, SignalMast.class, LayoutBlockConnectivityTools.MASTTOMAST));
+            validPaths.put(source, lbm.getLayoutBlockConnectivityTools().discoverPairDest(source, layout, SignalMast.class, LayoutBlockConnectivityTools.Routing.MASTTOMAST));
         }
         catch (JmriException e) {
             throw e;
@@ -353,7 +353,7 @@ public class DefaultSignalMastLogicManager
             runWhenStablised = true;
             return;
         }
-        HashMap<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(null, SignalMast.class, LayoutBlockConnectivityTools.MASTTOMAST);
+        HashMap<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(null, SignalMast.class, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
         firePropertyChange("autoGenerateUpdate", null, ("Found " + validPaths.size() + " masts as sources for logic"));
         InstanceManager.getDefault(SignalMastManager.class).getNamedBeanSet().forEach((nb) -> {
             nb.removeProperty("intermediateSignal");

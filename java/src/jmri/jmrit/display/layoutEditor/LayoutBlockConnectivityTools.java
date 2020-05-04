@@ -28,41 +28,47 @@ public class LayoutBlockConnectivityTools {
     public LayoutBlockConnectivityTools() {
     }
 
-    /**
-     * Constant used in the getLayoutBlocks to represent a path from one Signal
-     * Mast to another and that no mast should be in the path.
-     */
-    public final static int MASTTOMAST = 0x01;
+    public enum Routing {
+        /**
+         * Constant used in the getLayoutBlocks to represent a path from one Signal
+         * Mast to another and that no mast should be in the path.
+         */
+        MASTTOMAST,
 
-    /**
-     * Constant used in the getLayoutBlocks to represent a path from one Signal
-     * Head to another and that no head should be in the path.
-     */
-    public final static int HEADTOHEAD = 0x02;
+        /**
+         * Constant used in the getLayoutBlocks to represent a path from one Signal
+         * Head to another and that no head should be in the path.
+         */
+        HEADTOHEAD,
 
-    /**
-     * Constant used in the getLayoutBlocks to represent a path from one Sensor
-     * to another and that no sensor should be in the path.
-     */
-    public final static int SENSORTOSENSOR = 0x04;
+        /**
+         * Constant used in the getLayoutBlocks to represent a path from one Sensor
+         * to another and that no sensor should be in the path.
+         */
+        SENSORTOSENSOR,
 
-    /**
-     * Constant used in the getLayoutBlocks to represent a path from either a
-     * Signal Mast or Head to another Signal Mast or Head and that no mast of
-     * head should be in the path.
-     */
-    public final static int ANY = 0x08;
+        /**
+         * Constant used in the getLayoutBlocks to represent a path from either a
+         * Signal Mast or Head to another Signal Mast or Head and that no mast of
+         * head should be in the path.
+         */
+        ANY,
 
-    /**
-     * Constant used in the getLayoutBlocks to indicate that the system
-     * should not check for signal masts or heads on the path.
-     */
-    public final static int NONE = 0x00;
+        /**
+         * Constant used in the getLayoutBlocks to indicate that the system
+         * should not check for signal masts or heads on the path.
+         */
+        NONE
+    }
 
-    public final static int HOPCOUNT = 0x00;
-    public final static int METRIC = 0x01;
-    public final static int DISTANCE = 0x02;
+    public enum Metric {
+        HOPCOUNT,
+        METRIC,
+        DISTANCE
+    }
+    
     private static final int ttlSize = 50;
+    
 
     /**
      * Determines if a pair of NamedBeans (Signalhead, Signalmast or Sensor)
@@ -79,7 +85,7 @@ public class LayoutBlockConnectivityTools {
      * @throws jmri.JmriException if no blocks can be found that related to the
      *                            named beans.
      */
-    public boolean checkValidDest(NamedBean sourceBean, NamedBean destBean, int pathMethod) throws jmri.JmriException {
+    public boolean checkValidDest(NamedBean sourceBean, NamedBean destBean, Routing pathMethod) throws jmri.JmriException {
         if (log.isDebugEnabled()) {
             log.debug("check valid des with source/dest bean {} {}", sourceBean.getDisplayName(), destBean.getDisplayName());
         }
@@ -148,7 +154,7 @@ public class LayoutBlockConnectivityTools {
      * @throws jmri.JmriException if it can not find a valid path or the routing
      *                            has not been enabled.
      */
-    public List<LayoutBlock> getLayoutBlocks(NamedBean sourceBean, NamedBean destBean, boolean validateOnly, int pathMethod) throws jmri.JmriException {
+    public List<LayoutBlock> getLayoutBlocks(NamedBean sourceBean, NamedBean destBean, boolean validateOnly, Routing pathMethod) throws jmri.JmriException {
         List<LayoutEditor> layout = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         LayoutBlock facingBlock = null;
@@ -239,7 +245,7 @@ public class LayoutBlockConnectivityTools {
      * @return true if a path to the destination is valid.
      * @throws jmri.JmriException if any Block is null;
      */
-    public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, LayoutBlock destProBlock, int pathMethod) throws jmri.JmriException {
+    public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, LayoutBlock destProBlock, Routing pathMethod) throws jmri.JmriException {
 
         List<LayoutBlock> destList = new ArrayList<>();
         if (destProBlock != null) {
@@ -282,7 +288,7 @@ public class LayoutBlockConnectivityTools {
      * @throws jmri.JmriException if any layout block is null or advanced
      *                            routing is not enabled.
      */
-    public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, List<LayoutBlock> destBlockn1, int pathMethod) throws jmri.JmriException {
+    public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, List<LayoutBlock> destBlockn1, Routing pathMethod) throws jmri.JmriException {
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         if (!lbm.isAdvancedRoutingEnabled()) {
             log.debug("Advanced routing has not been enabled therefore we cannot use this function");
@@ -347,9 +353,9 @@ public class LayoutBlockConnectivityTools {
              is null as this indicates that the destination signal mast is assigned
              on an end bumper*/
 
-            if (pathMethod == SENSORTOSENSOR && destBlockn1.size() == 0) {
+            if (pathMethod == Routing.SENSORTOSENSOR && destBlockn1.size() == 0) {
                 // Change the pathMethod to accept the NX sensor at the end bumper.
-                pathMethod = NONE;
+                pathMethod = Routing.NONE;
             }
 
             List<LayoutBlock> blockList = getLayoutBlocks(currentBlock, destBlock, nextBlock, true, pathMethod); // Was MASTTOMAST
@@ -391,7 +397,7 @@ public class LayoutBlockConnectivityTools {
      * @return true if valid
      * @throws JmriException during nested getProtectingBlocks operation
      */
-    private boolean checkValidDest(LayoutBlock facing, LayoutBlock protecting, FacingProtecting dest, int pathMethod) throws JmriException {
+    private boolean checkValidDest(LayoutBlock facing, LayoutBlock protecting, FacingProtecting dest, Routing pathMethod) throws JmriException {
         if (facing == null || protecting == null || dest == null) {
             return false;
         }
@@ -444,7 +450,7 @@ public class LayoutBlockConnectivityTools {
      * @throws jmri.JmriException if it can not find a valid path or the routing
      *                            has not been enabled.
      */
-    public List<LayoutBlock> getLayoutBlocks(LayoutBlock sourceLayoutBlock, LayoutBlock destinationLayoutBlock, LayoutBlock protectingLayoutBlock, boolean validateOnly, int pathMethod) throws jmri.JmriException {
+    public List<LayoutBlock> getLayoutBlocks(LayoutBlock sourceLayoutBlock, LayoutBlock destinationLayoutBlock, LayoutBlock protectingLayoutBlock, boolean validateOnly, Routing pathMethod) throws jmri.JmriException {
         lastErrorMessage = "Unknown Error Occured";
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         
@@ -627,7 +633,7 @@ public class LayoutBlockConnectivityTools {
     String lastErrorMessage = "Unknown Error Occured";
 
     // We need to take into account if the returned block has a signalmast attached.
-    int findBestHop(final Block preBlock, final Block currentBlock, Block destBlock, int direction, List<Integer> offSet, boolean validateOnly, int pathMethod) {
+    int findBestHop(final Block preBlock, final Block currentBlock, Block destBlock, int direction, List<Integer> offSet, boolean validateOnly, Routing pathMethod) {
         int result = 0;
 
         LayoutBlock currentLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(currentBlock);
@@ -648,7 +654,7 @@ public class LayoutBlockConnectivityTools {
                 if (log.isDebugEnabled()) {
                     log.debug("Off Set {}", offSet);
                 }
-                result = currentLBlock.getNextBestBlock(preBlock, destBlock, offSet, METRIC);
+                result = currentLBlock.getNextBestBlock(preBlock, destBlock, offSet, Metric.METRIC);
             }
             if (result != -1) {
                 block = currentLBlock.getRouteNextBlockAtIndex(result);
@@ -775,7 +781,7 @@ public class LayoutBlockConnectivityTools {
      *                   NONE, ANY, MASTTOMAST, HEADTOHEAD
      * @return the valid pairs
      */
-    public HashMap<NamedBean, List<NamedBean>> discoverValidBeanPairs(LayoutEditor editor, Class<?> T, int pathMethod) {
+    public HashMap<NamedBean, List<NamedBean>> discoverValidBeanPairs(LayoutEditor editor, Class<?> T, Routing pathMethod) {
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         HashMap<NamedBean, List<NamedBean>> retPairs = new HashMap<>();
         List<FacingProtecting> beanList = generateBlocksWithBeans(editor, T);
@@ -820,7 +826,7 @@ public class LayoutBlockConnectivityTools {
      * @return A list of all reachable NamedBeans
      * @throws jmri.JmriException occurring during nested readAll operation
      */
-    public List<NamedBean> discoverPairDest(NamedBean source, LayoutEditor editor, Class<?> T, int pathMethod) throws JmriException {
+    public List<NamedBean> discoverPairDest(NamedBean source, LayoutEditor editor, Class<?> T, Routing pathMethod) throws JmriException {
         if (log.isDebugEnabled()) {
             log.debug("discover pairs from source {}", source.getDisplayName());
         }
@@ -837,7 +843,7 @@ public class LayoutBlockConnectivityTools {
         return ret;
     }
 
-    List<NamedBean> discoverPairDest(NamedBean source, LayoutBlock lProtecting, LayoutBlock lFacing, List<FacingProtecting> blockList, int pathMethod) throws JmriException {
+    List<NamedBean> discoverPairDest(NamedBean source, LayoutBlock lProtecting, LayoutBlock lFacing, List<FacingProtecting> blockList, Routing pathMethod) throws JmriException {
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         if (!lbm.isAdvancedRoutingEnabled()) {
             throw new JmriException("advanced routing not enabled");
