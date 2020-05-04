@@ -179,6 +179,69 @@ Fix `//([a-zA-Z])` comments with `// \1`
    although it's deferring to the View classes mostly, LayoutComponent is
    still messing with i.e. isDisabled, isHidden instead of defettnig that to the objects
    
+ ============
+ 
+ Might still be enum:
+ 
+ 
+layoutEditor/blockRoutingTable/LayoutBlockNeighbourTableModel.java:    public static final int NEIGHBOURCOL = 0;
+layoutEditor/blockRoutingTable/LayoutBlockNeighbourTableModel.java:    static final int DIRECTIONCOL = 1;
+layoutEditor/blockRoutingTable/LayoutBlockNeighbourTableModel.java:    static final int MUTUALCOL = 2;
+layoutEditor/blockRoutingTable/LayoutBlockNeighbourTableModel.java:    static final int RELATCOL = 3;
+layoutEditor/blockRoutingTable/LayoutBlockNeighbourTableModel.java:    static final int METRICCOL = 4;
+layoutEditor/blockRoutingTable/LayoutBlockNeighbourTableModel.java:    static final int NUMCOL = 4 + 1;
+
+layoutEditor/blockRoutingTable/LayoutBlockThroughPathsTableModel.java:    public static final int SOURCECOL = 0;
+layoutEditor/blockRoutingTable/LayoutBlockThroughPathsTableModel.java:    static final int DESTINATIONCOL = 1;
+layoutEditor/blockRoutingTable/LayoutBlockThroughPathsTableModel.java:    static final int ACTIVECOL = 2;
+layoutEditor/blockRoutingTable/LayoutBlockThroughPathsTableModel.java:    static final int NUMCOL = 2 + 1;
+
+layoutEditor/blockRoutingTable/LayoutBlockRouteTableModel.java:    public static final int DESTCOL = 0;
+layoutEditor/blockRoutingTable/LayoutBlockRouteTableModel.java:    static final int NEXTHOPCOL = 1;
+layoutEditor/blockRoutingTable/LayoutBlockRouteTableModel.java:    static final int HOPCOUNTCOL = 2;
+layoutEditor/blockRoutingTable/LayoutBlockRouteTableModel.java:    static final int DIRECTIONCOL = 3;
+layoutEditor/blockRoutingTable/LayoutBlockRouteTableModel.java:    static final int METRICCOL = 4;
+layoutEditor/blockRoutingTable/LayoutBlockRouteTableModel.java:    static final int LENGTHCOL = 5;
+layoutEditor/blockRoutingTable/LayoutBlockRouteTableModel.java:    static final int STATECOL = 6;
+layoutEditor/blockRoutingTable/LayoutBlockRouteTableModel.java:    static final int VALIDCOL = 7;
+layoutEditor/blockRoutingTable/LayoutBlockRouteTableModel.java:    static final int NUMCOL = 7 + 1;
+
+Note bits
+layoutEditor/LayoutBlock.java:    public static final int RESERVED = 0x08;
+layoutEditor/LayoutBlock.java:    final static int ADDITION = 0x00;
+layoutEditor/LayoutBlock.java:    final static int UPDATE = 0x02;
+layoutEditor/LayoutBlock.java:    final static int REMOVAL = 0x04;
+
+Note bits, with an odd choice of NONE
+layoutEditor/LayoutBlock.java:    final static int RXTX = 0x00;
+layoutEditor/LayoutBlock.java:    final static int RXONLY = 0x02;
+layoutEditor/LayoutBlock.java:    final static int TXONLY = 0x04;
+layoutEditor/LayoutBlock.java:    final static int NONE = 0x08;
+
+layoutEditor/ConnectivityUtil.java:    public static final int OVERALL = 0x00;
+layoutEditor/ConnectivityUtil.java:    public static final int CONTINUING = 0x01;
+layoutEditor/ConnectivityUtil.java:    public static final int DIVERGING = 0x02;
+
+Note the following values repeat. Two Enums? Try and see if compiles.
+layoutEditor/LayoutConnectivity.java:    final public static int NONE = 0;
+layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_AB = 1;  // continuing
+layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_CD = 2;  // continuing
+layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_AC = 3;  // xed over
+layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_BD = 4;  // xed over
+layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_AD = 1;  // continuing (slips)
+layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_BC = 2;  // continuing (slips)
+
+The following are bits, but there's no indication they are ever or'd:
+layoutEditor/LayoutTurnout.java:    public static final int STATE_AC = 0x02;
+layoutEditor/LayoutTurnout.java:    public static final int STATE_BD = 0x04;
+layoutEditor/LayoutTurnout.java:    public static final int STATE_AD = 0x06;
+layoutEditor/LayoutTurnout.java:    public static final int STATE_BC = 0x08;
+
+These bits are or'd, see tests
+layoutEditor/TrackSegment.java:    public static final int SHOWCON = 0x01;
+layoutEditor/TrackSegment.java:    public static final int HIDECON = 0x02;     // flag set on a segment basis.
+layoutEditor/TrackSegment.java:    public static final int HIDECONALL = 0x04;  // Used by layout editor for hiding all
+
  =============
  
  The LayoutTrack classes ($LETRK) use these from LayoutEditor
@@ -253,6 +316,19 @@ To understand the above, probably have to move the listener definitions out.
   11 LayoutSlip.java:
 
 Mostly addActionListener via ()->, some named listeners, some addPropertyChangeListener
+
+=============
+
+getBlockName not in LayoutTrack, perhaps because there are two forms of internal variable:
+LayoutTrack:
+    protected NamedBeanHandle<LayoutBlock> namedLayoutBlockA = null;
+ (There's a getBlockBName, getBlockCName, D but just getBlock for A in LayoutTurnout)
+ 
+ But TrackSegment has it's own getBlockName referencing it's own
+     private NamedBeanHandle<LayoutBlock> namedLayoutBlock = null;
+
+Maybe other subclasses?
+And the getBlockName code could be simpler, see the getBlock one-line version.
 
 =============
  
