@@ -120,14 +120,11 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckReturnValue
     @CheckForNull
     public LayoutBlock createNewLayoutBlock() {
-        boolean found = true;
-
-        while (found) {
+        while (true) {
             String sName = "ILB" + blkNum;
             LayoutBlock block = getBySystemName(sName);
 
             if (block == null) {
-                found = false;
                 String uName = "AUTOBLK:" + blkNum;
                 block = new LayoutBlock(sName, uName);
                 register(block);
@@ -136,7 +133,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
             blkNum++;
         }
-        return null;
     }
 
     /**
@@ -2108,8 +2104,12 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckForNull
     public LayoutBlock getFacingBlockBySensor(@Nonnull String sensorName,
             @CheckForNull LayoutEditor panel) {
-        Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(sensorName);
-        return (sensor == null) ? null : getFacingBlockBySensor(sensor, panel);
+        LayoutBlock result = null;  //assume failure (pessimist!)
+        if (panel != null) {
+            Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+            result = (sensor == null) ? null : getFacingBlockBySensor(sensor, panel);
+        }
+        return result;
     }
 
     /**
@@ -2313,13 +2313,16 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckForNull
     public LayoutBlock getProtectedBlock(
             @Nonnull SignalHead signalHead, @CheckForNull LayoutEditor panel) {
-        String userName = signalHead.getUserName();
-        LayoutBlock protect = (userName == null) ? null : getProtectedBlock(userName, panel);
+        LayoutBlock result = null;  //assume failure (pessimist!)
+        if (panel != null) {
+            String userName = signalHead.getUserName();
+            result = (userName == null) ? null : getProtectedBlock(userName, panel);
 
-        if (protect == null) {
-            protect = getProtectedBlock(signalHead.getSystemName(), panel);
+            if (result == null) {
+                result = getProtectedBlock(signalHead.getSystemName(), panel);
+            }
         }
-        return protect;
+        return result;
     }
 
     /**
@@ -2355,12 +2358,15 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckForNull
     public LayoutBlock getFacingBlock(
             @Nonnull SignalHead signalHead, @CheckForNull LayoutEditor panel) {
-        String userName = signalHead.getUserName();
-        LayoutBlock facing = (userName == null) ? null : getFacingBlock(userName, panel);
-        if (facing == null) {
-            facing = getFacingBlock(signalHead.getSystemName(), panel);
+        LayoutBlock result = null;  //assume failure (pessimist!)
+        if (panel != null) {
+            String userName = signalHead.getUserName();
+            result = (userName == null) ? null : getFacingBlock(userName, panel);
+            if (result == null) {
+                result = getFacingBlock(signalHead.getSystemName(), panel);
+            }
         }
-        return facing;
+        return result;
     }
 
     /**

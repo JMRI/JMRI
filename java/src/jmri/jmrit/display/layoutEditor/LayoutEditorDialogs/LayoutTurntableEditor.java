@@ -161,12 +161,12 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
 
         // Create list of turnouts to be retained in the NamedBeanComboBox
         turntableTurnouts.clear();
-        for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayList()) {
+        for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayTrackList()) {
             turntableTurnouts.add(rt.getTurnout());
         }
 
         editLayoutTurntableRayPanel.setLayout(new BoxLayout(editLayoutTurntableRayPanel, BoxLayout.Y_AXIS));
-        for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayList()) {
+        for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayTrackList()) {
             editLayoutTurntableRayPanel.add(new TurntableRayPanel(rt));
         }
         editLayoutTurntableRayPanel.revalidate();
