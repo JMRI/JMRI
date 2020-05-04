@@ -108,11 +108,15 @@ import org.slf4j.*;
  * are placed here by tools, e.g., Set Signals at Turnout, and Set Signals at
  * Double Crossover. Each connection point can have up to three SignalHeads and one SignalMast.
  * <p>
- * A LayoutTurnout may be linked to another LayoutTurnout to form a turnout
- * pair. Throat-To-Throat Turnouts - Two turnouts connected closely at their
+ * A LayoutWye may be linked to another LayoutTurnout to form a turnout
+ * pair. 
+ *<br>
+ * Throat-To-Throat Turnouts - Two turnouts connected closely at their
  * throats, so closely that signals are not appropriate at the their throats.
  * This is the situation when two RH, LH, or WYE turnouts are used to model a
- * double slip. 3-Way Turnout - Two turnouts modeling a 3-way turnout, where the
+ * double slip. 
+ *<br>
+ * 3-Way Turnout - Two turnouts modeling a 3-way turnout, where the
  * throat of the second turnout is closely connected to the continuing track of
  * the first turnout. The throat will have three heads, or one head. A link is
  * required to be able to correctly interpret the use of signal heads.
