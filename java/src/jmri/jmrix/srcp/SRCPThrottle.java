@@ -144,9 +144,35 @@ public class SRCPThrottle extends AbstractThrottle {
         msg += maxsteps;
 
         // now add the functions
-        for (int i=0; i<=28; i++){
-            msg += getFunction(i) ? " 1" : " 0";
-        }
+        msg += getFunction(0) ? " 1" : " 0";
+        msg += getFunction(1) ? " 1" : " 0";
+        msg += getFunction(2) ? " 1" : " 0";
+        msg += getFunction(3) ? " 1" : " 0";
+        msg += getFunction(4) ? " 1" : " 0";
+        msg += getFunction(5) ? " 1" : " 0";
+        msg += getFunction(6) ? " 1" : " 0";
+        msg += getFunction(7) ? " 1" : " 0";
+        msg += getFunction(8) ? " 1" : " 0";
+        msg += getFunction(9) ? " 1" : " 0";
+        msg += getFunction(10) ? " 1" : " 0";
+        msg += getFunction(11) ? " 1" : " 0";
+        msg += getFunction(12) ? " 1" : " 0";
+        msg += getFunction(13) ? " 1" : " 0";
+        msg += getFunction(14) ? " 1" : " 0";
+        msg += getFunction(15) ? " 1" : " 0";
+        msg += getFunction(16) ? " 1" : " 0";
+        msg += getFunction(17) ? " 1" : " 0";
+        msg += getFunction(18) ? " 1" : " 0";
+        msg += getFunction(19) ? " 1" : " 0";
+        msg += getFunction(20) ? " 1" : " 0";
+        msg += getFunction(21) ? " 1" : " 0";
+        msg += getFunction(22) ? " 1" : " 0";
+        msg += getFunction(23) ? " 1" : " 0";
+        msg += getFunction(24) ? " 1" : " 0";
+        msg += getFunction(25) ? " 1" : " 0";
+        msg += getFunction(26) ? " 1" : " 0";
+        msg += getFunction(27) ? " 1" : " 0";
+        msg += getFunction(28) ? " 1" : " 0";
 
         // send the result
         SRCPMessage m = new SRCPMessage(msg + "\n");
