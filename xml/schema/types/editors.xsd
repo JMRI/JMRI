@@ -1181,7 +1181,6 @@
             <xs:enumeration value="LH_TURNOUT"></xs:enumeration>
             <xs:enumeration value="WYE_TURNOUT"></xs:enumeration>
             <xs:enumeration value="DOUBLE_XOVER"></xs:enumeration>
-            <xs:enumeration value="TURNOUT_D"></xs:enumeration>
             <xs:enumeration value="RH_XOVER"></xs:enumeration>
             <xs:enumeration value="LH_XOVER"></xs:enumeration>
             <xs:enumeration value="SINGLE_SLIP"></xs:enumeration>
