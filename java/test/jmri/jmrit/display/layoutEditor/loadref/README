@@ -8,3 +8,9 @@ be made to simplify testing, these may not
 be schema-valid.
 
 
+The .png files here are for comparison with the contents of temp/temp after running
+
+./runtest.csh java/test/jmri/jmrit/display/layoutEditor/LoadAndStoreTest
+
+These files were made on macOS Mojave from master on May 1, 2020.  Other setups
+may differ, so we're not automating these tests (yet)

@@ -19,9 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
-    /**
-     * Constructor.
-     */
+    
     String objectNumber;
     int ecosretry = 0;
     private EcosLocoAddress objEcosLoco;
@@ -33,6 +31,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
     private boolean _hadControl = false;
     private boolean _control = true;
 
+    /** 
+     * Create a new EcosDccThrottle.
+     * @param address Throttle Address
+     * @param memo System Connection
+     */
     public EcosDccThrottle(DccLocoAddress address, EcosSystemConnectionMemo memo, boolean control) {
         super(memo);
         super.speedStepMode = SpeedStepMode.NMRA_DCC_128;
@@ -111,158 +114,17 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         return ((lSpeed) / 126.f);
     }
     
-    private void setF(int Fn, boolean val){
-        updateFunction(Fn,val);
+    /** 
+     * {@inheritDoc} 
+     */
+    @Override
+    public void setFunction(int functionNum, boolean newState){
+        updateFunction(functionNum,newState);
         if (_haveControl) {
             EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[" + 
-                String.valueOf(Fn) + ", " + (getFunction(Fn) ? 1 : 0) + "])");
+                String.valueOf(functionNum) + ", " + (newState ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
-    }
-
-    @Override
-    public void setF0(boolean f0) {
-        setF(0,f0);
-    }
-
-    @Override
-    public void setF1(boolean f1) {
-        setF(1,f1);
-    }
-
-    @Override
-    public void setF2(boolean f2) {
-        setF(2,f2);
-    }
-
-    @Override
-    public void setF3(boolean f3) {
-        setF(3,f3);
-    }
-
-    @Override
-    public void setF4(boolean f4) {
-        setF(4,f4);
-    }
-
-    @Override
-    public void setF5(boolean f5) {
-        setF(5,f5);
-    }
-
-    @Override
-    public void setF6(boolean f6) {
-        setF(6,f6);
-    }
-
-    @Override
-    public void setF7(boolean f7) {
-        setF(7,f7);
-    }
-
-    @Override
-    public void setF8(boolean f8) {
-        setF(8,f8);
-    }
-
-    @Override
-    public void setF9(boolean f9) {
-        setF(9,f9);
-    }
-
-    @Override
-    public void setF10(boolean f10) {
-        setF(10,f10);
-    }
-
-    @Override
-    public void setF11(boolean f11) {
-        setF(11,f11);
-    }
-
-    @Override
-    public void setF12(boolean f12) {
-        setF(12,f12);
-    }
-
-    @Override
-    public void setF13(boolean f13) {
-        setF(13,f13);
-    }
-
-    @Override
-    public void setF14(boolean f14) {
-        setF(14,f14);
-    }
-
-    @Override
-    public void setF15(boolean f15) {
-        setF(15,f15);
-    }
-
-    @Override
-    public void setF16(boolean f16) {
-        setF(16,f16);
-    }
-
-    @Override
-    public void setF17(boolean f17) {
-        setF(17,f17);
-    }
-
-    @Override
-    public void setF18(boolean f18) {
-        setF(18,f18);
-    }
-
-    @Override
-    public void setF19(boolean f19) {
-        setF(19,f19);
-    }
-
-    @Override
-    public void setF20(boolean f20) {
-        setF(20,f20);
-    }
-
-    @Override
-    public void setF21(boolean f21) {
-        setF(21,f21);
-    }
-
-    @Override
-    public void setF22(boolean f22) {
-        setF(22,f22);
-    }
-
-    @Override
-    public void setF23(boolean f23) {
-        setF(23,f23);
-    }
-
-    @Override
-    public void setF24(boolean f24) {
-        setF(24,f24);
-    }
-
-    @Override
-    public void setF25(boolean f25) {
-        setF(25,f25);
-    }
-
-    @Override
-    public void setF26(boolean f26) {
-        setF(26,f26);
-    }
-
-    @Override
-    public void setF27(boolean f27) {
-        setF(27,f27);
-    }
-
-    @Override
-    public void setF28(boolean f28) {
-        setF(28,f28);
     }
 
     /**
@@ -314,6 +176,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
     int speedMessageSent = 0;
 
+    /** 
+     * {@inheritDoc} 
+     */
     @Override
     public void setIsForward(boolean forward) {
         if (!_haveControl) {
@@ -338,11 +203,17 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
     private DccLocoAddress address;
 
+    /** 
+     * {@inheritDoc} 
+     */
     @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
 
+    /** 
+     * {@inheritDoc} 
+     */
     @Override
     protected void throttleDispose() {
         String message = "release(" + this.objectNumber + ", control)";
@@ -353,6 +224,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         finishRecord();
     }
 
+    /** 
+     * {@inheritDoc} 
+     */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     @Override
     public void reply(EcosReply m) {
@@ -510,10 +384,12 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         }
     }
 
+    /** 
+     * Messages ignored.
+     * {@inheritDoc} 
+     */
     @Override
     public void message(EcosMessage m) {
-        //System.out.println("Ecos message - "+ m);
-        // messages are ignored
     }
 
     public void forceControl() {

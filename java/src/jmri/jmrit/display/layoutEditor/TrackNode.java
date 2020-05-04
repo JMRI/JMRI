@@ -3,7 +3,7 @@ package jmri.jmrit.display.layoutEditor;
 import jmri.Block;
 
 /**
- * TrackNode is a temporary object specifying and returning track node
+ * TrackNode is a memo object specifying and returning track node
  * information
  * <p>
  * Used in conjunction with ConnectivityUtil.java to return information about
@@ -49,7 +49,6 @@ public class TrackNode {
     boolean _ReachedEndBumper = false;
     int _NodeState = 0;
 
-    // temporary instance variables
     /**
      * Access methods
      */

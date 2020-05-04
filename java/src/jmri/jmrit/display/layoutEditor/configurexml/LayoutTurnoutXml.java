@@ -410,7 +410,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         l.setSensorC(getElement(element, "sensorC"));
         l.setSensorD(getElement(element, "sensorD"));
 
-        p.getLayoutTracks().add(l);
+        p.addLayoutTrack(l);
     }
 
     String getElement(Element el, String child) {
