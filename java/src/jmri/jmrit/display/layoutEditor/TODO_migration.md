@@ -52,11 +52,6 @@ abstract protected void drawDecorations(Graphics2D g2);
 
 ===== 
 
-Make sure setCoordsCenter is invoked in super class
-grep setCoordsCenter java/src/jmri/jmrit/display/layoutEditor/*.java | grep -v super
-
-=======
-
 Where do the PositionablePoint editors for End Bumper, etc live?
 
 =========================================================
