@@ -23,10 +23,14 @@ public class LayoutTurntableView extends LayoutTrackView {
      */
     public LayoutTurntableView(@Nonnull LayoutTurntable turntable) {
         super(turntable);
-        // this.turntable = turntable;
+        this.turntable = turntable;
     }
 
-    // final private LayoutTurntable turntable;
-        
+    final private LayoutTurntable turntable;
+   
+    protected void drawTurnoutControls(Graphics2D g2) {
+        turntable.drawTurnoutControls(g2);
+    }
+     
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntableView.class);
 }

@@ -105,7 +105,7 @@ public class LayoutBlockConnectivityTools {
             if ((destFacingBlock != null) && (facingBlock != null) && (protectingBlock != null)) {
                 /*Destination protecting block list is allowed to be empty, as the destination signalmast
                  could be assigned to an end bumper */
-                //A simple to check to see if the remote signal/sensor is in the correct direction to ours.
+                // A simple to check to see if the remote signal/sensor is in the correct direction to ours.
                 try {
                     return checkValidDest(facingBlock, protectingBlock, destFacingBlock, destProtectBlock, pathMethod);
                 } catch (JmriException e) {
@@ -306,7 +306,7 @@ public class LayoutBlockConnectivityTools {
                 log.debug("Our dest protecting block is our current block and our protecting block is the same as our destination block");
                 return false;
             }
-            //Do a simple test to see if one is reachable from the other.
+            // Do a simple test to see if one is reachable from the other.
             int proCount = 0;
             int desCount = 0;
             if (!destBlockn1.isEmpty()) {
@@ -318,7 +318,7 @@ public class LayoutBlockConnectivityTools {
             }
 
             if ((proCount == -1) && (desCount == -1)) {
-                //The destination block and destBlock+1 are both directly connected
+                // The destination block and destBlock+1 are both directly connected
                 log.debug("Dest and dest+1 are directly connected");
                 return false;
             }
@@ -343,7 +343,7 @@ public class LayoutBlockConnectivityTools {
                 pathMethod = NONE;
             }
 
-            List<LayoutBlock> blockList = getLayoutBlocks(currentBlock, destBlock, nextBlock, true, pathMethod); //Was MASTTOMAST
+            List<LayoutBlock> blockList = getLayoutBlocks(currentBlock, destBlock, nextBlock, true, pathMethod); // Was MASTTOMAST
             if (log.isDebugEnabled()) {
                 log.debug("checkValidDest blockList for {}", destBlock.getDisplayName());
                 blockList.forEach(blk -> log.debug("  block = {}", blk.getDisplayName()));
@@ -388,11 +388,11 @@ public class LayoutBlockConnectivityTools {
             log.debug("facing : {} protecting : {} dest {}", protecting.getDisplayName(), dest.getBean().getDisplayName(), facing.getDisplayName());
         }
         try {
-            //In this instance it doesn't matter what the destination protecting block is so we get the first
+            // In this instance it doesn't matter what the destination protecting block is so we get the first
             /*LayoutBlock destProt = null;
              if(!dest.getProtectingBlocks().isEmpty()){
              destProt = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(dest.getProtectingBlocks().get(0));
-             //log.info(dest.getProtectingBlocks());
+             // log.info(dest.getProtectingBlocks());
              }*/
             List<LayoutBlock> destList = new ArrayList<>();
             for (Block b : dest.getProtectingBlocks()) {
@@ -482,7 +482,7 @@ public class LayoutBlockConnectivityTools {
 
         int ttl = 1;
         List<Integer> offSet = new ArrayList<>();
-        while (ttl < ttlSize) { //value should be higher but low for test!
+        while (ttl < ttlSize) { // value should be higher but low for test!
             log.debug("===== Ttl value = {} ======", ttl);
             log.debug("Looking for next block");
             int nextBlockIndex = findBestHop(currentBlock, nextBlock, destBlock, directionOfTravel, offSet, validateOnly, pathMethod);
@@ -491,7 +491,7 @@ public class LayoutBlockConnectivityTools {
                 if (log.isDebugEnabled()) {
                     log.debug("block index returned {} Blocks in route size {}", nextBlockIndex, blocksInRoute.size());
                 }
-                //Sets the old next block to be our current block.
+                // Sets the old next block to be our current block.
                 LayoutBlock currentLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(nextBlock);
                 if (currentLBlock==null){
                     log.error("Unable to get block :{}: from instancemanager",nextBlock);
@@ -538,9 +538,9 @@ public class LayoutBlockConnectivityTools {
                 }
             } else {
                 //-1 is returned when there are no more valid besthop valids found
-                //Block index is -1, so we need to go back a block and find another way.
+                // Block index is -1, so we need to go back a block and find another way.
 
-                //So we have gone back as far as our starting block so we better return.
+                // So we have gone back as far as our starting block so we better return.
                 int birSize = blocksInRoute.size();
                 log.debug("block in route size {}", birSize);
                 if (birSize <= 2) {
@@ -567,7 +567,7 @@ public class LayoutBlockConnectivityTools {
         if (ttl == ttlSize) {
             lastErrorMessage = "ttlExpired";
         }
-        //we exited the loop without either finding the destination or we had error.
+        // we exited the loop without either finding the destination or we had error.
         throw new jmri.JmriException(lastErrorMessage);
     }
 
@@ -585,7 +585,7 @@ public class LayoutBlockConnectivityTools {
         }
 
         int getLastIndex() {
-            return indexNumber.get(indexNumber.size() - 1); //get the last one in the list
+            return indexNumber.get(indexNumber.size() - 1); // get the last one in the list
         }
 
         List<Integer> getTestedIndexes() {
@@ -615,7 +615,7 @@ public class LayoutBlockConnectivityTools {
 
     String lastErrorMessage = "Unknown Error Occured";
 
-    //We need to take into account if the returned block has a signalmast attached.
+    // We need to take into account if the returned block has a signalmast attached.
     int findBestHop(final Block preBlock, final Block currentBlock, Block destBlock, int direction, List<Integer> offSet, boolean validateOnly, int pathMethod) {
         int blockindex = 0;
         Block block;
@@ -626,7 +626,7 @@ public class LayoutBlockConnectivityTools {
         }
         while (blockindex != -1) {
             if (currentBlock == preBlock) {
-                //Basically looking for the connected block, which there should only be one of!
+                // Basically looking for the connected block, which there should only be one of!
                 log.debug("At get ConnectedBlockRoute");
                 blockindex = currentLBlock.getConnectedBlockRouteIndex(destBlock, direction);
             } else {
@@ -765,7 +765,7 @@ public class LayoutBlockConnectivityTools {
                         log.debug("facing {}", fp.getFacing().getDisplayName());
                         log.debug("protecting {}", block.getDisplayName());
                     } catch (java.lang.NullPointerException e) {
-                        //Can be considered normal if the signalmast is assigned to an end bumper.
+                        // Can be considered normal if the signalmast is assigned to an end bumper.
                     }
                 }
                 LayoutBlock lFacing = lbm.getLayoutBlock(fp.getFacing());

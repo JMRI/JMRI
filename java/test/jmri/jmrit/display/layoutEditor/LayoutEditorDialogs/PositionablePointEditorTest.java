@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
+import java.awt.GraphicsEnvironment;
+
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.*;
 
@@ -14,18 +16,9 @@ public class PositionablePointEditorTest extends LayoutTrackEditorTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new PositionablePointEditor(null);
     }
     
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-    }
-
-    @After
-    public void tearDown()  {
-        JUnitUtil.tearDown();
-    }
-
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointEditorTest.class);
 }

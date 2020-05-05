@@ -961,7 +961,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
     /**
      * Create a list of sensors that have the layout block as either
      * facing or protecting.
-     * Called by {@link jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTrackEditors#hasNxSensorPairs}.
+     * Called by {@link jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTrackEditor#hasNxSensorPairs}.
      * @since 4.11.2
      * @param layoutBlock The layout block to be checked.
      * @return the a list of sensors affected by the layout block or an empty list.

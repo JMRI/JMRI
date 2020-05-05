@@ -31,8 +31,18 @@ public class LayoutLHTurnoutEditor extends LayoutTurnoutEditor {
         super(layoutEditor);
     }
 
-    // These now reflect to code in the base class; eventually this heirarchy will
-    // expand and the code will be brought here
+    // set the continuing route Turnout State
+    @Override
+    protected void setContinuingRouteTurnoutState() {
+        if ((layoutTurnout.getTurnoutType() == LayoutTurnout.TurnoutType.RH_TURNOUT)
+                || (layoutTurnout.getTurnoutType() == LayoutTurnout.TurnoutType.LH_TURNOUT)
+                || (layoutTurnout.getTurnoutType() == LayoutTurnout.TurnoutType.WYE_TURNOUT)) {
+            layoutTurnout.setContinuingSense(Turnout.CLOSED);
+            if (editLayoutTurnoutStateComboBox.getSelectedIndex() == editLayoutTurnoutThrownIndex) {
+                layoutTurnout.setContinuingSense(Turnout.THROWN);
+            }
+        }
+    }
     
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutLHTurnoutEditor.class);

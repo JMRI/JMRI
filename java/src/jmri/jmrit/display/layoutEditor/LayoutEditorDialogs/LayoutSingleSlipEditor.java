@@ -15,6 +15,8 @@ import jmri.util.*;
 /**
  * MVC Editor component for LayoutSingleSlip objects.
  *
+ * The single slip is the default behavior of the LayoutSlipEditor super class
+ *
  * @author Bob Jacobsen  Copyright (c) 2020
  * 
  */
