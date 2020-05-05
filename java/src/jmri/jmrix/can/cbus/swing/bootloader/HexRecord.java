@@ -112,7 +112,7 @@ public class HexRecord {
         
         checksum = 0;
         // Skip newline and look for ':'
-        while (((c = f.readChar()) == 0xd) || (c == 0xa)) { ; }
+        while (((c = f.readChar()) == 0xd) || (c == 0xa)) {  }
         if (c != ':') {
             log.error("No colon at start of line {}", f.getLineNo());
             throw new IOException("No colon at start of line "+f.getLineNo());
