@@ -30,7 +30,7 @@ public class ControlPanelEditorAction extends AbstractAction {
             }
         }
         ControlPanelEditor frame = new ControlPanelEditor(name);
-        InstanceManager.getDefault(EditorManager.class).contains(frame);
+        InstanceManager.getDefault(EditorManager.class).add(frame);
         frame.setLocation(20, 20);
 
         frame.setTitle();
