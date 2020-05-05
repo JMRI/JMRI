@@ -62,7 +62,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         top.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SelectPanel")), SwingConstants.RIGHT));  // NOI18N
         top.add(selectPanel);
         selectPanel.removeAllItems();
-        panels = new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class));
+        panels = InstanceManager.getDefault(EditorManager.class).getList(LayoutEditor.class);
         for (int i = 0; i < panels.size(); i++) {
             selectPanel.addItem(panels.get(i).getLayoutName());
         }
@@ -216,7 +216,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
         // Do other panels if any
         doFromCombo = false;
-        panels = new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class));
+        panels = InstanceManager.getDefault(EditorManager.class).getList(LayoutEditor.class);
         for (int i = 0; i < panels.size(); i++) {
             if (panels.get(i) != panel) {
                 selectPoints(panels.get(i));

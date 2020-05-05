@@ -158,6 +158,30 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
     }
 
     /**
+     * Get the set of all Editors as a List. This is a convenience method for use
+     * in scripts.
+     * 
+     * @return the set of all Editors
+     */
+    @Nonnull
+    public List<Editor> getList() {
+        return new ArrayList<>(getAll());
+    }
+
+    /**
+     * Get the set of all editors that implement the specified type. This is a
+     * convenience method for use in scripts.
+     *
+     * @param <T>  the specified type
+     * @param type the specified type
+     * @return the set of all editors that implement the specified type
+     */
+    @Nonnull
+    public <T extends Editor> List<T> getList(@Nonnull Class<T> type) {
+        return new ArrayList<>(getAll(type));
+    }
+
+    /**
      * Get a List of the currently-existing Editor objects. The returned list is
      * a copy made at the time of the call, so it can be manipulated as needed
      * by the caller.
