@@ -147,7 +147,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 
         if (type == PositionablePoint.PointType.EDGE_CONNECTOR && element.getAttribute("linkedpanel") != null && element.getAttribute("linkpointid") != null) {
             String linkedEditorName = element.getAttribute("linkedpanel").getValue();
-            LayoutEditor linkedEditor = InstanceManager.getDefault(EditorManager.class).get(LayoutEditor.class, name);
+            LayoutEditor linkedEditor = InstanceManager.getDefault(EditorManager.class).get(LayoutEditor.class, linkedEditorName);
             if (linkedEditor != null) {
                 String linkedPoint = element.getAttribute("linkpointid").getValue();
                 for (PositionablePoint point : linkedEditor.getPositionablePoints()) {

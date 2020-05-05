@@ -1532,7 +1532,7 @@ public class PositionablePoint extends LayoutTrack {
     public JPanel getLinkPanel() {
         editorCombo = new JComboBox<>();
         ArrayList<LayoutEditor> panels
-                = new ArrayList(InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class));
+                = new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class));
         editorCombo.addItem(new JCBHandle<>("None"));
         if (panels.contains(layoutEditor)) {
             panels.remove(layoutEditor);

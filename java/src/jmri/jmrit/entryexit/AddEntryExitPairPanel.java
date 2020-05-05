@@ -216,7 +216,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
         // Do other panels if any
         doFromCombo = false;
-        panels = new ArrayList(InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class));
+        panels = new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class));
         for (int i = 0; i < panels.size(); i++) {
             if (panels.get(i) != panel) {
                 selectPoints(panels.get(i));

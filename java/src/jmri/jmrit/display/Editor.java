@@ -3243,7 +3243,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     @Deprecated
     synchronized public static List<Editor> getEditors() {
-        return new ArrayList(InstanceManager.getDefault(EditorManager.class).getAll());
+        return new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll());
     }
 
     /**
@@ -3260,7 +3260,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     @Deprecated
     synchronized public static <T extends Editor> List<T> getEditors(@Nonnull Class<T> type) {
-        return new ArrayList(InstanceManager.getDefault(EditorManager.class).getAll(type));
+        return new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(type));
     }
 
     /**

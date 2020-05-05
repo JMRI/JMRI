@@ -105,7 +105,7 @@ public class PanelMenu extends JMenu {
      */
     public void deletePanel(Editor panel) {
         log.debug("deletePanel");
-        ArrayList<Editor> panelsList = new ArrayList(InstanceManager.getDefault(EditorManager.class).getAll());
+        ArrayList<Editor> panelsList = new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll());
         if (panelsList.isEmpty()) {
             return;
         }
@@ -135,7 +135,7 @@ public class PanelMenu extends JMenu {
      */
     public void addEditorPanel(final Editor panel) {
         // If this is the first panel, remove the 'No Panels' menu item
-        ArrayList<Editor> panelsList = new ArrayList(InstanceManager.getDefault(EditorManager.class).getAll());
+        ArrayList<Editor> panelsList = new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll());
         if (panelsList.isEmpty()) {
             panelsSubMenu.remove(noPanelsItem);
         }
@@ -161,7 +161,7 @@ public class PanelMenu extends JMenu {
      * @param panel the panel to update
      */
     public void updateEditorPanel(Editor panel) {
-        ArrayList<Editor> panelsList = new ArrayList(InstanceManager.getDefault(EditorManager.class).getAll());
+        ArrayList<Editor> panelsList = new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll());
         if (panelsList.isEmpty()) {
             return;
         }
@@ -196,7 +196,7 @@ public class PanelMenu extends JMenu {
      * @param panel the panel to rename
      */
     public void renameEditorPanel(Editor panel) {
-        ArrayList<Editor> panelsList = new ArrayList(InstanceManager.getDefault(EditorManager.class).getAll());
+        ArrayList<Editor> panelsList = new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll());
         if (panelsList.isEmpty()) {
             return;
         }
