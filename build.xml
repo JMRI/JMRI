@@ -390,6 +390,17 @@
       <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
     </target>
 
+    <target name="check-java-11-requirement"> <!-- check build system requirements, not for user use -->
+        <fail message="Unsupported Java version: ${ant.java.version}. 
+          Make sure that the Java version is 11 or greater.">
+          <condition>
+            <not>
+              <matches pattern="^1[1-9]" string="${ant.java.version}"/>
+            </not>
+          </condition>
+        </fail>
+    </target>
+
     <target name="get-version-string" depends="compile"><!-- compute the version string, not for user use -->
         <java classname="jmri.Version"
               dir="${basedir}"
@@ -1971,7 +1982,8 @@
     <!-- Requires Graphviz from http://www.graphviz.org            -->
     <!-- Does not work with Java 10 or later,                      -->
     <!-- see https://github.com/gboersma/uml-java-doclet           -->
-    <target name="javadoc-uml" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs with UML">
+    <target name="javadoc-uml" depends="check-java-11-requirement, init, jjdoc, compile-generated-source, plantuml" 
+                    description="create Javadocs with UML, requires Java 11">
         <javadoc packagenames="jmri.*, apps.*"
                  maxmemory="512m"
                  overview="${source}/jmri/overview.html"
@@ -2003,15 +2015,15 @@
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
-            <doclet name="org.umlgraph.doclet.UmlGraphDoc"
-                    path="${libdir}/UmlGraph-5.7.jar">
-                <param name="-attributes"/>
-                <param name="-operations"/>
+            <doclet name="nl.talsmasoftware.umldoclet.UMLDoclet"
+                    path="${libdir}/umldoclet-2.0.9.jar">
+<!--                 <param name="-operations"/>
                 <param name="-qualify"/>
                 <param name="-types"/>
-                <!-- <param name="-visibility"/> not used, as only showing public visibility -->
-                <param name="-collapsible"/>  <!-- hide images at first on web pages -->
-                <param name="-inferdepvis" value="public"/> <!-- only show public -->
+                <!- - <param name="-visibility"/> not used, as only showing public visibility - ->
+                <param name="-collapsible"/>  <!- - hide images at first on web pages - ->
+                <param name="-inferdepvis" value="public"/> <!- - only show public - ->
+-->
             </doclet>
             <group title="Core" packages="jmri"/>
             <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
