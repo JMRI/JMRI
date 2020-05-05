@@ -20,7 +20,7 @@ public class PragotronClockFrameTest extends jmri.util.JmriJFrameTestBase {
     @Test
     public void testButton(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        frame.initComponents();
+        frame.setVisible(true);
         java.util.Calendar cal = new java.util.GregorianCalendar();
         cal.set(2020, 5, 4, 0, 0, 00); // 02:00:00
         clock.setTime(cal.getTime());
@@ -44,7 +44,7 @@ public class PragotronClockFrameTest extends jmri.util.JmriJFrameTestBase {
     @Test
     public void testMins(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        frame.initComponents();
+        frame.setVisible(true);
         java.util.Calendar cal = new java.util.GregorianCalendar();
         for (int i = 0; i<=59; i++) {
             cal.set(2020, 5, 4, Math.min(23, i), i, 00); // 02:00:00
