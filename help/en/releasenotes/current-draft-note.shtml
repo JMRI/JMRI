@@ -354,6 +354,12 @@
 	            Note that files written by 4.19.6 may not be readable 
 	            by JMRI 4.19.5 and before.
 	        </li>
+                <li>
+                    A default instance of <code>jmri.jmrit.display.PanelMenu</code> is no
+                    longer maintained by the InstanceManager for the purposes of maintaining
+                    a list of open Editors or LayoutEditors. Use the default instance of
+                    <code>jmri.jmrit.display.EditorManager</code> in scripts instead.
+                </li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -427,7 +433,13 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>
+                A default instance of <code>jmri.jmrit.display.PanelMenu</code> is no
+                longer maintained by the InstanceManager for the purposes of maintaining
+                a list of open Editors or LayoutEditors. Use the default instance of
+                <code>jmri.jmrit.display.EditorManager</code> in scripts instead. All
+                sample scripts have been updated to reflect this.
+            </li>
         </ul>
 
     <h3>Signals</h3>
