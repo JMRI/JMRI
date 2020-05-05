@@ -25,7 +25,7 @@ import jmri.beans.Bean;
  * the property named "editors" when an editor is added or removed and forwards
  * the {@link java.beans.PropertyChangeEvent} for the "title" and "visible"
  * properties of Editors in the manager.
- * 
+ *
  * @author Randall Wood Copyright 2020
  */
 public class EditorManager extends Bean implements PropertyChangeListener, InstanceManagerAutoDefault {
@@ -163,7 +163,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
      * by the caller.
      *
      * @return a List of Editors
-     * @deprecated since 4.19.6; use {@link jmri.EditorManager#getAll()} instead
+     * @deprecated since 4.19.6; use {@link #getAll()} instead
      */
     @Deprecated
     synchronized public List<Editor> getEditorsList() {
@@ -177,11 +177,10 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
      * The returned list is a copy made at the time of the call, so it can be
      * manipulated as needed by the caller.
      *
-     * @param <T> the type of Editor
+     * @param <T>  the type of Editor
      * @param type the Class the list should be limited to.
      * @return a List of Editors.
-     * @deprecated since 4.19.6; use
-     * {@link jmri.EditorManager#getAll(java.lang.Class)} instead
+     * @deprecated since 4.19.6; use {@link #getAll(java.lang.Class)} instead
      */
     @Deprecated
     public <T extends Editor> List<T> getEditorsList(@Nonnull Class<T> type) {
@@ -195,8 +194,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
      * @param name the editor to get
      * @return the first matching Editor or null if no matching Editor could be
      *         found
-     * @deprecated since 4.19.6; use
-     * {@link jmri.EditorManager#getByName(java.lang.String)} instead
+     * @deprecated since 4.19.6; use {@link #get(java.lang.String)} instead
      */
     @Deprecated
     public Editor getEditor(String name) {
@@ -209,8 +207,8 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
      *
      * @param editor the editor to add
      * @return true if the set was changed; false otherwise
-     * @deprecated since 4.19.6; use
-     * {@link jmri.EditorManager#add(jmri.jmrit.display.Editor)} instead
+     * @deprecated since 4.19.6; use {@link #add(jmri.jmrit.display.Editor)}
+     * instead
      */
     @Deprecated
     public boolean addEditor(@Nonnull Editor editor) {
@@ -223,8 +221,8 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
      *
      * @param editor the editor to remove
      * @return true if the set was changed; false otherwise
-     * @deprecated since 4.19.6; use
-     * {@link jmri.EditorManager#remove(jmri.jmrit.display.Editor)} instead
+     * @deprecated since 4.19.6; use {@link #remove(jmri.jmrit.display.Editor)}
+     * instead
      */
     @Deprecated
     public boolean removeEditor(@Nonnull Editor editor) {
