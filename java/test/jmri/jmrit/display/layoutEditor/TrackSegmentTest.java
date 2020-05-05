@@ -304,16 +304,11 @@ public class TrackSegmentTest extends LayoutTrackTest {
             trackSegment.setLayoutBlockByName("");
             Assert.assertNull("trackSegment.getLayoutBlock('') == null", trackSegment.getLayoutBlock());
 
-            try {
-                trackSegment.setLayoutBlockByName("invalid name");    //note: invalid name
-                Assert.fail("trackSegment.setLayoutBlockByName(\"invalid name\"); NullPointerException not thrown");
-            } catch (NullPointerException e) {
-            }
-            Assert.assertNull("trackSegment.getLayoutBlock() == null", trackSegment.getLayoutBlock());
+            trackSegment.setLayoutBlockByName("invalid name");    //note: invalid name
             JUnitAppender.assertErrorMessage("provideLayoutBlock: The block name 'invalid name' does not return a block.");
 
 //            LayoutBlock layoutBlock = new LayoutBlock("ILB999", "Test Block");
-//            trackSegment.setLayoutBlockByName("ILB999");
+//            trackSegment.setLayoutBlockByName("Test Block");
 //            Assert.assertEquals("trackSegment.getLayoutBlock() == layoutBlock", layoutBlock, trackSegment.getLayoutBlock());
 //
 //            trackSegment.setLayoutBlock(null);

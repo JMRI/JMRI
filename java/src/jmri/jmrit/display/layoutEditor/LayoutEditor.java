@@ -2604,7 +2604,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             lt.setCoordsCenter(MathUtil.granulize(lt.getCoordsCenter(), gridSize1st));
             if (lt instanceof LayoutTurntable) {
                 LayoutTurntable tt = (LayoutTurntable) lt;
-                for (LayoutTurntable.RayTrack rt : tt.getRayList()) {
+                for (LayoutTurntable.RayTrack rt : tt.getRayTrackList()) {
                     int rayIndex = rt.getConnectionIndex();
                     tt.setRayCoordsIndexed(MathUtil.granulize(tt.getRayCoordsIndexed(rayIndex), gridSize1st), rayIndex);
                 }
@@ -5159,7 +5159,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (result) {   // only need to test Turntable turnouts if we haven't failed yet...
             // ensure that this turntable turnout is unique among turnouts in this Layout
             for (LayoutTurntable tt : getLayoutTurntables()) {
-                for (LayoutTurntable.RayTrack ray : tt.getRayList()) {
+                for (LayoutTurntable.RayTrack ray : tt.getRayTrackList()) {
                     t = ray.getTurnout();
                     if (t != null) {
                         String sname = t.getSystemName();
