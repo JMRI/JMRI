@@ -113,6 +113,7 @@ public class SRCPThrottle extends AbstractThrottle {
         this.speedSetting = speed;
         sendUpdate();
         firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        record(speed);
     }
 
     @Override
