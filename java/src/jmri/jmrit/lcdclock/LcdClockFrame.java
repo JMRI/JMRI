@@ -1,5 +1,6 @@
 package jmri.jmrit.lcdclock;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -94,7 +95,7 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
         getContentPane().add(colon);
         getContentPane().add(m1);
         getContentPane().add(m2);
-
+        this.getContentPane().setBackground(new Color(0xFFFFFF)); // set background to white to match lcd
         getContentPane().add(b = new JButton(Bundle.getMessage("ButtonPauseClock")));
         b.addActionListener(new ButtonListener());
         // since Run/Stop button looks crummy, user may turn it on in clock prefs
