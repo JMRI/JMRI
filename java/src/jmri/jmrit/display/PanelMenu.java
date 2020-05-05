@@ -2,30 +2,31 @@ package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.IndexedPropertyChangeEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Set;
-import javax.annotation.Nonnull;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
-import jmri.InstanceInitializer;
-import jmri.implementation.AbstractInstanceInitializer;
+import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Create the default "Panels" menu for use in a menubar.
- * <p>
- * Also manages the Show Panel menu for all Editor panels.
+ * Create the "Panels" menu for use in a menubar.
  *
  * @author Bob Jacobsen Copyright 2003, 2004, 2010
  * @author Dave Duchamp Copyright 2007
  * @author Pete Cressman Copyright 2010
  */
 public class PanelMenu extends JMenu {
+
+    private JMenu panelsSubMenu = null;
+    private JMenuItem noPanelsItem = null;
+    private final PropertyChangeListener listener = this::updateMenu;
 
     /**
      * The single PanelMenu must accessed using
@@ -59,20 +60,42 @@ public class PanelMenu extends JMenu {
         super.add(new jmri.jmrit.automat.monitor.AutomatTableAction(Bundle.getMessage("MenuItemMonitor")));
         super.add(new jmri.jmrit.jython.JythonWindow(Bundle.getMessage("MenuItemScriptLog")));
         super.add(new jmri.jmrit.jython.InputWindowAction(Bundle.getMessage("MenuItemScriptInput")));
+        InstanceManager.getDefault(EditorManager.class).addPropertyChangeListener(listener);
     }
 
-    // operational variables
-    private JMenu panelsSubMenu = null;
-    private JMenuItem noPanelsItem = null;
-    private final ArrayList<Editor> panelsList = new ArrayList<>();
+    private void updateMenu(PropertyChangeEvent evt) {
+        // an EditorManager notifies if an editor is added, removed, or renamed
+        // when editors are added or removed from the EditorManager, the event
+        // source is the EditorManager and the event is indexed
+        // when an editor is renamed, the event source is the Editor, and event
+        // is not indexed
+        if (evt.getSource().equals(InstanceManager.getDefault(EditorManager.class))
+                && evt instanceof IndexedPropertyChangeEvent) {
+            if (evt.getNewValue() != null) {
+                addEditorPanel((Editor) evt.getNewValue());
+            } else if (evt.getOldValue() != null) {
+                deletePanel((Editor) evt.getOldValue());
+            }
+        } else if (evt.getSource() instanceof Editor) {
+            Editor e = (Editor) evt.getSource();
+            if ("title".equals(evt.getPropertyName())) {
+                renameEditorPanel(e);
+            } else {
+                updateEditorPanel(e);
+            }
+        }
+    }
 
     /**
      * Utility routine for getting the number of panels in the Panels sub menu.
      *
      * @return the number of panels
+     * @deprecated since 4.19.6; use {@link java.util.Collection#size()} on the
+     * results of {@link EditorManager#getAll()} instead
      */
+    @Deprecated
     public int getNumberOfPanels() {
-        return panelsList.size();
+        return InstanceManager.getDefault(EditorManager.class).getAll().size();
     }
 
     /**
@@ -82,6 +105,7 @@ public class PanelMenu extends JMenu {
      */
     public void deletePanel(Editor panel) {
         log.debug("deletePanel");
+        ArrayList<Editor> panelsList = new ArrayList(InstanceManager.getDefault(EditorManager.class).getAll());
         if (panelsList.isEmpty()) {
             return;
         }
@@ -111,6 +135,7 @@ public class PanelMenu extends JMenu {
      */
     public void addEditorPanel(final Editor panel) {
         // If this is the first panel, remove the 'No Panels' menu item
+        ArrayList<Editor> panelsList = new ArrayList(InstanceManager.getDefault(EditorManager.class).getAll());
         if (panelsList.isEmpty()) {
             panelsSubMenu.remove(noPanelsItem);
         }
@@ -136,6 +161,7 @@ public class PanelMenu extends JMenu {
      * @param panel the panel to update
      */
     public void updateEditorPanel(Editor panel) {
+        ArrayList<Editor> panelsList = new ArrayList(InstanceManager.getDefault(EditorManager.class).getAll());
         if (panelsList.isEmpty()) {
             return;
         }
@@ -170,6 +196,7 @@ public class PanelMenu extends JMenu {
      * @param panel the panel to rename
      */
     public void renameEditorPanel(Editor panel) {
+        ArrayList<Editor> panelsList = new ArrayList(InstanceManager.getDefault(EditorManager.class).getAll());
         if (panelsList.isEmpty()) {
             return;
         }
@@ -191,60 +218,42 @@ public class PanelMenu extends JMenu {
      *
      * @param name the name to test
      * @return true if name is in use; false otherwise
+     * @deprecated since 4.19.6; use
+     * {@link EditorManager#contains(java.lang.String)} instead
      */
+    @Deprecated
     public boolean isPanelNameUsed(String name) {
-        if (panelsList.isEmpty()) {
-            return false;
-        }
-        for (Editor editor : panelsList) {
-            if (editor.getTargetFrame().getTitle().equals(name)) {
-                return true;
-            }
-        }
-        return false;
+        return InstanceManager.getDefault(EditorManager.class).contains(name);
     }
 
+    /**
+     * @param name the name of the editor
+     * @return the editor or null if there is no matching editor
+     * @deprecated since 4.19.6; use {@link EditorManager#get(java.lang.String)} instead
+     */
+    @Deprecated
     public Editor getEditorByName(String name) {
-        if (panelsList.isEmpty()) {
-            return null;
-        }
-        for (Editor editor : panelsList) {
-            if (editor.getTargetFrame().getTitle().equals(name)) {
-                return editor;
-            }
-        }
-        return null;
+        return InstanceManager.getDefault(EditorManager.class).get(name);
     }
 
+    /**
+     * 
+     * @return the list of Editors
+     * @deprecated since 4.19.6; use {@link EditorManager#getAll()} instead
+     */
+    @Deprecated
     public ArrayList<Editor> getEditorPanelList() {
-        return panelsList;
+        return new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll());
     }
 
+    /**
+     * 
+     * @return the list of LayoutEditors
+     * @deprecated since 4.19.6; use {@link EditorManager#getAll(java.lang.Class)} instead
+     */
+    @Deprecated
     public ArrayList<LayoutEditor> getLayoutEditorPanelList() {
-        ArrayList<LayoutEditor> lePanelsList = new ArrayList<>();
-        panelsList.stream().filter((e) -> (e instanceof LayoutEditor)).forEachOrdered((e) -> lePanelsList.add((LayoutEditor) e));
-        return lePanelsList;
-    }
-
-    @ServiceProvider(service = InstanceInitializer.class)
-    public static class Initializer extends AbstractInstanceInitializer {
-
-        @Override
-        @Nonnull
-        public <T> Object getDefault(Class<T> type) {
-            if (type.equals(PanelMenu.class)) {
-                return new PanelMenu();
-            }
-            return super.getDefault(type);
-        }
-
-        @Override
-        @Nonnull
-        public Set<Class<?>> getInitalizes() {
-            Set<Class<?>> set = super.getInitalizes();
-            set.add(PanelMenu.class);
-            return set;
-        }
+        return new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class));
     }
 
     private final static Logger log = LoggerFactory.getLogger(PanelMenu.class);

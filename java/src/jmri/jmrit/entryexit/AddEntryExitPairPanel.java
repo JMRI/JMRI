@@ -17,7 +17,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.NamedBean;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
@@ -62,7 +62,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         top.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SelectPanel")), SwingConstants.RIGHT));  // NOI18N
         top.add(selectPanel);
         selectPanel.removeAllItems();
-        panels = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+        panels = new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class));
         for (int i = 0; i < panels.size(); i++) {
             selectPanel.addItem(panels.get(i).getLayoutName());
         }
@@ -216,7 +216,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
         // Do other panels if any
         doFromCombo = false;
-        panels = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+        panels = new ArrayList(InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class));
         for (int i = 0; i < panels.size(); i++) {
             if (panels.get(i) != panel) {
                 selectPoints(panels.get(i));

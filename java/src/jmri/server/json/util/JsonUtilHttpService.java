@@ -32,6 +32,7 @@ import jmri.InstanceManager;
 import jmri.Metadata;
 import jmri.server.json.JsonServerPreferences;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.panelEditor.PanelEditor;
@@ -433,18 +434,19 @@ public class JsonUtilHttpService extends JsonHttpService {
 
     public ArrayNode getPanels(String format, int id) {
         ArrayNode root = mapper.createArrayNode();
+        EditorManager editors = InstanceManager.getDefault(EditorManager.class);
         // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor,
         // SwitchboardEditor)
         // list ControlPanelEditors
-        Editor.getEditors(ControlPanelEditor.class).stream()
+        editors.getAll(ControlPanelEditor.class).stream()
                 .map(editor -> this.getPanel(editor, format, id))
                 .filter(Objects::nonNull).forEach(root::add);
         // list LayoutEditors and PanelEditors
-        Editor.getEditors(PanelEditor.class).stream()
+        editors.getAll(PanelEditor.class).stream()
                 .map(editor -> this.getPanel(editor, format, id))
                 .filter(Objects::nonNull).forEach(root::add);
         // list SwitchboardEditors
-        Editor.getEditors(SwitchboardEditor.class).stream()
+        editors.getAll(SwitchboardEditor.class).stream()
                 .map(editor -> this.getPanel(editor, format, id))
                 .filter(Objects::nonNull).forEach(root::add);
         return root;
