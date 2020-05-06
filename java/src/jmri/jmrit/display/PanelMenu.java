@@ -7,6 +7,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
@@ -178,7 +179,8 @@ public class PanelMenu extends JMenu {
                             r.setSelected(false);
                         }
                     } else {
-                        if (panel.getTargetFrame().isVisible()) {
+                        JFrame target = panel.getTargetFrame();
+                        if (target != null && target.isVisible()) {
                             r.setSelected(true);
                         } else {
                             r.setSelected(false);
