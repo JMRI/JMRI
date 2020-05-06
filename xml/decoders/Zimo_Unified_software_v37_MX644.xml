@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -33,10 +32,11 @@
   <!-- version 1.4,  added version 37 Firmware options, Ronald Kuhn, 24 Apr 2019             -->
   <!--               File is not tested cause no decoder of this type is in my collection.   -->
   <!--               If you find any errors please contact me by mail (ronald@wirkuhns.de).  -->
+  <!-- version 1.5,  added replacementModel for v39,  Ronald Kuhn, 02 May 2020 -->
   <!--                                                                                       -->
   <decoder>
     <family name="Zimo Unified software (version 37+)" mfg="Zimo">
-      <model model="MX644C version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="222">
+      <model model="MX644C version 37+" replacementModel="MX644C version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="222">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -71,7 +71,7 @@
         </output>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
-      <model model="MX644D version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="222">
+      <model model="MX644D version 37+" replacementModel="MX644D version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="222">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>

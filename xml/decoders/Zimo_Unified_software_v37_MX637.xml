@@ -21,10 +21,11 @@
   <!--                                                                                       -->
   <!--   File is not tested cause no decoder of this type is in my collection.               -->
   <!--   If you find any errors please contact me by mail.                                   -->
+  <!-- v1.1,  added replacementModel for v39,  Ronald Kuhn, 02 May 2020 -->
   <!--                                                                                       -->
   <decoder>
     <family name="Zimo Unified software (version 37+)" mfg="Zimo">
-      <model model="MX637P22 version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="137">
+      <model model="MX637P22 version 37+" replacementModel="MX637P22 version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="137">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
         </output>
