@@ -142,5 +142,5 @@ public class LayoutBlockThroughPathsTableModel extends javax.swing.table.Abstrac
 
     private LayoutBlock lBlock = null;
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlockThroughPathsTableModel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlockThroughPathsTableModel.class);
 }

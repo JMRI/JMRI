@@ -1275,7 +1275,7 @@ public class LayoutEditorTools {
      * Returns true if an icon for the specified SignalHead is on the panel
      */
     public boolean isHeadOnPanel(@Nonnull SignalHead head) {
-        for (SignalHeadIcon h : layoutEditor.signalList) {
+        for (SignalHeadIcon h : layoutEditor.getSignalList()) {
             if (h.getSignalHead() == head) {
                 return true;
             }
@@ -7785,14 +7785,14 @@ public class LayoutEditorTools {
 
         SensorIcon h = null;
         int index = -1;
-        for (int i = 0; (i < layoutEditor.sensorList.size()) && (index == -1); i++) {
-            h = layoutEditor.sensorList.get(i);
+        for (int i = 0; (i < layoutEditor.getSensorList().size()) && (index == -1); i++) {
+            h = layoutEditor.getSensorList().get(i);
             if (h.getSensor() == sensor) {
                 index = i;
             }
         }
         if ((h != null) && (index != -1)) {
-            layoutEditor.sensorList.remove(index);
+            layoutEditor.getSensorList().remove(index);
             h.remove();
             h.dispose();
             needRedraw = true;
@@ -7958,7 +7958,7 @@ public class LayoutEditorTools {
     }
 
     public boolean isSensorOnPanel(@Nonnull Sensor sensor) {
-        for (SensorIcon s : layoutEditor.sensorList) {
+        for (SensorIcon s : layoutEditor.getSensorList()) {
             if (s.getSensor() == sensor) {
                 return true;
             }
@@ -8307,14 +8307,14 @@ public class LayoutEditorTools {
         removeSignalMastAssignment(signalMast);
         SignalMastIcon h = null;
         int index = -1;
-        for (int i = 0; (i < layoutEditor.signalMastList.size()) && (index == -1); i++) {
-            h = layoutEditor.signalMastList.get(i);
+        for (int i = 0; (i < layoutEditor.getSignalMastList().size()) && (index == -1); i++) {
+            h = layoutEditor.getSignalMastList().get(i);
             if ((h != null) && (h.getSignalMast() == signalMast)) {
                 index = i;
             }
         }
         if ((h != null) && (index != -1)) {
-            layoutEditor.signalMastList.remove(index);
+            layoutEditor.getSignalMastList().remove(index);
             h.remove();
             h.dispose();
             needRedraw = true;
@@ -9057,7 +9057,7 @@ public class LayoutEditorTools {
     }
 
     public boolean isSignalMastOnPanel(@Nonnull SignalMast signalMast) {
-        for (SignalMastIcon s : layoutEditor.signalMastList) {
+        for (SignalMastIcon s : layoutEditor.getSignalMastList()) {
             if (s.getSignalMast() == signalMast) {
                 return true;
             }
@@ -13489,7 +13489,7 @@ public class LayoutEditorTools {
         String farTurnoutName = farTurn.getDisplayName();
 
         String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();
-        String logixName = logixPrefix + ":IX_LAYOUTSLIP:" + slip.ident;
+        String logixName = logixPrefix + ":IX_LAYOUTSLIP:" + slip.getId();
         String sensorName = "IS:" + logixName + "C" + number;
         try {
             InstanceManager.sensorManagerInstance().provideSensor(sensorName);
@@ -13874,5 +13874,5 @@ public class LayoutEditorTools {
         return result;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorTools.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorTools.class);
 }

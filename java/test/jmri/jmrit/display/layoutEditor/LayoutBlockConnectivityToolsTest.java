@@ -29,5 +29,5 @@ public class LayoutBlockConnectivityToolsTest {
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
-    // private final static Logger log = LoggerFactory.getLogger(LayoutBlockConnectivityToolsTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlockConnectivityToolsTest.class);
 }

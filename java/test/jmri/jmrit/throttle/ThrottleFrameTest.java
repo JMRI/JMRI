@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
@@ -130,8 +131,9 @@ public class ThrottleFrameTest {
             JemmyUtil.enterClickAndLeave(f);
             new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
             Assert.assertTrue("Function F" + i + " on", f.isSelected());
+            // Full Message along lines of Can't send F13-F20 since no command station defined
+            JUnitAppender.assertErrorMessageStartsWith("Can't send F");
         }
-
         to.pushReleaseButton();
     }
 

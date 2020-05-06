@@ -134,5 +134,5 @@ public class LayoutRHXOver extends LayoutXOver {
         super(id, TurnoutType.RH_XOVER, c, rot, xFactor, yFactor, layoutEditor, 1);
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(LayoutRHXOver.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutRHXOver.class);
 }
