@@ -3,6 +3,7 @@ package jmri.jmrit.display;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
@@ -33,7 +34,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
     public static final String EDITORS = "editors";
     public static final String TITLE = "title";
     public static final String VISIBLE = "visible";
-    private final SortedSet<Editor> set = new TreeSet<>(Comparator.comparing(Editor::getTitle));
+    private final SortedSet<Editor> set = Collections.synchronizedSortedSet(new TreeSet<>(Comparator.comparing(Editor::getTitle)));
 
     public EditorManager() {
         super(false);
