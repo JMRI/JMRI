@@ -17,7 +17,7 @@ import jmri
 
 #script to disable a sensor
 panelMenu = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
-layoutPanels = panelMenu.getList(jmri.jmrit.display.layoutEditor.LayoutEditor.class)
+layoutPanels = panelMenu.getList(jmri.jmrit.display.layoutEditor.LayoutEditor)
 if (len(layoutPanels) > 0) :
     layoutEditor = layoutPanels[0]
     for p in layoutEditor.sensorImage :
@@ -30,7 +30,7 @@ else :
 
 #script to enable a sensor
 panelMenu = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
-layoutPanels = panelMenu.getList(jmri.jmrit.display.layoutEditor.LayoutEditor.class)
+layoutPanels = panelMenu.getList(jmri.jmrit.display.layoutEditor.LayoutEditor)
 if (len(layoutPanels) > 0) :
     layoutEditor = layoutPanels[0]
     for p in layoutEditor.sensorImage :
