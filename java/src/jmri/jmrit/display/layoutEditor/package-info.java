@@ -1,5 +1,5 @@
 /**
- * <h1>Layout Editor</h1> represents both structure and graphical display through a single set of objects.
+ * <h2>Layout Editor</h2> represents both structure and graphical display through a single set of objects.
  * <h2>Example</h2>
  * A small example layout:<br>
  * <a href="doc-files/SidingImage.png"><img src="doc-files/SidingImage.png" alt="Simple layout example" height="25%" width="25%"></a>
