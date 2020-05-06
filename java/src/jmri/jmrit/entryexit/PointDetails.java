@@ -10,7 +10,7 @@ import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -67,7 +67,7 @@ public class PointDetails {
     public void setPanel(LayoutEditor panel) {
         this.panel = panel;
         // find the panel that actually contains this sensor, default to the supplied panel
-        for (LayoutEditor layout : InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList()) {
+        for (LayoutEditor layout : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
             for (SensorIcon si : layout.getSensorList()) {
                 if (sensor == si.getNamedBean()) {
                     this.panel = layout;
@@ -249,9 +249,7 @@ public class PointDetails {
     }
 
     public void setRefObject(NamedBean refObs) {
-        List<LayoutEditor> panels = InstanceManager.getDefault(jmri.jmrit.display.PanelMenu.class).
-                getLayoutEditorPanelList();
-        for (LayoutEditor pnl : panels) {
+        for (LayoutEditor pnl : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
             if (refLoc == null) {
                 setRefObjectByPanel(refObs, pnl);
             }

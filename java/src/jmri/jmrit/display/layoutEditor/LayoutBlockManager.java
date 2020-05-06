@@ -2,12 +2,14 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.Block;
 import jmri.BlockManager;
+import jmri.jmrit.display.EditorManager;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBean;
@@ -1863,8 +1865,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @CheckForNull NamedBean bean,
             @CheckForNull LayoutEditor panel) {
         if (panel == null) {
-            List<LayoutEditor> panels = InstanceManager.getDefault(jmri.jmrit.display.PanelMenu.class)
-                    .getLayoutEditorPanelList();
+            Set<LayoutEditor> panels = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
             List<LayoutBlock> protectingBlocks = new ArrayList<>();
             for (LayoutEditor p : panels) {
                 protectingBlocks = getProtectingBlocksByBeanByPanel(bean, p);
@@ -2137,8 +2138,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @Nonnull NamedBean bean,
             LayoutEditor panel) {
         if (panel == null) {
-            List<LayoutEditor> panels = InstanceManager.getDefault(jmri.jmrit.display.PanelMenu.class).
-                    getLayoutEditorPanelList();
+            Set<LayoutEditor> panels = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
             LayoutBlock returnBlock = null;
             for (LayoutEditor p : panels) {
                 returnBlock = getFacingBlockByBeanByPanel(bean, p);

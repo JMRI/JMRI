@@ -3,13 +3,11 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 import java.awt.geom.Point2D;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This module handles configuration for display.PositionablePoint objects for a
@@ -149,7 +147,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 
         if (type == PositionablePoint.PointType.EDGE_CONNECTOR && element.getAttribute("linkedpanel") != null && element.getAttribute("linkpointid") != null) {
             String linkedEditorName = element.getAttribute("linkedpanel").getValue();
-            LayoutEditor linkedEditor = (LayoutEditor) InstanceManager.getDefault(PanelMenu.class).getEditorByName(linkedEditorName);
+            LayoutEditor linkedEditor = InstanceManager.getDefault(EditorManager.class).get(LayoutEditor.class, linkedEditorName);
             if (linkedEditor != null) {
                 String linkedPoint = element.getAttribute("linkpointid").getValue();
                 for (PositionablePoint point : linkedEditor.getPositionablePoints()) {

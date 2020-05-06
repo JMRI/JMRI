@@ -360,6 +360,12 @@
 	            by JMRI 4.19.5 and before.
 	        </li>
             <li>
+                A default instance of <code>jmri.jmrit.display.PanelMenu</code> is no
+                longer maintained by the InstanceManager for the purposes of maintaining
+                a list of open Editors or LayoutEditors. Use the default instance of
+                <code>jmri.jmrit.display.EditorManager</code> in scripts instead.
+            </li>
+            <li>
                 George Warner added the ability to assign a block 
                 to a turntable to represent the track on the turntable bridge.
                 You enter the block from the Edit pane in the turntable's popup menu.</li>
@@ -441,7 +447,13 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>
+                A default instance of <code>jmri.jmrit.display.PanelMenu</code> is no
+                longer maintained by the InstanceManager for the purposes of maintaining
+                a list of open Editors or LayoutEditors. Use the default instance of
+                <code>jmri.jmrit.display.EditorManager</code> in scripts instead. All
+                sample scripts have been updated to reflect this.
+            </li>
         </ul>
 
     <h3>Signals</h3>

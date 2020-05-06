@@ -87,8 +87,8 @@ class ManageBlocks(java.beans.PropertyChangeListener):
         # Process the rAction command                
         if rAction == 'releaseAll':
             # Init access to layout editor panels
-            PanelMenu = jmri.InstanceManager.getDefault(jmri.jmrit.display.PanelMenu)
-            layouts = PanelMenu.getLayoutEditorPanelList()
+            panels = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
+            layouts = panels.getList(jmri.jmrit.display.layoutEditor.LayoutEditor)
             
             cnt = 0
             for seg in layouts[rIndex].trackList.toArray():
@@ -139,8 +139,8 @@ class ManageBlocks(java.beans.PropertyChangeListener):
                         memories.getMemory("rColor").setValue('')
 
                         # Refresh panel to display new color
-                        PanelMenu = jmri.InstanceManager.getDefault(jmri.jmrit.display.PanelMenu)
-                        layouts = PanelMenu.getLayoutEditorPanelList()
+                        panels = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
+                        layouts = panels.getList(jmri.jmrit.display.layoutEditor.LayoutEditor)
                         layouts[rIndex].redrawPanel()
 
                         msg.append(blockName + ' set to ' + rColor)
@@ -153,8 +153,8 @@ class ManageBlocks(java.beans.PropertyChangeListener):
                         memories.getMemory("rColor").setValue('')
 
                         # Refresh panel to display new color
-                        PanelMenu = jmri.InstanceManager.getDefault(jmri.jmrit.display.PanelMenu)
-                        layouts = PanelMenu.getLayoutEditorPanelList()
+                        panels = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
+                        layouts = panels.getList(jmri.jmrit.display.layoutEditor.LayoutEditor)
                         layouts[rIndex].redrawPanel()
 
                         msg.append(blockName + ' set to ' + rColor)

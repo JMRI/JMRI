@@ -19,7 +19,7 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.beans.VetoableChangeSupport;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -164,9 +164,8 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
 
     public void addNXSourcePoint(NamedBean source) {
         PointDetails point = null;
-        List<LayoutEditor> layout = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
-        for (int i = 0; i < layout.size(); i++) {
-            point = providePoint(source, layout.get(i));
+        for (LayoutEditor editor : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
+            point = providePoint(source, editor);
         }
         if (point == null) {
             log.error("Unable to find a location on any panel for item {}", source.getDisplayName());  // NOI18N
