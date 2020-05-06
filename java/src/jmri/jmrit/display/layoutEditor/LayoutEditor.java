@@ -418,7 +418,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 .ifPresent(cm -> cm.registerUser(this));
 
         // confirm that panel hasn't already been loaded
-        if (!InstanceManager.getDefault(EditorManager.class).get(name).equals(this)) {
+        if (!this.equals(InstanceManager.getDefault(EditorManager.class).get(name))) {
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
         }
         setFocusable(true);
