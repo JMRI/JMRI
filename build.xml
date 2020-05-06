@@ -2065,16 +2065,12 @@
             <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jinputvalidator/0.8.0/" packagelistLoc="lib/jinputvalidator-0.8.0-package-list"/>
             <link offline="true" href="https://static.javadoc.io/com.tngtech.archunit/archunit/0.11.0/" packagelistLoc="lib/archunit-0.11.0-package-list"/>
 
-        <!-- commented out 2020-04-23 due to "Error fetching URL". The regular doclet seems to cope, but this plantuml one fails -->
-        
-<!-- 
             <link offline="true" href="https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.8/" packagelistLoc="lib/jackson-databind-2.9.8-package-list"/>
             <link offline="true" href="https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.23/" packagelistLoc="openlcb-0.7.23-package-list"/>
             <link offline="true" href="https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
             <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/"/>
             <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
- -->
         
         </javadoc>
         
