@@ -2020,14 +2020,12 @@
 
             <doclet name="nl.talsmasoftware.umldoclet.UMLDoclet"
                     path="${libdir}/umldoclet-2.0.9.jar">
-<!--                 <param name="-operations"/>
-                <param name="-qualify"/>
-                <param name="-types"/>
-                <!- - <param name="-visibility"/> not used, as only showing public visibility - ->
-                <param name="-collapsible"/>  <!- - hide images at first on web pages - ->
-                <param name="-inferdepvis" value="public"/> <!- - only show public - ->
--->
+                <param name="-package"/>
+                <param name="--show-members=package"/>
+                <param name="-linksource"/>
+                <param name="-use"/>
             </doclet>
+            
             <group title="Core" packages="jmri"/>
             <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
             <group title="Applications" packages="apps:apps.*"/>
