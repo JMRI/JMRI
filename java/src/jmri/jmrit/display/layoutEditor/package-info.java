@@ -1,5 +1,6 @@
 /**
- * <h1>Layout Editor</h1> represents both structure and graphical display through a single set of objects.
+ * Layout Editor currently represents both structure and graphical display through a single set of objects.
+ * Work is proceeding to separate those out and provide clean interfaces for other packages to access the structural information.
  * <h2>Example</h2>
  * A small example layout:<br>
  * <a href="doc-files/SidingImage.png"><img src="doc-files/SidingImage.png" alt="Simple layout example" height="25%" width="25%"></a>
@@ -112,7 +113,18 @@
  * <h2>More Info</h2>
  * User-level documentation is available 
  * <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/LayoutEditor.shtml">here</a>.
+ * <p>
+ * (If these Javadoc were created with UML, the 
+ * <a href="package.svg">
+ *   full-scale package diagram is also available.</a>)
+ * <p style="text-align: center; font-size: xx-small;">
+ *      <a href="package.svg">
+ *          <img src="i/resources/icons/misc/UML_small_logo.png" alt="Link to UML diagram">
+ *      </a>
+ * </p>
  * <!-- Put @see and @since tags down here. -->
+ * @see jmri.jmrit.entryexit
+ * @see jmri.Section
  *
  */
 
