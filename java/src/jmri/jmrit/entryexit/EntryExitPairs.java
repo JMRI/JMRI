@@ -47,10 +47,7 @@ import org.slf4j.LoggerFactory;
 public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault,
         PropertyChangeListener {
 
-    public int routingMethod = LayoutBlockConnectivityTools.METRIC;
-
-    final static int HOPCOUNT = LayoutBlockConnectivityTools.HOPCOUNT;
-    final static int METRIC = LayoutBlockConnectivityTools.METRIC;
+    public LayoutBlockConnectivityTools.Metric routingMethod = LayoutBlockConnectivityTools.Metric.METRIC;
 
     public final static int NXBUTTONSELECTED = 0x08;
     public final static int NXBUTTONACTIVE = Sensor.ACTIVE;
@@ -453,7 +450,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
                 for (String srcUUID : src.getDestinationUniqueId()) {
                     if (destUUID.equals(srcUUID)) {
                         log.debug("Found the correct source: src = {}, dest = {}",
-                                 pd.getSensor().getDisplayName(), dp.getDestPoint().getSensor().getDisplayName());
+                                pd.getSensor().getDisplayName(), dp.getDestPoint().getSensor().getDisplayName());
                         setMultiPointRoute(pd, dp.getDestPoint());
                         return;
                     }
@@ -485,9 +482,9 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
                 if (!toPd.getProtecting().isEmpty()) {
                     toProt = toPd.getProtecting().get(0);
                 }
-                boolean result = lbm.getLayoutBlockConnectivityTools().checkValidDest(fromPd.getFacing(), pro, toPd.getFacing(), toProt, LayoutBlockConnectivityTools.SENSORTOSENSOR);
+                boolean result = lbm.getLayoutBlockConnectivityTools().checkValidDest(fromPd.getFacing(), pro, toPd.getFacing(), toProt, LayoutBlockConnectivityTools.Routing.SENSORTOSENSOR);
                 if (result) {
-                    List<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, cleardown, LayoutBlockConnectivityTools.NONE);
+                    List<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, cleardown, LayoutBlockConnectivityTools.Routing.NONE);
                     if (!blkList.isEmpty()) {
                         if (log.isDebugEnabled()) {
                             for (LayoutBlock blk : blkList) {
@@ -551,8 +548,9 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
 
         /**
          * Constructor for a SourceToDest element.
-         * @param s a source point
-         * @param dp a destination point
+         *
+         * @param s   a source point
+         * @param dp  a destination point
          * @param dir a direction
          * @param ref Integer used as reference
          */
@@ -710,7 +708,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
             destPoint.setRefObject(destination);
             destPoint.getSignal();
             if (!nxpair.containsKey(sourcePoint)) {
-                Source sp = new Source(sourcePoint) ;
+                Source sp = new Source(sourcePoint);
                 nxpair.put(sourcePoint, sp);
                 sp.removePropertyChangeListener(this);
                 sp.addPropertyChangeListener(this);
@@ -912,9 +910,10 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
 
         /**
          * Constructor for a DeletePair row.
-         * @param src Source sensor bean
+         *
+         * @param src  Source sensor bean
          * @param dest Ddestination sensor bean
-         * @param pnl The LayoutEditor panel for the source bean
+         * @param pnl  The LayoutEditor panel for the source bean
          */
         DeletePair(NamedBean src, NamedBean dest, LayoutEditor pnl) {
             this.src = src;
@@ -1318,12 +1317,11 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
             log.debug("Layout block routing has not yet stabilised, discovery will happen once it has");  // NOI18N
             return;
         }
-        Hashtable<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().
-                discoverValidBeanPairs(null, Sensor.class, LayoutBlockConnectivityTools.SENSORTOSENSOR);
-        Enumeration<NamedBean> en = validPaths.keys();
+        HashMap<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().
+                discoverValidBeanPairs(null, Sensor.class, LayoutBlockConnectivityTools.Routing.SENSORTOSENSOR);
         EntryExitPairs eep = this;
-        while (en.hasMoreElements()) {
-            NamedBean key = en.nextElement();
+        for (Entry<NamedBean, List<NamedBean>> entry : validPaths.entrySet()) {
+            NamedBean key = entry.getKey();
             List<NamedBean> validDestMast = validPaths.get(key);
             if (validDestMast.size() > 0) {
                 eep.addNXSourcePoint(key, editor);
