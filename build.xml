@@ -390,12 +390,15 @@
       <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
     </target>
 
-    <target name="check-java-11-requirement"> <!-- check build system requirements, not for user use -->
+    <target name="check-java-version-requirement"> <!-- check build system requirements, not for user use -->
         <fail message="Unsupported Java version: ${ant.java.version}. 
-          Make sure that the Java version is 11 or greater.">
+          Make sure that the Java version is 9 or greater.">
           <condition>
             <not>
-              <matches pattern="^1[1-9]" string="${ant.java.version}"/>
+              <or>
+                <matches pattern="^1\.9" string="${ant.java.version}"/>
+                <matches pattern="^1[1-9]" string="${ant.java.version}"/>
+              </or>
             </not>
           </condition>
         </fail>
@@ -1982,7 +1985,7 @@
     <!-- Requires Graphviz from http://www.graphviz.org            -->
     <!-- Does not work with Java 10 or later,                      -->
     <!-- see https://github.com/gboersma/uml-java-doclet           -->
-    <target name="javadoc-uml" depends="check-java-11-requirement, init, jjdoc, compile-generated-source, plantuml" 
+    <target name="javadoc-uml" depends="heck-java-version-requirement, init, jjdoc, compile-generated-source, plantuml" 
                     description="create Javadocs with UML, requires Java 11">
         <javadoc packagenames="jmri.*, apps.*"
                  maxmemory="512m"
