@@ -119,7 +119,7 @@
  *   full-scale package diagram is also available.</a>)
  * <p style="text-align: center; font-size: xx-small;">
  *      <a href="package.svg">
- *          <img src="i/resources/icons/misc/UML_small_logo.png" title="Merge Dialog Box" border="0" />
+ *          <img src="i/resources/icons/misc/UML_small_logo.png" alt="Link to UML diagram">
  *      </a>
  * </p>
  * <!-- Put @see and @since tags down here. -->
