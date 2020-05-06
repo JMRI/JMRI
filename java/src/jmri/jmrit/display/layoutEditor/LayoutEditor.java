@@ -414,16 +414,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         setSize(screenDim.width, screenDim.height);
 
         // register the resulting panel for later configuration
-        ConfigureManager cm = InstanceManager.getNullableDefault(ConfigureManager.class
-        );
-        if (cm != null) {
-            cm.registerUser(this);
-        }
+        InstanceManager.getOptionalDefault(ConfigureManager.class)
+                .ifPresent(cm -> cm.registerUser(this));
 
         // confirm that panel hasn't already been loaded
-        if (InstanceManager.getDefault(EditorManager.class).contains(name)) {
-            log.warn(
-                    "File contains a panel with the same name ({}) as an existing panel", name);
+        if (!InstanceManager.getDefault(EditorManager.class).get(name).equals(this)) {
+            log.warn("File contains a panel with the same name ({}) as an existing panel", name);
         }
         setFocusable(true);
         addKeyListener(this);
