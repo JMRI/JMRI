@@ -76,7 +76,7 @@ public class HexFile {
     /**
      * Open hex file for reading.
      * 
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException if pre-defined file can't be opened
      */   
     public void openRd() throws FileNotFoundException {
         read = true;
@@ -84,7 +84,6 @@ public class HexFile {
         in = new FileInputStream(file);
         buffIn = new BufferedInputStream(in);
         address = 0;
-        //line = new StringBuffer("");
     }
 
     
@@ -167,7 +166,7 @@ public class HexFile {
     /**
      * Read a character from the hex file
      * @return the character
-     * @throws IOException 
+     * @throws IOException from the underlying read operation
      */
     public int readChar() throws IOException {
             return buffIn.read();
@@ -178,7 +177,7 @@ public class HexFile {
      * Read a hex byte.
      *
      * @return the byte
-     * @throws IOException 
+     * @throws IOException from the underlying read operation
      */
     public int rdHexByte() throws IOException {
         int hi = rdHexDigit();
@@ -191,7 +190,7 @@ public class HexFile {
      * Read a single hex digit.
      *
      * @return int representing a single hex digit 0 - f.
-     * @throws IOException 
+     * @throws IOException  from the underlying read operation or if there's an invalid hex digit
      */
     private int rdHexDigit() throws IOException {
         int b = 0;
