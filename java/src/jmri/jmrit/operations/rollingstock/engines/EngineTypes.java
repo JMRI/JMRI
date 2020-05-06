@@ -21,18 +21,6 @@ public class EngineTypes extends RollingStockAttribute implements InstanceManage
     public EngineTypes() {
     }
 
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized EngineTypes instance() {
-        return InstanceManager.getDefault(EngineTypes.class);
-    }
-
     @Override
     protected String getDefaultNames() {
         return TYPES;

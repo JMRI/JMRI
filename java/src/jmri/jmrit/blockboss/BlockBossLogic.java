@@ -9,12 +9,11 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanUsageReport;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.automat.Siglet;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Drives the "simple signal" logic for one signal.
@@ -127,7 +126,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     static public final int TRAILINGDIVERGING = 3;
     static public final int FACING = 4;
 
-    int mode = 0;
+    private int mode = 0;
 
     /**
      * Create an object to drive a specific signal head.
@@ -136,6 +135,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      */
     public BlockBossLogic(@Nonnull String name) {
         super(name + Bundle.getMessage("_BlockBossLogic"));
+        java.util.Objects.requireNonNull(name, "BlockBossLogic name cannot be null");
         this.name = name;
         log.trace("Create BBL {}", name);
 
@@ -231,7 +231,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the sensors 1-5 being monitored.
+     * Get the system name of the sensors 1-5 being monitored.
      *
      * @return system name; null if no sensor configured
      */
@@ -283,7 +283,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the turnout being monitored.
+     * Get the system name of the turnout being monitored.
      *
      * @return system name; null if no turnout configured
      */
@@ -328,7 +328,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the signal head being monitored for first route.
+     * Get the system name of the signal head being monitored for first route.
      *
      * @return system name; null if no primary signal head is configured
      */
@@ -354,7 +354,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the alternate signal head being monitored for first
+     * Get the system name of the alternate signal head being monitored for first
      * route.
      *
      * @return system name; null if no signal head is configured
@@ -381,7 +381,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the signal head being monitored for the 2nd route.
+     * Get the system name of the signal head being monitored for the 2nd route.
      *
      * @return system name; null if no signal head is configured
      */
@@ -407,7 +407,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the secondary signal head being monitored for the
+     * Get the system name of the secondary signal head being monitored for the
      * 2nd route.
      *
      * @return system name; null if no secondary signal head is configured
@@ -433,7 +433,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the original name of the sensor1 being monitored.
+     * Get the original name of the sensor1 being monitored.
      *
      * @return original name; null if no sensor is configured
      */
@@ -458,7 +458,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the sensor1Alt being monitored.
+     * Get the system name of the sensor1Alt being monitored.
      *
      * @return system name; null if no sensor is configured
      */
@@ -483,7 +483,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the sensor2 being monitored.
+     * Get the system name of the sensor2 being monitored.
      *
      * @return system name; null if no sensor is configured
      */
@@ -508,7 +508,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the sensor2Alt being monitored.
+     * Get the system name of the sensor2Alt being monitored.
      *
      * @return system name; null if no sensor is configured
      */
@@ -563,7 +563,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         return distantSignal;
     }
 
-    boolean mHold = false;
+    private boolean mHold = false;
 
     /**
      * Provide the current value of the "hold" parameter.
@@ -591,7 +591,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         setOutput();  // to invoke the new state
     }
 
-    String name;
+    private String name;
 
     @Nonnull NamedBeanHandle<SignalHead> driveSignal;
 
@@ -628,11 +628,10 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         if (approachSensor1.getBean() == null) {
             log.warn(Bundle.getMessage("BeanXNotFound", Bundle.getMessage("Approach_Sensor1_"), name));
         }
-
     }
 
     /**
-     * Return the system name of the sensor being monitored.
+     * Get the system name of the sensor being monitored.
      *
      * @return system name; null if no sensor configured
      */
@@ -770,7 +769,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
                 doFacing();
                 break;
             default:
-                log.error(Bundle.getMessage("UnexpectedMode") + mode + "_Signal_" + getDrivenSignal());
+                log.error("{}{}_Signal_{}", Bundle.getMessage("UnexpectedMode"), mode, getDrivenSignal());
         }
     }
 
@@ -1147,14 +1146,13 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
                 driveSignal.getBean().setLit(true);
             }
         }
-        return;
     }
 
     // Due to an older configuration & storage paradigm, this class
     // has to add itself to the configuration manager, but only once.
     // We do that the first time an instance is created and added to the active list
     private static volatile boolean addedToConfig = false;
-    
+
     // The list of existing instances. When the first is added,
     // the configuration connection is made.
     static List<BlockBossLogic> bblList = Collections.synchronizedList(
@@ -1186,7 +1184,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the BlockBossLogic item governing a specific signal head by its name,
+     * Get the BlockBossLogic item governing a specific signal head by its name,
      * having removed it from use.
      *
      * @param signal name of the signal head object
@@ -1196,7 +1194,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
                         justification="enforced dynamically, too hard to prove statically")
     public static BlockBossLogic getStoppedObject(String signal) {
-        // As a static requirement, the signal head must exist, but 
+        // As a static requirement, the signal head must exist, but
         // we can't express that statically.  We test it dynamically.
         SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signal);
         java.util.Objects.requireNonNull(sh, "signal head must exist");
@@ -1204,7 +1202,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the BlockBossLogic item governing a specific signal head, having
+     * Get the BlockBossLogic item governing a specific signal head, having
      * removed it from use.
      *
      * @param sh signal head object
@@ -1233,7 +1231,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the BlockBossLogic item governing a specific signal head located from its name.
+     * Get the BlockBossLogic item governing a specific signal head located from its name.
      * <p>
      * Unlike {@link BlockBossLogic#getStoppedObject(String signal)} this does
      * not remove the object from being used.
@@ -1252,7 +1250,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the BlockBossLogic item governing a specific signal head object.
+     * Get the BlockBossLogic item governing a specific signal head object.
      * <p>
      * Unlike {@link BlockBossLogic#getStoppedObject(String signal)} this does
      * not remove the object from being used.
@@ -1437,7 +1435,63 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         }
         bblList.clear();
     }
-    
-    private final static Logger log = LoggerFactory.getLogger(BlockBossLogic.class);
+
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        SignalHead head = driveSignal.getBean();
+        if (bean != null) {
+            if (watchSensor1 != null && bean.equals(getDrivenSignalNamedBean().getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSignal", head));  // NOI18N
+            }
+            if (watchSensor1 != null && bean.equals(watchSensor1.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensor1", head));  // NOI18N
+            }
+            if (watchSensor2 != null && bean.equals(watchSensor2.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensor2", head));  // NOI18N
+            }
+            if (watchSensor3 != null && bean.equals(watchSensor3.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensor3", head));  // NOI18N
+            }
+            if (watchSensor4 != null && bean.equals(watchSensor4.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensor4", head));  // NOI18N
+            }
+            if (watchSensor5 != null && bean.equals(watchSensor5.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensor5", head));  // NOI18N
+            }
+            if (watchTurnout != null && bean.equals(watchTurnout.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLTurnout", head));  // NOI18N
+            }
+            if (watchedSignal1 != null && bean.equals(watchedSignal1.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSignal1", head));  // NOI18N
+            }
+            if (watchedSignal1Alt != null && bean.equals(watchedSignal1Alt.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSignal1Alt", head));  // NOI18N
+            }
+            if (watchedSignal2 != null && bean.equals(watchedSignal2.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSignal2", head));  // NOI18N
+            }
+            if (watchedSignal2Alt != null && bean.equals(watchedSignal2Alt.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSignal2Alt", head));  // NOI18N
+            }
+            if (watchedSensor1 != null && bean.equals(watchedSensor1.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensorWatched1", head));  // NOI18N
+            }
+            if (watchedSensor1Alt != null && bean.equals(watchedSensor1Alt.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensorWatched1Alt", head));  // NOI18N
+            }
+            if (watchedSensor2 != null && bean.equals(watchedSensor2.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensorWatched2", head));  // NOI18N
+            }
+            if (watchedSensor2Alt != null && bean.equals(watchedSensor2Alt.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensorWatched2Alt", head));  // NOI18N
+            }
+            if (approachSensor1 != null && bean.equals(approachSensor1.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensorApproach", head));  // NOI18N
+            }
+        }
+        return report;
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockBossLogic.class);
 
 }

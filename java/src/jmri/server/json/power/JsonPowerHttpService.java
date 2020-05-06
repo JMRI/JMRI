@@ -12,19 +12,19 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.Locale;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
+import jmri.server.json.JsonRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
  * @author Randall Wood Copyright 2016, 2018
  */
 public class JsonPowerHttpService extends JsonHttpService {
@@ -37,7 +37,8 @@ public class JsonPowerHttpService extends JsonHttpService {
 
     @Override
     // Nullable to override inherited NonNull requirement
-    public JsonNode doGet(String type, @Nullable String name, JsonNode parameters, Locale locale, int id) throws JsonException {
+    public JsonNode doGet(String type, @CheckForNull String name, JsonNode parameters, JsonRequest request)
+            throws JsonException {
         ObjectNode data = mapper.createObjectNode();
         try {
             PowerManager manager = InstanceManager.getNullableDefault(PowerManager.class);
@@ -73,13 +74,13 @@ public class JsonPowerHttpService extends JsonHttpService {
             }
         } catch (JmriException e) {
             log.error("Unable to get Power state.", e);
-            throw new JsonException(500, Bundle.getMessage(locale, "ErrorPower"), id);
+            throw new JsonException(500, Bundle.getMessage(request.locale, "ErrorPower"), request.id);
         }
-        return message(POWER, data, id);
+        return message(POWER, data, request.id);
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doPost(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
         int state = data.path(STATE).asInt(UNKNOWN);
         if (state != UNKNOWN) {
             try {
@@ -100,36 +101,37 @@ public class JsonPowerHttpService extends JsonHttpService {
                             manager.setPower(PowerManager.ON);
                             break;
                         default:
-                            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorUnknownState", POWER, state), id);
+                            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
+                                    Bundle.getMessage(request.locale, "ErrorUnknownState", POWER, state), request.id);
                     }
                 }
             } catch (JmriException ex) {
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex, id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex, request.id);
             }
         }
-        return this.doGet(type, name, data, locale, id);
+        return this.doGet(type, name, data, request);
     }
 
     @Override
-    public JsonNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doGetList(String type, JsonNode data, JsonRequest request) throws JsonException {
         ArrayNode array = this.mapper.createArrayNode();
         for (PowerManager manager : InstanceManager.getList(PowerManager.class)) {
-            array.add(this.doGet(type, manager.getUserName(), data, locale, id));
+            array.add(this.doGet(type, manager.getUserName(), data, request));
         }
-        return message(array, id);
+        return message(array, request.id);
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
-        switch (type) {
-            case POWER:
-                return doSchema(type,
-                        server,
-                        "jmri/server/json/power/power-server.json",
-                        "jmri/server/json/power/power-client.json",
-                        id);
-            default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+    public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
+        if (POWER.equals(type)) {
+            return doSchema(type,
+                    server,
+                    "jmri/server/json/power/power-server.json",
+                    "jmri/server/json/power/power-client.json",
+                    request.id);
+        } else {
+            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                    Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
 }

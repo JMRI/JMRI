@@ -34,7 +34,6 @@ public class PositionableShapeTest extends PositionableJComponentTest {
         Assert.assertFalse("showToolTip after set false", p.showToolTip());
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -49,7 +48,6 @@ public class PositionableShapeTest extends PositionableJComponentTest {
                     return null;
                 }
 
-                @SuppressWarnings("null")
                 @Override
                 protected Shape makeShape() {
                     // bogus body, not used in tests

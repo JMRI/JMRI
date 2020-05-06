@@ -1,5 +1,6 @@
 package jmri.jmrix.internal;
 
+import javax.annotation.Nonnull;
 import jmri.Reporter;
 
 /**
@@ -10,23 +11,32 @@ import jmri.Reporter;
  */
 public class InternalReporterManager extends jmri.managers.AbstractReporterManager {
 
+    public InternalReporterManager(InternalSystemConnectionMemo memo) {
+        super(memo);
+    }
+
     /**
-     * Create an internal TrackReporter object
+     * {@inheritDoc}
      *
-     * @return new null
+     * @return an internal Reporter of class TrackReporter object with the given name
      */
     @Override
-    protected Reporter createNewReporter(String systemName, String userName) {
+    protected Reporter createNewReporter(@Nonnull String systemName, String userName) {
         return new TrackReporter(systemName, userName);
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return "I";
+    @Nonnull
+    public InternalSystemConnectionMemo getMemo() {
+        return (InternalSystemConnectionMemo) memo;
     }
+
 }

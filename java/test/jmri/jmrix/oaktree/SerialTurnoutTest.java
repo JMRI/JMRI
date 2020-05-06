@@ -8,7 +8,7 @@ import org.junit.Before;
 /**
  * Tests for the jmri.jmrix.oaktree.SerialTurnout class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
@@ -49,7 +49,9 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         tcis = null;
         _memo.dispose();
         t = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

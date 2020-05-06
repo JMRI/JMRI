@@ -5,17 +5,14 @@ import java.awt.event.*;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 
 import jmri.*;
 import jmri.implementation.*;
 import jmri.util.*;
-import jmri.util.swing.*;
 
 import org.jdom2.Element;
 
@@ -30,7 +27,7 @@ import org.jdom2.Element;
 public class AddSignalMastPanel extends JPanel {
     
     // head matter
-    JTextField userName = new JTextField(20); // N11N
+    JTextField userName = new JTextField(20);
     JComboBox<String> sigSysBox = new JComboBox<>();  // the basic signal system
     JComboBox<String> mastBox = new JComboBox<>(new String[]{Bundle.getMessage("MastEmpty")}); // the mast within the system NOI18N
     boolean mastBoxPassive = false; // if true, mastBox doesn't process updates
@@ -117,6 +114,7 @@ public class AddSignalMastPanel extends JPanel {
         }
         add(centerPanel);
         signalMastDriver.addItemListener(new ItemListener(){
+            @Override
             public void itemStateChanged(ItemEvent evt) {
                     log.trace("about to call selection() from signalMastDriver itemStateChanged");
                     selection((String)evt.getItem());
@@ -291,7 +289,12 @@ public class AddSignalMastPanel extends JPanel {
 
             // get the signals system name from the user name in combo box
             String u = (String) sigSysBox.getSelectedItem();
-            sigsysname = man.getByUserName(u).getSystemName();
+            SignalSystem sig = man.getByUserName(u);
+            if (sig==null){
+                log.error("Signal System Not found for Username {}",u);
+                return;
+            }
+            sigsysname = sig.getSystemName();
             log.trace("     loadMastDefinitions with sigsysname {}", sigsysname); // NOI18N
             mapNameToShowSize = new LinkedHashMap<>();
             mapTypeToName = new LinkedHashMap<>();

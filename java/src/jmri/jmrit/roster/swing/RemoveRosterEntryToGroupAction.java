@@ -105,11 +105,11 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
 
     public void okPressed() {
         String group = rosterBox.getSelectedRosterGroup();
-        log.info("Selected " + group);
+        log.info("Selected {}", group);
         if (group != null && !group.equals(Roster.ALLENTRIES)) {
             if (rosterBox.getSelectedRosterEntries().length != 0) {
                 RosterEntry re = rosterBox.getSelectedRosterEntries()[0];
-                log.info("Preparing to remove " + re.getId() + " from " + group);
+                log.info("Preparing to remove {} from {}", re.getId(), group);
                 if (userOK(re.getId(), group)) {
                     re.deleteAttribute(Roster.getRosterGroupProperty(group));
                     re.updateFile();

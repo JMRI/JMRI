@@ -36,7 +36,7 @@ public class SerialAddressTest {
         String pattern = SerialAddress.turnoutRegex;
 
         // check turnout match in default format
-        m = checkRegex(pattern, "T12", true);
+        m = checkRegex(pattern, "GT12", true);
         Assert.assertEquals("6 groups", 6, m.groupCount());
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "T", m.group(1));
@@ -44,7 +44,7 @@ public class SerialAddressTest {
         Assert.assertEquals("group 2", null, m.group(2));
 
         // check turnout match in two-part
-        m = checkRegex(pattern, "T12B4", true);
+        m = checkRegex(pattern, "GT12B4", true);
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "T", m.group(1));
         Assert.assertEquals("group 6", null, m.group(6));
@@ -67,7 +67,7 @@ public class SerialAddressTest {
         String pattern = SerialAddress.sensorRegex;
 
         // check sensor match in default format
-        m = checkRegex(pattern, "S12", true);
+        m = checkRegex(pattern, "GS12", true);
         Assert.assertEquals("6 groups", 6, m.groupCount());
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "S", m.group(1));
@@ -75,7 +75,7 @@ public class SerialAddressTest {
         Assert.assertEquals("group 2", null, m.group(2));
 
         // check sensor match in two-part
-        m = checkRegex(pattern, "S12B4", true);
+        m = checkRegex(pattern, "GS12B4", true);
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "S", m.group(1));
         Assert.assertEquals("group 6", null, m.group(6));
@@ -85,7 +85,7 @@ public class SerialAddressTest {
         Assert.assertEquals("group 5", "4", m.group(5));
         Assert.assertEquals("group 6", null, m.group(6));
 
-        m = checkRegex(pattern, "S12a4", true);
+        m = checkRegex(pattern, "GS12a4", true);
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "S", m.group(1));
         Assert.assertEquals("group 6", null, m.group(6));
@@ -106,14 +106,14 @@ public class SerialAddressTest {
         String pattern = SerialAddress.allRegex;
 
         // check sensor match in default format
-        m = checkRegex(pattern, "S12", true);
+        m = checkRegex(pattern, "GS12", true);
         Assert.assertEquals("6 groups", 6, m.groupCount());
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "S", m.group(1));
         Assert.assertEquals("group 6", "12", m.group(6));
         Assert.assertEquals("group 2", null, m.group(2));
 
-        m = checkRegex(pattern, "L14007", true);
+        m = checkRegex(pattern, "GL14007", true);
         Assert.assertEquals("6 groups", 6, m.groupCount());
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "L", m.group(1));
@@ -121,7 +121,7 @@ public class SerialAddressTest {
         Assert.assertEquals("group 2", null, m.group(2));
 
         // check sensor match in two-part
-        m = checkRegex(pattern, "S12B4", true);
+        m = checkRegex(pattern, "GS12B4", true);
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "S", m.group(1));
         Assert.assertEquals("group 6", null, m.group(6));
@@ -131,7 +131,7 @@ public class SerialAddressTest {
         Assert.assertEquals("group 5", "4", m.group(5));
         Assert.assertEquals("group 6", null, m.group(6));
 
-        m = checkRegex(pattern, "S12a4", true);
+        m = checkRegex(pattern, "GS12a4", true);
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "S", m.group(1));
         Assert.assertEquals("group 6", null, m.group(6));
@@ -166,7 +166,7 @@ public class SerialAddressTest {
     }
 
     @Test
-    public void testValidateSystemNameFormat() {
+    public void testValidSystemNameFormat() {
         checkValidSystemNameFormatName("GL1302", 'L', true);
         checkValidSystemNameFormatName("GL1B302", 'L', true);
         checkValidSystemNameFormatName("GL", 'L', false);
@@ -341,6 +341,7 @@ public class SerialAddressTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

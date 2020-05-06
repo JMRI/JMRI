@@ -9,7 +9,7 @@ import org.junit.*;
 /**
  * Tests for SignalHeadSection class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class SignalHeadSectionTest {
 
@@ -52,6 +52,7 @@ public class SignalHeadSectionTest {
 
         listened = false;
         PropertyChangeListener p = new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent e) {
                 listened = true;
                 Assert.assertEquals("LastIndication", e.getPropertyName());
@@ -94,6 +95,7 @@ public class SignalHeadSectionTest {
                          "Sec 1 Sign 1 L", "Sec 1 Sign 1 R",
                         station) {
                 // for testing purposes, turn off action on signal changes
+                @Override
                 void layoutSignalHeadChanged(java.beans.PropertyChangeEvent e) {}
         };
         
@@ -315,7 +317,6 @@ public class SignalHeadSectionTest {
     SignalHead ih3;
     SignalHead ih4;
     
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -323,8 +324,10 @@ public class SignalHeadSectionTest {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
 
-        codeline = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
+
+        codeline = new CodeLine("Code Indication Start", "Code Send Start", "IT101", "IT102", "IT103", "IT104");
         
         ih1 = new jmri.implementation.VirtualSignalHead("IH1");
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(ih1);
@@ -337,6 +340,7 @@ public class SignalHeadSectionTest {
 
         requestIndicationStart = false;
         station = new Station("test", codeline, new CodeButton("IS221", "IS222")) {
+            @Override
             public void requestIndicationStart() {
                 requestIndicationStart = true;
             }

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * SE8cSignalHeadXmlTest.java
  *
- * Description: tests for the SE8cSignalHeadXml class
+ * Test for the SE8cSignalHeadXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class SE8cSignalHeadXmlTest {
       Assert.assertNotNull("SE8cSignalHeadXml constructor",new SE8cSignalHeadXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MrcProgrammerManagerTest {
 
@@ -18,11 +18,10 @@ public class MrcProgrammerManagerTest {
         MrcInterfaceScaffold tc = new MrcInterfaceScaffold();
         memo.setMrcTrafficController(tc);
         jmri.InstanceManager.store(memo, MrcSystemConnectionMemo.class);
-        MrcProgrammerManager t = new MrcProgrammerManager(new MrcProgrammer(tc),memo);
+        MrcProgrammerManager t = new MrcProgrammerManager(new MrcProgrammer(memo),memo);
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

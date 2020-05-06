@@ -3,14 +3,8 @@ package jmri.jmris;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import jmri.DccLocoAddress;
-import jmri.DccThrottle;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.LocoAddress;
-import jmri.Throttle;
-import jmri.ThrottleListener;
-import jmri.ThrottleManager;
+
+import jmri.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +18,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
     private static final Logger log = LoggerFactory.getLogger(AbstractThrottleServer.class);
     protected ArrayList<Throttle> throttleList;
 
-    public AbstractThrottleServer() {
+    public AbstractThrottleServer(){
         throttleList = new ArrayList<>();
     }
 
@@ -198,8 +192,9 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             switch (e.getPropertyName()) {
-                case "SpeedSetting":
-                case "SpeedSteps":
+                case Throttle.SPEEDSETTING:
+                case Throttle.SPEEDSTEPS:
+                case Throttle.ISFORWARD:
                     try {
                         clientserver.sendStatus(throttle.getLocoAddress());
                     } catch (IOException ioe) {

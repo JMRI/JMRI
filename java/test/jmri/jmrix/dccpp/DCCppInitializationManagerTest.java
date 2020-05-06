@@ -8,10 +8,10 @@ import org.junit.Assert;
 /**
  * DCCppInitializationManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppInitializationManager class
+ * Test for the jmri.jmrix.dccpp.DCCppInitializationManager class
  *
- * @author	Paul Bender
- * @author	Mark Underwood
+ * @author Paul Bender
+ * @author Mark Underwood
  */
 public class DCCppInitializationManagerTest {
 
@@ -44,7 +44,9 @@ public class DCCppInitializationManagerTest {
 
     @After
     public void tearDown() throws Exception {
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

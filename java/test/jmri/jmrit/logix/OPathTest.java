@@ -12,9 +12,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the OPath class
+ * Tests for the OPath class.
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class OPathTest {
     
@@ -126,7 +126,6 @@ public class OPathTest {
     }
     
     // from here down is testing infrastructure
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

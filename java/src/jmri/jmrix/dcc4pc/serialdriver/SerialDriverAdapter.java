@@ -26,7 +26,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
-public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends Dcc4PcPortController {
 
     public SerialDriverAdapter() {
         super(new Dcc4PcSystemConnectionMemo());
@@ -51,10 +51,9 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
                 activeSerialPort.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
                 configureLeadsAndFlowControl(activeSerialPort, SerialPort.FLOWCONTROL_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
             }
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
 
             serialStream = activeSerialPort.getInputStream();
             // purge contents, if any
@@ -62,14 +61,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud, sees "
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
 
             opened = true;
@@ -135,7 +127,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
     @Override
     public void configureOption2(String value) {
         super.configureOption2(value);
-        log.debug("configureOption2: " + value);
+        log.debug("configureOption2: {}", value);
         //Not yet implemented
         /*boolean enable = true;
          if(value.equals("No"))
@@ -161,7 +153,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
+            log.error("getOutputStream exception: {}", e);
         }
         return null;
     }
@@ -182,6 +174,11 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
     @Override
     public int[] validBaudNumbers() {
         return new int[]{115200};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     InputStream serialStream = null;

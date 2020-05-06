@@ -9,10 +9,10 @@ import org.junit.Test;
 /**
  * XBeeTrafficControllerTest.java
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeTrafficController
+ * Test for the jmri.jmrix.ieee802154.xbee.XBeeTrafficController
  * class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154TrafficControllerTest {
 
@@ -195,7 +195,6 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
         Assert.assertNotNull("node not found", n);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -208,7 +207,9 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
     public void tearDown() {
         ((XBeeTrafficController)tc).terminate();
         tc = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

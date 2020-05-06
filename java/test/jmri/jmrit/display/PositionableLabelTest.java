@@ -1,7 +1,7 @@
 package jmri.jmrit.display;
 
-import static jmri.util.JUnitSwingUtil.assertPixel;
 import static jmri.util.JUnitSwingUtil.assertImageNinePoints;
+import static jmri.util.JUnitSwingUtil.assertPixel;
 import static jmri.util.JUnitSwingUtil.getDisplayedContent;
 
 import java.awt.Color;
@@ -13,21 +13,11 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
-import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.operators.JLabelOperator;
-
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
@@ -35,6 +25,14 @@ import jmri.util.JUnitSwingUtil;
 import jmri.util.JUnitSwingUtil.Pixel;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import org.netbeans.jemmy.ComponentChooser;
+import org.netbeans.jemmy.QueueTool;
+import org.netbeans.jemmy.operators.JLabelOperator;
 
 /**
  * Test of PositionableLabel
@@ -97,8 +95,8 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         // make four windows
         InstanceManager.getDefault(ConfigureManager.class)
-                .load(new File("java/test/jmri/jmrit/display/configurexml/verify/backgrounds.xml"));
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+                .load(new File("java/test/jmri/jmrit/display/configurexml/valid/backgrounds.xml"));
+        new QueueTool().waitEmpty(100);
 
         // Find color in label by frame name
         int color1 = getColor("F Bkg none, label Bkg none"); // transparent background
@@ -117,7 +115,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
     int getColor(String name) {
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
 
         // Find window by name
         JmriJFrame frame = JmriJFrame.getFrame(name);
@@ -125,6 +123,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         // find label within that
         JLabel jl = JLabelOperator.findJLabel(frame, new ComponentChooser() {
+            @Override
             public boolean checkComponent(Component comp) {
                 if (comp == null) {
                     return false;
@@ -133,6 +132,7 @@ public class PositionableLabelTest extends PositionableTestBase {
                 }
             }
 
+            @Override
             public String getDescription() {
                 return "find the first JLabel";
             }
@@ -164,7 +164,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
         Assert.assertEquals("icon size", new Dimension(13, 13).toString(), label.getSize().toString());
 
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
@@ -206,7 +206,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
         Assert.assertEquals("icon size", new Dimension(13, 13).toString(), label.getSize().toString());
 
         // do the rotation, which transforms 13x13 to sqrt(2) bigger, 19x19
@@ -214,7 +214,7 @@ public class PositionableLabelTest extends PositionableTestBase {
         Assert.assertEquals("icon size", new Dimension(19, 19).toString(), label.getSize().toString());
 
         f.pack();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
         Assert.assertEquals("icon size", new Dimension(19, 19).toString(), label.getSize().toString());
 
         // and check
@@ -266,12 +266,12 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
         Assert.assertEquals("icon size", new Dimension(13, 13).toString(), label.getSize().toString());
 
         // wait for a bit
         f.setVisible(true); // needed to get initial animation contents
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
 
         // check for initial red
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
@@ -296,7 +296,7 @@ public class PositionableLabelTest extends PositionableTestBase {
                 Pixel.RED, Pixel.RED, Pixel.RED);
 
         // wait for long enough to reach final red, skipping intermediate green as timing too fussy
-        new org.netbeans.jemmy.QueueTool().waitEmpty(250);
+        new QueueTool().waitEmpty(250);
 
         val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
 
@@ -343,7 +343,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
         Assert.assertEquals("icon size", new Dimension(13, 13).toString(), label.getSize().toString());
 
         // do the rotation, which transforms 13x13 to sqrt(2) bigger, 19x19
@@ -351,12 +351,12 @@ public class PositionableLabelTest extends PositionableTestBase {
         Assert.assertEquals("icon size", new Dimension(19, 19).toString(), label.getSize().toString());
 
         f.pack();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
         Assert.assertEquals("icon size", new Dimension(19, 19).toString(), label.getSize().toString());
 
         // wait for a bit
         f.setVisible(true); // needed to get initial animation contents
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
 
         // and check
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
@@ -381,7 +381,7 @@ public class PositionableLabelTest extends PositionableTestBase {
                 Pixel.GREEN, Pixel.RED, Pixel.GREEN);
 
         // wait for long enough to reach final blue, skipping intermediate green as timing too fussy
-        new org.netbeans.jemmy.QueueTool().waitEmpty(250);
+        new QueueTool().waitEmpty(250);
 
         // and check
         val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
@@ -430,7 +430,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
 
         Assert.assertTrue("Expect size " + label.getSize() + " wider than height",
                 label.getSize().width > label.getSize().height);
@@ -471,12 +471,12 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
 
         label.rotate(90);
 
         f.pack();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
 
         Assert.assertTrue("Expect size " + label.getSize() + " higher than width",
                 label.getSize().width < label.getSize().height);
@@ -517,12 +517,12 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
 
         label.rotate(45);
 
         f.pack();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
 
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
 
@@ -546,8 +546,8 @@ public class PositionableLabelTest extends PositionableTestBase {
         JUnitUtil.dispose(f);
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         super.setUp();
         JUnitUtil.initConfigureManager();

@@ -2,13 +2,11 @@ package jmri.jmrix.tams;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TamsSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -24,7 +22,6 @@ public class TamsSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @Override
     public void checkStatusRequestMsgSent() {}
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -35,7 +32,7 @@ public class TamsSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @Override
     @After
     public void tearDown() {
-	t.dispose();
+        t.dispose();
         JUnitUtil.tearDown();
     }
 

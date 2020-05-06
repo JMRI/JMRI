@@ -190,7 +190,7 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
 
     static public EasyDccMessage getReadRegister(int reg) { //Vx
         if (reg > 8) {
-            log.error("register number too large: " + reg);
+            log.error("register number too large: {}", reg);
         }
         EasyDccMessage m = new EasyDccMessage(2);
         m.setBinary(false);
@@ -204,7 +204,7 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
 
     static public EasyDccMessage getWriteRegister(int reg, int val) { //Sx xx
         if (reg > 8) {
-            log.error("register number too large: " + reg);
+            log.error("register number too large: {}", reg);
         }
         EasyDccMessage m = new EasyDccMessage(5);
         m.setBinary(false);

@@ -4,7 +4,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
@@ -30,9 +29,9 @@ import purejavacomm.UnsupportedCommOperationException;
  * any other options at configuration time.
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
-public class SerialDriverAdapter extends NcePortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends NcePortController {
 
     SerialPort activeSerialPort = null;
 
@@ -57,7 +56,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
             try {
                 activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -67,8 +66,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -78,8 +76,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
 
             // report status
             if (log.isInfoEnabled()) {
-                log.info("Wangrow " + portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud");
+                log.info("Wangrow {} port opened at {} baud", portName, activeSerialPort.getBaudRate());
             }
             opened = true;
 
@@ -130,7 +127,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
+            log.error("getOutputStream exception: {}", e);
         }
         return null;
     }

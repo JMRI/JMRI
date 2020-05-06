@@ -3,21 +3,12 @@ package jmri.jmrit.operations.locations.schedules;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -29,8 +20,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTablePersistenceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of a schedule
@@ -202,7 +191,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         toolMenu.add(new ScheduleCopyAction(schedule));
         toolMenu.add(new ScheduleOptionsAction(this));
         toolMenu.add(new ScheduleResetHitsAction(schedule));
-        toolMenu.add(new SchedulesByLoadAction(Bundle.getMessage("MenuItemShowSchedulesByLoad")));
+        toolMenu.add(new SchedulesByLoadAction());
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true); // NOI18N
 
@@ -352,7 +341,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
      * @return true if name is less than 26 characters
      */
     private boolean checkName(String s) {
-        if (scheduleNameTextField.getText().trim().equals("")) {
+        if (scheduleNameTextField.getText().trim().isEmpty()) {
             return false;
         }
         if (scheduleNameTextField.getText().length() > MAX_NAME_LENGTH) {
@@ -368,7 +357,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     private void reportScheduleExists(String s) {
-        log.info("Can not " + s + ", schedule already exists");
+        log.info("Can not {}, schedule already exists", s);
         JOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
                 MessageFormat.format(Bundle.getMessage("CanNotSchedule"), new Object[]{s}),
                 JOptionPane.ERROR_MESSAGE);
@@ -391,10 +380,10 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
         _location.removePropertyChangeListener(this);
         _track.removePropertyChangeListener(this);
-        scheduleModel.dispose();
         InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
             tpm.stopPersisting(scheduleTable);
         });
+        scheduleModel.dispose();
         super.dispose();
     }
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -28,6 +27,11 @@
 		<label xml:lang="it">Grado Decell.1</label>
 		<comment xml:lang="it">Valori 0-255</comment>
 		<tooltip xml:lang="it">Progr. grado decellerazione (ritardo o inerzia), valori 0-255</tooltip>
+	</variable>
+	<variable item="Motor Option 1" CV="182" mask="XXXXVXXX" default="1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>Motor Delay</label>
+		<tooltip>Adds ~2 seconds of delay to increases of speed to allow the prime mover to notch up as necessary.</tooltip>
 	</variable>
 	<variable item="Dynamic Lowest Speed Step" CV="189" default="10" tooltip="Lowest speed step (128 SS mode) the loco can go with dynamic brakes turned on">
 		<decVal max="126"/>

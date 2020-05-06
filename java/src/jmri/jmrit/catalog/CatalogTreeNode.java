@@ -55,7 +55,7 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
         //            }
         //        }
         int h = 0;
-        _leafs.add(new CatalogTreeLeaf(name, path, h));
+        _leafs.add(new CatalogTreeLeaf(name, path, h)); //  name is non-localized
     }
 
     /**
@@ -83,8 +83,7 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
     }
 
     public CatalogTreeLeaf getLeaf(String name, String path) {
-        for (int i = 0; i < _leafs.size(); i++) {
-            CatalogTreeLeaf leaf = _leafs.get(i);
+        for (CatalogTreeLeaf leaf : _leafs) {
             if (name.equals(leaf.getName()) && path.equals(leaf.getPath())) {
                 return leaf;
             }
@@ -101,8 +100,7 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
      */
     public ArrayList<CatalogTreeLeaf> getLeaves(String name) {
         ArrayList<CatalogTreeLeaf> leafs = new ArrayList<>();
-        for (int i = 0; i < _leafs.size(); i++) {
-            CatalogTreeLeaf leaf = _leafs.get(i);
+        for (CatalogTreeLeaf leaf : _leafs) {
             if (name.equals(leaf.getName())) {
                 leafs.add(leaf);
             }

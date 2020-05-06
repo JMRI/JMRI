@@ -2,14 +2,16 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -20,14 +22,14 @@ public class DeleteEngineRosterActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        DeleteEngineRosterAction t = new DeleteEngineRosterAction("Test Action");
+        DeleteEngineRosterAction t = new DeleteEngineRosterAction();
         Assert.assertNotNull("exists", t);
     }
 
     @Test
     public void testDelete() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        DeleteEngineRosterAction deleteRosterAction = new DeleteEngineRosterAction("Test Action");
+        DeleteEngineRosterAction deleteRosterAction = new DeleteEngineRosterAction();
         Assert.assertNotNull("exists", deleteRosterAction);
 
         JUnitOperationsUtil.initOperationsData();
@@ -55,6 +57,8 @@ public class DeleteEngineRosterActionTest extends OperationsTestCase {
         }
 
         Assert.assertEquals("Number of engines", 0, InstanceManager.getDefault(EngineManager.class).getNumEntries());
+        
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DeleteEngineRosterActionTest.class);

@@ -19,7 +19,7 @@ import purejavacomm.SerialPort;
  * handled automatically, and are not included in the QsiMessage and QsiReply
  * content.
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 
@@ -74,7 +74,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
                 try {
                     client.message(m);
                 } catch (Exception e) {
-                    log.warn("notify: During dispatch to " + client + "\nException " + e);
+                    log.warn("notify: During dispatch to {}\nException {}", client, e);
                 }
             }
         }
@@ -139,7 +139,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
                     client.reply(r);
                 }
             } catch (Exception e) {
-                log.warn("notify: During dispatch to " + client + "\nException " + e);
+                log.warn("notify: During dispatch to {}\nException {}", client, e);
             }
         }
 
@@ -205,7 +205,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
                 log.warn("sendMessage: no connection established");
             }
         } catch (Exception e) {
-            log.warn("sendMessage: Exception: " + e.toString());
+            log.warn("sendMessage: Exception: {}", e.toString());
         }
     }
 
@@ -237,18 +237,6 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         controller = null;
     }
 
-    /**
-     * static function returning the QsiTrafficController instance to use.
-     *
-     * @return The registered QsiTrafficController instance for general use, if
-     *         need be creating one.
-     * deprecated since 4.5.1
-     */
-    @Deprecated
-    static public QsiTrafficController instance() {
-        return null;
-    }
-
     // data members to hold the streams
     DataInputStream istream = null;
     OutputStream ostream = null;
@@ -265,7 +253,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
             try {
                 handleOneIncomingReply();
             } catch (java.io.IOException e) {
-                log.warn("run: Exception: " + e.toString());
+                log.warn("run: Exception: {}", e.toString());
             }
         }
     }

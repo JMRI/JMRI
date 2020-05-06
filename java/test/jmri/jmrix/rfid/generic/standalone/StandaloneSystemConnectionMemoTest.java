@@ -9,9 +9,9 @@ import org.junit.Test;
 /**
  * StandaloneSystemConnectionMemoTest.java
  *
- * Description:	tests for the StandaloneSystemConnectionMemo class
+ * Test for the StandaloneSystemConnectionMemo class
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class StandaloneSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -21,7 +21,6 @@ public class StandaloneSystemConnectionMemoTest extends jmri.jmrix.SystemConnect
        Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -37,14 +36,15 @@ public class StandaloneSystemConnectionMemoTest extends jmri.jmrix.SystemConnect
         };
         memo.setRfidTrafficController(tc);
         memo.configureManagers(
-            new StandaloneSensorManager(tc, memo.getSystemPrefix()),
-            new StandaloneReporterManager(tc, memo.getSystemPrefix()));
+            new StandaloneSensorManager(memo),
+            new StandaloneReporterManager(memo));
         scm=memo;
     }
 
     @Override
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

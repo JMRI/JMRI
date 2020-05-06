@@ -10,7 +10,7 @@ import org.junit.Assert;
 /**
  * JUnit tests for the InputBits class.
  *
- * @author	Dave Duchamp 2009
+ * @author Dave Duchamp 2009
  */
 public class InputBitsTest {
 
@@ -182,7 +182,9 @@ public class InputBitsTest {
     @After
     public void tearDown() {
         ibit = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

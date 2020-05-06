@@ -9,12 +9,13 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Use an object of this type as a XNetTrafficController in tests.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
  */
 public class XNetInterfaceScaffold extends XNetTrafficController {
 
     public XNetInterfaceScaffold(LenzCommandStation pCommandStation) {
         super(pCommandStation);
+        setSystemConnectionMemo(new XNetSystemConnectionMemo(this));
     }
 
     // override some XNetTrafficController methods for test purposes

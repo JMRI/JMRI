@@ -56,7 +56,6 @@ public class SprogSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
    }
 
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

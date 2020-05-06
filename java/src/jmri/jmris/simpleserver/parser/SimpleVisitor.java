@@ -8,9 +8,13 @@ import org.slf4j.LoggerFactory;
  * parser for the SimpleServer protocol and the JMRI back end.
  * @author Paul Bender Copyright (C) 2016
  */
-public class SimpleVisitor extends JmriServerParserDefaultVisitor implements JmriServerParserVisitor {
+public class SimpleVisitor extends JmriServerParserDefaultVisitor {
 
     private String outputString = null;
+
+    public SimpleVisitor(){
+        super();
+    }
 
     public String getOutputString() {
         return outputString;
@@ -18,14 +22,14 @@ public class SimpleVisitor extends JmriServerParserDefaultVisitor implements Jmr
 
     @Override
     public Object visit(ASTpowercmd node, Object data){
-        log.debug("Power Command Production " + node.jjtGetValue());
+        log.debug("Power Command Production {}",node.jjtGetValue());
         if(node.jjtGetNumChildren()==0) {
             // this is just a request for status
                try{
                   ((jmri.jmris.simpleserver.SimplePowerServer)
                    data).sendStatus(InstanceManager.getDefault(jmri.PowerManager.class).getPower());
-               } catch(java.io.IOException ioe){
-               } catch(jmri.JmriException je){
+               } catch(java.io.IOException | jmri.JmriException je){
+                   log.error("Error sending Power status to client {}",je);
                }
         }else{
             if (((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("ON"))
@@ -37,6 +41,6 @@ public class SimpleVisitor extends JmriServerParserDefaultVisitor implements Jmr
         return data;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(SimpleVisitor.class);
+    private static final Logger log = LoggerFactory.getLogger(SimpleVisitor.class);
 
 }

@@ -2,12 +2,14 @@ package jmri.managers;
 
 import jmri.IdTag;
 import jmri.IdTagManager;
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.junit.*;
 
 /**
  * Tests for the jmri.managers.DefaultIdTagManager class.
  *
- * @author	Matthew Harris Copyright (C) 2011
+ * @author Matthew Harris Copyright (C) 2011
  */
 public class DefaultIdTagManagerTest extends AbstractProvidingManagerTestBase<IdTagManager,IdTag> {
 
@@ -112,7 +114,6 @@ public class DefaultIdTagManagerTest extends AbstractProvidingManagerTestBase<Id
         Assert.assertFalse("Non-matching IdTag returned via provideTag by tag ID", t1.equals(m.provideIdTag("0413275FCA")));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
@@ -133,7 +134,7 @@ public class DefaultIdTagManagerTest extends AbstractProvidingManagerTestBase<Id
     // Override init method so as not to load file
     // nor register shutdown task during tests.
     protected DefaultIdTagManager getManager() {
-        return new DefaultIdTagManager() {
+        return new DefaultIdTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)) {
             @Override
             public void init() {
             }

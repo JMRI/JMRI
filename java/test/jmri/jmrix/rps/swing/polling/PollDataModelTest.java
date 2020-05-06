@@ -11,7 +11,7 @@ import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PollDataModelTest {
 
@@ -25,10 +25,11 @@ public class PollDataModelTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         memo = new RpsSystemConnectionMemo();
     }
 

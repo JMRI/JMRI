@@ -1,8 +1,9 @@
 package jmri.jmrix.nce;
 
+import java.util.EnumSet;
 import jmri.DccLocoAddress;
-import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class NceThrottleManager extends AbstractThrottleManager {
             // the NCE protocol doesn't require an interaction with the command
             // station for this, so immediately trigger the callback.
             DccLocoAddress address = (DccLocoAddress) a;
-            log.debug("new NceThrottle for " + address);
+            log.debug("new NceThrottle for {}", address);
             notifyThrottleKnown(new NceThrottle((NceSystemConnectionMemo) adapterMemo, address), address);
         }
         else {
@@ -69,8 +70,8 @@ public class NceThrottleManager extends AbstractThrottleManager {
     }
 
     @Override
-    public int supportedSpeedModes() {
-        return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128, SpeedStepMode.NMRA_DCC_28);
     }
 
     @Override

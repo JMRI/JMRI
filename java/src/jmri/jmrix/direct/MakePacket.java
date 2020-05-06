@@ -8,7 +8,6 @@ package jmri.jmrix.direct;
  * package of Kenneth Rice. The original header comment from that file follows
  * here.
  *
- *
  * <pre>
  *
  * Some Useful Background information
@@ -187,11 +186,9 @@ public class MakePacket {
         /* do end packet indicator */
         bitStream[--bitStreamIndex] = 1;
 
-        /**
+        /*
          * So we now have a int array reflecting required packet byte structure
          * => bitStream
-         */
-        /**
          * Now do the hard part - convert this into a serial stream
          */
         return (bitStreamToSerialBytes(bitStream));
@@ -264,7 +261,7 @@ public class MakePacket {
     }
 
     /**
-     * Find the next largest (ie longest lenght) child at this Node.
+     * Find the next largest (ie longest length) child at this Node.
      *
      * @param thisNode (INPUT/OUTPUT) determine if there is another child
      *                 if so update Node with ie the Bit
@@ -278,46 +275,35 @@ public class MakePacket {
             /* Success - there is another child */
 
             case BITS_00:
-            case BITS_01: {
+            case BITS_01:
                 thisNode.bitPattern = BITS_0;
                 thisNode.patternLength = 1;
                 break;
-            }
-            case BITS_001: {
+            case BITS_001:
                 thisNode.bitPattern = BITS_00;
                 thisNode.patternLength = 2;
                 break;
-            }
-            case BITS_010: {
+            case BITS_010:
+            case BITS_011:
                 thisNode.bitPattern = BITS_01;
                 thisNode.patternLength = 2;
                 break;
-            }
-            case BITS_011: {
-                thisNode.bitPattern = BITS_01;
-                thisNode.patternLength = 2;
-                break;
-            }
-            case BITS_100: {
+            case BITS_100:
                 thisNode.bitPattern = BITS_10;
                 thisNode.patternLength = 2;
                 break;
-            }
-            case BITS_0111: {
+            case BITS_0111:
                 thisNode.bitPattern = BITS_011;
                 thisNode.patternLength = 3;
                 break;
-            }
-            case BITS_1011: {
+            case BITS_1011:
                 thisNode.bitPattern = BITS_101;
                 thisNode.patternLength = 3;
                 break;
-            }
-            case BITS_1101: {
+            case BITS_1101:
                 thisNode.bitPattern = BITS_110;
                 thisNode.patternLength = 3;
                 break;
-            }
             /* We have exhausted all children on this level */
             default:
                 return false;
@@ -442,11 +428,7 @@ public class MakePacket {
                 }
         }
 
-        if (thisNode.patternLength == 0) {
-            return (false);
-        } else {
-            return (true);
-        }
+        return (thisNode.patternLength != 0);
     }
 
 }

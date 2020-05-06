@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import org.apache.commons.text.StringEscapeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -15,13 +20,10 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.util.FileUtil;
-import org.apache.commons.text.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class HtmlConductor extends HtmlTrainCommon {
 
@@ -73,19 +75,19 @@ public class HtmlConductor extends HtmlTrainCommon {
 
     private String getCurrentAndNextLocation() {
         if (train.getCurrentLocation() != null && train.getNextLocation(train.getCurrentLocation()) != null) {
-            return String.format(locale, strings.getProperty("CurrentAndNextLocation"), StringEscapeUtils  // NOI18N
-                    .escapeHtml4(train.getCurrentLocationName()), StringEscapeUtils.escapeHtml4(train
-                            .getNextLocationName()));
+            return String.format(locale, strings.getProperty("CurrentAndNextLocation"), // NOI18N
+                    StringEscapeUtils.escapeHtml4(splitString(train.getCurrentLocationName())),
+                    StringEscapeUtils.escapeHtml4(splitString(train.getNextLocationName())));
         } else if (train.getCurrentLocation() != null) {
-            return StringEscapeUtils.escapeHtml4(train.getCurrentLocationName());
+            return StringEscapeUtils.escapeHtml4(splitString(train.getCurrentLocationName()));
         }
-        return strings.getProperty("Terminated");  // NOI18N
+        return strings.getProperty("Terminated"); // NOI18N
     }
 
     private String getMoveButton() {
         if (train.getNextLocation(train.getCurrentLocation()) != null) {
-            return String.format(locale, strings.getProperty("MoveTo"), StringEscapeUtils.escapeHtml4(train  // NOI18N
-                    .getNextLocationName()));
+            return String.format(locale, strings.getProperty("MoveTo"), // NOI18N
+                    StringEscapeUtils.escapeHtml4(splitString(train.getNextLocationName())));
         } else if (train.getCurrentLocation() != null) {
             return strings.getProperty("Terminate");  // NOI18N
         }
@@ -292,7 +294,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                                 splitString(car.getDestinationTrackName())))) {
                     continue;
                 }
-                if (isLocalMove(car) == local
+                if (car.isLocalMove() == local
                         && (car.getRouteDestination() == location && car.getDestinationTrack() != null)) {
                     dropped.add(car.getId());
                     if (car.isUtility()) {

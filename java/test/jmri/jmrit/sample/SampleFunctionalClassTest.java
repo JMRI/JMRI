@@ -5,7 +5,7 @@ import org.junit.*;
 /**
  * Tests for the SampleFunctionalClass class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SampleFunctionalClassTest {
 

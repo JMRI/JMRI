@@ -38,7 +38,7 @@
                         if (h) h.call(this, m);
                     });
                 ws._send = ws.send;
-                ws.send = function (type, data, method = 'get') {
+                ws.send = function (type, data, method) {
                     var m = { type: type, method: method };
                     m = $.extend(true, m, $.extend(true, {}, settings.options, m));
                     if (data) m['data'] = data;

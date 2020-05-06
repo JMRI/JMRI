@@ -1,33 +1,30 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Herv&#233; Blorec 2013-09-26 -->
+<!-- Updated by Herv&#233; Blorec 2013-09-26 -->
 
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!--  $Id$ -->
 
-  <title>JMRI: AppleScript</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <title>JMRI: AppleScript</title>
+    <!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-      <h1>JMRI: AppleScript</h1>Sur Mac OS X, vous pouvez utiliser
+        <!-- Page Body -->
+<h1>JMRI: AppleScript</h1>Sur Mac OS X, vous pouvez utiliser
       AppleScript avec JMRI. Il y a deux fa&ccedil;ons de faire
       cela:
 
@@ -136,7 +133,7 @@ osascript-e 'tell application "DecoderPro" to get its |user.name|'
       </ul>Et, bien s&ucirc;r, une <a href=
       "http://www.google.com/search?client=safari&amp;rls=en-us&amp;q=applescript&amp;ie=iso-8859-1&amp;oe=iso-8859-1">
       recherche Google</a> retrouvera de nombreuses ressources
-      int&eacute;ressantes. <!--#include virtual="/Footer" -->
+      int&eacute;ressantes. <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

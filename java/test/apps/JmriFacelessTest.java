@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * Description: Tests for the JmriFaceless application.
+ * Tests for the JmriFaceless application.
  *
  * @author Paul Bender Copyright (C) 2016
  */
@@ -47,7 +47,7 @@ public class JmriFacelessTest {
 
             @Override
             protected void installShutDownManager() {
-                JUnitUtil.initShutDownManager();
+                // done automatically now as part of InstanceManager default handling
             }
         };
         Assert.assertNotNull(a);
@@ -55,7 +55,6 @@ public class JmriFacelessTest {
         AppsBase.handleQuit();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -66,6 +65,7 @@ public class JmriFacelessTest {
     @After
     public void tearDown() {
         JUnitUtil.resetApplication();
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

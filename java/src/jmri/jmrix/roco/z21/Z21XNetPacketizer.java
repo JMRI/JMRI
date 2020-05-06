@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Extension of the XNetPacketizer for Roco: the Roco Z21 XpressNet
  * Tunnel.
  *
- * @author	Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017
  */
 public class Z21XNetPacketizer extends XNetPacketizer {
 
@@ -36,11 +36,6 @@ public class Z21XNetPacketizer extends XNetPacketizer {
        }
     }
 
-    @Override
-    protected void terminate(){
-        // do nothing on terminate.
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetPacketizer.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21XNetPacketizer.class);
 
 }

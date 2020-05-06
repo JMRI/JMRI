@@ -56,7 +56,8 @@ public interface BasicRosterEntry {
 
     /**
      * Create an XML element to represent this Entry. This member has to remain
-     * synchronized with the detailed DTD in roster-config.xml.
+     * synchronized with the detailed schema in
+     * xml/schema/locomotive-config.xsd.
      *
      * @return Contents in a JDOM Element
      */

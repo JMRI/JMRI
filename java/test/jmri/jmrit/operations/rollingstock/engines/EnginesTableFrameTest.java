@@ -2,6 +2,11 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -10,17 +15,14 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Operations EnginesTableFrame class
  *
- * @author	Dan Boudreau Copyright (C) 2010
+ * @author Dan Boudreau Copyright (C) 2010
  *
  */
 public class EnginesTableFrameTest extends OperationsTestCase {
@@ -28,6 +30,7 @@ public class EnginesTableFrameTest extends OperationsTestCase {
     @Test
     public void testenginesTableFrame() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        loadEngines();
         // enable rfid field
         Setup.setRfidEnabled(true);
 
@@ -161,15 +164,8 @@ public class EnginesTableFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(etf.addButton);
 
         JUnitUtil.dispose(etf);
-    }
+        JUnitOperationsUtil.checkOperationsShutDownTask();
 
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-
-        loadEngines();
     }
 
     private void loadEngines() {

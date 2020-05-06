@@ -4,8 +4,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
- <!--Translated by Herv&#233; Blorec le 2016-06-18 -->
+<!--Translated by Herv&#233; Blorec le 2016-06-18 -->
 <title>JMRI: DecoderPro User Guide - Advanced Decoder Definitions</title>
 
 <!-- Style -->
@@ -18,29 +17,29 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
-
-<H1>JMRI:Guide Utilisateur DecoderPro</H1>  -<h2> D&#233;finitions Avanc&#233;es des D&#233;codeurs </h2>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
+<h1>JMRI:Guide Utilisateur DecoderPro</h1>  -<h2> D&#233;finitions Avanc&#233;es des D&#233;codeurs </h2>
 
 <p>Cette page fournit des informations sur les fonctionnalit&#233;s avanc&#233;es dans
 les fichiers de d&#233;finiton d&#233;codeur pour le Programmateur Symbolique DecoderPro
 .</p>
 
 <a name="html_formatting" id="html_formatting"></a>
-<H3> Formatage sur la page </h3>
+<h3> Formatage sur la page </h3>
 Vous pouvez faire une mise en forme limit&#233;e sur l'&#233;cran en utilisant les balises HTML de formatage.
 
 <p>
 Vous pouvez int&#233;grer du HTML dans le texte du volet, mais il doit &#234;tre enferm&#233; dans les Mots cl&#233;s &lt; html &gt; ... &lt; /html &gt; .
-</P>
-<P> Ceci est un peu difficile &#224; cause du chevauchement entre les "balises comme
+</p>
+<p> Ceci est un peu difficile &#224; cause du chevauchement entre les "balises comme
 partie de la structure XML du fichier d&#233;codeur" et "les balises HTML inclus dans le fichier d&#233;codeur".
 Toutes les balises HTML doivent &#234;tre cit&#233;es, avec leurs caract&#232;res &lt; et &gt; 
 remplac&#233;es par leurs chaines &amp;lt; et &amp;gt; et tous les guillemets 
-int&#233;gr&#233;s remplac&#233;s par &amp;quot;. </p
+int&#233;gr&#233;s remplac&#233;s par &amp;quot;.</p>
 <p>
 Par exemple:
 </p>
@@ -97,8 +96,8 @@ dans une famille de d&#233;codeur.
 		les conflits avec  les valeurs num&#233;riques trouv&#233;es dans les CV.
                     </dd>
 </dl>
-Par exempleF:
-<code><pre>
+Par exemple:
+<code>
   &lt;d&#233;codeurcoder&gt;
     &lt;Nom de famille="Mon Nom de Famille" mfg="NMRA"&gt;
       &lt;model model="Mod&#232;le A" lowVersionID="16" highVersionID="19" productID="400" /&gt;
@@ -106,7 +105,7 @@ Par exempleF:
       &lt;model model="Mod&#232;le B" lowVersionID="21" highVersionID="22" productID="401" /&gt;
       &lt;/model&gt;
   &lt;/d&#233;codeur&gt;
-</pre></code>
+</code>
 
 Si l'utilisateur s&#233;lectionne manuellenment un d&#233;codeur mod&#232;le, cettte s&#233;lection d&#233;finie
 les trois valeurs pour une utilisation lorsque la d&#233;finition de d&#233;codeur est &#233;largie
@@ -257,17 +256,20 @@ les traduire dans d'autres langues.
 <p>
 Par convention, nous avons ces fichiers fragment&#233;s dans les sous-r&#233;pertoires:
 <dl>
-<dt>xml/decoders/nmra<dd> Les d&#233;finitions The NMRA pour les CVs, utilis&#233; par beaucoup de d&#233;codeurs types
-<dt>xml/decoders/(mfg)<dd> Les variables sp&#233;cifiques Constructeurs, par exemple xml/decoders/esu
+        <dt>xml/decoders/nmra</dt>
+        <dd> Les d&#233;finitions The NMRA pour les CVs, utilis&#233; par beaucoup de d&#233;codeurs
+        types
+        <dt>xml/decoders/(mfg)</dt>
+        <dd> Les variables sp&#233;cifiques Constructeurs, par exemple xml/decoders/esu
 </dl>
 Le format pour une inclusion est:
-<code><pre>
+<code>
      &lt;xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/&gt;
-</pre></code>
+</code>
 
 Le programme cherche ces fragments de fichier d'abord dans le r&#233;pertoire &lt;preferences&gt;,
 puis dans le r&#233;pertoire &lt;programme&gt;. Le chemin complet doit &#234;tre pr&#233;sent, exemple
-vous avez besoin d'un r&#233;pertoire xml qui contient un r&#233;pertoire d&#233;codeurs dans votre r&#233;pertoire &lt;preferences&gt: pour le fragment de 
+vous avez besoin d'un r&#233;pertoire xml qui contient un r&#233;pertoire d&#233;codeurs dans votre r&#233;pertoire &lt;preferences&gt; pour le fragment de
 fichier &#224; trouver.
 <p>
 Utilisez un fichier existant comme un exemple pour pour les meilleurs &#233;l&#233;ments et &amp; le format n&#233;cessaire.
@@ -279,9 +281,9 @@ Quelquefois, nous rempla&#231;ons une d&#233;finition d&#233;codeur par une meil
 mais nous aimerions d&#233;placer les utilisateurs vers la nouvelle &#233;ventuellement. Il y a des attributs model-level
 qui peuvent &#234;tre ajout&#233;s &#224; l'ancienne ( pas la nouvelle ) d&#233;finition pour faciliter cette tâche:
 
-<code><pre>
+<code>
 &lt;model show="no" model="A4X" replacementModel="A4X" replacementFamily="Jan 2012"&gt;
-</pre></code>
+</code>
 
 Quand l'utilisateur s&#233;lectionne "Mise &#224; Jour D&#233;finitions de D&#233;codeur" depuis le menu D&#233;bogage de la fen&#234;tre PanelPro
 ou le menu Action dans DecoderPro,
@@ -323,7 +325,7 @@ Certaines centrales de commandes peuvent seulement acc&#233;der aux CV 256 ou CV
 fabricants de d&#233;codeur ont construit des m&#233;canismes pour contourner cela. Par exemple,
 quelques d&#233;codeurs ESU peuvent utiliser l'&#233;critures sur divers CV pour acc&#233;der aux CV adresse CV.
 Pour dire &#224; DecoderPro qu'un d&#233;codeur peut faire cela, utilisez un &#233;l&#233;ment comme:
-<code><pre>
+<code>
     &lt;capability&gt;
         &lt;name&gt;High Access via Double Index&lt;/name&gt;
         &lt;parameter name="Adresse CV Max "&gt;256&lt;/parameter&gt;
@@ -332,7 +334,7 @@ Pour dire &#224; DecoderPro qu'un d&#233;codeur peut faire cela, utilisez un &#2
         &lt;parameter name="CV Acc&#232;s Registre"&gt;99&lt;/parameter&gt;
         &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
     &lt;/capability&gt;
-</pre></code>
+</code>
 <p>
 Les param&#232;tres doivent appara&#238;tre dans l'ordre montr&#233;. Ils signifient:
 	<ul>
@@ -370,7 +372,7 @@ par exemple, pour &#233;crire 21 dans le CV614 avec un de ceux-ci, vous devez &#
 	<li> 21 dans le CV 14 (614 mod 100) pour &#233;crire dans le CV actuel 
 	</ul>
 Cet &#233;l&#233;ment "capability" va faire:
-<code><pre>
+<code>
         &lt;capability&gt;
             &lt;name&gt;High Access via Partial Index&lt;/name&gt;
             &lt;parameter name="CV Adresse Max "&gt;100&lt;/parameter&gt;
@@ -378,7 +380,7 @@ Cet &#233;l&#233;ment "capability" va faire:
             &lt;parameter name="Multiplicateur Adresse Haute"&gt;10&lt;/parameter&gt;
             &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
         &lt;/capability&gt;
-</pre></code>
+</code>
 Notez que "name" a une valeur diff&#233;rente. C'est ce qui s&#233;lectionne l'algorithme n&#233;cessaire ici.
 <p>
 Les param&#232;tres doivent appara&#238;tre dans l'ordre montr&#233;. Ils signifient:
@@ -409,7 +411,7 @@ Par exemple, pour &#233;crire 21 dans CV614 avec une de celles-ci vous devez:
 	<li>&#201;crire 0 dans CV7 pour r&#233;initialiser l'indexage.
 	</ul>
 Cet &#233;l&#233;ment "capability" fera ceci wi:
-<code><pre>
+<code>
         &lt;capability&gt;
             &lt;name&gt;High Access via Partial Index with Reset&lt;/name&gt;
              &lt;parameter name="CV Adresse Max "&gt;100&lt;/parameter&gt;
@@ -418,7 +420,7 @@ Cet &#233;l&#233;ment "capability" fera ceci wi:
             &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
             &lt;parameter name="Indicateur"&gt;200&lt;/parameter&gt;
         &lt;/capability&gt;
-</pre></code>
+</code>
 <p>
 Les param&#232;tres doivent appara&#238;tre dans l'ordre montr&#233;. Ils signifient:
 	<ul>
@@ -443,25 +445,25 @@ Les param&#232;tres doivent appara&#238;tre dans l'ordre montr&#233;. Ils signif
 Les paquets sp&#233;ciaux de programmation sont utilis&#233;s par certains d&#233;codeurs accessoires
 pour configurer leur CVs depuis le signal DCC de la voie.
 La &lt;capability&gt; &#224; faire ceci est &#233;crite:
-<code><pre>
+<code>
         &lt;capability&gt;
             &lt;name&gt;Ops Mode Accessory Programming&lt;/name&gt;
         &lt;/capability&gt;
-</pre></code>
+</code>
 Il n'y a pas de param&#232;tres.  Notez que ceci fonctionne seulement pour l'&#233;criture en mode Ops;
 ces paquets NMRA DCC particuliers ne remplissent pas les op&#233;rations de lecture, ils ne travaillent 
 pas en mode service (voie de programmation).
 <h4>Acc&#232;s CV Index&#233;</h4>
 
 Pour acc&#233;der &#224; des CV index&#233;s, inclure cet &#233;l&#233;ment de &lt;capability&gt;::
-<code><pre>
+<code>
         &lt;capability&gt;
             &lt;name&gt;Indexed CV access&lt;/name&gt;
             &lt;parameter name="PI"&gt;31&lt;/parameter&gt;
             &lt;parameter name="SI"&gt;32&lt;/parameter&gt;
             &lt;parameter name="cvFirst"&gt;false&lt;/parameter&gt;
         &lt;/capability&gt;
-</pre></code>
+</code>
 Si cvFirst est true (vrai), le format est CV.PI ou CV.PI.SI comme utilis&#233; par QSI.
 S'il est false (faux), le format est PI.CV ou PI.SI.CV  comme utilis&#233; par ESU.
 <p>
@@ -476,11 +478,11 @@ Pour un exemple de l'endroit o&#249; le positionner etc., voir le fichier
 Les D&#233;codeurs TCS WOW utilisent utiliser plusieurs m&#233;thodes uniques (pour le moins) d'acc&#232;s aux CV..
 JMRI les re&#231;oit par l'interm&#233;diaire d'un &#233;l&#233;ment de capacit&#233; sp&#233;ciale:
 
-<code><pre>
+<code>
         &lt;capability&gt;
             &lt;name&gt;TCS 4 CV access&lt;/name&gt;
         &lt;/capability&gt;
-</pre></code>
+</code>
 
 Ceci fournit deux formats personnalis&#233;s de CV:
 	<ul>
@@ -498,12 +500,12 @@ Par exemples sur comment l'utiliser, voir la d&#233;finition d&#233;codeur TCS W
 
 <p>Les adresses longues peuvent &#234;tre accessible par le type "splitVal", comme dans les exemples suivants:</p>
 
-<code><pre>
+<code>
     &lt;variable CV="1" item="Accessory Address" default="1" minOut="1"&gt;
         &lt;splitVal highCV="9" upperMask="XXXXXVVV"/&gt;
         &lt;label&gt;Accessory Address&lt;/label&gt;
     &lt;/variable&gt;
-</pre></code>
+</code>
 
 <p>Le premier CV d&#233;clar&#233; est le LSB (l'octet le moins significatif) tandis que dans le"CV HautV" se trouve le MSB (l'octet le plus significatif).</p>
 
@@ -512,9 +514,9 @@ Par exemples sur comment l'utiliser, voir la d&#233;finition d&#233;codeur TCS W
 	<li>Valeur &#224; mettre dans les CVs = ((valeur dans le champ texte) - Offset)/Factor</li>
 	<li>Valeur &#224; mettre dans le  champ texte = ((valeur dans les CVs) * Factor) + Offset</li>
 	</ul>
-<code><pre>
+<code>
     &lt;splitVal highCV="9" factor="4" offset="-3"/&gt;
-</pre></code>
+</code>
 
 <p>Pour exemple, voir le fichier <a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/SPROG_DCC_Servo6." target="_blank">xml/decoders/SPROG_DCC_Servo6.xml</a> .</p>
 
@@ -753,7 +755,7 @@ variable version-number a une valeur trop faible:</p>
   affichage d&#233;pendra de la valeur par d&#233;faut depuis le fichier qui pourrait induire en erreur l'utilisateur.
 </p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

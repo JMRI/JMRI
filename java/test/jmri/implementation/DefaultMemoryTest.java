@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DefaultMemoryTest {
 
@@ -18,7 +18,36 @@ public class DefaultMemoryTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
+    @Test
+    public void testSystemNames() {
+        DefaultMemory myMemory_1 = new DefaultMemory("IM1");
+        DefaultMemory myMemory_2 = new DefaultMemory("IM01");
+        Assert.assertEquals("Memory system name is correct", "IM1", myMemory_1.getSystemName());
+        Assert.assertEquals("Memory system name is correct", "IM01", myMemory_2.getSystemName());
+    }
+    
+    @Test
+    public void testCompareTo() {
+        DefaultMemory myMemory_1 = new DefaultMemory("IM1");
+        DefaultMemory myMemory_2 = new DefaultMemory("IM01");
+        Assert.assertNotEquals("Memory's are different", myMemory_1, myMemory_2);
+        Assert.assertNotEquals("Memory compareTo returns not zero", 0, myMemory_1.compareTo(myMemory_2));
+    }
+    
+    @Test
+    public void testCompareSystemNameSuffix() {
+        DefaultMemory myMemory_1 = new DefaultMemory("IM1");
+        DefaultMemory myMemory_2 = new DefaultMemory("IM01");
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                -1, myMemory_1.compareSystemNameSuffix("01", "1", myMemory_2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                0, myMemory_1.compareSystemNameSuffix("1", "1", myMemory_2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                0, myMemory_1.compareSystemNameSuffix("01", "01", myMemory_2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                +1, myMemory_1.compareSystemNameSuffix("1", "01", myMemory_2));
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -104,7 +104,7 @@ public class PrintRosterEntry implements PaneContainer {
             if (decoderModel.equals("")) {
                 log.debug("blank decoderModel requested, so nothing loaded");
             } else {
-                log.warn("no matching \"" + decoderModel + "\" decoder found for loco, no decoder info loaded");
+                log.warn("no matching \"{}\" decoder found for loco, no decoder info loaded", decoderModel);
             }
         }
 
@@ -118,10 +118,10 @@ public class PrintRosterEntry implements PaneContainer {
             decoderRoot = decoderFile.rootFromName(DecoderFile.fileLocation + decoderFile.getFileName());
 
         } catch (org.jdom2.JDOMException exj) {
-            log.error("could not parse " + decoderFile.getFileName() + ": " + exj.getMessage());
+            log.error("could not parse {}: {}", decoderFile.getFileName(), exj.getMessage());
             return;
         } catch (java.io.IOException exj) {
-            log.error("could not read " + decoderFile.getFileName() + ": " + exj.getMessage());
+            log.error("could not read {}: {}", decoderFile.getFileName(), exj.getMessage());
             return;
         }
 

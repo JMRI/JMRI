@@ -11,6 +11,10 @@
         "client": {
             "type": "string",
             "description": "A token the client can use to subscribe to a message stream"
+        },
+        "version": {
+            "type": "string",
+            "description": "The JSON protocol version the client will use"
         }
     },
     "additionalProperties": false,

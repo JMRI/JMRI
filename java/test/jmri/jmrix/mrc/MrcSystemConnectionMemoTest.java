@@ -7,13 +7,14 @@ import org.junit.Before;
 /**
  * Test simple functioning of MrcMonPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class MrcSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
     jmri.jmrix.mrc.MrcSystemConnectionMemo memo = null;
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
@@ -25,5 +26,6 @@ public class MrcSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
     }
 
     @After
+    @Override
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

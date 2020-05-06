@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of FacelessServer
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class FacelessServerTest {
 
@@ -44,6 +44,7 @@ public class FacelessServerTest {
           // not all tests fully configure the server, so an
           // NPE here is ok.
         }
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 }

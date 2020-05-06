@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2008, 2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,12 +14,14 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="td@teamdigital1.com" version="1.1" lastUpdated="20090622"/>
   <version author="Alain Le Marchand" version="1.2" lastUpdated="20190111"/>
+  <version author="Michael Mosher" version="1.3" lastUpdated="20200109"/>
   <!-- Version 1 initial release -->
   <!-- Version 1.1 corrected CV29 2009/06/22 -->
   <!-- Version 1.2 corrected mask CV72, 73, 74
                    added 2 more choices for CV71 to 74  -->
+  <!-- Version 1.3 change mfg to match name in NMRA.xml -->
   <decoder>
-    <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
+    <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary">
       <model model="SMC4" lowVersionID="1" comment="SMC4 is a stationary decoder, but it can be programmed in the usual way"/>
     </family>
     <programming direct="yes" paged="yes" register="no" ops="yes"/>

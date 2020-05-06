@@ -48,7 +48,6 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
             t = new CbusLight("ML",null,tcis);
             Assert.fail("Should have thrown an exception");
         } catch (NullPointerException e) {
-            Assert.assertTrue(true);
         }
     }
 
@@ -156,14 +155,13 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
     @Test
     public void threePartFail() {
         t = new CbusLight("ML","+7;-5;+11",tcis);
-        JUnitAppender.assertErrorMessageStartsWith("Can't parse CbusSensor system name");
+        JUnitAppender.assertErrorMessageStartsWith("Can't parse CbusLight system name");
     }
 
     @Test
     public void badSysNameErrorLog() {
-        
         t = new CbusLight("ML","+7;-5;+11",tcis);
-        JUnitAppender.assertErrorMessageStartsWith("Can't parse CbusSensor system name");
+        JUnitAppender.assertErrorMessageStartsWith("Can't parse CbusLight system name");
     }
 
     @Test
@@ -261,8 +259,8 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
 
     @Test
     public void testShortEventSinglegetAddrOn() {
-        CbusLight t = new CbusLight("ML","+7",tcis);
-        CanMessage m1 = t.getAddrOn();
+        t = new CbusLight("ML","+7",tcis);
+        CanMessage m1 = ((CbusLight)t).getAddrOn();
         CanMessage m2 = new CanMessage(tcis.getCanid());
         m2.setNumDataElements(5);
         m2.setElement(0, 0x98); // ASON OPC
@@ -275,8 +273,8 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
 
     @Test
     public void testShortEventSinglegetAddrOff() {
-        CbusLight t = new CbusLight("ML","+7",tcis);
-        CanMessage m1 = t.getAddrOff();
+        t = new CbusLight("ML","+7",tcis);
+        CanMessage m1 = ((CbusLight)t).getAddrOff();
         CanMessage m2 = new CanMessage(tcis.getCanid());
         m2.setNumDataElements(5);
         m2.setElement(0, 0x99); // ASOF OPC
@@ -289,8 +287,8 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
 
     @Test
     public void testLongEventgetAddrOn() {
-        CbusLight t = new CbusLight("ML","+N54321E12345",tcis);
-        CanMessage m1 = t.getAddrOn();
+        t = new CbusLight("ML","+N54321E12345",tcis);
+        CanMessage m1 = ((CbusLight)t).getAddrOn();
         CanMessage m2 = new CanMessage(tcis.getCanid());
         m2.setNumDataElements(5);
         m2.setElement(0, 0x90); // ACON OPC
@@ -303,8 +301,8 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
 
     @Test
     public void testLongEventgetAddrOff() {
-        CbusLight t = new CbusLight("ML","+N54321E12345",tcis);
-        CanMessage m1 = t.getAddrOff();
+        t = new CbusLight("ML","+N54321E12345",tcis);
+        CanMessage m1 = ((CbusLight)t).getAddrOff();
         CanMessage m2 = new CanMessage(tcis.getCanid());
         m2.setNumDataElements(5);
         m2.setElement(0, 0x91); // ACOF OPC
@@ -319,7 +317,7 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
     
     @Test
     public void testCbusLightCanMessage() throws jmri.JmriException {
-        CbusLight t = new CbusLight("ML","+N54321E12345",tcis);
+        t = new CbusLight("ML","+N54321E12345",tcis);
         Assert.assertTrue(t.getState() == Light.OFF); // Light.UNKNOWN ??
         CanMessage m = new CanMessage(tcis.getCanid());
         m.setNumDataElements(5);
@@ -328,23 +326,24 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         m.setElement(2, 0x31);
         m.setElement(3, 0x30);
         m.setElement(4, 0x39);
-        t.message(m);
+        ((CbusLight)t).message(m);
         
         Assert.assertTrue(t.getState() == Light.OFF ); 
 
         m.setElement(0, 0x90); // ACON OPC
-        t.message(m);
+        ((CbusLight)t).message(m);
         Assert.assertTrue(t.getState() == Light.ON);
 
         m.setElement(0, 0x91); // ACOF OPC
-        t.message(m);
+        ((CbusLight)t).message(m);
         Assert.assertTrue(t.getState() == Light.OFF);
+        Assert.assertTrue(tcis.outbound.isEmpty());
  
     }
     
     @Test
     public void testCbusLightCanMessageExtendedRtR() throws jmri.JmriException {
-        CbusLight t = new CbusLight("ML","+N54321E12345",tcis);
+        t = new CbusLight("ML","+N54321E12345",tcis);
         Assert.assertTrue(t.getState() == Light.OFF); // Light.UNKNOWN ??
         
         CanMessage m = new CanMessage(tcis.getCanid());
@@ -357,26 +356,24 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         
         m.setExtended(true);
         
-        t.message(m);
+        ((CbusLight)t).message(m);
         Assert.assertTrue(t.getState() == Light.OFF ); 
 
         m.setExtended(false);
         m.setRtr(true);
-        t.message(m);
+        ((CbusLight)t).message(m);
         Assert.assertTrue(t.getState() == Light.OFF );
         
         m.setRtr(false);
-        t.message(m);
+        ((CbusLight)t).message(m);
         Assert.assertTrue(t.getState() == Light.ON);
+        Assert.assertTrue(tcis.outbound.isEmpty());
         
-        t = null;
-        m = null;
- 
     }
     
         @Test
     public void testCbusLightCanReplyExtendedRtr() throws jmri.JmriException {
-        CbusLight t = new CbusLight("ML","+N54321E12345",tcis);
+        t = new CbusLight("ML","+N54321E12345",tcis);
         Assert.assertTrue(t.getState() == Light.OFF);  // Light.UNKNOWN ??
         CanReply r = new CanReply(tcis.getCanid());
         r.setNumDataElements(5);
@@ -387,28 +384,26 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         r.setElement(4, 0x39);
         r.setExtended(true);
         
-        t.reply(r);
+        ((CbusLight) t).reply(r);
         Assert.assertTrue(t.getState() == Light.OFF);   
         
         r.setExtended(false);
         r.setRtr(true);
-        t.reply(r);
+        ((CbusLight) t).reply(r);
         Assert.assertTrue(t.getState() == Light.OFF );
 
         r.setRtr(false);
         
-        t.reply(r);
+        ((CbusLight) t).reply(r);
         Assert.assertTrue(t.getState() == Light.ON);
+        Assert.assertTrue(tcis.outbound.isEmpty());
         
-        t = null;
-        r = null;
-  
     }
     
 
     @Test
     public void testCbusLightCanReply() throws jmri.JmriException {
-        CbusLight t = new CbusLight("ML","+N54321E12345",tcis);
+        t = new CbusLight("ML","+N54321E12345",tcis);
         Assert.assertTrue(t.getState() == Light.OFF);  // Light.UNKNOWN ??
         CanReply r = new CanReply(tcis.getCanid());
         r.setNumDataElements(5);
@@ -417,23 +412,24 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         r.setElement(2, 0x31);
         r.setElement(3, 0x30);
         r.setElement(4, 0x39);
-        t.reply(r);
+        ((CbusLight) t).reply(r);
         Assert.assertTrue(t.getState() == Light.OFF);        
 
         r.setElement(0, 0x90); // ACON OPC
-        t.reply(r);
+        ((CbusLight) t).reply(r);
         Assert.assertTrue(t.getState() == Light.ON);
 
         r.setElement(0, 0x91); // ACOF OPC
-        t.reply(r);
+        ((CbusLight) t).reply(r);
         Assert.assertTrue(t.getState() == Light.OFF);
+        Assert.assertTrue(tcis.outbound.isEmpty());
   
     }
 
     // with presence of node number should still resolve to short event turnout due to opc
     @Test
     public void testLightCanMessageShortEvWithNode() throws jmri.JmriException {
-        CbusLight t = new CbusLight("ML","+12345",tcis);
+        t = new CbusLight("ML","+12345",tcis);
         CanMessage m = new CanMessage(tcis.getCanid());
         m.setNumDataElements(5);
         m.setElement(0, 0x95); // EVULN OPC
@@ -441,23 +437,24 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         m.setElement(2, 0x31);
         m.setElement(3, 0x30);
         m.setElement(4, 0x39);
-        t.message(m);
+        ((CbusLight)t).message(m);
         Assert.assertTrue(t.getState() == Light.OFF);
         
         m.setElement(0, 0x98); // ASON OPC
-        t.message(m);
+        ((CbusLight)t).message(m);
         Assert.assertTrue(t.getState() == Light.ON);
         
         m.setElement(0, 0x99); // ASOF OPC
-        t.message(m);
+        ((CbusLight)t).message(m);
         Assert.assertTrue(t.getState() == Light.OFF);
+        Assert.assertTrue(tcis.outbound.isEmpty());
         
     }
     
     // with presence of node number should still resolve to short event turnout due to opc
     @Test
     public void testLightCanReplyShortEvWithNode() throws jmri.JmriException {
-        CbusLight t = new CbusLight("ML","+12345",tcis);
+        t = new CbusLight("ML","+12345",tcis);
         CanReply r = new CanReply(tcis.getCanid());
         r.setNumDataElements(5);
         r.setElement(0, 0x95); // EVULN OPC
@@ -465,16 +462,18 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         r.setElement(2, 0x31);
         r.setElement(3, 0x30);
         r.setElement(4, 0x39);
-        t.reply(r);
+        ((CbusLight) t).reply(r);
         Assert.assertTrue(t.getState() == Light.OFF);
         
         r.setElement(0, 0x98); // ASON OPC
-        t.reply(r);
+        ((CbusLight) t).reply(r);
         Assert.assertTrue(t.getState() == Light.ON);
         
         r.setElement(0, 0x99); // ASOF OPC
-        t.reply(r);
+        ((CbusLight) t).reply(r);
         Assert.assertTrue(t.getState() == Light.OFF);
+        
+        Assert.assertTrue(tcis.outbound.isEmpty());
         
     }
 
@@ -531,14 +530,14 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
     @Test
     public void testDoNewStateinvalid(){
         
-        CbusLight t = new CbusLight("M","+12345",tcis);
-        t.doNewState(Light.OFF,999);
+        t = new CbusLight("M","+12345",tcis);
+        ((CbusLight) t).doNewState(Light.OFF,999);
         JUnitAppender.assertWarnMessage("illegal state requested for Light: ML+12345");
         
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tcis = new TrafficControllerScaffold();
@@ -548,9 +547,9 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
     @After
     public void tearDown() {
         t.dispose();
+        tcis.terminateThreads();
         tcis=null;
         JUnitUtil.tearDown();
-        
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusLightTest.class);

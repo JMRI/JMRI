@@ -278,8 +278,8 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
             String id) {
         Object selection = this.getSelectedItem();
         if (log.isDebugEnabled()) {
-            log.debug("Old selection: " + selection);
-            log.debug("Old group: " + _group);
+            log.debug("Old selection: {}", selection);
+            log.debug("Old group: {}", _group);
         }
         ActionListener[] ALs = this.getActionListeners();
         for (ActionListener al : ALs) {
@@ -320,8 +320,8 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("New selection: " + this.getSelectedItem());
-            log.debug("New group: " + _group);
+            log.debug("New selection: {}", this.getSelectedItem());
+            log.debug("New group: {}", _group);
         }
         for (ActionListener al : ALs) {
             this.addActionListener(al);

@@ -107,7 +107,7 @@ public class OutputBits {
     public SerialMessage createOutPacket(int startBitNum, int endBitNum) {
         int nBits = endBitNum - startBitNum + 1;
         if (nBits > 99) {
-            log.error("Number of bits for this packet greater than 99 - " + nBits);
+            log.error("Number of bits for this packet greater than 99 - {}", nBits);
             return null;
         }
         int sAdd = 1000 + startBitNum;  // write starting at 1001 for output 1 in HMI's  
@@ -150,11 +150,6 @@ public class OutputBits {
         m.setTimeout(mSendDelay);
         m.setNoReply();
         return m;
-    }
-
-    @Deprecated
-    public static OutputBits instance() {
-        return null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(OutputBits.class);

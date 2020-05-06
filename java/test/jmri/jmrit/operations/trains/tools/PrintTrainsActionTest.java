@@ -3,14 +3,16 @@ package jmri.jmrit.operations.trains.tools;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.trains.TrainsTableFrame;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -22,10 +24,12 @@ public class PrintTrainsActionTest extends OperationsTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainsTableFrame ttf = new TrainsTableFrame();
-        PrintTrainsAction t = new PrintTrainsAction("Test Action", true, ttf);
+        PrintTrainsAction t = new PrintTrainsAction(true, ttf);
         Assert.assertNotNull("exists", t);
         
         JUnitUtil.dispose(ttf);
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     @Test
@@ -35,7 +39,7 @@ public class PrintTrainsActionTest extends OperationsTestCase {
         JUnitOperationsUtil.initOperationsData();
 
         TrainsTableFrame ttf = new TrainsTableFrame();
-        PrintTrainsAction pta = new PrintTrainsAction("Test Action", true, ttf);
+        PrintTrainsAction pta = new PrintTrainsAction(true, ttf);
         Assert.assertNotNull("exists", pta);
 
         pta.actionPerformed(new ActionEvent(this, 0, null));
@@ -50,6 +54,9 @@ public class PrintTrainsActionTest extends OperationsTestCase {
 
         JUnitUtil.dispose(printPreviewFrame);
         JUnitUtil.dispose(ttf);
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintTrainsActionTest.class);

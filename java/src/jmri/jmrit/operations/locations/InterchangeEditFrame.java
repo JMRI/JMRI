@@ -2,11 +2,7 @@ package jmri.jmrit.operations.locations;
 
 import javax.swing.BorderFactory;
 
-import jmri.jmrit.operations.locations.tools.ChangeTrackTypeAction;
-import jmri.jmrit.operations.locations.tools.IgnoreUsedTrackAction;
-import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
-import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
-import jmri.jmrit.operations.locations.tools.TrackDestinationEditAction;
+import jmri.jmrit.operations.locations.tools.*;
 
 /**
  * Frame for user edit of a classification/interchange track. Adds two panels to
@@ -14,7 +10,7 @@ import jmri.jmrit.operations.locations.tools.TrackDestinationEditAction;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011, 2012
  */
-public class InterchangeEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
+public class InterchangeEditFrame extends TrackEditFrame {
 
     public InterchangeEditFrame() {
         super();
@@ -26,10 +22,10 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 
         super.initComponents(location, track);
 
-        _toolMenu.add(new IgnoreUsedTrackAction(this));
-        _toolMenu.add(new TrackDestinationEditAction(this));
+        _toolMenu.add(new IgnoreUsedTrackAction(_track));
+        _toolMenu.add(new TrackDestinationEditAction(_track));
         _toolMenu.add(new ChangeTrackTypeAction(this));
-        _toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsTrack"), _location, _track));
+        _toolMenu.add(new ShowTrainsServingLocationAction(_location, _track));
         _toolMenu.add(new ShowCarsByLocationAction(false, _location, _track));
         addHelpMenu("package.jmri.jmrit.operations.Operations_Interchange", true); // NOI18N
 

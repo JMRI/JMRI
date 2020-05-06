@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * Tests for the PushbuttonPacket class
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class PushbuttonPacketTest {
 

@@ -17,14 +17,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>D&Atilde;&copy;codeur Son Virtuel JMRI</h1>Ceci est la
       page de r&Atilde;&copy;f&Atilde;&copy;rence rapide de l'outil
       D&Atilde;&copy;codeur Son Virtuel JMRI.<br>
@@ -230,7 +231,7 @@
       <br>
       <a id="prefs" name="prefs">(This is the
       jmri.jmrit.vsdecoder.VSDecoderFrame help page) 
-      <!--#include virtual="/Footer" --></a>
+      <!--#include virtual="/Footer.shtml" --></a>
     </div>
   </div>
 </body>

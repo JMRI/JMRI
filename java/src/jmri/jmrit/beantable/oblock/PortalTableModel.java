@@ -1,11 +1,12 @@
 package jmri.jmrit.beantable.oblock;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
 import jmri.InstanceManager;
-import jmri.Manager;
-import jmri.NamedBean;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
@@ -28,7 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman (C) 2010
  */
-public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Portal> {
+public class PortalTableModel extends AbstractTableModel implements PropertyChangeListener {
 
     public static final int FROM_BLOCK_COLUMN = 0;
     public static final int NAME_COLUMN = 1;
@@ -44,9 +45,8 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
     public PortalTableModel(TableFrames parent) {
         super();
         _parent = parent;
-    }
-
-    public void init() {
+        _manager = InstanceManager.getDefault(PortalManager.class);
+        _manager.addPropertyChangeListener(this);
         initTempRow();
     }
 
@@ -58,48 +58,13 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
     }
 
     @Override
-    public Manager<Portal> getManager() {
-        _manager = InstanceManager.getDefault(PortalManager.class);
-        return _manager;
-    }
-
-    @Override
-    public Portal getBySystemName(String name) {
-        return _manager.getBySystemName(name);
-    }
-
-    @Override
-    public Portal getByUserName(String name) {
-        return _manager.getByUserName(name);
-    }
-
-    @Override
-    protected String getBeanType() {
-        return "Portal";
-    }
-
-    @Override
-    public String getValue(String name) {
-        return name;
-    }
-
-    @Override
-    public void clickOn(Portal t) {
-    }
-
-    @Override
-    protected String getMasterClassName() {
-        return PortalTableModel.class.getName();
-    }
-
-    @Override
     public int getColumnCount() {
         return NUMCOLS;
     }
 
     @Override
     public int getRowCount() {
-        return super.getRowCount() + 1;
+        return _manager.getPortalCount() + 1;
     }
 
     @Override
@@ -120,17 +85,11 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
 
     @Override
     public Object getValueAt(int row, int col) {
-        if (getRowCount() == row) {
+//        log.debug("getValueAt row= {} col= {}", row, col);
+        if (row == _manager.getPortalCount()) {
             return tempRow[col];
         }
-        if (row > sysNameList.size()) {
-            return "";
-        }
-        Portal portal = null;
-        if (row < sysNameList.size()) {
-            String name = sysNameList.get(row);
-            portal = _manager.getBySystemName(name);
-        }
+        Portal portal = _manager.getPortal(row);
         if (portal == null) {
             if (col == DELETE_COL) {
                 return Bundle.getMessage("ButtonClear");
@@ -156,8 +115,9 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
 
     @Override
     public void setValueAt(Object value, int row, int col) {
+//        log.debug("setValueAt value= {}, row= {} col= {}", row, col);
         String msg = null;
-        if (super.getRowCount() == row) {
+        if (row == _manager.getPortalCount()) {
             if (col == DELETE_COL) {
                 initTempRow();
                 fireTableRowsUpdated(row, row);
@@ -187,21 +147,22 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
                 }
             }
             if (msg==null && tempRow[NAME_COLUMN] != null) {
-                if (fromBlock == null || toBlock==null ) {
-                    msg = Bundle.getMessage("PortalNeedsBlock", tempRow[NAME_COLUMN]);                   
-                } else if (fromBlock.equals(toBlock)){
-                    msg = Bundle.getMessage("SametoFromBlock", fromBlock.getDisplayName());
-                }
-                if (msg==null) {
-                    Portal portal = _manager.createNewPortal(null, tempRow[NAME_COLUMN]);
-                    if (portal != null) {
-                        portal.setToBlock(toBlock, false);
-                        portal.setFromBlock(fromBlock, false);
-                        initTempRow();
-                        fireTableDataChanged();
+                if (fromBlock != null && toBlock!=null ) {
+                    if (fromBlock.equals(toBlock)) { 
+                        msg = Bundle.getMessage("SametoFromBlock", fromBlock.getDisplayName());
                     } else {
-                        msg = Bundle.getMessage("DuplPortalName", (String) value);
+                        Portal portal = _manager.createNewPortal(tempRow[NAME_COLUMN]);
+                        if (portal != null) {
+                            portal.setToBlock(toBlock, false);
+                            portal.setFromBlock(fromBlock, false);
+                            initTempRow();
+                            fireTableDataChanged();
+                        } else {
+                            msg = Bundle.getMessage("DuplPortalName", (String) value);
+                        }
                     }
+                } else if (fromBlock == null ^ toBlock==null ) {
+                    msg = Bundle.getMessage("PortalNeedsBlock", tempRow[NAME_COLUMN]);                   
                 }
             }
             if (msg != null) {
@@ -211,11 +172,9 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
             return;
         }
 
-        String name = sysNameList.get(row);
-        Portal portal = _manager.getBySystemName(name);
+        Portal portal = _manager.getPortal(row);
         if (portal == null) {
-            log.error("Portal null, getValueAt row= " + row + ", col= " + col + ", "
-                    + "portalListSize= " + _manager.getObjectCount());
+            log.error("Portal null, getValueAt row= {}, col= {}, portalListSize= {}", row, col, _manager.getPortalCount());
             return;
         }
 
@@ -231,27 +190,17 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
                     break;
                 }
                 if (!portal.setFromBlock(block, false)) {
-                    int response = JOptionPane.showConfirmDialog(null,
-                            Bundle.getMessage("BlockPathsConflict", value, portal.getFromBlockName()),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION,
-                            JOptionPane.WARNING_MESSAGE);
-                    if (response == JOptionPane.NO_OPTION) {
+                    int val = _parent.verifyWarning(Bundle.getMessage("BlockPathsConflict", value, portal.getFromBlockName()));
+                    if (val == 2) {
                         break;
                     }
-
                 }
                 portal.setFromBlock(block, true);
                 fireTableRowsUpdated(row, row);
                 break;
             case NAME_COLUMN:
-                if (_manager.getPortal((String) value) != null) {
-                    msg = Bundle.getMessage("DuplPortalName", (String) value);
-                    break;
-                }
-                if (_manager.getPortal((String) value) != null) {
-                    msg = Bundle.getMessage("PortalNameConflict", (String) value);
-                } else {
-                    portal.setName((String) value);
+                msg = portal.setName((String)value);
+                if (msg == null ) {
                     fireTableRowsUpdated(row, row);
                 }
                 break;
@@ -266,14 +215,10 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
                     break;
                 }
                 if (!portal.setToBlock(block, false)) {
-                    int response = JOptionPane.showConfirmDialog(null,
-                            Bundle.getMessage("BlockPathsConflict", value, portal.getToBlockName()),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION,
-                            JOptionPane.WARNING_MESSAGE);
-                    if (response == JOptionPane.NO_OPTION) {
+                    int val = _parent.verifyWarning(Bundle.getMessage("BlockPathsConflict", value, portal.getToBlockName()));
+                    if (val == 2) {
                         break;
                     }
-
                 }
                 portal.setToBlock(block, true);
                 fireTableRowsUpdated(row, row);
@@ -293,18 +238,10 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
         }
     }
 
-    private static boolean deletePortal(Portal portal) {
-        if (JOptionPane.showConfirmDialog(null,
-                Bundle.getMessage("DeletePortalConfirm",
-                        portal.getName()), Bundle.getMessage("WarningTitle"),
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
-                == JOptionPane.YES_OPTION) {
-            OBlockManager oBlockMgr = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-            for (OBlock oblock : oBlockMgr.getNamedBeanSet()) {
-                oblock.removePortal(portal);
-            }
-            portal.dispose();
-            return true;
+    private boolean deletePortal(Portal portal) {
+        int val = _parent.verifyWarning(Bundle.getMessage("DeletePortalConfirm", portal.getName()));
+        if (val != 2) {
+            return portal.dispose();
         }
         return false;
     }
@@ -324,7 +261,6 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
                                 justification="better to keep cases in column order rather than to combine")
-    @Override
     public int getPreferredWidth(int col) {
         switch (col) {
             case FROM_BLOCK_COLUMN:
@@ -339,6 +275,23 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
                 break;
         }
         return 5;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        String property = e.getPropertyName();
+        if (log.isDebugEnabled()) {
+            log.debug("property = {} source= {}", property, e.getSource().getClass().getName());
+        }
+        if (property.equals("pathCount") || property.equals("numPortals")) {
+            initTempRow();
+            fireTableDataChanged();
+        } else if (property.equals("NameChange")) {
+            int row = _manager.getIndexOf((Portal)e.getNewValue());
+            fireTableRowsUpdated(row, row);   
+        } else if (property.equals("signals")) {
+            _parent.getSignalModel().propertyChange(e);
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(PortalTableModel.class);

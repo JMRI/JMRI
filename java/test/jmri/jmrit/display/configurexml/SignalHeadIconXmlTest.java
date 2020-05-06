@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * SignalHeadIconXmlTest.java
  *
- * Description: tests for the SignalHeadIconXml class
+ * Test for the SignalHeadIconXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,10 +20,10 @@ public class SignalHeadIconXmlTest {
       Assert.assertNotNull("SignalHeadIconXml constructor",new SignalHeadIconXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initInternalSignalHeadManager();
     }
 
     @After

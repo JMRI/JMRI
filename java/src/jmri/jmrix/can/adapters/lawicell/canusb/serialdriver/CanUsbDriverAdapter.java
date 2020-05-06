@@ -10,8 +10,7 @@ package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008, 2010
  */
-public class CanUsbDriverAdapter extends jmri.jmrix.can.adapters.lawicell.SerialDriverAdapter
-        implements jmri.jmrix.SerialPortAdapter {
+public class CanUsbDriverAdapter extends jmri.jmrix.can.adapters.lawicell.SerialDriverAdapter {
 
     /**
      * {@inheritDoc}
@@ -25,18 +24,19 @@ public class CanUsbDriverAdapter extends jmri.jmrix.can.adapters.lawicell.Serial
      * {@inheritDoc}
      */
     @Override
-    public int[] validBaudValues() {
+    public int[] validBaudNumbers() {
         return new int[]{57600, 115200, 230400, 250000, 333333, 460800, 500000};
     }
 
     /**
      * {@inheritDoc}
-     *
      * Migration method
+     * @deprecated since 4.16
      */
+    @Deprecated
     @Override
-    public int[] validBaudNumbers() {
-        return validBaudValues();
+    public int[] validBaudValues() {
+        return validBaudNumbers();
     }
 
 }

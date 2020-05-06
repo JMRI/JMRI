@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * InternalLightManagerXmlTest.java
  *
- * Description: tests for the InternalLightManagerXml class
+ * Test for the InternalLightManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class InternalLightManagerXmlTest {
       Assert.assertNotNull("InternalLightManagerXml constructor",new InternalLightManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

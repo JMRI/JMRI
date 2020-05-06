@@ -11,9 +11,9 @@ import org.junit.Assert;
 import org.junit.Before;
 
 /**
- * Description:	JUnit tests for the Dcc4PcTrafficController class
+ * JUnit tests for the Dcc4PcTrafficController class
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2015
+ * @author Bob Jacobsen Copyright (C) 2003, 2007, 2015
  */
 public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
@@ -41,11 +41,10 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         c.sendDcc4PcMessage(m, l);
 
         ostream.flush();
-        JUnitUtil.waitFor(()->{return tostream.available() == 4;}, "total length");
+        JUnitUtil.waitFor(() -> tostream.available() == 4, "total length");
         
-		// test the result of sending
-
-		Assert.assertEquals("total length ", 4, tostream.available());
+        // test the result of sending
+        Assert.assertEquals("total length ", 4, tostream.available());
         Assert.assertEquals("Char 0", '0', tostream.readByte());
         Assert.assertEquals("Char 1", '1', tostream.readByte());
         Assert.assertEquals("Char 2", '2', tostream.readByte());
@@ -115,6 +114,7 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         }
 
         //@Override
+        @Override
         public int[] validBaudNumbers() {
             return new int[] {};
         }
@@ -154,7 +154,6 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     DataOutputStream tistream; // tests write to this
     DataInputStream istream;  // so the traffic controller can read from this
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -165,7 +164,9 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     @Override
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

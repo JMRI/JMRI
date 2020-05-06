@@ -9,10 +9,10 @@ import org.slf4j.LoggerFactory;
 /**
  * PowerManager implementation for controlling SPROG layout power.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SprogPowerManager extends jmri.managers.AbstractPowerManager
-        implements PowerManager, SprogListener {
+        implements SprogListener {
 
     SprogTrafficController trafficController = null;
 
@@ -115,7 +115,7 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
     public void notify(AbstractMessage m) {
         if (m instanceof SprogMessage) {
             this.notifyMessage((SprogMessage) m);
-        } else {
+        } else if (m instanceof SprogReply){
             this.notifyReply((SprogReply) m);
         }
     }

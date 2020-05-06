@@ -8,7 +8,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the SerialNodeList class.
  *
- * @author	Bob Jacobsen Copyright 2017
+ * @author Bob Jacobsen Copyright 2017
  */
 public class SerialNodeListTest {
 
@@ -21,7 +21,6 @@ public class SerialNodeListTest {
     private SerialTrafficControlScaffold stcs = null;
     private SerialNode n2 = null;
     
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -44,10 +43,11 @@ public class SerialNodeListTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         if (stcs != null) stcs.terminateThreads();
         stcs = null;
         memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
 }

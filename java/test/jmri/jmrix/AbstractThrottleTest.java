@@ -1,20 +1,27 @@
 package jmri.jmrix;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
+
 import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.util.JUnitAppender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  *
@@ -55,6 +62,9 @@ public class AbstractThrottleTest {
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
+    
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     /**
      * Test of getSpeedSetting method, of class AbstractThrottle.
@@ -709,11 +719,8 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testNotifyPropertyChangeListener() {
-        String property = "";
-        Object oldValue = null;
-        Object newValue = null;
-        instance.notifyPropertyChangeListener(property, oldValue, newValue);
-        jmri.util.JUnitAppender.assertErrorMessage("notifyPropertyChangeListener without change");
+        instance.notifyPropertyChangeListener("", null, null);
+        JUnitAppender.assertNoErrorMessage();
     }
 
     /**
@@ -721,9 +728,7 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testGetListeners() {
-        Vector<PropertyChangeListener> expResult = new Vector<>();
-        Vector<PropertyChangeListener> result = instance.getListeners();
-        Assert.assertEquals(expResult, result);
+        assertThat(instance.getListeners()).isEmpty();
     }
 
     /**
@@ -1412,8 +1417,7 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testSetSpeedStepMode() {
-        int Mode = 0;
-        instance.setSpeedStepMode(Mode);
+        instance.setSpeedStepMode(SpeedStepMode.NMRA_DCC_128);
     }
 
     /**
@@ -1421,8 +1425,8 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testGetSpeedStepMode() {
-        int expResult = 0;
-        int result = instance.getSpeedStepMode();
+        SpeedStepMode expResult = SpeedStepMode.UNKNOWN;
+        SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
 
@@ -1524,6 +1528,49 @@ public class AbstractThrottleTest {
             speed = speed + 0.001F;
         }
     }
+    
+    /**
+     * Test of starting and stopping the time logging.
+     */
+    @Test
+    public void testLogsSpeedToBasicRosterEntry() throws java.io.IOException {
+        
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        
+        // create Element
+        org.jdom2.Element eOld = new org.jdom2.Element("locomotive")
+            .setAttribute("id", "id info")
+            .setAttribute("fileName", "file here")
+            .setAttribute("roadNumber", "431")
+            .setAttribute("roadName", "SP")
+            .setAttribute("mfg", "Athearn")
+            .setAttribute("dccAddress", "1234")
+            .addContent(new org.jdom2.Element("decoder")
+                .setAttribute("family", "91")
+                .setAttribute("model", "33")
+            ); // end create element
+        RosterEntry re = new RosterEntry(eOld) {
+            @Override
+            protected void warnShortLong(String s) {
+            }
+        };
+        
+        instance.setRosterEntry(re);
+        Assert.assertEquals("No Starting Duration Roster Entry", null, re.getAttribute("OperatingDuration"));
+        Assert.assertEquals("No Last Operated Roster Entry", null, re.getAttribute("LastOperated"));
+        Assert.assertEquals("No Starting Duration Throttle", 0, instance.start);
+        
+        instance.setSpeedSetting(0.777f);
+        Assert.assertEquals("Starting Duration not set, throttle needs to call record(speed) on speed change", true, instance.start > 0);
+        
+        instance.start = instance.start - 2011; // make duration about 2 seconds
+        Assert.assertNotNull("instance finds roster entry",instance.getRosterEntry());
+        
+        instance.throttleDispose();
+        Assert.assertEquals("No Duration in Roster Entry, throttle needs to call finishRecord()", "2", re.getAttribute("OperatingDuration"));
+        Assert.assertNotNull("Last Operated Updated",re.getAttribute("LastOperated"));
+        
+    }
 
     public final class AbstractThrottleImpl extends AbstractThrottle {
 
@@ -1536,6 +1583,7 @@ public class AbstractThrottleTest {
 
         @Override
         public void throttleDispose() {
+            finishRecord();
         }
 
         public void setLocoAddress(LocoAddress locoAddress) {

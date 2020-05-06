@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.ServiceLoader;
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.beans.Bean;
 import jmri.jmrix.swing.SystemConnectionAction;
@@ -170,7 +169,7 @@ public class StartupActionModelUtil extends Bean {
     }
 
     @CheckForNull
-    public String getOverride(@Nullable String name) {
+    public String getOverride(@CheckForNull String name) {
         this.prepareActionsHashMap();
         if (name != null && this.overrides.containsKey(name)) {
             return this.overrides.get(name).getName();

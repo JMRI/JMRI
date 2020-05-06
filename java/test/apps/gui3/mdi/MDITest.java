@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * Description: Tests for the MDI application.
+ * Tests for the MDI application.
  *
  * @author Paul Bender Copyright (C) 2016
  */
@@ -48,18 +48,12 @@ public class MDITest {
                 JUnitUtil.initMemoryManager();
                 JUnitUtil.initDebugThrottleManager();
             }
-
-            @Override
-            protected void installShutDownManager() {
-                JUnitUtil.initShutDownManager();
-            }
         };
         Assert.assertNotNull(a);
         // shutdown the application
         AppsBase.handleQuit();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -69,7 +63,9 @@ public class MDITest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();  // eventually want to test ShutDownTasks?
         JUnitUtil.resetApplication();
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

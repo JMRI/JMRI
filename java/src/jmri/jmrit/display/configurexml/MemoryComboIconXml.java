@@ -99,7 +99,7 @@ public class MemoryComboIconXml extends PositionableLabelXml {
         if (m != null) {
             l.setMemory(name);
         } else {
-            log.error("Memory named '" + attr.getValue() + "' not found.");
+            log.error("Memory named '{}' not found.", attr.getValue());
             p.loadFailed();
             return;
         }

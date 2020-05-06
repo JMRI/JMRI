@@ -14,7 +14,7 @@ import org.junit.Test;
  * These used to be in a separate SerialAddress class, with its own test class.
  * This structure is a vestige of that.
  *
- * @author	Dave Duchamp Copyright 2004
+ * @author Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2017
  */
 public class SerialAddressTwoSystemTest {
@@ -85,17 +85,19 @@ public class SerialAddressTwoSystemTest {
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
         if (stcs1 != null) stcs1.terminateThreads();
         stcs1 = null;
         memo1 = null;
         if (stcs2 != null) stcs2.terminateThreads();
         stcs2 = null;
         memo2 = null;
+
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
     @Test
-    public void testValidateSystemNameFormat() {
+    public void testValidSystemNameFormat() {
         Assert.assertTrue("valid format - CL2", NameValidity.VALID == memo1.validSystemNameFormat("CL2", 'L'));
         Assert.assertTrue("valid format - CL0B2", NameValidity.VALID == memo1.validSystemNameFormat("CL0B2", 'L'));
 
@@ -113,10 +115,10 @@ public class SerialAddressTwoSystemTest {
         Assert.assertTrue("valid format - CS2B5", NameValidity.VALID == memo1.validSystemNameFormat("CS2B5", 'S'));
 
         Assert.assertTrue("invalid format - CY2005", NameValidity.VALID != memo1.validSystemNameFormat("CY2005", 'L'));
-        JUnitAppender.assertErrorMessage("invalid type character in CMRI system name: CY2005");
+//        JUnitAppender.assertErrorMessage("invalid type character in CMRI system name: CY2005");
 
         Assert.assertTrue("invalid format - CY2B5", NameValidity.VALID != memo1.validSystemNameFormat("CY2B5", 'L'));
-        JUnitAppender.assertErrorMessage("invalid type character in CMRI system name: CY2B5");
+//        JUnitAppender.assertErrorMessage("invalid type character in CMRI system name: CY2B5");
 
         Assert.assertTrue("valid format - CL22001", NameValidity.VALID == memo1.validSystemNameFormat("CL22001", 'L'));
         Assert.assertTrue("valid format - CL22B1", NameValidity.VALID == memo1.validSystemNameFormat("CL22B1", 'L'));

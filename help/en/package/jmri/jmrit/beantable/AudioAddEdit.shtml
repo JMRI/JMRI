@@ -15,10 +15,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Adding/Editing Audio objects</h1>To create an audio
       object, click either the "Add Source..." or the "Add
       Buffer..." button at the bottom of the <a href=
@@ -49,7 +49,7 @@
 
       <p>For more information on Audio objects, see the <a href=
       "../../../../html/tools/Audio.shtml">Audio help page</a>.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

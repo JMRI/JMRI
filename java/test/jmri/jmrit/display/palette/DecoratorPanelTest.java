@@ -1,28 +1,47 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+
+import jmri.jmrit.display.EditorScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrit.display.DisplayFrame;
+import jmri.jmrit.display.PositionableLabel;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DecoratorPanelTest {
+
+    EditorScaffold editor;
+    DisplayFrame df;
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        DecoratorPanel t = new DecoratorPanel(new ControlPanelEditor("ED"), null);
-        Assert.assertNotNull("exists",t);
+        editor = new EditorScaffold("Editor");
+        df = new DisplayFrame("DisplayFrame", editor);
+        DecoratorPanel dec = new DecoratorPanel(df);
+        Assert.assertNotNull("exists", dec);
+        df.dispose();
     }
 
-    // The minimal setup for log4J
+    @Test
+    public void testInit() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        editor = new EditorScaffold("Editor");
+        df = new DisplayFrame("DisplayFrame", editor);
+        DecoratorPanel dec = new DecoratorPanel(df);
+        dec.initDecoratorPanel(new PositionableLabel("one", editor));
+        Assert.assertNotNull("exists", dec);
+        df.dispose();
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -31,6 +50,7 @@ public class DecoratorPanelTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -3,25 +3,24 @@
 
 <html lang="fr">
 <head>
-<!-- UpDated by Herv&#233; Blorec  2017-02-06-->
+<!-- Updated by Herv&#233; Blorec  2017-02-06-->
 <title>JMRI: RFID Reader Support</title>
 
 <!-- Style -->
 <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<link REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<link REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
+<link REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<link REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
 <link REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <link REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
+        <!-- Page Body -->
 
 <h1> Documentation Mat&#233;riel: Lecteurs RFID</h1>
 
@@ -93,7 +92,7 @@ sur le
 <h3>Rapports</h3>
 Les lectures RFID &#224; venir dans les applications JMRI sont &#233;galement accessibles via les
 Objets Rapports JMRI. Le Nom Syst&#232;me
-<!-- <a Href="Names.shtml"> du Rapport </a> --> du Rapport
+<!-- <a href="Names.shtml"> du Rapport </a> --> du Rapport
 d&#233;termine &#224; quel lecteur RFID il correspond.
 
 <p>
@@ -127,10 +126,9 @@ Pour ce faire:
 	utiliser le tableau de Rapport pour changer la valeur &#224; quelque chose qui sera visible.
 	<li> Vous pouvez faire glisser l'ic&#244;ne &#224; l'endroit o&#249; vous voulez de la mani&#232;re habituelle.
 	<li> Le menu contextuel sur l'ic&#244;ne vous permettra de changer la mise en forme.
-	</ul>
+</ul>
 
-
-<<!--#include virtual="/Footer" -->
+<<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

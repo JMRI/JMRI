@@ -10,6 +10,7 @@ import jmri.jmrix.mrc.MrcPacketizer;
 import jmri.jmrix.mrc.MrcPackets;
 import jmri.jmrix.mrc.MrcPortController;
 import jmri.jmrix.mrc.MrcSystemConnectionMemo;
+import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,8 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender, Copyright (C) 2009
  * @author Daniel Boudreau Copyright (C) 2010
  */
-public class SimulatorAdapter extends MrcPortController implements
-        jmri.jmrix.SerialPortAdapter, Runnable {
+public class SimulatorAdapter extends MrcPortController implements Runnable {
 
     // private control members
     private boolean opened = false;
@@ -42,10 +42,10 @@ public class SimulatorAdapter extends MrcPortController implements
     @Override
     public String openPort(String portName, String appName) {
         try {
-            PipedOutputStream tempPipeI = new PipedOutputStream();
+            PipedOutputStream tempPipeI = new ImmediatePipedOutputStream();
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
-            PipedOutputStream tempPipeO = new PipedOutputStream();
+            PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {

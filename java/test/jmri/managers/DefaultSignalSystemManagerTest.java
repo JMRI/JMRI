@@ -2,9 +2,10 @@ package jmri.managers;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.SortedSet;
+import jmri.InstanceManager;
 import jmri.SignalSystem;
 import jmri.implementation.SignalSystemTestUtil;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -15,7 +16,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.managers.DefaultSignalSystemManager class.
  *
- * @author	Bob Jacobsen Copyright 2009
+ * @author Bob Jacobsen Copyright 2009
  */
 public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri.SignalSystemManager,jmri.SignalSystem> {
 
@@ -34,7 +35,7 @@ public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri
             SignalSystemTestUtil.createMockSystem();
 
             // check that mock (test directory) system is present
-            DefaultSignalSystemManager d = new DefaultSignalSystemManager();
+            DefaultSignalSystemManager d = new DefaultSignalSystemManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
             java.util.List<String> l = d.getListOfNames();
             Assert.assertTrue(l.contains(SignalSystemTestUtil.getMockSystemName()));
 
@@ -109,7 +110,7 @@ public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        l = new DefaultSignalSystemManager();
+        l = new DefaultSignalSystemManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @After

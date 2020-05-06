@@ -12,7 +12,7 @@ import org.junit.Assert;
 /**
  * ZTC611XNetInitializationManagerTest.java
  *
- * Description: tests for the
+ * Test for the
  * jmri.jmrix.ztc.ztc611.ZTC611XNetInitializationManager class
  *
  * @author Paul Bender
@@ -47,7 +47,9 @@ public class ZTC611XNetInitializationManagerTest {
 
     @After
     public void tearDown() throws Exception {
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

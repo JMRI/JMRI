@@ -23,10 +23,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Grapevine Node Table</h1>
 
       <p>The "Node Table" tool lets you see all your Grapevine nodes at
@@ -112,7 +112,7 @@
       <p>Back to the <a href="../../../../../html/hardware/grapevine/index.shtml">Grapevine Hardware Help</a>
       page.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

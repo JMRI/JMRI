@@ -40,9 +40,8 @@ public class SerialTurnout extends AbstractTurnout {
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //				                Object oldValue,
-        //						Object newValue)
+        //  public void firePropertyChange(String propertyName,
+        //          Object oldValue, Object newValue)
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states

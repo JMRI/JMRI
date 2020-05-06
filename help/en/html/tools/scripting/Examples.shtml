@@ -17,15 +17,14 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
@@ -289,7 +288,7 @@
       <p>Try to send some bytes to a parallel port.</p>
 
       <p><a href=
-      "../../../../../../../ParallelPortTurnouts.py">ParallelPortTurnouts.py</a></p>
+      "../../../../../jython/ParallelPortTurnouts.py">ParallelPortTurnouts.py</a></p>
 
       <p>Connect JMRI Turnouts to parallel port logic. Maps internal
       Turnouts to specific values to be send to the parallel port.
@@ -464,7 +463,7 @@
       <p>The jython/javaone directory contains scripts that were
       first created for the JavaOne test layout.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

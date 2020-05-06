@@ -12,13 +12,13 @@ import org.junit.Test;
 /**
  * Tests for the jmri.util.swing.FontComboUtil class.
  *
- * @author	Matthew Harris Copyright 2011
+ * @author Matthew Harris Copyright 2011
  */
 public class FontComboUtilTest {
 
     // test constants
     @Test
-    public void testFontUtilConstants() {
+    public void testFontComboUtilConstants() {
         Assert.assertTrue("All and Character differ", (FontComboUtil.ALL != FontComboUtil.CHARACTER));
         Assert.assertTrue("All and Monospaced differ", (FontComboUtil.ALL != FontComboUtil.MONOSPACED));
         Assert.assertTrue("All and Proportional differ", (FontComboUtil.ALL != FontComboUtil.PROPORTIONAL));
@@ -84,7 +84,6 @@ public class FontComboUtilTest {
         Assert.assertTrue("List contains 'SansSerif'", fonts.contains("SansSerif"));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

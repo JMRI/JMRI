@@ -4,17 +4,14 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.*;
-
 import javax.annotation.CheckReturnValue;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.NamedBeanPropertyDescriptor;
-import jmri.ProvidingManager;
+import jmri.*;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
-import jmri.util.com.dictiography.collections.IndexedTreeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,38 +32,12 @@ import org.slf4j.LoggerFactory;
  * @param <E> the supported type of NamedBean
  * @author Bob Jacobsen Copyright (C) 2003, 2010, 2018
  */
-abstract public class AbstractProxyManager<E extends NamedBean> implements ProvidingManager<E>, Manager.ManagerDataListener<E> {
+abstract public class AbstractProxyManager<E extends NamedBean> implements ProxyManager<E>, ProvidingManager<E>, Manager.ManagerDataListener<E> {
 
     /**
-     * Number of managers available through getManager(i) and getManagerList(),
-     * including the Internal manager
-     *
-     * @return the number of managers.
+     * {@inheritDoc}
      */
-    protected int nMgrs() {
-        // make sure internal present
-        initInternal();
-
-        return mgrs.size();
-    }
-
-    protected Manager<E> getMgr(int index) {
-        // make sure internal present
-        initInternal();
-
-        if (index < mgrs.size()) {
-            return mgrs.exact(index);
-        } else {
-            throw new IllegalArgumentException("illegal index " + index); // NOI18N
-        }
-    }
-
-    /**
-     * Returns a list of all managers, including the internal manager. This is
-     * not a live list, but it is in alpha order (don't assume default is at front)
-     *
-     * @return the list of managers
-     */
+    @Override
     public List<Manager<E>> getManagerList() {
         // make sure internal present
         initInternal();
@@ -74,11 +45,9 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     /**
-     * Returns a list of all managers, with the default
-     * at the start and internal default at the end.
-     *
-     * @return the list of managers
+     * {@inheritDoc}
      */
+    @Override
     public List<Manager<E>> getDisplayOrderManagerList() {
         // make sure internal present
         initInternal();
@@ -102,18 +71,19 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     /**
-     * Returns the set default or, if not present, the internal manager as
-     * defacto default
-     * 
-     * @return the default manager or the internal manager if no default set
+     * {@inheritDoc}
      */
+    @Override
+    @Nonnull
     public Manager<E> getDefaultManager() {
-        if (defaultManager != null) return defaultManager;
-
-        return getInternalManager();
+        return defaultManager != null ? defaultManager : getInternalManager();
     }
 
-    public void addManager(Manager<E> m) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addManager(@Nonnull Manager<E> m) {
         Objects.requireNonNull(m, "Can only add non-null manager");
         // check for already present
         for (Manager<E> check : mgrs) {
@@ -133,14 +103,20 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
         propertyListenerList.stream().forEach((l) -> {
             m.addPropertyChangeListener(l);
         });
+        namedPropertyVetoListenerMap.entrySet().forEach((e) -> {
+            e.getValue().forEach((l) -> {
+                m.addVetoableChangeListener(e.getKey(), l);
+            });
+        });
+        namedPropertyListenerMap.entrySet().forEach((e) -> {
+            e.getValue().forEach((l) -> {
+                m.addPropertyChangeListener(e.getKey(), l);
+            });
+        });
 
         m.addDataListener(this);
-        updateOrderList();
         recomputeNamedBeanSet();
-
-        if (log.isDebugEnabled()) {
-            log.debug("added manager " + m.getClass());
-        }
+        log.debug("added manager {}", m.getClass());
     }
 
     private Manager<E> initInternal() {
@@ -151,12 +127,9 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
         return internalManager;
     }
 
-    private final IndexedTreeSet<Manager<E>> mgrs = new IndexedTreeSet<>(new java.util.Comparator<Manager<E>>(){
-        @Override
-        public int compare(Manager<E> e1, Manager<E> e2) { return e1.getSystemPrefix().compareTo(e2.getSystemPrefix()); }
-    });
+    private final Set<Manager<E>> mgrs = new TreeSet<>((Manager<E> e1, Manager<E> e2) -> e1.getSystemPrefix().compareTo(e2.getSystemPrefix()));
     private Manager<E> internalManager = null;
-    private Manager<E> defaultManager = null;
+    protected Manager<E> defaultManager = null;
 
     /**
      * Create specific internal manager as needed for concrete type.
@@ -167,24 +140,12 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
     /** {@inheritDoc} */
     @Override
-    public E getNamedBean(String name) {
-        E t = getBeanByUserName(name);
+    public E getNamedBean(@Nonnull String name) {
+        E t = getByUserName(name);
         if (t != null) {
             return t;
         }
-        return getBeanBySystemName(name);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @CheckReturnValue
-    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
-        int index = matchTentative(inputName);
-        if (index >= 0) {
-            return getMgr(index).normalizeSystemName(inputName);
-        }
-        log.debug("normalizeSystemName did not find manager for name {}, defer to default", inputName); // NOI18N
-        return getDefaultManager().normalizeSystemName(inputName);
+        return getBySystemName(name);
     }
 
     /**
@@ -207,47 +168,79 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
             return t;
         }
         // Doesn't exist. If the systemName was specified, find that system
-        int index = matchTentative(name);
-        if (index >= 0) {
-            return makeBean(index, name, null);
+        Manager<E> manager = getManager(name);
+        if (manager != null) {
+            return makeBean(manager, name, null);
         }
         log.debug("provideNamedBean did not find manager for name {}, defer to default", name); // NOI18N
-        return makeBean(mgrs.entryIndex(getDefaultManager()), getDefaultManager().makeSystemName(name), null);
+        return makeBean(getDefaultManager(), getDefaultManager().makeSystemName(name), null);
     }
 
     /**
-     * Defer creation of the proper type to the subclass
+     * Defer creation of the proper type to the subclass.
      *
-     * @param index      the manager to invoke
+     * @param manager    the manager to invoke
      * @param systemName the system name
      * @param userName   the user name
      * @return a bean
      */
-    abstract protected E makeBean(int index, String systemName, String userName);
+    abstract protected E makeBean(Manager<E> manager, String systemName, String userName);
 
     /** {@inheritDoc} */
     @Override
-    public E getBeanBySystemName(String systemName) {
-        // System names can be matched to managers by system and type at front of name
-        int index = matchTentative(systemName);
-        if (index >= 0) {
-            Manager<E> m = getMgr(index);
-            return m.getBeanBySystemName(m.normalizeSystemName(systemName));
+    @CheckReturnValue
+    @CheckForNull
+    public E getBySystemName(@Nonnull String systemName) {
+        Manager<E> m = getManager(systemName);
+        if (m == null) {
+            log.debug("getBySystemName did not find manager from name {}, defer to default manager", systemName);
+            m = getDefaultManager();
         }
-        log.debug("getBeanBySystemName did not find manager from name {}, defer to default manager", systemName); // NOI18N
-        return getDefaultManager().getBeanBySystemName(getDefaultManager().normalizeSystemName(systemName));
+        return m.getBySystemName(systemName);
     }
 
     /** {@inheritDoc} */
     @Override
-    public E getBeanByUserName(String userName) {
+    @CheckReturnValue
+    @CheckForNull
+    public E getByUserName(@Nonnull String userName) {
         for (Manager<E> m : this.mgrs) {
-            E b = m.getBeanByUserName(userName);
+            E b = m.getByUserName(userName);
             if (b != null) {
                 return b;
             }
         }
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation locates a specific Manager based on the system name
+     * and validates against that. If no matching Manager exists, the default
+     * Manager attempts to validate the system name.
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
+        Manager manager = getManager(systemName);
+        if (manager == null) {
+            manager = getDefaultManager();
+        }
+        return manager.validateSystemNameFormat(systemName, locale);
+    }
+
+    /**
+     * Validate system name format. Locate a system specific Manager based on a
+     * system name.
+     *
+     * @return if a manager is found, return its determination of validity of
+     *         system name format. Return INVALID if no manager exists.
+     */
+    @Override
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+        Manager m = getManager(systemName);
+        return m == null ? NameValidity.INVALID : m.validSystemNameFormat(systemName);
     }
 
     /**
@@ -285,22 +278,20 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
         initInternal();
 
         // if the systemName is specified, find that system
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return makeBean(i, systemName, userName);
+        Manager<E> m = getManager(systemName);
+        if (m != null) {
+            return makeBean(m, systemName, userName);
         }
 
         // did not find a manager, allow it to default to the primary
         log.debug("Did not find manager for system name {}, delegate to primary", systemName); // NOI18N
-        return makeBean(mgrs.entryIndex(getDefaultManager()), systemName, userName);
+        return makeBean(getDefaultManager(), systemName, userName);
     }
 
     /** {@inheritDoc} */
     @Override
     public void dispose() {
-        for (Manager<E> m : mgrs) {
-            m.dispose();
-        }
+        mgrs.forEach(m -> m.dispose());
         mgrs.clear();
         if (internalManager != null) {
             internalManager.dispose(); // don't make if not made yet
@@ -308,72 +299,126 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     /**
-     * Find the index of a matching manager. Returns -1 if there is no match,
-     * which is not considered an error
-     *
-     * @param systemname the system name
-     * @return the index of the matching manager
+     * Get the manager for the given system name.
+     * 
+     * @param systemName the given name 
+     * @return the requested manager or null if there is no matching manager
      */
-    protected int matchTentative(String systemname) {
-        for (Manager<E> m : mgrs) {
-            if (systemname.startsWith(m.getSystemPrefix() + m.typeLetter())) {
-                return mgrs.entryIndex(m);
+    @CheckForNull
+    protected Manager<E> getManager(@Nonnull String systemName) {
+        // make sure internal present
+        initInternal();
+        for (Manager<E> m : getManagerList()) {
+            if (systemName.startsWith(m.getSystemNamePrefix())) {
+                return m;
             }
         }
-        return -1;
+        return null;
     }
 
     /**
-     * Find the index of a matching manager. Throws IllegalArgumentException if
-     * there is no match, here considered to be an error that must be reported.
+     * Get the manager for the given system name or the default manager if there
+     * is no matching manager.
      *
-     * @param systemname the system name
-     * @return the index of the matching manager
+     * @param systemName the given name
+     * @return the requested manager or the default manager if there is no
+     *         matching manager
      */
-    protected int match(String systemname) {
-        // make sure internal present
-        initInternal();
-
-        int index = matchTentative(systemname);
-        if (index < 0) {
-            throw new IllegalArgumentException("System name " + systemname + " failed to match"); // NOI18N
+    @Nonnull
+    protected Manager<E> getManagerOrDefault(@Nonnull String systemName) {
+        Manager<E> manager = getManager(systemName);
+        if (manager == null) {
+            manager = getDefaultManager();
         }
-        return index;
+        return manager;
+    }
+
+    /**
+     * Shared method to create a systemName based on the address base, the prefix and manager class.
+     *
+     * @param curAddress base address to use
+     * @param prefix system prefix to use
+     * @param managerType BeanType manager (method is used for Turnout and Sensor Managers)
+     * @return a valid system name for this connection
+     * @throws JmriException if systemName cannot be created
+     */
+    String createSystemName(String curAddress, String prefix, Class managerType) throws JmriException {
+        for (Manager<E> m : mgrs) {
+            if (prefix.equals(m.getSystemPrefix()) && managerType.equals(m.getClass())) {
+                try {
+                    if (managerType == TurnoutManager.class) {
+                        return ((TurnoutManager) m).createSystemName(curAddress, prefix);
+                    } else if (managerType == SensorManager.class) {
+                        return ((SensorManager) m).createSystemName(curAddress, prefix);
+                    } else {
+                        log.warn("createSystemName requested for incompatible Manager");
+                    }
+                } catch (jmri.JmriException ex) {
+                    throw ex;
+                }
+            }
+        }
+        throw new jmri.JmriException("Manager could not be found for System Prefix " + prefix);
+    }
+
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, char typeLetter) throws jmri.JmriException {
+        for (Manager<E> m : mgrs) {
+            log.debug("NextValidAddress requested for {}", curAddress);
+            if (prefix.equals(m.getSystemPrefix()) && typeLetter == m.typeLetter()) {
+                try {
+                    switch (typeLetter) { // use #getDefaultManager() instead?
+                        case 'T':
+                            return ((TurnoutManager) m).getNextValidAddress(curAddress, prefix);
+                        case 'S':
+                            return ((SensorManager) m).getNextValidAddress(curAddress, prefix);
+                        case 'R':
+                            return ((ReporterManager) m).getNextValidAddress(curAddress, prefix);
+                        default:
+                            return null;
+                    }
+                } catch (jmri.JmriException ex) {
+                    throw ex;
+                }
+            }
+        }
+        return null;
     }
 
     /** {@inheritDoc} */
     @Override
-    public void deleteBean(E s, String property) throws PropertyVetoException {
-        String systemName = s.getSystemName();
-        try {
-            getMgr(match(systemName)).deleteBean(s, property);
-        } catch (PropertyVetoException e) {
-            throw e;
+    public void deleteBean(@Nonnull E s, @Nonnull String property) throws PropertyVetoException {
+        Manager<E> m = getManager(s.getSystemName());
+        if (m != null) {
+            m.deleteBean(s, property);
         }
     }
 
     /**
      * {@inheritDoc}
      * <p>
-     * Forwards the register request to the matching system
+     * Forwards the register request to the matching system.
      */
     @Override
-    public void register(E s) {
-        String systemName = s.getSystemName();
-        getMgr(match(systemName)).register(s);
+    public void register(@Nonnull E s) {
+        Manager<E> m = getManager(s.getSystemName());
+        if (m != null) {
+            m.register(s);
+        }
     }
 
     /**
      * {@inheritDoc}
      * <p>
-     * Forwards the deregister request to the matching system
+     * Forwards the deregister request to the matching system.
      *
      * @param s the name
      */
     @Override
-    public void deregister(E s) {
-        String systemName = s.getSystemName();
-        getMgr(match(systemName)).deregister(s);
+    public void deregister(@Nonnull E s) {
+        Manager<E> m = getManager(s.getSystemName());
+        if (m != null) {
+            m.deregister(s);
+        }
     }
 
     /** {@inheritDoc} */
@@ -381,9 +426,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     @Override
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
-        for (Manager<E> m : mgrs) {
-            l.addAll(m.getKnownBeanProperties());
-        }
+        mgrs.forEach(m -> l.addAll(m.getKnownBeanProperties()));
         return l;
     }
 
@@ -437,6 +480,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     @OverridingMethodsMustInvokeSuper
     public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
         if (!namedPropertyListenerMap.containsKey(propertyName)) {
@@ -537,9 +581,27 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     HashMap<String, ArrayList<VetoableChangeListener>> namedPropertyVetoListenerMap = new HashMap<>();
 
     /**
+     * {@inheritDoc}
+     *
+     * @return The system connection memo for the manager returned by
+     *         {@link #getDefaultManager()}, or the Internal system connection
+     *         memo if there is no default manager
+     */
+    @Override
+    @Nonnull
+    public SystemConnectionMemo getMemo() {
+        try {
+            return getDefaultManager().getMemo();
+        } catch (IndexOutOfBoundsException ex) {
+            return InstanceManager.getDefault(InternalSystemConnectionMemo.class);
+        }
+    }
+
+    /**
      * @return The system-specific prefix letter for the primary implementation
      */
     @Override
+    @Nonnull
     public String getSystemPrefix() {
         try {
             return getDefaultManager().getSystemPrefix();
@@ -561,31 +623,18 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
      *         primary system.
      */
     @Override
-    public String makeSystemName(String s) {
+    @Nonnull
+    public String makeSystemName(@Nonnull String s) {
         return getDefaultManager().makeSystemName(s);
     }
 
     /** {@inheritDoc} */
     @CheckReturnValue
+    @Override
     public int getObjectCount() {
         int count = 0;
         for (Manager<E> m : mgrs) { count += m.getObjectCount(); }
         return count;
-    }
-
-    /** {@inheritDoc} */
-    @Nonnull
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public String[] getSystemNameArray() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameArray");        
-        if (log.isTraceEnabled()) log.trace("Manager#getSystemNameArray() called", new Exception("traceback"));
-        
-        List<E> list = getNamedBeanList();
-        String[] retval = new String[list.size()];
-        int i = 0;
-        for (E e : list) retval[i++] = e.getSystemName();
-        return retval;
     }
 
     /** {@inheritDoc} */
@@ -598,28 +647,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
         ArrayList<String> retval = new ArrayList<>(list.size());
         for (E e : list) retval.add(e.getSystemName());
         return Collections.unmodifiableList(retval);
-    }
-
-    private ArrayList<String> addedOrderList = null;
-    
-    protected void updateOrderList() {
-        if (addedOrderList == null) return; // only maintain if requested
-        addedOrderList.clear();
-        for (Manager<E> m : mgrs) {
-            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
-            List<String> t = m.getSystemNameAddedOrderList();
-            addedOrderList.addAll(t);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public List<String> getSystemNameAddedOrderList() {
-        // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameAddedOrderList"); // used by configureXML
-        addedOrderList = new ArrayList<>();  // need to start maintaining it
-        updateOrderList();
-        return Collections.unmodifiableList(addedOrderList);
     }
 
     /** {@inheritDoc} */
@@ -657,11 +684,13 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     /** {@inheritDoc} */
+    @Override
     public void addDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.add(e);
     }
 
     /** {@inheritDoc} */
+    @Override
     public void removeDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.remove(e);
     }
@@ -684,8 +713,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
      */
     @Override
     public void intervalAdded(AbstractProxyManager.ManagerDataEvent<E> e) {
-        updateOrderList();
-
         if (namedBeanSet != null && e.getIndex0() == e.getIndex1()) {
             // just one element added, and we have the object reference
             namedBeanSet.add(e.getChangedBean());
@@ -715,7 +742,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
      */
     @Override
     public void intervalRemoved(AbstractProxyManager.ManagerDataEvent<E> e) {
-        updateOrderList();
         recomputeNamedBeanSet();
 
         if (muted) return;
@@ -735,6 +761,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
     private boolean muted = false;
     /** {@inheritDoc} */
+    @Override
     public void setDataListenerMute(boolean m) {
         if (muted && !m) {
             // send a total update, as we haven't kept track of specifics
@@ -748,4 +775,5 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(AbstractProxyManager.class);
+
 }

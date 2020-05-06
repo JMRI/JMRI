@@ -1,23 +1,13 @@
 package jmri.jmrit.logix;
 
 import java.awt.GraphicsEnvironment;
-import java.io.File;
-
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.rules.RetryRule;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
@@ -33,7 +23,6 @@ public class WarrantTableFrameTest {
         JUnitUtil.dispose(t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -43,6 +32,7 @@ public class WarrantTableFrameTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

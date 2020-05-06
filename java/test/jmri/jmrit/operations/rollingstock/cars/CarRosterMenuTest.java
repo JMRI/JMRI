@@ -1,15 +1,18 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsTestCase;
-import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
 
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
+
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class CarRosterMenuTest extends OperationsTestCase {
 
@@ -20,6 +23,7 @@ public class CarRosterMenuTest extends OperationsTestCase {
         CarRosterMenu t = new CarRosterMenu("test menu",1,ctf);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(ctf);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CarRosterMenuTest.class);

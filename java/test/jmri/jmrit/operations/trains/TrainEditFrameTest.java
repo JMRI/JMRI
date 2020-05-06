@@ -497,9 +497,10 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertTrue("Train status", train1.isBuilt());
 
         JUnitUtil.dispose(trainEditFrame);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

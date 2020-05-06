@@ -9,7 +9,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TamsProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -27,7 +27,6 @@ public class TamsProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 ((TamsProgrammer)programmer).getBestMode());        
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -41,6 +40,7 @@ public class TamsProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Override
     public void tearDown() {
         programmer = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

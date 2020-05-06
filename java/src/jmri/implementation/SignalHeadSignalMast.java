@@ -3,6 +3,7 @@ package jmri.implementation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
@@ -38,7 +39,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
-public class SignalHeadSignalMast extends AbstractSignalMast implements java.beans.VetoableChangeListener {
+public class SignalHeadSignalMast extends AbstractSignalMast {
 
     public SignalHeadSignalMast(String systemName, String userName) {
         super(systemName, userName);
@@ -109,7 +110,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
     }
 
     @Override
-    public void setAspect(String aspect) {
+    public void setAspect(@Nonnull String aspect) {
         // check it's a choice
         if (!map.checkAspect(aspect)) {
             // not a valid aspect
@@ -161,7 +162,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
         return heads;
     }
 
-    //taken out of the defaultsignalappearancemap
+    // taken out of the defaultsignalappearancemap
     public void setAppearances(String aspect) {
         if (map == null) {
             log.error("No appearance map defined, unable to set appearance {}", getDisplayName());
@@ -219,7 +220,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
             }
         }
         if (delay != 0) {
-            //If a delay is required we will fire this off into a seperate thread and let it get on with it.
+            // If a delay is required we will fire this off into a seperate thread and let it get on with it.
             final HashMap<SignalHead, Integer> thrDelayedSet = delayedSet;
             final int thrDelay = delay;
             Runnable r = new Runnable() {
@@ -228,7 +229,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
                     setDelayedAppearances(thrDelayedSet, thrDelay);
                 }
             };
-            Thread thr = new Thread(r);
+            Thread thr = jmri.util.ThreadingUtil.newThread(r);
             thr.setName(getDisplayName() + " delayed set appearance");
             thr.setDaemon(true);
             try {
@@ -258,7 +259,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
                 }
             };
 
-            Thread thr = new Thread(r);
+            Thread thr = jmri.util.ThreadingUtil.newThread(r);
             thr.setName(getDisplayName());
             thr.setDaemon(true);
             try {
@@ -300,7 +301,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
-        if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
+        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
             if (nb instanceof SignalHead) {
                 for (NamedBeanHandle<SignalHead> bean : getHeadsUsed()) {
                     if (bean.getBean().equals(nb)) {

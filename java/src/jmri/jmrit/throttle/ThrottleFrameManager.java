@@ -44,18 +44,6 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
     }
 
     /**
-     * Get the singleton instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static ThrottleFrameManager instance() {
-        return InstanceManager.getDefault(ThrottleFrameManager.class);
-    }
-
-    /**
      * Tell this manager that a new ThrottleWindow was created.
      *
      * @return The newly created ThrottleWindow

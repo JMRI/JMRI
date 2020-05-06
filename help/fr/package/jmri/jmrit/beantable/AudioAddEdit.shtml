@@ -14,12 +14,11 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
 <div id="mainContent">
 
-<H1>Ajout/Modification des Objets Audio</H1>
+<h1>Ajout/Modification des Objets Audio</h1>
 
 Pour cr&#233;er un objet audio, cliquez sur le bouton
 "Ajouter ..." 
@@ -46,12 +45,12 @@ diff&#233;rents types.
 <p>
 Le nom utilisateur est facultatif, mais si on leur en donne un, il doit &#234;tre unique.
 
-<p>Retour &#224; la page d'<a href="AudioTable.shtml">Aide Tableau Audio<a>.</p>
+<p>Retour &#224; la page d'<a href="AudioTable.shtml">Aide Tableau Audio</a>.</p>
 <p>
 Pour plus d'informations sur les objets audio, consultez la
 <a href="../../../../html/tools/Audio.shtml"> page d'aide audio</a>.
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

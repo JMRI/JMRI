@@ -3,7 +3,6 @@ package jmri.jmrix.internal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
 
 /**
  * Provides a dummy Adapter to allow the system connection memo and multiple
@@ -11,8 +10,7 @@ import java.util.Arrays;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
-public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
-        implements jmri.jmrix.PortAdapter {
+public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController {
 
     // private control members
     private boolean opened = false;

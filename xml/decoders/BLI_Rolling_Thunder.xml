@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: BLI_Blueline_Paragon2_Steam.xml 29062 2015-04-11 03:53:07Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,10 +13,15 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20151016"/>
+  <version author="Michael Mosher" version="2" lastUpdated="20200108"/>
   <!-- Version 1 New file from 0.3 manual -->
+  <!-- Version 2 Add Reciever to model name -->
   <decoder>
     <family name="Paragon 3" mfg="Broadway Limited Imports, LLC">
-      <model model="Rolling Thunder" >
+      <model model="Rolling Thunder Receiver" comment="Device that connects to Subwoofer">
+        <versionCV lowVersionID="0" highVersionID="31"/>
+      </model>
+      <model show="no" model="Rolling Thunder" >
         <versionCV lowVersionID="0" highVersionID="31"/>
       </model>
     </family>

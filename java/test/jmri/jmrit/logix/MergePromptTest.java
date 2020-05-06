@@ -1,17 +1,16 @@
 package jmri.jmrit.logix;
 
 import org.junit.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.GraphicsEnvironment;
 import java.util.HashMap;
+import java.util.Map;
+
 import org.netbeans.jemmy.operators.JDialogOperator;
-import org.junit.Rule;
 import org.junit.rules.Timeout;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MergePromptTest {
 
@@ -32,12 +31,11 @@ public class MergePromptTest {
         t.start();
 
         MergePrompt m = new MergePrompt("Merge Prompt CTor Test",new HashMap<String,Boolean>(),
-                        new HashMap<String, HashMap<Integer,Boolean>>());
+                        new HashMap<String, Map<Integer,Boolean>>());
         Assert.assertNotNull("exists",m);
         m.dispose();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

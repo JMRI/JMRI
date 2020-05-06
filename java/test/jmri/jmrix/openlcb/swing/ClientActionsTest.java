@@ -13,7 +13,7 @@ import org.openlcb.can.CanInterface;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ClientActionsTest {
 
@@ -34,7 +34,6 @@ public class ClientActionsTest {
         jmri.util.JUnitAppender.suppressWarnMessage("ool did not terminate");
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -43,7 +42,9 @@ public class ClientActionsTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ClientActionsTest.class);

@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Tests for the Jmri package LnPowerManager.
  *
- * @author	Bob Jacobsen Copyright 2001
+ * @author Bob Jacobsen Copyright 2001
  */
 public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
 
@@ -150,6 +150,7 @@ public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
     }
 
     @Test
+    @Override
     public void testSetPowerIdle() throws JmriException {
         memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS200, false, false, false);
         Assert.assertTrue("LocoNet implements IDLE", p.implementsIdle());

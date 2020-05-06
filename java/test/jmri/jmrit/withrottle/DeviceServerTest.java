@@ -8,7 +8,7 @@ import org.junit.*;
 /**
  * Test simple functioning of DeviceServer
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class DeviceServerTest {
 
@@ -33,6 +33,7 @@ public class DeviceServerTest {
     
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 }

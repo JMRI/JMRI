@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * DCCppSensorManagerXmlTest.java
  *
- * Description: tests for the DCCppSensorManagerXml class
+ * Test for the DCCppSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class DCCppSensorManagerXmlTest {
       Assert.assertNotNull("DCCppSensorManagerXml constructor",new DCCppSensorManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

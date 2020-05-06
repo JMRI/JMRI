@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import java.util.Arrays;
 import java.util.Collection;
 import javax.swing.JFrame;
+
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -11,7 +12,6 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 import org.junit.runner.RunWith;
 
 /**
@@ -75,7 +75,8 @@ public class EditorIconFrameTest {
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+       JUnitUtil.resetProfileManager();
+       JUnitUtil.initInternalSignalHeadManager();
        if(!GraphicsEnvironment.isHeadless()) {
           e = new EditorScaffold(inputString + " IconAdder test Editor");
           e.setVisible(true);
@@ -90,6 +91,7 @@ public class EditorIconFrameTest {
           JUnitUtil.dispose(e);
        }
        e = null;
+       JUnitUtil.deregisterBlockManagerShutdownTask();
        JUnitUtil.tearDown();
     }
 

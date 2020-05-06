@@ -24,9 +24,9 @@ import org.slf4j.LoggerFactory;
  * Update are executed from the NodeTableManager. This class was derived from
  * the NodeConfig class.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
- * @author	Dave Duchamp Copyright (C) 2004
- * @author	Chuck Catania Copyright (C) 2013, 2014, 2015, 2016, 2017, 2018
+ * @author Bob Jacobsen Copyright (C) 2004
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Chuck Catania Copyright (C) 2013, 2014, 2015, 2016, 2017, 2018
  */
 public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
@@ -52,8 +52,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     protected JTable nodeTable = null;
 
     // button pane items
-    JButton addButton = new JButton(Bundle.getMessage("AddButtonText"));
-    JButton doneButton = new JButton(Bundle.getMessage("DoneButtonText"));
+    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
+    JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
     JButton printButton = new JButton(Bundle.getMessage("PrintButtonText"));
 
     NodeConfigManagerFrame curFrame;
@@ -336,7 +336,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         try {
             f.initNodeConfigWindow();
         } catch (Exception ex) {
-            log.info("addButtonActionPerformed Exception-C2: " + ex.toString());
+            log.info("addButtonActionPerformed Exception-C2: {}", ex.toString());
         }
         f.nodeTableModel = nodeTableModel;
         f.initNodeVariables();
@@ -433,7 +433,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             f.initComponents();
             f.displayNodeIOBits(selectedNodeAddr);
         } catch (Exception ex) {
-            log.info("infoActionSelected Exception-C2: " + ex.toString());
+            log.info("infoActionSelected Exception-C2: {}", ex.toString());
 
         }
         f.setLocation(100, 100);
@@ -505,10 +505,12 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public int getColumnCount() {
             return NUM_COLUMNS;
         }
 
+        @Override
         public int getRowCount() {
             return cmriNode.size();
         }
@@ -541,11 +543,12 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     deleteActionSelected();
                 }
             } else {
-                log.info("setValueAt Row" + row + " value " + value);
+                log.info("setValueAt Row{} value {}", row, value);
             }
             fireTableDataChanged();
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             switch (c) {
                 case NODENUM_COLUMN:
@@ -603,7 +606,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         public static final int NODEDESC_COLUMN = 8;
         public static final int NUM_COLUMNS = NODEDESC_COLUMN + 1;
 
-//        private String[] pollStatus = {"ERROR","IDLE","POLLING","TIMEOUT","SLOW POLL"};
+//        private String[] pollStatus = {"ERROR", "IDLE", "POLLING", "TIMEOUT", "SLOW POLL"};
         /**
          * Method to print or print preview the assignment table. Printed in
          * proportionately sized columns across the page with headings and
@@ -822,6 +825,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
          * Here add code for other types of nodes
          */
         nodeTypeBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent event) {
                 String s = (String) nodeTypeBox.getSelectedItem();
 
@@ -915,6 +919,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
          */
 
         cardSizeBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent event) {
                 String s = (String) cardSizeBox.getSelectedItem();
                 if (s.equals(Bundle.getMessage("CardSize24"))) {
@@ -1321,7 +1326,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         // reset text displays after succefully adding node
         resetNotes();
         changedNode = true;
-        log.info("changedNode = "+changedNode);
+        log.info("changedNode = {}", changedNode);
         // provide user feedback
         statusText1.setText(Bundle.getMessage("FeedBackAdd") + " " + Integer.toString(nodeAddress));
         statusText2.setVisible(false);
@@ -1753,9 +1758,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 }
                 // consistency check
                 if (numSet != num2LSearchLights) {
-                    log.error("Inconsistent numbers of 2-lead searchlights. numSet = "
-                            + Integer.toString(numSet) + ", num2LSearchLights = "
-                            + Integer.toString(num2LSearchLights));
+                    log.error("Inconsistent numbers of 2-lead searchlights. numSet = {}, num2LSearchLights = {}", Integer.toString(numSet), Integer.toString(num2LSearchLights));
                 }
 
                 // Force created node to be polled as the default
@@ -1779,7 +1782,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                         curNode.setCardTypeByAddress(i, SerialNode.OUTPUT_CARD);
                         numOutput++;
                     } else {
-                        log.error("Unexpected card type - " + cardType[i]);
+                        log.error("Unexpected card type - {}", cardType[i]);
                     }
                 }
                 // consistency check
@@ -1810,7 +1813,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                         curNode.setCardTypeByAddress(i, SerialNode.OUTPUT_CARD);
                         numOutput++;
                     } else {
-                        log.error("Unexpected card type - " + cardType[i]);
+                        log.error("Unexpected card type - {}", cardType[i]);
                     }
                 }
 
@@ -1844,7 +1847,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                         curNode.setCardTypeByAddress(i, SerialNode.OUTPUT_CARD);
                         numOutput++;
                     } else {
-                        log.error("Unexpected card type - " + onBoardType[i]);
+                        log.error("Unexpected card type - {}", onBoardType[i]);
                     }
                 }
 
@@ -1860,7 +1863,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                         curNode.setCardTypeByAddress(i, SerialNode.OUTPUT_CARD);
                         numOutput++;
                     } else {
-                        log.error("Unexpected card type - " + cardType[i]);
+                        log.error("Unexpected card type - {}", cardType[i]);
                     }
                 }
 
@@ -1876,7 +1879,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 break;
 
             default:
-                log.error("Unexpected node type in setNodeParameters- " + Integer.toString(nodeType));
+                log.error("Unexpected node type in setNodeParameters- {}", Integer.toString(nodeType));
                 break;
         }
 
@@ -2397,7 +2400,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         public static final int CARDNUM_COLUMN = 1;
         public static final int CARDTYPE_COLUMN = 2;
     }
-    private final String[] cpnodeConfigColumnNames = {"Card","IOX Addr Port", "Port Type"};
+    private final String[] cpnodeConfigColumnNames = {"Card", "IOX Addr Port", "Port Type"};
 
     /**
      * Set up table for selecting card type by address for CPNODE/CPMEGA nodes

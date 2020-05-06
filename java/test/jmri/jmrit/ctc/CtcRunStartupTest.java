@@ -6,19 +6,14 @@ import org.junit.*;
 import org.junit.rules.ExpectedException;
 
 /**
- * Tests for the CtcRunStartup Class
+ * Tests for the CtcRunStartup Class.
+ *
  * @author Dave Sand Copyright (C) 2019
  */
 public class CtcRunStartupTest {
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
-
-    @Test
-    public void testCreate() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        new CtcRunStartup();
-    }
 
     @Test
     public void testGetTitle() {

@@ -511,16 +511,6 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     /**
      *
      * @param adaptermemo the SystemConnectionMemo to associate with this TrafficController
-     * @deprecated Since 4.13.5 duplicate of setAdapterMemo
-     */
-    @Deprecated
-    public void setSystemConnectionMemo(NceSystemConnectionMemo adaptermemo) {
-        memo = adaptermemo;
-    }
-
-    /**
-     *
-     * @param adaptermemo the SystemConnectionMemo to associate with this TrafficController
      */
     public void setAdapterMemo(NceSystemConnectionMemo adaptermemo) {
         memo = adaptermemo;

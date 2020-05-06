@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of StreamConfigPane 
  *
- * @author	Paul Bender Copyright (C) 2018
+ * @author Paul Bender Copyright (C) 2018
  */
 public class StreamConfigPaneTest {
 
@@ -43,6 +43,8 @@ public class StreamConfigPaneTest {
     public void tearDown() {
         node = null;
         tc = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 }

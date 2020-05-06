@@ -12,7 +12,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 abstract public class AbstractConsistManagerTestBase {
 
@@ -131,20 +131,20 @@ abstract public class AbstractConsistManagerTestBase {
     }
 
     @Test(expected=java.lang.IllegalArgumentException.class)
-    public void testGetConsistLocoAddress(){
+    public void testGetConsistLocoAddress() {
         // getConsist with a LocoAddress object typically throws an error
-	// (There are no current impemenations for non-DCC systems)
-        LocoAddress addr = new LocoAddress(){
-	    @Override
-	    public int getNumber(){
+        // (There are no current impemenations for non-DCC systems)
+        LocoAddress addr = new LocoAddress() {
+            @Override
+            public int getNumber() {
                 return 42;
-	    }
+            }
 
-	    @Override
-            public Protocol getProtocol(){
+            @Override
+            public Protocol getProtocol() {
                 return jmri.LocoAddress.Protocol.M4;
-	    }
-	};
+            }
+        };
         cm.getConsist(addr);
     }
 

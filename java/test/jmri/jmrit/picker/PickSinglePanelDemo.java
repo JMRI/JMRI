@@ -13,7 +13,7 @@ import jmri.util.JUnitUtil;
 /**
  * Demo for exploring operation of the PickSinglePanel class
  *
- * @author	Bob Jacobsen Copyright 2017
+ * @author Bob Jacobsen Copyright 2017
  */
 public class PickSinglePanelDemo implements ListSelectionListener {
 
@@ -42,7 +42,7 @@ public class PickSinglePanelDemo implements ListSelectionListener {
         m.provideSensor("8");
         m.provideSensor("9");
 
-        tableModel = PickListModel.sensorPickModelInstance(); // N11N
+        tableModel = PickListModel.sensorPickModelInstance();
         panel = new PickSinglePanel<Sensor>(tableModel);
 
         // add a listener

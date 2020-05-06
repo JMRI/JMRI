@@ -4,26 +4,22 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineLengths;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineModels;
-import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
+import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for adding and editing the engine roster for operations.
@@ -165,7 +161,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
         }
         String[] item = {itemName};
         if (_comboboxName.equals(TYPE)) {
-            item = itemName.split("-");
+            item = itemName.split(TrainCommon.HYPHEN);
         }
         if (item[0].length() > Control.max_len_string_attibute) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("engineAttribute"),
@@ -341,7 +337,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
         InstanceManager.getDefault(EngineLengths.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
         engineManager.removePropertyChangeListener(this);
-        firePcs(DISPOSE, _comboboxName, null);
+        firePropertyChange(DISPOSE, _comboboxName, null);
         super.dispose();
     }
 
@@ -369,24 +365,6 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
         if (e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH_CHANGED_PROPERTY)) {
             engineManager.updateConsistComboBox(comboBox);
         }
-    }
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    // note firePropertyChange occurs during frame creation
-    private void firePcs(String p, Object old, Object n) {
-        log.debug("EngineAttribute firePropertyChange {}", p);
-        pcs.firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(EngineAttributeEditFrame.class);

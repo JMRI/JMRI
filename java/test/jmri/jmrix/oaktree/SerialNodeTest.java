@@ -11,8 +11,8 @@ import org.junit.Assert;
 /**
  * JUnit tests for the SerialNode class
  *
- * @author	Bob Jacobsen Copyright 2003
- * @author	Dave Duchamp multi-node extensions 2003
+ * @author Bob Jacobsen Copyright 2003
+ * @author Dave Duchamp multi-node extensions 2003
  */
 public class SerialNodeTest {
 
@@ -99,7 +99,9 @@ public class SerialNodeTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

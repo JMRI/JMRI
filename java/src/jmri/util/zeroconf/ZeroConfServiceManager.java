@@ -304,18 +304,21 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
             log.warn("ZeroConfService stop threads interrupted.", ex);
         }
         CountDownLatch nsLatch = new CountDownLatch(getDNSes().size());
-        new HashMap<>(getDNSes()).values().parallelStream().forEach((dns) -> {
-            new Thread(() -> {
-                dns.unregisterAllServices();
-                if (close) {
-                    try {
-                        dns.close();
-                    } catch (IOException ex) {
-                        log.debug("jmdns.close() returned IOException: {}", ex.getMessage());
+        new HashMap<>(getDNSes()).values().parallelStream().forEach(dns -> {
+            jmri.util.ThreadingUtil.newThread(
+                () -> {
+                    dns.unregisterAllServices();
+                    if (close) {
+                        try {
+                            dns.close();
+                        } catch (IOException ex) {
+                            log.debug("jmdns.close() returned IOException: {}", ex.getMessage());
+                        }
                     }
-                }
-                nsLatch.countDown();
-            }).start();
+                    nsLatch.countDown();
+                }, 
+                "dns.close in ZeroConfServiceManager#stopAll")
+            .start();
         });
         try {
             zcLatch.await();
@@ -358,7 +361,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                                 try {
                                     JMDNS_SERVICES.put(address, JmDNS.create(address, name));
                                 } catch (IOException ex) {
-                                    log.warn("Unable to create JmDNS with error: {}", ex.getMessage(), ex);
+                                    log.warn("Unable to create JmDNS with error", ex);
                                 }
                             }
                         }
@@ -369,9 +372,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
             } catch (SocketException ex) {
                 log.error("Unable to get network interfaces.", ex);
             }
-            InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
-                manager.register(shutDownTask);
-            });
+            InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
         }
         return new HashMap<>(JMDNS_SERVICES);
     }
@@ -541,9 +542,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     @Override
     public void dispose() {
         dispose(this);
-        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
-            manager.deregister(shutDownTask);
-        });
+        InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
     }
 
     private static void dispose(ZeroConfServiceManager manager) {
@@ -627,10 +626,13 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
 
         @Override
         public boolean execute() {
-            new Thread(() -> {
-                dispose(manager);
-                this.isComplete = true;
-            }, "ZeroConfServiceManager ShutDownTask").start();
+            jmri.util.ThreadingUtil.newThread(
+                () -> {
+                    dispose(manager);
+                    this.isComplete = true;
+                },
+                "ZeroConfServiceManager ShutDownTask")
+            .start();
             return true;
         }
 

@@ -7,14 +7,13 @@ import org.junit.Before;
 /**
  * SRCPThrottleManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPThrottleManager class
+ * Test for the jmri.jmrix.srcp.SRCPThrottleManager class
  *
- * @author	Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2016	
+ * @author Bob Jacobsen
+ * @author      Paul Bender Copyright (C) 2016
  */
 public class SRCPThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -30,6 +29,7 @@ public class SRCPThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 }

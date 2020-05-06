@@ -6,7 +6,7 @@ import org.junit.*;
 /**
  * Tests for the Jmrit PowerPanel
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class PowerPaneTest extends jmri.util.swing.JmriPanelTest {
 
@@ -21,6 +21,7 @@ public class PowerPaneTest extends jmri.util.swing.JmriPanelTest {
         title=Bundle.getMessage("TitlePowerPanel");
     }
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -177,6 +177,24 @@ public class LocoNetSlot {
     public boolean isForward() {
         return 0 == (dirf & LnConstants.DIRF_DIR);
     }
+    
+    private boolean[] getFuncArray() {
+        return new boolean[]{isF0(),isF1(),isF2(),isF3(),isF4(),isF5(),isF6(),isF7(),isF8(),
+            isF9(),isF10(),isF11(),isF12(),isF13(),isF14(),isF15(),isF16(),isF17(),isF18(),
+            isF19(),isF20(),isF21(),isF22(),isF23(),isF24(),isF25(),isF26(),isF27(),isF28()};
+    }
+    
+    /**
+     * Return a slot Function state.
+     * <p>
+     * See individual Functions for meanings.
+     *
+     * @param Fn Function number, 0-28
+     * @return true if Function is "on", else false
+     */
+    public boolean isFunction(int Fn){
+        return getFuncArray()[Fn];
+    }
 
     /**
      * Returns the slot's F0 state
@@ -755,8 +773,7 @@ public class LocoNetSlot {
                     return;  // not an appropriate reply
                 }            // valid, so fill contents
                 if (slot != l.getElement(2)) {
-                    log.error("Asked to handle message not for this slot ("
-                            + slot + ") " + l);
+                    log.error("Asked to handle message not for this slot ({}) {}", slot, l);
                 }
                 stat = l.getElement(3);
                 _pcmd = l.getElement(4);
@@ -774,7 +791,7 @@ public class LocoNetSlot {
             }
             case LnConstants.OPC_SLOT_STAT1:
                 if (slot != l.getElement(1)) {
-                    log.error("Asked to handle message not for this slot " + l);
+                    log.error("Asked to handle message not for this slot {}", l);
                 }
                 stat = l.getElement(2);
                 notifySlotListeners();
@@ -1117,7 +1134,7 @@ public class LocoNetSlot {
         // TODO: consider throwing a LocoNetException if issued for a slot other
         // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("getFcDays invalid for slot " + getSlot());
+            log.error("getFcDays invalid for slot {}", getSlot());
         }
         return (addr & 0x3f80) / 0x80;
     }
@@ -1136,7 +1153,7 @@ public class LocoNetSlot {
         // TODO: consider throwing a LocoNetException if issued for a slot other
         // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("setFcDays invalid for slot " + getSlot());
+            log.error("setFcDays invalid for slot {}", getSlot());
         }
         addr = val * 128 + (addr & 0x7f);
     }
@@ -1152,7 +1169,7 @@ public class LocoNetSlot {
         // TODO: consider throwing a LocoNetException if issued for a slot other
         // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("getFcHours invalid for slot " + getSlot());
+            log.error("getFcHours invalid for slot {}", getSlot());
         }
         int temp = ((256 - ss2) & 0x7F) % 24;
         return (24 - temp) % 24;
@@ -1172,7 +1189,7 @@ public class LocoNetSlot {
         // TODO: consider throwing a LocoNetException if issued for a slot other
         // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("setFcHours invalid for slot " + getSlot());
+            log.error("setFcHours invalid for slot {}", getSlot());
         }
         ss2 = (256 - (24 - val)) & 0x7F;
     }
@@ -1188,7 +1205,7 @@ public class LocoNetSlot {
         // TODO: consider throwing a LocoNetException if issued for a slot other
         // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("getFcMinutes invalid for slot " + getSlot());
+            log.error("getFcMinutes invalid for slot {}", getSlot());
         }
         int temp = ((255 - dirf) & 0x7F) % 60;
         return (60 - temp) % 60;
@@ -1208,7 +1225,7 @@ public class LocoNetSlot {
         // TODO: consider throwing a LocoNetException if issued for a slot other
         // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("setFcMinutes invalid for slot " + getSlot());
+            log.error("setFcMinutes invalid for slot {}", getSlot());
         }
         dirf = (255 - (60 - val)) & 0x7F;
     }
@@ -1227,7 +1244,7 @@ public class LocoNetSlot {
         // TODO: consider throwing a LocoNetException if issued for a slot other
         // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("getFcFracMins invalid for slot " + getSlot());
+            log.error("getFcFracMins invalid for slot {}", getSlot());
         }
         return 0x3FFF - ((addr & 0x7F) | ((spd & 0x7F) << 7));
     }
@@ -1246,7 +1263,7 @@ public class LocoNetSlot {
         // TODO: consider throwing a LocoNetException if issued for a slot other
         // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("setFcFracMins invalid for slot " + getSlot());
+            log.error("setFcFracMins invalid for slot {}", getSlot());
         }
         int temp = 0x3FFF - val;
         addr = addr | (temp & 0x7F);
@@ -1264,7 +1281,7 @@ public class LocoNetSlot {
         // TODO: consider throwing a LocoNetException if issued for a slot other
         // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("getFcRate invalid for slot " + getSlot());
+            log.error("getFcRate invalid for slot {}", getSlot());
         }
         return stat;
     }
@@ -1283,7 +1300,7 @@ public class LocoNetSlot {
         // TODO: consider throwing a LocoNetException if issued for a slot other
         // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("setFcRate invalid for slot " + getSlot());
+            log.error("setFcRate invalid for slot {}", getSlot());
         }
         stat = val & 0x7F;
     }

@@ -18,8 +18,8 @@ import jmri.implementation.AbstractSignalMast;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 public final class SignalDirectionIndicators implements SignalDirectionIndicatorsInterface {
-    static HashSet<NBHAbstractSignalCommon> _mSignalsUsed = new HashSet<NBHAbstractSignalCommon>();
-    public static void resetSignalsUsed() { _mSignalsUsed = new HashSet<NBHAbstractSignalCommon>(); }
+    static final HashSet<NBHAbstractSignalCommon> _mSignalsUsed = new HashSet<>();
+    public static void resetSignalsUsed() { _mSignalsUsed.clear(); }
     private NBHSensor _mLeftSensor;
     private NBHSensor _mNormalSensor;
     private NBHSensor _mRightSensor;
@@ -34,8 +34,9 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
     private final ActionListener _mCodingTimeTimerActionListener;
     private int _mPresentDirection;
     private CodeButtonHandler _mCodeButtonHandler = null;
+    @Override
     public void setCodeButtonHandler(CodeButtonHandler codeButtonHandler) { _mCodeButtonHandler = codeButtonHandler; }
-    
+
     private LinkedList<SignalHeadPropertyChangeListenerMaintainer> _mSignalHeadPropertyChangeListenerLinkedList = new LinkedList<>();
     @SuppressWarnings("LeakingThisInConstructor")   // NOI18N
     private class SignalHeadPropertyChangeListenerMaintainer {
@@ -50,19 +51,19 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
             _mSignal.removePropertyChangeListener(_mPropertyChangeListener);
         }
     }
-    
+
 /*  From: https://docs.oracle.com/javase/tutorial/collections/implementations/list.html
     CopyOnWriteArrayList is a List implementation backed up by a copy-on-write array.
     This implementation is similar in nature to CopyOnWriteArraySet. No synchronization
-    is necessary, even during iteration, and iterators are guaranteed never to throw 
+    is necessary, even during iteration, and iterators are guaranteed never to throw
     ConcurrentModificationException. This implementation is well suited to maintaining
     event-handler lists, in which change is infrequent, and traversal is frequent and
     potentially time-consuming.
-*/    
+*/
 //  private final CopyOnWriteArrayList<TrafficDirection> _mTimeLockingChangeObservers = new CopyOnWriteArrayList<>();
-    
-    public SignalDirectionIndicators(   String userIdentifier, 
-                                        String leftSensor, 
+
+    public SignalDirectionIndicators(   String userIdentifier,
+                                        String leftSensor,
                                         String normalSensor,
                                         String rightSensor,
                                         int codingTimeInMilliseconds,
@@ -70,7 +71,7 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
                                         String signalListLeftRightCSV,
                                         String signalListRightLeftCSV,
                                         Fleeting fleetingObject) {
-        
+
 // We need to give time to the ABS system to set signals.  See CALL to routine "allSignalsRedSetThemAllHeld", comments above that line:
         if (codingTimeInMilliseconds < 100) codingTimeInMilliseconds = 100;
         _mTimeLockingTimerActionListener = (ActionEvent) -> { timeLockingDone(); };
@@ -83,7 +84,7 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
             _mLeftSensor = new NBHSensor("SignalDirectionIndicators",  userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsLeftSensor"), leftSensor, true);         // NOI18N
             _mNormalSensor = new NBHSensor("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsNormalSensor"), normalSensor, false);   // NOI18N
             _mRightSensor = new NBHSensor("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsRightSensor"), rightSensor, true);       // NOI18N
-//  Partially plagerized from GUI code:           
+//  Partially plagerized from GUI code:
             boolean leftInternalSensorPresent = _mLeftSensor.valid();
             boolean entriesInLeftRightTrafficSignalsCSVList = !signalListLeftRightCSV.isEmpty();
             boolean rightInternalSensorPresent = _mRightSensor.valid();
@@ -115,7 +116,7 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
           }
           catch (CTCException e) { e.logError(); return; }
     }
-    
+
     @Override
     public void removeAllListeners() {
         _mCodingTimeTimer.stop();       // Safety:
@@ -126,28 +127,28 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
             signalHeadPropertyChangeListenerMaintainer.removePropertyChangeListener();
         });
     }
-    
+
     @Override
     public boolean isNonfunctionalObject() { return false; }
-    
+
     @Override
     public void setPresentSignalDirectionLever(int presentSignalDirectionLever) { _mPresentSignalDirectionLever = presentSignalDirectionLever; }
-    
+
     @Override
     public boolean isRunningTime() { return _mTimeLockingTimer.isRunning(); }
-    
+
     @Override
     public void osSectionBecameOccupied() {
         _mCodingTimeTimer.stop();
         _mTimeLockingTimer.stop();      // MUST be done before the next line:
         possiblyUpdateSignalIndicationSensors();
     }
-    
+
     @Override
     public void codeButtonPressed(int requestedDirection, boolean requestedChangeInSignalDirection) {
 // Valid to process:
         _mCodingTimeTimer.stop();
-        _mRequestedDirectionObserver.setRequestedDirection(requestedDirection);
+        _mRequestedDirectionObserver.setRequestedDirection(requestedDirection);         // Superfluous since "setSignalsHeldto" does the same, but I'll leave it here
         if (requestedDirection == CTCConstants.SIGNALSNORMAL) {     // Wants ALL STOP.
             if (_mPresentDirection != CTCConstants.SIGNALSNORMAL) { // And is NOT all stop, run time:
                 _mTimeLockingTimer.start();
@@ -156,40 +157,40 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
         }
 // ONLY start the coding timer IF we aren't running time.
         if (!isRunningTime()) { startCodingTime(); }
-        if (requestedChangeInSignalDirection) setSignalDirectionIndicatorsToOUTOFCORRESPONDENCE(); 
+        if (requestedChangeInSignalDirection) setSignalDirectionIndicatorsToOUTOFCORRESPONDENCE();
         setSignalsHeldTo(requestedDirection);
     }
-    
+
     @Override
     public void startCodingTime() {
         _mCodingTimeTimer.start();
     }
-    
+
     @Override
     public boolean signalsNormal() {
         return _mPresentDirection == CTCConstants.SIGNALSNORMAL;
     }
-    
+
     @Override
     public boolean signalsNormalOrOutOfCorrespondence() {
         return _mPresentDirection == CTCConstants.SIGNALSNORMAL || _mPresentDirection == CTCConstants.OUTOFCORRESPONDENCE;
     }
-    
+
     @Override
     public int getPresentDirection() {
         return _mPresentDirection;
     }
-    
+
     @Override
     public boolean inCorrespondence() {
         return _mPresentDirection != CTCConstants.OUTOFCORRESPONDENCE;
     }
-    
+
     @Override
     public void forceAllSignalsToHeld() {
         setSignalsHeldTo(CTCConstants.SIGNALSNORMAL);
     }
-    
+
     @Override
     public int getSignalsInTheFieldDirection() {
         boolean LRCanGo = false;
@@ -209,16 +210,21 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
         if (RLCanGo) return CTCConstants.LEFTTRAFFIC;
         return CTCConstants.SIGNALSNORMAL;
     }
-    
+
     @Override
     public void setSignalDirectionIndicatorsToOUTOFCORRESPONDENCE() {
         setSignalDirectionIndicatorsToDirection(CTCConstants.OUTOFCORRESPONDENCE);
     }
-    
+
+    @Override
+    public void setRequestedDirection(int direction) {
+        _mRequestedDirectionObserver.setRequestedDirection(direction);
+    }
+
     private void addSignal(String userIdentifier, NBHAbstractSignalCommon signal) throws CTCException {
         if (!_mSignalsUsed.add(signal)) { throw new CTCException("SignalDirectionIndicators", userIdentifier, signal.getDisplayName(), Bundle.getMessage("SignalDirectionIndicatorsDuplicateHomeSignal")); }    // NOI18N
     }
-    
+
     private void setSignalsHeldTo(int direction) {
         switch (direction) {
             case CTCConstants.LEFTTRAFFIC:
@@ -236,7 +242,7 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
         }
         _mRequestedDirectionObserver.setRequestedDirection(direction);
     }
-    
+
     private void setRLSignalsHeldTo(boolean held) { _mSignalListRightLeft.forEach((signal) -> {
         signal.setHeld(held);
         });
@@ -249,7 +255,7 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
     private void setSignalDirectionIndicatorsToFieldSignalsState() {
         setSignalDirectionIndicatorsToDirection(getSignalsInTheFieldDirection());
     }
-    
+
     private void setSignalDirectionIndicatorsToDirection(int direction) {
         switch (direction) {
             case CTCConstants.RIGHTTRAFFIC:
@@ -275,13 +281,13 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
         }
         _mPresentDirection = direction;
     }
-    
+
     private void timeLockingDone() {
         setSignalDirectionIndicatorsToFieldSignalsState();  // They ALWAYS reflect the field, even if error!
         cancelLockedRoute();
     }
-    
-//  Called by "codingTime" object when it's timer fires:   
+
+//  Called by "codingTime" object when it's timer fires:
     private void codingTimeDone() {
         if (!isRunningTime()) { // Not running time, signals can change dynamically:
 /*
@@ -305,11 +311,11 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
             setSignalDirectionIndicatorsToFieldSignalsState();  // They ALWAYS reflect the field, even if error!
         }
     }
-    
+
     private void cancelLockedRoute() {
         if (_mCodeButtonHandler != null) { _mCodeButtonHandler.cancelLockedRoute(); }
     }
-    
+
 //  We return an indication of whether or not all signals are red.
 //  If true, then they all were red, else false.  If requestedDirection is not left or right, then default "true" (fail safe)!
     private boolean allSignalsRedSetThemAllHeld(int requestedDirection) {
@@ -333,7 +339,7 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
 
 /*  With the introduction of SignalMast objects, I had to modify this routine
     to support them ("changedToUniversalRed"):
-*/    
+*/
     private void handleSignalChange(PropertyChangeEvent e) {
         if (_mFleetingObject != null) {
             if (!_mFleetingObject.isFleetingEnabled()) {
@@ -360,7 +366,7 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
         }
         possiblyUpdateSignalIndicationSensors();
     }
-    
+
     private boolean changedToUniversalRed(PropertyChangeEvent e) {
         Object source = e.getSource();
         if (source instanceof AbstractSignalHead) {
@@ -375,7 +381,7 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
         }
         return false;   // If none of the above, don't know, assume not red.
     }
-    
+
     private void possiblyUpdateSignalIndicationSensors() {
         if (!_mCodingTimeTimer.isRunning() && !isRunningTime()) {   // Not waiting for coding time and not running time, signals can change dynamically:
             setSignalDirectionIndicatorsToFieldSignalsState();      // They ALWAYS reflect the field, even if error!

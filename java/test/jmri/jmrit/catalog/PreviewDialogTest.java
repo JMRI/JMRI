@@ -15,7 +15,6 @@ import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author pete cressman
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PreviewDialogTest {
 
@@ -38,6 +37,7 @@ public class PreviewDialogTest {
         PreviewDialog t = new PreviewDialog(jf,"catalogs",folder.getRoot(),new String[0]);
         Assert.assertNotNull("exists",t);
         t.dispose();
+        jf.dispose();
     }
 
     @Test
@@ -50,14 +50,29 @@ public class PreviewDialogTest {
         });
         JFileChooser chooser = JFileChooserOperator.waitJFileChooser();
         Assert.assertNotNull(" JFileChooser not found", chooser);
-        File file = FileUtil.getFile(FileUtil.getAbsoluteFilename("program:resources/icons"));
-        Assert.assertTrue(file.getPath()+" File does not exist", file.exists());
+
+        File dir = FileUtil.getFile(FileUtil.getAbsoluteFilename("program:resources/icons"));
+        Assert.assertTrue(dir.getPath()+" Test directory does not exist", dir.exists());
         new QueueTool().waitEmpty();
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
-            chooser.setCurrentDirectory(file);
+            chooser.setCurrentDirectory(dir);
         });
         new QueueTool().waitEmpty();
-        JUnitUtil.pressButton(chooser, "Open");
+
+        File file = FileUtil.getFile(FileUtil.getAbsoluteFilename("program:resources/icons/misc"));
+        Assert.assertTrue(file.getPath()+" Test file does not exist", file.exists());
+        new QueueTool().waitEmpty();
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+            chooser.setSelectedFile(file);
+        });
+        new QueueTool().waitEmpty();
+
+        // instead of locating the activate button, which can change, via
+        //   JUnitUtil.pressButton(chooser, "Choose");
+        // we directly fire the dialog
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+            chooser.approveSelection();
+        });
         new QueueTool().waitEmpty();
         log.debug("Mid testPreviewDialog: elapsed time = {}ms",(System.currentTimeMillis()-time));
 
@@ -85,15 +100,15 @@ public class PreviewDialogTest {
         log.debug("End testPreviewDialog: elapsed time = {}ms",(System.currentTimeMillis()-time));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(PreviewDialogTest.class.getName());

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the {@link jmri.jmrix.ztc.ztc611.ZTC611XNetTurnout} class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class ZTC611XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
 
@@ -24,7 +24,7 @@ public class ZTC611XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
         try {
             t.setCommandedState(jmri.Turnout.CLOSED);
         } catch (Exception e) {
-            log.error("TO exception: " + e);
+            log.error("TO exception: {}", e);
         }
 
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
@@ -46,7 +46,6 @@ public class ZTC611XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
         Assert.assertTrue(t.getKnownState() == jmri.Turnout.CLOSED);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -65,7 +64,9 @@ public class ZTC611XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
     public void tearDown() {
         t = null;
         lnis = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(ZTC611XNetTurnoutTest.class);

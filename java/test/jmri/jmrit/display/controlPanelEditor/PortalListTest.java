@@ -8,17 +8,16 @@ import org.junit.Before;
 import org.junit.Test;
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PortalListTest {
 
     @Test
     public void testCTor() {
-        PortalList t = new PortalList( new OBlock("OB1", "Test"));
+        PortalList t = new PortalList( new OBlock("OB1", "Test"), null);
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

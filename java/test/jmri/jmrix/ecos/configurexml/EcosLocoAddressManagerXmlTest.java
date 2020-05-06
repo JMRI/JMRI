@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * EcosLocoAddressManagerXmlTest.java
  *
- * Description: tests for the EcosLocoAddressManagerXml class
+ * Test for the EcosLocoAddressManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,10 +20,12 @@ public class EcosLocoAddressManagerXmlTest {
       Assert.assertNotNull("EcosLocoAddressManagerXml constructor",new EcosLocoAddressManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After

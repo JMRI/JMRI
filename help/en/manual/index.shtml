@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI Manual: Index</title><!-- Style -->
+  <title>JMRI Manual: Index</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,15 +15,14 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
@@ -224,7 +224,7 @@
       </p>
 
       <p>If this is your first visit to our manual, we suggest that
-      you take the Decoder Pro&reg; tour at <a href=
+      you take the DecoderPro&reg; tour at <a href=
       "http://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
       to get an overview of what we're about to cover.</p>
 
@@ -251,7 +251,7 @@
       "https://www.java.com/download/" target=
       "_blank">java.com/download</a>.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

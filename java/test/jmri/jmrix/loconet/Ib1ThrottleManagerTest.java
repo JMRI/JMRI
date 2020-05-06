@@ -6,7 +6,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class Ib1ThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
@@ -20,6 +20,7 @@ public class Ib1ThrottleManagerTest extends jmri.managers.AbstractThrottleManage
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new LocoNetSystemConnectionMemo();

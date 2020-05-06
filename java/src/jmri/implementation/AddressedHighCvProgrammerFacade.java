@@ -42,7 +42,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
         this.valueCV = valueCV;
         this.modulo = Integer.parseInt(modulo);
         _prog = prog;
-        log.debug("Created with " + prog + ", " + this.top + ", " + this.addrCVhigh + ", " + this.addrCVlow + ", " + this.valueCV + ", " + this.modulo);
+        log.debug("Created with {}, {}, {}, {}, {}, {}", prog, this.top, this.addrCVhigh, this.addrCVlow, this.valueCV, this.modulo);
     }
 
     int top;
@@ -136,7 +136,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     @Override
     public void programmingOpReply(int value, int status) {
         if (log.isDebugEnabled()) {
-            log.debug("notifyProgListenerEnd value " + value + " status " + status);
+            log.debug("notifyProgListenerEnd value {} status {}", value, status);
         }
 
         if (status != OK) {
@@ -197,7 +197,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
                 }
                 break;
             default:
-                log.error("Unexpected state on reply: " + state);
+                log.error("Unexpected state on reply: {}", state);
                 // clean up as much as possible
                 _usingProgrammer = null;
                 state = ProgState.NOTPROGRAMMING;

@@ -12,8 +12,8 @@ import org.junit.Test;
 /**
  * Test simple functioning of LnIPLImplementation
  *
- * @author	Paul Bender Copyright (C) 2016
- * @author	Bob Milhaupt Copyright (C) 2018
+ * @author Paul Bender Copyright (C) 2016
+ * @author Bob Milhaupt Copyright (C) 2018
  */
 public class LnIPLImplementationTest {
     jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo;

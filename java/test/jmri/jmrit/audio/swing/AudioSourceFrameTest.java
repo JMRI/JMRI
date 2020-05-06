@@ -6,11 +6,10 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AudioSourceFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -20,8 +19,8 @@ public class AudioSourceFrameTest extends jmri.util.JmriJFrameTestBase {
            // the second parameter should be an
            // jmri.jmrit.beantable.AudioTableAction.AudioSourceTableDataModel
            // object
-           frame = new AudioSourceFrame("Source Frame Test",null);
-	}
+           frame = new AudioSourceFrame("Source Frame Test", null);
+        }
     }
 
     @After

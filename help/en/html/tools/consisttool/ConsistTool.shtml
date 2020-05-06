@@ -18,9 +18,9 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
-<!--#include virtual="Sidebar" -->
+<!--#include virtual="Sidebar.shtml" -->
 <div id="mainContent">
 
 	<h1>JMRI: Consisting Tool</h1>
@@ -280,6 +280,48 @@
         is selected in this case, no consists will be created.
         </p>
 
+	<h4>Consists and the JMRI Roster</h4>
+
+        <p>
+        JMRI users sometimes create Advanced Consists using the programmer to 
+        set the value of CV19.  Begining with JMRI Version 4.17.3, the JMRI 
+        consisting tools provide some tools to synchronize the advanced 
+        consists created by programming with those of the  advanced 
+        </p>
+
+        <h5>Import From Roster</h5>
+
+        <p>
+        Users can import consists created with the programmer into the 
+        Consist Manager by selecting the <i>Scan Roster for Consists</i> 
+        option in the Consist Control's <i>File</i> menu.
+        </p>
+
+	    <img src="images/ConsistTool-ScanForConsists.png" alt="The Scan For Consists Option is a Choice in the Consist Control Window's file Menu" />
+
+        <p>
+        Once the scan completes, any consists discovered will be added to the 
+        list of consists available to the Consist Control.  Please note that 
+        this tool does not write the consists to the DCC system.
+        </p>
+
+        <h5>Keeping the Roster Synchronized</h5>
+        <p>
+        Users may choose to have JMRI update consist information in their roster
+        when creating and removing locomotives from Advanced Consists.  This 
+        optin is activated by checking the <i>Update CV19 in roster when 
+        modifying advanced consists</i> box in the <i>Consist Control</i> 
+        section of the JMRI preferences.
+        </p>
+
+	    <img src="images/ConsistControl-Preferences.png" alt="Preferences for the Consist Control" />
+
+        <p>
+        Selecting this option may cause a performance impact when modifying 
+        rosters, due to reading and writing the roster file.  This option is
+        disabled by default.
+        </p>
+
 	<a name="tool" id="tool">
 	</a><h2>Using the Consist Tool</h2>
 	<p>
@@ -393,7 +435,7 @@
 	<img src="images/ConsistTool-SelectConsist.png" alt="Select a Consist"
 		 height="83" width="353"/>
 
-	<!--#include virtual="/Footer" -->
+	<!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
 </body>

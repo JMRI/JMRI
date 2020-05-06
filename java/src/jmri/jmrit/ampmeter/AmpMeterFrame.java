@@ -1,32 +1,30 @@
 package jmri.jmrit.ampmeter;
 
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import jmri.InstanceManager;
 import jmri.MultiMeter;
-import jmri.MultiMeter.CurrentUnits;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
 
 /**
- * Frame providing a simple lcd-based display of track current.
+ * Frame providing a simple LCD-based display of track current.
  * <p>
- * A Run/Stop button is built into this, but because I don't like the way it
- * looks, it's not currently displayed in the GUI.
- *
  * @author Ken Cameron Copyright (C) 2007
  * @author Mark Underwood Copyright (C) 2007
+ * @author Andrew Crosland Copyright (C) 2020
  *
  * This was a direct steal form the LCDClock code by Ken Cameron, which was a
  * direct steal from the Nixie clock code, ver 1.2. Thank you Bob Jacobsen and
  * Ken Cameron.
+ * 
+ * [AC] The code had diverged from the clocks, with a new image scaling method
+ * which, unfortunately, did not work very well. It now takes account of the
+ * last saved window size and revalidates on each scaling (found to be neccessary
+ * on Raspberry Pis.
  */
 public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -37,9 +35,8 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
     JLabel milliAmp;
     JLabel amp;
 
-    double aspect;
-    double iconAspect;
-
+    private int displayLength;
+    private boolean displayDP;
     private int startWidth;
     private int startHeight;
 
@@ -68,20 +65,30 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         milliAmpIcon = new NamedIcon("resources/icons/misc/LCD/milliampb.gif", "resources/icons/misc/LCD/milliampb.gif");
         ampIcon = new NamedIcon("resources/icons/misc/LCD/ampb.gif", "resources/icons/misc/LCD/ampb.gif");
 
-        // determine aspect ratio of a single digit graphic
-        iconAspect = 24. / 32.;
-
-        // determine the aspect ratio of the 4 digit base graphic plus a half digit for the colon
-        // this DOES NOT allow space for the Run/Stop button, if it is
-        // enabled.  When the Run/Stop button is enabled, the layout will have to be changed
-        aspect = (4.5 * 24.) / 32.; // used to be 4.5??
-
         // listen for changes to the meter parameters
         meter.addPropertyChangeListener(this);
 
+        // mA current readings are displayed as integers.
+        // Start with 4 digits '0000' for mA, with an extra non-displayed decimal
+        // place to reduce the need to rescale the image or resize the window
+        // when an extra digit is added
+        switch (meter.getCurrentUnits()) {
+            case CURRENT_UNITS_MILLIAMPS:
+                displayLength = 5;
+                displayDP = false;
+                break;
+                
+            case CURRENT_UNITS_AMPS:
+            case CURRENT_UNITS_PERCENTAGE:
+            default:
+                displayLength = 3;
+                displayDP = true;
+                break;
+        }
+        
         // init GUI
-        digitIcons = new ArrayList<JLabel>(3); // 1 decimal place precision.
-        for(int i = 0;i<3;i++) {
+        digitIcons = new ArrayList<JLabel>(displayLength); // 1 decimal place precision.
+        for(int i = 0;i<displayLength;i++) {
            digitIcons.add(i,new JLabel(digits[0]));
         }
         percent = new JLabel(percentIcon);
@@ -91,6 +98,12 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
 
         buildContents();
 
+        // Initially we want to scale the icons to fit the previously saved window size
+        // Allow for number of digits, units and decimal point
+        getStartDimensions();
+        scaleImage();
+        buildContents();
+        
         meter.enable();
 
         update();
@@ -114,9 +127,6 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
             }
         });
 
-        startHeight = this.getContentPane().getSize().height;
-        startWidth = this.getContentPane().getSize().width;
-
     }
 
     // Added method to scale the clock digit images to fit the
@@ -136,6 +146,8 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         decimalIcon.scale(scale,this);
         ampIcon.scale(scale, this);
         milliAmpIcon.scale(scale,this);
+
+        this.getContentPane().revalidate();
     }
 
     private void buildContents(){
@@ -165,36 +177,48 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
                 break;
         }
 
-        getContentPane().add(b = new JButton(Bundle.getMessage("ButtonStop")));
-        b.addActionListener(new ButtonListener());
-        // since Run/Stop button looks crummy, don't display for now
-        b.setVisible(false);
-
         pack();
     }
 
+    /**
+     * Update the displayed value.
+     * 
+     * Assumes an integer value has an extra, non-displayed decimal digit.
+     */
     synchronized void update() {
         float val = meter.getCurrent();
         int value = (int)Math.floor(val *10); // keep one decimal place.
         boolean scaleChanged = false;
         // autoscale the array of labels.
-        while( (value) > (Math.pow(10,digitIcons.size()-1))) {
+        while( (value) > ((Math.pow(10,digitIcons.size()-1))-1)) {
            digitIcons.add(0,new JLabel(digits[0]));
            scaleChanged = true;
         }
 
         if (scaleChanged){
             // clear the content pane and rebuild it.
+            getStartDimensions();
+            scaleImage();
             buildContents();
         }
 
-        value = (int)Math.floor(val *10); // keep one decimal place.
         for(int i = digitIcons.size()-1; i>=0; i--){
             digitIcons.get(i).setIcon(digits[value%10]);
             value = value / 10;
         }
     }
 
+    /**
+     * Get the starting dimensions based on the size required by the display
+     */
+    void getStartDimensions() {
+        startHeight = digits[0].getIconHeight();
+        startWidth = digits[0].getIconWidth() * (displayLength + 1);
+        if (displayDP) {
+            startWidth += decimalIcon.getIconWidth();
+        }
+    }
+    
     @Override
     public void dispose() {
         meter.disable();
@@ -215,24 +239,6 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
             b.setText("Run");
         }
          */
-    }
-
-    JButton b;
-
-    static private class ButtonListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent a) {
-            /*
-            boolean next = !clock.getRun();
-            clock.setRun(next);
-            if (next) {
-                b.setText("Stop");
-            } else {
-                b.setText("Run ");
-            }
-             */
-        }
     }
 
 }

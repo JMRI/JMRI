@@ -7,22 +7,19 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SerialSystemConnectionMemoTest.java
- *
- * Description:	tests for the
+ * Tests for the
  * jmri.jmrix.ieee802154.serialdriver.SerialSystemConnectionMemo class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
     @Override
     @Test
     public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+       Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -33,6 +30,7 @@ public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionM
     @Override
     @After
     public void tearDown() {
+        scm = null;
         JUnitUtil.tearDown();
     }
 

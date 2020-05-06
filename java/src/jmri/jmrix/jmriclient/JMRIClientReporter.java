@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * JMRIClient implementation of the Reporter interface.
  * <p>
  *
- * Description: extend jmri.AbstractReporter for JMRIClient layouts
+ * extend jmri.AbstractReporter for JMRIClient layouts
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Paul Bender Copyright (C) 2010
@@ -50,8 +50,8 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
     @Override
     public void reply(JMRIClientReply m) {
         String message = m.toString();
-        log.debug("Message Received: " + m);
-        log.debug("length " + message.length());
+        log.debug("Message Received: {}", m);
+        log.debug("length {}", message.length());
         if (!message.contains(transmitName + " ") &&
             !message.contains(transmitName + "\n") &&
             !message.contains(transmitName + "\r") ) {
@@ -60,7 +60,7 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
             String text = "REPORTER " + transmitName + "\n";
             if (!message.equals(text)) {
                 String report = message.substring(text.length());
-                log.debug("setting report to " + report);
+                log.debug("setting report to {}", report);
                 setReport(report);  // this is an update of the report.
             } else {
                 log.debug("setting report to null");

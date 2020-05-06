@@ -65,7 +65,12 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
                 }
                 Object m = mem.getValue();
                 if (m != null) {
-                    return m.toString();
+                    if ( m instanceof jmri.Reportable) {
+                        return ((jmri.Reportable) m).toReportString();
+                    }
+                    else {
+                        return m.toString();
+                    }
                 } else {
                     return "";
                 }
@@ -228,7 +233,7 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
         if (uName == null || uName.isEmpty()) {
             uName = null;
         }
-        String sName = jmri.InstanceManager.memoryManagerInstance().normalizeSystemName(sysNameField.getText());
+        String sName = sysNameField.getText();
         // initial check for empty entry
         if (sName.isEmpty() && !autoSystemNameBox.isSelected()) {
             statusBarLabel.setText(Bundle.getMessage("WarningSysNameEmpty"));

@@ -29,9 +29,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
                 return true;
             }
         };
-        InstanceManager.getOptionalDefault(jmri.ShutDownManager.class).ifPresent(sdm -> {
-            sdm.register(ecosPreferencesShutDownTask);
-        });
+        InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosPreferencesShutDownTask);
 
         adaptermemo = memo;
         InstanceManager.store(new PreferencesPane(this),jmri.swing.PreferencesPanel.class);

@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.Vector;
 import javax.bluetooth.BluetoothStateException;
 import javax.bluetooth.DeviceClass;
@@ -28,7 +27,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide access to LocoNet via a LocoNet Bluetooth adapter.
  */
-public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
+public class LocoNetBluetoothAdapter extends LnPortController {
 
     public LocoNetBluetoothAdapter() {
         this(new LocoNetSystemConnectionMemo());
@@ -143,14 +142,14 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
             log.error("Exception when using bluetooth");
             return BSe.getLocalizedMessage();
         } catch (IOException IOe) {
-            log.error("Unknown IOException when establishing connection to " + portName);
+            log.error("Unknown IOException when establishing connection to {}", portName);
             return IOe.getLocalizedMessage();
         }
 
         if (!opened) {
             ConnectionStatus.instance().setConnectionState(null, portName, ConnectionStatus.CONNECTION_DOWN);
             if (exception[0] != null) {
-                log.error("Exception when connecting to " + portName);
+                log.error("Exception when connecting to {}", portName);
                 return exception[0].getLocalizedMessage();
             }
             switch (responseCode[0]) {

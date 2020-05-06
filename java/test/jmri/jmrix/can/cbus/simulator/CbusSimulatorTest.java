@@ -1,8 +1,5 @@
 package jmri.jmrix.can.cbus.simulator;
 
-import jmri.jmrix.can.cbus.simulator.CbusDummyCS;
-import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
-import jmri.jmrix.can.cbus.simulator.CbusEventResponder;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -49,7 +46,6 @@ public class CbusSimulatorTest {
         
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -58,8 +54,8 @@ public class CbusSimulatorTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         t.dispose();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusSimulatorTest.class);

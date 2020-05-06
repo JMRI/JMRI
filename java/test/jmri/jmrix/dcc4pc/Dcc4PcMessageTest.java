@@ -5,7 +5,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class Dcc4PcMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
@@ -159,8 +159,8 @@ public class Dcc4PcMessageTest extends jmri.jmrix.AbstractMessageTestBase {
        Assert.assertEquals(Dcc4PcMessage.SERIAL,m.getElement(0));
     } 
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = new Dcc4PcMessage(5);
@@ -168,7 +168,7 @@ public class Dcc4PcMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	m = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 

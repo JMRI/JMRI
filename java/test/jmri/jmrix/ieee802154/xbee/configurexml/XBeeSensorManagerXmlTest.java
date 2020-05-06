@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * XBeeSensorManagerXmlTest.java
  *
- * Description: tests for the XBeeSensorManagerXml class
+ * Test for the XBeeSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class XBeeSensorManagerXmlTest {
       Assert.assertNotNull("XBeeSensorManagerXml constructor",new XBeeSensorManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

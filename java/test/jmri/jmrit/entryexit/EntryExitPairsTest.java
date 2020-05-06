@@ -3,6 +3,7 @@ package jmri.jmrit.entryexit;
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 import java.util.HashMap;
+
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -100,7 +101,7 @@ public class EntryExitPairsTest {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JUnitUtil.resetProfileManager();
-
+        JUnitUtil.initConfigureManager();
         tools = new EntryExitTestTools();
         panels = EntryExitTestTools.getPanels();
         Assert.assertNotNull("Get LE panels", panels);  // NOI18N
@@ -119,7 +120,7 @@ public class EntryExitPairsTest {
         tm = null;
         panels = null;
         tools = null;
-        
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CbusEventDetails xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/MERG-DEV/JMRI/master/schema/MergCBUSEventTable.xsd">
+  <Event NodeNum="0" EventNum="1" />
+  <Event NodeNum="123" />
+  <Event EventNum="456" />
+  <Event NodeNum="111" EventNum="NOT A NUMBER" />
+  <Event NodeNum="NOT A NUMBER" EventNum="1111" />
+  <Event NodeNum="11" EventNum="22">
+    <On>NOT A NUMBER</On>
+  </Event>
+  <Event NodeNum="11" EventNum="33">
+    <Off>NOT A NUMBER</Off>
+  </Event>
+  <Event NodeNum="11" EventNum="44">
+    <In>NOT A NUMBER</In>
+  </Event>
+  <Event NodeNum="11" EventNum="55">
+    <Out>NOT A NUMBER</Out>
+  </Event>
+  <Event NodeNum="22" EventNum="22">
+    <On />
+  </Event>
+  <Event NodeNum="22" EventNum="33">
+    <Off />
+  </Event>
+  <Event NodeNum="22" EventNum="44">
+    <LastHeard>NOT A DATE</LastHeard>
+    <In />
+  </Event>
+  <Event NodeNum="22" EventNum="55">
+    <LastHeard />
+    <Out />
+  </Event>
+</CbusEventDetails>

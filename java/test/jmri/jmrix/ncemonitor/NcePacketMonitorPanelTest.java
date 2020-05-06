@@ -12,7 +12,7 @@ import jmri.jmrix.nce.NceTrafficController;
 /**
  * Test simple functioning of NcePacketMonitorPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class NcePacketMonitorPanelTest extends jmri.util.swing.JmriPanelTest {
 
@@ -42,6 +42,7 @@ public class NcePacketMonitorPanelTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -54,5 +55,8 @@ public class NcePacketMonitorPanelTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    @Override
+    public void tearDown() {        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
+    }
 }

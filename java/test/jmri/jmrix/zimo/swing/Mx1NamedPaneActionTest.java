@@ -15,7 +15,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class Mx1NamedPaneActionTest {
 
@@ -30,7 +30,6 @@ public class Mx1NamedPaneActionTest {
         jf.dispose();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -2,13 +2,11 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
-import jmri.jmrit.operations.rollingstock.cars.tools.DeleteCarRosterAction;
-import jmri.jmrit.operations.rollingstock.cars.tools.ExportCarRosterAction;
-import jmri.jmrit.operations.rollingstock.cars.tools.ImportCarRosterAction;
-import jmri.jmrit.operations.rollingstock.cars.tools.PrintCarRosterAction;
-import jmri.jmrit.operations.rollingstock.cars.tools.ResetCarMovesAction;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrit.operations.rollingstock.cars.tools.*;
 
 /**
  * Provides a context-specific menu for handling the Roster.
@@ -53,23 +51,18 @@ public class CarRosterMenu extends JMenu {
         super(pMenuName);
 
         // create the menu
-        AbstractAction importAction = new ImportCarRosterAction(Bundle.getMessage("MenuItemImport"),
-                carsTableFrame);
+        AbstractAction importAction = new ImportCarRosterAction();
         importAction.setEnabled(false);
-        AbstractAction exportAction = new ExportCarRosterAction(Bundle.getMessage("MenuItemExport"),
-                carsTableFrame);
+        AbstractAction exportAction = new ExportCarRosterAction(carsTableFrame);
         exportAction.setEnabled(false);
         AbstractAction deleteAction = new DeleteCarRosterAction(carsTableFrame);
         deleteAction.setEnabled(false);
-        AbstractAction resetMovesAction = new ResetCarMovesAction(
-                Bundle.getMessage("MenuItemResetMoves"), carsTableFrame);
+        AbstractAction resetMovesAction = new ResetCarMovesAction();
         resetMovesAction.setEnabled(false);
 
-        AbstractAction printAction = new PrintCarRosterAction(Bundle.getMessage("MenuItemPrint"),
-                false, carsTableFrame);
+        AbstractAction printAction = new PrintCarRosterAction(false, carsTableFrame);
         printAction.setEnabled(false);
-        AbstractAction previewAction = new PrintCarRosterAction(
-                Bundle.getMessage("MenuItemPreview"), true, carsTableFrame);
+        AbstractAction previewAction = new PrintCarRosterAction(true, carsTableFrame);
         previewAction.setEnabled(false);
         add(importAction);
         add(exportAction);
@@ -94,7 +87,7 @@ public class CarRosterMenu extends JMenu {
                 previewAction.setEnabled(true);
                 break;
             default:
-                log.error("RosterMenu constructed without a valid menuType parameter: " + pMenuType);
+                log.error("RosterMenu constructed without a valid menuType parameter: {}", pMenuType);
         }
     }
 

@@ -102,7 +102,7 @@
 			  	<display item="Deceleration backward" label="" format="hslider"/>
 			</row>
 		</griditem>
-        <griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+		<griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
 			<row>
 			  	<label>
 					<text> </text>

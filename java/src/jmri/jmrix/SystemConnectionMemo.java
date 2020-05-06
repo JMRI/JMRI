@@ -1,16 +1,20 @@
 package jmri.jmrix;
 
 import apps.startup.StartupActionModelUtil;
-import java.util.Enumeration;
+
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.ConsistManager;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.beans.Bean;
 import jmri.implementation.DccConsistManager;
 import jmri.implementation.NmraConsistManager;
+import jmri.util.NamedBeanComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +27,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-abstract public class SystemConnectionMemo extends Bean {
+public abstract class SystemConnectionMemo extends Bean {
 
     public static final String DISABLED = "ConnectionDisabled";
     public static final String USER_NAME = "ConnectionNameChanged";
@@ -35,14 +39,20 @@ abstract public class SystemConnectionMemo extends Bean {
     private String userName;
     private String userNameAsLoaded;
 
+    @SuppressWarnings("deprecation")
     protected SystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
+        if (this instanceof ConflictingSystemConnectionMemo) {
+            this.prefix = prefix;
+            this.userName = userName;
+            return;
+        }
         log.debug("SystemConnectionMemo created for prefix \"{}\" user name \"{}\"", prefix, userName);
         if (!setSystemPrefix(prefix)) {
             int x = 2;
             while (!setSystemPrefix(prefix + x)) {
                 x++;
             }
-            log.debug("created system prefix {}", prefix + x);
+            log.debug("created system prefix {}{}", prefix, x);
         }
 
         if (!setUserName(userName)) {
@@ -50,7 +60,7 @@ abstract public class SystemConnectionMemo extends Bean {
             while (!setUserName(userName + x)) {
                 x++;
             }
-            log.debug("created user name {}", prefix + x);
+            log.debug("created user name {}{}", prefix, x);
         }
         addToActionList();
         // reset to null so these get set by the first setPrefix/setUserName
@@ -163,10 +173,9 @@ abstract public class SystemConnectionMemo extends Bean {
                 return true; // we have a consist manager already
             } else if (provides(jmri.CommandStation.class)) {
                 return true; // we can construct an NMRAConsistManager
-            } else if (provides(jmri.AddressedProgrammerManager.class)) {
-                return true; // we can construct a DccConsistManager
             } else {
-                return false;
+                // true if we can construct a DccConsistManager
+                return provides(jmri.AddressedProgrammerManager.class);
             }
         } else {
             return false; // nothing, by default
@@ -179,15 +188,15 @@ abstract public class SystemConnectionMemo extends Bean {
      * the type, and <strong>must</strong> return null if provides() is false
      * for the type.
      *
-     * @param <T> Type of manager to get
-     * @param T   Type of manager to get
+     * @param <T>  Type of manager to get
+     * @param type Type of manager to get
      * @return The manager or null if provides() is false for T
      * @see #provides(java.lang.Class)
      */
     @OverridingMethodsMustInvokeSuper
     @SuppressWarnings("unchecked") // dynamic checking done on cast of getConsistManager
-    public <T> T get(Class<?> T) {
-        if (T.equals(ConsistManager.class)) {
+    public <T> T get(Class<?> type) {
+        if (type.equals(ConsistManager.class)) {
             return (T) getConsistManager();
         } else {
             return null; // nothing, by default
@@ -199,10 +208,22 @@ abstract public class SystemConnectionMemo extends Bean {
         SystemConnectionMemoManager.getDefault().deregister(this);
     }
 
+    /**
+     * Get if the System Connection is currently Disabled.
+     * @return true if Disabled, else false.
+     */
     public boolean getDisabled() {
         return disabled;
     }
 
+    /**
+     * Set if the System Connection is currently Disabled.
+     * <p>
+     * disabledAsLoaded is only set once.
+     * Sends PropertyChange on change of disabled status.
+     * 
+     * @param disabled true to disable, false to enable.
+     */
     public void setDisabled(boolean disabled) {
         if (this.disabledAsLoaded == null) {
             // only set first time
@@ -216,28 +237,28 @@ abstract public class SystemConnectionMemo extends Bean {
         this.propertyChangeSupport.firePropertyChange(DISABLED, oldDisabled, disabled);
     }
 
-    abstract protected ResourceBundle getActionModelResourceBundle();
+    /**
+     * Get the Comparator to be used for two NamedBeans. This is typically an
+     * {@link NamedBeanComparator}, but may be any Comparator that works for
+     * this connection type.
+     * 
+     * @param <B>  the type of NamedBean
+     * @param type the class of NamedBean
+     * @return the Comparator
+     */
+    public abstract <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type);
+
+    protected abstract ResourceBundle getActionModelResourceBundle();
 
     protected final void addToActionList() {
-        StartupActionModelUtil util = StartupActionModelUtil.getDefault();
-        ResourceBundle rb = getActionModelResourceBundle();
-        if (rb == null) {
-            // don't bother trying if there is no ActionModelResourceBundle
-            return;
-        }
-        log.debug("Adding actions from bundle {}", rb.getBaseBundleName());
-        Enumeration<String> e = rb.getKeys();
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
-            try {
-                util.addAction(key, rb.getString(key));
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class \"{}\"", key);
-            }
-        }
+        changeActionList(true);
     }
 
     protected final void removeFromActionList() {
+        changeActionList(false);
+    }
+
+    private void changeActionList(boolean add) {
         StartupActionModelUtil util = StartupActionModelUtil.getDefault();
         ResourceBundle rb = getActionModelResourceBundle();
         if (rb == null) {
@@ -245,17 +266,24 @@ abstract public class SystemConnectionMemo extends Bean {
             return;
         }
         log.debug("Removing actions from bundle {}", rb.getBaseBundleName());
-        Enumeration<String> e = rb.getKeys();
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
+        rb.keySet().forEach(key -> {
             try {
-                util.removeAction(key);
+                if (add) {
+                    util.addAction(key, rb.getString(key));
+                } else {
+                    util.removeAction(key);
+                }
             } catch (ClassNotFoundException ex) {
                 log.error("Did not find class \"{}\"", key);
             }
-        }
+        });
     }
 
+    /**
+     * Get if connection is dirty.
+     * Checked fields are disabled, prefix, userName
+     * @return true if changed since loaded
+     */
     public boolean isDirty() {
         return ((this.disabledAsLoaded == null || this.disabledAsLoaded != this.disabled)
                 || (this.prefixAsLoaded == null || !this.prefixAsLoaded.equals(this.prefix))
@@ -267,9 +295,10 @@ abstract public class SystemConnectionMemo extends Bean {
     }
 
     /**
-     * Provide access to the Consist Manager for this particular connection.
-     * <p>
-     * NOTE: Consist manager defaults to NULL
+     * Provide access to the ConsistManager for this particular connection.
+     *
+     * @return the provided ConsistManager or null if the connection does not
+     *         provide a ConsistManager
      */
     public ConsistManager getConsistManager() {
         if (consistManager == null) {
@@ -290,6 +319,6 @@ abstract public class SystemConnectionMemo extends Bean {
 
     private ConsistManager consistManager = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class);
+    private static final Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class);
 
 }

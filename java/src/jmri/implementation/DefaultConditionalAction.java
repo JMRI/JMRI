@@ -489,7 +489,7 @@ public class DefaultConditionalAction implements ConditionalAction {
             case Conditional.ITEM_TYPE_OBLOCK:
                 return (Bundle.getMessage("BeanNameOBlock"));
             case Conditional.ITEM_TYPE_ENTRYEXIT:
-                return (Bundle.getMessage("EntryExit"));
+                return (Bundle.getMessage("BeanNameEntryExit"));
             case Conditional.ITEM_TYPE_CLOCK:
                 return (Bundle.getMessage("FastClock"));
             case Conditional.ITEM_TYPE_AUDIO:
@@ -966,6 +966,6 @@ public class DefaultConditionalAction implements ConditionalAction {
         return str;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConditionalAction.class);
+    private final static Logger log = LoggerFactory.getLogger(DefaultConditionalAction.class);
 
 }

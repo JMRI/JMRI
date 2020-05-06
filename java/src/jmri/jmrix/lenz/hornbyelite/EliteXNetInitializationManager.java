@@ -31,13 +31,13 @@ public class EliteXNetInitializationManager extends AbstractXNetInitializationMa
         if (log.isDebugEnabled()) {
             log.debug("Command Station is Hornby Elite (manually identified).");
         }
-        systemMemo.setTurnoutManager(new jmri.jmrix.lenz.hornbyelite.EliteXNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setTurnoutManager(new jmri.jmrix.lenz.hornbyelite.EliteXNetTurnoutManager(systemMemo));
         jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
 
         systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
         jmri.InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
 
-        systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo));
         jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
         systemMemo.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(new jmri.jmrix.lenz.hornbyelite.EliteXNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
         if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
@@ -50,6 +50,6 @@ public class EliteXNetInitializationManager extends AbstractXNetInitializationMa
         log.debug("XpressNet Initialization Complete");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EliteXNetInitializationManager.class);
+    private static final Logger log = LoggerFactory.getLogger(EliteXNetInitializationManager.class);
 
 }

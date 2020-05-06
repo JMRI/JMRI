@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Some have been commented out so they don't run during normal production
  * testing.
  *
- * @author	Bob Jacobsen Copyright 2003, 2009, 2010
+ * @author Bob Jacobsen Copyright 2003, 2009, 2010
  */
 public class WaitHandlerTest {
 
@@ -180,7 +180,7 @@ public class WaitHandlerTest {
         Assert.assertTrue("ended", flag2);
 
         if (THREAD_DELAY <= endTime - startTime) {
-            log.error("run time not shortened: " + (endTime - startTime));
+            log.error("run time not shortened: {}", endTime - startTime);
         }
         Assert.assertTrue("run time shortened", THREAD_DELAY > endTime - startTime);
     }

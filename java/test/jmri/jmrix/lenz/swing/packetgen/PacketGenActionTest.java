@@ -13,7 +13,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Tests for the jmri.jmrix.lenz.packetgen.PacketGenAction class
  *
- * @author	Bob Jacobsen Copyright (c) 2001, 2002
+ * @author Bob Jacobsen Copyright (c) 2001, 2002
  */
 public class PacketGenActionTest {
 
@@ -61,6 +61,7 @@ public class PacketGenActionTest {
     @After
     public void tearDown() {
         memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

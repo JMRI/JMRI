@@ -21,10 +21,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: RPS Icon</h1>RPS is a system for measuring the
       positions of rolling stock on your layout. More information
       on RPS is available on the <a href=
@@ -279,7 +279,7 @@
       <p>A nice graphical interface for this is coming, but it's
       not here yet.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

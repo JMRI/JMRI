@@ -13,7 +13,6 @@ import jmri.jmrix.lenz.liusbserver.ConnectionConfig;
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -31,6 +30,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
     }
 
     @Test
+    @Override
     public void getInstanceTest() {
        super.getInstanceTest();
        JUnitAppender.assertErrorMessageStartsWith("Error opening network connection:");

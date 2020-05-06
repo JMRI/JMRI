@@ -1,8 +1,9 @@
 package jmri.jmrix.dccpp;
 
+import java.util.EnumSet;
 import java.util.HashMap;
 import jmri.LocoAddress;
-import jmri.ThrottleManager;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on XNetThrottleManager by Paul Bender
  */
-public class DCCppThrottleManager extends AbstractThrottleManager implements ThrottleManager, DCCppListener {
+public class DCCppThrottleManager extends AbstractThrottleManager implements DCCppListener {
 
     protected HashMap<LocoAddress, DCCppThrottle> throttles = new HashMap<LocoAddress, DCCppThrottle>(5);
 
@@ -43,7 +44,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         DCCppThrottle throttle;
         if (log.isDebugEnabled()) {
-            log.debug("Requesting Throttle: " + address);
+            log.debug("Requesting Throttle: {}", address);
         }
         if (throttles.containsKey(address)) {
             notifyThrottleKnown(throttles.get(address), address);
@@ -119,8 +120,8 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
      * 14,27,28 and 128 speed step modes
      */
     @Override
-    public int supportedSpeedModes() {
-        return (jmri.DccThrottle.SpeedStepMode128); }
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128); }
 
     // Handle incoming messages for throttles.
     @Override

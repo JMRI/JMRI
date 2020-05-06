@@ -9,9 +9,9 @@ import org.junit.Test;
 /**
  * SpeedoTrafficControllerTest.java
  *
- * Description:	tests for the jmri.jmrix.bachrus.SpeedoTrafficController class
+ * Test for the jmri.jmrix.bachrus.SpeedoTrafficController class
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SpeedoTrafficControllerTest {
 
@@ -21,7 +21,6 @@ public class SpeedoTrafficControllerTest {
         Assert.assertNotNull(tc);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

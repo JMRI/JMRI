@@ -1,9 +1,9 @@
 /**
  * XNetProgrammerTest.java
  *
- * Description:	JUnit tests for the XNetProgrammer class
+ * JUnit tests for the XNetProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.lenz;
 
@@ -577,15 +577,16 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 super.restartTimer(RESTART_TIME);
             }
         };
-	programmer=p;
+        programmer = p;
     }
 
     @Override
     @After
     public void tearDown() {
-	t = null;
-	l = null;
-	programmer=p=null;
+        t = null;
+        l = null;
+        programmer = p = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

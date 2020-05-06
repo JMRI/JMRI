@@ -1,9 +1,5 @@
 package jmri;
 
-import java.util.List;
-import jmri.ProgListener;
-import jmri.ProgrammingMode;
-import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
@@ -71,7 +67,6 @@ abstract public class ProgrammerTestBase {
                 programmer.writeCV("1",42,null);
     }
     
-    // The minimal setup for log4J
     @Before
     abstract public void setUp();
 

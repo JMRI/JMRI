@@ -2,10 +2,16 @@ package jmri.implementation;
 
 import java.beans.*;
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javax.annotation.*;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanUsageReport;
 import jmri.PushbuttonPacket;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -33,13 +39,14 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Note that we consider it an error for there to be more than one object that
  * corresponds to a particular physical turnout on the layout.
- * <p>
- * Turnout system names are always upper case.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2009
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
         Turnout, PropertyChangeListener {
+
+    private Turnout leadingTurnout = null;
+    private boolean followingCommandedState = true;
 
     protected AbstractTurnout(String systemName) {
         super(systemName);
@@ -109,7 +116,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      */
     @Override
     public void setCommandedState(int s) {
-        log.debug("set commanded state for turnout {} to {}", getFullyFormattedDisplayName(),
+        log.debug("set commanded state for turnout {} to {}", getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME),
                 (s == Turnout.CLOSED ? closedText : thrownText));
         newCommandedState(s);
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
@@ -158,7 +165,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * going to THROWN or CLOSED, because there may be others listening to
      * network state.
      * <p>
-     * This method is not intended for general use, e.g. for users to set the 
+     * This method is not intended for general use, e.g. for users to set the
      * KnownState, so it doesn't appear in the Turnout interface.
      *
      * @param s New state value
@@ -276,6 +283,13 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     @Override
     public void setControlType(int num) {
         _controlType = num;
+    }
+
+    @Override
+    public Set<Integer> getValidFeedbackModes() {
+        Set<Integer> modes = new HashSet<>();
+        Arrays.stream(_validFeedbackModes).forEach(modes::add);
+        return modes;
     }
 
     @Override
@@ -714,7 +728,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         if (temp != null) {
             temp.addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
         }
-        // set initial state 
+        // set initial state
         setInitialKnownStateFromFeedback();
     }
 
@@ -786,6 +800,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         } else if (evt.getSource() == getFirstSensor()
                 || evt.getSource() == getSecondSensor()) {
             sensorPropertyChange(evt);
+        } else if (evt.getSource() == leadingTurnout) {
+            leadingTurnoutPropertyChange(evt);
         }
     }
 
@@ -863,6 +879,18 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                    newKnownState(UNKNOWN);
             }
             // end TWOSENSOR block
+        }
+    }
+
+    protected void leadingTurnoutPropertyChange(PropertyChangeEvent evt) {
+        int state = (int) evt.getNewValue();
+        if ("KnownState".equals(evt.getPropertyName())
+                && leadingTurnout != null) {
+            if (followingCommandedState || state != leadingTurnout.getCommandedState()) {
+                newKnownState(state);
+            } else {
+                newKnownState(getCommandedState());
+            }
         }
     }
 
@@ -1023,12 +1051,90 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
-            if (evt.getOldValue().equals(getFirstSensor()) || evt.getOldValue().equals(getSecondSensor())) {
+        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
+            Object old = evt.getOldValue();
+            if (old.equals(getFirstSensor()) || old.equals(getSecondSensor()) || old.equals(leadingTurnout)) {
                 java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
-                throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseSensorTurnoutVeto", getDisplayName()), e); //IN18N
+                throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseSensorTurnoutVeto", getDisplayName()), e); // NOI18N
             }
         }
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean.equals(getFirstSensor())) {
+                report.add(new NamedBeanUsageReport("TurnoutFeedback1"));  // NOI18N
+            }
+            if (bean.equals(getSecondSensor())) {
+                report.add(new NamedBeanUsageReport("TurnoutFeedback2"));  // NOI18N
+            }
+            if (bean.equals(getLeadingTurnout())) {
+                report.add(new NamedBeanUsageReport("LeadingTurnout")); // NOI18N
+            }
+        }
+        return report;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isCanFollow() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @CheckForNull
+    public Turnout getLeadingTurnout() {
+        return leadingTurnout;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setLeadingTurnout(@CheckForNull Turnout turnout) {
+        if (isCanFollow()) {
+            Turnout old = leadingTurnout;
+            leadingTurnout = turnout;
+            firePropertyChange("LeadingTurnout", old, leadingTurnout);
+            if (old != null) {
+                old.removePropertyChangeListener("KnownState", this);
+            }
+            if (leadingTurnout != null) {
+                leadingTurnout.addPropertyChangeListener("KnownState", this);
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setLeadingTurnout(@CheckForNull Turnout turnout, boolean followingCommandedState) {
+        setLeadingTurnout(turnout);
+        setFollowingCommandedState(followingCommandedState);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isFollowingCommandedState() {
+        return followingCommandedState;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setFollowingCommandedState(boolean following) {
+        followingCommandedState = following;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnout.class);

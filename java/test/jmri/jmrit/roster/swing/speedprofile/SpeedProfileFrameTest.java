@@ -1,6 +1,7 @@
 package jmri.jmrit.roster.swing.speedprofile;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -10,20 +11,21 @@ import org.junit.*;
  */
 public class SpeedProfileFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new SpeedProfileFrame();
-	}
+        JUnitUtil.initRosterConfigManager();
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new SpeedProfileFrame();
+        }
     }
 
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 

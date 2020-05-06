@@ -222,6 +222,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         }
 
         //@Override
+        @Override
         public int[] validBaudNumbers() {
             return new int[] {};
         }
@@ -261,7 +262,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     static DataOutputStream tistream; // Tests write to this
     static DataInputStream istream;   // so the traffic controller can read from this
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -278,7 +278,8 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     @Override
     public void tearDown() {
         if (c != null) c.terminateThreads();
-       jmri.util.JUnitUtil.tearDown();
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        jmri.util.JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);

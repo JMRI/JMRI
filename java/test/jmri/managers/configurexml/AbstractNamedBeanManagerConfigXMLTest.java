@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 
 /**
- * Checks of basic NamedBean storage
+ * Checks of basic NamedBean storage.
  *
  * @author Bob Jacobsen Copyright 2009
  */

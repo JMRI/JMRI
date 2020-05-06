@@ -4,7 +4,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- UpDated  by Blorec Herv&#233; 2017-01-11-->
+<!-- Updated by Blorec Herv&#233; 2017-01-11-->
 <title>JMRI Hardware Support - SRCP Protocol</title>
 
 <!-- Style -->
@@ -17,18 +17,18 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+        <!-- Page Body -->
+
 <h1> Structure Mat&#233;rielle: Configuration Connexion SRCP</h1>
 
 <a href="http://www.der-moba.de/index.php/Digitalprojekt">
 <img src="http://www.der-moba.de/images/7/7b/Srcp-clients.png" align="right" height="130" width="159"/></a>
 
-<p>
-
-le
-<a href="http://srcpd.sourceforge.net/">protocole SRCP</a>
+<p>le <a href="http://srcpd.sourceforge.net/">protocole SRCP</a>
 a &#233;t&#233; cr&#233;&#233; par le groupe de mod&#233;lisme ferroviaire
 <a href="http://www.der-moba.de/index.php/Hauptseite"> der Moba</a>
  comme un moyen standard de connexion d'un programmes utilisateur "client" 
@@ -72,11 +72,10 @@ Enfin, enregistrez les Pr&#233;f&#233;rences et red&#233;marrer le programme.
 Il y a beaucoup de bonnes informations sur SRCP et comment il s'int&#232;gre dans une
  syst&#232;me globale de mod&#232;le ferroviaire sur
 <a href="http://www.der-moba.de/index.php/Digitalprojekt">der-moba.de ( en allemand )</a>
+</p>
 
-
-
-
-    
-<!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
+    </div>
+  </div>
 </body>
 </html>

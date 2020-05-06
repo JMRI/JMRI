@@ -66,11 +66,11 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
     @Override
     public void message(LocoNetMessage msg) {
         // sort on opcode and ALM number
-        if (msg.getOpCode() == 0xEE && msg.getElement(2) == mNumber) {
+        if ((msg.getOpCode() == LnConstants.OPC_IMM_PACKET_2) && msg.getElement(2) == mNumber) {
             writeMsg(msg);
-        } else if (msg.getOpCode() == 0xE6 && msg.getElement(2) == mNumber) {
+        } else if ((msg.getOpCode() == LnConstants.OPC_ALM_READ) && msg.getElement(2) == mNumber) {
             readMsg(msg);
-        } else if (msg.getOpCode() == 0xB4 && msg.getElement(1) == 0x6E) {
+        } else if ((msg.getOpCode() == LnConstants.OPC_LONG_ACK) && msg.getElement(1) == 0x6E) {
             lackMsg(msg);
         }
     }
@@ -198,7 +198,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
                 }
                 return;
             default:
-                log.warn("Unexpected ATASK: " + msg.getElement(3));
+                log.warn("Unexpected ATASK: {}", msg.getElement(3));
                 return;
         }
     }

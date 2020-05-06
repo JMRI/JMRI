@@ -1,8 +1,6 @@
 package jmri.jmrix.sprog.pi.pisprogonecs;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
@@ -12,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * The current implementation only handles the 115,200 baud rate, and does not use
  * any other options at configuration time.
  *
- * @author	Andrew Crosland Copyright (C) 2016
+ * @author Andrew Crosland Copyright (C) 2016
  */
 public class PiSprogOneCSSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {

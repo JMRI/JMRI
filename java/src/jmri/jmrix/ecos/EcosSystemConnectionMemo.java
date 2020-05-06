@@ -1,10 +1,12 @@
 package jmri.jmrix.ecos;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.NamedBean;
+import jmri.util.NamedBeanComparator;
+
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -86,9 +88,14 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return ResourceBundle.getBundle("jmri.jmrix.ecos.EcosActionListBundle");
     }
 
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
+    }
+
     private EcosSensorManager sensorManager;
     private EcosTurnoutManager turnoutManager;
-    private EcosLocoAddressManager locoManager;
+    protected EcosLocoAddressManager locoManager;
     private EcosPreferences prefManager;
     private EcosDccThrottleManager throttleManager;
     private EcosPowerManager powerManager;
@@ -205,6 +212,10 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (reporterManager != null) {
             reporterManager.dispose();
             reporterManager = null;
+        }
+        if (locoManager != null) {
+            locoManager.terminateThreads();
+            locoManager = null;
         }
         if (programmerManager != null) {
             InstanceManager.deregister(programmerManager, jmri.jmrix.ecos.EcosProgrammerManager.class);

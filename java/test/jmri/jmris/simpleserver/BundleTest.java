@@ -11,17 +11,14 @@ import org.junit.Test;
  */
 public class BundleTest  {
 
-    @Test public void testGoodKeyMessage() {
+    @Test
+    public void testGoodKeyMessage() {
         Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }
 
-    @Test public void testBadKeyMessage() {
-        try {
+    @Test(expected = java.util.MissingResourceException.class)
+    public void testBadKeyMessage() {
             Bundle.getMessage("FFFFFTTTTTTT");
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
     }
 
     @Test public void testGoodKeyMessageArg() {
@@ -29,13 +26,9 @@ public class BundleTest  {
         Assert.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
     }
 
-    @Test public void testBadKeyMessageArg() {
-        try {
+    @Test(expected = java.util.MissingResourceException.class)
+    public void testBadKeyMessageArg() {
             Bundle.getMessage("FFFFFTTTTTTT", new Object[]{});
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
     }
 
     @Test public void testLocaleMessage() {

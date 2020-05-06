@@ -1,9 +1,13 @@
 package jmri.jmrix.direct;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.util.NamedBeanComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,6 +86,11 @@ public class DirectSystemConnectionMemo extends SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return null;
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     public void configureManagers(){

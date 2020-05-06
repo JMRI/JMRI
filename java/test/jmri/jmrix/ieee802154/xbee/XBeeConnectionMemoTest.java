@@ -1,6 +1,5 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,10 +14,10 @@ import com.digi.xbee.api.XBeeDevice;
 /**
  * XBeeConnectionMemoTest.java
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo
+ * Test for the jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo
  * class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 @RunWith(MockitoJUnitRunner.class)
 public class XBeeConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
@@ -36,8 +35,8 @@ public class XBeeConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestB
        Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         memo = new XBeeConnectionMemo();
@@ -60,6 +59,7 @@ public class XBeeConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestB
     }
 
     @After
+    @Override
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

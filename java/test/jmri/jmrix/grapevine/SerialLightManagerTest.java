@@ -2,6 +2,9 @@ package jmri.jmrix.grapevine;
 
 import jmri.Light;
 import jmri.util.JUnitUtil;
+
+import java.beans.PropertyVetoException;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the SerialLightManager class
  *
- * @author	Bob Jacobsen Copyright 2004, 2007, 2008
+ * @author Bob Jacobsen Copyright 2004, 2007, 2008
  */
 public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
@@ -45,21 +48,38 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
         Light o = l.newLight("GL1105", "my name");
 
         if (log.isDebugEnabled()) {
-            log.debug("received light value " + o);
+            log.debug("received light value {}", o);
         }
         Assert.assertTrue(null != (SerialLight) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("GL1105"));
+            log.debug("by system name: {}", l.getBySystemName("GL1105"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
+            log.debug("by user name:   {}", l.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != l.getBySystemName("GL1105"));
         Assert.assertTrue(null != l.getByUserName("my name"));
 
+    }
+
+    @Override
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        testRegisterDuplicateSystemName(l,
+                l.makeSystemName("1107"),
+                l.makeSystemName("1109"));
+    }
+
+    @Override
+    @Test
+    public void testMakeSystemName() {
+        String s = l.makeSystemName("1107");
+        Assert.assertNotNull(s);
+        Assert.assertFalse(s.isEmpty());
     }
 
     /**
@@ -76,10 +96,11 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
     }
 
 
-    // The minimal setup for log4J
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManagerTest.class);

@@ -4,10 +4,10 @@ import java.awt.GraphicsEnvironment;
 import java.util.Locale;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
-import org.netbeans.jemmy.EventTool;
 
 /**
- * Tests for the CtcEditorStartup Class
+ * Tests for the CtcEditorStartup Class.
+ *
  * @author Dave Sand Copyright (C) 2019
  */
 public class CtcEditorStartupTest {
@@ -25,7 +25,7 @@ public class CtcEditorStartupTest {
     @Test
     public void testGetTitle() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("Open CTC Editor", new CtcEditorStartup().getTitle(CtcEditorAction.class, Locale.US));  // NOI18N
+        Assert.assertEquals("CTC Editor", new CtcEditorStartup().getTitle(CtcEditorAction.class, Locale.US));  // NOI18N
 // new EventTool().waitNoEvent(1000);
     }
 

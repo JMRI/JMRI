@@ -10,7 +10,7 @@ import org.openlcb.*;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010
+ * @author Bob Jacobsen Copyright 2008, 2010
  */
 public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -21,7 +21,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     @Override
     public String getSystemName(int i) {
-        return "MSX010203040506070" + i;
+        return "MSx010203040506070" + i;
     }
 
     @Test
@@ -30,12 +30,13 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @Test
+    @Override
     public void testProvideName() {
         // create
         Sensor t = l.provide(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Override
@@ -45,8 +46,8 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         // olcb addresses are hex values requirng 16 digits.
         Sensor t = l.provideSensor(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct " + t.getSystemName(), t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name correct " + t.getSystemName(), t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Override
@@ -62,12 +63,12 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor t1 = l.provideSensor(getSystemName(getNumToTest1()));
         Sensor t2 = l.provideSensor(getSystemName(getNumToTest2()));
         t1.setUserName("UserName");
-        Assert.assertTrue(t1 == l.getByUserName("UserName"));
+        Assert.assertSame(t1, l.getByUserName("UserName"));
 
         t2.setUserName("UserName");
-        Assert.assertTrue(t2 == l.getByUserName("UserName"));
+        Assert.assertSame(t2, l.getByUserName("UserName"));
 
-        Assert.assertTrue(null == t1.getUserName());
+        Assert.assertNull(t1.getUserName());
     }
 
     @Test
@@ -78,7 +79,6 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertEquals(t, l.getSensor(name));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -107,6 +107,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
+            @Override
             public Connection getOutputConnection() {
                 return connection;
             }
@@ -114,18 +115,20 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         memo.setTrafficController(new TestTrafficController());
         memo.configureManagers();
     
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
     @AfterClass
-    public static void postClassTearDown() throws Exception {
+    public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
         }
         memo = null;
         connection = null;
         nodeID = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

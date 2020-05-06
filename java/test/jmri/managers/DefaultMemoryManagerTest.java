@@ -1,12 +1,14 @@
 package jmri.managers;
 
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<jmri.MemoryManager,jmri.Memory> {
 
@@ -14,33 +16,35 @@ public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<j
     public void testIMthrows() {
         try {
             l.provideMemory("IM");
+            Assert.fail("Expected exception not thrown");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for memory: \"IM\" but needed IM followed by a suffix");
-            return;
+            // nothing to do
         }
+        JUnitAppender.assertErrorMessage("Invalid system name for Memory: System name \"" + l.getSystemNamePrefix() + "\" is missing suffix.");
     }
 
     @Test
-    public void testBlankThrows() throws java.lang.IllegalArgumentException {
+    public void testBlankThrows() {
         try {
             l.provideMemory("");
+            Assert.fail("Expected exception not thrown");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for memory: \"IM\" but needed IM followed by a suffix");
-            return;
+            // nothing to do
         }
+        JUnitAppender.assertErrorMessage("Invalid system name for Memory: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
     @Test
     public void testCreatesiM() {
         jmri.Memory im = l.provideMemory("iM");
         Assert.assertNotNull("iM created",im);
-        Assert.assertEquals("correct system name","IMIM",im.getSystemName());
+        Assert.assertEquals("correct system name","IMiM",im.getSystemName());
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        l = new DefaultMemoryManager();
+        l = new DefaultMemoryManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @After

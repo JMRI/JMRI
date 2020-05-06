@@ -443,7 +443,15 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
             if (l.isOkMessage()) {
                 if (_state == ADDREQUESTSENTSTATE) {
                     addToConsistList(_locoAddress, _directionNormal);
+                    if (consistType == ADVANCED_CONSIST) {
+                       //set the value in the roster entry for CV19
+                       setRosterEntryCVValue(_locoAddress);
+                    }
                 } else if (_state == REMOVEREQUESTSENTSTATE) {
+                    if (consistType == ADVANCED_CONSIST) {
+                       //reset the value in the roster entry for CV19
+                       resetRosterEntryCVValue(_locoAddress);
+                    }
                     removeFromConsistList(_locoAddress);
                 }
                 _state = IDLESTATE;
@@ -537,7 +545,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 
@@ -553,13 +561,13 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      */
     private void sendDirection(DccLocoAddress address, boolean isForward) {
         XNetMessage msg = XNetMessage.getSpeedAndDirectionMsg(address.getNumber(),
-                jmri.DccThrottle.SpeedStepMode28,
+                jmri.SpeedStepMode.NMRA_DCC_28,
                 (float) 0.0,
                 isForward);
         // now, we send the message to the command station
         tc.sendXNetMessage(msg, this);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetConsist.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetConsist.class);
 
 }

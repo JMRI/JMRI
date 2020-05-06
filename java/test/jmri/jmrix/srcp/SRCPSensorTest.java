@@ -2,18 +2,16 @@ package jmri.jmrix.srcp;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 
 /**
  * SRCPSensorTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPSensor class
+ * Test for the jmri.jmrix.srcp.SRCPSensor class
  *
- * @author	Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2018	
+ * @author Bob Jacobsen
+ * @author      Paul Bender Copyright (C) 2018
  */
 public class SRCPSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -30,7 +28,6 @@ public class SRCPSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public void checkStatusRequestMsgSent() {}
 
         
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -46,7 +43,8 @@ public class SRCPSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @Override
     @After
     public void tearDown() {
-	t.dispose();
+        t.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

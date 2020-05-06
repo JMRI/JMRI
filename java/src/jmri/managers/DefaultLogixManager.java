@@ -1,25 +1,22 @@
 package jmri.managers;
 
-import java.text.DecimalFormat;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
 import jmri.Manager;
 import jmri.implementation.DefaultLogix;
 import jmri.jmrit.beantable.LRouteTableAction;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
 
 /**
  * Basic Implementation of a LogixManager.
  * <p>
- * Note that Logix system names must begin with IX, and be followed by a string,
- * usually, but not always, a number. All alphabetic characters in a Logix
- * system name must be upper case. This is enforced when a Logix is created.
+ * Note that Logix system names must begin with system prefix and type character,
+ * usually IX, and be followed by a string, usually, but not always, a number. This
+ * is enforced when a Logix is created.
  * <p>
  * The system names of Conditionals belonging to a Logix begin with the Logix's
  * system name, then there is a capital C and a number.
@@ -27,10 +24,10 @@ import javax.annotation.Nonnull;
  * @author Dave Duchamp Copyright (C) 2007
  */
 public class DefaultLogixManager extends AbstractManager<Logix>
-        implements LogixManager, java.beans.PropertyChangeListener {
+        implements LogixManager {
 
-    public DefaultLogixManager() {
-        super();
+    public DefaultLogixManager(InternalSystemConnectionMemo memo) {
+        super(memo);
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
@@ -50,21 +47,15 @@ public class DefaultLogixManager extends AbstractManager<Logix>
     }
 
     @Override
-    public String getSystemPrefix() {
-        return "I";
-    }
-
-    @Override
     public char typeLetter() {
         return 'X';
     }
 
     /**
-     * Method to create a new Logix if the Logix does not exist.
-     * <p>
-     * Returns null if
-     * a Logix with the same systemName or userName already exists, or if there
-     * is trouble creating a new Logix.
+     * Create a new Logix if the Logix does not exist.
+     *
+     * @return null if a Logix with the same systemName or userName
+     * already exists, or if there is trouble creating a new Logix
      */
     @Override
     public Logix createNewLogix(String systemName, String userName) {
@@ -77,9 +68,6 @@ public class DefaultLogixManager extends AbstractManager<Logix>
             }
         }
         x = getBySystemName(systemName);
-        if (x == null) {
-            x = getBySystemName(systemName.toUpperCase());   // for compatibility?
-        }
         if (x != null) {
             return null;
         }
@@ -88,34 +76,16 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         // save in the maps
         register(x);
 
-        /*The following keeps track of the last created auto system name.
-         currently we do not reuse numbers, although there is nothing to stop the
-         user from manually recreating them*/
-        if (systemName.startsWith("IX:AUTO:")) {
-            try {
-                int autoNumber = Integer.parseInt(systemName.substring(8));
-                if (autoNumber > lastAutoLogixRef) {
-                    lastAutoLogixRef = autoNumber;
-                }
-            } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
-            }
-        }
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+
         return x;
     }
 
     @Override
     public Logix createNewLogix(String userName) {
-        int nextAutoLogixRef = lastAutoLogixRef + 1;
-        StringBuilder b = new StringBuilder("IX:AUTO:");
-        String nextNumber = paddedNumber.format(nextAutoLogixRef);
-        b.append(nextNumber);
-        return createNewLogix(b.toString(), userName);
+        return createNewLogix(getAutoSystemName(), userName);
     }
-
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
-
-    int lastAutoLogixRef = 0;
 
     /**
      * Remove an existing Logix and delete all its conditionals. Logix must have
@@ -153,7 +123,7 @@ public class DefaultLogixManager extends AbstractManager<Logix>
 
             if (loadDisabled) {
                 // user has requested that Logixs be loaded disabled
-                log.warn("load disabled set - will not activate logic for: " + x.getDisplayName());
+                log.warn("load disabled set - will not activate logic for: {}", x.getDisplayName());
                 x.setEnabled(false);
             }
             if (x.getEnabled()) {
@@ -167,8 +137,8 @@ public class DefaultLogixManager extends AbstractManager<Logix>
     }
 
     /**
-     * Method to get an existing Logix. First looks up assuming that name is a
-     * User Name. If this fails looks up assuming that name is a System Name. If
+     * Get an existing Logix. First looks up assuming name is a
+     * User Name. If this fails looks up assuming name is a System Name. If
      * both fail, returns null.
      */
     @Override
@@ -178,30 +148,6 @@ public class DefaultLogixManager extends AbstractManager<Logix>
             return x;
         }
         return getBySystemName(name);
-    }
-
-    @Override
-    public Logix getBySystemName(String name) {
-        return _tsys.get(name);
-    }
-
-    @Override
-    public Logix getByUserName(String key) {
-        return _tuser.get(key);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Forces upper case and trims leading and trailing whitespace.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
-        return inputName.toUpperCase().trim();
     }
 
     /**
@@ -214,19 +160,30 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         loadDisabled = s;
     }
 
-    static DefaultLogixManager _instance = null;
-
+    /**
+     * 
+     * @return the default instance of the DefaultLogixManager
+     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     static public DefaultLogixManager instance() {
-        if (_instance == null) {
-            _instance = new DefaultLogixManager();
-        }
-        return (_instance);
+        return InstanceManager.getDefault(DefaultLogixManager.class);
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameLogix");
+    @Nonnull
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameLogixes" : "BeanNameLogix");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Logix> getNamedBeanClass() {
+        return Logix.class;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class);
+
 }

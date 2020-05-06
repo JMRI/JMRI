@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import jmri.InstanceManager;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -7,11 +9,12 @@ import org.junit.Test;
 
 import jmri.Logix;
 import jmri.LogixManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
  * Tests for the jmri.managers.DefaultLogixManager class.
  *
- * @author	Bob Jacobsen Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2015
  */
 public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixManager,jmri.Logix> {
 
@@ -69,18 +72,19 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixM
 
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initIdTagManager();
-        l = new DefaultLogixManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initIdTagManager();
+        l = new DefaultLogixManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @After
     public void tearDown() {
         l = null;
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 }

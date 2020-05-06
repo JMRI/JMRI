@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/locomotive.xsl" type="text/xsl"?>
+<!-- This is a test file that uses the XML Schema , testing the migration away from DTD -->
+<locomotive-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/locomotive-config.xsd">
+  <locomotive id="ACL1012" fileName="ACL1012.xml" roadNumber="1012" roadName="Atlantic Coast Line" mfg="EMD SD35" owner="JMRI" model="Atlas" dccAddress="1012" comment="model needs road number decals added" maxSpeed="100" imageFilePath="preference:roster/ACL-1012.JPG" iconFilePath="preference:roster/ACL-1012.JPG" URL="" IsShuntingOn="">
+    <dateUpdated>2014-10-03T00:48:02Z</dateUpdated>
+    <decoder model="Synch Diesel Sound 1812 - N Scale Atlas Short Board Dropin" family="Brilliance Sound Decoders" comment="" />
+    <locoaddress>
+      <dcclocoaddress number="1012" longaddress="yes" />
+      <number>1012</number>
+      <protocol>dcc_long</protocol>
+    </locoaddress>
+    <functionlabels>
+      <functionlabel num="0" lockable="true" functionImage="preference:resources/Light.png" functionImageSelected="preference:resources/LightOn.png">Light</functionlabel>
+      <functionlabel num="1" lockable="true" functionImage="preference:resources/Bell.png" functionImageSelected="preference:resources/BellOn.png">Bell</functionlabel>
+      <functionlabel num="2" lockable="false" functionImage="preference:resources/Horn.png" functionImageSelected="preference:resources/HornOn.png">Horn</functionlabel>
+      <functionlabel num="12" lockable="false" functionImage="" functionImageSelected="">SelEng</functionlabel>
+      <functionlabel num="18" lockable="false" functionImage="" functionImageSelected="">SelBell</functionlabel>
+      <functionlabel num="19" lockable="false" functionImage="" functionImageSelected="">SelHorn</functionlabel>
+      <functionlabel num="21" lockable="false" functionImage="" functionImageSelected="">BellVol</functionlabel>
+      <functionlabel num="22" lockable="false" functionImage="" functionImageSelected="">HornVol</functionlabel>
+      <functionlabel num="23" lockable="false" functionImage="" functionImageSelected="">EngVol</functionlabel>
+    </functionlabels>
+    <attributepairs>
+      <keyvaluepair>
+        <key>DispatcherTrainType</key>
+        <value>LOCAL_FREIGHT</value>
+      </keyvaluepair>
+      <keyvaluepair>
+        <key>LastOperated</key>
+        <value>Mon Apr 11 13:13:10 EDT 2016</value>
+      </keyvaluepair>
+      <keyvaluepair>
+        <key>OperatingDuration</key>
+        <value>20127</value>
+      </keyvaluepair>
+      <keyvaluepair>
+        <key>RosterGroup:CSX</key>
+        <value>yes</value>
+      </keyvaluepair>
+      <keyvaluepair>
+        <key>VSDecoder_Path</key>
+        <value>C:\EclipseWorkspaces\jmri\jmri\resources\vsdecoder\example.vsd</value>
+      </keyvaluepair>
+      <keyvaluepair>
+        <key>VSDecoder_Profile</key>
+        <value>EMD 645 Turbo</value>
+      </keyvaluepair>
+    </attributepairs>
+    <values>
+      <decoderDef>
+        <varValue item="Start Voltage" value="15" />
+        <varValue item="Acceleration" value="0" />
+        <varValue item="Deceleration" value="0" />
+        <varValue item="Top Voltage" value="31" />
+        <varValue item="Speed Curve Select" value="0" />
+        <varValue item="Manufacturer Version Number" value="60" />
+        <varValue item="Manufacturer ID" value="143" />
+        <varValue item="Sound on/off" value="1" />
+        <varValue item="Horn Type" value="7" />
+        <varValue item="Horn Volume" value="12" />
+        <varValue item="Bell Type" value="5" />
+        <varValue item="Bell Volume" value="12" />
+        <varValue item="Bell Ring Rate" value="1" />
+        <varValue item="Diesel rumble volume" value="12" />
+        <varValue item="Brake squeal volume" value="7" />
+        <varValue item="Dynamic brake volume" value="12" />
+        <varValue item="Air Release Volume" value="12" />
+        <varValue item="Air Pump Volume" value="12" />
+        <varValue item="Safety pop valve volume" value="12" />
+        <varValue item="Engine Cooling Fan Volume" value="12" />
+        <varValue item="Coupling Volume" value="12" />
+        <varValue item="Random Noise Volume" value="12" />
+        <varValue item="Rail clack volume" value="12" />
+        <varValue item="Kick Start Voltage" value="63" />
+        <varValue item="Speed Table" value="0,9,18,28,37,47,56,66,75,85,94,103,113,122,132,141,151,160,170,179,188,198,207,217,226,236,245,255" />
+        <varValue item="Coupling fire volume" value="12" />
+        <varValue item="Brake Release volume" value="12" />
+        <varValue item="Auto Brake squeal" value="1" />
+        <varValue item="Light Mode" value="0" />
+        <varValue item="Diesel notch mode" value="0" />
+        <varValue item="Prime Mover" value="0" />
+        <varValue item="Primary Address" value="3" />
+        <varValue item="Extended Address" value="1012" />
+        <varValue item="Address Format" value="1" />
+        <varValue item="Advanced Consist Address" value="0" />
+        <varValue item="Locomotive Direction In Consist" value="0" />
+        <varValue item="Functions Respond to Address" value="1" />
+        <varValue item="Locomotive Direction" value="0" />
+        <varValue item="Speed Steps" value="1" />
+        <varValue item="Power Source Conversion" value="0" />
+        <varValue item="Use Speed Table" value="0" />
+        <varValue item="User ID #1 (0-255)" value="0" />
+        <varValue item="User ID #2 (0-255)" value="0" />
+      </decoderDef>
+      <CVvalue name="2" value="15" />
+      <CVvalue name="3" value="0" />
+      <CVvalue name="4" value="0" />
+      <CVvalue name="5" value="31" />
+      <CVvalue name="6" value="0" />
+      <CVvalue name="7" value="60" />
+      <CVvalue name="8" value="143" />
+      <CVvalue name="49" value="1" />
+      <CVvalue name="50" value="7" />
+      <CVvalue name="51" value="12" />
+      <CVvalue name="52" value="5" />
+      <CVvalue name="53" value="12" />
+      <CVvalue name="54" value="1" />
+      <CVvalue name="55" value="12" />
+      <CVvalue name="56" value="7" />
+      <CVvalue name="57" value="12" />
+      <CVvalue name="58" value="12" />
+      <CVvalue name="59" value="12" />
+      <CVvalue name="60" value="12" />
+      <CVvalue name="61" value="12" />
+      <CVvalue name="62" value="12" />
+      <CVvalue name="63" value="12" />
+      <CVvalue name="64" value="12" />
+      <CVvalue name="65" value="63" />
+      <CVvalue name="67" value="0" />
+      <CVvalue name="68" value="9" />
+      <CVvalue name="69" value="18" />
+      <CVvalue name="70" value="28" />
+      <CVvalue name="71" value="37" />
+      <CVvalue name="72" value="47" />
+      <CVvalue name="73" value="56" />
+      <CVvalue name="74" value="66" />
+      <CVvalue name="75" value="75" />
+      <CVvalue name="76" value="85" />
+      <CVvalue name="77" value="94" />
+      <CVvalue name="78" value="103" />
+      <CVvalue name="79" value="113" />
+      <CVvalue name="80" value="122" />
+      <CVvalue name="81" value="132" />
+      <CVvalue name="82" value="141" />
+      <CVvalue name="83" value="151" />
+      <CVvalue name="84" value="160" />
+      <CVvalue name="85" value="170" />
+      <CVvalue name="86" value="179" />
+      <CVvalue name="87" value="188" />
+      <CVvalue name="88" value="198" />
+      <CVvalue name="89" value="207" />
+      <CVvalue name="90" value="217" />
+      <CVvalue name="91" value="226" />
+      <CVvalue name="92" value="236" />
+      <CVvalue name="93" value="245" />
+      <CVvalue name="94" value="255" />
+      <CVvalue name="113" value="12" />
+      <CVvalue name="114" value="12" />
+      <CVvalue name="115" value="1" />
+      <CVvalue name="117" value="0" />
+      <CVvalue name="122" value="0" />
+      <CVvalue name="123" value="0" />
+      <CVvalue name="1" value="3" />
+      <CVvalue name="17" value="195" />
+      <CVvalue name="18" value="244" />
+      <CVvalue name="29" value="34" />
+      <CVvalue name="19" value="0" />
+      <CVvalue name="21" value="1" />
+      <CVvalue name="105" value="0" />
+      <CVvalue name="106" value="0" />
+    </values>
+  </locomotive>
+</locomotive-config>

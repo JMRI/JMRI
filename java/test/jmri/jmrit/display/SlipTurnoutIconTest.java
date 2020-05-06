@@ -6,7 +6,7 @@ import org.junit.*;
 /**
  * Test simple functioning of SlipTurnoutIcon
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SlipTurnoutIconTest extends PositionableTestBase {
 
@@ -17,6 +17,7 @@ public class SlipTurnoutIconTest extends PositionableTestBase {
     }
 
     @Before
+    @Override
     public void setUp() {
         super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {

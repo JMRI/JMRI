@@ -1,15 +1,18 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JTable;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -44,6 +47,8 @@ public class CarsSetFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(ctf);
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     @Test
@@ -66,6 +71,8 @@ public class CarsSetFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(ctf);
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
     
     @Test
@@ -108,6 +115,8 @@ public class CarsSetFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(ctf);
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CarsSetFrameTest.class);

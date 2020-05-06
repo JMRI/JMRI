@@ -23,7 +23,6 @@ public class SerialSignalHeadXmlTest {
       Assert.assertNotNull("SerialSignalHeadXml constructor", new SerialSignalHeadXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -35,7 +34,9 @@ public class SerialSignalHeadXmlTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

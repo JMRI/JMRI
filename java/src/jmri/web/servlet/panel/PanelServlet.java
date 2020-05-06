@@ -44,7 +44,7 @@ public class PanelServlet extends AbstractPanelServlet {
         try {
             PanelEditor editor = (PanelEditor) getEditor(name);
             if (editor == null) {
-                log.warn("Requested Panel [" + name + "] does not exist.");
+                log.warn("Requested Panel [{}] does not exist.", name);
                 return "ERROR Requested panel [" + name + "] does not exist.";
             }
 
@@ -76,7 +76,7 @@ public class PanelServlet extends AbstractPanelServlet {
                     try {
                         panel.addContent(positionableElement(sub));
                     } catch (Exception ex) {
-                        log.error("Error storing panel element: {}", ex.getMessage(), ex);
+                        log.error("Error storing panel element", ex);
                     }
                 }
             }
@@ -89,7 +89,7 @@ public class PanelServlet extends AbstractPanelServlet {
 
             return out.outputString(doc);
         } catch (NullPointerException ex) {
-            log.warn("Requested Panel [" + name + "] does not exist.");
+            log.warn("Requested Panel [{}] does not exist.", name);
             return "ERROR Requested panel [" + name + "] does not exist.";
         }
     }
@@ -100,7 +100,7 @@ public class PanelServlet extends AbstractPanelServlet {
         try {
             PanelEditor editor = (PanelEditor) getEditor(name);
             if (editor == null) {
-                log.warn("Requested Panel [" + name + "] does not exist.");
+                log.warn("Requested Panel [{}] does not exist.", name);
                 return "ERROR Requested panel [" + name + "] does not exist.";
             }
 
@@ -140,7 +140,7 @@ public class PanelServlet extends AbstractPanelServlet {
 
             return this.mapper.writeValueAsString(root);
         } catch (NullPointerException ex) {
-            log.warn("Requested Panel [" + name + "] does not exist.");
+            log.warn("Requested Panel [{}] does not exist.", name);
             return "ERROR Requested panel [" + name + "] does not exist.";
         } catch (JsonGenerationException e) {
             log.error("Error generating JSON", e);

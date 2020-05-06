@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TamsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -22,8 +22,8 @@ public class TamsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertNotNull("exists",l);
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         TamsTrafficController tc = new TamsInterfaceScaffold();
@@ -33,6 +33,7 @@ public class TamsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

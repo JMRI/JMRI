@@ -1,14 +1,16 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.trains.Train;
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock Engine class Last manually
@@ -19,7 +21,7 @@ import org.junit.Test;
  * Everything Consist: Everything Import: Everything EngineManager: Engine
  * register/deregister EngineManager: Consists
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class EngineManagerTest extends OperationsTestCase {
 
@@ -360,8 +362,8 @@ public class EngineManagerTest extends OperationsTestCase {
 
         // release engines from trains
         e2.setTrain(null);
-        e4.setTrain(null);	// e4 is located in the middle of the route, therefore not available
-        e6.setTrain(null);	// e6 is located at the end of the route, therefore not available
+        e4.setTrain(null); // e4 is located in the middle of the route, therefore not available
+        e6.setTrain(null); // e6 is located at the end of the route, therefore not available
 
         // there should be more engines now
         List<Engine> engineList = manager.getAvailableTrainList(t1);
@@ -440,6 +442,8 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th engine in list by rfid", e3, engineList.get(3));
         Assert.assertEquals("5th engine in list by rfid", e6, engineList.get(4));
         Assert.assertEquals("6th engine in list by rfid", e1, engineList.get(5));
+        
+
     }
 
     @Test
@@ -472,6 +476,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("find e4 by rfid", e4, manager.getByRfid("asd"));
         Assert.assertEquals("find e5 by rfid", e5, manager.getByRfid("93F"));
         Assert.assertEquals("find e6 by rfid", e6, manager.getByRfid("B12"));
+
 
     }
 

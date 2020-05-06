@@ -4,15 +4,13 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
-import jmri.jmrix.loconet.UhlenbrockSlotManager;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class UhlenbrockSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

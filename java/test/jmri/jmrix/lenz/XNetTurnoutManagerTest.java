@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.lenz.XNetTurnoutManager class.
  *
- * @author	Bob Jacobsen Copyright 2004
+ * @author Bob Jacobsen Copyright 2004
  */
 public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -30,8 +30,8 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Override
     public void testMisses() {
         // try to get nonexistant turnouts
-        Assert.assertTrue(null == l.getByUserName("foo"));
-        Assert.assertTrue(null == l.getBySystemName("bar"));
+        Assert.assertNull(l.getByUserName("foo"));
+        Assert.assertNull(l.getBySystemName("bar"));
     }
 
     @Test
@@ -54,8 +54,8 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         lnis.sendTestMessage(m2);
 
         // try to get turnouts to see if they exist
-        Assert.assertTrue(null != l.getBySystemName("XT21"));
-        Assert.assertTrue(null != l.getBySystemName("XT22"));
+        Assert.assertNotNull(l.getBySystemName("XT21"));
+        Assert.assertNotNull(l.getBySystemName("XT22"));
 
         // check the list
         List<String> testList = new ArrayList<String>(2);
@@ -72,9 +72,9 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Turnout o = t.newTurnout("XT21", "my name");
 
         if (log.isDebugEnabled()) {
-            log.debug("received turnout value " + o);
+            log.debug("received turnout value {}", o);
         }
-        Assert.assertTrue(null != (XNetTurnout) o);
+        Assert.assertNotNull(o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
@@ -84,36 +84,37 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             log.debug("by user name:   {}", t.getByUserName("my name"));
         }
 
-        Assert.assertTrue(null != t.getBySystemName("XT21"));
-        Assert.assertTrue(null != t.getByUserName("my name"));
+        Assert.assertNotNull(t.getBySystemName("XT21"));
+        Assert.assertNotNull(t.getByUserName("my name"));
     }
 
     @Test
-    public void testGetSystemPrefix(){
-        Assert.assertEquals("prefix","X",l.getSystemPrefix());
+    public void testGetSystemPrefix() {
+        Assert.assertEquals("prefix", "X", l.getSystemPrefix());
     }
 
     @Test
-    public void testAllowMultipleAdditions(){
+    public void testAllowMultipleAdditions() {
         Assert.assertTrue(l.allowMultipleAdditions("foo"));
     }
 
     @Test
     @Override
-    public void testThrownText(){
-         Assert.assertEquals("thrown text",Bundle.getMessage("TurnoutStateThrown"),l.getThrownText());
+    public void testThrownText() {
+        Assert.assertEquals("thrown text", Bundle.getMessage("TurnoutStateThrown"), l.getThrownText());
     }
 
     @Test
     @Override
-    public void testClosedText(){
-         Assert.assertEquals("closed text",Bundle.getMessage("TurnoutStateClosed"),l.getClosedText());
+    public void testClosedText() {
+        Assert.assertEquals("closed text", Bundle.getMessage("TurnoutStateClosed"), l.getClosedText());
     }
 
     @After
     public void tearDown() {
-	lnis = null;
-	l = null;
+        lnis = null;
+        l = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 
@@ -124,7 +125,7 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
-        l = new XNetTurnoutManager(lnis, "X");
+        l = new XNetTurnoutManager(lnis.getSystemConnectionMemo());
         jmri.InstanceManager.setTurnoutManager(l);
     }
 

@@ -16,7 +16,7 @@ import jmri.util.JUnitUtil;
 /**
  * Tests for the SimpleTimebase class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SimpleTimebaseTest {
 
@@ -133,6 +133,7 @@ public class SimpleTimebaseTest {
         seenNewMinutes = -1;
         seenOldMinutes = -1;
         p.addMinuteChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent e) {
                 seenOldMinutes = (Double) e.getOldValue();
                 seenNewMinutes = (Double) e.getNewValue();

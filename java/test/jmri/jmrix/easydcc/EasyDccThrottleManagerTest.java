@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class EasyDccThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
@@ -21,8 +21,8 @@ public class EasyDccThrottleManagerTest extends jmri.managers.AbstractThrottleMa
         Assert.assertNotNull("exists",tm);
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tc = new EasyDccTrafficControlScaffold(null);
@@ -32,7 +32,9 @@ public class EasyDccThrottleManagerTest extends jmri.managers.AbstractThrottleMa
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(EasyDccThrottleManagerTest.class);

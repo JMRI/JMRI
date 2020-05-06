@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Test the HexVariableValue class
  *
- * @author	Bob Jacobsen Copyright 2001
+ * @author Bob Jacobsen Copyright 2001
  */
 public class HexVariableValueTest extends AbstractVariableValueTestBase {
 
@@ -83,11 +83,13 @@ public class HexVariableValueTest extends AbstractVariableValueTestBase {
     }
 
     @Before
+    @Override
     public void setUp() {
         super.setUp();
     }
     
     @After
+    @Override
     public void tearDown() {
         super.tearDown();
     }

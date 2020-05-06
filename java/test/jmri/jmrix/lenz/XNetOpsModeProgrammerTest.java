@@ -12,9 +12,9 @@ import org.junit.Test;
 /**
  * XNetOpsModeProgrammerTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.XNetOpsModeProgrammer class
+ * Test for the jmri.jmrix.lenz.XNetOpsModeProgrammer class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
@@ -45,11 +45,13 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
     }
 
     @Test
+    @Override
     public void testGetAddressNumber(){
        Assert.assertEquals("address",5,op.getAddressNumber());
     }
 
     @Test
+    @Override
     public void testGetAddress(){
        Assert.assertEquals("address","5 true",op.getAddress());
     }
@@ -142,8 +144,8 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         Assert.assertEquals("status",jmri.ProgListener.UnknownError,lastStatus);
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -166,11 +168,13 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
     }
 
     @After
+    @Override
     public void tearDown() {
         tc = null;
         op = null;
         pl = null;
         programmer = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

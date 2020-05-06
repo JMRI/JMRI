@@ -21,6 +21,12 @@
 <ul>
  
 <li>
+<a href="package/jmri/jmrit/logix/Tracker.shtml">Train Trackers </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="html/hardware/acela/index.shtml">Acela (CTI) - Hardware, Connection, Tools </a>
 <ul></ul>
 </li>
@@ -886,6 +892,12 @@
 
  
 <li>
+<a href="html/tools/scripting/Python.shtml">Jython (in Scripting) </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor (Panels) </a>
 <ul></ul>
 </li>
@@ -1519,6 +1531,12 @@
 
  
 <li>
+<a href="html/tools/scripting/Python.shtml">Python (in Scripting) </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="html/hardware/qsi/index.shtml">QSI - Hardware, Connection, Tools </a>
 <ul></ul>
 </li>
@@ -1665,13 +1683,50 @@
 
  
 <li>
+<a href="html/tools/scripting/index.shtml">Scripting </a>
+<ul>
+  
+<li>
+<a href="html/tools/scripting/Start.shtml">Getting Started </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/tools/scripting/ex_set_turnouts.shtml">Example: Setting Turnouts </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/tools/scripting/Examples.shtml">Examples (Links) </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/tools/scripting/HowTo.shtml">Scripting How To... </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/tools/scripting/WhatWhere.shtml">Scripting What...Where </a>
+<ul></ul>
+</li>
+
+ 
+</ul>
+</li>
+ 
+<li>
 <a href="html/hardware/secsi/index.shtml">SECSI (TrakTronix) </a>
 <ul></ul>
 </li>
 
  
 <li>
-<a href="package/jmri/jmrit/beantable/SectionTable.shtml">Section </a>
+<a href="html/tools/Sections.shtml">Section </a>
 <ul>
   
 <li>
@@ -2066,6 +2121,12 @@
 
   
 <li>
+<a href="package/jmri/jmrit/beantable/ViewSpecialActions.shtml">Transit Actions </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="package/jmri/jmrit/beantable/TransitTable.shtml">Transit Table </a>
 <ul></ul>
 </li>
@@ -2073,12 +2134,6 @@
  
 </ul>
 </li>
- 
-<li>
-<a href="package/jmri/jmrit/beantable/TransitTable.shtml">Transit Table </a>
-<ul></ul>
-</li>
-
  
 <li>
 <a href="package/jmri/jmrit/display/TranslateSelection.shtml">Translate (Move) Selection (Panels) </a>
@@ -2175,6 +2230,12 @@
  
 <li>
 <a href="html/web/index.shtml">Web Access to JMRI </a>
+<ul></ul>
+</li>
+
+ 
+<li>
+<a href="package/jmri/jmrit/whereused/WhereUsed.shtml">Where Used </a>
 <ul></ul>
 </li>
 

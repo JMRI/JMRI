@@ -1,6 +1,7 @@
 package jmri.jmrit.display.switchboardEditor;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrit.display.AbstractEditorTestBase;
 import jmri.util.ColorUtil;
 import jmri.util.JUnitUtil;
@@ -77,6 +78,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -86,13 +88,15 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     }
 
     @After
+    @Override
     public void tearDown() {
         if (e != null) {
-            // dispose on Swing thread
-            JUnitUtil.dispose(e.getTargetFrame());
-            JUnitUtil.dispose(e);
+             // dispose on Swing thread
+             JUnitUtil.dispose(e.getTargetFrame());
+             JUnitUtil.dispose(e);
             e = null;
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

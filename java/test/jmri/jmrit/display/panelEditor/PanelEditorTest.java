@@ -30,8 +30,8 @@ public class PanelEditorTest extends AbstractEditorTestBase<PanelEditor> {
         Assert.assertNotNull("exists", e);
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -41,12 +41,14 @@ public class PanelEditorTest extends AbstractEditorTestBase<PanelEditor> {
     }
 
     @After
+    @Override
     public void tearDown() {
         if (e != null) {
             JUnitUtil.dispose(e.getTargetFrame());
             JUnitUtil.dispose(e);
             e = null;
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

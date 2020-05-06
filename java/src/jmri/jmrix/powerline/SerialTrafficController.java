@@ -39,7 +39,6 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
         // use poll delay just to spread out startup
         setAllowUnexpectedReply(true);
         mWaitBeforePoll = 1000;  // can take a long time to send
-
     }
 
     /**
@@ -49,6 +48,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      * <p>
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
+     *
      * @param s sequence to send
      * @param l listener for reply
      */
@@ -62,6 +62,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      * <p>
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
+     *
      * @param s sequence to send
      * @param l listener for reply
      */
@@ -82,6 +83,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      * <p>
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
+     *
      * @param length message size
      * @return null
      */
@@ -142,7 +144,6 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     @Override
     protected AbstractMRMessage pollMessage() {
         return null;
-
     }
 
     @Override
@@ -161,7 +162,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (logDebug) {
-            log.debug("forward " + m);
+            log.debug("forward {}", m);
         }
         sendInterlock = ((SerialMessage) m).getInterlocked();
         super.forwardToPort(m, reply);
@@ -177,19 +178,6 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
         return null;
     }
 
-//    /**
-//     * static function returning the SerialTrafficController instance to use.
-//     * @return The registered SerialTrafficController instance for general use,
-//     *         if need be creating one.
-//     */
-//    @Deprecated
-//    public SerialTrafficController instance() {
-//        if (self == null) {
-//            if (log.isDebugEnabled()) log.debug("Creating default SerialTrafficController instance");
-//            self = new SerialTrafficController();
-//        }
-//        return self;
-//    }
     public void setAdapterMemo(SerialSystemConnectionMemo adaptermemo) {
         memo = adaptermemo;
     }
@@ -207,7 +195,6 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     int remainingBytes = 0;        // count of bytes _left_
 
     /**
-     * <p>
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
      */
@@ -217,7 +204,6 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     }
 
     /**
-     * <p>
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
      */
@@ -229,6 +215,3 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
 
 }
-
-
-

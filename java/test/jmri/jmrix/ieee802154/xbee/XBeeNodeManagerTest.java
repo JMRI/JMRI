@@ -25,7 +25,6 @@ public class XBeeNodeManagerTest {
        Assert.assertNotNull(a);
    }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -35,7 +34,9 @@ public class XBeeNodeManagerTest {
     @After
     public void tearDown() {
         tc = null;
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

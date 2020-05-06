@@ -26,10 +26,12 @@ public class ServletUtil implements InstanceManagerAutoDefault {
     public static final String APPLICATION_XML = "application/xml"; // NOI18N
     public static final String IMAGE_PNG = "image/png"; // NOI18N
     public static final String TEXT_HTML = "text/html"; // NOI18N
-    public static final String UTF8_APPLICATION_JAVASCRIPT = APPLICATION_JAVASCRIPT + "; charset=utf-8"; // NOI18N
-    public static final String UTF8_APPLICATION_JSON = APPLICATION_JSON + "; charset=utf-8"; // NOI18N
-    public static final String UTF8_APPLICATION_XML = APPLICATION_XML + "; charset=utf-8"; // NOI18N
-    public static final String UTF8_TEXT_HTML = TEXT_HTML + "; charset=utf-8"; // NOI18N
+    public static final String UTF8_CHARSET = "; charset=utf-8"; // NOI18N
+    public static final String UTF8_APPLICATION_JAVASCRIPT = APPLICATION_JAVASCRIPT + UTF8_CHARSET; // NOI18N
+    public static final String UTF8_APPLICATION_JSON = APPLICATION_JSON + UTF8_CHARSET; // NOI18N
+    public static final String UTF8_APPLICATION_XML = APPLICATION_XML + UTF8_CHARSET; // NOI18N
+    public static final String UTF8_TEXT_HTML = TEXT_HTML + UTF8_CHARSET; // NOI18N
+    public static final String HIDDEN = "hidden"; // NOI18N
 
     /**
      * Get the railroad name for HTML documents.
@@ -57,14 +59,14 @@ public class ServletUtil implements InstanceManagerAutoDefault {
      */
     public String getFooter(Locale locale, String context) throws IOException {
         // Should return a built NavBar with li class for current context set to "active"
-        String footer = String.format(locale,
-                "-->" + FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(locale, "Footer.html"))) + "<!--", // NOI18N
+        String footer = String.format(locale, String.format(locale, "-->%s<!--", // NOI18N
+                FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(locale, "Footer.html")))), // NOI18N
                 this.getRailroadName(true));
         String clazz = "context" + context.replace("/", "-"); // NOI18N
         // replace class "context-<this-context>-only" with class "show"
         footer = footer.replace(clazz + "-only", "show"); // NOI18N
         // replace class "context-<some-other-context>-only" with class "hidden"
-        footer = footer.replaceAll("context-[\\w-]*-only", "hidden"); // NOI18N
+        footer = footer.replaceAll("context-[\\w-]*-only", HIDDEN); // NOI18N
         // replace class "context-<this-context>" with class "active"
         footer = footer.replace(clazz, "active"); // NOI18N
         return footer;
@@ -82,40 +84,27 @@ public class ServletUtil implements InstanceManagerAutoDefault {
      */
     public String getNavBar(Locale locale, String context) throws IOException {
         // Should return a built NavBar with li class for current context set to "active"
-        String navBar = String.format(locale,
-                "-->" + FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(locale, "NavBar.html"))) + "<!--", // NOI18N
+        String navBar = String.format(locale, String.format(locale, "-->%s<!--", // NOI18N
+                FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(locale, "NavBar.html")))), // NOI18N
                 this.getRailroadName(true));
         String clazz = "context" + context.replace("/", "-"); // NOI18N
         // replace class "context-<this-context>-only" with class "show"
         navBar = navBar.replace(clazz + "-only", "show"); // NOI18N
         // replace class "context-<some-other-context>-only" with class "hidden"
-        navBar = navBar.replaceAll("context-[\\w-]*-only", "hidden"); // NOI18N
+        navBar = navBar.replaceAll("context-[\\w-]*-only", HIDDEN); // NOI18N
         // replace class "context-<this-context>" with class "active"
         navBar = navBar.replace(clazz, "active"); // NOI18N
         if (InstanceManager.getDefault(WebServerPreferences.class).allowRemoteConfig()) {
             navBar = navBar.replace("config-enabled-only", "show"); // NOI18N
-            navBar = navBar.replace("config-disabled-only", "hidden"); // NOI18N
+            navBar = navBar.replace("config-disabled-only", HIDDEN); // NOI18N
         } else {
-            navBar = navBar.replace("config-enabled-only", "hidden"); // NOI18N
+            navBar = navBar.replace("config-enabled-only", HIDDEN); // NOI18N
             navBar = navBar.replace("config-disabled-only", "show"); // NOI18N
         }
         if (!InstanceManager.getDefault(WebServerPreferences.class).isReadonlyPower()) {
             navBar = navBar.replace("data-power=\"readonly\"", "data-power=\"readwrite\""); // NOI18N
         }
         return navBar;
-    }
-
-    /**
-     * Get the default ServletUtil instance.
-     *
-     * @return the default instance of ServletUtil
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with the
-     * argument {@code ServletUtil.class} instead
-     */
-    @Deprecated
-    public static ServletUtil getDefault() {
-        return InstanceManager.getDefault(ServletUtil.class);
     }
 
     /**
@@ -172,6 +161,6 @@ public class ServletUtil implements InstanceManagerAutoDefault {
      * @return The complete title
      */
     public String getTitle(Locale locale, String title) {
-        return Bundle.getMessage(locale, "HtmlTitle", this.getRailroadName(false), title);
+        return String.format(Bundle.getMessage(locale, "HtmlTitle"), this.getRailroadName(false), title);
     }
 }

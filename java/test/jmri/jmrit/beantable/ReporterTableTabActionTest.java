@@ -1,12 +1,11 @@
 package jmri.jmrit.beantable;
 
-import jmri.Reporter;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ReporterTableTabActionTest extends AbstractTableTabActionBase {
 
@@ -31,7 +30,6 @@ public class ReporterTableTabActionTest extends AbstractTableTabActionBase {
         Assert.assertTrue("Default include add button", a.includeAddButton());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

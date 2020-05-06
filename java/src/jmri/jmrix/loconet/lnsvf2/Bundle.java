@@ -3,7 +3,7 @@ package jmri.jmrix.loconet.lnsvf2;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Bundle extends jmri.jmrix.loconet.Bundle {
 
-    @Nullable
+    @CheckForNull
     private final static String name = "jmri.jmrix.loconet.lnsvf2.LnSvF2Bundle"; // NOI18N
 
     //
@@ -41,7 +41,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key) {
-        log.debug("interpreting key "+key+" without parameters");
+        log.debug("interpreting key {} without parameters", key);
         return getBundle().handleGetMessage(key);
     }
 
@@ -59,13 +59,13 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key, Object... subs) {
-        log.debug("interpreting key "+key+" with " + subs.length + " parameters");
+        log.debug("interpreting key {} with {} parameters", key, subs.length);
         return getBundle().handleGetMessage(key, subs);
     }
     private final static Bundle b = new Bundle();
 
     @Override
-    @Nullable
+    @CheckForNull
     protected String bundleName() {
         return name;
     }
@@ -79,7 +79,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
         return super.getBundle().handleGetMessage(locale,key);
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LnSv2MessageContents.class);
+    private final static Logger log = LoggerFactory.getLogger(Bundle.class);
 
     /**
      * Merges user data with a translated string for a given key in a given

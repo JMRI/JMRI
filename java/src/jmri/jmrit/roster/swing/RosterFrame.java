@@ -1,6 +1,5 @@
 package jmri.jmrit.roster.swing;
 
-import apps.AppsBase;
 import apps.gui3.Apps3;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,7 +28,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.help.SwingHelpUtilities;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -736,10 +735,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     prefsMgr.setSimplePreferenceState(rememberWindowClose, true);
                 }
                 if (result == JOptionPane.YES_OPTION) {
-                    AppsBase.handleQuit();
+                    handleQuit();
                 }
             } else {
-                AppsBase.handleQuit();
+                handleQuit();
             }
         } else if (frameInstances.size() > 1) {
             final String rememberWindowClose = this.getClass().getName() + ".closeMultipleDP3prompt";
@@ -759,12 +758,20 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     prefsMgr.setSimplePreferenceState(rememberWindowClose, true);
                 }
                 if (result == JOptionPane.YES_OPTION) {
-                    AppsBase.handleQuit();
+                    handleQuit();
                 }
             } else {
-                AppsBase.handleQuit();
+                handleQuit();
             }
             //closeWindow(null);
+        }
+    }
+
+    private void handleQuit(){
+        try {
+            InstanceManager.getDefault(jmri.ShutDownManager.class).shutdown();
+        } catch (Exception e) {
+            log.error("Continuing after error in handleQuit", e);
         }
     }
 
@@ -1494,7 +1501,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      *            ProgrammerManager, care will be taken not to trigger the
      *            automatic creation of a new ProgrammerManager
      */
-    protected void updateProgrammerStatus(@Nullable PropertyChangeEvent evt) {
+    protected void updateProgrammerStatus(@CheckForNull PropertyChangeEvent evt) {
         log.debug("Updating Programmer Status");
         ConnectionConfig oldServMode = serModeProCon;
         ConnectionConfig oldOpsMode = opsModeProCon;

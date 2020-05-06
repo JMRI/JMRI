@@ -1,5 +1,6 @@
 package jmri.jmrit.vsdecoder;
 
+import jmri.*;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -8,7 +9,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class VSDManagerEventTest {
 
@@ -17,9 +18,11 @@ public class VSDManagerEventTest {
         VSDecoderManager vsdm = new VSDecoderManager();
         VSDManagerEvent t = new VSDManagerEvent(vsdm);
         Assert.assertNotNull("exists",t);
+    
+        // this created an audio manager, clean that up
+        InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -27,7 +30,7 @@ public class VSDManagerEventTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

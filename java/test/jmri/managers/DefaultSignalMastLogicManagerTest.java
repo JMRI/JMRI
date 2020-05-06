@@ -1,11 +1,13 @@
 package jmri.managers;
 
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DefaultSignalMastLogicManagerTest extends AbstractManagerTestBase<jmri.SignalMastLogicManager,jmri.SignalMastLogic> {
 
@@ -20,11 +22,16 @@ public class DefaultSignalMastLogicManagerTest extends AbstractManagerTestBase<j
     public void testMakeSystemName() {
     }
 
-    // The minimal setup for log4J
+    @Ignore("This managers doesn't support auto system names")
+    @Test
+    @Override
+    public void testAutoSystemNames() {
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        l = new DefaultSignalMastLogicManager();
+        l = new DefaultSignalMastLogicManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @After

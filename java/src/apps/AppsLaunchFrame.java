@@ -107,7 +107,6 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
             operationsMenu(menuBar, wi);
         }
         systemsMenu(menuBar, wi);
-        scriptMenu(menuBar, wi);
         debugMenu(menuBar, wi, pane);
         menuBar.add(new WindowMenu(wi)); // * GT 28-AUG-2008 Added window menu
         helpMenu(menuBar, wi, pane);
@@ -186,7 +185,7 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
     }
 
     protected void panelMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(InstanceManager.getDefault(PanelMenu.class));
+        menuBar.add(new PanelMenu());
     }
 
     /**
@@ -236,13 +235,20 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
 
     }
 
+    /**
+     * Add a script menu to a window menu bar.
+     * 
+     * @param menuBar the menu bar to add the script menu to
+     * @param wi the window interface containing menuBar
+     * @deprecated since 4.17.5 without direct replacement; appears
+     * to have been empty method since 1.2.3
+     */
+    @Deprecated
     protected void scriptMenu(JMenuBar menuBar, WindowInterface wi) {
         // temporarily remove Scripts menu; note that "Run Script"
         // has been added to the Panels menu
         // JMenu menu = new JMenu("Scripts");
         // menuBar.add(menu);
-        // menu.add(new jmri.jmrit.automat.JythonAutomatonAction("Jython script", this));
-        // menu.add(new jmri.jmrit.automat.JythonSigletAction("Jython siglet", this));
     }
 
     protected void developmentMenu(JMenuBar menuBar, WindowInterface wi) {

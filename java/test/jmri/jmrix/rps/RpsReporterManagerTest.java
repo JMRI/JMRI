@@ -1,6 +1,9 @@
 package jmri.jmrix.rps;
 
 import jmri.util.JUnitUtil;
+
+import java.beans.PropertyVetoException;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -8,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class RpsReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
@@ -28,14 +31,29 @@ public class RpsReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
     }
 
     @Override
-    public void testReporterProvideByNumber() {} // not possible on RPS
+    public void testReporterProvideByNumber() {
+        // not possible on RPS so do nothing
+    }
 
     @Override
-    public void testRegisterDuplicateSystemName() {} // not possible in this form on RPS
+    public void testRegisterDuplicateSystemName()
+            throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException, PropertyVetoException {
+        super.testRegisterDuplicateSystemName(l,
+            l.makeSystemName(getNameToTest1()),
+            l.makeSystemName(getNameToTest2()));
+    }
 
     @Test
     public void testCTor() {
         Assert.assertNotNull("exists", l);
+    }
+
+    @Override
+    @Test
+    public void testMakeSystemName() {
+        String s = l.makeSystemName(getNameToTest1());
+        Assert.assertNotNull(s);
+        Assert.assertFalse(s.isEmpty());
     }
 
     @Test
@@ -43,8 +61,8 @@ public class RpsReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
         Assert.assertEquals("R", l.getSystemPrefix());
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         l = new RpsReporterManager(new RpsSystemConnectionMemo());

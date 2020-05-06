@@ -1,14 +1,11 @@
 package jmri.jmrit.beantable;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -38,7 +35,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import jmri.Block;
-import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -138,12 +134,17 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 }
                 Block b = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(name);
                 if (b == null) {
-                    log.debug("requested getValue(\"" + name + "\"), Block doesn't exist");
+                    log.debug("requested getValue(\"{}\"), Block doesn't exist", name);
                     return "(no Block)";
                 }
                 Object m = b.getValue();
                 if (m != null) {
-                    return m.toString();
+                    if ( m instanceof jmri.Reportable) {
+                        return ((jmri.Reportable) m).toReportString();
+                    }
+                    else {
+                        return m.toString();
+                    }
                 } else {
                     return "";
                 }
@@ -185,18 +186,18 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             public Object getValueAt(int row, int col) {
                 // some error checking
                 if (row >= sysNameList.size()) {
-                    log.debug("requested getValueAt(\"" + row + "\"), row outside of range");
+                    log.debug("requested getValueAt(\"{}\"), row outside of range", row);
                     return "Error table size";
                 }
                 Block b = getBySystemName(sysNameList.get(row));
                 if (b == null) {
-                    log.debug("requested getValueAt(\"" + row + "\"), Block doesn't exist");
+                    log.debug("requested getValueAt(\"{}\"), Block doesn't exist", row);
                     return "(no Block)";
                 }
                 if (col == DIRECTIONCOL) {
                     return jmri.Path.decodeDirection(b.getDirection());
                 } else if (col == CURVECOL) {
-                    JComboBox<String> c = new JComboBox<String>(curveOptions);
+                    JComboBox<String> c = new JComboBox<>(curveOptions);
                     if (b.getCurvature() == Block.NONE) {
                         c.setSelectedItem(0);
                     } else if (b.getCurvature() == Block.GRADUAL) {
@@ -223,7 +224,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     if (!speedList.contains(speed)) {
                         speedList.add(speed);
                     }
-                    JComboBox<String> c = new JComboBox<String>(speedList);
+                    JComboBox<String> c = new JComboBox<>(speedList);
                     c.setEditable(true);
                     c.setSelectedItem(speed);
                     return c;
@@ -240,7 +241,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     }
                 } else if (col == SENSORCOL) {
                     Sensor sensor = b.getSensor();
-                    JComboBox<String> c = new JComboBox<String>(sensorList);
+                    JComboBox<String> c = new JComboBox<>(sensorList);
                     String name = "";
                     if (sensor != null) {
                         name = sensor.getDisplayName();
@@ -249,7 +250,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     return c;
                 } else if (col == REPORTERCOL) {
                     Reporter reporter = b.getReporter();
-                    JComboBox<String> rs = new JComboBox<String>(reporterList);
+                    JComboBox<String> rs = new JComboBox<>(reporterList);
                     String name = "";
                     if (reporter != null) {
                         name = reporter.getDisplayName();
@@ -319,16 +320,14 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 } else if (col == REPORTERCOL) {
                     @SuppressWarnings("unchecked")
                     String strReporter = (String) ((JComboBox<String>) value).getSelectedItem();
-                    Reporter r = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(strReporter); 
+                    Reporter r = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(strReporter);
                     b.setReporter(r);
                     fireTableRowsUpdated(row, row);
-                    return;
                 } else if (col == SENSORCOL) {
                     @SuppressWarnings("unchecked")
                     String strSensor = (String) ((JComboBox<String>) value).getSelectedItem();
                     b.setSensor(strSensor);
                     fireTableRowsUpdated(row, row);
-                    return;
                 } else if (col == CURRENTREPCOL) {
                     boolean boo = ((Boolean) value);
                     b.setReportingCurrent(boo);
@@ -792,7 +791,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenus before 'Window' and 'Help'
         int offset = 1;
-        log.debug("setMenuBar number of menu items = " + pos);
+        log.debug("setMenuBar number of menu items = {}", pos);
         for (int i = 0; i <= pos; i++) {
             if (menuBar.getComponent(i) instanceof JMenu) {
                 if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
@@ -905,7 +904,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddBlock"), false, true);
-            addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); //NOI18N
+            addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); // NOI18N
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             ActionListener oklistener = new ActionListener() {
                 @Override
@@ -1026,10 +1025,12 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             user = null;
         }
         String uName = user; // keep result separate to prevent recursive manipulation
+        String system = "";
 
-        String system = sysName.getText();
+        if (!_autoSystemNameCheckBox.isSelected()) {
+            system = InstanceManager.getDefault(jmri.BlockManager.class).makeSystemName(sysName.getText());
+        }
         String sName = system; // keep result separate to prevent recursive manipulation
-        sName = InstanceManager.getDefault(BlockManager.class).normalizeSystemName(sName);
         // initial check for empty entry using the raw name
         if (sName.length() < 3 && !_autoSystemNameCheckBox.isSelected()) {  // Using 3 to catch a plain IB
             statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));

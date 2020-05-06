@@ -18,13 +18,12 @@ public class LnReporterManagerTest extends jmri.managers.AbstractReporterMgrTest
 
     private LnTrafficController tc = null;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new LocoNetInterfaceScaffold();
-        l = new LnReporterManager(tc,"L");
+        tc = new LocoNetInterfaceScaffold(new LocoNetSystemConnectionMemo());
+        l = new LnReporterManager(tc.getSystemConnectionMemo());
     }
 
     @After

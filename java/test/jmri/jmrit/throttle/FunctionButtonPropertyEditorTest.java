@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of FunctionButtonPropertyEditor
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class FunctionButtonPropertyEditorTest {
 
@@ -29,6 +29,7 @@ public class FunctionButtonPropertyEditorTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 }

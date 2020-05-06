@@ -2,6 +2,7 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.display.PositionableIconTest;
+import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
@@ -12,6 +13,7 @@ import org.junit.*;
 public class PortalIconTest extends PositionableIconTest {
 
     @Test
+    @Override
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists", p);
@@ -19,10 +21,10 @@ public class PortalIconTest extends PositionableIconTest {
 
     @Override
     @Test
-    @Ignore("not supported for PortalIcon")
+//    @Ignore("not supported for PortalIcon")
     public void testDoViemMenu() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertTrue("Do View Menu", p.doViemMenu());
+        Assert.assertFalse("Do View Menu", p.doViemMenu());
     }
 
     @Override
@@ -39,6 +41,15 @@ public class PortalIconTest extends PositionableIconTest {
             editor = new ControlPanelEditor("Portal Icon Test Panel");
             p = new PortalIcon(editor);
         }
+    }
+
+    @After
+    @Override
+    public void tearDown() {
+        if (editor != null) {
+            JUnitUtil.dispose(editor);
+        }
+        super.tearDown();
     }
 
 }

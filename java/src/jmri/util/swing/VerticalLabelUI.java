@@ -10,7 +10,6 @@ import java.awt.geom.AffineTransform;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicLabelUI;
 
 /**
@@ -47,11 +46,6 @@ public class VerticalLabelUI extends BasicLabelUI {
      * Define Anti-Clockwise rotation (-90 degrees from horizontal)
      */
     public static final int ANTICLOCKWISE = 2;
-
-    /**
-     * Static variable to define default instance
-     */
-    private static ComponentUI verticalLabelUI = new VerticalLabelUI();
 
     /**
      * Variable to determine rotation direction
@@ -170,18 +164,6 @@ public class VerticalLabelUI extends BasicLabelUI {
                 ((Graphics2D) graphics).setTransform(transform);
             }
         }
-    }
-
-    /**
-     * Return default VerticalLabelUI instance
-     *
-     * @param component ignored
-     * @return default VerticalLabelUI instance
-     * @deprecated since 4.9.5; construct a new VerticalLabelUI object instead
-     */
-    @Deprecated // 4.9.5
-    public static ComponentUI createUI(JComponent component) {
-        return verticalLabelUI;
     }
 
     //private static final Logger log = LoggerFactory.getLogger(VerticalLabelUI.class);

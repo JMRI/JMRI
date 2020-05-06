@@ -2,11 +2,16 @@ package jmri.jmrit.timetable;
 
 import org.junit.*;
 
+import jmri.util.JUnitUtil;
+
 /**
  * Tests for the Station Class
  * @author Dave Sand Copyright (C) 2018
  */
 public class StationTest {
+
+    @Rule
+    public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
 
     @Test
     public void testCreate() {
@@ -56,12 +61,13 @@ public class StationTest {
     }
 
     @Before
-    public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 }

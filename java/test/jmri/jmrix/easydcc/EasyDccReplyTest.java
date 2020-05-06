@@ -1,9 +1,9 @@
 /**
  * EasyDccReplyTest.java
  *
- * Description:	JUnit tests for the EasyDccReplyclass
+ * JUnit tests for the EasyDccReplyclass
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.easydcc;
 
@@ -92,8 +92,8 @@ public class EasyDccReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("not find ", -1, msg.match("foo"));
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new EasyDccReply();
@@ -101,7 +101,7 @@ public class EasyDccReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	m = msg = null;
+        m = msg = null;
         JUnitUtil.tearDown();
     }
 

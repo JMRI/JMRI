@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.SlotManager;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
 
@@ -33,8 +33,8 @@ public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
         ((LoaderPane)panel).initContext(memo);
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         lnis = new LocoNetInterfaceScaffold();
@@ -46,6 +46,7 @@ public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @After
+    @Override
     public void tearDown() {
         memo.dispose();
         lnis = null;

@@ -16,14 +16,9 @@ public class BundleTest {
         Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }
 
-    @Test
+    @Test(expected = java.util.MissingResourceException.class)
     public void testBadKeyMessage() {
-        try {
             Bundle.getMessage("FFFFFTTTTTTT");
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
     }
 
     @Test
@@ -33,14 +28,9 @@ public class BundleTest {
         Assert.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
     }
 
-    @Test
+    @Test(expected = java.util.MissingResourceException.class)
     public void testBadKeyMessageArg() {
-        try {
             Bundle.getMessage("FFFFFTTTTTTT", "foo");
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
     }
 
 }

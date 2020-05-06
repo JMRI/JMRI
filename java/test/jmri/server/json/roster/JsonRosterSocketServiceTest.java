@@ -12,10 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.profile.ProfileManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
+import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -29,7 +32,7 @@ import org.junit.Test;
 public class JsonRosterSocketServiceTest {
 
     private JsonMockConnection connection = null;
-    private Locale locale = Locale.ENGLISH;
+    private final Locale locale = Locale.ENGLISH;
 
     @Before
     public void setUp() throws Exception {
@@ -39,7 +42,9 @@ public class JsonRosterSocketServiceTest {
 
         connection = new JsonMockConnection((DataOutputStream) null);
 
-        InstanceManager.setDefault(Roster.class, new Roster("java/test/jmri/server/json/roster/data/roster.xml"));
+        JUnitUtil.initRosterConfigManager();
+        InstanceManager.getDefault(RosterConfigManager.class).setRoster(ProfileManager.getDefault().getActiveProfile(),
+                new Roster("java/test/jmri/server/json/roster/data/roster.xml"));
         connection = new JsonMockConnection((DataOutputStream) null);
     }
 
@@ -81,9 +86,14 @@ public class JsonRosterSocketServiceTest {
         new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         // list the groups in a JSON message for assertions
-        this.connection.sendMessage((JsonNode) null, 0);
-        instance.onMessage(JsonRoster.ROSTER_GROUPS, NullNode.getInstance(), JSON.GET, locale, 0);
+        this.connection.sendMessage(null, 0);
+        instance.onMessage(JsonRoster.ROSTER_GROUPS, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         JsonNode message = this.connection.getMessage();
+        if (this.connection.getMessages().size() !=1) { // error, but first log why
+            connection.getMessages().forEach((msg)->{
+                log.warn(" message {}", msg);
+            });
+        }
         Assert.assertEquals("Single message sent", 1, this.connection.getMessages().size());
         Assert.assertNotNull("Message was sent", message);
         Assert.assertTrue("Message is array", message.isArray());
@@ -92,7 +102,7 @@ public class JsonRosterSocketServiceTest {
         Assert.assertTrue("Contains group AllEntries", message.findValuesAsText(JSON.NAME).contains(Roster.allEntries(locale)));
 
         // add a roster group and verify message sent by listener
-        this.connection.sendMessage((JsonNode) null, 0);
+        this.connection.sendMessage(null, 0);
         Roster.getDefault().addRosterGroup("NewRosterGroup");
         Assert.assertEquals("Single message sent", 1, this.connection.getMessages().size());
         message = this.connection.getMessage();
@@ -103,7 +113,7 @@ public class JsonRosterSocketServiceTest {
         Assert.assertTrue("Contains group NewRosterGroup", message.findValuesAsText(JSON.NAME).contains("NewRosterGroup"));
 
         // rename a roster group and verify message sent by listener
-        this.connection.sendMessage((JsonNode) null, 0);
+        this.connection.sendMessage(null, 0);
         Roster.getDefault().getRosterGroups().get("NewRosterGroup").setName("AgedRosterGroup");
         Assert.assertEquals("Single message sent", 1, this.connection.getMessages().size());
         message = this.connection.getMessage();
@@ -115,7 +125,7 @@ public class JsonRosterSocketServiceTest {
         Assert.assertFalse("Contains group NewRosterGroup", message.findValuesAsText(JSON.NAME).contains("NewRosterGroup"));
 
         // remove a roster group and verify message sent by listener
-        this.connection.sendMessage((JsonNode) null, 0);
+        this.connection.sendMessage(null, 0);
         Roster.getDefault().removeRosterGroup(Roster.getDefault().getRosterGroups().get("AgedRosterGroup"));
         Assert.assertEquals("Single message sent", 1, this.connection.getMessages().size());
         message = this.connection.getMessage();
@@ -127,7 +137,7 @@ public class JsonRosterSocketServiceTest {
         Assert.assertFalse("Contains group NewRosterGroup", message.findValuesAsText(JSON.NAME).contains("NewRosterGroup"));
 
         // Set unknown roster group directly as attribute of RosterEntry
-        this.connection.sendMessage((JsonNode) null, 0);
+        this.connection.sendMessage(null, 0);
         RosterEntry re = Roster.getDefault().getEntryForId("testEntry1");
         Assert.assertEquals("instance is listening to RosterEntry", 3, re.getPropertyChangeListeners().length);
         re.putAttribute(Roster.ROSTER_GROUP_PREFIX + "attribute", "yes");
@@ -144,7 +154,7 @@ public class JsonRosterSocketServiceTest {
         JUnitUtil.waitFor(() -> {
             return Roster.getDefault().getRosterGroupList().contains("NewRosterGroup");
         }, "Roster Group was not added");
-        this.connection.sendMessage((JsonNode) null, 0); // clear out messages
+        this.connection.sendMessage(null, 0); // clear out messages
         re.putAttribute(Roster.ROSTER_GROUP_PREFIX + "NewRosterGroup", "yes"); // add new group to roster entry
         // wait for all expected messages to be sent before testing messages are as expected
         JUnitUtil.waitFor(() -> {
@@ -161,7 +171,7 @@ public class JsonRosterSocketServiceTest {
                 values.toArray(new String[5]));
 
         // Remove known roster group directly as attribute of RosterEntry
-        this.connection.sendMessage((JsonNode) null, 0); // clear out messages
+        this.connection.sendMessage(null, 0); // clear out messages
         re.deleteAttribute(Roster.ROSTER_GROUP_PREFIX + "NewRosterGroup"); // remove group from roster entry
         // wait for all expected messages to be sent before testing messages are as expected
         JUnitUtil.waitFor(() -> {
@@ -187,10 +197,9 @@ public class JsonRosterSocketServiceTest {
     @Test
     public void testOnMessageDeleteRoster() throws IOException, JmriException {
         JsonNode data = this.connection.getObjectMapper().createObjectNode();
-        Locale locale = Locale.ENGLISH;
         JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
         try {
-            instance.onMessage(JsonRoster.ROSTER, data, JSON.DELETE, locale, 42);
+            instance.onMessage(JsonRoster.ROSTER, data, new JsonRequest(locale, JSON.V5, JSON.DELETE, 42));
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
@@ -206,10 +215,9 @@ public class JsonRosterSocketServiceTest {
     @Test
     public void testOnMessagePostRoster() throws IOException, JmriException {
         JsonNode data = this.connection.getObjectMapper().createObjectNode().put(JSON.METHOD, JSON.POST);
-        Locale locale = Locale.ENGLISH;
         JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
         try {
-            instance.onMessage(JsonRoster.ROSTER, data, JSON.POST, locale, 42);
+            instance.onMessage(JsonRoster.ROSTER, data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_NOT_IMPLEMENTED, ex.getCode());
@@ -225,10 +233,9 @@ public class JsonRosterSocketServiceTest {
     @Test
     public void testOnMessagePutRoster() throws IOException, JmriException {
         JsonNode data = this.connection.getObjectMapper().createObjectNode().put(JSON.METHOD, JSON.PUT);
-        Locale locale = Locale.ENGLISH;
         JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
         try {
-            instance.onMessage(JsonRoster.ROSTER, data, JSON.POST, locale, 42);
+            instance.onMessage(JsonRoster.ROSTER, data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_NOT_IMPLEMENTED, ex.getCode());
@@ -248,7 +255,6 @@ public class JsonRosterSocketServiceTest {
     @Test
     public void testOnMessageGetRoster() throws IOException, JmriException, JsonException {
         JsonNode data = this.connection.getObjectMapper().createObjectNode();
-        Locale locale = Locale.ENGLISH;
         JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
         // assert we have not been listening
         Assert.assertEquals(0, Roster.getDefault().getPropertyChangeListeners().length);
@@ -256,7 +262,7 @@ public class JsonRosterSocketServiceTest {
             Assert.assertEquals(1, entry.getPropertyChangeListeners().length);
         });
         // onMessage should cause listening to start if it hasn't already
-        instance.onMessage(JsonRoster.ROSTER, data, JSON.GET, locale, 0);
+        instance.onMessage(JsonRoster.ROSTER, data, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         JsonNode message = this.connection.getMessage();
         Assert.assertNotNull("Message was sent", message);
         Assert.assertEquals(Roster.getDefault().numEntries(), message.size());
@@ -280,10 +286,9 @@ public class JsonRosterSocketServiceTest {
     @Test
     public void testOnMessageInvalidRoster() throws IOException, JmriException, JsonException {
         JsonNode data = this.connection.getObjectMapper().createObjectNode();
-        Locale locale = Locale.ENGLISH;
         JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
         try {
-            instance.onMessage(JsonRoster.ROSTER, data, "Invalid", locale, 42);
+            instance.onMessage(JsonRoster.ROSTER, data, new JsonRequest(locale, JSON.V5, "Invalid", 42));
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("Exception is coded for HTTP invalid method", 405, ex.getCode());
@@ -304,7 +309,6 @@ public class JsonRosterSocketServiceTest {
     @Test
     public void testOnList() throws IOException, JmriException, JsonException {
         JsonNode data = this.connection.getObjectMapper().createObjectNode();
-        Locale locale = Locale.ENGLISH;
         JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
         // assert we have not been listening
         Assert.assertEquals(0, Roster.getDefault().getPropertyChangeListeners().length);
@@ -312,7 +316,7 @@ public class JsonRosterSocketServiceTest {
             Assert.assertEquals(1, entry.getPropertyChangeListeners().length);
         });
         // onList should cause listening to start if it hasn't already
-        instance.onList(JsonRoster.ROSTER, data, locale, 0);
+        instance.onList(JsonRoster.ROSTER, data, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         JsonNode message = this.connection.getMessage();
         Assert.assertNotNull(message);
         Assert.assertEquals(Roster.getDefault().numEntries(), message.size());
@@ -345,4 +349,5 @@ public class JsonRosterSocketServiceTest {
         });
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonRosterSocketServiceTest.class);
 }

@@ -7,13 +7,12 @@ import org.junit.Before;
 /**
  * StandaloneTrafficControllerTest.java
  *
- * Description:	tests for the StandaloneTrafficController class
+ * Test for the StandaloneTrafficController class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class StandaloneTrafficControllerTest extends jmri.jmrix.rfid.RfidTrafficControllerTest {
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -25,6 +24,8 @@ public class StandaloneTrafficControllerTest extends jmri.jmrix.rfid.RfidTraffic
     @After
     public void tearDown() {
         tc = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 }

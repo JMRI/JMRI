@@ -142,6 +142,11 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_MASTER_BUSY");
             }
 
+            case LnConstants.OPC_RE_LOCORESET_BUTTON: {
+                return Bundle.getMessage("LN_MSG_RE_LOCO_RESET");
+
+            }
+
             /*
              * OPC_LOCO_ADR     0xBF   ; REQ loco ADR
              *                         ; Follow on message: <E7>SLOT READ
@@ -2270,7 +2275,7 @@ public class LocoNetMessageInterpret {
     private static String interpretOpcWrSlDataOpcSlRdData(LocoNetMessage l) {
         int slot = l.getElement(2); // slot number for this request
         String mode;
-        int command = l.getElement(0);
+        int command = l.getOpCode();
         int id1 = l.getElement(11); // ls 7 bits of ID code
         int id2 = l.getElement(12); // ms 7 bits of ID code
         /*
@@ -3651,10 +3656,11 @@ public class LocoNetMessageInterpret {
             int[] packetInt = new int[len];
             packet[0] = (byte) (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
             packetInt[0] = (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
-            if (len >= 2) {
-                packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-                packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-            }
+
+            // len >= 2 always true at this point
+            packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+            packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+
             if (len >= 3) {
                 packet[2] = (byte) (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
                 packetInt[2] = (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
@@ -4460,7 +4466,7 @@ public class LocoNetMessageInterpret {
                     return "routes unknown\n";
                 default:
                     return Bundle.getMessage(
-                            ((l.getElement(0) == LnConstants.OPC_ALM_WRITE)
+                            ((l.getOpCode() == LnConstants.OPC_ALM_WRITE)
                             ? "LN_MSG_ALM_WRITE"
                             : "LN_MSG_ALM_WRITE_REPLY"),
                             l.getElement(2),

@@ -9,10 +9,10 @@ import org.junit.Assert;
 /**
  * HornbyEliteCommandStationTest.java
  *
- * Description:	tests for the
+ * Test for the
  * jmri.jmrix.lenz.hornbyelite.HornbyEliteCommandStation class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class HornbyEliteCommandStationTest {
 

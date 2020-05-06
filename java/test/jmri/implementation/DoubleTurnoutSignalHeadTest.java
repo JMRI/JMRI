@@ -17,7 +17,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  * @author Balazs Racz Copyright (C) 2017
  */
 public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
@@ -174,7 +174,6 @@ public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
         return mHead;
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

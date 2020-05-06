@@ -9,9 +9,9 @@ import org.junit.Test;
 /**
  * MarklinSystemConnectionMemoTest.java
  *
- * Description:	tests for the jmri.jmrix.marklin.MarklinSystemConnectionMemo class
+ * Test for the jmri.jmrix.marklin.MarklinSystemConnectionMemo class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class MarklinSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -27,7 +27,6 @@ public class MarklinSystemConnectionMemoTest extends jmri.jmrix.SystemConnection
        Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -48,7 +47,9 @@ public class MarklinSystemConnectionMemoTest extends jmri.jmrix.SystemConnection
     @Override
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

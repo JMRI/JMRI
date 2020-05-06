@@ -1,6 +1,5 @@
 package jmri;
 
-import java.beans.PropertyChangeListener;
 import jmri.beans.PropertyChangeProvider;
 
 /**
@@ -23,15 +22,6 @@ public interface MultiMeter extends PropertyChangeProvider {
      * @param c the current
      */
     public void setCurrent(float c);
-
-    /**
-     * Set the current.
-     *
-     * @param c the current
-     * @deprecated since 4.7.1; use {@link #setCurrent(float)} instead
-     */
-    @Deprecated // 4.7.1
-    public void updateCurrent(float c);
 
     /**
      * get the current
@@ -65,15 +55,6 @@ public interface MultiMeter extends PropertyChangeProvider {
     public void setVoltage(float v);
 
     /**
-     * Set the voltage.
-     *
-     * @param v the voltage
-     * @deprecated since 4.7.1; use {@link #setVoltage(float)} instead
-     */
-    @Deprecated // 4.7.1
-    public void updateVoltage(float v);
-
-    /**
      * get the voltage.
      *
      * @return v the voltage in volts.
@@ -87,39 +68,6 @@ public interface MultiMeter extends PropertyChangeProvider {
     public boolean hasCurrent();
 
     public boolean hasVoltage();
-
-    /**
-     * Request a call-back when the current changes.
-     *
-     * @param l the listener to add
-     * @deprecated since 4.7.1; use
-     * {@link #addPropertyChangeListener(java.lang.String, java.beans.PropertyChangeListener)}
-     * with {@link #CURRENT} as the first parameter
-     */
-    @Deprecated // 4.7.1
-    public void addDataUpdateListener(PropertyChangeListener l);
-
-    /**
-     * Remove a request for call-back when the current changes.
-     *
-     * @param l the listener to remove
-     * @deprecated since 4.7.1; use
-     * {@link #removePropertyChangeListener(java.lang.String, java.beans.PropertyChangeListener)}
-     * with {@link #CURRENT} as the first parameter
-     */
-    @Deprecated // 4.7.1
-    public void removeDataUpdateListener(PropertyChangeListener l);
-
-    /**
-     * Get the list of minute change listeners.
-     *
-     * @return a list of listeners or an empty list
-     * @deprecated since 4.7.1; use
-     * {@link #getPropertyChangeListeners(java.lang.String)} with
-     * {@link #CURRENT} as the parameter
-     */
-    @Deprecated // 4.7.1
-    public PropertyChangeListener[] getDataUpdateListeners();
 
     /**
      * Remove references to and from this object, so that it can eventually be

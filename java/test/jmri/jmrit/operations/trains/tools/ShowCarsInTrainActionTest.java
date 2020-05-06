@@ -24,7 +24,7 @@ public class ShowCarsInTrainActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
-        ShowCarsInTrainAction t = new ShowCarsInTrainAction("Test Action", train1);
+        ShowCarsInTrainAction t = new ShowCarsInTrainAction(train1);
         Assert.assertNotNull("exists", t);
     }
 
@@ -41,7 +41,7 @@ public class ShowCarsInTrainActionTest extends OperationsTestCase {
         Assert.assertTrue(train1.build());
         Assert.assertTrue(train1.isBuilt());
         
-        ShowCarsInTrainAction pa = new ShowCarsInTrainAction("Test Action", train1);
+        ShowCarsInTrainAction pa = new ShowCarsInTrainAction(train1);
         
         Thread performAction = new Thread(new Runnable() {
             @Override
@@ -61,6 +61,9 @@ public class ShowCarsInTrainActionTest extends OperationsTestCase {
         Assert.assertNotNull("exists", frame);
         
         JUnitUtil.dispose(frame);
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ShowCarsInTrainActionTest.class);

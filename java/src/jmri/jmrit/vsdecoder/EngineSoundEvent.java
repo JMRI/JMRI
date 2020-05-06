@@ -3,11 +3,15 @@ package jmri.jmrit.vsdecoder;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JComponent;
+import jmri.Throttle;
+import jmri.jmrit.vsdecoder.swing.DieselPane;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Handles sound events for all types.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -22,9 +26,9 @@ import org.slf4j.LoggerFactory;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018
+ * @author Klaus Killinger Copyright (C) 2018-2020
  */
-public class EngineSoundEvent extends SoundEvent implements PropertyChangeListener {
+public class EngineSoundEvent extends SoundEvent {
 
     EnginePane engine_pane;
 
@@ -117,7 +121,7 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
     }
 
     public void guiAction(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("start")) {
+        if (evt.getPropertyName().equals(DieselPane.START)) {
             log.debug("GUI Start button changed. New value: {}", evt.getNewValue());
             if ((Boolean) evt.getNewValue()) {
                 ((EngineSound) parent.getSound("ENGINE")).setEngineStarted(true);
@@ -126,15 +130,22 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
                 ((EngineSound) parent.getSound("ENGINE")).setEngineStarted(false);
                 ((EngineSound) parent.getSound("ENGINE")).stopEngine();
             }
+        } else if (evt.getPropertyName().equals(DieselPane.VOLUME)) {
+            log.debug("decoder volume: {}", evt.getOldValue());
+            this.getParent().setDecoderVolume((1.0f * (Integer) evt.getOldValue()) / 100.0f);
+            // save to Roster Media
+            if (this.getParent().getRosterEntry() != null) {
+                this.getParent().getRosterEntry().putAttribute("VSDecoder_Volume", String.valueOf(this.getParent().getDecoderVolume()));
+            }
         }
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent event) {
         super.propertyChange(event);
-        if (event.getPropertyName().equals("SpeedSetting")) {
+        if (event.getPropertyName().equals(Throttle.SPEEDSETTING)) {
             ((EngineSound) parent.getSound("ENGINE")).handleSpeedChange((Float) event.getNewValue(), engine_pane);
-        } else if (event.getPropertyName().equals("IsForward")) {
+        } else if (event.getPropertyName().equals(Throttle.ISFORWARD)) {
             ((EngineSound) parent.getSound("ENGINE")).changeLocoDirection((Boolean) event.getNewValue() ? 1 : -1);
             log.debug("is forward: {}", event.getNewValue());
         } else if (event.getPropertyName().startsWith("F")) {
@@ -152,7 +163,13 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
                 }
             }
         }
-        //engine_pane.setThrottle(EngineSound.calcEngineNotch((Float)event.getNewValue()));
+    }
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="BC_UNCONFIRMED_CAST", justification="DieselPane extends EnginePane")
+    private void setDecoderVolume() {
+        // Get decoder volume and pass it to the spinner
+        int dv = Math.round(this.getParent().getDecoderVolume() * 100f);
+        ((DieselPane) engine_pane).volume_slider.setValue(dv);
     }
 
     @Override
@@ -175,7 +192,9 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
     public void setXml(Element el, VSDFile vf) {
         // Create the "button"  (should this be in constructor)
         log.debug("Creating DieselPane");
-        engine_pane = new jmri.jmrit.vsdecoder.swing.DieselPane("Engine");
+        engine_pane = new DieselPane("Engine");
+
+        setDecoderVolume();
 
         // Handle common stuff
         super.setXml(el, vf);
@@ -187,6 +206,18 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
                 guiAction(evt);
             }
         });
+
+        // Forward an option passed from the trigger ENGINE_STARTSTOP
+        // The option can force speed zero before the engine can be stopped
+        for (Trigger t : trigger_list.values()) {
+            if (t.getName().equals("ENGINE_STARTSTOP")) {
+                if (t.getTargetAction().equals(jmri.jmrit.vsdecoder.Trigger.TargetAction.STOP_AT_ZERO)) {
+                    engine_pane.setStopOption(true); // force speed zero
+                } else {
+                    engine_pane.setStopOption(false); // engine can be stopped at any speed
+                }
+            }
+        }
 
         if (log.isDebugEnabled()) {
             for (ButtonTrigger bt : button_trigger_list.values()) {

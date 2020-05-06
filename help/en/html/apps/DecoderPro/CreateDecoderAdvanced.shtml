@@ -8,7 +8,8 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: DecoderPro User Guide - Advanced Decoder
-  Definitions</title><!-- Style -->
+  Definitions</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -16,16 +17,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>JMRI: DecoderPro User Guide</h1>
 
       <h2>Advanced Decoder Definitions</h2>
@@ -1274,7 +1275,13 @@ means that it doesn't.
       number is too low. Note that initially, before the values are
       read from the decoder, this display will depend on the
       default value from the file, which might be misleading to the
-      user.</p><!--#include virtual="/Footer" -->
+      user.</p>
+      <h3>Using XSL transformations</h3>
+      <p>
+          It is possible to generate complex, repeated decoder XML parts using XSL stylesheets.
+          For more information, please see <a href="TransformDecoder.shtml">Use XSLT Transformation for complex decoders</a>.
+      </p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

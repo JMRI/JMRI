@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Vector;
 import jmri.jmrix.loconet.LnPacketizer;
@@ -20,7 +19,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to LocoNet via a MS100 attached to a serial comm port.
+ * Provide access to LocoNet via a MS100 attached to a serial com port.
  * Normally controlled by the jmri.jmrix.loconet.ms100.ConnectionConfig class.
  * <p>
  * By default, this attempts to use 16600 baud. If that fails, it falls back to
@@ -29,7 +28,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
+public class MS100Adapter extends LnPortController {
 
     public MS100Adapter() {
         super(new LocoNetSystemConnectionMemo());
@@ -100,7 +99,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
                 log.debug("Serial timeout was observed as: {} {}",
                         activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
             } catch (UnsupportedCommOperationException et) {
-                log.info("failed to set serial timeout: " + et);
+                log.info("failed to set serial timeout: {}", et);
             }
 
             // get and save stream
@@ -189,6 +188,11 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         return new int[]{16600};
     }
 
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
     /**
      * Set the second port option. Only to be used after construction, but
      * before the openPort call
@@ -196,7 +200,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     @Override
     public void configureOption2(String value) {
         super.configureOption2(value);
-        log.debug("configureOption2: " + value);
+        log.debug("configureOption2: {}", value);
         setCommandStationType(value);
     }
 

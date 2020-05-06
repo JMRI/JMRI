@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MrcTurnoutManagerTest {
 
@@ -18,12 +18,11 @@ public class MrcTurnoutManagerTest {
         MrcInterfaceScaffold tc = new MrcInterfaceScaffold();
         memo.setMrcTrafficController(tc);
         jmri.InstanceManager.store(memo, MrcSystemConnectionMemo.class);
-        MrcTurnoutManager t = new MrcTurnoutManager(tc,"test");
+        MrcTurnoutManager t = new MrcTurnoutManager(memo);
         Assert.assertNotNull("exists",t);
     }
 
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

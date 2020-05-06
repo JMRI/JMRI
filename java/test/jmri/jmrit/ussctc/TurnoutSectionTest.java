@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Tests for TurnoutSection class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class TurnoutSectionTest {
 
@@ -192,7 +192,6 @@ public class TurnoutSectionTest {
     Sensor normSensor;
     Sensor revSensor;
     
-    // The minimal setup for log4J
     @org.junit.Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -202,7 +201,6 @@ public class TurnoutSectionTest {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initMemoryManager();  
-        JUnitUtil.initShutDownManager();
         
         layoutTurnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1"); layoutTurnout.setUserName("Sec 1 Layout TO");
         normIndicator = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT2"); normIndicator.setUserName("Sec1 TO 1 N");
@@ -211,10 +209,11 @@ public class TurnoutSectionTest {
         normSensor = InstanceManager.getDefault(SensorManager.class).provideSensor("IT2"); normSensor.setUserName("Sec1 TO 1 N");
         revSensor  = InstanceManager.getDefault(SensorManager.class).provideSensor("IT3");  revSensor.setUserName("Sec1 TO 1 R");
 
-        codeline = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
+        codeline = new CodeLine("Code Indication Start", "Code Send Start", "IT101", "IT102", "IT103", "IT104");
         
         requestIndicationStart = false;
         station = new Station("test", codeline, new CodeButton("IS221", "IS222")) {
+            @Override
             public void requestIndicationStart() {
                 requestIndicationStart = true;
             }

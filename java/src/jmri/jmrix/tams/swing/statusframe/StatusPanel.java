@@ -1,10 +1,8 @@
 package jmri.jmrix.tams.swing.statusframe;
 
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import jmri.JmriException;
 import jmri.jmrix.tams.TamsListener;
 import jmri.jmrix.tams.TamsMessage;
 import jmri.jmrix.tams.TamsReply;
@@ -16,7 +14,7 @@ import jmri.jmrix.tams.TamsTrafficController;
  *
  * Based on work by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements TamsListener {
 

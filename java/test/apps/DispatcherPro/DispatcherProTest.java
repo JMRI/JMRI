@@ -25,6 +25,7 @@ import org.junit.Test;
 @Ignore("Replaced with a Cucumber test")
 public class DispatcherProTest extends apps.LaunchJmriAppBase {
 
+    @Override
     protected void launch(String[] args) {
         DispatcherPro.main(args);
     }

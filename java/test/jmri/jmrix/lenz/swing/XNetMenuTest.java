@@ -15,7 +15,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of XNetMenu
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class XNetMenuTest {
 
@@ -41,6 +41,9 @@ public class XNetMenuTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
+    public void tearDown() {
+        tc = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 }

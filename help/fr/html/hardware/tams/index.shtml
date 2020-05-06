@@ -8,23 +8,24 @@
   <!-- Copyright ($Author$) 2008 -->
   <!-- translated by Herv&#233; Blorec 2013-09-19 -->
 
-  <title>JMRI: TAMs Master Control Support</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <title>JMRI: TAMs Master Control Support</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
-      <h1>JMRI: Support TAMs</h1>JMRI peut se connecter &agrave;
+        <!-- Page Body -->
+
+<h1>JMRI: Support TAMs</h1>JMRI peut se connecter &agrave;
       une centrale MasterControl TAMS en utilisant l'interface USB
       int&eacute;gr&eacute;e et/ou l'interface s&eacute;rie.<br>
       L'interface USB est livr&eacute; avec les pilotes pour
@@ -82,7 +83,8 @@
       sur la version <a href=
       "http://jmri.org/releasenotes/jmri2.99.7.shtml">JMRI
       2.99.7</a>.</p>
-      <!--#include virtual="/Footer" -->
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

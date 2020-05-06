@@ -53,6 +53,7 @@ public class FrmFindAndReplace extends javax.swing.JFrame {
         CommonSubs.setButtonSelected(_mHowReplace, 1);
 
         _mResults.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+           @Override
            public void valueChanged(ListSelectionEvent event)  {
                if (!event.getValueIsAdjusting()) {
                    updateSelectionCount();
@@ -113,6 +114,7 @@ public class FrmFindAndReplace extends javax.swing.JFrame {
 
         _mButtonDone.setText(Bundle.getMessage("ButtonDone"));
         _mButtonDone.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mButtonDoneActionPerformed(evt);
             }
@@ -126,6 +128,7 @@ public class FrmFindAndReplace extends javax.swing.JFrame {
 
         _mSearch.setText(Bundle.getMessage("ButtonDlgFindSearch"));
         _mSearch.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSearchActionPerformed(evt);
             }
@@ -150,6 +153,7 @@ public class FrmFindAndReplace extends javax.swing.JFrame {
 
         _mReplace.setText(Bundle.getMessage("ButtonDlgFindReplace"));
         _mReplace.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mReplaceActionPerformed(evt);
             }
@@ -187,6 +191,7 @@ public class FrmFindAndReplace extends javax.swing.JFrame {
 
         _mSelectDeselectAll.setText("?Select all");
         _mSelectDeselectAll.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSelectDeselectAllActionPerformed(evt);
             }

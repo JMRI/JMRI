@@ -1,6 +1,11 @@
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.trains.Train;
@@ -8,13 +13,10 @@ import jmri.jmrit.operations.trains.TrainEditFrame;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TrainScriptFrameTest extends OperationsTestCase {
 
@@ -34,6 +36,8 @@ public class TrainScriptFrameTest extends OperationsTestCase {
         
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(tef);
+        
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainScriptFrameTest.class);

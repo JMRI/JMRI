@@ -14,7 +14,7 @@ import jmri.util.NamedBeanComparator;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SerialLightTest {
 
@@ -91,7 +91,6 @@ public class SerialLightTest {
         Assert.assertEquals("CL3B4", it.next().getSystemName());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -104,10 +103,11 @@ public class SerialLightTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         if (tcis != null) tcis.terminateThreads();
         tcis = null;
         memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
 }

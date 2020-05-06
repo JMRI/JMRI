@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * SRCPProgrammerManagerTest.java
  *
- * Description: tests for the jmri.jmrix.srcp.SRCPProgrammerManager class
+ * Test for the jmri.jmrix.srcp.SRCPProgrammerManager class
  *
  * @author Bob Jacobsen
  */
@@ -33,6 +33,7 @@ public class SRCPProgrammerManagerTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 }

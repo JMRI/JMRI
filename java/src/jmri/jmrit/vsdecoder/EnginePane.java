@@ -27,8 +27,8 @@ public class EnginePane extends JPanel {
     // Doesn't really do anything.
 
     String name;
-
     EngineSoundEvent engine;
+    private boolean force_stop_at_zero;
 
     public EnginePane(String n, EngineSoundEvent e) {
         super();
@@ -77,6 +77,14 @@ public class EnginePane extends JPanel {
     }
 
     public void setSpeed(float s) {
+    }
+
+    void setStopOption(boolean m) {
+        force_stop_at_zero = m;
+    }
+
+    public boolean getStopOption() {
+        return force_stop_at_zero;
     }
 
     public void startButtonClick() {

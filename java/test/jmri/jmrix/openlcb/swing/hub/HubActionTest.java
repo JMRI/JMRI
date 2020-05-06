@@ -1,6 +1,8 @@
 package jmri.jmrix.openlcb.swing.hub;
 
 import java.awt.GraphicsEnvironment;
+
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -24,19 +26,24 @@ public class HubActionTest {
         Assert.assertNotNull("Action object non-null", h);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
 
         memo  = new jmri.jmrix.openlcb.OlcbSystemConnectionMemo();
-        TestTrafficController tc = new TestTrafficController();
+        tc = new TestTrafficController();
         memo.setTrafficController(tc);
+        jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class,memo);
     }
 
     @After
     public void tearDown() {
+        memo.dispose();
+        memo = null;
+        tc.terminateThreads();
+        tc = null;
         JUnitUtil.tearDown();
+
     }
 }

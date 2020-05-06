@@ -1,10 +1,5 @@
 package jmri.jmrix.nce;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
-import java.util.Vector;
 import jmri.JmriException;
 import jmri.ProgrammingMode;
 import org.junit.*;
@@ -13,7 +8,7 @@ import org.junit.*;
  * JUnit tests for the NceProgrammer class
  * <p>
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -21,22 +16,21 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Override
     public void testDefault() {
         Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
-                programmer.getMode());        
+                programmer.getMode());
     }
-    
+
     @Override
     @Test
     public void testDefaultViaBestMode() {
         Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
-                ((NceProgrammer)programmer).getBestMode());        
+                ((NceProgrammer) programmer).getBestMode());
     }
 
     @Override
     @Test
     public void testGetCanWriteAddress() {
         Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
-    }    
-
+    }
 
     @Override
     @Before
@@ -54,7 +48,8 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     public void tearDown() {
         tc = null;
         programmer = p = null;
-	jmri.util.JUnitUtil.tearDown();
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        jmri.util.JUnitUtil.tearDown();
     }
 
     // infrastructure objects
@@ -139,5 +134,4 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceProgrammerTest.class);
-
 }

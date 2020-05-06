@@ -17,7 +17,7 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the Acela system. This connects an Acela
- * interface to the CTI network via a serial comm port. Normally controlled by
+ * interface to the CTI network via a serial com port. Normally controlled by
  * the SerialDriverFrame class.
  * <p>
  * The current implementation only handles the 9,600 baud rate, and does not use
@@ -28,7 +28,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Coleman, Copyright (C) 2007, 2008 Based on MRC example, modified
  * to establish Acela support.
  */
-public class SerialDriverAdapter extends AcelaPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends AcelaPortController {
 
     public SerialDriverAdapter() {
         super(new AcelaSystemConnectionMemo());
@@ -54,7 +54,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
             try {
                 activeSerialPort.setSerialPortParams(currentBaudNumber(getCurrentBaudRate()), SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -63,8 +63,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -74,14 +73,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud, sees "
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
 
             opened = true;
@@ -129,7 +121,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
+            log.error("getOutputStream exception: {}", e);
         }
         return null;
     }

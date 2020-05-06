@@ -28,6 +28,7 @@ public class CbusNodeConstantsTest {
     
     @Test
     public void testGetManu() {
+        Assert.assertTrue("getManu 0",CbusNodeConstants.getManu(0).isEmpty());
         Assert.assertEquals("getManu","MERG",CbusNodeConstants.getManu(165));
         Assert.assertEquals("getManu 999","Manufacturer 999",CbusNodeConstants.getManu(999));
     }
@@ -51,6 +52,7 @@ public class CbusNodeConstantsTest {
     @Test
     public void testgetSupportLink() {
         Assert.assertTrue("getModuleSupportLink 165 31",CbusNodeConstants.getModuleSupportLink(165,31).contains("https://"));
+        Assert.assertTrue("getModuleSupportLink 165 999",CbusNodeConstants.getModuleSupportLink(165,999).isEmpty() );
         Assert.assertTrue("getModuleSupportLink 70 4",CbusNodeConstants.getModuleSupportLink(70,4).contains("http"));
         Assert.assertTrue("getModuleSupportLink unknown",CbusNodeConstants.getModuleSupportLink(999,999).isEmpty() );
     }
@@ -59,11 +61,35 @@ public class CbusNodeConstantsTest {
     public void testgetReservedModule() {
         Assert.assertTrue("getReservedModule 260",CbusNodeConstants.getReservedModule(260).isEmpty() );
         Assert.assertEquals("getModuleTypeExtra 70 4","Reserved, used by all CABS",CbusNodeConstants.getReservedModule(65535));
+        Assert.assertTrue("getReservedModule 99",CbusNodeConstants.getReservedModule(99).isEmpty() );
+        Assert.assertEquals("getReservedModule 100",Bundle.getMessage("NdNumReserveFixed"),CbusNodeConstants.getReservedModule(100));
+        Assert.assertEquals("getReservedModule 125",Bundle.getMessage("NdNumReserveFixed"),CbusNodeConstants.getReservedModule(100));        
+        
+        
     }    
     
+    @Test
+    public void testBackupDisplayPhrase() {
+        Assert.assertEquals("Backup Enum Text outstanding",
+            Bundle.getMessage("BackupOutstanding"),
+            CbusNodeConstants.displayPhrase(CbusNodeConstants.BackupType.OUTSTANDING));
+        
+        Assert.assertEquals("Backup Enum Text complete error",
+            Bundle.getMessage("BackupCompleteError"),
+            CbusNodeConstants.displayPhrase(CbusNodeConstants.BackupType.COMPLETEDWITHERROR));
+    }
     
-
-    // The minimal setup for log4J
+    @Test
+    public void testBackupLookupByName() {
+        Assert.assertEquals("Backup Enum Text lookup outstanding",
+            CbusNodeConstants.BackupType.OUTSTANDING,
+            CbusNodeConstants.lookupByName("OUTSTANDING"));
+        
+        Assert.assertEquals("Backup Enum Text lookup complete error",
+            CbusNodeConstants.BackupType.COMPLETEDWITHERROR,
+            CbusNodeConstants.lookupByName("COMPLETEDWITHERROR"));
+    }
+    
     @Before
     public void setUp() {
         JUnitUtil.setUp();

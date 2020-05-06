@@ -1,8 +1,9 @@
 package jmri.jmrix.sprog;
 
+import java.util.EnumSet;
 import jmri.DccLocoAddress;
-import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets
  *
- * @author	Andrew Crosland Copyright (C) 2006, 2012
+ * @author Andrew Crosland Copyright (C) 2006, 2012
  */
 public class SprogCSThrottleManager extends AbstractThrottleManager {
 
@@ -31,7 +32,7 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
             
             // The SPROG protocol doesn't require an interaction with the command
             // station for this, so immediately trigger the callback
-            log.debug("new SprogThrottle for " + a);
+            log.debug("new SprogThrottle for {}", a);
             notifyThrottleKnown(new SprogCSThrottle((SprogSystemConnectionMemo) adapterMemo, a), a);
         }
         else {
@@ -45,8 +46,8 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
      * possible modes specified by the DccThrottle interface
      */
     @Override
-    public int supportedSpeedModes() {
-        return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128, SpeedStepMode.NMRA_DCC_28);
     }
 
     /**

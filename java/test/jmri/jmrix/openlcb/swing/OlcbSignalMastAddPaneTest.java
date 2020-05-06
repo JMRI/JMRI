@@ -11,16 +11,16 @@ import javax.swing.*;
 
 import org.junit.*;
 
-import org.netbeans.jemmy.operators.*;
 
 import org.openlcb.*;
 
 /**
- * @author	Bob Jacobsen Copyright 2018
+ * @author Bob Jacobsen Copyright 2018
  */
 public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
     /** {@inheritDoc} */
+    @Override
     protected SignalMastAddPane getOTT() { return new OlcbSignalMastAddPane(); }    
     
     @Test
@@ -82,12 +82,11 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
 
         vp.setAspectNames(
             new jmri.implementation.DefaultSignalAppearanceMap("IM123") {
+                @Override
                 public Enumeration<String> getAspects() {
                     return java.util.Collections.enumeration(
-                        java.util.Arrays.asList(
-                            new String[]{"Clear","Approach Medium","Advance Approach",
-                                    "Medium Clear", "Approach", "Slow Approach",
-                                    "Permissive", "Restricting", "Stop and Proceed", "Stop"}));
+                        java.util.Arrays.asList("Clear","Approach Medium","Advance Approach",
+                                "Medium Clear", "Approach", "Slow Approach", "Permissive", "Restricting", "Stop and Proceed", "Stop"));
                     }
             }
                 , InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic") );
@@ -125,7 +124,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
 
         // check aspect disabled
         Assert.assertTrue(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 1").isAspectDisabled("Approach Medium"));
-        Assert.assertTrue(! InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 1").isAspectDisabled("Clear"));
+        Assert.assertFalse(InstanceManager.getDefault(SignalMastManager.class).getByUserName("user name 1").isAspectDisabled("Clear"));
 
         // check correct eventid present
         OlcbSignalMast foundMast = (OlcbSignalMast)InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 1");
@@ -136,9 +135,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         Assert.assertEquals(new OlcbAddress("05.02.01.01.01.01.01.01"), new OlcbAddress(foundMast.getHeldEventId()));
         Assert.assertEquals(new OlcbAddress("06.02.01.01.01.01.01.01"), new OlcbAddress(foundMast.getNotHeldEventId()));
 
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
-            frame.dispose();
-        });
+        jmri.util.ThreadingUtil.runOnGUI(frame::dispose);
     }
 
     @Test
@@ -161,6 +158,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         
         vp.setAspectNames(
             new jmri.implementation.DefaultSignalAppearanceMap("IM123") {
+                @Override
                 public Enumeration<String> getAspects() { return mast.getAllKnownAspects().elements(); }
             }
                 , InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
@@ -194,10 +192,10 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         // system name not checked, depends on history of how many SignalMast objects have been created
 
         // check correct aspects disabled
-        Assert.assertTrue(! InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Clear"));
+        Assert.assertFalse(InstanceManager.getDefault(SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Clear"));
         Assert.assertTrue(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Approach"));
         Assert.assertTrue(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Stop"));
-        Assert.assertTrue(! InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Unlit"));
+        Assert.assertFalse(InstanceManager.getDefault(SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Unlit"));
 
         // check correct eventid present
         OlcbSignalMast foundMast = (OlcbSignalMast)InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2");
@@ -210,9 +208,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         Assert.assertEquals(new OlcbAddress("05.01.01.01.01.01.01.01"), new OlcbAddress(foundMast.getHeldEventId()));
         Assert.assertEquals(new OlcbAddress("06.01.01.01.01.01.01.01"), new OlcbAddress(foundMast.getNotHeldEventId()));
 
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
-            frame.dispose();
-        });
+        jmri.util.ThreadingUtil.runOnGUI(frame::dispose);
     }
 
 
@@ -222,11 +218,11 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
     static java.util.ArrayList<Message> messages;
     
-    // The minimal setup for log4J
     //
     // This only initialized JUnit and Log4J once per class so that it
     // can only initialize the OpenLCB structure once per class
     @Before
+    @Override
     public void setUp() {
         messages = new java.util.ArrayList<>();
     }
@@ -249,21 +245,23 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
+            @Override
             public Connection getOutputConnection() {
                 return connection;
             }
         });
         
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
     @After
+    @Override
     public void tearDown() {
         messages = null;
     }
 
     @AfterClass
-    public static void postClassTearDown() throws Exception {
+    public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
         }

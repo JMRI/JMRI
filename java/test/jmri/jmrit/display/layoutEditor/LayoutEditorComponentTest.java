@@ -25,7 +25,6 @@ public class LayoutEditorComponentTest {
         JUnitUtil.dispose(le);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -34,6 +33,7 @@ public class LayoutEditorComponentTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

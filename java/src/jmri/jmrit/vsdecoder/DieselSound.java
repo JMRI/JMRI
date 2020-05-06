@@ -49,7 +49,7 @@ class DieselSound extends EngineSound {
     // Note:  Play and Loop do the same thing, since all of the notch sounds are set to loop.
     @Override
     public void play() {
-        log.debug("EngineSound Play: current_notch = " + current_notch);
+        log.debug("EngineSound Play: current_notch = {}", current_notch);
         if (notch_sounds.containsKey(current_notch) && (engine_started || auto_start_engine)) {
             notch_sounds.get(current_notch).play();
             is_playing = true;
@@ -75,8 +75,7 @@ class DieselSound extends EngineSound {
 
     @Override
     public void changeNotch(int new_notch) {
-        log.debug("EngineSound.changeNotch() current = " + current_notch
-                + " new notch = " + new_notch);
+        log.debug("EngineSound.changeNotch() current = {} new notch = {}", current_notch, new_notch);
         if (new_notch != current_notch) {
             if (notch_sounds.containsKey(current_notch) && (engine_started || auto_start_engine)) {
                 notch_sounds.get(current_notch).fadeOut();
@@ -84,8 +83,7 @@ class DieselSound extends EngineSound {
 
             notch_transition = findNotchTransient(current_notch, new_notch);
             if (notch_transition != null) {
-                log.debug("notch transition: name = " + notch_transition.getFileName() + " length = " + notch_transition.getLengthAsInt()
-                        + "fade_length = " + fade_length);
+                log.debug("notch transition: name = {} length = {}fade_length = {}", notch_transition.getFileName(), notch_transition.getLengthAsInt(), fade_length);
                 // Handle notch transition...
                 t = newTimer(notch_transition.getLengthAsInt() - notch_sounds.get(new_notch).getFadeInTime(), false,
                         new ActionListener() {
@@ -108,8 +106,7 @@ class DieselSound extends EngineSound {
 
     protected void handleNotchTimerPop(ActionEvent e) {
         // notch value has already been changed
-        log.debug("Notch timer pop. nt.next_notch = " + notch_transition.getNextNotch()
-                + "file = " + notch_sounds.get(notch_transition.getNextNotch()).getFileName());
+        log.debug("Notch timer pop. nt.next_notch = {}file = {}", notch_transition.getNextNotch(), notch_sounds.get(notch_transition.getNextNotch()).getFileName());
         if (notch_sounds.containsKey(notch_transition.getNextNotch()) && (engine_started || auto_start_engine)) {
             notch_sounds.get(notch_transition.getNextNotch()).fadeIn();
         }
@@ -117,11 +114,11 @@ class DieselSound extends EngineSound {
     }
 
     private NotchTransition findNotchTransient(int prev, int next) {
-        log.debug("Looking for Transient: prev = " + prev + " next = " + next);
+        log.debug("Looking for Transient: prev = {} next = {}", prev, next);
         for (NotchTransition nt : transition_sounds) {
-            log.debug("searching: nt.prev = " + nt.getPrevNotch() + " nt.next = " + nt.getNextNotch());
+            log.debug("searching: nt.prev = {} nt.next = {}", nt.getPrevNotch(), nt.getNextNotch());
             if ((nt.getPrevNotch() == prev) && (nt.getNextNotch() == next)) {
-                log.debug("Found transient: prev = " + nt.getPrevNotch() + " next = " + nt.getNextNotch());
+                log.debug("Found transient: prev = {} next = {}", nt.getPrevNotch(), nt.getNextNotch());
                 return (nt);
             }
         }
@@ -155,7 +152,7 @@ class DieselSound extends EngineSound {
     }
 
     private void startToIdleAction(ActionEvent e) {
-        log.debug("Starting idle sound notch = " + current_notch + " sound = " + notch_sounds.get(current_notch));
+        log.debug("Starting idle sound notch = {} sound = {}", current_notch, notch_sounds.get(current_notch));
         notch_sounds.get(current_notch).loop();
         engine_started = true;
     }
@@ -246,7 +243,7 @@ class DieselSound extends EngineSound {
         // Handle the common stuff.
         super.setXml(e, vf);
 
-        log.debug("Diesel EngineSound: " + e.getAttribute("name").getValue());
+        log.debug("Diesel EngineSound: {}", e.getAttribute("name").getValue());
         notch_sounds = new HashMap<Integer, SoundBite>();
         transition_sounds = new ArrayList<NotchTransition>();
 
@@ -312,6 +309,6 @@ class DieselSound extends EngineSound {
 
     }
 
-    private static final Logger log = LoggerFactory.getLogger(EngineSound.class);
+    private static final Logger log = LoggerFactory.getLogger(DieselSound.class);
 
 }

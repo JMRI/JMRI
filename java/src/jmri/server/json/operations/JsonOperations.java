@@ -120,6 +120,10 @@ public class JsonOperations {
      */
     public static final String LEAD = "lead"; // NOI18N
     /**
+     * {@value #CAR_SUB_TYPE}
+     */
+    public static final String CAR_SUB_TYPE = "carSubType"; // NOI18N
+    /**
      * {@value #CAR_TYPE}
      */
     public static final String CAR_TYPE = "carType"; // NOI18N

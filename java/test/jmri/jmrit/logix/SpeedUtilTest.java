@@ -9,19 +9,27 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SpeedUtilTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        new Warrant("IW0", "AllTestWarrant");
-        SpeedUtil t = new SpeedUtil(null);
+        SpeedUtil t = new SpeedUtil();
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
+    @Test
+    public void testMakeRamp() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SpeedUtil su = new SpeedUtil();
+        Assert.assertNotNull("exists", su);
+        RampData ramp = su.getRampForSpeedChange(.1f, .8f);
+        Assert.assertNotNull("exists",ramp);
+        Assert.assertTrue("upRamp",ramp.isUpRamp());
+    }
+
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

@@ -34,16 +34,19 @@ public class TextAreaFIFO extends JTextArea implements DocumentListener {
         getDocument().addDocumentListener( this );
     }
     
+    @Override
     public void insertUpdate(DocumentEvent e) {
         ThreadingUtil.runOnGUIEventually( ()->{
             removeLines();
         });
     }
+    @Override
     public void removeUpdate(DocumentEvent e ) {
         ThreadingUtil.runOnGUIEventually ( ()->{
             removeLines();
         });        
     }
+    @Override
     public void changedUpdate(DocumentEvent e) {
         ThreadingUtil.runOnGUIEventually( ()->{
             removeLines();

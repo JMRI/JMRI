@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of AlignTablePane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class AlignTablePaneTest {
 
@@ -31,6 +31,7 @@ public class AlignTablePaneTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initRosterConfigManager();
         jmri.util.JUnitUtil.resetProfileManager();
     }
 

@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * Description: Tests for the DecoderPro3 application.
+ * Tests for the DecoderPro3 application.
  *
  * @author Paul Bender Copyright (C) 2016
  */
@@ -49,19 +49,14 @@ public class DecoderPro3Test {
                 JUnitUtil.initDebugThrottleManager();
             }
 
-            @Override
-            protected void installShutDownManager() {
-                JUnitUtil.initShutDownManager();
-            }
         };
         Assert.assertNotNull(a);
         // shutdown the application
         AppsBase.handleQuit();
         // remove a frame opened by DecoderPro3
-        JUnitUtil.disposeFrame("Decoder Pro Wizard", false, false);
+        JUnitUtil.disposeFrame("DecoderPro Wizard", false, false);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -71,6 +66,7 @@ public class DecoderPro3Test {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();  // eventually want to test ShutDownTasks?
         JUnitUtil.resetApplication();
         JUnitUtil.tearDown();
     }

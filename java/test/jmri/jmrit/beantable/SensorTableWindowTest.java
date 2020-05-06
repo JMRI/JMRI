@@ -4,6 +4,9 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
+import jmri.SensorManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
@@ -23,8 +26,8 @@ import org.netbeans.jemmy.util.NameComponentChooser;
 /**
  * Swing tests for the sensor table.
  *
- * @author	Bob Jacobsen Copyright 2009, 2010
- * @author	Egbert Broerse Copyright 2018
+ * @author Bob Jacobsen Copyright 2009, 2010
+ * @author Egbert Broerse Copyright 2018
  */
 public class SensorTableWindowTest {
 
@@ -64,7 +67,8 @@ public class SensorTableWindowTest {
         Assert.assertNotNull(prefixBox);
         // set to "Internal"
         prefixBox.setSelectedItem("Internal");
-        Assert.assertEquals("Selected system item", "Internal", prefixBox.getSelectedItem());
+        SensorManager internal = InstanceManager.getDefault(InternalSystemConnectionMemo.class).getSensorManager();
+        Assert.assertEquals("Selected system item", internal, prefixBox.getSelectedItem());
 
         // Find and click the Add Create button to add sensor
         JUnitUtil.pressButton(fa, Bundle.getMessage("ButtonCreate"));

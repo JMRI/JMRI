@@ -184,25 +184,18 @@ public class AcelaNodeTest {
             //    tcis.deleteNode(0);
             tcis.resetStartingAddresses();
         }
-        if (tcis.getNumNodes() <= 0) {
-            a0 = new AcelaNode(0, AcelaNode.AC, tcis);
-            a0.initNode();
-            a1 = new AcelaNode(1, AcelaNode.TB, tcis);
-            a1.initNode();
-            a2 = new AcelaNode(2, AcelaNode.D8, tcis);
-            a2.initNode();
-            a3 = new AcelaNode(3, AcelaNode.SY, tcis);
-            a3.initNode();
-        } else {
-            a0 = (AcelaNode) (AcelaTrafficControlScaffold.instance().getNode(0));
-            tcis.initializeAcelaNode(a0);
-            a1 = (AcelaNode) (AcelaTrafficControlScaffold.instance().getNode(1));
-            tcis.initializeAcelaNode(a1);
-            a2 = (AcelaNode) (AcelaTrafficControlScaffold.instance().getNode(2));
-            tcis.initializeAcelaNode(a2);
-            a3 = (AcelaNode) (AcelaTrafficControlScaffold.instance().getNode(3));
-            tcis.initializeAcelaNode(a3);
+        if (tcis.getNumNodes() > 0) {
+            Assert.fail("didn't clear nodes, found "+tcis.getNumNodes());
         }
+        
+        a0 = new AcelaNode(0, AcelaNode.AC, tcis);
+        a0.initNode();
+        a1 = new AcelaNode(1, AcelaNode.TB, tcis);
+        a1.initNode();
+        a2 = new AcelaNode(2, AcelaNode.D8, tcis);
+        a2.initNode();
+        a3 = new AcelaNode(3, AcelaNode.SY, tcis);
+        a3.initNode();
 
         jmri.util.JUnitUtil.resetInstanceManager();
 

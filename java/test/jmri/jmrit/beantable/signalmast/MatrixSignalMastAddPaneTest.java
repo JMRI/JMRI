@@ -12,11 +12,12 @@ import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
- * @author	Bob Jacobsen Copyright 2018
+ * @author Bob Jacobsen Copyright 2018
  */
 public class MatrixSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
     /** {@inheritDoc} */
+    @Override
     protected SignalMastAddPane getOTT() { return new MatrixSignalMastAddPane(); }    
     
     @Test
@@ -46,6 +47,7 @@ public class MatrixSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBa
 
         vp.setAspectNames(
             new jmri.implementation.DefaultSignalAppearanceMap("IF$xsm:basic:one-low($0001)-3t") {
+                @Override
                 public Enumeration<String> getAspects() {
                     return java.util.Collections.enumeration(
                         java.util.Arrays.asList(
@@ -103,6 +105,7 @@ public class MatrixSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBa
 
         vp.setAspectNames(
                 new jmri.implementation.DefaultSignalAppearanceMap("IM123") {
+                    @Override
                     public Enumeration<String> getAspects() { return mast.getAllKnownAspects().elements(); }
                 }
                 , InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
@@ -139,12 +142,14 @@ public class MatrixSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBa
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

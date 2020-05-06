@@ -60,7 +60,6 @@ public class JmriColorChooserTest {
         t.start();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -68,6 +67,7 @@ public class JmriColorChooserTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

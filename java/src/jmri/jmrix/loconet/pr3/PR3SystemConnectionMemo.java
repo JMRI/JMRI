@@ -106,11 +106,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
                     return true;
                 }
             };
-            if (InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-                InstanceManager.getDefault(jmri.ShutDownManager.class).register(restoreToLocoNetInterfaceModeTask);
-            } else {
-                log.warn("The PR3 will not be automatically returned to 'LocoNet interface' mode upon quit!"); // NOI18N
-            }
+            InstanceManager.getDefault(jmri.ShutDownManager.class).register(restoreToLocoNetInterfaceModeTask);
         }
     }
 

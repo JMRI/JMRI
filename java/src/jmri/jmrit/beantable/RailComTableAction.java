@@ -9,8 +9,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.IdTag;
-import jmri.Manager;
-import jmri.NamedBean;
 import jmri.RailCom;
 import jmri.RailComManager;
 import jmri.Reporter;
@@ -106,7 +104,7 @@ public class RailComTableAction extends AbstractTableAction<IdTag> {
                 if (col == CLEARCOL) {
                     RailCom t = getBySystemName(sysNameList.get(row));
                     if (log.isDebugEnabled()) {
-                        log.debug("Clear where & when last seen for " + t.getSystemName());
+                        log.debug("Clear where & when last seen for {}", t.getSystemName());
                     }
                     t.setWhereLastSeen(null);
                     fireTableRowsUpdated(row, row);

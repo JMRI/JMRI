@@ -7,14 +7,11 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.jmrix.oaktree.SerialTrafficControlScaffold;
-import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
-import jmri.jmrix.oaktree.SerialTrafficController;
 
 /**
  * Test simple functioning of OakTreeMenu
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class OakTreeMenuTest {
 
@@ -38,5 +35,7 @@ public class OakTreeMenuTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
+    }
 }

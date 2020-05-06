@@ -21,15 +21,15 @@ public class OBlockManagerTest {
     @Test
     public void testProvide() {
         // original create with systemname
-        OBlock b1 = l.provideOBlock("OB101");
+        OBlock b1 = l.provide("OB101");
         Assert.assertNotNull(b1);
         Assert.assertEquals("system name", "OB101", b1.getSystemName());
     }
 
     @Test
     public void testProvideWorksTwice() {
-        Block b1 = l.provideOBlock("OB102");
-        Block b2 = l.provideOBlock("OB102");
+        Block b1 = l.provide("OB102");
+        Block b2 = l.provide("OB102");
         Assert.assertNotNull(b1);
         Assert.assertNotNull(b2);
         Assert.assertEquals(b1, b2);
@@ -39,7 +39,7 @@ public class OBlockManagerTest {
     public void testProvideFailure() {
         boolean correct = false;
         try {
-            l.provideOBlock("");
+            l.provide("");
             Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
             correct = true;
@@ -68,7 +68,6 @@ public class OBlockManagerTest {
         Assert.assertEquals("OBlock", bSouth, _OBlockMgr.getOBlock("OB4"));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();        l = new OBlockManager();

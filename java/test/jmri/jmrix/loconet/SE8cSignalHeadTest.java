@@ -238,7 +238,6 @@ public class SE8cSignalHeadTest {
     LocoNetSystemConnectionMemo memo;
     boolean propChangeFlag;
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -259,6 +258,7 @@ public class SE8cSignalHeadTest {
 
     @After
     public void tearDown() {
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

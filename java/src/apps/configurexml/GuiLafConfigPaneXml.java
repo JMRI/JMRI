@@ -1,7 +1,7 @@
 package apps.configurexml;
 
 import apps.GuiLafConfigPane;
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.Font;
 import java.util.Enumeration;
 import java.util.Locale;
@@ -25,7 +25,11 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
  * @see apps.GuiLafConfigPane
  * @since 2.9.5
+ * @deprecated since 4.19.6 without replacement; this class supports reading
+ * preferences from JMRI version earlier than 4.1.4; from which a direct update
+ * is not supported
  */
+@Deprecated
 public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public GuiLafConfigPaneXml() {
@@ -72,19 +76,19 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         }
         String name = shared.getAttribute("LAFclass").getValue();
         String className = installedLAFs.get(name);
-        log.debug("GUI selection: " + name + " class name: " + className);
+        log.debug("GUI selection: {} class name: {}", name, className);
         // set the GUI
         if (className != null) {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setLookAndFeel(name);
             try {
                 if (!className.equals(UIManager.getLookAndFeel().getClass().getName())) {
-                    log.debug("set GUI to " + name + "," + className);
+                    log.debug("set GUI to {},{}", name, className);
                     updateLookAndFeel(name, className);
                 } else {
-                    log.debug("skip updateLAF as already has className==" + className);
+                    log.debug("skip updateLAF as already has className=={}", className);
                 }
             } catch (Exception ex) {
-                log.error("Exception while setting GUI look & feel: " + ex);
+                log.error("Exception while setting GUI look & feel: {}", ex);
                 result = false;
             }
         }
@@ -104,7 +108,6 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         Attribute clickAttr = shared.getAttribute("nonStandardMouseEvent");
         if (clickAttr != null) {
             boolean nonStandardMouseEvent = clickAttr.getValue().equals("yes");
-            jmri.util.swing.SwingSettings.setNonStandardMouseEvent(nonStandardMouseEvent);
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(nonStandardMouseEvent);
         }
         Attribute graphicAttr = shared.getAttribute("graphicTableState");

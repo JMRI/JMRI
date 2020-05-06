@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * <li> (everything else)
  * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -102,7 +102,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                 msg[i] = (byte) m.getElement(i);
             }
             if (log.isDebugEnabled()) {
-                log.debug("queue outgoing packet: " + m.toString());
+                log.debug("queue outgoing packet: {}", m.toString());
             }
             // in an atomic operation, queue the request and wake the xmit thread
         }
@@ -300,7 +300,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                                 msg.setElement(i, message.get(i));
                             }
                             if (message.get(message.size() - 1) != (get8BitCRC(msg) & 0xff)) {
-                                log.error("Message with invalid CRC received Expecting:" + (get8BitCRC(msg) & 0xff) + " found:" + message.get(message.size() - 1));
+                                log.error("Message with invalid CRC received Expecting:{} found:{}", get8BitCRC(msg) & 0xff, message.get(message.size() - 1));
                                 msg.setCRCError();
                             } else {
                                 xmtPackets.remove(message.get(3));
@@ -338,7 +338,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                         // start by looking for command
                         opCode = istream.readByte() & 0xFF;
                         // Create output message
-                        log.debug("RcvHandler: Start message with opcode: " + Integer.toHexString(opCode));
+                        log.debug("RcvHandler: Start message with opcode: {}", Integer.toHexString(opCode));
                         int len = 1;
                         Mx1Message msgn = new Mx1Message(15);
                         msgn.setElement(0, opCode);
@@ -380,11 +380,11 @@ public class Mx1Packetizer extends Mx1TrafficController {
                         log.debug("EOFException, is serial I/O using timeouts?");
                     } catch (java.io.IOException e) {
                         // fired when write-end of HexFile reaches end
-                        log.debug("IOException, should only happen with HexFIle: " + e);
+                        log.debug("IOException, should only happen with HexFIle: {}", e);
                         disconnectPort(controller);
                         return;
                     } catch (RuntimeException e) {
-                        log.warn("run: unexpected exception: " + e);
+                        log.warn("run: unexpected exception: {}", e);
                     }
                 } // end of permanent loop
             }
@@ -517,7 +517,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                             log.warn("send message: no connection established");
                         }
                     } catch (java.io.IOException e) {
-                        log.warn("send message: IOException: " + e.toString());
+                        log.warn("send message: IOException: {}", e.toString());
                     }
                 } catch (NoSuchElementException e) {
                     //Check retry queue?
@@ -621,10 +621,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
      */
     public void startThreads() {
         int priority = Thread.currentThread().getPriority();
-        log.debug("startThreads current priority = " + priority
-                + " max available = " + Thread.MAX_PRIORITY
-                + " default = " + Thread.NORM_PRIORITY
-                + " min available = " + Thread.MIN_PRIORITY);
+        log.debug("startThreads current priority = {} max available = " + Thread.MAX_PRIORITY + " default = " + Thread.NORM_PRIORITY + " min available = " + Thread.MIN_PRIORITY, priority);
 
         // start the RetryHandler in a thread of its own simply use standard priority
         Thread retryThread = new Thread(retryHandler, "MX1 retry handler");
@@ -635,7 +632,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
         int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
         // start the XmtHandler in a thread of its own
         Thread xmtThread = new Thread(xmtHandler, "MX1 transmit handler");
-        log.debug("Xmt thread starts at priority " + xmtpriority);
+        log.debug("Xmt thread starts at priority {}", xmtpriority);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
         xmtThread.start();
 

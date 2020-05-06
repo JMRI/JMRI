@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * XpaTurnoutManagerXmlTest.java
  *
- * Description: tests for the XpaTurnoutManagerXml class
+ * Test for the XpaTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class XpaTurnoutManagerXmlTest {
       Assert.assertNotNull("XpaTurnoutManagerXml constructor",new XpaTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

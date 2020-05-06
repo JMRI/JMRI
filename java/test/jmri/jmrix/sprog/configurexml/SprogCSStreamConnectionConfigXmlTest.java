@@ -12,8 +12,8 @@ import jmri.jmrix.sprog.SprogCSStreamConnectionConfig;
  */
 public class SprogCSStreamConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractStreamConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new SprogCSStreamConnectionConfigXml();
@@ -21,6 +21,7 @@ public class SprogCSStreamConnectionConfigXmlTest extends jmri.jmrix.configurexm
     }
 
     @After
+    @Override
     public void tearDown() {
         // if we've started a traffic controller, dispose of it
         if (cc.getAdapter() != null) {

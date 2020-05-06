@@ -47,7 +47,7 @@ public class GridConnectMessage extends AbstractMRMessage {
         setElement(offset + m.getNumDataElements() * 2, ';');
         setNumDataElements(offset + 1 + m.getNumDataElements() * 2);
         if (log.isDebugEnabled()) {
-            log.debug("encoded as " + this.toString());
+            log.debug("encoded as {}", this.toString());
         }
     }
 

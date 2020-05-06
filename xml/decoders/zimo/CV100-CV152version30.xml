@@ -13,6 +13,7 @@
 <!-- version 1.6 14 Dec 2016 Ronald Kuhn -  added german translation and Function Decoder-->
 <!-- version 1.7 15 Apr 2019 Ronald Kuhn -  added some german translation -->
 <!-- version 1.8 06 May 2019 Ronald Kuhn -  added CV144 Bit4 & Bit5 -->
+<!-- version 1.9 25 Jun 2019 Ronald Kuhn -  CV114 & CV152 tooltip correction -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
@@ -620,8 +621,8 @@
     <label xml:lang="it">Smorzamento Luci frontali</label>
     <label xml:lang="cs">Tlumení předního světla</label>
     <label xml:lang="de">Dimmung Lvor</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="114" item="Dim Rear Light" mask="XXXXXXVX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -629,8 +630,8 @@
     <label xml:lang="it">Smorzamento Luci posteriori</label>
     <label xml:lang="cs">Tlumení zadního světla</label>
     <label xml:lang="de">Dimmung Lrück</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 1" mask="XXXXXVXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -638,8 +639,8 @@
     <label xml:lang="it">Smorzamento Uscita funzioni 1</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 1</label>
     <label xml:lang="de">Dimmung FA1</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 2" mask="XXXXVXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -647,8 +648,8 @@
     <label xml:lang="it">Smorzamento Uscita funzioni 2</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 2</label>
     <label xml:lang="de">Dimmung FA2</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 3" mask="XXXVXXXX" default="0" minOut="5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -656,8 +657,8 @@
     <label xml:lang="it">Smorzamento Uscita funzioni 3</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 3</label>
     <label xml:lang="de">Dimmung FA3</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 4" mask="XXVXXXXX" default="0" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -665,8 +666,8 @@
     <label xml:lang="it">Smorzamento Uscita funzioni 4</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 4</label>
     <label xml:lang="de">Dimmung FA4</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 5" mask="XVXXXXXX" default="0" minOut="7" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -674,8 +675,8 @@
     <label xml:lang="it">Smorzamento Uscita funzioni 5</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 5</label>
     <label xml:lang="de">Dimmung FA5</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 6" mask="VXXXXXXX" default="0" minOut="8" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -683,8 +684,8 @@
     <label xml:lang="it">Smorzamento Uscita funzioni 6</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 6</label>
     <label xml:lang="de">Dimmung FA6</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="115" item="Uncoupler" default="0">
     <decVal max="99"/>
@@ -1595,8 +1596,8 @@
     <label xml:lang="it">Funzione smorzamento uscita 7</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 7</label>
     <label xml:lang="de">Dimmung FA7</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 8" mask="XXXXXXVX" default="0" minOut="10">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1604,8 +1605,8 @@
     <label xml:lang="it">Funzione smorzamento uscita 8</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 8</label>
     <label xml:lang="de">Dimmung FA8</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 9" mask="XXXXXVXX" default="0" minOut="11">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1613,8 +1614,8 @@
     <label xml:lang="it">Funzione smorzamento uscita 9</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 9</label>
     <label xml:lang="de">Dimmung FA9</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 10" mask="XXXXVXXX" default="0" minOut="12">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1622,8 +1623,8 @@
     <label xml:lang="it">Funzione smorzamento uscita 10</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 10</label>
     <label xml:lang="de">Dimmung FA10</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 11" mask="XXXVXXXX" default="0" minOut="13">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1631,8 +1632,8 @@
     <label xml:lang="it">Funzione smorzamento uscita 11</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 11</label>
     <label xml:lang="de">Dimmung FA11</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 12" mask="XXVXXXXX" default="0" minOut="14">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1640,8 +1641,8 @@
     <label xml:lang="it">Funzione smorzamento uscita 12</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 12</label>
     <label xml:lang="de">Dimmung FA12</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="152" item="FO3 + FO4 directional setting" mask="XVXXXXXX" default="0" minOut="6">
     <enumVal>

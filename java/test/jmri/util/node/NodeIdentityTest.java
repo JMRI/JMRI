@@ -22,7 +22,6 @@ public class NodeIdentityTest {
         Assert.assertNotNull(NodeIdentity.storageIdentity());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

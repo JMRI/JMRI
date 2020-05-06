@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of XBeeComponentFactory
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class XBeeComponentFactoryTest {
 
@@ -48,6 +48,8 @@ public class XBeeComponentFactoryTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
+    public void tearDown() {        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
+        tc = null;
     }
 }

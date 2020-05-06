@@ -1,6 +1,5 @@
 package jmri.jmrix.srcp;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
 import jmri.jmrix.AbstractMRListener;
@@ -37,13 +36,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
      */
     public SRCPTrafficController() {
         super();
-        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(this);
-        } else {
-            if (log.isDebugEnabled()) {
-                log.debug("attempted to register shutdown task, but shutdown manager is null");
-            }
-        }
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(this);
     }
 
     // The methods to implement the SRCPInterface
@@ -109,8 +102,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                     log.debug("dispatch thread invoked");
                 }
 
-                log.debug("Mode " + mode + " child contains "
-                        + ((SimpleNode) e.jjtGetChild(1)).jjtGetValue());
+                log.debug("Mode {} child contains {}", mode, ((SimpleNode) e.jjtGetChild(1)).jjtGetValue());
                 //if (mode==HANDSHAKEMODE && ((String)((SimpleNode)e.jjtGetChild(1)).jjtGetValue()).contains("GO")) mode=RUNMODE;
 
                 SRCPClientVisitor v = new SRCPClientVisitor();
@@ -169,9 +161,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                         replyInDispatch = false;
                         if (allowUnexpectedReply == true) {
                             if (log.isDebugEnabled()) {
-                                log.debug("Allowed unexpected reply received in state: "
-                                        + mCurrentState + " was "
-                                        + e.toString());
+                                log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, e.toString());
                             }
 
                             synchronized (xmtRunnable) {
@@ -289,7 +279,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         for (int i = 0; i < cnt; i++) {
             AbstractMRListener client = v.elementAt(i);
             if (log.isDebugEnabled()) {
-                log.debug("notify client: " + client);
+                log.debug("notify client: {}", client);
             }
             try {
                 //skip dest for now, we'll send the message to there last.

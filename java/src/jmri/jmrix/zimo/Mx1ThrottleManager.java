@@ -1,8 +1,9 @@
 package jmri.jmrix.zimo;
 
+import java.util.EnumSet;
 import jmri.DccLocoAddress;
-import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * MRC implementation of a ThrottleManager.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  *
  */
 public class Mx1ThrottleManager extends AbstractThrottleManager {
@@ -34,7 +35,7 @@ public class Mx1ThrottleManager extends AbstractThrottleManager {
         if (a instanceof DccLocoAddress ) {
             //We do interact
             DccLocoAddress address = (DccLocoAddress) a;
-            log.debug("new Mx1Throttle for " + address); //IN18N
+            log.debug("new Mx1Throttle for {}", address); // NOI18N
             notifyThrottleKnown(new Mx1Throttle((Mx1SystemConnectionMemo) adapterMemo, address), address);
         }
         else {
@@ -70,8 +71,8 @@ public class Mx1ThrottleManager extends AbstractThrottleManager {
     }
 
     @Override
-    public int supportedSpeedModes() {
-        return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128, SpeedStepMode.NMRA_DCC_28);
     }
 
     @Override

@@ -4,14 +4,13 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * XBeeLightTest.java
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeLight class
+ * Test for the jmri.jmrix.ieee802154.xbee.XBeeLight class
  *
- * @author	Paul Bender copyright (C) 2012,2016
+ * @author Paul Bender copyright (C) 2012,2016
  */
 public class XBeeLightTest {
 
@@ -36,7 +35,6 @@ public class XBeeLightTest {
         Assert.assertNotNull("exists", s);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -44,13 +42,15 @@ public class XBeeLightTest {
         memo = new XBeeConnectionMemo();
         memo.setSystemPrefix("ABC");
         tc.setAdapterMemo(memo);
-        memo.setLightManager(new XBeeLightManager(tc, "ABC"));
+        memo.setLightManager(new XBeeLightManager(memo));
     }
 
     @After
     public void tearDown() {
         tc.terminate();
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

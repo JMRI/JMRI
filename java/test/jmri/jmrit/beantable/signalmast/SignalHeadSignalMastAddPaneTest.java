@@ -4,18 +4,18 @@ import jmri.*;
 import jmri.implementation.*;
 import jmri.util.*;
 
-import java.util.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author	Bob Jacobsen Copyright 2018
+ * @author Bob Jacobsen Copyright 2018
  */
 public class SignalHeadSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
     /** {@inheritDoc} */
+    @Override
     protected SignalMastAddPane getOTT() { return new SignalHeadSignalMastAddPane(); }    
     
     @Test
@@ -47,12 +47,15 @@ public class SignalHeadSignalMastAddPaneTest extends AbstractSignalMastAddPaneTe
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initInternalSignalHeadManager();
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

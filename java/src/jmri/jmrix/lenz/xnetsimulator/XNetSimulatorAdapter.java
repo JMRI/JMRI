@@ -14,6 +14,7 @@ import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSimulatorPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
+import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,9 +40,9 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
 
     private int csStatus;
     // status flags from the XpressNet Documentation.
-    private final static int CS_EMERGENCY_STOP = 0x01; // bit 0
+    private static final int CS_EMERGENCY_STOP = 0x01; // bit 0
     // 0x00 means normal mode.
-    private final static int CS_NORMAL_MODE = 0x00;
+    private static final int CS_NORMAL_MODE = 0x00;
 
     // information about the last throttle command(s).
     private int currentSpeedStepMode = XNetConstants.LOCO_SPEED_128;
@@ -56,18 +57,18 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private int momentaryGroup3 = 0;
     private int momentaryGroup4 = 0;
     private int momentaryGroup5 = 0;
-
+    
     public XNetSimulatorAdapter() {
         setPort(Bundle.getMessage("None"));
         try {
-            PipedOutputStream tempPipeI = new PipedOutputStream();
+            PipedOutputStream tempPipeI = new ImmediatePipedOutputStream();
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
-            PipedOutputStream tempPipeO = new PipedOutputStream();
+            PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());
+            log.error("init (pipe): Exception: {}",e);
             return;
         }
         csStatus = CS_NORMAL_MODE;
@@ -87,7 +88,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
      * @param s true if the buffer is empty; false otherwise
      */
     @Override
-    synchronized public void setOutputBufferEmpty(boolean s) {
+    public synchronized void setOutputBufferEmpty(boolean s) {
         outputBufferEmpty = s;
     }
 
@@ -119,7 +120,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         packets.connectPort(this);
 
         // start operation
-        // packets.startThreads();
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
         sourceThread = new Thread(this);
@@ -155,14 +155,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     @Override
     public boolean status() {
         return (pout != null && pin != null);
-    }
-
-    @Deprecated
-    static public XNetSimulatorAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new XNetSimulatorAdapter();
-        }
-        return mInstance;
     }
 
     @Override
@@ -207,7 +199,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         switch (m.getElement(0) & 0xff) {
 
             case XNetConstants.CS_REQUEST:
-                switch (m.getElement(1)) {
+                switch (m.getElement(1) & 0xff ) {
                     case XNetConstants.CS_VERSION:
                         reply = xNetVersionReply();
                         break;
@@ -235,7 +227,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 reply.setParity();
                 break;
             case XNetConstants.LOCO_OPER_REQ:
-                switch (m.getElement(1)) {
+                switch (m.getElement(1) & 0xff ) {
                     case XNetConstants.LOCO_SPEED_14:
                         currentSpeedStepMode = XNetConstants.LOCO_SPEED_14;
                         currentSpeedStep = m.getElement(4);
@@ -317,10 +309,11 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 // LZ100 and LZV100 respond with an ACC_INFO_RESPONSE.
                 // but XpressNet standard says to no response (which causes
                 // the interface to send an OK reply).
-                reply = okReply();
+            case XNetConstants.ACC_INFO_REQ:
+                reply = accInfoReply(m);
                 break;
             case XNetConstants.LOCO_STATUS_REQ:
-                switch (m.getElement(1)) {
+                switch (m.getElement(1) & 0xff ) {
                     case XNetConstants.LOCO_INFO_REQ_V3:
                         reply.setOpCode(XNetConstants.LOCO_INFO_NORMAL_UNIT);
                         reply.setElement(1, currentSpeedStepMode);
@@ -359,30 +352,9 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                         reply = notSupportedReply();
                 }
                 break;
-            case XNetConstants.ACC_INFO_REQ:
-                reply.setOpCode(XNetConstants.ACC_INFO_RESPONSE);
-                reply.setElement(1, m.getElement(1));
-                if (m.getElement(1) < 64) {
-                    // treat as turnout feedback request.
-                    if (m.getElement(2) == 0x80) {
-                        reply.setElement(2, 0x00);
-                    } else {
-                        reply.setElement(2, 0x10);
-                    }
-                } else {
-                    // treat as feedback encoder request.
-                    if (m.getElement(2) == 0x80) {
-                        reply.setElement(2, 0x40);
-                    } else {
-                        reply.setElement(2, 0x50);
-                    }
-                }
-                reply.setElement(3, 0x00);
-                reply.setParity();
-                break;
             case XNetConstants.OPS_MODE_PROG_REQ:
                     int operation = m.getElement(4) & 0xFC;
-                    switch(operation) {
+                    switch(operation & 0xff ) {
                          case 0xEC:
                            log.debug("Write CV in Ops Mode Request Received");
                            reply = okReply();
@@ -469,7 +441,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         reply.setOpCode(XNetConstants.CS_SERVICE_MODE_RESPONSE);
         reply.setElement(1, XNetConstants.CS_SOFTWARE_VERSION);
         reply.setElement(2, 0x36 & 0xff); // indicate we are version 3.6
-        reply.setElement(3, 0x00 & 0xff); // indicate we are an LZ100;
+        reply.setElement(3, 0x00 & 0xff); // indicate we are an LZ100
         reply.setElement(4, 0x00); // set the parity byte to 0
         reply.setParity();
         return reply;
@@ -483,6 +455,32 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         reply.setElement(2, csStatus);
         reply.setElement(3, 0x00); // set the parity byte to 0
         reply.setParity();
+        return reply;
+    }
+
+    // Create a reply to a request for the accessory device Status
+    private XNetReply accInfoReply(XNetMessage m) {
+        XNetReply reply = new XNetReply();
+        reply.setOpCode(XNetConstants.ACC_INFO_RESPONSE);
+        reply.setElement(1, m.getElement(1));
+           if (m.getOpCode() == XNetConstants.ACC_OPER_REQ || 
+               m.getElement(1) < 64) {
+              // treat as turnout feedback request.
+              if (m.getElement(2) == 0x80) {
+                 reply.setElement(2, 0x00);
+              } else {
+                 reply.setElement(2, 0x10);
+              }
+           } else {
+              // treat as feedback encoder request.
+              if (m.getElement(2) == 0x80) {
+                 reply.setElement(2, 0x40);
+              } else {
+                 reply.setElement(2, 0x50);
+              }
+           }
+           reply.setElement(3, 0x00);
+           reply.setParity();
         return reply;
     }
 
@@ -543,7 +541,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         }
     }
 
-    volatile static XNetSimulatorAdapter mInstance = null;
     private DataOutputStream pout = null; // for output to other classes
     private DataInputStream pin = null; // for input from other classes
     // internal ends of the pipes
@@ -551,6 +548,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private DataInputStream inpipe = null; // feed pout
     private Thread sourceThread;
 
-    private final static Logger log = LoggerFactory.getLogger(XNetSimulatorAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetSimulatorAdapter.class);
 
 }

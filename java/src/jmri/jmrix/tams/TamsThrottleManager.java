@@ -1,8 +1,9 @@
 package jmri.jmrix.tams;
 
+import java.util.EnumSet;
 import jmri.DccLocoAddress;
-import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * 
  * Based on work by Bob Jacobsen 
  *
- * @author	Kevin Dickerson
+ * @author Kevin Dickerson
  * 
  */
 public class TamsThrottleManager extends AbstractThrottleManager implements TamsListener {
@@ -48,7 +49,7 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
             /*Here we do not set notifythrottle, we simply create a new Tams throttle.
             The Tams throttle in turn will notify the throttle manager of a successful or
             unsuccessful throttle connection. */
-            log.info("new TamsThrottle for " + address);
+            log.info("new TamsThrottle for {}", address);
             notifyThrottleKnown(new TamsThrottle((TamsSystemConnectionMemo) adapterMemo, (DccLocoAddress) address), address);
         }
         else {
@@ -106,8 +107,8 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
     }
 
     @Override
-    public int supportedSpeedModes() {
-        return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128, SpeedStepMode.NMRA_DCC_28);
     }
 
     @Override

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * AcelaLightTest.java
  *
- * Description: tests for the AcelaLight class
+ * Test for the AcelaLight class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -30,7 +30,6 @@ public class AcelaLightTest {
       Assert.assertNotNull("AcelaLight Constructor",new AcelaLight("AL2","Test Turnout", _memo ));
     }
 
-   // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -43,7 +42,9 @@ public class AcelaLightTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a z21 PacketGenFrame object.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class PacketGenAction extends AbstractAction {
 
@@ -42,7 +42,7 @@ public class PacketGenAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: {}",ex,ex);
         }
         f.setVisible(true);
 
@@ -50,6 +50,6 @@ public class PacketGenAction extends AbstractAction {
         f.connect(_memo.getTrafficController());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PacketGenAction.class);
 
 }

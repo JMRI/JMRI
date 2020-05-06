@@ -1,12 +1,13 @@
 package jmri.jmrit.sensorgroup;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
  *
- * @author	Bob Jacobsen Copyright 2003, 2007
+ * @author Bob Jacobsen Copyright 2003, 2007
  * @author Paul Bender Copyright (C) 2017
  */
 public class SensorGroupFrameTest extends jmri.util.JmriJFrameTestBase {
@@ -16,14 +17,15 @@ public class SensorGroupFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new SensorGroupFrame();
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new SensorGroupFrame();
+        }
     }
 
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 

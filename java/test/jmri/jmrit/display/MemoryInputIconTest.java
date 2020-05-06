@@ -10,13 +10,14 @@ import org.junit.*;
 public class MemoryInputIconTest extends PositionableJPanelTest {
 
     @Test
+    @Override
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists", p);
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         super.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);

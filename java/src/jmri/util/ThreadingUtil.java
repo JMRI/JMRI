@@ -2,6 +2,8 @@ package jmri.util;
 
 import java.awt.event.ActionEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.atomic.AtomicReference;
+
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.annotation.Nonnull;
@@ -127,16 +129,18 @@ public class ThreadingUtil {
      * Run some GUI-specific code before returning a value
      * <p>
      * Typical uses:
-     * <p> {@code
-     * ThreadingUtil.runOnGUI(() -> {
-     *     mine.setVisible();
+     * <p>
+     * {@code
+     * Boolean retval = ThreadingUtil.runOnGUIwithReturn(() -> {
+     *     return mine.isVisible();
      * });
      * }
      * <p>
-     * If an InterruptedException is encountered, it'll be deferred to the 
-     * next blocking call via Thread.currentThread().interrupt()
+     * If an InterruptedException is encountered, it'll be deferred to the next
+     * blocking call via Thread.currentThread().interrupt()
      * 
      * @param ta What to run, usually as a lambda expression
+     * @return the value returned by ta
      */
     static public <E> E runOnGUIwithReturn(@Nonnull ReturningThreadAction<E> ta) {
         if (isGUIThread()) {
@@ -145,7 +149,7 @@ public class ThreadingUtil {
         } else {
             warnLocks();
             // dispatch to Swing
-            final java.util.concurrent.atomic.AtomicReference<E> result = new java.util.concurrent.atomic.AtomicReference<>();
+            final AtomicReference<E> result = new AtomicReference<>();
             try {
                 SwingUtilities.invokeAndWait(() -> {
                     result.set(ta.run());
@@ -191,7 +195,7 @@ public class ThreadingUtil {
      * Typical uses:
      * <p>
      * {@code 
-     * ThreadingUtil.runOnGUIEventually( ()->{ 
+     * ThreadingUtil.runOnGUIDelayed( ()->{ 
      *  mine.setVisible(); 
      * }, 1000);
      * }
@@ -220,6 +224,39 @@ public class ThreadingUtil {
         return SwingUtilities.isEventDispatchThread();
     }
 
+    /**
+     * Create a new thread in the JMRI group
+     */
+    static public Thread newThread(Runnable runner) {
+        return new Thread(getJmriThreadGroup(), runner);
+    }
+    
+    /**
+     * Create a new thread in the JMRI group
+     */
+    static public Thread newThread(Runnable runner, String name) {
+        return new Thread(getJmriThreadGroup(), runner, name);
+    }
+    
+    /**
+     * Get the JMRI default thread group.
+     * This should be passed to as the first argument to the {@link Thread} constructor
+     * so we can track JMRI-created threads.
+     */
+    static public ThreadGroup getJmriThreadGroup() {
+        // we access this dynamically instead of keeping it in a static
+        
+        ThreadGroup main = Thread.currentThread().getThreadGroup();
+        while (main.getParent() != null ) {main = main.getParent(); }        
+        ThreadGroup[] list = new ThreadGroup[main.activeGroupCount()+2];  // space on end
+        int max = main.enumerate(list);
+        
+        for (int i = 0; i<max; i++) { // usually just 2 or 3, quite quick
+            if (list[i].getName().equals("JMRI")) return list[i];
+        }
+        return new ThreadGroup(main, "JMRI");
+    }
+    
     /**
      * Check whether a specific thread is running (or able to run) right now.
      *
@@ -294,6 +331,8 @@ public class ThreadingUtil {
 
     /**
      * Interface for use in ThreadingUtil's lambda interfaces
+     * 
+     * @param <E> the type returned
      */
     @FunctionalInterface
     static public interface ReturningThreadAction<E> {

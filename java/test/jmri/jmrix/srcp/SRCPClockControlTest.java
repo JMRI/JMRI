@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * SRCPClockControlTest.java
  *
- * Description: tests for the jmri.jmrix.srcp.SRCPClockControl class
+ * Test for the jmri.jmrix.srcp.SRCPClockControl class
  *
  * @author Bob Jacobsen
  */
@@ -33,6 +33,7 @@ public class SRCPClockControlTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 }

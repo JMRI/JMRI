@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SerialThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
@@ -17,8 +17,8 @@ public class SerialThrottleManagerTest extends jmri.managers.AbstractThrottleMan
         Assert.assertNotNull("exists",tm);
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tm = new SerialThrottleManager(new TmccSystemConnectionMemo());
@@ -26,7 +26,9 @@ public class SerialThrottleManagerTest extends jmri.managers.AbstractThrottleMan
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SerialThrottleManagerTest.class);

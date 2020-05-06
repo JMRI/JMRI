@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import javax.annotation.Nonnull;
 import javax.swing.JLabel;
@@ -22,7 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class LongAddrVariableValue extends VariableValue
-        implements ActionListener, PropertyChangeListener, FocusListener {
+        implements ActionListener, FocusListener {
 
     public LongAddrVariableValue(@Nonnull String name, @Nonnull String comment, @Nonnull String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
@@ -118,7 +117,7 @@ public class LongAddrVariableValue extends VariableValue
         cv17.setValue(newCv17);
         cv18.setValue(newCv18);
         if (log.isDebugEnabled()) {
-            log.debug("new value " + newVal + " gives CV17=" + newCv17 + " CV18=" + newCv18);
+            log.debug("new value {} gives CV17={} CV18={}", newVal, newCv17, newCv18);
         }
     }
 
@@ -195,7 +194,7 @@ public class LongAddrVariableValue extends VariableValue
             oldVal = -999;
         }
         if (log.isDebugEnabled()) {
-            log.debug("setValue with new value " + value + " old value " + oldVal);
+            log.debug("setValue with new value {} old value {}", value, oldVal);
         }
         _value.setText("" + value);
         if (oldVal != value || getState() == VariableValue.UNKNOWN) {
@@ -288,7 +287,7 @@ public class LongAddrVariableValue extends VariableValue
         setToRead(false);
         setBusy(true);  // will be reset when value changes
         if (_progState != IDLE) {
-            log.warn("Programming state " + _progState + ", not IDLE, in read()");
+            log.warn("Programming state {}, not IDLE, in read()", _progState);
         }
         _progState = READING_FIRST;
         if (log.isDebugEnabled()) {
@@ -308,7 +307,7 @@ public class LongAddrVariableValue extends VariableValue
         setToWrite(false);
         setBusy(true);  // will be reset when value changes
         if (_progState != IDLE) {
-            log.warn("Programming state " + _progState + ", not IDLE, in write()");
+            log.warn("Programming state {}, not IDLE, in write()", _progState);
         }
         _progState = WRITING_FIRST;
         if (log.isDebugEnabled()) {
@@ -321,8 +320,7 @@ public class LongAddrVariableValue extends VariableValue
     @Override
     public void propertyChange(@Nonnull java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("property changed event - name: "
-                    + e.getPropertyName());
+            log.debug("property changed event - name: {}", e.getPropertyName());
         }
         // notification from CV; check for Value being changed
         if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
@@ -366,14 +364,14 @@ public class LongAddrVariableValue extends VariableValue
                     setBusy(false);
                     return;
                 default:  // unexpected!
-                    log.error("Unexpected state found: " + _progState);
+                    log.error("Unexpected state found: {}", _progState);
                     _progState = IDLE;
                     return;
             }
         } else if (e.getPropertyName().equals("State")) {
             CvValue cv = _cvMap.get(getCvNum());
             if (log.isDebugEnabled()) {
-                log.debug("CV State changed to " + cv.getState());
+                log.debug("CV State changed to {}", cv.getState());
             }
             setState(cv.getState());
         } else if (e.getPropertyName().equals("Value")) {
@@ -402,7 +400,7 @@ public class LongAddrVariableValue extends VariableValue
                     }
                     return;
                 default:  // unexpected!
-                    log.error("Unexpected state found: " + _progState);
+                    log.error("Unexpected state found: {}", _progState);
                     _progState = IDLE;
                     return;
             }

@@ -2,10 +2,6 @@ package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.lang.reflect.*;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -14,14 +10,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import jmri.ConfigureManager;
 import jmri.jmrix.AbstractStreamConnectionConfig;
-import jmri.jmrix.AbstractStreamPortController;
-import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.StreamConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
-import jmri.swing.PreferencesPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
@@ -181,14 +174,14 @@ public class StreamConfigPane extends JmrixConfigPane {
                         }
                     } else {
                         Class<?> cl = Class.forName(className);
-			try {
-                           config = (StreamConnectionConfig) cl.getDeclaredConstructor().newInstance();
-                           modeBox.addItem(config.name());
-			} catch (ClassCastException cce) {
-		           // the list may include non-StreamConnectinoConfig 
-			   // objects, so just ignore those.
-			   continue;
-			}
+                        try {
+                            config = (StreamConnectionConfig) cl.getDeclaredConstructor().newInstance();
+                            modeBox.addItem(config.name());
+                        } catch (ClassCastException cce) {
+                            // the list may include non-StreamConnectinoConfig 
+                            // objects, so just ignore those.
+                            continue;
+                        }
                     }
                     classConnectionList[n++] = config;
                 } catch (NullPointerException e) {
@@ -256,9 +249,9 @@ public class StreamConfigPane extends JmrixConfigPane {
                         modeBox.setSelectedIndex(1);
                     }
                 } catch (ClassCastException cce) {
-		    // the list may include non-StreamConnectinoConfig 
-		    // objects, so just ignore those.
-	            continue;
+                    // the list may include non-StreamConnectinoConfig 
+                    // objects, so just ignore those.
+                    continue;
                 } catch (NullPointerException | ClassNotFoundException | InstantiationException | 
                             IllegalAccessException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
                     log.warn("Attempt to load {} failed: {}", classConnectionNameList1, e);

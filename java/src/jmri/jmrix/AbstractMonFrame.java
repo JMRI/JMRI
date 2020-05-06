@@ -18,8 +18,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
-import javax.swing.SwingUtilities;
-import javax.swing.text.BadLocationException;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.TextAreaFIFO;
@@ -343,7 +341,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
             try {
                 logStream = new PrintStream(new FileOutputStream(logFileChooser.getSelectedFile()));
             } catch (java.io.FileNotFoundException ex) {
-                log.error("exception " + ex);
+                log.error("exception {}", ex);
             }
         }
     }

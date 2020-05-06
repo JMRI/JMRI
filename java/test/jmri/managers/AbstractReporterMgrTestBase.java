@@ -8,14 +8,10 @@ import org.junit.*;
 /**
  * Abstract Base Class for ReporterManager tests in specific jmrix packages. This
  * is not itself a test class, e.g. should not be added to a suite. Instead,
- * this forms the base for test classes, including providing some common tests
+ * this forms the base for test classes, including providing some common tests.
  *
- * This is not itself a test class, e.g. should not be added to a suite.
- * Instead, this forms the base for test classes, including providing some
- * common tests
- *
- * @author	Bob Jacobsen 2003, 2006, 2008
- * @author      Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen 2003, 2006, 2008
+ * @author Paul Bender Copyright (C) 2016
  */
 public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManagerTestBase<ReporterManager, Reporter> {
 
@@ -26,7 +22,7 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
     protected int maxN() { return 100; }
 
     // implementing classes must provide these abstract members:
-    abstract public void setUp();    	// load l with actual object; create scaffolds as needed, tag @Before
+    abstract public void setUp(); // load l with actual object; create scaffolds as needed, tag @Before
 
     abstract public String getSystemName(String i);
 
@@ -80,7 +76,7 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
         try {
             l.provideReporter("");
         } catch (IllegalArgumentException ex) {
-          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for reporter: "+l.getSystemPrefix()+l.typeLetter()+" needed "+l.getSystemPrefix()+l.typeLetter());
+          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Reporter: System name must start with \"" + l.getSystemNamePrefix() + "\".");
           throw ex;
         }
     }
@@ -183,6 +179,12 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
         Reporter t2 = l.getByUserName("after");
         Assert.assertEquals("same object", t1, t2);
         Assert.assertEquals("no old object", null, l.getByUserName("before"));
+    }
+
+    @Ignore("Reporter managers doesn't support auto system names")
+    @Test
+    @Override
+    public void testAutoSystemNames() {
     }
 
     /**

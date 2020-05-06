@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.util.ColorUtil class.
  *
- * @author	Paul Bender Copyright 2016
+ * @author Paul Bender Copyright 2016
  */
 public class ColorUtilTest {
 
@@ -150,7 +150,7 @@ public class ColorUtilTest {
     @Test
     public void testDefaultColorFromString() {
         try {
-            ColorUtil.stringToColor("other"); //NOI18N
+            ColorUtil.stringToColor("other"); // NOI18N
             Assert.fail("Expected exception not thrown");
         } catch (IllegalArgumentException ex) {
             Assert.assertEquals("unknown color text 'other'", ex.getMessage());

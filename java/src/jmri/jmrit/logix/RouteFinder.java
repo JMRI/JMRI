@@ -39,7 +39,7 @@ public class RouteFinder implements Runnable {
         _maxBlocks = maxB;
     }
 
-    synchronized protected void quit() {
+    protected synchronized void quit() {
         log.debug("quit= {}", _quit);
         _quit = true;
     }
@@ -103,9 +103,6 @@ public class RouteFinder implements Runnable {
                 log.debug("level {} has {} nodes. quit= {}", level, nodes.size(), _quit);
             }
             level++;
-            if (_quit) {
-                break;
-            }
         }
         jmri.util.ThreadingUtil.runOnLayout(() -> {
             if (_destNodes.isEmpty()) {
@@ -175,10 +172,10 @@ public class RouteFinder implements Runnable {
                                 && _dEntryName.equals(pName)) {
                             _destNodes.add(child);
                         }
-                        children.add(child);
-                        if (_quit) {
-                            break;
-                        }
+                    }
+                    children.add(child);
+                    if (_quit) {
+                        break;
                     }
                 }
             } else {
@@ -193,5 +190,5 @@ public class RouteFinder implements Runnable {
         return children;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteFinder.class);
+    private static final Logger log = LoggerFactory.getLogger(RouteFinder.class);
 }

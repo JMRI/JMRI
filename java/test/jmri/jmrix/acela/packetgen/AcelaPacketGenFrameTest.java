@@ -8,7 +8,7 @@ import org.junit.*;
 /**
  * Test simple functioning of AcelaPacketGenFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class AcelaPacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -24,6 +24,7 @@ public class AcelaPacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
 }

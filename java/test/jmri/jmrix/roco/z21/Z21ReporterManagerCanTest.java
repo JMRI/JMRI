@@ -1,10 +1,11 @@
 package jmri.jmrix.roco.z21;
 
+import jmri.Reporter;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * This class provides tests for the Z21 Reporter Manager's ability to create
+ * This class provides tests for the Z21ReporterManager's ability to create
  * Z21CanReporter objects.  
  *
  * @author Paul Bender Copyright (C) 2016
@@ -31,9 +32,51 @@ public class Z21ReporterManagerCanTest extends jmri.managers.AbstractReporterMgr
        Assert.assertNotNull("Reporter Created via message",zr.getReporter("ZRABCD:1"));
    }
 
-   @Before
+    @Test
     @Override
-   public void setUp() {
+    public void testProvideName() {
+        // create
+        Reporter t = l.provide("ZRABCD:1");
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertEquals("system name correct ", t,l.getBySystemName("ZRABCD:1"));
+    }
+
+    @Test
+    public void testDefaultSystemNameLowerCase() {
+        // create
+        Reporter t = l.provideReporter("ZRabcd:1");
+        // check
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name same input correct ", t,l.getBySystemName("ZRabcd:1"));
+        Assert.assertEquals("system name same value correct ", t,l.getBySystemName("ZRABCD:1"));
+    }
+
+    @Test
+    public void testDefaultSystemMixedDigit() {
+        // create
+        Reporter t = l.provideReporter("ZRa1c3:5");
+        // check
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name same input correct ", t,l.getBySystemName("ZRa1c3:5"));
+        Assert.assertEquals("system name same value correct ", t,l.getBySystemName("ZRA1C3:5"));
+    }
+
+    @Test
+    public void testDefaultSystemMixedCase() {
+        // create
+        Reporter t = l.provideReporter("ZRaBcD:5");
+        // check
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name same input correct", t, l.getBySystemName("ZRaBcD:5"));
+        Assert.assertEquals("system name opposite input correct", t, l.getBySystemName("ZRAbCd:5"));
+        Assert.assertEquals("system name same all lower", t, l.getBySystemName("ZRabcd:5"));
+        Assert.assertEquals("system name same all upper", t, l.getBySystemName("ZRABCD:5"));
+    }
+
+    @Before
+    @Override
+    public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         memo = new Z21SystemConnectionMemo();
@@ -49,6 +92,7 @@ public class Z21ReporterManagerCanTest extends jmri.managers.AbstractReporterMgr
         tc.terminateThreads();
         memo = null;
         tc = null;
+        JUnitUtil.clearShutDownManager(); // clears "Writing IdTags" from DefaultIdTagManager
         JUnitUtil.tearDown();
    }
 

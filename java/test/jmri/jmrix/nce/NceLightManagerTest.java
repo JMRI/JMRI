@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class NceLightManagerTest {
 
@@ -16,19 +16,20 @@ public class NceLightManagerTest {
 
     @Test
     public void testCTor() {
-        NceLightManager t = new NceLightManager(tcis,"N");
+        NceLightManager t = new NceLightManager(tcis.getAdapterMemo());
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         tcis = new NceTrafficControlScaffold();
+        tcis.setAdapterMemo(new NceSystemConnectionMemo());
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

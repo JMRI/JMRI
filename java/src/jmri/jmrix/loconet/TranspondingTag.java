@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet;
 
-import jmri.IdTag;
-
 /**
  * Concrete implementation of the {@link jmri.IdTag} interface for the LocoNet
  * based Transponding reports.
@@ -23,27 +21,11 @@ import jmri.IdTag;
 public class TranspondingTag extends jmri.implementation.DefaultIdTag implements jmri.AddressedIdTag {
 
     public TranspondingTag(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     public TranspondingTag(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
-    }
-
-    /**
-     * @deprecated since 4.15.4.  Eventually will be removed in favor of
-     * the {@link jmri.implementation.AbstractNamedBean#toString()}, which 
-     * does not produce the same result. Use {@link #toReportString()} instead.
-     */
-    @Deprecated
-    @Override
-    public String toString(){
-       String exit = (String) getProperty("entryexit");
-       if(exit!=null) {
-          return getTagID() + " " + exit;
-       } else {
-          return getTagID();
-       }
+        super(systemName, userName);
     }
 
 }

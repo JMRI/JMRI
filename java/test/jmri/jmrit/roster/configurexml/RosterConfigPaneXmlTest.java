@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * RosterConfigPaneXmlTest.java
  *
- * Description: tests for the RosterConfigPaneXml class
+ * Test for the RosterConfigPaneXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class RosterConfigPaneXmlTest {
       Assert.assertNotNull("RosterConfigPaneXml constructor",new RosterConfigPaneXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

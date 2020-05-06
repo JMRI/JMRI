@@ -132,7 +132,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     javax.swing.Timer timer = null;
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts.
+     * Internal routine to handle timer starts and restarts.
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
@@ -214,7 +214,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
             if (m != null) {
                 cs.sendPacket(m, 1);
             } else {
-                log.warn("Message invalid: " + mPacketField[mNextSequenceElement].getText());
+                log.warn("Message invalid: {}", mPacketField[mNextSequenceElement].getText());
             }
             // and queue the rest of the sequence if we're continuing
             if (mRunButton.isSelected()) {
@@ -232,6 +232,8 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
      *
      * @return the packet, with contents filled-in
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+        justification = "API defined by CommmandStation interface")
     byte[] createPacket(String s) {
         // gather bytes in result
         byte b[] = StringUtil.bytesFromHexString(s);
@@ -253,6 +255,6 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     // private data
     private CommandStation cs = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SendPacketAction.class);
+    private final static Logger log = LoggerFactory.getLogger(SendPacketFrame.class);
 
 }

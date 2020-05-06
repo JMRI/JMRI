@@ -1,17 +1,18 @@
 package jmri.jmrit.operations.automation.actions;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class WaitTrainTerminatedActionTest extends OperationsTestCase {
 
@@ -94,6 +95,9 @@ public class WaitTrainTerminatedActionTest extends OperationsTestCase {
         train1.move();
         Assert.assertFalse(automationItem.isActionRunning());
         Assert.assertTrue(automationItem.isActionSuccessful());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
     
     /**
@@ -123,6 +127,8 @@ public class WaitTrainTerminatedActionTest extends OperationsTestCase {
         train1.setBuildEnabled(false);
         Assert.assertFalse(automationItem.isActionRunning());
         Assert.assertTrue(automationItem.isActionSuccessful());
+        
+
     }
     
     @Test
@@ -150,6 +156,8 @@ public class WaitTrainTerminatedActionTest extends OperationsTestCase {
         action.cancelAction();
         Assert.assertFalse(automationItem.isActionRunning());
         Assert.assertFalse(automationItem.isActionSuccessful());
+        
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(WaitTrainTerminatedActionTest.class);

@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -8,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DefaultSignalGroupManagerTest extends AbstractManagerTestBase<jmri.SignalGroupManager,jmri.SignalGroup> {
 
@@ -17,11 +19,10 @@ public class DefaultSignalGroupManagerTest extends AbstractManagerTestBase<jmri.
         Assert.assertNotNull("exists",l);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        l = new DefaultSignalGroupManager();
+        l = new DefaultSignalGroupManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @After

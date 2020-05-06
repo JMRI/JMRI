@@ -216,7 +216,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 
@@ -240,6 +240,6 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LI101Frame.class);
+    private static final Logger log = LoggerFactory.getLogger(LI101Frame.class);
 
 }

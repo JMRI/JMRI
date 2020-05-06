@@ -7,6 +7,7 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,16 +15,22 @@ import org.slf4j.LoggerFactory;
  * Provide access to current meter from a MERG CBUS Command Station
  *
  * @author Steve Young (C) 2019
+ * 
+ * @author Andrew Crosland 2020
+ * Added voltage capability to use with new jmrit.voltmeter class
  */
 public class CbusMultiMeter extends jmri.implementation.AbstractMultiMeter implements CanListener {
 
-    private TrafficController tc;
+    private final TrafficController tc;
     private int _nodeToListen;
-    private int _eventToListen;
+    private int _eventToListenCurrent;
+    private int _eventToListenVoltage;
+    private final CanSystemConnectionMemo _memo;
     
     public CbusMultiMeter(CanSystemConnectionMemo memo) {
         super(-1);  // no internal timer, since the command station controls the report frequency
         tc = memo.getTrafficController();
+        _memo = memo;
         log.debug("CbusMultiMeter constructor called");
     }
 
@@ -38,13 +45,13 @@ public class CbusMultiMeter extends jmri.implementation.AbstractMultiMeter imple
     }
 
     /**
-     * CBUS does not have Voltage reporting
+     * CBUS might have Voltage reporting
      *
      * {@inheritDoc}
      */
     @Override
     public boolean hasVoltage() {
-        return false;
+        return true;
     }
 
     /**
@@ -54,18 +61,22 @@ public class CbusMultiMeter extends jmri.implementation.AbstractMultiMeter imple
      */
     @Override
     public void enable() {
-        try {
-            CbusNodeTableDataModel cs =  jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
+        _nodeToListen = 65534;
+        _eventToListenCurrent = 1; // hard coded at present
+        _eventToListenVoltage = 2; // hard coded at present
+        CbusNodeTableDataModel cs =  jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
+        if (cs != null) {
             CbusNode csnode = cs.getCsByNum(0);
-            log.debug("csnode is {}",csnode);
-            _nodeToListen = csnode.getNodeNumber();
-            _eventToListen = 1; // hard coded at present
-            tc.addCanListener(this);
-            log.info("Enabled meter Long Ex2Data {}", new CbusNameService().getEventNodeString(_nodeToListen,_eventToListen));
+            if (csnode!=null) {
+                _nodeToListen = csnode.getNodeNumber();
+            }
+        } else {
+            log.info("Unable to fetch Master Command Station from Node Manager");
         }
-        catch ( NullPointerException e ){
-            log.error("Unable to Locate Details for Master Command Station 0");
-        }
+        tc.addCanListener(this);
+        log.info("Enabled meter Long Ex2Data {} {}", 
+            new CbusNameService(_memo).getEventNodeString(_nodeToListen,_eventToListenCurrent), 
+            new CbusNameService(_memo).getEventNodeString(_nodeToListen,_eventToListenVoltage));
     }
 
     /**
@@ -93,23 +104,21 @@ public class CbusMultiMeter extends jmri.implementation.AbstractMultiMeter imple
      */
     @Override
     public void reply(CanReply r) {
-        if ( r.isExtended() || r.isRtr() ) {
+        if ( r.extendedOrRtr()
+            || CbusMessage.getOpcode(r) != CbusConstants.CBUS_ACON2
+            || CbusMessage.getNodeNumber(r) != _nodeToListen 
+            || (CbusMessage.getEvent(r) != _eventToListenCurrent 
+                && CbusMessage.getEvent(r) != _eventToListenVoltage )) {
             return;
         }
-        if ( CbusMessage.getOpcode(r) != CbusConstants.CBUS_ACON2  ) {
-            return;
+        if (CbusMessage.getEvent(r) == _eventToListenCurrent) {
+            int currentInt = ( r.getElement(5) * 256 ) + r.getElement(6);
+            setCurrent(currentInt * 1.0f ); // mA value, min 0, max 65535, NOT percentage
+        } else {
+            // Voltage from the command station is scaled by a factor of 10 to allow one decimal place
+            int voltageInt = ( r.getElement(5) * 256 ) + r.getElement(6);
+            setVoltage(voltageInt / 10.0f ); // V value, min 0, max 6553.5, NOT percentage
         }
-        if ( CbusMessage.getNodeNumber(r) != _nodeToListen ) {
-            return;
-        }
-        if ( CbusMessage.getEvent(r) != _eventToListen ) {
-            return;
-        }
-        int currentInt = ( r.getElement(5) * 256 ) + r.getElement(6);
-        log.debug("Setting current to {} mA",currentInt);
-        
-        setCurrent(currentInt * 1.0f ); // mA value, min 0, max 65535, NOT percentage
-
     }
 
     /**

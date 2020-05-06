@@ -20,11 +20,9 @@ import jmri.SignalMastManager;
 import jmri.TurnoutManager;
 import jmri.RouteManager;
 import jmri.Sensor;
-import jmri.Signal;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
-import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
@@ -918,7 +916,6 @@ public class DefaultConditionalActionTest {
 
     // from here down is testing infrastructure
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();

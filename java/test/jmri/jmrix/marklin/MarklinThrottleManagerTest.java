@@ -6,7 +6,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MarklinThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
@@ -17,8 +17,8 @@ public class MarklinThrottleManagerTest extends jmri.managers.AbstractThrottleMa
     public void testGetThrottleInfo() {
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         MarklinTrafficController tc = new MarklinTrafficController();
@@ -28,7 +28,9 @@ public class MarklinThrottleManagerTest extends jmri.managers.AbstractThrottleMa
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(MarklinThrottleManagerTest.class);

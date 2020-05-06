@@ -98,9 +98,9 @@ public class Pr1Importer {
                                 cv.setValue(getCV(cvNum));
                             }
                         } catch (JmriException ex) {
-                            log.error("failed to getCV() " + cvNum);
+                            log.error("failed to getCV() {}", cvNum);
                         } catch (ArrayIndexOutOfBoundsException ex) {
-                            log.error("failed to getCvByNumber() " + cvNum);
+                            log.error("failed to getCvByNumber() {}", cvNum);
                         }
                     }
                 }

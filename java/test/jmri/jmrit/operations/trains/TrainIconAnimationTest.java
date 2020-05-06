@@ -2,8 +2,13 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.InstanceManager;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -16,11 +21,9 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -58,7 +61,7 @@ public class TrainIconAnimationTest extends OperationsTestCase {
         // create and register a panel
         jmri.jmrit.display.panelEditor.PanelEditor editor = new jmri.jmrit.display.panelEditor.PanelEditor(
                 "Train Test Panel");
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(editor);
+        InstanceManager.getDefault(EditorManager.class).add(editor);
 
         // confirm panel creation
         JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
@@ -372,6 +375,7 @@ public class TrainIconAnimationTest extends OperationsTestCase {
 
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     //    private final static Logger log = LoggerFactory.getLogger(TrainIconAnimationTest.class);

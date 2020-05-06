@@ -6,11 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
-import jmri.jmrix.loconet.SlotManager;
 
-import java.util.List;
 import jmri.ProgrammerException;
-import jmri.ProgrammingMode;
 
 /**
  * Tests for LocoNet CsOpSwAccess class.
@@ -1467,7 +1464,6 @@ public class CsOpSwAccessTest {
 
     @Before
     public void setUp() {
-        // The minimal setup for log4J
         jmri.util.JUnitUtil.setUp();
         lnis = new LocoNetInterfaceScaffold();
         sm = new SlotManager(lnis);
@@ -1480,6 +1476,7 @@ public class CsOpSwAccessTest {
     public void tearDown() {
         memo.dispose();
         lnis = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * EliteAdapterTest.java
  *
- * Description: tests for the jmri.jmrix.lenz.hornbyelite.EliteAdapter class
+ * Test for the jmri.jmrix.lenz.hornbyelite.EliteAdapter class
  *
  * @author Paul Bender
  */

@@ -15,12 +15,12 @@ public class ScaleConfigXMLTest {
         Assert.assertNotNull(sxml);
     }
 
+    @Test
     public void testLoad() {
         boolean loadResult = ScaleConfigXML.doLoad();
         Assert.assertTrue("load worked", loadResult);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

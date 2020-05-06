@@ -9,7 +9,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class UhlenbrockLnThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
@@ -23,8 +23,8 @@ public class UhlenbrockLnThrottleManagerTest extends jmri.managers.AbstractThrot
         Assert.fail("parent class test requires further setup");
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         LnTrafficController lnis = new LocoNetInterfaceScaffold();

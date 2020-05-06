@@ -1,7 +1,6 @@
 package jmri.jmrit.sensorgroup;
 
 import java.util.ArrayList;
-import java.util.List;
 import jmri.InstanceManager;
 import jmri.Route;
 import jmri.RouteManager;
@@ -39,8 +38,8 @@ public class SensorGroup {
         this.name = name;
         // find suitable 
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
-        String group = name.toUpperCase();
-        String prefix = (namePrefix + group + nameDivider).toUpperCase();
+        String group = name;
+        String prefix = (namePrefix + group + nameDivider);
 
         sensorList = new ArrayList<String>();
         for (Route route : rm.getNamedBeanSet()) {
@@ -54,12 +53,12 @@ public class SensorGroup {
     }
 
     void addPressed() {
-        log.debug("start with " + sensorList.size() + " lines");
+        log.debug("start with {} lines", sensorList.size());
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
-        String group = name.toUpperCase();
+        String group = name;
 
         // remove the old routes
-        String prefix = (namePrefix + group + nameDivider).toUpperCase();
+        String prefix = (namePrefix + group + nameDivider);
 
         for (Route r : rm.getNamedBeanSet()) {
             String routeName = r.getSystemName();

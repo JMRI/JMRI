@@ -11,7 +11,7 @@ import org.junit.*;
 /**
  * Test simple functioning of MultiThrottle
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class MultiThrottleTest {
 
@@ -177,6 +177,7 @@ public class MultiThrottleTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.initRosterConfigManager();
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
         InstanceManager.setDefault(WiThrottlePreferences.class, new WiThrottlePreferences());
         JUnitUtil.initDebugThrottleManager();

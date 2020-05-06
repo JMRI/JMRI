@@ -8,12 +8,17 @@ import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.operations.setup.Control;
@@ -21,8 +26,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table Model for edit of trains used by operations
@@ -55,7 +58,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public TrainsTableModel() {
         super();
         trainManager.addPropertyChangeListener(this);
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
         updateList();
     }
 
@@ -387,13 +390,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             tef.dispose();
         }
         // use invokeLater so new window appears on top
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                Train train = getTrainByRow(row);
-                log.debug("Edit train ({})", train.getName());
-                tef = new TrainEditFrame(train);
-            }
+        SwingUtilities.invokeLater(() -> {
+            Train train = getTrainByRow(row);
+            log.debug("Edit train ({})", train.getName());
+            tef = new TrainEditFrame(train);
         });
     }
 
@@ -407,7 +407,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 return;
             }
             // use a thread to allow table updates during build
-            build = new Thread(new Runnable() {
+            build = jmri.util.ThreadingUtil.newThread(new Runnable() {
                 @Override
                 public void run() {
                     train.build();
@@ -484,7 +484,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 train.terminate();
             }
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR)) {
-            log.debug("Enable conductor for train (" + train.getName() + ")");
+            log.debug("Enable conductor for train ({})", train.getName());
             launchConductor(train);
         }
     }
@@ -507,24 +507,20 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     private void launchConductor(Train train) {
         // use invokeLater so new window appears on top
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                TrainConductorFrame f = _trainConductorHashTable.get(train.getId());
-                // create a copy train frame
-                if (f == null || !f.isVisible()) {
-                    f = new TrainConductorFrame(train);
-                    _trainConductorHashTable.put(train.getId(), f);
-                } else {
-                    f.setExtendedState(Frame.NORMAL);
-                }
-                f.setVisible(true); // this also brings the frame into focus
+        SwingUtilities.invokeLater(() -> {
+            TrainConductorFrame f = _trainConductorHashTable.get(train.getId());
+            // create a copy train frame
+            if (f == null || !f.isVisible()) {
+                f = new TrainConductorFrame(train);
+                _trainConductorHashTable.put(train.getId(), f);
+            } else {
+                f.setExtendedState(Frame.NORMAL);
             }
+            f.setVisible(true); // this also brings the frame into focus
         });
     }
 
     @Override
-    // removed synchronized from propertyChange, it caused a thread lock, see _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change {} old: {} new: {}",
@@ -554,13 +550,11 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 log.debug("Update train table row: {} name: {}", row, train.getName());
             }
             if (row >= 0 && _table != null) {
-                int viewRow = _table.convertRowIndexToView(row);
-                // if there are issues with thread locking here, this needs to
-                // be refactored so the panel holding the table is listening for
-                // this changes so it can instruct the table to scroll
-                // adding "synchronized" to this propertyChange can lock up thread                
-                _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
-                fireTableRowsUpdated(row, row);
+                SwingUtilities.invokeLater(() -> {
+                    fireTableRowsUpdated(row, row);
+                    int viewRow = _table.convertRowIndexToView(row);
+                    _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
+                });
             }
         }
     }
@@ -582,7 +576,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             tef.dispose();
         }
         trainManager.removePropertyChangeListener(this);
-        Setup.removePropertyChangeListener(this);
+        Setup.getDefault().removePropertyChangeListener(this);
         removePropertyChangeTrains();
     }
 

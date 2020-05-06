@@ -11,7 +11,7 @@ import jmri.jmrix.grapevine.SerialTrafficControlScaffold;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class NodeTablePaneTest {
 
@@ -23,7 +23,6 @@ public class NodeTablePaneTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -34,7 +33,9 @@ public class NodeTablePaneTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(NodeTablePaneTest.class);

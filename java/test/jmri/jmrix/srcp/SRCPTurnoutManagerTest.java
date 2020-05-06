@@ -9,11 +9,13 @@ import org.junit.Test;
 /**
  * SRCPTurnoutManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPTurnoutManager class
+ * Test for the jmri.jmrix.srcp.SRCPTurnoutManager class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
+
+    private SRCPBusConnectionMemo memo;
 
     @Override
     public String getSystemName(int i){
@@ -22,7 +24,7 @@ public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     @Test
     public void testCtor() {
-        SRCPTurnoutManager m = new SRCPTurnoutManager();
+        SRCPTurnoutManager m = new SRCPTurnoutManager(memo, memo.getBus());
         Assert.assertNotNull(m);
     }
 
@@ -31,12 +33,11 @@ public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertNotNull(l);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(new SRCPTrafficController() {
+        memo = new SRCPBusConnectionMemo(new SRCPTrafficController() {
             @Override
             public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
             }
@@ -48,6 +49,7 @@ public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 }

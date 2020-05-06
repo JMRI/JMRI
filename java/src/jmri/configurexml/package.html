@@ -76,12 +76,13 @@
             There are four levels of information, a coarse measure to ensure
             that prerequisites are present during a load:
         <UL>
-            <LI>Pref
-            <LI>Config
-            <LI>Tool
-            <LI>User
+            <LI>Pref - program-level preferences
+            <LI>Config - NamedBeanManagers
+            <LI>Tool - not used
+            <LI>User - panels
         </UL>
-        
+            The level is specified via the call used when registering
+            with the {@link jmri.ConfigureManager}.
         <P>
             Additionally, the {@link jmri.Manager} class has a 
             {@link jmri.Manager#getXMLOrder} method that 
@@ -103,6 +104,7 @@
             <li>layout-2-9-6.xsd - manually created when the first non-backward-compatible XML content 
                 change was made after the release of JMRI 2.9.5, this accumulates changes
                 until some later non-backward-compatible change is made.
+            <li>layout-4-19-2.xsd - a significant update in structure and content.
         </ul>
 
         When a non-backward compatible change is made to XML persistance,

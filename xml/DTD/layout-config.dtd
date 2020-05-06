@@ -1,6 +1,5 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id$ -->
 
 <!-- This version is now frozen.  Make no changes to it!  -->
 <!-- For more information, see http://jmri.org/help/en/html/doc/Technical/XmlPersistance.shtml#DTD -->

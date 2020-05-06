@@ -4,6 +4,8 @@ import jmri.Manager.NameValidity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Utility Class supporting parsing and testing of addresses for Lenz XpressNet
  * <p>
@@ -41,7 +43,8 @@ public class XNetAddress {
         // validate the system Name leader characters
         if (!systemName.startsWith(prefix)) {
             // here if an invalid XpressNet system name
-            log.error("invalid character in header field of XpressNet system name: {}", systemName);
+            log.error("invalid character in header field of XpressNet system name: {} wants prefix {}", 
+                systemName, prefix);
             return (-1);
         }
         // name must be in the Xtnnnnn or XSmm:pp format (X is user 
@@ -77,11 +80,12 @@ public class XNetAddress {
      *
      * @return VALID if system name has a valid format, else return INVALID
      */
-    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix + type))) {
             // here if an illegal format 
-            log.error("invalid character in header field of system name: {}", systemName);
+            log.error("invalid character in header field of system name: {} wants prefix {} type {}", 
+                systemName, prefix, type);
             return NameValidity.INVALID;
         }
         if (getBitFromSystemName(systemName, prefix) > 0) {
@@ -135,6 +139,6 @@ public class XNetAddress {
         return ("");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetAddress.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetAddress.class);
 
 }

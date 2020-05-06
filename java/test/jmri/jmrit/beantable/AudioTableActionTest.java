@@ -1,14 +1,15 @@
 package jmri.jmrit.beantable;
 
+import jmri.Audio;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
-public class AudioTableActionTest extends AbstractTableActionBase {
+public class AudioTableActionTest extends AbstractTableActionBase<Audio> {
 
     @Test
     public void testCTor() {
@@ -54,6 +55,7 @@ public class AudioTableActionTest extends AbstractTableActionBase {
 
     @Test
     @Ignore("Audio table does not have Add... button")
+    @Override
     public void testAddButton() {
     }
 
@@ -75,7 +77,6 @@ public class AudioTableActionTest extends AbstractTableActionBase {
     public void testEditButton() {
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -83,13 +84,13 @@ public class AudioTableActionTest extends AbstractTableActionBase {
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         helpTarget = "package.jmri.jmrit.beantable.AudioTable";
-	    a = new AudioTableAction();
+        a = new AudioTableAction();
     }
 
     @After
     @Override
     public void tearDown() {
-        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
         a = null;
     }

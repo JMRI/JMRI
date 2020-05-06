@@ -28,7 +28,7 @@ public class PacketGenAction extends AbstractXPressNetAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: {}", ex.toString());
         }
         f.setVisible(true);
 
@@ -36,6 +36,6 @@ public class PacketGenAction extends AbstractXPressNetAction {
         f.connect(_memo.getXNetTrafficController());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PacketGenAction.class);
 
 }

@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of BackgroundPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class BackgroundPanelTest {
 
@@ -30,6 +30,7 @@ public class BackgroundPanelTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 }

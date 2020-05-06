@@ -1,6 +1,7 @@
 package jmri.jmrix.srcp;
 
 import jmri.util.JUnitUtil;
+import jmri.SpeedStepMode;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,9 +10,9 @@ import org.junit.Test;
 /**
  * SRCPThrottleTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPThrottle class
+ * Test for the jmri.jmrix.srcp.SRCPThrottle class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -48,8 +49,8 @@ public class SRCPThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        int expResult = 1;
-        int result = instance.getSpeedStepMode();
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
+        SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
 
@@ -371,6 +372,7 @@ public class SRCPThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup4 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup4() {
     }
 
@@ -378,11 +380,11 @@ public class SRCPThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup5 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup5() {
     }
 
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -399,6 +401,7 @@ public class SRCPThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 }

@@ -2,7 +2,6 @@ package jmri.jmrix.roco.z21;
 
 import jmri.JmriException;
 import jmri.util.JUnitUtil;
-import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import org.junit.*;
@@ -10,7 +9,7 @@ import org.junit.*;
 /**
  * Tests for the z21XNetProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
 
@@ -20,13 +19,13 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
     @Test
     public void testGetCanReadAddress() {
         Assert.assertTrue("can read address", programmer.getCanRead("1234"));
-    }   
- 
+    }
+
     @Override
     @Test
     public void testGetCanWriteAddress() {
         Assert.assertTrue("can write address", programmer.getCanWrite("1234"));
-    }    
+    }
 
     @Override
     @Test
@@ -52,7 +51,9 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
+        JUnitUtil.waitFor(() -> {
+            return l.getRcvdInvoked() != 0;
+        }, "Receive Called by Programmer");
 
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
     }
@@ -82,7 +83,9 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
+        JUnitUtil.waitFor(() -> {
+            return l.getRcvdInvoked() != 0;
+        }, "Receive Called by Programmer");
 
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
     }
@@ -114,7 +117,9 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
+        JUnitUtil.waitFor(() -> {
+            return l.getRcvdInvoked() != 0;
+        }, "Receive Called by Programmer");
 
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
     }
@@ -147,7 +152,9 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
+        JUnitUtil.waitFor(() -> {
+            return l.getRcvdInvoked() != 0;
+        }, "Receive Called by Programmer");
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
     }
 
@@ -165,16 +172,18 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
                 super.restartTimer(RESTART_TIME);
             }
         };
-	programmer=p;
+        programmer = p;
     }
 
     @Override
     @After
     public void tearDown() {
-	t = null;
-	l = null;
-	programmer=p=null;
+        t = null;
+        l = null;
+        programmer = p = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

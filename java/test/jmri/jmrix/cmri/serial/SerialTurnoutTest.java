@@ -16,7 +16,7 @@ import jmri.util.NamedBeanComparator;
 /**
  * Tests for the jmri.jmrix.cmri.serial.SerialTurnout class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
@@ -49,10 +49,11 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         if (tcis != null) tcis.terminateThreads();
         tcis = null;
         memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
     int startingNumListeners; // number at creation, before tests start allocating them.
@@ -64,17 +65,16 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     @Override
     public void checkThrownMsgSent() {
-
-//                tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
-//		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-//		Assert.assertEquals("content", "41 54 08", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
+//        tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
+//        Assert.assertTrue("message sent", tcis.outbound.size() > 0);
+//        Assert.assertEquals("content", "41 54 08", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
     }
 
     @Override
     public void checkClosedMsgSent() {
-//                tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
-//		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-//		Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
+//        tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
+//        Assert.assertTrue("message sent", tcis.outbound.size() > 0);
+//        Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
     }
 
     @Test

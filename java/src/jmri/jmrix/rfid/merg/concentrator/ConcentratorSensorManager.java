@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
+import javax.annotation.Nonnull;
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
@@ -7,6 +8,7 @@ import jmri.Sensor;
 import jmri.jmrix.rfid.RfidMessage;
 import jmri.jmrix.rfid.RfidReply;
 import jmri.jmrix.rfid.RfidSensorManager;
+import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.jmrix.rfid.RfidTrafficController;
 import jmri.jmrix.rfid.TimeoutRfidSensor;
 import org.slf4j.Logger;
@@ -24,12 +26,10 @@ import org.slf4j.LoggerFactory;
 public class ConcentratorSensorManager extends RfidSensorManager {
 
     private final RfidTrafficController tc;
-    private final String prefix;
 
-    public ConcentratorSensorManager(RfidTrafficController tc, String prefix) {
-        super(prefix);
-        this.tc = tc;
-        this.prefix = prefix;
+    public ConcentratorSensorManager(RfidSystemConnectionMemo memo) {
+        super(memo);
+        this.tc = memo.getTrafficController();
         attach();
     }
 
@@ -37,8 +37,12 @@ public class ConcentratorSensorManager extends RfidSensorManager {
         tc.addRfidListener(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
         log.debug("Create new Sensor");
         TimeoutRfidSensor s;
         s = new TimeoutRfidSensor(systemName, userName);
@@ -49,7 +53,7 @@ public class ConcentratorSensorManager extends RfidSensorManager {
     @Override
     public void message(RfidMessage m) {
         if (m.toString().equals(new ConcentratorMessage(tc.getAdapterMemo().getProtocol().initString(), 0).toString())) {
-            log.info("Sent init string: " + m);
+            log.info("Sent init string: {}", m);
         } else {
             super.message(m);
         }
@@ -64,15 +68,15 @@ public class ConcentratorSensorManager extends RfidSensorManager {
 
     private void processReply(ConcentratorReply r) {
         if (!tc.getAdapterMemo().getProtocol().isValid(r)) {
-            log.warn("Invalid message - skipping " + r);
+            log.warn("Invalid message - skipping {}", r);
             return;
         }
         if (!r.isInRange()) {
-            log.warn("Invalid concentrator reader range - skipping " + r);
+            log.warn("Invalid concentrator reader range - skipping {}", r);
             return;
         }
         IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(tc.getAdapterMemo().getProtocol().getTag(r));
-        TimeoutRfidSensor sensor = (TimeoutRfidSensor) provideSensor(prefix + typeLetter() + r.getReaderPort());
+        TimeoutRfidSensor sensor = (TimeoutRfidSensor) provideSensor(getSystemNamePrefix() + r.getReaderPort());
         sensor.notify(idTag);
     }
 

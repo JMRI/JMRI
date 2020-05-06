@@ -1,9 +1,9 @@
 package jmri.jmrix.roco.z21;
 
+import javax.annotation.Nonnull;
 import jmri.Turnout;
-import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetReply;
-import jmri.jmrix.lenz.XNetTrafficController;
+import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetTurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,25 +14,25 @@ import org.slf4j.LoggerFactory;
  * System names are "XTnnn", where X is the user-configurable system prefix,
  * nnn is the turnout number without padding.
  *
- * @author	Paul Bender Copyright (C) 2016 
+ * @author Paul Bender Copyright (C) 2016 
  */
-public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetListener {
+public class Z21XNetTurnoutManager extends XNetTurnoutManager {
 
-    public Z21XNetTurnoutManager(XNetTrafficController controller, String prefix) {
-        super(controller, prefix);
+    public Z21XNetTurnoutManager(XNetSystemConnectionMemo memo) {
+        super(memo);
     }
 
     // XNet-specific methods
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
-        Turnout t = new Z21XNetTurnout(prefix, addr, tc);
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        Turnout t = new Z21XNetTurnout(getSystemPrefix(), addr, tc);
         t.setUserName(userName);
         return t;
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
@@ -48,7 +48,7 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
           address = address + 1; 
           log.debug("message has address: {}", address);
           // make sure we know about this turnout.
-          String s = prefix + typeLetter() + address;
+          String s = getSystemNamePrefix() + address;
           forwardMessageToTurnout(s,l);
         } else {
           super.message(l); // let the XpressNetTurnoutManager code
@@ -70,6 +70,6 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManager.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManager.class);
 
 }

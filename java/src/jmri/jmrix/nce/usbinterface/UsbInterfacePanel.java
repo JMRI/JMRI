@@ -6,7 +6,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -166,7 +165,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         if (src == setButton) {
             changeCabId();
         } else {
-            log.error("unknown action performed: " + src);
+            log.error("unknown action performed: {}", src);
         }
     }
 
@@ -265,7 +264,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
             log.debug("Receive character");
         }
         if (waiting <= 0) {
-            log.error("unexpected response. Len: " + r.getNumDataElements() + " code: " + r.getElement(0));
+            log.error("unexpected response. Len: {} code: {}", r.getNumDataElements(), r.getElement(0));
             return;
         }
         waiting--;

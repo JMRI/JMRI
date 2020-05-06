@@ -35,7 +35,9 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
     @After
     public void tearDown() {
         tif.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     @Override
@@ -44,13 +46,13 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
     }
 
     @Override
-    public void checkThrownMsgSent() throws InterruptedException {
+    public void checkThrownMsgSent() {
         tif.flush();
         tif.assertSentMessage(":X195B4C4CN0102030405060708;");
     }
 
     @Override
-    public void checkClosedMsgSent() throws InterruptedException {
+    public void checkClosedMsgSent() {
         tif.flush();
         tif.assertSentMessage(":X195B4C4CN0102030405060709;");
     }
@@ -65,14 +67,14 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
 
         t.setState(Turnout.THROWN);
         tif.flush();
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
+        JUnitUtil.waitFor( () -> l.getPropertyChanged());
 
         Assert.assertEquals(Turnout.THROWN, t.getCommandedState());
         Assert.assertEquals(Turnout.THROWN, t.getKnownState());
 
         t.setState(Turnout.CLOSED);
         tif.flush();
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
+        JUnitUtil.waitFor( () -> l.getPropertyChanged());
 
         Assert.assertEquals(Turnout.CLOSED, t.getCommandedState());
         Assert.assertEquals(Turnout.CLOSED, t.getKnownState());

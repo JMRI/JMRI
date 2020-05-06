@@ -8,7 +8,7 @@ import org.junit.rules.TemporaryFolder;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class BackupSetTest extends OperationsTestCase {
 

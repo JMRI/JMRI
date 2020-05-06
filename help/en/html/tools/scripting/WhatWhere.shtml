@@ -1,11 +1,12 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="en">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="keywords" content="save store jython script, jython naming, jython threads,
+        jython automation, jython siglets, jython AbstractAutomaton">
   <title>JMRI: "What...Where" of Jython Scripting with JMRI</title>
     <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -19,16 +20,16 @@
     <!-- /Style -->
 </head>
 
-<body id="WhatWhereTopOfPage">
-  <!--#include virtual="/Header" -->
-
+<body>
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
-      <h1>JMRI: "What...Where" of Jython Scripting with JMRI</h1>
+      <h1><a id="WhatWhereTopOfPage" name="WhatWhereTopOfPage">JMRI: "What...Where" of Jython Scripting with JMRI</a></h1>
+ 	  <!-- Page reorganized by Jerry Grochow 2018-11-29 -->
+
 
       <p class="subtitle">Other interesting tidbits about
       scripting in JMRI with Jython</p>
@@ -36,7 +37,9 @@
       <ul>
       <li><a href="#storescripts">Where should I store my JMRI Jython scripts?</a></li>
       <li><a href="#classes">Where can I find more information on the JMRI classes?</a></li>
+      <li><a href="#names">What is the difference between System names and User names?</a></li>     
 	  <li><a href="#import">What do the words "<code>import</code>" and "<code>class</code>" mean?</a></li>
+      <li><a href="#threads">Why should I based my script on "Siglet" and "AbstractAutomaton" classes?</a></li>
       <li><a href="#siglet-automaton">What's the difference between the "Siglet" and
       "AbstractAutomaton" classes?</a></li>
 	  </ul>
@@ -48,7 +51,8 @@
       <p>See also <a href="Python.shtml">Jython/Python Language</a> for general info about the language.</p>
 	  
 	  
-            
+ <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+           
 	  <h2><a id="storescripts">Where should I store my JMRI Jython scripts?</a></h2>
       
       <div class="para">
@@ -56,7 +60,7 @@
       <p>You CAN use any location for your own
       scripts, including locations within a Dropbox (or other file
       sharing system) folder where they will be available across multiple computers. [Instructions on using
-      Dropbox with various JMRI files can be found at <a href="http://jmri.org/help/en/html/setup/Dropbox.shtml" target="_blank">
+      Dropbox with various JMRI files can be found at <a href="../../setup/Dropbox.shtml" target="_blank">
       JMRI Setup: Sharing Files with Dropbox</a>.]</p>
       
       <p>However, you should NEVER store your own scripts (or any other user-created files) anywhere within your
@@ -68,11 +72,12 @@
       <p><a href="#WhatWhereTopOfPage">[Go to top of page]</a></p>
       </div>
       
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
       
-      <h2><a id="classes">Where can I find more information on the JMRI classes?</a></h2>
+      <h2><a id="classes" name="classes">Where can I find more information on the JMRI classes?</a></h2>
 
       <div class="para">
-        The <a href="http://jmri.org/JavaDoc/doc/" target="_blank">class
+        The <a href="https://jmri.org/JavaDoc/doc/" target="_blank">class
         documentation pages</a> include automatically-built summary
         information on every class.
 
@@ -86,23 +91,87 @@
         
         <p>Additional information can be found in the JavaDocs for specific types of classes, for example:
    
-       <p><a href="http://jmri.org/JavaDoc/doc/index.html?jmri/SensorManager.html" target="_blank">
-        http://jmri.org/JavaDoc/doc/index.html?jmri/SensorManager.html</a><br>
-        <a href="http://jmri.org/JavaDoc/doc/index.html?jmri/TurnoutManager.html" target="_blank">
-        http://jmri.org/JavaDoc/doc/index.html?jmri/TurnoutManager.html</a><br>
-        <a href="http://jmri.org/JavaDoc/doc/index.html?jmri/LightManager.html" target="_blank">
-        http://jmri.org/JavaDoc/doc/index.html?jmri/LightManager.html</a><br>
-        <a href="http://jmri.org/JavaDoc/doc/index.html?jmri/BlockManager.html" target="_blank">
-        http://jmri.org/JavaDoc/doc/index.html?jmri/BlockManager.html</a>
+       <p><a href="https://jmri.org/JavaDoc/doc/index.html?jmri/SensorManager.html" target="_blank">
+        https://jmri.org/JavaDoc/doc/index.html?jmri/SensorManager.html</a><br>
+        <a href="https://jmri.org/JavaDoc/doc/index.html?jmri/TurnoutManager.html" target="_blank">
+        https://jmri.org/JavaDoc/doc/index.html?jmri/TurnoutManager.html</a><br>
+        <a href="https://jmri.org/JavaDoc/doc/index.html?jmri/LightManager.html" target="_blank">
+        https://jmri.org/JavaDoc/doc/index.html?jmri/LightManager.html</a><br>
+        <a href="https://jmri.org/JavaDoc/doc/index.html?jmri/BlockManager.html" target="_blank">
+        https://jmri.org/JavaDoc/doc/index.html?jmri/BlockManager.html</a>
         </p>
         
       <p><a href="#WhatWhereTopOfPage">[Go to top of page]</a></p>
 
         </div>
 
-	  
-	      <h2><a id="import">What do the words "<code>import</code>",
-      "<code>class</code>" mean?</a></h2>
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  	
+     <h2><a id="names" name="names">What is the difference between System Names and User Names?</a></h2>
+
+      <p>Click for more information on <a href="../../../../../help/en/html/doc/Technical/Names.shtml"> Names and Naming</a>.</p>
+		
+		<p>System names for sensors, turnouts, lights and others, are connection specific. A LocoNet sensor
+		name begins with "LS" while a CMRI sensor begins with "CS" and an internal sensor with "IS". 
+		"provide" methods check the prefix of the passed string to determine if it matches a defined connection
+		or internal. If so, and the rest of the name is valid, the sensor is created. If a match does not 
+		exist, it assigns the prefix for the first connection in the currently open connection list.</p>
+		
+		<p>Example: If your connections are LocoNet and CMRI, a provideSensor request without a prefix of LS, 
+		CS or IS, will be assigned LS. If the name value is not one to four numeric digits (a LocoNet 
+		requirement), you get a bad format error. Memories are only internal, so provideMemory uses "IM" as 
+		the default prefix.</p>
+        
+        <p>Since System names follow a prescribed format, there is a procedure for checking whether a name
+        is valid.  Use this code to create a sensor with a valid name:</p>
+        
+        <!-- Example adapted from Randall Wood post to jmriusers@groups.io 2019-09-06 -->
+        <pre style="font-family: monospace;">
+        try:
+           sensors.validateSystemNameFormat(MySensorSystemName)
+        except jmri.NamedBean.BadSystemNameException:
+           print 'Invalid name: ', MySensorSystemName 
+        </pre>    
+		
+		<p>User names are set after input and outputs are created. They can be any character string you want. 
+		You can use user name or system name in scripts and Logix. The use of user names is recommended for 
+		these purposes if there is the possibility that you will be changing your control system in which case 
+		system names will be changing as well.</p>
+                
+                
+  <h3>Obtaining User Names from Objects</h3>
+                
+    <p>If a returned object from a query is a NamedBean Object, ( ie. it appears in a JMRI Table )
+        the return value ( from Java #toString() ) is the Hardware Address.<br>
+    
+    If you require the ID Tag UserName, eg. For a Block with username "BlockUserName", you could use :
+    </p>
+        <pre style="font-family: monospace;">
+        mylocostring=blocks.getByUserName("BlockUserName").getValue() #Block value Object could be a String or ID Tag
+        if (isinstance(mylocostring,jmri.NamedBean)) : # The object is a NamedBean
+            mylocostring = mylocostring .getUserName() # Set to the User Name
+        print mylocostring
+        </pre>
+               
+    <p>It can sometimes be handy to get further information on a Reporter value.
+    The toReportString method provides an object specific report, 
+    which may or may not actually contain the user name by itself.
+    <br>For example, a LocoNet TranspondingTag may report strings such as '1234 enter' or '1234 exit',
+    while Railcom objects will add any detector supplied values, such as orientation, to the string.</p>
+
+    <p>Eg. For a Block with username "BlockUserName", you could use :</p>
+    
+        <pre style="font-family: monospace;">
+        mylocostring=blocks.getByUserName("BlockUserName").getValue() #Block Object could be a String or ID Tag
+        if (isinstance(mylocostring,jmri.Reportable)) : # The object is a Reportable
+            mylocostring = mylocostring .toReportString() # Set to the Report String
+        print mylocostring
+        </pre>
+     
+    <p><a href="#WhatWhereTopOfPage">[Go to top of page]</a></p>        
+
+
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  	    
+	   <h2><a id="import" name="import">What do the words "<code>import</code>", "<code>class</code>" mean?</a></h2>
 
       <div class="para">
         They're part of the jython language used for the scripting.
@@ -147,19 +216,38 @@
 
         </div>
 	  
-     
-	  <h2><a id="siglet-automaton">What's the difference between the "Siglet" and
+    <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+      <h2><a id="threads" name="threads">Why should I base my scripts on "Siglet" and "AbstractAutomaton" classes?</a></h2>
+ 	  <!-- Section created by Jerry Grochow 2019-10-14 based on post to jmriusers@groups.io by Bob Jacobson 2018-11-01 -->
+
+      
+      <div class="para">
+      
+      <p>Scripts are part of the main JMRI program. This creates a bit of a problem:  when something goes wrong
+      in a script, it may crash JMRI.  When a script goes to sleep, the whole program sleeps. However, if you want
+      to run independent of JMRI, you can via a separate "thread."  The Siglet and AbstractAutomaton classes have
+      created to allow you to base your scripts on a class that will run as an independent thread but with the 
+      ability to communicate with the rest of JMRI.  For more information, see 
+      <a href="../../../../../help/en/html/doc/Technical/Threads.shtml">the section on threads.</a></p>      
+      
+      <p>Effectively, each Automat or Siglet is a separate program running when it needs to.  Since they run in 
+      separate threads, they can wait for something to happen while the rest of the JMRI program proceeds - a
+      very useful capability indeed. </p>    
+      
+      </div>
+  
+  
+    <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+	  <h2><a id="siglet-automaton" name="siglet-automaton">What's the difference between the "Siglet" and
       "AbstractAutomaton" classes?</a></h2>
 
       <div class="para">
-        (Maybe not a <em>frequently</em> asked question, but it
-        needs to go somewhere)
-
+ 
         <p>Some examples use the <a href=
-        "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html" target="_blank">
+        "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html" target="_blank">
         AbstractAutomaton</a> class as a base, while others use the
         <a href=
-        "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html" target="_blank">
+        "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html" target="_blank">
         Siglet</a> class. This is because those are intended for
         two different purposes.</p>
 
@@ -216,7 +304,7 @@
 
         <p>For more info on the routines that AbstractAutomaton
         provides to help you, see the <a href=
-        "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#method_summary" target="_blank">
+        "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#method_summary" target="_blank">
         Javadocs</a> for the class. (Scroll down to the section
         called "Method Summary")</p>
 
@@ -224,9 +312,10 @@
 
         </div>
 
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
 	  
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
 </body>

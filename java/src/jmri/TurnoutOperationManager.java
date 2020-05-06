@@ -75,7 +75,7 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
             }
         }
         if (previous != null) {
-            log.debug("replaced existing operation called " + previous.getName());
+            log.debug("replaced existing operation called {}", previous.getName());
         }
         firePropertyChange("Content", null, null);
     }
@@ -119,28 +119,16 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
             if (item.getClass() == op.getClass()) {
                 newTypes.add(op);
                 found = true;
-                log.debug("replacing definitive instance of " + item.getClass());
+                log.debug("replacing definitive instance of {}", item.getClass());
             } else {
                 newTypes.add(item);
             }
         }
         if (!found) {
             newTypes.add(op);
-            log.debug("adding definitive instance of " + op.getClass());
+            log.debug("adding definitive instance of {}", op.getClass());
         }
         operationTypes = newTypes;
-    }
-
-    /**
-     * Get the default instance.
-     *
-     * @return the default instance, created if necessary
-     * @deprecated since 4.11.4; get from the InstanceManager instead
-     */
-    @Deprecated // since 4.11.4
-    public synchronized static @Nonnull
-    TurnoutOperationManager getDefault() {
-        return InstanceManager.getDefault(TurnoutOperationManager.class);
     }
 
     /**

@@ -1,11 +1,13 @@
 package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsTestCase;
-import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -20,6 +22,17 @@ public class SchedulesByLoadFrameTest extends OperationsTestCase {
         SchedulesByLoadFrame t = new SchedulesByLoadFrame();
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
+
+    }
+    
+    @Test
+    public void testSchedulesByLoadFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SchedulesByLoadFrame f = new SchedulesByLoadFrame();
+        Assert.assertNotNull(f);
+
+        // TODO improve test
+        JUnitUtil.dispose(f);
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SchedulesByLoadFrameTest.class);

@@ -4,7 +4,6 @@ import jmri.*;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 
-import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.junit.*;
@@ -184,6 +183,7 @@ public class ActiveLogixTest {
 
     @AfterClass
     public static void tearDown() throws Exception {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

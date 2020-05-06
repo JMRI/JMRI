@@ -53,7 +53,7 @@ public class MarklinTurnout extends AbstractTurnout
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
+                log.error("Cannot command both CLOSED and THROWN {}", s);
                 return;
             } else {
                 // send a CLOSED command
@@ -138,7 +138,7 @@ public class MarklinTurnout extends AbstractTurnout
                 try {
                     sendOffMessage((state ? 1 : 0));
                 } catch (Exception e) {
-                    log.error("Exception occurred while sending delayed off to turnout: " + e);
+                    log.error("Exception occurred while sending delayed off to turnout: {}", e);
                 }
             }
         }, METERINTERVAL);
@@ -176,7 +176,7 @@ public class MarklinTurnout extends AbstractTurnout
                         setKnownStateFromCS(Turnout.CLOSED);
                         break;
                     default:
-                        log.warn("Unknown state command " + m.getElement(9));
+                        log.warn("Unknown state command {}", m.getElement(9));
                 }
             }
         }

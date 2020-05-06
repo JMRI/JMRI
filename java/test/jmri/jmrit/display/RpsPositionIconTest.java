@@ -12,7 +12,7 @@ import org.junit.*;
 /**
  * Tests for the RpsIcon class.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class RpsPositionIconTest extends PositionableTestBase {
 
@@ -81,6 +81,7 @@ public class RpsPositionIconTest extends PositionableTestBase {
     }
 
     @Before
+    @Override
     public void setUp() {
         super.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();

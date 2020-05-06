@@ -40,7 +40,6 @@ public class SprogCSTurnoutTest extends jmri.implementation.AbstractTurnoutTestB
         Assert.assertEquals("controller listeners remaining", 1, numListeners());
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

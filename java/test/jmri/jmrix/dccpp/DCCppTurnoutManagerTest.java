@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DCCppTurnoutManagerTest {
     // Note: this doesn't use the usual test pattern for turnouts, which
@@ -23,7 +23,7 @@ public class DCCppTurnoutManagerTest {
 
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
 
-        DCCppTurnoutManager tm = new DCCppTurnoutManager(tc,memo.getSystemPrefix());
+        DCCppTurnoutManager tm = new DCCppTurnoutManager(memo);
         Assert.assertNotNull("exists",tm);
     }
 
@@ -33,7 +33,7 @@ public class DCCppTurnoutManagerTest {
 
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
 
-        DCCppTurnoutManager tm = new DCCppTurnoutManager(tc,memo.getSystemPrefix());
+        DCCppTurnoutManager tm = new DCCppTurnoutManager(memo);
         
         Turnout t = tm.provideTurnout("DT0");
         Assert.assertNotNull("exists",t);
@@ -46,7 +46,7 @@ public class DCCppTurnoutManagerTest {
 
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
 
-        DCCppTurnoutManager tm = new DCCppTurnoutManager(tc,memo.getSystemPrefix());
+        DCCppTurnoutManager tm = new DCCppTurnoutManager(memo);
         
         Turnout t = tm.provideTurnout("DT10");
         Assert.assertNotNull("exists",t);
@@ -54,7 +54,6 @@ public class DCCppTurnoutManagerTest {
         
     }
     
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -62,7 +61,10 @@ public class DCCppTurnoutManagerTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false); // shouldn't be necessary, can't see where windows are created
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutManagerTest.class);

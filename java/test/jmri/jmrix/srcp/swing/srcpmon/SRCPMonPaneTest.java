@@ -1,10 +1,8 @@
 package jmri.jmrix.srcp.swing.srcpmon;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,8 +19,8 @@ public class SRCPMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         Assert.assertNotNull(f);
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -35,9 +33,10 @@ public class SRCPMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @After
+    @Override
     public void tearDown() {
         panel = pane = null;
         jmri.InstanceManager.deregister(memo, jmri.jmrix.srcp.SRCPSystemConnectionMemo.class);
-    	JUnitUtil.tearDown();
+        super.tearDown();
     }
 }

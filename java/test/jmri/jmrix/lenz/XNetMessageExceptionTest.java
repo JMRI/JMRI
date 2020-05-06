@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * XNetMessageExceptionTest.java
  *
- * Description: tests for the jmri.jmrix.lenz.XNetMessageException class
+ * Test for the jmri.jmrix.lenz.XNetMessageException class
  *
  * @author Paul Bender
  */

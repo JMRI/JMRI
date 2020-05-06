@@ -1,6 +1,7 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import java.util.SortedSet;
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
@@ -35,34 +36,24 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
     public Element store(Object o) {
         Element reporters = new Element("reporters");
         setStoreElementClass(reporters);
-        ReporterManager tm = (ReporterManager) o;
-        if (tm != null) {
-            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
-            java.util.Iterator<String> iter
-                    = tm.getSystemNameAddedOrderList().iterator();
-
-            // don't return an element if there are not reporters to include
-            if (!iter.hasNext()) {
+        ReporterManager rm = (ReporterManager) o;
+        if (rm != null) {
+            SortedSet<Reporter> rList = rm.getNamedBeanSet();
+            // don't return an element if there are no reporters to include
+            if (rList.isEmpty()) {
                 return null;
             }
-
-            // store the reporters
-            while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
-                    log.error("System name null during store");
-                    break;
-                }
-                log.debug("system name is " + sname);
-                Reporter r = tm.getBySystemName(sname);
+            // store the Reporters
+            for (Reporter r : rList) {
+                String rName = r.getSystemName();
+                log.debug("system name is {}", rName);
                 Element elem = new Element("reporter");
-                elem.addContent(new Element("systemName").addContent(sname));
+                elem.addContent(new Element("systemName").addContent(rName));
                 // store common parts
                 storeCommon(r, elem);
 
-                log.debug("store Reporter " + sname);
+                log.debug("store Reporter {}", rName);
                 reporters.addContent(elem);
-
             }
         }
         return reporters;
@@ -88,28 +79,23 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
     public boolean loadReporters(Element reporters) {
         boolean result = true;
         List<Element> reporterList = reporters.getChildren("reporter");
-        if (log.isDebugEnabled()) {
-            log.debug("Found " + reporterList.size() + " reporters");
-        }
+        log.debug("Found {} reporters", reporterList.size());
         ReporterManager tm = InstanceManager.getDefault(jmri.ReporterManager.class);
         tm.setDataListenerMute(true);
 
-        for (int i = 0; i < reporterList.size(); i++) {
-
-            String sysName = getSystemName(reporterList.get(i));
+        for (Element e : reporterList) {
+            String sysName = getSystemName(e);
             if (sysName == null) {
-                log.warn("unexpected null in systemName " + reporterList.get(i) + " " + reporterList.get(i).getAttributes());
+                log.warn("unexpected null in systemName {} {}", e, e.getAttributes());
                 result = false;
                 break;
             }
 
-            String userName = getUserName(reporterList.get(i));
+            String userName = getUserName(e);
 
-            if (log.isDebugEnabled()) {
-                log.debug("create Reporter: (" + sysName + ")(" + (userName == null ? "<null>" : userName) + ")");
-            }
+            log.debug("create Reporter: ({})({})", sysName, (userName == null ? "<null>" : userName));
             Reporter r = tm.newReporter(sysName, userName);
-            loadCommon(r, reporterList.get(i));
+            loadCommon(r, e);
         }
         tm.setDataListenerMute(false);
         return result;
@@ -121,4 +107,5 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractReporterManagerConfigXML.class);
+
 }

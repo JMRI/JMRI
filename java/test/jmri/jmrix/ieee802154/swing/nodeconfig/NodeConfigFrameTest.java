@@ -8,7 +8,7 @@ import org.junit.*;
 /**
  * Test simple functioning of NodeConfigFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -47,6 +47,7 @@ public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
     @Override
     public void tearDown() {
         tc = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
 }

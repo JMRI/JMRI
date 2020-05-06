@@ -38,8 +38,8 @@ public class SprogProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 programmer.getMode());        
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         // prepare an interface
@@ -53,6 +53,7 @@ public class SprogProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @After
+    @Override
     public void tearDown() {
         stcs.dispose();
         programmer = null;

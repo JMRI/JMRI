@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of JoalAudioFactory
  *
- * @author	Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JoalAudioFactoryTest {
 
@@ -25,5 +25,7 @@ public class JoalAudioFactoryTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 }

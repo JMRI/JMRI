@@ -1,8 +1,11 @@
 package jmri.jmrix.mqtt;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.util.NamedBeanComparator;
 
 /**
  *
@@ -17,19 +20,24 @@ public class MqttSystemConnectionMemo extends SystemConnectionMemo {
         register();
         InstanceManager.store(this, MqttSystemConnectionMemo.class);
     }
-    
+
     public void configureManagers() {
 //        setPowerManager(new jmri.jmrix.jmriclient.JMRIClientPowerManager(this));
 //        jmri.InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
-        jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
+        InstanceManager.setTurnoutManager(getTurnoutManager());
 //        jmri.InstanceManager.setSensorManager(getSensorManager());
 //        jmri.InstanceManager.setLightManager(getLightManager());
 //        jmri.InstanceManager.setReporterManager(getReporterManager());
-    }    
-    
+    }
+
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return null;
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     /**
@@ -44,9 +52,9 @@ public class MqttSystemConnectionMemo extends SystemConnectionMemo {
             return true;
         }
         return false; // nothing, by default
-    }    
-   
-     /**
+    }
+
+    /**
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
@@ -60,15 +68,15 @@ public class MqttSystemConnectionMemo extends SystemConnectionMemo {
         }
         return null; // nothing, by default
     }
-    
-   protected MqttTurnoutManager turnoutManager;
+
+    protected MqttTurnoutManager turnoutManager;
 
     public MqttTurnoutManager getTurnoutManager() {
         if (getDisabled()) {
             return null;
         }
         if (turnoutManager == null) {
-            turnoutManager = new MqttTurnoutManager(mqttAdapter, getSystemPrefix());
+            turnoutManager = new MqttTurnoutManager(this);
         }
         return turnoutManager;
     }
@@ -77,4 +85,7 @@ public class MqttSystemConnectionMemo extends SystemConnectionMemo {
         mqttAdapter = ma;
     }
 
+    MqttAdapter getMqttAdapter() {
+        return mqttAdapter;
+    }
 }

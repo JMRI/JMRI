@@ -1,8 +1,10 @@
 package jmri.jmrix.debugthrottle;
 
+import java.util.EnumSet;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +32,7 @@ public class DebugThrottleManager extends AbstractThrottleManager {
         if (a instanceof DccLocoAddress) {
             // Immediately trigger the callback.
             DccLocoAddress address = (DccLocoAddress) a;
-            log.debug("new debug throttle for " + address);
+            log.debug("new debug throttle for {}", address);
             notifyThrottleKnown(new DebugThrottle(address, adapterMemo), a);
         }
         else {
@@ -66,7 +68,7 @@ public class DebugThrottleManager extends AbstractThrottleManager {
 
     @Override
     public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
-        log.debug("disposeThrottle called for " + t);
+        log.debug("disposeThrottle called for {}", t);
         if (super.disposeThrottle(t, l)) {
             if (t instanceof DebugThrottle) {
                 DebugThrottle lnt = (DebugThrottle) t;
@@ -85,11 +87,11 @@ public class DebugThrottleManager extends AbstractThrottleManager {
      * possible modes specified by the DccThrottle interface
      */
     @Override
-    public int supportedSpeedModes() {
-        return (DccThrottle.SpeedStepMode128
-                | DccThrottle.SpeedStepMode28
-                | DccThrottle.SpeedStepMode27
-                | DccThrottle.SpeedStepMode14);
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128
+                , SpeedStepMode.NMRA_DCC_28
+                , SpeedStepMode.NMRA_DCC_27
+                , SpeedStepMode.NMRA_DCC_14);
     }
 
     private final static Logger log = LoggerFactory.getLogger(DebugThrottleManager.class);

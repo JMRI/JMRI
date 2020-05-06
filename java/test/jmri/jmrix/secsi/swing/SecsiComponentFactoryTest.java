@@ -1,9 +1,7 @@
 package jmri.jmrix.secsi.swing;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrix.secsi.SerialTrafficControlScaffold;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
-import jmri.jmrix.secsi.SerialTrafficController;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,7 +12,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of SecsiComponentFactory
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SecsiComponentFactoryTest {
 

@@ -199,7 +199,6 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
 
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

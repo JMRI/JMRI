@@ -10,11 +10,6 @@
   <title>JMRI: Utilisation de DTD XML</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code xml usage">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -23,15 +18,18 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header" -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
 <body>
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-      <h1>JMRI: Utilisation de DTD XML</h1>Cette page d&eacute;crit
+        <!-- Page Body -->
+
+<h1>JMRI: Utilisation de DTD XML</h1>Cette page d&eacute;crit
       l'utilisation des DTD XML dans JMRI avant la version 2.9.4.
       Ces DTD ont &eacute;t&eacute; remplac&eacute;s par un
       sch&eacute;ma XML dans JMRI 2.9.4.
@@ -110,8 +108,9 @@
         </li>
       </ul>En commen&ccedil;ant avec JMRI 2.9.4, JMRI utilise un
       <a href="XmlSchema.shtml">sch&eacute;ma XML</a> au lieu des
-      DTDs et ce processus est diff&eacute;rent. 
-      <!--#include virtual="/Footer" -->
+      DTDs et ce processus est diff&eacute;rent.
+
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

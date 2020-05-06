@@ -2,6 +2,8 @@ package jmri.jmrix.easydcc;
 
 import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;
+import jmri.InstanceManager;
+import jmri.jmrit.consisttool.ConsistPreferencesManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -66,11 +68,13 @@ public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestB
 
     private EasyDccSystemConnectionMemo _memo;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
         _memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
         _memo.setEasyDccTrafficController(new EasyDccTrafficControlScaffold(_memo));
         jmri.InstanceManager.setDefault(jmri.CommandStation.class, new EasyDccCommandStation(_memo));

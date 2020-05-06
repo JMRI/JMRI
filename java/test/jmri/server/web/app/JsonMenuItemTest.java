@@ -33,7 +33,6 @@ public class JsonMenuItemTest {
 
     }
 
-    @SuppressWarnings("null")
     @Test
     public void testContstructor() {
         try {

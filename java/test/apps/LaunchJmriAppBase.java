@@ -13,10 +13,11 @@ import org.junit.rules.TemporaryFolder;
 import org.junit.rules.Timeout;
 
 import jmri.InstanceManager;
-import jmri.managers.DefaultShutDownManager;
+import jmri.ShutDownManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.MockShutDownManager;
 import jmri.util.junit.rules.RetryRule;
 
 /**
@@ -80,7 +81,11 @@ abstract public class LaunchJmriAppBase {
             cleanup();
 
             // gracefully shutdown, but don't exit
-            ((DefaultShutDownManager) InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+            ShutDownManager sdm = InstanceManager.getDefault(ShutDownManager.class);
+            if (sdm instanceof MockShutDownManager) {
+                // ShutDownManagers other than MockShutDownManager really shutdown
+                sdm.shutdown();
+            }
 
         } finally {
             // wait for threads, etc
@@ -96,7 +101,6 @@ abstract public class LaunchJmriAppBase {
     protected void cleanup() {
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

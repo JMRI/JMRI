@@ -4,8 +4,6 @@ import jmri.implementation.AbstractLight;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.cbus.CbusConstants;
-import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.TrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,20 +13,18 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matthew Harris Copyright (C) 2015
  */
-public class CbusLight extends AbstractLight
-        implements CanListener {
+public class CbusLight extends AbstractLight implements CanListener, CbusEventInterface {
 
-    CbusAddress addrOn;   // go to on state
-    CbusAddress addrOff;   // go to off state
+    private CbusAddress addrOn;   // go to on state
+    private CbusAddress addrOff;   // go to off state
 
     protected CbusLight(String prefix, String address, TrafficController tc) {
         super(prefix + "L" + address);
         this.tc = tc;
         init(address);
-
     }
 
-    TrafficController tc;
+    private final TrafficController tc;
 
     /**
      * Common initialization for both constructors.
@@ -41,7 +37,7 @@ public class CbusLight extends AbstractLight
         CbusAddress[] v = a.split();
         switch (v.length) {
             case 0:
-                log.error("Did not find usable system name: " + address);
+                log.error("Did not find usable system name: {}", address);
                 return;
             case 1:
                 addrOn = v[0];
@@ -52,7 +48,7 @@ public class CbusLight extends AbstractLight
                 } else if (address.startsWith("-")) {
                     addrOff = new CbusAddress("+" + address.substring(1));
                 } else {
-                    log.error("can't make 2nd event from systemname " + address);
+                    log.error("can't make 2nd event from systemname {}", address);
                     return;
                 }
                 break;
@@ -61,11 +57,11 @@ public class CbusLight extends AbstractLight
                 addrOff = v[1];
                 break;
             default:
-                log.error("Can't parse CbusSensor system name: " + address);
+                log.error("Can't parse CbusLight system name: {}", address);
                 return;
         }
         // connect
-        tc.addCanListener(this);
+        addTc(tc);
     }
 
     /**
@@ -75,77 +71,90 @@ public class CbusLight extends AbstractLight
     @Override
     protected void doNewState(int oldState, int newState) {
         CanMessage m;
-        if (newState == ON) {
-            m = addrOn.makeMessage(tc.getCanid());
-            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-            tc.sendCanMessage(m, this);
-        } else if (newState == OFF) {
-            m = addrOff.makeMessage(tc.getCanid());
-            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-            tc.sendCanMessage(m, this);
-        } else {
-            log.warn("illegal state requested for Light: " + getSystemName());
+        switch (newState) {
+            case ON:
+                m = addrOn.makeMessage(tc.getCanid());
+                CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+                tc.sendCanMessage(m, this);
+                break;
+            case OFF:
+                m = addrOff.makeMessage(tc.getCanid());
+                CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+                tc.sendCanMessage(m, this);
+                break;
+            default:
+                log.warn("illegal state requested for Light: {}", getSystemName());
+                break;
         }
     }
 
     /** {@inheritDoc} */
     @Override
     public void requestUpdateFromLayout() {
-        CanMessage m;
-        m = addrOn.makeMessage(tc.getCanid());
-        int opc = CbusMessage.getOpcode(m);
-        if (CbusOpCodes.isShortEvent(opc)) {
-            m.setOpCode(CbusConstants.CBUS_ASRQ);
-        }
-        else {
-            m.setOpCode(CbusConstants.CBUS_AREQ);
-        }
+        CanMessage m = addrOn.makeMessage(tc.getCanid());
+        m.setOpCode( CbusOpCodes.isShortEvent(CbusMessage.getOpcode(m)) ? CbusConstants.CBUS_ASRQ : CbusConstants.CBUS_AREQ);
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
         tc.sendCanMessage(m, this);
     }
     
+    /** {@inheritDoc} */
     @Override
     public void message(CanMessage f) {
-        if ( f.isExtended() || f.isRtr() ) {
+        if ( f.extendedOrRtr() ) {
             return;
         }
         if (addrOn.match(f)) {
-            setState(ON);
+            notifyStateChange(getState(), ON);
         } else if (addrOff.match(f)) {
-            setState(OFF);
+            notifyStateChange(getState(), OFF);
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void reply(CanReply f) {
-        if ( f.isExtended() || f.isRtr() ) {
+        if ( f.extendedOrRtr() ) {
             return;
         }
         // convert response events to normal
         f = CbusMessage.opcRangeToStl(f);
         if (addrOn.match(f)) {
-            setState(ON);
+            notifyStateChange(getState(), ON);
         } else if (addrOff.match(f)) {
-            setState(OFF);
+            notifyStateChange(getState(), OFF);
         }
     }
     
     /**
-     * Package method returning CanMessage for the On Light Address
+     * Get a CanMessage for the On Light Address.
+     * @return CanMessage for Light ON
      */    
     public CanMessage getAddrOn(){
-        CanMessage m;
-        m = addrOn.makeMessage(tc.getCanid());
-        return m;
+        return addrOn.makeMessage(tc.getCanid());
     }
     
     /**
-     * Package method returning CanMessage for the Off Light Address
+     * Get a CanMessage for the Off Light Address.
+     * @return CanMessage for Light OFF
      */    
     public CanMessage getAddrOff(){
-        CanMessage m;
-        m = addrOff.makeMessage(tc.getCanid());
-        return m;
+        return addrOff.makeMessage(tc.getCanid());
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CanMessage getBeanOnMessage(){
+        return checkEvent(getAddrOn());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CanMessage getBeanOffMessage(){
+        return checkEvent(getAddrOff());
     }
 
     /**

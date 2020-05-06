@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of LayoutBlock
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class LayoutBlockTest {
 
@@ -78,7 +78,7 @@ public class LayoutBlockTest {
         Block block = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getByUserName("Test Block");
 
         // add a roster entry as the block value
-        jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012.xml"));
+        jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
 
         // change the value of the block.
         block.setValue(re);
@@ -125,7 +125,8 @@ public class LayoutBlockTest {
     @After
     public void tearDown() throws Exception {
         layoutBlock = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    // private final static Logger log = LoggerFactory.getLogger(LayoutBlockTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlockTest.class);
 }

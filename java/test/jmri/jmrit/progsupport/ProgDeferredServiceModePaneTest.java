@@ -23,7 +23,6 @@ public class ProgDeferredServiceModePaneTest {
         t.dispose();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -31,6 +30,7 @@ public class ProgDeferredServiceModePaneTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

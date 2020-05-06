@@ -1,11 +1,15 @@
 package jmri.jmrix.rps;
 
+import java.util.Comparator;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.util.NamedBeanComparator;
 import jmri.InstanceManager;
-import jmri.SensorManager;
-import jmri.jmrix.rps.serial.SerialAdapter;
+import jmri.Manager;
+import jmri.Manager.NameValidity;
+import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,18 +37,14 @@ public class RpsSystemConnectionMemo extends SystemConnectionMemo {
         log.debug("Created nameless RpsSystemConnectionMemo");
     }
 
-    /*    *//**
-     * No TrafficController used in RPS.
-     *//*
-    void setRpsAdapter(SerialAdapter sa) {
-        serialAdapter = sa;
-    }*/
-
-    //private SerialAdapter serialAdapter;
-
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return null;
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     public void configureManagers() {
@@ -113,6 +113,91 @@ public class RpsSystemConnectionMemo extends SystemConnectionMemo {
             return (T) getReporterManager();
         }
         return super.get(T);
+    }
+
+    /**
+     * Validate RPS system name format.
+     *
+     * @param name    the name to validate
+     * @param manager the manager requesting the validation
+     * @param locale  the locale for user messages
+     * @return name, unchanged
+     */
+    public String validateSystemNameFormat(String name, Manager manager, Locale locale) {
+        manager.validateSystemNamePrefix(name, locale);
+        String[] points = name.substring(manager.getSystemNamePrefix().length()).split(";");
+        if (points.length < 3) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidMissingPoints", name, points.length),
+                    Bundle.getMessage(locale, "SystemNameInvalidMissingPoints", name, points.length));
+        }
+        for (int i = 0; i < points.length; i++) {
+            if (!points[i].startsWith("(") || !points[i].endsWith(")")) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidPointInvalid", name, points[i]),
+                        Bundle.getMessage(locale, "SystemNameInvalidPointInvalid", name, points[i]));
+            }
+            String[] coords = points[i].substring(1, points[i].length() - 1).split(",");
+            if (coords.length != 3) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidPointInvalid", name, points[i]),
+                        Bundle.getMessage(locale, "SystemNameInvalidPointInvalid", name, points[i]));
+            }
+            for (int j = 0; j < 3; j++) {
+                try {
+                    Double.valueOf(coords[j]);
+                } catch (NumberFormatException ex) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidCoordInvalid", name, points[i], coords[j]),
+                        Bundle.getMessage(locale, "SystemNameInvalidCoordInvalid", name, points[i], coords[j]));
+                }
+            }
+        }
+        return name;
+    }
+
+    /**
+     * Validate RPS system name format.
+     *
+     * @return VALID if system name has a valid format, else return INVALID
+     */
+    public NameValidity validSystemNameFormat(@Nonnull String systemName, char type) {
+        // validate the system Name leader characters
+        if (!(systemName.startsWith(getSystemPrefix() + type))) {
+            // here if an illegal format 
+            log.error("invalid character in header field of system name: {}", systemName);
+            return NameValidity.INVALID;
+        }
+        String s = systemName.substring(getSystemPrefix().length() + 1);
+        String[] pStrings = s.split(";");
+        if (pStrings.length < 3) {
+            log.warn("need to have at least 3 points in {}", systemName);
+            return NameValidity.INVALID;
+        }
+        for (int i = 0; i < pStrings.length; i++) {
+            if (!(pStrings[i].startsWith("(")) || !(pStrings[i].endsWith(")"))) {
+                // here if an illegal format
+                log.warn("missing brackets in point {}: \"{}\"", i, pStrings[i]);
+                return NameValidity.INVALID;
+            }
+            // remove leading ( and trailing )
+            String coords = pStrings[i].substring(1, pStrings[i].length() - 1);
+            try {
+                String[] coord = coords.split(",");
+                if (coord.length != 3) {
+                    log.warn("need to have three coordinates in point {}: \"{}\"", i, pStrings[i]);
+                    return NameValidity.INVALID;
+                }
+                double x = Double.valueOf(coord[0]);
+                double y = Double.valueOf(coord[1]);
+                double z = Double.valueOf(coord[2]);
+                log.debug("succes converting systemName point {} to {},{},{}", i, x, y, z);
+                // valid, continue
+            } catch (NumberFormatException e) {
+                return NameValidity.INVALID;
+            }
+        }
+        return NameValidity.VALID;
     }
 
     private final static Logger log = LoggerFactory.getLogger(RpsSystemConnectionMemo.class);

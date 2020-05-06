@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AcelaSignalHeadTest {
 
@@ -28,7 +28,6 @@ public class AcelaSignalHeadTest {
         jmri.util.JUnitAppender.assertErrorMessage("Can't find new Acela Signal with name 'AH1'");
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -38,7 +37,9 @@ public class AcelaSignalHeadTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AcelaSignalHeadTest.class);

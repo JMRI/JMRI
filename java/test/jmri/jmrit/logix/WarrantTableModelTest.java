@@ -23,7 +23,6 @@ public class WarrantTableModelTest {
         JUnitUtil.dispose(f);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -32,6 +31,7 @@ public class WarrantTableModelTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

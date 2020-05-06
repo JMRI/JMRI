@@ -3,33 +3,26 @@ package jmri.jmrit.operations.trains;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.davidflanagan.HardcopyWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Train print utilities. Used for train manifests and build reports.
  *
  * @author Daniel Boudreau (C) 2010
- *
  */
 public class TrainPrintUtilities {
 
@@ -55,11 +48,11 @@ public class TrainPrintUtilities {
             boolean isBuildReport, String logoURL, String printerName, String orientation, int fontSize) {
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
-        Frame mFrame = new Frame();
         boolean isLandScape = false;
         boolean printHeader = true;
         double margin = .5;
-        Dimension pagesize = null; // HardcopyWritter provides default page sizes for portrait and landscape
+        Dimension pagesize = null; // HardcopyWritter provides default page
+                                   // sizes for portrait and landscape
         if (orientation.equals(Setup.LANDSCAPE)) {
             margin = .65;
             isLandScape = true;
@@ -71,27 +64,23 @@ public class TrainPrintUtilities {
                     TrainCommon.getPageSize(orientation).height + TrainCommon.PAPER_MARGINS.height);
         }
         try {
-            writer = new HardcopyWriter(mFrame, name, fontSize, margin, margin, .5, .5,
+            writer = new HardcopyWriter(new Frame(), name, fontSize, margin, margin, .5, .5,
                     isPreview, printerName, isLandScape, printHeader, pagesize);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
         }
         // set font
-        if (!fontName.equals("")) {
+        if (!fontName.isEmpty()) {
             writer.setFontName(fontName);
         }
 
         // now get the build file to print
         BufferedReader in = null;
         try {
-            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")); // NOI18N
+            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
         } catch (FileNotFoundException e) {
             log.error("Build file doesn't exist");
-            writer.close();
-            return;
-        } catch (UnsupportedEncodingException e) {
-            log.error("Doesn't support UTF-8 encoding");
             writer.close();
             return;
         }
@@ -100,13 +89,13 @@ public class TrainPrintUtilities {
         if (!isBuildReport && logoURL != null && !logoURL.equals(Setup.NONE)) {
             ImageIcon icon = new ImageIcon(logoURL);
             if (icon.getIconWidth() == -1) {
-                log.error("Logo not found: " + logoURL);
+                log.error("Logo not found: {}", logoURL);
             } else {
                 writer.write(icon.getImage(), new JLabel(icon));
             }
         }
         Color c = null;
-        boolean printingComment = false;
+        boolean printingColor = false;
         while (true) {
             try {
                 line = in.readLine();
@@ -117,18 +106,19 @@ public class TrainPrintUtilities {
             if (line == null) {
                 if (isPreview) {
                     try {
-                        writer.write(" "); // need to do this in case the input file was empty to create preview
+                        writer.write(" "); // need to do this in case the input
+                                           // file was empty to create preview
                     } catch (IOException e) {
                         log.debug("Print write failed for null line");
                     }
                 }
                 break;
             }
-            //   log.debug("Line: {}", line.toString());
+            // log.debug("Line: {}", line.toString());
             // check for build report print level
             if (isBuildReport) {
                 line = filterBuildReport(line, false); // no indent
-                if (line.equals("")) {
+                if (line.isEmpty()) {
                     continue;
                 }
                 // printing the train manifest
@@ -143,14 +133,71 @@ public class TrainPrintUtilities {
                         }
                     }
                     if (horizontialLineSeparatorFound) {
-                        writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber(), line.length() + 1);
+                        writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber(),
+                                line.length() + 1);
                         c = null;
                         continue;
                     }
                 }
+
+                // determine if line is a pickup or drop
+                if ((!Setup.getPickupEnginePrefix().trim().isEmpty() &&
+                        line.startsWith(Setup.getPickupEnginePrefix())) ||
+                        (!Setup.getPickupCarPrefix().trim().isEmpty() &&
+                                line.startsWith(Setup.getPickupCarPrefix())) ||
+                        (!Setup.getSwitchListPickupCarPrefix().trim().isEmpty() &&
+                                line.startsWith(Setup.getSwitchListPickupCarPrefix()))) {
+                    c = Setup.getPickupColor();
+                } else if ((!Setup.getDropEnginePrefix().trim().isEmpty() &&
+                        line.startsWith(Setup.getDropEnginePrefix())) ||
+                        (!Setup.getDropCarPrefix().trim().isEmpty() &&
+                                line.startsWith(Setup.getDropCarPrefix())) ||
+                        (!Setup.getSwitchListDropCarPrefix().trim().isEmpty() &&
+                                line.startsWith(Setup.getSwitchListDropCarPrefix()))) {
+                    c = Setup.getDropColor();
+                } else if ((!Setup.getLocalPrefix().trim().isEmpty() &&
+                        line.startsWith(Setup.getLocalPrefix())) ||
+                        (!Setup.getSwitchListLocalPrefix().trim().isEmpty() &&
+                                line.startsWith(Setup.getSwitchListLocalPrefix()))) {
+                    c = Setup.getLocalColor();
+                } else if (line.contains(TrainCommon.TEXT_COLOR_START)) {
+                    c = TrainCommon.getTextColor(line);
+                    if (!line.endsWith(TrainCommon.TEXT_COLOR_END)) {
+                        printingColor = true;
+                    }
+                    // could be a color change when using two column format
+                    if (line.contains(Character.toString(VERTICAL_LINE_SEPARATOR))) {
+                        String s = line.substring(0, line.indexOf(VERTICAL_LINE_SEPARATOR));
+                        s = TrainCommon.getTextColorString(s);
+                        try {
+                            writer.write(c, s); // 1st half of line printed
+                        } catch (IOException e) {
+                            log.debug("Print write color failed");
+                            break;
+                        }
+                        // get the new color and text
+                        line = line.substring(line.indexOf(VERTICAL_LINE_SEPARATOR));
+                        c = TrainCommon.getTextColor(line);
+                        // pad out string
+                        StringBuffer sb = new StringBuffer();
+                        for (int i = 0; i < s.length(); i++) {
+                            sb.append(SPACE);
+                        }
+                        // 2nd half of line to be printed
+                        line = sb.append(TrainCommon.getTextColorString(line)).toString();
+                    } else {
+                        // simple case only one color
+                        line = TrainCommon.getTextColorString(line);
+                    }
+                } else if (line.contains(TrainCommon.TEXT_COLOR_END)) {
+                    printingColor = false;
+                    line = TrainCommon.getTextColorString(line);
+                } else if (!line.startsWith(TrainCommon.TAB) && !printingColor) {
+                    c = null;
+                }
                 for (int i = 0; i < line.length(); i++) {
                     if (line.charAt(i) == VERTICAL_LINE_SEPARATOR) {
-                        // make a frame (manifest two column format)
+                        // make a frame (two column format)
                         if (Setup.isTabEnabled()) {
                             writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber() + 1, 0);
                             writer.write(writer.getCurrentLineNumber(), line.length() + 1,
@@ -160,38 +207,7 @@ public class TrainPrintUtilities {
                     }
                 }
                 line = line.replace(VERTICAL_LINE_SEPARATOR, SPACE);
-                // determine if line is a pickup or drop
-                if ((!Setup.getPickupEnginePrefix().equals("") && line.startsWith(Setup
-                        .getPickupEnginePrefix()))
-                        || (!Setup.getPickupCarPrefix().equals("") && line.startsWith(Setup
-                        .getPickupCarPrefix()))
-                        || (!Setup.getSwitchListPickupCarPrefix().equals("") && line
-                        .startsWith(Setup.getSwitchListPickupCarPrefix()))) {
-                    c = Setup.getPickupColor();
-                } else if ((!Setup.getDropEnginePrefix().equals("") && line.startsWith(Setup
-                        .getDropEnginePrefix()))
-                        || (!Setup.getDropCarPrefix().equals("") && line.startsWith(Setup
-                        .getDropCarPrefix()))
-                        || (!Setup.getSwitchListDropCarPrefix().equals("") && line.startsWith(Setup
-                        .getSwitchListDropCarPrefix()))) {
-                    c = Setup.getDropColor();
-                } else if ((!Setup.getLocalPrefix().equals("") && line.startsWith(Setup
-                        .getLocalPrefix()))
-                        || (!Setup.getSwitchListLocalPrefix().equals("") && line.startsWith(Setup
-                        .getSwitchListLocalPrefix()))) {
-                    c = Setup.getLocalColor();
-                } else if (line.contains(TrainCommon.COMMENT_COLOR_START)) {
-                    c = TrainCommon.getTextColor(line);
-                    if (!line.endsWith(TrainCommon.COMMENT_COLOR_END)) {
-                        printingComment = true;
-                    }
-                    line = TrainCommon.getTextColorString(line);
-                } else if (line.endsWith(TrainCommon.COMMENT_COLOR_END)) {
-                    printingComment = false;
-                    line = TrainCommon.getTextColorString(line);
-                } else if (!line.startsWith(TrainCommon.TAB) && !printingComment) {
-                    c = null;
-                }
+
                 if (c != null) {
                     try {
                         writer.write(c, line + NEW_LINE);
@@ -229,12 +245,9 @@ public class TrainPrintUtilities {
         // make a new file with the build report levels removed
         BufferedReader in = null;
         try {
-            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")); // NOI18N
+            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
         } catch (FileNotFoundException e) {
             log.error("Build file doesn't exist");
-            return;
-        } catch (UnsupportedEncodingException e) {
-            log.error("Doesn't support UTF-8 encoding");
             return;
         }
         PrintWriter out;
@@ -242,7 +255,7 @@ public class TrainPrintUtilities {
                 Bundle.getMessage("Report") + " " + name);
         try {
             out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(buildReport), "UTF-8")), true); // NOI18N
+                    new FileOutputStream(buildReport), StandardCharsets.UTF_8)), true);
         } catch (IOException e) {
             log.error("Can not create build report file");
             try {
@@ -259,7 +272,7 @@ public class TrainPrintUtilities {
                     break;
                 }
                 line = filterBuildReport(line, Setup.isBuildReportIndentEnabled());
-                if (line.equals("")) {
+                if (line.isEmpty()) {
                     continue;
                 }
                 out.println(line); // indent lines for each level
@@ -287,26 +300,26 @@ public class TrainPrintUtilities {
         if (inputLine.length == 0) {
             return "";
         }
-        if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")
-                || inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
-                || inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-")
-                || inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + "-")) {
+        if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + TrainCommon.BUILD_REPORT_CHAR) ||
+                inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + TrainCommon.BUILD_REPORT_CHAR) ||
+                inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + TrainCommon.BUILD_REPORT_CHAR) ||
+                inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + TrainCommon.BUILD_REPORT_CHAR)) {
 
             if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_MINIMAL)) {
-                if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-")
-                        || inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
-                        || inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")) {
+                if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + TrainCommon.BUILD_REPORT_CHAR) ||
+                        inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + TrainCommon.BUILD_REPORT_CHAR) ||
+                        inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + TrainCommon.BUILD_REPORT_CHAR)) {
                     return ""; // don't print this line
                 }
             }
             if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL)) {
-                if (inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
-                        || inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")) {
+                if (inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + TrainCommon.BUILD_REPORT_CHAR) ||
+                        inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + TrainCommon.BUILD_REPORT_CHAR)) {
                     return ""; // don't print this line
                 }
             }
             if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED)) {
-                if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")) {
+                if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + TrainCommon.BUILD_REPORT_CHAR)) {
                     return ""; // don't print this line
                 }
             }
@@ -314,13 +327,13 @@ public class TrainPrintUtilities {
             int start = 0;
             if (indent) {
                 // indent lines based on level
-                if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")) {
+                if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + TrainCommon.BUILD_REPORT_CHAR)) {
                     inputLine[0] = "   ";
-                } else if (inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")) {
+                } else if (inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + TrainCommon.BUILD_REPORT_CHAR)) {
                     inputLine[0] = "  ";
-                } else if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-")) {
+                } else if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + TrainCommon.BUILD_REPORT_CHAR)) {
                     inputLine[0] = " ";
-                } else if (inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + "-")) {
+                } else if (inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + TrainCommon.BUILD_REPORT_CHAR)) {
                     inputLine[0] = "";
                 }
             } else {
@@ -337,7 +350,7 @@ public class TrainPrintUtilities {
             }
             return buf.toString();
         } else {
-            log.debug("ERROR first characters of build report not valid (" + line + ")");
+            log.debug("ERROR first characters of build report not valid ({})", line);
             return "ERROR " + line; // NOI18N
         }
     }

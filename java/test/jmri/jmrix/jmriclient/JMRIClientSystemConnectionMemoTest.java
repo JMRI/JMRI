@@ -9,10 +9,10 @@ import org.junit.Test;
 /**
  * JMRIClientSystemConnectionMemoTest.java
  *
- * Description:	tests for the
+ * Test for the
  * jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class JMRIClientSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -55,7 +55,6 @@ public class JMRIClientSystemConnectionMemoTest extends jmri.jmrix.SystemConnect
     }
 
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -67,6 +66,7 @@ public class JMRIClientSystemConnectionMemoTest extends jmri.jmrix.SystemConnect
     @Override
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

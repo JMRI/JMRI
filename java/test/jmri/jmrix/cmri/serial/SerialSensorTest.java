@@ -14,7 +14,7 @@ import jmri.util.NamedBeanComparator;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -98,8 +98,8 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
         Assert.assertEquals("CS3B4", it.next().getSystemName());
     }
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -111,11 +111,13 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
     }
 
     @After
+    @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
         if (tcis != null) tcis.terminateThreads();
         tcis = null;
         memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
 }

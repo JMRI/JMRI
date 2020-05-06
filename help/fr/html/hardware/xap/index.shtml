@@ -5,27 +5,26 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2009 -->
-  <!-- $Id$ -->
-  <!-- UpDated  by Blorec Herv&#233; le 2013-09-20-->
+  <!-- Updated by Blorec Herv&#233; le 2013-09-20-->
 
-  <title>JMRI: xAP Support</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <title>JMRI: xAP Support</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
-      <h1>JMRI: Support xAP</h1>XAP est un protocole domotique
+        <!-- Page Body -->
+
+<h1>JMRI: Support xAP</h1>XAP est un protocole domotique
       populaire utilis&eacute; par les amateurs construisant
       eux-m&ecirc;mes &agrave; travers par de grandes installations
       professionnelles.
@@ -69,10 +68,13 @@ remplit le nom d'utilisateur JMRI, par exemple:
       <pre>
 <code>  Entr&eacute;e 14 GJD RFX Activer
 </code>
-</pre>Vous pouvez modifier ult&eacute;rieurement le nom
+</pre>
+
+<p>Vous pouvez modifier ult&eacute;rieurement le nom
 d'utilisateur JMRI pour tout ce que vous souhaitez via le tableau
-habituel, si d&eacute;sir&eacute;. 
-<!--#include virtual="/Footer" -->
+habituel, si d&eacute;sir&eacute;.</p>
+
+<!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

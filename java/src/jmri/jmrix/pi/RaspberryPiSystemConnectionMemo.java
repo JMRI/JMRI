@@ -1,11 +1,15 @@
 package jmri.jmrix.pi;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.LightManager;
+import jmri.NamedBean;
 import jmri.SensorManager;
 import jmri.TurnoutManager;
+import jmri.util.NamedBeanComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +49,7 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
          sensorManager = s;
     }
 
-    private SensorManager sensorManager=null;
+    private SensorManager sensorManager = null;
 
     /*
      * Provides access to the TurnoutManager for this particular connection.
@@ -77,40 +81,52 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
     private LightManager lightManager = null;
 
     public void configureManagers(){
-       setTurnoutManager(new RaspberryPiTurnoutManager(getSystemPrefix()));
-       setSensorManager(new RaspberryPiSensorManager(getSystemPrefix()));
+       setTurnoutManager(new RaspberryPiTurnoutManager(this));
+       setSensorManager(new RaspberryPiSensorManager(this));
     }
     
     @Override
     public boolean provides(Class<?> type) {
-        if (getDisabled())
+        if (getDisabled()) {
             return false;
-        if (type.equals(jmri.SensorManager.class))
+        }
+        if (type.equals(jmri.SensorManager.class)) {
             return true;
-        else if (type.equals(jmri.TurnoutManager.class))
+        } else if (type.equals(jmri.TurnoutManager.class)) {
             return true;
-        else if (type.equals(jmri.LightManager.class))
+        } else if (type.equals(jmri.LightManager.class)) {
             return false;  // implement LightManager later.
-        else return false; // nothing, by default
+        } else {
+            return false; // nothing, by default
+        }
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<?> T) {
-         if (getDisabled())
+         if (getDisabled()) {
              return null;
-         if (T.equals(jmri.SensorManager.class))
-             return (T)getSensorManager();
-         if (T.equals(jmri.TurnoutManager.class))
-             return (T)getTurnoutManager();
-         if (T.equals(jmri.LightManager.class))
-             return (T)getLightManager();
+         }
+         if (T.equals(jmri.SensorManager.class)) {
+             return (T) getSensorManager();
+         }
+         if (T.equals(jmri.TurnoutManager.class)) {
+             return (T) getTurnoutManager();
+         }
+         if (T.equals(jmri.LightManager.class)) {
+             return (T) getLightManager();
+         }
          return null; // nothing, by default
      }
 
     @Override
     protected ResourceBundle getActionModelResourceBundle(){
         return ResourceBundle.getBundle("jmri.jmrix.pi.RaspberryPiActionListBundle");
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     @Override

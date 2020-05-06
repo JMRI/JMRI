@@ -15,7 +15,7 @@ public class SerialMonAction extends AbstractAction {
 
     private CMRISystemConnectionMemo _memo = null;
 
-    public SerialMonAction(String s,CMRISystemConnectionMemo memo) {
+    public SerialMonAction(String s, CMRISystemConnectionMemo memo) {
         super(s);
         _memo = memo;
     }
@@ -31,7 +31,7 @@ public class SerialMonAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("SerialMonAction starting SerialMonFrame: Exception: " + ex.toString());
+            log.warn("SerialMonAction starting SerialMonFrame: Exception: {}", ex.toString());
         }
         f.setVisible(true);
     }

@@ -9,14 +9,13 @@ import org.junit.Test;
 /**
  * SRCPBusConnectionMemoTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPBusConnectionMemo class
+ * Test for the jmri.jmrix.srcp.SRCPBusConnectionMemo class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPBusConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -43,6 +42,7 @@ public class SRCPBusConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTe
     @Override
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 }

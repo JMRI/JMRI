@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.GlobalProgrammerManager
  * @see jmri.AddressedProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2014
  */
 public class DeferringProgrammerManager implements AddressedProgrammerManager, GlobalProgrammerManager {
 
@@ -161,7 +161,7 @@ public class DeferringProgrammerManager implements AddressedProgrammerManager, G
     public static final class Initializer extends AbstractInstanceInitializer {
 
         @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type == AddressedProgrammerManager.class) {
                 return new DeferringProgrammerManager();
             }

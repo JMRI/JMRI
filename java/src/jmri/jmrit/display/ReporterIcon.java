@@ -1,10 +1,11 @@
 package jmri.jmrit.display;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
 import jmri.Reporter;
+import jmri.NamedBean.DisplayOptions;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,7 +68,7 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
                     provideReporter(pName);
                 setReporter(reporter);
             } catch (IllegalArgumentException e) {
-                log.error("Reporter '" + pName + "' not available, icon won't see changes");
+                log.error("Reporter '{}' not available, icon won't see changes", pName);
             }
         } else {
             log.error("No ReporterManager for this protocol, icon won't see changes");
@@ -93,9 +94,7 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("property change: "
-                    + e.getPropertyName()
-                    + " is now " + e.getNewValue());
+            log.debug("property change: {} is now {}", e.getPropertyName(), e.getNewValue());
         }
         displayState();
     }
@@ -106,7 +105,7 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         if (reporter == null) {
             name = Bundle.getMessage("NotConnected");
         } else {
-            name = reporter.getFullyFormattedDisplayName();
+            name = reporter.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
     }
@@ -132,19 +131,13 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
             setText(Bundle.getMessage("NoReport"));
         }
         updateSize();
-        return;
     }
 
     @Override
     protected void edit() {
         makeIconEditorFrame(this, "Reporter", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.reporterPickModelInstance());
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                editReporter();
-            }
-        };
+        ActionListener addIconAction = a -> editReporter();
         _iconEditor.complete(addIconAction, false, true, true);
         _iconEditor.setSelection(reporter);
 

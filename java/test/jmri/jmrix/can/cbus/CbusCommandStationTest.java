@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus;
 
+import jmri.InstanceManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 import jmri.jmrix.can.TrafficControllerScaffold;
@@ -21,9 +22,9 @@ import org.junit.Test;
  */
 public class CbusCommandStationTest {
 
-    CbusCommandStation t;
-    CanSystemConnectionMemo memo;
-    TrafficControllerScaffold lnis;
+    private CbusCommandStation t;
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold lnis;
 
     @Test
     public void testCTor() {
@@ -46,16 +47,9 @@ public class CbusCommandStationTest {
         memo.setTrafficController(tc);
         CbusCommandStation ta = new CbusCommandStation(memo);
         Assert.assertNotNull("exists",ta);
-        try {
-            CbusSimulator sim = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.simulator.CbusSimulator.class);
-            Assert.assertTrue(true);
-            Assert.assertNotNull("exists",sim);
-        } catch (NullPointerException e) {
-            Assert.assertTrue(false);
-        }
+        Assert.assertNotNull(InstanceManager.getDefault(CbusSimulator.class));
         
-        tc = null;
-        ta = null;
+        tc.terminateThreads();
     }
 
     // test originates from loconet
@@ -190,12 +184,10 @@ public class CbusCommandStationTest {
         Assert.assertEquals("nmra packet 21",
             "[78] A0 02 80 55 10 C5",
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-                
-        lnis = null;
+        
     }
     
     
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -207,10 +199,12 @@ public class CbusCommandStationTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
+        memo.dispose();
+        lnis.terminateThreads();
         memo = null;
         t = null;
         lnis = null;
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusCommandStationTest.class);

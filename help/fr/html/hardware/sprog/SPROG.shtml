@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated  by Blorec Herv&#233; 2013-09-19-->
+<!-- Updated by Blorec Herv&#233; 2013-09-19-->
 
 <html lang="fr">
 <head>
@@ -10,23 +10,25 @@
   <title>JMRI Hardware Guide: SPROG</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
-  "SPROG java model railroad JMRI install windows"><!-- Style -->
+  "SPROG java model railroad JMRI install windows">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
-      <h2>JMRI Guide Mat&eacute;riel: SPROG</h2>
+        <!-- Page Body -->
+
+<h2>JMRI Guide Mat&eacute;riel: SPROG</h2>
 
       <h3>Mat&eacute;riel Support&eacute;</h3>JMRI supporte le
       Sprog &agrave; la fois en tant que programmateur
@@ -34,11 +36,11 @@
       d'informations sur ses capacit&eacute;s, voir le <a href=
       "http://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf">manuel
       Sprog</a> sur le <a href="http://www.sprog-dcc.co.uk/">site
-      web Sprog</a> .
+      web Sprog</a>.
 
       <p>Remarquez qu'il existe plusieurs versions du
       mat&eacute;riel Sprog, et encore plus de versions du logiciel
-      Sprog .</p>
+      Sprog.</p>
 
       <h3>Installation</h3>
 
@@ -199,7 +201,8 @@
       <p>Il existe un <a href=
       "http://uk.groups.yahoo.com/group/sprog-dcc/">groupe de
       discussion Yahoo</a> pour Sprog.</p>
-      <!--#include virtual="/Footer" -->
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

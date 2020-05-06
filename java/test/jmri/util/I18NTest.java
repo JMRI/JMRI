@@ -6,7 +6,7 @@ import org.junit.*;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class I18NTest {
 
@@ -50,7 +50,6 @@ public class I18NTest {
      }
      */
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

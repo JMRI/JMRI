@@ -8,7 +8,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.Sensor;
 
 /**
@@ -20,7 +19,7 @@ import jmri.Sensor;
  * @author Kevin Dickerson Copyright (C) 2011
  * @author Egbert Broerse Copyright (C) 2017
  */
-public class SensorDebounceEditAction extends BeanEditAction {
+public class SensorDebounceEditAction extends BeanEditAction<Sensor> {
 
     @Override
     public String helpTarget() {
@@ -33,7 +32,7 @@ public class SensorDebounceEditAction extends BeanEditAction {
     }
 
     @Override
-    public NamedBean getByUserName(String name) {
+    public Sensor getByUserName(String name) {
         return InstanceManager.sensorManagerInstance().getByUserName(name);
     }
 
@@ -46,7 +45,7 @@ public class SensorDebounceEditAction extends BeanEditAction {
     }
 
     @Override
-    public void setBean(NamedBean bean) {
+    public void setBean(Sensor bean) {
         super.setBean(bean);
         if (bean == null) {
             enabled(false);
@@ -109,13 +108,12 @@ public class SensorDebounceEditAction extends BeanEditAction {
             return;
         }
 
-        Sensor sen = (Sensor) bean;
         long time = (long) sensorDebounceActiveSpinner.getValue();
-        sen.setSensorDebounceGoingActiveTimer(time);
+        bean.setSensorDebounceGoingActiveTimer(time);
 
         time = (long) sensorDebounceInactiveSpinner.getValue();
-        sen.setSensorDebounceGoingInActiveTimer(time);
-        sen.setUseDefaultTimerSettings(sensorDebounceGlobalCheck.isSelected());
+        bean.setSensorDebounceGoingInActiveTimer(time);
+        bean.setUseDefaultTimerSettings(sensorDebounceGlobalCheck.isSelected());
     }
 
     protected void resetDebounceItems(ActionEvent e) {
@@ -124,17 +122,16 @@ public class SensorDebounceEditAction extends BeanEditAction {
             return;
         }
         enabled(true);
-        Sensor sen = (Sensor) bean;
-        sensorDebounceGlobalCheck.setSelected(sen.getUseDefaultTimerSettings());
-        if (sen.getUseDefaultTimerSettings()) {
+        sensorDebounceGlobalCheck.setSelected(bean.getUseDefaultTimerSettings());
+        if (bean.getUseDefaultTimerSettings()) {
             sensorDebounceActiveSpinner.setEnabled(false);
             sensorDebounceInactiveSpinner.setEnabled(false);
         } else {
             sensorDebounceActiveSpinner.setEnabled(true);
             sensorDebounceInactiveSpinner.setEnabled(true);
         }
-        sensorDebounceActiveSpinner.setValue(Long.valueOf(sen.getSensorDebounceGoingActiveTimer())); // as long
-        sensorDebounceInactiveSpinner.setValue(Long.valueOf(sen.getSensorDebounceGoingInActiveTimer()));
+        sensorDebounceActiveSpinner.setValue(Long.valueOf(bean.getSensorDebounceGoingActiveTimer())); // as long
+        sensorDebounceInactiveSpinner.setValue(Long.valueOf(bean.getSensorDebounceGoingInActiveTimer()));
     }
 
     public void enabled(Boolean boo) {

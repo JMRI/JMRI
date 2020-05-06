@@ -8,9 +8,9 @@ import org.junit.Before;
 /**
  * SRCPSensorManagerTest.java
  * <p>
- * Description:	tests for the jmri.jmrix.srcp.SRCPSensorManager class
+ * Test for the jmri.jmrix.srcp.SRCPSensorManager class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  * @author Paul Bender Copyright (C) 2016
  */
 public class SRCPSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
@@ -24,7 +24,6 @@ public class SRCPSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertNotNull(l);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -41,6 +40,7 @@ public class SRCPSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @After
     public void tearDown() {
         l.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 }

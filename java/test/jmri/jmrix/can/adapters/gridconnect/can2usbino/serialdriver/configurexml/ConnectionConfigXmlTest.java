@@ -11,8 +11,8 @@ import jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver.ConnectionCon
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
@@ -20,6 +20,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;

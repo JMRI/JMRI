@@ -2,7 +2,6 @@ package jmri.jmrix.jmriclient.swing;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
-import jmri.jmrix.jmriclient.JMRIClientTrafficController;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -13,7 +12,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of JMRIClientComponentFactory
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class JMRIClientComponentFactoryTest {
 
@@ -38,7 +37,7 @@ public class JMRIClientComponentFactoryTest {
 
     @After
     public void tearDown() {
-        // JUnitUtil.tearDown();
-        // tc = null;
+        m.getJMRIClientTrafficController().terminateThreads();
+        JUnitUtil.tearDown();
     }
 }

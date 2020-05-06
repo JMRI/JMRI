@@ -17,7 +17,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.EventObject;
-import java.util.ResourceBundle;
 import javax.help.SwingHelpUtilities;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -36,7 +35,6 @@ import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
-import jmri.util.swing.FontComboUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,9 +89,6 @@ public abstract class Apps3 extends AppsBase {
     public Apps3(String applicationName, String configFileDef, String[] args) {
         // pre-GUI work
         super(applicationName, configFileDef, args);
-
-        // Prepare font lists
-        prepareFontLists();
 
         // create GUI
         initializeHelpSystem();
@@ -242,22 +237,6 @@ public abstract class Apps3 extends AppsBase {
         debugmsg = false;
     }
 
-    private void prepareFontLists() {
-        // Prepare font lists
-        Thread fontThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                log.debug("Prepare font lists...");
-                FontComboUtil.prepareFontLists();
-                log.debug("...Font lists built");
-            }
-        });
-        
-        fontThread.setDaemon(true);
-        fontThread.setPriority(Thread.MIN_PRIORITY);
-        fontThread.start();
-    }
-
     protected void initMacOSXMenus() {
         jmri.plaf.macosx.Application macApp = jmri.plaf.macosx.Application.getApplication();
         macApp.setAboutHandler(new AboutHandler() {
@@ -344,7 +323,7 @@ public abstract class Apps3 extends AppsBase {
             }
 
             // rapid language set; must follow up later with full setting as part of preferences
-            apps.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
+            jmri.util.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }

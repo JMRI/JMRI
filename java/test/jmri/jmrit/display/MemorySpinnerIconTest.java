@@ -9,11 +9,8 @@ import jmri.util.JmriJFrame;
 import org.junit.*;
 
 /**
- * MemorySpinnerIconTest.java
- * <p>
- * Description:
  *
- * @author	Bob Jacobsen Copyright 2009
+ * @author Bob Jacobsen Copyright 2009
  */
 public class MemorySpinnerIconTest extends PositionableJPanelTest {
 
@@ -25,6 +22,7 @@ public class MemorySpinnerIconTest extends PositionableJPanelTest {
     MemorySpinnerIcon toi3 = null;
 
     @Test
+    @Override
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists",p);

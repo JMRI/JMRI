@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * Test LongAddrVariableValue class.
  *
  * @todo need a check of the MIXED state model for long address
- * @author	Bob Jacobsen Copyright 2001, 2002
+ * @author Bob Jacobsen Copyright 2001, 2002
  */
 public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
 
@@ -94,7 +94,7 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
     @Override
     @Test
     public void testVariableValueRead() {
-    }	// due to multi-cv nature of LongAddr
+    } // due to multi-cv nature of LongAddr
 
     @Override
     @Test
@@ -236,11 +236,13 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
     }
 
     @Before
+    @Override
     public void setUp() {
         super.setUp();
     }
     
     @After
+    @Override
     public void tearDown() {
         super.tearDown();
     }

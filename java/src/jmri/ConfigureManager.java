@@ -21,9 +21,10 @@ import jmri.jmrit.XmlFile;
  * <li>"Prefs" - handled first on read, these are the general preferences
  * controlling how the program starts up
  * <li>"Config" - layout configuration information, e.g. turnout, signal, etc
+ *   - generally, all NamedBeanManagers
  * <li>"Tool" - (Not really clear yet, but present)
  * <li>"User" - typically information about panels and windows, these are
- * handled last during startup
+ * handled last during startup - all the jmri.display panel types
  * </ol>
  * <p>
  * The configuration manager is generally located through the InstanceManager.
@@ -41,7 +42,9 @@ import jmri.jmrit.XmlFile;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002, 2010, 2017, 2020
+ * @author Matthew Harris Copyright (C) 2010, 2016
+ * @author Randall Wood Coyright (C) 2013, 2015, 2017
  * @see jmri.InstanceManager
  * @see jmri.configurexml.ConfigXmlManager
  */

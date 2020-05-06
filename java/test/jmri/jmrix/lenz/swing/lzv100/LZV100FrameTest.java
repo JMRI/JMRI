@@ -10,9 +10,9 @@ import org.junit.*;
 /**
  * LZV100FrameTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.swing.lzv100.LZV100Frame class
+ * Test for the jmri.jmrix.lenz.swing.lzv100.LZV100Frame class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LZV100FrameTest extends jmri.util.JmriJFrameTestBase {
         
@@ -33,6 +33,7 @@ public class LZV100FrameTest extends jmri.util.JmriJFrameTestBase {
     @Override
     public void tearDown() {
         tc = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
 

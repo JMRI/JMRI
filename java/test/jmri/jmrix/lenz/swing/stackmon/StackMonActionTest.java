@@ -13,7 +13,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Tests for the jmri.jmrix.lenz.swing.stackmon.StackMonAction class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class StackMonActionTest {
 
@@ -42,7 +42,6 @@ public class StackMonActionTest {
         frame.dispose();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -54,6 +53,7 @@ public class StackMonActionTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

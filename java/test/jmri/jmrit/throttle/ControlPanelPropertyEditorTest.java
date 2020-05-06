@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of ControlPanelPropertyEditor
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ControlPanelPropertyEditorTest {
 
@@ -27,10 +27,12 @@ public class ControlPanelPropertyEditorTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initDebugThrottleManager();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 }

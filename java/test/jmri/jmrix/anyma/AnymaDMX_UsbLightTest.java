@@ -16,22 +16,27 @@ public class AnymaDMX_UsbLightTest extends AbstractLightTestBase {
 
     private AnymaDMX_SystemConnectionMemo _memo = null;
 
+    @Override
     public void testCreate() {
         t = new AnymaDMX_UsbLight("DL1", "Test Light", _memo);
         Assert.assertNotNull("testCreate", t);
     }
 
+    @Override
     public int numListeners() {
         return 0;
     }
 
+    @Override
     public void checkOnMsgSent() {
     }
 
+    @Override
     public void checkOffMsgSent() {
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();

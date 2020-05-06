@@ -1,7 +1,5 @@
 package jmri.jmrit.timetable;
 
-import java.awt.GraphicsEnvironment;
-import jmri.jmrit.timetable.swing.*;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -84,15 +82,11 @@ public class StopTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
 
         JUnitUtil.resetInstanceManager();
-        try {
-            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
-        } catch(java.io.IOException ioe){
-          Assert.fail("failed to setup profile for test");
-        }
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
     }
 
     @After

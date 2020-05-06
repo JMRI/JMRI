@@ -2,8 +2,6 @@ package jmri.jmrix.can.nmranet.swing;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TestTrafficController;
-import jmri.jmrix.can.TrafficController;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,7 +12,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of NmraNetComponentFactory
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class NmraNetComponentFactoryTest {
 

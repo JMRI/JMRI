@@ -45,17 +45,17 @@ import org.slf4j.LoggerFactory;
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
     final String blank = "       ";
-    JTextField startSensor = new JTextField(5); // N11N
+    JTextField startSensor = new JTextField(5);
     javax.swing.ButtonGroup startGroup = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton startOnEntry = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton startOnExit = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));
 
-    JTextField stopSensor1 = new JTextField(5);  // N11N
+    JTextField stopSensor1 = new JTextField(5);
     javax.swing.ButtonGroup stopGroup1 = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton stopOnEntry1 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton stopOnExit1 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));
 
-    public JTextField stopSensor2 = new JTextField(5);  // N11N
+    public JTextField stopSensor2 = new JTextField(5);
     javax.swing.ButtonGroup stopGroup2 = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton stopOnEntry2 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton stopOnExit2 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));
@@ -338,7 +338,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         // Check inputs are valid and get the number of valid stop sensors
         int valid = verifyInputs(true);
         if (log.isDebugEnabled()) {
-            log.debug("Number of valid stop sensors: " + valid);
+            log.debug("Number of valid stop sensors: {}", valid);
         }
         enableConfiguration(valid == 0);
         if (valid == 0) {
@@ -359,7 +359,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                             || (now == Sensor.INACTIVE && startOnExit.isSelected())) {
                         startTime = System.currentTimeMillis();  // milliseconds
                         if (log.isDebugEnabled()) {
-                            log.debug("set start " + startTime);
+                            log.debug("set start {}", startTime);
                         }
                     }
                 }
@@ -380,7 +380,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                             || (now == Sensor.INACTIVE && stopOnExit1.isSelected())) {
                         stopTime1 = System.currentTimeMillis();  // milliseconds
                         if (log.isDebugEnabled()) {
-                            log.debug("set stop " + stopTime1);
+                            log.debug("set stop {}", stopTime1);
                         }
                         // calculate and show speed
                         float secs = (stopTime1 - startTime) / 1000.f;
@@ -388,7 +388,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                         try {
                             feet = IntlUtilities.floatValue(distance1.getText());
                         } catch (java.text.ParseException ex) {
-                            log.error("invalid floating point number as input: " + distance1.getText());
+                            log.error("invalid floating point number as input: {}", distance1.getText());
                         }
                         float speed;
                         if (dim == false) {
@@ -397,7 +397,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                             speed = (feet / 100000.f) * (3600.f / secs);
                         }
                         if (log.isDebugEnabled()) {
-                            log.debug("calc from " + secs + "," + feet + ":" + speed);
+                            log.debug("calc from {},{}:{}", secs, feet, speed);
                         }
                         result1.setText(String.valueOf(speed).substring(0, 4));
                         String time = String.valueOf(secs);
@@ -434,7 +434,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                             || (now == Sensor.INACTIVE && stopOnExit2.isSelected())) {
                         stopTime2 = System.currentTimeMillis();  // milliseconds
                         if (log.isDebugEnabled()) {
-                            log.debug("set stop " + stopTime2);
+                            log.debug("set stop {}", stopTime2);
                         }
                         // calculate and show speed
                         float secs = (stopTime2 - startTime) / 1000.f;
@@ -442,7 +442,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                         try {
                             feet = IntlUtilities.floatValue(distance2.getText());
                         } catch (java.text.ParseException ex) {
-                            log.error("invalid floating point number as input: " + distance2.getText());
+                            log.error("invalid floating point number as input: {}", distance2.getText());
                         }
                         float speed;
                         if (dim == false) {
@@ -451,7 +451,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                             speed = (feet / 100000.f) * (3600.f / secs);
                         }
                         if (log.isDebugEnabled()) {
-                            log.debug("calc from " + secs + "," + feet + ":" + speed);
+                            log.debug("calc from {},{}:{}", secs, feet, speed);
                         }
                         result2.setText(String.valueOf(speed).substring(0, 4));
                         String time = String.valueOf(secs);
@@ -525,7 +525,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
             }
         } catch (Exception e) {
             // couldn't locate the sensor, that's an error
-            log.error("Start sensor invalid: " + startSensor.getText());
+            log.error("Start sensor invalid: {}", startSensor.getText());
             if (warn) {
                 JOptionPane.showMessageDialog(
                         this,
@@ -545,7 +545,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
             }
         } catch (Exception e) {
             // couldn't locate the sensor, that's an error
-            log.error("Stop 1 sensor invalid : " + stopSensor1.getText());
+            log.error("Stop 1 sensor invalid : {}", stopSensor1.getText());
             if (warn) {
                 JOptionPane.showMessageDialog(
                         this,
@@ -582,7 +582,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                 }
             } catch (Exception e) {
                 // couldn't locate the sensor, that's an error
-                log.error("Stop 2 sensor invalid: " + stopSensor2.getText());
+                log.error("Stop 2 sensor invalid: {}", stopSensor2.getText());
                 if (warn) {
                     JOptionPane.showMessageDialog(
                             this,
@@ -676,7 +676,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                 try {
                     e.addContent(new Element("distance").addContent(String.valueOf(IntlUtilities.floatValue(distance1.getText()))));
                 } catch (java.text.ParseException ex) {
-                    log.error("Distance isn't a valid floating number: " + distance1.getText());
+                    log.error("Distance isn't a valid floating number: {}", distance1.getText());
                 }
                 values.addContent(e);
             }
@@ -690,7 +690,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                 try {
                     e.addContent(new Element("distance").addContent(String.valueOf(IntlUtilities.floatValue(distance2.getText()))));
                 } catch (java.text.ParseException ex) {
-                    log.error("Distance isn't a valid floating number: " + distance2.getText());
+                    log.error("Distance isn't a valid floating number: {}", distance2.getText());
                 }
                 values.addContent(e);
             }
@@ -698,9 +698,9 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         try {
             x.writeXML(file, doc);
         } catch (FileNotFoundException ex) {
-            log.error("File not found when writing: " + ex);
+            log.error("File not found when writing: {}", ex);
         } catch (IOException ex) {
-            log.error("IO Exception when writing: " + ex);
+            log.error("IO Exception when writing: {}", ex);
         }
 
         log.debug("...done");
@@ -732,12 +732,12 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
             if (root.getChild("configuration") != null) {
                 List<Element> l = root.getChild("configuration").getChildren();
                 if (log.isDebugEnabled()) {
-                    log.debug("readFile sees " + l.size() + " configurations");
+                    log.debug("readFile sees {} configurations", l.size());
                 }
                 for (int i = 0; i < l.size(); i++) {
                     Element e = l.get(i);
                     if (log.isDebugEnabled()) {
-                        log.debug("Configuration " + e.getName() + " value " + e.getValue());
+                        log.debug("Configuration {} value {}", e.getName(), e.getValue());
                     }
                     if (e.getName().equals("useMetric")) {
                         setUnitsMetric(e.getValue().equals("yes") ? true : false);
@@ -749,7 +749,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
             if (root.getChild("sensors") != null) {
                 List<Element> l = root.getChild("sensors").getChildren("sensor");
                 if (log.isDebugEnabled()) {
-                    log.debug("readFile sees " + l.size() + " sensors");
+                    log.debug("readFile sees {} sensors", l.size());
                 }
                 for (int i = 0; i < l.size(); i++) {
                     Element e = l.get(i);
@@ -784,15 +784,15 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                                 )
                         );
                     } else {
-                        log.warn("Unknown sensor type: " + sensorType);
+                        log.warn("Unknown sensor type: {}", sensorType);
                     }
                 }
             }
 
         } catch (JDOMException ex) {
-            log.error("File invalid: " + ex);
+            log.error("File invalid: {}", ex);
         } catch (IOException ex) {
-            log.error("Error reading file: " + ex);
+            log.error("Error reading file: {}", ex);
         }
 
         log.debug("...done");

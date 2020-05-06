@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * JUnit tests for the DataSource class
  *
- * @author	Bob Jacobsen Copyright 2005
+ * @author Bob Jacobsen Copyright 2005
  */
 public class DataSourceTest {
 
@@ -33,7 +33,7 @@ public class DataSourceTest {
         f.nextLine(message);
         Assert.assertTrue("pass misc ", !message.equals(f.version.getText()));
 
-        message = PackageTest.version;
+        message = TestConstants.version;
         f.nextLine(message);
         Assert.assertTrue("show version ", message.equals(f.version.getText()));
 
@@ -43,7 +43,6 @@ public class DataSourceTest {
     // avoid spurious error messages
     @Before
     public void setup() {
-        JUnitUtil.setUp();
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
 

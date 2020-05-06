@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2003, 2006
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -22,11 +22,14 @@ public class SerialTurnout extends AbstractTurnout {
     protected String _prefix = "T"; // default to "T"
 
     /**
-     * Create a turnout. TMCC turnouts use the NMRA number (0-511) as their
-     * numerical identification.
+     * Create a turnout. TMCC turnouts use the number 1-99 as their
+     * numerical identification. The TMCC SC-2 reserves 0 as a special reset
+     * address, but the TMCC SC-1 allows 0 to be a turnout; however, the SC-1
+     * documentation examples and callouts all use 1 as the first turnout
+     * address.
      *
      * @param prefix the connection prefix
-     * @param number the NMRA turnout number from 0 to 511
+     * @param number the TMCC turnout number from 1 to 99
      * @param memo   the connection memo
      */
     public SerialTurnout(String prefix, int number, TmccSystemConnectionMemo memo) {
@@ -48,7 +51,7 @@ public class SerialTurnout extends AbstractTurnout {
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
+                log.error("Cannot command both CLOSED and THROWN {}", s);
                 return;
             } else {
                 // send a CLOSED command

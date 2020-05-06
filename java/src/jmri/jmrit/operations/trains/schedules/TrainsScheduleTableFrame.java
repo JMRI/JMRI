@@ -223,7 +223,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
         addHorizontalScrollBarKludgeFix(controlPane, controlPanel);
 
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
         trainManager.addPropertyChangeListener(this);
         trainScheduleManager.addPropertyChangeListener(this);
         addPropertyChangeLocations();
@@ -276,8 +276,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         if (ae.getSource() == runFileButton) {
             // Processes the CSV Manifest files using an external custom program.
             if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: " + InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName()
-                        + ", file name: " + InstanceManager.getDefault(TrainCustomManifest.class).getFileName()); // NOI18N
+                log.warn("Manifest creator file not found!, directory name: {}, file name: {}", InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(), InstanceManager.getDefault(TrainCustomManifest.class).getFileName()); // NOI18N
                 JOptionPane.showMessageDialog(this, MessageFormat.format(
                         Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
                             InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(), InstanceManager.getDefault(TrainCustomManifest.class).getFileName()}), Bundle
@@ -389,7 +388,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         while (en.hasMoreElements()) {
             b = en.nextElement();
             if (b.isSelected()) {
-                log.debug("schedule radio button " + b.getText());
+                log.debug("schedule radio button {}", b.getText());
                 return b.getName();
             }
         }
@@ -472,7 +471,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
     @Override
     public void dispose() {
-        Setup.removePropertyChangeListener(this);
+        Setup.getDefault().removePropertyChangeListener(this);
         trainManager.removePropertyChangeListener(this);
         trainScheduleManager.removePropertyChangeListener(this);
         removePropertyChangeTrainSchedules();

@@ -1,12 +1,11 @@
 package jmri.jmrit.beantable;
 
-import jmri.IdTag;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class IdTagTableTabActionTest extends AbstractTableTabActionBase {
 

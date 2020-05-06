@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LnClockControlTest {
 
@@ -32,9 +32,10 @@ public class LnClockControlTest {
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
  
-        LnClockControl t = new LnClockControl(slotmanager,lnis);
+        LnClockControl t = new LnClockControl(slotmanager, lnis, null);
  
         Assert.assertNotNull("exists",t);
+        slotmanager.dispose();
     }
 
     @Test

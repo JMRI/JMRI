@@ -16,8 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2008
  */
-public class PaneOpsProgFrame extends PaneProgFrame
-        implements java.beans.PropertyChangeListener {
+public class PaneOpsProgFrame extends PaneProgFrame {
 
     JPanel modePane;
 
@@ -48,8 +47,7 @@ public class PaneOpsProgFrame extends PaneProgFrame
         super(decoderFile, r, name, file, p, true);
 
         if (log.isDebugEnabled()) {
-            log.debug("PaneOpsProgFrame \"" + name
-                    + "\" constructed");
+            log.debug("PaneOpsProgFrame \"{}\" constructed", name);
         }
     }
 

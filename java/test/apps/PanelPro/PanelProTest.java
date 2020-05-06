@@ -26,10 +26,12 @@ import org.junit.Test;
 @Ignore("Replaced with a Cucumber test")
 public class PanelProTest extends apps.LaunchJmriAppBase {
 
+    @Override
     protected void launch(String[] args) {
         PanelPro.main(args);
     }
     
+    @Override
     protected void extraChecks() {
         JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("Main initialization done") != null;}, "last Info line seen");
     }

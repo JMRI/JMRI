@@ -1,16 +1,20 @@
 package jmri.jmrix.lenz;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.AddressedProgrammerManager;
 import jmri.CommandStation;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.LightManager;
+import jmri.NamedBean;
 import jmri.PowerManager;
 import jmri.SensorManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.util.NamedBeanComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -297,6 +301,11 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
+    }
+
+    @Override
     public void dispose() {
         xt = null;
         InstanceManager.deregister(this, XNetSystemConnectionMemo.class);
@@ -306,6 +315,6 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetSystemConnectionMemo.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetSystemConnectionMemo.class);
 
 }

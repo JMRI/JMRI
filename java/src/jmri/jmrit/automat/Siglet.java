@@ -81,7 +81,7 @@ abstract public class Siglet {
         setOutput();
 
         // run one cycle at start
-        thread = new Thread(() -> {
+        thread = jmri.util.ThreadingUtil.newThread(() -> {
             while (true) {
                 try {
                     PropertyChangeEvent pe = pq.take();
@@ -110,14 +110,16 @@ abstract public class Siglet {
 
     /**
      * Stop execution of the logic.
-     * <p>
-     * Note: completion not guaranteed when this returns, as the internal
-     * operation may proceed for a short time. It's safe to call "start" again
-     * without worrying about that.
      */
     public void stop() {
         if (thread != null) {
-            thread.interrupt();
+            Thread tempThread = thread;
+            tempThread.interrupt();
+            try {
+                tempThread.join();
+            } catch (InterruptedException ex) {
+                log.debug("stop interrupted");
+            }
         }
     }
 

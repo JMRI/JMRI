@@ -7,7 +7,7 @@ import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import jmri.beans.Beans;
+import jmri.beans.BeanUtil;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.swing.WindowInterface;
@@ -92,16 +92,15 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     boolean selectExistingFromEntry() {
         // create a dialog to select the roster entry to copy
         String group = null;
-        if (Beans.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
-            group = (String) Beans.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
+        if (BeanUtil.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
+            group = (String) BeanUtil.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
         }
         JComboBox<?> selections = new RosterEntryComboBox(group);
         int retval = JOptionPane.showOptionDialog(mParent,
                 "Select one roster entry", "Select roster entry",
                 0, JOptionPane.INFORMATION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), selections}, null);
-        log.debug("Dialog value " + retval + " selected " + selections.getSelectedIndex() + ":\""
-                + selections.getSelectedItem() + "\""); // TODO I18N
+        log.debug("Dialog value {} selected {}:\"{}\"", retval, selections.getSelectedIndex(), selections.getSelectedItem()); // TODO I18N
         if (retval != 1) {
             return false;  // user didn't select
         }
@@ -119,8 +118,8 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     public void setExistingEntry(RosterEntry mFromEntry) {
         this.mFromEntry = mFromEntry;
         mFromFilename = mFromEntry.getFileName();
-        mFullFromFilename = LocoFile.getFileLocation() + mFromFilename;
-        log.debug(" from resolves to \"" + mFromFilename + "\", \"" + mFullFromFilename + "\"");
+        mFullFromFilename = Roster.getDefault().getRosterFilesLocation() + mFromFilename;
+        log.debug(" from resolves to \"{}\", \"{}\"", mFromFilename, mFullFromFilename);
     }
 
     boolean selectNewToEntryID() {
@@ -170,7 +169,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
         mFromFile = fileChooser.getSelectedFile();
         mFromFilename = mFromFile.getName();
         mFullFromFilename = mFromFile.getAbsolutePath();
-        log.debug("New from file: " + mFromFilename + " at " + mFullFromFilename);
+        log.debug("New from file: {} at {}", mFromFilename, mFullFromFilename);
         return true;
     }
 
@@ -189,7 +188,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
         mToFile = fileChooser.getSelectedFile();
         mToFilename = mToFile.getName();
         mFullToFilename = mToFile.getAbsolutePath();
-        log.debug("New to file: " + mToFilename + " at " + mFullToFilename);
+        log.debug("New to file: {} at {}", mToFilename, mFullToFilename);
         return true;
     }
 

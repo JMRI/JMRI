@@ -5,7 +5,6 @@ import java.util.*;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
 
 import org.junit.*;
 
@@ -16,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.managers.InternalSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2016
+ * @author Bob Jacobsen Copyright 2016
  */
 public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase implements Manager.ManagerDataListener<Sensor>, PropertyChangeListener {
 
@@ -52,11 +51,9 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("IS:XYZ", t.getSystemName());  // we force upper
         Assert.assertTrue("system name correct ", t == l.getBySystemName("IS:XYZ"));
         Assert.assertEquals(1, l.getObjectCount());
-        Assert.assertEquals(1, l.getSystemNameAddedOrderList().size());
 
         t = l.provideSensor("IS:XYZ");
         Assert.assertEquals(1, l.getObjectCount());
-        Assert.assertEquals(1, l.getSystemNameAddedOrderList().size());
     }
 
     @Test
@@ -80,7 +77,9 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         s1.setUserName("Sensor 1");
         
         l.addDataListener(this);
-        l.addPropertyChangeListener(this);
+        // listen to explicitly selected property changes
+        l.addPropertyChangeListener("length", this);
+        l.addPropertyChangeListener("DisplayListName", this);
 
         // add an item
         Sensor s2 = l.provideSensor("IS2");
@@ -141,16 +140,9 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Sensor s4 = l.provideSensor("IS4");
         Sensor s2 = l.provideSensor("IS2");
         
-        List<String> orderedList = l.getSystemNameAddedOrderList();
         List<String> sortedList = l.getSystemNameList();
         SortedSet<Sensor> beanSet = l.getNamedBeanSet();
-        String[] sortedArray = l.getSystemNameArray();  // deprecated, but we test until removed
-        jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
         
-        Assert.assertEquals("ordered list length", 2, orderedList.size());
-        Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
-        Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
-
         Assert.assertEquals("sorted list length", 2, sortedList.size());
         Assert.assertEquals("sorted list 1st", "IS2", sortedList.get(0));
         Assert.assertEquals("sorted list 2nd", "IS4", sortedList.get(1));
@@ -160,19 +152,9 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("bean set 1st", s2, iter.next());
         Assert.assertEquals("bean set 2nd", s4, iter.next());
 
-        Assert.assertEquals("sorted array length", 2, sortedArray.length);
-        Assert.assertEquals("sorted array 1st", "IS2", sortedArray[0]);
-        Assert.assertEquals("sorted array 2nd", "IS4", sortedArray[1]);
-        
         // add and test (non) liveness
         Sensor s3 = l.provideSensor("IS3");
         Sensor s1 = l.provideSensor("IS1");
-
-        Assert.assertEquals("ordered list length", 4, orderedList.size());
-        Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
-        Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
-        Assert.assertEquals("ordered list 3rd", "IS3", orderedList.get(2));
-        Assert.assertEquals("ordered list 4th", "IS1", orderedList.get(3));
 
         Assert.assertEquals("sorted list length", 2, sortedList.size());
         Assert.assertEquals("sorted list 1st", "IS2", sortedList.get(0));
@@ -185,22 +167,10 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("bean set 3rd", s3, iter.next());
         Assert.assertEquals("bean set 4th", s4, iter.next());
 
-        Assert.assertEquals("sorted array length", 2, sortedArray.length);
-        Assert.assertEquals("sorted array 1st", "IS2", sortedArray[0]);
-        Assert.assertEquals("sorted array 2nd", "IS4", sortedArray[1]);
-        
         // update and test update
-        orderedList = l.getSystemNameAddedOrderList();
         sortedList = l.getSystemNameList();
         beanSet = l.getNamedBeanSet();
-        sortedArray = l.getSystemNameArray();
         
-        Assert.assertEquals("ordered list length", 4, orderedList.size());
-        Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
-        Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
-        Assert.assertEquals("ordered list 3rd", "IS3", orderedList.get(2));
-        Assert.assertEquals("ordered list 4th", "IS1", orderedList.get(3));
-
         Assert.assertEquals("sorted list length", 4, sortedList.size());
         Assert.assertEquals("sorted list 1st", "IS1", sortedList.get(0));
         Assert.assertEquals("sorted list 2nd", "IS2", sortedList.get(1));
@@ -213,12 +183,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("bean set 2nd", s2, iter.next());
         Assert.assertEquals("bean set 3rd", s3, iter.next());
         Assert.assertEquals("bean set 4th", s4, iter.next());
-
-        Assert.assertEquals("sorted array length", 4, sortedArray.length);
-        Assert.assertEquals("sorted array 1st", "IS1", sortedArray[0]);
-        Assert.assertEquals("sorted array 2nd", "IS2", sortedArray[1]);
-        Assert.assertEquals("sorted array 3rd", "IS3", sortedArray[2]);
-        Assert.assertEquals("sorted array 4th", "IS4", sortedArray[3]);
 
     }
 
@@ -256,7 +220,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     String lastCall;
     
     @Override
-    public void intervalAdded(Manager.ManagerDataEvent e) {
+    public void intervalAdded(Manager.ManagerDataEvent<Sensor> e) {
         events++;
         lastEvent0 = e.getIndex0();
         lastEvent1 = e.getIndex1();
@@ -264,7 +228,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         lastCall = "Added";
     }
     @Override
-    public void intervalRemoved(Manager.ManagerDataEvent e) {
+    public void intervalRemoved(Manager.ManagerDataEvent<Sensor> e) {
         events++;
         lastEvent0 = e.getIndex0();
         lastEvent1 = e.getIndex1();
@@ -272,7 +236,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         lastCall = "Removed";
     }
     @Override
-    public void contentsChanged(Manager.ManagerDataEvent e) {
+    public void contentsChanged(Manager.ManagerDataEvent<Sensor> e) {
         events++;
         lastEvent0 = e.getIndex0();
         lastEvent1 = e.getIndex1();
@@ -280,7 +244,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         lastCall = "Changed";
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -288,7 +251,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         // create and register the manager object
         jmri.util.JUnitUtil.resetInstanceManager();
         
-        l = new InternalSensorManager();
+        l = new InternalSensorManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
 
         propertyListenerCount = 0;
         propertyListenerLast = null;

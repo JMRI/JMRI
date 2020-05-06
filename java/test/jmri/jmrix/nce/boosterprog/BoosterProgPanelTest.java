@@ -11,7 +11,7 @@ import jmri.jmrix.nce.NceTrafficController;
 /**
  * Test simple functioning of BoosterProgPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class BoosterProgPanelTest extends jmri.util.swing.JmriPanelTest {
 
@@ -54,5 +54,8 @@ public class BoosterProgPanelTest extends jmri.util.swing.JmriPanelTest {
 
     @Override
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
+    }
 }

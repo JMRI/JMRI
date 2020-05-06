@@ -8,7 +8,7 @@ import org.junit.*;
 /**
  * Tests for RouteLock class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class RouteLockTest {
 
@@ -133,12 +133,12 @@ public class RouteLockTest {
     }
 
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalSignalHeadManager();
     }
 
     @After

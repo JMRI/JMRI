@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of PacketGenFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class PacketGenFrameTest {
 
@@ -34,5 +34,9 @@ public class PacketGenFrameTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {        
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.tearDown();
+    }
 }

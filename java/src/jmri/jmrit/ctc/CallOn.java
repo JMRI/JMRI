@@ -12,7 +12,6 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.jmrit.ctc.ctcserialdata.CallOnEntry;
-import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
@@ -108,24 +107,25 @@ public class CallOn {
                                                                             callOnEntry._mSwitchIndicator6);
                     if (_mSignalHeadSelected) {
 //  Technically, I'd have liked to call this only once, but in reality, each signalhead could have a different value list:
-                        String[] validStateNames = signal.getValidStateNames();
+                        String[] validStateNames = signal.getValidStateNames(); // TODO consider using getValidStateKeys() to skip localisation issue
                         int validStateNamesIndex = arrayFind(validStateNames, convertFromForeignLanguageColor(callOnEntry._mSignalAspectToDisplay));
+                        // TODO use non-localized validStateNKeys instead of localized validStateNames
                         if (validStateNamesIndex == -1) { // Not found:
                             throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " " + Bundle.getMessage("CallOnNotValidAspect"));   // NOI18N
                         }
                         NBHSensor calledOnExternalSensor = new NBHSensor("CallOn", userIdentifier, "groupingString", callOnEntry._mCalledOnExternalSensor, false);
-                        int[] correspondingValidStates = signal.getValidStates();   // I ASSUME it's a coorelated 1 for 1 with "getValidStateNames", via tests it seems to be.
+                        int[] correspondingValidStates = signal.getValidStates();   // I ASSUME it's a correlated 1 for 1 with "getValidStateNames", via tests it seems to be.
                         _mGroupingDataArrayList.add(new GroupingData(signal, trafficDirection, correspondingValidStates[validStateNamesIndex], calledOnExternalSensor, null, route));
                     } else {
                         String externalBlockName = callOnEntry._mExternalBlock;
                         if (ProjectsCommonSubs.isNullOrEmptyString(externalBlockName)) {
                             throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " " + Bundle.getMessage("CallOnSignalMastBlockError")); // NOI18N
                         }
-                        Block externalBlock = blockManager.getBlock(externalBlockName);
+                        Block externalBlock = InstanceManager.getDefault(BlockManager.class).getBlock(externalBlockName);
                         if (externalBlock == null) {
                             throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " " + Bundle.getMessage("CallOnSignalMastBlockError2"));    // NOI18N
                         }
-                        NamedBeanHandle<Block> namedBeanHandleExternalBlock = NAMED_BEAN_HANDLE_MANAGER.getNamedBeanHandle(externalBlockName, externalBlock);
+                        NamedBeanHandle<Block> namedBeanHandleExternalBlock = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(externalBlockName, externalBlock);
                         _mGroupingDataArrayList.add(new GroupingData(signal, trafficDirection, 0, null, namedBeanHandleExternalBlock, route));
                     }
                 } catch (CTCException e) { e.logError(); return; }
@@ -205,6 +205,7 @@ NOTE:
             foundGroupingData._mSignal.setHeld(false);
         }
 
+        signalDirectionIndicatorsObject.setRequestedDirection(signalDirectionLever);
 // These two statements MUST be last thing in this order:
         signalDirectionIndicatorsObject.setSignalDirectionIndicatorsToOUTOFCORRESPONDENCE();
         signalDirectionIndicatorsObject.startCodingTime();
@@ -219,23 +220,23 @@ NOTE:
     }
 
 //  When we went to foreign language support, I had to convert to English here, so that these lines worked above:
-//  String[] validStateNames = signal.getValidStateNames();
+//  String[] validStateNames = signal.getValidStateNames(); // use getValidStateKeys instead?
 //  int validStateNamesIndex = arrayFind(validStateNames, convertFromForeignLanguageColor(callOnEntry._mSignalAspectToDisplay));
+//
 //  I SUSPECT (not verified) that "signal.getValidStateNames()" ALWAYS returns English no matter what language is selected.
 //  If I AM WRONG, then this routine can be removed, and the call to it removed:
     private String convertFromForeignLanguageColor(String foreignLanguageColor) {
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCODark"))) return "Dark"; // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCORed"))) return "Red";   // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOYellow"))) return "Yellow"; // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOGreen"))) return "Green";   // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingRed"))) return "Flashing Red";   // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingYellow"))) return "Flashing Yellow"; // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingGreen"))) return "Flashing Green";   // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOLunar"))) return "Lunar";   // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingLunar"))) return "Flashing Lunar";   // NOI18N
-        return "Red";   // NOI18N    Should NEVER happen, but if programmers screw up, default to some "sane" value.
+        String color = "Red"; // should NEVER be used directly, but if programmers screw up, default to some "sane" value.
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateDark"))) color = "Dark";     // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateRed"))) color = "Red";       // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateYellow"))) color = "Yellow"; // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateGreen"))) color = "Green";   // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateFlashingRed"))) color = "Flashing Red";       // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateFlashingYellow"))) color = "Flashing Yellow"; // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateFlashingGreen"))) color = "Flashing Green";   // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateLunar"))) color = "Lunar";                    // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateFlashingLunar"))) color = "Flashing Lunar";   // NOI18N
+        return color;
     }
 
-    private static final NamedBeanHandleManager NAMED_BEAN_HANDLE_MANAGER = InstanceManager.getDefault(NamedBeanHandleManager.class);
-    private static final BlockManager blockManager = InstanceManager.getDefault(BlockManager.class);
 }

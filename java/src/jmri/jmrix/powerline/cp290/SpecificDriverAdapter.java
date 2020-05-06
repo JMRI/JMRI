@@ -16,7 +16,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to Powerline devices via a serial comm port.
+ * Provide access to Powerline devices via a serial com port.
  * Derived from the Oaktree code.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
@@ -24,7 +24,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */
-public class SpecificDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class SpecificDriverAdapter extends SerialPortController {
 
     SerialPort activeSerialPort = null;
 
@@ -61,8 +61,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
             // set timeout; framing should work before this anyway
             try {
                 activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
+                log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
             } catch (Exception et) {
                 log.info("failed to set serial timeout: ", et);
             }
@@ -76,14 +75,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
             // report status?
             if (log.isInfoEnabled()) {
                 // report now
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud with"
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
             if (log.isDebugEnabled()) {
                 // report additional status
@@ -178,7 +170,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 600;  // default, but also defaulted in the initial value of selectedSpeed
+        int baud = currentBaudNumber(mBaudRate);
 
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
@@ -190,7 +182,11 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
 
     protected String[] validSpeeds = new String[]{Bundle.getMessage("BaudAutomatic")};
     protected int[] validSpeedValues = new int[]{600};
-    protected String selectedSpeed = validSpeeds[0];
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     private final static Logger log = LoggerFactory.getLogger(SpecificDriverAdapter.class);
 

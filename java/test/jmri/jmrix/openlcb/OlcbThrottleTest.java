@@ -9,7 +9,7 @@ import org.openlcb.*;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbThrottle class.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010, 2011
+ * @author Bob Jacobsen Copyright 2008, 2010, 2011
  */
 public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         
@@ -347,6 +347,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup4 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup4() {
     }
 
@@ -354,11 +355,11 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup5 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup5() {
     }
 
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -388,6 +389,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
+            @Override
             public Connection getOutputConnection() {
                 return connection;
             }
@@ -395,17 +397,20 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo.setTrafficController(new TestTrafficController());
         memo.configureManagers();
     
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
     @AfterClass
-    public static void postClassTearDown() throws Exception {
+    public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
-           memo.getInterface().dispose();
+            memo.getTrafficController().terminateThreads();
+            memo.getInterface().dispose();
         }
         memo = null;
         connection = null;
         nodeID = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
+
     }
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2008, 2012 All rights reserved -->
-<!-- $Id: $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -18,6 +17,7 @@
                 xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
                 showEmptyPanes="no">
 
+  <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version author="Martin Pischky (mailto:martin@pischky.de)" 
            version="1" lastUpdated="20120618"/>
 
@@ -333,30 +333,9 @@
 
 <!-- Consisting Information follows -->
 
-      <variable label="Consist Address (0-127)"
-                CV="19" mask="XVVVVVVV" default="0"
-                item="Consist Address"
-                comment="Stores consist address. Range 0-127 (direction set in bit 7)">
-        <decVal max="127"/>
-        <label>Consist Address (0-127)</label>
-        <comment>Stores consist address. Range 0-127 (direction set in bit 7)</comment>
-      </variable>
 
-      <variable label="Loco Direction In Consist"
-                CV="19" mask="VXXXXXXX" default="0"
-                item="Consist Direction"
-                comment="A consist address over 127 will also set this bit">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Loco Direction In Consist</label>
-        <comment>A consist address over 127 will also set this bit</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+
 
       <variable label="Consist Address Activation for F1"
                 CV="21" mask="XXXXXXXV" default="0" minFn="1"

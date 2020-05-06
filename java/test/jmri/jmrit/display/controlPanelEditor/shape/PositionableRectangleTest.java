@@ -14,12 +14,12 @@ import org.junit.Test;
 public class PositionableRectangleTest extends PositionableShapeTest {
 
     @Test
+    @Override
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists", p);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

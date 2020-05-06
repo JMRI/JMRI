@@ -2,6 +2,11 @@ package jmri.jmrit.operations.automation.actions;
 
 import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.automation.AutomationItem;
@@ -12,9 +17,6 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -79,8 +81,7 @@ public class PrintSwitchListActionTest extends OperationsTestCase {
         Location northIndustries = lmanager.getLocationByName("North Industries");
         
         // confirm print preview window is showing
-        ResourceBundle rb = ResourceBundle
-                .getBundle("jmri.util.UtilBundle");
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.util.UtilBundle");
         JmriJFrame printPreviewFrame =
                 JmriJFrame.getFrame(rb.getString("PrintPreviewTitle") + " " + northEndStaging.getName());
         Assert.assertNotNull("exists", printPreviewFrame);
@@ -95,6 +96,9 @@ public class PrintSwitchListActionTest extends OperationsTestCase {
                 JmriJFrame.getFrame(rb.getString("PrintPreviewTitle") + " " + northIndustries.getName());
         Assert.assertNotNull("exists", printPreviewFrame);
         JUnitUtil.dispose(printPreviewFrame);
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintSwitchListActionTest.class);

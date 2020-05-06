@@ -37,7 +37,7 @@
         },
         "value": {
             "type": ["string", "null"],
-            "description": "The value of the memory"
+            "description": "The memory's value, can be idTag, Reporter, or text"
         }
     },
     "additionalProperties": false,

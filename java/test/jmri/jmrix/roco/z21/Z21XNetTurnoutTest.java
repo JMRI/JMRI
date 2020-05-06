@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the {@link jmri.jmrix.roco.z21.Z21XNetTurnout} class.
  *
- * @author	Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2016	
+ * @author Bob Jacobsen
+ * @author      Paul Bender Copyright (C) 2016
  */
 public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
 
@@ -40,7 +40,7 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         try {
             t.setCommandedState(jmri.Turnout.CLOSED);
         } catch (Exception e) {
-            log.error("TO exception: " + e);
+            log.error("TO exception: {}", e);
         }
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 
@@ -95,7 +95,7 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         try {
             t.setCommandedState(jmri.Turnout.THROWN);
         } catch (Exception e) {
-            log.error("TO exception: " + e);
+            log.error("TO exception: {}", e);
         }
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
 
@@ -105,12 +105,12 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
             s.setState(jmri.Sensor.INACTIVE);
             t.provideFirstFeedbackSensor("IS1");
         } catch (Exception x1) {
-            log.error("TO exception: " + x1);
+            log.error("TO exception: {}", x1);
         }
         try {
             s.setState(jmri.Sensor.ACTIVE);
         } catch (Exception x) {
-            log.error("TO exception: " + x);
+            log.error("TO exception: {}", x);
         }
         // check to see if the turnout state changes.
         Assert.assertTrue(t.getKnownState() == jmri.Turnout.THROWN);
@@ -126,7 +126,6 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         Assert.assertEquals("controller listeners remaining", 1, numListeners());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

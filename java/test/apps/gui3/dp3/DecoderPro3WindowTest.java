@@ -6,7 +6,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -23,14 +22,14 @@ public class DecoderPro3WindowTest {
         JUnitUtil.dispose(t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initConnectionConfigManager();
-        jmri.util.JUnitUtil.initDebugProgrammerManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initConnectionConfigManager();
+        JUnitUtil.initDebugProgrammerManager();
         jmri.InstanceManager.setDefault(jmri.jmrit.symbolicprog.ProgrammerConfigManager.class,new jmri.jmrit.symbolicprog.ProgrammerConfigManager());
     }
 

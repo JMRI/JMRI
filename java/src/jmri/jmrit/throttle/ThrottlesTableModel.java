@@ -6,6 +6,7 @@ import javax.swing.table.AbstractTableModel;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.Throttle;
 
 public class ThrottlesTableModel extends AbstractTableModel implements AddressListener, java.beans.PropertyChangeListener {
 
@@ -76,7 +77,9 @@ public class ThrottlesTableModel extends AbstractTableModel implements AddressLi
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if ((e.getPropertyName().equals("SpeedSetting")) || (e.getPropertyName().equals("SpeedSteps")) || (e.getPropertyName().equals("IsForward"))) {
+        if ((e.getPropertyName().equals(Throttle.SPEEDSETTING)) ||
+                (e.getPropertyName().equals(Throttle.SPEEDSTEPS)) ||
+                (e.getPropertyName().equals(Throttle.ISFORWARD))) {
             fireTableDataChanged();
         }
     }

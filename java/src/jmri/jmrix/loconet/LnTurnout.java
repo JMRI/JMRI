@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class LnTurnout extends AbstractTurnout implements LocoNetListener {
+public class LnTurnout extends AbstractTurnout {
 
     public LnTurnout(String prefix, int number, LocoNetInterface controller) throws IllegalArgumentException {
         // a human-readable turnout number must be specified!
@@ -51,12 +51,6 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         this.controller = controller;
 
         _number = number;
-        // At construction, register for messages
-        if (this.controller != null) {
-            this.controller.addLocoNetListener(~0, this);
-        } else {
-            log.warn("No LocoNet connection, turnout won't update");
-        }
         // update feedback modes
         _validFeedbackTypes |= MONITORING | EXACT | INDIRECT;
         _activeFeedbackType = MONITORING;
@@ -76,14 +70,15 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     /**
      * True when setFeedbackMode has specified the mode;
      * false when the mode is just left over from initialization.
-     * This is intended to indicate (when true) that a configuration 
+     * This is intended to indicate (when true) that a configuration
      * file has set the value; message-created turnouts have it false.
-     */     
+     */
     boolean feedbackDeliberatelySet = false; // package to allow access from LnTurnoutManager
-    
+
     @Override
     public void setBinaryOutput(boolean state) {
         // TODO Auto-generated method stub
+        setProperty(LnTurnoutManager.SENDONANDOFFKEY, !state);
         binaryOutput = state;
     }
     @Override
@@ -135,19 +130,19 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     }
 
     public boolean isByPassBushbyBit() {
-        if (getProperty(LnTurnoutManager.BYPASSBUSHBYBITKEY) != null) {
-            return  (boolean) getProperty(LnTurnoutManager.BYPASSBUSHBYBITKEY) ;
-        } else {
-            return false;
+        Object returnVal = getProperty(LnTurnoutManager.BYPASSBUSHBYBITKEY);
+        if (returnVal == null) {
+            return  false;
         }
+        return (boolean) returnVal;
     }
 
     public boolean isSendOnAndOff() {
-        if (getProperty(LnTurnoutManager.SENDONANDOFFKEY) != null) {
-            return (boolean) getProperty(LnTurnoutManager.SENDONANDOFFKEY) ;
-        } else {
-            return !binaryOutput;
+        Object returnVal = getProperty(LnTurnoutManager.SENDONANDOFFKEY);
+        if (returnVal == null) {
+            return  true;
         }
+        return (boolean) returnVal;
     }
 
     // Handle a request to change state by sending a LocoNet command
@@ -166,7 +161,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                     try {
                         sendSetOffMessage(state);
                     } catch (Exception e) {
-                        log.error("Exception occurred while sending delayed off to turnout: " + e);
+                        log.error("Exception occurred while sending delayed off to turnout: {}", e);
                     }
                 }
             };
@@ -186,18 +181,11 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
      */
     void sendOpcSwReqMessage(int state, boolean on) {
         LocoNetMessage l = new LocoNetMessage(4);
-        if (isByPassBushbyBit()) {
-            l.setOpCode(LnConstants.OPC_SW_ACK);
-        } else {
-            l.setOpCode(LnConstants.OPC_SW_REQ);
-        }
+        l.setOpCode(isByPassBushbyBit() ? LnConstants.OPC_SW_ACK : LnConstants.OPC_SW_REQ);
+        int hiadr = ((_number - 1) / 128) & 0x7F;   // compute address fields
+        l.setElement(1, ((_number - 1) - hiadr * 128) & 0x7F);
 
-        // compute address fields
-        int hiadr = (_number - 1) / 128;
-        int loadr = (_number - 1) - hiadr * 128;
-
-        // set closed (note that this can't handle both!  Not sure how to
-        // say that in LocoNet.
+        // set closed bit (Note that LocoNet cannot handle both Thrown and Closed)
         if ((state & CLOSED) != 0) {
             hiadr |= 0x20;
             // thrown exception if also THROWN
@@ -209,34 +197,33 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         // load On/Off
         if (on) {
             hiadr |= 0x10;
-        } else {
-            if (_useOffSwReqAsConfirmation) {
-                log.warn("Turnout {} is using OPC_SWREQ off as confirmation, but is sending OFF commands itself anyway", _number);
-            }
-            hiadr &= 0xEF;
+        } else if (_useOffSwReqAsConfirmation) {
+            log.warn("Turnout {} is using OPC_SWREQ off as confirmation, but is sending OFF commands itself anyway", _number);
         }
 
-        // store and send
-        l.setElement(1, loadr);
         l.setElement(2, hiadr);
 
-        this.controller.sendLocoNetMessage(l);
+        this.controller.sendLocoNetMessage(l);  // send message
 
         if (_useOffSwReqAsConfirmation) {
-            // Start a timer to resend the command in a couple of seconds in case consistency is not obtained before then
             noConsistencyTimersRunning++;
-            consistencyTask = new java.util.TimerTask() {
-                @Override
-                public void run() {
-                    noConsistencyTimersRunning--;
-                    if (!isConsistentState() && noConsistencyTimersRunning == 0) {
-                        log.debug("LnTurnout resending command for turnout {}", _number);
-                        forwardCommandChangeToLayout(getCommandedState());
-                    }
-                }
-            };
-            jmri.util.TimerUtil.schedule(consistencyTask, CONSISTENCYTIMER);
+            startConsistencyTimerTask();
         }
+    }
+
+    private void startConsistencyTimerTask() {
+        // Start a timer to resend the command in a couple of seconds in case consistency is not obtained before then
+        consistencyTask = new java.util.TimerTask() {
+            @Override
+            public void run() {
+                noConsistencyTimersRunning--;
+                if (!isConsistentState() && noConsistencyTimersRunning == 0) {
+                    log.debug("LnTurnout resending command for turnout {}", _number);
+                    forwardCommandChangeToLayout(getCommandedState());
+                }
+            }
+        };
+        jmri.util.TimerUtil.schedule(consistencyTask, CONSISTENCYTIMER);
     }
 
     boolean pending = false;
@@ -251,148 +238,197 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         sendOpcSwReqMessage(adjustStateForInversion(state), false);
     }
 
+    private void handleReceivedOpSwAckReq(LocoNetMessage l) {
+        int sw2 = l.getElement(2);
+        if (myAddress(l.getElement(1), sw2)) {
+
+            log.debug("SW_REQ received with valid address");
+            //sort out states
+            int state;
+            state = ((sw2 & LnConstants.OPC_SW_REQ_DIR) != 0) ? CLOSED : THROWN;
+            state = adjustStateForInversion(state);
+
+            newCommandedState(state);
+            computeKnownStateOpSwAckReq(sw2, state);
+        }
+    }
+
+    private void computeKnownStateOpSwAckReq(int sw2, int state) {
+        boolean on = ((sw2 & LnConstants.OPC_SW_REQ_OUT) != 0);
+        switch (getFeedbackMode()) {
+            case MONITORING:
+                if ((!on) || (!_useOffSwReqAsConfirmation)) {
+                    newKnownState(state);
+                }
+                break;
+            case DIRECT:
+                newKnownState(state);
+                break;
+            default:
+                break;                    
+        }
+
+    }
+    private void setKnownStateFromOutputStateClosedReport() {
+        newCommandedState(CLOSED);
+        if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
+            newKnownState(CLOSED);
+        }
+    }
+    
+    private void setKnownStateFromOutputStateThrownReport() {
+        newCommandedState(THROWN);
+        if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
+            newKnownState(THROWN);
+        }
+    }
+    
+    private void setKnownStateFromOutputStateOddReport() {
+        newCommandedState(CLOSED + THROWN);
+        if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
+            newKnownState(CLOSED + THROWN);
+        }
+    }
+    
+    private void setKnownStateFromOutputStateReallyOddReport() {
+        newCommandedState(0);
+        if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
+            newKnownState(0);
+        }
+    }
+    
+    private void computeFromOutputStateReport(int sw2) {
+        // LnConstants.OPC_SW_REP_INPUTS not set, these report outputs
+        // sort out states
+        int state;
+        state = sw2
+                & (LnConstants.OPC_SW_REP_CLOSED | LnConstants.OPC_SW_REP_THROWN);
+        state = adjustStateForInversion(state);
+
+        switch (state) {
+            case LnConstants.OPC_SW_REP_CLOSED:
+                setKnownStateFromOutputStateClosedReport();
+                break;
+            case LnConstants.OPC_SW_REP_THROWN:
+                setKnownStateFromOutputStateThrownReport();
+                break;
+            case LnConstants.OPC_SW_REP_CLOSED | LnConstants.OPC_SW_REP_THROWN:
+                setKnownStateFromOutputStateOddReport();
+                break;
+            default:
+                setKnownStateFromOutputStateReallyOddReport();
+                break;
+        }
+    }
+
+    private void computeFeedbackFromSwitchReport(int sw2) {
+        // Switch input report
+        if ((sw2 & LnConstants.OPC_SW_REP_HI) != 0) {
+            computeFeedbackFromSwitchOffReport();
+        } else {
+            computeFeedbackFromSwitchOnReport();
+        }
+    }
+    
+    private void computeFeedbackFromSwitchOffReport() {
+        // switch input closed (off)
+        if (getFeedbackMode() == EXACT) {
+            // reached closed state
+            newKnownState(adjustStateForInversion(CLOSED));
+        } else if (getFeedbackMode() == INDIRECT) {
+            // reached closed state
+            newKnownState(adjustStateForInversion(CLOSED));
+        } else if (!feedbackDeliberatelySet) {
+            // don't have a defined feedback mode, but know we've reached closed state
+            log.debug("setting CLOSED with !feedbackDeliberatelySet");
+            newKnownState(adjustStateForInversion(CLOSED));
+        }
+    }
+
+    private void computeFeedbackFromSwitchOnReport() {
+        // switch input thrown (input on)
+        if (getFeedbackMode() == EXACT) {
+            // leaving CLOSED on way to THROWN, go INCONSISTENT if not already THROWN
+            if (getKnownState() != THROWN) {
+                newKnownState(INCONSISTENT);
+            }
+        } else if (getFeedbackMode() == INDIRECT) {
+            // reached thrown state
+            newKnownState(adjustStateForInversion(THROWN));
+        } else if (!feedbackDeliberatelySet) {
+            // don't have a defined feedback mode, but know we're not in closed state, most likely is actually thrown
+            log.debug("setting THROWN with !feedbackDeliberatelySet");
+            newKnownState(adjustStateForInversion(THROWN));
+        }
+    }
+
+    private void computeFromSwFeedbackState(int sw2) {
+        // LnConstants.OPC_SW_REP_INPUTS set, these are feedback messages from inputs
+        // sort out states
+        if ((sw2 & LnConstants.OPC_SW_REP_SW) != 0) {
+            computeFeedbackFromSwitchReport(sw2);
+
+        } else {
+            computeFeedbackFromAuxInputReport(sw2);
+        }
+    }
+
+    private void computeFeedbackFromAuxInputReport(int sw2) {
+        // This is only valid in EXACT mode, so if we encounter it
+        //  without a feedback mode set, we switch to EXACT
+        if (!feedbackDeliberatelySet) {
+            setFeedbackMode(EXACT);
+            feedbackDeliberatelySet = false; // was set when setting feedback
+        }
+
+        if ((sw2 & LnConstants.OPC_SW_REP_HI) != 0) {
+            // aux input closed (off)
+            if (getFeedbackMode() == EXACT) {
+                // reached thrown state
+                newKnownState(adjustStateForInversion(THROWN));
+            }
+        } else {
+            // aux input thrown (input on)
+            if (getFeedbackMode() == EXACT) {
+                // leaving THROWN on the way to CLOSED, go INCONSISTENT if not already CLOSED
+                if (getKnownState() != CLOSED) {
+                    newKnownState(INCONSISTENT);
+                }
+            }
+        }
+    }
+
+    private void handleReceivedOpSwRep(LocoNetMessage l) {
+        int sw1 = l.getElement(1);
+        int sw2 = l.getElement(2);
+        if (myAddress(sw1, sw2)) {
+
+            log.debug("SW_REP received with valid address");
+            // see if its a turnout state report
+            if ((sw2 & LnConstants.OPC_SW_REP_INPUTS) == 0) {
+                computeFromOutputStateReport(sw2);
+            } else {
+                computeFromSwFeedbackState(sw2);
+            }
+        }
+    }
+
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
     //        public void firePropertyChange(String propertyName,
     //                              Object oldValue,
     //                        Object newValue)
     // _once_ if anything has changed state (or set the commanded state directly)
-    @Override
-    public void message(LocoNetMessage l) {
+    public void messageFromManager(LocoNetMessage l) {
         // parse message type
         switch (l.getOpCode()) {
             case LnConstants.OPC_SW_ACK:
             case LnConstants.OPC_SW_REQ: {
-                /* page 9 of LocoNet PE */
-
-                int sw1 = l.getElement(1);
-                int sw2 = l.getElement(2);
-                if (myAddress(sw1, sw2)) {
-                
-                    log.debug("SW_REQ received with valid address");
-                    //sort out states
-                    int state;
-                    if ((sw2 & LnConstants.OPC_SW_REQ_DIR) != 0) {
-                        state = CLOSED;
-                    } else {
-                        state = THROWN;
-                    }
-                    state = adjustStateForInversion(state);
-
-                    newCommandedState(state);
-                    boolean on = ((sw2 & LnConstants.OPC_SW_REQ_OUT) != 0);
-                    if (getFeedbackMode() == MONITORING && !on || getFeedbackMode() == MONITORING && on && !_useOffSwReqAsConfirmation || getFeedbackMode() == DIRECT) {
-                        newKnownState(state);
-                    }
-                }
+                handleReceivedOpSwAckReq(l);
                 return;
-            }
-            case LnConstants.OPC_SW_REP: {
-                /* page 9 of LocoNet PE */
-
-                int sw1 = l.getElement(1);
-                int sw2 = l.getElement(2);
-                if (myAddress(sw1, sw2)) {
-
-                    log.debug("SW_REP received with valid address");
-                    // see if its a turnout state report
-                    if ((sw2 & LnConstants.OPC_SW_REP_INPUTS) == 0) {
-                        // LnConstants.OPC_SW_REP_INPUTS not set, these report outputs
-                        // sort out states
-                        int state;
-                        state = sw2
-                                & (LnConstants.OPC_SW_REP_CLOSED | LnConstants.OPC_SW_REP_THROWN);
-                        state = adjustStateForInversion(state);
-
-                        switch (state) {
-                            case LnConstants.OPC_SW_REP_CLOSED:
-                                newCommandedState(CLOSED);
-                                if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
-                                    newKnownState(CLOSED);
-                                }
-                                break;
-                            case LnConstants.OPC_SW_REP_THROWN:
-                                newCommandedState(THROWN);
-                                if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
-                                    newKnownState(THROWN);
-                                }
-                                break;
-                            case LnConstants.OPC_SW_REP_CLOSED | LnConstants.OPC_SW_REP_THROWN:
-                                newCommandedState(CLOSED + THROWN);
-                                if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
-                                    newKnownState(CLOSED + THROWN);
-                                }
-                                break;
-                            default:
-                                newCommandedState(0);
-                                if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
-                                    newKnownState(0);
-                                }
-                                break;
-                        }
-                    } else {
-                        // LnConstants.OPC_SW_REP_INPUTS set, these are feedback messages from inputs
-                        // sort out states
-                        if ((sw2 & LnConstants.OPC_SW_REP_SW) != 0) {
-                            // Switch input report
-                            if ((sw2 & LnConstants.OPC_SW_REP_HI) != 0) {
-                                // switch input closed (off)
-                                if (getFeedbackMode() == EXACT) {
-                                    // reached closed state
-                                    newKnownState(adjustStateForInversion(CLOSED));
-                                } else if (getFeedbackMode() == INDIRECT) {
-                                    // reached closed state
-                                    newKnownState(adjustStateForInversion(CLOSED));
-                                } else if (!feedbackDeliberatelySet) {
-                                    // don't have a defined feedback mode, but know we've reached closed state 
-                                    log.debug("setting CLOSED with !feedbackDeliberatelySet");
-                                    newKnownState(adjustStateForInversion(CLOSED));
-                                }
-                            } else {
-                                // switch input thrown (input on)
-                                if (getFeedbackMode() == EXACT) {
-                                    // leaving CLOSED on way to THROWN, go INCONSISTENT if not already THROWN
-                                    if (getKnownState() != THROWN) {
-                                        newKnownState(INCONSISTENT);
-                                    }
-                                } else if (getFeedbackMode() == INDIRECT) {
-                                    // reached thrown state
-                                    newKnownState(adjustStateForInversion(THROWN));
-                                } else if (!feedbackDeliberatelySet) {
-                                    // don't have a defined feedback mode, but know we're not in closed state, most likely is actually thrown
-                                    log.debug("setting THROWN with !feedbackDeliberatelySet");
-                                    newKnownState(adjustStateForInversion(THROWN));
-                                }
-                            }
-                        } else {
-                            // Aux input report
-                            
-                            // This is only valid in EXACT mode, so if we encounter it
-                            //  without a feedback mode set, we switch to EXACT
-                            if (!feedbackDeliberatelySet) {
-                                setFeedbackMode(EXACT);
-                                feedbackDeliberatelySet = false; // was set when setting feedback
-                            }
-                            
-                            if ((sw2 & LnConstants.OPC_SW_REP_HI) != 0) {
-                                // aux input closed (off)
-                                if (getFeedbackMode() == EXACT) {
-                                    // reached thrown state
-                                    newKnownState(adjustStateForInversion(THROWN));
-                                }
-                            } else {
-                                // aux input thrown (input on)
-                                if (getFeedbackMode() == EXACT) {
-                                    // leaving THROWN on the way to CLOSED, go INCONSISTENT if not already CLOSED
-                                    if (getKnownState() != CLOSED) {
-                                        newKnownState(INCONSISTENT);
-                                    }
-                                }
-                            }
-                        }
-
-                    }
                 }
+            case LnConstants.OPC_SW_REP: {
+                handleReceivedOpSwRep(l);
                 return;
             }
             default:
@@ -415,7 +451,6 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         if(consistencyTask != null ) {
            consistencyTask.cancel();
         }
-        this.controller.removeLocoNetListener(~0, this);
         super.dispose();
     }
 

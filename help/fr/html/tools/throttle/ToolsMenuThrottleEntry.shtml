@@ -1,30 +1,30 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- UpDated  by Blorec Herv&#233;  2017-01-10-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Blorec Herv&#233;  2017-01-10-->
 <html lang="fr">
 <head>
 	<title>Tools Throttle Menu</title>
-	<meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" >
-	<meta name="Description" content="Throttle documentation for JMRI project" >
-	<meta name="Author" content="Lionel Jeanson" >
-	<meta name="Language" content="EN" >
-	
+	<meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
+	<meta name="Description" content="Throttle documentation for JMRI project">
+	<meta name="Author" content="Lionel Jeanson">
+
 	<!-- Style -->
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
-	<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" >
-	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" >
-	<link rel="icon" href="/images/jmri.ico" type="image/png" >
-	<link rel="home" title="Home" href="/" >
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+	<link rel="icon" href="/images/jmri.ico" type="image/png">
+	<link rel="home" title="Home" href="/">
 	<!-- /Style -->
-	</head>
+</head>
 
 <body>
-<!--#include virtual="/Header" -->
-
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Menu Outils R&#233;gulateur</h1>
-<img src="images/Toolsmenuentry.png" alt="" >
+<img src="images/Toolsmenuentry.png" alt="Menu R&#233;gulateur">
 
 <h2>Nouveau R&#233;gulateur:</h2>
 Cr&#233;er une <a href="BasicThrottleWindow.shtml">nouvelle fen&#234;tre R&#233;gulateur</a> avec un r&#233;gulateur disponible et vide &#224; l'int&#233;rieur.
@@ -49,7 +49,7 @@ Charge &lt;Le dossier Pr&#233;f&#233;rences JMRI &lt;/throttleJMRI_ThrottlePrefe
 locomotive ou une adresse de couplage), ou elle peut contenir des multiples panneau de r&#233;gulateur. Dans tous les cas, lors de 
 l'ouverture d'un fichier de configuration de r&#233;gulateur, JMRI v&#233;rifie pour voir si des panneaux existants de R&#233;gulateurs 
 actifs sont d&#233;j&#224; ouverts. Si aucune n'est trouv&#233;e, le fichier est ouvert, comme une ouverture de configuration simple 
-(expliqu&#233; ci-dessus). </P> 
+(expliqu&#233; ci-dessus). </p>
 			
 <p style="text-align: center; font-size: xx-small;">
 			
@@ -79,8 +79,7 @@ sur votre &#233;cran.
 <h2>Pr&#233;f&#233;rences R&#233;gulateurs:</h2>
 Ouvrez le <a href="ThrottlesPreferencesPane.shtml">Volet Pr&#233;f&#233;rences r&#233;gulateurs.</a>
 
-<!--#include virtual="/Footer" -->
-
+<!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
 </body>

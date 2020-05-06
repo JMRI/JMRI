@@ -11,7 +11,6 @@ public class PacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private jmri.jmrix.srcp.SRCPSystemConnectionMemo memo = null;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -28,6 +27,7 @@ public class PacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
 }

@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.17.1-SNAPSHOT</version>
+    <version>4.19.6-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -17,21 +17,34 @@
         but if multiple dependencies are linked, use a property for single
         dependency source) -->
         <cucumber.version>4.3.1</cucumber.version>
-        <jetty.version>9.4.7.v20170914</jetty.version>
-        <jemmy.version>22-00c9f753cd0a</jemmy.version> <!-- this is a custom version, see lib/README.md -->
+        <jetty.version>9.4.26.v20200117</jetty.version>
+        <!-- this is a custom version, see lib/README.md -->
+        <jemmy.version>22-00c9f753cd0a</jemmy.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.version>2.10.0</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
-        <openlcb.version>0.7.25</openlcb.version>
-        <netbeans.version>RELEASE82</netbeans.version>
+        <openlcb.version>0.7.26</openlcb.version>
+        <netbeans.version>RELEASE113</netbeans.version>
+        <jacoco.version>0.8.5</jacoco.version>
+        <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
-        <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
-        <ant.version>1.10.1</ant.version>
+        <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
+        <!-- don't load JInput during CI tests -->
+        <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin>
+        <ant.version>1.10.7</ant.version>
+        <junit5.version>5.6.0</junit5.version>
+        <junit.platform.version>1.6.0</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
-        <surefire.version>2.20</surefire.version>
+        <!-- define argLines to allow running surefire:test -->
+        <surefire.argLine></surefire.argLine>
+        <failsafe.argLine></failsafe.argLine>
+        <surefire.version>2.22.0</surefire.version>
+        <failsafe.version>2.22.0</failsafe.version>
+        <jqassistant.version>1.6.0</jqassistant.version>
+        <checkstyle.config.location>${basedir}/checkstyle.xml</checkstyle.config.location>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>
@@ -79,7 +92,6 @@
                         <configuration>
                             <sourceDirectories>
                                 <!-- Additional source directories -->
-                                <File>java/tmp</File>
                                 <File>target/generated-sources/javacc</File>
                                 <File>target/generated-sources/jjtree</File>
                             </sourceDirectories>
@@ -92,6 +104,14 @@
             <id>appveyor</id>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <skipMain>true</skipMain>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
@@ -113,15 +133,6 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!-- use surefire (maven default test harness) only for line endings -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${surefire.version}</version>
-                        <configuration>
-                            <test>jmri.util.FileLineEndingsTest</test>
-                        </configuration>
-                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -141,7 +152,16 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
-                        <version>3.1.6</version>
+                        <version>3.1.12</version>
+                        <configuration>
+                            <plugins>
+                                <plugin>
+                                    <groupId>jp.skypencil.findbugs.slf4j</groupId>
+                                    <artifactId>bug-pattern</artifactId>
+                                    <version>1.5.0</version>
+                                </plugin>
+                            </plugins>
+                        </configuration>
                         <!-- configured to fail on Medium priority bugs during test phase (needs to be done two places) -->
                         <executions>
                             <execution>
@@ -156,6 +176,202 @@
                                     <threshold>Low</threshold>
                                     <maxHeap>1536</maxHeap>
                                     <timeout>1200000</timeout><!-- 20 minutes -->
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- with exception of violationSeverity should match non-profiled checkstyle config and ant checkstyle config -->
+                                    <failOnViolation>true</failOnViolation>
+                                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                                    <sourceDirectories>
+                                        <sourceDirectory>${basedir}</sourceDirectory>
+                                    </sourceDirectories>
+                                    <includes>**/*</includes>
+                                    <excludes>**/*.jpg,**/*.PNG,**/*.jar,**/*.dll,**/*.dylib,**/*.so,**/*.exe,
+                                        **/*.zip,**/*.icns,**/*.bat,**/*.ttf,**/*.vsd,**/*.wav,**/*.spj,
+                                        **/*.pdf,.metadata/.plugins/org.eclipse.core.resources/**,
+                                        help/en/JavaHelpSearch/**,help/fr/JavaHelpSearch/**,
+                                        web/app/node_modules/**,.git/**,target/**</excludes>
+                                    <!-- only show errors, not warnings or infos -->
+                                    <violationSeverity>error</violationSeverity>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>test-warnings-check</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.8.1</version>
+                        <configuration>
+                            <compilerId>eclipse</compilerId>
+                            <source>1.8</source>
+                            <target>1.8</target>
+                            <compilerArgs>
+                                <properties>${basedir}/java/ecj.warning.options-ci</properties>
+                                <arg>-sourcepath</arg>
+                                <arg>${basedir}/java/src:${basedir}/target/generated-sources</arg>
+                            </compilerArgs>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.codehaus.plexus</groupId>
+                                <artifactId>plexus-compiler-eclipse</artifactId>
+                                <version>2.8.5</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.eclipse.jdt</groupId>
+                                <artifactId>ecj</artifactId>
+                                <version>3.19.0</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>travis-scanhelp</id>
+            <build>
+                <plugins>
+                    <!-- prevent surefire (maven default test harness) from running tests -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${surefire.version}</version>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <executable>scripts/tidy-check.sh</executable>
+                            <arguments>
+                                <argument>help/en/*/*</argument>
+                                <argument>help/fr/*/*</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!--
+                The profile disables if tests are run in debug mode, so Jacoco instrumentation
+                does not break debugging features.
+            -->
+            <id>jacoco-coverage-unit</id>
+            <activation>
+                <property>
+                    <name>!maven.surefire.debug</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
+                        <executions>
+                            <execution>
+                                <id>prepare-agent</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!--
+                The profile disables if tests are run in debug mode, so Jacoco instrumentation
+                does not break debugging features.
+            -->
+            <id>jacoco-coverage-integration</id>
+            <activation>
+                <property>
+                    <name>!maven.surefire.debug</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
+                        <executions>
+                            <execution>
+                                <id>prepare-agent-integration</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!--
+                This profile is a workaround for NetBeans broken (?) support for multiple
+                maven goals on action where Compile-on-Save is enabled. Instead of running a
+                goal sequence, the IDE sets a property that activates this profile.
+            -->
+            <id>jacoco-coverage-ide-report</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>netbeans.jacoco.report</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
+                        <executions>
+                            <execution>
+                                <id>ide-report</id>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                                <!-- Bind to the test phase. The Jacoco plugin is
+                                    configured AFTER surefire plugin in this POM, so starting with Maven 3.0.3
+                                    the Jacoco plugin goals will only run after surefire testing completes
+                                -->
+                                <phase>test</phase>
+                                <configuration>
+                                    <skip>${skipTests}</skip>
                                 </configuration>
                             </execution>
                         </executions>
@@ -206,9 +422,15 @@
 
         <plugins>
             <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.4.10</version>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
+                <version>1.8</version><!--$NO-MVN-MAN-VER$-->
+                <!-- above line-end comment silences warning in Eclipse -->
                 <!--
                 <executions>
                     <execution>
@@ -244,12 +466,12 @@
                     <!-- junit support is optional in ant maven packaging -->
                     <dependency>
                         <groupId>org.apache.ant</groupId>
-                        <artifactId>ant-junit4</artifactId>
+                        <artifactId>ant-junit</artifactId>
                         <version>${ant.version}</version>
                     </dependency>
                     <dependency>
                         <groupId>org.apache.ant</groupId>
-                        <artifactId>ant-junit</artifactId>
+                        <artifactId>ant-junitlauncher</artifactId>
                         <version>${ant.version}</version>
                     </dependency>
                 </dependencies>
@@ -257,7 +479,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -288,9 +510,16 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>3.1.6</version>
+                <version>3.1.12</version>
                 <!-- configured to fail on medium priority bugs (needs to be done two places)-->
                 <configuration>
+                    <plugins>
+                        <plugin>
+                            <groupId>jp.skypencil.findbugs.slf4j</groupId>
+                            <artifactId>bug-pattern</artifactId>
+                            <version>1.5.0</version>
+                        </plugin>
+                    </plugins>
                     <excludeFilterFile>.spotbugs-check.xml</excludeFilterFile>
                     <effort>Max</effort>
                     <threshold>Low</threshold>
@@ -303,18 +532,22 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.version}</version>
                 <configuration>
+                    <additionalClasspathElements>
+                        <additionalClasspathElement>${basedir}</additionalClasspathElement>
+                    </additionalClasspathElements>
                     <excludes>
                         <!-- ignore until #3492 is resolved -->
                         <exclude>%regex[jmri.jmrix.loconet.locormi.LnMessage[Client|Server]Test]</exclude>
                         <!-- ignore to avoid duplicate test runs -->
                         <exclude>apps.tests.AllTest</exclude>
                         <exclude>jmri.HeadLessTest</exclude>
-                        <!-- ignore package tests under assumption they only include other tests -->
-                        <exclude>**.PackageTest</exclude>
                         <!-- ignore since the test is not intended to be normally used -->
                         <exclude>jmri.util.FailTest</exclude>
+                        <!-- exclude the archunit tests from automatic execution -->
+                        <exclude>jmri.ArchitectureTest</exclude>
+                        <!-- exclude the line endings tests from automatic execution -->
+                        <exclude>jmri.util.FileLineEndings</exclude>
                         <!-- ignore since base classes for other tests -->
-                        <exclude>jmri.util.SwingTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsSwingTestCase</exclude>
                         <!-- exclude since intentionally waits forever -->
@@ -323,11 +556,13 @@
                     <systemPropertyVariables>
                         <jmri.path.program>${basedir}</jmri.path.program>
                         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
-                        <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
+                        <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
+                        <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin><!-- don't load JInput during CI tests -->
                     </systemPropertyVariables>
                     <trimStackTrace>false</trimStackTrace>
                     <workingDirectory>${basedir}</workingDirectory>
-                    <argLine>@{argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
+                    <!-- -ea or -da in the next line to control Java asserts -->
+                    <argLine>@{argLine} @{surefire.argLine} -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
                     <!-- forkCount causes tests to run in forked JVMs.  The following the number with C says to fork the number multiplied by the number of cores available. -->
@@ -335,14 +570,22 @@
                     <!-- setting re-use forks to false causes a timeout on CI servers, please do not uncomment.
                     <reuseForks>false</reuseForks>
                     -->
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.apache.maven.surefire</groupId>
-                            <artifactId>surefire-junit47</artifactId>
-                            <version>${surefire.version}</version>
-                        </dependency>
-                    </dependencies>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${failsafe.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <argLine>@{argLine} @{failsafe.argLine} -Djava.security.policy=${basedir}/lib/security.policy</argLine>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -501,28 +744,105 @@
                     <links>
                         <link>http://docs.oracle.com/javase/8/docs/api/</link>
                         <link>http://java.sun.com/products/javacomm/reference/api/</link>
-                        <!-- <link>https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.2.RELEASE</link> wrong format data -->
                         <link>http://www.jdom.org/docs/apidocs/</link>
-                        <link>http://javacsv.sourceforge.net/</link>
-                        <link>http://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson.version}/</link>
+                        <link>https://commons.apache.org/proper/commons-csv/apidocs/</link>
+                        <link>https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson.version}/</link>
                         <link>http://logging.apache.org/log4j/1.2/apidocs/</link>
                         <link>http://download.java.net/media/java3d/javadoc/1.3.2/</link>
-                        <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link>
                         <link>https://static.javadoc.io/org.openlcb/openlcb/${openlcb.version}/</link>
                         <link>https://commons.apache.org/proper/commons-lang/javadocs/api-release/</link>
+                        <link>https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/</link>
+                        <link>https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/</link>
+                        <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link>
+                        <link>https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/</link>
+                        <link>https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/</link>
                     </links>
                 </configuration>
             </plugin>
             <plugin>
+                <!-- Warning: do not put this plugin's configuration before surefire plugin one. The sequence
+                     in which the surefire and jacoco goals run is important -->
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.2</version>
+                <version>${jacoco.version}</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
+                        <!-- Do not bind any goals, let a profile to do it conditionally -->
+                        <configuration>
+                            <append>true</append>
+                            <destFile>${jacoco.reportDir}/jacoco-unit.exec</destFile>
+                            <propertyName>surefire.argLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>prepare-agent-integration</id>
+                        <!-- Do not bind any goals, let a profile to do it conditionally -->
+                        <configuration>
+                            <append>true</append>
+                            <destFile>${jacoco.reportDir}/jacoco-it.exec</destFile>
+                            <propertyName>failsafe.argLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>merge</id>
+                        <phase>post-integration-test</phase>
                         <goals>
-                            <goal>prepare-agent</goal>
+                            <goal>merge</goal>
                         </goals>
+                        <configuration>
+                            <fileSets>
+                                <fileSet>
+                                    <directory>${jacoco.reportDir}</directory>
+                                    <includes>
+                                        <File>**/*.exec</File>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>default-cli</id>
+                        <configuration>
+                            <fileSets>
+                                <fileSet>
+                                    <directory>${jacoco.reportDir}</directory>
+                                    <includes>
+                                        <File>**/*.exec</File>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Do a merge after unit tests complete, to cover the case that only goals up to 'test' phase
+                             are executed. The post-integration-test will merge in integration tests' coverage -->
+                        <id>post-test-merge</id>
+                        <!-- Must explicitly bind to the phase. Since this plugin is configured AFTER surefire,
+                             it will bind later that surefire:test into the (same) test phase -->
+                        <phase>test</phase>
+                        <goals>
+                            <goal>merge</goal>
+                        </goals>
+                        <configuration>
+                            <fileSets>
+                                <fileSet>
+                                    <directory>${jacoco.reportDir}</directory>
+                                    <includes>
+                                        <File>**/*.exec</File>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>      
+                        <configuration>
+                            <skip>${skipTests}</skip>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>default-check</id>
@@ -530,6 +850,7 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
+                            <skip>${skipTests}</skip>
                             <excludes>
                                 <File>**/*Test*.class</File>
                                 <!-- Exclude testing infrastructure classes -->
@@ -544,19 +865,12 @@
                                 <File>jmri/util/web/BrowserFactory.class</File>
                                 <!-- pure interfaces and classes of constants -->
                                 <File>jmri/AddressedProgrammerManager.class</File>
-                                <File>jmri/PhysicalLocationReporter.class</File>
                                 <File>jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class</File>
                                 <File>jmri/jmris/srcp/parser/SRCPParserTreeConstants.class</File>
                                 <File>jmri/jmrit/audio/AudioSource.class</File>
-                                <File>jmri/jmrit/operations/locations/Xml.class</File>
-                                <File>jmri/jmrit/operations/rollingstock/cars/Xml.class</File>
-                                <File>jmri/jmrit/operations/rollingstock/engines/Xml.class</File>
-                                <File>jmri/jmrit/operations/trains/Xml.class</File>
-                                <File>jmri/jmrit/ussctc/Lock.class</File>
                                 <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
-                                <File>jmri/server/json/roster/JsonRoster.class</File>
-                                <File>jmri/server/json/reporter/JsonReporter.class</File>
-                                <File>jmri/server/json/signalMast/JsonSignalMast.class</File>
+                                <!-- exclude the archunit check -->
+                                <File>jmri.ArchitectureCheck.class</File>
                                 <!-- deprecated classes -->
                                 <File>jmri/jmrix/loconet/AbstractAlmImplementation.class</File>
                                 <!-- Exclude files meant to check SpotBugs. -->
@@ -594,8 +908,8 @@
                                     <limits>
                                         <limit>
                                             <counter>LINE</counter>
-                                            <value>COVEREDCOUNT</value>
-                                            <minimum>1</minimum>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.00001</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -604,44 +918,84 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- don't run  jqassistant (yet) on every build.
+            <plugin>
+                <groupId>com.buschmais.jqassistant</groupId>
+                <artifactId>jqassistant-maven-plugin</artifactId>
+            </plugin>
+            -->
             <plugin>
                 <groupId>org.sonatype.ossindex.maven</groupId>
                 <artifactId>ossindex-maven-plugin</artifactId>
                 <version>3.0.4</version>
                 <configuration>
-                    <failOnError>true</failOnError>
+                    <fail>true</fail>
                     <!-- List packages with vulnerabilities to ignore. -->
                     <!-- Include an issue in GitHub for each ignored package -->
                     <!-- documenting why the vulnerability is ignored. -->
                     <excludeCoordinates>
-                        <exclude>
-                            <!-- jython 2.7.0: https://github.com/JMRI/JMRI/issues/3712 -->
-                            <groupId>org.python</groupId>
-                            <artifactId>jython-standalone</artifactId>
-                            <version>2.7.0</version>
-                        </exclude>
                     </excludeCoordinates>
                 </configuration>
             </plugin>
             <plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-enforcer-plugin</artifactId>
-	            <version>3.0.0-M2</version>
-	            <executions>
-	                <execution>
-	                    <id>enforce-maven</id>
-	                    <goals>
-	                        <goal>enforce</goal>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M2</version>
+                <executions>
+                    <execution>
+                        <id>enforce-maven</id>
+                        <goals>
+                            <goal>enforce</goal>
                         </goals>
-	                    <configuration>
-	                        <rules>
-	                            <requireMavenVersion>
-	                                <version>[3.3.9,)</version>
-	                            </requireMavenVersion>
-	                        </rules>
-	                    </configuration>
-	                </execution>
-	            </executions>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>[3.3.9,)</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <!-- with exception of violationSeverity should match travis-spotbugs profile checkstyle config and ant checkstyle config -->
+                    <failOnViolation>true</failOnViolation>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <sourceDirectories>
+                        <sourceDirectory>${basedir}</sourceDirectory>
+                    </sourceDirectories>
+                    <includes>**/*</includes>
+                    <excludes>**/*.jpg,**/*.PNG,**/*.jar,**/*.dll,**/*.dylib,**/*.so,**/*.exe,
+                        **/*.zip,**/*.icns,**/*.bat,**/*.ttf,**/*.vsd,**/*.wav,**/*.spj,
+                        **/*.pdf,.metadata/.plugins/org.eclipse.core.resources/**,
+                        help/en/JavaHelpSearch/**,help/fr/JavaHelpSearch/**,
+                        web/app/node_modules/**,.git/**,target/**</excludes>
+                    <!-- show errors, warnings, and infos -->
+                    <violationSeverity>info</violationSeverity>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <filesets>
+                        <!-- cleanup behind Eclipse -->
+                        <fileset>
+                            <directory>.apt_generated</directory>
+                            <followSymlinks>false</followSymlinks>
+                            <useDefaultExcludes>true</useDefaultExcludes>
+                        </fileset>
+                        <fileset>
+                            <directory>.apt_generated_tests</directory>
+                            <followSymlinks>false</followSymlinks>
+                            <useDefaultExcludes>true</useDefaultExcludes>
+                        </fileset>
+                    </filesets>
+                </configuration>
             </plugin>
         </plugins>
         <pluginManagement>
@@ -713,7 +1067,36 @@
                         <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                         <autoReleaseAfterClose>false</autoReleaseAfterClose>
                     </configuration>
-                </plugin>        
+                </plugin>
+                <plugin>
+                    <groupId>com.buschmais.jqassistant</groupId>
+                    <artifactId>jqassistant-maven-plugin</artifactId>
+                    <version>${jqassistant.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>scan</goal>
+                                <goal>analyze</goal>
+                            </goals>
+                            <configuration>
+                                <warnOnSeverity>MINOR</warnOnSeverity>
+                                <failOnSeverity>MAJOR</failOnSeverity>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>8.29</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -730,7 +1113,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
-                <version>2.5</version>
+                <version>2.7</version>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -744,15 +1127,33 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.9</version>
+                <version>${jacoco.version}</version>
                 <reportSets>
                     <reportSet>
                         <reports>
                             <!-- select non-aggregate reports -->
+                            <!-- <report>report</report>
+                            <report>report-integration</report> -->
+                            <report>report-aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>com.buschmais.jqassistant</groupId>
+                <artifactId>jqassistant-maven-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
                             <report>report</report>
                         </reports>
                     </reportSet>
                 </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.1.0</version>
             </plugin>
         </plugins>
     </reporting>
@@ -785,9 +1186,63 @@
             <version>1.5.4</version>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-commons</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit4</artifactId>
+            <version>0.11.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.12.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-swing-junit</artifactId>
+            <version>3.9.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -843,14 +1298,6 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>${jetty.version}</version>
-            <type>jar</type>
-        </dependency>
-        -->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
@@ -912,11 +1359,9 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <!-- when updating, remove from net.ossindex list of ignored -->
-            <!-- vulnerabilities elsewhere in this file -->
             <groupId>org.python</groupId>
             <artifactId>jython-standalone</artifactId>
-            <version>2.7.0</version><!-- versions < 2.7.1 have CVE against them -->
+            <version>2.7.2</version>
         </dependency>
         <!--
         <dependency>
@@ -972,7 +1417,21 @@
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
-            <version>1.1</version>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-device</artifactId>
+            <version>1.2</version>
+            <!-- not used at compile time, may be used at runtime. -->
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-gpio-extension</artifactId>
+            <version>1.2</version>
+            <!-- not used at compile time, may be used at runtime. -->
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>net.sf.bluecove</groupId>
@@ -982,6 +1441,12 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna-platform</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+        <!-- the following dependency required for Eclipse IDE -->
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
             <version>4.4.0</version>
         </dependency>
         <dependency>
@@ -995,9 +1460,9 @@
             <version>1.5</version>
         </dependency>
         <dependency>
-            <groupId>net.sourceforge.javacsv</groupId>
-            <artifactId>javacsv</artifactId>
-            <version>2.0</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.7</version>
         </dependency>
         <dependency>
             <groupId>org.openlcb</groupId>
@@ -1007,7 +1472,7 @@
         <dependency>
             <groupId>org.usb4java</groupId>
             <artifactId>usb4java-javax</artifactId>
-            <version>1.2.0</version>
+            <version>1.3.0</version>
         </dependency>
         <!-- SpotBugs annotations -->
         <dependency>
@@ -1069,16 +1534,15 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>2.13.0</version>
+            <version>3.3.0</version>
             <scope>test</scope>
         </dependency>
-        <!--
         <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib-nodep</artifactId>
-            <version>2.2.2</version>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>1.10.5</version>
+            <scope>test</scope>
         </dependency>
-        -->
         <dependency>
             <groupId>org.netbeans.external</groupId>
             <artifactId>jemmy</artifactId>
@@ -1108,28 +1572,33 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>json-schema-validator</artifactId>
-            <version>1.0.10</version>
+            <version>1.0.28</version>
         </dependency>
         <dependency>
-	         <groupId>org.eclipse.paho</groupId>
-	         <artifactId>mqtt-client</artifactId>
-	         <version>0.4.0</version>
-	    </dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>mqtt-client</artifactId>
+            <version>0.4.0</version>
+        </dependency>
         <dependency>
-             <groupId>com.alexandriasoftware.swing</groupId>
-             <artifactId>jsplitbutton</artifactId>
-             <version>1.3.1</version>
+            <groupId>com.alexandriasoftware.swing</groupId>
+            <artifactId>jsplitbutton</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alexandriasoftware.swing</groupId>
+            <artifactId>jinputvalidator</artifactId>
+            <version>0.8.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>5.1.3.RELEASE</version>
+            <version>5.1.14.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>5.1.3.RELEASE</version>
+            <version>5.1.14.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -1149,16 +1618,6 @@
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
-        </repository>
-        <!--
-        Repository hosting NetBeans modules, especially APIs.
-        Versions are based on IDE releases, e.g.: RELEASE691
-        To create your own repository, use: nbm:populate-repository
-        -->
-        <repository>
-            <id>netbeans</id>
-            <name>NetBeans</name>
-            <url>http://bits.netbeans.org/nexus/content/groups/netbeans/</url>
         </repository>
         <!--
         Repository hosting libraries not available through maven.org

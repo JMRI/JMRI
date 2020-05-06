@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Tests for the Path class
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class PathTest {
 
@@ -38,6 +38,7 @@ public class PathTest {
 
         Block b = new Block("IB1");
         p.setBlock(b);
+        Assert.assertEquals("block added",b,p.getBlock());
     }
 
     @Test

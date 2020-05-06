@@ -1,6 +1,5 @@
 package jmri.jmrix.tams.swing.monitor;
 
-import java.util.ResourceBundle;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import jmri.jmrix.tams.TamsListener;
@@ -14,7 +13,7 @@ import jmri.jmrix.tams.swing.TamsPanelInterface;
  *
  * Based on work by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListener, TamsPanelInterface {
 

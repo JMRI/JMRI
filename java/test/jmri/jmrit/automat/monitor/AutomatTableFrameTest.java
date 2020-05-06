@@ -10,15 +10,14 @@ import org.junit.*;
  */
 public class AutomatTableFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new AutomatTableFrame(new AutomatTableDataModel());
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new AutomatTableFrame(new AutomatTableDataModel());
+        }
     }
 
     @After

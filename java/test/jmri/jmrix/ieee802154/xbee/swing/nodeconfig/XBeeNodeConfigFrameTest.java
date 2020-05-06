@@ -10,7 +10,7 @@ import org.junit.*;
 /**
  * Test simple functioning of XBeeNodeConfigFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class XBeeNodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -25,6 +25,7 @@ public class XBeeNodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -39,9 +40,11 @@ public class XBeeNodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     @After
+    @Override
     public void tearDown() {        
         tc = null;
         m = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
 }

@@ -32,7 +32,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Andrew Crosland Copyright (C) 2010
  */
-public class SerialDriverAdapter extends SpeedoPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends SpeedoPortController {
 
     public SerialDriverAdapter() {
         super(new SpeedoSystemConnectionMemo());
@@ -55,11 +55,11 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
                 return handlePortBusy(p, portName, log);
             }
 
-            // try to set it for comunication via SerialDriver
+            // try to set it for communication via SerialDriver
             try {
                 activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -72,8 +72,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -83,14 +82,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud, sees "
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
 
             //AJB - add Sprog Traffic Controller as event listener
@@ -155,7 +147,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
+            log.error("getOutputStream exception: {}", e);
         }
         return null;
     }
@@ -180,6 +172,11 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     @Override
     public int[] validBaudNumbers() {
         return new int[]{9600};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     private boolean opened = false;

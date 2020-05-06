@@ -10,7 +10,7 @@ import org.junit.*;
 /**
  * Test simple functioning of ConsistController
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ConsistControllerTest {
 
@@ -22,11 +22,11 @@ public class ConsistControllerTest {
 
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.resetProfileManager();
-
-        jmri.util.JUnitUtil.initDebugCommandStation();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initDebugCommandStation();
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
     }

@@ -6,14 +6,11 @@ import javax.swing.JLabel;
 import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.implementation.DefaultSignalHead;
-import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
  * Test the SignalMastIcon.
- * <p>
- * Description:
  *
  * @author Bob Jacobsen Copyright 2009
  */
@@ -47,6 +44,7 @@ public class SignalMastIconTest extends PositionableIconTest {
     @Test
     public void testShowIcon() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         JFrame jf = new JFrame("SignalMastIcon Icon Test");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
@@ -57,7 +55,7 @@ public class SignalMastIconTest extends PositionableIconTest {
         jf.getContentPane().add(to);
 
         s = InstanceManager.getDefault(jmri.SignalMastManager.class)
-                .provideSignalMast("IF$shsm:basic:two-searchlight:IH1:IH2");
+                .provideSignalMast("IF$shsm:basic:two-searchlight:IH2:IH3");
 
         s.setAspect("Clear");
 
@@ -73,13 +71,13 @@ public class SignalMastIconTest extends PositionableIconTest {
         JUnitUtil.dispose(jf);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         super.setUp();
+        JUnitUtil.initInternalSignalHeadManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            editor = new PanelEditor("Test SignalMastIcon Panel");
+            editor = new EditorScaffold();
             p = new SignalMastIcon(editor);
             to = new SignalMastIcon(editor);
             to.setShowAutoText(true);

@@ -1,5 +1,6 @@
 package jmri.util;
 
+import java.nio.charset.StandardCharsets;
 import org.junit.*;
 import jmri.web.server.WebServer;
 import org.slf4j.Logger;
@@ -7,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MultipartMessageTest {
 
@@ -15,19 +16,17 @@ public class MultipartMessageTest {
 
     @Test
     public void testCTor() throws java.io.IOException {
-        MultipartMessage t = new MultipartMessage("http://localhost:12080","UTF-8");
+        MultipartMessage t = new MultipartMessage("http://localhost:12080",StandardCharsets.UTF_8.name());
         Assert.assertNotNull("exists",t);
         t.finish(); // make sure the port closes.
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         // we need a web server to test this, so start the JMRI webserver here
         // and clean it up in teardown.
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initShutDownManager();
         jmri.util.JUnitUtil.initDebugPowerManager();
         server = new WebServer(); // a webserver using default preferences.
         server.start();
@@ -57,6 +56,7 @@ public class MultipartMessageTest {
             log.debug("NPE shutting down web server", npe2);
             //Assert.fail("Null Pointer Exception occured during teardown:" + npe2);
         }
+        JUnitUtil.resetZeroConfServiceManager();
         jmri.util.JUnitUtil.tearDown();
     }
 

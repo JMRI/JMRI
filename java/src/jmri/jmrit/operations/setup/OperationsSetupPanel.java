@@ -1,25 +1,18 @@
 package jmri.jmrit.operations.setup;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsXml;
@@ -31,8 +24,6 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.util.swing.ExceptionDisplayFrame;
 import jmri.util.swing.UnexpectedExceptionContext;
 import jmri.web.server.WebServerPreferences;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of operation parameters
@@ -76,8 +67,8 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
     private final JRadioButton meterUnit = new JRadioButton(Bundle.getMessage("Meter"));
 
     // check boxes
-    private final JCheckBox eastCheckBox = new JCheckBox(Bundle.getMessage("eastwest"));
-    private final JCheckBox northCheckBox = new JCheckBox(Bundle.getMessage("northsouth"));
+    final JCheckBox eastCheckBox = new JCheckBox(Bundle.getMessage("eastwest"));
+    final JCheckBox northCheckBox = new JCheckBox(Bundle.getMessage("northsouth"));
     private final JCheckBox mainMenuCheckBox = new JCheckBox(Bundle.getMessage("MainMenu"));
     private final JCheckBox closeOnSaveCheckBox = new JCheckBox(Bundle.getMessage("CloseOnSave"));
     private final JCheckBox autoSaveCheckBox = new JCheckBox(Bundle.getMessage("AutoSave"));
@@ -456,7 +447,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         }
 
         try {
-            if (!yearTextField.getText().trim().equals("")) {
+            if (!yearTextField.getText().trim().isEmpty()) {
                 Integer.parseInt(yearTextField.getText().trim());
             }
         } catch (NumberFormatException e) {

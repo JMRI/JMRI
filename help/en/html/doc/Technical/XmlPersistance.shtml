@@ -13,14 +13,15 @@
   <meta name="keywords" content=
   "JMRI technical code xml persistance">
   <!--#include virtual="/Style.shtml" -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
-      <h1>JMRI Code: XML Persistance</h1>
+
+    <h1>JMRI Code: XML Persistance</h1>
 
       <p>JMRI uses XML for persisting internal structures,
       especially when storing the preferences and panel files.</p>
@@ -50,7 +51,7 @@
       special case.  To keep that all sane, we do a lot of 
       unit and CI testing on it.</p>
 
-      <h3>Example</h3>
+      <h3><a id="ex" name="ex">Example</a></h3>
       <p>A LightManager knows about Lights.<br>
       There are lots of concrete classes implementing the Light
       interface:</p>
@@ -99,7 +100,7 @@
       persistance classes for the individual objects in addition to
       the manager.</p>
 
-      <h3>Adding More Information to a Class</h3>
+      <h3><a id="add" name="add">Adding More Information to a Class</a></h3>
       <p>If you want to
       store more state information, find the persisting class and
       add code to it to create and read attributes or elements.<br>
@@ -130,10 +131,25 @@
       particular SignalHead implementing class has it's own
       persisting class.</p>
 
-      <p>To e.g. add more data to a sensor, the
+      <p>To e.g. add more data to a sensor object, the
       jmri.jmrix.cmri.serial.configurexml.SerialSensorManagerXml
       and jmri.managers.configurexml.InternalSensorManagerXml
-      classes would have to be modified.</p>
+      classes would have to be modified. This is where all the code
+      to transfer to and from the stored form should go; don't add
+      code in e.g. primary classes SerialSensorManager and InternalSensorManager
+      to translate to or from the stored form. This keeps the main 
+      classes internal and flexible, allowing the persistance to be 
+      worked on (and tested and debugged!) separately.</p>
+      
+      <p>Boolean values should be stored as the strings "true" and "false".</p>
+      
+      <p>Although much of the early code stored information in attributes, 
+      consider putting the data being stored in elements instead.  This 
+      makes for simpler XML Schema and XSLT definitions, and the structured nature can 
+      be easier for humans to read.</p>
+
+      <p>If you do add new attributes or elements, don't forget to
+      update the format definition, see below.</p>
 
       <p>Note that in some cases, there's an inheritance
       relationship amoung the persisting classes that can help. For
@@ -144,10 +160,7 @@
       jmri.configurexml.AbstractSensorManagerConfigXML</a>, which
       does almost all the work of storing and loading sensors.</p>
 
-      <p>If you do add new attributes or elements, don't forget to
-      update the format definition, see below.</p>
-
-      <h3>Persisting References to NamedBeans</h3>
+      <h3><a id="refs" name="refs">Persisting References to NamedBeans</a></h3>
       
       Classes should, but don't always, 
       <a href="Patterns.shtml#handles">hold references to NamedBeans via NamedBean handles</a>.

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * TrackSegmentXmlTest.java
  *
- * Description: tests for the TrackSegmentXml class
+ * Test for the TrackSegmentXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class TrackSegmentXmlTest {
       Assert.assertNotNull("TrackSegmentXml constructor",new TrackSegmentXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -26,8 +26,8 @@ import purejavacomm.SerialPortEventListener;
  * move everything off the swing thread. Use a blocking queue to handle
  * asynchronous messages from multiple sources.
  * 
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Andrew Crosland Copyright (C) 2018
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew Crosland Copyright (C) 2018
  */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener,
         Runnable {
@@ -55,11 +55,11 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         // Set the timeout for communication with hardware
         resetTimeout();
 
-        tcThread = new Thread(this);
+        tcThread = jmri.util.ThreadingUtil.newThread(this);
         tcThread.setName("SPROG TC thread");
         tcThread.setPriority(Thread.MAX_PRIORITY-1);
         tcThread.setDaemon(true);
-        log.debug("starting TC thread from {} in group {}", this, tcThread.getThreadGroup(), jmri.util.Log4JUtil.shortenStacktrace(new Exception("traceback"),6));
+        log.debug("starting TC thread from {} ", this, jmri.util.Log4JUtil.shortenStacktrace(new Exception("traceback"),6));
         tcThread.start();
     }
 
@@ -155,7 +155,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                     }
                 }
             } catch (Exception e) {
-                log.warn("notify: During dispatch to {}\nException {}", listener, e.toString());
+                log.warn("notify: During dispatch to {}", listener, e);
             }
         }
         // forward to the last listener who sent a message
@@ -167,49 +167,65 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     }
 
     protected synchronized void notifyReply(SprogReply r) {
-        for (SprogListener listener : this.getCopyOfListeners()) {
-            try {
-                // don't send message back to the originator!
-                // skip forwarding to the last sender for now, we'll get them later
-                if (lastSender != listener) {
-                    listener.notifyReply(r);
-                }
+        log.debug("notifyReply starts for later, last sender: {}", lastSender);
 
-            } catch (Exception e) {
-                log.warn("notify: During dispatch to {}\nException {}", listener, e.toString());
+        final Vector<SprogListener> listeners = this.getCopyOfListeners();
+        final SprogReply replyForLater = r;
+        final SprogListener senderForLater = lastSender;
+        Runnable rl = () -> {
+            for (SprogListener listener : listeners) {
+                try {
+                    // don't send message back to the originator!
+                    // skip forwarding to the last sender for now, we'll get them later
+                    if (senderForLater != listener) {
+                        listener.notifyReply(replyForLater);
+                    }
+
+                } catch (Exception e) {
+                    log.warn("notify: During dispatch to {}", listener, e);
+                }
             }
-        }
-        // forward to the last listener who sent a message
-        // this is done _second_ so monitoring can have already stored the reply
-        // before a response is sent
-        if (lastSender != null) {
-            lastSender.notifyReply(r);
-        }
+            // forward to the last listener who sent a message
+            // this is done _second_ so monitoring can have already stored the reply
+            // before a response is sent
+            if (senderForLater != null) {
+                senderForLater.notifyReply(replyForLater);
+            }
+        };
+        javax.swing.SwingUtilities.invokeLater(rl);
     }
 
     protected synchronized void notifyReply(SprogReply r, SprogListener lastSender) {
-//        log.debug("notifyReply starts last sender: {}", lastSender);
-        for (SprogListener listener : this.getCopyOfListeners()) {
-            try {
-            //if is message don't send it back to the originator!
-                // skip forwarding to the last sender for now, we'll get them later
-                if (lastSender != listener) {
-//                    log.debug("Notify listener: {} {}", listener, r.toString());
-                    listener.notifyReply(r);
-                }
+        log.debug("notifyReply starts for later, last sender: {}", lastSender);
 
-            } catch (Exception e) {
-                log.warn("notify: During dispatch to {}\nException: {}", listener, e.toString());
+        final Vector<SprogListener> listeners = this.getCopyOfListeners();
+        final SprogReply replyForLater = r;
+        final SprogListener senderForLater = lastSender;
+        Runnable rl = () -> {
+            log.debug("notifyReply starts last sender: {}", senderForLater);
+            for (SprogListener listener : listeners) {
+                try {
+                //if is message don't send it back to the originator!
+                    // skip forwarding to the last sender for now, we'll get them later
+                    if (senderForLater != listener) {
+                        log.debug("Notify listener: {} {}", listener, r.toString());
+                        listener.notifyReply(replyForLater);
+                    }
+
+                } catch (Exception e) {
+                    log.warn("notify: During dispatch to {}", listener, e);
+                }
             }
-        }
-        
-        // forward to the last listener who sent a message
-        // this is done _second_ so monitoring can have already stored the reply
-        // before a response is sent
-        if (lastSender != null) {
-//            log.debug("notify last sender: {}{}", lastSender, r.toString());
-            lastSender.notifyReply(r);
-        }
+
+            // forward to the last listener who sent a message
+            // this is done _second_ so monitoring can have already stored the reply
+            // before a response is sent
+            if (senderForLater != null) {
+                log.debug("notify last sender: {} {}", senderForLater, replyForLater.toString());
+                senderForLater.notifyReply(replyForLater);
+            }
+        };
+        javax.swing.SwingUtilities.invokeLater(rl);
     }
 
     // A class to remember the message and who sent it
@@ -273,13 +289,14 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         MessageTuple messageToSend;
         log.debug("Traffic controller queuing thread starts");
         while (true) {
+            log.debug("Traffic controller queue waiting");
             try {
                 messageToSend = new MessageTuple(sendQueue.take());
             } catch (InterruptedException e) {
                 log.debug("Thread interrupted while dequeuing message to send");
                 return;
             }
-            log.debug("Message dequeued id: {}", messageToSend.message.getId());
+            log.debug("Message dequeued {} id: {}", messageToSend.message, messageToSend.message.getId());
             // remember who sent this
             lastSender = messageToSend.listener;
             lastId = messageToSend.message.getId();
@@ -297,7 +314,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             }
             if (!replyAvailable) {
                 // Timed out
-                log.warn("Timeout waiting for reply from hardware");
+                log.warn("Timeout waiting for reply from hardware in SprogState {}", sprogState);
             } else {
                 log.debug("Notified of reply");
             }
@@ -422,7 +439,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
                 break;
             case SerialPortEvent.DATA_AVAILABLE:
-                log.debug("Data Available");
+                log.debug("Data Available in sprogState {}", sprogState);
                 handleOneIncomingReply();
                 break;
             default:
@@ -462,7 +479,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
      */
     private void sendreply() {
         //send the reply
-        log.debug("dispatch reply of length {}", reply.getNumDataElements());
+        log.debug("dispatch reply of length {} in SprogState {}", reply.getNumDataElements(), sprogState);
         if (unsolicited) {
             log.debug("Unsolicited Reply");
             reply.setUnsolicited();

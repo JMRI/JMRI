@@ -13,7 +13,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MergSD2SignalHeadTest extends AbstractSignalHeadTestBase {
 
@@ -40,7 +40,6 @@ public class MergSD2SignalHeadTest extends AbstractSignalHeadTestBase {
         return new MergSD2SignalHead("testsys","testuser",3,green,yellow,red,false,false);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();        jmri.util.JUnitUtil.initInternalTurnoutManager();
