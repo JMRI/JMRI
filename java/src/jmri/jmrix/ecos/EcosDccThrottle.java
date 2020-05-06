@@ -167,7 +167,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
             tc.sendEcosMessage(m, this);
 
         }
-        //record(speed);
+        record(speed);
     }
 
     long lastSpeedMessageTime = 0L;

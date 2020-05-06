@@ -91,6 +91,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public void setSpeedSetting(float speed) {
         setSpeedSetting(speed, false, false);
+        record(speed);
     }
 
     /**
@@ -595,7 +596,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     long durationRunning = 0;
-    long start;
+    protected long start;
 
     /**
      * Processes updated speed from subclasses. Tracks total operating time for

@@ -189,7 +189,7 @@ public class SignallingPanel extends JmriPanel {
                 if (useLayoutEditor.isSelected()) {
                     try {
                         boolean valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedItem(),
-                                destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.MASTTOMAST);
+                                destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.Routing.MASTTOMAST);
                         if (!valid) {
                             JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));
                         }
@@ -245,7 +245,7 @@ public class SignallingPanel extends JmriPanel {
                         }
                         try {
                             valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedItem(),
-                                    destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.MASTTOMAST);
+                                    destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.Routing.MASTTOMAST);
                             if (!valid) {
                                 JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));
                             }
@@ -856,7 +856,7 @@ public class SignallingPanel extends JmriPanel {
             boolean valid;
             try {
                 valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMast,
-                        destMast, LayoutBlockConnectivityTools.MASTTOMAST);
+                        destMast, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
                 if (!valid) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));
                     return;

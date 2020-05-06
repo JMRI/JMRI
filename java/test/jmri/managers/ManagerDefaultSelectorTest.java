@@ -35,6 +35,7 @@ public class ManagerDefaultSelectorTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

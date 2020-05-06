@@ -2949,7 +2949,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * @param routingMethod value to match metric
      * @return next block
      */
-    public int getNextBestBlock(Block previousBlock, Block destBlock, List<Integer> excludeBlock, int routingMethod) {
+    public int getNextBestBlock(Block previousBlock, Block destBlock, List<Integer> excludeBlock, LayoutBlockConnectivityTools.Metric routingMethod) {
         if (enableSearchRouteLogging) {
             log.info("From {} find best route from {} to {} index {} routingMethod {}", this.getDisplayName(), previousBlock.getDisplayName(), destBlock.getDisplayName(), excludeBlock, routingMethod);
         }
@@ -2958,7 +2958,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         int lastValue = 0;
         List<Block> nextBlocks = new ArrayList<>(5);
         if (!excludeBlock.isEmpty() && (excludeBlock.get(excludeBlock.size() - 1) < routes.size())) {
-            if (routingMethod == LayoutBlockConnectivityTools.METRIC) {
+            if (routingMethod == LayoutBlockConnectivityTools.Metric.METRIC) {
                 lastValue = routes.get(excludeBlock.get(excludeBlock.size() - 1)).getMetric();
             } else /* if (routingMethod==LayoutBlockManager.HOPCOUNT)*/ {
                 lastValue = routes.get(excludeBlock.get(excludeBlock.size() - 1)).getHopCount();
@@ -2980,7 +2980,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 if (!nextBlocks.contains(ro.getNextBlock())) {
                     // if(ro.getNextBlock()!=nextBlock){
                     int currentValue;
-                    if (routingMethod == LayoutBlockConnectivityTools.METRIC) {
+                    if (routingMethod == LayoutBlockConnectivityTools.Metric.METRIC) {
                         currentValue = routes.get(i).getMetric();
                     } else /*if (routingMethod==InstanceManager.getDefault(
                         LayoutBlockManager.class).HOPCOUNT)*/ {
@@ -3000,7 +3000,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                                     log.info("valid through path");
                                 }
 
-                                if (routingMethod == LayoutBlockConnectivityTools.METRIC) {
+                                if (routingMethod == LayoutBlockConnectivityTools.Metric.METRIC) {
                                     if (ro.getMetric() < bestCount) {
                                         bestIndex = i;
                                         bestCount = ro.getMetric();
