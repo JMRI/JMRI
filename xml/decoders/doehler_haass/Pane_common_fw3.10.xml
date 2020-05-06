@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- version 5 - 2020-05-03 - RK - correction of a very small spelling mistake -->
+<!-- version 5 - 2020-05-02 - RK - added initialmapping functions -->
 <!-- version 4 - 2015-10-14 - PB - grids added and new SD fw functions -->
 <!-- version 3 - 2015-03-05 - PB - Spelling.  -->
 <!-- version 2 - 2014-06-03 - PB - improved XML -->
@@ -25,7 +25,7 @@
               </label>
           </griditem>
           <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="Lights dimming (normal)"/>
               <label>
                 <text> </text>
@@ -34,7 +34,7 @@
             </row>
           </griditem>
           <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="Lights dimming (alternative)"/>
               <label>
                 <text> </text>
@@ -43,7 +43,7 @@
             </row>
           </griditem>
           <griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="AUX 1 dimming"/>
               <label>
                 <text> </text>
@@ -52,7 +52,7 @@
             </row>
           </griditem>
           <griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="AUX 2 dimming"/>
               <label>
                 <text> </text>
@@ -62,6 +62,58 @@
           </griditem>
         </grid>
         <!-- END - Dimming grid -->
+      </column>
+      <column>
+        <label>
+          <text>   </text>
+        </label>
+      </column>
+      <separator/>
+      <column>
+        <label>
+          <text>   </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <!-- BEGIN - Dimming mask -->
+        <grid gridy="NEXT" weightx="1" ipadx="10">
+          <griditem gridx="0" gridy="0" gridwidth="1">
+              <label>
+                <text>Dimming mask</text>
+                <text xml:lang="fr">Masque pour atténuation</text>
+                <text xml:lang="de">Dimmmaske für Abblendlicht</text>
+              </label>
+          </griditem>
+          <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Dim LV" format="checkbox"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Dim LR" format="checkbox"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Dim AUX1" format="checkbox"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Dim AUX2" format="checkbox"/>
+            </row>
+          </griditem>
+        </grid>
+        <!-- END - Dimming mask -->
       </column>
       <column>
         <label>
@@ -90,7 +142,7 @@
               </label>
           </griditem>
           <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="AUX 1 Auto-off timer" label="AUX 1"/>
               <label>
                 <text> </text>
@@ -99,7 +151,7 @@
             </row>
           </griditem>
           <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="AUX 2 Auto-off timer" label="AUX 2"/>
               <label>
                 <text> </text>
@@ -108,7 +160,7 @@
             </row>
           </griditem>
           <griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="AUX 3 Auto-off timer" label="AUX 3"/>
               <label>
                 <text> </text>
@@ -117,7 +169,7 @@
             </row>
           </griditem>
           <griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="AUX 4 Auto-off timer" label="AUX 4"/>
               <label>
                 <text> </text>
@@ -126,7 +178,7 @@
             </row>
           </griditem>
           <griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="AUX 5 Auto-off timer" label="AUX 5"/>
               <label>
                 <text> </text>
@@ -135,7 +187,7 @@
             </row>
           </griditem>
           <griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
-			<row>
+            <row>
               <display item="AUX 6 Auto-off timer" label="AUX 6"/>
               <label>
                 <text> </text>
@@ -208,204 +260,204 @@
       <!-- BEGIN - Row 2 (Front lights)-->
       <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
 		<display item="F1 precludes front lights" format="checkbox" label="Front lights"/>
-	  </griditem>
+      </griditem>
       <griditem gridx="1" gridy="1" gridwidth="1" anchor="LINE_END">
 		<display item="F2 precludes front lights" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="2" gridy="1" gridwidth="1" anchor="LINE_END">
 		<display item="F3 precludes front lights" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="3" gridy="1" gridwidth="1" anchor="LINE_END">
 		<display item="F4 precludes front lights" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="4" gridy="1" gridwidth="1" anchor="LINE_END">
 		<display item="F5 precludes front lights" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="5" gridy="1" gridwidth="1" anchor="LINE_END">
 		<display item="F6 precludes front lights" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="6" gridy="1" gridwidth="1" anchor="LINE_END">
 		<display item="F7 precludes front lights" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="7" gridy="1" gridwidth="1" anchor="LINE_END">
 		<display item="F8 precludes front lights" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <!-- BEGIN - Row 3 (Rear lights)-->
       <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
 		<display item="F1 precludes rear lights" format="checkbox" label="Rear lights"/>
-	  </griditem>
+      </griditem>
       <griditem gridx="1" gridy="2" gridwidth="1" anchor="LINE_END">
 		<display item="F2 precludes rear lights" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="2" gridy="2" gridwidth="1" anchor="LINE_END">
 		<display item="F3 precludes rear lights" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="3" gridy="2" gridwidth="1" anchor="LINE_END">
 		<display item="F4 precludes rear lights" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="4" gridy="2" gridwidth="1" anchor="LINE_END">
 		<display item="F5 precludes rear lights" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="5" gridy="2" gridwidth="1" anchor="LINE_END">
 		<display item="F6 precludes rear lights" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="6" gridy="2" gridwidth="1" anchor="LINE_END">
 		<display item="F7 precludes rear lights" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="7" gridy="2" gridwidth="1" anchor="LINE_END">
 		<display item="F8 precludes rear lights" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <!-- BEGIN - Row 4 (AUX 1)-->
       <griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
 		<display item="F1 precludes AUX 1" format="checkbox" label="AUX 1"/>
-	  </griditem>
+      </griditem>
       <griditem gridx="1" gridy="3" gridwidth="1" anchor="LINE_END">
 		<display item="F2 precludes AUX 1" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="2" gridy="3" gridwidth="1" anchor="LINE_END">
 		<display item="F3 precludes AUX 1" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="3" gridy="3" gridwidth="1" anchor="LINE_END">
 		<display item="F4 precludes AUX 1" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="4" gridy="3" gridwidth="1" anchor="LINE_END">
 		<display item="F5 precludes AUX 1" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="5" gridy="3" gridwidth="1" anchor="LINE_END">
 		<display item="F6 precludes AUX 1" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="6" gridy="3" gridwidth="1" anchor="LINE_END">
 		<display item="F7 precludes AUX 1" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="7" gridy="3" gridwidth="1" anchor="LINE_END">
 		<display item="F8 precludes AUX 1" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <!-- BEGIN - Row 5 (AUX 2)-->
       <griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
 		<display item="F1 precludes AUX 2" format="checkbox" label="AUX 2"/>
-	  </griditem>
+      </griditem>
       <griditem gridx="1" gridy="4" gridwidth="1" anchor="LINE_END">
 		<display item="F2 precludes AUX 2" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="2" gridy="4" gridwidth="1" anchor="LINE_END">
 		<display item="F3 precludes AUX 2" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="3" gridy="4" gridwidth="1" anchor="LINE_END">
 		<display item="F4 precludes AUX 2" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="4" gridy="4" gridwidth="1" anchor="LINE_END">
 		<display item="F5 precludes AUX 2" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="5" gridy="4" gridwidth="1" anchor="LINE_END">
 		<display item="F6 precludes AUX 2" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="6" gridy="4" gridwidth="1" anchor="LINE_END">
 		<display item="F7 precludes AUX 2" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="7" gridy="4" gridwidth="1" anchor="LINE_END">
 		<display item="F8 precludes AUX 2" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <!-- BEGIN - Row 6 (AUX 3)-->
       <griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
 		<display item="F1 precludes AUX 3" format="checkbox" label="AUX 3"/>
-	  </griditem>
+      </griditem>
       <griditem gridx="1" gridy="5" gridwidth="1" anchor="LINE_END">
 		<display item="F2 precludes AUX 3" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="2" gridy="5" gridwidth="1" anchor="LINE_END">
 		<display item="F3 precludes AUX 3" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="3" gridy="5" gridwidth="1" anchor="LINE_END">
 		<display item="F4 precludes AUX 3" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="4" gridy="5" gridwidth="1" anchor="LINE_END">
 		<display item="F5 precludes AUX 3" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="5" gridy="5" gridwidth="1" anchor="LINE_END">
 		<display item="F6 precludes AUX 3" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="6" gridy="5" gridwidth="1" anchor="LINE_END">
 		<display item="F7 precludes AUX 3" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="7" gridy="5" gridwidth="1" anchor="LINE_END">
 		<display item="F8 precludes AUX 3" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <!-- BEGIN - Row 7 (AUX 4)-->
       <griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
 		<display item="F1 precludes AUX 4" format="checkbox" label="AUX 4"/>
-	  </griditem>
+      </griditem>
       <griditem gridx="1" gridy="6" gridwidth="1" anchor="LINE_END">
 		<display item="F2 precludes AUX 4" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="2" gridy="6" gridwidth="1" anchor="LINE_END">
 		<display item="F3 precludes AUX 4" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="3" gridy="6" gridwidth="1" anchor="LINE_END">
 		<display item="F4 precludes AUX 4" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="4" gridy="6" gridwidth="1" anchor="LINE_END">
 		<display item="F5 precludes AUX 4" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="5" gridy="6" gridwidth="1" anchor="LINE_END">
 		<display item="F6 precludes AUX 4" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="6" gridy="6" gridwidth="1" anchor="LINE_END">
 		<display item="F7 precludes AUX 4" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="7" gridy="6" gridwidth="1" anchor="LINE_END">
 		<display item="F8 precludes AUX 4" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <!-- BEGIN - Row 8 (AUX 5)-->
       <griditem gridx="0" gridy="7" gridwidth="1" anchor="LINE_END">
 		<display item="F1 precludes AUX 5" format="checkbox" label="AUX 5"/>
-	  </griditem>
+      </griditem>
       <griditem gridx="1" gridy="7" gridwidth="1" anchor="LINE_END">
 		<display item="F2 precludes AUX 5" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="2" gridy="7" gridwidth="1" anchor="LINE_END">
 		<display item="F3 precludes AUX 5" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="3" gridy="7" gridwidth="1" anchor="LINE_END">
 		<display item="F4 precludes AUX 5" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="4" gridy="7" gridwidth="1" anchor="LINE_END">
 		<display item="F5 precludes AUX 5" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="5" gridy="7" gridwidth="1" anchor="LINE_END">
 		<display item="F6 precludes AUX 5" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="6" gridy="7" gridwidth="1" anchor="LINE_END">
 		<display item="F7 precludes AUX 5" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="7" gridy="7" gridwidth="1" anchor="LINE_END">
 		<display item="F8 precludes AUX 5" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <!-- BEGIN - Row 9 (AUX 6)-->
       <griditem gridx="0" gridy="8" gridwidth="1" anchor="LINE_END">
 		<display item="F1 precludes AUX 6" format="checkbox" label="AUX 6"/>
-	  </griditem>
+      </griditem>
       <griditem gridx="1" gridy="8" gridwidth="1" anchor="LINE_END">
 		<display item="F2 precludes AUX 6" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="2" gridy="8" gridwidth="1" anchor="LINE_END">
 		<display item="F3 precludes AUX 6" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="3" gridy="8" gridwidth="1" anchor="LINE_END">
 		<display item="F4 precludes AUX 6" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="4" gridy="8" gridwidth="1" anchor="LINE_END">
 		<display item="F5 precludes AUX 6" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="5" gridy="8" gridwidth="1" anchor="LINE_END">
 		<display item="F6 precludes AUX 6" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="6" gridy="8" gridwidth="1" anchor="LINE_END">
 		<display item="F7 precludes AUX 6" format="checkbox" label=""/>
-	  </griditem>
+      </griditem>
       <griditem gridx="7" gridy="8" gridwidth="1" anchor="LINE_END">
 		<display item="F8 precludes AUX 6" format="checkbox" label=""/>
-	  </griditem>
-	</grid>
+      </griditem>
+    </grid>
     <!-- END - Preclusion grid -->
     <label>
       <text> </text>
@@ -449,5 +501,86 @@
     <label>
       <text> </text>
     </label>
+    <separator/>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <!-- BEGIN - Initialmapping grid -->
+        <grid gridy="NEXT" weightx="1" ipadx="10">
+          <griditem gridx="0" gridy="0" gridwidth="1">
+              <label>
+                <text>Initialmapping</text>
+              </label>
+          </griditem>
+          <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Initialmapping - LV"/>
+              <label>
+                <text> </text>
+              </label>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Initialmapping - LR"/>
+              <label>
+                <text> </text>
+              </label>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Initialmapping - AUX1"/>
+              <label>
+                <text> </text>
+              </label>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Initialmapping - AUX2"/>
+              <label>
+                <text> </text>
+              </label>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Initialmapping - AUX3"/>
+              <label>
+                <text> </text>
+              </label>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Initialmapping - AUX4"/>
+              <label>
+                <text> </text>
+              </label>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="7" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Initialmapping - AUX5"/>
+              <label>
+                <text> </text>
+              </label>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="8" gridwidth="1" anchor="LINE_END">
+            <row>
+              <display item="Initialmapping - AUX6"/>
+              <label>
+                <text> </text>
+              </label>
+            </row>
+          </griditem>
+        </grid>
+        <!-- END - Initialmapping grid -->
+      </column>
+    </row>
   </column>
 </pane>
