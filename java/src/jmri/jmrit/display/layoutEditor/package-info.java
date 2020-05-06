@@ -116,10 +116,12 @@
  * <p>
  * (If these Javadoc were created with UML, the 
  * <a href="package.svg">
- *   full-scale package diagram is also available.
- *   <img src="/resources/icons/misc/UML_small_logo.png" align="right"/>
- * </a>.)
- *
+ *   full-scale package diagram is also available.</a>)
+ * <p style="text-align: center; font-size: xx-small;">
+ *      <a href="package.svg">
+ *          <img src="i/resources/icons/misc/UML_small_logo.png" title="Merge Dialog Box" border="0" />
+ *      </a>
+ * </p>
  * <!-- Put @see and @since tags down here. -->
  * @see jmri.jmrit.entryexit
  * @see jmri.Section
