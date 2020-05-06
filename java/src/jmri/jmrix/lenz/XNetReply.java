@@ -1,5 +1,10 @@
 package jmri.jmrix.lenz;
 
+import java.util.Optional;
+import java.util.function.Function;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 /**
  * Represents a single response from the XpressNet.
  *
@@ -139,41 +144,22 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      */
     public int getTurnoutMsgAddr() {
         if (this.isFeedbackMessage()) {
-            int a1 = this.getElement(1);
-            int a2 = this.getElement(2);
-            int messagetype = this.getFeedbackMessageType();
-            if (messagetype == 0 || messagetype == 1) {
-                // This is a turnout message
-                int address = (a1 & 0xff) * 4;
-                if (((a2 & 0x13) == 0x01) || ((a2 & 0x13) == 0x02)) {
-                    // This is the first address in the group*/
-                    return (address + 1);
-                } else if (((a2 & 0x1c) == 0x04) || ((a2 & 0x1c) == 0x08)) {
-                    // This is the second address in the group
-                    // return the odd address associated with this turnout
-                    return (address + 1);
-                } else if (((a2 & 0x13) == 0x11) || ((a2 & 0x13) == 0x12)) {
-                    // This is the third address in the group
-                    return (address + 3);
-                } else if (((a2 & 0x1c) == 0x14) || ((a2 & 0x1c) == 0x18)) {
-                    // This is the fourth address in the group
-                    // return the odd address associated with this turnout
-                    return (address + 3);
-                } else if ((a2 & 0x1f) == 0x10) {
-                    // This is an address in the upper nibble, but neither 
-                    // address has been operated.
-                    return (address + 3);
-                } else {
-                    // This is an address in the lower nibble, but neither 
-                    // address has been operated
-                    return (address + 1);
-                }
-            } else {
-                return -1;
-            }
-        } else {
+            return getTurnoutAddrFromData(
+                    getElement(1),
+                    getElement(2));
+        }
+        return -1;
+    }
+    
+    private int getTurnoutAddrFromData(int a1, int a2) {
+        if (getFeedbackMessageType() > 1) {
             return -1;
         }
+        int address = (a1 & 0xff) * 4 + 1;
+        if ((a2 & 0x10) != 0) {
+            address += 2;
+        }
+        return address;
     }
 
     /**
@@ -188,36 +174,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         if (this.isFeedbackBroadcastMessage()) {
             int a1 = this.getElement(startByte);
             int a2 = this.getElement(startByte + 1);
-            int messagetype = this.getFeedbackMessageType();
-            if (messagetype == 0 || messagetype == 1) {
-                // This is a turnout message
-                int address = (a1 & 0xff) * 4;
-                if (((a2 & 0x13) == 0x01) || ((a2 & 0x13) == 0x02)) {
-                    // This is the first address in the group*/
-                    return (address + 1);
-                } else if (((a2 & 0x1c) == 0x04) || ((a2 & 0x1c) == 0x08)) {
-                    // This is the second address in the group
-                    // return the odd address associated with this turnout
-                    return (address + 1);
-                } else if (((a2 & 0x13) == 0x11) || ((a2 & 0x13) == 0x12)) {
-                    // This is the third address in the group
-                    return (address + 3);
-                } else if (((a2 & 0x1c) == 0x14) || ((a2 & 0x1c) == 0x18)) {
-                    // This is the fourth address in the group
-                    // return the odd address associated with this turnout
-                    return (address + 3);
-                } else if ((a2 & 0x1f) == 0x10) {
-                    // This is an address in the upper nibble, but neither 
-                    // address has been operated.
-                    return (address + 3);
-                } else {
-                    // This is an address in the lower nibble, but neither 
-                    // address has been operated
-                    return (address + 1);
-                }
-            } else {
-                return -1;
-            }
+            return getTurnoutAddrFromData(a1, a2);
         } else {
             return -1;
         }
@@ -236,40 +193,10 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * @return THROWN/CLOSED as defined in {@link jmri.Turnout}
      */
     public int getTurnoutStatus(int turnout) {
-        if (this.isFeedbackMessage()) {
+        if (this.isFeedbackMessage() && (turnout == 0 || turnout == 1)) {
             int a2 = this.getElement(2);
-            int messagetype = this.getFeedbackMessageType();
-            if (messagetype == 0 || messagetype == 1) {
-                if (turnout == 1) {
-                    // we want the lower half of the nibble
-                    if ((a2 & 0x03) != 0) {
-                        /* this is for the First turnout in the nibble */
-                        int state = this.getElement(2) & 0x03;
-                        if (state == 0x01) {
-                            return (jmri.Turnout.CLOSED);
-                        } else if (state == 0x02) {
-                            return (jmri.Turnout.THROWN);
-                        } else {
-                            return -1; /* the state is invalid */
-
-                        }
-                    }
-                } else if (turnout == 0) {
-                    /* we want the upper half of the nibble */
-                    if ((a2 & 0x0C) != 0) {
-                        /* this is for the upper half of the nibble */
-                        int state = this.getElement(2) & 0x0C;
-                        if (state == 0x04) {
-                            return (jmri.Turnout.CLOSED);
-                        } else if (state == 0x08) {
-                            return (jmri.Turnout.THROWN);
-                        } else {
-                            return -1; /* the state is invalid */
-
-                        }
-                    }
-                }
-            }
+            // fake turnout id, used just internally. Just odd/even matters.
+            return createFeedbackItem(turnout, a2).getTurnoutStatus();
         }
         return (-1);
     }
@@ -289,40 +216,10 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * @return THROWN/CLOSED as defined in {@link jmri.Turnout}
      */
     public int getTurnoutStatus(int startByte, int turnout) {
-        if (this.isFeedbackBroadcastMessage()) {
+        if (this.isFeedbackBroadcastMessage() && (turnout == 0 || turnout == 1)) {
             int a2 = this.getElement(startByte + 1);
-            int messagetype = this.getFeedbackMessageType();
-            if (messagetype == 0 || messagetype == 1) {
-                if (turnout == 1) {
-                    // we want the lower half of the nibble
-                    if ((a2 & 0x03) != 0) {
-                        /* this is for the First turnout in the nibble */
-                        int state = this.getElement(2) & 0x03;
-                        if (state == 0x01) {
-                            return (jmri.Turnout.CLOSED);
-                        } else if (state == 0x02) {
-                            return (jmri.Turnout.THROWN);
-                        } else {
-                            return -1; /* the state is invalid */
-
-                        }
-                    }
-                } else if (turnout == 0) {
-                    /* we want the upper half of the nibble */
-                    if ((a2 & 0x0C) != 0) {
-                        /* this is for the upper half of the nibble */
-                        int state = this.getElement(2) & 0x0C;
-                        if (state == 0x04) {
-                            return (jmri.Turnout.CLOSED);
-                        } else if (state == 0x08) {
-                            return (jmri.Turnout.THROWN);
-                        } else {
-                            return -1; /* the state is invalid */
-
-                        }
-                    }
-                }
-            }
+            // fake turnout id, used just internally. Just odd/even matters.
+            return createFeedbackItem(turnout, a2).getTurnoutStatus();
         }
         return (-1);
     }
@@ -347,6 +244,22 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         } else {
             return -1;
         }
+    }
+
+    /**
+     * Returns the number of feedback items in the messages.
+     * For accessory info replies, always returns 1. For broadcast, it returns the
+     * number of feedback pairs. Returns 0 for non-feedback messages.
+     * 
+     * @return number of feedback pair items.
+     */
+    public final int getFeedbackMessageItems() {
+        if (isFeedbackMessage()) {
+            return 1;
+        } else if (isFeedbackBroadcastMessage()) {
+            return (this.getElement(0) & 0x0F) / 2;
+        }
+        return 0;
     }
 
     /**
@@ -671,7 +584,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * @return true if the message is an unsollicited message
+     * @return true if the message is an unsolicited message
      */
     @Override
     public boolean isUnsolicited() {
@@ -686,8 +599,131 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 || (this.isFeedbackMessage() && reallyUnsolicited));
     }
 
+    /**
+     * Resets the unsolicited feedback flag. If the reply was not a feedback,
+     * or was received as a broadcast - unsolicited from the command station, 
+     * this method  <b>will not cause</b> the {@link #isUnsolicited()} to 
+     * return {@code false}.  
+     * <p>
+     * Messages sent as unsolicited by the command station can not be turned 
+     * to solicited.
+     */
     public final void resetUnsolicited() {
         reallyUnsolicited = false;
+    }
+    
+    /**
+     * Mask to identify a turnout feedback + correct nibble. Turnout types differ in
+     * 6th bit, so it's left out (is variable).
+     */
+    private static final int FEEDBACK_TURNOUT_MASK = 0b0101_0000;
+    
+    /**
+     * Mask to identify a feedback module + correct nibble. Turnout modules have
+     * type exactly 2.
+     */
+    private static final int FEEDBACK_MODULE_MASK  = 0b0111_0000;
+    
+    /**
+     * The value of "feedback module" type. 
+     */
+    private static final int FEEDBACK_TYPE_FBMODULE = 0b0100_0000;
+    
+    /**
+     * Bit that indicates the higher nibble in module or turnout feedback
+     */
+    private static final int FEEDBACK_HIGH_NIBBLE = 0b0001_0000;
+    
+    private int findFeedbackData(int baseAddress, int selector, int mask) {
+        if (isFeedbackMessage()) {
+            // shorctcut for single-item msg
+            int data = getElement(2);
+            if (getElement(1) == baseAddress &&
+                (data & mask) == selector) {
+                return data;
+            }
+        } else {
+            int start = 1;
+            for (int cnt = getFeedbackMessageItems(); cnt > 0; cnt--, start += 2) {
+                int data = getElement(start + 1);
+                if (getElement(start) == baseAddress &&
+                    (data & mask) == selector) {
+                    return data;
+                }
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns value of the given feedback module bit. Returns {@link Optional}
+     * that is non-empty, if the feedback was present. The Optional's value indicates the
+     * feedback state.
+     * 
+     * @param sensorNumber the sensor bit ID
+     * @return optional sensor state.
+     */
+    @CheckForNull
+    public Boolean selectModuleFeedback(int sensorNumber) {
+        if (!isFeedbackBroadcastMessage() || sensorNumber == 0 || sensorNumber >= 1024) {
+            return null;
+        }
+        // feedback address directly addresses 8-bit module, XpressNet spec 3.0:2.1.11.
+        int s = sensorNumber - 1;
+        int baseAddress = (s / 8);
+        int selector2 = (s & 0x04) != 0 ? 
+                FEEDBACK_TYPE_FBMODULE | FEEDBACK_HIGH_NIBBLE : 
+                FEEDBACK_TYPE_FBMODULE;
+        int res = findFeedbackData(baseAddress, selector2, FEEDBACK_MODULE_MASK);
+        return res == -1 ? null : 
+                (res & (1 << (s % 4))) > 0;
+    }
+    
+    /**
+     * Calls processor for turnout's feedback, returns the processor's outcome.
+     * Searches for the turnout feedback for the given accessory. If found,
+     * runs a processor on the feedback item, and returns its Boolean result.
+     * <p>
+     * Returns {@code false}, if matching feedback is not found.
+     * @param accessoryNumber the turnout number
+     * @param proc the processor
+     * @return {@code false} if feedback was not found, or a result of {@code proc()}.
+     */
+    public boolean onTurnoutFeedback(int accessoryNumber, Function<FeedbackItem, Boolean> proc) {
+        return selectTurnoutFeedback(accessoryNumber).map(proc).orElse(false);
+    }
+
+    /**
+     * Selects a matching turnout feedback. Finds turnout feedback for the given {@code accessoryNumber}.
+     * Returns an encapsulated feedback, that can be inspected. If no matching feedback is
+     * present, returns empty {@link Optional}.
+     * @param accessoryNumber the turnout number
+     * @return optional feedback item.
+     */
+    @Nonnull
+    public Optional<FeedbackItem> selectTurnoutFeedback(int accessoryNumber) {
+        // shortcut for single-item messages.
+        if (!isFeedbackBroadcastMessage() || accessoryNumber <= 0 || accessoryNumber >= 1024) {
+            return Optional.empty();
+        }
+        int a = accessoryNumber - 1;
+        int base = (a / 4);
+        // the mask makes the turnout feedback type bit irrelevant
+        int selector2 = (a & 0x02) != 0 ? FEEDBACK_HIGH_NIBBLE : 0;
+        int r = findFeedbackData(base, selector2, FEEDBACK_TURNOUT_MASK);
+        if (r == -1) {
+            return Optional.empty();
+        }
+        FeedbackItem item = new FeedbackItem(this, accessoryNumber, r);
+        if (item.getAccessoryStatus() > 2) {
+            // mask out invalid statuses
+            return Optional.empty();
+        }
+        return Optional.of(item);
+    }
+    
+    protected final FeedbackItem createFeedbackItem(int n, int d) {
+        return new FeedbackItem(this, n, d);
     }
 
     /**
