@@ -8,11 +8,16 @@ import jmri.managers.DefaultProgrammerManager;
 /**
  * Extend DefaultProgrammerManager to provide programmers for CBUS systems
  *
+ * Added methods to manipulate the programmer availability.
+ * 
  * @see jmri.managers.DefaultProgrammerManager
- * @author Andrew crosland Copyright (C) 2009
+ * @author Andrew crosland Copyright (C) 2009, 2020
  */
 public class CbusDccProgrammerManager extends DefaultProgrammerManager {
 
+    private boolean _isAddressedModePossible = true;
+    private boolean _isGlobalProgrammerAvailable = true;
+    
     public CbusDccProgrammerManager(Programmer serviceModeProgrammer, CanSystemConnectionMemo memo) {
         super(serviceModeProgrammer, memo);
         tc = memo.getTrafficController();
@@ -27,7 +32,16 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
      */
     @Override
     public boolean isAddressedModePossible() {
-        return true;
+        return _isAddressedModePossible;
+    }
+
+    /**
+     * Set availability of addressed (ops mode) programmer.
+     * 
+     * @param state true if available
+     */
+    public void setAddressedModePossible(boolean state) {
+        _isAddressedModePossible = state;
     }
 
     /**
@@ -37,7 +51,16 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
      */
     @Override
     public boolean isGlobalProgrammerAvailable() {
-        return true;
+        return _isGlobalProgrammerAvailable;
+    }
+    
+    /**
+     * Set availability of global (service mode) programmer.
+     * 
+     * @param state true if available
+     */
+    public void setGlobalProgrammerAvailable(boolean state) {
+        _isGlobalProgrammerAvailable = state;
     }
 
     @Override

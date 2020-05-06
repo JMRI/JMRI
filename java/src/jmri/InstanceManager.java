@@ -485,6 +485,17 @@ public final class InstanceManager {
     }
 
     /**
+     * Fire property change
+     * 
+     * @param p the property
+     * @param old value
+     * @param n new value
+     */
+    public static synchronized void firePropertyChange(String p, Object old, Object n) {
+        getDefault().pcs.firePropertyChange(p, old, n);
+    }
+    
+    /**
      * Get the property name included in the
      * {@link java.beans.PropertyChangeEvent} thrown when the default for a
      * specific class is changed.

@@ -28,7 +28,17 @@ public class CbusPreferences extends PreferencesBean {
     private boolean _saveRestoreEventTable = true;
     private int minimumNumBackupsToKeep = 10;
     private int bootWriteDelay = CbusNode.BOOT_PROG_TIMEOUT_FAST;
+    private HardwareMode hardwareMode = HardwareMode.BOTH;
     
+    /**
+     * Hardware operating modes
+     */
+    public enum HardwareMode {
+        PROGRAMMER,
+        COMMANDSTATION,
+        BOTH
+    }
+
     public CbusPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
         Preferences sharedPreferences = ProfileUtils.getPreferences(super.getProfile(), this.getClass(), true);
@@ -256,6 +266,23 @@ public class CbusPreferences extends PreferencesBean {
      */
     public void setBootWriteDelay( int newVal ){
         bootWriteDelay = newVal;
+        savePreferences();
+    }
+    
+    /**
+     * Get the current hardware operating mode
+     * @return the mode
+     */
+    public HardwareMode getHardwareMode(){
+        return hardwareMode;
+    }
+    
+    /**
+     * Set the current hardware operating mode
+     * @param mode the new mode
+     */
+    public void setHardwareMode( HardwareMode mode ){
+        hardwareMode = mode;
         savePreferences();
     }
     
