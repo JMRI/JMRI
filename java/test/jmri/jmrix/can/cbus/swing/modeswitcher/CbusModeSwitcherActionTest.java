@@ -8,13 +8,13 @@ import org.junit.*;
  *
  * @author Andrew Crosland (C) 2020
  */
-public class ModeSwitcherActionTest {
+public class CbusModeSwitcherActionTest {
 
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        ModeSwitcherAction action = new ModeSwitcherAction("ModeSwitcherAction test");
+        CbusModeSwitcherAction action = new CbusModeSwitcherAction("CbusModeSwitcherAction test");
         Assert.assertNotNull("exists", action);
     }
 
