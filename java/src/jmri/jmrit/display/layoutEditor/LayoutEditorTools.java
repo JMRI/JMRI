@@ -1309,23 +1309,19 @@ final public class LayoutEditorTools {
         }
 
         for (LevelXing x : layoutEditor.getLevelXings()) {
-            if ((x.getSignalAName() != null)
-                    && (x.getSignalAName().equals(sName) || ((uName != null)
+            if (  (x.getSignalAName().equals(sName) || ((uName != null)
                     && (x.getSignalAName().equals(uName))))) {
                 return true;
             }
-            if ((x.getSignalBName() != null)
-                    && (x.getSignalBName().equals(sName) || ((uName != null)
+            if (  (x.getSignalBName().equals(sName) || ((uName != null)
                     && (x.getSignalBName().equals(uName))))) {
                 return true;
             }
-            if ((x.getSignalCName() != null)
-                    && (x.getSignalCName().equals(sName) || ((uName != null)
+            if (  (x.getSignalCName().equals(sName) || ((uName != null)
                     && (x.getSignalCName().equals(uName))))) {
                 return true;
             }
-            if ((x.getSignalDName() != null)
-                    && (x.getSignalDName().equals(sName) || ((uName != null)
+            if (  (x.getSignalDName().equals(sName) || ((uName != null)
                     && (x.getSignalDName().equals(uName))))) {
                 return true;
             }
@@ -1387,23 +1383,19 @@ final public class LayoutEditorTools {
             }
         }
         for (LevelXing x : layoutEditor.getLevelXings()) {
-            if ((x.getSignalAName() != null)
-                    && (x.getSignalAName().equals(sName) || ((uName != null)
+            if ( (x.getSignalAName().equals(sName) || ((uName != null)
                     && (x.getSignalAName().equals(uName))))) {
                 x.setSignalAName("");
             }
-            if ((x.getSignalBName() != null)
-                    && (x.getSignalBName().equals(sName) || ((uName != null)
+            if ( (x.getSignalBName().equals(sName) || ((uName != null)
                     && (x.getSignalBName().equals(uName))))) {
                 x.setSignalBName("");
             }
-            if ((x.getSignalCName() != null)
-                    && (x.getSignalCName().equals(sName) || ((uName != null)
+            if ( (x.getSignalCName().equals(sName) || ((uName != null)
                     && (x.getSignalCName().equals(uName))))) {
                 x.setSignalCName("");
             }
-            if ((x.getSignalDName() != null)
-                    && (x.getSignalDName().equals(sName) || ((uName != null)
+            if ( (x.getSignalDName().equals(sName) || ((uName != null)
                     && (x.getSignalDName().equals(uName))))) {
                 x.setSignalDName("");
             }
@@ -1615,7 +1607,7 @@ final public class LayoutEditorTools {
                 //Reached level crossing that may or may not be a block boundary
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalAName();
-                if ((signalName != null) && !signalName.isEmpty()) {
+                if ( !signalName.isEmpty() ) {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
                 t = (TrackSegment) x.getConnectC();
@@ -1630,7 +1622,7 @@ final public class LayoutEditorTools {
                 //Reached level crossing that may or may not be a block boundary
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalBName();
-                if ((signalName != null) && !signalName.isEmpty()) {
+                if ( !signalName.isEmpty() ) {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
                 t = (TrackSegment) x.getConnectD();
@@ -1645,7 +1637,7 @@ final public class LayoutEditorTools {
                 //Reached level crossing that may or may not be a block boundary
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalCName();
-                if ((signalName != null) && !signalName.isEmpty()) {
+                if ( !signalName.isEmpty() ) {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
                 t = (TrackSegment) x.getConnectA();
@@ -1660,7 +1652,7 @@ final public class LayoutEditorTools {
                 //Reached level crossing that may or may not be a block boundary
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalDName();
-                if ((signalName != null) && !signalName.isEmpty()) {
+                if ( !signalName.isEmpty() ) {
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
                 t = (TrackSegment) x.getConnectB();
@@ -9559,23 +9551,19 @@ final public class LayoutEditorTools {
             }
         }
         for (LevelXing x : layoutEditor.getLevelXings()) {
-            if ((x.getSignalAMastName() != null)
-                    && (x.getSignalAMastName().equals(sName) || ((uName != null)
+            if ( (x.getSignalAMastName().equals(sName) || ((uName != null)
                     && (x.getSignalAMastName().equals(uName))))) {
                 x.setSignalAMast("");
             }
-            if ((x.getSignalBMastName() != null)
-                    && (x.getSignalBMastName().equals(sName) || ((uName != null)
+            if ( (x.getSignalBMastName().equals(sName) || ((uName != null)
                     && (x.getSignalBMastName().equals(uName))))) {
                 x.setSignalBMast("");
             }
-            if ((x.getSignalCMastName() != null)
-                    && (x.getSignalCMastName().equals(sName) || ((uName != null)
+            if ( (x.getSignalCMastName().equals(sName) || ((uName != null)
                     && (x.getSignalCMastName().equals(uName))))) {
                 x.setSignalCMast("");
             }
-            if ((x.getSignalDMastName() != null)
-                    && (x.getSignalDMastName().equals(sName) || ((uName != null)
+            if ( (x.getSignalDMastName().equals(sName) || ((uName != null)
                     && (x.getSignalDMastName().equals(uName))))) {
                 x.setSignalDMast("");
             }
