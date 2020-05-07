@@ -97,27 +97,27 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private  boolean panelChanged = false;
 
     // size of point boxes
-    protected static final double SIZE = 3.0;
-    protected static final double SIZE2 = SIZE * 2.; // must be twice SIZE
+    public static final double SIZE = 3.0;
+    public static final double SIZE2 = SIZE * 2.; // must be twice SIZE
 
-    protected Color turnoutCircleColor = Color.black; // matches earlier versions
-    protected Color turnoutCircleThrownColor = Color.black;
-    protected boolean turnoutFillControlCircles = false;
-    protected int turnoutCircleSize = 4; // matches earlier versions
+    public Color turnoutCircleColor = Color.black; // matches earlier versions
+    public Color turnoutCircleThrownColor = Color.black;
+    private boolean turnoutFillControlCircles = false;
+    private int turnoutCircleSize = 4; // matches earlier versions
 
     // use turnoutCircleSize when you need an int and these when you need a double
     // note: these only change when setTurnoutCircleSize is called
     // using these avoids having to call getTurnoutCircleSize() and
     // the multiply (x2) and the int -> double conversion overhead
-    protected  double circleRadius = SIZE * getTurnoutCircleSize();
-    protected  double circleDiameter = 2.0 * circleRadius;
+    public  double circleRadius = SIZE * getTurnoutCircleSize();
+    public  double circleDiameter = 2.0 * circleRadius;
 
     // selection variables
-    protected  boolean selectionActive = false;
+    public  boolean selectionActive = false;
     private  double selectionX = 0.0;
     private  double selectionY = 0.0;
-    protected  double selectionWidth = 0.0;
-    protected  double selectionHeight = 0.0;
+    public  double selectionWidth = 0.0;
+    public  double selectionHeight = 0.0;
 
     // Option menu items
     private  JCheckBoxMenuItem editModeCheckBoxMenuItem = null;
@@ -180,19 +180,19 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     // Selected point information
     private final  Point2D startDelta = new Point2D.Double(0.0, 0.0); // starting delta coordinates
-    protected  Object selectedObject = null;       // selected object, null if nothing selected
-    protected  Object prevSelectedObject = null;   // previous selected object, for undo
+    public  Object selectedObject = null;       // selected object, null if nothing selected
+    public  Object prevSelectedObject = null;   // previous selected object, for undo
     private  HitPointType selectedHitPointType = HitPointType.NONE;         // hit point type within the selected object
 
-    protected  LayoutTrack foundTrack = null;      // found object, null if nothing found
-    protected  Point2D foundLocation = new Point2D.Double(0.0, 0.0); // location of found object
-    protected  HitPointType foundHitPointType = HitPointType.NONE;          // connection type within the found object
+    public  LayoutTrack foundTrack = null;      // found object, null if nothing found
+    private  Point2D foundLocation = new Point2D.Double(0.0, 0.0); // location of found object
+    public  HitPointType foundHitPointType = HitPointType.NONE;          // connection type within the found object
 
-    protected  LayoutTrack beginTrack = null;      // begin track segment connection object, null if none
-    protected  Point2D beginLocation = new Point2D.Double(0.0, 0.0); // location of begin object
-    protected  HitPointType beginHitPointType = HitPointType.NONE; // connection type within begin connection object
+    public  LayoutTrack beginTrack = null;      // begin track segment connection object, null if none
+    public  Point2D beginLocation = new Point2D.Double(0.0, 0.0); // location of begin object
+    private  HitPointType beginHitPointType = HitPointType.NONE; // connection type within begin connection object
 
-    protected  Point2D currentLocation = new Point2D.Double(0.0, 0.0); // current location
+    public  Point2D currentLocation = new Point2D.Double(0.0, 0.0); // current location
 
     // Lists of items that describe the Layout, and allow it to be drawn
     // Each of the items must be saved to disk over sessions
@@ -251,18 +251,18 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private  int numLayoutTurntables = 0;
     private  int numShapes = 0;
 
-    protected  LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
+    private  LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
 
     @Nonnull
     public LayoutEditorFindItems getFinder() {
         return finder;
     }
 
-    protected  Color mainlineTrackColor = Color.DARK_GRAY;
-    protected  Color sidelineTrackColor = Color.DARK_GRAY;
-    protected  Color defaultTrackColor = Color.DARK_GRAY;
-    protected  Color defaultOccupiedTrackColor = Color.red;
-    protected  Color defaultAlternativeTrackColor = Color.white;
+    private  Color mainlineTrackColor = Color.DARK_GRAY;
+    private  Color sidelineTrackColor = Color.DARK_GRAY;
+    public  Color defaultTrackColor = Color.DARK_GRAY;
+    private  Color defaultOccupiedTrackColor = Color.red;
+    private  Color defaultAlternativeTrackColor = Color.white;
     private  Color defaultTextColor = Color.black;
 
     private  String layoutName = "";
@@ -274,10 +274,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private  boolean snapToGridOnMove = false;
     private  boolean snapToGridInvert = false;
 
-    protected  boolean antialiasingOn = false;
-    protected  boolean highlightSelectedBlockFlag = false;
+    public  boolean antialiasingOn = false;
+    public  boolean highlightSelectedBlockFlag = false;
 
-    protected  boolean turnoutCirclesWithoutEditMode = false;
+    public  boolean turnoutCirclesWithoutEditMode = false;
     private  boolean tooltipsWithoutEditMode = false;
     private  boolean tooltipsInEditMode = true;
 
@@ -302,9 +302,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private final  double maxZoom = 8.0;
 
     // A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
-    protected  HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
+    private  HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
 
-    protected enum ToolBarSide {
+    private enum ToolBarSide {
         eTOP("top"),
         eLEFT("left"),
         eBOTTOM("bottom"),
@@ -661,7 +661,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     @Override
-    protected void init(String name) {
+    public void init(String name) {
     }
 
     @Override
@@ -689,7 +689,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     @Override
-    protected void targetWindowClosingEvent(WindowEvent e) {
+    public void targetWindowClosingEvent(WindowEvent e) {
         boolean save = (isDirty() || (savedEditMode != isEditable())
                 || (savedPositionable != allPositionable())
                 || (savedControlLayout != allControlling())
@@ -759,7 +759,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param menuBar to add the option menu to
      * @return option menu that was added
      */
-    protected JMenu setupOptionMenu(@Nonnull JMenuBar menuBar) {
+    private JMenu setupOptionMenu(@Nonnull JMenuBar menuBar) {
         JMenu optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
 
         optionMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("OptionsMnemonic")));
@@ -1416,7 +1416,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      *
      * @param menuBar the menu bar to add the Tools menu to
      */
-    protected void setupToolsMenu(@Nonnull JMenuBar menuBar) {
+    private void setupToolsMenu(@Nonnull JMenuBar menuBar) {
         JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
 
         toolsMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuToolsMnemonic")));
@@ -2299,7 +2299,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * Remove marker icons from panel
      */
     @Override
-    protected void removeMarkers() {
+    public void removeMarkers() {
         for (int i = markerImage.size(); i > 0; i--) {
             LocoIcon il = markerImage.get(i - 1);
 
@@ -2317,7 +2317,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     /**
      * Assign the block from the toolbar to all selected layout tracks
      */
-    protected void assignBlockToSelection() {
+    private void assignBlockToSelection() {
         String newName = leToolBarPanel.blockIDComboBox.getSelectedItemDisplayName();
         if (newName == null) {
             newName = "";
@@ -2660,7 +2660,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 getTurnoutCircleSize() == inSize, a);
     }
 
-    protected void setOptionMenuTurnoutCircleSize() {
+    private void setOptionMenuTurnoutCircleSize() {
         String tcs = Integer.toString(getTurnoutCircleSize());
         Enumeration<AbstractButton> e = turnoutCircleSizeButtonGroup.getElements();
         while (e.hasMoreElements()) {
@@ -3560,7 +3560,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * Select the menu items to display for the Positionable's popup.
      */
     @Override
-    protected void showPopUp(@Nonnull Positionable p, @Nonnull MouseEvent event) {
+    public void showPopUp(@Nonnull Positionable p, @Nonnull MouseEvent event) {
         if (!((Component) p).isVisible()) {
             return; // component must be showing on the screen to determine its location
         }
@@ -4059,11 +4059,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         be.setCoordsCenter(offset);
     }
 
-    protected  List<Positionable> _positionableSelection = new ArrayList<>();
-    protected  List<LayoutTrack> _layoutTrackSelection = new ArrayList<>();
-    protected  List<LayoutShape> _layoutShapeSelection = new ArrayList<>();
+    public  List<Positionable> _positionableSelection = new ArrayList<>();
+    public  List<LayoutTrack> _layoutTrackSelection = new ArrayList<>();
+    public  List<LayoutShape> _layoutShapeSelection = new ArrayList<>();
 
-    protected void createSelectionGroups() {
+    private void createSelectionGroups() {
         Rectangle2D selectionRect = getSelectionRect();
 
         getContents().forEach((o) -> {
@@ -4170,7 +4170,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         redrawPanel();
     }
 
-    protected void amendSelectionGroup(@Nonnull LayoutTrack p) {
+    public void amendSelectionGroup(@Nonnull LayoutTrack p) {
         if (_layoutTrackSelection.contains(p)) {
             _layoutTrackSelection.remove(p);
         } else {
@@ -4180,7 +4180,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         redrawPanel();
     }
 
-    protected void amendSelectionGroup(@Nonnull LayoutShape ls) {
+    public void amendSelectionGroup(@Nonnull LayoutShape ls) {
         if (_layoutShapeSelection.contains(ls)) {
             _layoutShapeSelection.remove(ls);
         } else {
@@ -4257,7 +4257,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         redrawPanel();
     }
 
-    protected boolean showAlignPopup() {
+    private boolean showAlignPopup() {
         return ((_positionableSelection.size() > 0)
                 || (_layoutTrackSelection.size() > 0)
                 || (_layoutShapeSelection.size() > 0));
@@ -4686,7 +4686,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     @Nonnull
-    protected PositionablePoint addAnchor(@Nonnull Point2D p) {
+    public PositionablePoint addAnchor(@Nonnull Point2D p) {
         // get unique name
         String name = finder.uniqueName("A", ++numAnchors);
 
@@ -5171,11 +5171,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param toObject      the object to link to
      * @param toPointType   the object type to link to
      */
-    protected void setLink(@Nonnull LayoutTrack fromObject, HitPointType fromPointType,
+    public void setLink(@Nonnull LayoutTrack fromObject, HitPointType fromPointType,
             @Nonnull LayoutTrack toObject, HitPointType toPointType) {
         switch (fromPointType) {
             case POS_POINT: {
-                if (toPointType == HitPointType.TRACK) {
+                if ( (toPointType == HitPointType.TRACK) && (fromObject instanceof PositionablePoint) ) {
                     ((PositionablePoint) fromObject).setTrackConnection((TrackSegment) toObject);
                 } else {
                     log.error("Attempt to link a non-TRACK connection ('{}')to a Positionable Point ('{}')",
@@ -5211,9 +5211,17 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
 
             default: {
-                if (HitPointType.isTurntableRayHitType(fromPointType)) {
-                    ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
-                            fromPointType.turntableTrackIndex() );
+                if (HitPointType.isTurntableRayHitType(fromPointType)  && (fromObject instanceof LayoutTurntable)) {
+                    if (toObject instanceof TrackSegment) {
+                        ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
+                                fromPointType.turntableTrackIndex() );
+                    } else {
+                        log.warn("setLink found expected toObject type {} with fromPointType {} fromObject type {}", 
+                                    toObject.getClass(), fromPointType, fromObject.getClass(), new Exception("traceback") );
+                    }
+                } else {
+                    log.warn("setLink found expected fromObject type {} with fromPointType {} toObject type {}", 
+                                fromObject.getClass(), fromPointType, toObject.getClass(), new Exception("traceback") );                    
                 }
                 break;
             }
@@ -5365,7 +5373,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param s the object to remove
      * @return true if found
      */
-    protected boolean remove(@Nonnull Object s) {
+    private boolean remove(@Nonnull Object s) {
         boolean found = false;
 
         if (backgroundImage.contains(s)) {
@@ -5599,7 +5607,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param o the PositionablePoint to remove
      * @return true if removed
      */
-    protected boolean removePositionablePoint(@Nonnull PositionablePoint o) {
+    public boolean removePositionablePoint(@Nonnull PositionablePoint o) {
         // First verify with the user that this is really wanted, only show message if there is a bit of track connected
         if ((o.getConnect1() != null) || (o.getConnect2() != null)) {
             if (!noWarnPositionablePoint) {
@@ -5658,7 +5666,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param o the LayoutTurnout to remove
      * @return true if removed
      */
-    protected boolean removeLayoutTurnout(@Nonnull LayoutTurnout o) {
+    public boolean removeLayoutTurnout(@Nonnull LayoutTurnout o) {
         // First verify with the user that this is really wanted
         if (!noWarnLayoutTurnout) {
             int selectedValue = JOptionPane.showOptionDialog(this,
@@ -5764,7 +5772,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param o the LevelXing to remove
      * @return true if removed
      */
-    protected boolean removeLevelXing(@Nonnull LevelXing o) {
+    public boolean removeLevelXing(@Nonnull LevelXing o) {
         // First verify with the user that this is really wanted
         if (!noWarnLevelXing) {
             int selectedValue = JOptionPane.showOptionDialog(this,
@@ -5842,7 +5850,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param o the LayoutSlip to remove
      * @return true if removed
      */
-    protected boolean removeLayoutSlip(@Nonnull LayoutTurnout o) {
+    public boolean removeLayoutSlip(@Nonnull LayoutTurnout o) {
         if (!(o instanceof LayoutSlip)) {
             return false;
         }
@@ -5918,7 +5926,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param o the LayoutTurntable to remove
      * @return true if removed
      */
-    protected boolean removeTurntable(@Nonnull LayoutTurntable o) {
+    public boolean removeTurntable(@Nonnull LayoutTurntable o) {
         // First verify with the user that this is really wanted
         if (!noWarnTurntable) {
             int selectedValue = JOptionPane.showOptionDialog(this,
@@ -5967,7 +5975,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      *
      * @param o the TrackSegment to remove
      */
-    protected void removeTrackSegment(@Nonnull TrackSegment o) {
+    public void removeTrackSegment(@Nonnull TrackSegment o) {
         // save affected blocks
         LayoutBlock block1 = null;
         LayoutBlock block2 = null;
@@ -6536,17 +6544,21 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         setDirty();
     }
 
-    /**
-     * Remove a background image from the list of background images
-     *
-     * @param b PositionableLabel to remove
-     */
-    protected void removeBackground(@Nonnull PositionableLabel b) {
-        if (backgroundImage.contains(b)) {
-            backgroundImage.remove(b);
-            setDirty();
-        }
-    }
+    // there is no way to call this; could that
+    //    private boolean remove(@Nonnull Object s)
+    // is being used instead.
+    //
+    ///**
+    // * Remove a background image from the list of background images
+    // *
+    // * @param b PositionableLabel to remove
+    // */
+    //private void removeBackground(@Nonnull PositionableLabel b) {
+    //    if (backgroundImage.contains(b)) {
+    //        backgroundImage.remove(b);
+    //        setDirty();
+    //    }
+    //}
 
     /**
      * add a layout shape to the list of layout shapes
@@ -6555,7 +6567,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @return the LayoutShape
      */
     @Nonnull
-    protected LayoutShape addLayoutShape(@Nonnull Point2D p) {
+    private LayoutShape addLayoutShape(@Nonnull Point2D p) {
         // get unique name
         String name = finder.uniqueName("S", ++numShapes);
 
@@ -6573,7 +6585,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param s the LayoutShape to add
      * @return true if added
      */
-    protected boolean removeLayoutShape(@Nonnull LayoutShape s) {
+    public boolean removeLayoutShape(@Nonnull LayoutShape s) {
         boolean result = false;
         if (layoutShapes.contains(s)) {
             layoutShapes.remove(s);
@@ -6617,7 +6629,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * the user can spec it.
      */
     @Override
-    protected void setNextLocation(@Nonnull Positionable obj) {
+    public void setNextLocation(@Nonnull Positionable obj) {
         obj.setLocation(xLoc, yLoc);
     }
 
@@ -7185,7 +7197,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     //
     // highlight the block selected by the specified combo Box
     //
-    protected boolean highlightBlockInComboBox(@Nonnull NamedBeanComboBox<Block> inComboBox) {
+    public boolean highlightBlockInComboBox(@Nonnull NamedBeanComboBox<Block> inComboBox) {
         return highlightBlock(inComboBox.getSelectedItem());
     }
 
@@ -7323,7 +7335,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     // reset turnout sizes to program defaults
-    protected void resetTurnoutSize() {
+    private void resetTurnoutSize() {
         turnoutBX = LayoutTurnout.turnoutBXDefault;
         turnoutCX = LayoutTurnout.turnoutCXDefault;
         turnoutWid = LayoutTurnout.turnoutWidDefault;
@@ -7375,7 +7387,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * is the 'target' pane where the layout is displayed
      */
     @Override
-    protected void paintTargetPanel(@Nonnull Graphics g) {
+    public void paintTargetPanel(@Nonnull Graphics g) {
         // Nothing to do here
         // All drawing has been moved into LayoutEditorComponent
         // which calls draw.
@@ -7384,8 +7396,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     // get selection rectangle
-    protected @Nonnull
-    Rectangle2D getSelectionRect() {
+    @Nonnull
+    public Rectangle2D getSelectionRect() {
         double selX = Math.min(selectionX, selectionX + selectionWidth);
         double selY = Math.min(selectionY, selectionY + selectionHeight);
         return new Rectangle2D.Double(selX, selY,
@@ -7426,7 +7438,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // redrawPanel(); // createSelectionGroups already calls this
     }
 
-    protected void setSelectRect(Rectangle rectangle) {
+    public void setSelectRect(Rectangle rectangle) {
         _selectRect = rectangle;
     }
 
@@ -7621,7 +7633,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     @Override
-    protected boolean showAlignPopup(@Nonnull Positionable l) {
+    public boolean showAlignPopup(@Nonnull Positionable l) {
         return false;
     }
 
@@ -7945,7 +7957,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
     }
 
-//    protected void rename(String inFrom, String inTo) {
+//    private void rename(String inFrom, String inTo) {
 //
 //    }
     @Override
