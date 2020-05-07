@@ -62,7 +62,7 @@ import jmri.util.swing.*;
  * @author Dave Duchamp Copyright: (c) 2004-2007
  * @author George Warner Copyright: (c) 2017-2019
  */
-public class LayoutEditor extends PanelEditor implements MouseWheelListener {
+final public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
 
     // Operational instance variables - not saved to disk
@@ -95,9 +95,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private  TrackSegment newTrack = null;
     private  boolean panelChanged = false;
-
-    private  int gridSize1st = 10;    // grid size in pixels
-    private  int gridSize2nd = 10;    // secondary grid
 
     // size of point boxes
     protected static final double SIZE = 3.0;
@@ -214,6 +211,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private  List<SignalHeadIcon> signalList = new ArrayList<>();                // Signal Head Icons
     private  List<SignalMastIcon> signalMastList = new ArrayList<>();            // Signal Mast Icons
 
+    public final LayoutEditorViewContext gContext = new LayoutEditorViewContext(); // public for now, as things work access changes
+    
     @Nonnull
     public List<SensorIcon> getSensorList() {
         return sensorList;
@@ -259,19 +258,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return finder;
     }
 
-    // persistent instance variables - saved to disk with Save Panel
-    private  int upperLeftX = 0; // Note: These are _WINDOW_ upper left x & y
-    private  int upperLeftY = 0; // (not panel)
-
-    private  int windowWidth = 0;
-    private  int windowHeight = 0;
-
-    protected  int panelWidth = 0;
-    protected  int panelHeight = 0;
-
-    protected  float mainlineTrackWidth = 4.0F;
-    protected  float sidelineTrackWidth = 2.0F;
-
     protected  Color mainlineTrackColor = Color.DARK_GRAY;
     protected  Color sidelineTrackColor = Color.DARK_GRAY;
     protected  Color defaultTrackColor = Color.DARK_GRAY;
@@ -280,8 +266,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private  Color defaultTextColor = Color.black;
 
     private  String layoutName = "";
-    private  double xScale = 1.0;
-    private  double yScale = 1.0;
     private  boolean animatingLayout = true;
     private  boolean showHelpBar = true;
     private  boolean drawGrid = true;
@@ -405,12 +389,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         // set to full screen
         Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
-        windowWidth = screenDim.width - 20;
-        windowHeight = screenDim.height - 120;
+        gContext.setWindowWidth(screenDim.width - 20);
+        gContext.setWindowHeight(screenDim.height - 120);
 
         // Let Editor make target, and use this frame
         super.setTargetPanel(null, null);
-        super.setTargetPanelSize(windowWidth, windowHeight);
+        super.setTargetPanelSize(gContext.getWindowWidth(), gContext.getWindowHeight());
         setSize(screenDim.width, screenDim.height);
 
         // register the resulting panel for later configuration
@@ -1087,7 +1071,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             optionMenu.add(locationItem);
             locationItem.addActionListener((ActionEvent event) -> {
                 setCurrentPositionAndSize();
-                log.debug("Bounds:{}, {}, {}, {}, {}, {}", upperLeftX, upperLeftY, windowWidth, windowHeight, panelWidth, panelHeight);
+                log.debug("Bounds:{}, {}, {}, {}, {}, {}", gContext.getUpperLeftX(), gContext.getUpperLeftY(), gContext.getWindowWidth(), gContext.getWindowHeight(), gContext.getLayoutWidth(), gContext.getLayoutHeight());
             });
         }
 
@@ -1394,10 +1378,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (layoutTrackDrawingOptions == null) {
             layoutTrackDrawingOptions = new LayoutTrackDrawingOptions(getLayoutName());
             // integrate LayoutEditor drawing options with previous drawing options
-            layoutTrackDrawingOptions.setMainBlockLineWidth((int) mainlineTrackWidth);
-            layoutTrackDrawingOptions.setSideBlockLineWidth((int) sidelineTrackWidth);
-            layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
-            layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
+            layoutTrackDrawingOptions.setMainBlockLineWidth(gContext.getMainlineTrackWidth());
+            layoutTrackDrawingOptions.setSideBlockLineWidth(gContext.getSidelineTrackWidth());
+            layoutTrackDrawingOptions.setMainRailWidth(gContext.getMainlineTrackWidth());
+            layoutTrackDrawingOptions.setSideRailWidth(gContext.getSidelineTrackWidth());
             layoutTrackDrawingOptions.setMainRailColor(mainlineTrackColor);
             layoutTrackDrawingOptions.setSideRailColor(sidelineTrackColor);
             layoutTrackDrawingOptions.setBlockDefaultColor(defaultTrackColor);
@@ -1417,8 +1401,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         layoutTrackDrawingOptions = ltdo;
 
         // integrate LayoutEditor drawing options with previous drawing options
-        mainlineTrackWidth = layoutTrackDrawingOptions.getMainBlockLineWidth();
-        sidelineTrackWidth = layoutTrackDrawingOptions.getSideBlockLineWidth();
+        gContext.setMainlineTrackWidth( layoutTrackDrawingOptions.getMainBlockLineWidth() );
+        gContext.setSidelineTrackWidth( layoutTrackDrawingOptions.getSideBlockLineWidth() );
         mainlineTrackColor = layoutTrackDrawingOptions.getMainRailColor();
         sidelineTrackColor = layoutTrackDrawingOptions.getSideRailColor();
         redrawPanel();
@@ -1808,8 +1792,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 JScrollBar vsb = scrollPane.getVerticalScrollBar();
 
                 // Increase scroll bar unit increments!!!
-                vsb.setUnitIncrement(gridSize1st);
-                hsb.setUnitIncrement(gridSize1st);
+                vsb.setUnitIncrement(gContext.getGridSize());
+                hsb.setUnitIncrement(gContext.getGridSize());
 
                 // add scroll bar adjustment listeners
                 vsb.addAdjustmentListener(this::scrollBarAdjusted);
@@ -1885,9 +1869,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         double ratioY = (oldMaxY < 1) ? 0 : oldY / oldMaxY;
 
         // calculate the new X maximum and value
-        int panelHeight = (int) (targetPanelSize.getHeight());
-        int scrollHeight = (int) scrollBounds.getHeight();
-        int newMaxY = Math.max(panelHeight - scrollHeight, 0);
+        int tempPanelHeight = (int) (targetPanelSize.getHeight());
+        int tempScrollHeight = (int) scrollBounds.getHeight();
+        int newMaxY = Math.max(tempPanelHeight - tempScrollHeight, 0);
         int newY = (int) (newMaxY * ratioY);
         vertScroll.setMaximum(newMaxY);
         vertScroll.setValue(newY);
@@ -2162,7 +2146,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         // put a grid size margin around it
-        result = MathUtil.inset(result, gridSize1st * gridSize2nd / -2.0);
+        result = MathUtil.inset(result, gContext.getGridSize() * gContext.getGridSize2nd() / -2.0);
 
         return result;
     }
@@ -2359,8 +2343,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         getLayoutTracks().forEach((lt) -> lt.scaleCoords(xFactor, yFactor));
 
         // update the overall scale factors
-        xScale *= xFactor;
-        yScale *= yFactor;
+        gContext.setXScale(gContext.getXScale() * xFactor);
+        gContext.setYScale(gContext.getYScale() * yFactor);
 
         resizePanelBounds(true);
         return true;
@@ -2593,23 +2577,23 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private void alignToGrid(List<Positionable> positionables, List<LayoutTrack> tracks, List<LayoutShape> shapes) {
         for (Positionable positionable : positionables) {
-            Point2D newLocation = MathUtil.granulize(positionable.getLocation(), gridSize1st);
+            Point2D newLocation = MathUtil.granulize(positionable.getLocation(), gContext.getGridSize());
             positionable.setLocation((int) (newLocation.getX()), (int) newLocation.getY());
         }
         for (LayoutTrack lt : tracks) {
-            lt.setCoordsCenter(MathUtil.granulize(lt.getCoordsCenter(), gridSize1st));
+            lt.setCoordsCenter(MathUtil.granulize(lt.getCoordsCenter(), gContext.getGridSize()));
             if (lt instanceof LayoutTurntable) {
                 LayoutTurntable tt = (LayoutTurntable) lt;
                 for (LayoutTurntable.RayTrack rt : tt.getRayTrackList()) {
                     int rayIndex = rt.getConnectionIndex();
-                    tt.setRayCoordsIndexed(MathUtil.granulize(tt.getRayCoordsIndexed(rayIndex), gridSize1st), rayIndex);
+                    tt.setRayCoordsIndexed(MathUtil.granulize(tt.getRayCoordsIndexed(rayIndex), gContext.getGridSize()), rayIndex);
                 }
             }
         }
         for (LayoutShape ls : shapes) {
-            ls.setCoordsCenter(MathUtil.granulize(ls.getCoordsCenter(), gridSize1st));
+            ls.setCoordsCenter(MathUtil.granulize(ls.getCoordsCenter(), gContext.getGridSize()));
             for (int idx = 0; idx < ls.getNumberPoints(); idx++) {
-                ls.setPoint(idx, MathUtil.granulize(ls.getPoint(idx), gridSize1st));
+                ls.setPoint(idx, MathUtil.granulize(ls.getPoint(idx), gContext.getGridSize()));
             }
         }
 
@@ -2623,20 +2607,20 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         Dimension dim = getSize();
 
         // Compute window size based on LayoutEditor size
-        windowHeight = dim.height;
-        windowWidth = dim.width;
+        gContext.setWindowHeight(dim.height);
+        gContext.setWindowWidth(dim.width);
 
         // Compute layout size based on LayoutPane size
         dim = getTargetPanelSize();
-        panelWidth = (int) (dim.width / getZoom());
-        panelHeight = (int) (dim.height / getZoom());
+        gContext.setLayoutWidth( (int) (dim.width / getZoom()) );
+        gContext.setLayoutHeight( (int) (dim.height / getZoom()) );
         adjustScrollBars();
 
         Point pt = getLocationOnScreen();
-        upperLeftX = pt.x;
-        upperLeftY = pt.y;
+        gContext.setUpperLeftY(pt.x);
+        gContext.setUpperLeftY(pt.y);
 
-        log.debug("setCurrentPositionAndSize Position - {},{} WindowSize - {},{} PanelSize - {},{}", upperLeftX, upperLeftY, windowWidth, windowHeight, panelWidth, panelHeight);
+        log.debug("setCurrentPositionAndSize Position - {},{} WindowSize - {},{} PanelSize - {},{}", gContext.getUpperLeftX(), gContext.getUpperLeftY(), gContext.getWindowWidth(), gContext.getWindowHeight(), gContext.getLayoutWidth(), gContext.getLayoutHeight());
         setDirty();
     }
 
@@ -3266,7 +3250,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
                 if (snapToGridOnAdd != snapToGridInvert) {
                     // this snaps the current point to the grid
-                    currentPoint = MathUtil.granulize(currentPoint, gridSize1st);
+                    currentPoint = MathUtil.granulize(currentPoint, gContext.getGridSize());
                     xLoc = (int) currentPoint.getX();
                     yLoc = (int) currentPoint.getY();
                     leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
@@ -4478,7 +4462,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             if ((selectedObject != null) && isMetaDown(event) && allPositionable()) {
                 if (snapToGridOnMove != snapToGridInvert) {
                     // this snaps currentPoint to the grid
-                    currentPoint = MathUtil.granulize(currentPoint, gridSize1st);
+                    currentPoint = MathUtil.granulize(currentPoint, gContext.getGridSize());
                     xLoc = (int) currentPoint.getX();
                     yLoc = (int) currentPoint.getY();
                     leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
@@ -4974,22 +4958,22 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         switch(type) {
 
             case RH_TURNOUT :
-                o = new LayoutRHTurnout(name, currentPoint, rot, xScale, yScale, this);
+                o = new LayoutRHTurnout(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
             case LH_TURNOUT :
-                o = new LayoutLHTurnout(name, currentPoint, rot, xScale, yScale, this);
+                o = new LayoutLHTurnout(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
             case WYE_TURNOUT :
-                o = new LayoutWye(name, currentPoint, rot, xScale, yScale, this);
+                o = new LayoutWye(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
             case DOUBLE_XOVER :
-                o = new LayoutDoubleXOver(name, currentPoint, rot, xScale, yScale, this);
+                o = new LayoutDoubleXOver(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
             case RH_XOVER :
-                o = new LayoutRHXOver(name, currentPoint, rot, xScale, yScale, this);
+                o = new LayoutRHXOver(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
             case LH_XOVER :
-                o = new LayoutLHXOver(name, currentPoint, rot, xScale, yScale, this);
+                o = new LayoutLHXOver(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
 
             case DOUBLE_SLIP :
@@ -6777,69 +6761,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return animatingLayout;
     }
 
-    public int getLayoutWidth() {
-        return panelWidth;
-    }
-
-    public int getLayoutHeight() {
-        return panelHeight;
-    }
-
-    public int getWindowWidth() {
-        return windowWidth;
-    }
-
-    public int getWindowHeight() {
-        return windowHeight;
-    }
-
-    public int getUpperLeftX() {
-        return upperLeftX;
-    }
-
-    public int getUpperLeftY() {
-        return upperLeftY;
-    }
-
     public boolean getScroll() {
         // deprecated but kept to allow opening files
         // on version 2.5.1 and earlier
         return _scrollState != Editor.SCROLL_NONE;
     }
 
-    public int setGridSize(int newSize) {
-        gridSize1st = newSize;
-        return gridSize1st;
-    }
-
-    public int getGridSize() {
-        return gridSize1st;
-    }
-
-    public int setGridSize2nd(int newSize) {
-        gridSize2nd = newSize;
-        return gridSize2nd;
-    }
-
-    public int getGridSize2nd() {
-        return gridSize2nd;
-    }
-
-    public int getMainlineTrackWidth() {
-        return (int) mainlineTrackWidth;
-    }
-
-    public int getSidelineTrackWidth() {
-        return (int) sidelineTrackWidth;
-    }
-
-    public double getXScale() {
-        return xScale;
-    }
-
-    public double getYScale() {
-        return yScale;
-    }
 
 //    public Color getDefaultBackgroundColor() {
 //        return defaultBackgroundColor;
@@ -6983,12 +6910,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     public void setLayoutDimensions(int windowWidth, int windowHeight, int windowX, int windowY, int panelWidth, int panelHeight, boolean merge) {
 
-        upperLeftX = windowX;
-        upperLeftY = windowY;
-        setLocation(upperLeftX, upperLeftY);
+        gContext.setUpperLeftX(windowX);
+        gContext.setUpperLeftY(windowY);
+        setLocation(gContext.getUpperLeftX(), gContext.getUpperLeftY());
 
-        this.windowWidth = windowWidth;
-        this.windowHeight = windowHeight;
+        gContext.setWindowWidth(windowWidth);
+        gContext.setWindowHeight(windowHeight);
         setSize(windowWidth, windowHeight);
 
         Rectangle2D panelBounds = new Rectangle2D.Double(0.0, 0.0, panelWidth, panelHeight);
@@ -7001,7 +6928,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     @Nonnull
     public Rectangle2D getPanelBounds() {
-        return new Rectangle2D.Double(0.0, 0.0, panelWidth, panelHeight);
+        return new Rectangle2D.Double(0.0, 0.0, gContext.getLayoutWidth(), gContext.getLayoutHeight());
     }
 
     public void setPanelBounds(@Nonnull Rectangle2D newBounds) {
@@ -7009,16 +6936,16 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         newBounds = newBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
         if (!getPanelBounds().equals(newBounds)) {
-            panelWidth = (int) newBounds.getWidth();
-            panelHeight = (int) newBounds.getHeight();
+            gContext.setLayoutWidth((int) newBounds.getWidth());
+            gContext.setLayoutHeight( (int) newBounds.getHeight());
             resetTargetSize();
         }
         log.debug("setPanelBounds(({})", newBounds);
     }
 
     private void resetTargetSize() {
-        int newTargetWidth = (int) (panelWidth * getZoom());
-        int newTargetHeight = (int) (panelHeight * getZoom());
+        int newTargetWidth = (int) (gContext.getLayoutWidth() * getZoom());
+        int newTargetHeight = (int) (gContext.getLayoutHeight() * getZoom());
 
         Dimension targetPanelSize = getTargetPanelSize();
         int oldTargetWidth = (int) targetPanelSize.getWidth();
@@ -7036,7 +6963,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         Rectangle2D result = getPanelBounds();
 
         // make room to expand
-        Rectangle2D b = MathUtil.inset(bounds, gridSize1st * gridSize2nd / -2.0);
+        Rectangle2D b = MathUtil.inset(bounds, gContext.getGridSize() * gContext.getGridSize2nd() / -2.0);
 
         // don't let origin go negative
         b = b.createIntersection(MathUtil.zeroToInfinityRectangle2D);
@@ -7045,14 +6972,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         setPanelBounds(result);
         return result;
-    }
-
-    public void setMainlineTrackWidth(int w) {
-        mainlineTrackWidth = w;
-    }
-
-    public void setSidelineTrackWidth(int w) {
-        sidelineTrackWidth = w;
     }
 
     /**
@@ -7152,18 +7071,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JmriColorChooser.addRecentColor(color);
     }
 
-    public void setXScale(double xSc) {
-        xScale = xSc;
-    }
-
-    public void setYScale(double ySc) {
-        yScale = ySc;
-    }
-
     public void setLayoutName(@Nonnull String name) {
         layoutName = name;
     }
-
+    
     /**
      * Should only be invoked on the GUI (Swing) thread
      */
@@ -8318,6 +8229,5 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     // initialize logging
-    private  final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditor.class
-    );
+    private  final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditor.class);
 }

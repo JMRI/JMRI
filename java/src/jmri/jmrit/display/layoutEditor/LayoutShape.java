@@ -589,7 +589,7 @@ public class LayoutShape {
                         LayoutShape ls = new LayoutShape(LayoutShape.this);
                         ls.setName(layoutEditor.getFinder().uniqueName("S"));
 
-                        double gridSize = layoutEditor.getGridSize();
+                        double gridSize = layoutEditor.gContext.getGridSize();
                         Point2D delta = new Point2D.Double(gridSize, gridSize);
                         for (LayoutShapePoint lsp : ls.getPoints()) {
                             lsp.setPoint(MathUtil.add(lsp.getPoint(), delta));

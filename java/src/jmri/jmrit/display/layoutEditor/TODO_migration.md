@@ -52,9 +52,41 @@ abstract protected void drawDecorations(Graphics2D g2);
 
 ===== 
 
-Where do the PositionablePoint editors for End Bumper, etc live?
+Where do the PositionablePoint editors for End Bumper, etc live? they're not really editors: From Dave Sand:
+
+> The Set items call LayoutEditorTools.  The Edit Link shows a small dialog to select the neighbor panel and block.
+> 
+> While each one has specific behaviors,  the ability to change the type is handy when creating/modifying track plans.  
+> 
+> Making them subclasses would simplify the showPopup method but makes the type change more difficult since it 
+> requires an object swap (unless there is a Java trick that I don't know).
+
 
 =========================================================
+
+These are kept as private variables with accessors in LayoutEditor, but their defaults come from LayoutTurnout.
+The LayoutEditor references seem to be the only ones
+
+LayoutEditor
+    // turnout size parameters - saved with panel
+    private  double turnoutBX = LayoutTurnout.turnoutBXDefault; // RH, LH, WYE
+    private  double turnoutCX = LayoutTurnout.turnoutCXDefault;
+    private  double turnoutWid = LayoutTurnout.turnoutWidDefault;
+    private  double xOverLong = LayoutTurnout.xOverLongDefault; // DOUBLE_XOVER, RH_XOVER, LH_XOVER
+    private  double xOverHWid = LayoutTurnout.xOverHWidDefault;
+    private  double xOverShort = LayoutTurnout.xOverShortDefault;
+    private  boolean useDirectTurnoutControl = false; // Uses Left click for closing points, Right click for throwing.
+
+LayoutTurnout
+    // program default turnout size parameters
+    public static final double turnoutBXDefault = 20.0;  // RH, LH, WYE
+    public static final double turnoutCXDefault = 20.0;
+    public static final double turnoutWidDefault = 10.0;
+    public static final double xOverLongDefault = 30.0;   // DOUBLE_XOVER, RH_XOVER, LH_XOVER
+    public static final double xOverHWidDefault = 10.0;
+    public static final double xOverShortDefault = 10.0;
+
+============================================================
 
 LayoutEditorComponent support of LayoutShapes, Memories, Blocks, etc as future problem
         layoutEditor.getLayoutShapes()
@@ -256,6 +288,10 @@ Where that "0" is really TRACKNODE_CONTINUING (by the argument). One way to prot
 to provide a getNextNode that has one argument, i.e. assumes the  TRACKNODE_CONTINUING
 
  =============
+ mainline track width, side track width are in both LayoutEditorViewContext and LayoutTrackDrawingOptions.
+ Also, why are they floats?  (What's loaded and stored? Is there any calcuation that can make a
+ non-integer value?)
+  =============
  
  The LayoutTrack classes ($LETRK) use these from LayoutEditor
  layoutEditor.setDirty();
