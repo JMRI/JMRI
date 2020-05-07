@@ -37,7 +37,7 @@ import org.slf4j.*;
  * @author Dave Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2019
  */
-public class LayoutEditorTools {
+final public class LayoutEditorTools {
 
     //constants
     //private final int NONE = 0;  //Signal at Turnout Positions

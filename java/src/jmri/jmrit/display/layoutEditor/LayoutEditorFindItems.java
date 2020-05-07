@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author George Warner Copyright (c) 2017-2018
  */
-public class LayoutEditorFindItems {
+final public class LayoutEditorFindItems {
 
     private final LayoutEditor layoutEditor;
 
