@@ -335,6 +335,102 @@ to provide a getNextNode that has one argument, i.e. assumes the  TRACKNODE_CONT
  non-integer value?)
 
 ---
+
+Outside its own package, "jmri.jmrit.display.layoutEditor" appears in (with counts):
+
+```
+   2 java/src/apps/Apps.java
+   1 java/src/apps/AppsBase.java
+   
+   1 java/src/jmri/BlockManager.java  
+                (ref and use jmri.jmrit.display.layoutEditor.BlockValueFile)
+                
+  11 java/src/jmri/Section.java
+   2 java/src/jmri/SectionManager.java
+
+   2 java/src/jmri/SignalMastLogic.java  
+                import jmri.jmrit.display.layoutEditor.LayoutBlock;
+                    public void setFacingBlock(LayoutBlock facing);
+                    public LayoutBlock getFacingBlock();
+                    public LayoutBlock getProtectingBlock(SignalMast destination);
+                    public LinkedHashMap<Block, Integer> setupLayoutEditorTurnoutDetails(List<LayoutBlock> blks, SignalMast destination);
+
+                import jmri.jmrit.display.layoutEditor.LevelXing;
+                    public void removeConflictingLogic(SignalMast sm, LevelXing lx);
+                    public void setConflictingLogic(SignalMast sm, LevelXing lx);
+                    
+   1 java/src/jmri/SignalMastLogicManager.java       
+                public void discoverSignallingDest(@Nonnull SignalMast source, @Nonnull LayoutEditor layout) throws JmriException;
+
+   1 java/src/jmri/Transit.java
+                public int checkSignals(LayoutEditor panel) {
+                public int validateConnectivity(LayoutEditor panel) {
+
+   6 java/src/jmri/configurexml/ClassMigration.properties
+   1 java/src/jmri/configurexml/LoadXmlConfigAction.java
+   2 java/src/jmri/implementation/DefaultCabSignal.java
+  14 java/src/jmri/implementation/DefaultSignalMastLogic.java
+   2 java/src/jmri/jmrit/beantable/BeanTableDataModel.java
+   3 java/src/jmri/jmrit/beantable/Maintenance.java
+   1 java/src/jmri/jmrit/beantable/SectionTableAction.java
+   1 java/src/jmri/jmrit/beantable/SignalMastLogicTableAction.java
+   2 java/src/jmri/jmrit/beantable/beanedit/BeanEditAction.java
+   2 java/src/jmri/jmrit/beantable/beanedit/BlockEditAction.java
+   1 java/src/jmri/jmrit/blockboss/BlockBossFrame.java              - Just an @see?
+   2 java/src/jmri/jmrit/dispatcher/AutoActiveTrain.java
+   3 java/src/jmri/jmrit/dispatcher/AutoAllocate.java
+   5 java/src/jmri/jmrit/dispatcher/AutoTurnouts.java
+   2 java/src/jmri/jmrit/dispatcher/DispatcherFrame.java
+   1 java/src/jmri/jmrit/dispatcher/OptionsFile.java
+   1 java/src/jmri/jmrit/dispatcher/OptionsMenu.java
+   2 java/src/jmri/jmrit/display/MemoryIcon.java
+   1 java/src/jmri/jmrit/display/NewPanelAction.java
+   2 java/src/jmri/jmrit/display/PanelMenu.java
+   3 java/src/jmri/jmrit/display/SignalMastIcon.java
+   2 java/src/jmri/jmrit/display/configurexml/BlockContentsIconXml.java
+   2 java/src/jmri/jmrit/display/configurexml/MemoryIconXml.java
+   1 java/src/jmri/jmrit/entryexit/AddEntryExitPairAction.java
+   1 java/src/jmri/jmrit/entryexit/AddEntryExitPairFrame.java
+   7 java/src/jmri/jmrit/entryexit/AddEntryExitPairPanel.java
+  14 java/src/jmri/jmrit/entryexit/DestinationPoints.java
+   9 java/src/jmri/jmrit/entryexit/EntryExitPairs.java
+   3 java/src/jmri/jmrit/entryexit/ManuallySetRoute.java
+   6 java/src/jmri/jmrit/entryexit/PointDetails.java
+   2 java/src/jmri/jmrit/entryexit/Source.java
+   1 java/src/jmri/jmrit/entryexit/configurexml/EntryExitPairsXml.java
+   2 java/src/jmri/jmrit/signalling/SignallingPanel.java
+   2 java/src/jmri/jmrit/signalling/SignallingSourcePanel.java
+   1 java/src/jmri/jmrit/whereused/WhereUsedCollectors.java
+   4 java/src/jmri/managers/DefaultSignalMastLogicManager.java
+   1 java/src/jmri/script/JmriScriptEngineManager.java
+   2 java/src/jmri/server/json/layoutblock/JsonLayoutBlockHttpService.java
+   2 java/src/jmri/server/json/layoutblock/JsonLayoutBlockSocketService.java
+   1 java/src/jmri/server/json/util/JsonUtilHttpService.java
+   1 java/src/jmri/web/servlet/panel/LayoutPanelServlet.java
+   
+   1 java/test/jmri/InstanceManagerTest.java
+   1 java/test/jmri/configurexml/LoadAndStoreTestBase.java
+   4 java/test/jmri/implementation/DefaultCabSignalIT.java
+   2 java/test/jmri/jmrit/beantable/BlockTableActionTest.java
+   2 java/test/jmri/jmrit/display/SensorIconWindowTest.java
+   3 java/test/jmri/jmrit/display/SignalSystemTest.java
+   2 java/test/jmri/jmrit/display/TurnoutIconWindowTest.java
+   1 java/test/jmri/jmrit/display/configurexml/LevelXingXmlTest.java
+   1 java/test/jmri/jmrit/entryexit/AddEntryExitPairActionTest.java
+   1 java/test/jmri/jmrit/entryexit/AddEntryExitPairPanelTest.java
+   2 java/test/jmri/jmrit/entryexit/DestinationPointsTest.java
+   2 java/test/jmri/jmrit/entryexit/EntryExitPairsTest.java
+   2 java/test/jmri/jmrit/entryexit/EntryExitTestTools.java
+   1 java/test/jmri/jmrit/entryexit/ManuallySetRouteTest.java
+   3 java/test/jmri/jmrit/entryexit/PointDetailsTest.java
+   3 java/test/jmri/jmrit/entryexit/SourceTest.java
+   2 java/test/jmri/server/json/layoutblock/JsonLayoutBlockSocketServiceTest.java
+   1 java/test/jmri/server/json/util/JsonUtilSocketServiceTest.java
+   1 java/test/jmri/util/JUnitUtil.java
+```
+
+
+---
  
  The LayoutTrack classes ($LETRK) use these from LayoutEditor
 ```
