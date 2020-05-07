@@ -135,7 +135,9 @@ isDisconnected in LayoutTrack (base) and PositionablePoint (subclass) seem very 
  - Run a cleanup on imports via NetBeans; you've left quite a few behind...
 
 ==================
-
+LayoutEditorViewContext:  Move the setters to a subclass, allowing separation of a read-only interface for most
+uses.  (Members final, but not class? Make the setters an internal class, with both final?)
+==================
 LayoutTrackDrawingOptions holds things like ballast color, etc.
 Persisted by configurexml/LayoutTrackDrawingOptionsXml.java
 Accessed and maintained by LayoutEditor.java
