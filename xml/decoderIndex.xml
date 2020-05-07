@@ -14099,6 +14099,9 @@
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_NAV_ST.xml">
         <model model="UNI16ARD-NAV-ST" lowVersionID="41" highVersionID="49" productID="16843010" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
       </family>
+      <family name="sidlo" mfg="Public-domain and DIY" file="Public_Domain_sidlo_ARD-LN-S88.xml">
+        <model model="ARD-LN-S88" productID="1" developerID="21" />
+      </family>
       <family name="QSI Articulated Steam" mfg="QSIndustries" lowVersionID="2" highVersionID="5" file="QSI_Articulated_Steam.xml">
         <model model="BLI AC5 Cab Forward 4-8-8-2" lowVersionID="5" numFns="14" numOuts="14" productID="403">
           <output name="1" label="Plug" connection="other" />
