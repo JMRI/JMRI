@@ -50,7 +50,7 @@ public class HexRecord {
      * Read a new record from a file.
      * 
      * @param f hex file to read from
-     * @throws IOException 
+     * @throws IOException from underlying read operations
      */
     public HexRecord(HexFile f) throws IOException {
         this();
@@ -150,7 +150,7 @@ public class HexRecord {
      * Read the data bytes.
      * 
      * @param f Input hex file
-     * @throws IOException 
+     * @throws IOException from underlying read operations
      */
     void readData(HexFile f) throws IOException {
         if (type != END) {

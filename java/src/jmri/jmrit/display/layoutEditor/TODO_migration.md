@@ -212,13 +212,13 @@ layoutEditor/LayoutBlock.java:    final static int ADDITION = 0x00;
 layoutEditor/LayoutBlock.java:    final static int UPDATE = 0x02;
 layoutEditor/LayoutBlock.java:    final static int REMOVAL = 0x04;
 
-Note bits, with an odd choice of NONE
+Note bits, with an odd choice of NONE - confined to Layout Block, make private? 
 layoutEditor/LayoutBlock.java:    final static int RXTX = 0x00;
 layoutEditor/LayoutBlock.java:    final static int RXONLY = 0x02;
 layoutEditor/LayoutBlock.java:    final static int TXONLY = 0x04;
 layoutEditor/LayoutBlock.java:    final static int NONE = 0x08;
 
-layoutEditor/ConnectivityUtil.java:    public static final int OVERALL = 0x00;
+layoutEditor/ConnectivityUtil.java:    public static final int OVERALL = 0x00;  (Connected to Section.java)
 layoutEditor/ConnectivityUtil.java:    public static final int CONTINUING = 0x01;
 layoutEditor/ConnectivityUtil.java:    public static final int DIVERGING = 0x02;
 
@@ -241,6 +241,19 @@ These bits are or'd, see tests
 layoutEditor/TrackSegment.java:    public static final int SHOWCON = 0x01;
 layoutEditor/TrackSegment.java:    public static final int HIDECON = 0x02;     // flag set on a segment basis.
 layoutEditor/TrackSegment.java:    public static final int HIDECONALL = 0x04;  // Used by layout editor for hiding all
+
+
+An example of a private enum that's not, from ConnectivityUtil:
+    private final int TRACKNODE_CONTINUING = 0;
+    private final int TRACKNODE_DIVERGING = 1;
+    private final int TRACKNODE_DIVERGING_2ND_3WAY = 2;
+
+Note private. But Section.java has lots of lines like:
+
+                    tn = cUtil.getNextNode(tn, 0);
+
+Where that "0" is really TRACKNODE_CONTINUING (by the argument). One way to protect is
+to provide a getNextNode that has one argument, i.e. assumes the  TRACKNODE_CONTINUING
 
  =============
  
@@ -316,6 +329,25 @@ To understand the above, probably have to move the listener definitions out.
   11 LayoutSlip.java:
 
 Mostly addActionListener via ()->, some named listeners, some addPropertyChangeListener
+
+=============
+This is in Section.java, should be in somewhere in the layoutManager package under navigation section
+
+
+    private LayoutTurnout getLayoutTurnoutFromTurnoutName(String turnoutName, LayoutEditor panel) {
+        Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+        if (t == null) {
+            return null;
+        }
+        for (LayoutTurnout lt : panel.getLayoutTurnouts()) {
+            if (lt.getTurnout() == t) {
+                return lt;
+            }
+        }
+        return null;
+    }
+
+
 
 =============
 

@@ -33,7 +33,6 @@ public class CbusCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
         JUnitUtil.initLayoutBlockManager();
         JUnitUtil.initDefaultSignalMastManager();
         JUnitUtil.initSignalMastLogicManager();
-        InstanceManager.setDefault(jmri.jmrit.display.PanelMenu.class,new jmri.jmrit.display.PanelMenu());
 
         // prepare the cab signal
         memo = new CanSystemConnectionMemo();
