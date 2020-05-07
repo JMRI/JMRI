@@ -1514,7 +1514,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
             if ((editor != null) && (connection == null)) {
                 // We should be able to determine block metric now as the tracksegment should be valid
-                connection = new ConnectivityUtil(editor);
+                connection = editor.getConnectivityUtil();
             }
 
             // Need to inform our neighbours of our new addition
@@ -2273,7 +2273,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                                 }
                                 layoutBlock.removeRouteFromNeighbour(this, newUpdate);
                                 getAdjacency(nextblk).removeRouteAdvertisedToNeighbour(routesToRemove.get(j));
-                                
+
                             } else {
                                 if (enableDeleteRouteLogging) {
                                     log.info("{} a valid path through exists {} so we will not remove route.", msgPrefix, nextblk.getDisplayName());
@@ -2434,7 +2434,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             log.info("Block {}, src: {}, dst: {}",
                     block.getDisplayName(), srcBlock.getDisplayName(), dstBlock.getDisplayName());
         }
-        connection = new ConnectivityUtil(panel);
+        connection = panel.getConnectivityUtil();
         List<LayoutTrackExpectedState<LayoutTurnout>> stod;
 
         try {
