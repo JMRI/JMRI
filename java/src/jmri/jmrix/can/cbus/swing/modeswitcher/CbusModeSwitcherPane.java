@@ -1,16 +1,15 @@
 package jmri.jmrix.can.cbus.swing.modeswitcher;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
 import jmri.ProgrammerManager.ProgrammerType;
 import jmri.jmrix.can.cbus.CbusDccProgrammerManager;
 import jmri.jmrix.can.cbus.CbusPreferences;
@@ -26,17 +25,17 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Andrew Crosland Copyright (C) 2020
  */
-public class ModeSwitcherPane extends JmriJFrame {
+public class CbusModeSwitcherPane extends JmriJFrame {
     
-    GlobalProgrammerManager gpm = null;
     CbusDccProgrammerManager cdpm = null;
+    GlobalProgrammerManager gpm = null;
     
     JRadioButton progModeButton;
     JRadioButton cmdModeButton;
 
     private CbusPreferences preferences;
 
-    public ModeSwitcherPane() {
+    public CbusModeSwitcherPane() {
         super();
     }
     
@@ -57,24 +56,23 @@ public class ModeSwitcherPane extends JmriJFrame {
     @Override
     public void initComponents() {
         preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        gpm = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
         
         JLabel label = new JLabel();
         JPanel panel = new JPanel(new BorderLayout());
-        JPanel modePane = new JPanel();
-        
-        gpm = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
         
         if (!(gpm instanceof CbusDccProgrammerManager)) {
-            // No CBUS programer
-            // Wrap  in html to get wrapping when added to border layout
+            // We don't have a CBUS programmer
             label.setText("<html>"+Bundle.getMessage("NoCBUSProgrammer")+"</html>");
+            panel.add(label, BorderLayout.NORTH);
         } else {
             cdpm = (CbusDccProgrammerManager)gpm;
-        
+            
             // Wrap  in html to get wrapping when added to border layout
             label.setText("<html>"+Bundle.getMessage("HardwareModeLabel")+"</html>");
 
             // Mode selector
+            JPanel modePane = new JPanel();
             modePane.setLayout(new BoxLayout(modePane, BoxLayout.Y_AXIS));
             modePane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), Bundle.getMessage("HardwareMode")));
@@ -85,31 +83,35 @@ public class ModeSwitcherPane extends JmriJFrame {
                 case BOTH:
                     progModeButton.setSelected(true);
                     cmdModeButton.setSelected(true);
-                    log.info("Programmer type from preferences now BOTH");
+                    log.info("Hardware mode from preferences now BOTH");
                     break;
-                case GLOBAL:
+                case ADDRESSED: // command station with addressed (ops mode) programmer
                     progModeButton.setSelected(false);
                     cmdModeButton.setSelected(true);
-                    log.info("Programmer type from preferences now GLOBAL"); 
+                    log.info("Programmer from preferences now ADDRESSED"); 
                     break;
-                default:
+                default:    // Programmer with global (service mode) programmer
                     progModeButton.setSelected(true);
                     cmdModeButton.setSelected(false);
-                    log.info("Programmer type from preferences now ADDESSED");
+                    log.info("Programmer type from preferences now GLOBAL");
                     break;
             }
 
             // Handle Programmer mode button activity
-            ActionListener setMode = ae -> {
+            ActionListener setMode = (ActionEvent ae) -> {
                 if ((!progModeButton.isSelected() && !cmdModeButton.isSelected())
                         || (progModeButton.isSelected() && !cmdModeButton.isSelected())) {
-                    log.info("Default or switch to programmer mode with global (service mode) programmer");
+                    // Default or switch to programmer mode
+                    progModeButton.setSelected(true);
+                    log.info("System now in programmer mode with global (service mode) programmer");
                     cdpm.setProgrammerType(ProgrammerType.GLOBAL);
                 } else if (!progModeButton.isSelected() && cmdModeButton.isSelected()) {
-                    log.info("Switch to command station mode with addressed (ops mode) programmer");
+                    // Switch to command staton mode
+                    log.info("System now in command station mode with addressed (ops mode) programmer");
                     cdpm.setProgrammerType(ProgrammerType.ADDRESSED);
                 } else {
-                    log.info("Switch to universal mode with both global (service mode) addressed (ops mode) programmer");
+                    // Switch to both
+                    log.debug("System now in universal mode with global and addressed programmers");
                     cdpm.setProgrammerType(ProgrammerType.BOTH);
                 }
                 preferences.setProgrammerType(cdpm.getProgrammerType());
@@ -119,10 +121,10 @@ public class ModeSwitcherPane extends JmriJFrame {
             cmdModeButton.addActionListener(setMode);
             modePane.add(progModeButton);
             modePane.add(cmdModeButton);
+
+            panel.add(label, BorderLayout.NORTH);
+            panel.add(modePane, BorderLayout.CENTER);
         }
-        
-        panel.add(label, BorderLayout.NORTH);
-        panel.add(modePane, BorderLayout.CENTER);
         
         this.add(panel);
 
@@ -130,6 +132,6 @@ public class ModeSwitcherPane extends JmriJFrame {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ModeSwitcherPane.class);
+    private final static Logger log = LoggerFactory.getLogger(CbusModeSwitcherPane.class);
     
 }
