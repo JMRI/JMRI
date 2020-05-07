@@ -1,6 +1,7 @@
 This is a fast-evolving list of items for the restructuring of the display.layoutEditor package. 
 It's in no particular order, items are removed as done, so please don't consider it documentation.
 
+
 ----
 
 ## MVC work
@@ -10,6 +11,7 @@ It's in no particular order, items are removed as done, so please don't consider
 
 Usages from LayoutTrackView:
 
+```
 protected abstract void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
 
     java/src/jmri/jmrit/display/layoutEditor/LayoutTurnout.java:3442
@@ -48,9 +50,14 @@ abstract protected void drawDecorations(Graphics2D g2);
     java/src/jmri/jmrit/display/layoutEditor/LevelXing.java:1500
 
     java/src/jmri/jmrit/display/layoutEditor/LayoutEditorChecks.java:379
+```
 
+---
 
-===== 
+Eventually, *View classes should receive a reference to the *ViewContext object(s) and
+use that as an accessor instead of the LayoutEditor reference.
+
+---
 
 Where do the PositionablePoint editors for End Bumper, etc live? they're not really editors: From Dave Sand:
 
@@ -62,11 +69,12 @@ Where do the PositionablePoint editors for End Bumper, etc live? they're not rea
 > requires an object swap (unless there is a Java trick that I don't know).
 
 
-=========================================================
+---
 
 These are kept as private variables with accessors in LayoutEditor, but their defaults come from LayoutTurnout.
 The LayoutEditor references seem to be the only ones
 
+```
 LayoutEditor
     // turnout size parameters - saved with panel
     private  double turnoutBX = LayoutTurnout.turnoutBXDefault; // RH, LH, WYE
@@ -85,19 +93,22 @@ LayoutTurnout
     public static final double xOverLongDefault = 30.0;   // DOUBLE_XOVER, RH_XOVER, LH_XOVER
     public static final double xOverHWidDefault = 10.0;
     public static final double xOverShortDefault = 10.0;
-
-============================================================
+```
+---
 
 LayoutEditorComponent support of LayoutShapes, Memories, Blocks, etc as future problem
+```
         layoutEditor.getLayoutShapes()
+```
  
 LayoutEditorComponent.drawTrackSegmentInProgress still uses LayoutTrack not LayoutTrackView
     but what does it actually do? calls to LayoutTrack.highlightUnconnected(..) in two forms
 
-============================================================
+---
 
-- [ ] getId vs getName why? getName (257) much more common than getId (35), but is it right?
+getId vs getName why? getName (257) much more common than getId (35), but is it right?
 
+```
 % grep -r 'String getName\(\)' java/src/jmri/jmrit/display/layoutEditor/
 java/src/jmri/jmrit/display/layoutEditor//LayoutTrackDrawingOptions.java:    public String getName() {
 java/src/jmri/jmrit/display/layoutEditor//LayoutShape.java:    public String getName() {
@@ -107,14 +118,15 @@ java/src/jmri/jmrit/display/layoutEditor//LayoutTrack.java:    final public Stri
 % grep -r 'String getId\(\)' java/src/jmri/jmrit/display/layoutEditor/
 java/src/jmri/jmrit/display/layoutEditor//LayoutBlock.java:    public String getId() {
 java/src/jmri/jmrit/display/layoutEditor//LayoutTrack.java:    final public String getId() {
+```
 
-=========================================================
+---
 
 ## Code Pushes
 
  - Operational code in the LayoutTrack tree needs to be pushed up and down.
 
-isDisconnected in LayoutTrack (base) and PositionablePoint (subclass) seem very different;
+    isDisconnected in LayoutTrack (base) and PositionablePoint (subclass) seem very different;
     do they actually do the same thing?  Want to make one final implementation if possible.
     
 
@@ -122,8 +134,8 @@ isDisconnected in LayoutTrack (base) and PositionablePoint (subclass) seem very 
     LayoutTurnout, LayoutSlip, LevelXing
     
 - Why is this considered common code by CI?
+
     import static java.lang.Float.POSITIVE_INFINITY; 
-    
     
 
 ## Further items
@@ -134,10 +146,13 @@ isDisconnected in LayoutTrack (base) and PositionablePoint (subclass) seem very 
  - Sort out comments at the top of LayoutTrack & subclasses
  - Run a cleanup on imports via NetBeans; you've left quite a few behind...
 
-==================
+---
+
 LayoutEditorViewContext:  Move the setters to a subclass, allowing separation of a read-only interface for most
 uses.  (Members final, but not class? Make the setters an internal class, with both final?)
-==================
+
+---
+
 LayoutTrackDrawingOptions holds things like ballast color, etc.
 Persisted by configurexml/LayoutTrackDrawingOptionsXml.java
 Accessed and maintained by LayoutEditor.java
@@ -145,29 +160,35 @@ Accessed by LayoutEditor, maybe set?
 Edited by LayoutEditorDialogs/LayoutTrackDrawingOptionsDialog
     Options -> Track Options -> Set Track Options that opens a window
 There's also a Options -> Turnout Options that says in a sub menu
-==================
+
+---
  
 This needs to get hooked up properly:
+
+```
     [javac] /Users/jake/Documents/Trains/JMRI/projects/JMRI/java/src/jmri/jmrit/display/layoutEditor/LayoutEditorChecks.java:378: error: cannot find symbol
     [javac]             layoutEditor.getLayoutTrackEditors().editLayoutTrack(layoutTrack);
     [javac]                         ^
     [javac]   symbol:   method getLayoutTrackEditors()
     [javac]   location: variable layoutEditor of type LayoutEditor
+```
 
+---
 
-===================
+About writing out the image files in tests:
 
-Add a control property for writing out the image files in 
-./runtest.csh java/test/jmri/jmrit/display/layoutEditor/LoadAndStoreTest
+ - Add a control property for writing out the image files in 
+``./runtest.csh java/test/jmri/jmrit/display/layoutEditor/LoadAndStoreTest`
 
-Drop status output to System.err
+ - Drop status output to System.err
 
-Consider moving the write up once it's controlled.
-===================
+ - Consider moving the write up for other classes once it's controlled.
+
+---
 
  TrackSegment HIDECON as an EnumSet
  https://docs.oracle.com/javase/7/docs/api/java/util/EnumSet.html
- 
+``` 
      public enum Style {
         BOLD, ITALIC, UNDERLINE, STRIKETHROUGH
     }
@@ -179,7 +200,9 @@ Consider moving the write up once it's controlled.
         assert EnumSet.of(Style.BOLD, Style.ITALIC).equals(styles); // check set contents are correct
         System.out.println(styles);
     }
---
+```    
+
+```
 public enum Flag {
     UPPERCASE, REVERSE, FULL_STOP, EMPHASISE;
 
@@ -191,8 +214,10 @@ public enum Flag {
 
  EnumSet.of(Flag.UPPERCASE))
  EnumSet.of(Flag.FULL_STOP, Flag.EMPHASISE)
- 
- ============
+```
+
+--- 
+
  % grep "nothing to see" *.java  (Multiple copies removed below)
 LayoutEditorChecks.java:                //nothing to see here... move along...
 LayoutTurntable.java:            // nothing to see here, move along...
@@ -201,23 +226,24 @@ PositionablePoint.java:        //nothing to see here... move along...
 TrackSegment.java:        //nothing to see here, move along
 TrackSegment.java:        //nothing to see here, move along
 
-=================
+---
 
 Fix `//([a-zA-Z])` comments with `// \1`
    
-=================
+---
    
    Consider moving list management entirely out of Layout Manager to decrease size & complexity.
    
-=============
-   although it's deferring to the View classes mostly, LayoutComponent is
-   still messing with i.e. isDisabled, isHidden instead of defettnig that to the objects
+---
+
+although it's deferring to the View classes mostly, LayoutComponent is
+still messing with i.e. isDisabled, isHidden instead of deferring that to the objects
    
- ============
+---
  
  Might still be enum:
  
- 
+```
 layoutEditor/blockRoutingTable/LayoutBlockNeighbourTableModel.java:    public static final int NEIGHBOURCOL = 0;
 layoutEditor/blockRoutingTable/LayoutBlockNeighbourTableModel.java:    static final int DIRECTIONCOL = 1;
 layoutEditor/blockRoutingTable/LayoutBlockNeighbourTableModel.java:    static final int MUTUALCOL = 2;
@@ -239,14 +265,18 @@ layoutEditor/blockRoutingTable/LayoutBlockRouteTableModel.java:    static final 
 layoutEditor/blockRoutingTable/LayoutBlockRouteTableModel.java:    static final int STATECOL = 6;
 layoutEditor/blockRoutingTable/LayoutBlockRouteTableModel.java:    static final int VALIDCOL = 7;
 layoutEditor/blockRoutingTable/LayoutBlockRouteTableModel.java:    static final int NUMCOL = 7 + 1;
+```
 
-Note bits
+Note bits:
+```
 layoutEditor/LayoutBlock.java:    public static final int RESERVED = 0x08;
 layoutEditor/LayoutBlock.java:    final static int ADDITION = 0x00;
 layoutEditor/LayoutBlock.java:    final static int UPDATE = 0x02;
 layoutEditor/LayoutBlock.java:    final static int REMOVAL = 0x04;
+```
 
 Note bits, with an odd choice of NONE - confined to Layout Block, make private? 
+```
 layoutEditor/LayoutBlock.java:    final static int RXTX = 0x00;
 layoutEditor/LayoutBlock.java:    final static int RXONLY = 0x02;
 layoutEditor/LayoutBlock.java:    final static int TXONLY = 0x04;
@@ -255,8 +285,10 @@ layoutEditor/LayoutBlock.java:    final static int NONE = 0x08;
 layoutEditor/ConnectivityUtil.java:    public static final int OVERALL = 0x00;  (Connected to Section.java)
 layoutEditor/ConnectivityUtil.java:    public static final int CONTINUING = 0x01;
 layoutEditor/ConnectivityUtil.java:    public static final int DIVERGING = 0x02;
+```
 
 Note the following values repeat. Two Enums? Try and see if compiles.
+```
 layoutEditor/LayoutConnectivity.java:    final public static int NONE = 0;
 layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_AB = 1;  // continuing
 layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_CD = 2;  // continuing
@@ -264,38 +296,48 @@ layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_
 layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_BD = 4;  // xed over
 layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_AD = 1;  // continuing (slips)
 layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_BC = 2;  // continuing (slips)
+```
 
 The following are bits, but there's no indication they are ever or'd:
+```
 layoutEditor/LayoutTurnout.java:    public static final int STATE_AC = 0x02;
 layoutEditor/LayoutTurnout.java:    public static final int STATE_BD = 0x04;
 layoutEditor/LayoutTurnout.java:    public static final int STATE_AD = 0x06;
 layoutEditor/LayoutTurnout.java:    public static final int STATE_BC = 0x08;
+```
 
 These bits are or'd, see tests
+```
 layoutEditor/TrackSegment.java:    public static final int SHOWCON = 0x01;
 layoutEditor/TrackSegment.java:    public static final int HIDECON = 0x02;     // flag set on a segment basis.
 layoutEditor/TrackSegment.java:    public static final int HIDECONALL = 0x04;  // Used by layout editor for hiding all
+```
 
+---
 
 An example of a private enum that's not, from ConnectivityUtil:
+```
     private final int TRACKNODE_CONTINUING = 0;
     private final int TRACKNODE_DIVERGING = 1;
     private final int TRACKNODE_DIVERGING_2ND_3WAY = 2;
-
+```
 Note private. But Section.java has lots of lines like:
-
+```
                     tn = cUtil.getNextNode(tn, 0);
-
+```
 Where that "0" is really TRACKNODE_CONTINUING (by the argument). One way to protect is
 to provide a getNextNode that has one argument, i.e. assumes the  TRACKNODE_CONTINUING
 
- =============
+---
+
  mainline track width, side track width are in both LayoutEditorViewContext and LayoutTrackDrawingOptions.
  Also, why are they floats?  (What's loaded and stored? Is there any calcuation that can make a
  non-integer value?)
-  =============
+
+---
  
  The LayoutTrack classes ($LETRK) use these from LayoutEditor
+```
  layoutEditor.setDirty();
  layoutEditor.redrawPanel();   {just calls repaint?} see .paintTargetPanel abstract in ../Editor; LayoutEditor extends PanelEditor
  layoutEditor.repaint()
@@ -320,11 +362,11 @@ to provide a getNextNode that has one argument, i.e. assumes the  TRACKNODE_CONT
  layoutEditor.setXOverLong
  layoutEditor.setXOverHWid
  layoutEditor.setXOverShort
- 
+```
  The above are presisted to XML.  LayoutTurnout#setUpDefaultSize sets them from a specific
  turnout, depending on type, and is only invoked from "Use Size as Default" selection in 
  interface.  Also, are the if statements in setUpDefaultSize structured right?
- 
+```
  layoutEditor.isTurnoutFillControlCircles
  LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
  
@@ -354,9 +396,9 @@ layoutEditor.getLayoutTracks()
 
 layoutEditor.selectedObject
 layoutEditor.prevSelectedObject
-
+```
 To understand the above, probably have to move the listener definitions out.
-
+```
 % grep Listener $LETRK | awk '{print $1}' | uniq -c
    8 LayoutTurntable.java:
    1 LevelXing.java:
@@ -365,13 +407,14 @@ To understand the above, probably have to move the listener definitions out.
   49 TrackSegment.java:
   13 LayoutTurnout.java:
   11 LayoutSlip.java:
-
+```
 Mostly addActionListener via ()->, some named listeners, some addPropertyChangeListener
 
-=============
+---
+
 This is in Section.java, should be in somewhere in the layoutManager package under navigation section
 
-
+```
     private LayoutTurnout getLayoutTurnoutFromTurnoutName(String turnoutName, LayoutEditor panel) {
         Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
         if (t == null) {
@@ -384,10 +427,9 @@ This is in Section.java, should be in somewhere in the layoutManager package und
         }
         return null;
     }
+```
 
-
-
-=============
+---
 
 getBlockName not in LayoutTrack, perhaps because there are two forms of internal variable:
 LayoutTrack:
@@ -400,10 +442,10 @@ LayoutTrack:
 Maybe other subclasses?
 And the getBlockName code could be simpler, see the getBlock one-line version.
 
-=============
+---
  
 Example from LayoutEditor
-
+```
         if ((lt.getConnectD() == null) && (lt.isTurnoutTypeXover() || lt.isTurnoutTypeSlip())) {
             if (lt instanceof LayoutSlip) {
                 beginHitPointType = HitPointType.SLIP_D;
@@ -413,12 +455,12 @@ Example from LayoutEditor
             dLoc = lt.getCoordsD();
             hitPointCheckLayoutTurnoutSubs(dLoc);
         }
-
+```
 Should that be a "getBeginHitPoint"?
 
 (Scan for instanceOf)
 
----------
+---
 
 Example from LayoutEditor  (What's that stuff at the top selecting?)
 
@@ -445,7 +487,7 @@ Example from LayoutEditor  (What's that stuff at the top selecting?)
 What are we _not_ rotating the other types?  Is this a conditional thing somehow?  
 (check rotateTurnout method a few lines down which does a similar check and returns, but might be called from elsewhere)
 
----------
+---
 
 Figure this one out!  At least part of the comments is wrong...
 TrackSegment 436
@@ -464,7 +506,31 @@ TrackSegment 436
 
 (Searching for "nothing to see here" is interesting)
 
-=====
+---
+
 LayoutTrackDrawingOptions is mutable and doesn't have a constant hash
 
+---
 
+## Some notes on the Layout Editor migration project 
+
+[from a separate page](migration/MigrationNotes.md) that can easily be dropped later if needed.
+
+Where we are now:
+
+![Where we are now](migration/plan_1.png "Where we are now")
+
+Moving to MVC:
+
+![Moving to MVC](migration/plan_2.png "Moving to MVC")
+
+Lift accessor to JMRI package via temporary interface:
+
+![Lift accessor to JMRI package via temporary interface](migration/plan_3.png "Lift accessor to JMRI package via temporary interface")
+
+Separate out LayoutEditor class to MVC parts:
+
+![Separate out LayoutEditor class to MVC parts](migration/plan_4.png "Separate out LayoutEditor class to MVC parts")
+
+ --- 
+ 
