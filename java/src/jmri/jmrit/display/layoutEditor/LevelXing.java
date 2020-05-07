@@ -203,6 +203,7 @@ public class LevelXing extends LayoutTrack {
         return null;
     }
 
+    @Nonnull
     public String getSignalAName() {
         if (signalAHeadNamed != null) {
             return signalAHeadNamed.getName();
@@ -224,6 +225,7 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
+    @Nonnull
     public String getSignalBName() {
         if (signalBHeadNamed != null) {
             return signalBHeadNamed.getName();
@@ -245,6 +247,7 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
+    @Nonnull
     public String getSignalCName() {
         if (signalCHeadNamed != null) {
             return signalCHeadNamed.getName();
@@ -266,6 +269,7 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
+    @Nonnull
     public String getSignalDName() {
         if (signalDHeadNamed != null) {
             return signalDHeadNamed.getName();
