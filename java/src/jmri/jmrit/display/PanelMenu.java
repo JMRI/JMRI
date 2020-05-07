@@ -6,8 +6,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Set;
 import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
@@ -70,7 +68,7 @@ public class PanelMenu extends JMenu {
             panelsSubMenu.add(noPanelsItem);
         } else {
             editors.forEach(editor -> {
-                JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(editor.getTitle());
+                JMenuItem menuItem = new JMenuItem(editor.getTitle());
                 ActionListener action = event -> {
                     if (editor instanceof LayoutEditor) {
                         editor.setVisible(true);
@@ -78,20 +76,10 @@ public class PanelMenu extends JMenu {
                     } else {
                         editor.getTargetFrame().setVisible(true);
                     }
-                    updateMenuItem(editor, menuItem);
                 };
                 menuItem.addActionListener(action);
-                updateMenuItem(editor, menuItem);
                 panelsSubMenu.add(menuItem);
             });
-        }
-    }
-
-    private void updateMenuItem(@Nonnull Editor editor, @Nonnull JCheckBoxMenuItem menuItem) {
-        if (editor instanceof LayoutEditor) {
-            menuItem.setSelected(editor.isVisible());
-        } else {
-            menuItem.setSelected(editor.getTargetFrame().isVisible());
         }
     }
 

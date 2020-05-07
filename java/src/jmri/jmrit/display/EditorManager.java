@@ -19,13 +19,13 @@ import jmri.beans.Bean;
  * interface to do so (so it can be interacted with as a normal set), while also
  * providing some methods specific to editors.
  * <p>
- * This manager listens to the "title" property of Editors to be notified to
- * changes to the title of the Editor that could affect the order of editors.
+ * This manager listens to the {@code title} property of Editors to be notified
+ * to changes to the title of the Editor that could affect the order of editors.
  * <p>
  * This manager generates an {@link java.beans.IndexedPropertyChangeEvent} for
- * the property named "editors" when an editor is added or removed and forwards
- * the {@link java.beans.PropertyChangeEvent} for the "title" and "visible"
- * properties of Editors in the manager.
+ * the property named {@code editors} when an editor is added or removed and
+ * forwards the {@link java.beans.PropertyChangeEvent} for the {@code title}
+ * property of Editors in the manager.
  *
  * @author Randall Wood Copyright 2020
  */
@@ -33,7 +33,6 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
 
     public static final String EDITORS = "editors";
     public static final String TITLE = "title";
-    public static final String VISIBLE = "visible";
     private final SortedSet<Editor> set = Collections.synchronizedSortedSet(new TreeSet<>(Comparator.comparing(Editor::getTitle)));
 
     public EditorManager() {
@@ -50,7 +49,6 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
         if (result) {
             fireIndexedPropertyChange(EDITORS, set.size(), null, editor);
             editor.addPropertyChangeListener(TITLE, this);
-            editor.addPropertyChangeListener(VISIBLE, this);
         }
     }
 
@@ -59,7 +57,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
      *
      * @param editor the editor to check for
      * @return true if this manager contains an editor with name; false
-     *         otherwise
+     * otherwise
      */
     public boolean contains(@Nonnull Editor editor) {
         return set.contains(editor);
@@ -79,7 +77,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
      * Get all managed editors that implement the specified type. This set is
      * sorted by the title of the editor.
      *
-     * @param <T>  the specified type
+     * @param <T> the specified type
      * @param type the specified type
      * @return the set of all editors of the specified type
      */
@@ -96,7 +94,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
      *
      * @param name the name of the editor
      * @return the editor with the given name or null if no editor by that name
-     *         exists
+     * exists
      */
     @CheckForNull
     public Editor get(@Nonnull String name) {
@@ -106,11 +104,11 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
     /**
      * Get the editor with the given name and type.
      *
-     * @param <T>  the type of the editor
+     * @param <T> the type of the editor
      * @param type the type of the editor
      * @param name the name of the editor
      * @return the editor with the given name or null if no editor by that name
-     *         exists
+     * exists
      */
     @CheckForNull
     public <T extends Editor> T get(@Nonnull Class<T> type, @Nonnull String name) {
@@ -129,7 +127,6 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
         if (result) {
             fireIndexedPropertyChange(EDITORS, set.size(), editor, null);
             editor.removePropertyChangeListener(TITLE, this);
-            editor.removePropertyChangeListener(VISIBLE, this);
         }
     }
 
@@ -137,11 +134,9 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getSource() instanceof Editor) {
             Editor editor = (Editor) evt.getSource();
-            if (contains(editor)) {
-                if (TITLE.equals(evt.getPropertyName())) {
-                    set.remove(editor);
-                    set.add(editor);
-                }
+            if (contains(editor) && TITLE.equals(evt.getPropertyName())) {
+                set.remove(editor);
+                set.add(editor);
                 firePropertyChange(evt);
             }
         }
@@ -152,16 +147,16 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
      *
      * @param name the name to check for
      * @return true if this manager contains an editor with name; false
-     *         otherwise
+     * otherwise
      */
     public boolean contains(String name) {
         return get(name) != null;
     }
 
     /**
-     * Get the set of all Editors as a List. This is a convenience method for use
-     * in scripts.
-     * 
+     * Get the set of all Editors as a List. This is a convenience method for
+     * use in scripts.
+     *
      * @return the set of all Editors
      */
     @Nonnull
@@ -173,7 +168,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
      * Get the set of all editors that implement the specified type. This is a
      * convenience method for use in scripts.
      *
-     * @param <T>  the specified type
+     * @param <T> the specified type
      * @param type the specified type
      * @return the set of all editors that implement the specified type
      */
@@ -202,7 +197,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
      * The returned list is a copy made at the time of the call, so it can be
      * manipulated as needed by the caller.
      *
-     * @param <T>  the type of Editor
+     * @param <T> the type of Editor
      * @param type the Class the list should be limited to.
      * @return a List of Editors.
      * @deprecated since 4.19.6; use {@link #getAll(java.lang.Class)} instead
@@ -218,7 +213,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
      *
      * @param name the editor to get
      * @return the first matching Editor or null if no matching Editor could be
-     *         found
+     * found
      * @deprecated since 4.19.6; use {@link #get(java.lang.String)} instead
      */
     @Deprecated
