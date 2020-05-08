@@ -4,10 +4,11 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.ServiceLoader;
 import java.util.Set;
+import java.util.stream.StreamSupport;
 import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
@@ -38,10 +39,9 @@ public class PanelMenu extends JMenu {
         // new panel is a submenu
         //add(new jmri.jmrit.display.NewPanelAction());
         JMenu newPanel = new JMenu(Bundle.getMessage("MenuItemNew"));
-        newPanel.add(new jmri.jmrit.display.panelEditor.PanelEditorAction(Bundle.getMessage("PanelEditor")));
-        newPanel.add(new jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction(Bundle.getMessage("ControlPanelEditor")));
-        newPanel.add(new jmri.jmrit.display.layoutEditor.LayoutEditorAction(Bundle.getMessage("LayoutEditor")));
-        newPanel.add(new jmri.jmrit.display.switchboardEditor.SwitchboardEditorAction(Bundle.getMessage("SwitchboardEditor")));
+        StreamSupport.stream(ServiceLoader.load(EditorActionFactory.class).spliterator(), false)
+                .sorted(Comparator.comparing(EditorActionFactory::getTitle))
+                .forEach(factory -> newPanel.add(factory.createAction()));
         super.add(newPanel);
 
         super.add(new jmri.configurexml.LoadXmlUserAction(Bundle.getMessage("MenuItemLoad")));
@@ -70,28 +70,14 @@ public class PanelMenu extends JMenu {
             panelsSubMenu.add(noPanelsItem);
         } else {
             editors.forEach(editor -> {
-                JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(editor.getTitle());
+                JMenuItem menuItem = new JMenuItem(editor.getTitle());
                 ActionListener action = event -> {
-                    if (editor instanceof LayoutEditor) {
-                        editor.setVisible(true);
-                        editor.repaint();
-                    } else {
-                        editor.getTargetFrame().setVisible(true);
-                    }
-                    updateMenuItem(editor, menuItem);
+                    editor.getTargetFrame().setVisible(true);
+                    editor.getTargetFrame().repaint();
                 };
                 menuItem.addActionListener(action);
-                updateMenuItem(editor, menuItem);
                 panelsSubMenu.add(menuItem);
             });
-        }
-    }
-
-    private void updateMenuItem(@Nonnull Editor editor, @Nonnull JCheckBoxMenuItem menuItem) {
-        if (editor instanceof LayoutEditor) {
-            menuItem.setSelected(editor.isVisible());
-        } else {
-            menuItem.setSelected(editor.getTargetFrame().isVisible());
         }
     }
 

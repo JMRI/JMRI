@@ -1053,7 +1053,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 switch (selectedValue) {
                     case 0:
                         _targetFrame.setVisible(false);   // doesn't remove the editor!
-                        firePropertyChange("visible", true, false);
                         break;
                     case 1:
                         if (deletePanel()) { // disposes everything
@@ -1063,7 +1062,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     case 2:
                         showCloseInfoMessage = false;
                         _targetFrame.setVisible(false);   // doesn't remove the editor!
-                        firePropertyChange("visible", true, false);
                         break;
                     default:    // dialog closed - do nothing
                         _targetFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -1071,11 +1069,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 log.debug("targetWindowClosing: selectedValue= {}", selectedValue);
             } else {
                 _targetFrame.setVisible(false);
-                firePropertyChange("visible", true, false);
             }
         } else {
             _targetFrame.setVisible(false);   // doesn't remove the editor!
-            firePropertyChange("visible", true, false);
         }
     }
 
