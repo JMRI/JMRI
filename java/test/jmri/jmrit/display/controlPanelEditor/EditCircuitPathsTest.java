@@ -26,7 +26,7 @@ public class EditCircuitPathsTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ControlPanelEditor frame = new ControlPanelEditor("EditCircuitPathsTest");
+        new ControlPanelEditor("EditCircuitPathsTest");
     }
 
     @Test
