@@ -2183,7 +2183,7 @@
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs-check.xml"
-
+                  failOnError="true"
                   effort="max"
                   reportLevel="low"
                   >
@@ -2200,7 +2200,6 @@
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs.xml"
-
                   effort="max"
                   reportLevel="low"
                   >
@@ -2217,7 +2216,7 @@
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs-check.xml"
-
+                  failOnError="true"
                   effort="max"
                   reportLevel="low"
                   >
