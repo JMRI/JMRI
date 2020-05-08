@@ -579,11 +579,13 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
              + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
              + " " + 21 + " "
              + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
-             + Bundle.getMessage("XNetReplyNotOperated")+ "; " 
+             + Bundle.getMessage("XNetReplyNotOperated")+ " "
+             + Bundle.getMessage("XNetReplyMotionComplete") + "; "
              + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
              + " " + 22 + " "
              + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
-             + Bundle.getMessage("XNetReplyNotOperated");
+             + Bundle.getMessage("XNetReplyNotOperated") + " "
+             + Bundle.getMessage("XNetReplyMotionComplete");
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 25 62");
         targetString =
@@ -592,11 +594,13 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
              + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
              + " " + 21 + " "
              + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
-             + Bundle.getMessage("XNetReplyThrownLeft")+ "; " 
+             + Bundle.getMessage("XNetReplyThrownLeft")+ " "
+             + Bundle.getMessage("XNetReplyMotionComplete") + "; "
              + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
              + " " + 22 + " "
              + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
-             + Bundle.getMessage("XNetReplyThrownLeft");
+             + Bundle.getMessage("XNetReplyThrownLeft") + " "
+             + Bundle.getMessage("XNetReplyMotionComplete");
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 2A 6C");
         targetString =
@@ -605,11 +609,13 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
              + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
              + " " + 21 + " "
              + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
-             + Bundle.getMessage("XNetReplyThrownRight")+ "; " 
+             + Bundle.getMessage("XNetReplyThrownRight") + " "
+             + Bundle.getMessage("XNetReplyMotionComplete") + "; "
              + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
              + " " + 22 + " "
              + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
-             + Bundle.getMessage("XNetReplyThrownRight");
+             + Bundle.getMessage("XNetReplyThrownRight") + " "
+             + Bundle.getMessage("XNetReplyMotionComplete");
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 2F 68");
         targetString =
@@ -618,11 +624,13 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
              + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
              + " " + 21 + " "
              + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
-             + Bundle.getMessage("XNetReplyInvalid")+ "; " 
+             + Bundle.getMessage("XNetReplyInvalid")+ " "
+             + Bundle.getMessage("XNetReplyMotionComplete") + "; "
              + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
              + " " + 22 + " "
              + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
-             + Bundle.getMessage("XNetReplyInvalid");
+             + Bundle.getMessage("XNetReplyInvalid") + " "
+             + Bundle.getMessage("XNetReplyMotionComplete");
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 48 0F");
         targetString =
@@ -1572,13 +1580,14 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     
     /**
-     * Checks that select will filter out accessories with an incorrect state.
+     * Checks that select will not filter out accessories the
+     * invalid state.
      */
     @Test
     public void testInvalidAccessoryStateFiltered() {
         XNetReply r = new XNetReply("42 05 2B 0f");
         Optional<FeedbackItem> opt = r.selectTurnoutFeedback(21);
-        assertFalse(opt.isPresent());
+        assertTrue(opt.isPresent());
         assertEquals(-1, r.getTurnoutStatus(1));
         
         opt = r.selectTurnoutFeedback(22);
