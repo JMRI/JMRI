@@ -19,7 +19,36 @@ public class  LayoutRHXOverViewTest extends  LayoutXOverViewTest {
 
     @Test
     public void testCtor() {
-        new LayoutRHXOverView(null, null);
+        new LayoutRHXOverView(xover, layoutEditor);
     }
 
+
+    LayoutEditor layoutEditor;
+    LayoutRHXOver xover;
+    
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.resetProfileManager();
+
+            layoutEditor = new LayoutEditor();
+            
+            Point2D point = new Point2D.Double(150.0, 100.0);
+ 
+            xover = new LayoutRHXOver("Wye", point, 99.0, 1.5, 1.6, layoutEditor);
+
+        }
+    }
+
+    @After
+    public void tearDown() {
+        if (layoutEditor != null) {
+            JUnitUtil.dispose(layoutEditor);
+        }
+        layoutEditor = null;
+        xover = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
+    }
 }

@@ -17,9 +17,7 @@ import org.junit.Test;
  */
 public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
 
-    @Test
-    public void testCtor() {
-        new LayoutTurnoutView(null, null);
-    }
+    // LayoutTurnoutView is abstract, so there's
+    // not much we can do here right now.
 
 }

@@ -19,6 +19,35 @@ public class  LayoutDoubleXOverViewTest extends  LayoutXOverViewTest {
 
     @Test
     public void testCtor() {
-        new LayoutDoubleXOverView(null, null);
+        new LayoutDoubleXOverView(xover, layoutEditor);
+    }
+
+    LayoutEditor layoutEditor;
+    LayoutDoubleXOver xover;
+    
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.resetProfileManager();
+
+            layoutEditor = new LayoutEditor();
+            
+            Point2D point = new Point2D.Double(150.0, 100.0);
+ 
+            xover = new LayoutDoubleXOver("XO", point, 0., 100., 100., layoutEditor);
+
+        }
+    }
+
+    @After
+    public void tearDown() {
+        if (layoutEditor != null) {
+            JUnitUtil.dispose(layoutEditor);
+        }
+        layoutEditor = null;
+        xover = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 }

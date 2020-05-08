@@ -19,7 +19,36 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
 
     @Test
     public void testCtor() {
-        new PositionablePointView(null,null);
+        new PositionablePointView(pPoint, layoutEditor);
     }
 
+
+    LayoutEditor layoutEditor;
+    PositionablePoint pPoint;
+    
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.resetProfileManager();
+
+            layoutEditor = new LayoutEditor();
+            
+            Point2D point2D = new Point2D.Double(150.0, 100.0);
+ 
+            pPoint = new PositionablePoint("PP", PositionablePoint.PointType.ANCHOR, point2D, layoutEditor);
+
+        }
+    }
+
+    @After
+    public void tearDown() {
+        if (layoutEditor != null) {
+            JUnitUtil.dispose(layoutEditor);
+        }
+        layoutEditor = null;
+        pPoint = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
+    }
 }

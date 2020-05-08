@@ -20,26 +20,9 @@ public class LayoutTurntableViewTest extends LayoutTrackViewTest {
         new LayoutTurntableView(turntable, layoutEditor);
     }
 
-    // from here down is testing infrastructure
-    @BeforeClass
-    public static void beforeClass() {
-        JUnitUtil.setUp();
-        if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
-            JUnitUtil.resetInstanceManager();
-            JUnitUtil.initInternalTurnoutManager();
-            JUnitUtil.initInternalSensorManager();
-            JUnitUtil.initInternalSignalHeadManager();
-        }
-    }
-
     LayoutEditor layoutEditor;
     LayoutTurntable turntable;
     
-    @AfterClass
-    public static void afterClass() {
-    }
-
     @Before
     public void setUp() {
         JUnitUtil.setUp();
