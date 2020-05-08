@@ -5,11 +5,11 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * Common tests for the jmri.jmrix.can.CanMessage and CanReply classes
+ * Common tests for the jmri.jmrix.can.CanMessage and CanReply classes.
  *
  * @author Bob Jacobsen Copyright 2008, 2009
  */
-public class CanMRCommonTestBase extends jmri.jmrix.AbstractMessageTestBase {
+public abstract class CanMRCommonTestBase extends jmri.jmrix.AbstractMessageTestBase {
 
     @Override
     @Before
@@ -17,6 +17,7 @@ public class CanMRCommonTestBase extends jmri.jmrix.AbstractMessageTestBase {
         JUnitUtil.setUp();
     }
 
+    @Override
     @After
     public void tearDown() {
         m = null;
