@@ -378,7 +378,6 @@ public class TrackSegmentView extends LayoutTrackView {
      * @param index If negative, this is index from the end i.e. -1 is the last element
      */
     public void setBezierControlPoint(@CheckForNull Point2D p, int index) {
-        System.out.println("setBezierControlPoint in TSV"); new Exception("traceback").printStackTrace();
         if (index < 0) {
             index += bezierControlPoints.size();
         }
@@ -1597,7 +1596,6 @@ public class TrackSegmentView extends LayoutTrackView {
     }
 
     private void addBezierControlPointBefore(int index) {
-        System.out.println("addBezierControlPointBefore in TSV");
         Point2D addPoint = getBezierControlPoint(index);
         if (index > 0) {
             addPoint = MathUtil.midPoint(getBezierControlPoint(index - 1), addPoint);
@@ -1611,7 +1609,6 @@ public class TrackSegmentView extends LayoutTrackView {
     }
 
     private void addBezierControlPointAfter(int index) {
-        System.out.println("addBezierControlPointAfter in TSV");
         int cnt = bezierControlPoints.size();
         Point2D addPoint = getBezierControlPoint(index);
         if (index < cnt - 1) {

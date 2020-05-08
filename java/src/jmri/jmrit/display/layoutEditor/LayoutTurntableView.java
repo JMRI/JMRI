@@ -697,26 +697,6 @@ public class LayoutTurntableView extends LayoutTrackView {
     public String tLayoutBlockName = "";
 
     /**
-     * Initialization method The name of each track segment connected to a ray
-     * track is initialized by by LayoutTurntableXml, then the following method
-     * is called after the entire LayoutEditor is loaded to set the specific
-     * TrackSegment objects.
-     *
-     * @param p the layout editor
-     */
-    @Override
-    public void setObjects(LayoutEditor p) {
-        if (tLayoutBlockName != null && !tLayoutBlockName.isEmpty()) {
-            setLayoutBlockByName(tLayoutBlockName);
-        }
-        tLayoutBlockName = null; /// release this memory
-
-        rayTrackList.forEach((rt) -> {
-            rt.setConnect(p.getFinder().findTrackSegmentByName(rt.connectName));
-        });
-    }
-
-    /**
      * Is this turntable turnout controlled?
      *
      * @return true if so

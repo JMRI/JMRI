@@ -7515,13 +7515,18 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .map(layoutTrackClass::cast);
     }
 
+    private @Nonnull
+    Stream<LayoutTrackView> getLayoutTrackViewsOfClass(Class<? extends LayoutTrackView> layoutTrackViewClass) {
+        return getLayoutTrackViews().stream()
+                .filter(layoutTrackViewClass::isInstance)
+                .map(layoutTrackViewClass::cast);
+    }
+
     public @Nonnull
     List<PositionablePointView> getPositionablePointViews() {
-        List<PositionablePointView> list = new ArrayList<>();
-        for (PositionablePoint p : getPositionablePoints()) {
-            list.add(new PositionablePointView(p, this));
-        }
-        return list;
+        return getLayoutTrackViewsOfClass(PositionablePointView.class)
+                .map(PositionablePointView.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public @Nonnull
@@ -7535,6 +7540,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     List<LayoutSlip> getLayoutSlips() {
         return getLayoutTracksOfClass(LayoutSlip.class)
                 .map(LayoutSlip.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public @Nonnull
+    List<TrackSegmentView> getTrackSegmentViews() {
+        return getLayoutTrackViewsOfClass(TrackSegmentView.class)
+                .map(TrackSegmentView.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -7599,12 +7611,23 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * LayoutTrack family objects.
      */
     final public void addLayoutTrack(@Nonnull LayoutTrack trk) {
+        // create the view on the fly
+        LayoutTrackView v = LayoutTrackView.makeTrackView(trk, this);
+    
+        log.trace("created LayoutTrackView {}", v);
+        
+        addLayoutTrack(trk, v);
+    }
+
+    /**
+     * Add a LayoutTrack and LayoutTrackView to the list of 
+     * LayoutTrack family objects.
+     */
+    final public void addLayoutTrack(@Nonnull LayoutTrack trk, @Nonnull LayoutTrackView v) {
         log.trace("addLayoutTrack {}", trk);
         if (layoutTrackList.contains(trk)) log.warn("LayoutTrack {} already being maintained", trk.getName());
         layoutTrackList.add(trk);
         
-        // create the view on the fly
-        LayoutTrackView v = LayoutTrackView.makeTrackView(trk, this);
         layoutTrackViewList.add(v);
         trkToView.put(trk, v);
         viewToTrk.put(v, trk);
@@ -7617,6 +7640,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @return true is item was deleted and a redraw done.
      */
     final public boolean removeLayoutTrackAndRedraw(@Nonnull LayoutTrack trk) {
+        log.trace("removeLayoutTrackAndRedraw {}", trk);
         if (layoutTrackList.contains(trk)) {
             removeLayoutTrack(trk);
             setDirty();

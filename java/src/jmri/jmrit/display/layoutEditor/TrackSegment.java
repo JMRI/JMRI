@@ -491,7 +491,6 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public void setBezierControlPoint(@CheckForNull Point2D p, int index) {
-        System.out.println("setBezierControlPoint in TS"); new Exception("traceback").printStackTrace();
         if (index < 0) {
             index += bezierControlPoints.size();
         }
@@ -1797,7 +1796,6 @@ public class TrackSegment extends LayoutTrack {
     }
 
     private void addBezierControlPointBefore(int index) {
-        System.out.println("addBezierControlPointBelow in TS");
         Point2D addPoint = getBezierControlPoint(index);
         if (index > 0) {
             addPoint = MathUtil.midPoint(getBezierControlPoint(index - 1), addPoint);
@@ -1811,7 +1809,6 @@ public class TrackSegment extends LayoutTrack {
     }
 
     private void addBezierControlPointAfter(int index) {
-        System.out.println("addBezierControlPointAfter in TS");
         int cnt = bezierControlPoints.size();
         Point2D addPoint = getBezierControlPoint(index);
         if (index < cnt - 1) {

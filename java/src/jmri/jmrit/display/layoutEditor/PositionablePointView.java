@@ -636,27 +636,6 @@ public class PositionablePointView extends LayoutTrackView {
     public String trackSegment2Name = "";
 
     /**
-     * Initialization method The above variables are initialized by
-     * PositionablePointXml, then the following method is called after the
-     * entire LayoutEditor is loaded to set the specific TrackSegment objects.
-     */
-    @Override
-    public void setObjects(LayoutEditor p) {
-        if (type == PointType.EDGE_CONNECTOR) {
-            connect1 = p.getFinder().findTrackSegmentByName(trackSegment1Name);
-            if (getConnect2() != null && getLinkedEditor() != null) {
-                //now that we have a connection we can fire off a change
-                TrackSegment ts = getConnect2();
-                getLinkedEditor().getLEAuxTools().setBlockConnectivityChanged();
-                ts.updateBlockInfo();
-            }
-        } else {
-            connect1 = p.getFinder().findTrackSegmentByName(trackSegment1Name);
-            connect2 = p.getFinder().findTrackSegmentByName(trackSegment2Name);
-        }
-    }
-
-    /**
      * setup a connection to a track
      *
      * @param track the track we want to connect to

@@ -992,50 +992,6 @@ public class LevelXingView extends LayoutTrackView {
     public String tLayoutBlockNameBD = "";
 
     /**
-     * Initialization method The above variables are initialized by
-     * PositionablePointXml, then the following method is called after the
-     * entire LayoutEditor is loaded to set the specific TrackSegment objects.
-     */
-    @Override
-    public void setObjects(LayoutEditor p) {
-        connectA = p.getFinder().findTrackSegmentByName(connectAName);
-        connectB = p.getFinder().findTrackSegmentByName(connectBName);
-        connectC = p.getFinder().findTrackSegmentByName(connectCName);
-        connectD = p.getFinder().findTrackSegmentByName(connectDName);
-
-        LayoutBlock lb;
-        if (!tLayoutBlockNameAC.isEmpty()) {
-            lb = p.provideLayoutBlock(tLayoutBlockNameAC);
-            String userName = lb.getUserName();
-            if (userName != null) {
-                namedLayoutBlockAC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, lb);
-                if (namedLayoutBlockBD != namedLayoutBlockAC) {
-                    lb.incrementUse();
-                }
-            } else {
-                log.error("LevelXing.setObjects(); bad blockname AC ''{}''", tLayoutBlockNameAC);
-                namedLayoutBlockAC = null;
-            }
-            tLayoutBlockNameAC = null; //release this memory
-        }
-
-        if (!tLayoutBlockNameBD.isEmpty()) {
-            lb = p.provideLayoutBlock(tLayoutBlockNameBD);
-            String userName = lb.getUserName();
-            if (userName != null) {
-                namedLayoutBlockBD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, lb);
-                if (namedLayoutBlockBD != namedLayoutBlockAC) {
-                    lb.incrementUse();
-                }
-            } else {
-                log.error("{}.setObjects(); bad blockname BD ''{}''", this, tLayoutBlockNameBD);
-                namedLayoutBlockBD = null;
-            }
-            tLayoutBlockNameBD = null; //release this memory
-        }
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override

@@ -35,43 +35,43 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
     @Override
     public Element store(Object o) {
 
-        TrackSegment p = (TrackSegment) o;
+        TrackSegment trk = (TrackSegment) o;
 
         Element element = new Element("tracksegment"); // NOI18N
 
         // include attributes
-        element.setAttribute("ident", p.getId());
-        if (!p.getBlockName().isEmpty()) {
-            element.setAttribute("blockname", p.getBlockName());
+        element.setAttribute("ident", trk.getId());
+        if (!trk.getBlockName().isEmpty()) {
+            element.setAttribute("blockname", trk.getBlockName());
         }
-        element.setAttribute("connect1name", p.getConnect1Name());
-        element.setAttribute("type1", "" + htpMap.outputFromEnum(p.getType1()) );
-        element.setAttribute("connect2name", p.getConnect2Name());
-        element.setAttribute("type2", "" + htpMap.outputFromEnum(p.getType2()) );
-        element.setAttribute("dashed", "" + (p.isDashed() ? "yes" : "no"));
-        element.setAttribute("mainline", "" + (p.isMainline() ? "yes" : "no"));
-        element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
-        if (p.isArc()) {
+        element.setAttribute("connect1name", trk.getConnect1Name());
+        element.setAttribute("type1", "" + htpMap.outputFromEnum(trk.getType1()) );
+        element.setAttribute("connect2name", trk.getConnect2Name());
+        element.setAttribute("type2", "" + htpMap.outputFromEnum(trk.getType2()) );
+        element.setAttribute("dashed", "" + (trk.isDashed() ? "yes" : "no"));
+        element.setAttribute("mainline", "" + (trk.isMainline() ? "yes" : "no"));
+        element.setAttribute("hidden", "" + (trk.isHidden() ? "yes" : "no"));
+        if (trk.isArc()) {
             element.setAttribute("arc", "yes");
-            element.setAttribute("flip", "" + (p.isFlip() ? "yes" : "no"));
-            element.setAttribute("circle", "" + (p.isCircle() ? "yes" : "no"));
-            if ((p.isCircle()) && (p.getAngle() != 0.0D)) {
-                element.setAttribute("angle", "" + (p.getAngle()));
-                element.setAttribute("hideConLines", "" + (p.hideConstructionLines() ? "yes" : "no"));
+            element.setAttribute("flip", "" + (trk.isFlip() ? "yes" : "no"));
+            element.setAttribute("circle", "" + (trk.isCircle() ? "yes" : "no"));
+            if ((trk.isCircle()) && (trk.getAngle() != 0.0D)) {
+                element.setAttribute("angle", "" + (trk.getAngle()));
+                element.setAttribute("hideConLines", "" + (trk.hideConstructionLines() ? "yes" : "no"));
             }
         }
 
-        if (p.isBezier()) {
+        if (trk.isBezier()) {
             element.setAttribute("bezier", "yes");
-            element.setAttribute("hideConLines", "" + (p.hideConstructionLines() ? "yes" : "no"));
+            element.setAttribute("hideConLines", "" + (trk.hideConstructionLines() ? "yes" : "no"));
             // add control points
             Element elementControlpoints = new Element("controlpoints");
-            for (int i = 0; i < p.getNumberOfBezierControlPoints(); i++) {
+            for (int i = 0; i < trk.getNumberOfBezierControlPoints(); i++) {
                 Element elementControlpoint = new Element("controlpoint");
 
                 elementControlpoint.setAttribute("index", "" + i);
 
-                Point2D pt = p.getBezierControlPoint(i);
+                Point2D pt = trk.getBezierControlPoint(i);
                 elementControlpoint.setAttribute("x", String.format("%.1f", pt.getX()));
                 elementControlpoint.setAttribute("y", String.format("%.1f", pt.getY()));
 
@@ -81,7 +81,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         }
 
         // store decorations
-        Map<String, String> decorations = p.getDecorations();
+        Map<String, String> decorations = trk.getDecorations();
         if (decorations.size() > 0) {
             Element decorationsElement = new Element("decorations");
             for (Map.Entry<String, String> entry : decorations.entrySet()) {
@@ -99,89 +99,89 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             }
             element.addContent(decorationsElement);
 
-            if (p.getArrowStyle() > 0) {
+            if (trk.getArrowStyle() > 0) {
                 Element decorationElement = new Element("arrow");
-                decorationElement.setAttribute("style", Integer.toString(p.getArrowStyle()));
-                if (p.isArrowEndStart() && p.isArrowEndStop()) {
+                decorationElement.setAttribute("style", Integer.toString(trk.getArrowStyle()));
+                if (trk.isArrowEndStart() && trk.isArrowEndStop()) {
                     decorationElement.setAttribute("end", "both");
-                } else if (p.isArrowEndStop()) {
+                } else if (trk.isArrowEndStop()) {
                     decorationElement.setAttribute("end", "stop");
                 } else {
                     decorationElement.setAttribute("end", "start");
                 }
-                if (p.isArrowDirIn() && p.isArrowDirOut()) {
+                if (trk.isArrowDirIn() && trk.isArrowDirOut()) {
                     decorationElement.setAttribute("direction", "both");
-                } else if (p.isArrowDirOut()) {
+                } else if (trk.isArrowDirOut()) {
                     decorationElement.setAttribute("direction", "out");
                 } else {
                     decorationElement.setAttribute("direction", "in");
                 }
-                decorationElement.setAttribute("color", ColorUtil.colorToHexString(p.getArrowColor()));
-                decorationElement.setAttribute("linewidth", Integer.toString(p.getArrowLineWidth()));
-                decorationElement.setAttribute("length", Integer.toString(p.getArrowLength()));
-                decorationElement.setAttribute("gap", Integer.toString(p.getArrowGap()));
+                decorationElement.setAttribute("color", ColorUtil.colorToHexString(trk.getArrowColor()));
+                decorationElement.setAttribute("linewidth", Integer.toString(trk.getArrowLineWidth()));
+                decorationElement.setAttribute("length", Integer.toString(trk.getArrowLength()));
+                decorationElement.setAttribute("gap", Integer.toString(trk.getArrowGap()));
                 decorationsElement.addContent(decorationElement);
             }
-            if (p.isBridgeSideLeft() || p.isBridgeSideRight()) {
+            if (trk.isBridgeSideLeft() || trk.isBridgeSideRight()) {
                 Element decorationElement = new Element("bridge");
-                if (p.isBridgeSideLeft() && p.isBridgeSideRight()) {
+                if (trk.isBridgeSideLeft() && trk.isBridgeSideRight()) {
                     decorationElement.setAttribute("side", "both");
-                } else if (p.isBridgeSideLeft()) {
+                } else if (trk.isBridgeSideLeft()) {
                     decorationElement.setAttribute("side", "left");
                 } else {
                     decorationElement.setAttribute("side", "right");
                 }
-                if (p.isBridgeHasEntry() && p.isBridgeHasExit()) {
+                if (trk.isBridgeHasEntry() && trk.isBridgeHasExit()) {
                     decorationElement.setAttribute("end", "both");
-                } else if (p.isBridgeHasEntry()) {
+                } else if (trk.isBridgeHasEntry()) {
                     decorationElement.setAttribute("end", "entry");
-                } else if (p.isBridgeHasExit()) {
+                } else if (trk.isBridgeHasExit()) {
                     decorationElement.setAttribute("end", "exit");
                 }
-                decorationElement.setAttribute("color", ColorUtil.colorToHexString(p.getBridgeColor()));
-                decorationElement.setAttribute("linewidth", Integer.toString(p.getBridgeLineWidth()));
-                decorationElement.setAttribute("approachwidth", Integer.toString(p.getBridgeApproachWidth()));
-                decorationElement.setAttribute("deckwidth", Integer.toString(p.getBridgeDeckWidth()));
+                decorationElement.setAttribute("color", ColorUtil.colorToHexString(trk.getBridgeColor()));
+                decorationElement.setAttribute("linewidth", Integer.toString(trk.getBridgeLineWidth()));
+                decorationElement.setAttribute("approachwidth", Integer.toString(trk.getBridgeApproachWidth()));
+                decorationElement.setAttribute("deckwidth", Integer.toString(trk.getBridgeDeckWidth()));
                 decorationsElement.addContent(decorationElement);
             }
-            if (p.isBumperEndStart() || p.isBumperEndStop()) {
+            if (trk.isBumperEndStart() || trk.isBumperEndStop()) {
                 Element decorationElement = new Element("bumper");
-                if (p.isBumperEndStart() && p.isBumperEndStop()) {
+                if (trk.isBumperEndStart() && trk.isBumperEndStop()) {
                     decorationElement.setAttribute("end", "both");
-                } else if (p.isBumperEndStop()) {
+                } else if (trk.isBumperEndStop()) {
                     decorationElement.setAttribute("end", "stop");
                 } else {
                     decorationElement.setAttribute("end", "start");
                 }
-                decorationElement.setAttribute("color", ColorUtil.colorToHexString(p.getBumperColor()));
-                decorationElement.setAttribute("linewidth", Integer.toString(p.getBumperLineWidth()));
-                decorationElement.setAttribute("length", Integer.toString(p.getBumperLength()));
-                if (p.isBumperFlipped()) {
+                decorationElement.setAttribute("color", ColorUtil.colorToHexString(trk.getBumperColor()));
+                decorationElement.setAttribute("linewidth", Integer.toString(trk.getBumperLineWidth()));
+                decorationElement.setAttribute("length", Integer.toString(trk.getBumperLength()));
+                if (trk.isBumperFlipped()) {
                     decorationElement.setAttribute("flip", "true");
                 }
                 decorationsElement.addContent(decorationElement);
             }
 
-            if (p.isTunnelSideLeft() || p.isTunnelSideRight()) {
+            if (trk.isTunnelSideLeft() || trk.isTunnelSideRight()) {
                 Element decorationElement = new Element("tunnel");
-                if (p.isTunnelSideLeft() && p.isTunnelSideRight()) {
+                if (trk.isTunnelSideLeft() && trk.isTunnelSideRight()) {
                     decorationElement.setAttribute("side", "both");
-                } else if (p.isTunnelSideLeft()) {
+                } else if (trk.isTunnelSideLeft()) {
                     decorationElement.setAttribute("side", "left");
                 } else {
                     decorationElement.setAttribute("side", "right");
                 }
-                if (p.isTunnelHasEntry() && p.isTunnelHasExit()) {
+                if (trk.isTunnelHasEntry() && trk.isTunnelHasExit()) {
                     decorationElement.setAttribute("end", "both");
-                } else if (p.isTunnelHasEntry()) {
+                } else if (trk.isTunnelHasEntry()) {
                     decorationElement.setAttribute("end", "entry");
-                } else if (p.isTunnelHasExit()) {
+                } else if (trk.isTunnelHasExit()) {
                     decorationElement.setAttribute("end", "exit");
                 }
-                decorationElement.setAttribute("color", ColorUtil.colorToHexString(p.getTunnelColor()));
-                decorationElement.setAttribute("linewidth", Integer.toString(p.getTunnelLineWidth()));
-                decorationElement.setAttribute("entrancewidth", Integer.toString(p.getTunnelEntranceWidth()));
-                decorationElement.setAttribute("floorwidth", Integer.toString(p.getTunnelFloorWidth()));
+                decorationElement.setAttribute("color", ColorUtil.colorToHexString(trk.getTunnelColor()));
+                decorationElement.setAttribute("linewidth", Integer.toString(trk.getTunnelLineWidth()));
+                decorationElement.setAttribute("entrancewidth", Integer.toString(trk.getTunnelEntranceWidth()));
+                decorationElement.setAttribute("floorwidth", Integer.toString(trk.getTunnelFloorWidth()));
                 decorationsElement.addContent(decorationElement);
             }
         }
@@ -270,33 +270,35 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             }
         }
 
-        // create the new TrackSegment
+        // create the new TrackSegment and view
         TrackSegment l = new TrackSegment(name,
                 con1Name, type1, con2Name, type2,
                 dash, main, hide, p);
+        TrackSegmentView lv = new TrackSegmentView(l, p);
+        
         try {
-            l.setArc(element.getAttribute("arc").getBooleanValue());
+            lv.setArc(element.getAttribute("arc").getBooleanValue());
         } catch (DataConversionException e) {
             log.warn("unable to convert track segment arc attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
-        if (l.isArc()) {
+        if (lv.isArc()) {
             try {
-                l.setFlip(element.getAttribute("flip").getBooleanValue());
+                lv.setFlip(element.getAttribute("flip").getBooleanValue());
             } catch (DataConversionException e) {
                 log.warn("unable to convert track segment flip attribute");
             } catch (NullPointerException e) {  // considered normal if the attribute is not present
             }
             try {
-                l.setCircle(element.getAttribute("circle").getBooleanValue());
+                lv.setCircle(element.getAttribute("circle").getBooleanValue());
             } catch (DataConversionException e) {
                 log.warn("unable to convert track segment circle attribute");
             } catch (NullPointerException e) {  // considered normal if the attribute is not present
             }
-            if (l.isCircle()) {
+            if (lv.isCircle()) {
                 try {
-                    l.setAngle(element.getAttribute("angle").getDoubleValue());
+                    lv.setAngle(element.getAttribute("angle").getDoubleValue());
                 } catch (DataConversionException e) {
                     log.error("failed to convert tracksegment attribute");
                 } catch (NullPointerException e) {  // considered normal if the attribute is not present
@@ -304,7 +306,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             }
             try {
                 if (element.getAttribute("hideConLines").getBooleanValue()) {
-                    l.hideConstructionLines(TrackSegment.HIDECON);
+                    lv.hideConstructionLines(TrackSegment.HIDECON);
                 }
             } catch (DataConversionException e) {
                 log.warn("unable to convert track segment hideConLines attribute");
@@ -331,7 +333,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                                 } catch (DataConversionException e) {
                                     log.error("failed to convert controlpoint coordinates or index attributes");
                                 }
-                                l.setBezierControlPoint(new Point2D.Double(x, y), index);
+                                lv.setBezierControlPoint(new Point2D.Double(x, y), index);
                             }
                         } else {
                             log.error("Track segment Bezier two controlpoint elements not found. (found {})", elementList.size());
@@ -343,16 +345,13 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                     log.error("Track segment Bezier controlpoints element not found.");
                 }
                 // NOTE: do this LAST (so reCenter won't be called yet)
-                l.setBezier(true);
+                lv.setBezier(true);
             }
         } catch (DataConversionException e) {
             log.error("failed to convert tracksegment attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
-        //if (l.getName().equals("T31")) {
-        //    log.debug("Stop");
-        //}
         // load decorations
         Element decorationsElement = element.getChild("decorations");
         if (decorationsElement != null) {
@@ -365,101 +364,101 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                         Attribute a = decorationElement.getAttribute("style");
                         if (a != null) {
                             try {
-                                l.setArrowStyle(a.getIntValue());
+                                lv.setArrowStyle(a.getIntValue());
                             } catch (DataConversionException e) {
                             }
                         }
                         // assume both ends
-                        l.setArrowEndStart(true);
-                        l.setArrowEndStop(true);
+                        lv.setArrowEndStart(true);
+                        lv.setArrowEndStop(true);
                         a = decorationElement.getAttribute("end");
                         if (a != null) {
                             String value = a.getValue();
                             if (value.equals("start")) {
-                                l.setArrowEndStop(false);
+                                lv.setArrowEndStop(false);
                             } else if (value.equals("stop")) {
-                                l.setArrowEndStart(false);
+                                lv.setArrowEndStart(false);
                             }
                         }
                         // assume both directions
-                        l.setArrowDirIn(true);
-                        l.setArrowDirOut(true);
+                        lv.setArrowDirIn(true);
+                        lv.setArrowDirOut(true);
                         a = decorationElement.getAttribute("direction");
                         if (a != null) {
                             String value = a.getValue();
                             if (value.equals("in")) {
-                                l.setArrowDirOut(false);
+                                lv.setArrowDirOut(false);
                             } else if (value.equals("out")) {
-                                l.setArrowDirIn(false);
+                                lv.setArrowDirIn(false);
                             }
                         }
                         a = decorationElement.getAttribute("color");
                         if (a != null) {
                             try {
-                                l.setArrowColor(ColorUtil.stringToColor(a.getValue()));
+                                lv.setArrowColor(ColorUtil.stringToColor(a.getValue()));
                             } catch (IllegalArgumentException e) {
-                                l.setArrowColor(Color.BLACK);
+                                lv.setArrowColor(Color.BLACK);
                                 log.error("Invalid color {}; using black", a.getValue());
                             }
                         }
                         a = decorationElement.getAttribute("linewidth");
                         if (a != null) {
                             try {
-                                l.setArrowLineWidth(a.getIntValue());
+                                lv.setArrowLineWidth(a.getIntValue());
                             } catch (DataConversionException e) {
                             }
                         }
                         a = decorationElement.getAttribute("length");
                         if (a != null) {
                             try {
-                                l.setArrowLength(a.getIntValue());
+                                lv.setArrowLength(a.getIntValue());
                             } catch (DataConversionException e) {
                             }
                         }
                         a = decorationElement.getAttribute("gap");
                         if (a != null) {
                             try {
-                                l.setArrowGap(a.getIntValue());
+                                lv.setArrowGap(a.getIntValue());
                             } catch (DataConversionException e) {
                             }
                         }
                     } else if (decorationName.equals("bridge")) {
                         // assume both sides
-                        l.setBridgeSideLeft(true);
-                        l.setBridgeSideRight(true);
+                        lv.setBridgeSideLeft(true);
+                        lv.setBridgeSideRight(true);
                         Attribute a = decorationElement.getAttribute("side");
                         if (a != null) {
                             String value = a.getValue();
                             if (value.equals("right")) {
-                                l.setBridgeSideLeft(false);
+                                lv.setBridgeSideLeft(false);
                             } else if (value.equals("left")) {
-                                l.setBridgeSideRight(false);
+                                lv.setBridgeSideRight(false);
                             }
                         }
                         // assume neither end
-                        l.setBridgeHasEntry(false);
-                        l.setBridgeHasExit(false);
+                        lv.setBridgeHasEntry(false);
+                        lv.setBridgeHasExit(false);
                         a = decorationElement.getAttribute("end");
                         if (a != null) {
                             String value = a.getValue();
                             if (value.equals("both")) {
-                                l.setBridgeHasEntry(true);
-                                l.setBridgeHasExit(true);
+                                lv.setBridgeHasEntry(true);
+                                lv.setBridgeHasExit(true);
                             } else if (value.equals("entry")) {
-                                l.setBridgeHasEntry(true);
-                                l.setBridgeHasExit(false);
+                                lv.setBridgeHasEntry(true);
+                                lv.setBridgeHasExit(false);
                             } else if (value.equals("exit")) {
-                                l.setBridgeHasEntry(false);
-                                l.setBridgeHasExit(true);
+                                lv.setBridgeHasEntry(false);
+                                lv.setBridgeHasExit(true);
                             }
                         }
 
                         a = decorationElement.getAttribute("color");
                         if (a != null) {
                             try {
-                                l.setBridgeColor(ColorUtil.stringToColor(a.getValue()));
+                                lv.setBridgeColor(ColorUtil.stringToColor(a.getValue()));
                             } catch (IllegalArgumentException e) {
-                                l.setBridgeColor(Color.BLACK);
+                                lv.setBridgeColor(Color.BLACK);
                                 log.error("Invalid color {}; using black", a.getValue());
                             }
                         }
@@ -467,7 +466,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                         a = decorationElement.getAttribute("linewidth");
                         if (a != null) {
                             try {
-                                l.setBridgeLineWidth(a.getIntValue());
+                                lv.setBridgeLineWidth(a.getIntValue());
                             } catch (DataConversionException e) {
                             }
                         }
@@ -475,7 +474,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                         a = decorationElement.getAttribute("approachwidth");
                         if (a != null) {
                             try {
-                                l.setBridgeApproachWidth(a.getIntValue());
+                                lv.setBridgeApproachWidth(a.getIntValue());
                             } catch (DataConversionException e) {
                             }
                         }
@@ -483,7 +482,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                         a = decorationElement.getAttribute("deckwidth");
                         if (a != null) {
                             try {
-                                l.setBridgeDeckWidth(a.getIntValue());
+                                lv.setBridgeDeckWidth(a.getIntValue());
                             } catch (DataConversionException e) {
                             }
                         }
@@ -495,18 +494,18 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                         if (a != null) {
                             String value = a.getValue();
                             if (value.equals("start")) {
-                                l.setBumperEndStop(false);
+                                lv.setBumperEndStop(false);
                             } else if (value.equals("stop")) {
-                                l.setBumperEndStart(false);
+                                lv.setBumperEndStart(false);
                             }
                         }
 
                         a = decorationElement.getAttribute("color");
                         if (a != null) {
                             try {
-                                l.setBumperColor(ColorUtil.stringToColor(a.getValue()));
+                                lv.setBumperColor(ColorUtil.stringToColor(a.getValue()));
                             } catch (IllegalArgumentException e) {
-                                l.setBumperColor(Color.BLACK);
+                                lv.setBumperColor(Color.BLACK);
                                 log.error("Invalid color {}; using black", a.getValue());
                             }
                         }
@@ -514,7 +513,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                         a = decorationElement.getAttribute("linewidth");
                         if (a != null) {
                             try {
-                                l.setBumperLineWidth(a.getIntValue());
+                                lv.setBumperLineWidth(a.getIntValue());
                             } catch (DataConversionException e) {
                             }
                         }
@@ -522,7 +521,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                         a = decorationElement.getAttribute("length");
                         if (a != null) {
                             try {
-                                l.setBumperLength(a.getIntValue());
+                                lv.setBumperLength(a.getIntValue());
                             } catch (DataConversionException e) {
                             }
                         }
@@ -530,47 +529,47 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                         a = decorationElement.getAttribute("flip");
                         if (a != null) {
                             try {
-                                l.setBumperFlipped(a.getBooleanValue());
+                                lv.setBumperFlipped(a.getBooleanValue());
                             } catch (DataConversionException e) {
                             }
                         }
                     } else if (decorationName.equals("tunnel")) {
                         // assume both sides
-                        l.setTunnelSideLeft(true);
-                        l.setTunnelSideRight(true);
+                        lv.setTunnelSideLeft(true);
+                        lv.setTunnelSideRight(true);
                         Attribute a = decorationElement.getAttribute("side");
                         if (a != null) {
                             String value = a.getValue();
                             if (value.equals("right")) {
-                                l.setTunnelSideLeft(false);
+                                lv.setTunnelSideLeft(false);
                             } else if (value.equals("left")) {
-                                l.setTunnelSideRight(false);
+                                lv.setTunnelSideRight(false);
                             }
                         }
                         // assume neither end
-                        l.setTunnelHasEntry(false);
-                        l.setTunnelHasExit(false);
+                        lv.setTunnelHasEntry(false);
+                        lv.setTunnelHasExit(false);
                         a = decorationElement.getAttribute("end");
                         if (a != null) {
                             String value = a.getValue();
                             if (value.equals("both")) {
-                                l.setTunnelHasEntry(true);
-                                l.setTunnelHasExit(true);
+                                lv.setTunnelHasEntry(true);
+                                lv.setTunnelHasExit(true);
                             } else if (value.equals("entry")) {
-                                l.setTunnelHasEntry(true);
-                                l.setTunnelHasExit(false);
+                                lv.setTunnelHasEntry(true);
+                                lv.setTunnelHasExit(false);
                             } else if (value.equals("exit")) {
-                                l.setTunnelHasEntry(false);
-                                l.setTunnelHasExit(true);
+                                lv.setTunnelHasEntry(false);
+                                lv.setTunnelHasExit(true);
                             }
                         }
 
                         a = decorationElement.getAttribute("color");
                         if (a != null) {
                             try {
-                                l.setTunnelColor(ColorUtil.stringToColor(a.getValue()));
+                                lv.setTunnelColor(ColorUtil.stringToColor(a.getValue()));
                             } catch (IllegalArgumentException e) {
-                                l.setTunnelColor(Color.BLACK);
+                                lv.setTunnelColor(Color.BLACK);
                                 log.error("Invalid color {}; using black", a.getValue());
                             }
                         }
@@ -578,7 +577,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                         a = decorationElement.getAttribute("linewidth");
                         if (a != null) {
                             try {
-                                l.setTunnelLineWidth(a.getIntValue());
+                                lv.setTunnelLineWidth(a.getIntValue());
                             } catch (DataConversionException e) {
                             }
                         }
@@ -586,7 +585,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                         a = decorationElement.getAttribute("entrancewidth");
                         if (a != null) {
                             try {
-                                l.setTunnelEntranceWidth(a.getIntValue());
+                                lv.setTunnelEntranceWidth(a.getIntValue());
                             } catch (DataConversionException e) {
                             }
                         }
@@ -594,7 +593,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                         a = decorationElement.getAttribute("floorwidth");
                         if (a != null) {
                             try {
-                                l.setTunnelFloorWidth(a.getIntValue());
+                                lv.setTunnelFloorWidth(a.getIntValue());
                             } catch (DataConversionException e) {
                             }
                         }
@@ -618,7 +617,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             l.tLayoutBlockName = a.getValue();
         }
 
-        p.addLayoutTrack(l);
+        p.addLayoutTrack(l, lv);
     }
 
     static final EnumIO<HitPointType> htpMap = new EnumIoNamesNumbers<>(HitPointType.class);

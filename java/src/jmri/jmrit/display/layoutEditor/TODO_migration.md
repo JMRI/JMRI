@@ -9,49 +9,45 @@ It's in no particular order, items are removed as done, so please don't consider
         rename methods left behind to ensure not accessed
  - once moved to View, break down to subclasses to removing dynamic typing
 
-Usages from LayoutTrackView:
 
-```
-protected abstract void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
+ - Remove geometry variables from View
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+ - Remove view variables from geometry
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+ - load with specific view
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint *TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+ - store from specific view
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
 
-    java/src/jmri/jmrit/display/layoutEditor/LayoutTurnout.java:3442
-    java/src/jmri/jmrit/display/layoutEditor/LayoutTurntable.java:1136
-    java/src/jmri/jmrit/display/layoutEditor/TrackSegment.java:2295
-    java/src/jmri/jmrit/display/layoutEditor/PositionablePoint.java:1760
-    java/src/jmri/jmrit/display/layoutEditor/LevelXing.java:1508
-    java/src/jmri/jmrit/display/layoutEditor/LayoutSlip.java:1093
 
-    java/src/jmri/jmrit/display/layoutEditor/LayoutEditorChecks.java:379
+ - move typed code down
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout
+        LayoutSlip
+        LayoutXOver
 
-abstract protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement)
+Last:  TrackSegment is loading but not storing (needs TrackSegment_View_Xml and changes in 
+LayoutEditorXml) 
 
-    java/src/jmri/jmrit/display/layoutEditor/LayoutTurnout.java:3781
-    java/src/jmri/jmrit/display/layoutEditor/LayoutTurntable.java:1187
-    java/src/jmri/jmrit/display/layoutEditor/TrackSegment.java:2328
-    java/src/jmri/jmrit/display/layoutEditor/PositionablePoint.java:1768
-    java/src/jmri/jmrit/display/layoutEditor/LevelXing.java:1527
-    java/src/jmri/jmrit/display/layoutEditor/LayoutSlip.java:1267
-    (others inherited)    
-    
-abstract protected void drawEditControls(Graphics2D g2);
+---
 
-    java/src/jmri/jmrit/display/layoutEditor/LayoutTurnout.java:4511
-    java/src/jmri/jmrit/display/layoutEditor/LayoutTurntable.java:1266
-    java/src/jmri/jmrit/display/layoutEditor/TrackSegment.java:2385
-    java/src/jmri/jmrit/display/layoutEditor/PositionablePoint.java:1789
-    java/src/jmri/jmrit/display/layoutEditor/LevelXing.java:1632
-
-   
-abstract protected void drawDecorations(Graphics2D g2);
-    java/src/jmri/jmrit/display/layoutEditor/LayoutTurnout.java:3436
-    java/src/jmri/jmrit/display/layoutEditor/LayoutTurntable.java:1130
-    java/src/jmri/jmrit/display/layoutEditor/TrackSegment.java:2431
-    java/src/jmri/jmrit/display/layoutEditor/PositionablePoint.java:1754
-    java/src/jmri/jmrit/display/layoutEditor/LevelXing.java:1500
-
-    java/src/jmri/jmrit/display/layoutEditor/LayoutEditorChecks.java:379
-```
-
+  Store is done from LayoutTrack child, without access to View and LayoutEditor (for nav).
+  Need to change the store process in configurexml/LayoutEditorXml to fix that
+  
+  See java/src/jmri/configurexml/ClassMigration.properties 
+  
 ---
 
 Eventually, *View classes should receive a reference to the *ViewContext object(s) and
