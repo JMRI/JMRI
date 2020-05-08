@@ -27,6 +27,8 @@ public class TamsTurnout extends AbstractTurnout
      * identification in the system name.
      *
      * @param number DCC address of the turnout
+     * @param prefix system prefic
+     * @param etc Tams system connection traffic controller
      */
     public TamsTurnout(int number, String prefix, TamsTrafficController etc) {
         super(prefix + "T" + number);
