@@ -23,6 +23,7 @@ public class AlignTableFrame extends jmri.util.JmriJFrame {
 
     /**
      * Constructor method
+     * @param _memo system connection.
      */
     public AlignTableFrame(RpsSystemConnectionMemo _memo) {
         super();

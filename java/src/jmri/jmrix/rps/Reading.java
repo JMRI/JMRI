@@ -52,6 +52,7 @@ public class Reading {
 
     /**
      * Return the time at which this Reading was requested.
+     * @return read request time.
      */
     public int getTime() {
         return time;
@@ -59,6 +60,7 @@ public class Reading {
 
     /**
      * Return the ID int of the transmitter this reading describes.
+     * @return ID of the transmitter.
      */
     public String getId() {
         return id;
@@ -66,6 +68,7 @@ public class Reading {
 
     /**
      * NValues is really the highest receiver number possible.
+     * @return highest receiver number possible.
      */
     public int getNValues() {
         return values.length - 1;
@@ -73,6 +76,8 @@ public class Reading {
 
     /**
      * Convenience method to get a specific one of the values.
+     * @param i value index.
+     * @return value.
      */
     public double getValue(int i) {
         return values[i];
