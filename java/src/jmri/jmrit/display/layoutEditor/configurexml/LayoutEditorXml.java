@@ -12,16 +12,7 @@ import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.display.layoutEditor.LayoutShape;
-import jmri.jmrit.display.layoutEditor.LayoutSlip;
-import jmri.jmrit.display.layoutEditor.LayoutTrack;
-import jmri.jmrit.display.layoutEditor.LayoutTrackDrawingOptions;
-import jmri.jmrit.display.layoutEditor.LayoutTurnout;
-import jmri.jmrit.display.layoutEditor.LayoutTurntable;
-import jmri.jmrit.display.layoutEditor.LevelXing;
-import jmri.jmrit.display.layoutEditor.PositionablePoint;
-import jmri.jmrit.display.layoutEditor.TrackSegment;
+import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.ColorUtil;
 import org.jdom2.*;
 import org.slf4j.Logger;
@@ -164,72 +155,45 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             log.debug("N LayoutTrack elements: {}", num);
         }
 
-        // uncomment this (!!!temporarly!!!) to save alphanumerically sorted by ID
-//        log.error("DO NOT LEAVE THIS ENABLED FOR PRODUCTION: ORGINAL ORDER MUST BE MAINTAINED.");
-//        Collections.sort(layoutTracks, new Comparator<LayoutTrack>() {
-//            @Override
-//            public int compare(LayoutTrack t1, LayoutTrack t2) {
-//                AlphanumComparator ac = new AlphanumComparator();
-//                return ac.compare(t1.getId(), t2.getId());
-//            }
-//        });
 
-        // Because some people (like me) like to edit their panel.xml files
-        // directly we're going to group the layout tracks by class before
-        // storing them. Note: No other order is effected; They should exist
-        // in the saved file in the order that they were created (ether at
-        // panel file load time or later by the users in the editor).
-        List<LayoutTrack> orderedList = layoutTracks.stream() // next line excludes LayoutSlips
-                .filter(item -> ((item instanceof LayoutTurnout) && !(item instanceof LayoutSlip)))
-                .map(item -> (LayoutTurnout) item)
-                .collect(Collectors.toList());
-        orderedList.addAll(layoutTracks.stream()
-                .filter(item -> item instanceof TrackSegment)
-                .map(item -> (TrackSegment) item)
-                .collect(Collectors.toList()));
-        orderedList.addAll(layoutTracks.stream()
-                .filter(item -> item instanceof PositionablePoint)
-                .map(item -> (PositionablePoint) item)
-                .collect(Collectors.toList()));
-        orderedList.addAll(layoutTracks.stream()
-                .filter(item -> item instanceof LevelXing)
-                .map(item -> (LevelXing) item)
-                .collect(Collectors.toList()));
-        orderedList.addAll(layoutTracks.stream()
-                .filter(item -> item instanceof LayoutSlip)
-                .map(item -> (LayoutSlip) item)
-                .collect(Collectors.toList()));
-        orderedList.addAll(layoutTracks.stream()
-                .filter(item -> item instanceof LayoutTurntable)
-                .map(item -> (LayoutTurntable) item)
-                .collect(Collectors.toList()));
 
-        for (LayoutTrack lt : orderedList) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(lt);
-                if (e != null) {
-                    panel.addContent(e);
-                }
-            } catch (Exception e) {
-                log.error("Error storing layoutturnout element: ", e);
-            }
+        // Previous write order was
+        //   LayoutTurnout) && !(item instanceof LayoutSlip)
+        //   TrackSegment
+        //   PositionablePoint
+        //   LevelXing
+        //   LayoutSlip
+        //   LayoutTurntable
+
+        // write order specified for compatibility
+        for (LayoutTrack lt : p.getLayoutTurnouts()) {
+            if (! (lt instanceof LayoutSlip) )
+                storeOne(panel, lt); 
         }
-
+        for (LayoutTrackView lt : p.getTrackSegmentViews()) {storeOne(panel, lt); }
+        for (LayoutTrack lt : p.getPositionablePoints())    {storeOne(panel, lt); }
+        for (LayoutTrack lt : p.getLevelXings())            {storeOne(panel, lt); }
+        for (LayoutTrack lt : p.getLayoutSlips())           {storeOne(panel, lt); }
+        for (LayoutTrack lt : p.getLayoutTurntables())      {storeOne(panel, lt); }
+        
         // include Layout Shapes
-        for (LayoutShape ls : p.getLayoutShapes()) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(ls);
-                if (e != null) {
-                    panel.addContent(e);
-                }
-            } catch (Exception e) {
-                log.error("Error storing layout shape element: ", e);
-            }
-        }
+        for (LayoutShape ls : p.getLayoutShapes()) {storeOne(panel, ls); }
 
         return panel;
     }   // store
 
+
+    private void storeOne(Element panel, Object item) {
+        try {
+            Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(item);
+            if (e != null) {
+                panel.addContent(e);
+            }
+        } catch (Exception ex) {
+            log.error("Error storing layout item: {}", item, ex);
+        }    
+    }
+    
     @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");

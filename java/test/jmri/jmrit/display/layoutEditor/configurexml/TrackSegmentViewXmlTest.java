@@ -13,11 +13,11 @@ import org.junit.Test;
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
-public class TrackSegmentXmlTest {
+public class TrackSegmentViewXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("TrackSegmentXml constructor",new TrackSegmentXml());
+      Assert.assertNotNull("TrackSegmentXml constructor",new TrackSegmentViewXml());
     }
 
     @Before

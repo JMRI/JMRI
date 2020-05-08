@@ -66,6 +66,8 @@ public class TrackSegmentView extends LayoutTrackView {
 
     final private TrackSegment trackSegment;
     
+    @Nonnull
+    public TrackSegment getTrackSegment() { return trackSegment; }
     /**
      * Get debugging string for the TrackSegment.
      *
@@ -260,11 +262,11 @@ public class TrackSegmentView extends LayoutTrackView {
     }
 
     /**
-     * @param set true to turn on Bezier curve rep
+     * @param bool Set true to turn on Bezier curve representation.
      */
-    public void setBezier(boolean boo) {
-        if (bezier != boo) {
-            bezier = boo;
+    public void setBezier(boolean bool) {
+        if (bezier != bool) {
+            bezier = bool;
             if (bezier) {
                 arc = false;
                 circle = false;
@@ -284,12 +286,12 @@ public class TrackSegmentView extends LayoutTrackView {
     }
 
     /**
-     * Get the direction from end point 1 to 2
+     * Get the direction from end point 1 to 2.
      * <p>
      * Note: Goes CW from east (0) to south (PI/2) to west (PI) to north
      * (PI*3/2), etc.
      *
-     * @return the direction (in radians)
+     * @return The direction (in radians)
      */
     public double getDirectionRAD() {
         Point2D ep1 = getCoordsCenter(), ep2 = getCoordsCenter();
@@ -303,7 +305,7 @@ public class TrackSegmentView extends LayoutTrackView {
     }
 
     /**
-     * Get the direction from end point 1 to 2
+     * Get the direction from end point 1 to 2.
      * <p>
      * Note: Goes CW from east (0) to south (90) to west (180) to north (270),
      * etc.

@@ -189,15 +189,6 @@ public class LayoutTurntableView extends LayoutTrackView {
         return index;
     }
 
-    // the following method is only for use in loading layout turntables
-    public void addRayTrack(double angle, int index, String name) {
-        RayTrack rt = new RayTrack(angle, index);
-        /// if (ray!=null) {
-        rayTrackList.add(rt);
-        rt.connectName = name;
-        //}
-    }
-
     /**
      * Get the connection for the ray with this index.
      *
@@ -1067,9 +1058,6 @@ public class LayoutTurntableView extends LayoutTrackView {
             }
             return result;
         }
-
-        // initialization instance variable (used when loading a LayoutEditor)
-        public String connectName = "";
 
         private NamedBeanHandle<Turnout> namedTurnout;
         // Turnout t;

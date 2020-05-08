@@ -22,7 +22,7 @@ abstract public class LayoutTrackView {
      * constructor method
      */
     public LayoutTrackView(@Nonnull LayoutTrack track, @Nonnull LayoutEditor layoutEditor) {
-         this.layoutTrack = track;
+         // this.layoutTrack = track;
          this.layoutEditor = layoutEditor;
     }
 
@@ -65,12 +65,12 @@ abstract public class LayoutTrackView {
         throw new IllegalArgumentException("no matching concrete type in the LayoutTrack tree");
     }
 
-    final private LayoutTrack layoutTrack;
+    // final private LayoutTrack layoutTrack;
     final protected LayoutEditor layoutEditor;
 
-    /**
-     * accessor methods
-     */
+    // Accessor Methods
+    
+    
     @Nonnull 
     final public String getId() {
         return ident;
@@ -90,7 +90,7 @@ abstract public class LayoutTrackView {
     /**
      * Set center coordinates
      *
-     * @return the center coordinates
+     * @return The center coordinates
      */
     final public Point2D getCoordsCenter() { // final for efficiency
         return center;

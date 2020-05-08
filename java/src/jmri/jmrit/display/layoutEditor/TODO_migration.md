@@ -31,6 +31,11 @@ It's in no particular order, items are removed as done, so please don't consider
         LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
         LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
 
+ - Editor creates them the right way (addLayoutTurnout, addLayoutSlip, etc in LE)
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
 
  - move typed code down
         LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 

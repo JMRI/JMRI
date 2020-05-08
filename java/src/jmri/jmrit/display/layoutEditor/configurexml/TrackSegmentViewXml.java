@@ -18,12 +18,13 @@ import org.slf4j.LoggerFactory;
  * This module handles configuration for display.TrackSegment objects for a
  * LayoutEditor.
  *
+ * @author Bob Jacobsen Copyright (c) 2020
  * @author David Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2019
  */
-public class TrackSegmentXml extends AbstractXmlAdapter {
+public class TrackSegmentViewXml extends AbstractXmlAdapter {
 
-    public TrackSegmentXml() {
+    public TrackSegmentViewXml() {
     }
 
     /**
@@ -35,7 +36,8 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
     @Override
     public Element store(Object o) {
 
-        TrackSegment trk = (TrackSegment) o;
+        TrackSegmentView view = (TrackSegmentView) o;
+        TrackSegment trk = view.getTrackSegment();
 
         Element element = new Element("tracksegment"); // NOI18N
 
@@ -622,5 +624,5 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
 
     static final EnumIO<HitPointType> htpMap = new EnumIoNamesNumbers<>(HitPointType.class);
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegmentXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegmentViewXml.class);
 }
