@@ -352,15 +352,6 @@ abstract public class LayoutTrackView {
     }
 
     /**
-     * Initialization method for LayoutTrack sub-classes. The following method
-     * is called for each instance after the entire LayoutEditor is loaded to
-     * set the specific objects for that instance
-     *
-     * @param le the layout editor
-     */
-    abstract public void setObjects(@Nonnull LayoutEditor le);
-
-    /**
      * scale this LayoutTrack's coordinates by the x and y factors
      *
      * @param xFactor the amount to scale X coordinates

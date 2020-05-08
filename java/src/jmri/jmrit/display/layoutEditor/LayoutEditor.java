@@ -709,6 +709,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     public static void setupComboBox(@Nonnull NamedBeanComboBox<?> inComboBox, boolean inValidateMode, boolean inEnable, boolean inEditable) {
         log.debug("LE setupComboBox called");
+        assert inComboBox != null;
 
         inComboBox.setEnabled(inEnable);
         inComboBox.setEditable(inEditable);
@@ -760,6 +761,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @return option menu that was added
      */
     private JMenu setupOptionMenu(@Nonnull JMenuBar menuBar) {
+        assert menuBar != null;
+        
         JMenu optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
 
         optionMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("OptionsMnemonic")));
@@ -3058,6 +3061,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private TrackSegment checkTrackSegmentPopUps(@Nonnull Point2D loc) {
+        assert loc != null;
+        
         TrackSegment result = null;
 
         // NOTE: Rather than calculate all the hit rectangles for all
@@ -3077,6 +3082,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private PositionableLabel checkBackgroundPopUps(@Nonnull Point2D loc) {
+        assert loc != null;
+
         PositionableLabel result = null;
         // check background images, if any
         for (int i = backgroundImage.size() - 1; i >= 0; i--) {
@@ -3091,6 +3098,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private SensorIcon checkSensorIconPopUps(@Nonnull Point2D loc) {
+        assert loc != null;
+
         SensorIcon result = null;
         // check sensor images, if any
         for (int i = sensorImage.size() - 1; i >= 0; i--) {
@@ -3104,6 +3113,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private SignalHeadIcon checkSignalHeadIconPopUps(@Nonnull Point2D loc) {
+        assert loc != null;
+
         SignalHeadIcon result = null;
         // check signal head images, if any
         for (int i = signalHeadImage.size() - 1; i >= 0; i--) {
@@ -3118,6 +3129,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private SignalMastIcon checkSignalMastIconPopUps(@Nonnull Point2D loc) {
+        assert loc != null;
+
         SignalMastIcon result = null;
         // check signal head images, if any
         for (int i = signalMastList.size() - 1; i >= 0; i--) {
@@ -3132,6 +3145,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private PositionableLabel checkLabelImagePopUps(@Nonnull Point2D loc) {
+        assert loc != null;
+
         PositionableLabel result = null;
         int level = 0;
 
@@ -3163,6 +3178,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private AnalogClock2Display checkClockPopUps(@Nonnull Point2D loc) {
+        assert loc != null;
+
         AnalogClock2Display result = null;
         // check clocks, if any
         for (int i = clocks.size() - 1; i >= 0; i--) {
@@ -3177,6 +3194,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private MultiSensorIcon checkMultiSensorPopUps(@Nonnull Point2D loc) {
+        assert loc != null;
+
         MultiSensorIcon result = null;
         // check multi sensor icons, if any
         for (int i = multiSensors.size() - 1; i >= 0; i--) {
@@ -3191,6 +3210,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private LocoIcon checkMarkerPopUps(@Nonnull Point2D loc) {
+        assert loc != null;
+
         LocoIcon result = null;
         // check marker icons, if any
         for (int i = markerImage.size() - 1; i >= 0; i--) {
@@ -3206,6 +3227,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private LayoutShape checkLayoutShapePopUps(@Nonnull Point2D loc) {
+        assert loc != null;
+
         LayoutShape result = null;
         for (LayoutShape ls : layoutShapes) {
             selectedHitPointType = ls.findHitPointType(loc, true);
@@ -3226,6 +3249,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     @Nonnull
     public static Point2D getCoords(@Nonnull LayoutTrack layoutTrack, HitPointType connectionType) {
+        assert layoutTrack != null;
         return layoutTrack.getCoordsForConnectionType(connectionType);
     }
 
@@ -3561,6 +3585,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     @Override
     public void showPopUp(@Nonnull Positionable p, @Nonnull MouseEvent event) {
+        assert p != null;
+
         if (!((Component) p).isVisible()) {
             return; // component must be showing on the screen to determine its location
         }
@@ -3744,6 +3770,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private void checkPointOfPositionable(@Nonnull PositionablePoint p) {
+        assert p != null;
+
         TrackSegment t = p.getConnect1();
 
         if (t == null) {
@@ -3893,6 +3921,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private void hitPointCheckLayoutTurnoutSubs(@Nonnull Point2D dLoc) {
+        assert dLoc != null;
+
         if (findLayoutTracksHitPoint(dLoc, true)) {
             switch (foundHitPointType) {
                 case POS_POINT: {
@@ -3962,6 +3992,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private void rotateTurnout(@Nonnull LayoutTurnout t) {
+        assert t != null;
+
         LayoutTurnout be = (LayoutTurnout) beginTrack;
 
         if (((beginHitPointType == HitPointType.TURNOUT_A) && ((be.getConnectB() != null) || (be.getConnectC() != null)))
@@ -4162,6 +4194,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private void amendSelectionGroup(@Nonnull Positionable p) {
+        assert p != null;
+        
         if (_positionableSelection.contains(p)) {
             _positionableSelection.remove(p);
         } else {
@@ -4171,6 +4205,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     public void amendSelectionGroup(@Nonnull LayoutTrack p) {
+        assert p != null;
+
         if (_layoutTrackSelection.contains(p)) {
             _layoutTrackSelection.remove(p);
         } else {
@@ -4181,6 +4217,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     public void amendSelectionGroup(@Nonnull LayoutShape ls) {
+        assert ls != null;
+        
         if (_layoutShapeSelection.contains(ls)) {
             _layoutShapeSelection.remove(ls);
         } else {
@@ -4687,6 +4725,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     @Nonnull
     public PositionablePoint addAnchor(@Nonnull Point2D p) {
+        assert p != null;
+
         // get unique name
         String name = finder.uniqueName("A", ++numAnchors);
 
