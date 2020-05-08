@@ -86,7 +86,7 @@ public class LayoutConnectivity {
     // this should only be used for debugging...
     @Override
     public String toString() {
-        String result = "between " + block1 + " and " + block2 + " in direction " + Path.decodeDirection(direction);
+        String result = "between " + block1.getDisplayName() + " and " + block2.getDisplayName() + " in direction " + Path.decodeDirection(direction);
         if (track1 != null) {
             result = result + ", track: " + track1.getId();
         }
