@@ -21,8 +21,8 @@ public class LayoutSingleSlipView extends LayoutSlipView {
     /**
      * constructor method
      */
-    public LayoutSingleSlipView(@Nonnull LayoutSingleSlip slip) {
-        super(slip);
+    public LayoutSingleSlipView(@Nonnull LayoutSingleSlip slip, @Nonnull LayoutEditor layoutEditor) {
+        super(slip, layoutEditor);
         // this.slip = slip;
     }
         

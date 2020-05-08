@@ -17,9 +17,6 @@ import org.junit.Test;
  */
 public class LayoutTrackViewTest {
 
-    @Test
-    public void testCtor() {
-        new LayoutTrackView(null);
-    }
-
+    // LayoutTrackView is abstract, so there's
+    // not much we can do here right now.
 }

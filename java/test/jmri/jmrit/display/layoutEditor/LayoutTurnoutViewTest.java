@@ -19,7 +19,7 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
 
     @Test
     public void testCtor() {
-        new LayoutTurnoutView(null);
+        new LayoutTurnoutView(null, null);
     }
 
 }

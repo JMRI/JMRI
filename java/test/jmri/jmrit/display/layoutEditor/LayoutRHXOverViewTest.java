@@ -19,7 +19,7 @@ public class  LayoutRHXOverViewTest extends  LayoutXOverViewTest {
 
     @Test
     public void testCtor() {
-        new LayoutRHXOverView(null);
+        new LayoutRHXOverView(null, null);
     }
 
 }

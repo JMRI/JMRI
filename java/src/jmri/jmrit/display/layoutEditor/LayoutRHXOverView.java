@@ -21,8 +21,8 @@ public class LayoutRHXOverView extends LayoutXOverView {
     /**
      * constructor method
      */
-    public LayoutRHXOverView(@Nonnull LayoutRHXOver xover) {
-        super(xover);
+    public LayoutRHXOverView(@Nonnull LayoutRHXOver xover, @Nonnull LayoutEditor layoutEditor) {
+        super(xover, layoutEditor);
         // this.xover = xover;
     }
         

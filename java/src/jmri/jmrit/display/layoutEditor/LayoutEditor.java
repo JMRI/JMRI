@@ -7479,7 +7479,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     List<PositionablePointView> getPositionablePointViews() {
         List<PositionablePointView> list = new ArrayList<>();
         for (PositionablePoint p : getPositionablePoints()) {
-            list.add(new PositionablePointView(p));
+            list.add(new PositionablePointView(p, this));
         }
         return list;
     }
@@ -7564,7 +7564,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         layoutTrackList.add(trk);
         
         // create the view on the fly
-        LayoutTrackView v = LayoutTrackView.makeTrackView(trk);
+        LayoutTrackView v = LayoutTrackView.makeTrackView(trk, this);
         layoutTrackViewList.add(v);
         trkToView.put(trk, v);
         viewToTrk.put(v, trk);

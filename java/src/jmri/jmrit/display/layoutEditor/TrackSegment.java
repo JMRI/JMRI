@@ -14,7 +14,6 @@ import jmri.*;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;
-import org.slf4j.*;
 
 /**
  * TrackSegment is a segment of track on a layout linking two nodes of the

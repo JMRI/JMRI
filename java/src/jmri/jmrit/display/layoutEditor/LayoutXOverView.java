@@ -21,8 +21,8 @@ public class LayoutXOverView extends LayoutTurnoutView {
     /**
      * constructor method
      */
-    public LayoutXOverView(@Nonnull LayoutXOver xover) {
-        super(xover);
+    public LayoutXOverView(@Nonnull LayoutXOver xover, @Nonnull LayoutEditor layoutEditor) {
+        super(xover, layoutEditor);
         // this.xover = xover;
     }
         

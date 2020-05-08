@@ -21,8 +21,8 @@ public class LayoutLHTurnoutView extends LayoutTurnoutView {
     /**
      * constructor method
      */
-    public LayoutLHTurnoutView(@Nonnull LayoutLHTurnout turnout) {
-        super(turnout);
+    public LayoutLHTurnoutView(@Nonnull LayoutLHTurnout turnout, @Nonnull LayoutEditor layoutEditor) {
+        super(turnout, layoutEditor);
         // this.turnout = turnout;
     }
         

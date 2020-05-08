@@ -19,6 +19,6 @@ public class LayoutDoubleSlipViewTest extends LayoutSlipViewTest {
 
     @Test
     public void testCtor() {
-        new LayoutDoubleSlipView(null);
+        new LayoutDoubleSlipView(null, null);
     }
 }

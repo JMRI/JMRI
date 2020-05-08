@@ -21,8 +21,8 @@ public class LayoutWyeView extends LayoutTurnoutView {
     /**
      * constructor method
      */
-    public LayoutWyeView(@Nonnull LayoutWye wye) {
-        super(wye);
+    public LayoutWyeView(@Nonnull LayoutWye wye, @Nonnull LayoutEditor layoutEditor) {
+        super(wye, layoutEditor);
         // this.wye = wye;
     }
         

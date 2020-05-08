@@ -19,6 +19,6 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
 
     @Test
     public void testCtor() {
-        new TrackSegmentView(null);
+        new TrackSegmentView(null, null);
     }
 }

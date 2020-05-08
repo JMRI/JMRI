@@ -19,7 +19,7 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
 
     @Test
     public void testCtor() {
-        new PositionablePointView(null);
+        new PositionablePointView(null,null);
     }
 
 }

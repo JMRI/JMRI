@@ -107,6 +107,7 @@ LayoutEditorComponent.drawTrackSegmentInProgress still uses LayoutTrack not Layo
 ---
 
 getId vs getName why? getName (257) much more common than getId (35), but is it right?
+getId but setIdent?
 
 ```
 % grep -r 'String getName\(\)' java/src/jmri/jmrit/display/layoutEditor/
@@ -119,6 +120,23 @@ java/src/jmri/jmrit/display/layoutEditor//LayoutTrack.java:    final public Stri
 java/src/jmri/jmrit/display/layoutEditor//LayoutBlock.java:    public String getId() {
 java/src/jmri/jmrit/display/layoutEditor//LayoutTrack.java:    final public String getId() {
 ```
+
+---
+
+In LayoutTurnoutView (temp) ctor:
+```
+        if (rot != 0.0) log.warn("we're not able to retrieve the rotation from the underlying track; it's in the coordinates")
+        rotateCoords(rot);
+        // adjust size of new turnout
+        Point2D pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
+                Math.round(dispB.getY() * yFactor));
+        dispB = pt;
+        pt = new Point2D.Double(Math.round(dispA.getX() * xFactor),
+                Math.round(dispA.getY() * yFactor));
+        dispA = pt;
+```
+Should we just be sucking over all the variables from the track?  But it won't have them anymore
+(This is a tricky ctor; is it ever used with rot != 0?)
 
 ---
 

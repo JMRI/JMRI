@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 import jmri.*;
 import jmri.util.MathUtil;
-import org.slf4j.*;
 
 /**
  * A LayoutTurntable is a representation used by LayoutEditor to display a
@@ -79,7 +78,6 @@ public class LayoutTurntable extends LayoutTrack {
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurntableEditor(layoutEditor);
     }
 
-    //
     /**
      * Get a string that represents this object. This should only be used for
      * debugging.

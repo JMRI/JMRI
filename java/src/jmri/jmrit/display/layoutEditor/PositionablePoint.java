@@ -17,7 +17,7 @@ import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.*;
 import jmri.util.swing.*;
-import org.slf4j.*;
+
 
 /**
  * PositionablePoint is a Point defining a node in the Track that can be dragged
@@ -517,7 +517,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     @CheckReturnValue
-    private NamedBeanHandle<SignalMast> getEastBoundSignalMastNamed() {
+    public NamedBeanHandle<SignalMast> getEastBoundSignalMastNamed() {
         if (getType() == PointType.EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
             if (dir == Path.SOUTH || dir == Path.EAST || dir == Path.SOUTH_EAST) {
@@ -582,7 +582,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     @CheckReturnValue
-    private NamedBeanHandle<SignalMast> getWestBoundSignalMastNamed() {
+    public NamedBeanHandle<SignalMast> getWestBoundSignalMastNamed() {
         if (getType() == PointType.EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
             if (dir == Path.WEST || dir == Path.NORTH || dir == Path.NORTH_WEST) {
@@ -1464,7 +1464,7 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * Removes this object from display and persistence
      */
-    private void remove() {
+    public void remove() {  // temporary public instead of private for migration
         // remove from persistence by flagging inactive
         active = false;
     }

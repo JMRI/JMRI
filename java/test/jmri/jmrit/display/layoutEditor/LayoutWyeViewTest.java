@@ -19,6 +19,6 @@ public class LayoutWyeViewTest extends LayoutTurnoutViewTest {
 
     @Test
     public void testCtor() {
-        new LayoutWyeView(null);
+        new LayoutWyeView(null, null);
     }
 }

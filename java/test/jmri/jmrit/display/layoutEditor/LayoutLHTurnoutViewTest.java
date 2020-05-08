@@ -19,6 +19,6 @@ public class LayoutLHTurnoutViewTest extends LayoutTurnoutViewTest {
 
     @Test
     public void testCtor() {
-        new LayoutLHTurnoutView(null);
+        new LayoutLHTurnoutView(null, null);
     }
 }

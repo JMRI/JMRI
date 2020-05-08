@@ -19,7 +19,7 @@ public class LayoutXOverViewTest extends LayoutTurnoutViewTest {
 
     @Test
     public void testCtor() {
-        new LayoutXOverView(null);
+        new LayoutXOverView(null, null);
     }
 
 }
