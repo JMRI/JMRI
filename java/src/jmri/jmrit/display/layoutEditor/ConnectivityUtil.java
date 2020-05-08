@@ -57,7 +57,7 @@ public class ConnectivityUtil {
     // constructor method
     public ConnectivityUtil(LayoutEditor thePanel) {
         layoutEditor = thePanel;
-        auxTools = new LayoutEditorAuxTools(layoutEditor);
+        auxTools = layoutEditor.getLEAuxTools();
         layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
     }
 
