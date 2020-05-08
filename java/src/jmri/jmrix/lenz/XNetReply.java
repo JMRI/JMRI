@@ -1116,7 +1116,6 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     private String singleTurnoutMonitorMessage(String prefix, int turnoutMsgAddr, FeedbackItem feedbackItem) {
         StringBuilder outputBuilder = new StringBuilder();
-        feedbackItem.getAddress();
         outputBuilder.append(prefix).append(" ")
                 .append(Bundle.getMessage(MAKE_LABEL, Bundle.getMessage(BEAN_NAME_TURNOUT))).append(" ")
                 .append(turnoutMsgAddr).append(" ").append(Bundle.getMessage(MAKE_LABEL, Bundle.getMessage(COLUMN_STATE))).append(" ");
