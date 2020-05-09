@@ -31,8 +31,11 @@ public class SerialAddress {
 
     /**
      * Public static method to parse a Maple system name and return the bit number.
+     * <p>
      * Notes: Bits are numbered from 1.
      *
+     * @param systemName system name.
+     * @param prefix system prefix.
      * @return the bit number, return 0 if an error is found
      */
     public static int getBitFromSystemName(String systemName, String prefix) {
@@ -81,6 +84,9 @@ public class SerialAddress {
     /**
      * Public static method to validate system name format.
      *
+     * @param systemName system name to validate.
+     * @param type bean type, ie S for Sensor, T for Turnout.
+     * @param prefix system prefix.
      * @return 'true' if system name has a valid format,
      * else returns 'false'
      */
@@ -108,6 +114,9 @@ public class SerialAddress {
     /**
      * Public static method to validate system name for configuration.
      *
+     * @param systemName system name to validate.
+     * @param type bean type, ie S for Sensor, T for Turnout.
+     * @param memo system connection.
      * @return 'true' if system name has a valid meaning in current configuration,
      * else returns 'false'
      */
@@ -147,6 +156,8 @@ public class SerialAddress {
      * to a bit, by removing extra zeros inserted by the user.
      * It's not applied to sensors (whick might be addressed using the KS3:5 format.
      *
+     * @param systemName systemname to normalize.
+     * @param prefix system prefix.
      * @return if the supplied system name does not have a valid format, an empty string
      * is returned. If the address in the system name is not within the legal
      * maximum range for the type of item (L, T, or S), an empty string is
@@ -185,6 +196,9 @@ public class SerialAddress {
      * This routine returns a system name in the KLxxxx, KTxxxx, or KSxxxx
      * format. The returned name is normalized.
      *
+     * @param type bean type, ie S Sensor, T Turnout.
+     * @param bitNum bit number.
+     * @param prefix system prefix.
      * @return "" (null string) if the supplied type character is not valid,
      * or the bit number is out of the 1 - 9000 range, and an error message is
      * logged.
@@ -215,6 +229,8 @@ public class SerialAddress {
     /**
      * Public static method to test if an output bit is free for assignment.
      *
+     * @param bitNum bit number.
+     * @param prefix system prefix.
      * @return "" (null string) if the specified output bit is free for
      * assignment, else returns the system name of the conflicting assignment.
      * Test is not performed if the node address or bit number are valid.
@@ -263,7 +279,9 @@ public class SerialAddress {
     /**
      * Public static method to test if an input bit is free for assignment.
      *
-     * @return "" (null string) if the specified input bit is free for
+     * @param bitNum bit number.
+     * @param prefix system prefix.
+     * @return "" (empty string) if the specified input bit is free for
      * assignment, else returns the system name of the conflicting assignment.
      * Test is not performed if the node address is illegal or bit number is
      * valid.
@@ -294,7 +312,9 @@ public class SerialAddress {
     /**
      * Public static method to get the user name for a valid system name.
      *
-     * @return "" (null string) if the system name is not valid or does not exist
+     * @param systemName system name.
+     * @param prefix system prefix.
+     * @return "" (empty string) if the system name is not valid or does not exist
      */
     public static String getUserNameFromSystemName(String systemName, String prefix) {
         if (prefix.length() < 1) {

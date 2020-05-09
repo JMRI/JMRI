@@ -41,6 +41,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return SRCP traffic controller.
      */
     public SRCPTrafficController getTrafficController() {
         return et;

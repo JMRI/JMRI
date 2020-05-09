@@ -19,6 +19,7 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public SprogCSThrottleManager(SprogSystemConnectionMemo memo) {
         super(memo);

@@ -102,6 +102,7 @@ public class SerialDriverAdapter extends SerialPortController {
 
     /**
      * Can the port accept additional characters? Yes, always
+     * @return always true.
      */
     public boolean okToSend() {
         return true;

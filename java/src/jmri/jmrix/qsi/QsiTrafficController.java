@@ -214,6 +214,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
 
     /**
      * Make connection to existing PortController object.
+     * @param p the QSI port controller.
      */
     public void connectPort(QsiPortController p) {
         istream = p.getInputStream();
@@ -225,8 +226,9 @@ public class QsiTrafficController implements QsiInterface, Runnable {
     }
 
     /**
-     * Break connection to existing QsiPortController object. Once broken,
-     * attempts to send via "message" member will fail.
+     * Break connection to existing QsiPortController object.
+     * Once broken, attempts to send via "message" member will fail.
+     * @param p the QSI port controller.
      */
     public void disconnectPort(QsiPortController p) {
         istream = null;
