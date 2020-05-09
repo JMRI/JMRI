@@ -18,8 +18,6 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
     public CbusDccProgrammerManager(Programmer serviceModeProgrammer, CanSystemConnectionMemo memo) {
         super(serviceModeProgrammer, memo);
         tc = memo.getTrafficController();
-        // Initially CBUS suports both global and addressed programmers
-        _type = ProgrammerType.BOTH;
     }
 
     jmri.jmrix.can.TrafficController tc;
