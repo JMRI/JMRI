@@ -358,6 +358,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     }
                     updateProgrammerStatus(evt);
                 });
+        InstanceManager.getList(AddressedProgrammerManager.class).forEach(m -> m.addPropertyChangeListener(this::updateProgrammerStatus));
         InstanceManager.addPropertyChangeListener(InstanceManager.getListPropertyName(GlobalProgrammerManager.class),
                 evt -> {
                     log.debug("Received property {} with value {} ", evt.getPropertyName(), evt.getNewValue());
@@ -367,6 +368,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     }
                     updateProgrammerStatus(evt);
                 });
+        InstanceManager.getList(GlobalProgrammerManager.class).forEach(m -> m.addPropertyChangeListener(this::updateProgrammerStatus));
         getSplitPane().addPropertyChangeListener(propertyChangeListener);
         if (this.getProgrammerConfigManager().getDefaultFile() != null) {
             programmer1 = this.getProgrammerConfigManager().getDefaultFile();
