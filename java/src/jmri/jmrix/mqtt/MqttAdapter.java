@@ -61,7 +61,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
                 options.put(option2Name, new Option("MQTT channel :", new String[]{baseTopic, DEFAULT_BASETOPIC}));
             }
 
-            String clientID = CLID + "-" + this.getUserName();
+            String clientID = CLID + "-" + this.getUserName() + "-" + jmri.profile.ProfileManager.getDefault().getActiveProfile().getUniqueId();
             mqttClient = new MqttClient(PROTOCOL + getCurrentPortName(), clientID);
             mqttClient.connect();
         } catch (MqttException ex) {
