@@ -19,10 +19,6 @@ import javax.annotation.Nonnull;
  * reservation; both tools (first and second reserver) must be using the
  * reserve/release interface.
  * <p>
- * The {@link ProgrammerManager} interface allows control of which programmers
- * are available at, run time, to use for hardware systems that can provide one
- * or the other (or even both).
- * <p>
  * This file is part of JMRI.
  * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
@@ -37,7 +33,7 @@ import javax.annotation.Nonnull;
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2014
  * @since 3.9.6
  */
-public interface GlobalProgrammerManager extends ProgrammerManager{
+public interface GlobalProgrammerManager {
 
     /**
      * Gain access to the Global Mode Programmer without reservation.

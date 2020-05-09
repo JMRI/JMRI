@@ -61,7 +61,6 @@ import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.Programmer;
-import jmri.ProgrammerManager.ProgrammerType;
 import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.decoderdefn.DecoderFile;
@@ -341,11 +340,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 int panesize = (int) (sourceSplitPane.getSize().getHeight());
                 hideBottomPane = panesize - current <= 1;
                 //p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideSummary",hideSummary);
-            }
-        };
-        PropertyChangeListener programmerListener = (PropertyChangeEvent e) -> {
-            if (e.getPropertyName().equals("programmertype")) {
-                setProgrammerType((ProgrammerType)e.getOldValue(), (ProgrammerType)e.getNewValue());
             }
         };
         updateProgrammerStatus(null);
@@ -1537,6 +1531,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 && evt.getPropertyName().equals(InstanceManager.getDefaultsPropertyName(AddressedProgrammerManager.class))
                 && evt.getNewValue() == null)) {
             apm = InstanceManager.getNullableDefault(AddressedProgrammerManager.class);
+            log.trace("found addressed programming manager {}", gpm);
         }
         if (apm != null) {
             String opsModeProgrammerName = apm.getUserName();
@@ -1560,17 +1555,19 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                         Bundle.getMessage("ServiceModeProgOnline", serModeProCon.getConnectionName()));
                 serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
             } else {
-                log.debug("GPM Connection onffline");
+                log.debug("GPM Connection offline");
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOffline", serModeProCon.getConnectionName()));
                 serviceModeProgrammerLabel.setForeground(Color.red);
             }
             if (oldServMode == null) {
+                log.debug("Re-enable user interface");
                 contextService.setEnabled(true);
                 contextService.setVisible(true);
                 service.setEnabled(true);
                 service.setVisible(true);
                 firePropertyChange("setprogservice", "setEnabled", true);
+                getToolBar().getComponents()[1].setEnabled(true);
             }
         } else if (gpm != null && gpm.isGlobalProgrammerAvailable()) {
             if (ConnectionStatus.instance().isSystemOk(gpm.getUserName())) {
@@ -1585,11 +1582,13 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 serviceModeProgrammerLabel.setForeground(Color.red);
             }
             if (oldServMode == null) {
+                log.debug("Re-enable user interface");
                 contextService.setEnabled(true);
                 contextService.setVisible(true);
                 service.setEnabled(true);
                 service.setVisible(true);
                 firePropertyChange("setprogservice", "setEnabled", true);
+                getToolBar().getComponents()[1].setEnabled(true);
             }
         } else {
             // No service programmer available, disable interface sections not available
@@ -1607,6 +1606,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             // This relies on it being the 2nd item in the tool bar, as defined in xml//config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml
             // Because of I18N, we don't look for a particular Action name here
             getToolBar().getComponents()[1].setEnabled(false);
+            serModeProCon = null;
         }
 
         if (opsModeProCon != null && apm != null && apm.isAddressedModePossible()) {
@@ -1648,6 +1648,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 firePropertyChange("setprogops", "setEnabled", true);
             }
         } else {
+            // No ops mode programmer available, disable interface sections not available
+            log.debug("no ops mode programmer");
             operationsModeProgrammerLabel.setText(Bundle.getMessage("NoOpsProgrammerAvailable"));
             operationsModeProgrammerLabel.setForeground(Color.red);
             if (oldOpsMode != null) {
@@ -1657,6 +1659,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 ops.setVisible(false);
                 firePropertyChange("setprogops", "setEnabled", false);
             }
+            opsModeProCon = null;
         }
         String strProgMode;
         if (service.isEnabled()) {
@@ -1678,10 +1681,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         firePropertyChange(strProgMode, "setSelected", true);
     }
 
-    protected void setProgrammerType(ProgrammerType old, ProgrammerType n3w) {
-        log.info("Change programmer type from {} to {}", old, n3w);
-    }
-    
     @Override
     public void windowClosing(WindowEvent e) {
         closeWindow(e);

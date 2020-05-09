@@ -15,6 +15,9 @@ import jmri.managers.DefaultProgrammerManager;
  */
 public class CbusDccProgrammerManager extends DefaultProgrammerManager {
 
+    private boolean _isAddressedModePossible = true;
+    private boolean _isGlobalProgrammerAvailable = true;
+    
     public CbusDccProgrammerManager(Programmer serviceModeProgrammer, CanSystemConnectionMemo memo) {
         super(serviceModeProgrammer, memo);
         tc = memo.getTrafficController();
@@ -23,25 +26,43 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
     jmri.jmrix.can.TrafficController tc;
 
     /**
-     * MERG CAN_CMD may support ops mode
+     * MERG CAN_CMD supports ops mode
      *
      * @return true
      */
     @Override
     public boolean isAddressedModePossible() {
-        return ((_type == ProgrammerType.BOTH) || (_type == ProgrammerType.ADDRESSED));
+        return _isAddressedModePossible;
     }
 
     /**
-     * MERG CAN_CMD may support service mode
+     * Set availability of addressed (ops mode) programmer.
+     * 
+     * @param state true if available
+     */
+    public void setAddressedModePossible(boolean state) {
+        _isAddressedModePossible = state;
+    }
+
+    /**
+     * MERG CAN_CMD supports service mode
      *
      * @return true
      */
     @Override
     public boolean isGlobalProgrammerAvailable() {
-        return ((_type == ProgrammerType.BOTH) || (_type == ProgrammerType.GLOBAL));
+        return _isGlobalProgrammerAvailable;
     }
     
+    /**
+     * Set availability of global (service mode) programmer.
+     * 
+     * @param state true if available
+     */
+    public void setGlobalProgrammerAvailable(boolean state) {
+        _isGlobalProgrammerAvailable = state;
+    }
+
     @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new CbusDccOpsModeProgrammer(pAddress, pLongAddress, tc);
@@ -50,10 +71,5 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
     @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
-    }
-
-    @Override
-    public void setProgrammerType(ProgrammerType type) {
-        super.setProgrammerType(type);
     }
 }

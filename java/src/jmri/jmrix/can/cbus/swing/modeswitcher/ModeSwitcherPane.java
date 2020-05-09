@@ -10,8 +10,6 @@ import javax.swing.JRadioButton;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
-import jmri.ProgrammerManager.ProgrammerType;
 import jmri.jmrix.can.cbus.CbusDccProgrammerManager;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.util.JmriJFrame;
@@ -28,8 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ModeSwitcherPane extends JmriJFrame {
     
-    GlobalProgrammerManager gpm = null;
-    CbusDccProgrammerManager cdpm = null;
+    CbusDccProgrammerManager pm = null;
     
     JRadioButton progModeButton;
     JRadioButton cmdModeButton;
@@ -58,75 +55,110 @@ public class ModeSwitcherPane extends JmriJFrame {
     public void initComponents() {
         preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
         
+        pm = (CbusDccProgrammerManager)InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
+        
         JLabel label = new JLabel();
-        JPanel panel = new JPanel(new BorderLayout());
+        // Wrap  in html to get wrapping when added to border layout
+        label.setText("<html>"+Bundle.getMessage("HardwareModeLabel")+"</html>");
+        
+        // Mode selector
         JPanel modePane = new JPanel();
-        
-        gpm = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
-        
-        if (!(gpm instanceof CbusDccProgrammerManager)) {
-            // No CBUS programer
-            // Wrap  in html to get wrapping when added to border layout
-            label.setText("<html>"+Bundle.getMessage("NoCBUSProgrammer")+"</html>");
-        } else {
-            cdpm = (CbusDccProgrammerManager)gpm;
-        
-            // Wrap  in html to get wrapping when added to border layout
-            label.setText("<html>"+Bundle.getMessage("HardwareModeLabel")+"</html>");
+        modePane.setLayout(new BoxLayout(modePane, BoxLayout.Y_AXIS));
+        modePane.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createEtchedBorder(), Bundle.getMessage("HardwareMode")));
 
-            // Mode selector
-            modePane.setLayout(new BoxLayout(modePane, BoxLayout.Y_AXIS));
-            modePane.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), Bundle.getMessage("HardwareMode")));
-
-            progModeButton = new JRadioButton(Bundle.getMessage("ProgMode"));
-            cmdModeButton = new JRadioButton(Bundle.getMessage("CmdMode"));
-            switch (preferences.getProgrammerType()) {
-                case BOTH:
-                    progModeButton.setSelected(true);
-                    cmdModeButton.setSelected(true);
-                    log.info("Programmer type from preferences now BOTH");
-                    break;
-                case GLOBAL:
-                    progModeButton.setSelected(false);
-                    cmdModeButton.setSelected(true);
-                    log.info("Programmer type from preferences now GLOBAL"); 
-                    break;
-                default:
-                    progModeButton.setSelected(true);
-                    cmdModeButton.setSelected(false);
-                    log.info("Programmer type from preferences now ADDESSED");
-                    break;
-            }
-
-            // Handle Programmer mode button activity
-            ActionListener setMode = ae -> {
-                if ((!progModeButton.isSelected() && !cmdModeButton.isSelected())
-                        || (progModeButton.isSelected() && !cmdModeButton.isSelected())) {
-                    log.info("Default or switch to programmer mode with global (service mode) programmer");
-                    cdpm.setProgrammerType(ProgrammerType.GLOBAL);
-                } else if (!progModeButton.isSelected() && cmdModeButton.isSelected()) {
-                    log.info("Switch to command station mode with addressed (ops mode) programmer");
-                    cdpm.setProgrammerType(ProgrammerType.ADDRESSED);
-                } else {
-                    log.info("Switch to universal mode with both global (service mode) addressed (ops mode) programmer");
-                    cdpm.setProgrammerType(ProgrammerType.BOTH);
-                }
-                preferences.setProgrammerType(cdpm.getProgrammerType());
-            };
-
-            progModeButton.addActionListener(setMode);
-            cmdModeButton.addActionListener(setMode);
-            modePane.add(progModeButton);
-            modePane.add(cmdModeButton);
+        progModeButton = new JRadioButton(Bundle.getMessage("ProgMode"));
+        cmdModeButton = new JRadioButton(Bundle.getMessage("CmdMode"));
+        switch (preferences.getHardwareMode()) {
+            case BOTH:
+                progModeButton.setSelected(true);
+                cmdModeButton.setSelected(true);
+                log.info("Hardware mode from preferences now BOTH");
+                break;
+            case COMMANDSTATION:
+                progModeButton.setSelected(false);
+                cmdModeButton.setSelected(true);
+                log.info("Hardware mode from preferences now COMMANDSTATION"); 
+                break;
+            default:    // Programmer
+                progModeButton.setSelected(true);
+                cmdModeButton.setSelected(false);
+                log.info("Hardware mode from preferences now PROGRAMMER");
+                break;
         }
         
+        // Handle Programmer mode button activity
+        ActionListener setProgMode = ae -> {
+            if (progModeButton.isSelected()) {
+                // Enable service mode programmer
+                log.debug("Firing property change on {}", InstanceManager.getListPropertyName(GlobalProgrammerManager.class));
+                pm.setGlobalProgrammerAvailable(true);
+                InstanceManager.firePropertyChange(InstanceManager.getListPropertyName(GlobalProgrammerManager.class), false, true);
+            } else if (cmdModeButton.isSelected()) {
+                // Only disable service mode if ops mode active
+                log.debug("Firing property change on {}", InstanceManager.getListPropertyName(GlobalProgrammerManager.class));
+                pm.setGlobalProgrammerAvailable(false);
+                InstanceManager.firePropertyChange(InstanceManager.getListPropertyName(GlobalProgrammerManager.class), true, false);
+            } else {
+                // Service mode is the default if all are deselected - reselect it
+                log.debug("Cannot de-select programmer mode");
+                progModeButton.setSelected(true);
+            }
+            writeMode();
+        };
+        
+        // Handle command station mode button activity
+        ActionListener setCmdMode = ae -> {
+            if (cmdModeButton.isSelected()) {
+                // Enable ops mode programmer
+                log.debug("Firing property change on {}", InstanceManager.getListPropertyName(AddressedProgrammerManager.class));
+                pm.setAddressedModePossible(true);
+                InstanceManager.firePropertyChange(InstanceManager.getListPropertyName(AddressedProgrammerManager.class), false, true);
+            } else {
+                // Disable ops mode programmer
+                log.debug("Firing property change on {}", InstanceManager.getListPropertyName(AddressedProgrammerManager.class));
+                pm.setAddressedModePossible(false);
+                InstanceManager.firePropertyChange(InstanceManager.getListPropertyName(AddressedProgrammerManager.class), true, false);
+                if (!progModeButton.isSelected()) {
+                    // Re-enable service mode if all are deselected
+                    log.debug("Firing property change on {}", InstanceManager.getListPropertyName(GlobalProgrammerManager.class));
+                    pm.setGlobalProgrammerAvailable(true);
+                    InstanceManager.firePropertyChange(InstanceManager.getListPropertyName(GlobalProgrammerManager.class), false, true);
+                    progModeButton.setSelected(true);
+                }
+            }
+            writeMode();
+        };
+        
+        progModeButton.addActionListener(setProgMode);
+        cmdModeButton.addActionListener(setCmdMode);
+        modePane.add(progModeButton);
+        modePane.add(cmdModeButton);
+        
+        JPanel panel = new JPanel(new BorderLayout());
         panel.add(label, BorderLayout.NORTH);
         panel.add(modePane, BorderLayout.CENTER);
         
         this.add(panel);
 
         setVisible(true);
+    }
+    
+    
+    /**
+     * Write the current mode to the preferences
+     */
+    private void writeMode() {
+        if (progModeButton.isSelected() && cmdModeButton.isSelected()) {
+            preferences.setHardwareMode(CbusPreferences.HardwareMode.BOTH);
+            log.info("Hardware mode now BOTH");
+        } else if (cmdModeButton.isSelected()) {
+            preferences.setHardwareMode(CbusPreferences.HardwareMode.COMMANDSTATION);
+            log.info("Hardware mode now COMMANDSTATION");
+        } else {
+            preferences.setHardwareMode(CbusPreferences.HardwareMode.PROGRAMMER);
+            log.info("Hardware mode now PROGRAMMER");
+        }
     }
     
     

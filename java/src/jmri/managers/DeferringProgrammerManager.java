@@ -180,16 +180,5 @@ public class DeferringProgrammerManager implements AddressedProgrammerManager, G
         }
 
     }
-    
-    /**
-     * {@inheritDoc}
-     * 
-     * @return the programmer type
-     */
-    @Override
-    public ProgrammerType getProgrammerType() {
-        return ProgrammerType.BOTH;
-    }
-    
     private final static Logger log = LoggerFactory.getLogger(DeferringProgrammerManager.class);
 }

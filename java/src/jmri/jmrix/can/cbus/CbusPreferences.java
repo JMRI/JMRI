@@ -2,7 +2,6 @@ package jmri.jmrix.can.cbus;
 
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
-import jmri.ProgrammerManager.ProgrammerType;
 import jmri.beans.PreferencesBean;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.profile.ProfileManager;
@@ -29,8 +28,17 @@ public class CbusPreferences extends PreferencesBean {
     private boolean _saveRestoreEventTable = true;
     private int minimumNumBackupsToKeep = 10;
     private int bootWriteDelay = CbusNode.BOOT_PROG_TIMEOUT_FAST;
-    private ProgrammerType programmerType = ProgrammerType.BOTH;
+    private HardwareMode hardwareMode = HardwareMode.BOTH;
     
+    /**
+     * Hardware operating modes
+     */
+    public enum HardwareMode {
+        PROGRAMMER,
+        COMMANDSTATION,
+        BOTH
+    }
+
     public CbusPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
         Preferences sharedPreferences = ProfileUtils.getPreferences(super.getProfile(), this.getClass(), true);
@@ -262,20 +270,19 @@ public class CbusPreferences extends PreferencesBean {
     }
     
     /**
-     * Get the current programmer
+     * Get the current hardware operating mode
      * @return the mode
      */
-    public ProgrammerType getProgrammerType(){
-        return programmerType;
+    public HardwareMode getHardwareMode(){
+        return hardwareMode;
     }
     
     /**
-     * Set the current programmer type
-     * 
-     * @param type the new mode
+     * Set the current hardware operating mode
+     * @param mode the new mode
      */
-    public void setProgrammerType( ProgrammerType type ){
-        programmerType = type;
+    public void setHardwareMode( HardwareMode mode ){
+        hardwareMode = mode;
         savePreferences();
     }
     

@@ -8,7 +8,6 @@ import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
-import jmri.beans.PropertyChangeSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.GlobalProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2001, 2015, 2016
  */
-public class DefaultProgrammerManager extends PropertyChangeSupport implements AddressedProgrammerManager, GlobalProgrammerManager {
+public class DefaultProgrammerManager implements AddressedProgrammerManager, GlobalProgrammerManager {
 
     // For the record, these were the original numerical definitions:
     //     public static final ProgrammingMode NONE              = new ProgrammingMode("NONE", 0);
@@ -43,8 +42,6 @@ public class DefaultProgrammerManager extends PropertyChangeSupport implements A
     //     public static final ProgrammingMode OPSACCEXTBYTEMODE = new ProgrammingMode("OPSACCEXTBYTEMODE", 121);
     //     public static final ProgrammingMode OPSACCEXTBITMODE  = new ProgrammingMode("OPSACCEXTBITMODE", 122);
     private Programmer programmer;
-    
-    protected ProgrammerType _type;
 
     /**
      * Constructor when no global programmer is available.
@@ -169,26 +166,5 @@ public class DefaultProgrammerManager extends PropertyChangeSupport implements A
         return retval;
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @return the programmer type
-     */
-    @Override
-    public ProgrammerType getProgrammerType() {
-        return _type;
-    }
-    
-    /**
-     * Set the programmer type
-     * 
-     * @param type 
-     */
-    protected void setProgrammerType(ProgrammerType type) {
-        ProgrammerType old = _type;
-        _type = type;
-        firePropertyChange("programmertype", old, _type);
-    }
-    
     private final static Logger log = LoggerFactory.getLogger(DefaultProgrammerManager.class);
 }
