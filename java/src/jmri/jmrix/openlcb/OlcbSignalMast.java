@@ -176,8 +176,9 @@ public class OlcbSignalMast extends AbstractSignalMast {
     }
 
     /**
-     * Handle incoming messages
+     * Handle incoming messages.
      * 
+     * @param msg the message to handle.
      */
     public void handleMessage(Message msg) {
         // gather before state
@@ -237,6 +238,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
 
     /**
      * Provide the last used sequence number of all OlcbSignalMasts in use.
+     * @return last used OlcbSignalMasts sequence number
      */
     public static int getLastRef() {
         return lastRef;

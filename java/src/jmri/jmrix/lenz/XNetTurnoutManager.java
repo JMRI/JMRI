@@ -72,17 +72,16 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
                 // parse message type
                 int addr = l.getTurnoutMsgAddr(i);
                 if (addr >= 0) {
-                    log.debug("message has address: {}",addr);
-                    // reach here for switch command; make sure we know
-                    // about this one
+                    log.debug("message has address: {}", addr);
+                    // forward to the specified turnout.
                     String s = getSystemNamePrefix() + addr;
-                    forwardMessageToTurnout(s,l);
-                }
-                if (addr % 2 != 0) {
-                   // reach here for switch command; make sure we know
-                   // about this one
-                   String s = getSystemNamePrefix() + (addr + 1);
-                   forwardMessageToTurnout(s,l);
+                    forwardMessageToTurnout(s, l);
+                    if (addr % 2 != 0) {
+                        // if the address is odd, also send the feedback
+                        // message to the even turnout.
+                        s = getSystemNamePrefix() + (addr + 1);
+                        forwardMessageToTurnout(s, l);
+                    }
                 }
             }
         }

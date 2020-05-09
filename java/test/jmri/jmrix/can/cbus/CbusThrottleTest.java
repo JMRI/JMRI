@@ -57,6 +57,14 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         boolean result = instance.getIsForward();
         Assert.assertEquals(expResult, result);
     }
+    
+    private void testSingleFunction(int function){
+        Assert.assertTrue(instance.getFunction(function));
+        Assert.assertTrue(tc.outbound.size()==1);
+        instance.setFunction(function,false);
+        Assert.assertFalse(instance.getFunction(function));
+        Assert.assertTrue(tc.outbound.size()==2);
+    }
 
     /**
      * Test of setF0 method, of class AbstractThrottle.
@@ -64,8 +72,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF0() {
-        boolean f0 = false;
-        instance.setF0(f0);
+        instance.setF0(true);
+        testSingleFunction(0);
     }
 
     /**
@@ -74,8 +82,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF1() {
-        boolean f1 = false;
-        instance.setF1(f1);
+        instance.setF1(true);
+        testSingleFunction(1);
     }
 
     /**
@@ -84,8 +92,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF2() {
-        boolean f2 = false;
-        instance.setF2(f2);
+        instance.setF2(true);
+        testSingleFunction(2);
     }
 
     /**
@@ -94,8 +102,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF3() {
-        boolean f3 = false;
-        instance.setF3(f3);
+        instance.setF3(true);
+        testSingleFunction(3);
     }
 
     /**
@@ -104,8 +112,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF4() {
-        boolean f4 = false;
-        instance.setF4(f4);
+        instance.setF4(true);
+        testSingleFunction(4);
     }
 
     /**
@@ -114,8 +122,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF5() {
-        boolean f5 = false;
-        instance.setF5(f5);
+        instance.setF5(true);
+        testSingleFunction(5);
     }
 
     /**
@@ -124,8 +132,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF6() {
-        boolean f6 = false;
-        instance.setF6(f6);
+        instance.setF6(true);
+        testSingleFunction(6);
     }
 
     /**
@@ -134,8 +142,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF7() {
-        boolean f7 = false;
-        instance.setF7(f7);
+        instance.setF7(true);
+        testSingleFunction(7);
     }
 
     /**
@@ -144,8 +152,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF8() {
-        boolean f8 = false;
-        instance.setF8(f8);
+        instance.setF8(true);
+        testSingleFunction(8);
     }
 
     /**
@@ -154,8 +162,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF9() {
-        boolean f9 = false;
-        instance.setF9(f9);
+        instance.setF9(true);
+        testSingleFunction(9);
     }
 
     /**
@@ -164,8 +172,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF10() {
-        boolean f10 = false;
-        instance.setF10(f10);
+        instance.setF10(true);
+        testSingleFunction(10);
     }
 
     /**
@@ -174,8 +182,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF11() {
-        boolean f11 = false;
-        instance.setF11(f11);
+        instance.setF11(true);
+        testSingleFunction(11);
     }
 
     /**
@@ -184,8 +192,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF12() {
-        boolean f12 = false;
-        instance.setF12(f12);
+        instance.setF12(true);
+        testSingleFunction(12);
     }
 
     /**
@@ -194,8 +202,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF13() {
-        boolean f13 = false;
-        instance.setF13(f13);
+        instance.setF13(true);
+        testSingleFunction(13);
     }
 
     /**
@@ -204,8 +212,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF14() {
-        boolean f14 = false;
-        instance.setF14(f14);
+        instance.setF14(true);
+        testSingleFunction(14);
     }
 
     /**
@@ -214,8 +222,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF15() {
-        boolean f15 = false;
-        instance.setF15(f15);
+        instance.setF15(true);
+        testSingleFunction(15);
     }
 
     /**
@@ -224,8 +232,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF16() {
-        boolean f16 = false;
-        instance.setF16(f16);
+        instance.setF16(true);
+        testSingleFunction(16);
     }
 
     /**
@@ -234,8 +242,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF17() {
-        boolean f17 = false;
-        instance.setF17(f17);
+        instance.setF17(true);
+        testSingleFunction(17);
     }
 
     /**
@@ -244,8 +252,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF18() {
-        boolean f18 = false;
-        instance.setF18(f18);
+        instance.setF18(true);
+        testSingleFunction(18);
     }
 
     /**
@@ -254,8 +262,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF19() {
-        boolean f19 = false;
-        instance.setF19(f19);
+        instance.setF19(true);
+        testSingleFunction(19);
     }
 
     /**
@@ -264,8 +272,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF20() {
-        boolean f20 = false;
-        instance.setF20(f20);
+        instance.setF20(true);
+        testSingleFunction(20);
     }
 
     /**
@@ -274,8 +282,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF21() {
-        boolean f21 = false;
-        instance.setF21(f21);
+        instance.setF21(true);
+        testSingleFunction(21);
     }
 
     /**
@@ -284,8 +292,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF22() {
-        boolean f22 = false;
-        instance.setF22(f22);
+        instance.setF22(true);
+        testSingleFunction(22);
     }
 
     /**
@@ -294,8 +302,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF23() {
-        boolean f23 = false;
-        instance.setF23(f23);
+        instance.setF23(true);
+        testSingleFunction(23);
     }
 
     /**
@@ -304,8 +312,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF24() {
-        boolean f24 = false;
-        instance.setF24(f24);
+        instance.setF24(true);
+        testSingleFunction(24);
     }
 
     /**
@@ -314,8 +322,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF25() {
-        boolean f25 = false;
-        instance.setF25(f25);
+        instance.setF25(true);
+        testSingleFunction(25);
     }
 
     /**
@@ -324,8 +332,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF26() {
-        boolean f26 = false;
-        instance.setF26(f26);
+        instance.setF26(true);
+        testSingleFunction(26);
     }
 
     /**
@@ -334,8 +342,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF27() {
-        boolean f27 = false;
-        instance.setF27(f27);
+        instance.setF27(true);
+        testSingleFunction(27);
     }
 
     /**
@@ -344,8 +352,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSetF28() {
-        boolean f28 = false;
-        instance.setF28(f28);
+        instance.setF28(true);
+        testSingleFunction(28);
     }
 
     /**
@@ -838,7 +846,8 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.MERGCBUS);
-        // memo.configureManagers();  // registers a blockmanager which leaves an open shutdown task
+        memo.configureManagers();
+        
         InstanceManager.setThrottleManager(new AbstractThrottleManager() {
 
             @Override
@@ -873,6 +882,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo = null;
         tc.terminateThreads();
         tc = null;
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
 
     }

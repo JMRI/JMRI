@@ -18,6 +18,8 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
 
     /**
      * Constructor.
+     * @param memo system connection.
+     * @param address loco address.
      */
     public MarklinThrottle(MarklinSystemConnectionMemo memo, LocoAddress address) {
         super(memo);
