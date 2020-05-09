@@ -16,6 +16,7 @@ public class SprogCSStreamConnectionConfig extends jmri.jmrix.AbstractStreamConn
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p Stream port controller.
      */
     public SprogCSStreamConnectionConfig(jmri.jmrix.AbstractStreamPortController p) {
         super(p);

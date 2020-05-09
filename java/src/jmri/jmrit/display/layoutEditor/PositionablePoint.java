@@ -13,7 +13,7 @@ import java.util.*;
 import javax.annotation.*;
 import javax.swing.*;
 import jmri.*;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.*;
 import jmri.util.swing.*;
@@ -202,7 +202,7 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        setCoordsCenter(MathUtil.granulize(MathUtil.multiply(getCoordsCenter(), factor), 1.0));
+        super.setCoordsCenter(MathUtil.granulize(MathUtil.multiply(getCoordsCenter(), factor), 1.0));
     }
 
     /**
@@ -211,7 +211,7 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     public void translateCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        setCoordsCenter(MathUtil.add(getCoordsCenter(), factor));
+        super.setCoordsCenter(MathUtil.add(getCoordsCenter(), factor));
     }
 
     /**
@@ -1531,8 +1531,8 @@ public class PositionablePoint extends LayoutTrack {
 
     public JPanel getLinkPanel() {
         editorCombo = new JComboBox<>();
-        ArrayList<LayoutEditor> panels
-                = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+        Set<LayoutEditor> panels
+                = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
         editorCombo.addItem(new JCBHandle<>("None"));
         if (panels.contains(layoutEditor)) {
             panels.remove(layoutEditor);

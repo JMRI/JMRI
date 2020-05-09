@@ -5,3 +5,9 @@
 	    by JMRI 4.19.5 and before. This is in addition to the 
 	    changed in 4.19.5 that raised a similar issue for 4.19.4.
     </li>
+    <li>
+        A default instance of <code>jmri.jmrit.display.PanelMenu</code> is no
+        longer maintained by the InstanceManager for the purposes of maintaining
+        a list of open Editors or LayoutEditors. Use the default instance of
+        <code>jmri.jmrit.display.EditorManager</code> in scripts instead.
+    </li>

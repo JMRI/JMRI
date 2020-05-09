@@ -15,6 +15,7 @@ public class RocoXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManager
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public RocoXNetThrottleManager(XNetSystemConnectionMemo memo) {
         super(memo);

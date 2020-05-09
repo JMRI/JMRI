@@ -25,6 +25,8 @@ public class SprogTurnout extends AbstractTurnout {
      * <p>
      * Sprog turnouts use the NMRA number (0-511) as their numerical
      * identification.
+     * @param number NMRA number.
+     * @param memo system connection.
      */
     public SprogTurnout(int number, SprogSystemConnectionMemo memo) {
         super(memo.getSystemPrefix() + "T" + number);

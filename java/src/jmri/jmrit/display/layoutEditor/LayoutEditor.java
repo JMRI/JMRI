@@ -28,6 +28,7 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.*;
+import jmri.jmrit.display.EditorManager;
 import jmri.configurexml.StoreXmlUserAction;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.dispatcher.*;
@@ -413,16 +414,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         setSize(screenDim.width, screenDim.height);
 
         // register the resulting panel for later configuration
-        ConfigureManager cm = InstanceManager.getNullableDefault(ConfigureManager.class
-        );
-        if (cm != null) {
-            cm.registerUser(this);
-        }
+        InstanceManager.getOptionalDefault(ConfigureManager.class)
+                .ifPresent(cm -> cm.registerUser(this));
 
         // confirm that panel hasn't already been loaded
-        if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
-            log.warn(
-                    "File contains a panel with the same name ({}) as an existing panel", name);
+        if (!this.equals(InstanceManager.getDefault(EditorManager.class).get(name))) {
+            log.warn("File contains a panel with the same name ({}) as an existing panel", name);
         }
         setFocusable(true);
         addKeyListener(this);
@@ -1028,7 +1025,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             if (newName != null) {
                 if (!newName.equals(getLayoutName())) {
-                    if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(newName)) {
+                    if (InstanceManager.getDefault(EditorManager.class).contains(newName)) {
                         JOptionPane.showMessageDialog(
                                 null, Bundle.getMessage("CanNotRename"), Bundle.getMessage("PanelExist"),
                                 JOptionPane.ERROR_MESSAGE);
@@ -1036,7 +1033,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         setTitle(newName);
                         setLayoutName(newName);
                         getLayoutTrackDrawingOptions().setName(newName);
-                        InstanceManager.getDefault(PanelMenu.class).renameEditorPanel(LayoutEditor.this);
                         setDirty();
 
                         if (toolBarSide.equals(ToolBarSide.eFLOAT) && isEditable()) {
@@ -2604,7 +2600,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             lt.setCoordsCenter(MathUtil.granulize(lt.getCoordsCenter(), gridSize1st));
             if (lt instanceof LayoutTurntable) {
                 LayoutTurntable tt = (LayoutTurntable) lt;
-                for (LayoutTurntable.RayTrack rt : tt.getRayList()) {
+                for (LayoutTurntable.RayTrack rt : tt.getRayTrackList()) {
                     int rayIndex = rt.getConnectionIndex();
                     tt.setRayCoordsIndexed(MathUtil.granulize(tt.getRayCoordsIndexed(rayIndex), gridSize1st), rayIndex);
                 }
@@ -5159,7 +5155,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (result) {   // only need to test Turntable turnouts if we haven't failed yet...
             // ensure that this turntable turnout is unique among turnouts in this Layout
             for (LayoutTurntable tt : getLayoutTurntables()) {
-                for (LayoutTurntable.RayTrack ray : tt.getRayList()) {
+                for (LayoutTurntable.RayTrack ray : tt.getRayTrackList()) {
                     t = ray.getTurnout();
                     if (t != null) {
                         String sname = t.getSystemName();

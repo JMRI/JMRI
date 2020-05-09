@@ -606,7 +606,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     protected void panelMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(InstanceManager.getDefault(PanelMenu.class));
+        menuBar.add(new PanelMenu());
     }
 
     /**

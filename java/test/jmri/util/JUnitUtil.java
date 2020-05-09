@@ -26,7 +26,6 @@ import apps.SystemConsole;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
-import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -1432,12 +1431,9 @@ public class JUnitUtil {
      * instance.
      */
     public static void closeAllPanels() {
-        EditorManager manager = InstanceManager.getNullableDefault(EditorManager.class);
-        if (manager != null) {
-            for (Editor e : manager.getEditorsList()) {
-                new EditorFrameOperator(e).closeFrameWithConfirmations();
-            }
-        }
+        InstanceManager.getOptionalDefault(EditorManager.class)
+                .ifPresent(m -> m.getAll()
+                        .forEach(e -> new EditorFrameOperator(e).closeFrameWithConfirmations()));
     }
 
     /* GraphicsEnvironment utility methods */

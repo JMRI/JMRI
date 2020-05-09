@@ -13,6 +13,7 @@ import javax.swing.table.TableCellRenderer;
 import jmri.jmrix.can.cbus.node.*;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
 
+import jmri.jmrix.can.cbus.swing.CbusCommonSwing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -362,36 +363,17 @@ public class CbusNodeBackupsPane extends CbusNodeConfigTab implements TableModel
                 f.setBorder( table.getBorder() );
                 
                 String string;
-                if ( row % 2 == 0 ) {
-                    f.setBackground( table.getBackground() );
-                } else {
-                    f.setBackground( WHITE_GREEN );
-                }
-                if (isSelected) {
-                    f.setBackground( table.getSelectionBackground() );
-                }
+                CbusCommonSwing.setCellBackground(isSelected, f, table, row);
+                
                 if(arg1 != null){
                     string = arg1.toString();
                     f.setText(string);
-                    
-                    if (arg1 instanceof Date) {
-                        f.setText(readableDateStyle.format((Date) arg1));
-                    }
-                    if ( arg1 instanceof BackupType ) {
-                        f.setText(CbusNodeConstants.displayPhrase( (BackupType) arg1));
-                        f.setBackground( VERY_LIGHT_RED );
-                        if ( Objects.equals(arg1 , BackupType.COMPLETE )) {
-                            f.setBackground( VERY_LIGHT_GREEN );
-                        }
-                    }
+                    CbusCommonSwing.setCellFromDate(arg1, f, readableDateStyle);
+                    CbusCommonSwing.setCellFromBackupEnum(arg1, f);
                 } else {
                     f.setText("");
                 }
-                if (hasFocus) {
-                   f.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.blue));
-                } else {
-                    f.setBorder( table.getBorder() );
-                }
+                CbusCommonSwing.setCellFocus(hasFocus, f, table);
                 return f;
             }
         };

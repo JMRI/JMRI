@@ -41,6 +41,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return the traffic controller.
      */
     public MarklinTrafficController getTrafficController() {
         return et;

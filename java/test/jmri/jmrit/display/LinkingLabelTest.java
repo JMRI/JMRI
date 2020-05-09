@@ -40,7 +40,7 @@ public class LinkingLabelTest extends PositionableTestBase {
         to.setDisplayLevel(jmri.jmrit.display.Editor.LABELS);
         editor.putItem(to);
 
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(editor);
+        InstanceManager.getDefault(EditorManager.class).add(editor);
         editor.setLocation(150, 150);
 
         editor.setTitle();

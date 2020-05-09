@@ -41,7 +41,7 @@ import jmri.SectionManager;
 import jmri.Sensor;
 import jmri.Transit;
 import jmri.NamedBean.DisplayOptions;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
 import jmri.swing.NamedBeanComboBox;
@@ -899,8 +899,8 @@ public class SectionTableAction extends AbstractTableAction<Section> {
 
     private boolean initializeLayoutEditorCombo(JComboBox<String> box) {
         // get list of Layout Editor panels
-        lePanelList = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
-        if (lePanelList.size() == 0) {
+        lePanelList = new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class));
+        if (lePanelList.isEmpty()) {
             return false;
         }
         box.removeAllItems();
@@ -1250,8 +1250,8 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     private boolean initializeLayoutEditor(boolean required) {
         // Get a Layout Editor panel. Choose Layout Editor panel if more than one.
         ArrayList<LayoutEditor> layoutEditorList
-                = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
-        if ((panel == null) || (layoutEditorList.size() > 1)) {
+                = new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class));
+        if (panel == null || !layoutEditorList.isEmpty()) {
             if (layoutEditorList.size() > 1) {
                 // initialize for choosing between layout editors
                 Object choices[] = new Object[layoutEditorList.size()];

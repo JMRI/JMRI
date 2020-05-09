@@ -21,7 +21,7 @@ import jmri.InstanceManager;
 import jmri.beans.Identifiable;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -3458,7 +3458,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         // if there's a panel specified, get it and place icon
         if (!Setup.getPanelName().equals(Setup.NONE)) {
-            Editor editor = InstanceManager.getDefault(PanelMenu.class).getEditorByName(Setup.getPanelName());
+            Editor editor = InstanceManager.getDefault(EditorManager.class).get(Setup.getPanelName());
             if (editor != null) {
                 _trainIcon = editor.addTrainIcon(getIconName());
                 _trainIcon.setTrain(this);

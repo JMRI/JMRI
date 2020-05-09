@@ -1153,7 +1153,7 @@ public abstract class AbstractMRTrafficController {
         }
     }
 
-    /*
+    /**
      * Log an error message for a message received in an unexpected state.
      */
     protected void unexpectedReplyStateError(int State, String msgString) {
@@ -1163,7 +1163,7 @@ public abstract class AbstractMRTrafficController {
        log.error("reply complete in unexpected state: {} was {} in class {}", State, msgString, name);
     }
 
-    /*
+    /**
      * for testing purposes, let us be able to find out
      * what the last sender was
      */

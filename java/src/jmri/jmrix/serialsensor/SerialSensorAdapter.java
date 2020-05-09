@@ -212,6 +212,8 @@ public class SerialSensorAdapter extends AbstractSerialPortController {
 
     /**
      * Do a sensor change on the event queue.
+     * @param sensor sensor 
+     * @param value true if sensor changes on, else false.
      */
     public void notify(String sensor, boolean value) {
     }
