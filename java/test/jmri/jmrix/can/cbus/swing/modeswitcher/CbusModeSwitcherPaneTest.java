@@ -2,7 +2,6 @@ package jmri.jmrix.can.cbus.swing.modeswitcher;
 
 import java.awt.GraphicsEnvironment;
 import jmri.GlobalProgrammerManager;
-import jmri.Programmer;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusDccProgrammer;
@@ -18,7 +17,7 @@ import org.junit.Test;
  *
  * @author Andrew Crosland (C) 2020
  */
-public class ModeSwitcherPaneTest extends jmri.util.JmriJFrameTestBase {
+public class CbusModeSwitcherPaneTest extends jmri.util.JmriJFrameTestBase {
 
     CanSystemConnectionMemo memo;
     CbusDccProgrammer prog;
@@ -27,7 +26,7 @@ public class ModeSwitcherPaneTest extends jmri.util.JmriJFrameTestBase {
     @Test
     public void testInitComponents() throws Exception{
         // for now, just make sure there isn't an exception.
-        ((ModeSwitcherPane) frame).initComponents();
+        ((CbusModeSwitcherPane) frame).initComponents();
     }
 
     @Before
@@ -42,7 +41,7 @@ public class ModeSwitcherPaneTest extends jmri.util.JmriJFrameTestBase {
         
         jmri.InstanceManager.setDefault(GlobalProgrammerManager.class,new CbusDccProgrammerManager(prog, memo) );
         if (!GraphicsEnvironment.isHeadless()) {
-            frame = new ModeSwitcherPane();
+            frame = new CbusModeSwitcherPane();
         }
     }
 
