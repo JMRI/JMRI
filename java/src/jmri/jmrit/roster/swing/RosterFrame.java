@@ -350,13 +350,21 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         });
         InstanceManager.addPropertyChangeListener(InstanceManager.getListPropertyName(AddressedProgrammerManager.class),
-                (PropertyChangeEvent evt) -> {
+                evt -> {
                     log.debug("Received property {} with value {} ", evt.getPropertyName(), evt.getNewValue());
+                    AddressedProgrammerManager m = (AddressedProgrammerManager) evt.getNewValue();
+                    if (m != null) {
+                        m.addPropertyChangeListener(this::updateProgrammerStatus);
+                    }
                     updateProgrammerStatus(evt);
                 });
         InstanceManager.addPropertyChangeListener(InstanceManager.getListPropertyName(GlobalProgrammerManager.class),
-                (PropertyChangeEvent evt) -> {
+                evt -> {
                     log.debug("Received property {} with value {} ", evt.getPropertyName(), evt.getNewValue());
+                    GlobalProgrammerManager m = (GlobalProgrammerManager) evt.getNewValue();
+                    if (m != null) {
+                        m.addPropertyChangeListener(this::updateProgrammerStatus);
+                    }
                     updateProgrammerStatus(evt);
                 });
         getSplitPane().addPropertyChangeListener(propertyChangeListener);
