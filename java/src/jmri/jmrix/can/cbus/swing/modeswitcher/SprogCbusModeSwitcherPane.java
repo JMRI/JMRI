@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Andrew Crosland Copyright (C) 2020
  */
-public class ModeSwitcherPane extends JmriJFrame {
+public class SprogCbusModeSwitcherPane extends JmriJFrame {
     
     CbusDccProgrammerManager pm = null;
     
@@ -33,7 +33,7 @@ public class ModeSwitcherPane extends JmriJFrame {
 
     private CbusPreferences preferences;
 
-    public ModeSwitcherPane() {
+    public SprogCbusModeSwitcherPane() {
         super();
     }
     
@@ -91,11 +91,11 @@ public class ModeSwitcherPane extends JmriJFrame {
         ActionListener setProgMode = ae -> {
             if (progModeButton.isSelected()) {
                 // Enable service mode programmer
-                log.debug("Firing property change on {}", InstanceManager.getListPropertyName(GlobalProgrammerManager.class));
+                log.debug("Setting Global Programmer Available");
                 pm.setGlobalProgrammerAvailable(true);
             } else if (cmdModeButton.isSelected()) {
                 // Only disable service mode if ops mode active
-                log.debug("Firing property change on {}", InstanceManager.getListPropertyName(GlobalProgrammerManager.class));
+                log.debug("Setting Global Programmer Unavailable");
                 pm.setGlobalProgrammerAvailable(false);
             } else {
                 // Service mode is the default if all are deselected - reselect it
@@ -109,15 +109,15 @@ public class ModeSwitcherPane extends JmriJFrame {
         ActionListener setCmdMode = ae -> {
             if (cmdModeButton.isSelected()) {
                 // Enable ops mode programmer
-                log.debug("Firing property change on {}", InstanceManager.getListPropertyName(AddressedProgrammerManager.class));
+                log.debug("Setting Addressed Programmer Available");
                 pm.setAddressedModePossible(true);
             } else {
                 // Disable ops mode programmer
-                log.debug("Firing property change on {}", InstanceManager.getListPropertyName(AddressedProgrammerManager.class));
+                log.debug("Setting Addressed Programmer Unavailable");
                 pm.setAddressedModePossible(false);
                 if (!progModeButton.isSelected()) {
                     // Re-enable service mode if all are deselected
-                    log.debug("Firing property change on {}", InstanceManager.getListPropertyName(GlobalProgrammerManager.class));
+                log.debug("Setting GLobal Programmer Available");
                     pm.setGlobalProgrammerAvailable(true);
                     progModeButton.setSelected(true);
                 }
@@ -135,7 +135,7 @@ public class ModeSwitcherPane extends JmriJFrame {
         panel.add(modePane, BorderLayout.CENTER);
         
         this.add(panel);
-
+        pack();
         setVisible(true);
     }
     
@@ -157,6 +157,6 @@ public class ModeSwitcherPane extends JmriJFrame {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ModeSwitcherPane.class);
+    private final static Logger log = LoggerFactory.getLogger(SprogCbusModeSwitcherPane.class);
     
 }

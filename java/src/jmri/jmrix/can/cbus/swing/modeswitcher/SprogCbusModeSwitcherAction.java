@@ -6,20 +6,20 @@ import javax.swing.AbstractAction;
 /**
  * Create a ModeSwitcherPane.
  */
-public class ModeSwitcherAction extends AbstractAction {
+public class SprogCbusModeSwitcherAction extends AbstractAction {
 
-    public ModeSwitcherAction() {
+    public SprogCbusModeSwitcherAction() {
         this(Bundle.getMessage("MenuItemSPROGModeSwitcher"));
     }
 
-    public ModeSwitcherAction(String s) {
+    public SprogCbusModeSwitcherAction(String s) {
         super(s);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        ModeSwitcherPane f = new ModeSwitcherPane();
+        SprogCbusModeSwitcherPane f = new SprogCbusModeSwitcherPane();
         f.initComponents();
         f.setVisible(true);
     }
