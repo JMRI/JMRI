@@ -41,7 +41,9 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
      * @param state true if available
      */
     public void setAddressedModePossible(boolean state) {
+        boolean old = _isAddressedModePossible;
         _isAddressedModePossible = state;
+        firePropertyChange("addressedModePossible", old, state);
     }
 
     /**
@@ -60,7 +62,9 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
      * @param state true if available
      */
     public void setGlobalProgrammerAvailable(boolean state) {
+        boolean old = _isGlobalProgrammerAvailable;
         _isGlobalProgrammerAvailable = state;
+        firePropertyChange("globalProgrammerAvailable", old, state);
     }
 
     @Override

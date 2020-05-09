@@ -93,12 +93,10 @@ public class ModeSwitcherPane extends JmriJFrame {
                 // Enable service mode programmer
                 log.debug("Firing property change on {}", InstanceManager.getListPropertyName(GlobalProgrammerManager.class));
                 pm.setGlobalProgrammerAvailable(true);
-                InstanceManager.firePropertyChange(InstanceManager.getListPropertyName(GlobalProgrammerManager.class), false, true);
             } else if (cmdModeButton.isSelected()) {
                 // Only disable service mode if ops mode active
                 log.debug("Firing property change on {}", InstanceManager.getListPropertyName(GlobalProgrammerManager.class));
                 pm.setGlobalProgrammerAvailable(false);
-                InstanceManager.firePropertyChange(InstanceManager.getListPropertyName(GlobalProgrammerManager.class), true, false);
             } else {
                 // Service mode is the default if all are deselected - reselect it
                 log.debug("Cannot de-select programmer mode");
@@ -113,17 +111,14 @@ public class ModeSwitcherPane extends JmriJFrame {
                 // Enable ops mode programmer
                 log.debug("Firing property change on {}", InstanceManager.getListPropertyName(AddressedProgrammerManager.class));
                 pm.setAddressedModePossible(true);
-                InstanceManager.firePropertyChange(InstanceManager.getListPropertyName(AddressedProgrammerManager.class), false, true);
             } else {
                 // Disable ops mode programmer
                 log.debug("Firing property change on {}", InstanceManager.getListPropertyName(AddressedProgrammerManager.class));
                 pm.setAddressedModePossible(false);
-                InstanceManager.firePropertyChange(InstanceManager.getListPropertyName(AddressedProgrammerManager.class), true, false);
                 if (!progModeButton.isSelected()) {
                     // Re-enable service mode if all are deselected
                     log.debug("Firing property change on {}", InstanceManager.getListPropertyName(GlobalProgrammerManager.class));
                     pm.setGlobalProgrammerAvailable(true);
-                    InstanceManager.firePropertyChange(InstanceManager.getListPropertyName(GlobalProgrammerManager.class), false, true);
                     progModeButton.setSelected(true);
                 }
             }
