@@ -23,10 +23,13 @@ public class EasyDccTurnout extends AbstractTurnout {
     protected String _prefix = "E"; // default to "E"
 
     /**
-     * Create a turnout. EasyDCC turnouts use the NMRA number (0-511) as their
-     * numerical identification.
+     * Create a turnout.
+     * <p>
+     * EasyDCC turnouts use the NMRA number (0-511) as their numerical identification.
      *
-     * @param number the NMRA turnout number from 0 to 511
+     * @param prefix system connection prefix.
+     * @param number the NMRA turnout number from 0 to 511.
+     * @param memo system connection.
      */
     public EasyDccTurnout(String prefix, int number, EasyDccSystemConnectionMemo memo) {
         super(prefix + "T" + number);
