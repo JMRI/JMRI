@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implements MqttCallback {
 
     private final static String PROTOCOL = "tcp://";
-    private final static String CLID = "JMRI";
     private final static String DEFAULT_BASETOPIC = "/trains/";
     
     public String baseTopic = DEFAULT_BASETOPIC;
