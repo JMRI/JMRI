@@ -93,6 +93,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     /**
      * Get minimum address of an Acela node as set on this TrafficController.
+     * @return minimum node address.
      */
     public int getMinimumNodeAddress() {
         return minNode;
@@ -100,6 +101,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     /**
      * Get maximum number of Acela nodes as set on this TrafficController.
+     * @return max number of nodes.
      */
     public int getMaximumNumberOfNodes() {
         return maxNode;
@@ -154,6 +156,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     /**
      * Public method to register an Acela node.
+     * @param node which node to register.
      */
     public void registerAcelaNode(AcelaNode node) {
         synchronized (this) {
@@ -190,6 +193,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     /**
      * Public method to set up for initialization of an Acela node.
+     * @param node which node to initialize.
      */
     public void initializeAcelaNode(AcelaNode node) {
         synchronized (this) {
@@ -203,6 +207,8 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
      * <p>
      * Note: nodeAddress is numbered from 0
      *
+     * @param bitAddress address to query.
+     * @param isSensor true to use start sensor address, false to use start output address.
      * @return '-1' if an AcelaNode with the specified address was not found
      */
     public int lookupAcelaNodeAddress(int bitAddress, boolean isSensor) {
@@ -237,6 +243,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     /**
      * Forward an AcelaMessage to all registered AcelaInterface listeners.
+     * {@inheritDoc}
      */
     @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
@@ -245,6 +252,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     /**
      * Forward an AcelaReply to all registered AcelaInterface listeners.
+     * {@inheritDoc}
      */
     @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
@@ -397,6 +405,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     /**
      * Forward a pre-formatted message to the actual interface.
+     * {@inheritDoc}
      */
     @Override
     public void sendAcelaMessage(AcelaMessage m, AcelaListener reply) {
@@ -463,6 +472,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     /**
      * For each sensor node call markChanges.
+     * @param r reply to use in sensor update.
      */
     public void updateSensorsFromPoll(AcelaReply r) {
         for (int i = 0; i < getNumNodes(); i++) {
