@@ -30,6 +30,7 @@ import jmri.SignalMast;
 import jmri.SignalMastManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.MultiSensorIcon;
 import jmri.jmrit.display.Positionable;
 import jmri.server.json.JSON;
@@ -205,7 +206,7 @@ public abstract class AbstractPanelServlet extends HttpServlet {
 
     @CheckForNull
     protected Editor getEditor(String name) {
-        for (Editor editor : Editor.getEditors()) {
+        for (Editor editor : InstanceManager.getDefault(EditorManager.class).getAll()) {
             Container container = editor.getTargetPanel().getTopLevelAncestor();
             if (Frame.class.isInstance(container)) {
                 if (((Frame) container).getTitle().equals(name)) {

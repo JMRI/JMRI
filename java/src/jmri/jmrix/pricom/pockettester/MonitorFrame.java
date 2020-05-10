@@ -44,7 +44,9 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataLis
 
     /**
      * Start filtering input to include only lines that start with a specific
-     * string. A null input passes all.
+     * string.
+     * A null input passes all.
+     * @param s string to filter, can be null.
      */
     public void setFilter(String s) {
         filter = s;

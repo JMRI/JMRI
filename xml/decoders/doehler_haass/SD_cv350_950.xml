@@ -19,6 +19,12 @@
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
       <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
         <firstname>Pierre</firstname>
         <surname>Billon</surname>
       </personname>
@@ -26,12 +32,18 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>3</revnumber>
+      <date>2020-05-02</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>Excluded similar CV9xx for Sound Decoder</revremark>
+    </revision>
+    <revision>
       <revnumber>2</revnumber>
       <date>2015-11-01</date>
       <authorinitials>PB</authorinitials>
       <revremark>Included similar CVs from SUSI sound modules</revremark>
     </revision>
-	<revision>
+    <revision>
       <revnumber>1</revnumber>
       <date>2014-10-13</date>
       <authorinitials>PB</authorinitials>
@@ -45,12 +57,11 @@
 	<label xml:lang="de">Leerlauf Verzögerungszeit</label>
 	<label xml:lang="ca">Retard màxim en parada</label>
    </variable>
-  <variable label="Max time to standstill sound" CV="950" tooltip="CV950 (0-255 x100ms)" default="0" item="Sound Option 8" exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01">
+  <variable label="Max time to standstill sound" CV="950" tooltip="CV950 (0-255 x100ms)" default="0" item="Sound Option 8" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),SH10A_1.00,SH10A_1.01">
 	<decVal min="0" max="255"/>
 	<label xml:lang="fr">Délai max avant son marche arrêt</label>
 	<label xml:lang="de">Leerlauf Verzögerungszeit</label>
 	<label xml:lang="ca">Retard màxim en parada</label>
    </variable>
-  
   <!-- END SIMILAR CV --> 
 </variables>

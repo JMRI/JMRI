@@ -1,5 +1,6 @@
 package jmri.jmrit.whereused;
 
+import jmri.jmrit.display.EditorManager;
 import java.util.Enumeration;
 
 import jmri.*;
@@ -449,15 +450,14 @@ public class WhereUsedCollectors {
      */
     static String checkPanels(NamedBean bean) {
         StringBuilder sb = new StringBuilder();
-        InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getEditorsList().forEach((panel) -> {
-            panel.getUsageReport(bean).forEach((report) -> {
+        InstanceManager.getDefault(EditorManager.class).getAll().forEach(panel -> 
+            panel.getUsageReport(bean).forEach(report -> {
                 if (panel instanceof SwitchboardEditor) {
                     sb.append(Bundle.getMessage("ReferenceLineName", report.usageData));  // NOI18N
                 } else {
                     sb.append(Bundle.getMessage("ReferenceLinePanel", panel.getTitle(), report.usageData));  // NOI18N
                 }
-            });
-        });
+            }));
         return addHeader(sb, "ReferencePanels");  // NOI18N
     }
 

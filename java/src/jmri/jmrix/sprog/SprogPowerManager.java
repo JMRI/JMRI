@@ -58,6 +58,7 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
     /**
      * Update power state after service mode programming operation
      * without sending a message to the SPROG.
+     * @param v new power state.
      */
     public void notePowerState(int v) {
         power = v;

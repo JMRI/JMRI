@@ -499,29 +499,40 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Set up a Layout Block for a Track Segment.
+     * Set up a LayoutBlock for this Track Segment.
+     *
+     * @param newLayoutBlock the LayoutBlock to set
      */
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
     public void setLayoutBlock(@CheckForNull LayoutBlock newLayoutBlock) {
         LayoutBlock layoutBlock = getLayoutBlock();
         if (layoutBlock != newLayoutBlock) {
-            // block has changed, if old block exists, decrement use
+            //block has changed, if old block exists, decrement use
             if (layoutBlock != null) {
                 layoutBlock.decrementUse();
             }
+            namedLayoutBlock = null;
             if (newLayoutBlock != null) {
-                namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
-            } else {
-                namedLayoutBlock = null;
+                String newName = newLayoutBlock.getUserName();
+                if ((newName != null) && !newName.isEmpty()) {
+                    namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newName, newLayoutBlock);
+                }
             }
         }
     }
 
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
+    /**
+     * Set up a LayoutBlock for this Track Segment.
+     *
+     * @param name the name of the new LayoutBlock
+     */
     public void setLayoutBlockByName(@CheckForNull String name) {
         if ((name != null) && !name.isEmpty()) {
             LayoutBlock b = layoutEditor.provideLayoutBlock(name);
-            namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(b.getUserName(), b);
+            if (b != null) {
+                namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, b);
+            } else {
+                namedLayoutBlock = null;
+            }
         } else {
             namedLayoutBlock = null;
         }
@@ -549,7 +560,7 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public void translateCoords(double xFactor, double yFactor) {
-        setCoordsCenter(MathUtil.add(getCoordsCenter(), new Point2D.Double(xFactor, yFactor)));
+        super.setCoordsCenter(MathUtil.add(getCoordsCenter(), new Point2D.Double(xFactor, yFactor)));
     }
 
     /**
@@ -565,7 +576,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * set center coordinates
+     * Set center coordinates.
      *
      * @param newCenterPoint the coordinates to set
      */
@@ -611,23 +622,11 @@ public class TrackSegment extends LayoutTrack {
                         getName(), tLayoutBlockName, getName());
                 namedLayoutBlock = null;
             }
-            tLayoutBlockName = null; // release this memory
+            tLayoutBlockName = null; //release this memory
         }
 
-        // NOTE: testing "type-less" connects
-        //(read comments for findObjectByName in LayoutEditorFindItems.java)
         connect1 = p.getFinder().findObjectByName(tConnect1Name);
-        if (null == connect1) { // findObjectByName failed... try findObjectByTypeAndName
-            log.warn("{}.setObjects(...); Unknown connect1 object prefix: '{}' of type {}.",
-                    getName(), tConnect1Name, type1);
-            connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
-        }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
-        if (null == connect2) { // findObjectByName failed; try findObjectByTypeAndName
-            log.warn("{}.setObjects(...); Unknown connect2 object prefix: '{}' of type {}.",
-                    getName(), tConnect2Name, type2);
-            connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
-        }
     }
 
     public void updateBlockInfo() {
@@ -2037,7 +2036,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public void setCentreSegX(double x) {
-        setCoordsCenter(new Point2D.Double(x, getCentreSeg().getY()));
+        super.setCoordsCenter(new Point2D.Double(x, getCentreSeg().getY()));
     }
 
     public double getCentreSegY() {
@@ -2062,7 +2061,7 @@ public class TrackSegment extends LayoutTrack {
             if (isCircle()) {
                 result = getCoordsCenter(); // new Point2D.Double(centreX, centreY);
             } else if (isArc()) {
-                setCoordsCenter(MathUtil.midPoint(getBounds()));
+                super.setCoordsCenter(MathUtil.midPoint(getBounds()));
                 if (isFlip()) {
                     Point2D t = ep1;
                     ep1 = ep2;

@@ -1514,7 +1514,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
             if ((editor != null) && (connection == null)) {
                 // We should be able to determine block metric now as the tracksegment should be valid
-                connection = new ConnectivityUtil(editor);
+                connection = editor.getConnectivityUtil();
             }
 
             // Need to inform our neighbours of our new addition
@@ -2273,7 +2273,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                                 }
                                 layoutBlock.removeRouteFromNeighbour(this, newUpdate);
                                 getAdjacency(nextblk).removeRouteAdvertisedToNeighbour(routesToRemove.get(j));
-                                
+
                             } else {
                                 if (enableDeleteRouteLogging) {
                                     log.info("{} a valid path through exists {} so we will not remove route.", msgPrefix, nextblk.getDisplayName());
@@ -2434,7 +2434,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             log.info("Block {}, src: {}, dst: {}",
                     block.getDisplayName(), srcBlock.getDisplayName(), dstBlock.getDisplayName());
         }
-        connection = new ConnectivityUtil(panel);
+        connection = panel.getConnectivityUtil();
         List<LayoutTrackExpectedState<LayoutTurnout>> stod;
 
         try {
@@ -2949,7 +2949,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * @param routingMethod value to match metric
      * @return next block
      */
-    public int getNextBestBlock(Block previousBlock, Block destBlock, List<Integer> excludeBlock, int routingMethod) {
+    public int getNextBestBlock(Block previousBlock, Block destBlock, List<Integer> excludeBlock, LayoutBlockConnectivityTools.Metric routingMethod) {
         if (enableSearchRouteLogging) {
             log.info("From {} find best route from {} to {} index {} routingMethod {}", this.getDisplayName(), previousBlock.getDisplayName(), destBlock.getDisplayName(), excludeBlock, routingMethod);
         }
@@ -2958,7 +2958,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         int lastValue = 0;
         List<Block> nextBlocks = new ArrayList<>(5);
         if (!excludeBlock.isEmpty() && (excludeBlock.get(excludeBlock.size() - 1) < routes.size())) {
-            if (routingMethod == LayoutBlockConnectivityTools.METRIC) {
+            if (routingMethod == LayoutBlockConnectivityTools.Metric.METRIC) {
                 lastValue = routes.get(excludeBlock.get(excludeBlock.size() - 1)).getMetric();
             } else /* if (routingMethod==LayoutBlockManager.HOPCOUNT)*/ {
                 lastValue = routes.get(excludeBlock.get(excludeBlock.size() - 1)).getHopCount();
@@ -2980,7 +2980,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 if (!nextBlocks.contains(ro.getNextBlock())) {
                     // if(ro.getNextBlock()!=nextBlock){
                     int currentValue;
-                    if (routingMethod == LayoutBlockConnectivityTools.METRIC) {
+                    if (routingMethod == LayoutBlockConnectivityTools.Metric.METRIC) {
                         currentValue = routes.get(i).getMetric();
                     } else /*if (routingMethod==InstanceManager.getDefault(
                         LayoutBlockManager.class).HOPCOUNT)*/ {
@@ -3000,7 +3000,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                                     log.info("valid through path");
                                 }
 
-                                if (routingMethod == LayoutBlockConnectivityTools.METRIC) {
+                                if (routingMethod == LayoutBlockConnectivityTools.Metric.METRIC) {
                                     if (ro.getMetric() < bestCount) {
                                         bestIndex = i;
                                         bestCount = ro.getMetric();

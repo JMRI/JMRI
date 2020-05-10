@@ -4,7 +4,7 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 /**
- * Encodes a single measurement point for RPS
+ * Encodes a single measurement point for RPS.
  * <p>
  * Immutable
  *
@@ -31,13 +31,15 @@ public class Measurement {
      * <p>
      * By definition, Reading objects are immutable
      *
+     * @return the reading.
      */
     public Reading getReading() {
         return r;
     }
 
     /**
-     * Return the ID int of the transmitter this measurement describes
+     * Return the ID int of the transmitter this measurement describes.
+     * @return transmitter ID.
      */
     public String getId() {
         if (r == null) {
@@ -76,7 +78,8 @@ public class Measurement {
     }
 
     /**
-     * Error code, defined specifically by generator
+     * Error code, defined specifically by generator.
+     * @return error code.
      */
     public int getCode() {
         return code;
@@ -84,6 +87,7 @@ public class Measurement {
 
     /**
      * Should this be considered a valid measurement?
+     * @return if getCode greater 0.
      */
     public boolean isOkPoint() {
         if (getCode() > 0) {
@@ -93,7 +97,8 @@ public class Measurement {
     }
 
     /**
-     * Get the error code as a human-readable string
+     * Get the error code as a human-readable string.
+     * @return readable error code.
      */
     public String textCode() {
         return "" + getCode();
@@ -108,7 +113,8 @@ public class Measurement {
     }
 
     /**
-     * Get name of the source
+     * Get name of the source.
+     * @return source name.
      */
     public String getSource() {
         return source;

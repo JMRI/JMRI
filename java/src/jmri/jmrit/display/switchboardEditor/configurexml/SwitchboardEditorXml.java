@@ -9,7 +9,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.util.ColorUtil;
 
@@ -130,7 +130,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             name = shared.getAttribute("name").getValue();
         }
         // confirm that panel hasn't already been loaded
-        if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
+        if (InstanceManager.getDefault(EditorManager.class).contains(name)) {
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             result = false;
         }
@@ -156,7 +156,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
         SwitchboardEditor panel = new SwitchboardEditor(name);
         //panel.makeFrame(name);
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
+        InstanceManager.getDefault(EditorManager.class).add(panel);
         panel.getTargetFrame().setLocation(x, y);
         panel.getTargetFrame().setSize(width, height);
 

@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
@@ -187,7 +187,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 
     // place test markers on panel
     private void placeTestIcons() {
-        Editor editor = InstanceManager.getDefault(PanelMenu.class).getEditorByName(Setup.getPanelName());
+        Editor editor = InstanceManager.getDefault(EditorManager.class).get(Setup.getPanelName());
         if (editor == null) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LoadPanel"),
                     new Object[]{Setup.getPanelName()}), Bundle.getMessage("PanelNotFound"),

@@ -45,7 +45,7 @@ import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
@@ -205,7 +205,7 @@ public class PanelEditor extends Editor implements ItemListener {
                     if (newName == null) {
                         return;  // cancelled
                     }
-                    if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(newName)) {
+                    if (InstanceManager.getDefault(EditorManager.class).contains(newName)) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("CanNotRename"), Bundle.getMessage("PanelExist"),
                                 JOptionPane.ERROR_MESSAGE);
                         return;
@@ -215,7 +215,6 @@ public class PanelEditor extends Editor implements ItemListener {
                         ((JFrame) ancestor).setTitle(newName);
                     }
                     editor.setTitle();
-                    InstanceManager.getDefault(PanelMenu.class).renameEditorPanel(editor);
                 }
 
                 ActionListener init(PanelEditor e) {

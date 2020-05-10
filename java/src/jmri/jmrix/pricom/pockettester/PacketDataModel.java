@@ -139,10 +139,11 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
     }
 
     /**
-     * Configure a table to have our standard rows and columns. This is
-     * optional, in that other table formats can use this table model. But we
-     * put it here to help keep it consistent.
+     * Configure a table to have our standard rows and columns.
+     * This is optional, in that other table formats can use this table model.
+     * But we put it here to help keep it consistent.
      *
+     * @param slotTable the table to configure.
      */
     public void configureTable(JTable slotTable) {
         // allow reordering of the columns
