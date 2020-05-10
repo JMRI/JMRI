@@ -160,6 +160,43 @@
       jmri.configurexml.AbstractSensorManagerConfigXML</a>, which
       does almost all the work of storing and loading sensors.</p>
 
+      <h3><a id="enum" name="refs">Persisting enum values</h3>
+      
+    The “EnumIO” tool built into AbstractXmlAdapter that reads and writes enums via the names of their elements.
+    <p>
+    You add a member in your configureXml load/store class:
+<pre>
+    static final EnumIO&lt;MyEmum&gt; enumMap = new EnumIoNamesNumbers&lt;&gt;(MyEnum);
+</pre><br>
+    Then to store your value, in this example from the <code>myEnumValue</code>
+    variable, you pass the enum value through that map element in your <code>store</code> method:
+
+<pre>
+            element.setAttribute(“name", "" + enumMap.outputFromEnum(myEnumValue));
+</pre><br>
+Storing into an element is similar
+
+To restore the value on load:
+<pre>
+	myEnumValue = enumMap.inputFromAttribute(element.getAttribute(“name"));
+</pre><br>
+      
+      There are several variations available, please see 
+      <a href="https://www.jmri.org/JavaDoc/doc/jmri/configurexml/AbstractXmlAdapter.html">the Javadoc</a>.
+      Briefly:
+      <ul>
+        <li>EnumIoNames - just stores and loads the enum element names.
+        <li>EnumIoNamesNumbers - stores and loads the enum element names.
+                    On load, if it encounters a small integer value n, i.e.
+                    from an older file format, that will be translated to the nth
+                    enum value.
+        <li>EnumIoOrdinals - just stores and loads via the enum's ordinal numbers.
+                    This provides complete load and store backwards compatibility
+                    with earlier versions of the file.
+        <li>EnumIoMapped - allows you to provide arbitrary mappings between enums and
+                    the values loaded and stored.  It's possible to provide multiple
+                    load values that make to a single enum value, i.e. "3" and "Ralph".
+      </ul>
       <h3><a id="refs" name="refs">Persisting References to NamedBeans</a></h3>
       
       Classes should, but don't always, 
