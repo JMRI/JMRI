@@ -59,18 +59,18 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
             element.setAttribute("arc",         "yes");
             element.setAttribute("flip",        (view.isFlip() ? "yes" : "no"));
             element.setAttribute("circle",      (view.isCircle() ? "yes" : "no"));
-            if ((trk.isCircle()) && (view.getAngle() != 0.0D)) {
+            if ((view.isCircle()) && (view.getAngle() != 0.0D)) {
                 element.setAttribute("angle",   "" + (view.getAngle()));
                 element.setAttribute("hideConLines", (view.hideConstructionLines() ? "yes" : "no"));
             }
         }
 
-        if (trk.isBezier()) {
+        if (view.isBezier()) {
             element.setAttribute("bezier", "yes");
             element.setAttribute("hideConLines", "" + (view.hideConstructionLines() ? "yes" : "no"));
             // add control points
             Element elementControlpoints = new Element("controlpoints");
-            for (int i = 0; i < trk.getNumberOfBezierControlPoints(); i++) {
+            for (int i = 0; i < view.getNumberOfBezierControlPoints(); i++) {
                 Element elementControlpoint = new Element("controlpoint");
 
                 elementControlpoint.setAttribute("index", "" + i);
@@ -106,7 +106,7 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
             if (view.getArrowStyle() > 0) {
                 Element decorationElement = new Element("arrow");
                 decorationElement.setAttribute("style", Integer.toString(view.getArrowStyle()));
-                if (view.isArrowEndStart() && trk.isArrowEndStop()) {
+                if (view.isArrowEndStart() && view.isArrowEndStop()) {
                     decorationElement.setAttribute("end", "both");
                 } else if (view.isArrowEndStop()) {
                     decorationElement.setAttribute("end", "stop");
@@ -257,10 +257,10 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
         }
 
         // create the new TrackSegment and view
-        TrackSegment l = new TrackSegment(name,
+        TrackSegment lt = new TrackSegment(name,
                 con1Name, type1, con2Name, type2,
                 main, p);
-        TrackSegmentView lv = new TrackSegmentView(l, p);
+        TrackSegmentView lv = new TrackSegmentView(lt, p);
         
         lv.setDashed(dash);
         lv.setArc( getAttributeBooleanValue(element, "arc", false) );
@@ -570,17 +570,17 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
                         }
                     }
                 }
-                l.setDecorations(decorations);
+                lv.setDecorations(decorations);
             }
         }
 
         // get remaining attribute
         Attribute a = element.getAttribute("blockname");
         if (a != null) {
-            l.tLayoutBlockName = a.getValue();
+            lt.tLayoutBlockName = a.getValue();
         }
 
-        p.addLayoutTrack(l, lv);
+        p.addLayoutTrack(lt, lv);
     }
 
     static final EnumIO<HitPointType> htpMap = new EnumIoNamesNumbers<>(HitPointType.class);

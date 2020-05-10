@@ -7615,7 +7615,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // create the view on the fly
         LayoutTrackView v = LayoutTrackView.makeTrackView(trk, this);
     
-        log.trace("created LayoutTrackView {}", v);
+        log.trace("created LayoutTrackView {} of type {}", v, v.getClass().getName(), new Exception("traceback"));
         
         addLayoutTrack(trk, v);
     }
