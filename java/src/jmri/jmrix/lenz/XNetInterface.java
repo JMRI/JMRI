@@ -33,6 +33,8 @@ public interface XNetInterface {
      * in a reply, you need to register an XNetListener object to watch the
      * message stream. When sending, you specify (in 2nd parameter) who
      * you are so you're not redundantly notified of this message.
+     * @param msg the XNet message to send.
+     * @param replyTo sending listener to NOT notify.
      */
     public void sendXNetMessage(XNetMessage msg, XNetListener replyTo);
 
@@ -59,13 +61,17 @@ public interface XNetInterface {
     void addXNetListener(int mask, XNetListener l);
 
     /**
-     * Stop notification of things happening on the XNet. Note that mask and XNetListener
-     * must match a previous request exactly.
+     * Stop notification of things happening on the XNet.
+     * <p>
+     * Note that mask and XNetListener must match a previous request exactly.
+     * @param mask listening mask.
+     * @param listener listener to remove notifications for. 
      */
     void removeXNetListener(int mask, XNetListener listener);
 
     /**
-     * Check whether an implementation is operational. True indicates OK.
+     * Check whether an implementation is operational.
+     * @return true if OK, else false.
      */
     public boolean status();
 

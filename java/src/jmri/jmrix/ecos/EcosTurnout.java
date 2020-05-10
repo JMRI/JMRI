@@ -30,7 +30,10 @@ public class EcosTurnout extends AbstractTurnout
      * ECoS turnouts use the NMRA number (0-2044) as their numerical
      * identification in the system name.
      *
-     * @param number DCC address of the turnout
+     * @param number DCC address of the turnout.
+     * @param prefix system prefix.
+     * @param etc system connection traffic controller.
+     * @param etm ecos turnout manager.
      */
     public EcosTurnout(int number, String prefix, EcosTrafficController etc, EcosTurnoutManager etm) {
         super(prefix + "T" + number);

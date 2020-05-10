@@ -105,11 +105,12 @@ public class HexFile {
 
     
     /**
-     * Read a hex file
-     * 
+     * Read a hex file.
+     * <p>
      * Read into the array of individual records.
      * Add the actual programming data to the data arrays.
      * Track the highest used addresses
+     * @throws java.io.IOException on read error.
      */
     public void read() throws IOException {
         HexRecord r;

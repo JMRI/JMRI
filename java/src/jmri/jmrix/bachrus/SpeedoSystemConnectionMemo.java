@@ -38,6 +38,7 @@ public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
 
     /**
      * Provide access to the TrafficController for this particular connection.
+     * @return traffic controller.
      */
     public SpeedoTrafficController getTrafficController() {
         return tc;

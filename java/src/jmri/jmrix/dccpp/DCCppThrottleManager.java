@@ -25,6 +25,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public DCCppThrottleManager(DCCppSystemConnectionMemo memo) {
         super(memo);
