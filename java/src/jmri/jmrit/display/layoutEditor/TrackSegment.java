@@ -47,8 +47,11 @@ public class TrackSegment extends LayoutTrack {
     protected HitPointType type1 = HitPointType.NONE;
     protected LayoutTrack connect2 = null;
     protected HitPointType type2 = HitPointType.NONE;
-    private boolean dashed = false;
     private boolean mainline = false;
+
+    // eventually drop
+
+    private boolean dashed = false;
     private boolean arc = false;
     private boolean flip = false;
     private double angle = 0.0D;
@@ -56,16 +59,27 @@ public class TrackSegment extends LayoutTrack {
     private boolean changed = false;
     private boolean bezier = false;
 
+
+
     // for Bezier
     private final ArrayList<Point2D> bezierControlPoints = new ArrayList<>(); // list of control point displacements
 
     // temporary reference to the Editor that will eventually be part of View
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor editor;
 
+    // (temporary dummy ctor for backward compatibility, ignores hidden)
+     public TrackSegment(@Nonnull String id,
+            @CheckForNull LayoutTrack c1, HitPointType t1,
+            @CheckForNull LayoutTrack c2, HitPointType t2,
+            boolean hidden, boolean main,
+            @Nonnull LayoutEditor layoutEditor) {
+        this(id, c1, t1, c2, t2, main, layoutEditor);
+    }
+       
     public TrackSegment(@Nonnull String id,
             @CheckForNull LayoutTrack c1, HitPointType t1,
             @CheckForNull LayoutTrack c2, HitPointType t2,
-            boolean dash, boolean main,
+            boolean main,
             @Nonnull LayoutEditor layoutEditor) {
         super(id, MathUtil.zeroPoint2D, layoutEditor);
 
@@ -88,23 +102,25 @@ public class TrackSegment extends LayoutTrack {
         }
 
         mainline = main;
-        dashed = dash;
-
-        arc = false;
-        flip = false;
-        angle = 0.0D;
-        circle = false;
-        bezier = false;
+        
         setupDefaultBumperSizes(layoutEditor);
 
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
     }
 
+    // (temporary dummy ctor for backward compatibility, ignores hidden)
+     public TrackSegment(@Nonnull String id,
+            @CheckForNull String c1Name, HitPointType t1,
+            @CheckForNull String c2Name, HitPointType t2,
+            boolean hidden, boolean main,
+            @Nonnull LayoutEditor layoutEditor) {
+        this(id, c1Name, t1, c2Name, t2, main, layoutEditor);
+    }
     // alternate constructor for loading layout editor panels
     public TrackSegment(@Nonnull String id,
             @CheckForNull String c1Name, HitPointType t1,
             @CheckForNull String c2Name, HitPointType t2,
-            boolean dash, boolean main, boolean hide,
+            boolean main,
             @Nonnull LayoutEditor layoutEditor) {
         super(id, MathUtil.zeroPoint2D, layoutEditor);
 
@@ -114,9 +130,7 @@ public class TrackSegment extends LayoutTrack {
         type2 = t2;
 
         mainline = main;
-        dashed = dash;
-        setHidden(hide);
-
+        
         setupDefaultBumperSizes(layoutEditor);
         
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
@@ -1690,8 +1704,8 @@ public class TrackSegment extends LayoutTrack {
         TrackSegment newTrackSegment = new TrackSegment(name,
                 newAnchor, HitPointType.POS_POINT,
                 connect2, type2,
-                isDashed(), isMainline(), layoutEditor);
-        log.error("splitTrackSegment creating track without view (temporary)");
+                isMainline(), layoutEditor);
+        log.error("splitTrackSegment creating track without view (temporary), didn't handle isDashed()");
         // add it to known tracks
         layoutEditor.addLayoutTrack(newTrackSegment);
         layoutEditor.setDirty();

@@ -29,7 +29,7 @@ public class TrackSegmentTest extends LayoutTrackTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
             // Invalid parameters in TrackSegment constructor call
-            TrackSegment ts = new TrackSegment("TS01", null, HitPointType.NONE, null, HitPointType.NONE, false, false, layoutEditor);
+            TrackSegment ts = new TrackSegment("TS01", (String) null, HitPointType.NONE, (String) null, HitPointType.NONE, false, layoutEditor);
             Assert.assertNotNull("TrackSegment TS01 not null", ts);
             JUnitAppender.assertErrorMessage("Invalid object in TrackSegment constructor call - TS01");
             JUnitAppender.assertErrorMessage("Invalid connect type 1 ('NONE') in TrackSegment constructor - TS01");
@@ -719,7 +719,7 @@ public class TrackSegmentTest extends LayoutTrackTest {
             if (layoutEditor != null) {
                 PositionablePoint p1 = new PositionablePoint("A1", PositionablePoint.PointType.ANCHOR, new Point2D.Double(10.0, 20.0), layoutEditor);
                 PositionablePoint p2 = new PositionablePoint("A2", PositionablePoint.PointType.ANCHOR, new Point2D.Double(20.0, 33.0), layoutEditor);
-                trackSegment = new TrackSegment("TS1", p1, HitPointType.POS_POINT, p2, HitPointType.POS_POINT, false, true, layoutEditor);
+                trackSegment = new TrackSegment("TS1", p1, HitPointType.POS_POINT, p2, HitPointType.POS_POINT, true, layoutEditor);
             }
         }
     }

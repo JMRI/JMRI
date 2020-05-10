@@ -4782,9 +4782,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         // create object
         newTrack = new TrackSegment(name, beginTrack, beginHitPointType,
-                foundTrack, foundHitPointType, leToolBarPanel.dashedLine.isSelected(),
+                foundTrack, foundHitPointType,
                 leToolBarPanel.mainlineTrack.isSelected(), this);
 
+        log.error("(temporary) addTrackSegment didn't make view, didn't handle leToolBarPanel.dashedLine.isSelected() ");
         addLayoutTrack(newTrack);
         unionToPanelBounds(newTrack.getBounds());
         setDirty();

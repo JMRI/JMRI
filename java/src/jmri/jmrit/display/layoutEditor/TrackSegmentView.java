@@ -23,15 +23,15 @@ import jmri.util.swing.JmriColorChooser;
  */
 public class TrackSegmentView extends LayoutTrackView {
 
-    // defined constants
-
     // persistent instances variables (saved between sessions)
     private boolean dashed = false;
     private boolean mainline = false;
+    
     private boolean arc = false;
+    private boolean circle = false;
     private boolean flip = false;
     private double angle = 0.0D;
-    private boolean circle = false;
+    
     private boolean changed = false;
     private boolean bezier = false;
 
@@ -41,27 +41,24 @@ public class TrackSegmentView extends LayoutTrackView {
     // temporary reference to the Editor that will eventually be part of View
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor editor;
 
-    /**
-     * constructor method
-     */
+
     public TrackSegmentView(@Nonnull TrackSegment track, @Nonnull LayoutEditor layoutEditor) {
         super(track, layoutEditor);
         this.trackSegment = track;
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
+    }
+    
+    /**
+     * constructor method for general use
+     */
+    public TrackSegmentView(@Nonnull TrackSegment track, @Nonnull LayoutEditor layoutEditor,
+                                boolean arc, boolean flip, boolean circle
+                        ) {
+        this(track, layoutEditor);
                 
         setMainline(track.isMainline());
-        setDashed(track.isDashed());
-        setHidden(track.isHidden());
 
-        // arc, circle, bezier maybe others have complex setters that the original ctor didn't invoke, so we don't here.
-        arc = track.isArc();
-        flip = track.isFlip();
-        angle = track.getAngle();
-        circle = track.isCircle();
-        bezier = track.isBezier();
-        
         setupDefaultBumperSizes(layoutEditor);
-
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
     }
 
     final private TrackSegment trackSegment;
@@ -1493,7 +1490,8 @@ public class TrackSegmentView extends LayoutTrackView {
         TrackSegment newTrackSegment = new TrackSegment(name,
                 newAnchor, HitPointType.POS_POINT,
                 getConnect2(), getType2(),
-                isDashed(), isMainline(), layoutEditor);
+                isMainline(), layoutEditor);
+        log.error("temporary: splitTrackSegment created track without view, didn't include isDashed() ");
         // add it to known tracks
         layoutEditor.addLayoutTrack(newTrackSegment);
         layoutEditor.setDirty();

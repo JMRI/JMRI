@@ -50,16 +50,18 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
         element.setAttribute("type1", "" + htpMap.outputFromEnum(trk.getType1()) );
         element.setAttribute("connect2name", trk.getConnect2Name());
         element.setAttribute("type2", "" + htpMap.outputFromEnum(trk.getType2()) );
-        element.setAttribute("dashed", "" + (view.isDashed() ? "yes" : "no"));
-        element.setAttribute("mainline", "" + (trk.isMainline() ? "yes" : "no"));
-        element.setAttribute("hidden", "" + (view.isHidden() ? "yes" : "no"));
-        if (trk.isArc()) {
-            element.setAttribute("arc", "yes");
-            element.setAttribute("flip", "" + (view.isFlip() ? "yes" : "no"));
-            element.setAttribute("circle", "" + (view.isCircle() ? "yes" : "no"));
+        
+        element.setAttribute("dashed",      (view.isDashed() ? "yes" : "no"));
+        element.setAttribute("mainline",    (trk.isMainline() ? "yes" : "no"));
+        element.setAttribute("hidden",      (view.isHidden() ? "yes" : "no"));
+        
+        if (view.isArc()) {
+            element.setAttribute("arc",         "yes");
+            element.setAttribute("flip",        (view.isFlip() ? "yes" : "no"));
+            element.setAttribute("circle",      (view.isCircle() ? "yes" : "no"));
             if ((trk.isCircle()) && (view.getAngle() != 0.0D)) {
-                element.setAttribute("angle", "" + (view.getAngle()));
-                element.setAttribute("hideConLines", "" + (view.hideConstructionLines() ? "yes" : "no"));
+                element.setAttribute("angle",   "" + (view.getAngle()));
+                element.setAttribute("hideConLines", (view.hideConstructionLines() ? "yes" : "no"));
             }
         }
 
@@ -217,29 +219,9 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
         // get attributes
         String name = element.getAttribute("ident").getValue();
 
-        boolean dash = true;
-        try {
-            dash = element.getAttribute("dashed").getBooleanValue();
-        } catch (DataConversionException e) {
-            log.warn("unable to convert track segment dashed attribute");
-        } catch (NullPointerException e) {  // considered normal if the attribute is not present
-        }
-
-        boolean main = true;
-        try {
-            main = element.getAttribute("mainline").getBooleanValue();
-        } catch (DataConversionException e) {
-            log.warn("unable to convert track segment mainline attribute");
-        } catch (NullPointerException e) {  // considered normal if the attribute is not present
-        }
-
-        boolean hide = false;
-        try {
-            hide = element.getAttribute("hidden").getBooleanValue();
-        } catch (DataConversionException e) {
-            log.warn("unable to convert track segment hidden attribute");
-        } catch (NullPointerException e) {  // considered normal if the attribute is not present
-        }
+        boolean dash = getAttributeBooleanValue(element, "dashed", true);
+        boolean main = getAttributeBooleanValue(element, "mainline", true);
+        boolean hide = getAttributeBooleanValue(element, "hidden", false);
 
         String con1Name = element.getAttribute("connect1name").getValue();
         String con2Name = element.getAttribute("connect2name").getValue();
@@ -277,35 +259,21 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
         // create the new TrackSegment and view
         TrackSegment l = new TrackSegment(name,
                 con1Name, type1, con2Name, type2,
-                dash, main, hide,  p);
-        TrackSegmentView lv = new TrackSegmentView(l, 
-                p);
+                main, p);
+        TrackSegmentView lv = new TrackSegmentView(l, p);
         
-        try {
-            lv.setArc(element.getAttribute("arc").getBooleanValue());
-        } catch (DataConversionException e) {
-            log.warn("unable to convert track segment arc attribute");
-        } catch (NullPointerException e) {  // considered normal if the attribute is not present
-        }
+        lv.setDashed(dash);
+        lv.setArc( getAttributeBooleanValue(element, "arc", false) );
 
         if (lv.isArc()) {
             lv.setFlip( getAttributeBooleanValue(element, "flip", false) );
             lv.setCircle( getAttributeBooleanValue(element, "circle", false) );
             if (lv.isCircle()) {
-                try {
-                    lv.setAngle(element.getAttribute("angle").getDoubleValue());
-                } catch (DataConversionException e) {
-                    log.error("failed to convert tracksegment attribute");
-                } catch (NullPointerException e) {  // considered normal if the attribute is not present
-                }
+                lv.setAngle( getAttributeDoubleValue(element, "angle", 0.0) );
             }
-            try {
-                if (element.getAttribute("hideConLines").getBooleanValue()) {
-                    lv.hideConstructionLines(TrackSegment.HIDECON);
-                }
-            } catch (DataConversionException e) {
-                log.warn("unable to convert track segment hideConLines attribute");
-            } catch (NullPointerException e) {  // considered normal if the attribute is not present
+
+            if ( getAttributeBooleanValue(element, "hideConLines", false) ) {
+                lv.hideConstructionLines(TrackSegment.HIDECON);
             }
         }
 
@@ -483,8 +451,8 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
                         }
                     } else if (decorationName.equals("bumper")) {
                         // assume both ends
-                        l.setBumperEndStart(true);
-                        l.setBumperEndStop(true);
+                        lv.setBumperEndStart(true);
+                        lv.setBumperEndStop(true);
                         Attribute a = decorationElement.getAttribute("end");
                         if (a != null) {
                             String value = a.getValue();
