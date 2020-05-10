@@ -85,6 +85,22 @@ public class AbstractXmlAdapterTest{
         Assert.assertEquals(21., adapter.getAttributeDoubleValue(testEl, "t21", 12.), 0.001);
     }
         
+    @Test
+    public void testGetAttributeFloatValue() {
+        AbstractXmlAdapter adapter  = new AbstractXmlAdapter(){
+            public Element store(Object o) {return null;}
+            public void load(Element e, Object o) {}
+        };
+        
+        Element testEl = new Element("foo");
+        
+        Assert.assertEquals(12., adapter.getAttributeFloatValue(testEl, "att", 12.f), 0.001);
+                
+        testEl.setAttribute("t21", "21.");
+        
+        Assert.assertEquals(21., adapter.getAttributeFloatValue(testEl, "t21", 12.f), 0.001);
+    }
+        
     enum testEnum {Foo, Bar, Biff}
     
     @Test
