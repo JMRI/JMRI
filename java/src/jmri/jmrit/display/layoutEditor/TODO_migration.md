@@ -54,6 +54,10 @@ as people lay out their layout on separate models.  (Another demo of the shortag
 
 ---
 
+pMainline can be used for routing, so that's a connectivity (model) item
+
+--- 
+
   Store is done from LayoutTrack child, without access to View and LayoutEditor (for nav).
   Need to change the store process in configurexml/LayoutEditorXml to fix that
   
