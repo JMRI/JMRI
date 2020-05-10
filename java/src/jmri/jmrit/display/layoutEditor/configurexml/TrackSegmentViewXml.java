@@ -289,18 +289,8 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
         }
 
         if (lv.isArc()) {
-            try {
-                lv.setFlip(element.getAttribute("flip").getBooleanValue());
-            } catch (DataConversionException e) {
-                log.warn("unable to convert track segment flip attribute");
-            } catch (NullPointerException e) {  // considered normal if the attribute is not present
-            }
-            try {
-                lv.setCircle(element.getAttribute("circle").getBooleanValue());
-            } catch (DataConversionException e) {
-                log.warn("unable to convert track segment circle attribute");
-            } catch (NullPointerException e) {  // considered normal if the attribute is not present
-            }
+            lv.setFlip( getAttributeBooleanValue(element, "flip", false) );
+            lv.setCircle( getAttributeBooleanValue(element, "circle", false) );
             if (lv.isCircle()) {
                 try {
                     lv.setAngle(element.getAttribute("angle").getDoubleValue());
