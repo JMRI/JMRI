@@ -271,15 +271,15 @@ public class CbusPreferences extends PreferencesBean {
     
     /**
      * Get the global programmer state
-     * @return 
+     * @return global programmer state
      */
     public boolean isGlobalProgrammerAvailable() {
         return _isGlobalProgrammerAvailable;
     }
     
     /**
-     * Get the global programmer state
-     * @return 
+     * Get the addressed programmer state
+     * @return addressed programmer state
      */
     public boolean isAddressedModePossible() {
         return _isAddressedModePossible;
