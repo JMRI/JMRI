@@ -28,17 +28,9 @@ public class CbusPreferences extends PreferencesBean {
     private boolean _saveRestoreEventTable = true;
     private int minimumNumBackupsToKeep = 10;
     private int bootWriteDelay = CbusNode.BOOT_PROG_TIMEOUT_FAST;
-    private HardwareMode hardwareMode = HardwareMode.BOTH;
+    private boolean _isGlobalProgrammerAvailable = true;
+    private boolean _isAddressedModePossible = true;
     
-    /**
-     * Hardware operating modes
-     */
-    public enum HardwareMode {
-        PROGRAMMER,
-        COMMANDSTATION,
-        BOTH
-    }
-
     public CbusPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
         Preferences sharedPreferences = ProfileUtils.getPreferences(super.getProfile(), this.getClass(), true);
@@ -63,6 +55,11 @@ public class CbusPreferences extends PreferencesBean {
             "bootWriteDelay",this.getBootWriteDelay() );
         this._saveRestoreEventTable = sharedPreferences.getBoolean(
             "saveRestoreEventTable",this.getSaveRestoreEventTable() );
+
+        this._isGlobalProgrammerAvailable = sharedPreferences.getBoolean(
+            "globalprogrammer", this.isGlobalProgrammerAvailable() );
+        this._isAddressedModePossible = sharedPreferences.getBoolean(
+            "addressedprogrammer", this.isAddressedModePossible() );
     }
 
     public void savePreferences() {
@@ -81,6 +78,9 @@ public class CbusPreferences extends PreferencesBean {
         sharedPreferences.putInt("minimumNumBackupsToKeep", this.getMinimumNumBackupsToKeep() );
         sharedPreferences.putInt("bootWriteDelay", this.getBootWriteDelay() );
         sharedPreferences.putBoolean("saveRestoreEventTable", this.getSaveRestoreEventTable() );
+
+        sharedPreferences.putBoolean("globalprogrammer", this.isGlobalProgrammerAvailable() );
+        sharedPreferences.putBoolean("addressedprogrammer", this.isAddressedModePossible() );
         
         try {
             sharedPreferences.sync();
@@ -270,20 +270,47 @@ public class CbusPreferences extends PreferencesBean {
     }
     
     /**
-     * Get the current hardware operating mode
-     * @return the mode
+     * Get the global programmer state
+     * @return 
      */
-    public HardwareMode getHardwareMode(){
-        return hardwareMode;
+    public boolean isGlobalProgrammerAvailable() {
+        return _isGlobalProgrammerAvailable;
     }
     
     /**
-     * Set the current hardware operating mode
-     * @param mode the new mode
+     * Get the global programmer state
+     * @return 
      */
-    public void setHardwareMode( HardwareMode mode ){
-        hardwareMode = mode;
+    public boolean isAddressedModePossible() {
+        return _isAddressedModePossible;
+    }
+    
+    /**
+     * Set global (service mode) programmer availability
+     * @param state true if available
+     */
+    public void setGlobalProgrammerAvailable(boolean state) {
+        _isGlobalProgrammerAvailable = state;
         savePreferences();
+    }
+    
+    /**
+     * Set global (service mode) programmer availability
+     * @param state true if available
+     */
+    public void setAddressedModePossible(boolean state) {
+        _isAddressedModePossible = state;
+        savePreferences();
+    }
+    
+    /**
+     * Set the programmer type
+     * @param global true if global (service mode) programmer is available
+     * @param addressed thru if addressed (ops mode) programmer is available
+     */
+    public void setProgrammersAvailable(boolean global, boolean addressed) {
+        setGlobalProgrammerAvailable(global);
+        setAddressedModePossible(addressed);
     }
     
     private final static Logger log = LoggerFactory.getLogger(CbusPreferences.class);

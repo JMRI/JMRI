@@ -7,7 +7,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.jmrix.can.cbus.CbusDccProgrammerManager;
@@ -67,62 +66,56 @@ public class SprogCbusModeSwitcherPane extends JmriJFrame {
         modePane.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createEtchedBorder(), Bundle.getMessage("HardwareMode")));
 
+        // Create selection buttons and set initial state
         progModeButton = new JRadioButton(Bundle.getMessage("ProgMode"));
         cmdModeButton = new JRadioButton(Bundle.getMessage("CmdMode"));
-        switch (preferences.getHardwareMode()) {
-            case BOTH:
-                progModeButton.setSelected(true);
-                cmdModeButton.setSelected(true);
-                log.info("Hardware mode from preferences now BOTH");
-                break;
-            case COMMANDSTATION:
-                progModeButton.setSelected(false);
-                cmdModeButton.setSelected(true);
-                log.info("Hardware mode from preferences now COMMANDSTATION"); 
-                break;
-            default:    // Programmer
-                progModeButton.setSelected(true);
-                cmdModeButton.setSelected(false);
-                log.info("Hardware mode from preferences now PROGRAMMER");
-                break;
+        if (pm.isGlobalProgrammerAvailable()) {
+            progModeButton.setSelected(true);
+        } else {
+            progModeButton.setSelected(false);
+        }
+        if (pm.isAddressedModePossible()) {
+            cmdModeButton.setSelected(true);
+        } else {
+            cmdModeButton.setSelected(false);
         }
         
         // Handle Programmer mode button activity
         ActionListener setProgMode = ae -> {
             if (progModeButton.isSelected()) {
                 // Enable service mode programmer
-                log.debug("Setting Global Programmer Available");
+                log.info("Setting Global Programmer Available");
                 pm.setGlobalProgrammerAvailable(true);
             } else if (cmdModeButton.isSelected()) {
                 // Only disable service mode if ops mode active
-                log.debug("Setting Global Programmer Unavailable");
+                log.info("Setting Global Programmer Unavailable");
                 pm.setGlobalProgrammerAvailable(false);
             } else {
                 // Service mode is the default if all are deselected - reselect it
-                log.debug("Cannot de-select programmer mode");
+                log.info("Cannot de-select programmer mode as only mode");
                 progModeButton.setSelected(true);
             }
-            writeMode();
+            preferences.setProgrammersAvailable(progModeButton.isSelected(), cmdModeButton.isSelected());
         };
         
         // Handle command station mode button activity
         ActionListener setCmdMode = ae -> {
             if (cmdModeButton.isSelected()) {
                 // Enable ops mode programmer
-                log.debug("Setting Addressed Programmer Available");
+                log.info("Setting Addressed Programmer Available");
                 pm.setAddressedModePossible(true);
             } else {
                 // Disable ops mode programmer
-                log.debug("Setting Addressed Programmer Unavailable");
+                log.info("Setting Addressed Programmer Unavailable");
                 pm.setAddressedModePossible(false);
                 if (!progModeButton.isSelected()) {
                     // Re-enable service mode if all are deselected
-                log.debug("Setting GLobal Programmer Available");
+                    log.info("No current programmer, setting Global Programmer Available");
                     pm.setGlobalProgrammerAvailable(true);
                     progModeButton.setSelected(true);
                 }
             }
-            writeMode();
+            preferences.setProgrammersAvailable(progModeButton.isSelected(), cmdModeButton.isSelected());
         };
         
         progModeButton.addActionListener(setProgMode);
@@ -138,24 +131,6 @@ public class SprogCbusModeSwitcherPane extends JmriJFrame {
         pack();
         setVisible(true);
     }
-    
-    
-    /**
-     * Write the current mode to the preferences
-     */
-    private void writeMode() {
-        if (progModeButton.isSelected() && cmdModeButton.isSelected()) {
-            preferences.setHardwareMode(CbusPreferences.HardwareMode.BOTH);
-            log.info("Hardware mode now BOTH");
-        } else if (cmdModeButton.isSelected()) {
-            preferences.setHardwareMode(CbusPreferences.HardwareMode.COMMANDSTATION);
-            log.info("Hardware mode now COMMANDSTATION");
-        } else {
-            preferences.setHardwareMode(CbusPreferences.HardwareMode.PROGRAMMER);
-            log.info("Hardware mode now PROGRAMMER");
-        }
-    }
-    
     
     private final static Logger log = LoggerFactory.getLogger(SprogCbusModeSwitcherPane.class);
     

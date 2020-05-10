@@ -10,6 +10,7 @@ import jmri.jmrix.can.cbus.CbusDccProgrammerManager;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,6 +27,7 @@ public class SprogCbusModeSwitcherPaneTest extends jmri.util.JmriJFrameTestBase 
     
     @Test
     public void testInitComponents() throws Exception{
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // for now, just make sure there isn't an exception.
         ((SprogCbusModeSwitcherPane) frame).initComponents();
     }
