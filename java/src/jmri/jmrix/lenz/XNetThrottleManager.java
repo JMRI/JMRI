@@ -23,6 +23,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements XNet
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public XNetThrottleManager(XNetSystemConnectionMemo memo) {
         super(memo);
