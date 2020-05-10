@@ -1915,7 +1915,7 @@
             </packageset>
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="1650"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
+            <arg value="1300"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <arg value="-J-Dhttp.agent=javadoc"/>
@@ -2183,7 +2183,7 @@
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs-check.xml"
-
+                  failOnError="true"
                   effort="max"
                   reportLevel="low"
                   >
@@ -2200,7 +2200,6 @@
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs.xml"
-
                   effort="max"
                   reportLevel="low"
                   >
@@ -2217,7 +2216,7 @@
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs-check.xml"
-
+                  failOnError="true"
                   effort="max"
                   reportLevel="low"
                   >

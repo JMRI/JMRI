@@ -31,7 +31,7 @@ public interface CbusEventInterface {
      * @return Passed CanMessage if event, else null.
      */
     @CheckForNull
-    default CanMessage checkEvent(CanMessage m) {
+    public default CanMessage checkEvent(CanMessage m) {
         if ( CbusMessage.isEvent(m) ){
             return m;
         }

@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.19.6-SNAPSHOT</version>
+    <version>4.19.7-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -677,7 +677,7 @@
                     <sourcepath>${basedir}/java/src:${project.build.directory}/generated-sources/javacc:${project.build.directory}/generated-sources/jjtree</sourcepath>
                     <show>package</show>
                     <!-- change from default 100 warnings; keep number synced with ant javadoc-lint target -->
-                    <additionalJOption>-breakiterator -Xmaxwarns 1650</additionalJOption>
+                    <additionalJOption>-breakiterator -Xmaxwarns 1300</additionalJOption>
                     <!-- remove ",-missing" to get warnings about missing Javadoc tags -->
                     <doclint>all,-missing</doclint>
                     <author>true</author><!-- default -->

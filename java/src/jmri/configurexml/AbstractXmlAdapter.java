@@ -91,7 +91,65 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         return this.errorHandler;
     }
 
+    /**
+     * Service method to handle attribute input of
+     * boolean  (true/yes vs false/no) values.  Not being present
+     * is not an error. Not parsing (which shouldn't happen due to
+     * the XML Schema checks) invokes the default error handler.
+     */
+    final public boolean getAttributeBooleanValue(@Nonnull Element element, @Nonnull String name, boolean def) {
+        Attribute a = null;
+        String val = null;
+        try {
+            a = element.getAttribute(name);
+            if (a == null) return def;
+            val = a.getValue();
+            if ( val.equals("yes") || val.equals("true") ) return true;  // non-externalized strings
+            if ( val.equals("no") || val.equals("false") ) return false;
+            return def;
+        } catch (Exception ex) {
+            log.debug("caught exception", ex);
+            ErrorMemo em = new ErrorMemo(this,
+                                            "getAttributeBooleanValue threw exception",
+                                            "element: "+element.getName(),
+                                            "attribute: "+name,
+                                            "value: "+val,
+                                            ex);
+            getExceptionHandler().handle(em);
+            return def;
+        }
+    }
 
+    /**
+     * Service method to handle attribute input of
+     * integer values.  Not being present
+     * is not an error. Not parsing (which shouldn't happen due to
+     * the XML Schema checks) invokes the default error handler.
+     */
+    final public int getAttributeIntegerValue(@Nonnull Element element, @Nonnull String name, int def) {
+        Attribute a = null;
+        String val = null;
+        try {
+            a = element.getAttribute(name);
+            if (a == null) return def;
+            val = a.getValue();
+            return a.getIntValue();
+        } catch (Exception ex) {
+            log.debug("caught exception", ex);
+            ErrorMemo em = new ErrorMemo(this,
+                                            "getAttributeIntegerValue threw exception",
+                                            "element: "+element.getName(),
+                                            "attribute: "+name,
+                                            "value: "+val,
+                                            ex);
+            getExceptionHandler().handle(em);
+            return def;
+        }
+    }
+
+    /**
+     * Base for support of Enum load/store to XML files
+     */
     public static abstract class EnumIO <T extends Enum<T>> { // public to be usable by adapters in other configXML packages
 
         /**

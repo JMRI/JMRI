@@ -205,14 +205,6 @@ public class SerialDriverAdapter extends SprogPortController {
     InputStream serialStream = null;
 
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialDriverAdapter instance() {
-        return null;
-    }
-
-    /**
      * Set up all of the other objects to operate with an Sprog command station
      * connected to this port.
      */

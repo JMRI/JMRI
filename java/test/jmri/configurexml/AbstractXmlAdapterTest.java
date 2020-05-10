@@ -1,6 +1,7 @@
 package jmri.configurexml;
 
 import java.util.HashMap;
+import org.jdom2.*;
 import org.junit.*;
 
 /**
@@ -10,6 +11,54 @@ import org.junit.*;
  */
 public class AbstractXmlAdapterTest{
 
+    @Test
+    public void testGetAttributeBooleanValue() {
+        AbstractXmlAdapter adapter  = new AbstractXmlAdapter(){
+            public Element store(Object o) {return null;}
+            public void load(Element e, Object o) {}
+        };
+        
+        Element testEl = new Element("foo");
+        
+        Assert.assertTrue(adapter.getAttributeBooleanValue(testEl, "att", true));
+        Assert.assertFalse(adapter.getAttributeBooleanValue(testEl, "att", false));
+                
+        testEl.setAttribute("t", "true");
+        testEl.setAttribute("f", "false");
+        testEl.setAttribute("y", "yes");
+        testEl.setAttribute("n", "no");
+
+        Assert.assertTrue(adapter.getAttributeBooleanValue(testEl, "t", true));
+        Assert.assertTrue(adapter.getAttributeBooleanValue(testEl, "t", false));
+                
+        Assert.assertFalse(adapter.getAttributeBooleanValue(testEl, "f", true));
+        Assert.assertFalse(adapter.getAttributeBooleanValue(testEl, "f", false));
+                
+        Assert.assertTrue(adapter.getAttributeBooleanValue(testEl, "y", true));
+        Assert.assertTrue(adapter.getAttributeBooleanValue(testEl, "y", false));
+                
+        Assert.assertFalse(adapter.getAttributeBooleanValue(testEl, "n", true));
+        Assert.assertFalse(adapter.getAttributeBooleanValue(testEl, "n", false));
+                
+        
+    }
+    
+    @Test
+    public void testGetAttributeIintegerValue() {
+        AbstractXmlAdapter adapter  = new AbstractXmlAdapter(){
+            public Element store(Object o) {return null;}
+            public void load(Element e, Object o) {}
+        };
+        
+        Element testEl = new Element("foo");
+        
+        Assert.assertEquals(12, adapter.getAttributeIntegerValue(testEl, "att", 12));
+                
+        testEl.setAttribute("t21", "21");
+        
+        Assert.assertEquals(21, adapter.getAttributeIntegerValue(testEl, "t21", 12));
+    }
+        
     enum testEnum {Foo, Bar, Biff}
     
     @Test

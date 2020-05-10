@@ -27,6 +27,8 @@ public class MarklinTurnout extends AbstractTurnout
      * identification in the system name.
      *
      * @param number address of the turnout
+     * @param prefix system prefix.
+     * @param etc connection traffic controller.
      */
     public MarklinTurnout(int number, String prefix, MarklinTrafficController etc) {
         super(prefix + "T" + number);

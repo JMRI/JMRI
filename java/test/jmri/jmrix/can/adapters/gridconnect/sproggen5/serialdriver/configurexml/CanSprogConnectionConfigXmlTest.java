@@ -30,8 +30,9 @@ public class CanSprogConnectionConfigXmlTest extends jmri.jmrix.configurexml.Abs
     @After
     @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         xmlAdapter = null;
         cc = null;
+        JUnitUtil.tearDown();
     }
 }
