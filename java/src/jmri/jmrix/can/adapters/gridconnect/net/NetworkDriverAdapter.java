@@ -26,10 +26,6 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         options.put(option2Name, new Option(Bundle.getMessage("ConnectionProtocol"), jmri.jmrix.can.ConfigurationManager.getSystemOptions(), false));
         setManufacturer(jmri.jmrix.openlcb.OlcbConnectionTypeList.OPENLCB);
         allowConnectionRecovery = true;
-        
-        maxreconnectinterval = 30000; // 30s
-        retryAttempts = Integer.MAX_VALUE;
-        
     }
 
     /**
