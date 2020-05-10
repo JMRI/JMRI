@@ -51,9 +51,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Petr Šídlo added a timeout for SV2-mode programming.</li>
-                <li>You can now set the number of simulated command station
-                slots in the LocoNet simulator, courtesy Steve Todd.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -68,9 +66,7 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Support for <a href="https://www.jmri.org/help/en/html/hardware/can/cbus/CbusFastClock.shtml"
-                >CBUS Fast Clock</a> messaging.</li>
-                <li>Andrew Crosland added a CBUS multimeter.</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
@@ -195,7 +191,7 @@
 
         <h4>Hornby</h4>
             <ul>
-                <li>Brian Jackson and Dave Heap updated the Hornby TTS definition</li>
+                <li></li>
             </ul>
 
         <h4>Kuehn</h4>
@@ -215,7 +211,7 @@
 
         <h4>Lenz</h4>
             <ul>
-                <li>W.D. Kok added a Lenz Scale 0 definition.</li>
+                <li></li>
             </ul>
 
         <h4>MGP</h4>
@@ -349,26 +345,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>
-                George Warner added quick keys to select LayoutEditor toolbar panel radio buttons</li>
-	        <li>
-	            Lots of internal work to improve Layout Editor structure
-	            so that new features can be added more reliably. Please
-	            keep an eye out for any new issues!
-	            <p>
-	            Note that files written by 4.19.6 may not be readable 
-	            by JMRI 4.19.5 and before.
-	        </li>
-            <li>
-                A default instance of <code>jmri.jmrit.display.PanelMenu</code> is no
-                longer maintained by the InstanceManager for the purposes of maintaining
-                a list of open Editors or LayoutEditors. Use the default instance of
-                <code>jmri.jmrit.display.EditorManager</code> in scripts instead.
-            </li>
-            <li>
-                George Warner added the ability to assign a block 
-                to a turntable to represent the track on the turntable bridge.
-                You enter the block from the Edit pane in the turntable's popup menu.</li>
+	        <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -424,12 +401,7 @@
     <h3>Resources</h3>
         <a id="Resources" name="Resources"></a>
         <ul>
-            <li>Konrad Malkowski added icons for 
-                <a href="http://jmri.org/resources/icons/panels/DominoPanel">European domino-style</a>
-                panels.
-            <li>Added several missing index pages to the resource
-                directories for <a href="http://jmri.org/resources/">display on the web</a>.
-            </li>
+            <li></li>
         </ul>
 
     <h3>Roster</h3>
@@ -447,13 +419,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>
-                A default instance of <code>jmri.jmrit.display.PanelMenu</code> is no
-                longer maintained by the InstanceManager for the purposes of maintaining
-                a list of open Editors or LayoutEditors. Use the default instance of
-                <code>jmri.jmrit.display.EditorManager</code> in scripts instead. All
-                sample scripts have been updated to reflect this.
-            </li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -483,7 +449,7 @@
 
 	    <h4>Cab Signals</h4>
             <ul>
-                <li></li>
+                <li>Better set row height in table.</li>
             </ul>
 
     	<h4>Simple Signal Logic</h4>
@@ -547,15 +513,12 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Added a separate volume control for each decoder. See
-            <a href="https://groups.io/g/jmriusers/topic/vsdecoder_enhancement_request/73168521">
-            more details</a>.</li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Andrew Crosland fixed some nasty flickering in the Nixie clock and 
-            ammeter frames.</li>
+            <li></li>
         </ul>
 
