@@ -34,10 +34,10 @@ public class LayoutTrackTest {
     
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         if (le != null) {
             JUnitUtil.dispose(le);
         }
         le = null;
+        JUnitUtil.tearDown();
     }
 }

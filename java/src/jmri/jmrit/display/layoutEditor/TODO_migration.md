@@ -48,6 +48,12 @@ LayoutEditorXml)
 
 ---
 
+It's not "geometry" or "geometrical" it's connectivity or topology
+There are _two_ geometries:  Layout and Screen. There can't be any clean correspondence. 
+as people lay out their layout on separate models.  (Another demo of the shortage of single-meaning words)
+
+---
+
   Store is done from LayoutTrack child, without access to View and LayoutEditor (for nav).
   Need to change the store process in configurexml/LayoutEditorXml to fix that
   

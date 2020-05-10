@@ -713,7 +713,7 @@ public class TrackSegmentTest extends LayoutTrackTest {
      */
     @Before
     public void setUpEach() throws Exception {
-        JUnitUtil.setUp();
+        super.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             if (layoutEditor != null) {
@@ -734,6 +734,6 @@ public class TrackSegmentTest extends LayoutTrackTest {
         // release refereces to track segment
         trackSegment = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 }

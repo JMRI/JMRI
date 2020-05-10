@@ -50,22 +50,22 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
         element.setAttribute("type1", "" + htpMap.outputFromEnum(trk.getType1()) );
         element.setAttribute("connect2name", trk.getConnect2Name());
         element.setAttribute("type2", "" + htpMap.outputFromEnum(trk.getType2()) );
-        element.setAttribute("dashed", "" + (trk.isDashed() ? "yes" : "no"));
+        element.setAttribute("dashed", "" + (view.isDashed() ? "yes" : "no"));
         element.setAttribute("mainline", "" + (trk.isMainline() ? "yes" : "no"));
-        element.setAttribute("hidden", "" + (trk.isHidden() ? "yes" : "no"));
+        element.setAttribute("hidden", "" + (view.isHidden() ? "yes" : "no"));
         if (trk.isArc()) {
             element.setAttribute("arc", "yes");
-            element.setAttribute("flip", "" + (trk.isFlip() ? "yes" : "no"));
-            element.setAttribute("circle", "" + (trk.isCircle() ? "yes" : "no"));
-            if ((trk.isCircle()) && (trk.getAngle() != 0.0D)) {
-                element.setAttribute("angle", "" + (trk.getAngle()));
-                element.setAttribute("hideConLines", "" + (trk.hideConstructionLines() ? "yes" : "no"));
+            element.setAttribute("flip", "" + (view.isFlip() ? "yes" : "no"));
+            element.setAttribute("circle", "" + (view.isCircle() ? "yes" : "no"));
+            if ((trk.isCircle()) && (view.getAngle() != 0.0D)) {
+                element.setAttribute("angle", "" + (view.getAngle()));
+                element.setAttribute("hideConLines", "" + (view.hideConstructionLines() ? "yes" : "no"));
             }
         }
 
         if (trk.isBezier()) {
             element.setAttribute("bezier", "yes");
-            element.setAttribute("hideConLines", "" + (trk.hideConstructionLines() ? "yes" : "no"));
+            element.setAttribute("hideConLines", "" + (view.hideConstructionLines() ? "yes" : "no"));
             // add control points
             Element elementControlpoints = new Element("controlpoints");
             for (int i = 0; i < trk.getNumberOfBezierControlPoints(); i++) {
@@ -73,7 +73,7 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
 
                 elementControlpoint.setAttribute("index", "" + i);
 
-                Point2D pt = trk.getBezierControlPoint(i);
+                Point2D pt = view.getBezierControlPoint(i);
                 elementControlpoint.setAttribute("x", String.format("%.1f", pt.getX()));
                 elementControlpoint.setAttribute("y", String.format("%.1f", pt.getY()));
 
@@ -83,7 +83,7 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
         }
 
         // store decorations
-        Map<String, String> decorations = trk.getDecorations();
+        Map<String, String> decorations = view.getDecorations();
         if (decorations.size() > 0) {
             Element decorationsElement = new Element("decorations");
             for (Map.Entry<String, String> entry : decorations.entrySet()) {
@@ -101,94 +101,96 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
             }
             element.addContent(decorationsElement);
 
-            if (trk.getArrowStyle() > 0) {
+            if (view.getArrowStyle() > 0) {
                 Element decorationElement = new Element("arrow");
-                decorationElement.setAttribute("style", Integer.toString(trk.getArrowStyle()));
-                if (trk.isArrowEndStart() && trk.isArrowEndStop()) {
+                decorationElement.setAttribute("style", Integer.toString(view.getArrowStyle()));
+                if (view.isArrowEndStart() && trk.isArrowEndStop()) {
                     decorationElement.setAttribute("end", "both");
-                } else if (trk.isArrowEndStop()) {
+                } else if (view.isArrowEndStop()) {
                     decorationElement.setAttribute("end", "stop");
                 } else {
                     decorationElement.setAttribute("end", "start");
                 }
-                if (trk.isArrowDirIn() && trk.isArrowDirOut()) {
+                if (view.isArrowDirIn() && view.isArrowDirOut()) {
                     decorationElement.setAttribute("direction", "both");
-                } else if (trk.isArrowDirOut()) {
+                } else if (view.isArrowDirOut()) {
                     decorationElement.setAttribute("direction", "out");
                 } else {
                     decorationElement.setAttribute("direction", "in");
                 }
-                decorationElement.setAttribute("color", ColorUtil.colorToHexString(trk.getArrowColor()));
-                decorationElement.setAttribute("linewidth", Integer.toString(trk.getArrowLineWidth()));
-                decorationElement.setAttribute("length", Integer.toString(trk.getArrowLength()));
-                decorationElement.setAttribute("gap", Integer.toString(trk.getArrowGap()));
+                decorationElement.setAttribute("color", ColorUtil.colorToHexString(view.getArrowColor()));
+                decorationElement.setAttribute("linewidth", Integer.toString(view.getArrowLineWidth()));
+                decorationElement.setAttribute("length", Integer.toString(view.getArrowLength()));
+                decorationElement.setAttribute("gap", Integer.toString(view.getArrowGap()));
                 decorationsElement.addContent(decorationElement);
             }
-            if (trk.isBridgeSideLeft() || trk.isBridgeSideRight()) {
+            if (view.isBridgeSideLeft() || view.isBridgeSideRight()) {
                 Element decorationElement = new Element("bridge");
-                if (trk.isBridgeSideLeft() && trk.isBridgeSideRight()) {
+                if (view.isBridgeSideLeft() && view.isBridgeSideRight()) {
                     decorationElement.setAttribute("side", "both");
-                } else if (trk.isBridgeSideLeft()) {
+                } else if (view.isBridgeSideLeft()) {
                     decorationElement.setAttribute("side", "left");
                 } else {
                     decorationElement.setAttribute("side", "right");
                 }
-                if (trk.isBridgeHasEntry() && trk.isBridgeHasExit()) {
+                if (view.isBridgeHasEntry() && view.isBridgeHasExit()) {
                     decorationElement.setAttribute("end", "both");
-                } else if (trk.isBridgeHasEntry()) {
+                } else if (view.isBridgeHasEntry()) {
                     decorationElement.setAttribute("end", "entry");
-                } else if (trk.isBridgeHasExit()) {
+                } else if (view.isBridgeHasExit()) {
                     decorationElement.setAttribute("end", "exit");
                 }
-                decorationElement.setAttribute("color", ColorUtil.colorToHexString(trk.getBridgeColor()));
-                decorationElement.setAttribute("linewidth", Integer.toString(trk.getBridgeLineWidth()));
-                decorationElement.setAttribute("approachwidth", Integer.toString(trk.getBridgeApproachWidth()));
-                decorationElement.setAttribute("deckwidth", Integer.toString(trk.getBridgeDeckWidth()));
+                decorationElement.setAttribute("color", ColorUtil.colorToHexString(view.getBridgeColor()));
+                decorationElement.setAttribute("linewidth", Integer.toString(view.getBridgeLineWidth()));
+                decorationElement.setAttribute("approachwidth", Integer.toString(view.getBridgeApproachWidth()));
+                decorationElement.setAttribute("deckwidth", Integer.toString(view.getBridgeDeckWidth()));
                 decorationsElement.addContent(decorationElement);
             }
-            if (trk.isBumperEndStart() || trk.isBumperEndStop()) {
+            if (view.isBumperEndStart() || view.isBumperEndStop()) {
                 Element decorationElement = new Element("bumper");
-                if (trk.isBumperEndStart() && trk.isBumperEndStop()) {
+                if (view.isBumperEndStart() && view.isBumperEndStop()) {
                     decorationElement.setAttribute("end", "both");
-                } else if (trk.isBumperEndStop()) {
+                } else if (view.isBumperEndStop()) {
                     decorationElement.setAttribute("end", "stop");
                 } else {
                     decorationElement.setAttribute("end", "start");
                 }
-                decorationElement.setAttribute("color", ColorUtil.colorToHexString(trk.getBumperColor()));
-                decorationElement.setAttribute("linewidth", Integer.toString(trk.getBumperLineWidth()));
-                decorationElement.setAttribute("length", Integer.toString(trk.getBumperLength()));
-                if (trk.isBumperFlipped()) {
+                decorationElement.setAttribute("color", ColorUtil.colorToHexString(view.getBumperColor()));
+                decorationElement.setAttribute("linewidth", Integer.toString(view.getBumperLineWidth()));
+                decorationElement.setAttribute("length", Integer.toString(view.getBumperLength()));
+                if (view.isBumperFlipped()) {
                     decorationElement.setAttribute("flip", "true");
                 }
                 decorationsElement.addContent(decorationElement);
             }
 
-            if (trk.isTunnelSideLeft() || trk.isTunnelSideRight()) {
+            if (view.isTunnelSideLeft() || view.isTunnelSideRight()) {
                 Element decorationElement = new Element("tunnel");
-                if (trk.isTunnelSideLeft() && trk.isTunnelSideRight()) {
+                if (view.isTunnelSideLeft() && view.isTunnelSideRight()) {
                     decorationElement.setAttribute("side", "both");
-                } else if (trk.isTunnelSideLeft()) {
+                } else if (view.isTunnelSideLeft()) {
                     decorationElement.setAttribute("side", "left");
                 } else {
                     decorationElement.setAttribute("side", "right");
                 }
-                if (trk.isTunnelHasEntry() && trk.isTunnelHasExit()) {
+                if (view.isTunnelHasEntry() && view.isTunnelHasExit()) {
                     decorationElement.setAttribute("end", "both");
-                } else if (trk.isTunnelHasEntry()) {
+                } else if (view.isTunnelHasEntry()) {
                     decorationElement.setAttribute("end", "entry");
-                } else if (trk.isTunnelHasExit()) {
+                } else if (view.isTunnelHasExit()) {
                     decorationElement.setAttribute("end", "exit");
                 }
-                decorationElement.setAttribute("color", ColorUtil.colorToHexString(trk.getTunnelColor()));
-                decorationElement.setAttribute("linewidth", Integer.toString(trk.getTunnelLineWidth()));
-                decorationElement.setAttribute("entrancewidth", Integer.toString(trk.getTunnelEntranceWidth()));
-                decorationElement.setAttribute("floorwidth", Integer.toString(trk.getTunnelFloorWidth()));
+                decorationElement.setAttribute("color", ColorUtil.colorToHexString(view.getTunnelColor()));
+                decorationElement.setAttribute("linewidth", Integer.toString(view.getTunnelLineWidth()));
+                decorationElement.setAttribute("entrancewidth", Integer.toString(view.getTunnelEntranceWidth()));
+                decorationElement.setAttribute("floorwidth", Integer.toString(view.getTunnelFloorWidth()));
                 decorationsElement.addContent(decorationElement);
             }
         }
 
-        element.setAttribute("class", getClass().getName());
+        //element.setAttribute("class", getClass().getName());
+        log.info("storing old fixed class name for TrackSegment");
+        element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml");
 
         return element;
     }   // store
@@ -275,8 +277,9 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
         // create the new TrackSegment and view
         TrackSegment l = new TrackSegment(name,
                 con1Name, type1, con2Name, type2,
-                dash, main, hide, p);
-        TrackSegmentView lv = new TrackSegmentView(l, p);
+                dash, main, hide,  p);
+        TrackSegmentView lv = new TrackSegmentView(l, 
+                p);
         
         try {
             lv.setArc(element.getAttribute("arc").getBooleanValue());

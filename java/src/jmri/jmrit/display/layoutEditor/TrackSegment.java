@@ -1691,6 +1691,7 @@ public class TrackSegment extends LayoutTrack {
                 newAnchor, HitPointType.POS_POINT,
                 connect2, type2,
                 isDashed(), isMainline(), layoutEditor);
+        log.error("(temporary) spltiTrackSegment greated TrackSegment without view, used screen position");
         // add it to known tracks
         layoutEditor.addLayoutTrack(newTrackSegment);
         layoutEditor.setDirty();
