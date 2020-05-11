@@ -12,6 +12,21 @@ import jmri.util.*;
 
 /**
  * MVC View component for the LayoutTrack hierarchy.
+ * <p>
+ * This contains the display information, including screen geometry, for a LayoutEditor panel.
+ * The geometry/connectivity information is held in {@link LayoutTrack} subclasses.
+ * <ul>
+ *   <li>Position(s) of the screen icons and its parts, typically the center;
+ *             scaling and translation; size and bounds
+ *   <li>Line colors
+ *   <li>Flipped status; drawing details like bezier curve points
+ *   <li>Various decorations: arrows, tunnels, bridges
+ *   <li>Hidden status
+ *   <li>
+ *   <li>
+ *   <li>
+ *   <li>
+ * </ul>
  *
  * @author Bob Jacobsen  Copyright (c) 2020
  * 
@@ -208,8 +223,6 @@ abstract public class LayoutTrackView {
     final protected Color setColorForTrackBlock(Graphics2D g2, @CheckForNull LayoutBlock lb) {
         return setColorForTrackBlock(g2, lb, false);
     }
-
-    abstract public boolean isMainline();
 
     /**
      * draw one line (Ballast, ties, center or 3rd rail, block lines)

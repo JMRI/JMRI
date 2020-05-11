@@ -853,11 +853,6 @@ public class LevelXingView extends LayoutTrackView {
         }
     }
 
-    @Override
-    public boolean isMainline() {
-        return (isMainlineAC() || isMainlineBD());
-    }
-
     /*
     * Modify coordinates methods.
      */

@@ -473,23 +473,6 @@ public class LayoutSlipView extends LayoutTurnoutView {
     }
 
     /**
-     * Methods to test if mainline track or not Returns true if either
-     * connecting track segment is mainline Defaults to not mainline if
-     * connecting track segments are missing
-     */
-    @Override
-    public boolean isMainline() {
-        if (((connectA != null) && (((TrackSegment) connectA).isMainline()))
-                || ((connectB != null) && (((TrackSegment) connectB).isMainline()))
-                || ((connectC != null) && (((TrackSegment) connectC).isMainline()))
-                || ((connectD != null) && (((TrackSegment) connectD).isMainline()))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override

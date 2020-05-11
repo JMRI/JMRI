@@ -1709,20 +1709,6 @@ public class PositionablePointView extends LayoutTrackView {
         return result;
     }
 
-    @Override
-    public boolean isMainline() {
-        boolean result = false; // assume failure (pessimist!)
-        if (getConnect1() != null) {
-            result = getConnect1().isMainline();
-        }
-        if (getType() == PointType.ANCHOR) {
-            if (getConnect2() != null) {
-                result |= getConnect2().isMainline();
-            }
-        }
-        return result;
-    }
-
     /**
      * Draw track decorations.
      * 

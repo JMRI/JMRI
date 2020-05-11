@@ -1985,14 +1985,6 @@ public class LayoutTurnoutView extends LayoutTrackView {
      * {@inheritDoc}
      */
     @Override
-    public boolean isMainline() {
-        return (isMainlineA() || isMainlineB() || isMainlineC() || isMainlineD());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     protected HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         HitPointType result = HitPointType.NONE;  // assume point not on connection
         // note: optimization here: instead of creating rectangles for all the

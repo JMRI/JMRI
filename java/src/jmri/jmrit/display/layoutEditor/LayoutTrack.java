@@ -13,6 +13,22 @@ import jmri.util.*;
 /**
  * Abstract base class for all layout track objects (PositionablePoint,
  * TrackSegment, LayoutTurnout, LayoutSlip, LevelXing and LayoutTurntable)
+ * <p>
+ * This is the connectivity/topology information for the layout; the 
+ * display information, including screen geometry, is held in {@link LayoutTrackView} subclasses.
+ * <ul>
+ *   <li>One or more connections, consisting of a LayoutTrack name and {@link HitPointType}
+ *   <li>Mainline status
+ *   <li>Associated
+ *      <ul>
+ *          <li>Blocks
+ *          <li>Signal heads and masts
+ *          <li>Sensors
+ *          <li>Turnout controls
+ *      </ul>
+ *   <li>
+ *   <li>
+ * </ul>
  *
  * @author Dave Duchamp Copyright (C) 2009
  * @author George Warner Copyright (c) 2017-2020
@@ -147,10 +163,12 @@ abstract public class LayoutTrack {
     }
 
     // optional parameter forceTrack = false
+    // temporary - needs to go away eventually
     final protected Color getColorForTrackBlock(@CheckForNull LayoutBlock lb) {
         return getColorForTrackBlock(lb, false);
     }
 
+    // temporary - needs to go away eventually
     final protected Color setColorForTrackBlock(Graphics2D g2,
             @CheckForNull LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
         Color result = getColorForTrackBlock(layoutBlock, forceBlockTrackColor);
@@ -159,6 +177,7 @@ abstract public class LayoutTrack {
     }
 
     // optional parameter forceTrack = false
+    // temporary - needs to go away eventually
     final protected Color setColorForTrackBlock(Graphics2D g2, @CheckForNull LayoutBlock lb) {
         return setColorForTrackBlock(g2, lb, false);
     }

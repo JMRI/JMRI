@@ -597,11 +597,6 @@ public class LayoutTurntableView extends LayoutTrackView {
         return result;
     }
 
-    @Override
-    public boolean isMainline() {
-        return false;
-    }
-
     //
     // Modify coordinates methods
     //

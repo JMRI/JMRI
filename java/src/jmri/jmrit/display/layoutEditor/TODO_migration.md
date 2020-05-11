@@ -43,9 +43,20 @@ It's in no particular order, items are removed as done, so please don't consider
         LayoutSlip
         LayoutXOver
 
-Last:  TrackSegment is loading but not storing (needs TrackSegment_View_Xml and changes in 
-LayoutEditorXml) 
+Last:  TrackSegmentViewXml is storing as  class="TrackSegmentView" to ease file comparison; change back.
 
+ - [X] mainline in geometry classes (inc base clases, *Xml)
+ - [ ] hidden in View
+ - [ ] flip in View
+ - [ ] center in View
+ - [ ] Decorations in View
+    - [ ] arrowstyle in View
+    - [ ] bridge in View
+    - [ ] tunnel in View
+ - [ ] center in view
+ - [ ] create popup et al (inc member vars) in view
+ - [ ] Turnout state in connectivity
+ - [ ] Block and connectivity checks to, well, connectivity
 ---
 
 It's not "geometry" or "geometrical" it's connectivity or topology

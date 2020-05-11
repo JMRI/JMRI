@@ -25,7 +25,6 @@ public class TrackSegmentView extends LayoutTrackView {
 
     // persistent instances variables (saved between sessions)
     private boolean dashed = false;
-    private boolean mainline = false;
     
     private boolean arc = false;
     private boolean circle = false;
@@ -56,8 +55,6 @@ public class TrackSegmentView extends LayoutTrackView {
                         ) {
         this(track, layoutEditor);
                 
-        setMainline(track.isMainline());
-
         setupDefaultBumperSizes(layoutEditor);
     }
 
@@ -143,22 +140,6 @@ public class TrackSegmentView extends LayoutTrackView {
     public void setDashed(boolean dash) {
         if (dashed != dash) {
             dashed = dash;
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-
-    /**
-     * @return true if track segment is a main line
-     */
-    @Override
-    public boolean isMainline() {
-        return mainline;
-    }
-
-    public void setMainline(boolean main) {
-        if (mainline != main) {
-            mainline = main;
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -710,9 +691,9 @@ public class TrackSegmentView extends LayoutTrackView {
         popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
 
         popupMenu.add(mainlineCheckBoxMenuItem);
-        mainlineCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setMainline(mainlineCheckBoxMenuItem.isSelected()));
+        mainlineCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> trackSegment.setMainline(mainlineCheckBoxMenuItem.isSelected()));
         mainlineCheckBoxMenuItem.setToolTipText(Bundle.getMessage("MainlineCheckBoxMenuItemToolTip"));
-        mainlineCheckBoxMenuItem.setSelected(mainline);
+        mainlineCheckBoxMenuItem.setSelected(trackSegment.isMainline());
 
         popupMenu.add(hiddenCheckBoxMenuItem);
         hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setHidden(hiddenCheckBoxMenuItem.isSelected()));
@@ -1506,7 +1487,7 @@ public class TrackSegmentView extends LayoutTrackView {
         TrackSegment newTrackSegment = new TrackSegment(name,
                 newAnchor, HitPointType.POS_POINT,
                 getConnect2(), getType2(),
-                isMainline(), layoutEditor);
+                trackSegment.isMainline(), layoutEditor);
         log.error("temporary: splitTrackSegment created track without view, didn't include isDashed() ");
         // add it to known tracks
         layoutEditor.addLayoutTrack(newTrackSegment);
@@ -2125,7 +2106,7 @@ public class TrackSegmentView extends LayoutTrackView {
             // This removes random rail fragments from between the block dashes
             return;
         }
-        if (isMain == mainline) {
+        if (isMain == trackSegment.isMainline()) {
             if (isBlock) {
                 setColorForTrackBlock(g2, getLayoutBlock());
             }
@@ -2158,7 +2139,7 @@ public class TrackSegmentView extends LayoutTrackView {
             // This removes random rail fragments from between the block dashes
             return;
         }
-        if (isMain == mainline) {
+        if (isMain == trackSegment.isMainline()) {
             if (isArc()) {
                 calculateTrackSegmentAngle();
                 Rectangle2D cRectangle2D = new Rectangle2D.Double(
@@ -3542,7 +3523,7 @@ public class TrackSegmentView extends LayoutTrackView {
         int tieWidth = ltdo.getSideTieWidth();
         int railWidth = ltdo.getSideRailWidth();
         int railGap = ltdo.getSideRailGap();
-        if (mainline) {
+        if (trackSegment.isMainline()) {
             tieLength = ltdo.getMainTieLength();
             tieWidth = ltdo.getMainTieWidth();
             railWidth = ltdo.getMainRailWidth();
