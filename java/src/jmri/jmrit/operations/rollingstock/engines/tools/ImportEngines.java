@@ -54,10 +54,10 @@ public class ImportEngines extends ImportRollingStock {
     private static final int ENG_WEIGHT = 14;
     private static final int ENG_TYPE = 15;
    // private static final int ENG_COMMENT = 16;
-    private static final int ENG_MISCELLANEOUS = 17;
+   // private static final int ENG_MISCELLANEOUS = 17;
 
     // as of 7/23/2018 there were 18 attributes exported by operations
-    private static final int MAXIMUM_NUMBER_FIELDS = ENG_MISCELLANEOUS + 1;
+
 
     EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
 
@@ -133,7 +133,7 @@ public class ImportEngines extends ImportRollingStock {
             }
             // use comma as delimiter if found otherwise use spaces
             if (comma) {
-                inputLine = parseCommaLine(line, MAXIMUM_NUMBER_FIELDS);
+                inputLine = parseCommaLine(line);
             } else {
                 inputLine = line.split("\\s+"); // NOI18N
             }
