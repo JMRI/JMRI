@@ -44,7 +44,7 @@ public class SprogCbusModeSwitcherPaneTest extends jmri.util.JmriJFrameTestBase 
         
         jmri.InstanceManager.setDefault(GlobalProgrammerManager.class,new CbusDccProgrammerManager(prog, memo) );
         if (!GraphicsEnvironment.isHeadless()) {
-            frame = new SprogCbusModeSwitcherPane();
+            frame = new SprogCbusModeSwitcherPane(memo);
         }
     }
 
