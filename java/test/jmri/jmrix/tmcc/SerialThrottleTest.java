@@ -270,6 +270,17 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         boolean f21 = false;
         instance.setF21(f21);
     }
+    
+    @Test
+    @Override
+    public void testOutOfRangeSetFunction(){
+        instance.setFunction(-1, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
+        
+        instance.setFunction(29, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 29");
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: 29");
+    }
 
     @Before
     @Override

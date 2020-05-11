@@ -28,6 +28,16 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         boolean result = instance.getIsForward();
         Assert.assertEquals(expResult, result);
     }
+    
+    @Test
+    @Override
+    public void testOutOfRangeSetFunction(){
+        instance.setFunction(-1, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
+        
+        instance.setFunction(29, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 29");
+    }
 
     /**
      * Test of setF0 method, of class AbstractThrottle.
