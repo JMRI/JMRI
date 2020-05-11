@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Extend DefaultProgrammerManager to provide programmers for CBUS systems
  *
- * Added methods to manipulate the programmer availability.
+ * Added methods to manipulate the programmer availability to support hardware
+ * that can redirect ops mode or service mode packets to a particular interface.
  * 
  * @see jmri.managers.DefaultProgrammerManager
  * @author Andrew crosland Copyright (C) 2009, 2020
@@ -34,9 +35,27 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
     jmri.jmrix.can.TrafficController tc;
 
     /**
-     * MERG CAN_CMD supports ops mode
+     * CBUS DCC Programmer has hardware support for ops mode
      *
      * @return true
+     */
+    public boolean isAddressedModeHardwareAvailable() {
+        return true;
+    }
+
+    /**
+     * CBUS DCC Programmer has hardware support for service mode
+     *
+     * @return true if available
+     */
+    public boolean isGlobalProgrammerHardwareAvailable() {
+        return true;
+    }
+    
+    /**
+     * Does Programmer currently support ops mode
+     *
+     * @return true if possible
      */
     @Override
     public boolean isAddressedModePossible() {
@@ -47,7 +66,7 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
      * Set availability of addressed (ops mode) programmer.
      * To avoid calling overridable method from constructor
      * 
-     * @param state true if available
+     * @param state true if possible
      */
     public final void mySetAddressedModePossible(boolean state) {
         boolean old = _isAddressedModePossible;
@@ -65,9 +84,9 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
     }
 
     /**
-     * MERG CAN_CMD supports service mode
+     * Programmer currently support service mode
      *
-     * @return true
+     * @return true if available
      */
     @Override
     public boolean isGlobalProgrammerAvailable() {
