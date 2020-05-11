@@ -95,7 +95,7 @@ public class XpaThrottle extends AbstractThrottle {
      */
     @Override
     public void setFunction(int func, boolean value){
-        if ( func<13 && getFunction(func)!=value){
+        if ( func>=0 && func<13 && getFunction(func)!=value){
             updateFunction(func,value);    
             tc.sendXpaMessage(XpaMessage.getFunctionMsg(address, 0), null);
         }

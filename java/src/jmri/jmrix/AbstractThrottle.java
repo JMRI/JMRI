@@ -37,15 +37,17 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * Array of Function values.
      * <p>
      * Contains current Boolean value for functions 0-28.
+     * This array should not be accessed directly by Throttles,
+     * use setFunction / getFunction.
      */
-    private final boolean[] FUNCTION_BOOLEAN_ARRAY;
+    protected boolean[] FUNCTION_BOOLEAN_ARRAY;
 
     /**
      * Array of Momentary Function values.
      * <p>
      * Contains current Boolean value for Momentary functions 0-28.
      */
-    private final boolean[] FUNCTION_MOMENTARY_BOOLEAN_ARRAY;
+    protected boolean[] FUNCTION_MOMENTARY_BOOLEAN_ARRAY;
     
     /**
      * Is this object still usable? Set false after dispose, this variable is
@@ -157,6 +159,10 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      */
     @Override
     public boolean getFunction(int fN) {
+        if (fN<0 || fN > FUNCTION_BOOLEAN_ARRAY.length-1){
+            log.warn("Unhandled get function: {}",fN);
+            return false;
+        }
         return FUNCTION_BOOLEAN_ARRAY[fN];
     }
 
@@ -165,6 +171,10 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      */
     @Override
     public boolean getFunctionMomentary(int fN) {
+        if (fN<0 || fN > FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length-1){
+            log.warn("Unhandled get momentary function: {}",fN);
+            return false;
+        }
         return FUNCTION_MOMENTARY_BOOLEAN_ARRAY[fN];
     
     }
@@ -366,14 +376,14 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      */
     @Override
     public void setFunction(int functionNum, boolean newState) {
-        if (functionNum < 0 || functionNum > 28) {
-            log.warn("Unhandled function number: {}", functionNum);
+        if (functionNum < 0 || functionNum > FUNCTION_BOOLEAN_ARRAY.length-1) {
+            log.warn("Unhandled set function number: {} {}", functionNum, this.getClass().getName());
             return;
         }
         boolean old = FUNCTION_BOOLEAN_ARRAY[functionNum];
         FUNCTION_BOOLEAN_ARRAY[functionNum] = newState;
         sendFunctionGroup(functionNum,false);
-        firePropertyChange(FUNCTION_STRING_ARRAY[functionNum], old, newState);
+        firePropertyChange("F"+functionNum, old, newState);
     }
 
     /**
@@ -384,13 +394,13 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * @param state On - True, Off - False
      */
     public void updateFunction(int fn, boolean state) {
-        if (fn < 0 || fn > 28) {
-            log.warn("Unhandled function number: {}", fn);
+        if (fn < 0 || fn > FUNCTION_BOOLEAN_ARRAY.length-1) {
+            log.warn("Unhandled update function number: {} {}", fn, this.getClass().getName());
             return;
         }
         boolean old = FUNCTION_BOOLEAN_ARRAY[fn];
         FUNCTION_BOOLEAN_ARRAY[fn] = state;
-        firePropertyChange(FUNCTION_STRING_ARRAY[fn], old, state);
+        firePropertyChange("F"+fn, old, state);
     }
     
     /**
@@ -402,8 +412,8 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * @param state On - True, Off - False
      */
     protected void updateFunctionMomentary(int fn, boolean state) {
-        if (fn < 0 || fn > 28) {
-            log.warn("Unhandled Momentary function number: {}", fn);
+        if (fn < 0 || fn > FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length-1) {
+            log.warn("Unhandled update momentary function number: {}", fn);
             return;
         }
         boolean old = FUNCTION_MOMENTARY_BOOLEAN_ARRAY[fn];
@@ -512,14 +522,14 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      */
     @Override
     public void setFunctionMomentary(int momFuncNum, boolean state){
-        if (momFuncNum < 0 || momFuncNum > 28) {
-            log.warn("Unhandled Momentary function number: {}", momFuncNum);
+        if (momFuncNum < 0 || momFuncNum > FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length-1) {
+            log.warn("Unhandled set momentary function number: {}", momFuncNum);
             return;
         }
         boolean old = FUNCTION_MOMENTARY_BOOLEAN_ARRAY[momFuncNum];
         FUNCTION_MOMENTARY_BOOLEAN_ARRAY[momFuncNum] = state;
         sendFunctionGroup(momFuncNum,true);
-        firePropertyChange(FUNCTION_MOMENTARY_STRING_ARRAY[momFuncNum], old, state);
+        firePropertyChange("F" + momFuncNum + "Momentary", old, state);
     }
 
     /**
