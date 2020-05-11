@@ -5,45 +5,12 @@ It's in no particular order, items are removed as done, so please don't consider
 ----
 
 ## MVC work
- -  *View  present and running, now start to move code for those methods
-        rename methods left behind to ensure not accessed
- - once moved to View, break down to subclasses to removing dynamic typing
 
-
- - Remove geometry variables from View
-        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
-        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
-        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
-        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
- - Remove view variables from geometry
-        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
-        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
-        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
-        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
- - load with specific view
-        LayoutTrack LayoutTurntable LevelXing  PositionablePoint *TrackSegment 
-        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
-        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
-        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
- - store from specific view
-        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
-        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
-        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
-        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
-
- - Editor creates them the right way (addLayoutTurnout, addLayoutSlip, etc in LE)
-        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
-        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
-        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
-        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
-
- - move typed code down
-        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
-        LayoutTurnout
-        LayoutSlip
-        LayoutXOver
 
 Last:  TrackSegmentViewXml is storing as  class="TrackSegmentView" to ease file comparison; change back.
+
+ - [ ] Turntable Ray display
+   - [ ] Turntable ray location for information split between topo and View classes
 
  - [X] mainline in geometry classes (inc base clases, *Xml)
  - [ ] hidden in View
@@ -57,6 +24,53 @@ Last:  TrackSegmentViewXml is storing as  class="TrackSegmentView" to ease file 
  - [ ] create popup et al (inc member vars) in view
  - [ ] Turnout state in connectivity
  - [ ] Block and connectivity checks to, well, connectivity
+
+Go through and confirm individually:
+
+ - Remove topology variables from View
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+ - Remove view variables from topology
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+        
+ - load with specific view
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint *TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+ - store from specific view
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+
+ - Check all ctors handling arguments, storage properly (paired objects for now)
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+
+ - Editor creates them the right way (addLayoutTurnout, addLayoutSlip, etc in LE)
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+
+
+ 
+## once moved to View, break down to subclasses to removing dynamic typing
+
+ - move typed code down
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout
+        LayoutSlip
+        LayoutXOver
+
 ---
 
 It's not "geometry" or "geometrical" it's connectivity or topology
@@ -65,8 +79,9 @@ as people lay out their layout on separate models.  (Another demo of the shortag
 
 ---
 
-pMainline can be used for routing, so that's a connectivity (model) item
-
+Add View ctors that (because it's not got a Track object) knows to create the
+track object
+ - [ ] LayoutEditor#add of just View pulls Track
 --- 
 
   Store is done from LayoutTrack child, without access to View and LayoutEditor (for nav).
