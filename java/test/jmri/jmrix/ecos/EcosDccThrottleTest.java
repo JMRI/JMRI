@@ -374,7 +374,108 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         boolean f28 = false;
         instance.setF28(f28);
     }
+    
+    @Test
+    public void testSetGetF29(){
+        instance.setFunction(29, true);
+        Assert.assertTrue(instance.getFunction(29));
+        instance.setFunction(29, false);
+        Assert.assertFalse(instance.getFunction(29));
+    }
+    
+    @Test
+    public void testSetGetF30(){
+        instance.setFunction(30, true);
+        Assert.assertTrue(instance.getFunction(30));
+        instance.setFunction(30, false);
+        Assert.assertFalse(instance.getFunction(30));
+    }
+    
+    @Test
+    public void testSetGetF31(){
+        instance.setFunction(31, true);
+        Assert.assertTrue(instance.getFunction(31));
+        instance.setFunction(31, false);
+        Assert.assertFalse(instance.getFunction(31));
+    }
+    
+    @Test
+    public void testUpdateFunction0(){
+        instance.updateFunction(0, true);
+        Assert.assertTrue(instance.getFunction(0));
+        instance.updateFunction(0, false);
+        Assert.assertFalse(instance.getFunction(0));
+    }
+    
+    @Test
+    public void testUpdateFunction1(){
+        instance.updateFunction(1, true);
+        Assert.assertTrue(instance.getFunction(1));
+        instance.updateFunction(1, false);
+        Assert.assertFalse(instance.getFunction(1));
+    }
+    
+    @Test
+    public void testUpdateFunction29(){
+        instance.updateFunction(29, true);
+        Assert.assertTrue(instance.getFunction(29));
+        instance.updateFunction(29, false);
+        Assert.assertFalse(instance.getFunction(29));
+    }
+    
+    @Test
+    public void testUpdateFunction30(){
+        instance.updateFunction(30, true);
+        Assert.assertTrue(instance.getFunction(30));
+        instance.updateFunction(30, false);
+        Assert.assertFalse(instance.getFunction(30));
+    }
+    
+    @Test
+    public void testUpdateFunction31(){
+        instance.updateFunction(31, true);
+        Assert.assertTrue(instance.getFunction(31));
+        instance.updateFunction(31, false);
+        Assert.assertFalse(instance.getFunction(31));
+    }
 
+    @Test
+    @Override
+    public void testOutOfRangeUpdateFunction(){
+        
+        instance.updateFunction(-1, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
+        
+        instance.updateFunction(32, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 32");
+        
+    }
+    
+    @Test
+    @Override
+    public void testOutOfRangeSetFunction(){
+        
+        instance.setFunction(-1, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
+        
+        instance.setFunction(32, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 32");
+        
+    }
+    
+    @Test
+    @Override
+    public void testOutOfRangeGetFunction(){
+        
+        instance.getFunction(-1);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get function: -1");
+        
+        instance.getFunction(32);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get function: 32");
+        
+    }
+    
+    
     /**
      * Test of sendFunctionGroup1 method, of class AbstractThrottle.
      */
