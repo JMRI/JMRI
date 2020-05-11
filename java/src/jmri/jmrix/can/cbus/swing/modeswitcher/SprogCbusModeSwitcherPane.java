@@ -9,8 +9,16 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.jmrix.can.CanListener;
+import jmri.jmrix.can.CanMessage;
+import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusDccProgrammerManager;
 import jmri.jmrix.can.cbus.CbusPreferences;
+import jmri.jmrix.can.cbus.CbusSend;
+import jmri.jmrix.can.cbus.node.CbusNode;
+import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,17 +31,31 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Andrew Crosland Copyright (C) 2020
  */
-public class SprogCbusModeSwitcherPane extends JmriJFrame {
+public class SprogCbusModeSwitcherPane extends JmriJFrame 
+        implements CanListener {
     
-    CbusDccProgrammerManager pm = null;
+    private static final int PROP_CMD_STATION = 5;
+    private static final int PROG_MODE = 0;
+    private static final int CMD_MODE = 1;
     
+    private CbusPreferences preferences;
+    private CbusDccProgrammerManager pm = null;
+    private CanSystemConnectionMemo _memo = null;
+    private TrafficController tc;
+    private CbusSend send;
+
     JRadioButton progModeButton;
     JRadioButton cmdModeButton;
 
-    private CbusPreferences preferences;
+    int csNode;
 
-    public SprogCbusModeSwitcherPane() {
+    public SprogCbusModeSwitcherPane(CanSystemConnectionMemo memo) {
         super();
+        _memo = memo;
+        
+        // connect to the CanInterface
+        tc = _memo.getTrafficController();
+        addTc(tc);
     }
     
     
@@ -63,6 +85,18 @@ public class SprogCbusModeSwitcherPane extends JmriJFrame {
             label.setText("<html>"+Bundle.getMessage("NoCbusProgrammer")+"</html>");
             panel.add(label, BorderLayout.NORTH);
         } else {
+            csNode = 65534;
+            CbusNodeTableDataModel cs =  jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
+            if (cs != null) {
+                CbusNode csnode = cs.getCsByNum(0);
+                if (csnode != null) {
+                    csNode = csnode.getNodeNumber();
+                }
+            } else {
+                log.info("Unable to fetch Master Command Station from Node Manager");
+            }
+            send = new CbusSend(_memo);
+            
             // Wrap  in html to get wrapping when added to border layout
             label.setText("<html>"+Bundle.getMessage("HardwareModeLabel")+"</html>");
 
@@ -92,12 +126,15 @@ public class SprogCbusModeSwitcherPane extends JmriJFrame {
                     // Enable service mode programmer
                     log.info("Setting Global Programmer Available");
                     pm.setGlobalProgrammerAvailable(true);
+                    setHardwareMode();
                 } else if (cmdModeButton.isSelected()) {
                     // Only disable service mode if ops mode active
                     log.info("Setting Global Programmer Unavailable");
                     pm.setGlobalProgrammerAvailable(false);
+                    setHardwareMode();
                 } else {
-                    // Service mode is the default if all are deselected - reselect it
+                    // Service mode is the default if all are deselected
+                    // Reselect it - nothing has changed
                     log.info("Cannot de-select programmer mode as only mode");
                     progModeButton.setSelected(true);
                 }
@@ -110,15 +147,18 @@ public class SprogCbusModeSwitcherPane extends JmriJFrame {
                     // Enable ops mode programmer
                     log.info("Setting Addressed Programmer Available");
                     pm.setAddressedModePossible(true);
+                    setHardwareMode();
                 } else {
                     // Disable ops mode programmer
                     log.info("Setting Addressed Programmer Unavailable");
                     pm.setAddressedModePossible(false);
+                    setHardwareMode();
                     if (!progModeButton.isSelected()) {
                         // Re-enable service mode if all are deselected
                         log.info("No current programmer, setting Global Programmer Available");
                         pm.setGlobalProgrammerAvailable(true);
                         progModeButton.setSelected(true);
+                        setHardwareMode();
                     }
                 }
                 preferences.setProgrammersAvailable(progModeButton.isSelected(), cmdModeButton.isSelected());
@@ -137,6 +177,59 @@ public class SprogCbusModeSwitcherPane extends JmriJFrame {
         pack();
         setVisible(true);
     }
+    
+    
+    /**
+     * Set the hardware operating mode to programmer mode if only service mode is
+     * selected, otherwise set it to command station mode
+     */
+    private void setHardwareMode() {
+        if (progModeButton.isSelected() && !cmdModeButton.isSelected()) {
+            send.nVSET(csNode, PROP_CMD_STATION, PROG_MODE);
+        } else {
+            send.nVSET(csNode, PROP_CMD_STATION, CMD_MODE);
+        }
+    }
+    
+    
+    /**
+     * Process outgoing CAN messages
+     * 
+     * {@inheritDoc} 
+     */
+    @Override
+    public void message(CanMessage m) {
+    }
+    
+    
+    /**
+     * Processes incoming CAN replies
+     * <p>
+     *
+     * {@inheritDoc} 
+     */
+    @Override
+    public void reply(CanReply r) {
+        
+        if ( r.isRtr() ) {
+            return;
+        }
+        
+        if (!r.isExtended() ) {
+            log.debug("Standard Reply {}", r);
+            
+        }
+    }
+    
+    
+    /**
+     * disconnect from the CBUS
+     */
+    @Override
+    public void dispose() {
+        tc.removeCanListener(this);
+    }
+
     
     private final static Logger log = LoggerFactory.getLogger(SprogCbusModeSwitcherPane.class);
     
