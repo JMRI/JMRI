@@ -96,10 +96,11 @@ public class Message extends AbstractMRMessage {
     }
 
     /**
-     * Set the CAN header as ASCII hex digits. Handles extended/standard
-     * internally
+     * Set the CAN header as ASCII hex digits.
+     * Handles extended/standard internally.
      *
      * @param header A valid CAN header value
+     * @param index start index.
      * @return index to next bytes, after this
      */
     public int setHeader(int header, int index) {

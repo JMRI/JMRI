@@ -54,6 +54,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     /**
      * Get minimum address of an Grapevine node as set on this TrafficController.
+     * @return minimum node address.
      */
     public int getMinimumNodeAddress() {
         return minNode;
@@ -88,6 +89,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     /**
      * Set up for initialization of a Serial node.
+     * @param node node to initialize.
      */
     public void initializeSerialNode(SerialNode node) {
         synchronized (this) {

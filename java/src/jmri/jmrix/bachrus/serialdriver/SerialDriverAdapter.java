@@ -37,7 +37,6 @@ public class SerialDriverAdapter extends SpeedoPortController {
     public SerialDriverAdapter() {
         super(new SpeedoSystemConnectionMemo());
         setManufacturer(SpeedoConnectionTypeList.BACHRUS);
-        mInstance = this;
         this.getSystemConnectionMemo().setSpeedoTrafficController(new SpeedoTrafficController(this.getSystemConnectionMemo()));
     }
 
@@ -181,19 +180,6 @@ public class SerialDriverAdapter extends SpeedoPortController {
 
     private boolean opened = false;
     InputStream serialStream = null;
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    public synchronized SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new SerialDriverAdapter();
-            mInstance.setManufacturer(SpeedoConnectionTypeList.BACHRUS);
-        }
-        return mInstance;
-    }
-    private SerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

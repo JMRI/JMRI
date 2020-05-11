@@ -81,8 +81,10 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * For Grapevine, which doesn't have a data poll, the poll operation is only
-     * used to see that the nodes are present. This is done by sending a "get
-     * software version" command.
+     * used to see that the nodes are present.
+     * This is done by sending a "get software version" command.
+     * @param addr address to poll.
+     * @return serial message to poll data.
      */
     static public SerialMessage getPoll(int addr) {
         // eventually this will have to include logic for reading 
@@ -138,6 +140,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      * Set the number of characters expected back from the command station.
      * Normally four, this is used to set other lengths for special cases, like
      * a reply to a poll (software version) message.
+     * @param len reply length.
      */
     public void setReplyLen(int len) {
         replyLen = len;
@@ -149,6 +152,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * Format the reply as human-readable text.
+     * @return human-readable text of reply.
      */
     public String format() {
         if (getNumDataElements() == 8) {

@@ -144,7 +144,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     private CMRISystemConnectionMemo _memo = null;
 
     /**
-     * Constructor method
+     * Constructor method.
+     * @param memo system connection.
      */
     public NodeConfigManagerFrame(CMRISystemConnectionMemo memo) {
         super();
@@ -317,6 +318,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
     /**
      * Get the selected node address from the node table.
+     * @return selected node ID.
      */
     public int getSelectedNodeAddr() {
         return (Integer) nodeTable.getValueAt(nodeTable.getSelectedRow(), 0);
@@ -613,7 +615,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
          * vertical lines between each column. Data is word wrapped within a
          * column. Can only handle 4 columns of data as strings. Adapted from
          * routines in BeanTableDataModel.java by Bob Jacobsen and Dennis Miller
-         */
+         * @param w hardcopywriter instance.
+         * @param colWidth column width array.
+        */
         public void printTable(HardcopyWriter w, int colWidth[]) {
             // determine the column sizes - proportionately sized, with space between for lines
             int[] columnSize = new int[NUM_COLUMNS];
