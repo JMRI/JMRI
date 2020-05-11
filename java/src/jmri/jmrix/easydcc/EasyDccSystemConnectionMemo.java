@@ -68,6 +68,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     /**
      * Provide access to the TrafficController for this particular connection.
+     * @return traffic controller, provided if null.
      */
     public EasyDccTrafficController getTrafficController() {
         if (et == null) {

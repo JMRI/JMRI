@@ -22,7 +22,9 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     private static final String MOMENTARY_FUNCTION_REQUEST_NOT_SUPPORTED_BY_ELITE = "Momentary function request not supported by Elite.";
 
     /**
-     * Constructor
+     * Constructor.
+     * @param memo system connection.
+     * @param tc traffic controller.
      */
     public EliteXNetThrottle(XNetSystemConnectionMemo memo, XNetTrafficController tc) {
         super(memo, tc);
@@ -30,7 +32,10 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     /**
-     * Constructor by address
+     * Constructor by address.
+     * @param memo system connection.
+     * @param address loco address.
+     * @param tc system connection traffic controller.
      */
     public EliteXNetThrottle(XNetSystemConnectionMemo memo, LocoAddress address, XNetTrafficController tc) {
         super(memo, address, tc);

@@ -177,6 +177,7 @@ public class LI100fAdapter extends XNetSerialPortController {
 
     /**
      * option1 controls flow control option.
+     * @return human readable string, uses IFTypeLI100F .
      */
     public String option1Name() {
         return Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("IFTypeLI100F"));

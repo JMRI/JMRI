@@ -35,6 +35,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
      * Create a new EcosDccThrottle.
      * @param address Throttle Address
      * @param memo System Connection
+     * @param control sets _control flag which NEEDS CLARIFICATION.
      */
     public EcosDccThrottle(DccLocoAddress address, EcosSystemConnectionMemo memo, boolean control) {
         super(memo);

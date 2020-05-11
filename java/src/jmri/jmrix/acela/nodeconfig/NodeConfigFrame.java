@@ -158,7 +158,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected javax.swing.JTextField receiveDelayField = new javax.swing.JTextField(3);
 
     /**
-     * Constructor method
+     * Constructor method.
+     * @param memo system connection.
      */
     public NodeConfigFrame(AcelaSystemConnectionMemo memo) {
         super();

@@ -243,7 +243,8 @@ public class ListFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle selection of a Node for info display
+     * Method to handle selection of a Node for info display.
+     * @param nodeID node ID string.
      */
     public void displayNodeInfo(String nodeID) {
         if (!nodeID.equals(selNodeID)) {
@@ -315,6 +316,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
 
     /**
      * Handle print button in List Frame.
+     * @param e unused.
      */
     public void printButtonActionPerformed(java.awt.event.ActionEvent e) {
         int[] colWidth = new int[AssignmentTableModel.MAX_COLS];
@@ -481,6 +483,8 @@ public class ListFrame extends jmri.util.JmriJFrame {
          * vertical lines between each column. Data is word wrapped within a
          * column. Can only handle 4 columns of data as strings. Adapted from
          * routines in BeanTableDataModel.java by Bob Jacobsen and Dennis Miller
+         * @param w hard copy writer instance.
+         * @param colWidth column width array.
          */
         public void printTable(HardcopyWriter w, int colWidth[]) {
             // determine the column sizes - proportionately sized, with space between for lines

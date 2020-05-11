@@ -13,6 +13,7 @@ public abstract class AbstractDCCppSerialConnectionConfig extends jmri.jmrix.Abs
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p serial port adapter.
      */
     public AbstractDCCppSerialConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);

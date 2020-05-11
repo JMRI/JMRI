@@ -20,6 +20,8 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
 
     /**
      * JMRIClient lights use the light number on the remote host.
+     * @param number light number.
+     * @param memo system connection.
      */
     public JMRIClientLight(int number, JMRIClientSystemConnectionMemo memo) {
         super(memo.getSystemPrefix() + "l" + number);

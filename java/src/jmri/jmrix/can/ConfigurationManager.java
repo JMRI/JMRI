@@ -68,7 +68,9 @@ abstract public class ConfigurationManager {
     abstract public void configureManagers();
 
     /**
-     * Tells which managers this class provides.
+     * Get which managers this class provides.
+     * @param type class to query.
+     * @return true if provided, else false.
      */
     abstract public boolean provides(Class<?> type);
 
