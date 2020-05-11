@@ -2389,6 +2389,7 @@ public class TrackSegment extends LayoutTrack {
             boolean dirOut,
             int offset) {
         Point2D p1, p2, p3, p4, p5, p6;
+        log.trace("drawArrow in TrackSegment", new Exception("traceback") );
         switch (arrowStyle) {
             default: {
                 arrowStyle = 0;
@@ -2917,6 +2918,7 @@ public class TrackSegment extends LayoutTrack {
      * et al.
      */
     public void setArrowStyle(int newVal) {
+        log.trace("TrackSegment:setArrowStyle {} {} {}", newVal, arrowEndStart, arrowEndStop);
         if (arrowStyle != newVal) {
             if (newVal > 0) {
                 if (!arrowEndStart && !arrowEndStop) {

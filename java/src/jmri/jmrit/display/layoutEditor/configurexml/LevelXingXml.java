@@ -4,6 +4,7 @@ import java.awt.geom.Point2D;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LevelXing;
+import jmri.jmrit.display.layoutEditor.LevelXingView;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -142,48 +143,49 @@ public class LevelXingXml extends AbstractXmlAdapter {
         }
 
         // create the new LevelXing
-        LevelXing l = new LevelXing(name, new Point2D.Double(x, y), p);
+        LevelXing lt = new LevelXing(name, new Point2D.Double(x, y), p);
+        LevelXingView lv = new LevelXingView(lt, new Point2D.Double(x, y), p);
 
         // get remaining attributes
         Attribute a = element.getAttribute("blocknameac");
         if (a != null) {
-            l.tLayoutBlockNameAC = a.getValue();
+            lt.tLayoutBlockNameAC = a.getValue();
         }
         a = element.getAttribute("blocknamebd");
         if (a != null) {
-            l.tLayoutBlockNameBD = a.getValue();
+            lt.tLayoutBlockNameBD = a.getValue();
         }
         a = element.getAttribute("connectaname");
         if (a != null) {
-            l.connectAName = a.getValue();
+            lt.connectAName = a.getValue();
         }
         a = element.getAttribute("connectbname");
         if (a != null) {
-            l.connectBName = a.getValue();
+            lt.connectBName = a.getValue();
         }
         a = element.getAttribute("connectcname");
         if (a != null) {
-            l.connectCName = a.getValue();
+            lt.connectCName = a.getValue();
         }
         a = element.getAttribute("connectdname");
         if (a != null) {
-            l.connectDName = a.getValue();
+            lt.connectDName = a.getValue();
         }
         a = element.getAttribute("signalaname");
         if (a != null) {
-            l.setSignalAName(a.getValue());
+            lt.setSignalAName(a.getValue());
         }
         a = element.getAttribute("signalbname");
         if (a != null) {
-            l.setSignalBName(a.getValue());
+            lt.setSignalBName(a.getValue());
         }
         a = element.getAttribute("signalcname");
         if (a != null) {
-            l.setSignalCName(a.getValue());
+            lt.setSignalCName(a.getValue());
         }
         a = element.getAttribute("signaldname");
         if (a != null) {
-            l.setSignalDName(a.getValue());
+            lt.setSignalDName(a.getValue());
         }
 
         try {
@@ -192,7 +194,7 @@ public class LevelXingXml extends AbstractXmlAdapter {
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert levelxing a coords attribute");
         }
-        l.setCoordsA(new Point2D.Double(x, y));
+        lv.setCoordsA(new Point2D.Double(x, y));
 
         try {
             x = element.getAttribute("xb").getFloatValue();
@@ -200,10 +202,10 @@ public class LevelXingXml extends AbstractXmlAdapter {
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert levelxing b coords attribute");
         }
-        l.setCoordsB(new Point2D.Double(x, y));
+        lv.setCoordsB(new Point2D.Double(x, y));
 
         try {
-            l.setHidden(element.getAttribute("hidden").getBooleanValue());
+            lv.setHidden(element.getAttribute("hidden").getBooleanValue());
         } catch (DataConversionException e1) {
             log.warn("unable to convert levelxing hidden attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
@@ -212,60 +214,60 @@ public class LevelXingXml extends AbstractXmlAdapter {
         if (element.getChild("signalAMast") != null) {
             String mast = element.getChild("signalAMast").getText();
             if (mast != null && !mast.isEmpty()) {
-                l.setSignalAMast(mast);
+                lt.setSignalAMast(mast);
             }
         }
 
         if (element.getChild("signalBMast") != null) {
             String mast = element.getChild("signalBMast").getText();
             if (mast != null && !mast.isEmpty()) {
-                l.setSignalBMast(mast);
+                lt.setSignalBMast(mast);
             }
         }
 
         if (element.getChild("signalCMast") != null) {
             String mast = element.getChild("signalCMast").getText();
             if (mast != null && !mast.isEmpty()) {
-                l.setSignalCMast(mast);
+                lt.setSignalCMast(mast);
             }
         }
 
         if (element.getChild("signalDMast") != null) {
             String mast = element.getChild("signalDMast").getText();
             if (mast != null && !mast.isEmpty()) {
-                l.setSignalDMast(mast);
+                lt.setSignalDMast(mast);
             }
         }
 
         if (element.getChild("sensorA") != null) {
             String sensor = element.getChild("sensorA").getText();
             if (sensor != null && !sensor.isEmpty()) {
-                l.setSensorAName(sensor);
+                lt.setSensorAName(sensor);
             }
         }
 
         if (element.getChild("sensorB") != null) {
             String sensor = element.getChild("sensorB").getText();
             if (sensor != null && !sensor.isEmpty()) {
-                l.setSensorBName(sensor);
+                lt.setSensorBName(sensor);
             }
         }
 
         if (element.getChild("sensorC") != null) {
             String sensor = element.getChild("sensorC").getText();
             if (sensor != null && !sensor.isEmpty()) {
-                l.setSensorCName(sensor);
+                lt.setSensorCName(sensor);
             }
         }
 
         if (element.getChild("sensorD") != null) {
             String sensor = element.getChild("sensorD").getText();
             if (sensor != null && !sensor.isEmpty()) {
-                l.setSensorDName(sensor);
+                lt.setSensorDName(sensor);
             }
         }
 
-        p.addLayoutTrack(l);
+        p.addLayoutTrack(lt, lv);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LevelXingXml.class);

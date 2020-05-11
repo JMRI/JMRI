@@ -577,18 +577,34 @@ public class TrackSegmentView extends LayoutTrackView {
      * Maximum length of the bumper decoration.
      */
     public static final int MAX_BUMPER_LENGTH = 40;
+    public static final int MIN_BUMPER_LENGTH = 8;
     public static final int MAX_BUMPER_WIDTH = 10;
+    public static final int MIN_BUMPER_WIDTH = 1;
 
     private static final int MAX_ARROW_LINE_WIDTH = 5;
     private static final int MAX_ARROW_LENGTH = 60;
     private static final int MAX_ARROW_GAP = 40;
+    
     private static final int MAX_BRIDGE_LINE_WIDTH = 5;
+    private static final int MIN_BRIDGE_LINE_WIDTH = 1;
+        
     private static final int MAX_BRIDGE_APPROACH_WIDTH = 100;
+    private static final int MIN_BRIDGE_APPROACH_WIDTH = 8;
+    
     private static final int MAX_BRIDGE_DECK_WIDTH = 80;
+    private static final int MIN_BRIDGE_DECK_WIDTH = 6;
+    
     private static final int MAX_BUMPER_LINE_WIDTH = 9;
+    private static final int MIN_BUMPER_LINE_WIDTH = 1;
+    
     private static final int MAX_TUNNEL_FLOOR_WIDTH = 40;
+    private static final int MIN_TUNNEL_FLOOR_WIDTH = 4;
+    
     private static final int MAX_TUNNEL_LINE_WIDTH = 9;
+    private static final int MIN_TUNNEL_LINE_WIDTH = 1;
+    
     private static final int MAX_TUNNEL_ENTRANCE_WIDTH = 80;
+    private static final int MIN_TUNNEL_ENTRANCE_WIDTH = 1;
 
     /**
      * Helper method, which adds "Set value" item to the menu. The value can be
@@ -2237,10 +2253,8 @@ public class TrackSegmentView extends LayoutTrackView {
      */
     @Override
     protected void drawDecorations(Graphics2D g2) {
-//   if (getName().equals("T5")) {
-//       log.debug("STOP");
-//   }
 
+        log.warn("TrackSegmentView: drawDecorations arrowStyle {}",arrowStyle);
 // get end points and calculate start/stop angles (in radians)
         Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
         Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
@@ -2274,6 +2288,7 @@ public class TrackSegmentView extends LayoutTrackView {
 // arrow decorations
 //
         if (arrowStyle > 0) {
+            log.trace("arrowstyle>0 with width {}", arrowLineWidth);
             g2.setStroke(new BasicStroke(arrowLineWidth,
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
             g2.setColor(arrowColor);
@@ -2307,6 +2322,7 @@ public class TrackSegmentView extends LayoutTrackView {
         if (bridgeSideLeft || bridgeSideRight) {
             float halfWidth = bridgeDeckWidth / 2.F;
 
+            log.trace("bridgeleft/right with width {}", bridgeLineWidth);
             g2.setStroke(new BasicStroke(bridgeLineWidth,
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
             g2.setColor(bridgeColor);
@@ -2405,6 +2421,7 @@ public class TrackSegmentView extends LayoutTrackView {
 // end bumper decorations
 //
         if (bumperEndStart || bumperEndStop) {
+            log.trace("bumper end/start with width {}", bumperLineWidth);
             g2.setStroke(new BasicStroke(bumperLineWidth,
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
             g2.setColor(bumperColor);
@@ -2439,6 +2456,7 @@ public class TrackSegmentView extends LayoutTrackView {
 // tunnel decorations
 //
         if (tunnelSideRight || tunnelSideLeft) {
+            log.trace("tunnel left/right with width {}", tunnelLineWidth);
             float halfWidth = tunnelFloorWidth / 2.F;
             g2.setStroke(new BasicStroke(tunnelLineWidth,
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
@@ -2648,6 +2666,7 @@ public class TrackSegmentView extends LayoutTrackView {
             boolean dirOut,
             int offset) {
         Point2D p1, p2, p3, p4, p5, p6;
+        log.warn("drawArrow in TrackSegmentView");
         switch (arrowStyle) {
             default: {
                 arrowStyle = 0;
@@ -3179,6 +3198,7 @@ public class TrackSegmentView extends LayoutTrackView {
      * et al.
      */
     public void setArrowStyle(int newVal) {
+        log.trace("TrackSegmentView:setArrowStyle {} {} {}", newVal, arrowEndStart, arrowEndStop);
         if (arrowStyle != newVal) {
             if (newVal > 0) {
                 if (!arrowEndStart && !arrowEndStop) {
@@ -3398,7 +3418,7 @@ public class TrackSegmentView extends LayoutTrackView {
 
     public void setBridgeDeckWidth(int newVal) {
         if (bridgeDeckWidth != newVal) {
-            bridgeDeckWidth = Math.max(6, newVal);   // don't let value be less than 6
+            bridgeDeckWidth = Math.max(MIN_BRIDGE_DECK_WIDTH, newVal);   // don't let value be less than MIN
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3411,7 +3431,7 @@ public class TrackSegmentView extends LayoutTrackView {
 
     public void setBridgeLineWidth(int newVal) {
         if (bridgeLineWidth != newVal) {
-            bridgeLineWidth = Math.max(1, newVal);   // don't let value be less than 1
+            bridgeLineWidth = Math.max(MIN_BRIDGE_LINE_WIDTH, newVal);   // don't let value be less than MIN
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3424,7 +3444,7 @@ public class TrackSegmentView extends LayoutTrackView {
 
     public void setBridgeApproachWidth(int newVal) {
         if (bridgeApproachWidth != newVal) {
-            bridgeApproachWidth = Math.max(8, newVal);   // don't let value be less than 8
+            bridgeApproachWidth = Math.max(MIN_BRIDGE_APPROACH_WIDTH, newVal);   // don't let value be less than MIN
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3494,7 +3514,7 @@ public class TrackSegmentView extends LayoutTrackView {
 
     public void setBumperLength(int newVal) {
         if (bumperLength != newVal) {
-            bumperLength = Math.max(8, newVal);   // don't let value be less than 8
+            bumperLength = Math.max(MIN_BUMPER_LENGTH, newVal);   // don't let value be less than MIN
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3534,8 +3554,8 @@ public class TrackSegmentView extends LayoutTrackView {
             bumperLineWidth = tieWidth;
             bumperLength = tieLength * 3 / 2;
         }
-        bumperLineWidth = Math.max(1, bumperLineWidth);
-        bumperLength = Math.max(10, bumperLength);
+        bumperLineWidth = Math.max(MIN_BUMPER_LINE_WIDTH, bumperLineWidth); // don't let value be less than MIN
+        bumperLength = Math.max(MIN_BUMPER_LENGTH, bumperLength);// don't let value be less than MIN
     }
 
     //
@@ -3613,7 +3633,7 @@ public class TrackSegmentView extends LayoutTrackView {
 
     public void setTunnelFloorWidth(int newVal) {
         if (tunnelFloorWidth != newVal) {
-            tunnelFloorWidth = Math.max(4, newVal);   // don't let value be less than 4
+            tunnelFloorWidth = Math.max(MIN_TUNNEL_FLOOR_WIDTH, newVal);   // don't let value be less than MIN
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3626,7 +3646,7 @@ public class TrackSegmentView extends LayoutTrackView {
 
     public void setTunnelLineWidth(int newVal) {
         if (tunnelLineWidth != newVal) {
-            tunnelLineWidth = Math.max(1, newVal);   // don't let value be less than 1
+            tunnelLineWidth = Math.max(MIN_TUNNEL_LINE_WIDTH, newVal);   // don't let value be less than MIN
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3639,7 +3659,7 @@ public class TrackSegmentView extends LayoutTrackView {
 
     public void setTunnelEntranceWidth(int newVal) {
         if (tunnelEntranceWidth != newVal) {
-            tunnelEntranceWidth = Math.max(1, newVal);   // don't let value be less than 1
+            tunnelEntranceWidth = Math.max(MIN_TUNNEL_ENTRANCE_WIDTH, newVal);   // don't let value be less than 1
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }

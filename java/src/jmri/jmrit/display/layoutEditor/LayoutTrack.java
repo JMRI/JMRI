@@ -66,7 +66,7 @@ abstract public class LayoutTrack {
      * idea, i.e. for Bezier curves
      * @param p the coordinates to set
      */
-    protected void setCoordsCenter(@Nonnull Point2D p) {
+    public void setCoordsCenter(@Nonnull Point2D p) { // temporary until coords always in Views
         center = p;
     }
 

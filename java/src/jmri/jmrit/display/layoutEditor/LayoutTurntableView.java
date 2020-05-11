@@ -1174,6 +1174,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      */
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
+        log.trace("LayoutTurntable:draw1 at {}", getCoordsCenter());
         float trackWidth = 2.F;
         float halfTrackWidth = trackWidth / 2.f;
         double radius = getRadius(), diameter = 2.f * radius;
@@ -1244,6 +1245,8 @@ public class LayoutTurntableView extends LayoutTrackView {
      */
     @Override
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+        log.trace("LayoutTurntable:draw2 at {}", getCoordsCenter());
+        
         float trackWidth = 2.F;
         float halfTrackWidth = trackWidth / 2.f;
 
@@ -1269,6 +1272,7 @@ public class LayoutTurntableView extends LayoutTrackView {
             Point2D pt2L = MathUtil.subtract(pt2, vDeltaO);
             Point2D pt2R = MathUtil.add(pt2, vDeltaO);
             if (main == isMain) {
+                log.trace("   draw main at {} {}, {} {}", pt1L, pt2L, pt1R, pt2R);
                 g2.draw(new Line2D.Double(pt1L, pt2L));
                 g2.draw(new Line2D.Double(pt1R, pt2R));
             }
@@ -1284,6 +1288,7 @@ public class LayoutTurntableView extends LayoutTrackView {
                 pt1 = MathUtil.subtract(getCoordsCenter(), vDelta);
                 pt1L = MathUtil.subtract(pt1, vDeltaO);
                 pt1R = MathUtil.add(pt1, vDeltaO);
+                log.trace("   draw not main at {} {}, {} {}", pt1L, pt2L, pt1R, pt2R);
                 g2.draw(new Line2D.Double(pt1L, pt2L));
                 g2.draw(new Line2D.Double(pt1R, pt2R));
             }
@@ -1298,6 +1303,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      */
     @Override
     protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
+        log.trace("LayoutTurntable:highlightUnconnected");
         for (int j = 0; j < getNumberRays(); j++) {
             if (  (specificType == HitPointType.NONE)
                     || (specificType == (HitPointType.turntableTrackIndexedValue(j)))
@@ -1305,6 +1311,7 @@ public class LayoutTurntableView extends LayoutTrackView {
             {
                 if (getRayConnectOrdered(j) == null) {
                     Point2D pt = getRayCoordsOrdered(j);
+                    log.trace("   draw at {} {}, {} {}", pt);
                     g2.fill(trackControlCircleAt(pt));
                 }
             }
@@ -1318,6 +1325,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      */
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {
+        log.trace("LayoutTurntable:drawTurnoutControls");
         if (isTurnoutControlled()) {
             // draw control circles at all but current position ray tracks
             for (int j = 0; j < getNumberRays(); j++) {

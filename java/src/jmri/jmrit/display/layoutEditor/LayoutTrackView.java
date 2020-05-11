@@ -26,6 +26,15 @@ abstract public class LayoutTrackView {
          this.layoutEditor = layoutEditor;
     }
 
+    /**
+     * constructor method
+     */
+    public LayoutTrackView(@Nonnull LayoutTrack track, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
+         // this.layoutTrack = track;
+         this.layoutEditor = layoutEditor;
+         this.center = c;
+    }
+
     // temporary method to get a correct-type *View or subclass.
     // Eventually, this will go away once *View's are created
     // in a type-specific way with their underlying model objects
@@ -92,7 +101,7 @@ abstract public class LayoutTrackView {
      *
      * @return The center coordinates
      */
-    final public Point2D getCoordsCenter() { // final for efficiency
+    public Point2D getCoordsCenter() { // should be final for efficiency, temporary not to allow redirction overrides.
         return center;
     }
 
@@ -103,7 +112,7 @@ abstract public class LayoutTrackView {
      * idea, i.e. for Bezier curves
      * @param p the coordinates to set
      */
-    protected void setCoordsCenter(@Nonnull Point2D p) {
+    public void setCoordsCenter(@Nonnull Point2D p) {  // temporary = want to make protected after migration
         center = p;
     }
 

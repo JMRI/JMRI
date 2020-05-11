@@ -71,11 +71,21 @@ public class LevelXingView extends LayoutTrackView {
      */
     public LevelXingView(@Nonnull LevelXing xing, @Nonnull LayoutEditor layoutEditor) {
         super(xing, layoutEditor);
-        this.xing = xing;
 
+        this.xing = xing;
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor(layoutEditor);
     }
         
+    /**
+     * constructor method
+     */
+    public LevelXingView(@Nonnull LevelXing xing, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
+        super(xing, c, layoutEditor);
+
+        this.xing = xing;
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor(layoutEditor);
+    }
+
     final private LevelXing xing;
 
     // this should only be used for debugging

@@ -55,8 +55,8 @@ public class PositionablePoint extends LayoutTrack {
     // operational instance variables (not saved between sessions)
     // persistent instances variables (saved between sessions)
     private PointType type = PointType.NONE;
-    private TrackSegment connect1 = null;
-    private TrackSegment connect2 = null;
+    TrackSegment connect1 = null;  // temporary: make private once decoupled
+    TrackSegment connect2 = null;  // temporary: make private once decoupled
 
     protected NamedBeanHandle<SignalHead> signalEastHeadNamed = null; // signal head for east (south) bound trains
     protected NamedBeanHandle<SignalHead> signalWestHeadNamed = null; // signal head for west (north) bound trains
@@ -132,7 +132,7 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
-    private void setTypeAnchor() {
+    void setTypeAnchor() { // temporary: make private once decoupled
         setIdent(layoutEditor.getFinder().uniqueName("A", 1));
         type = PointType.ANCHOR;
         if (connect1 != null) {
@@ -157,7 +157,7 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
-    private void setTypeEndBumper() {
+    void setTypeEndBumper() { // temporary: make private once decoupled
         setIdent(layoutEditor.getFinder().uniqueName("EB", 1));
         type = PointType.END_BUMPER;
         if (connect1 != null) {
@@ -172,7 +172,7 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
-    private void setTypeEdgeConnector() {
+    void setTypeEdgeConnector() { // temporary: make private once decoupled
         setIdent(layoutEditor.getFinder().uniqueName("EC", 1));
         type = PointType.EDGE_CONNECTOR;
         if (connect1 != null) {
@@ -679,6 +679,7 @@ public class PositionablePoint extends LayoutTrack {
             connect1 = p.getFinder().findTrackSegmentByName(trackSegment1Name);
             connect2 = p.getFinder().findTrackSegmentByName(trackSegment2Name);
         }
+        log.trace("PositionablePoint:setObjects {}: {} and {} {}", trackSegment1Name, connect1, trackSegment1Name, connect1);
     }
 
     /**
@@ -1751,13 +1752,16 @@ public class PositionablePoint extends LayoutTrack {
      * This type of track has none, so this method is empty.
      */
     @Override
-    protected void drawDecorations(Graphics2D g2) {}
+    protected void drawDecorations(Graphics2D g2) {
+        log.trace("PositionablePoint::drawDecorations");
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
+        log.trace("PositionablePoint::draw1");
         //nothing to do here... move along...
     }   // draw1
 
@@ -1766,6 +1770,7 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+        log.trace("PositionablePoint::draw2");
         //nothing to do here... move along...
     }
 
@@ -1774,6 +1779,7 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
+        log.trace("PositionablePoint::highlightUnconnected");
         if ((specificType == HitPointType.NONE) || (specificType == HitPointType.POS_POINT)) {
             if ((getConnect1() == null)
                     || ((getType() == PointType.ANCHOR) && (getConnect2() == null))) {
@@ -1787,6 +1793,7 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     protected void drawEditControls(Graphics2D g2) {
+        log.trace("PositionablePoint::drawEditControls");
         TrackSegment ts1 = getConnect1();
         if (ts1 == null) {
             g2.setColor(Color.red);
@@ -1813,6 +1820,7 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {
+        log.trace("PositionablePoint::drawTurnoutControls");
         // PositionablePoints don't have turnout controls...
         // nothing to see here... move along...
     }

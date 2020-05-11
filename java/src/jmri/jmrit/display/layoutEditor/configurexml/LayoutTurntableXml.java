@@ -6,6 +6,7 @@ import jmri.Turnout;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTurntable;
+import jmri.jmrit.display.layoutEditor.LayoutTurntableView;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -107,17 +108,21 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
             log.error("failed to convert layoutturntable center or radius attributes");
         }
         // create the new LayoutTurntable
-        LayoutTurntable l = new LayoutTurntable(name, new Point2D.Double(x, y), p);
-        l.setRadius(radius);
+        LayoutTurntable lt = new LayoutTurntable(name, new Point2D.Double(x, y), p);
+        LayoutTurntableView lv = new LayoutTurntableView(lt, p);
+        lv.setCoordsCenter(new Point2D.Double(x, y));
+        log.trace("LayoutTurntable at {}, {}", x, y);
+        
+        lv.setRadius(radius);
 
         // get remaining attribute
         Attribute a = element.getAttribute("blockname");
         if (a != null) {
-            l.tLayoutBlockName = a.getValue();
+            lt.tLayoutBlockName = a.getValue();
         }
 
         try {
-            l.setTurnoutControlled(element.getAttribute("turnoutControlled").getBooleanValue());
+            lt.setTurnoutControlled(element.getAttribute("turnoutControlled").getBooleanValue());
         } catch (DataConversionException e1) {
             log.warn("unable to convert layout turnout turnoutControlled attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
@@ -140,21 +145,21 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
                 if (a != null) {
                     connectName = a.getValue();
                 }
-                l.addRayTrack(angle, index, connectName);
-                if (l.isTurnoutControlled() && value.getAttribute("turnout") != null) {
+                lt.addRayTrack(angle, index, connectName);
+                if (lt.isTurnoutControlled() && value.getAttribute("turnout") != null) {
                     if (value.getAttribute("turnoutstate").getValue().equals("thrown")) {
-                        l.setRayTurnout(index, value.getAttribute("turnout").getValue(), Turnout.THROWN);
+                        lt.setRayTurnout(index, value.getAttribute("turnout").getValue(), Turnout.THROWN);
                     } else {
-                        l.setRayTurnout(index, value.getAttribute("turnout").getValue(), Turnout.CLOSED);
+                        lt.setRayTurnout(index, value.getAttribute("turnout").getValue(), Turnout.CLOSED);
                     }
                     try {
-                        l.setRayDisabled(index, value.getAttribute("disabled").getBooleanValue());
+                        lt.setRayDisabled(index, value.getAttribute("disabled").getBooleanValue());
                     } catch (DataConversionException e1) {
                         log.warn("unable to convert layout turnout disabled attribute");
                     } catch (NullPointerException e) {  // considered normal if the attribute is not present
                     }
                     try {
-                        l.setRayDisabledWhenOccupied(index, value.getAttribute("disableWhenOccupied").getBooleanValue());
+                        lt.setRayDisabledWhenOccupied(index, value.getAttribute("disableWhenOccupied").getBooleanValue());
                     } catch (DataConversionException e1) {
                         log.warn("unable to convert layout turnout disableWhenOccupied attribute");
                     } catch (NullPointerException e) {  // considered normal if the attribute is not present
@@ -162,7 +167,7 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
                 }
             }
         }
-        p.addLayoutTrack(l);
+        p.addLayoutTrack(lt, lv);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntableXml.class);
