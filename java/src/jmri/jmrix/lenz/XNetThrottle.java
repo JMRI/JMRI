@@ -40,6 +40,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
     /**
      * Constructor
+     * @param memo system connection.
+     * @param controller system connection traffic controller.
      */
     public XNetThrottle(XNetSystemConnectionMemo memo, XNetTrafficController controller) {
         super(memo);
@@ -49,7 +51,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     /**
-     * Constructor
+     * Constructor.
+     * @param memo system connection.
+     * @param address loco address.
+     * @param controller system connection traffic controller.
      */
     public XNetThrottle(XNetSystemConnectionMemo memo, LocoAddress address, XNetTrafficController controller) {
         super(memo);

@@ -381,7 +381,8 @@ public class GcSerialDriverAdapter extends GcPortController {
     }
 
     /**
-     * Migration method
+     * Migration method.
+     * @return array of valid baud numbers.
      * @deprecated since 4.16
      */
     @Deprecated

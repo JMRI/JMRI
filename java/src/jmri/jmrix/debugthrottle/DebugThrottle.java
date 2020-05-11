@@ -16,7 +16,9 @@ import org.slf4j.LoggerFactory;
 public class DebugThrottle extends AbstractThrottle {
 
     /**
-     * Constructor
+     * Constructor.
+     * @param address loco address.
+     * @param memo system connection.
      */
     public DebugThrottle(DccLocoAddress address, SystemConnectionMemo memo) {
         super(memo);

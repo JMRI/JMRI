@@ -55,6 +55,7 @@ public class AcelaSystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return traffic controller, provided if null.
      */
     public AcelaTrafficController getTrafficController() {
         if (tc == null) {
