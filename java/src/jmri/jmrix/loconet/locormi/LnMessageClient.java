@@ -65,6 +65,9 @@ public class LnMessageClient extends LnTrafficRouter {
     // be passed to this.notify(LocoNetMessage m)
     /**
      * Start the connection to the server. This is invoked once.
+     * @param remoteHostName remote host name.
+     * @param timeoutSec timeout, value in seconds, not ms.
+     * @throws jmri.jmrix.loconet.LocoNetException if failed to connect to server.
      */
     public void configureRemoteConnection(String remoteHostName, int timeoutSec) throws LocoNetException {
         serverName = remoteHostName;

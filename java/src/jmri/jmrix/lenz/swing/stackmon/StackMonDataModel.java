@@ -138,6 +138,8 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
 
     /**
      * Update the internal data structures for a specified address.
+     * @param address which address to update.
+     * @param type address type.
      */
     public void updateData(Integer address, String type) {
         if (_addressList == null) {

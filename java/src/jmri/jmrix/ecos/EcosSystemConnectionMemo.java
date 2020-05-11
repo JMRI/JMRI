@@ -45,6 +45,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return Ecos traffic controller.
      */
     public EcosTrafficController getTrafficController() {
         return et;
