@@ -1,9 +1,11 @@
 package jmri.util.web;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
 
 import org.assertj.core.api.SoftAssertions;
+import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
@@ -46,14 +48,11 @@ public class BrowserFactory {
                 if (driver == null) {
                     WebDriverManager.getInstance(FirefoxDriver.class).setup();
                     FirefoxBinary firefoxBinary = new FirefoxBinary();
-                    FirefoxOptions firefoxOptions = new FirefoxOptions();
                     firefoxBinary.addCommandLineOptions("--headless");
-                    firefoxOptions.setBinary(firefoxBinary);
-                    firefoxOptions.setLogLevel(org.openqa.selenium.firefox.FirefoxDriverLogLevel.ERROR);
-
-                    LoggingPreferences logPrefs = new LoggingPreferences();
-                    logPrefs.enable(LogType.BROWSER, Level.SEVERE);
-                    firefoxOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+                    FirefoxOptions firefoxOptions = new FirefoxOptions()
+                            .setBinary(firefoxBinary)
+                            .setLogLevel(FirefoxDriverLogLevel.FATAL)
+                            .addPreference("devtools.console.stdout.content",true);
 
                     driver = new EventFiringWebDriver(new FirefoxDriver(firefoxOptions));
                     driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -65,11 +64,11 @@ public class BrowserFactory {
                 if (driver == null) {
                     WebDriverManager.getInstance(ChromeDriver.class).setup();
                     ChromeOptions chromeOptions = new ChromeOptions();
-                    if (GraphicsEnvironment.isHeadless()) {
+                   // if (GraphicsEnvironment.isHeadless()) {
                         chromeOptions.addArguments("--headless");
-                    } else {
+                    //} else {
                         chromeOptions.addArguments("--log-level=3");
-                    }
+                    //}
                     chromeOptions.addArguments("--disable-extensions");
                     LoggingPreferences logPrefs = new LoggingPreferences();
                     logPrefs.enable(LogType.BROWSER, Level.SEVERE);

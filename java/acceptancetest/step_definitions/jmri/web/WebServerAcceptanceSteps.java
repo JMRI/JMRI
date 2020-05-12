@@ -4,6 +4,7 @@ import cucumber.api.java8.En;
 
 import java.io.File;
 import java.util.List;
+import java.util.logging.Level;
 
 import jmri.InstanceManager;
 import jmri.ConfigureManager;
@@ -115,7 +116,9 @@ public class WebServerAcceptanceSteps implements En {
 
             SoftAssertions softly = new SoftAssertions();
             for (LogEntry logEntry : logEntries) {
-                softly.assertThat(logEntry.toString()).withFailMessage((logEntry.getMessage())).doesNotContain("JavaScript");
+                softly.assertThat(logEntry.getLevel())
+                        .withFailMessage(String.format("%s:%s",webDriver.getWrappedDriver().getClass(),logEntry.getMessage()))
+                        .isNotEqualTo(Level.SEVERE);
             }
             softly.assertAll();
         });
