@@ -64,8 +64,11 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
                 FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
                 File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name+"."+index+".png");
                 System.out.println(outFile);
+                
+                java.awt.Dimension size = new java.awt.Dimension(Math.min(le.getTargetPanel().size().width, 2000),
+                                                Math.min(le.getTargetPanel().size().height, 1000));
                 jmri.util.JUnitSwingUtil.writeDisplayedContentToFile(le.getTargetPanel(), 
-                                            le.getTargetPanel().size(), new java.awt.Point(0, 0),
+                                            size, new java.awt.Point(0, 0),
                                             outFile);
             }
         }
