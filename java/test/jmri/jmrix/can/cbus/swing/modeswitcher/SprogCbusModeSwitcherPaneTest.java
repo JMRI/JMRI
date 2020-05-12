@@ -2,7 +2,6 @@ package jmri.jmrix.can.cbus.swing.modeswitcher;
 
 import java.awt.GraphicsEnvironment;
 import jmri.GlobalProgrammerManager;
-import jmri.Programmer;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusDccProgrammer;
@@ -23,7 +22,7 @@ public class SprogCbusModeSwitcherPaneTest extends jmri.util.JmriJFrameTestBase 
 
     CanSystemConnectionMemo memo;
     CbusDccProgrammer prog;
-    TrafficControllerScaffold tc;
+    jmri.jmrix.can.TrafficController tc;
     
     @Test
     public void testInitComponents() throws Exception{
@@ -35,6 +34,8 @@ public class SprogCbusModeSwitcherPaneTest extends jmri.util.JmriJFrameTestBase 
     @Before
     @Override
     public void setUp() {
+        JUnitUtil.setUp();
+        
         jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.CbusPreferences.class,new CbusPreferences() );
 
         tc = new TrafficControllerScaffold();
@@ -52,9 +53,10 @@ public class SprogCbusModeSwitcherPaneTest extends jmri.util.JmriJFrameTestBase 
     @Override
     public void tearDown() {
         tc.terminateThreads();
-        tc = null;
         memo.dispose();
+        tc = null;
         memo = null;
+        JUnitUtil.resetWindows(false,false);
         super.tearDown();
     }
 }
