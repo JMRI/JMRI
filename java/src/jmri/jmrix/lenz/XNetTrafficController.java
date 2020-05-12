@@ -324,6 +324,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     /**
      * Return an XNetFeedbackMessageCache object associated with this traffic
      * controller.
+     * @return the feedback message cache. One is provided if null.
      */
     public XNetFeedbackMessageCache getFeedbackMessageCache() {
         if (_FeedbackCache == null) {

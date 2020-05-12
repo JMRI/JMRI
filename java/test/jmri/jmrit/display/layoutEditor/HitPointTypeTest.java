@@ -318,5 +318,5 @@ public class HitPointTypeTest {
         Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_63.getValue() == 113", HitPointType.TURNTABLE_RAY_63.ordinal(), 113);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(HitPointTypeTest.class.getName());
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HitPointTypeTest.class.getName());
 }

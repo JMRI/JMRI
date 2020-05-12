@@ -287,7 +287,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         addPropertyChangeLocations();
 
         // auto save
-        new AutoSave().start();
+        AutoSave.start();
     }
 
     @Override

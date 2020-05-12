@@ -19,6 +19,7 @@ public class Z21SimulatorConnectionConfig extends jmri.jmrix.roco.z21.Connection
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p network port adapter.
      */
     public Z21SimulatorConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);

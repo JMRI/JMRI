@@ -61,9 +61,13 @@ public class WebServerAcceptanceSteps implements En {
             assertThat(webDriver.getTitle()).isEqualTo(pageTitle);
         });
 
-        Then("^either (.*) or (.*) is returned as the title$", (String pageTitle, String formatedPageTitle) -> {
-            waitLoad();
-            assertThat(webDriver.getTitle()).isIn(newLinkedHashSet(pageTitle, formatedPageTitle));
+        Then("^either (.*) or (.*) is returned as the title$", (String pageTitle, String formattedPageTitle) -> {
+            waitLoad(); //wait for page to load
+            //additional conditional wait for javascript to run and set the title
+            WebDriverWait wait = new WebDriverWait(webDriver, 15);
+            wait.until(ExpectedConditions.or(
+                    ExpectedConditions.titleIs(pageTitle), ExpectedConditions.titleIs(formattedPageTitle)));
+            assertThat(webDriver.getTitle()).isIn(newLinkedHashSet(pageTitle, formattedPageTitle));
         });
 
 

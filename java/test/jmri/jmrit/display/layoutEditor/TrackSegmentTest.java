@@ -9,11 +9,14 @@ import org.junit.*;
 import org.netbeans.jemmy.operators.Operator;
 
 /**
- * Test simple functioning of TrackSegment
+ * Test simple functioning of TrackSegment.
+ *
+ * Note this uses <code>@BeforeClass</code> and <code>@AfterClass</code>
+ * to do static setup.
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class TrackSegmentTest {
+public class TrackSegmentTest extends LayoutTrackTest {
 
     static private LayoutEditor layoutEditor = null;
     static private TrackSegment trackSegment = null;
@@ -301,16 +304,11 @@ public class TrackSegmentTest {
             trackSegment.setLayoutBlockByName("");
             Assert.assertNull("trackSegment.getLayoutBlock('') == null", trackSegment.getLayoutBlock());
 
-            try {
-                trackSegment.setLayoutBlockByName("invalid name");    //note: invalid name
-                Assert.fail("trackSegment.setLayoutBlockByName(\"invalid name\"); NullPointerException not thrown");
-            } catch (NullPointerException e) {
-            }
-            Assert.assertNull("trackSegment.getLayoutBlock() == null", trackSegment.getLayoutBlock());
+            trackSegment.setLayoutBlockByName("invalid name");    //note: invalid name
             JUnitAppender.assertErrorMessage("provideLayoutBlock: The block name 'invalid name' does not return a block.");
 
 //            LayoutBlock layoutBlock = new LayoutBlock("ILB999", "Test Block");
-//            trackSegment.setLayoutBlockByName("ILB999");
+//            trackSegment.setLayoutBlockByName("Test Block");
 //            Assert.assertEquals("trackSegment.getLayoutBlock() == layoutBlock", layoutBlock, trackSegment.getLayoutBlock());
 //
 //            trackSegment.setLayoutBlock(null);

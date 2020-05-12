@@ -15,6 +15,7 @@ public class EliteXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManage
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public EliteXNetThrottleManager(XNetSystemConnectionMemo memo) {
         super(memo);

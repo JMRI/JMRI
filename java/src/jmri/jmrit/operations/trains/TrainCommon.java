@@ -45,6 +45,8 @@ public class TrainCommon {
     protected static final String SPACE = " ";
     protected static final String BLANK_LINE = " ";
     protected static final String HORIZONTAL_LINE_CHAR = "-";
+    protected static final String BUILD_REPORT_CHAR = "-";
+    public static final String HYPHEN = "-";
     protected static final String VERTICAL_LINE_CHAR = "|";
     protected static final String TEXT_COLOR_START = "<FONT color=\"";
     protected static final String TEXT_COLOR_END = "</FONT>";
@@ -1057,7 +1059,7 @@ public class TrainCommon {
         boolean showLoad = showUtilityCarLoad(format);
         boolean showLocation = false;
         boolean showDestination = false;
-        String carType = car.getTypeName().split("-")[0];
+        String carType = car.getTypeName().split(HYPHEN)[0];
         String carAttributes;
         // Note for car pick up: type, id, track name. For set out type, track
         // name, id (reversed).
@@ -1092,7 +1094,7 @@ public class TrainCommon {
                 if (!c.isUtility()) {
                     continue;
                 }
-                String cType = c.getTypeName().split("-")[0];
+                String cType = c.getTypeName().split(HYPHEN)[0];
                 if (!cType.equals(carType)) {
                     continue;
                 }
@@ -1183,13 +1185,13 @@ public class TrainCommon {
                 if (sb.length() + word.length() < lineLengthMax) {
                     sb.append(word + SPACE);
                 } else {
-                    file.println(level + "- " + sb.toString());
+                    file.println(level + BUILD_REPORT_CHAR + " " + sb.toString());
                     sb = new StringBuffer(word + SPACE);
                 }
             }
             string = sb.toString();
         }
-        file.println(level + "- " + string);
+        file.println(level + BUILD_REPORT_CHAR + " " + string);
     }
 
     /**
@@ -1255,7 +1257,7 @@ public class TrainCommon {
      * @return First half of the string.
      */
     public static String splitString(String name) {
-        String[] splitname = name.split("-");
+        String[] splitname = name.split(HYPHEN);
         // is the hyphen followed by a number or left parenthesis?
         if (splitname.length > 1 && !splitname[1].startsWith("(")) {
             try {
@@ -1274,7 +1276,7 @@ public class TrainCommon {
      * @return First half of the string.
      */
     private static String splitStringLeftParenthesis(String name) {
-        String[] splitname = name.split("-");
+        String[] splitname = name.split(HYPHEN);
         if (splitname.length > 1 && splitname[1].startsWith("(")) {
             return splitname[0].trim();
         }
@@ -1375,7 +1377,7 @@ public class TrainCommon {
                                     InstanceManager.getDefault(CarLoads.class).getMaxNameLength() +
                                             1)
                                     : " " +
-                                            padAndTruncateIfNeeded(car.getLoadName().split("-")[0],
+                                            padAndTruncateIfNeeded(car.getLoadName().split(HYPHEN)[0],
                                                     InstanceManager.getDefault(CarLoads.class).getMaxNameLength());
         } else if (attribute.equals(Setup.LOAD_TYPE)) {
             return " " +
@@ -1450,10 +1452,10 @@ public class TrainCommon {
         if (attribute.equals(Setup.NUMBER)) {
             return " " + padAndTruncateIfNeeded(splitString(rs.getNumber()), Control.max_len_string_print_road_number);
         } else if (attribute.equals(Setup.ROAD)) {
-            String road = rs.getRoadName().split("-")[0];
+            String road = rs.getRoadName().split(HYPHEN)[0];
             return " " + padAndTruncateIfNeeded(road, InstanceManager.getDefault(CarRoads.class).getMaxNameLength());
         } else if (attribute.equals(Setup.TYPE)) {
-            String type = rs.getTypeName().split("-")[0];
+            String type = rs.getTypeName().split(HYPHEN)[0];
             return " " + padAndTruncateIfNeeded(type, InstanceManager.getDefault(CarTypes.class).getMaxNameLength());
         } else if (attribute.equals(Setup.LENGTH)) {
             return " " +

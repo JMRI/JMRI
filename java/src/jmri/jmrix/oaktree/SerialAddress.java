@@ -49,6 +49,8 @@ public class SerialAddress {
     /**
      * Static method to parse a system name and return the Serial Node.
      *
+     * @param systemName system name.
+     * @param tc traffic controller.
      * @return 'NULL' if illegal systemName format or if the node is not found
      */
     public static SerialNode getNodeFromSystemName(String systemName, SerialTrafficController tc) {
@@ -110,6 +112,8 @@ public class SerialAddress {
      * Static method to parse a system name and return the bit number.
      * Note: Bits are numbered from 1.
      *
+     * @param systemName system name.
+     * @param prefix system prefix.
      * @return 0 if an error is found
      */
     public static int getBitFromSystemName(String systemName, String prefix) {
@@ -237,7 +241,9 @@ public class SerialAddress {
     /**
      * Static method to validate system name format.
      *
+     * @param systemName system name.
      * @param type Letter indicating device type expected
+     * @param prefix system prefix.
      * @return 'true' if system name has a valid format, else returns 'false'
      */
     public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
@@ -310,6 +316,9 @@ public class SerialAddress {
     /**
      * Static method to validate system name for configuration.
      *
+     * @param systemName system name.
+     * @param type bean type, e.g. S for Sensor, T for Turnout.
+     * @param memo system connection.
      * @return 'true' if system name has a valid meaning in current configuration, else
      * return 'false'
      */
@@ -350,6 +359,8 @@ public class SerialAddress {
      * Static method to convert one format system name for the alternate
      * format.
      *
+     * @param systemName system name.
+     * @param prefix system prefix.
      * @return an empty string if the supplied system name does not have a valid
      * format, or if there is no representation in the alternate naming scheme
      */
@@ -397,6 +408,8 @@ public class SerialAddress {
      * This routine is used to ensure that each system name is uniquely linked
      * to one bit, by removing extra zeros inserted by the user.
      *
+     * @param systemName system name.
+     * @param prefix system prefix.
      * @return an empty string if the supplied system name does not have a valid format.
      * Otherwise a normalized name is returned in the same format as the input name.
      */

@@ -117,6 +117,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     /**
      * Open the node/packet filter window.
+     * @param e unused.
      */
     public void openPacketFilterPerformed(ActionEvent e) {
         // create a SerialFilterFrame

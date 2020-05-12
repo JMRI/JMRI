@@ -1944,6 +1944,8 @@
 
 <mapID target="manual.DecoderPro.index_DecoderDefinition" url="manual/DecoderPro/index.shtml#DecoderDefinition"/>
 
+<mapID target="package.jmri.jmrit.withrottle.Protocol_propertychangenotification" url="package/jmri/jmrit/withrottle/Protocol.shtml#propertychangenotification"/>
+
 <mapID target="html.hardware.maple.index_naming" url="html/hardware/maple/index.shtml#naming"/>
 
 <mapID target="package.jmri.jmrit.beantable.BlockEdit_usage" url="package/jmri/jmrit/beantable/BlockEdit.shtml#usage"/>

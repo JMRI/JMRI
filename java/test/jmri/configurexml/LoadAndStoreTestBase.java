@@ -50,7 +50,7 @@ import org.slf4j.LoggerFactory;
 public class LoadAndStoreTestBase {
 
     // allows code reuse when building the parameter collection in getFiles()
-    private final File file;
+    protected final File file;
 
     public enum SaveType {
         All, Config, Prefs, User, UserPrefs

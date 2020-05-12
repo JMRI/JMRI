@@ -10,7 +10,7 @@ import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.dispatcher.DispatcherFrame;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutShape;
@@ -320,7 +320,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         if ((a = shared.getAttribute("name")) != null) {
             name = a.getValue();
         }
-        if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
+        if (InstanceManager.getDefault(EditorManager.class).contains(name)) {
             JFrame frame = new JFrame("DialogDemo");
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
@@ -355,7 +355,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         LayoutEditor panel = new LayoutEditor(name);
         panel.setLayoutName(name);
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
+        InstanceManager.getDefault(EditorManager.class).add(panel);
 
         // create the objects
         panel.setMainlineTrackWidth(mainlinetrackwidth);
@@ -748,5 +748,5 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
     public int loadOrder() {
         return jmri.Manager.PANELFILES;
     }
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorXml.class);
 }

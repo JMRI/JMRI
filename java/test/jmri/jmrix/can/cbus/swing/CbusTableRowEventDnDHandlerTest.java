@@ -29,7 +29,7 @@ public class CbusTableRowEventDnDHandlerTest  {
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testInitComponents() throws Exception{
         // for now, just makes sure there isn't an exception.
-        CbusTableRowEventDnDHandler t = new CbusTableRowEventDnDHandler(null,null);
+        t = new CbusTableRowEventDnDHandler(null,null);
         assertThat(t).isNotNull();
         t.dispose();
     }
@@ -38,23 +38,23 @@ public class CbusTableRowEventDnDHandlerTest  {
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testTransferable() throws java.awt.datatransfer.UnsupportedFlavorException, java.io.IOException {
         
-        CbusEventTableDataModel dm = new CbusEventTableDataModel(memo,0,0);
+        dm = new CbusEventTableDataModel(memo,0,0);
         dm.provideEvent(123, 456);
         dm.provideEvent(222, 333);
         
         JTable table = new JTable(dm);
         table.setName("jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel");
         
-        CbusTableRowEventDnDHandler t = new CbusTableRowEventDnDHandler(memo,table);
+        t = new CbusTableRowEventDnDHandler(memo,table);
         assertThat(t.getSourceActions(null)).isEqualTo(TransferHandler.COPY);
         assertThat(t.createTransferable(null)).isNull();
         assertThat(t.createTransferable(table)).isNull();
         t.mouseMoved(0,0);
         
         table.setRowSelectionInterval(0, 0);
-        assertThat(t.createTransferable(table)).isNotNull();
-        
+
         Transferable trnfr = t.createTransferable(table);
+        assertThat(trnfr).isNotNull();
         assertEquals("+N123E456", trnfr.getTransferData(DataFlavor.stringFlavor));
 
         table.setRowSelectionInterval(1, 1);
@@ -80,6 +80,8 @@ public class CbusTableRowEventDnDHandlerTest  {
     }
     
     private CanSystemConnectionMemo memo;
+    private CbusTableRowEventDnDHandler t;
+    private CbusEventTableDataModel dm;
 
     @BeforeEach
     public void setUp() {
@@ -91,10 +93,16 @@ public class CbusTableRowEventDnDHandlerTest  {
 
     @AfterEach
     public void tearDown() {
-        if(!GraphicsEnvironment.isHeadless()){
+        if (dm != null) {
+            dm.skipSaveOnDispose();
+            dm.dispose();
+            dm = null;
+        }
+        if(memo != null){
             memo.dispose();
             memo = null;
         }
+        t = null;
         JUnitUtil.tearDown();
     }
 

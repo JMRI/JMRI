@@ -50,6 +50,7 @@ public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * Get the traffic controller instance associated with this connection memo.
+     * @return traffic controller, new TC provided if null.
      */
     public SerialTrafficController getTrafficController() {
         if (tc == null) {
@@ -84,6 +85,7 @@ public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
      * Provide access to the SensorManager for this particular connection.
      * <p>
      * NOTE: SensorManager defaults to NULL
+     * @return sensor manager.
      */
     public SensorManager getSensorManager() {
         return sensorManager;
@@ -101,6 +103,7 @@ public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
      * Provide access to the TurnoutManager for this particular connection.
      * <p>
      * NOTE: TurnoutManager defaults to NULL
+     * @return turnout manager.
      */
     public TurnoutManager getTurnoutManager() {
         return turnoutManager;
@@ -117,6 +120,7 @@ public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
      * Provide access to the LightManager for this particular connection.
      * <p>
      * NOTE: LightManager defaults to NULL
+     * @return light manager.
      */
     public LightManager getLightManager() {
         return lightManager;

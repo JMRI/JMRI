@@ -8,15 +8,30 @@
   <name xml:lang="cs">Alternativní přiřazení funkcí</name>
   <name xml:lang="de">Alt. Funktionszuordnung</name>
   <column>
-    <display item="FO3 + FO4 directional setting"/>
-    <display item="FO9 directional setting"/>
-    <label>
-      <text> </text>
-    </label>
-    <display item="Special Function Mapping" format="radiobuttons"/>
-    <label>
-      <text> </text>
-    </label>
+      <row>
+          <column>
+              <display item="FO3 + FO4 directional setting"/>
+              <display item="FO9 directional setting"/>
+              <label>
+                  <text> </text>
+              </label>
+              <display item="Special Function Mapping" format="radiobuttons"/>
+              <label>
+                  <text> </text>
+              </label>
+              <label>
+                  <text> </text>
+              </label>
+          </column>    
+      </row>
+      <row>
+          <column>
+              <group>
+                <qualifier>
+                  <variableref>Special Function Mapping</variableref>
+                  <relation>eq</relation>
+                  <value>97</value>
+                </qualifier>
     <label>
       <text> </text>
     </label>
@@ -537,6 +552,9 @@
           <text xml:lang="de">   nicht eingestellt werden.</text>
         </label>
       </column>
+    </row>
+            </group>
+        </column>
     </row>
   </column>
 </pane>

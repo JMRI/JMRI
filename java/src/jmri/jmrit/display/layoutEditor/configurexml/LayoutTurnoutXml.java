@@ -410,7 +410,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         l.setSensorC(getElement(element, "sensorC"));
         l.setSensorD(getElement(element, "sensorD"));
 
-        p.getLayoutTracks().add(l);
+        p.addLayoutTrack(l);
     }
 
     String getElement(Element el, String child) {
@@ -420,5 +420,5 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         return "";
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurnoutXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnoutXml.class);
 }

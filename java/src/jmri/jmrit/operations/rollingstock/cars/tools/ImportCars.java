@@ -78,8 +78,6 @@ public class ImportCars extends ImportRollingStock {
     //    private static final int CAR_MISCELLANEOUS = 16;
     private static final int CAR_EXTENSIONS = 17;
 
-    private static final int MAXIMUM_NUMBER_FIELDS = CAR_EXTENSIONS + 1;
-
     // we use a thread so the status frame will work!
     @Override
     public void run() {
@@ -161,7 +159,7 @@ public class ImportCars extends ImportRollingStock {
             }
             // use comma as delimiter if found otherwise use spaces
             if (comma) {
-                inputLine = parseCommaLine(line, MAXIMUM_NUMBER_FIELDS);
+                inputLine = parseCommaLine(line);
             } else {
                 inputLine = line.split("\\s+"); // NOI18N
             }
@@ -376,8 +374,11 @@ public class ImportCars extends ImportRollingStock {
                         log.debug("Car ({} {}) has location ({})", carRoad, carNumber, carLocationName);
                         // now get the track name, no more than 3 words to describe track name when importing a space delimited file
                         boolean foundLocationTrackSeparator = false;
-                        for (int i =
-                                base + CAR_LOCATION_TRACK_SEPARATOR; i < base + CAR_LOCATION_TRACK_SEPARATOR + 6; i++) {
+                        int limit = base + CAR_LOCATION_TRACK_SEPARATOR + 6;
+                        if (limit > inputLine.length) {
+                            limit = inputLine.length;
+                        }
+                        for (int i = base + CAR_LOCATION_TRACK_SEPARATOR; i < limit; i++) {
                             if (inputLine[i].equals(LOCATION_TRACK_SEPARATOR)) {
                                 foundLocationTrackSeparator = true;
                                 if (inputLine.length > i + 1) {

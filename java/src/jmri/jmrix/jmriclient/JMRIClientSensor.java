@@ -20,6 +20,8 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
 
     /**
      * JMRIClient sensors use the sensor number on the remote host.
+     * @param number sensor number.
+     * @param memo system connection.
      */
     public JMRIClientSensor(int number, JMRIClientSystemConnectionMemo memo) {
         super(memo.getSystemPrefix() + "S" + number);
