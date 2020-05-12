@@ -57,6 +57,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
     /**
      * Constructor.
+     * @param ltf the main learn throttle frame.
      */
     public ControlPanel(LearnThrottleFrame ltf) {
         super("Speed");
