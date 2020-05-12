@@ -264,10 +264,13 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
     volatile PrintStream logStream = null;
 
     /**
-     *
-     * Save Metrics button handler Metric data is saved to a text file named
-     * CMRInetMetrics_YYYYMMDD_HHMMSS The file is text lines, one for each
-     * metric displayed and the count
+     * Save Metrics button handler.
+     * <p>
+     * Metric data is saved to a text file named
+     * CMRInetMetrics_YYYYMMDD_HHMMSS 
+     * The file is text lines, one for each metric displayed and the count.
+     * 
+     * @param e unused.
      */
     public void saveMetricsButtonActionPerformed(ActionEvent e) {
         String fileName = "CMRInetMetrics_";
@@ -313,8 +316,8 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * ------------------------------ Reset All Metrics button handler
-     * ------------------------------
+     * Reset All Metrics button handler.
+     * @param e unused.
      */
     public void resetAllMetricsButtonActionPerformed(ActionEvent e) {
         metricsData.clearAllDataMetrics();

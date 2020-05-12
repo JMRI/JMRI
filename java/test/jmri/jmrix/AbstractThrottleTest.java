@@ -776,6 +776,70 @@ public class AbstractThrottleTest {
         Assert.assertEquals(expResult, result, 0.0);
     }
 
+    @Test
+    public void testOutOfRangeUpdateFunction(){
+        
+        instance.updateFunction(-1, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
+        
+        instance.updateFunction(29, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 29");
+        
+    }
+    
+    @Test
+    public void testOutOfRangeSetFunction(){
+        
+        instance.setFunction(-1, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: -1");
+        
+        instance.setFunction(29, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: 29");
+        
+    }
+    
+    @Test
+    public void testOutOfRangeGetFunction(){
+        instance.getFunction(-1);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get function: -1");
+        
+        instance.getFunction(29);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get function: 29");
+    }
+    
+    @Test
+    public void testOutOfRangeUpdateFunctionMomentary(){
+        
+        instance.updateFunctionMomentary(-1, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update momentary function number: -1");
+        
+        instance.updateFunctionMomentary(29, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update momentary function number: 29");
+        
+    }
+    
+    @Test
+    public void testOutOfRangeSetFunctionMomentary(){
+        
+        instance.setFunctionMomentary(-1, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set momentary function number: -1");
+        
+        instance.setFunctionMomentary(29, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set momentary function number: 29");
+        
+    }
+    
+    @Test
+    public void testOutOfRangeGetFunctionMomentary(){
+        instance.getFunctionMomentary(-1);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get momentary function: -1");
+        
+        instance.getFunctionMomentary(29);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get momentary function: 29");
+    }
+    
+    
+    
     /**
      * Test of setF0 method, of class AbstractThrottle.
      */

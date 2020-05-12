@@ -56,6 +56,8 @@ public class SpjFile {
     /**
      * Find the map entry (character string) that corresponds to a particular
      * handle number.
+     * @param i handle index.
+     * @return string of map entry.
      */
     public String getMapEntry(int i) {
         log.debug("getMapEntry({})", i);
@@ -133,9 +135,12 @@ public class SpjFile {
     }
 
     /**
-     * Save this file. It lays the file out again, changing the record start
+     * Save this file.
+     * <p>
+     * It lays the file out again, changing the record start
      * addresses into a sequential series.
      *
+     * @param name file name.
      * @throws java.io.IOException if anything goes wrong
      */
     public void save(String name) throws java.io.IOException {
@@ -198,7 +203,8 @@ public class SpjFile {
     }
 
     /**
-     * Read the file whose name was provided earlier
+     * Read the file whose name was provided earlier.
+     * @throws java.io.IOException on file error.
      */
     public void read() throws java.io.IOException {
         if (file == null) {
@@ -286,9 +292,10 @@ public class SpjFile {
 
     /**
      * Write data from headers into separate files.
-     *
-     * Normally, we just work with the data within this file. This method allows
-     * us to extract the contents of the file for external use.
+     * <p>
+     * Normally, we just work with the data within this file.
+     * This method allows us to extract the contents of the file for external use.
+     * @throws java.io.IOException on file error.
      */
     public void writeSubFiles() throws IOException {
         // write data from WAV headers into separate files
@@ -414,8 +421,11 @@ public class SpjFile {
         }
 
         /**
+         * Get Record Length.
+         * <p>
          * This method, in addition to returning the needed record size, will
          * also pull a SdfBuffer back into the record if one exists.
+         * @return record length.
          */
         public int getRecordLength() {
             if (sdfBuffer != null) {
@@ -460,8 +470,10 @@ public class SpjFile {
         }
 
         /**
-         * Get as a SDF buffer. This buffer then becomes associated, and a later
-         * write will use the buffer's contents.
+         * Get as a SDF buffer.
+         * This buffer then becomes associated, and a later write will use 
+         * the buffer's contents.
+         * @return the byte array as SDF buffer.
          */
         public SdfBuffer getSdfBuffer() {
             sdfBuffer = new SdfBuffer(getByteArray());

@@ -32,9 +32,13 @@ public class LoaderEngine {
 
     /**
      * Send the complete sequence to download to a decoder.
+     * <p>
+     * Intended to be run in a separate thread.
      *
-     * Intended to be run in a separate thread. Uses "notify" method for status
-     * updates; overload that to redirect the messages
+     * Uses "notify" method for status updates; 
+     * overload that to redirect the messages.
+     * 
+     * @param file the spjfile to be used.
      */
     public void runDownload(SpjFile file) {
         this.spjFile = file;
@@ -133,10 +137,11 @@ public class LoaderEngine {
     }
 
     /**
-     * Nofify of status of download.
-     *
+     * Notify of status of download.
+     * <p>
      * This implementation doesn't do much, but this is provided as a separate
-     * method to allow easy overloading
+     * method to allow easy overloading.
+     * @param message string form of message.
      */
     public void notify(String message) {
         log.debug(message);
@@ -167,8 +172,10 @@ public class LoaderEngine {
     }
 
     /**
-     * Provide a simple object wait. This handles interrupts, synchonization,
-     * etc
+     * Provide a simple object wait.
+     * <p>
+     * This handles interrupts, synchronization, etc.
+     * @param millis milliseconds to wait.
      */
     public void protectedWait(int millis) {
         synchronized (this) {
@@ -207,9 +214,10 @@ public class LoaderEngine {
 
     /**
      * Get the next message for an ongoing WAV download.
-     *
-     * You loop calling nextWavTransfer() until it says it's complete by
+     * <p>
+     * You loop calling nextWavTransfer() until it says it's complete by 
      * returning null.
+     * @return message to send.
      */
     public LocoNetMessage nextTransfer() {
         if (transferStart) {

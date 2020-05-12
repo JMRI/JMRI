@@ -45,6 +45,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Create a reply from an XNetMessage.
+     * @param message existing message.
      */
     public XNetReply(XNetMessage message) {
         super();
@@ -56,6 +57,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Create a reply from a string of hex characters.
+     * @param message hex string of message.
      */
     public XNetReply(String message) {
         super();
@@ -77,6 +79,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Get the opcode as a string in hex format.
+     * @return 0x hex string of OpCode.
      */
     public String getOpCodeHex() {
         return "0x" + Integer.toHexString(this.getOpCode());
@@ -84,6 +87,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Check whether the message has a valid parity.
+     * @return true if parity valid, else false.
      */
     public boolean checkParity() {
         int len = getNumDataElements();
@@ -288,6 +292,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Is this a feedback response message?
+     * @return true if a feedback response, else false.
      */
     public boolean isFeedbackMessage() {
         return (this.getElement(0) == XNetConstants.ACC_INFO_RESPONSE);
@@ -295,6 +300,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Is this a feedback broadcast message?
+     * @return true if a feedback broadcast message, else false.
      */
     public boolean isFeedbackBroadcastMessage() {
         return ((this.getElement(0) & 0xF0) == XNetConstants.BC_FEEDBACK);
@@ -360,9 +366,12 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      */
 
     /**
-     * If this is a throttle-type message, return address. Otherwise return -1.
-     * Note we only identify the command now; the reponse to a request for
-     * status is not yet seen here.
+     * If this is a throttle-type message, return address.
+     * Otherwise return -1. 
+     * <p>
+     * Note we only identify the command now;
+     * the response to a request for status is not yet seen here.
+     * @return address if throttle-type message, else -1.
      */
     public int getThrottleMsgAddr() {
         if (this.isThrottleMessage()) {
@@ -380,6 +389,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Is this a throttle message?
+     * @return true if throttle message. else false.
      */
     public boolean isThrottleMessage() {
         int message = this.getElement(0);
@@ -397,6 +407,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     /**
      * Does this message indicate the locomotive has been taken over by another
      * device?
+     * @return true if take over message, else false.
      */
     public boolean isThrottleTakenOverMessage() {
         return (this.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE
@@ -405,6 +416,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Is this a consist message?
+     * @return true if consist message, else false.
      */
     public boolean isConsistMessage() {
         int message = this.getElement(0);
@@ -421,6 +433,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     /**
      * In the interest of code reuse, the following function checks to see
      * if an XpressNet Message is the OK message (01 04 05).
+     * @return true if an OK message, else false.
      */
     public boolean isOkMessage() {
         return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
@@ -430,6 +443,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     /**
      * In the interest of code reuse, the following function checks to see
      * if an XpressNet Message is the timeslot restored message (01 07 06).
+     * @return true if a time-slot restored message.
      */
     public boolean isTimeSlotRestored() {
         return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
@@ -438,8 +452,9 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * In the interest of code reuse, the following function checks to see
-     * if an XpressNet Message is the Command Station no longer provideing a
+     * if an XpressNet Message is the Command Station no longer providing a
      * timeslot message (01 05 04).
+     * @return true if a time-slot revoked message, else false.
      */
     public boolean isTimeSlotRevoked() {
         return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
@@ -449,6 +464,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     /**
      * In the interest of code reuse, the following function checks to see
      * if an XpressNet Message is the Command Station Busy message (61 81 e3).
+     * @return true if is a CS Busy message, else false.
      */
     public boolean isCSBusyMessage() {
         return (this.getElement(0) == XNetConstants.CS_INFO
@@ -460,6 +476,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * In the interest of code reuse, the following function checks to see
      * if an XpressNet Message is the Command Station Transfer Error
      * message (61 80 e1).
+     * @return if CS Transfer error, else false.
      */
     public boolean isCSTransferError() {
         return (this.getElement(0) == XNetConstants.CS_INFO
@@ -470,6 +487,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * In the interest of code reuse, the following function checks to see
      * if an XpressNet Message is the not supported Error
      * message (61 82 e3).
+     * @return true if unsupported error, else false.
      */
     public boolean isUnsupportedError() {
         return (this.getElement(0) == XNetConstants.CS_INFO
@@ -479,12 +497,14 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     /**
      * In the interest of code reuse, the following function checks to see
      * if an XpressNet Message is a communications error message.
+     * <p>
      * The errors handled are:
      *  01 01 00  -- Error between interface and the PC
      *  01 02 03  -- Error between interface and the Command Station
      *  01 03 02  -- Unknown Communications Error
-     *      01 06 07  -- LI10x Buffer Overflow
-     *      01 0A 0B  -- LIUSB only. Request resend of data.
+     *  01 06 07  -- LI10x Buffer Overflow
+     *  01 0A 0B  -- LIUSB only. Request resend of data.
+     * @return true if comm error message, else false.
      */
     public boolean isCommErrorMessage() {
         return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
@@ -499,10 +519,12 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     /**
      * In the interest of code reuse, the following function checks to see
      * if an XpressNet Message is a communications error message.
+     * <p>
      * The errors handled are:
      *  01 05 04  -- Timeslot Error
      *  01 07 06  -- Timeslot Restored
      *  01 08 09  -- Data sent while there is no Timeslot
+     * @return true if time slot error, else false.
      */
     public boolean isTimeSlotErrorMessage() {
         return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
@@ -514,6 +536,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Is this message a service mode response?
+     * @return true if a service mode response, else false.
      */
     public boolean isServiceModeResponse() {
         return (getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE
@@ -526,6 +549,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Is this message a register or paged mode programming response?
+     * @return true if register or paged mode programming response, else false.
      */
     public boolean isPagedModeResponse() {
         return (getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE
@@ -534,6 +558,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Is this message a direct CV mode programming response?
+     * @return true if direct CV mode programming response, else false.
      */
     public boolean isDirectModeResponse() {
         return (getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE

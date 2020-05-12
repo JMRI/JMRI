@@ -143,8 +143,10 @@
       
       <p>Boolean values should be stored as the strings "true" and "false".</p>
       
-      <p>The <code>getAttributeIntegerValue</code> and 
-      <code>getAttributeBooleanValue</code>
+      <p>The 
+      <a href="https://www.jmri.org/JavaDoc/doc/jmri/configurexml/AbstractXmlAdapter.html#getAttributeBooleanValue-org.jdom2.Element-java.lang.String-boolean-"><code>getAttributeBooleanValue</code></a>, 
+      <a href="https://www.jmri.org/JavaDoc/doc/jmri/configurexml/AbstractXmlAdapter.html#getAttributeIntegerValue-org.jdom2.Element-java.lang.String-int-"><code>getAttributeIntValue</code></a>, and 
+      <a href="https://www.jmri.org/JavaDoc/doc/jmri/configurexml/AbstractXmlAdapter.html#getAttributeDoubleValue-org.jdom2.Element-java.lang.String-double"><code>getAttributeIntegerValue</code></a>
       methods provide a simple way of parsing input and handling errors.
       </p>
       

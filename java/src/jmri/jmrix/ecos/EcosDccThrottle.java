@@ -35,6 +35,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
      * Create a new EcosDccThrottle.
      * @param address Throttle Address
      * @param memo System Connection
+     * @param control sets _control flag which NEEDS CLARIFICATION.
      */
     public EcosDccThrottle(DccLocoAddress address, EcosSystemConnectionMemo memo, boolean control) {
         super(memo);
@@ -45,7 +46,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         //The script will go through and read the values from the Ecos
 
         this.speedSetting = 0;
-        // Functions 0-28 default to false
+        // Functions 0-31 default to false
+        FUNCTION_BOOLEAN_ARRAY = new boolean[32];
 
         this.address = address;
         this.isForward = true;

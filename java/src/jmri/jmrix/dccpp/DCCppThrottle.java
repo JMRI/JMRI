@@ -32,7 +32,9 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     protected int address;
 
     /**
-     * Constructor
+     * Constructor.
+     * @param memo system connection.
+     * @param controller system connection traffic controller.
      */
     public DCCppThrottle(DCCppSystemConnectionMemo memo, DCCppTrafficController controller) {
         super(memo);
@@ -44,7 +46,10 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
-     * Constructor
+     * Constructor.
+     * @param memo system connection.
+     * @param address loco address.
+     * @param controller system connection traffic controller.
      */
     public DCCppThrottle(DCCppSystemConnectionMemo memo, LocoAddress address, DCCppTrafficController controller) {
         super(memo);

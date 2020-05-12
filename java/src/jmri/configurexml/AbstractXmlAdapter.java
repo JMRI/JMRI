@@ -175,6 +175,33 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
     }
 
     /**
+     * Service method to handle attribute input of
+     * float values.  Not being present
+     * is not an error. Not parsing (which shouldn't happen due to
+     * the XML Schema checks) invokes the default error handler.
+     */
+    final public float getAttributeFloatValue(@Nonnull Element element, @Nonnull String name, float def) {
+        Attribute a = null;
+        String val = null;
+        try {
+            a = element.getAttribute(name);
+            if (a == null) return def;
+            val = a.getValue();
+            return a.getFloatValue();
+        } catch (Exception ex) {
+            log.debug("caught exception", ex);
+            ErrorMemo em = new ErrorMemo(this,
+                                            "getAttributeFloatValue threw exception",
+                                            "element: "+element.getName(),
+                                            "attribute: "+name,
+                                            "value: "+val,
+                                            ex);
+            getExceptionHandler().handle(em);
+            return def;
+        }
+    }
+
+    /**
      * Base for support of Enum load/store to XML files
      */
     public static abstract class EnumIO <T extends Enum<T>> { // public to be usable by adapters in other configXML packages
