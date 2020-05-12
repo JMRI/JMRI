@@ -12,5 +12,29 @@ The .png files here are for comparison with the contents of temp/temp after runn
 
 ./runtest.csh java/test/jmri/jmrit/display/layoutEditor/LoadAndStoreTest
 
-These files were made on macOS Mojave from master on May 1, 2020.  Other setups
-may differ, so we're not automating these tests (yet)
+Made from 4.19.4 with macOS Mojave Java 1.8.0_151-b12
+
+    12546 May 12 14:12 LayoutEditorTest-4-19-4.xml.1.png
+    95307 May 12 14:12 Decorations-4-19-4.xml.1.png
+
+Made from 4.19.5 with macOS Mojave Java 1.8.0_151-b12
+
+    16400 May 12 12:57 ThreeWay-Error-4-19-5.xml.1.png
+
+Made from 4.19.6 with macOS Mojave Java 1.8.0_151-b12
+
+    29797 May 12 13:15 Decorations-4-19-6.xml
+    95296 May 12 13:15 Decorations-4-19-6.xml.1.png
+    23768 May 12 13:15 LayoutEditorTest-4-19-6.xml
+    12546 May 12 13:15 LayoutEditorTest-4-19-6.xml.1.png
+    10416 May 12 13:15 OneOfEach-4-19-6.xml
+    43798 May 12 13:15 OneOfEach-4-19-6.xml.1.png
+     9942 May 12 13:15 OneSiding-4-19-6.xml
+    26025 May 12 13:15 OneSiding-4-19-6.xml.1.png
+    38585 May 12 13:15 ThreeWay-Error-4-19-6.xml
+    16400 May 12 13:15 ThreeWay-Error-4-19-6.xml.1.png
+
+Also made with 4.19.6 as above, these are the references for older files (change is mostly enum as alpha name)
+    37214 May 12 12:56 ThreeWay-Error-4-19-5.xml
+    28598 May 12 14:12 Decorations-4-19-4.xml
+    22843 May 12 14:12 LayoutEditorTest-4-19-4.xml

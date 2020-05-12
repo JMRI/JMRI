@@ -4,7 +4,7 @@
   <jmriversion>
     <major>4</major>
     <minor>19</minor>
-    <test>6</test>
+    <test>7</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -329,15 +329,39 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Tue Apr 28 12:46:54 PDT 2020</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest.xml</filename>
-      <filehistory />
+      <date>Tue May 12 13:15:17 PDT 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/versions/v4.19.6/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest-4-19-6.xml</filename>
+      <filehistory>
+        <operation>
+          <type>Load OK</type>
+          <date>Tue Apr 28 12:56:01 PDT 2020</date>
+          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest-4-19-6.xml</filename>
+          <filehistory>
+            <operation>
+              <type>Load OK</type>
+              <date>Sun Apr 26 15:57:57 PDT 2020</date>
+              <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest.xml</filename>
+              <filehistory />
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Sun Apr 26 15:57:57 PDT 2020</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Tue Apr 28 12:56:01 PDT 2020</date>
+          <filename />
+        </operation>
+      </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Tue Apr 28 12:46:54 PDT 2020</date>
+      <date>Tue May 12 13:15:17 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.6ish+jake+20200428T1945Z+R49ac2358e8 on Tue Apr 28 12:46:54 PDT 2020-->
+  <!--Written by JMRI version 4.19.7ish+jake+20200512T1851Z+Re4346c8e6a on Tue May 12 13:15:17 PDT 2020-->
 </layout-config>
