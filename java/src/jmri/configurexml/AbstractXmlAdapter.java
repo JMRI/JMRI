@@ -239,7 +239,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         public EnumIoOrdinals(@Nonnull Class<T> clazz) {
             this.clazz = clazz;
         }
-        Class<T> clazz;
+        final Class<T> clazz;
 
         /** {@inheritDoc} */
         @Override
@@ -278,7 +278,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
             
         }
 
-        Class<T> clazz;
+        final Class<T> clazz;
         final Map<String, T> mapToEnum;
         
         /** {@inheritDoc} */
@@ -364,7 +364,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
             }
         }
 
-        Class<T> clazz;
+        final Class<T> clazz;
         final Map<T, String> mapFromEnum;
         final Map<String, T> mapToEnum;
         
