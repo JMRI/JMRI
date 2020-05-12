@@ -271,7 +271,10 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     /**
-     * Provide or build a VSDecoder based on a provided configuration
+     * Provide or build a VSDecoder based on a provided configuration.
+     * 
+     * @param config previous configuration, not null.
+     * @return vsdecoder, or null on error.
      */
     public VSDecoder getVSDecoder(VSDConfig config) {
         String path;
