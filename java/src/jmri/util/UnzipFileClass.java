@@ -17,12 +17,13 @@ import java.util.zip.ZipInputStream;
 public class UnzipFileClass {
 
     /**
-     * Unzip contents into a directory
+     * Unzip contents into a directory.
      *
      * @param destinationFolder Destination for contents, created if need be;
-     *                          relative or absolute, but must be pre-expanded
+     *                          relative or absolute, but must be pre-expanded.
      * @param zipFile           .zip file name; relative or absolute, but must
-     *                          be pre-expanded
+     *                          be pre-expanded.
+     * @throws                  java.io.FileNotFoundException if File Not Found.
      */
     public static void unzipFunction(String destinationFolder, String zipFile) throws java.io.FileNotFoundException {
         File directory = new File(destinationFolder);
@@ -32,7 +33,7 @@ public class UnzipFileClass {
     }
 
     /**
-     * Unzip contents into a directory
+     * Unzip contents into a directory.
      *
      * @param directory Destination for contents, created if need be
      * @param input     in .zip format

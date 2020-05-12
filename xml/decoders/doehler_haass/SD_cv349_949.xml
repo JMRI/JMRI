@@ -19,6 +19,12 @@
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
       <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
         <firstname>Pierre</firstname>
         <surname>Billon</surname>
       </personname>
@@ -26,12 +32,18 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>3</revnumber>
+      <date>2020-05-02</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>Excluded similar CV9xx for Sound Decoder</revremark>
+    </revision>
+    <revision>
       <revnumber>2</revnumber>
       <date>2015-11-01</date>
       <authorinitials>PB</authorinitials>
       <revremark>Included similar CVs from SUSI sound modules</revremark>
     </revision>
-	<revision>
+    <revision>
       <revnumber>1</revnumber>
       <date>2015-03-05</date>
       <authorinitials>PB</authorinitials>
@@ -45,7 +57,7 @@
 		<label xml:lang="ca">Volume mode silenciós</label>
 		<label xml:lang="de">Lautstärke Ausblendeffekt</label>
 	</variable>
-	<variable label="Volume sound fader" CV="949" default="0" tooltip="CV949: 0=>0%, 255=>200%" item="Sound Setting 6" exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03,SH10A_1.04">
+	<variable label="Volume sound fader" CV="949" default="0" tooltip="CV949: 0=>0%, 255=>200%" item="Sound Setting 6" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03,SH10A_1.04">
 		<decVal/>
 		<label xml:lang="fr">Volume mode silencieux</label>
 		<label xml:lang="de">Lautstärke Ausblendeffekt</label>

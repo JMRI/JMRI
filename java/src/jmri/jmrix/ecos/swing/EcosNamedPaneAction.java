@@ -16,6 +16,10 @@ public class EcosNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
      * Enhanced constructor for placing the pane in various GUIs.
+     * @param s action title string.
+     * @param wi window interface.
+     * @param paneClass pane class string.
+     * @param memo system connection.
      */
     public EcosNamedPaneAction(String s, WindowInterface wi, String paneClass, EcosSystemConnectionMemo memo) {
         super(s, wi, paneClass);

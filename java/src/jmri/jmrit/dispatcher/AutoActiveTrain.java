@@ -1109,8 +1109,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 if (useSpeedProfile && _currentAllocatedSection.getSection().getActualLength() > 0) {
                     _stoppingUsingSpeedProfile = true;
                 } else {
-                    // sensor is not active
-                    setToAMaximumThrottle(_speedRatio[RESTRICTED_SPEED]);
+                    setDecreasedSpeedBeforeStop();
                 }
                 _stopSensor.addPropertyChangeListener(_stopSensorListener = (java.beans.PropertyChangeEvent e) -> {
                     if (e.getPropertyName().equals("KnownState")) {
@@ -1266,7 +1265,7 @@ public class AutoActiveTrain implements ThrottleListener {
             case BEGINNING_RESET:
                 _activeTrain.setRestart();
                 if (_activeTrain.getResetWhenDone()) {
-                    if (_activeTrain.getDelayedRestart() == ActiveTrain.NODELAY) {
+                    if (_activeTrain.getDelayedRestart() == ActiveTrain.NODELAY && !_activeTrain.getReverseAtEnd()) {
                         log.error("[{}]: train is continueing without pause, should have been handled in handleBlockStateChange.",_activeTrain.getTrainName());
                     } else {
                         // then active train is delayed
@@ -1278,7 +1277,6 @@ public class AutoActiveTrain implements ThrottleListener {
                         _activeTrain.setRestart();
                         if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
                             InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
-                            break;
                         }
                         // can be mid block
                         setupNewCurrentSignal(null, true);
@@ -1329,17 +1327,27 @@ public class AutoActiveTrain implements ThrottleListener {
         // note: _stoppingBlock must be set before invoking this method
         //  verify that _stoppingBlock is actually occupied, if not stop immed
         if (_stoppingBlock.getState() == Block.OCCUPIED) {
-            float signalSpeed = 25;
-            try {
-                signalSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
-            } catch (IllegalArgumentException ex) {
-                log.error("Missing [{}] from Speed table - defaulting to 25",InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
-            }
-            setToAMaximumThrottle(getThrottleSettingFromSpeed(signalSpeed));
+            setDecreasedSpeedBeforeStop();
             _stoppingByBlockOccupancy = true;
         } else {
             setStopNow();
         }
+    }
+
+    /**
+     * Before stopping by sensor alone, or by clearing previous block,
+     * set the speed to the user defined preference.
+     */
+    private void setDecreasedSpeedBeforeStop() {
+        float signalSpeed = 25;
+        try {
+            signalSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class)
+                    .getSpeed(InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
+        } catch (IllegalArgumentException ex) {
+            log.error("Missing [{}] from Speed table - defaulting to 25",
+                    InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
+        }
+        setToAMaximumThrottle(getThrottleSettingFromSpeed(signalSpeed));
     }
 
     /**

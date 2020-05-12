@@ -62,8 +62,13 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
     /**
      * Edit a Slip.
      */
-    public void editLayoutSlip(LayoutSlip layoutSlip) {
-        this.layoutSlip = layoutSlip;
+    @Override
+    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
+        if ( layoutTrack instanceof LayoutSlip ) {
+            this.layoutSlip = (LayoutSlip) layoutTrack;
+        } else {
+            log.error("editLayoutTrack called with wrong type {}", layoutTrack, new Exception("traceback"));
+        }
         sensorList.clear();
 
         if (editLayoutSlipOpen) {
@@ -195,6 +200,10 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
         showSensorMessage();
     }   // editLayoutSlip
 
+    /* 
+     * draw the current state (STATE_AC, STATE_BD  et al)
+     * with fixed geometry
+     */
     private void drawSlipState(Graphics2D g2, int state) {
         Point2D cenP = layoutSlip.getCoordsCenter();
         Point2D A = MathUtil.subtract(layoutSlip.getCoordsA(), cenP);
@@ -218,64 +227,78 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
             g2.draw(new Line2D.Double(A, MathUtil.oneThirdPoint(A, D)));
             g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, A)));
 
-            if (layoutSlip.getSlipType() == LayoutTurnout.TurnoutType.DOUBLE_SLIP) {
-                g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, C)));
-                g2.draw(new Line2D.Double(C, MathUtil.oneThirdPoint(C, B)));
-            }
+            drawSlipStatePart1A(g2,state, A,B,C,D);
+             
         } else {
             g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
             g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
         }
 
-        if (layoutSlip.getSlipType() == LayoutTurnout.TurnoutType.DOUBLE_SLIP) {
-            if (state == LayoutTurnout.STATE_AC) {
-                g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
-                g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
+        drawSlipStatePart2A(g2,state, A,B,C,D);
+    }  
+    
+    protected void drawSlipStatePart1A(Graphics2D g2, int state, Point2D A, Point2D B, Point2D C, Point2D D) {
+    }
 
-                g2.setColor(Color.red);
-                g2.draw(new Line2D.Double(A, C));
-            } else if (state == LayoutTurnout.STATE_BD) {
-                g2.setColor(Color.red);
-                g2.draw(new Line2D.Double(B, D));
-            } else if (state == LayoutTurnout.STATE_AD) {
-                g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, C)));
+    protected void drawSlipStatePart1B(Graphics2D g2, int state, Point2D A, Point2D B, Point2D C, Point2D D) {
+        g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, C)));
+        g2.draw(new Line2D.Double(C, MathUtil.oneThirdPoint(C, B)));
+    }
 
-                g2.draw(new Line2D.Double(C, MathUtil.oneThirdPoint(C, B)));
+    // all others implementation
+    protected void drawSlipStatePart2A(Graphics2D g2, int state, Point2D A, Point2D B, Point2D C, Point2D D) {
+        g2.draw(new Line2D.Double(A, MathUtil.oneThirdPoint(A, D)));
+        g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, A)));
 
-                g2.setColor(Color.red);
-                g2.draw(new Line2D.Double(A, D));
-            } else if (state == LayoutTurnout.STATE_BC) {
-                g2.draw(new Line2D.Double(A, MathUtil.oneThirdPoint(A, D)));
+        if (state == LayoutTurnout.STATE_AD) {
+            g2.setColor(Color.red);
+            g2.draw(new Line2D.Double(A, D));
+        } else if (state == LayoutTurnout.STATE_AC) {
+            g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
+            g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
 
-                g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, A)));
-                g2.setColor(Color.red);
-                g2.draw(new Line2D.Double(B, C));
-            } else {
-                g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
-                g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
-            }
+            g2.setColor(Color.red);
+            g2.draw(new Line2D.Double(A, C));
+        } else if (state == LayoutTurnout.STATE_BD) {
+            g2.setColor(Color.red);
+            g2.draw(new Line2D.Double(B, D));
         } else {
-            g2.draw(new Line2D.Double(A, MathUtil.oneThirdPoint(A, D)));
-            g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, A)));
-
-            if (state == LayoutTurnout.STATE_AD) {
-                g2.setColor(Color.red);
-                g2.draw(new Line2D.Double(A, D));
-            } else if (state == LayoutTurnout.STATE_AC) {
-                g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
-                g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
-
-                g2.setColor(Color.red);
-                g2.draw(new Line2D.Double(A, C));
-            } else if (state == LayoutTurnout.STATE_BD) {
-                g2.setColor(Color.red);
-                g2.draw(new Line2D.Double(B, D));
-            } else {
-                g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
-                g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
-            }
+            g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
+            g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
         }
-    }   // drawSlipState
+    }
+
+    // DOUBLE_SLIP implementation
+    protected void drawSlipStatePart2B(Graphics2D g2, int state, Point2D A, Point2D B, Point2D C, Point2D D) {
+        if (state == LayoutTurnout.STATE_AC) {
+            g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
+            g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
+
+            g2.setColor(Color.red);
+            g2.draw(new Line2D.Double(A, C));
+        } else if (state == LayoutTurnout.STATE_BD) {
+            g2.setColor(Color.red);
+            g2.draw(new Line2D.Double(B, D));
+        } else if (state == LayoutTurnout.STATE_AD) {
+            g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, C)));
+
+            g2.draw(new Line2D.Double(C, MathUtil.oneThirdPoint(C, B)));
+
+            g2.setColor(Color.red);
+            g2.draw(new Line2D.Double(A, D));
+        } else if (state == LayoutTurnout.STATE_BC) {
+            g2.draw(new Line2D.Double(A, MathUtil.oneThirdPoint(A, D)));
+
+            g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, A)));
+            g2.setColor(Color.red);
+            g2.draw(new Line2D.Double(B, C));
+        } else {
+            g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
+            g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
+        }
+    }
+
+
 
     class SampleStates extends JPanel {
 
@@ -460,5 +483,5 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
     }
     
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipEditor.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipEditor.class);
 }

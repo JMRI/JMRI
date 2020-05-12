@@ -13,7 +13,7 @@ import java.util.*;
 import javax.annotation.*;
 import javax.swing.*;
 import jmri.*;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.*;
 import jmri.util.swing.*;
@@ -133,7 +133,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     private void setTypeAnchor() {
-        ident = layoutEditor.getFinder().uniqueName("A", 1);
+        setIdent(layoutEditor.getFinder().uniqueName("A", 1));
         type = PointType.ANCHOR;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
@@ -158,7 +158,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     private void setTypeEndBumper() {
-        ident = layoutEditor.getFinder().uniqueName("EB", 1);
+        setIdent(layoutEditor.getFinder().uniqueName("EB", 1));
         type = PointType.END_BUMPER;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
@@ -173,7 +173,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     private void setTypeEdgeConnector() {
-        ident = layoutEditor.getFinder().uniqueName("EC", 1);
+        setIdent(layoutEditor.getFinder().uniqueName("EC", 1));
         type = PointType.EDGE_CONNECTOR;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
@@ -202,7 +202,7 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
+        super.setCoordsCenter(MathUtil.granulize(MathUtil.multiply(getCoordsCenter(), factor), 1.0));
     }
 
     /**
@@ -211,7 +211,7 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     public void translateCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        center = MathUtil.add(center, factor);
+        super.setCoordsCenter(MathUtil.add(getCoordsCenter(), factor));
     }
 
     /**
@@ -973,7 +973,7 @@ public class PositionablePoint extends LayoutTrack {
                 jcbmi.setSelected((connect1.getArrowStyle() == 0) || !etherEnd);
 
                 // configure the arrows
-                for (int i = 1; i<=5; i++) {
+                for (int i = 1; i < NUM_ARROW_TYPES; i++) {
                     jcbmi = loadArrowImageToJCBItem(i, arrowsCountMenu);
                     final int n = i;
                     jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
@@ -1208,11 +1208,7 @@ public class PositionablePoint extends LayoutTrack {
                             }
 
                             // remove connect2 from the layoutEditor's list of layout tracks
-                            if (layoutEditor.getLayoutTracks().contains(connect2)) {
-                                layoutEditor.getLayoutTracks().remove(connect2);
-                                layoutEditor.setDirty();
-                                layoutEditor.redrawPanel();
-                            }
+                            layoutEditor.removeLayoutTrackAndRedraw(connect2);
 
                             //update affected block
                             LayoutBlock block = connect2.getLayoutBlock();
@@ -1235,11 +1231,7 @@ public class PositionablePoint extends LayoutTrack {
                             }
 
                             // remove pp_this from the layoutEditor's list of layout tracks
-                            if (layoutEditor.getLayoutTracks().contains(pp_this)) {
-                                layoutEditor.getLayoutTracks().remove(pp_this);
-                                layoutEditor.setDirty();
-                                layoutEditor.redrawPanel();
-                            }
+                            layoutEditor.removeLayoutTrackAndRedraw(pp_this);
                             pp_this.remove();
                             pp_this.dispose();
 
@@ -1539,8 +1531,8 @@ public class PositionablePoint extends LayoutTrack {
 
     public JPanel getLinkPanel() {
         editorCombo = new JComboBox<>();
-        ArrayList<LayoutEditor> panels
-                = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+        Set<LayoutEditor> panels
+                = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
         editorCombo.addItem(new JCBHandle<>("None"));
         if (panels.contains(layoutEditor)) {
             panels.remove(layoutEditor);

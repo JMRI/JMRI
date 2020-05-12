@@ -52,7 +52,7 @@ public class SerialThrottle extends AbstractThrottle {
     @Override
     public void setFunction(int func, boolean value) {
         updateFunction(func, value);
-        if (func<22) {
+        if (func>=0 && func<22) {
             sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 128);
         }
         else {

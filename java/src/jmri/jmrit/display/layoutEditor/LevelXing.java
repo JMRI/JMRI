@@ -90,11 +90,15 @@ public class LevelXing extends LayoutTrack {
         POINTA, POINTB, POINTC, POINTD
     }
 
+    // temporary reference to the Editor that will eventually be part of View
+    private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor editor;
+
     /**
      * Constructor method
      */
     public LevelXing(String id, Point2D c, LayoutEditor layoutEditor) {
         super(id, c, layoutEditor);
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor(layoutEditor);
     }
 
     // this should only be used for debugging
@@ -677,19 +681,19 @@ public class LevelXing extends LayoutTrack {
     }
 
     public Point2D getCoordsA() {
-        return MathUtil.add(center, dispA);
+        return MathUtil.add(getCoordsCenter(), dispA);
     }
 
     public Point2D getCoordsB() {
-        return MathUtil.add(center, dispB);
+        return MathUtil.add(getCoordsCenter(), dispB);
     }
 
     public Point2D getCoordsC() {
-        return MathUtil.subtract(center, dispA);
+        return MathUtil.subtract(getCoordsCenter(), dispA);
     }
 
     public Point2D getCoordsD() {
-        return MathUtil.subtract(center, dispB);
+        return MathUtil.subtract(getCoordsCenter(), dispB);
     }
 
     /**
@@ -700,7 +704,7 @@ public class LevelXing extends LayoutTrack {
      */
     @Override
     public Point2D getCoordsForConnectionType(HitPointType connectionType) {
-        Point2D result = center;
+        Point2D result = getCoordsCenter();
         switch (connectionType) {
             case LEVEL_XING_CENTER:
                 break;
@@ -867,19 +871,19 @@ public class LevelXing extends LayoutTrack {
     * Modify coordinates methods.
      */
     public void setCoordsA(Point2D p) {
-        dispA = MathUtil.subtract(p, center);
+        dispA = MathUtil.subtract(p, getCoordsCenter());
     }
 
     public void setCoordsB(Point2D p) {
-        dispB = MathUtil.subtract(p, center);
+        dispB = MathUtil.subtract(p, getCoordsCenter());
     }
 
     public void setCoordsC(Point2D p) {
-        dispA = MathUtil.subtract(center, p);
+        dispA = MathUtil.subtract(getCoordsCenter(), p);
     }
 
     public void setCoordsD(Point2D p) {
-        dispB = MathUtil.subtract(center, p);
+        dispB = MathUtil.subtract(getCoordsCenter(), p);
     }
 
     /**
@@ -888,7 +892,7 @@ public class LevelXing extends LayoutTrack {
     @Override
     public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
+        super.setCoordsCenter(MathUtil.granulize(MathUtil.multiply(getCoordsCenter(), factor), 1.0));
         dispA = MathUtil.granulize(MathUtil.multiply(dispA, factor), 1.0);
         dispB = MathUtil.granulize(MathUtil.multiply(dispB, factor), 1.0);
     }
@@ -899,7 +903,7 @@ public class LevelXing extends LayoutTrack {
     @Override
     public void translateCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        center = MathUtil.add(center, factor);
+        super.setCoordsCenter(MathUtil.add(getCoordsCenter(), factor));
     }
 
     /**
@@ -913,11 +917,11 @@ public class LevelXing extends LayoutTrack {
         double cosineRot = Math.cos(rotRAD);
 
         // rotate displacements around origin {0, 0}
-        Point2D center_temp = center;
-        center = MathUtil.zeroPoint2D;
+        Point2D center_temp = getCoordsCenter();
+        super.setCoordsCenter(MathUtil.zeroPoint2D);
         dispA = rotatePoint(dispA, sineRot, cosineRot);
         dispB = rotatePoint(dispB, sineRot, cosineRot);
-        center = center_temp;
+        super.setCoordsCenter(center_temp);
 
     }
 
@@ -1219,14 +1223,14 @@ public class LevelXing extends LayoutTrack {
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
             JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
-            hiddenCheckBoxMenuItem.setSelected(hidden);
+            hiddenCheckBoxMenuItem.setSelected(isHidden());
             popup.add(hiddenCheckBoxMenuItem);
             hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setHidden(hiddenCheckBoxMenuItem.isSelected()));
 
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    layoutEditor.getLayoutTrackEditors().editLevelXing(LevelXing.this);
+                    editor.editLayoutTrack(LevelXing.this);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {

@@ -56,6 +56,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     /**
      * Parses the DCC++ CS status response to pull out the base station version
      * and software version.
+     * @param l status response to query.
      */
     protected void setCommandStationInfo(DCCppReply l) {
  // V1.0 Syntax
@@ -100,6 +101,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     /**
      * Provide the version string returned during the initial check.
      * This function is not yet implemented...
+     * @return version string.
      */
     public String getVersionString() {
         return(baseStationType + ": BUILD " + codeBuildDate);
@@ -112,15 +114,18 @@ public class DCCppCommandStation implements jmri.CommandStation {
 
     /**
      * DCC++ command station does provide Ops Mode.
+     * @return always true.
      */
     public boolean isOpsModePossible() {
- return true;
+        return true;
     }
 
     // A few utility functions
     /**
      * Get the Lower byte of a locomotive address from the decimal locomotive
      * address.
+     * @param address loco address.
+     * @return loco address byte lo.
      */
     public static int getDCCAddressLow(int address) {
         /* For addresses below 128, we just return the address, otherwise,
@@ -138,6 +143,8 @@ public class DCCppCommandStation implements jmri.CommandStation {
     /**
      * Get the Upper byte of a locomotive address from the decimal locomotive
      * address.
+     * @param address loco address.
+     * @return high byte of address.
      */
     public static int getDCCAddressHigh(int address) {
         /* this isn't actually the high byte, For addresses below 128, we

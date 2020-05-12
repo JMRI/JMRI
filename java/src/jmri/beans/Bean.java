@@ -24,16 +24,16 @@ public abstract class Bean extends UnboundBean implements PropertyChangeFirer, P
     protected final SwingPropertyChangeSupport propertyChangeSupport;
 
     /**
-     * Create a bean that notifies property change listeners on the event
-     * dispatch thread (EDT).
+     * Create a bean that notifies property change listeners on the thread the
+     * event was generated on.
      */
     protected Bean() {
-        this(true);
+        this(false);
     }
 
     /**
      * Create a bean.
-     * 
+     *
      * @param notifyOnEDT true to notify property change listeners on the EDT;
      *                    false to notify listeners on the thread the event was
      *                    generated on (which may or may not be the EDT)
@@ -145,7 +145,7 @@ public abstract class Bean extends UnboundBean implements PropertyChangeFirer, P
     public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
     }
-    
+
     /**
      * Is this Bean assuring that all property change listeners will be notified
      * on the EDT?

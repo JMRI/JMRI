@@ -514,8 +514,10 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             index++;
         }
     }
+    
     /**
-     * Method to handle selection of a Node for info display
+     * Method to handle selection of a Node for info display.
+     * @param nodeID Node ID.
      */
     public void displayNodeInfo(String nodeID) {
         if (!nodeID.equals(testNodeID)) {
@@ -601,8 +603,10 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         statusText2.setVisible(true);
 
     }
+    
     /**
      * Handle run button in Diagnostic Frame.
+     * @param e unused.
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {
         // Ignore button if test is already running
@@ -778,6 +782,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 
     /**
      * Handle continue button in Diagnostic Frame.
+     * @param e unused.
      */
     public void continueButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (testRunning && testSuspended) {
@@ -791,6 +796,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 
     /**
      * Handle Stop button in Diagnostic Frame.
+     * @param e unused.
      */
     public void stopButtonActionPerformed(java.awt.event.ActionEvent e) {
         // Ignore button push if test is not running, else change flag
@@ -1162,6 +1168,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     
     /**
      * Handle poll node button in Diagnostic Frame.
+     * @param e unused.
      */
     public synchronized void pollButtonActionPerformed(java.awt.event.ActionEvent e) {
             portsPerCard = (testNode.getNumBitsPerCard()) / 8;
@@ -1222,10 +1229,11 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     }
     
     /**
-    * Transmit bytes to selected output card starting with out card number
-    * for number of bytes entered.
-    * If inverted checked, data is flipped.
-    */    
+     * Transmit bytes to selected output card starting with out card number
+     * for number of bytes entered.
+     * If inverted checked, data is flipped.
+     * @param e unused.
+     */    
     public synchronized void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
 
        portsPerCard = (testNode.getNumBitsPerCard()) / 8;

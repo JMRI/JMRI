@@ -85,18 +85,18 @@ public class LayoutEditorToolsTest {
                 new Point2D.Double(150.0, 100.0),
                 33.0, 1.1, 1.2, layoutEditor);
         Assert.assertNotNull("RH turnout for testSetSignalsAtTurnoutWithDone", layoutTurnout);
-        layoutEditor.getLayoutTracks().add(layoutTurnout);
+        layoutEditor.addLayoutTrack(layoutTurnout);
 
         positionablePoint1 = new PositionablePoint("A1", PositionablePoint.PointType.ANCHOR, new Point2D.Double(250.0, 100.0), layoutEditor);
         Assert.assertNotNull("positionablePoint1 for testSetSignalsAtTurnoutWithDone", positionablePoint1);
-        layoutEditor.getLayoutTracks().add(positionablePoint1);
+        layoutEditor.addLayoutTrack(positionablePoint1);
 
         positionablePoint2 = new PositionablePoint("A2", PositionablePoint.PointType.ANCHOR, new Point2D.Double(50.0, 100.0), layoutEditor);
-        layoutEditor.getLayoutTracks().add(positionablePoint2);
+        layoutEditor.addLayoutTrack(positionablePoint2);
         Assert.assertNotNull("positionablePoint2 for testSetSignalsAtTurnoutWithDone", positionablePoint2);
 
         positionablePoint3 = new PositionablePoint("A3", PositionablePoint.PointType.ANCHOR, new Point2D.Double(250.0, 150.0), layoutEditor);
-        layoutEditor.getLayoutTracks().add(positionablePoint3);
+        layoutEditor.addLayoutTrack(positionablePoint3);
         Assert.assertNotNull("positionablePoint3 for testSetSignalsAtTurnoutWithDone", positionablePoint3);
 
         //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
@@ -272,7 +272,7 @@ public class LayoutEditorToolsTest {
                 positionablePoints[idx], HitPointType.POS_POINT,
                 false, false, layoutEditor);
         Assert.assertNotNull("trackSegment not null", trackSegment);
-        layoutEditor.getLayoutTracks().add(trackSegment);
+        layoutEditor.addLayoutTrack(trackSegment);
         try {
             layoutTurnout.setConnection(types[idx], trackSegment, HitPointType.TRACK);
         } catch (JmriException ex) {
@@ -376,7 +376,7 @@ public class LayoutEditorToolsTest {
             LayoutTurnout to = new LayoutRHTurnout("Right Hand",
                     point, 33.0, 1.1, 1.2, layoutEditor);
             to.setTurnout(turnouts.get(0).getSystemName());
-            layoutEditor.getLayoutTracks().add(to);
+            layoutEditor.addLayoutTrack(to);
 
             //this causes a "set Signal Heads Turnout" dialog to be displayed.
             let.setSignalsAtTurnoutFromMenu(to, getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
@@ -400,7 +400,7 @@ public class LayoutEditorToolsTest {
             LayoutTurnout to = new LayoutRHTurnout("Right Hand",
                     point, 33.0, 1.1, 1.2, layoutEditor);
             to.setTurnout(turnouts.get(0).getSystemName());
-            layoutEditor.getLayoutTracks().add(to);
+            layoutEditor.addLayoutTrack(to);
             //this causes a "set Signal Heads Turnout" dialog to be displayed.
             let.setSignalsAtTurnoutFromMenu(to, getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
         });

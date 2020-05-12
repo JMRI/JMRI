@@ -21,9 +21,6 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     private int nibble;      /* Is this sensor in the upper or lower 
      nibble for the feedback encoder */
 
-    private int nibblebit;   /* Which bit in the nibble represents this 
-     sensor */
-
     private String systemName;
 
     protected XNetTrafficController tc = null;
@@ -55,22 +52,6 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
             nibble = 0x00;
         } else {
             nibble = 0x10;
-        }
-        switch (temp % 4) {
-            case 0:
-                nibblebit = 0x01;
-                break;
-            case 1:
-                nibblebit = 0x02;
-                break;
-            case 2:
-                nibblebit = 0x04;
-                break;
-            case 3:
-                nibblebit = 0x08;
-                break;
-            default:
-                nibblebit = 0x00;
         }
         if (log.isDebugEnabled()) {
             log.debug("Created Sensor {} (Address {},  position {})",
@@ -128,28 +109,21 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
         if (log.isDebugEnabled()) {
             log.debug("received message: {}", l);
         }
-        if (l.isFeedbackBroadcastMessage()) {
-            int numDataBytes = l.getElement(0) & 0x0f;
-            for (int i = 1; i < numDataBytes; i += 2) {
-                if ((l.getFeedbackMessageType(i) == 2)
-                        && baseaddress == l.getFeedbackEncoderMsgAddr(i)
-                        && nibble == (l.getElement(i + 1) & 0x10)) {
-                    if (log.isDebugEnabled()) {
+        Boolean opt = l.selectModuleFeedback(address);
+        if (opt != null) {
+            if (log.isDebugEnabled()) {
                         log.debug("Message for sensor {} (Address {} position {})", systemName, baseaddress, address - (baseaddress * 8));
-                    }
-                    if (statusRequested && l.isUnsolicited()) {
-                        l.resetUnsolicited();
-                        statusRequested = false;
-                    }
-                    if (((l.getElement(i + 1) & nibblebit) != 0) ^ _inverted) {
-                        setOwnState(Sensor.ACTIVE);
-                    } else {
-                        setOwnState(Sensor.INACTIVE);
-                    }
-                }
+            }
+            if (statusRequested && l.isUnsolicited()) {
+                l.resetUnsolicited();
+                statusRequested = false;
+            }
+            if (opt ^ _inverted) {
+                setOwnState(Sensor.ACTIVE);
+            } else {
+                setOwnState(Sensor.INACTIVE);
             }
         }
-        return;
     }
 
     /**
@@ -165,7 +139,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message{}", msg.toString());
+            log.debug("Notified of timeout on message: {}", msg.toString());
         }
     }
 

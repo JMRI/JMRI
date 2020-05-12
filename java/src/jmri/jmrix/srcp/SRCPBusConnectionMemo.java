@@ -49,6 +49,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return SRCP Traffic Controller.
      */
     public SRCPTrafficController getTrafficController() {
         return et;
@@ -89,8 +90,10 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     }
 
     /**
-     * Provides access to the Programmer for this particular connection. NOTE:
-     * Programmer defaults to null
+     * Provides access to the Programmer for this particular connection.
+     * <p>
+     * NOTE: Programmer defaults to null
+     * @return programmer manager.
      */
     public SRCPProgrammerManager getProgrammerManager() {
         return programmerManager;

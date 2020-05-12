@@ -38,6 +38,8 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * Assumes calling method has checked that a Turnout with this
      * system name does not already exist.
      *
+     * @param systemName turnout system name.
+     * @param userName turnout user name.
      * @return null if the system name is not in a valid format
      */
     @Override
@@ -94,6 +96,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     /**
      * Public method to validate system name for configuration.
      *
+     * @param systemName system name to validate.
      * @return 'true' if system name has a valid meaning in the current
      * configuration, else return 'false'
      */
@@ -102,9 +105,10 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Public method to convert system name to its alternate format
+     * Public method to convert system name to its alternate format.
      * <p>
-     * Returns a normalized system name if system name is valid and has a valid
+     * @param systemName system name to convert.
+     * @return a normalized system name if system name is valid and has a valid
      * alternate representation, else return "".
      */
     public String convertSystemNameToAlternate(String systemName) {

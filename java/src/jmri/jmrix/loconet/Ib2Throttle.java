@@ -11,8 +11,9 @@ import org.slf4j.LoggerFactory;
 public class Ib2Throttle extends LocoNetThrottle {
 
     /**
-     * Constructor
+     * Constructor.
      *
+     * @param memo system connection.
      * @param slot The LocoNetSlot this throttle will talk on.
      */
     public Ib2Throttle(LocoNetSystemConnectionMemo memo, LocoNetSlot slot) {

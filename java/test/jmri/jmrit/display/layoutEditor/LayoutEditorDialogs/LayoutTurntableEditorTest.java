@@ -42,7 +42,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
         LayoutTurntableEditor editor = new LayoutTurntableEditor(layoutEditor);
 
         // Edit the layoutTurntable
-        editor.editLayoutTurntable(layoutTurntable);
+        editor.editLayoutTrack(layoutTurntable);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         // Set good radius
@@ -89,45 +89,47 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
         // Set ray turnouts
         //TODO: fix hardcoded index
-        JComboBoxOperator turnout_cbo = new JComboBoxOperator(jFrameOperator, 0);
-        JComboBoxOperator state_cbo = new JComboBoxOperator(jFrameOperator, 1);
+        JComboBoxOperator turnout_cbo = new JComboBoxOperator(jFrameOperator, 1);
+        JComboBoxOperator state_cbo = new JComboBoxOperator(jFrameOperator, 2);
 
         turnout_cbo.selectItem(1); //TODO: fix hardcoded index
         state_cbo.selectItem(0); //TODO: fix hardcoded index
 
-        turnout_cbo = new JComboBoxOperator(jFrameOperator, 2);
-        state_cbo = new JComboBoxOperator(jFrameOperator, 3);
+        turnout_cbo = new JComboBoxOperator(jFrameOperator, 3);
+        state_cbo = new JComboBoxOperator(jFrameOperator, 4);
         turnout_cbo.selectItem(1); //TODO: fix hardcoded index
         state_cbo.selectItem(1); //TODO: fix hardcoded index
 
-        turnout_cbo = new JComboBoxOperator(jFrameOperator, 4);
-        state_cbo = new JComboBoxOperator(jFrameOperator, 5);
+        turnout_cbo = new JComboBoxOperator(jFrameOperator, 5);
+        state_cbo = new JComboBoxOperator(jFrameOperator, 6);
         turnout_cbo.selectItem(2); //TODO: fix hardcoded index
         state_cbo.selectItem(0); //TODO: fix hardcoded index
 
-        turnout_cbo = new JComboBoxOperator(jFrameOperator, 6);
-        state_cbo = new JComboBoxOperator(jFrameOperator, 7);
+        turnout_cbo = new JComboBoxOperator(jFrameOperator, 7);
+        state_cbo = new JComboBoxOperator(jFrameOperator, 8);
         turnout_cbo.selectItem(2); //TODO: fix hardcoded index
         state_cbo.selectItem(1); //TODO: fix hardcoded index
 
         // Add a valid ray and then change the angle to an invalid value
-        jtxt = new JTextFieldOperator(jFrameOperator, 2);
+        jtxt = new JTextFieldOperator(jFrameOperator, 3);
         jtxt.clickMouse();
         jtxt.setText("qqq");
+
 
         // Move focus
         Thread badRayAngleModalDialogOperatorThread = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
-        jtxt = new JTextFieldOperator(jFrameOperator, 3);
+        jtxt = new JTextFieldOperator(jFrameOperator, 4); // elsewhere to fire error
         jtxt.clickMouse();
         JUnitUtil.waitFor(() -> {
             return !(badRayAngleModalDialogOperatorThread.isAlive());
         }, "badRayAngle finished");
-
+        
         // Put a good value back in
-        jtxt = new JTextFieldOperator(jFrameOperator, 2);
-        jtxt.setText("30");
+        jtxt = new JTextFieldOperator(jFrameOperator, 3);
+        jtxt.clickMouse();
+        jtxt.setText("0");
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
@@ -140,7 +142,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
         LayoutTurntableEditor editor = new LayoutTurntableEditor(layoutEditor);
 
         // Edit the Turntable
-        editor.editLayoutTurntable(layoutTurntable);
+        editor.editLayoutTrack(layoutTurntable);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();
@@ -154,7 +156,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
         LayoutTurntableEditor editor = new LayoutTurntableEditor(layoutEditor);
 
         // Edit the Turntable
-        editor.editLayoutTurntable(layoutTurntable);
+        editor.editLayoutTrack(layoutTurntable);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
@@ -168,7 +170,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
         LayoutTurntableEditor editor = new LayoutTurntableEditor(layoutEditor);
 
         // Edit the layoutTurntable
-        editor.editLayoutTurntable(layoutTurntable);
+        editor.editLayoutTrack(layoutTurntable);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         // Ray angle

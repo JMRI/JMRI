@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.19.6-SNAPSHOT</version>
+    <version>4.19.7-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -277,6 +277,104 @@
                                 <argument>help/fr/*/*</argument>
                             </arguments>
                         </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!--
+                The profile disables if tests are run in debug mode, so Jacoco instrumentation
+                does not break debugging features.
+            -->
+            <id>jacoco-coverage-unit</id>
+            <activation>
+                <property>
+                    <name>!maven.surefire.debug</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
+                        <executions>
+                            <execution>
+                                <id>prepare-agent</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!--
+                The profile disables if tests are run in debug mode, so Jacoco instrumentation
+                does not break debugging features.
+            -->
+            <id>jacoco-coverage-integration</id>
+            <activation>
+                <property>
+                    <name>!maven.surefire.debug</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
+                        <executions>
+                            <execution>
+                                <id>prepare-agent-integration</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!--
+                This profile is a workaround for NetBeans broken (?) support for multiple
+                maven goals on action where Compile-on-Save is enabled. Instead of running a
+                goal sequence, the IDE sets a property that activates this profile.
+            -->
+            <id>jacoco-coverage-ide-report</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>netbeans.jacoco.report</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
+                        <executions>
+                            <execution>
+                                <id>ide-report</id>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                                <!-- Bind to the test phase. The Jacoco plugin is
+                                    configured AFTER surefire plugin in this POM, so starting with Maven 3.0.3
+                                    the Jacoco plugin goals will only run after surefire testing completes
+                                -->
+                                <phase>test</phase>
+                                <configuration>
+                                    <skip>${skipTests}</skip>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
@@ -579,7 +677,7 @@
                     <sourcepath>${basedir}/java/src:${project.build.directory}/generated-sources/javacc:${project.build.directory}/generated-sources/jjtree</sourcepath>
                     <show>package</show>
                     <!-- change from default 100 warnings; keep number synced with ant javadoc-lint target -->
-                    <additionalJOption>-breakiterator -Xmaxwarns 1650</additionalJOption>
+                    <additionalJOption>-breakiterator -Xmaxwarns 700</additionalJOption>
                     <!-- remove ",-missing" to get warnings about missing Javadoc tags -->
                     <doclint>all,-missing</doclint>
                     <author>true</author><!-- default -->
@@ -662,15 +760,15 @@
                 </configuration>
             </plugin>
             <plugin>
+                <!-- Warning: do not put this plugin's configuration before surefire plugin one. The sequence
+                     in which the surefire and jacoco goals run is important -->
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
+                        <!-- Do not bind any goals, let a profile to do it conditionally -->
                         <configuration>
                             <append>true</append>
                             <destFile>${jacoco.reportDir}/jacoco-unit.exec</destFile>
@@ -679,9 +777,7 @@
                     </execution>
                     <execution>
                         <id>prepare-agent-integration</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
+                        <!-- Do not bind any goals, let a profile to do it conditionally -->
                         <configuration>
                             <append>true</append>
                             <destFile>${jacoco.reportDir}/jacoco-it.exec</destFile>
@@ -707,6 +803,24 @@
                     </execution>
                     <execution>
                         <id>default-cli</id>
+                        <configuration>
+                            <fileSets>
+                                <fileSet>
+                                    <directory>${jacoco.reportDir}</directory>
+                                    <includes>
+                                        <File>**/*.exec</File>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Do a merge after unit tests complete, to cover the case that only goals up to 'test' phase
+                             are executed. The post-integration-test will merge in integration tests' coverage -->
+                        <id>post-test-merge</id>
+                        <!-- Must explicitly bind to the phase. Since this plugin is configured AFTER surefire,
+                             it will bind later that surefire:test into the (same) test phase -->
+                        <phase>test</phase>
                         <goals>
                             <goal>merge</goal>
                         </goals>
