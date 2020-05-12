@@ -55,6 +55,6 @@ public class SprogCbusModeSwitcherPaneTest extends jmri.util.JmriJFrameTestBase 
         tc = null;
         memo.dispose();
         memo = null;
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 }
