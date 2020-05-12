@@ -19,7 +19,8 @@ import jmri.util.*;
 public class LayoutWyeView extends LayoutTurnoutView {
 
     /**
-     * constructor method
+     * Constructor method.
+     * @param wye the wye to base view on.
      */
     public LayoutWyeView(@Nonnull LayoutWye wye) {
         super(wye);

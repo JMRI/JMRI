@@ -94,7 +94,10 @@ public class LevelXing extends LayoutTrack {
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor editor;
 
     /**
-     * Constructor method
+     * Constructor method.
+     * @param id ID string.
+     * @param c the point location.
+     * @param layoutEditor the main layout editor.
      */
     public LevelXing(String id, Point2D c, LayoutEditor layoutEditor) {
         super(id, c, layoutEditor);
@@ -744,6 +747,7 @@ public class LevelXing extends LayoutTrack {
 
     /**
      * Add Layout Blocks.
+     * @param newLayoutBlock the layout block to add.
      */
     @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
     public void setLayoutBlockAC(LayoutBlock newLayoutBlock) {
@@ -1413,7 +1417,9 @@ public class LevelXing extends LayoutTrack {
     boolean active = true;
 
     /**
+     * Get if active.
      * "active" means that the object is still displayed, and should be stored.
+     * @return true if still displayed, else false.
      */
     public boolean isActive() {
         return active;

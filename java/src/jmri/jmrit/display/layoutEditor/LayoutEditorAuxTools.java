@@ -42,10 +42,12 @@ public class LayoutEditorAuxTools {
     }
 
     /**
-     * Get Connectivity involving a specific Layout Block
+     * Get Connectivity involving a specific Layout Block.
      * <p>
      * This routine returns an ArrayList of BlockConnectivity objects involving
      * the specified LayoutBlock.
+     * @param blk the layout block.
+     * @return the layout connectivity list, not null.
      */
     public List<LayoutConnectivity> getConnectivityList(LayoutBlock blk) {
         if (!initialized) {
@@ -230,6 +232,9 @@ public class LayoutEditorAuxTools {
      * right-handed turnout via the throat track), the search is stopped. The
      * search is also stopped when the track reaches a different block (or an
      * undefined block), or reaches an end bumper.
+     * @param p path to follow until branch.
+     * @param lc layout connectivity.
+     * @param layoutBlock the layout block.
      */
     public void addBeanSettings(Path p, LayoutConnectivity lc, LayoutBlock layoutBlock) {
         p.clearSettings();

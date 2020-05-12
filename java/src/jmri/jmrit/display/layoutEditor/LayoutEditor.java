@@ -2350,10 +2350,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * scale all LayoutTracks coordinates by the x and y factors
+     * scale all LayoutTracks coordinates by the x and y factors.
      *
-     * @param xFactor the amount to scale X coordinates
-     * @param yFactor the amount to scale Y coordinates
+     * @param xFactor the amount to scale X coordinates.
+     * @param yFactor the amount to scale Y coordinates.
+     * @return true when complete.
      */
     public boolean scaleTrack(float xFactor, float yFactor) {
         getLayoutTracks().forEach((lt) -> lt.scaleCoords(xFactor, yFactor));
@@ -6458,7 +6459,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Add a Reporter Icon to the panel
+     * Add a Reporter Icon to the panel.
+     * @param reporter the reporter icon to add.
+     * @param xx the horizontal location.
+     * @param yy the vertical location.
      */
     public void addReporter(@Nonnull Reporter reporter, int xx, int yy) {
         ReporterIcon l = new ReporterIcon(this);
@@ -6631,6 +6635,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Set object location and size for icon and label object as it is created.
      * Size comes from the preferredSize; location comes from the fields where
      * the user can spec it.
+     * @param obj the positionable object.
      */
     @Override
     protected void setNextLocation(@Nonnull Positionable obj) {
@@ -7104,7 +7109,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Should only be invoked on the GUI (Swing) thread
+     * Should only be invoked on the GUI (Swing) thread.
+     * @param state true to fill in turnout control circles, else false.
      */
     @InvokeOnGuiThread
     public void setTurnoutFillControlCircles(boolean state) {
@@ -7126,7 +7132,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Should only be invoked on the GUI (Swing) thread
+     * Should only be invoked on the GUI (Swing) thread.
+     * @param state true to draw unselected legs, else false.
      */
     @InvokeOnGuiThread
     public void setTurnoutDrawUnselectedLeg(boolean state) {
@@ -7165,7 +7172,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Should only be invoked on the GUI (Swing) thread
+     * Should only be invoked on the GUI (Swing) thread.
+     * @param state true to show the help bar, else false.
      */
     @InvokeOnGuiThread  // due to the setSelected call on a possibly-visible item
     public void setShowHelpBar(boolean state) {
@@ -7192,7 +7200,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Should only be invoked on the GUI (Swing) thread
+     * Should only be invoked on the GUI (Swing) thread.
+     * @param state true to show the draw grid, else false.
      */
     @InvokeOnGuiThread
     public void setDrawGrid(boolean state) {
@@ -7203,7 +7212,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Should only be invoked on the GUI (Swing) thread
+     * Should only be invoked on the GUI (Swing) thread.
+     * @param state true to set snap to grid on add, else false.
      */
     @InvokeOnGuiThread
     public void setSnapOnAdd(boolean state) {
@@ -7214,7 +7224,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Should only be invoked on the GUI (Swing) thread
+     * Should only be invoked on the GUI (Swing) thread.
+     * @param state true to set snap on move, else false.
      */
     @InvokeOnGuiThread
     public void setSnapOnMove(boolean state) {
@@ -7225,7 +7236,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Should only be invoked on the GUI (Swing) thread
+     * Should only be invoked on the GUI (Swing) thread.
+     * @param state true to set anti-aliasing flag on, else false.
      */
     @InvokeOnGuiThread
     public void setAntialiasingOn(boolean state) {
@@ -7605,10 +7617,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Read-only access to the list of 
-     * LayoutTrack family objects. The returned
-     * list will throw UnsupportedOperationException
+     * Read-only access to the list of LayoutTrack family objects.
+     * The returned list will throw UnsupportedOperationException
      * if you attempt to modify it.
+     * @return unmodifiable copy of layout track list.
      */
     @Nonnull
     final public List<LayoutTrack> getLayoutTracks() {
@@ -7616,10 +7628,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Read-only access to the list of 
-     * LayoutTrackView family objects. The returned
-     * list will throw UnsupportedOperationException
+     * Read-only access to the list of LayoutTrackView family objects.
+     * The returned list will throw UnsupportedOperationException
      * if you attempt to modify it.
+     * @return unmodifiable copy of track views.
      */
     @Nonnull
     final public List<LayoutTrackView> getLayoutTrackViews() {
@@ -7632,8 +7644,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private final Map<LayoutTrackView, LayoutTrack> viewToTrk = new HashMap<>();
 
     /**
-     * Add a LayoutTrack to the list of 
-     * LayoutTrack family objects.
+     * Add a LayoutTrack to the list of LayoutTrack family objects.
+     * @param trk the layout track to add.
      */
     final public void addLayoutTrack(@Nonnull LayoutTrack trk) {
         log.trace("addLayoutTrack {}", trk);
@@ -7649,8 +7661,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     /**
      * If item present, delete from the list of LayoutTracks
-     * and force a dirty redraw
-     *
+     * and force a dirty redraw.
+     * @param trk the layout track to remove and redraw.
      * @return true is item was deleted and a redraw done.
      */
     final public boolean removeLayoutTrackAndRedraw(@Nonnull LayoutTrack trk) {
@@ -7667,7 +7679,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     
     /**
      * If item present, delete from the list of LayoutTracks
-     * and force a dirty redraw
+     * and force a dirty redraw.
+     * @param trk the layout track to remove.
      */
     final public void removeLayoutTrack(@Nonnull LayoutTrack trk) {
         log.trace("removeLayoutTrack {}", trk);

@@ -861,6 +861,7 @@ public class SwitchboardEditor extends Editor {
 
     /**
      * Allow external set of dirty bit.
+     * @param val new dirty flag value, true dirty, false clean.
      */
     public void setDirty(boolean val) {
         panelChanged = val;
@@ -872,6 +873,7 @@ public class SwitchboardEditor extends Editor {
 
     /**
      * Check the dirty state.
+     * @return true if panel changed, else false.
      */
     public boolean isDirty() {
         return panelChanged;
@@ -1242,7 +1244,8 @@ public class SwitchboardEditor extends Editor {
      * JScollPane (js) which contains the targetPane.
      * Note this is a private menuBar, looking identical to the Editor's _menuBar
      *
-     * @param name title for the Switchboard
+     * @param name title for the Switchboard.
+     * @return frame containing the switchboard editor.
      */
     public JmriJFrame makeFrame(String name) {
         JmriJFrame targetFrame = new JmriJFrame(name);
