@@ -30,6 +30,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2020-05-12</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Speed map</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>SZDC-2015-zakladni</aspecttable>
@@ -71,22 +77,63 @@
   </appearances>
   
   <aspectMappings>
+  
     <aspectMapping>
-      <advancedAspect>Výstraha</advancedAspect>
       <ourAspect>Opakovaná volno</ourAspect>
+      <advancedAspect>Volno</advancedAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>Stůj</advancedAspect>
+      <ourAspect>Opakovaná volno</ourAspect>
+      <advancedAspect>Výstraha</advancedAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <ourAspect>Opakovaná volno</ourAspect>
+      <advancedAspect>Očekávej 40</advancedAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <ourAspect>Opakovaná volno</ourAspect>
+      <advancedAspect>Očekávej 60</advancedAspect>
+    </aspectMapping>
+    
+    <aspectMapping>
       <ourAspect>Opakovaná výstraha</ourAspect>
+      <advancedAspect>Stůj</advancedAspect>
     </aspectMapping>
+    
     <aspectMapping>
-      <advancedAspect>Rychlost 40 a výstraha</advancedAspect>
       <ourAspect>Opakovaná očekávej 40</ourAspect>
+      <advancedAspect>Rychlost 40 a volno</advancedAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>Rychlost 60 a výstraha</advancedAspect>
-      <ourAspect>Opakovaná očekávej 60</ourAspect>
+      <ourAspect>Opakovaná očekávej 40</ourAspect>
+      <advancedAspect>Rychlost 40 a výstraha</advancedAspect>
     </aspectMapping>
+    <aspectMapping>
+      <ourAspect>Opakovaná očekávej 40</ourAspect>
+      <advancedAspect>Rychlost 40 a očekávej 40</advancedAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <ourAspect>Opakovaná očekávej 40</ourAspect>
+      <advancedAspect>Rychlost 40 a očekávej 60</advancedAspect>
+    </aspectMapping>
+    
+    <aspectMapping>
+      <ourAspect>Opakovaná očekávej 60</ourAspect>
+      <advancedAspect>Rychlost 60 a volno</advancedAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <ourAspect>Opakovaná očekávej 60</ourAspect>
+      <advancedAspect>Rychlost 60 a výstraha</advancedAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <ourAspect>Opakovaná očekávej 60</ourAspect>
+      <advancedAspect>Rychlost 60 a očekávej 40</advancedAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <ourAspect>Opakovaná očekávej 60</ourAspect>
+      <advancedAspect>Rychlost 60 a očekávej 60</advancedAspect>
+    </aspectMapping>
+    
   </aspectMappings>
   
 </appearancetable>  
