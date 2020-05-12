@@ -520,7 +520,7 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Documentation updated regarding "VSD headless mode", "steam1 top speed reverse" and "sleep interval".</li>
         </ul>
 
     <h3>Miscellaneous</h3>
