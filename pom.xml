@@ -677,7 +677,7 @@
                     <sourcepath>${basedir}/java/src:${project.build.directory}/generated-sources/javacc:${project.build.directory}/generated-sources/jjtree</sourcepath>
                     <show>package</show>
                     <!-- change from default 100 warnings; keep number synced with ant javadoc-lint target -->
-                    <additionalJOption>-breakiterator -Xmaxwarns 700</additionalJOption>
+                    <additionalJOption>-breakiterator -Xmaxwarns 100</additionalJOption>
                     <!-- remove ",-missing" to get warnings about missing Javadoc tags -->
                     <doclint>all,-missing</doclint>
                     <author>true</author><!-- default -->
