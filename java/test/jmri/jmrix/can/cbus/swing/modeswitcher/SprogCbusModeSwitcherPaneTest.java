@@ -52,6 +52,7 @@ public class SprogCbusModeSwitcherPaneTest extends jmri.util.JmriJFrameTestBase 
     @After
     @Override
     public void tearDown() {
+        prog = null;
         tc.terminateThreads();
         memo.dispose();
         tc = null;
