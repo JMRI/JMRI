@@ -63,7 +63,10 @@ public class LayoutTurntable extends LayoutTrack {
     private int lastKnownIndex = -1;
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurntableEditor editor;
     // persistent instance variables (saved between sessions)
-    private final List<RayTrack> rayTrackList = new ArrayList<>(); // list of Ray Track objects
+    
+    // temporary: this is referenced directly from LayoutTurntable, which 
+    // should be using _functional_ accessors here.
+    public final List<RayTrack> rayTrackList = new ArrayList<>(); // list of Ray Track objects
 
     /**
      * Constructor method
@@ -1101,7 +1104,7 @@ public class LayoutTurntable extends LayoutTrack {
          *
          * @return true if occupied
          */
-        private boolean isOccupied() {
+        public boolean isOccupied() {  // temporary - accessed by View - is this topology or visualization?
             boolean result = false; // assume not
             if (connect != null) {  // does it have a connection? (yes)
                 LayoutBlock lb = connect.getLayoutBlock();

@@ -9,21 +9,28 @@ It's in no particular order, items are removed as done, so please don't consider
 
 Last:  TrackSegmentViewXml is storing as  class="TrackSegmentView" to ease file comparison; change back.
 
- - [ ] Turntable Ray display
-   - [ ] Turntable ray location for information split between topo and View classes
+diff temp/temp/LayoutEditorTest.xml java/test/jmri/jmrit/display/layoutEditor/loadref/LayoutEditorTest.xml
+(There are two LayoutEditorTest.xml files in load, only one in loadref)
+- [ ] turntable doesn't echo positions right
+- [ ] xing doesn't echo positions right
 
- - [X] mainline in geometry classes (inc base clases, *Xml)
- - [ ] hidden in View
- - [ ] flip in View
- - [ ] center in View
- - [ ] Decorations in View
+
+- [X] Turntable Ray display
+  - [ ] Turntable ray location for information split between topo and View classes; add decorator in view.
+
+
+- [X] mainline in geometry classes (inc base clases, *Xml)
+- [ ] hidden in View
+- [ ] flip in View
+- [ ] center in View
+- [ ] Decorations in View
     - [ ] arrowstyle in View
     - [ ] bridge in View
     - [ ] tunnel in View
- - [ ] center in view
- - [ ] create popup et al (inc member vars) in view
- - [ ] Turnout state in connectivity
- - [ ] Block and connectivity checks to, well, connectivity
+- [ ] center in view
+- [ ] create popup et al (inc member vars) in view
+- [ ] Turnout state in connectivity
+- [ ] Block and connectivity checks to, well, connectivity
 
 Go through and confirm individually:
 
@@ -70,6 +77,22 @@ Go through and confirm individually:
         LayoutTurnout
         LayoutSlip
         LayoutXOver
+
+In LayoutTurnoutView (temp) ctor:
+```
+        if (rot != 0.0) log.warn("we're not able to retrieve the rotation from the underlying track; it's in the coordinates")
+        rotateCoords(rot);
+        // adjust size of new turnout
+        Point2D pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
+                Math.round(dispB.getY() * yFactor));
+        dispB = pt;
+        pt = new Point2D.Double(Math.round(dispA.getX() * xFactor),
+                Math.round(dispA.getY() * yFactor));
+        dispA = pt;
+```
+Should we just be sucking over all the variables from the track?  But it won't have them anymore
+(This is a tricky ctor; is it ever used with rot != 0?)
+
 
 ---
 
@@ -158,22 +181,6 @@ java/src/jmri/jmrit/display/layoutEditor//LayoutBlock.java:    public String get
 java/src/jmri/jmrit/display/layoutEditor//LayoutTrack.java:    final public String getId() {
 ```
 
----
-
-In LayoutTurnoutView (temp) ctor:
-```
-        if (rot != 0.0) log.warn("we're not able to retrieve the rotation from the underlying track; it's in the coordinates")
-        rotateCoords(rot);
-        // adjust size of new turnout
-        Point2D pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
-                Math.round(dispB.getY() * yFactor));
-        dispB = pt;
-        pt = new Point2D.Double(Math.round(dispA.getX() * xFactor),
-                Math.round(dispA.getY() * yFactor));
-        dispA = pt;
-```
-Should we just be sucking over all the variables from the track?  But it won't have them anymore
-(This is a tricky ctor; is it ever used with rot != 0?)
 
 ---
 
@@ -227,6 +234,10 @@ This needs to get hooked up properly:
     [javac]   symbol:   method getLayoutTrackEditors()
     [javac]   location: variable layoutEditor of type LayoutEditor
 ```
+
+---
+
+Way too many calls to repaint, particularly during loading.  Add a global "wait for later", perhaps protected by a keep-alive (or set a 'no repaint-before' timer)
 
 ---
 
@@ -287,11 +298,11 @@ Fix `//([a-zA-Z])` comments with `// \1`
    
 ---
    
-   Consider moving list management entirely out of Layout Manager to decrease size & complexity.
+Move list management entirely out of Layout Manager to decrease size & complexity, and add a central repository (also accessible via InstanceManager)
    
 ---
 
-although it's deferring to the View classes mostly, LayoutComponent is
+Although it's deferring to the View classes mostly, LayoutComponent is
 still messing with i.e. isDisabled, isHidden instead of deferring that to the objects
    
 ---
@@ -656,6 +667,12 @@ TrackSegment 436
     }
 
 (Searching for "nothing to see here" is interesting)
+
+---
+
+There's got to be a better way than all those code replications on connectionA, connectionB, connectionC, connectionD - maybe a group transformation?
+
+Similarly, having connection and a HitPointType as separate is screaming for a combined data type.
 
 ---
 

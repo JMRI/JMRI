@@ -21,6 +21,8 @@ import javax.swing.*;
 import jmri.*;
 import jmri.util.MathUtil;
 
+import jmri.jmrit.display.layoutEditor.LayoutTurntable.RayTrack;
+
 /**
  * MVC View component for the LayoutTurntable class.
  *
@@ -37,8 +39,6 @@ public class LayoutTurntableView extends LayoutTrackView {
     private double radius = 25.0;
     private int lastKnownIndex = -1;
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurntableEditor editor;
-    // persistent instance variables (saved between sessions)
-    private final List<RayTrack> rayTrackList = new ArrayList<>(); // list of Ray Track objects
 
     /**
      * constructor method
@@ -165,28 +165,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @return the RayTrack
      */
     public RayTrack addRay(double angle) {
-        RayTrack rt = new RayTrack(angle, getNewIndex());
-        rayTrackList.add(rt);
-        return rt;
-    }
-
-    private int getNewIndex() {
-        int index = -1;
-        if (rayTrackList.isEmpty()) {
-            return 0;
-        }
-
-        boolean found = true;
-        while (found) {
-            index++;
-            found = false; // assume failure (pessimist!)
-            for (RayTrack rt : rayTrackList) {
-                if (index == rt.getConnectionIndex()) {
-                    found = true;
-                }
-            }
-        }
-        return index;
+        return turntable.addRay(angle);
     }
 
     /**
@@ -196,14 +175,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @return the connection for the ray with this value of getConnectionIndex
      */
     public TrackSegment getRayConnectIndexed(int index) {
-        TrackSegment result = null;
-        for (RayTrack rt : rayTrackList) {
-            if (rt.getConnectionIndex() == index) {
-                result = rt.getConnect();
-                break;
-            }
-        }
-        return result;
+        return turntable.getRayConnectIndexed(index);
     }
 
     /**
@@ -213,15 +185,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @return the connection for the ray at that index in the rayTrackList or null
      */
     public TrackSegment getRayConnectOrdered(int i) {
-        TrackSegment result = null;
-
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
-            if (rt != null) {
-                result = rt.getConnect();
-            }
-        }
-        return result;
+        return turntable.getRayConnectOrdered(i);
     }
 
     /**
@@ -231,17 +195,12 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @param index the index in the rayTrackList
      */
     public void setRayConnect(TrackSegment ts, int index) {
-        for (RayTrack rt : rayTrackList) {
-            if (rt.getConnectionIndex() == index) {
-                rt.setConnect(ts);
-                break;
-            }
-        }
+        turntable.setRayConnect(ts, index);
     }
 
     // should only be used by xml save code
     public List<RayTrack> getRayTrackList() {
-        return rayTrackList;
+        return turntable.getRayTrackList();
     }
 
     /**
@@ -250,7 +209,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @return the number of rays
      */
     public int getNumberRays() {
-        return rayTrackList.size();
+        return turntable.getNumberRays();
     }
 
     /**
@@ -260,12 +219,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @return the index
      */
     public int getRayIndex(int i) {
-        int result = 0;
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
-            result = rt.getConnectionIndex();
-        }
-        return result;
+        return turntable.getRayIndex(i);
     }
 
     /**
@@ -275,12 +229,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @return the angle
      */
     public double getRayAngle(int i) {
-        double result = 0.0;
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
-            result = rt.getAngle();
-        }
-        return result;
+        return turntable.getRayAngle(i);
     }
 
     /**
@@ -291,18 +240,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @param state       the state
      */
     public void setRayTurnout(int index, String turnoutName, int state) {
-        boolean found = false; // assume failure (pessimist!)
-        for (RayTrack rt : rayTrackList) {
-            if (rt.getConnectionIndex() == index) {
-                rt.setTurnout(turnoutName, state);
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            log.error("{}.setRayTurnout({}, {}, {}); Attempt to add Turnout control to a non-existant ray track",
-                    getName(), index, turnoutName, state);
-        }
+        turntable.setRayTurnout(index, turnoutName, state);
     }
 
     /**
@@ -312,12 +250,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @return name of the turnout for the ray at this index
      */
     public String getRayTurnoutName(int i) {
-        String result = null;
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
-            result = rt.getTurnoutName();
-        }
-        return result;
+        return turntable.getRayTurnoutName(i);
     }
 
     /**
@@ -327,12 +260,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @return the turnout for the ray at this index
      */
     public Turnout getRayTurnout(int i) {
-        Turnout result = null;
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
-            result = rt.getTurnout();
-        }
-        return result;
+        return turntable.getRayTurnout(i);
     }
 
     /**
@@ -342,12 +270,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @return state of the turnout for the ray at this index
      */
     public int getRayTurnoutState(int i) {
-        int result = 0;
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
-            result = rt.getTurnoutState();
-        }
-        return result;
+        return turntable.getRayTurnoutState(i);
     }
 
     /**
@@ -357,12 +280,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @return true if disabled
      */
     public boolean isRayDisabled(int i) {
-        boolean result = false;    // assume not disabled
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
-            result = rt.isDisabled();
-        }
-        return result;
+        return turntable.isRayDisabled(i);
     }
 
     /**
@@ -372,10 +290,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @param boo the state
      */
     public void setRayDisabled(int i, boolean boo) {
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
-            rt.setDisabled(boo);
-        }
+        turntable.setRayDisabled(i, boo);
     }
 
     /**
@@ -385,12 +300,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @return the state
      */
     public boolean isRayDisabledWhenOccupied(int i) {
-        boolean result = false;    // assume not disabled when occupied
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
-            result = rt.isDisabledWhenOccupied();
-        }
-        return result;
+        return turntable.isRayDisabledWhenOccupied(i);
     }
 
     /**
@@ -400,10 +310,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @param boo the state
      */
     public void setRayDisabledWhenOccupied(int i, boolean boo) {
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
-            rt.setDisabledWhenOccupied(boo);
-        }
+        turntable.setRayDisabledWhenOccupied(i, boo);
     }
 
     /**
@@ -415,7 +322,7 @@ public class LayoutTurntableView extends LayoutTrackView {
     public Point2D getRayCoordsIndexed(int index) {
         Point2D result = MathUtil.zeroPoint2D;
         double rayRadius = radius + LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-        for (RayTrack rt : rayTrackList) {
+        for (RayTrack rt : turntable.rayTrackList) {
             if (rt.getConnectionIndex() == index) {
                 double angle = Math.toRadians(rt.getAngle());
                 // calculate coordinates
@@ -436,8 +343,8 @@ public class LayoutTurntableView extends LayoutTrackView {
      */
     public Point2D getRayCoordsOrdered(int i) {
         Point2D result = MathUtil.zeroPoint2D;
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
+        if (i < turntable.rayTrackList.size()) {
+            RayTrack rt = turntable.rayTrackList.get(i);
             if (rt != null) {
                 double angle = Math.toRadians(rt.getAngle());
                 double rayRadius = radius + LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
@@ -459,7 +366,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      */
     public void setRayCoordsIndexed(double x, double y, int index) {
         boolean found = false; // assume failure (pessimist!)
-        for (RayTrack rt : rayTrackList) {
+        for (RayTrack rt : turntable.rayTrackList) {
             if (rt.getConnectionIndex() == index) {
                 // convert these coordinates to an angle
                 double angle = Math.atan2(x - getCoordsCenter().getX(), y - getCoordsCenter().getY());
@@ -563,7 +470,7 @@ public class LayoutTurntableView extends LayoutTrackView {
     public boolean isMainlineIndexed(int index) {
         boolean result = false; // assume failure (pessimist!)
 
-        for (RayTrack rt : rayTrackList) {
+        for (RayTrack rt : turntable.rayTrackList) {
             if (rt.getConnectionIndex() == index) {
                 TrackSegment ts = rt.getConnect();
                 if (ts != null) {
@@ -585,8 +492,8 @@ public class LayoutTurntableView extends LayoutTrackView {
      */
     public boolean isMainlineOrdered(int i) {
         boolean result = false; // assume failure (pessimist!)
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
+        if (i < turntable.rayTrackList.size()) {
+            RayTrack rt = turntable.rayTrackList.get(i);
             if (rt != null) {
                 TrackSegment ts = rt.getConnect();
                 if (ts != null) {
@@ -632,7 +539,7 @@ public class LayoutTurntableView extends LayoutTrackView {
     @Override
     public void rotateCoords(double angleDEG) {
         // rotate all rayTracks
-        rayTrackList.forEach((rayTrack) -> {
+        turntable.rayTrackList.forEach((rayTrack) -> {
             rayTrack.setAngle(rayTrack.getAngle() + angleDEG);
         });
     }
@@ -727,9 +634,9 @@ public class LayoutTurntableView extends LayoutTrackView {
         jmi.setEnabled(false);
 
         /// if there are any track connections
-        if (!rayTrackList.isEmpty()) {
+        if (!turntable.rayTrackList.isEmpty()) {
             JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections"));
-            rayTrackList.forEach((rt) -> {
+            turntable.rayTrackList.forEach((rt) -> {
                 TrackSegment ts = rt.getConnect();
                 if (ts != null) {
                     connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "" + rt.getConnectionIndex()) + ts.getName()) {
@@ -776,7 +683,7 @@ public class LayoutTurntableView extends LayoutTrackView {
             rayPopup = new JPopupMenu();
         }
 
-        for (RayTrack rt : rayTrackList) {
+        for (RayTrack rt : turntable.rayTrackList) {
             if (rt.getConnectionIndex() == index) {
                 JMenuItem jmi = rayPopup.add("Turntable Ray " + index);
                 jmi.setEnabled(false);
@@ -838,7 +745,7 @@ public class LayoutTurntableView extends LayoutTrackView {
     public void setPosition(int index) {
         if (isTurnoutControlled()) {
             boolean found = false; // assume failure (pessimist!)
-            for (RayTrack rt : rayTrackList) {
+            for (RayTrack rt : turntable.rayTrackList) {
                 if (rt.getConnectionIndex() == index) {
                     lastKnownIndex = index;
                     rt.setPosition();
@@ -871,7 +778,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      */
     public void deleteRay(RayTrack rayTrack) {
         TrackSegment t = null;
-        if (rayTrackList == null) {
+        if (turntable.rayTrackList == null) {
             log.error("{}.deleteRay(null); rayTrack is null", getName());
         } else {
             t = rayTrack.getConnect();
@@ -896,7 +803,7 @@ public class LayoutTurntableView extends LayoutTrackView {
             popupMenu.removeAll();
         }
         popupMenu = null;
-        rayTrackList.forEach((rt) -> {
+        turntable.rayTrackList.forEach((rt) -> {
             rt.dispose();
         });
     }
@@ -918,99 +825,15 @@ public class LayoutTurntableView extends LayoutTrackView {
         return active;
     }
 
-    public class RayTrack {
+    public class RayTrackVisuals {
 
-        /**
-         * constructor for RayTracks
-         *
-         * @param angle its angle
-         * @param index its index
-         */
-        public RayTrack(double angle, int index) {
-            rayAngle = MathUtil.wrapPM360(angle);
-            connect = null;
-            connectionIndex = index;
-
-            disabled = false;
-            disableWhenOccupied = false;
-        }
-
+        RayTrack track;
+        
         // persistant instance variables
         private double rayAngle = 0.0;
-        private TrackSegment connect = null;
         private int connectionIndex = -1;
 
-        private boolean disabled = false;
-        private boolean disableWhenOccupied = false;
-
-        //
-        // Accessor routines
-        //
-        /**
-         * Set ray track disabled.
-         *
-         * @param boo set true to disable
-         */
-        public void setDisabled(boolean boo) {
-            if (disabled != boo) {
-                disabled = boo;
-                if (layoutEditor != null) {
-                    layoutEditor.redrawPanel();
-                }
-            }
-        }
-
-        /**
-         * Is this ray track disabled?
-         *
-         * @return true if so
-         */
-        public boolean isDisabled() {
-            return disabled;
-        }
-
-        /**
-         * Set ray track disabled if occupied.
-         *
-         * @param boo set true to disable if occupied
-         */
-        public void setDisabledWhenOccupied(boolean boo) {
-            if (disableWhenOccupied != boo) {
-                disableWhenOccupied = boo;
-                if (layoutEditor != null) {
-                    layoutEditor.redrawPanel();
-                }
-            }
-        }
-
-        /**
-         * Is ray track disabled if occupied?
-         *
-         * @return true if so
-         */
-        public boolean isDisabledWhenOccupied() {
-            return disableWhenOccupied;
-        }
-
-        /**
-         * get the track segment connected to this ray
-         *
-         * @return the track segment connected to this ray
-         */
-        public TrackSegment getConnect() {
-            return connect;
-        }
-
-        /**
-         * Set the track segment connected to this ray.
-         *
-         * @param ts the track segment to connect to this ray
-         */
-        public void setConnect(TrackSegment ts) {
-            connect = ts;
-        }
-
-        /**
+       /**
          * Get the angle for this ray.
          *
          * @return the angle for this ray
@@ -1028,133 +851,7 @@ public class LayoutTurntableView extends LayoutTrackView {
             rayAngle = MathUtil.wrapPM360(an);
         }
 
-        /**
-         * Get the connection index for this ray.
-         *
-         * @return the connection index for this ray
-         */
-        public int getConnectionIndex() {
-            return connectionIndex;
-        }
-
-        /**
-         * Is this ray occupied?
-         *
-         * @return true if occupied
-         */
-        private boolean isOccupied() {
-            boolean result = false; // assume not
-            if (connect != null) {  // does it have a connection? (yes)
-                LayoutBlock lb = connect.getLayoutBlock();
-                if (lb != null) {   // does the connection have a block? (yes)
-                    // is the block occupied?
-                    result = (lb.getOccupancy() == LayoutBlock.OCCUPIED);
-                }
-            }
-            return result;
-        }
-
-        private NamedBeanHandle<Turnout> namedTurnout;
-        // Turnout t;
-        private int turnoutState;
-        private PropertyChangeListener mTurnoutListener;
-
-        /**
-         * Set the turnout and state for this ray track.
-         *
-         * @param turnoutName the turnout name
-         * @param state       its state
-         */
-        public void setTurnout(String turnoutName, int state) {
-            Turnout turnout = null;
-            if (mTurnoutListener == null) {
-                mTurnoutListener = (PropertyChangeEvent e) -> {
-                    if (getTurnout().getKnownState() == turnoutState) {
-                        lastKnownIndex = connectionIndex;
-                        layoutEditor.redrawPanel();
-                        layoutEditor.setDirty();
-                    }
-                };
-            }
-            if (turnoutName != null) {
-                turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
-            }
-            if (namedTurnout != null && namedTurnout.getBean() != turnout) {
-                namedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
-            }
-            if (turnout != null && (namedTurnout == null || namedTurnout.getBean() != turnout)) {
-                if ((turnoutName != null) && !turnoutName.isEmpty()) {
-                    namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turnout);
-                    turnout.addPropertyChangeListener(mTurnoutListener, turnoutName, "Layout Editor Turntable");
-                }
-            }
-            if (turnout == null) {
-                namedTurnout = null;
-            }
-
-            if (this.turnoutState != state) {
-                this.turnoutState = state;
-            }
-        }
-
-        /**
-         * Set the position for this ray track.
-         */
-        public void setPosition() {
-            if (namedTurnout != null) {
-                if (disableWhenOccupied && isOccupied()) {
-                    log.debug("Can not setPosition of turntable ray when it is occupied");
-                } else {
-                    getTurnout().setCommandedState(turnoutState);
-                }
-            }
-        }
-
-        /**
-         * Get the turnout for this ray track.
-         *
-         * @return the turnout
-         */
-        public Turnout getTurnout() {
-            if (namedTurnout == null) {
-                return null;
-            }
-            return namedTurnout.getBean();
-        }
-
-        /**
-         * Get the turnout name for the ray track.
-         *
-         * @return the turnout name
-         */
-        public String getTurnoutName() {
-            if (namedTurnout == null) {
-                return null;
-            }
-            return namedTurnout.getName();
-        }
-
-        /**
-         * Get the state for the turnout for this ray track.
-         *
-         * @return the state
-         */
-        public int getTurnoutState() {
-            return turnoutState;
-        }
-
-        /**
-         * Dispose of this ray track.
-         */
-        void dispose() {
-            if (getTurnout() != null) {
-                getTurnout().removePropertyChangeListener(mTurnoutListener);
-            }
-            if (lastKnownIndex == connectionIndex) {
-                lastKnownIndex = -1;
-            }
-        }
-    }   // class RayTrack
+    }
 
     /**
      * Draw track decorations.
@@ -1325,7 +1022,7 @@ public class LayoutTurntableView extends LayoutTrackView {
             // draw control circles at all but current position ray tracks
             for (int j = 0; j < getNumberRays(); j++) {
                 if (getPosition() != j) {
-                    RayTrack rt = rayTrackList.get(j);
+                    RayTrack rt = turntable.rayTrackList.get(j);
                     if (!rt.isDisabled() && !(rt.isDisabledWhenOccupied() && rt.isOccupied())) {
                         Point2D pt = getRayCoordsOrdered(j);
                         g2.draw(trackControlCircleAt(pt));
