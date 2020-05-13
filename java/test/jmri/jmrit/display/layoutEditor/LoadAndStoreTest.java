@@ -34,6 +34,31 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
     static boolean done;
 
     /**
+     * Wait for the layout editor block processing to take place.
+     * This is quite layoutEditor-specific.
+     */
+     protected void postLoadProcessing(){
+     
+        done = false;
+        jmri.util.ThreadingUtil.runOnGUIDelayed(()->{ 
+                done = true;
+            }, 2500);
+        jmri.util.JUnitUtil.waitFor(()->{
+            return jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised || done;
+        });
+        
+        // need to do two separate ones because of waitFor limit
+        done = false;
+        jmri.util.ThreadingUtil.runOnGUIDelayed(()->{ 
+                done = true;
+            }, 2500);
+        jmri.util.JUnitUtil.waitFor(()->{
+            return jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised || done;
+        });
+        
+     }
+     
+    /**
      * Also writes out image files from these
      * for later offline checking.  This can't be 
      * (easily) automated, as the images vary from platform
@@ -47,8 +72,9 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         done = false;
         jmri.util.ThreadingUtil.runOnGUIDelayed(()->{ 
                 done = true;
-            }, 2500);
+            }, 1000);
         jmri.util.JUnitUtil.waitFor(()->{return done;});
+        
         storeImage(this.file);
     }
     
