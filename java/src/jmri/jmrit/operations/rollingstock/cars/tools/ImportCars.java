@@ -371,23 +371,27 @@ public class ImportCars extends ImportRollingStock {
                     // space delimited file
                     if (!comma) {
                         int j = 0;
+                        StringBuffer name = new StringBuffer(carLocationName);
                         for (int i = base + CAR_LOCATION_TRACK_SEPARATOR; i < inputLine.length; i++) {
                             if (inputLine[i].equals(LOCATION_TRACK_SEPARATOR)) {
                                 j = i + 1;
                                 break;
                             } else {
-                                carLocationName = carLocationName + " " + inputLine[i];
+                                name.append(" " + inputLine[i]);
                             }
                         }
+                        carLocationName = name.toString();
                         log.debug("Car ({} {}) has location ({})", carRoad, carNumber, carLocationName);
                         // now get the track name
+                        name = new StringBuffer();
                         if (j != 0 && j < inputLine.length) {
-                            carTrackName = inputLine[j];
+                            name.append(inputLine[j]);
                             for (int i = j + 1; i < inputLine.length; i++) {
-                                carTrackName = carTrackName + " " + inputLine[i];
+                                name.append(" " + inputLine[i]);
                             }
                             log.debug("Car ({} {}) has track ({})", carRoad, carNumber, carTrackName);
                         }
+                        carTrackName = name.toString();
                     }
 
                     // is there a load name?
