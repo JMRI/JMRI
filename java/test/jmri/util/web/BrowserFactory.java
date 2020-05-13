@@ -71,7 +71,7 @@ public class BrowserFactory {
                     //}
                     chromeOptions.addArguments("--disable-extensions");
                     LoggingPreferences logPrefs = new LoggingPreferences();
-                    logPrefs.enable(LogType.BROWSER, Level.SEVERE);
+                    logPrefs.enable(LogType.BROWSER, Level.INFO);
                     chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
 
                     driver = new EventFiringWebDriver(new ChromeDriver(chromeOptions));
