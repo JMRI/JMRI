@@ -24,6 +24,7 @@ build: off
 
 environment:
   global:
+    # Following doesn't affect tests, which are set in the build.xml target
     MAVEN_OPTS: "-Xmx2400m"
 
 before_test:
