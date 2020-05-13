@@ -278,35 +278,30 @@ public class ImportEngines extends ImportRollingStock {
                 if (inputLine.length > base + ENG_LOCATION) {
                     engineLocation = inputLine[base + ENG_LOCATION];
                 }
-                if (inputLine.length > base + ENG_TRACK) {
+                if (comma && inputLine.length > base + ENG_TRACK) {
                     engineTrack = inputLine[base + ENG_TRACK];
                 }
-                // Location name can be one to three words
-                if (!comma && inputLine.length > base + ENG_LOCATION_TRACK_SEPARATOR) {
-                    if (!inputLine[base + ENG_LOCATION_TRACK_SEPARATOR].equals(LOCATION_TRACK_SEPARATOR)) {
-                        engineLocation = engineLocation + " " + inputLine[base + ENG_LOCATION_TRACK_SEPARATOR];
-                        if (inputLine.length > base + ENG_LOCATION_TRACK_SEPARATOR + 1) {
-                            if (!inputLine[base + ENG_LOCATION_TRACK_SEPARATOR + 1].equals(LOCATION_TRACK_SEPARATOR)) {
-                                engineLocation = engineLocation + " " + inputLine[base + ENG_LOCATION_TRACK_SEPARATOR + 1];
-                            }
-                        }
-                    }
-                    // get track name if there's one
-                    boolean foundDash = false;
+                // Location and track name can be one or more words in a
+                // space delimited file
+                if (!comma) {
+                    int j = 0;
                     for (int i = base + ENG_LOCATION_TRACK_SEPARATOR; i < inputLine.length; i++) {
                         if (inputLine[i].equals(LOCATION_TRACK_SEPARATOR)) {
-                            foundDash = true;
-                            if (inputLine.length > i + 1) {
-                                engineTrack = inputLine[++i];
-                            }
-                        } else if (foundDash) {
-                            engineTrack = engineTrack + " " + inputLine[i];
+                            j = i + 1; // skip over separator
+                            break;
+                        } else {
+                            engineLocation = engineLocation + " " + inputLine[i];
                         }
                     }
-                    if (engineTrack == null) {
-                        engineTrack = "";
+                    log.debug("Engine ({} {}) has location ({})", engineRoad, engineNumber, engineLocation);
+                    // now get the track name
+                    if (j != 0 && j < inputLine.length) {
+                        engineTrack = inputLine[j];
+                        for (int i = j + 1; i < inputLine.length; i++) {
+                            engineTrack = engineTrack + " " + inputLine[i];
+                        }
+                        log.debug("Engine ({} {}) has track ({})", engineRoad, engineNumber, engineTrack);
                     }
-                    log.debug("Engine ({} {}) has track ({})", engineRoad, engineNumber, engineTrack);
                 }
 
                 if (engineLocation.length() > Control.max_len_string_location_name) {
