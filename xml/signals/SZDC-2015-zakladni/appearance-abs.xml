@@ -88,59 +88,59 @@
   <aspectMappings>
   
     <aspectMapping>
-      <ourAspect>Volno</ourAspect>
       <advancedAspect>Volno</advancedAspect>
+      <ourAspect>Volno</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <ourAspect>Volno</ourAspect>
       <advancedAspect>Výstraha</advancedAspect>
+      <ourAspect>Volno</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <ourAspect>Volno</ourAspect>
       <advancedAspect>Očekávej 40</advancedAspect>
-    </aspectMapping>
-    <aspectMapping>
       <ourAspect>Volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
       <advancedAspect>Očekávej 60</advancedAspect>
+      <ourAspect>Volno</ourAspect>
     </aspectMapping>
     
     <aspectMapping>
-      <ourAspect>Výstraha</ourAspect>
       <advancedAspect>Stůj</advancedAspect>
+      <ourAspect>Výstraha</ourAspect>
     </aspectMapping>
     
     <aspectMapping>
-      <ourAspect>Očekávej 40</ourAspect>
       <advancedAspect>Rychlost 40 a volno</advancedAspect>
+      <ourAspect>Očekávej 40</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <ourAspect>Očekávej 40</ourAspect>
       <advancedAspect>Rychlost 40 a výstraha</advancedAspect>
+      <ourAspect>Očekávej 40</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <ourAspect>Očekávej 40</ourAspect>
       <advancedAspect>Rychlost 40 a očekávej 40</advancedAspect>
+      <ourAspect>Očekávej 40</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <ourAspect>Očekávej 40</ourAspect>
       <advancedAspect>Rychlost 40 a očekávej 60</advancedAspect>
+      <ourAspect>Očekávej 40</ourAspect>
     </aspectMapping>
     
     <aspectMapping>
-      <ourAspect>Očekávej 60</ourAspect>
       <advancedAspect>Rychlost 60 a volno</advancedAspect>
+      <ourAspect>Očekávej 60</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <ourAspect>Očekávej 60</ourAspect>
       <advancedAspect>Rychlost 60 a výstraha</advancedAspect>
+      <ourAspect>Očekávej 60</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <ourAspect>Očekávej 60</ourAspect>
       <advancedAspect>Rychlost 60 a očekávej 40</advancedAspect>
+      <ourAspect>Očekávej 60</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <ourAspect>Očekávej 60</ourAspect>
       <advancedAspect>Rychlost 60 a očekávej 60</advancedAspect>
+      <ourAspect>Očekávej 60</ourAspect>
     </aspectMapping>
     
   </aspectMappings>

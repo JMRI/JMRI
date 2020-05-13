@@ -79,59 +79,59 @@
   <aspectMappings>
   
     <aspectMapping>
-      <ourAspect>Opakovaná volno</ourAspect>
       <advancedAspect>Volno</advancedAspect>
+      <ourAspect>Opakovaná volno</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <ourAspect>Opakovaná volno</ourAspect>
       <advancedAspect>Výstraha</advancedAspect>
+      <ourAspect>Opakovaná volno</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <ourAspect>Opakovaná volno</ourAspect>
       <advancedAspect>Očekávej 40</advancedAspect>
-    </aspectMapping>
-    <aspectMapping>
       <ourAspect>Opakovaná volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
       <advancedAspect>Očekávej 60</advancedAspect>
+      <ourAspect>Opakovaná volno</ourAspect>
     </aspectMapping>
     
     <aspectMapping>
-      <ourAspect>Opakovaná výstraha</ourAspect>
       <advancedAspect>Stůj</advancedAspect>
+      <ourAspect>Opakovaná výstraha</ourAspect>
     </aspectMapping>
     
     <aspectMapping>
-      <ourAspect>Opakovaná očekávej 40</ourAspect>
       <advancedAspect>Rychlost 40 a volno</advancedAspect>
+      <ourAspect>Opakovaná očekávej 40</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <ourAspect>Opakovaná očekávej 40</ourAspect>
       <advancedAspect>Rychlost 40 a výstraha</advancedAspect>
+      <ourAspect>Opakovaná očekávej 40</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <ourAspect>Opakovaná očekávej 40</ourAspect>
       <advancedAspect>Rychlost 40 a očekávej 40</advancedAspect>
+      <ourAspect>Opakovaná očekávej 40</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <ourAspect>Opakovaná očekávej 40</ourAspect>
       <advancedAspect>Rychlost 40 a očekávej 60</advancedAspect>
+      <ourAspect>Opakovaná očekávej 40</ourAspect>
     </aspectMapping>
     
     <aspectMapping>
-      <ourAspect>Opakovaná očekávej 60</ourAspect>
       <advancedAspect>Rychlost 60 a volno</advancedAspect>
+      <ourAspect>Opakovaná očekávej 60</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <ourAspect>Opakovaná očekávej 60</ourAspect>
       <advancedAspect>Rychlost 60 a výstraha</advancedAspect>
+      <ourAspect>Opakovaná očekávej 60</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <ourAspect>Opakovaná očekávej 60</ourAspect>
       <advancedAspect>Rychlost 60 a očekávej 40</advancedAspect>
+      <ourAspect>Opakovaná očekávej 60</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <ourAspect>Opakovaná očekávej 60</ourAspect>
       <advancedAspect>Rychlost 60 a očekávej 60</advancedAspect>
+      <ourAspect>Opakovaná očekávej 60</ourAspect>
     </aspectMapping>
     
   </aspectMappings>
