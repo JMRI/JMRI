@@ -95,8 +95,8 @@ public class EnterGridSizesDialog {
         }
 
         //Set up for Entry of Track Widths
-        primaryGridSizeField.setText(Integer.toString(layoutEditor.getGridSize()));
-        secondaryGridSizeField.setText(Integer.toString(layoutEditor.getGridSize2nd()));
+        primaryGridSizeField.setText(Integer.toString(layoutEditor.gContext.getGridSize()));
+        secondaryGridSizeField.setText(Integer.toString(layoutEditor.gContext.getGridSize2nd()));
         enterGridSizesFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent event) {
@@ -131,8 +131,8 @@ public class EnterGridSizesDialog {
             return;
         }
 
-        if (!MathUtil.equals(layoutEditor.getGridSize2nd(), siz)) {
-            layoutEditor.setGridSize2nd((int) siz);
+        if (!MathUtil.equals(layoutEditor.gContext.getGridSize2nd(), siz)) {
+            layoutEditor.gContext.setGridSize2nd((int) siz);
             gridSizesChange = true;
         }
 
@@ -151,8 +151,8 @@ public class EnterGridSizesDialog {
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
         } else {
-            if (!MathUtil.equals(layoutEditor.getGridSize(), siz)) {
-                layoutEditor.setGridSize((int) siz);
+            if (!MathUtil.equals(layoutEditor.gContext.getGridSize(), siz)) {
+                layoutEditor.gContext.setGridSize((int) siz);
                 gridSizesChange = true;
             }
             gridSizesCancelPressed(null);
