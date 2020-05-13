@@ -12,8 +12,8 @@ import jmri.*;
  * Note that unlike the NamedBean itself, the sytem name of a NamedBean within
  * a particular NamedBeanHandle is <u>not</u> immutable. The handle can point
  * at a different NamedBean after a rename operation. 
- * @param <B> supported type of NamedBean
- * @param <H> NamedBeanHandle of B
+ *
+ * @param <H> NamedBeanHandle of a supported type of NamedBean
  *
  * @see NamedBean
  * @see NamedBeanHandle
