@@ -1543,7 +1543,7 @@
 	    <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
 	    <arg line="-n '.*IT.*'" />
             <arg line="--reports-dir ${testreport}" />
-            <jvmarg value="-Xmx1536m"/>
+            <jvmarg value="-Xmx2400m"/>
             <jvmarg value="${jacocoagent}"/>
             <jvmarg line="${jvm.args}"/>
         </java>
