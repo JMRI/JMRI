@@ -1265,7 +1265,7 @@ public class AutoActiveTrain implements ThrottleListener {
             case BEGINNING_RESET:
                 _activeTrain.setRestart();
                 if (_activeTrain.getResetWhenDone()) {
-                    if (_activeTrain.getDelayedRestart() == ActiveTrain.NODELAY && !_activeTrain.getReverseAtEnd()) {
+                    if (_activeTrain.getDelayedRestart() == ActiveTrain.NODELAY) {
                         log.error("[{}]: train is continueing without pause, should have been handled in handleBlockStateChange.",_activeTrain.getTrainName());
                     } else {
                         // then active train is delayed
@@ -1277,6 +1277,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         _activeTrain.setRestart();
                         if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
                             InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                            break;
                         }
                         // can be mid block
                         setupNewCurrentSignal(null, true);
