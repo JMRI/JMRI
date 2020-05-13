@@ -24,7 +24,7 @@ public class SprogCbusModeSwitcherAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        SprogCbusModeSwitcherPane f = new SprogCbusModeSwitcherPane(_memo);
+        SprogCbusModeSwitcherFrame f = new SprogCbusModeSwitcherFrame(_memo);
         f.initComponents();
         f.setVisible(true);
     }

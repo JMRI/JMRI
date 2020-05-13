@@ -26,12 +26,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Mode Switcher to switch modes between programmer and command station.
  *
- * No matter what I tried, I cannot get the label text to wrap when added to a
- * CanNamedPane, so this is implemented as a JmriJFrame.
- * 
  * @author Andrew Crosland Copyright (C) 2020
  */
-public class SprogCbusModeSwitcherPane extends JmriJFrame 
+public class SprogCbusModeSwitcherFrame extends JmriJFrame 
         implements CanListener {
     
     private static final int PROP_CMD_STATION = 5;
@@ -49,7 +46,7 @@ public class SprogCbusModeSwitcherPane extends JmriJFrame
 
     int csNode;
 
-    public SprogCbusModeSwitcherPane(CanSystemConnectionMemo memo) {
+    public SprogCbusModeSwitcherFrame(CanSystemConnectionMemo memo) {
         super();
         _memo = memo;
         
@@ -231,6 +228,6 @@ public class SprogCbusModeSwitcherPane extends JmriJFrame
     }
 
     
-    private final static Logger log = LoggerFactory.getLogger(SprogCbusModeSwitcherPane.class);
+    private final static Logger log = LoggerFactory.getLogger(SprogCbusModeSwitcherFrame.class);
     
 }

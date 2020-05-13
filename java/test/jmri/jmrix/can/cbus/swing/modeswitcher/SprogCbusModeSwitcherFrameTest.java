@@ -18,19 +18,12 @@ import org.junit.Test;
  *
  * @author Andrew Crosland (C) 2020
  */
-public class SprogCbusModeSwitcherPaneTest extends jmri.util.JmriJFrameTestBase {
+public class SprogCbusModeSwitcherFrameTest extends jmri.util.JmriJFrameTestBase {
 
     CanSystemConnectionMemo memo;
     CbusDccProgrammer prog;
     jmri.jmrix.can.TrafficController tc;
     
-    @Test
-    public void testInitComponents() throws Exception{
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // for now, just make sure there isn't an exception.
-        ((SprogCbusModeSwitcherPane) frame).initComponents();
-    }
-
     @Before
     @Override
     public void setUp() {
@@ -45,7 +38,7 @@ public class SprogCbusModeSwitcherPaneTest extends jmri.util.JmriJFrameTestBase 
         
         jmri.InstanceManager.setDefault(GlobalProgrammerManager.class,new CbusDccProgrammerManager(prog, memo) );
         if (!GraphicsEnvironment.isHeadless()) {
-            frame = new SprogCbusModeSwitcherPane(memo);
+            frame = new SprogCbusModeSwitcherFrame(memo);
         }
     }
 
@@ -57,7 +50,6 @@ public class SprogCbusModeSwitcherPaneTest extends jmri.util.JmriJFrameTestBase 
         memo.dispose();
         tc = null;
         memo = null;
-        JUnitUtil.resetWindows(false,false);
         super.tearDown();
     }
 }
