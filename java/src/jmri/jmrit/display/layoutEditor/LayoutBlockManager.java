@@ -1166,7 +1166,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         //block boundary must be at a level crossing
-        if (HitPointType.isLevelXingHitType(cType)) {
+        if (!HitPointType.isLevelXingHitType(cType)) {
             log.error("{} {} Block Boundary not identified correctly - Blocks {}, {}",
                     cType, connected, facingBlock.getDisplayName(), protectedBlock.getDisplayName());
 
@@ -1744,7 +1744,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (HitPointType.isLevelXingHitType(cType)) {
+        if (!HitPointType.isLevelXingHitType(cType)) {
             log.error("Block Boundary not identified correctly - Blocks {}, {}", facingBlock.getDisplayName(),
                     protectedBlock.getDisplayName());
 
