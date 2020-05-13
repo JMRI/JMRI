@@ -96,6 +96,10 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * boolean  (true/yes vs false/no) values.  Not being present
      * is not an error. Not parsing (which shouldn't happen due to
      * the XML Schema checks) invokes the default error handler.
+     * @param element the element to parse.
+     * @param name element attribute name.
+     * @param def default value if name not present in element.
+     * @return boolean value of attribute, else default if not present or error.
      */
     final public boolean getAttributeBooleanValue(@Nonnull Element element, @Nonnull String name, boolean def) {
         Attribute a = null;
@@ -125,6 +129,10 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * integer values.  Not being present
      * is not an error. Not parsing (which shouldn't happen due to
      * the XML Schema checks) invokes the default error handler.
+     * @param element the element to parse.
+     * @param name element attribute name.
+     * @param def default value if name not present in element.
+     * @return integer value of attribute, else default if not present or error.
      */
     final public int getAttributeIntegerValue(@Nonnull Element element, @Nonnull String name, int def) {
         Attribute a = null;
@@ -152,6 +160,10 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * double values.  Not being present
      * is not an error. Not parsing (which shouldn't happen due to
      * the XML Schema checks) invokes the default error handler.
+     * @param element the element to parse.
+     * @param name element attribute name.
+     * @param def default value if name not present in element.
+     * @return double value of attribute, else default if not present or error.
      */
     final public double getAttributeDoubleValue(@Nonnull Element element, @Nonnull String name, double def) {
         Attribute a = null;
@@ -179,6 +191,11 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * float values.  Not being present
      * is not an error. Not parsing (which shouldn't happen due to
      * the XML Schema checks) invokes the default error handler.
+     * 
+     * @param element the element to parse.
+     * @param name element attribute name.
+     * @param def default value if name not present in element.
+     * @return float value of attribute, else default if not present or error.
      */
     final public float getAttributeFloatValue(@Nonnull Element element, @Nonnull String name, float def) {
         Attribute a = null;
@@ -202,24 +219,30 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
     }
 
     /**
-     * Base for support of Enum load/store to XML files
+     * Base for support of Enum load/store to XML files.
      */
     public static abstract class EnumIO <T extends Enum<T>> { // public to be usable by adapters in other configXML packages
 
         /**
          * Convert an enum value to a String for storage in an XML file.
+         * @param e enum value.
+         * @return storage string.
          */
         @Nonnull
         abstract public String outputFromEnum(@Nonnull T e);
         
         /**
-         * Convert a String value from an XML file to an enum value
+         * Convert a String value from an XML file to an enum value.
+         * @param s storage string
+         * @return enum value.
          */
         @Nonnull
         abstract public T inputFromString(@Nonnull String s);
 
         /**
          * Convert a JDOM Attribute from an XML file to an enum value
+         * @param a JDOM attribute.
+         * @return enum value.
          */
         @Nonnull
         public T inputFromAttribute(@Nonnull Attribute a) {
@@ -233,6 +256,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * This converts to and from ordinal numbers
      * so the order of definitions in the enum has to 
      * match up with the (former) constant values.
+     * @param <T> generic Enum class.
      */
     public static class EnumIoOrdinals <T extends Enum<T>> extends EnumIO<T> { // public to be usable by adapters in other configXML packages
     
@@ -261,12 +285,14 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
 
     /**
      * Support for Enum I/O to XML using the enum's element names.
+     * @param <T> generic enum class.
      */
     public static class EnumIoNames <T extends Enum<T>> extends EnumIO<T> { // public to be usable by adapters in other configXML packages
     
         /**
          * This constructor converts to and from strings
          * using the enum element names.
+         * @param clazz enum class.
          */
         public EnumIoNames(@Nonnull Class<T> clazz) {
             this.clazz = clazz;
@@ -304,12 +330,14 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * Support for Enum I/O to XML using the enum's element names;
      * for backward compatibility, it will also accept ordinal 
      * numbers when reading.
+     * @param <T> generic enum class.
      */
     public static class EnumIoNamesNumbers <T extends Enum<T>> extends EnumIoNames<T> { // public to be usable by adapters in other configXML packages
     
         /**
          * This constructor converts to and from strings
          * using the enum element names and, on read only, ordinal numbers
+         * @param clazz enum class type.
          */
         public EnumIoNamesNumbers(@Nonnull Class<T> clazz) {
             super(clazz);
@@ -326,10 +354,12 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * This converts to and from ordinal numbers
      * so the order of definitions in the enum has to 
      * match up with the (former) constant values.
+     * @param <T> generic enum class.
      */
     public static class EnumIoMapped <T extends Enum<T>> extends EnumIO<T> { // public to be usable by adapters in other configXML packages
     
         /**
+         * @param clazz enum class.
          * @param mapToEnum Substitutes an explicit mapping
          * for mapping from Strings to enums; this could allow e.g.
          * accepting both name and number versions. Multiple entries
@@ -347,6 +377,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         }
 
         /**
+         * @param clazz enum class.
          * @param mapToEnum Substitutes an explicit mapping
          * for mapping from Strings to enums; this could allow e.g.
          * accepting both name and number versions. Multiple entries

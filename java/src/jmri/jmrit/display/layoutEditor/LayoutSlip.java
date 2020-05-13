@@ -58,7 +58,13 @@ abstract public class LayoutSlip extends LayoutTurnout {
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutSlipEditor editor;
 
     /**
-     * constructor method
+     * Constructor method.
+     * 
+     * @param id slip ID.
+     * @param c 2D point.
+     * @param rot rotation.
+     * @param layoutEditor the layout editor.
+     * @param type slip type, SINGLE_SLIP or DOUBLE_SLIP.
      */
     public LayoutSlip(String id, Point2D c, double rot, LayoutEditor layoutEditor, TurnoutType type) {
         super(id, c, layoutEditor, type);
@@ -248,7 +254,8 @@ abstract public class LayoutSlip extends LayoutTurnout {
 
     /**
      * Toggle slip states if clicked on, physical turnout exists, and not
-     * disabled
+     * disabled.
+     * @param selectedPointType the selected hit point type.
      */
     public void toggleState(HitPointType selectedPointType) {
         if (!disabled && !(disableWhenOccupied && isOccupied())) {

@@ -48,7 +48,8 @@ public class TrackSegmentView extends LayoutTrackView {
     }
     
     /**
-     * constructor method for general use
+     * constructor method.
+     * @param track the track segment to view.
      */
     public TrackSegmentView(@Nonnull TrackSegment track, @Nonnull LayoutEditor layoutEditor,
                                 boolean arc, boolean flip, boolean circle

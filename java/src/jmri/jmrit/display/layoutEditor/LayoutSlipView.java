@@ -32,7 +32,8 @@ public class LayoutSlipView extends LayoutTurnoutView {
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutSlipEditor editor;
 
     /**
-     * constructor method
+     * Constructor method.
+     * @param slip the layout sip to create view for.
      */
     public LayoutSlipView(@Nonnull LayoutSlip slip, @Nonnull LayoutEditor layoutEditor) {
         super(slip, layoutEditor);

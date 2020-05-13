@@ -50,7 +50,8 @@ public class TrackNode {
     int _NodeState = 0;
 
     /**
-     * Access methods
+     * Set the node.
+     * @param node the layout track node.
      */
     public void setNode(LayoutTrack node) {
         _Node = node;
@@ -92,7 +93,8 @@ public class TrackNode {
       Operational methods
      */
     /**
-     * Returns the Block of the node Object at the nodeType position
+     * Get the node block.
+     * @return the Block of the node Object at the nodeType position, may be null.
      */
     public Block getNodeBlock() {
         if (HitPointType.POS_POINT == _NodeType) {

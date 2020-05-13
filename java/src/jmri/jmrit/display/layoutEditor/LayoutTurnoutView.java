@@ -222,7 +222,8 @@ public class LayoutTurnoutView extends LayoutTrackView {
     final private LayoutTurnout turnout;
 
     /**
-     * constructor method
+     * Constructor method.
+     * @param turnout the layout turnout to create the view for.
      */
     public LayoutTurnoutView(@Nonnull LayoutTurnout turnout, @Nonnull LayoutEditor layoutEditor) {
         super(turnout, layoutEditor);

@@ -596,7 +596,10 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     }
 
     /**
-     * since 4.15.4
+     * Get the Roster ID String.
+     * 
+     * @since 4.15.4
+     * @return roster ID string.
      */
     public String getCurrentRosterIdString() {
         StringBuilder s = new StringBuilder("");

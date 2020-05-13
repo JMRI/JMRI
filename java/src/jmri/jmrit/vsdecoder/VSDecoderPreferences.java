@@ -315,8 +315,12 @@ public class VSDecoderPreferences {
     }
 
     /**
-     * Add an AddressListener. AddressListeners are notified when the user
-     * selects a new address and when a Throttle is acquired for that address
+     * Add an AddressListener.
+     * <p>
+     * AddressListeners are notified when the user
+     * selects a new address and when a Throttle is acquired for that address.
+     * 
+     * @param l listener to add.
      *
      */
     public void addPropertyChangeListener(PropertyChangeListener l) {
@@ -331,6 +335,7 @@ public class VSDecoderPreferences {
     /**
      * Remove an AddressListener.
      *
+     * @param l listener to remove.
      */
     public void removePropertyChangeListener(PropertyChangeListener l) {
         if (listeners == null) {

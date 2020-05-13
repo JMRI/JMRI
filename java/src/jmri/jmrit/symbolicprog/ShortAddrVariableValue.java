@@ -38,7 +38,8 @@ public class ShortAddrVariableValue extends DecVariableValue {
     }
 
     /**
-     * Register a CV to be modified regardless of current value
+     * Register a CV to be modified regardless of current value.
+     * @param cvNum cv number string.
      */
     public void setModifiedCV(String cvNum) {
         if (firstFreeSpace >= maxCVs) {

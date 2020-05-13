@@ -25,7 +25,8 @@ import jmri.util.*;
 public class PositionablePointEditor extends LayoutTrackEditor {
 
     /**
-     * constructor method
+     * constructor method.
+     * @param layoutEditor main layout editor.
      */
     public PositionablePointEditor(@Nonnull LayoutEditor layoutEditor) {
         super(layoutEditor);

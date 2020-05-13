@@ -41,7 +41,8 @@ public class LayoutTurntableView extends LayoutTrackView {
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurntableEditor editor;
 
     /**
-     * constructor method
+     * Constructor method.
+     * @param turntable the layout turntable to create view for.
      */
     public LayoutTurntableView(@Nonnull LayoutTurntable turntable, @Nonnull LayoutEditor layoutEditor) {
         super(turntable, layoutEditor);

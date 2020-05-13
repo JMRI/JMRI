@@ -39,7 +39,8 @@ public class PositionablePointView extends LayoutTrackView {
     private NamedBeanHandle<Sensor> westBoundSensorNamed = null;
 
     /**
-     * constructor method
+     * constructor method.
+     * @param point the positionable point.
      */
     public PositionablePointView(@Nonnull PositionablePoint point, @Nonnull LayoutEditor layoutEditor) {
         super(point, layoutEditor);

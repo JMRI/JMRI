@@ -67,7 +67,8 @@ public class LevelXingView extends LayoutTrackView {
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor editor;
 
     /**
-     * constructor method
+     * Constructor method.
+     * @param xing the level crossing.
      */
     public LevelXingView(@Nonnull LevelXing xing, @Nonnull LayoutEditor layoutEditor) {
         super(xing, layoutEditor);

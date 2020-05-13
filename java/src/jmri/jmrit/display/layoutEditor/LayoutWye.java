@@ -88,7 +88,14 @@ public class LayoutWye extends LayoutTurnout {
     }
 
     /**
-     * Main constructor method
+     * Main constructor method.
+     * @param id wye id string.
+     * @param c 2D point position.
+     * @param rot rotation.
+     * @param xFactor horizontal factor.
+     * @param yFactor vertical factor.
+     * @param layoutEditor main layout editor.
+     * @param v unused.
      */
     public LayoutWye(@Nonnull String id, @Nonnull Point2D c, double rot,
             double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
