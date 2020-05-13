@@ -117,8 +117,12 @@ public class WebServerAcceptanceSteps implements En {
             SoftAssertions softly = new SoftAssertions();
             for (LogEntry logEntry : logEntries) {
                 softly.assertThat(logEntry.getLevel())
-                        .withFailMessage(String.format("%s:%s",webDriver.getWrappedDriver().getClass(),logEntry.getMessage()))
+                        .withFailMessage(String.format("%s:%s:%s",webDriver.getWrappedDriver().getClass(),logEntry.getLevel().getName(),logEntry.getMessage()))
+                        .isNotEqualTo(Level.WARNING)
                         .isNotEqualTo(Level.SEVERE);
+                softly.assertThat(logEntry.getMessage())
+                        .withFailMessage(String.format("%s:%s:%s",webDriver.getWrappedDriver().getClass(),logEntry.getLevel().getName(),logEntry.getMessage()))
+                        .doesNotStartWith("ERROR");
             }
             softly.assertAll();
         });
@@ -129,7 +133,7 @@ public class WebServerAcceptanceSteps implements En {
                 webDriver.get("http://localhost:12080/");
             } catch (org.openqa.selenium.WebDriverException wde) {
                 // ignore reaching an error page, rethrow if anything
-                // not being able to reach the browser here is ok.1
+                // not being able to reach the browser here is ok.
                 if (!(wde.getMessage().startsWith("Reached error page") || wde instanceof org.openqa.selenium.remote.UnreachableBrowserException)) {
                     throw wde;
                 }
