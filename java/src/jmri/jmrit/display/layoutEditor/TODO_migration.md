@@ -585,6 +585,13 @@ What are we _not_ rotating the other types?  Is this a conditional thing somehow
 
 ---
 
+java/src/jmri/util/NamedBeanHandleComparator.java prompts some cleanup:
+ - to give stable sorting, should this use the bean (reference) name instead of system name?
+ - Should/is NamedBeanHandle's name member datam really immutable? Final?
+ 
+---
+
+
 Figure this one out!  At least part of the comments is wrong...
 TrackSegment 436
     /**
