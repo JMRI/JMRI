@@ -225,6 +225,7 @@ public class SprogCbusModeSwitcherFrame extends JmriJFrame
     @Override
     public void dispose() {
         tc.removeCanListener(this);
+        super.dispose();
     }
 
     
