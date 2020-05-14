@@ -83,7 +83,9 @@ public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         tc = new XpaTrafficControlScaffold();
-        p = new XpaPowerManager(tc);
+        XpaSystemConnectionMemo memo = new XpaSystemConnectionMemo();
+        memo.setXpaTrafficController(tc);
+        p = new XpaPowerManager(memo);
     }
 
     @After

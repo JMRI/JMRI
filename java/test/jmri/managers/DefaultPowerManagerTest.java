@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,7 +16,7 @@ public class DefaultPowerManagerTest {
 
     @Test
     public void testCTor() {
-        DefaultPowerManager t = new DefaultPowerManager();
+        DefaultPowerManager t = new DefaultPowerManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         Assert.assertNotNull("exists",t);
     }
 

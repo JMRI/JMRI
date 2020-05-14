@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import java.util.Date;
+import jmri.JmriException;
 
 import jmri.PowerManager;
 import jmri.implementation.DefaultClockControl;
@@ -344,7 +345,11 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
             //     power (GTRK_POWER, 0x01 bit in byte 7)
             boolean power = true;
             if (pm != null) {
-                power = (pm.getPower() == PowerManager.ON);
+                try {
+                    power = (pm.getPower() == PowerManager.ON);
+                } catch (JmriException ex) {
+                    log.error("Error getting power", ex);
+                }
             } else {
                 jmri.util.Log4JUtil.warnOnce(log, "Can't access power manager for fast clock");
             }

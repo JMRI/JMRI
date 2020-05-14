@@ -35,6 +35,7 @@ public class LnPr2PowerManager extends LnPowerManager {
 
     @Override
     public void setPower(int v) throws JmriException {
+        int old = power;
         power = UNKNOWN;
 
         // Instead of GPON/GPOFF, PR2 uses ops-mode writes to CV 128 for control
@@ -79,7 +80,7 @@ public class LnPr2PowerManager extends LnPowerManager {
             }
         }
         // notify of change
-        firePropertyChange("Power", null, null); // NOI18N
+        firePropertyChange("Power", old, power); // NOI18N
     }
 
     void refresh() {
@@ -100,9 +101,9 @@ public class LnPr2PowerManager extends LnPowerManager {
     // to listen for status changes from LocoNet
     @Override
     public void message(LocoNetMessage m) {
+        int old = power;
         if (m.getOpCode() == LnConstants.OPC_GPON) {
             power = ON;
-            firePropertyChange("Power", null, null); // NOI18N
         } else if (m.getOpCode() == LnConstants.OPC_GPOFF) {
             power = OFF;
             if (timer != null) {
@@ -111,7 +112,6 @@ public class LnPr2PowerManager extends LnPowerManager {
                 // A NPE was seen, before protected added, with the DCS52.
                 timer.stop();
             }
-            firePropertyChange("Power", null, null); // NOI18N
         } else if (m.getOpCode() == LnConstants.OPC_WR_SL_DATA) {
             // if this is a service mode write, drop out of power on mode
             if ((m.getElement(1) == 0x0E)
@@ -123,7 +123,6 @@ public class LnPr2PowerManager extends LnPowerManager {
                     if (timer != null) {
                         timer.stop();
                     }
-                    firePropertyChange("Power", null, null); // NOI18N
                 }
             }
         } else if ( // check for status showing going off
@@ -140,10 +139,10 @@ public class LnPr2PowerManager extends LnPowerManager {
                     if (timer != null) {
                         timer.stop();
                     }
-                    firePropertyChange("Power", null, null); // NOI18N
                 }
             }
         }
+        firePropertyChange("Power", old, power); // NOI18N
     }
     
     /**
