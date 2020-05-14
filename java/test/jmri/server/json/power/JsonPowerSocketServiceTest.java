@@ -1,5 +1,7 @@
 package jmri.server.json.power;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -110,19 +112,12 @@ public class JsonPowerSocketServiceTest {
     @Test
     public void testSendingErrors() throws IOException, JmriException, JsonException {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
-        JsonNode message = connection.getObjectMapper().readTree("{\"state\":0}"); // Power UNKNOWN
+        final JsonNode message = connection.getObjectMapper().readTree("{\"state\":0}"); // Power UNKNOWN
         TestJsonPowerHttpService http = new TestJsonPowerHttpService(connection.getObjectMapper());
         JsonPowerSocketService service = new JsonPowerSocketService(connection, http);
-        PowerManager power = InstanceManager.getDefault(PowerManager.class);
-        power.setPower(PowerManager.UNKNOWN);
-        service.onList(JsonPowerServiceFactory.POWER, message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         http.setThrowException(true);
-        power.setPower(PowerManager.ON);
-        message = connection.getMessage();
-        Assert.assertNotNull(message);
-        Assert.assertEquals(JsonException.ERROR, message.path(JSON.TYPE).asText());
-        Assert.assertEquals(499, message.path(JSON.DATA).path(JsonException.CODE).asInt());
-        Assert.assertEquals("Mock Exception", message.path(JSON.DATA).path(JsonException.MESSAGE).asText());
+        assertThatCode(() -> service.onMessage(JsonPowerServiceFactory.POWER, message, new JsonRequest(locale, JSON.V5, JSON.POST, 0)))
+        .isExactlyInstanceOf(JsonException.class);
     }
 
     @Test
@@ -163,12 +158,12 @@ public class JsonPowerSocketServiceTest {
         }
 
         @Override
-        public JsonNode doGet(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        public JsonNode doPost(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
             if (throwException) {
                 throwException = false;
                 throw new JsonException(499, "Mock Exception", request.id);
             }
-            return super.doGet(type, name, data, request);
+            return super.doPost(type, name, data, request);
         }
 
         public void setThrowException(boolean throwException) {
