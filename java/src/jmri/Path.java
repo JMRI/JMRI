@@ -402,31 +402,29 @@ public class Path implements Comparable<Path> {
         if (!(getClass() == obj.getClass())) {
             throw new IllegalArgumentException("argument of improper type");
         } else {
-            Path p = (Path) obj;
-
             int retval;
             
-            if (p.getBlock() != null && getBlock() != null) {
-                retval = getBlock().compareTo(p.getBlock());
+            if (obj.getBlock() != null && getBlock() != null) {
+                retval = getBlock().compareTo(obj.getBlock());
                 if (retval != 0) return retval;
             }
             
-            if ( (int)this._length - (int)p._length != 0.) return (int)this._length - (int)p._length;
+            if ( (int)this._length - (int)obj._length != 0.) return (int)this._length - (int)obj._length;
 
-            if (this._toBlockDirection != p._toBlockDirection) 
-                return this._toBlockDirection - p._toBlockDirection;
+            if (this._toBlockDirection != obj._toBlockDirection) 
+                return this._toBlockDirection - obj._toBlockDirection;
 
-            if (this._fromBlockDirection != p._fromBlockDirection) 
-                return this._fromBlockDirection - p._fromBlockDirection;
+            if (this._fromBlockDirection != obj._fromBlockDirection) 
+                return this._fromBlockDirection - obj._fromBlockDirection;
 
             
-            if (this._beans.size() != p._beans.size()) {
-                return this._beans.size() - p._beans.size();
+            if (this._beans.size() != obj._beans.size()) {
+                return this._beans.size() - obj._beans.size();
             }
             
-            for (int i = 0; i < p._beans.size(); i++) {
+            for (int i = 0; i < obj._beans.size(); i++) {
                 BeanSetting bs1 = this._beans.get(i);
-                BeanSetting bs2 = p._beans.get(i);
+                BeanSetting bs2 = obj._beans.get(i);
                 if (bs1.getBean() == null && bs2.getBean() != null) return 1;
                 if (bs1.getBean() != null && bs2.getBean() == null) return -1;
                 if (bs1.getBean() != null && bs2.getBean() != null) {
