@@ -107,7 +107,7 @@ public class FunctionButton extends JToggleButton {
     /**
      * Set the function number this button will operate.
      *
-     * @param id An integer from 0 to 28.
+     * @param id An integer, minimum 0.
      */
     public void setIdentity(int id) {
         this.identity = id;
@@ -116,7 +116,7 @@ public class FunctionButton extends JToggleButton {
     /**
      * Get the function number this button operates.
      *
-     * @return An integer from 0 to 28.
+     * @return An integer, minimum 0.
      */
     public int getIdentity() {
         return identity;
@@ -571,6 +571,24 @@ public class FunctionButton extends JToggleButton {
      */
     public boolean isSelectedImageOK() {
         return isSelectedImageOK;
+    }
+    
+    private int _maxFunc;
+    
+    /** 
+     * Set maximum function number hardware is capable of.
+     * @param maxfunc normally 29, 0-28.
+     */
+    public void setMaxFunction( int maxfunc) {
+        _maxFunc = maxfunc;
+    }
+    
+    /**
+     * Get maximum function number hardware is capable of.
+     * @return maximum functions, normally 29, i.e. 0-28.
+     */
+    public int getMaxFunction() {
+        return _maxFunc;
     }
 
     private final static Logger log = LoggerFactory.getLogger(FunctionButton.class);

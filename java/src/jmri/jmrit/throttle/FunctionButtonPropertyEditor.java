@@ -155,6 +155,7 @@ public class FunctionButtonPropertyEditor extends JDialog {
         textField.setText(button.getButtonLabel());
         lockableCheckBox.setSelected(button.getIsLockable());
         idField.setText(String.valueOf(button.getIdentity()));
+        idField.setToolTipText(Bundle.getMessage("MaxFunction",button.getMaxFunction()-1));
         fontField.setText(String.valueOf(button.getFont().getSize()));
         visibleCheckBox.setSelected(button.getDisplay());
         _imageFilePath.setImagePath(button.getIconPath());
@@ -203,12 +204,13 @@ public class FunctionButtonPropertyEditor extends JDialog {
         /* ID >=0 && ID <= 28 */
         try {
             int id = Integer.parseInt(idField.getText());
-            if ((id < 0) || id > 28) {
+            if ((id < 0) || id >= button.getMaxFunction()) {
                 throw new NumberFormatException("");
             }
         } catch (NumberFormatException ex) {
             errors.append(String.valueOf(++errorNumber)).append(". ");
-            errors.append(Bundle.getMessage("ErrorFunctionKeyRange")).append("\n");
+            errors.append(Bundle.getMessage("ErrorFunctionKeyRange",
+                button.getMaxFunction()-1)).append("\n");
         }
 
         /* font > 0 */
