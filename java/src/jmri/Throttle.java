@@ -147,7 +147,8 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get maximum number of functions supported by this Throttle.
      * Typically returns 29, i.e. 0-28.
-     * @see jmri.jmrit.roster.RosterEntry.getMAXFNNUM()
+     * This is the hardware maximum value.
+     * For roster entry max. see jmri.jmrit.roster.RosterEntry.getMAXFNNUM()
      * @return max number of functions supported by this hardware type.
      */
     public abstract int getMaxFunctions();
