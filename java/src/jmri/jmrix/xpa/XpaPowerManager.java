@@ -61,8 +61,9 @@ public class XpaPowerManager extends AbstractPowerManager<XpaSystemConnectionMem
     @Override
     public void reply(XpaMessage m) {
         if (waiting) {
+            int old = power;
             power = onReply;
-            firePropertyChange("Power", null, null);
+            firePowerPropertyChange(old, power);
         }
         waiting = false;
     }

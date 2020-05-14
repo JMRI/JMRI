@@ -49,7 +49,7 @@ public class MrcPowerManager
             tc.sendMrcMessage(l);
         }
         power = v;
-        firePropertyChange("Power", old, power); // NOI18N
+        firePowerPropertyChange(old, power);
     }
 
     // these next three public methods have been added so that other classes

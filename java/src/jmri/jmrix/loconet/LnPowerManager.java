@@ -55,7 +55,7 @@ public class LnPowerManager extends AbstractPowerManager<LocoNetSystemConnection
             tc.sendLocoNetMessage(l);
         }
 
-        firePropertyChange("Power", old, power); // NOI18N
+        firePowerPropertyChange(old, power);
     }
 
     // to free resources when no longer used
@@ -122,7 +122,7 @@ public class LnPowerManager extends AbstractPowerManager<LocoNetSystemConnection
             default:
                 break;
         }
-        firePropertyChange("Power", old, power); // NOI18N
+        firePowerPropertyChange(old, power);
     }
 
     /**

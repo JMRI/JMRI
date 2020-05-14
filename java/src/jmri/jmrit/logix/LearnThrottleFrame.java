@@ -234,7 +234,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         if (log.isDebugEnabled()) {
             log.debug("propertyChange {} = {}",evt.getPropertyName(),evt.getNewValue());
         }
-        if (evt.getPropertyName().equals("Power")) {
+        if (evt.getPropertyName().equals(PowerManager.POWER)) {
             setPowerIcons();
         }
     }

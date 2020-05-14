@@ -27,11 +27,9 @@ public class LnPr2PowerManager extends LnPowerManager {
     public LnPr2PowerManager(LocoNetSystemConnectionMemo memo) {
         super(memo);
         this.tc = memo.getLnTrafficController();
-        this.memo = memo;
     }
 
     LnTrafficController tc;
-    LocoNetSystemConnectionMemo memo;
 
     @Override
     public void setPower(int v) throws JmriException {
@@ -49,15 +47,10 @@ public class LnPr2PowerManager extends LnPowerManager {
                 // set bit 1 in CV 128
                 pm.writeCV("128", 1, null);
                 power = ON;
-                firePropertyChange("Power", null, null); // NOI18N
+                firePowerPropertyChange(old, power);
                 // start making sure that the power is refreshed
                 if (timer == null) {
-                    timer = new javax.swing.Timer(2 * 1000, new java.awt.event.ActionListener() {
-                        @Override
-                        public void actionPerformed(java.awt.event.ActionEvent e) {
-                            refresh();
-                        }
-                    });
+                    timer = new javax.swing.Timer(2 * 1000, e -> refresh());
                     timer.setInitialDelay(2 * 1000);
                     timer.setRepeats(true);     // in case we run by
                 }
@@ -80,7 +73,7 @@ public class LnPr2PowerManager extends LnPowerManager {
             }
         }
         // notify of change
-        firePropertyChange("Power", old, power); // NOI18N
+        firePowerPropertyChange(old, power);
     }
 
     void refresh() {
@@ -142,7 +135,7 @@ public class LnPr2PowerManager extends LnPowerManager {
                 }
             }
         }
-        firePropertyChange("Power", old, power); // NOI18N
+        firePowerPropertyChange(old, power);
     }
     
     /**
