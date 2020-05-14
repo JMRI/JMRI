@@ -20,8 +20,8 @@ import jmri.beans.PropertyChangeProvider;
  * {@link java.beans.PropertyChangeEvent}s that can be listened to include
  * <ul>
  * <li>SpeedSetting, SpeedSteps, isForward
- * <li>F0, F1, F2 .. F27, F28
- * <li>F0Momentary, F1Momentary, F2Momentary .. F28Momentary
+ * <li>F0, F1, F2 .. F27, F28, F29, F30 ..
+ * <li>F0Momentary, F1Momentary, F2Momentary .. F28Momentary .. F29Momentary ..
  * <li>ThrottleAssigned, throttleRemoved, throttleConnected,
  * throttleNotFoundInRemoval
  * <li>DispatchEnabled, ReleaseEnabled
@@ -72,15 +72,6 @@ public interface Throttle extends PropertyChangeProvider {
     public static final String F26 = "F26"; // NOI18N
     public static final String F27 = "F27"; // NOI18N
     public static final String F28 = "F28"; // NOI18N
-
-    /**
-     * String array containing Function constants.
-     * e.g. "F0","F1","F2","F3" .. "F27","F28".
-     */
-    public static final String[] FUNCTION_STRING_ARRAY = new String[]{
-        F0, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14,
-        F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28
-    };
     
     /**
      * Constants to represent Function Groups.
@@ -89,7 +80,7 @@ public interface Throttle extends PropertyChangeProvider {
      */
     public static final int[] FUNCTION_GROUPS = new int[]{ 1, 1, 1, 1, 1, /** 0-4 */
         2, 2, 2, 2, /** 5-8 */   3, 3, 3, 3, /** 9-12 */
-        4, 4, 4, 4, 4, 4, 4, 4, /** 13-20 */ 5, 5, 5, 5, 5, 5, 5, 5 /** 14-28 */ 
+        4, 4, 4, 4, 4, 4, 4, 4, /** 13-20 */ 5, 5, 5, 5, 5, 5, 5, 5 /** 21-28 */ 
         
     };
     
@@ -127,17 +118,39 @@ public interface Throttle extends PropertyChangeProvider {
     public static final String F28Momentary = "F28Momentary"; // NOI18N
 
     /**
-     * String array containing Momentary Function constants.
-     * e.g. "F0Momentary", "F1Momentary" .. "F28Momentary".
+     * Get the Function String for a particular Function number.
+     * Commonly used string in Throttle property change listeners.
+     * @param functionNum Function Number, minimum 0.
+     * @return function string, e.g. "F0" or "F7".
      */
-    public static final String[] FUNCTION_MOMENTARY_STRING_ARRAY = new String[]{
-        F0Momentary, F1Momentary, F2Momentary, F3Momentary, F4Momentary, 
-        F5Momentary, F6Momentary, F7Momentary, F8Momentary,
-        F9Momentary, F10Momentary, F11Momentary, F12Momentary,
-        F13Momentary, F14Momentary, F15Momentary, F16Momentary,
-        F17Momentary, F18Momentary, F19Momentary, F20Momentary,
-        F21Momentary, F22Momentary, F23Momentary, F24Momentary,
-        F25Momentary, F26Momentary, F27Momentary, F28Momentary };
+    public static String getFunctionString(int functionNum){
+        StringBuilder sb = new StringBuilder(3);
+        sb.append("F"); // NOI18N
+        sb.append(functionNum);
+        return sb.toString();
+    }
+
+    /**
+     * Get the Momentary Function String for a particular Function number.
+     * Commonly used string in Throttle property change listeners.
+     * @param momentFunctionNum Momentary Function Number, minimum 0.
+     * @return momentary function string, e.g. "F0Momentary" or "F7Momentary".
+     */
+    public static String getFunctionMomentaryString(int momentFunctionNum){
+        StringBuilder sb = new StringBuilder(12);
+        sb.append("F"); // NOI18N
+        sb.append(momentFunctionNum);
+        sb.append("Momentary"); // NOI18N
+        return sb.toString();
+    }
+    
+    /**
+     * Get maximum number of functions supported by this Throttle.
+     * Typically returns 29, i.e. 0-28.
+     * @see jmri.jmrit.roster.RosterEntry.getMAXFNNUM()
+     * @return max number of functions supported by this hardware type.
+     */
+    public abstract int getMaxFunctions();
     
     /**
      * Speed - expressed as a value {@literal 0.0 -> 1.0.} Negative means
