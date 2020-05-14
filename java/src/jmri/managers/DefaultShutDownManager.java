@@ -99,7 +99,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      * {@inheritDoc}
      */
     @Override
-    synchronized public void register(Callable task) {
+    synchronized public void register(Callable<Boolean> task) {
         Objects.requireNonNull(task, "Shutdown task cannot be null.");
         this.callables.add(task);
     }

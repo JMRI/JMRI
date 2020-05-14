@@ -2,7 +2,6 @@ package jmri;
 
 import java.util.List;
 
-import java.util.Set;
 import java.util.concurrent.Callable;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
@@ -47,7 +46,7 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * @param task the verification task
      * @throws NullPointerException if the task is null
      */
-    public void register(@Nonnull Callable task);
+    public void register(@Nonnull Callable<Boolean> task);
 
     /**
      * Register a task that runs when JMRI is stopping. An attempt to
