@@ -1,9 +1,7 @@
 package jmri.jmrit.vsdecoder.swing;
 
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -13,14 +11,13 @@ import org.junit.*;
  */
 public class VSDManagerFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new VSDManagerFrame();
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new VSDManagerFrame();
+        }
     }
 
     @After

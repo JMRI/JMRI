@@ -12,7 +12,8 @@ import jmri.TurnoutOperation;
 public class RawTurnoutOperationConfig extends CommonTurnoutOperationConfig {
     /**
      * Create the config JPanel, if there is one, to configure this operation
-     * type
+     * type.
+     * @param op turnout operation.
      */
     public RawTurnoutOperationConfig(TurnoutOperation op) {
         super(op);

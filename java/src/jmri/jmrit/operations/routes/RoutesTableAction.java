@@ -1,9 +1,11 @@
 package jmri.jmrit.operations.routes;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Swing action to create and register a RoutesTableFrame object.
@@ -13,12 +15,8 @@ import javax.swing.AbstractAction;
  */
 public class RoutesTableAction extends AbstractAction {
 
-    public RoutesTableAction(String s) {
-        super(s);
-    }
-
     public RoutesTableAction() {
-        this(Bundle.getMessage("MenuRoutes")); // NOI18N
+        super(Bundle.getMessage("MenuRoutes")); // NOI18N
     }
 
     private static RoutesTableFrame routesTableFrame = null;

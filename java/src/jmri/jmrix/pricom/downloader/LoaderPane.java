@@ -24,7 +24,7 @@ import purejavacomm.*;
 /**
  * Pane for downloading software updates to PRICOM products
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -75,7 +75,7 @@ public class LoaderPane extends javax.swing.JPanel {
                     //} catch (jmri.jmrix.SerialConfigException ex) {
                     //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
                 } catch (java.lang.UnsatisfiedLinkError ex) {
-                    log.error("Error while opening port. Did you select the right one?\n" + ex);
+                    log.error("Error while opening port. Did you select the right one?\n{}", ex);
                 }
             }
         });
@@ -147,7 +147,7 @@ public class LoaderPane extends javax.swing.JPanel {
             byte endbyte = 0x03;
             ostream.write(endbyte);
         } catch (java.io.IOException e) {
-            log.error("Exception on output: " + e);
+            log.error("Exception on output: {}", e);
         }
     }
 
@@ -170,13 +170,13 @@ public class LoaderPane extends javax.swing.JPanel {
             try {
                 nibbleIncomingData();            // remove any pending chars in queue
             } catch (java.io.IOException e) {
-                log.warn("nibble: Exception: " + e.toString());
+                log.warn("nibble: Exception: {}", e.toString());
             }
             while (true) {   // loop permanently, stream close will exit via exception
                 try {
                     handleIncomingData();
                 } catch (java.io.IOException e) {
-                    log.warn("run: Exception: " + e.toString());
+                    log.warn("run: Exception: {}", e.toString());
                 }
             }
         }
@@ -430,8 +430,8 @@ public class LoaderPane extends javax.swing.JPanel {
             }
 
             // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true); // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(true); // pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
@@ -454,14 +454,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud, sees "
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
 
             //opened = true;
@@ -565,7 +558,7 @@ public class LoaderPane extends javax.swing.JPanel {
         try {
             pdiFile.open();
         } catch (IOException e) {
-            log.error("Error opening file: " + e);
+            log.error("Error opening file: {}", e);
         }
 
         comment.setText(pdiFile.getComment());
@@ -615,7 +608,7 @@ public class LoaderPane extends javax.swing.JPanel {
         long crc = 0;
 
         for (int r = 0; r < buffer.length - 2; r++) {
-            crc = CRC_char(crc, buffer[r]);	// do this character
+            crc = CRC_char(crc, buffer[r]); // do this character
         }
 
         // store into buffer

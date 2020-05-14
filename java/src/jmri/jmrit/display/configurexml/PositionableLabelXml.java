@@ -1,6 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.Color;
 import java.awt.Font;
 import jmri.InstanceManager;
@@ -261,14 +261,14 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             log.error("PositionableLabel is null!");
             if (log.isDebugEnabled()) {
                 java.util.List<Attribute> attrs = element.getAttributes();
-                log.debug("\tElement Has " + attrs.size() + " Attributes:");
+                log.debug("\tElement Has {} Attributes:", attrs.size());
                 for (Attribute a : attrs) {
-                    log.debug("\t\t" + a.getName() + " = " + a.getValue());
+                    log.debug("\t\t{} = {}", a.getName(), a.getValue());
                 }
                 java.util.List<Element> kids = element.getChildren();
-                log.debug("\tElementHas " + kids.size() + " children:");
+                log.debug("\tElementHas {} children:", kids.size());
                 for (Element e : kids) {
-                    log.debug("\t\t" + e.getName() + " = \"" + e.getValue() + "\"");
+                    log.debug("\t\t{} = \"{}\"", e.getName(), e.getValue());
                 }
             }
             editor.loadFailed();

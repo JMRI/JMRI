@@ -34,7 +34,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * each address up to the max receiver, even if some are missing (0 in that
  * case)
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2008
  */
 public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
 
@@ -113,14 +113,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud, sees "
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
 
             opened = true;

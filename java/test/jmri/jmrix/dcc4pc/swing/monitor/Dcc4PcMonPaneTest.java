@@ -7,7 +7,7 @@ import org.junit.Before;
 /**
  * Test simple functioning of Dcc4PcMonPane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class Dcc4PcMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 

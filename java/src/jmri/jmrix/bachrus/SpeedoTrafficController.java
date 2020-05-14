@@ -78,7 +78,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
                     client.reply(r);
                 }
             } catch (Exception e) {
-                log.warn("notify: During dispatch to " + client + "\nException " + e);
+                log.warn("notify: During dispatch to {}\nException {}", client, e);
             }
         }
 
@@ -96,6 +96,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
 
     /**
      * Make connection to existing PortController object.
+     * @param p speedo port controller.
      */
     public void connectPort(SpeedoPortController p) {
         istream = p.getInputStream();
@@ -107,8 +108,9 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     }
 
     /**
-     * Break connection to existing SpeedoPortController object. Once broken,
-     * attempts to send via "message" member will fail.
+     * Break connection to existing SpeedoPortController object.
+     * Once broken, attempts to send via "message" member will fail.
+     * @param p speedo port controller.
      */
     public void disconnectPort(SpeedoPortController p) {
         istream = null;

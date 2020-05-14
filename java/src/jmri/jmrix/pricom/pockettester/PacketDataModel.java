@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table data model for display of DCC packet contents
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
  */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel {
 
@@ -128,7 +128,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
                     f.setFilter((String) getValueAt(row, ADDRESSCOLUMN));
                     source.addListener(f);
                 } catch (Exception ex) {
-                    log.error("starting MonitorFrame caught exception: " + ex.toString());
+                    log.error("starting MonitorFrame caught exception: {}", ex.toString());
                 }
                 f.setVisible(true);
 
@@ -139,10 +139,11 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
     }
 
     /**
-     * Configure a table to have our standard rows and columns. This is
-     * optional, in that other table formats can use this table model. But we
-     * put it here to help keep it consistent.
+     * Configure a table to have our standard rows and columns.
+     * This is optional, in that other table formats can use this table model.
+     * But we put it here to help keep it consistent.
      *
+     * @param slotTable the table to configure.
      */
     public void configureTable(JTable slotTable) {
         // allow reordering of the columns

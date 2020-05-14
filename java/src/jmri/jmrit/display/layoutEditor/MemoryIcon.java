@@ -26,7 +26,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
     public MemoryIcon(String s, LayoutEditor panel) {
         super(s, panel);
-        log.debug("MemoryIcon ctor= " + MemoryIcon.class.getName());
+        log.debug("MemoryIcon ctor= {}", MemoryIcon.class.getName());
     }
 
     @Override
@@ -38,7 +38,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         }
     }
 
-    private transient LayoutBlock lBlock = null;
+    private LayoutBlock lBlock = null;
 
     public LayoutBlock getLayoutBlock() {
         return lBlock;
@@ -112,8 +112,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                     _icon = false;
                     updateSize();
                 } else {
-                    log.warn("can't display current value of " + getNamedMemory().getName()
-                            + ", val= " + val + " of Class " + val.getClass().getName());
+                    log.warn("can't display current value of {}, val= {} of Class {}", getNamedMemory().getName(), val, val.getClass().getName());
                 }
             } else {
                 // map exists, use it
@@ -233,5 +232,5 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MemoryIcon.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MemoryIcon.class);
 }

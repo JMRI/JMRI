@@ -2,9 +2,9 @@ package jmri.jmrix.rps;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import jmri.BlockManager;
+
+import jmri.jmrit.display.EditorManager;
 import jmri.InstanceManager;
-import jmri.ShutDownManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Editor;
 import jmri.util.JUnitUtil;
@@ -17,7 +17,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the rps.Reading class.
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  */
 public class RpsPositionIconTest {
 
@@ -38,7 +38,7 @@ public class RpsPositionIconTest {
         Measurement m = new Measurement(loco, 0.0, 0.0, 0.0, 0.133, 5, "source");
         Distributor.instance().submitMeasurement(m);
 
-        Editor e = Editor.getEditor("RPS Location Test Editor");
+        Editor e = InstanceManager.getDefault(EditorManager.class).get("RPS Location Test Editor");
         Assert.assertNotNull("has target frame", e.getTargetFrame());
         Assert.assertEquals("RPS Location Test", e.getTargetFrame().getTitle());
         e.dispose();

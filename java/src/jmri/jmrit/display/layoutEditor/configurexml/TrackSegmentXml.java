@@ -45,9 +45,9 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             element.setAttribute("blockname", p.getBlockName());
         }
         element.setAttribute("connect1name", p.getConnect1Name());
-        element.setAttribute("type1", "" + p.getType1().name());
+        element.setAttribute("type1", "" + htpMap.outputFromEnum(p.getType1()) );
         element.setAttribute("connect2name", p.getConnect2Name());
-        element.setAttribute("type2", "" + p.getType2().name());
+        element.setAttribute("type2", "" + htpMap.outputFromEnum(p.getType2()) );
         element.setAttribute("dashed", "" + (p.isDashed() ? "yes" : "no"));
         element.setAttribute("mainline", "" + (p.isMainline() ? "yes" : "no"));
         element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
@@ -240,32 +240,32 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         String con1Name = element.getAttribute("connect1name").getValue();
         String con2Name = element.getAttribute("connect2name").getValue();
 
-        LayoutEditor.HitPointType type1 = LayoutEditor.HitPointType.NONE;
+        HitPointType type1 = HitPointType.NONE;
         try {
             attribute = element.getAttribute("type1");
-            type1 = LayoutEditor.HitPointType.valueOf(attribute.getValue());
+            type1 = HitPointType.valueOf(attribute.getValue());
         } catch (IllegalArgumentException | NullPointerException e) {
             try {
                 if (attribute == null) {
                     throw new NullPointerException();
                 }
-                type1 = LayoutEditor.HitPointType.getValue(attribute.getIntValue());
-            } catch (DataConversionException | NullPointerException e1) {
+                type1 = htpMap.inputFromAttribute(attribute);
+            } catch (NullPointerException e1) {
                 log.error("failed to convert tracksegment type1 attribute");
             }
         }
 
-        LayoutEditor.HitPointType type2 = LayoutEditor.HitPointType.NONE;
+        HitPointType type2 = HitPointType.NONE;
         try {
             attribute = element.getAttribute("type2");
-            type2 = LayoutEditor.HitPointType.valueOf(attribute.getValue());
+            type2 = HitPointType.valueOf(attribute.getValue());
         } catch (IllegalArgumentException | NullPointerException e) {
             try {
                 if (attribute == null) {
                     throw new NullPointerException();
                 }
-                type2 = LayoutEditor.HitPointType.getValue(attribute.getIntValue());
-            } catch (DataConversionException | NullPointerException e1) {
+                type2 = htpMap.inputFromAttribute(attribute);
+            } catch (NullPointerException e1) {
                 log.error("failed to convert tracksegment type2 attribute");
             }
         }
@@ -334,7 +334,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                                 l.setBezierControlPoint(new Point2D.Double(x, y), index);
                             }
                         } else {
-                            log.error("Track segment Bezier two controlpoint elements not found. (found " + elementList.size() + ")");
+                            log.error("Track segment Bezier two controlpoint elements not found. (found {})", elementList.size());
                         }
                     } else {
                         log.error("Track segment Bezier controlpoint elements not found.");
@@ -618,8 +618,10 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             l.tLayoutBlockName = a.getValue();
         }
 
-        p.getLayoutTracks().add(l);
+        p.addLayoutTrack(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackSegmentXml.class);
+    static final EnumIO<HitPointType> htpMap = new EnumIoNamesNumbers<>(HitPointType.class);
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegmentXml.class);
 }

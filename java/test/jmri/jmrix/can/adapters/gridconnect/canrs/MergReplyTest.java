@@ -121,7 +121,6 @@ public class MergReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         return (((h >> 3) & 0x1FFC0000) | (h & 0x3FFFF));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -131,7 +130,7 @@ public class MergReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	m = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 }

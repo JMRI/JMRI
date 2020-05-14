@@ -11,7 +11,7 @@ import org.junit.rules.TemporaryFolder;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class NullProfileTest {
 
@@ -25,7 +25,6 @@ public class NullProfileTest {
         Assert.assertNotNull("exists",instance);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

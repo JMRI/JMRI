@@ -62,7 +62,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
     @Override
     public void setState(int newState) {
         if (log.isDebugEnabled()) {
-            log.debug("setState " + newState + " was " + mState);
+            log.debug("setState {} was {}", newState, mState);
         }
         int oldState = mState;
         if (newState != ON && newState != OFF) {
@@ -77,7 +77,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
             if (getMaxIntensity() == 1.0 && getTransitionTime() <= 0) {
                 // treat as not variable light
                 if (log.isDebugEnabled()) {
-                    log.debug("setState(" + newState + ") considers not variable for ON");
+                    log.debug("setState({}) considers not variable for ON", newState);
                 }
                 // update the intensity without invoking the hardware
                 notifyTargetIntensityChange(1.0);
@@ -86,7 +86,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
                 if (getTransitionTime() <= 0) {
                     // no transition, just to directly to target using on/off
                     if (log.isDebugEnabled()) {
-                        log.debug("setState(" + newState + ") using variable intensity");
+                        log.debug("setState({}) using variable intensity", newState);
                     }
                     // tell the hardware to change intensity
                     sendIntensity(getMaxIntensity());
@@ -103,7 +103,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
             if (getMinIntensity() == 0.0 && getTransitionTime() <= 0) {
                 // treat as not variable light
                 if (log.isDebugEnabled()) {
-                    log.debug("setState(" + newState + ") considers not variable for OFF");
+                    log.debug("setState({}) considers not variable for OFF", newState);
                 }
                 // update the intensity without invoking the hardware
                 notifyTargetIntensityChange(0.0);
@@ -112,7 +112,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
                 if (getTransitionTime() <= 0) {
                     // no transition, just to directly to target using on/off
                     if (log.isDebugEnabled()) {
-                        log.debug("setState(" + newState + ") using variable intensity");
+                        log.debug("setState({}) using variable intensity", newState);
                     }
                     // tell the hardware to change intensity
                     sendIntensity(getMinIntensity());
@@ -148,7 +148,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
     @Override
     public void setTargetIntensity(double intensity) {
         if (log.isDebugEnabled()) {
-            log.debug("setTargetIntensity " + intensity);
+            log.debug("setTargetIntensity {}", intensity);
         }
         if (intensity < 0.0 || intensity > 1.0) {
             throw new IllegalArgumentException("Target intensity value " + intensity + " not in legal range");
@@ -275,7 +275,7 @@ public abstract class AbstractVariableLight extends AbstractLight {
             // if we are more than one step away, keep stepping
             if (Math.abs(mCurrentIntensity - mTransitionTargetIntensity) != 0) {
                 if (log.isDebugEnabled()) {
-                    log.debug("before Target: " + mTransitionTargetIntensity + " Current: " + mCurrentIntensity);
+                    log.debug("before Target: {} Current: {}", mTransitionTargetIntensity, mCurrentIntensity);
                 }
 
                 if (mTransitionTargetIntensity > mCurrentIntensity) {
@@ -306,20 +306,20 @@ public abstract class AbstractVariableLight extends AbstractLight {
                 sendIntensity(mCurrentIntensity);
 
                 if (log.isDebugEnabled()) {
-                    log.debug("after Target: " + mTransitionTargetIntensity + " Current: " + mCurrentIntensity);
+                    log.debug("after Target: {} Current: {}", mTransitionTargetIntensity, mCurrentIntensity);
                 }
             }
         }
         if (origCurrent != mCurrentIntensity) {
             firePropertyChange("CurrentIntensity", Double.valueOf(origCurrent), Double.valueOf(mCurrentIntensity));
             if (log.isDebugEnabled()) {
-                log.debug("firePropertyChange intensity " + origCurrent + " -> " + mCurrentIntensity);
+                log.debug("firePropertyChange intensity {} -> {}", origCurrent, mCurrentIntensity);
             }
         }
         if (origState != mState) {
             firePropertyChange("KnownState", Integer.valueOf(origState), Integer.valueOf(mState));
             if (log.isDebugEnabled()) {
-                log.debug("firePropertyChange intensity " + origCurrent + " -> " + mCurrentIntensity);
+                log.debug("firePropertyChange intensity {} -> {}", origCurrent, mCurrentIntensity);
             }
         }
     }
@@ -438,18 +438,18 @@ public abstract class AbstractVariableLight extends AbstractLight {
         // command new intensity
         sendIntensity(mCurrentIntensity);
         if (log.isDebugEnabled()) {
-            log.debug("set analog value: " + value);
+            log.debug("set analog value: {}", value);
         }
         
         firePropertyChange("CurrentIntensity", origCurrent, mCurrentIntensity);
         if (log.isDebugEnabled()) {
-            log.debug("firePropertyChange intensity " + origCurrent + " -> " + mCurrentIntensity);
+            log.debug("firePropertyChange intensity {} -> {}", origCurrent, mCurrentIntensity);
         }
         
         if (origState != mState) {
             firePropertyChange("KnownState", origState, mState);
             if (log.isDebugEnabled()) {
-                log.debug("firePropertyChange intensity " + origCurrent + " -> " + mCurrentIntensity);
+                log.debug("firePropertyChange intensity {} -> {}", origCurrent, mCurrentIntensity);
             }
         }
     }

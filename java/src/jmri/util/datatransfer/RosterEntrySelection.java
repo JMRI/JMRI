@@ -29,7 +29,7 @@ import jmri.jmrit.roster.RosterEntry;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Randall Wood Copyright (C) 2011
+ * @author Randall Wood Copyright (C) 2011
  */
 public class RosterEntrySelection implements Transferable, ClipboardOwner {
 

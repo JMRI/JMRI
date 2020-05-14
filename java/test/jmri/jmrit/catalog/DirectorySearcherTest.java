@@ -10,7 +10,7 @@ import jmri.util.JUnitUtil;
 /**
  *
  * @author pete cressman
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DirectorySearcherTest {
 
@@ -32,7 +32,6 @@ public class DirectorySearcherTest {
         JUnitUtil.pressButton(pane, "Cancel");
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

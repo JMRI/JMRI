@@ -12,7 +12,7 @@ import jmri.util.JmriJFrame;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class CarDeleteAttributeActionTest extends OperationsTestCase {
 
@@ -20,7 +20,7 @@ public class CarDeleteAttributeActionTest extends OperationsTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarAttributeEditFrame f = new CarAttributeEditFrame();
-        CarDeleteAttributeAction t = new CarDeleteAttributeAction("Test Action",f);
+        CarDeleteAttributeAction t = new CarDeleteAttributeAction(f);
         Assert.assertNotNull("exists",t);
     }
     
@@ -29,7 +29,7 @@ public class CarDeleteAttributeActionTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarAttributeEditFrame cef = new CarAttributeEditFrame();
         cef.initComponents(CarAttributeEditFrame.ROAD);
-        CarDeleteAttributeAction a = new CarDeleteAttributeAction("Test Action", cef);
+        CarDeleteAttributeAction a = new CarDeleteAttributeAction(cef);
         Assert.assertNotNull("exists", a);
         
         //TODO check that the delete worked

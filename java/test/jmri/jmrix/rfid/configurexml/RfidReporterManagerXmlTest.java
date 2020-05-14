@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * RfidReporterManagerXmlTest.java
  *
- * Description: tests for the RfidReporterManagerXml class
+ * Test for the RfidReporterManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class RfidReporterManagerXmlTest {
       Assert.assertNotNull("RfidReporterManagerXml constructor",new RfidReporterManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

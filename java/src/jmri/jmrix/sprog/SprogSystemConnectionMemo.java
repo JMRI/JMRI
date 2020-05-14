@@ -141,7 +141,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         jmri.InstanceManager.store(commandStation, jmri.CommandStation.class);
         switch (sprogMode) {
             case OPS:
-                slotThread = new Thread(commandStation);
+                slotThread = jmri.util.ThreadingUtil.newThread(commandStation);
                 slotThread.setName("SPROG slot thread");
                 slotThread.setPriority(Thread.MAX_PRIORITY-2);
                 slotThread.start();

@@ -2,7 +2,6 @@ package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.display.DisplayFrame;
-import jmri.jmrit.display.EditorScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ClockItemPanelTest {
 
@@ -25,7 +24,6 @@ public class ClockItemPanelTest {
         JUnitUtil.dispose(df);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

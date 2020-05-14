@@ -11,7 +11,7 @@ import jmri.jmrix.tams.TamsTrafficController;
 /**
  * Test simple functioning of LocoDataPane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class LocoDataPaneTest extends jmri.util.swing.JmriPanelTest {
 

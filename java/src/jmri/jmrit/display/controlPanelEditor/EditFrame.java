@@ -1,10 +1,7 @@
 package jmri.jmrit.display.controlPanelEditor;
 
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Point;
 
-import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;

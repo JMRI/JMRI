@@ -9,14 +9,13 @@ import org.junit.Test;
 /**
  * SRCPBusConnectionMemoTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPBusConnectionMemo class
+ * Test for the jmri.jmrix.srcp.SRCPBusConnectionMemo class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPBusConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

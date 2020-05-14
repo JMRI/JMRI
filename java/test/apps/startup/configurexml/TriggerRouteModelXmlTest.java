@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * TriggerRouteModelXmlTest.java
  *
- * Description: tests for the TriggerRouteModelXml class
+ * Test for the TriggerRouteModelXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class TriggerRouteModelXmlTest {
       Assert.assertNotNull("TriggerRouteModelXml constructor",new TriggerRouteModelXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

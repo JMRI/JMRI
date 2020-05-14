@@ -423,7 +423,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
             status.setText(Bundle.getMessage("STATUS_INPUT_BAD"));
             JOptionPane.showMessageDialog(this, Bundle.getMessage("STATUS_INVALID_ADDRESS"),
                     Bundle.getMessage("STATUS_TYPE_ERROR"), JOptionPane.ERROR_MESSAGE);
-            log.error(Bundle.getMessage("ERROR_PARSING_ADDRESS") + " " + e);
+            log.error("{} {}", Bundle.getMessage("ERROR_PARSING_ADDRESS"), e);
             throw e;
         }
         // parsed OK, check range
@@ -470,7 +470,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         try {
             setAddress(256);
         } catch (Exception e) {
-            log.debug(Bundle.getMessage("ERROR_WRITEALL_ABORTED") + " " + e);
+            log.debug("{} {}", Bundle.getMessage("ERROR_WRITEALL_ABORTED"), e);
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);
             status.setText(" "); // NOI18N
@@ -509,7 +509,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
             setAddress(256);
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
-                log.debug(Bundle.getMessage("ERROR_WRITEONE_ABORTED") + " " + e);
+                log.debug("{} {}", Bundle.getMessage("ERROR_WRITEONE_ABORTED"), e);
             }
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);
@@ -539,7 +539,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     @Override
     public void message(LocoNetMessage m) {
         if (log.isDebugEnabled()) {
-            log.debug(Bundle.getMessage("DEBUG_PARSING_LOCONET_MESSAGE") + " " + m);
+            log.debug("{} {}", Bundle.getMessage("DEBUG_PARSING_LOCONET_MESSAGE"), m);
         }
         // are we reading? If not, ignore
         if (state == 0) {

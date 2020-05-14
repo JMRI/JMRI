@@ -1,9 +1,9 @@
 /**
  * QsiInterfaceScaffold.java
  *
- * Description:	Stands in for the QsiTrafficController class
+ * Stands in for the QsiTrafficController class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.qsi;
 

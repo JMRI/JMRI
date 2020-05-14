@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Test simple functioning of MemoryContents
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  * @suthor B. Milhaupt Copyright (C) 2014
  */
 public class MemoryContentsTest {
@@ -210,7 +210,7 @@ public class MemoryContentsTest {
 
         // attempt to delete the file if debug logging is not enabled.
         if (log.isDebugEnabled()) {
-            log.debug("Path to written hex file is: " + filename);
+            log.debug("Path to written hex file is: {}", filename);
         } else {
             MemoryContentsTestWrite_24AddrFile.delete();
         }

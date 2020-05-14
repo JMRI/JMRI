@@ -559,7 +559,7 @@ public class CoordinateEdit extends JmriJFrame {
         SpinnerNumberModel model = new SpinnerNumberModel(100.0, 10.0, 5000.0, 1.0);
         spinX = new JSpinner(model);
         if (log.isDebugEnabled()) {
-            log.debug("scale%= " + (int) Math.round(oldD * 100));
+            log.debug("scale%= {}", (int) Math.round(oldD * 100));
         }
         spinX.setValue((int) Math.round(oldD * 100));
         spinX.setToolTipText(Bundle.getMessage("enterScale"));
@@ -669,7 +669,7 @@ public class CoordinateEdit extends JmriJFrame {
         SpinnerNumberModel model = new SpinnerNumberModel(100.0, 1.0, 5000.0, 1.0);
         spinX = new JSpinner(model);
         if (log.isDebugEnabled()) {
-            log.debug("scale%= " + (int) Math.round(oldD * 100));
+            log.debug("scale%= {}", (int) Math.round(oldD * 100));
         }
         spinX.setToolTipText(Bundle.getMessage("enterZoom"));
         spinX.setMaximumSize(new Dimension(

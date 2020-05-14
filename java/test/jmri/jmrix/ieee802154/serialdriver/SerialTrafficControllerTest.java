@@ -10,10 +10,10 @@ import org.junit.Test;
 /**
  * SerialTrafficControllerTest.java
  *
- * Description:	tests for the
+ * Test for the
  * jmri.jmrix.ieee802154.serialdriver.SerialTrafficController class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154TrafficControllerTest {
 
@@ -150,7 +150,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
         Assert.assertNotNull("node not found", n);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

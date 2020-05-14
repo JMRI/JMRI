@@ -8,30 +8,33 @@ import org.junit.Assume;
 import org.junit.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class YardmasterByTrackActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        YardmasterByTrackAction t = new YardmasterByTrackAction();
+        Location location = JUnitOperationsUtil.createOneNormalLocation("Test");
+        YardmasterByTrackAction t = new YardmasterByTrackAction(location);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        YardmasterByTrackAction a = new YardmasterByTrackAction();
+        Location location = JUnitOperationsUtil.createOneNormalLocation("Test");
+        YardmasterByTrackAction a = new YardmasterByTrackAction(location);
         Assert.assertNotNull("exists", a);
         
         a.actionPerformed(new ActionEvent(this, 0, null));
         
-        JmriJFrame f = JmriJFrame.getFrame(Bundle.getMessage("TitleYardmasterByTrack"));
+        JmriJFrame f = JmriJFrame.getFrame(Bundle.getMessage("TitleYardmasterByTrack") + " (Test)");
         Assert.assertNotNull("frame exists", f);
         JUnitUtil.dispose(f);
     }

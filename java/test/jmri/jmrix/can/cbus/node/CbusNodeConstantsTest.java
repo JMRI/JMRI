@@ -90,7 +90,6 @@ public class CbusNodeConstantsTest {
             CbusNodeConstants.lookupByName("COMPLETEDWITHERROR"));
     }
     
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

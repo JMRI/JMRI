@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * extension to the common Roster, and every entry in this class's collection
  * must be present in the Roster.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 public class Engine implements ReadingListener {
 
@@ -71,8 +71,10 @@ public class Engine implements ReadingListener {
     Receiver[] receivers;
 
     /**
-     * Set the maximum receiver number expected. If the highest value in the
-     * hardware is 5, that's what's needed here.
+     * Set the maximum receiver number expected.
+     * <p>
+     * If the highest value in the hardware is 5, that's what's needed here.
+     * @param n max receivers.
      */
     public void setMaxReceiverNumber(int n) {
         log.debug("setReceiverCount to {}", n);
@@ -102,7 +104,9 @@ public class Engine implements ReadingListener {
     }
 
     /**
-     * Get a particular receiver by address (starting at 1).
+     * Set a particular receiver by address (starting at 1).
+     * @param address the receiver address.
+     * @param receiver the receiver.
      */
     public void setReceiver(int address, Receiver receiver) {
         if (receivers == null) {

@@ -9,9 +9,9 @@ import org.junit.Assert;
 /**
  * LZV200AdapterTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.lzv200.LZV200Adapter class
+ * Test for the jmri.jmrix.lenz.lzv200.LZV200Adapter class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LZV200AdapterTest {
 

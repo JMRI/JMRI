@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * MemoryComboIconXmlTest.java
  *
- * Description: tests for the MemoryComboIconXml class
+ * Test for the MemoryComboIconXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class MemoryComboIconXmlTest {
       Assert.assertNotNull("MemoryComboIconXml constructor",new MemoryComboIconXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

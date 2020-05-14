@@ -68,7 +68,6 @@ public class OBlockManagerTest {
         Assert.assertEquals("OBlock", bSouth, _OBlockMgr.getOBlock("OB4"));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();        l = new OBlockManager();

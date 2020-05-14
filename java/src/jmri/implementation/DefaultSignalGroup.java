@@ -547,7 +547,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         public boolean checkActive() {
             boolean state = false;
             for (int x = 0; x < _signalTurnoutList.size(); x++) {
-                log.debug("Real state " + _signalTurnoutList.get(x).getName() + " " + _signalTurnoutList.get(x).getTurnout().getKnownState() + " state we testing for " + _signalTurnoutList.get(x).getState());
+                log.debug("Real state {} {} state we testing for {}", _signalTurnoutList.get(x).getName(), _signalTurnoutList.get(x).getTurnout().getKnownState(), _signalTurnoutList.get(x).getState());
                 if (_signalTurnoutList.get(x).getTurnout().getKnownState() == _signalTurnoutList.get(x).getState()) {
                     state = true;
                 } else {
@@ -595,7 +595,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
                     return false;
                 }
                 if ((state != Turnout.THROWN) && (state != Turnout.CLOSED)) {
-                    log.warn("Illegal Turnout state " + state + " for : " + getName());
+                    log.warn("Illegal Turnout state {} for : {}", state, getName());
                     return false;
                 }
                 _state = state;
@@ -682,7 +682,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
                     return false;
                 }
                 if ((state != Sensor.ACTIVE) && (state != Sensor.INACTIVE)) {
-                    log.warn("Illegal Sensor state " + state + " for : " + getName());
+                    log.warn("Illegal Sensor state {} for : {}", state, getName());
                     return false;
                 }
                 _state = state;

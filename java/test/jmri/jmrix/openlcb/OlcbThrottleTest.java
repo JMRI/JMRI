@@ -9,7 +9,7 @@ import org.openlcb.*;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbThrottle class.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010, 2011
+ * @author Bob Jacobsen Copyright 2008, 2010, 2011
  */
 public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         
@@ -27,6 +27,16 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         boolean expResult = true;
         boolean result = instance.getIsForward();
         Assert.assertEquals(expResult, result);
+    }
+    
+    @Test
+    @Override
+    public void testOutOfRangeSetFunction(){
+        instance.setFunction(-1, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
+        
+        instance.setFunction(29, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 29");
     }
 
     /**
@@ -360,7 +370,6 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -398,18 +407,19 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo.setTrafficController(new TestTrafficController());
         memo.configureManagers();
     
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
     @AfterClass
-    public static void postClassTearDown() throws Exception {
+    public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
-           memo.getInterface().dispose();
+            memo.getTrafficController().terminateThreads();
+            memo.getInterface().dispose();
         }
         memo = null;
         connection = null;
         nodeID = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
 
     }

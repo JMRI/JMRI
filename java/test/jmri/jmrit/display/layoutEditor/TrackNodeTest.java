@@ -2,9 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.util.JUnitUtil;
 import jmri.util.MathUtil;
 import org.junit.After;
@@ -16,7 +14,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of TrackNode
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class TrackNodeTest {
 
@@ -24,11 +22,11 @@ public class TrackNodeTest {
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor le = new LayoutEditor();
-        LayoutTurnout lt = new LayoutTurnout("T", MathUtil.zeroPoint2D, le);
-        PositionablePoint p1 = new PositionablePoint("a", PositionablePoint.ANCHOR, new Point2D.Double(0.0, 0.0), le);
-        PositionablePoint p2 = new PositionablePoint("b", PositionablePoint.ANCHOR, new Point2D.Double(1.0, 1.0), le);
-        TrackSegment ts = new TrackSegment("test", p1, LayoutEditor.HitPointType.POS_POINT, p2, LayoutEditor.HitPointType.POS_POINT, false, true, le);
-        TrackNode tn = new TrackNode(lt, LayoutEditor.HitPointType.TURNOUT_A, ts, false, 0);
+        LayoutTurnout lt = new LayoutRHTurnout("T", MathUtil.zeroPoint2D, 0., 1., 1., le);
+        PositionablePoint p1 = new PositionablePoint("a", PositionablePoint.PointType.ANCHOR, new Point2D.Double(0.0, 0.0), le);
+        PositionablePoint p2 = new PositionablePoint("b", PositionablePoint.PointType.ANCHOR, new Point2D.Double(1.0, 1.0), le);
+        TrackSegment ts = new TrackSegment("test", p1, HitPointType.POS_POINT, p2, HitPointType.POS_POINT, false, true, le);
+        TrackNode tn = new TrackNode(lt, HitPointType.TURNOUT_A, ts, false, 0);
         Assert.assertNotNull("exists", tn);
         JUnitUtil.dispose(le);
     }

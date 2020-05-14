@@ -14,7 +14,7 @@ import org.junit.Test;
 
 /**
  *
- * @author	Bob Jacobsen, Copyright 2014
+ * @author Bob Jacobsen, Copyright 2014
  */
 public class QualifierAdderTest {
 
@@ -144,7 +144,7 @@ public class QualifierAdderTest {
         //org.jdom2.output.XMLOutputter fmt 
         //    = new org.jdom2.output.XMLOutputter(org.jdom2.output.Format.getPrettyFormat());
         //try {
-        //	 fmt.output(doc, System.out);
+        // fmt.output(doc, System.out);
         //} catch (Exception ex) { log.error("error writing XML", ex);}
         // test Exists
         processModifierElements(e, v2);

@@ -7,13 +7,12 @@ import org.junit.Before;
 /**
  * ConcentratorTrafficControllerTest.java
  *
- * Description:	tests for the ConcentratorTrafficController class
+ * Test for the ConcentratorTrafficController class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class ConcentratorTrafficControllerTest extends jmri.jmrix.rfid.RfidTrafficControllerTest {
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

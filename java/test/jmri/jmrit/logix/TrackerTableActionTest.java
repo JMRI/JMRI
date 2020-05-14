@@ -1,10 +1,8 @@
 package jmri.jmrit.logix;
 
-import jmri.BlockManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
-import jmri.ShutDownManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 
@@ -22,7 +20,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TrackerTableActionTest {
 
@@ -187,7 +185,6 @@ public class TrackerTableActionTest {
         panel.dispose();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

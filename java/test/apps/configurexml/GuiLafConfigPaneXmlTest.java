@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * GuiLafConfigPaneXmlTest.java
  *
- * Description: tests for the GuiLafConfigPaneXml class
+ * Test for the GuiLafConfigPaneXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class GuiLafConfigPaneXmlTest {
       Assert.assertNotNull("GuiLafConfigPaneXml constructor",new GuiLafConfigPaneXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

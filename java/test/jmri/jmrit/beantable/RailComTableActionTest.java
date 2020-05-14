@@ -34,7 +34,6 @@ public class RailComTableActionTest extends AbstractTableActionBase<IdTag> {
         return Bundle.getMessage("TitleAddIdTag");
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

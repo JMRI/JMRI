@@ -16,18 +16,18 @@ public class XNetTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContr
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new XNetTrafficController(new LenzCommandStation()){
+        tc = new XNetTrafficController(new LenzCommandStation()) {
             @Override
-            public void sendXNetMessage(XNetMessage m, XNetListener reply){
+            public void sendXNetMessage(XNetMessage m, XNetListener reply) {
             }
         };
     }
 
     @After
     @Override
-    public void tearDown(){
+    public void tearDown() {
         tc = null;
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

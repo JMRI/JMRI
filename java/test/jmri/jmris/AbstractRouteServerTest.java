@@ -1,7 +1,5 @@
 package jmri.jmris;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,13 +25,13 @@ public class AbstractRouteServerTest {
        jmri.util.JUnitUtil.setUp();
        rs = new AbstractRouteServer(){
           @Override
-          public void sendStatus(String route, int Status) throws IOException {
+          public void sendStatus(String route, int Status) {
           }
           @Override
-          public void sendErrorStatus(String route) throws IOException {
+          public void sendErrorStatus(String route) {
           }
           @Override
-          public void parseStatus(String statusString) throws IOException {
+          public void parseStatus(String statusString) {
           }
 
        };

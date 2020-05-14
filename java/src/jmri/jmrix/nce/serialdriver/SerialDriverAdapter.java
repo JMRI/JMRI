@@ -56,7 +56,7 @@ public class SerialDriverAdapter extends NcePortController {
                 int baud = currentBaudNumber(mBaudRate);
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -66,8 +66,7 @@ public class SerialDriverAdapter extends NcePortController {
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -77,8 +76,7 @@ public class SerialDriverAdapter extends NcePortController {
 
             // report status
             if (log.isInfoEnabled()) {
-                log.info("NCE " + portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud");
+                log.info("NCE {} port opened at {} baud", portName, activeSerialPort.getBaudRate());
             }
             opened = true;
 
@@ -135,7 +133,7 @@ public class SerialDriverAdapter extends NcePortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
+            log.error("getOutputStream exception: {}", e);
         }
         return null;
     }

@@ -17,7 +17,7 @@ import org.junit.Test;
 /**
  * Tests for the BlockBossLogic class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class BlockBossLogicTest {
     

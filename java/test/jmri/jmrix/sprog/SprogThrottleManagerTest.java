@@ -20,7 +20,6 @@ public class SprogThrottleManagerTest extends jmri.managers.AbstractThrottleMana
        Assert.assertNotNull("exists",tm);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

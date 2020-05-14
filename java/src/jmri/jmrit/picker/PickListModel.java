@@ -150,7 +150,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             _pickList.get(i).addPropertyChangeListener(this);
         }
         if (log.isDebugEnabled()) {
-            log.debug("_pickList has " + _pickList.size() + " beans");
+            log.debug("_pickList has {} beans", _pickList.size());
         }
     }
 
@@ -300,8 +300,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("propertyChange of \"" + e.getPropertyName()
-                    + "\" for " + e.getSource().toString());
+            log.debug("propertyChange of \"{}\" for {}", e.getPropertyName(), e.getSource().toString());
         }
     }
 

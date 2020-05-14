@@ -10,7 +10,7 @@ import jmri.Turnout;
  * System names are "PTnnn", where P is the user configurable system prefix,
  * nnn is the turnout number without padding.
  *
- * @author	Paul Bender Copyright (C) 2004,2016
+ * @author Paul Bender Copyright (C) 2004,2016
  */
 public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 

@@ -1,10 +1,8 @@
 package jmri.script;
 
-import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
-import jmri.ShutDownManager;
 import jmri.TurnoutManager;
 import jmri.profile.NullProfile;
 import jmri.profile.ProfileManager;

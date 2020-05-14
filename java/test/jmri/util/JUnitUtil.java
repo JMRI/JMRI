@@ -23,10 +23,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import apps.SystemConsole;
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
-import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -139,11 +138,18 @@ public class JUnitUtil {
     static boolean checkSequenceDumpsStack =    Boolean.getBoolean("jmri.util.JUnitUtil.checkSequenceDumpsStack"); // false unless set true
 
     /**
-     * Check for any threads left behind after a test calls {@link #tearDown}
+     * Announce any threads left behind after a test calls {@link #tearDown}
      * <p>
      * Set from the jmri.util.JUnitUtil.checkRemnantThreads environment variable.
      */
     static boolean checkRemnantThreads =    Boolean.getBoolean("jmri.util.JUnitUtil.checkRemnantThreads"); // false unless set true
+
+    /**
+     * Kill any threads left behind after a test calls {@link #tearDown}
+     * <p>
+     * Set from the jmri.util.JUnitUtil.killRemnantThreads environment variable
+     */
+    static boolean killRemnantThreads =    Boolean.getBoolean("jmri.util.JUnitUtil.killRemnantThreads"); // false unless set true
 
     /**
      * Check for tests that take an excessive time
@@ -155,10 +161,9 @@ public class JUnitUtil {
 
     static long    checkTestDurationStartTime = 0;  // working value
     
-    static private int threadCount = 0;
-    
     static private boolean didSetUp = false;    // If true, last saw setUp, waiting tearDown normally
     static private boolean didTearDown = true;  // If true, last saw tearDown, waiting setUp normally
+
     static private String lastSetUpClassName = "<unknown>";
     static private String lastSetUpThreadName = "<unknown>";
     static private StackTraceElement[] lastSetUpStackTrace = new StackTraceElement[0];
@@ -241,9 +246,9 @@ public class JUnitUtil {
                         System.err.println("---- This stack ------");
                         Thread.dumpStack();
                         System.err.println("---- Last setUp stack ------");
-                        for (StackTraceElement e : lastSetUpStackTrace) System.err.println("	at "+e);
+                        for (StackTraceElement e : lastSetUpStackTrace) System.err.println("    at " + e);
                         System.err.println("---- Last tearDown stack ------");
-                        for (StackTraceElement e : lastTearDownStackTrace) System.err.println("	at "+e);
+                        for (StackTraceElement e : lastTearDownStackTrace) System.err.println("    at " + e);
                         System.err.println("----------------------");
                     }
                 }
@@ -306,9 +311,9 @@ public class JUnitUtil {
                         System.err.println("---- This stack ------");
                         Thread.dumpStack();
                         System.err.println("---- Last setUp stack ------");
-                        for (StackTraceElement e : lastSetUpStackTrace) System.err.println("	at "+e);
+                        for (StackTraceElement e : lastSetUpStackTrace) System.err.println("    at " + e);
                         System.err.println("---- Last tearDown stack ------");
-                        for (StackTraceElement e : lastTearDownStackTrace) System.err.println("	at "+e);
+                        for (StackTraceElement e : lastTearDownStackTrace) System.err.println("    at " + e);
                         System.err.println("----------------------");
                     }
                 }
@@ -338,9 +343,9 @@ public class JUnitUtil {
         JUnitAppender.resetUnexpectedMessageFlags(severity);
         Assert.assertFalse("Unexpected "+severity+" or higher messages emitted: "+unexpectedMessageContent, unexpectedMessageSeen);
         
-        // Optionally, check that no threads were left running (controlled by jmri.util.JUnitUtil.checkRemnantThreads environment var)
-        if (checkRemnantThreads) {
-            checkThreads();
+        // Optionally, handle any threads left running
+        if (checkRemnantThreads || killRemnantThreads) {
+            handleThreads();
         }
         
         // Optionally, print whatever is on the Swing queue to see what's keeping things alive
@@ -1343,49 +1348,81 @@ public class JUnitUtil {
      * <p>
      * First implementation is rather simplistic.
      */
-    static void checkThreads() {
+    static void handleThreads() {
         // now check for extra threads
-        threadCount = 0;
-        Thread.getAllStackTraces().keySet().forEach((t) -> 
-            {
-                if (threadsSeen.contains(t)) return;
-                if (t.getState() == Thread.State.TERMINATED) return; // going away, just not cleaned up yet
-                String name = t.getName();
-                if (! (threadNames.contains(name)
-                     || name.startsWith("Timer-")  // we separately scan for JMRI-resident timers
-                     || name.startsWith("RMI TCP Accept")
-                     || name.startsWith("AWT-EventQueue")
-                     || name.startsWith("Aqua L&F")
-                     || name.startsWith("Image Fetcher ")
-                     || name.startsWith("Image Animator ")
-                     || name.startsWith("JmDNS(")
-                     || name.startsWith("JmmDNS pool")
-                     || name.startsWith("ForkJoinPool.commonPool-worker")
-                     || name.startsWith("SocketListener(")
-                     || ( t.getThreadGroup() != null && t.getThreadGroup().getName().equals("system")) // JRE system threads
-                     || ( t.getThreadGroup() != null && t.getThreadGroup().getName().contains("FailOnTimeoutGroup")) // JUnit timeouts
-                     || (name.startsWith("SwingWorker-pool-1-thread-") && 
-                            ( t.getThreadGroup() != null && 
-                                (t.getThreadGroup().getName().contains("FailOnTimeoutGroup") || t.getThreadGroup().getName().contains("main") )
-                            ) 
-                        )
-                    )) {  
-                    
-                        // if still running, wait to see if being terminated
-                        
-                        threadCount++;
-                        threadsSeen.add(t);
-                        
+        ThreadGroup main = Thread.currentThread().getThreadGroup();
+        while (main.getParent() != null ) {main = main.getParent(); }        
+        Thread[] list = new Thread[main.activeCount()+2];  // space on end
+        int max = main.enumerate(list);
+        
+        for (int i = 0; i<max; i++) { 
+            Thread t = list[i];
+            Thread.State topState = t.getState();
+            if (t.getState() == Thread.State.TERMINATED) { // going away, just not cleaned up yet
+                threadsSeen.remove(t);  // don't want to prevent gc
+                continue; 
+            }
+            if (threadsSeen.contains(t)) continue;
+            String name = t.getName();
+            ThreadGroup g = t.getThreadGroup();
+            String group = (g != null) ?  g.getName() : "<null group>";
+
+            if (! (threadNames.contains(name)
+                 || group.equals("system")
+                 || name.startsWith("Timer-")  // we separately scan for JMRI-resident timers
+                 || name.startsWith("RMI TCP Accept")
+                 || name.startsWith("AWT-EventQueue")
+                 || name.startsWith("Aqua L&F")
+                 || name.startsWith("Image Fetcher ")
+                 || name.startsWith("Image Animator ")
+                 || name.startsWith("JmDNS(")
+                 || name.startsWith("JmmDNS pool")
+                 || name.startsWith("ForkJoinPool.commonPool-worker")
+                 || name.startsWith("SocketListener(")
+                 || group.contains("FailOnTimeoutGroup")) // JUnit timeouts
+                 || name.startsWith("SocketListener(")
+                 || (name.startsWith("SwingWorker-pool-1-thread-") && ( group.contains("FailOnTimeoutGroup") || group.contains("main") )
+                )) {  
+                
+                        if (t.getState() == Thread.State.TERMINATED) {  
+                            // might have transitioned during above (logging slow)
+                            continue;
+                        }
+                        boolean kill = true;
+                        String action = "Interrupt";
+                        if (!killRemnantThreads) {
+                            action = "Found";
+                            kill = false;
+                        }
+                        if (name.toUpperCase().startsWith("OLCB") || name.toUpperCase().startsWith("OPENLCB")) { // ugly special case
+                            action = "Skipping";
+                            kill = false;
+                        }
+           
                         // for anonymous threads, show the traceback in hopes of finding what it is
                         if (name.startsWith("Thread-")) {
                             Exception ex = new Exception("traceback of numbered thread");
                             ex.setStackTrace(Thread.getAllStackTraces().get(t));
-                            log.warn("Found remnant thread \"{}\" in group \"{}\" after {}", t.getName(), (t.getThreadGroup() != null ? t.getThreadGroup().getName() : "<no group>"), getTestClassName(), ex);
+                            log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName(), ex);
                         } else {
-                            log.warn("Found remnant thread \"{}\" in group \"{}\" after {}", t.getName(), (t.getThreadGroup() != null ? t.getThreadGroup().getName() : "<no group>"), getTestClassName());
+                            log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName());
                         }
-                }
-            });
+                        if (kill) {
+                            System.err.println(topState+" "+t.getState());
+                            try {
+                                if (t.getState() != Thread.State.TERMINATED) {  // might have transitioned during above (logging slow)
+                                    t.interrupt();
+                                    t.join(2000);
+                                }
+                                if (t.getState() != Thread.State.TERMINATED) log.warn("   Thread {} did not terminate", name);
+                            } catch (IllegalMonitorStateException | IllegalStateException | InterruptedException e) {
+                                log.error("While interrupting thread {}", name, e);
+                            }
+                        } else {
+                            threadsSeen.add(t);
+                        }
+            }
+        }
     }
 
     /* Global Panel operations */
@@ -1394,12 +1431,9 @@ public class JUnitUtil {
      * instance.
      */
     public static void closeAllPanels() {
-        EditorManager manager = InstanceManager.getNullableDefault(EditorManager.class);
-        if (manager != null) {
-            for (Editor e : manager.getEditorsList()) {
-                new EditorFrameOperator(e).closeFrameWithConfirmations();
-            }
-        }
+        InstanceManager.getOptionalDefault(EditorManager.class)
+                .ifPresent(m -> m.getAll()
+                        .forEach(e -> new EditorFrameOperator(e).closeFrameWithConfirmations()));
     }
 
     /* GraphicsEnvironment utility methods */

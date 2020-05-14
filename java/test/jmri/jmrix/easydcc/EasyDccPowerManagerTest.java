@@ -9,7 +9,7 @@ import org.junit.*;
 /**
  * JUnit tests for the EasyDccPowerManager class
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  */
 public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
 
@@ -99,7 +99,6 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
     public void testStateOff() throws JmriException {
     }
 
-    // The minimal setup for log4J
     @After 
     public void tearDown() {
         controller.terminateThreads();

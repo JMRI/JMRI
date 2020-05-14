@@ -3,7 +3,7 @@ package jmri.jmrit.display.layoutEditor;
 import jmri.Block;
 
 /**
- * TrackNode is a temporary object specifying and returning track node
+ * TrackNode is a memo object specifying and returning track node
  * information
  * <p>
  * Used in conjunction with ConnectivityUtil.java to return information about
@@ -33,7 +33,7 @@ import jmri.Block;
  */
 public class TrackNode {
 
-    public TrackNode(LayoutTrack node, LayoutEditor.HitPointType nodeType, TrackSegment segment, boolean endBumper,
+    public TrackNode(LayoutTrack node, HitPointType nodeType, TrackSegment segment, boolean endBumper,
             int nodeState) {
         _Node = node;
         _NodeType = nodeType;
@@ -44,14 +44,14 @@ public class TrackNode {
 
     // instance variables
     LayoutTrack _Node = null;
-    LayoutEditor.HitPointType _NodeType = LayoutEditor.HitPointType.NONE;
+    HitPointType _NodeType = HitPointType.NONE;
     TrackSegment _TrackSegment = null;
     boolean _ReachedEndBumper = false;
     int _NodeState = 0;
 
-    // temporary instance variables
     /**
-     * Access methods
+     * Set the node.
+     * @param node the layout track node.
      */
     public void setNode(LayoutTrack node) {
         _Node = node;
@@ -61,11 +61,11 @@ public class TrackNode {
         return _Node;
     }
 
-    public void setNodeType(LayoutEditor.HitPointType type) {
+    public void setNodeType(HitPointType type) {
         _NodeType = type;
     }
 
-    public LayoutEditor.HitPointType getNodeType() {
+    public HitPointType getNodeType() {
         return _NodeType;
     }
 
@@ -93,24 +93,25 @@ public class TrackNode {
       Operational methods
      */
     /**
-     * Returns the Block of the node Object at the nodeType position
+     * Get the node block.
+     * @return the Block of the node Object at the nodeType position, may be null.
      */
     public Block getNodeBlock() {
-        if (LayoutEditor.HitPointType.POS_POINT == _NodeType) {
+        if (HitPointType.POS_POINT == _NodeType) {
             return _TrackSegment.getLayoutBlock().getBlock();
-        } else if (LayoutEditor.HitPointType.TURNOUT_A == _NodeType) {
+        } else if (HitPointType.TURNOUT_A == _NodeType) {
             return ((LayoutTurnout) _Node).getLayoutBlock().getBlock();
-        } else if (LayoutEditor.HitPointType.TURNOUT_B == _NodeType) {
+        } else if (HitPointType.TURNOUT_B == _NodeType) {
             return ((LayoutTurnout) _Node).getLayoutBlockB().getBlock();
-        } else if (LayoutEditor.HitPointType.TURNOUT_C == _NodeType) {
+        } else if (HitPointType.TURNOUT_C == _NodeType) {
             return ((LayoutTurnout) _Node).getLayoutBlockC().getBlock();
-        } else if (LayoutEditor.HitPointType.TURNOUT_D == _NodeType) {
+        } else if (HitPointType.TURNOUT_D == _NodeType) {
             return ((LayoutTurnout) _Node).getLayoutBlockD().getBlock();
-        } else if ((LayoutEditor.HitPointType.LEVEL_XING_A == _NodeType)
-                || (LayoutEditor.HitPointType.LEVEL_XING_C == _NodeType)) {
+        } else if ((HitPointType.LEVEL_XING_A == _NodeType)
+                || (HitPointType.LEVEL_XING_C == _NodeType)) {
             return ((LevelXing) _Node).getLayoutBlockAC().getBlock();
-        } else if ((LayoutEditor.HitPointType.LEVEL_XING_B == _NodeType)
-                || (LayoutEditor.HitPointType.LEVEL_XING_D == _NodeType)) {
+        } else if ((HitPointType.LEVEL_XING_B == _NodeType)
+                || (HitPointType.LEVEL_XING_D == _NodeType)) {
             return ((LevelXing) _Node).getLayoutBlockBD().getBlock();
         }
         return null;

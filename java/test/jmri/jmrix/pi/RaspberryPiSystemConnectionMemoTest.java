@@ -133,7 +133,6 @@ public class RaspberryPiSystemConnectionMemoTest extends jmri.jmrix.SystemConnec
         Assert.assertNull(jmri.InstanceManager.getNullableDefault(RaspberryPiSystemConnectionMemo.class));
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

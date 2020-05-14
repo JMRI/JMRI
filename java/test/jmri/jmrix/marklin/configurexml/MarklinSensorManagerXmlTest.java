@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * MarklinSensorManagerXmlTest.java
  *
- * Description: tests for the MarklinSensorManagerXml class
+ * Test for the MarklinSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class MarklinSensorManagerXmlTest {
       Assert.assertNotNull("MarklinSensorManagerXml constructor",new MarklinSensorManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -6,7 +6,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class QsiProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -32,7 +32,6 @@ public class QsiProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 programmer.getMode());        
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

@@ -20,7 +20,6 @@ import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.ShutDownManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;

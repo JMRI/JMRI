@@ -64,7 +64,6 @@ public class DccSpeedProfileTest {
         Assert.assertEquals("after clear, last value", -1, profile.getLast());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

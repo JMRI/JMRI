@@ -127,7 +127,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -223,7 +223,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -315,9 +315,9 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
             }
             
             /**
@@ -372,7 +372,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 failedThrottleRequest = true;
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
             }
             
             /**
@@ -426,7 +426,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 failedThrottleRequest = true;
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
             }
             
             /**
@@ -480,7 +480,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -537,7 +537,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -591,7 +591,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -654,7 +654,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -686,7 +686,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle2 request failed for " + address + " because " + reason);
+                log.error("Throttle2 request failed for {} because {}", address, reason);
                 failedThrottleRequest2 = true;
             }
             
@@ -778,7 +778,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -810,7 +810,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle2 request failed for " + address + " because " + reason);
+                log.error("Throttle2 request failed for {} because {}", address, reason);
                 failedThrottleRequest2 = true;
             }
             
@@ -922,7 +922,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -954,7 +954,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle2 request failed for " + address + " because " + reason);
+                log.error("Throttle2 request failed for {} because {}", address, reason);
                 failedThrottleRequest2 = true;
             }
             
@@ -986,7 +986,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle3 request failed for " + address + " because " + reason);
+                log.error("Throttle3 request failed for {} because {}", address, reason);
                 failedThrottleRequest3 = true;
             }
             
@@ -1108,7 +1108,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -1141,7 +1141,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle2 request failed for " + address + " because " + reason);
+                log.error("Throttle2 request failed for {} because {}", address, reason);
                 failedThrottleRequest2 = true;
             }
             
@@ -1250,7 +1250,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle4 request failed for " + address + " because " + reason);
+                log.error("Throttle4 request failed for {} because {}", address, reason);
                 failedThrottleRequest4 = true;
             }
             
@@ -1329,7 +1329,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     LocoNetInterfaceScaffold lnis;
     LocoNetSystemConnectionMemo memo;
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

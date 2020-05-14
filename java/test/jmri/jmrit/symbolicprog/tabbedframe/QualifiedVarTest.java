@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Test PaneProg with qualified variables.
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class QualifiedVarTest {
 

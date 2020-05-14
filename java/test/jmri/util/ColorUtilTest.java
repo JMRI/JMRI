@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.util.ColorUtil class.
  *
- * @author	Paul Bender Copyright 2016
+ * @author Paul Bender Copyright 2016
  */
 public class ColorUtilTest {
 

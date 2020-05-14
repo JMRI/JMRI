@@ -23,7 +23,6 @@ public class WarrantTableModelTest {
         JUnitUtil.dispose(f);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

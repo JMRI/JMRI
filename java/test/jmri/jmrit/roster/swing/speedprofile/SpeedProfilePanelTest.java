@@ -1,8 +1,5 @@
 package jmri.jmrit.roster.swing.speedprofile;
 
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -11,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SpeedProfilePanelTest {
 

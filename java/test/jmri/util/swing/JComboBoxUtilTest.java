@@ -20,7 +20,6 @@ public class JComboBoxUtilTest {
         Assert.assertTrue("Max Row Count", c.getMaximumRowCount() > 7);  // NOI18N
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

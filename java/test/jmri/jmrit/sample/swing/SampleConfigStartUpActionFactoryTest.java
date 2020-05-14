@@ -5,7 +5,7 @@ import org.junit.*;
 /**
  * Tests for the ampleConfigStartUpActionFactory class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SampleConfigStartUpActionFactoryTest {
 

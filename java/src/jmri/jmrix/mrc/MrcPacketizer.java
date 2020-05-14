@@ -105,7 +105,7 @@ public class MrcPacketizer extends MrcTrafficController {
             synchronized (xmtHandler) {
                 xmtList.addLast(m);
                 if (log.isDebugEnabled()) { // avoid String building if not needed
-                    log.debug("xmt list size " + xmtList.size()); // NOI18N
+                    log.debug("xmt list size {}", xmtList.size()); // NOI18N
                     Iterator<MrcMessage> iterator = xmtList.iterator();
                     while (iterator.hasNext()) {
                         log.debug(iterator.next().toString());
@@ -417,7 +417,7 @@ public class MrcPacketizer extends MrcTrafficController {
                                 break;
                             default:
                                 msg = new MrcMessage(4); //Unknown
-                                log.debug("UNKNOWN " + Integer.toHexString(firstByte)); // NOI18N
+                                log.debug("UNKNOWN {}", Integer.toHexString(firstByte)); // NOI18N
                         }
                     }
 
@@ -702,10 +702,7 @@ public class MrcPacketizer extends MrcTrafficController {
      */
     public void startThreads() {
         int priority = Thread.currentThread().getPriority();
-        log.debug("startThreads current priority = " + priority
-                + " max available = " + Thread.MAX_PRIORITY
-                + " default = " + Thread.NORM_PRIORITY
-                + " min available = " + Thread.MIN_PRIORITY); // NOI18N
+        log.debug("startThreads current priority = {} max available = " + Thread.MAX_PRIORITY + " default = " + Thread.NORM_PRIORITY + " min available = " + Thread.MIN_PRIORITY, priority); // NOI18N
 
         // make sure that the xmt priority is no lower than the current priority
         int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY : Thread.MAX_PRIORITY - 1);
@@ -714,7 +711,7 @@ public class MrcPacketizer extends MrcTrafficController {
             xmtHandler = new XmtHandler();
         }
         Thread xmtThread = new Thread(xmtHandler, "Mrc transmit handler"); // NOI18N
-        log.debug("Xmt thread starts at priority " + xmtpriority); // NOI18N
+        log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
         xmtThread.start();

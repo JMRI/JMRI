@@ -351,7 +351,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tc;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

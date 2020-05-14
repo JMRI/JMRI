@@ -129,7 +129,7 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
                     if (icon != null) {
                         l.setIcon(value.getName(), icon);
                     } else {
-                        log.info(msg + " removed for url= " + value.getName());
+                        log.info("{} removed for url= {}", msg, value.getName());
                         return;
                     }
                 }

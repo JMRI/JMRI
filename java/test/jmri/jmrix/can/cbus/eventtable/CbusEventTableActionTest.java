@@ -201,7 +201,6 @@ public class CbusEventTableActionTest {
     
     // InstanceManager.setDefault(jmri.SensorManager.class,new CbusSensorManager(memo));
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();

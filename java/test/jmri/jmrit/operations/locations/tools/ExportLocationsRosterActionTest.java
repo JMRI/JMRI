@@ -12,21 +12,21 @@ import jmri.util.swing.JemmyUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ExportLocationsRosterActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ExportLocationsRosterAction t = new ExportLocationsRosterAction("Test Action");
+        ExportLocationsRosterAction t = new ExportLocationsRosterAction();
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ExportLocationsRosterAction a = new ExportLocationsRosterAction("Test Action");
+        ExportLocationsRosterAction a = new ExportLocationsRosterAction();
         Assert.assertNotNull("exists", a);
               
         // should cause dialog to appear

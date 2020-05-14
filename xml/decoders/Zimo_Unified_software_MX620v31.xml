@@ -27,9 +27,10 @@
   <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
   <!-- variables on the proper pane of the Comprehensive programmer.                         -->
   <!-- V 1 new file -->
+  <!-- v1.1,  added replacementModel for v37,  Ronald Kuhn, 02 May 2020 -->
   <decoder>
     <family name="Zimo Unified software (version 25+)" mfg="Zimo">
-      <model model="MX620 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="201">
+      <model model="MX620 version 31" replacementModel="MX620 version 37+" replacementFamily="query:Zimo Unified software (version 37+)" lowVersionID="31" highVersionID="31" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="201">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
         </output>
@@ -50,7 +51,7 @@
         </output>
         <size length="14" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX620N version 31" lowVersionID="31" highVersionID="31" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="201">
+      <model model="MX620N version 31" replacementModel="MX620N version 37+" replacementFamily="query:Zimo Unified software (version 37+)" lowVersionID="31" highVersionID="31" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="201">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
         </output>
@@ -71,7 +72,7 @@
         </output>
         <size length="14" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX620R version 31" lowVersionID="31" highVersionID="31" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="201">
+      <model model="MX620R version 31" replacementModel="MX620R version 37+" replacementFamily="query:Zimo Unified software (version 37+)" lowVersionID="31" highVersionID="31" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="201">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
         </output>
@@ -92,7 +93,7 @@
         </output>
         <size length="14" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX620F version 31" lowVersionID="31" highVersionID="31" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="201">
+      <model model="MX620F version 31" replacementModel="MX620F version 37+" replacementFamily="query:Zimo Unified software (version 37+)" lowVersionID="31" highVersionID="31" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="201">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
         </output>

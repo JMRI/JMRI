@@ -123,7 +123,7 @@ public class DefaultLogixManager extends AbstractManager<Logix>
 
             if (loadDisabled) {
                 // user has requested that Logixs be loaded disabled
-                log.warn("load disabled set - will not activate logic for: " + x.getDisplayName());
+                log.warn("load disabled set - will not activate logic for: {}", x.getDisplayName());
                 x.setEnabled(false);
             }
             if (x.getEnabled()) {

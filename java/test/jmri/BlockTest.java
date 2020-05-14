@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Tests for the Block class
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class BlockTest {
 
@@ -364,7 +364,6 @@ public class BlockTest {
     }
 
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

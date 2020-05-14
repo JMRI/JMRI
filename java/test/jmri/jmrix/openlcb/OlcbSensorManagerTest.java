@@ -10,7 +10,7 @@ import org.openlcb.*;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010
+ * @author Bob Jacobsen Copyright 2008, 2010
  */
 public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -63,12 +63,12 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor t1 = l.provideSensor(getSystemName(getNumToTest1()));
         Sensor t2 = l.provideSensor(getSystemName(getNumToTest2()));
         t1.setUserName("UserName");
-        Assert.assertTrue(t1 == l.getByUserName("UserName"));
+        Assert.assertSame(t1, l.getByUserName("UserName"));
 
         t2.setUserName("UserName");
-        Assert.assertTrue(t2 == l.getByUserName("UserName"));
+        Assert.assertSame(t2, l.getByUserName("UserName"));
 
-        Assert.assertTrue(null == t1.getUserName());
+        Assert.assertNull(t1.getUserName());
     }
 
     @Test
@@ -79,7 +79,6 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertEquals(t, l.getSensor(name));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -116,11 +115,11 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         memo.setTrafficController(new TestTrafficController());
         memo.configureManagers();
     
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
     @AfterClass
-    public static void postClassTearDown() throws Exception {
+    public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
         }

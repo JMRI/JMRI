@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * <a href="http://callisto.worldonline.nl/~samsvl/stdalone.htm">http://callisto.worldonline.nl/~samsvl/stdalone.htm</a>
  * There is also a link there to a C port of Sam's programs.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class Analytic_AAlgorithm extends AbstractCalculator {
 
@@ -52,8 +52,8 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
     public Measurement convert(Reading r) {
 
         if (log.isDebugEnabled()) {
-            log.debug("Reading: " + r.toString());
-            log.debug("Sensors: " + sensors.length);
+            log.debug("Reading: {}", r.toString());
+            log.debug("Sensors: {}", sensors.length);
             if (sensors.length >= 1 && sensors[0] != null) {
                 log.debug("Sensor[0]: {},{},{}", sensors[0].x, sensors[0].y, sensors[0].z);
             }
@@ -75,7 +75,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
 
         nr = r.getNValues();
         if (nr != sensors.length - 1) {
-            log.error("Mismatch: " + nr + " readings, " + (sensors.length - 1) + " receivers");
+            log.error("Mismatch: {} readings, {} receivers", nr, sensors.length - 1);
         }
         nr = Math.min(nr, sensors.length - 1); // accept the shortest
 
@@ -108,7 +108,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
         Zt = result[2];
 
         // Vs = result.vs;
-        log.debug("Result x = " + Xt + " y = " + Yt + " z0 = " + Zt + " time offset=" + result[3]);
+        log.debug("Result x = {} y = {} z0 = {} time offset={}", Xt, Yt, Zt, result[3]);
         return new Measurement(r, Xt, Yt, Zt, Vs, nr, "Analytic_A");
     }
 
@@ -154,16 +154,16 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
     /**
      * *************************************************************************
      *
-     * @param	Xs	array with 3 columns and 32 rows, for the coordinates of the
+     * @param Xs array with 3 columns and 32 rows, for the coordinates of the
      *           sat's
-     * @param	SV	valid prn's
-     * @param	P	 pseudoranges
+     * @param SV valid prn's
+     * @param P  pseudoranges
      *
      * (note: arrays actually have 33 rows, but row 0 is unused, in order to
      * index by actual prn number)
      *
-     * @param	Xr	input of initial guess ( user position in ECEF)
-     * @return	[X, X, X, Cr]	output of final position and receiver clock error
+     * @param Xr input of initial guess ( user position in ECEF)
+     * @return [X, X, X, Cr] output of final position and receiver clock error
      *         return null if calculation failed //do: throw exception instead
      */
     public double[] solve(double[][] Xs, boolean[] SV, double[] P, double[] Xr) {
@@ -257,7 +257,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
 
             // display how close
             if (log.isDebugEnabled()) {
-                log.debug("  after " + it + ", delta is " + ((Math.abs(D[0]) + Math.abs(D[1]) + Math.abs(D[2]))));
+                log.debug("  after {}, delta is {}", it, Math.abs(D[0]) + Math.abs(D[1]) + Math.abs(D[2]));
             }
         } while ((it < 6) //there is something wrong if more than 6 iterations are required
                 && ((Math.abs(D[0]) + Math.abs(D[1]) + Math.abs(D[2])) >= 1.0E-2));  //iteration criterion
@@ -265,7 +265,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
         double Cr = D[3]; //receiver clock error
 
         if (it >= 6) {
-            log.error("Can't solve, iteration limit exceeded.  it = " + it);
+            log.error("Can't solve, iteration limit exceeded.  it = {}", it);
             return null;
         }
 
@@ -276,9 +276,9 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
      * *************************************************************************
      * finds the determinant of a minor of a 4 x 4 matrix
      *
-     * @param A	input 4 x 4 array
-     * @param r	the row to be deleted
-     * @param c	the column to be deleted
+     * @param A input 4 x 4 array
+     * @param r the row to be deleted
+     * @param c the column to be deleted
      * @return subdet determinant of the resulting 3 x 3 matrix
      */
     public double sub(double[][] A, int r, int c) {

@@ -7,30 +7,33 @@ import org.junit.Before;
 /**
  * JUnit tests for the XNetSerialPortController class.
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class XNetSerialPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
     @Before
-    public void setUp(){
-       JUnitUtil.setUp();
-       XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
-       new XNetSystemConnectionMemo(tc);
-       apc = new XNetSerialPortController(){
+    public void setUp() {
+        JUnitUtil.setUp();
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        new XNetSystemConnectionMemo(tc);
+        apc = new XNetSerialPortController() {
             @Override
-            public boolean status(){
-              return true;
+            public boolean status() {
+                return true;
             }
+
             @Override
-            public void configure(){
+            public void configure() {
             }
+
             @Override
-            public java.io.DataInputStream getInputStream(){
+            public java.io.DataInputStream getInputStream() {
                 return null;
             }
+
             @Override
-            public java.io.DataOutputStream getOutputStream(){
+            public java.io.DataOutputStream getOutputStream() {
                 return null;
             }
 
@@ -38,27 +41,28 @@ public class XNetSerialPortControllerTest extends jmri.jmrix.AbstractSerialPortC
              * Get an array of valid baud rates; used to display valid options.
              */
             @Override
-            public String[] validBaudRates(){
-               String[] retval = {"9600"};
-               return retval;
+            public String[] validBaudRates() {
+                String[] retval = {"9600"};
+                return retval;
             }
 
             /**
-             * Open a specified port. The appName argument is to be provided to the
-             * underlying OS during startup so that it can show on status displays, etc
+             * Open a specified port. The appName argument is to be provided to
+             * the underlying OS during startup so that it can show on status
+             * displays, etc
              */
             @Override
-            public String openPort(String portName, String appName){
-               return "";
+            public String openPort(String portName, String appName) {
+                return "";
             }
 
-       };
+        };
     }
 
     @Override
     @After
-    public void tearDown(){
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+    public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

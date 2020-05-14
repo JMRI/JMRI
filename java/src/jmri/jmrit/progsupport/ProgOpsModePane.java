@@ -104,8 +104,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
                 programmer = null;
             }
             boolean longAddr = longAddrButton.isSelected();
-            log.debug("ops programmer for address " + address
-                    + ", long address " + longAddr);
+            log.debug("ops programmer for address {}, long address {}", address, longAddr);
             programmer = pm.getAddressedProgrammer(longAddr, address);
             log.debug("   programmer: {}", programmer);
 

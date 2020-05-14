@@ -1,10 +1,8 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
-import jmri.InstanceManager;
+
 import jmri.NamedBeanHandle;
-import jmri.ShutDownManager;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitUtil;
@@ -19,7 +17,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Swing tests for the TurnoutIcon
  *
- * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author Bob Jacobsen Copyright 2009, 2010
  */
 public class TurnoutIconWindowTest {
     
@@ -141,7 +139,6 @@ public class TurnoutIconWindowTest {
         to.closeFrameWithConfirmations();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();

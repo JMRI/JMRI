@@ -9,8 +9,8 @@ import jmri.Manager;
  * Implementation of a LightManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
- * @author	Bob Jacobsen Copyright (C) 2010, 2018
- * @author	Dave Duchamp Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2010, 2018
+ * @author Dave Duchamp Copyright (C) 2004
  */
 public class ProxyLightManager extends AbstractProxyManager<Light>
         implements LightManager {

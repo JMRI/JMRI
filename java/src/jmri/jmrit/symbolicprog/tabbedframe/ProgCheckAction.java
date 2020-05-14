@@ -48,7 +48,7 @@ public class ProgCheckAction extends AbstractAction {
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fci.getSelectedFile();
             if (log.isDebugEnabled()) {
-                log.debug("located file " + file + " for XML processing");
+                log.debug("located file {} for XML processing", file);
             }
 
             warnMissingNames(file);
@@ -119,8 +119,7 @@ public class ProgCheckAction extends AbstractAction {
                     name = nameAttr.getValue();
                 }
                 if (log.isDebugEnabled()) {
-                    log.debug("Variable called \""
-                            + ((name != null) ? name : "<none>") + "\"");
+                    log.debug("Variable called \"{}\"", (name != null) ? name : "<none>");
                 }
                 if (!(name == null ? false : nfile.checkName(name))) {
                     log.warn("Variable not found in name list: name=\"{}\"", name);
@@ -167,7 +166,7 @@ public class ProgCheckAction extends AbstractAction {
             List<Element> varList = new ArrayList<>();
             expandElement(root.getChild("programmer"), varList);
             if (log.isDebugEnabled()) {
-                log.debug("found " + varList.size() + " display elements");
+                log.debug("found {} display elements", varList.size());
             }
             NameFile nfile = InstanceManager.getDefault(NameFile.class);
 

@@ -10,7 +10,7 @@ import org.junit.*;
  * but this is so commonly used that it seems wise to 
  * confirm some behaviors.
  *
- * @author	Bob Jacobsen Copyright 2019
+ * @author Bob Jacobsen Copyright 2019
  */
 public class JUnitUtilTest {
 

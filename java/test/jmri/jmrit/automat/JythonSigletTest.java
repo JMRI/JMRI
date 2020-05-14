@@ -10,8 +10,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import jmri.BlockManager;
-import jmri.ShutDownManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,7 +17,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JythonSigletTest {
 
@@ -47,7 +45,6 @@ public class JythonSigletTest {
         assertFalse(js.isRunning());
     }
     
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

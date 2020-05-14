@@ -789,12 +789,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     protected void handleRequest(String inPackage) {
         switch (inPackage.charAt(0)) {
             case 'V': {
-                if(lastSentSpeed.isEmpty()){
-                   // send the current speed only
-                   // if we aren't waiting for the back end
-                   // to update the speed.
-                   sendCurrentSpeed(throttle);
-                }
+                sendCurrentSpeed(throttle);
                 break;
             }
             case 'R': {

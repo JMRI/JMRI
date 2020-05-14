@@ -18,7 +18,7 @@ import org.netbeans.jemmy.operators.JTableOperator;
 /**
  * Test simple functioning of CbusNodeEventTablePane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2019
  */
 public class CbusNodeEventTablePaneTest {

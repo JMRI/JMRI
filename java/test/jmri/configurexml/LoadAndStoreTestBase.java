@@ -50,7 +50,7 @@ import org.slf4j.LoggerFactory;
 public class LoadAndStoreTestBase {
 
     // allows code reuse when building the parameter collection in getFiles()
-    private final File file;
+    protected final File file;
 
     public enum SaveType {
         All, Config, Prefs, User, UserPrefs
@@ -239,8 +239,8 @@ public class LoadAndStoreTestBase {
                 log.error("match failed in LoadAndStoreTest:");
                 log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
                 log.error("    file2:line {}: \"{}\"", lineNumber2, line2);
-                log.error("  comparing file1:\"" + inFile1.getPath() + "\"");
-                log.error("         to file2:\"" + inFile2.getPath() + "\"");
+                log.error("  comparing file1:\"{}\"", inFile1.getPath());
+                log.error("         to file2:\"{}\"", inFile2.getPath());
                 Assert.assertEquals(line1, line2);
             }
             line1 = next1;
@@ -322,11 +322,20 @@ public class LoadAndStoreTestBase {
         }
         log.debug("   Chose comparison file {}", compFile.getCanonicalPath());
 
+        postLoadProcessing();
+        
         File outFile = storeFile(this.file, this.saveType);
         checkFile(compFile, outFile);
         
         JUnitAppender.suppressErrorMessage("systemName is already registered: ");
     }
+    
+    /**
+     * If anything, i.e. typically a delay,
+     * is needed after loading the file,
+     * it can be added by override here.
+     */
+    protected void postLoadProcessing(){}
 
     @Before
     public void setUp() {
@@ -348,6 +357,6 @@ public class LoadAndStoreTestBase {
         System.setProperty("jmri.test.no-dialogs", "false");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LoadAndStoreTest.class);
+    private final static Logger log = LoggerFactory.getLogger(LoadAndStoreTestBase.class);
 
 }

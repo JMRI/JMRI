@@ -128,7 +128,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
                     break;
                 }
                 if (log.isDebugEnabled()) {
-                    log.debug("macro " + line);
+                    log.debug("macro {}", line);
                 }
                 // check that each line contains the NCE memory address of the macro
                 String macroAddr = ":" + Integer.toHexString(curMacro);
@@ -250,7 +250,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
     @Override
     public void reply(NceReply r) {
         if (log.isDebugEnabled()) {
-            log.debug("waiting for " + waiting + " responses ");
+            log.debug("waiting for {} responses ", waiting);
         }
         if (waiting <= 0) {
             log.error("unexpected response");

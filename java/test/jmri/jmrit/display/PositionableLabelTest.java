@@ -546,7 +546,6 @@ public class PositionableLabelTest extends PositionableTestBase {
         JUnitUtil.dispose(f);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

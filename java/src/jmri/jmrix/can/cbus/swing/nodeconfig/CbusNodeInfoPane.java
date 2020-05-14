@@ -48,7 +48,9 @@ public class CbusNodeInfoPane extends CbusNodeConfigTab {
      */
     @Override
     public void propertyChange(PropertyChangeEvent ev){
-        paramsHaveUpdated();
+        jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
+            paramsHaveUpdated();
+        });
     }
     
     /**

@@ -17,7 +17,7 @@ import org.junit.Test;
 /**
  * Tests for the ProgServiceModePane
  *
- * @author	Bob Jacobsen 2008
+ * @author Bob Jacobsen 2008
  */
 public class ProgServiceModePaneTest {
 

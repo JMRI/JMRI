@@ -8,7 +8,7 @@ import jmri.PowerManager;
 /**
  * Default implementation for controlling layout power
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010
  */
 public class DefaultPowerManager implements PowerManager {
 

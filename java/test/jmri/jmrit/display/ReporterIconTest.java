@@ -5,14 +5,11 @@ import javax.swing.JFrame;
 import jmri.InstanceManager;
 import jmri.ReporterManager;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
  * Test the ReporterIcon.
- * <p>
- * Description:
  *
  * @author Bob Jacobsen Copyright 2007
  */

@@ -12,7 +12,7 @@ import org.junit.Test;
 
 /**
  *
- * @author	Bob Jacobsen Copyright 2010, 2014
+ * @author Bob Jacobsen Copyright 2010, 2014
  */
 public class OBlockTest {
 
@@ -251,7 +251,6 @@ public class OBlockTest {
     }
     
     // from here down is testing infrastructure
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

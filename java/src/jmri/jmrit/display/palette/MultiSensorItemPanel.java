@@ -224,7 +224,7 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
 
         protected void setPositionRange(int size) {
             if (log.isDebugEnabled()) {
-                log.debug("setPositionRange: size= " + size);
+                log.debug("setPositionRange: size= {}", size);
             }
             if (size > POSITION.length) {
                 size = POSITION.length;

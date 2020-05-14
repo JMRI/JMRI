@@ -74,7 +74,7 @@ public class RpsPositionIconXml extends PositionableLabelXml {
         if (active == null) {
             active = ed.loadFailed("RpsPositionIcon: icon \"active\" ", name);
             if (active == null) {
-                log.info("RpsPositionIcon: icon \"active\" removed for url= " + name);
+                log.info("RpsPositionIcon: icon \"active\" removed for url= {}", name);
                 return;
             }
         }
@@ -85,7 +85,7 @@ public class RpsPositionIconXml extends PositionableLabelXml {
         if (error == null) {
             error = ed.loadFailed("RpsPositionIcon: icon \"error\" ", name);
             if (error == null) {
-                log.info("RpsPositionIcon: \"error\" removed for url= " + name);
+                log.info("RpsPositionIcon: \"error\" removed for url= {}", name);
                 return;
             }
         }

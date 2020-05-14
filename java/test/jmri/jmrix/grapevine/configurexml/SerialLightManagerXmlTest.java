@@ -18,7 +18,6 @@ public class SerialLightManagerXmlTest {
       Assert.assertNotNull("SerialLightManagerXml constructor", new SerialLightManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

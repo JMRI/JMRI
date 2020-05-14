@@ -174,8 +174,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
 
         Portal portal = _manager.getPortal(row);
         if (portal == null) {
-            log.error("Portal null, getValueAt row= " + row + ", col= " + col + ", "
-                    + "portalListSize= " + _manager.getPortalCount());
+            log.error("Portal null, getValueAt row= {}, col= {}, portalListSize= {}", row, col, _manager.getPortalCount());
             return;
         }
 

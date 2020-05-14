@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * InternalReporterManagerXmlTest.java
  *
- * Description: tests for the InternalReporterManagerXml class
+ * Test for the InternalReporterManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class InternalReporterManagerXmlTest {
       Assert.assertNotNull("InternalReporterManagerXml constructor",new InternalReporterManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import jmri.BlockManager;
 
 import org.junit.*;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -21,7 +20,6 @@ import jmri.InstanceManager;
 import jmri.Light;
 import jmri.Route;
 import jmri.Sensor;
-import jmri.ShutDownManager;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
@@ -29,7 +27,7 @@ import jmri.util.JUnitUtil;
 /**
  * Tests for the jmri.jmrit.beantable.LRouteTableAction class
  *
- * @author	Pete Cressman Copyright 2009
+ * @author Pete Cressman Copyright 2009
  */
 public class LRouteTableActionTest {
 

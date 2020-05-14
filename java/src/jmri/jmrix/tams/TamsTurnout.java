@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on work by Bob Jacobsen and Kevin Dickerson Copyright
  *
- * @author	 Jan Boen
+ * @author  Jan Boen
  */
 public class TamsTurnout extends AbstractTurnout
         implements TamsListener {
@@ -27,6 +27,8 @@ public class TamsTurnout extends AbstractTurnout
      * identification in the system name.
      *
      * @param number DCC address of the turnout
+     * @param prefix system prefic
+     * @param etc Tams system connection traffic controller
      */
     public TamsTurnout(int number, String prefix, TamsTrafficController etc) {
         super(prefix + "T" + number);
@@ -85,7 +87,7 @@ public class TamsTurnout extends AbstractTurnout
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
+                log.error("Cannot command both CLOSED and THROWN {}", s);
                 return;
             } else {
                 // send a CLOSED command
@@ -116,7 +118,7 @@ public class TamsTurnout extends AbstractTurnout
             log.debug("Returning");
             return;
         }
-        log.debug("Setting to state " + state);
+        log.debug("Setting to state {}", state);
         newCommandedState(state);
     }
 
@@ -165,19 +167,19 @@ public class TamsTurnout extends AbstractTurnout
     @Override
     public void reply(TamsReply m) {
         log.debug("*** TamsReply ***");
-        log.debug("m.match(\"T\") = " + Integer.toString(m.match("T")));
+        log.debug("m.match(\"T\") = {}", Integer.toString(m.match("T")));
         String msg = m.toString();
-        log.debug("Turnout Reply = " + msg);
+        log.debug("Turnout Reply = {}", msg);
         if (m.match("T") == 0) {
             String[] lines = msg.split(" ");
             if (lines[1].equals("" + _number)) {
                 updateReceived = true;
                 if (lines[2].equals("r") || lines[2].equals("0")) {
-                    log.debug("Turnout " + _number + " = CLOSED");
+                    log.debug("Turnout {} = CLOSED", _number);
                     setCommandedStateFromCS(Turnout.CLOSED);
                     setKnownStateFromCS(Turnout.CLOSED);
                 } else {
-                    log.debug("Turnout " + _number + " = THROWN");
+                    log.debug("Turnout {} = THROWN", _number);
                     setCommandedStateFromCS(Turnout.THROWN);
                     setKnownStateFromCS(Turnout.THROWN);
                 }
