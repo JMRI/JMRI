@@ -775,6 +775,11 @@ public class AbstractThrottleTest {
         float result = instance.getSpeedIncrement();
         Assert.assertEquals(expResult, result, 0.0);
     }
+    
+    @Test
+    public void testTotalFunctions() {
+        Assert.assertEquals("Total Functions", 29, instance.getMaxFunctions());
+    }
 
     @Test
     public void testOutOfRangeUpdateFunction(){
