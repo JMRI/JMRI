@@ -14,7 +14,7 @@
     </sensor>
   </sensors>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="3:57 PM">
+    <memory value="7:31 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -295,26 +295,38 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Sun Apr 26 15:57:56 PDT 2020</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/Decorations.xml</filename>
+      <date>Wed May 13 07:31:17 PDT 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/versions/v4.19.6/java/test/jmri/jmrit/display/layoutEditor/load/Decorations-4-19-6.xml</filename>
       <filehistory>
         <operation>
-          <type>app</type>
-          <date>Wed Oct 09 09:25:27 PDT 2019</date>
-          <filename>JMRI program</filename>
+          <type>Load OK</type>
+          <date>Sun Apr 26 15:57:56 PDT 2020</date>
+          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/Decorations.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Wed Oct 09 09:25:27 PDT 2019</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Wed Oct 09 09:26:26 PDT 2019</date>
+              <filename />
+            </operation>
+          </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Wed Oct 09 09:26:26 PDT 2019</date>
+          <date>Sun Apr 26 15:57:56 PDT 2020</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sun Apr 26 15:57:56 PDT 2020</date>
+      <date>Wed May 13 07:31:22 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.6ish+jake+20200426T2255Z+R6c02d72f3a on Sun Apr 26 15:57:56 PDT 2020-->
+  <!--Written by JMRI version 4.19.6ish+jake+20200513T1417Z+Rdb3d7c2db9 on Wed May 13 07:31:22 PDT 2020-->
 </layout-config>

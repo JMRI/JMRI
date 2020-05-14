@@ -8,6 +8,7 @@ import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
+import jmri.beans.PropertyChangeSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.GlobalProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2001, 2015, 2016
  */
-public class DefaultProgrammerManager implements AddressedProgrammerManager, GlobalProgrammerManager {
+public class DefaultProgrammerManager extends PropertyChangeSupport implements AddressedProgrammerManager, GlobalProgrammerManager {
 
     // For the record, these were the original numerical definitions:
     //     public static final ProgrammingMode NONE              = new ProgrammingMode("NONE", 0);

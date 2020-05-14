@@ -51,7 +51,11 @@ import org.slf4j.*;
 public class LayoutSingleSlip extends LayoutSlip {
 
     /**
-     * constructor method
+     * Constructor method.
+     * @param id slip ID.
+     * @param c 2D point.
+     * @param rot rotation.
+     * @param layoutEditor main layout editor.
      */
     public LayoutSingleSlip(String id, Point2D c, double rot, LayoutEditor layoutEditor) {
         super(id, c, rot, layoutEditor, TurnoutType.SINGLE_SLIP);

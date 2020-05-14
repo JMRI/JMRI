@@ -435,6 +435,7 @@ public class PointDetails {
     /**
      * @since 4.17.6
      * Making the source object available for scripting in Jython.
+     * @return the sensor.
      */
     public Sensor getSensor() {
         if (getRefObject() == null) {

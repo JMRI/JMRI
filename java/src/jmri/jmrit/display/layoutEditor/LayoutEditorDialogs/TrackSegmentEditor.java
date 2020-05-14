@@ -26,7 +26,8 @@ import jmri.util.*;
 public class TrackSegmentEditor extends LayoutTrackEditor {
 
     /**
-     * constructor method
+     * constructor method.
+     * @param layoutEditor main layout editor.
      */
     public TrackSegmentEditor(@Nonnull LayoutEditor layoutEditor) {
         super(layoutEditor);

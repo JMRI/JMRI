@@ -202,6 +202,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
      * Internal method to invoke the factory, after all the logic for returning
      * an existing Turnout has been invoked.
      *
+     * @param systemName system name.
+     * @param userName username.
      * @return never null
      */
     abstract protected Turnout createNewTurnout(@Nonnull String systemName, String userName);

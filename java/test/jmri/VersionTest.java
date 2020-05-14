@@ -16,10 +16,12 @@ public class VersionTest {
      */
     @Test
     public void announceVersions() {
-        log.info("Tests running on JMRI {} with Java {} from {}", 
+        log.info("Tests running on JMRI {} with Java {} from {}, {} MB memory of {} MB", 
             Version.name(),
             System.getProperty("java.version", "<unknown>"),
-            java.util.Locale.getDefault()
+            java.util.Locale.getDefault(),
+            Runtime.getRuntime().totalMemory()/1048576,
+            Runtime.getRuntime().maxMemory()/1048576
         );
     }
     

@@ -31,19 +31,21 @@ import org.slf4j.LoggerFactory;
 public class LocoFile extends XmlFile {
 
     /**
-     * Convert to a canonical text form for ComboBoxes, etc
+     * Convert to a canonical text form for ComboBoxes, etc.
+     * @return loco title.
      */
     public String titleString() {
         return "no title form yet";
     }
 
     /**
-     * Load a CvTableModel from the locomotive element in the File
+     * Load a CvTableModel from the locomotive element in the File.
      *
      * @param loco    A JDOM Element containing the locomotive definition
      * @param cvModel An existing CvTableModel object which will have the CVs
      *                from the loco Element appended. It is intended, but not
      *                required, that this be empty.
+     * @param family  unused.
      */
     public static void loadCvModel(Element loco, CvTableModel cvModel, String family) {
         CvValue cvObject;

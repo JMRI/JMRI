@@ -322,11 +322,20 @@ public class LoadAndStoreTestBase {
         }
         log.debug("   Chose comparison file {}", compFile.getCanonicalPath());
 
+        postLoadProcessing();
+        
         File outFile = storeFile(this.file, this.saveType);
         checkFile(compFile, outFile);
         
         JUnitAppender.suppressErrorMessage("systemName is already registered: ");
     }
+    
+    /**
+     * If anything, i.e. typically a delay,
+     * is needed after loading the file,
+     * it can be added by override here.
+     */
+    protected void postLoadProcessing(){}
 
     @Before
     public void setUp() {
