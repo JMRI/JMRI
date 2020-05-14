@@ -128,6 +128,7 @@ public class CbusConfigurationManagerTest {
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis; // needed for DCC programming mgr?
     private CbusConfigurationManager t;
+    private CbusPreferences prefs;
     
     @Before
     public void setUp() {
@@ -136,6 +137,8 @@ public class CbusConfigurationManagerTest {
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
+        prefs = new CbusPreferences();
+        jmri.InstanceManager.store(prefs,CbusPreferences.class );
         
         t = new CbusConfigurationManager(memo);
     }

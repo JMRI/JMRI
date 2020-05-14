@@ -1515,7 +1515,7 @@
         </fail>
     </target>
 
-    <target name="ci-test-appveyor" depends="tests, runtime-library-selection" description="run ci-tests using Appveyour via Junit5 Console Launcher">
+    <target name="ci-test-appveyor" depends="tests, runtime-library-selection" description="run ci-tests using Appveyor via Junit5 Console Launcher">
         <mkdir dir="${tempdir}"/>
         <mkdir dir="${testreport}"/>
         <jacoco:agent property="jacocoagent" destfile="${jacocoexec}" excludes="org.slf4j.*" />
@@ -1543,7 +1543,7 @@
 	    <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
 	    <arg line="-n '.*IT.*'" />
             <arg line="--reports-dir ${testreport}" />
-            <jvmarg value="-Xmx1536m"/>
+            <jvmarg value="-Xmx3000m"/> <!-- needs to cover ArchUnit test run under coverage -->
             <jvmarg value="${jacocoagent}"/>
             <jvmarg line="${jvm.args}"/>
         </java>
