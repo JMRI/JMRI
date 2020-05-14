@@ -71,7 +71,7 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
     @Override
     protected void sendIntensity(double intensity) {
         if (log.isDebugEnabled()) {
-            log.debug("sendIntensity(" + intensity + ")" + " lastOutputStep: " + lastOutputStep + " maxDimStep: " + maxDimStep);
+            log.debug("sendIntensity({}) lastOutputStep: {} maxDimStep: {}", intensity, lastOutputStep, maxDimStep);
         }
 
         // if we don't know the dim count, force it to a value.
@@ -81,13 +81,13 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
 
         // check for errors
         if ((newStep < 0) || (newStep > maxDimStep)) {
-            log.error("newStep wrong: " + newStep + " intensity: " + intensity);
+            log.error("newStep wrong: {} intensity: {}", newStep, intensity);
         }
 
         if (newStep == lastOutputStep) {
             // nothing to do!
             if (log.isDebugEnabled()) {
-                log.debug("intensity " + intensity + " within current step, return");
+                log.debug("intensity {} within current step, return", intensity);
             }
             return;
 
@@ -101,7 +101,7 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
         lastOutputStep = newStep;
 
         if (log.isDebugEnabled()) {
-            log.debug("sendIntensity(" + intensity + ") house " + X10Sequence.houseValueToText(housecode) + " device " + devicecode + " newStep: " + newStep);
+            log.debug("sendIntensity({}) house {} device {} newStep: {}", intensity, X10Sequence.houseValueToText(housecode), devicecode, newStep);
         }
     }
 

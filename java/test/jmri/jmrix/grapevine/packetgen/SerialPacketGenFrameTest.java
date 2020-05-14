@@ -9,13 +9,12 @@ import jmri.jmrix.grapevine.SerialTrafficControlScaffold;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SerialPacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private GrapevineSystemConnectionMemo memo = null; 
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

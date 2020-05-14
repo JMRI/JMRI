@@ -49,7 +49,6 @@ public class DateUtilTest {
         Assert.assertEquals("Julian Day", 2440588, DateUtil.julianDayFromCalendar(testCal));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();

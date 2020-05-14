@@ -43,6 +43,7 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return traffic controller.
      */
     public Dcc4PcTrafficController getDcc4PcTrafficController() {
         return tc;

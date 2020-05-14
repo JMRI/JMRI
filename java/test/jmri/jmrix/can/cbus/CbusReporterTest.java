@@ -12,7 +12,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBase {
 
@@ -119,7 +119,6 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
     
     private TrafficControllerScaffold tcis;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

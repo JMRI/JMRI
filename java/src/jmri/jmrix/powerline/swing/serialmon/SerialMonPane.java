@@ -9,9 +9,9 @@ import jmri.jmrix.powerline.swing.PowerlinePanelInterface;
 /**
  * Swing action to create and register a MonFrame object.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008 copied from Ecos and converted
+ * @author Bob Jacobsen Copyright (C) 2001, 2008 copied from Ecos and converted
  * to Powerline
- * @author	Ken Cameron Copyright (C) 2011
+ * @author Ken Cameron Copyright (C) 2011
  */
 public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialListener, PowerlinePanelInterface {
 

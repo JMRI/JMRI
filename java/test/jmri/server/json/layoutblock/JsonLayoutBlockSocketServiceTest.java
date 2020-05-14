@@ -15,6 +15,7 @@ import java.beans.PropertyChangeListener;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
@@ -44,6 +45,7 @@ public class JsonLayoutBlockSocketServiceTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

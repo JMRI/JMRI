@@ -12,7 +12,7 @@ import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
- * @author	Bob Jacobsen Copyright 2018
+ * @author Bob Jacobsen Copyright 2018
  */
 public class MatrixSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 

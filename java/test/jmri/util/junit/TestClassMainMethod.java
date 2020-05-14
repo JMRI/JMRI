@@ -1,6 +1,5 @@
 package jmri.util.junit;
 
-import org.assertj.core.internal.Failures;
 import org.junit.platform.launcher.Launcher;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;
 import org.junit.platform.launcher.TestPlan;
@@ -9,11 +8,9 @@ import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
-import org.junit.runner.notification.Failure;
 
 import java.io.PrintWriter;
 import java.lang.reflect.*;
-import java.util.List;
 
 import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.*;
@@ -21,7 +18,7 @@ import static org.junit.platform.engine.discovery.DiscoverySelectors.*;
 /**
  * Main method to launch a JUnit test class
  *
- * @author	Bob Jacobsen Copyright 2016
+ * @author Bob Jacobsen Copyright 2016
  */
 public class TestClassMainMethod {
 
@@ -62,8 +59,8 @@ public class TestClassMainMethod {
                 System.err.println(ex);
             }
         }
-	    // This shouldn't be necessary, but....
-	    System.exit(0);
+        // This shouldn't be necessary, but....
+        System.exit(0);
     }
 
     /**

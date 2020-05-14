@@ -121,7 +121,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                     opstr = "Off";
                 } else if (op == null) {
                     opstr = "Default";
-                } else if (op.isNonce()) {	// nonce operation appears as subelement
+                } else if (op.isNonce()) { // nonce operation appears as subelement
                     TurnoutOperationXml adapter = TurnoutOperationXml.getAdapter(op);
                     if (adapter != null) {
                         Element nonceOpElem = adapter.store(op);

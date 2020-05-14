@@ -10,10 +10,10 @@ import org.junit.Test;
 /**
  * EliteXNetSystemConnectionMemoTest.java
  * <p>
- * Description:	tests for the jmri.jmrix.lenz.EliteXNetSystemConnectionMemo
+ * Test for the jmri.jmrix.lenz.EliteXNetSystemConnectionMemo
  * class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class EliteXNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -51,7 +51,6 @@ public class EliteXNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnecti
         Assert.assertFalse(t.provides(jmri.ConsistManager.class));
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

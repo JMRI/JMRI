@@ -17,7 +17,7 @@ import org.netbeans.jemmy.operators.*;
 /**
  * Swing tests for the turnout table.
  *
- * @author	Bob Jacobsen Copyright 2009, 2010, 2017
+ * @author Bob Jacobsen Copyright 2009, 2010, 2017
  */
 public class TurnoutTableWindowTest {
 
@@ -155,7 +155,6 @@ public class TurnoutTableWindowTest {
 
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();

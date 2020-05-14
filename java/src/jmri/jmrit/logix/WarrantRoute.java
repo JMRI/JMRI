@@ -113,7 +113,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     public abstract void propertyChange(java.beans.PropertyChangeEvent e);
     
     protected void setSpeedUtil(SpeedUtil sp) {
-    	_speedUtil = sp;
+        _speedUtil = sp;
     }
 
     /* ************************* Panel for Route search depth **********************/
@@ -217,12 +217,12 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         trainPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
 
         _dccNumBox.addActionListener((ActionEvent e) -> {
-        	_speedUtil.setDccAddress(_dccNumBox.getText());
-        	if (_speedUtil.getRosterEntry() == null) {
-        		_rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
-        	} else {
+            _speedUtil.setDccAddress(_dccNumBox.getText());
+            if (_speedUtil.getRosterEntry() == null) {
+                _rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
+            } else {
                 setTrainInfo(_trainNameBox.getText());
-        	}
+            }
         });
         return trainPanel;
     }
@@ -240,12 +240,12 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         _rosterBox.addActionListener((ActionEvent e) -> {
             String selection = (String) _rosterBox.getSelectedItem();
             if (selection != null && !Bundle.getMessage("noSuchAddress").equals(selection)
-            		&& selection.trim().length() != 0) {
+                    && selection.trim().length() != 0) {
                 _speedUtil.setDccAddress(selection);
                 setTrainInfo(_trainNameBox.getText());
             }
         });
-        
+
         _viewProfile.addActionListener((ActionEvent e) -> {
             showProfile();
         });
@@ -308,7 +308,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
 
     protected String setTrainInfo(String name) {
         if (log.isDebugEnabled()) {
-            log.debug("setTrainInfo for: " + name);
+            log.debug("setTrainInfo for: {}", name);
         }
         setTrainName(name);
         _dccNumBox.setText(_speedUtil.getAddress());
@@ -866,7 +866,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
             }
             _routeFinder = new RouteFinder(this, _origin.getOrder(), _destination.getOrder(),
                     _via.getOrder(), _avoid.getOrder(), getDepth());
-            new Thread(_routeFinder).start();
+            jmri.util.ThreadingUtil.newThread(_routeFinder).start();
         }
         return msg;
     }
@@ -1065,7 +1065,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
 //        _dirty = true;
         _routeModel.fireTableDataChanged();
         if (log.isDebugEnabled()) {
-            log.debug("showRoute: Route has " + _orders.size() + " orders.");
+            log.debug("showRoute: Route has {} orders.", _orders.size());
         }
     }
 

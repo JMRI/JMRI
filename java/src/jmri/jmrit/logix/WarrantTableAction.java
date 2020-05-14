@@ -282,7 +282,7 @@ public class WarrantTableAction extends AbstractAction {
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "OPath extends Path")
     public String checkPathPortals(OBlock b) {
         if (log.isDebugEnabled()) {
-            log.debug("checkPathPortals for " + b.getDisplayName());
+            log.debug("checkPathPortals for {}", b.getDisplayName());
         }
         StringBuffer sb = new StringBuffer();
         List<Path> pathList = b.getPaths();

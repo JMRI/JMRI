@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Some helpful implementations and values for Calculators.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 public abstract class AbstractCalculator implements Calculator {
 

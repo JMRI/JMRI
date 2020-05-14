@@ -85,6 +85,8 @@ public class CbusOpCodes {
             case CbusConstants.CBUS_GLOC: // extra info GLOC OPC
                 appendGloc(msg,buf);
                 break;
+            case CbusConstants.CBUS_FCLK:
+                return CbusClockControl.dateFromCanFrame(msg);
             default:
                 break;
         }
@@ -276,7 +278,8 @@ public class CbusOpCodes {
     }
     
     /**
-     * Test if CBUS OpCode is translatable.
+     * Test if CBUS OpCode is known to JMRI.
+     * Performs Extended / RTR Frame check.
      *
      * @param msg CanReply or CanMessage
      * @return True if opcode is known

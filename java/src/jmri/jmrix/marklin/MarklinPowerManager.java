@@ -71,7 +71,7 @@ public class MarklinPowerManager extends AbstractPowerManager implements Marklin
                     power = OFF;
                     break;
                 default:
-                    log.warn("Unknown sub command " + m.getElement(9));
+                    log.warn("Unknown sub command {}", m.getElement(9));
             }
             firePowerPropertyChange(old, power);
         }

@@ -12,7 +12,6 @@ import jmri.jmrix.lenz.XNetStreamConnectionConfig;
  */
 public class XNetStreamConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractStreamConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

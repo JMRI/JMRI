@@ -26,7 +26,6 @@ import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.lang.reflect.InvocationTargetException;
@@ -69,16 +68,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import jmri.BlockManager;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.NamedBean;
-import jmri.NamedBeanUsageReport;
-import jmri.Reporter;
-import jmri.ShutDownManager;
-import jmri.SignalHeadManager;
-import jmri.SignalMastManager;
+import jmri.*;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.DirectorySearcher;
 import jmri.jmrit.catalog.ImageIndexEditor;
@@ -238,7 +228,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
         InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
         InstanceManager.getDefault(BlockManager.class).addVetoableChangeListener(this);
-        InstanceManager.getDefault(EditorManager.class).addEditor(this);
+        InstanceManager.getDefault(EditorManager.class).add(this);
     }
 
     public Editor(String name) {
@@ -333,37 +323,28 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             JPanel result = new JPanel();
             result.setLayout(new FlowLayout());
             JButton doneButton = new JButton(Bundle.getMessage("ButtonContinue"));
-            doneButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent a) {
-                    _newIcon = NamedIcon.getIconByName(_urlField.getText());
-                    if (_newIcon != null) {
-                        _urlMap.put(_badUrl, _urlField.getText());
-                    }
-                    dispose();
+            doneButton.addActionListener(a -> {
+                _newIcon = NamedIcon.getIconByName(_urlField.getText());
+                if (_newIcon != null) {
+                    _urlMap.put(_badUrl, _urlField.getText());
                 }
+                dispose();
             });
             doneButton.setToolTipText(Bundle.getMessage("TooltipContinue"));
             result.add(doneButton);
 
             JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
-            deleteButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent a) {
-                    _delete = true;
-                    dispose();
-                }
+            deleteButton.addActionListener(a -> {
+                _delete = true;
+                dispose();
             });
             result.add(deleteButton);
             deleteButton.setToolTipText(Bundle.getMessage("TooltipDelete"));
 
             JButton cancelButton = new JButton(Bundle.getMessage("ButtonIgnore"));
-            cancelButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent a) {
-                    _ignore = true;
-                    dispose();
-                }
+            cancelButton.addActionListener(a -> {
+                _ignore = true;
+                dispose();
             });
             result.add(cancelButton);
             cancelButton.setToolTipText(Bundle.getMessage("TooltipIgnore"));
@@ -666,8 +647,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                super.paint(g);
                paintTargetPanel(g);
             } catch (Exception e) {
-                log.error("paint failed in thread "+
-                    Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": ", e);
+                log.error("paint failed in thread {} {}: ", Thread.currentThread().getName(), Thread.currentThread().getId(), e);
             }
 
             Stroke stroke = new BasicStroke();
@@ -1066,15 +1046,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
             if (!InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()) {
                 int selectedValue = JOptionPane.showOptionDialog(_targetPanel,
-                        MessageFormat.format(message,
-                                new Object[]{name}), Bundle.getMessage("ReminderTitle"),
+                        MessageFormat.format(message, name), Bundle.getMessage("ReminderTitle"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
                         null, new Object[]{Bundle.getMessage("ButtonHide"), Bundle.getMessage("ButtonDeletePanel"),
                             Bundle.getMessage("ButtonDontShow")}, Bundle.getMessage("ButtonHide"));
                 switch (selectedValue) {
                     case 0:
                         _targetFrame.setVisible(false);   // doesn't remove the editor!
-                        InstanceManager.getDefault(PanelMenu.class).updateEditorPanel(this);
                         break;
                     case 1:
                         if (deletePanel()) { // disposes everything
@@ -1084,7 +1062,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     case 2:
                         showCloseInfoMessage = false;
                         _targetFrame.setVisible(false);   // doesn't remove the editor!
-                        InstanceManager.getDefault(PanelMenu.class).updateEditorPanel(this);
                         break;
                     default:    // dialog closed - do nothing
                         _targetFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -1095,7 +1072,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
         } else {
             _targetFrame.setVisible(false);   // doesn't remove the editor!
-            InstanceManager.getDefault(PanelMenu.class).updateEditorPanel(this);
         }
     }
 
@@ -1132,7 +1108,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             ed.setSize(getSize());
 //            ed.pack();
             ed.setVisible(true);
-            InstanceManager.getDefault(PanelMenu.class).addEditorPanel(ed);
             dispose();
             return ed;
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException cnfe) {
@@ -1522,13 +1497,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         mtext.setText(Bundle.getMessage("SelectLoco") + ":");
         locoRosterFrame.getContentPane().add(mtext);
         final RosterEntrySelectorPanel rosterBox = new RosterEntrySelectorPanel();
-        rosterBox.addPropertyChangeListener("selectedRosterEntries", new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent pce) {
-                if (rosterBox.getSelectedRosterEntries().length != 0) {
-                    selectLoco(rosterBox.getSelectedRosterEntries()[0]);
-                }
+        rosterBox.addPropertyChangeListener("selectedRosterEntries", pce -> {
+            if (rosterBox.getSelectedRosterEntries().length != 0) {
+                selectLoco(rosterBox.getSelectedRosterEntries()[0]);
             }
         });
         locoRosterFrame.getContentPane().add(rosterBox);
@@ -1581,16 +1552,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         locoId.setToolTipText(Bundle.getMessage("EnterLocoID"));
         JButton okay = new JButton();
         okay.setText(Bundle.getMessage("ButtonOK"));
-        okay.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String nameID = locoId.getText();
-                if ((nameID != null) && !(nameID.trim().equals(""))) {
-                    addLocoIcon(nameID.trim());
-                } else {
-                    JOptionPane.showMessageDialog(locoFrame, Bundle.getMessage("ErrorEnterLocoID"),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                }
+        okay.addActionListener(e -> {
+            String nameID = locoId.getText();
+            if ((nameID != null) && !(nameID.trim().equals(""))) {
+                addLocoIcon(nameID.trim());
+            } else {
+                JOptionPane.showMessageDialog(locoFrame, Bundle.getMessage("ErrorEnterLocoID"),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
         });
         locoFrame.getContentPane().add(okay);
@@ -1821,12 +1789,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _iconEditorFrame.put("RightTurnout", frame);
         editor.setPickList(PickListModel.turnoutPickModelInstance());
 
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                addTurnoutR();
-            }
-        };
+        ActionListener addIconAction = a -> addTurnoutR();
         editor.makeIconPanel(true);
         editor.complete(addIconAction, true, true, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
@@ -1847,12 +1810,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _iconEditorFrame.put("LeftTurnout", frame);
         editor.setPickList(PickListModel.turnoutPickModelInstance());
 
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                addTurnoutL();
-            }
-        };
+        ActionListener addIconAction = a -> addTurnoutL();
         editor.makeIconPanel(true);
         editor.complete(addIconAction, true, true, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
@@ -1877,12 +1835,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _iconEditorFrame.put("SlipTOEditor", frame);
         editor.setPickList(PickListModel.turnoutPickModelInstance());
 
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                addSlip();
-            }
-        };
+        ActionListener addIconAction = a -> addSlip();
         editor.makeIconPanel(true);
         editor.complete(addIconAction, true, true, false);
         frame.addHelpMenu("package.jmri.jmrit.display.SlipTurnoutIcon", true);
@@ -1903,12 +1856,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _iconEditorFrame.put("Sensor", frame);
         editor.setPickList(PickListModel.sensorPickModelInstance());
 
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                putSensor();
-            }
-        };
+        ActionListener addIconAction = a -> putSensor();
         editor.makeIconPanel(true);
         editor.complete(addIconAction, true, true, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
@@ -1920,12 +1868,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _iconEditorFrame.put("SignalHead", frame);
         editor.setPickList(PickListModel.signalHeadPickModelInstance());
 
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                putSignalHead();
-            }
-        };
+        ActionListener addIconAction = a -> putSignalHead();
         editor.makeIconPanel(true);
         editor.complete(addIconAction, true, false, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
@@ -1964,41 +1907,26 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _iconEditorFrame.put("SignalMast", frame);
         editor.setPickList(PickListModel.signalMastPickModelInstance());
 
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                putSignalMast();
-            }
-        };
+        ActionListener addIconAction = a -> putSignalMast();
         editor.makeIconPanel(true);
         editor.complete(addIconAction, true, false, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
 
-    private SpinnerNumberModel _spinCols = new SpinnerNumberModel(3, 1, 100, 1);
+    private final SpinnerNumberModel _spinCols = new SpinnerNumberModel(3, 1, 100, 1);
 
     protected void addMemoryEditor() {
         IconAdder editor = new IconAdder("Memory") {
-            JButton bSpin = new JButton(Bundle.getMessage("AddSpinner"));
-            JButton bBox = new JButton(Bundle.getMessage("AddInputBox"));
-            JSpinner spinner = new JSpinner(_spinCols);
+            final JButton bSpin = new JButton(Bundle.getMessage("AddSpinner"));
+            final JButton bBox = new JButton(Bundle.getMessage("AddInputBox"));
+            final JSpinner spinner = new JSpinner(_spinCols);
 
             @Override
             protected void addAdditionalButtons(JPanel p) {
-                bSpin.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent a) {
-                        addMemorySpinner();
-                    }
-                });
+                bSpin.addActionListener(a -> addMemorySpinner());
                 JPanel p1 = new JPanel();
                 //p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
-                bBox.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent a) {
-                        addMemoryInputBox();
-                    }
-                });
+                bBox.addActionListener(a -> addMemoryInputBox());
                 ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setColumns(2);
                 spinner.setMaximumSize(spinner.getPreferredSize());
                 JPanel p2 = new JPanel();
@@ -2019,12 +1947,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 bBox.setEnabled(addIconIsEnabled());
             }
         };
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                putMemory();
-            }
-        };
+        ActionListener addIconAction = a -> putMemory();
         JFrameItem frame = makeAddIconFrame("Memory", true, true, editor);
         _iconEditorFrame.put("Memory", frame);
         editor.setPickList(PickListModel.memoryPickModelInstance());
@@ -2035,12 +1958,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     protected void addBlockContentsEditor() {
         IconAdder editor = new IconAdder("Block Contents");
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                putBlockContents();
-            }
-        };
+        ActionListener addIconAction = a -> putBlockContents();
         JFrameItem frame = makeAddIconFrame("BlockLabel", true, true, editor);
         _iconEditorFrame.put("BlockLabel", frame);
         editor.setPickList(PickListModel.blockPickModelInstance());
@@ -2051,12 +1969,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     protected void addReporterEditor() {
         IconAdder editor = new IconAdder("Reporter");
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                addReporter();
-            }
-        };
+        ActionListener addIconAction = a -> addReporter();
         JFrameItem frame = makeAddIconFrame("Reporter", true, true, editor);
         _iconEditorFrame.put("Reporter", frame);
         editor.setPickList(PickListModel.reporterPickModelInstance());
@@ -2080,12 +1993,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _iconEditorFrame.put("Light", frame);
         editor.setPickList(PickListModel.lightPickModelInstance());
 
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                addLight();
-            }
-        };
+        ActionListener addIconAction = a -> addLight();
         editor.makeIconPanel(true);
         editor.complete(addIconAction, true, true, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
@@ -2098,12 +2006,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         JFrameItem frame = makeAddIconFrame("Background", true, false, editor);
         _iconEditorFrame.put("Background", frame);
 
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                putBackground();
-            }
-        };
+        ActionListener addIconAction = a -> putBackground();
         editor.makeIconPanel(true);
         editor.complete(addIconAction, true, false, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
@@ -2130,12 +2033,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
         editor.setPickList(PickListModel.sensorPickModelInstance());
 
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                addMultiSensor();
-            }
-        };
+        ActionListener addIconAction = a -> addMultiSensor();
         editor.makeIconPanel(true);
         editor.complete(addIconAction, true, true, false);
         return frame;
@@ -2147,12 +2045,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         JFrameItem frame = makeAddIconFrame("Icon", true, false, editor);
         _iconEditorFrame.put("Icon", frame);
 
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                putIcon();
-            }
-        };
+        ActionListener addIconAction = a -> putIcon();
         editor.makeIconPanel(true);
         editor.complete(addIconAction, true, false, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
@@ -2562,13 +2455,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             menuBar.add(findIcon);
 
             JMenuItem editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
-            editItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ImageIndexEditor ii = InstanceManager.getDefault(ImageIndexEditor.class);
-                    ii.pack();
-                    ii.setVisible(true);
-                }
+            editItem.addActionListener(e -> {
+                ImageIndexEditor ii = InstanceManager.getDefault(ImageIndexEditor.class);
+                ii.pack();
+                ii.setVisible(true);
             });
             findIcon.add(editItem);
             findIcon.addSeparator();
@@ -2672,8 +2562,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (cm != null) {
             cm.deregister(this);
         }
-        InstanceManager.getDefault(PanelMenu.class).deletePanel(this);
-        InstanceManager.getDefault(EditorManager.class).removeEditor(this);
+        InstanceManager.getDefault(EditorManager.class).remove(this);
         setVisible(false);
         _contents.clear();
         removeAll();
@@ -2984,29 +2873,23 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             JPanel panel0 = new JPanel();
             panel0.setLayout(new FlowLayout());
             JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
-            doneButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent a) {
-                    PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
-                    _decorator.setSuppressRecentColor(false);
-                    _decorator.setAttributes(_pos);
-                    if (_selectionGroup == null) {
-                        setAttributes(util, _pos);
-                    } else {
-                        setSelectionsAttributes(util, _pos);
-                    }
-                   dispose();
+            doneButton.addActionListener(a -> {
+                PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
+                _decorator.setSuppressRecentColor(false);
+                _decorator.setAttributes(_pos);
+                if (_selectionGroup == null) {
+                    setAttributes(util, _pos);
+                } else {
+                    setSelectionsAttributes(util, _pos);
                 }
+               dispose();
             });
             panel0.add(doneButton);
 
             JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-            cancelButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent a) {
-                    _decorator.setSuppressRecentColor(false);
-                    dispose();
-                }
+            cancelButton.addActionListener(a -> {
+                _decorator.setSuppressRecentColor(false);
+                dispose();
             });
             panel0.add(cancelButton);
             return panel0;
@@ -3350,14 +3233,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Get a List of the currently-existing Editor objects. The returned list is
      * a copy made at the time of the call, so it can be manipulated as needed
      * by the caller.
-     * <p>
-     * This is a convenience reference to {@link jmri.jmrit.display.EditorManager#getEditorsList()}
      *
      * @return a List of Editors
-     * @see jmri.jmrit.display.EditorManager#getEditorsList()
+     * @deprecated since 4.19.6; use {@link EditorManager#getAll()} instead
      */
+    @Deprecated
     synchronized public static List<Editor> getEditors() {
-        return InstanceManager.getDefault(EditorManager.class).getEditorsList();
+        return new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll());
     }
 
     /**
@@ -3366,30 +3248,28 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * <p>
      * The returned list is a copy made at the time of the call, so it can be
      * manipulated as needed by the caller.
-     * <p>
-     * This is a convenience reference to {@link jmri.jmrit.display.EditorManager#getEditorsList(Class)}
      *
      * @param <T>  the Class the list should be limited to.
      * @param type the Class the list should be limited to.
      * @return a List of Editors.
-     * @see jmri.jmrit.display.EditorManager#getEditorsList(Class)
+     * @deprecated since 4.19.6; use {@link EditorManager#getAll(Class)} instead
      */
+    @Deprecated
     synchronized public static <T extends Editor> List<T> getEditors(@Nonnull Class<T> type) {
-        return InstanceManager.getDefault(EditorManager.class).getEditorsList(type);
+        return new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(type));
     }
 
     /**
      * Get an Editor of a particular name. If more than one exists, there's no
      * guarantee as to which is returned.
-     * <p>
-     * This is a convenience reference to {@link jmri.jmrit.display.EditorManager#getEditor(String)}
      *
      * @param name the editor to get
      * @return an Editor or null if no matching Editor could be found
-     * @see jmri.jmrit.display.EditorManager#getEditor(String)
+     * @deprecated since 4.19.6; use {@link EditorManager#get(String)} instead
      */
+    @Deprecated
     public static Editor getEditor(String name) {
-        return InstanceManager.getDefault(EditorManager.class).getEditor(name);
+        return InstanceManager.getDefault(EditorManager.class).get(name);
     }
 
     public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
@@ -3442,11 +3322,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     String getUsageData(Positionable pos) {
         Point point = pos.getLocation();
-        String data = String.format("%s :: x=%d, y=%d",
+        return String.format("%s :: x=%d, y=%d",
                 pos.getClass().getSimpleName(),
                 Math.round(point.getX()),
                 Math.round(point.getY()));
-        return data;
     }
 
     // initialize logging

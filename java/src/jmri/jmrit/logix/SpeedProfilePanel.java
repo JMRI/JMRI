@@ -364,6 +364,9 @@ public class SpeedProfilePanel extends JPanel {
 
         @Override
         public Transferable createTransferable(JComponent c) {
+            if (!(c instanceof JTable )){
+                return null;
+            }
             JTable table = (JTable) c;
             int row = table.getSelectedRow();
             if (row < 0) {

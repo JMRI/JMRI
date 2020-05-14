@@ -7,16 +7,15 @@ import org.junit.*;
 /**
  * LIUSBConfigFrameTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.swing.liusb.LIUSBConfigFrame class
+ * Test for the jmri.jmrix.lenz.swing.liusb.LIUSBConfigFrame class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LIUSBConfigFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private jmri.jmrix.lenz.XNetInterfaceScaffold t = null;
     private jmri.jmrix.lenz.XNetSystemConnectionMemo memo = null;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

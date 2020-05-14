@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Stands in for the SerialTrafficController class.
  *
- * @author	Bob Jacobsen Copyright 2004, 2007, 2008 Converted to multiple
+ * @author Bob Jacobsen Copyright 2004, 2007, 2008 Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
  */

@@ -194,7 +194,7 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
                     _spinner.getValue());
         }
         Integer nCols = (Integer) _spinner.getValue();
-        _writeMem.setNumColumns(nCols.intValue());
+        _writeMem.setNumColumns(nCols);
     }
 
     /**
@@ -266,12 +266,11 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
                     ((JSpinner.DefaultEditor) _spinner.getEditor()).commitEdit();
                     SpinnerNumberModel spinModel = (SpinnerNumberModel) _spinner.getModel();
                     if (log.isDebugEnabled()) {
-                        log.debug("MemoryDnD.createTransferable: spinCols= "
-                                + spinModel.getNumber().intValue());
+                        log.debug("MemoryDnD.createTransferable: spinCols= {}", spinModel.getNumber().intValue());
                     }
                     numCols = spinModel.getNumber().intValue();
                 } catch (java.text.ParseException pe) {
-                    log.error("MemoryDnD.createTransferable: " + pe);
+                    log.error("MemoryDnD.createTransferable: {}", pe);
                 }
                 switch (_memType) {
                     case READONLY:

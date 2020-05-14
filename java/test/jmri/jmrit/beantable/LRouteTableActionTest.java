@@ -27,7 +27,7 @@ import jmri.util.JUnitUtil;
 /**
  * Tests for the jmri.jmrit.beantable.LRouteTableAction class
  *
- * @author	Pete Cressman Copyright 2009
+ * @author Pete Cressman Copyright 2009
  */
 public class LRouteTableActionTest {
 
@@ -162,6 +162,7 @@ public class LRouteTableActionTest {
         if (_lRouteTable.f != null) {
             _lRouteTable.f.dispose();
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

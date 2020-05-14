@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SerialMonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008 Converted to
+ * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */
@@ -34,7 +34,7 @@ public class SerialMonAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("SerialMonAction starting SerialMonFrame: Exception: " + ex.toString());
+            log.warn("SerialMonAction starting SerialMonFrame: Exception: {}", ex.toString());
         }
         f.setVisible(true);
     }

@@ -8,7 +8,7 @@ import org.junit.*;
 /**
  * Test simple functioning of AcelaPacketGenFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class AcelaPacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
 

@@ -147,6 +147,7 @@
 <!ATTLIST buildOptions promptToStagingEnabled		(true | false ) "false">
 <!ATTLIST buildOptions generateCsvManifest			(true | false ) "false">  
 <!ATTLIST buildOptions generateCsvSwitchList		(true | false ) "false">  
+<!ATTLIST buildOptions stagingTryNormal				(true | false ) "true">
    
 <!ATTLIST buildReport level				CDATA #IMPLIED>    
 <!ATTLIST buildReport useEditor			(true | false ) "false">   

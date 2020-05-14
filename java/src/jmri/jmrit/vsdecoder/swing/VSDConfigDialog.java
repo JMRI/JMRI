@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Configuration dialog for setting up a new VSDecoder
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -50,7 +51,7 @@ import org.slf4j.LoggerFactory;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 public class VSDConfigDialog extends JDialog {
 
@@ -283,11 +284,16 @@ public class VSDConfigDialog extends JDialog {
             config.setLocoAddress(addressSelector.getAddress());
             if (getSelectedRosterItem() != null) {
                 config.setRosterEntry(getSelectedRosterItem());
+                // decoder volume
+                String dv = config.getRosterEntry().getAttribute("VSDecoder_Volume");
+                if (dv !=null && !dv.isEmpty()) {
+                    config.setVolume(Float.parseFloat(dv));
+                }
+                log.debug("Decoder volume in config: {}", config.getVolume());
             } else {
                 config.setRosterEntry(null);
             }
-
-            firePropertyChange(CONFIG_PROPERTY, null, config);
+            firePropertyChange(CONFIG_PROPERTY, config, null); // open the new VSDControl
             dispose();
         }
     }
@@ -377,30 +383,43 @@ public class VSDConfigDialog extends JDialog {
                 log.warn("Path not selected.  Ignore Save button press.");
                 return;
             } else {
-                r.setOpen(true);
-                r.putAttribute("VSDecoder_Path", path);
-                r.putAttribute("VSDecoder_Profile", profile);
-                if (r.getAttribute("VSDecoder_LaunchThrottle") == null) {
-                    r.putAttribute("VSDecoder_LaunchThrottle", "no");
-                }
                 int value = JOptionPane.showConfirmDialog(null,
                         MessageFormat.format(Bundle.getMessage("UpdateRoster"),
-                                new Object[]{r.titleString()}),
+                        new Object[]{r.titleString()}),
                         Bundle.getMessage("SaveRoster?"), JOptionPane.YES_NO_OPTION);
                 if (value == JOptionPane.YES_OPTION) {
-                    storeFile(r);
+                    r.putAttribute("VSDecoder_Path", path);
+                    r.putAttribute("VSDecoder_Profile", profile);
+                    if (r.getAttribute("VSDecoder_LaunchThrottle") == null) {
+                        r.putAttribute("VSDecoder_LaunchThrottle", "no");
+                    }
+                    if (r.getAttribute("VSDecoder_Volume") == null) {
+                        // convert Float to String without decimal places
+                        r.putAttribute("VSDecoder_Volume", String.valueOf(config.DEFAULT_VOLUME));
+                    }
+                    r.updateFile(); // write and update timestamp
+                    log.info("Roster Media updated for {}", r.getDisplayName());
+                    closeButton.doClick(); // All done
+                } else {
+                    log.info("Roster Media not saved");
                 }
-                r.setOpen(false);
             }
         }
     }
 
+    // Probably the last setting step of the manually "Add Decoder" process
+    // (but the user also can load a VSD file and then set the address).
+    // Enable the OK button (closeButton) and the Roster Save button.
+    // note: a selected roster entry sets an Address too
     private void profileComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
         // if there's also an Address entered, then enable the OK button.
-        if (addressSelector.getAddress() != null &&
-                !(profileComboBox.getSelectedItem() instanceof NullProfileBoxItem)) {
+        if (addressSelector.getAddress() != null
+                && !(profileComboBox.getSelectedItem() instanceof NullProfileBoxItem)) {
             closeButton.setEnabled(true);
-            rosterSaveButton.setEnabled(true);
+            // Roster Entry is required to enable the Roster Save button
+            if (rosterSelector.getSelectedRosterEntries().length != 0) {
+                rosterSaveButton.setEnabled(true);
+            }
         }
     }
 
@@ -411,10 +430,14 @@ public class VSDConfigDialog extends JDialog {
     }
 
     /**
-     * handle the address "Set" button.
+     * handle the address "Set" button
      */
     private void addressSetButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // If there's also a Profile selected, enable the OK button.
+        // address should be an integer, not a string
+        if (addressSelector.getAddress() == null) {
+            log.warn("Address is not valid");
+        }
+        // if a profile is already selected enable the OK button (closeButton)
         if ((profileComboBox.getSelectedIndex() != -1)
                 && (!(profileComboBox.getSelectedItem() instanceof NullProfileBoxItem))) {
             closeButton.setEnabled(true);
@@ -463,18 +486,16 @@ public class VSDConfigDialog extends JDialog {
             }
         }
 
-        // If the combo box isn't empty, enable it and enable the
-        // Roster Save button.
+        // If the combo box isn't empty, enable it and enable it
         if (profileComboBox.getItemCount() > 0) {
             profileComboBox.setEnabled(true);
-            // Enable the roster save button if roster items are available.
+            // select a profile if roster items are available
             if (getSelectedRosterItem() != null) {
                 RosterEntry r = getSelectedRosterItem();
                 String profile = r.getAttribute("VSDecoder_Profile");
                 log.debug("Trying to set the ProfileComboBox to this Profile: {}", profile);
                 if (profile != null) {
                     profileComboBox.setSelectedItem(profile);
-                    rosterSaveButton.setEnabled(true);
                 }
             }
         }
@@ -519,45 +540,6 @@ public class VSDConfigDialog extends JDialog {
         addressSelector.setAddress(entry.getDccLocoAddress());
         addressSelector.setEnabled(true);
         addressSetButton.setEnabled(true);
-    }
-
-    /**
-     * Write roster settings to the Roster file
-     */
-    protected boolean storeFile(RosterEntry _rosterEntry) {
-        log.debug("storeFile starts");
-        // We need to create a programmer, a cvTableModel, and a variableTableModel.
-        // Doesn't matter which, so we'll use the Global programmer.
-        Programmer p = InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
-        CvTableModel cvModel = new CvTableModel(null, p);
-        VariableTableModel variableModel = new VariableTableModel(null, new String[]{"Name", "Value"}, cvModel);
-
-        // Now, in theory we can call _rosterEntry.writeFile...
-        if (_rosterEntry.getFileName() != null) {
-            // set the loco file name in the roster entry
-            _rosterEntry.readFile();  // read, but don't yet process
-            _rosterEntry.loadCvModel(variableModel, cvModel);
-        }
-
-        // id has to be set!
-        if (_rosterEntry.getId().isEmpty()) {
-            log.debug("storeFile without a filename; issued dialog");
-            return false;
-        }
-
-        // if there isn't a filename, store using the id
-        _rosterEntry.ensureFilenameExists();
-
-        // create the RosterEntry to its file
-        _rosterEntry.writeFile(cvModel, variableModel); // where to get the models???
-
-        // mark this as a success
-        variableModel.setFileDirty(false);
-
-        // and store an updated roster file
-        Roster.getDefault().writeRoster();
-
-        return true;
     }
 
     private static final Logger log = LoggerFactory.getLogger(VSDConfigDialog.class);

@@ -20,17 +20,12 @@ import org.slf4j.LoggerFactory;
 /**
  * OlcbSensorManagerXmlTest.java
  *
- * Description: tests for the OlcbSensorManagerXml class
+ * Test for the OlcbSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  *           Balazs Racz    (C) 2018
  */
 public class OlcbSensorManagerXmlTest {
-
-    @Test
-    public void testCtor(){
-      Assert.assertNotNull("OlcbSensorManagerXml constructor",new OlcbSensorManagerXml());
-    }
 
     @Test
     public void testSaveAndRestoreWithProperties() throws Exception {
@@ -61,7 +56,7 @@ public class OlcbSensorManagerXmlTest {
 
         s.setProperty(OlcbUtils.PROPERTY_QUERY_AT_STARTUP, false);
         s.setAuthoritative(false);
-        Assert.assertEquals(1, mgr.getSystemNameList().size());
+        Assert.assertEquals(1, mgr.getNamedBeanSet().size());
 
         Element stored = xmlmgr.store(mgr);
         Assert.assertNotNull(stored);
@@ -108,7 +103,6 @@ public class OlcbSensorManagerXmlTest {
     OlcbTestInterface t;
     private final static Logger log = LoggerFactory.getLogger(OlcbSensorManagerXmlTest.class);
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

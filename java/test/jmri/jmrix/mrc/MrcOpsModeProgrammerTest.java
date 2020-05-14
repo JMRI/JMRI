@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MrcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
@@ -18,7 +18,6 @@ public class MrcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgramm
         Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
     }    
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

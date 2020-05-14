@@ -28,7 +28,7 @@ package jmri.jmrix.roco.z21;
  * <li>0x00080000 send can detector messages to the client</li>
  * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2001 
+ * @author Bob Jacobsen Copyright (C) 2001 
  * @author      Paul Bender Copyright (C) 2016
  */
 public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {

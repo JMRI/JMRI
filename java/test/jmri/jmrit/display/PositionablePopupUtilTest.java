@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PositionablePopupUtilTest {
 
@@ -52,7 +53,6 @@ public class PositionablePopupUtilTest {
         Assert.assertFalse("hasBackground",t.hasBackground());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -60,6 +60,7 @@ public class PositionablePopupUtilTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

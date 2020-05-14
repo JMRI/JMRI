@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * RpsPositionIconXmlTest.java
  *
- * Description: tests for the RpsPositionIconXml class
+ * Test for the RpsPositionIconXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class RpsPositionIconXmlTest {
       Assert.assertNotNull("RpsPositionIconXml constructor",new RpsPositionIconXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

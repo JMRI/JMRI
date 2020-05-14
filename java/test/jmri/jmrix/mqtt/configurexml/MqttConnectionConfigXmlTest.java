@@ -13,7 +13,6 @@ import jmri.jmrix.mqtt.MqttConnectionConfig;
  */
 public class MqttConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

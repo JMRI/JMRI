@@ -70,5 +70,5 @@ public class LocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
         log.error("Invalid method called");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DccLocoAddressXml.class);
+    private final static Logger log = LoggerFactory.getLogger(LocoAddressXml.class);
 }

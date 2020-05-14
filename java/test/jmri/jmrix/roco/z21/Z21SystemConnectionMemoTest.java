@@ -6,7 +6,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.jmrix.roco.z21.z21SystemConnectionMemo class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class Z21SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -55,7 +55,6 @@ public class Z21SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
        Assert.assertNotNull("Get MultiMeter",scm.get(jmri.MultiMeter.class));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

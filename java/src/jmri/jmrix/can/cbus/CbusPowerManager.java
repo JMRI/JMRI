@@ -34,19 +34,19 @@ public class CbusPowerManager extends AbstractPowerManager implements CanListene
             // send "Enable main track"
             tc.sendCanMessage(CbusMessage.getRequestTrackOn(tc.getCanid()), this);
         }
-        if (v == OFF) {
+        else if (v == OFF) {
             // send "Kill main track"
             tc.sendCanMessage(CbusMessage.getRequestTrackOff(tc.getCanid()), this);
         }
         firePowerPropertyChange(old, power);
     }
 
-    // to free resources when no longer used
+    /** 
+     * {@inheritDoc} 
+     */
     @Override
     public void dispose() throws JmriException {
-        if (tc !=null) {
-            tc.removeCanListener(this);
-        }
+        removeTc(tc);
         tc = null;
     }
 
@@ -73,6 +73,10 @@ public class CbusPowerManager extends AbstractPowerManager implements CanListene
         firePowerPropertyChange(old, power);
     }
 
+    /** 
+     * Does not listen to outgoing messages.
+     * {@inheritDoc} 
+     */
     @Override
     public void message(CanMessage m) {
         // do nothing

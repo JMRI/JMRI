@@ -152,7 +152,7 @@ public class AudioTablePanel extends JPanel {
                     bufferDataTable.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat("Buffer Table"), footerFormat);
                     sourceDataTable.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat("Source Table"), footerFormat);
                 } catch (java.awt.print.PrinterException e1) {
-                    log.warn("error printing: " + e1, e1);
+                    log.warn("error printing: {}", e1, e1);
                 }
             }
         });

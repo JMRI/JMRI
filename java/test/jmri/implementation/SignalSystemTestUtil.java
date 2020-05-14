@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Static utilities for testing signal system code.
  *
- * @author	Bob Jacobsen Copyright 2014, 2015
+ * @author Bob Jacobsen Copyright 2014, 2015
  */
 public class SignalSystemTestUtil {
 

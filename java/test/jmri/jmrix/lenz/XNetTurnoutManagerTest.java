@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.lenz.XNetTurnoutManager class.
  *
- * @author	Bob Jacobsen Copyright 2004
+ * @author Bob Jacobsen Copyright 2004
  */
 public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -72,7 +72,7 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Turnout o = t.newTurnout("XT21", "my name");
 
         if (log.isDebugEnabled()) {
-            log.debug("received turnout value " + o);
+            log.debug("received turnout value {}", o);
         }
         Assert.assertNotNull(o);
 
@@ -89,32 +89,32 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     }
 
     @Test
-    public void testGetSystemPrefix(){
-        Assert.assertEquals("prefix","X",l.getSystemPrefix());
+    public void testGetSystemPrefix() {
+        Assert.assertEquals("prefix", "X", l.getSystemPrefix());
     }
 
     @Test
-    public void testAllowMultipleAdditions(){
+    public void testAllowMultipleAdditions() {
         Assert.assertTrue(l.allowMultipleAdditions("foo"));
     }
 
     @Test
     @Override
-    public void testThrownText(){
-         Assert.assertEquals("thrown text",Bundle.getMessage("TurnoutStateThrown"),l.getThrownText());
+    public void testThrownText() {
+        Assert.assertEquals("thrown text", Bundle.getMessage("TurnoutStateThrown"), l.getThrownText());
     }
 
     @Test
     @Override
-    public void testClosedText(){
-         Assert.assertEquals("closed text",Bundle.getMessage("TurnoutStateClosed"),l.getClosedText());
+    public void testClosedText() {
+        Assert.assertEquals("closed text", Bundle.getMessage("TurnoutStateClosed"), l.getClosedText());
     }
 
     @After
     public void tearDown() {
-	    lnis = null;
-	    l = null;
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        lnis = null;
+        l = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

@@ -12,9 +12,9 @@ import org.junit.Test;
 /**
  * Z21MonPaneTest.java
  * <p>
- * Description:	tests for the jmri.jmrix.roco.z21.swing.mon.Z21MonPane class
+ * Test for the jmri.jmrix.roco.z21.swing.mon.Z21MonPane class
  *
- * @author	Paul Bender Copyright (C) 2014,2016
+ * @author Paul Bender Copyright (C) 2014,2016
  */
 public class Z21MonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
@@ -27,7 +27,6 @@ public class Z21MonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         Assert.assertNotNull(f);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -51,6 +50,7 @@ public class Z21MonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         memo=null;
         tc.terminateThreads();
         tc=null;
+        panel = pane = null;
         JUnitUtil.tearDown();
     }
 

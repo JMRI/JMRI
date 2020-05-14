@@ -8,8 +8,8 @@ import org.junit.Before;
 /**
  * Tests for the {@link jmri.jmrix.dccpp.DCCppLight} class.
  *
- * @author	Paul Bender
- * @author	Mark Underwood (C) 2015
+ * @author Paul Bender
+ * @author Mark Underwood (C) 2015
  */
 public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
 
@@ -34,7 +34,6 @@ public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
         Assert.assertEquals("OFF state", jmri.Light.OFF, t.getState());
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

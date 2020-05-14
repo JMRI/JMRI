@@ -11,9 +11,7 @@ import jmri.Application;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.JmriConfigurationManager;
-import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
@@ -92,8 +90,6 @@ public abstract class AppsBase {
         configureProfile();
 
         installConfigurationManager();
-
-        addDefaultShutDownTasks();
 
         installManagers();
 
@@ -319,29 +315,6 @@ public abstract class AppsBase {
     @Deprecated
     protected void installShutDownManager() {
         // nothing to do
-    }
-
-    protected void addDefaultShutDownTasks() {
-        // add the default shutdown task to save blocks
-        // as a special case, register a ShutDownTask to write out blocks
-        InstanceManager.getDefault(jmri.ShutDownManager.class).
-                register(new AbstractShutDownTask("Writing Blocks") {
-
-                    @Override
-                    public boolean execute() {
-                        // Save block values prior to exit, if necessary
-                        log.debug("Start writing block info");
-                        try {
-                            new BlockValueFile().writeBlockValues();
-                        } //catch (org.jdom2.JDOMException jde) { log.error("Exception writing blocks: "+jde); }
-                        catch (java.io.IOException ioe) {
-                            log.error("Exception writing blocks:", ioe);
-                        }
-
-                        // continue shutdown
-                        return true;
-                    }
-                });
     }
 
     /**

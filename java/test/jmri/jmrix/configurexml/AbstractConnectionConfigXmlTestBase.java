@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 /**
  * Base tests for ConnectionConfigXml objects.
  *
- * @author Paul Bender Copyright (C) 2018	
+ * @author Paul Bender Copyright (C) 2018
  */
 abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configurexml.AbstractXmlAdapterTestBase {
 

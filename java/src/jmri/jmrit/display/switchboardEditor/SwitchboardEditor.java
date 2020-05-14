@@ -38,8 +38,7 @@ import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
@@ -117,7 +116,7 @@ public class SwitchboardEditor extends Editor {
         Bundle.getMessage("Symbols")
     };
     private JComboBox<String> switchShapeList;
-    private List<String> beanManuPrefixes = new ArrayList<>();
+    private final List<String> beanManuPrefixes = new ArrayList<>();
     private JComboBox<String> beanManuNames;
     private TitledBorder border;
     private final String interact = Bundle.getMessage("SwitchboardInteractHint");
@@ -145,9 +144,9 @@ public class SwitchboardEditor extends Editor {
     private final JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
 
     // Action commands
-    private static String LAYER_COMMAND = "layer";
-    private static String MANU_COMMAND = "manufacturer";
-    private static String SWITCHTYPE_COMMAND = "switchshape";
+    private static final String LAYER_COMMAND = "layer";
+    private static final String MANU_COMMAND = "manufacturer";
+    private static final String SWITCHTYPE_COMMAND = "switchshape";
 
     /**
      * List of names/labels of all switches currently displayed. Refreshed
@@ -368,8 +367,7 @@ public class SwitchboardEditor extends Editor {
             log.debug("Warning for big range");
             int retval = JOptionPane.showOptionDialog(null,
                     Bundle.getMessage("LargeRangeWarning", range, Bundle.getMessage("CheckBoxHideUnconnected")),
-                    Bundle.getMessage("WarningTitle"),
-                    0, JOptionPane.INFORMATION_MESSAGE, null,
+                    Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                     new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonCancel")}, null);
             log.debug("Retval: {}", retval);
             if (retval != 0) {
@@ -425,24 +423,23 @@ public class SwitchboardEditor extends Editor {
         String name;
         BeanSwitch _switch;
         NamedBean nb;
-        String _manu = manuPrefix; // cannot use All group as in Tables
-        log.debug("_manu = {}", _manu);
+        log.debug("_manu = {}", manuPrefix);
         String _insert = "";
-        if (_manu.startsWith("M")) {
+        if (manuPrefix.startsWith("M")) {
             _insert = "+"; // for CANbus.MERG On event
         }
         for (int i = min; i <= max; i++) {
             switch (beanType) {
                 case 0:
-                    name = _manu + "T" + _insert + i;
+                    name = manuPrefix + "T" + _insert + i;
                     nb = jmri.InstanceManager.turnoutManagerInstance().getTurnout(name);
                     break;
                 case 1:
-                    name = _manu + "S" + _insert + i;
+                    name = manuPrefix + "S" + _insert + i;
                     nb = jmri.InstanceManager.sensorManagerInstance().getSensor(name);
                     break;
                 case 2:
-                    name = _manu + "L" + _insert + i;
+                    name = manuPrefix + "L" + _insert + i;
                     nb = jmri.InstanceManager.lightManagerInstance().getLight(name);
                     break;
                 default:
@@ -501,15 +498,12 @@ public class SwitchboardEditor extends Editor {
         // enlarge minSpinner editor text field width
         JFormattedTextField minTf = ((JSpinner.DefaultEditor) minEditor).getTextField();
         minTf.setColumns(5);
-        minSpinner.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                JSpinner spinner = (JSpinner) e.getSource();
-                int value = (int)spinner.getValue();
-                // stop if value >= maxSpinner -1 (range <= 0)
-                if (value >= (Integer) maxSpinner.getValue() - 1) {
-                    maxSpinner.setValue(value + 1);
-                }
+        minSpinner.addChangeListener(e -> {
+            JSpinner spinner = (JSpinner) e.getSource();
+            int value = (int)spinner.getValue();
+            // stop if value >= maxSpinner -1 (range <= 0)
+            if (value >= (Integer) maxSpinner.getValue() - 1) {
+                maxSpinner.setValue(value + 1);
             }
         });
         navBarPanel.add(minSpinner);
@@ -518,15 +512,12 @@ public class SwitchboardEditor extends Editor {
         JComponent maxEditor = maxSpinner.getEditor();
         JFormattedTextField maxTf = ((JSpinner.DefaultEditor) maxEditor).getTextField();
         maxTf.setColumns(5);
-        maxSpinner.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                JSpinner spinner = (JSpinner) e.getSource();
-                int value = (int)spinner.getValue();
-                // stop if value <= minSpinner + 1 (range <= 0)
-                if (value <= (Integer) minSpinner.getValue() + 1) {
-                    minSpinner.setValue(value - 1);
-                }
+        maxSpinner.addChangeListener(e -> {
+            JSpinner spinner = (JSpinner) e.getSource();
+            int value = (int)spinner.getValue();
+            // stop if value <= minSpinner + 1 (range <= 0)
+            if (value <= (Integer) minSpinner.getValue() + 1) {
+                minSpinner.setValue(value - 1);
             }
         });
         navBarPanel.add(maxSpinner);
@@ -624,9 +615,7 @@ public class SwitchboardEditor extends Editor {
         autoItemRangeBox.setSelected(autoItemRange());
         // show tooltip item
         _optionMenu.add(showToolTipBox);
-        showToolTipBox.addActionListener((ActionEvent e) -> {
-            setAllShowToolTip(showToolTipBox.isSelected());
-        });
+        showToolTipBox.addActionListener((ActionEvent e) -> setAllShowToolTip(showToolTipBox.isSelected()));
         showToolTipBox.setSelected(showToolTip());
 
         // Show/Hide Scroll Bars
@@ -635,24 +624,16 @@ public class SwitchboardEditor extends Editor {
         ButtonGroup scrollGroup = new ButtonGroup();
         scrollGroup.add(scrollBoth);
         scrollMenu.add(scrollBoth);
-        scrollBoth.addActionListener((ActionEvent event) -> {
-            setScroll(SCROLL_BOTH);
-        });
+        scrollBoth.addActionListener((ActionEvent event) -> setScroll(SCROLL_BOTH));
         scrollGroup.add(scrollNone);
         scrollMenu.add(scrollNone);
-        scrollNone.addActionListener((ActionEvent event) -> {
-            setScroll(SCROLL_NONE);
-        });
+        scrollNone.addActionListener((ActionEvent event) -> setScroll(SCROLL_NONE));
         scrollGroup.add(scrollHorizontal);
         scrollMenu.add(scrollHorizontal);
-        scrollHorizontal.addActionListener((ActionEvent event) -> {
-            setScroll(SCROLL_HORIZONTAL);
-        });
+        scrollHorizontal.addActionListener((ActionEvent event) -> setScroll(SCROLL_HORIZONTAL));
         scrollGroup.add(scrollVertical);
         scrollMenu.add(scrollVertical);
-        scrollVertical.addActionListener((ActionEvent event) -> {
-            setScroll(SCROLL_VERTICAL);
-        });
+        scrollVertical.addActionListener((ActionEvent event) -> setScroll(SCROLL_VERTICAL));
         // add background color menu item
         JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor", "..."));
         _optionMenu.add(backgroundColorMenuItem);
@@ -665,8 +646,7 @@ public class SwitchboardEditor extends Editor {
                // if new bgColor matches the defaultTextColor, ask user as labels will become unreadable
                if (desiredColor.equals(defaultTextColor)) {
                   int retval = JOptionPane.showOptionDialog(null,
-                               Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"),
-                               0, JOptionPane.INFORMATION_MESSAGE, null,
+                               Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
                   log.debug("Retval: {}", retval);
                   if (retval != 0) {
@@ -692,8 +672,7 @@ public class SwitchboardEditor extends Editor {
                // if new defaultTextColor matches bgColor, ask user as labels will become unreadable
                if (desiredColor.equals(defaultBackgroundColor)) {
                   int retval = JOptionPane.showOptionDialog(null,
-                  Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"),
-                  0, JOptionPane.INFORMATION_MESSAGE, null,
+                  Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                   new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
                   log.debug("Retval: {}", retval);
                   if (retval != 0) {
@@ -882,6 +861,7 @@ public class SwitchboardEditor extends Editor {
 
     /**
      * Allow external set of dirty bit.
+     * @param val new dirty flag value, true dirty, false clean.
      */
     public void setDirty(boolean val) {
         panelChanged = val;
@@ -893,6 +873,7 @@ public class SwitchboardEditor extends Editor {
 
     /**
      * Check the dirty state.
+     * @return true if panel changed, else false.
      */
     public boolean isDirty() {
         return panelChanged;
@@ -1263,7 +1244,8 @@ public class SwitchboardEditor extends Editor {
      * JScollPane (js) which contains the targetPane.
      * Note this is a private menuBar, looking identical to the Editor's _menuBar
      *
-     * @param name title for the Switchboard
+     * @param name title for the Switchboard.
+     * @return frame containing the switchboard editor.
      */
     public JmriJFrame makeFrame(String name) {
         JmriJFrame targetFrame = new JmriJFrame(name);

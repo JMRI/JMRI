@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DCCppTurnoutManagerTest {
     // Note: this doesn't use the usual test pattern for turnouts, which
@@ -54,7 +54,6 @@ public class DCCppTurnoutManagerTest {
         
     }
     
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

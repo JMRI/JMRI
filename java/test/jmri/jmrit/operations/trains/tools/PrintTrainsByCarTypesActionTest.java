@@ -3,12 +3,14 @@ package jmri.jmrit.operations.trains.tools;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import jmri.jmrit.operations.OperationsTestCase;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
 
 /**
  *
@@ -19,7 +21,7 @@ public class PrintTrainsByCarTypesActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PrintTrainsByCarTypesAction t = new PrintTrainsByCarTypesAction("Test Action", true);
+        PrintTrainsByCarTypesAction t = new PrintTrainsByCarTypesAction(true);
         Assert.assertNotNull("exists", t);
     }
     
@@ -27,7 +29,7 @@ public class PrintTrainsByCarTypesActionTest extends OperationsTestCase {
     public void testPrintAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        PrintTrainsByCarTypesAction pa = new PrintTrainsByCarTypesAction("Test Action", true);
+        PrintTrainsByCarTypesAction pa = new PrintTrainsByCarTypesAction(true);
         Assert.assertNotNull("exists", pa);
         
         pa.actionPerformed(new ActionEvent("test event", 0, null));

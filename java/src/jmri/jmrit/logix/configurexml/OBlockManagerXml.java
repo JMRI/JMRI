@@ -94,7 +94,9 @@ public class OBlockManagerXml // extends XmlFile
 
                 List<Path> paths = block.getPaths();
                 for (Path op : paths) {
-                    elem.addContent(storePath((OPath) op));
+                    if ( op instanceof OPath ) {
+                        elem.addContent(storePath((OPath) op));
+                    }
                 }
                 List<Portal> portals = block.getPortals();
                 for (Portal po : portals) {

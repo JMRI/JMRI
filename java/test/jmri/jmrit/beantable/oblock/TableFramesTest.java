@@ -16,7 +16,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TableFramesTest {
 
@@ -71,7 +71,6 @@ public class TableFramesTest {
         jmri.util.JUnitAppender.assertWarnMessage("Portal IP0001-0002 needs an OBlock on each side");
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -81,6 +80,7 @@ public class TableFramesTest {
     @After
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

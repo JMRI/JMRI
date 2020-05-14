@@ -151,7 +151,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
 
     /**
      * Run button pressed down, start the sequence operation.
-     *
+     * @param e unused.
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (!mRunButton.isSelected()) {
@@ -214,7 +214,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
             if (m != null) {
                 cs.sendPacket(m, 1);
             } else {
-                log.warn("Message invalid: " + mPacketField[mNextSequenceElement].getText());
+                log.warn("Message invalid: {}", mPacketField[mNextSequenceElement].getText());
             }
             // and queue the rest of the sequence if we're continuing
             if (mRunButton.isSelected()) {
@@ -255,6 +255,6 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     // private data
     private CommandStation cs = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SendPacketAction.class);
+    private final static Logger log = LoggerFactory.getLogger(SendPacketFrame.class);
 
 }

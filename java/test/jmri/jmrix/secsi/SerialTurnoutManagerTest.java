@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 /**
  * SerialTurnoutManagerTest.java
  *
- * Description:	tests for the SerialTurnoutManager class
+ * Test for the SerialTurnoutManager class
  *
- * @author	Bob Jacobsen Copyright 2004, 2008
+ * @author Bob Jacobsen Copyright 2004, 2008
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -43,16 +43,16 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         Turnout o = l.newTurnout("VT21", "my name");
 
         if (log.isDebugEnabled()) {
-            log.debug("received turnout value " + o);
+            log.debug("received turnout value {}", o);
         }
         Assert.assertTrue(null != (SerialTurnout) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("VT21"));
+            log.debug("by system name: {}", l.getBySystemName("VT21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
+            log.debug("by user name:   {}", l.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != l.getBySystemName("VT21"));

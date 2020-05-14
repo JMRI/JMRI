@@ -8,7 +8,7 @@ import jmri.managers.AbstractPowerManager;
  * PowerManager implementation for controlling layout power from an XPA+modem
  * connected to an XpressNet based system.
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
   *
  */
 public class XpaPowerManager extends AbstractPowerManager implements XpaListener {

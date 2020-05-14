@@ -30,6 +30,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2020-05-12</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Speed map</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>SZDC-2015-zakladni</aspecttable>
@@ -245,12 +251,32 @@
   </specificappearances>
   
   <aspectMappings>
+  
     <aspectMapping>
       <advancedAspect>Volno</advancedAspect>
       <ourAspect>Volno</ourAspect>
       <ourAspect>Rychlost 40 a volno</ourAspect>
       <ourAspect>Rychlost 60 a volno</ourAspect>
     </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Výstraha</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+      <ourAspect>Rychlost 40 a volno</ourAspect>
+      <ourAspect>Rychlost 60 a volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Očekávej 40</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+      <ourAspect>Rychlost 40 a volno</ourAspect>
+      <ourAspect>Rychlost 60 a volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Očekávej 60</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+      <ourAspect>Rychlost 40 a volno</ourAspect>
+      <ourAspect>Rychlost 60 a volno</ourAspect>
+    </aspectMapping>
+    
     <aspectMapping>
       <advancedAspect>Stůj</advancedAspect>
       <ourAspect>Výstraha</ourAspect>
@@ -261,6 +287,7 @@
       <ourAspect>Jízda podle rozhledových poměrů</ourAspect>
       <ourAspect>Rychlost 40 a jízda podle rozhledových poměrů</ourAspect>
     </aspectMapping>
+    
     <aspectMapping>
       <advancedAspect>Rychlost 40 a volno</advancedAspect>
       <ourAspect>Očekávej 40</ourAspect>
@@ -268,11 +295,49 @@
       <ourAspect>Rychlost 60 a očekávej 40</ourAspect>
     </aspectMapping>
     <aspectMapping>
+      <advancedAspect>Rychlost 40 a výstraha</advancedAspect>
+      <ourAspect>Očekávej 40</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 40</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 40</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 40 a očekávej 40</advancedAspect>
+      <ourAspect>Očekávej 40</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 40</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 40</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 40 a očekávej 60</advancedAspect>
+      <ourAspect>Očekávej 40</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 40</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 40</ourAspect>
+    </aspectMapping>
+    
+    <aspectMapping>
       <advancedAspect>Rychlost 60 a volno</advancedAspect>
       <ourAspect>Očekávej 60</ourAspect>
       <ourAspect>Rychlost 40 a očekávej 60</ourAspect>
       <ourAspect>Rychlost 60 a očekávej 60</ourAspect>
     </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 60 a výstraha</advancedAspect>
+      <ourAspect>Očekávej 60</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 60</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 60</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 60 a očekávej 40</advancedAspect>
+      <ourAspect>Očekávej 60</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 60</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 60</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 60 a očekávej 60</advancedAspect>
+      <ourAspect>Očekávej 60</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 60</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 60</ourAspect>
+    </aspectMapping>
+    
   </aspectMappings>
   
 </appearancetable>  

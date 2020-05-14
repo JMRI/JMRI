@@ -198,7 +198,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
                 }
                 return;
             default:
-                log.warn("Unexpected ATASK: " + msg.getElement(3));
+                log.warn("Unexpected ATASK: {}", msg.getElement(3));
                 return;
         }
     }

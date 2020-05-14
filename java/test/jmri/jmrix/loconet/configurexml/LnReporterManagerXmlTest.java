@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * LnReporterManagerXmlTest.java
  *
- * Description: tests for the LnReporterManagerXml class
+ * Test for the LnReporterManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class LnReporterManagerXmlTest {
       Assert.assertNotNull("LnReporterManagerXml constructor",new LnReporterManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

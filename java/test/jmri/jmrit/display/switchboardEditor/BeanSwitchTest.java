@@ -2,6 +2,7 @@ package jmri.jmrit.display.switchboardEditor;
 
 import org.junit.*;
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
 
 /**
@@ -19,7 +20,6 @@ public class BeanSwitchTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -36,6 +36,7 @@ public class BeanSwitchTest {
             swe = null;
         }
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

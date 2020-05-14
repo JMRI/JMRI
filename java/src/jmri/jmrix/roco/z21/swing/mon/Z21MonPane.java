@@ -55,7 +55,7 @@ public class Z21MonPane extends jmri.jmrix.AbstractMonPane implements Z21Listene
      */
     @Override
     public synchronized void message(Z21Message l) {
-	logMessage(l);
+        logMessage(l);
     }
 
     /**
@@ -64,8 +64,8 @@ public class Z21MonPane extends jmri.jmrix.AbstractMonPane implements Z21Listene
     static public class Default extends jmri.util.swing.JmriNamedPaneAction {
 
         public Default() {
-            super(Bundle.getMessage("Z21TrafficTitle"), 
-			    Z21MonPane.class.getName());
+            super(Bundle.getMessage("Z21TrafficTitle"),
+                    Z21MonPane.class.getName());
             setContext(jmri.InstanceManager.
                     getDefault(Z21SystemConnectionMemo.class));
         }

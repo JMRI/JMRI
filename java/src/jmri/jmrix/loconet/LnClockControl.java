@@ -283,7 +283,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
             return;
         }
         if (log.isDebugEnabled()) {
-            log.debug("slot update " + s);
+            log.debug("slot update {}", s);
         }
         // update current clock variables from the new slot contents
         curDays = s.getFcDays();

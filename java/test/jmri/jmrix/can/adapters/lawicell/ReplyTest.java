@@ -64,7 +64,6 @@ public class ReplyTest extends jmri.jmrix.AbstractMessageTest {
         Assert.assertEquals("el 3", 0x78, r.getElement(3));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -75,7 +74,7 @@ public class ReplyTest extends jmri.jmrix.AbstractMessageTest {
     @After
     @Override
     public void tearDown() {
-	m = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 }

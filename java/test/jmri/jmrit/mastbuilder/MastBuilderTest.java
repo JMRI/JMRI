@@ -13,7 +13,7 @@ import org.junit.Test;
  * class.
  * Note MastBuilder for now is only a demo.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class MastBuilderTest {
 
@@ -25,7 +25,6 @@ public class MastBuilderTest {
         JUnitUtil.dispose(p);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -6,7 +6,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.jmrix.xpa.XpaTurnout class.
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase  {
 
@@ -37,7 +37,6 @@ public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
         Assert.assertNotNull(t);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

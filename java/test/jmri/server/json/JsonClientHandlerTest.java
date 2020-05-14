@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
+
 import jmri.profile.NullProfile;
 import jmri.profile.Profile;
 import jmri.util.JUnitAppender;
@@ -44,6 +45,7 @@ public class JsonClientHandlerTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

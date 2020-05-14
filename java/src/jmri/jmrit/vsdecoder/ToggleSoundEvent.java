@@ -76,9 +76,9 @@ public class ToggleSoundEvent extends SoundEvent {
     protected ButtonTrigger setupButtonAction(Element te) {
         bt = new ButtonTrigger(te.getAttributeValue("name"));
         button_trigger_list.put(bt.getName(), bt);
-        log.debug("new ButtonTrigger " + bt + " name " + bt.getName() + " type " + this.getButtonType());
+        log.debug("new ButtonTrigger {} name {} type {}", bt, bt.getName(), this.getButtonType());
         if (bt != null) {
-            log.debug("name " + bt.getName() + " type " + this.getButtonType().toString());
+            log.debug("name {} type {}", bt.getName(), this.getButtonType().toString());
         }
         if (button == null) {
             log.error("BUTTON SHOULD NOT BE NULL");

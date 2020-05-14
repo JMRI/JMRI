@@ -22,7 +22,6 @@ import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.EventListenerList;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.vsdecoder.LoadVSDFileAction;
@@ -35,9 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * class VSDManagerFrame
- *
- * Main frame for the new GUI VSDecoder Manager Frame
+ * Main frame for the GUI VSDecoder Manager.
  *
  * <hr>
  * This file is part of JMRI.
@@ -52,7 +49,7 @@ import org.slf4j.LoggerFactory;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 public class VSDManagerFrame extends JmriJFrame {
 
@@ -103,7 +100,7 @@ public class VSDManagerFrame extends JmriJFrame {
         Mnemonics.put("AddButton", KeyEvent.VK_A);
     }
 
-    protected EventListenerList listenerList = new javax.swing.event.EventListenerList();
+    public int master_volume;
 
     JPanel decoderPane;
     JPanel volumePane;
@@ -147,16 +144,17 @@ public class VSDManagerFrame extends JmriJFrame {
         volumePane.setLayout(new BoxLayout(volumePane, BoxLayout.LINE_AXIS));
         JToggleButton muteButton = new JToggleButton(Bundle.getMessage("MuteButtonLabel"));
         JButton addButton = new JButton(Bundle.getMessage("AddButtonLabel"));
-        JSlider volume = new JSlider(0, 100);
+        final JSlider volume = new JSlider(0, 100);
         volume.setMinorTickSpacing(10);
         volume.setPaintTicks(true);
-        volume.setValue(80);
+        master_volume = VSDecoderManager.instance().getMasterVolume();
+        volume.setValue(master_volume);
         volume.setPreferredSize(new Dimension(200, 20));
         volume.setToolTipText(Bundle.getMessage("MgrVolumeToolTip"));
         volume.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                volumeChange(e);
+                volumeChange(e); // slider in real time
             }
         });
         volumePane.add(new JLabel(Bundle.getMessage("VolumePaneLabel")));
@@ -244,18 +242,24 @@ public class VSDManagerFrame extends JmriJFrame {
      */
     protected void addButtonPressed(ActionEvent e) {
         log.debug("Add button pressed");
-        config = new VSDConfig(); // Create a new Config for the new VSDecoder.
-        // Do something here.  Create a new VSDecoder and add it to the window.
-        cd = new VSDConfigDialog(decoderPane, Bundle.getMessage("NewDecoderConfigPaneTitle"), config, is_auto_loading);
-        cd.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent event) {
-                log.debug("property change name {}, old: {}, new: {}", event.getPropertyName(),
-                        event.getOldValue(), event.getNewValue());
-                addButtonPropertyChange(event);
-            }
-        });
-        //firePropertyChange(ADD_DECODER, null, null);
+
+        // If the maximum number of VSDecoders (Controls) is reached, don't create a new Control
+        if (VSDecoderManager.instance().getVSDecoderList().size() >= VSDecoderManager.max_decoder) {
+            JOptionPane.showMessageDialog(null, 
+                    "VSDecoder cannnot be created. Maximal number is " + String.valueOf(VSDecoderManager.max_decoder));
+        } else {
+            config = new VSDConfig(); // Create a new Config for the new VSDecoder.
+            // Do something here.  Create a new VSDecoder and add it to the window.
+            cd = new VSDConfigDialog(decoderPane, Bundle.getMessage("NewDecoderConfigPaneTitle"), config, is_auto_loading);
+            cd.addPropertyChangeListener(new PropertyChangeListener() {
+                @Override
+                public void propertyChange(PropertyChangeEvent event) {
+                    log.debug("property change name {}, old: {}, new: {}", event.getPropertyName(),
+                            event.getOldValue(), event.getNewValue());
+                    addButtonPropertyChange(event);
+                }
+            });
+        }
     }
 
     /**
@@ -266,15 +270,10 @@ public class VSDManagerFrame extends JmriJFrame {
         // If this decoder already exists, don't create a new Control
         if (VSDecoderManager.instance().getVSDecoderByAddress(config.getLocoAddress().toString()) != null) {
             JOptionPane.showMessageDialog(null, Bundle.getMessage("MgrAddDuplicateMessage"));
-        // If the maximum number of VSDecoders (Controls) is reached, don't create a new Control
-        } else if (VSDecoderManager.instance().getVSDecoderList().size() >= VSDecoderManager.max_decoder) {
-            JOptionPane.showMessageDialog(null, 
-                    "VSDecoder not created. Maximal number is " + String.valueOf(VSDecoderManager.max_decoder));
         } else {
             VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
             if (newDecoder == null) {
-                log.warn("No New Decoder constructed! Address: {}, profile: {}, ",
-                        config.getLocoAddress(), config.getProfileName());
+                log.warn("No New Decoder constructed! Address: {}, profile: {}, ", config.getLocoAddress(), config.getProfileName());
                 JOptionPane.showMessageDialog(null, "VSDecoder not created");
                 return;
             }
@@ -294,16 +293,20 @@ public class VSDManagerFrame extends JmriJFrame {
             if (decoderPane.isAncestorOf(decoderBlank)) {
                 decoderPane.remove(decoderBlank);
             }
+
             decoderPane.add(newControl);
             newControl.addSoundButtons(new ArrayList<SoundEvent>(newDecoder.getEventList()));
-            //debugPrintDecoderList();
+
+            firePropertyChange(VOLUME_CHANGE, master_volume, null);
+            log.debug("Master volume set to {}", master_volume);
+
             decoderPane.revalidate();
             decoderPane.repaint();
 
             this.pack();
             //this.setVisible(true);
             // Do we need to make newControl a listener to newDecoder?
-            //firePropertyChange(ADD_DECODER, null, newDecoder);
+            //firePropertyChange(ADD_DECODER, newDecoder, null);
         }
     }
 
@@ -314,14 +317,14 @@ public class VSDManagerFrame extends JmriJFrame {
         String property = event.getPropertyName();
         if (property.equals(VSDControl.DELETE)) {
             String ov = (String) event.getOldValue();
-            String nv = (String) event.getNewValue();
-            VSDecoder vsd = VSDecoderManager.instance().getVSDecoderByAddress(nv);
+            log.debug("vsdControlPropertyChange. ID: {}, old: {}", VSDControl.DELETE, ov);
+            VSDecoder vsd = VSDecoderManager.instance().getVSDecoderByAddress(ov);
             if (vsd == null) {
-                log.debug("VSD is null.");
+                log.warn("VSD is null.");
             }
             this.removePropertyChangeListener(vsd);
-            log.debug("vsdControlPropertyChange. ID: {}, old: {}, new: {}", REMOVE_DECODER, ov, nv);
-            firePropertyChange(REMOVE_DECODER, ov, nv);
+            log.debug("vsdControlPropertyChange. ID: {}, old: {}", REMOVE_DECODER, ov);
+            firePropertyChange(REMOVE_DECODER, ov, null);
             decoderPane.remove((VSDControl) event.getSource());
             if (decoderPane.getComponentCount() == 0) {
                 decoderPane.add(decoderBlank);
@@ -335,21 +338,19 @@ public class VSDManagerFrame extends JmriJFrame {
     }
 
     /**
-     * (Debug only) Print the decoder list
-     */
-    /*
-     private void debugPrintDecoderList() {
-     log.debug("Printing Decoder Lists from VSDManagerFrame...");
-     VSDecoderManager.instance().debugPrintDecoderList();
-     }
-     */
-    /**
-     * Handle volume slider change
+     * Handle master volume slider change
      */
     protected void volumeChange(ChangeEvent e) {
         JSlider v = (JSlider) e.getSource();
         log.debug("Volume slider moved. value: {}", v.getValue());
-        firePropertyChange(VOLUME_CHANGE, v.getValue(), v.getValue());
+        master_volume = v.getValue();
+        firePropertyChange(VOLUME_CHANGE, master_volume, null);
+        // todo? do you want to save?
+        if (VSDecoderManager.instance().getMasterVolume() != v.getValue()) {
+            VSDecoderManager.instance().setMasterVolume(v.getValue());
+            VSDecoderManager.instance().getVSDecoderPreferences().save();
+            log.debug("VSD Preferences saved");
+        }
     }
 
     private void buildMenu() {

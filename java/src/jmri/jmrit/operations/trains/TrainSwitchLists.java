@@ -34,6 +34,7 @@ public class TrainSwitchLists extends TrainCommon {
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
     private static final char FORM_FEED = '\f';
     private static final boolean IS_PRINT_HEADER = true;
+    private static final String HYPHEN = TrainCommon.HYPHEN;
 
     String messageFormatText = ""; // the text being formated in case there's an exception
 
@@ -388,19 +389,19 @@ public class TrainSwitchLists extends TrainCommon {
                             } else {
                                 newLine(fileOut, MessageFormat.format(
                                         messageFormatText = TrainSwitchListText.getStringHoldCar(),
-                                        new Object[]{padAndTruncateString(car.getRoadName(),
+                                        new Object[]{padAndTruncateIfNeeded(car.getRoadName(),
                                                 InstanceManager.getDefault(CarRoads.class).getMaxNameLength()),
-                                                padAndTruncateString(TrainCommon.splitString(car.getNumber()),
+                                                padAndTruncateIfNeeded(TrainCommon.splitString(car.getNumber()),
                                                         Control.max_len_string_print_road_number),
-                                                padAndTruncateString(car.getTypeName().split("-")[0],
+                                                padAndTruncateIfNeeded(car.getTypeName().split(HYPHEN)[0],
                                                         InstanceManager.getDefault(CarTypes.class).getMaxNameLength()),
-                                                padAndTruncateString(car.getLength() + Setup.getLengthUnitAbv(),
+                                                padAndTruncateIfNeeded(car.getLength() + Setup.getLengthUnitAbv(),
                                                         Control.max_len_string_length_name),
-                                                padAndTruncateString(car.getLoadName(),
+                                                padAndTruncateIfNeeded(car.getLoadName(),
                                                         InstanceManager.getDefault(CarLoads.class).getMaxNameLength()),
-                                                padAndTruncateString(trackName,
+                                                padAndTruncateIfNeeded(trackName,
                                                         locationManager.getMaxTrackNameLength()),
-                                                padAndTruncateString(car.getColor(),
+                                                padAndTruncateIfNeeded(car.getColor(),
                                                         InstanceManager.getDefault(CarColors.class).getMaxNameLength())}));
                             }
                         }

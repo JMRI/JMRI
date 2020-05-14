@@ -377,7 +377,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
                 case EDITCOL:
                     return Bundle.getMessage("ButtonEdit");
                 default:
-                    log.error("internal state inconsistent with table requst for " + row + " " + col);
+                    log.error("internal state inconsistent with table requst for {} {}", row, col);
                     return null;
             }
         }

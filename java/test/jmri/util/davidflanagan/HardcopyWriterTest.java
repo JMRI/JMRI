@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * HardcopyWriterTest.java
  *
- * Description: tests for the HardcopyWriter class
+ * Test for the HardcopyWriter class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -31,7 +31,6 @@ public class HardcopyWriterTest {
       }
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

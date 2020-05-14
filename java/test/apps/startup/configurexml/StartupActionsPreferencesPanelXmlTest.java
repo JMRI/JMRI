@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * StartupActionsPreferencesPanelXmlTest.java
  *
- * Description: tests for the StartupActionsPreferencesPanelXml class
+ * Test for the StartupActionsPreferencesPanelXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class StartupActionsPreferencesPanelXmlTest {
       Assert.assertNotNull("StartupActionsPreferencesPanelXml constructor",new StartupActionsPreferencesPanelXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

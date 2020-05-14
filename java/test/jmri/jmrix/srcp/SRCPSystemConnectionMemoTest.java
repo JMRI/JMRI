@@ -9,9 +9,9 @@ import org.junit.Test;
 /**
  * SRCPSystemConnectionMemoTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPSystemConnectionMemo class
+ * Test for the jmri.jmrix.srcp.SRCPSystemConnectionMemo class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -33,7 +33,6 @@ public class SRCPSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
        Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

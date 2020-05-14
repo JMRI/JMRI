@@ -4,7 +4,6 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Set;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -113,17 +112,15 @@ public final class ImageIndexEditor extends JmriJFrame {
         setVisible(true);
     }
 
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations, generics
     private JPanel makeCatalogPanel() {
         CatalogPanel _catalog = CatalogPanel.makeCatalog("defaultCatalog", "selectNode", true, false, true); // make sure both these properties keys exist
          log.debug("init the new CatalogPanel for ImageIndexEditor.makeCatalogPanel()");
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
-        List<String> sysNames = manager.getSystemNameList();
 
-        for (String systemName : sysNames) {
-            if (systemName.startsWith("IF")) {
-                _catalog.addTree(manager.getBySystemName(systemName));
-                 log.debug("added item to tree");
+        for (jmri.CatalogTree tree : manager.getNamedBeanSet()) {
+            if (tree.getSystemName().startsWith("IF")) {
+                _catalog.addTree(tree);
+                log.debug("added item to tree");
             }
         }
 
@@ -166,7 +163,6 @@ public final class ImageIndexEditor extends JmriJFrame {
         editMenu.add(deleteItem);
     }
 
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations, generics
     private JPanel makeIndexPanel() {
         _index = CatalogPanel.makeCatalog("ImageIndex", "selectIndexNode", true, true, false); // make sure both these properties keys exist
         log.debug("init the new CatalogPanel for ImageIndexEditor.makeIndexPanel()");
@@ -174,11 +170,9 @@ public final class ImageIndexEditor extends JmriJFrame {
 
         boolean found = false;
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
-        List<String> sysNames = manager.getSystemNameList();
-
-        for (String systemName : sysNames) {
-            if (systemName.startsWith("IX")) {
-                _index.addTree(manager.getBySystemName(systemName));
+        for (jmri.CatalogTree tree : manager.getNamedBeanSet()) {
+            if (tree.getSystemName().startsWith("IX")) {
+                _index.addTree(tree);
                 found = true;
             }
         }

@@ -15,14 +15,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TimeStampedOutputTest {
 
     @Test
     public void testCTor() {
         TimeStampedOutput t = new TimeStampedOutput(new ByteArrayOutputStream());
-        assertThat(t).isNotNull().withFailMessage("exists");
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
     @Test
@@ -35,7 +35,6 @@ public class TimeStampedOutputTest {
         }
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

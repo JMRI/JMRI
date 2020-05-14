@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * DCCppEthernetAdapterTest.java
  *
- * Description: tests for the jmri.jmrix.dccpp.network.DCCppEthernetAdapter
+ * Test for the jmri.jmrix.dccpp.network.DCCppEthernetAdapter
  * class
  *
  * @author Paul Bender

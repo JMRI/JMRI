@@ -7,9 +7,9 @@ import org.junit.Before;
 /**
  * EcosTurnoutManagerTest.java
  *
- * Description:	tests for the EcosTurnoutManager class
+ * Test for the EcosTurnoutManager class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class EcosTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -20,7 +20,6 @@ public class EcosTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     EcosTrafficController tc = null;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

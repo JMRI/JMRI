@@ -10,7 +10,7 @@ import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class Pr1ImportActionTest {
 
@@ -24,7 +24,6 @@ public class Pr1ImportActionTest {
         jf.dispose();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -35,7 +34,7 @@ public class Pr1ImportActionTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(Pr1ImportActionTest.class);

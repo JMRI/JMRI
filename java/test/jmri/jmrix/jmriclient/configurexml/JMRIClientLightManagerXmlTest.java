@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * JMRIClientLightManagerXmlTest.java
  *
- * Description: tests for the JMRIClientLightManagerXml class
+ * Test for the JMRIClientLightManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class JMRIClientLightManagerXmlTest {
       Assert.assertNotNull("JMRIClientLightManagerXml constructor",new JMRIClientLightManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

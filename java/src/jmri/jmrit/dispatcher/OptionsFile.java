@@ -1,11 +1,11 @@
 package jmri.jmrit.dispatcher;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.Set;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.ScaleManager;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.FileUtil;
 import org.jdom2.Document;
@@ -76,15 +76,15 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                         // there is a layout editor name selected
                         String leName = options.getAttribute("lename").getValue();
                         // get list of Layout Editor panels
-                        ArrayList<LayoutEditor> layoutEditorList = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+                        Set<LayoutEditor> layoutEditorList = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
                         if (layoutEditorList.isEmpty()) {
                             log.warn("Dispatcher options specify a Layout Editor panel that is not present.");
                         } else {
                             boolean found = false;
-                            for (int i = 0; i < layoutEditorList.size(); i++) {
-                                if (leName.equals(layoutEditorList.get(i).getTitle())) {
+                            for (LayoutEditor editor : layoutEditorList) {
+                                if (leName.equals(editor.getTitle())) {
                                     found = true;
-                                    dispatcher.setLayoutEditor(layoutEditorList.get(i));
+                                    dispatcher.setLayoutEditor(editor);
                                 }
                             }
                             if (!found) {

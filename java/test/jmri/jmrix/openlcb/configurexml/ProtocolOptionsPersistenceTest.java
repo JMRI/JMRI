@@ -37,7 +37,7 @@ public class ProtocolOptionsPersistenceTest {
     private PortAdapter adapter;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
         this.workspace = FileSystems.getDefault().getPath("/tmp/testprofile");
         //this.workspace = Files.createTempDirectory(this.getClass().getSimpleName());
@@ -46,14 +46,13 @@ public class ProtocolOptionsPersistenceTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        jmri.util.JUnitUtil.tearDown();
 
-        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.resetFileUtilSupport();
         //FileUtil.delete(this.workspace.toFile());
+        jmri.util.JUnitUtil.tearDown();
     }
 
     private void resetSystem() {

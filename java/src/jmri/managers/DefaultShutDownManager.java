@@ -60,7 +60,7 @@ public class DefaultShutDownManager implements ShutDownManager {
         // application to hang.
         // This shutdown hook also allows OS X Application->Quit to trigger our
         // shutdown tasks, since that simply calls System.exit();
-        this.shutdownHook = new Thread(() -> {
+        this.shutdownHook = jmri.util.ThreadingUtil.newThread(() -> {
             DefaultShutDownManager.this.shutdown(0, false);
         });
         try {
@@ -79,7 +79,7 @@ public class DefaultShutDownManager implements ShutDownManager {
         if (!this.tasks.contains(s)) {
             this.tasks.add(s);
         } else {
-            log.debug("already contains " + s);
+            log.debug("already contains {}", s);
         }
     }
 

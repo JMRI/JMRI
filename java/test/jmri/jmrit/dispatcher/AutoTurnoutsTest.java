@@ -1,6 +1,7 @@
 package jmri.jmrit.dispatcher;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -26,7 +27,6 @@ public class AutoTurnoutsTest {
         JUnitUtil.dispose(d);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -36,6 +36,7 @@ public class AutoTurnoutsTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

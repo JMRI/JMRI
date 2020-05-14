@@ -113,7 +113,8 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
      * parent of the set of Sensor elements.
      *
      * @param sensors Element containing the Sensor elements to load.
-     * @return true if succeeded
+     * @return true if succeeded.
+     * @throws JmriConfigureXmlException on error.
      */
     public boolean loadSensors(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
         boolean result = true;

@@ -769,7 +769,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
                 doFacing();
                 break;
             default:
-                log.error(Bundle.getMessage("UnexpectedMode") + mode + "_Signal_" + getDrivenSignal());
+                log.error("{}{}_Signal_{}", Bundle.getMessage("UnexpectedMode"), mode, getDrivenSignal());
         }
     }
 

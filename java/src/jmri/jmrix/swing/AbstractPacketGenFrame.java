@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 /**
  * Frame for user input of XpressNet messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001,2002
+ * @author Bob Jacobsen Copyright (C) 2001,2002
  */
 public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
 

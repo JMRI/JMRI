@@ -47,6 +47,7 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return traffic controller.
      */
     public JMRIClientTrafficController getJMRIClientTrafficController() {
         return jt;

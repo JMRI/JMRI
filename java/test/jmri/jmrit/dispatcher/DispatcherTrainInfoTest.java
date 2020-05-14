@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * Swing tests for dispatcher train info.
  *
- * @author	Dave Duchamp
+ * @author Dave Duchamp
  */
 public class DispatcherTrainInfoTest {
 

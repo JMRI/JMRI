@@ -1,6 +1,7 @@
 package apps.gui3.tabbedpreferences;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -20,7 +21,6 @@ public class EditConnectionPreferencesDialogTest {
         Assert.assertNotNull("exists",d);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -33,6 +33,7 @@ public class EditConnectionPreferencesDialogTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

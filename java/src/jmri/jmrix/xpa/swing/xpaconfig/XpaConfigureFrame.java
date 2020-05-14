@@ -1,7 +1,7 @@
 /**
  * Frame for configuring an XPA using a modem.
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
  */
 package jmri.jmrix.xpa.swing.xpaconfig;
 

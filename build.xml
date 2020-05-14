@@ -264,9 +264,9 @@
         <pathelement location="${libdir}/webdrivermanager-3.4.0.jar"/>
         <pathelement location="${libdir}/jarchivelib-1.0.0.jar"/>
         <!-- Spring Mock and it's dependencies -->
-        <pathelement location="${libdir}/spring-test-5.1.3.RELEASE.jar"/>
-        <pathelement location="${libdir}/spring-core-5.1.3.RELEASE.jar"/>
-        <pathelement location="${libdir}/spring-web-5.1.3.RELEASE.jar"/>
+        <pathelement location="${libdir}/spring-test-5.1.14.RELEASE.jar"/>
+        <pathelement location="${libdir}/spring-core-5.1.14.RELEASE.jar"/>
+        <pathelement location="${libdir}/spring-web-5.1.14.RELEASE.jar"/>
         <!-- Assertj -->
         <pathelement location="${libdir}/assertj-core-3.12.0.jar"/>
         <pathelement location="${libdir}/assertj-swing-3.9.2.jar"/>
@@ -286,7 +286,6 @@
                 //echo.perform();
 
                 // Only attempt to quiet if the top logger is the default Ant logger
-                // This avoids errors when e.g. NetBeans has injected it's own logger ([object org.apache.tools.ant.module.bridge.impl.NbBuildLogger])
                 if (Object.prototype.toString.call(project.getBuildListeners().firstElement()) == "[object org.apache.tools.ant.DefaultLogger]") {
                     project.getBuildListeners().firstElement().setMessageOutputLevel(0);
                 }
@@ -391,6 +390,20 @@
       <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
     </target>
 
+    <target name="check-java-version-requirement"> <!-- check build system requirements, not for user use -->
+        <fail message="Unsupported Java version: ${ant.java.version}. 
+          Make sure that the Java version is 9 or greater.">
+          <condition>
+            <not>
+              <or>
+                <matches pattern="^1\.9" string="${ant.java.version}"/>
+                <matches pattern="^1[1-9]" string="${ant.java.version}"/>
+              </or>
+            </not>
+          </condition>
+        </fail>
+    </target>
+
     <target name="get-version-string" depends="compile"><!-- compute the version string, not for user use -->
         <java classname="jmri.Version"
               dir="${basedir}"
@@ -430,6 +443,7 @@
         <delete dir="release"/>
         <delete dir="dist"/>
         <delete dir="temp"/>
+        <delete dir="test"/>
         <delete dir="web/TrainCrew"/>
         <delete dir="lib/cachedir"/>
         <delete dir="java/tmp"/>
@@ -443,6 +457,10 @@
             <fileset file=".ant-targets-build.xml"/>
             <fileset file=".run.sh"/>
             <fileset file="release.zip"/>
+            <fileset file="spotbugs.html"/>
+            <fileset file="spotbugs-check.html"/>
+            <fileset file="spotbugs.xml"/>
+            <fileset file="spotbugs-check.xml"/>
             <fileset dir="." includes="hs_err_pid*.log"/>
         </delete>
     </target>
@@ -463,8 +481,6 @@
             <fileset file="junit-results.xml"/>
             <fileset file="findbugs.html"/>
             <fileset file="findbugs.xml"/>
-            <fileset file="spotbugs.html"/>
-            <fileset file="spotbugs.xml"/>
             <fileset file="jacoco.exec"/>
             <fileset file="jmri-fb.html"/>
             <fileset file="coveragereport"/>
@@ -646,8 +662,6 @@
             />
     </target>
 
-    <!-- Note if modifying the debug target, please be sure to up date the -->
-    <!-- NetBeans IDE debug target in nbproject/ide-targets.xml -->
     <target name="debug"
             description="compile source with debugging on, omitting tests - identical to compile target"
             depends="compile">
@@ -746,11 +760,10 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
-            <sysproperty key="java.awt.headless" value="true"/>
-            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
+            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
 
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
@@ -759,16 +772,17 @@
             <arg line="-n ${test.includes}"/>
             <arg line="--reports-dir '${testreport}'" />
             <jvmarg value="-Xmx1536m"/>
+            <jvmarg value="-ea"/>
 	    <jvmarg line="${test-single.jvmargs}"/>
         </java>    
-	<fail>
+        <fail>
             <condition>
                 <istrue value="${test.failed}" />
             </condition>
         </fail>
     </target>
 
-    <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test." name="test-single-coverage">
+    <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test with Coverage." name="test-single-coverage">
         <mkdir dir="${tempdir}"/>
         <mkdir dir="${testreport}"/>
         <jacoco:agent property="jacocoagent" destfile="${jacocoexec}" excludes="org.slf4j.*" />
@@ -784,11 +798,10 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
-            <sysproperty key="java.awt.headless" value="true"/>
-            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
+            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
 
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
@@ -797,6 +810,7 @@
             <arg line="-n ${test.includes}"/>
             <arg line="--reports-dir ${testreport}" />
             <jvmarg value="-Xmx1536m"/>
+            <jvmarg value="-ea"/>
             <jvmarg value="${jacocoagent}"/>
 	    <jvmarg line="${test-single.jvmargs}"/>
         </java>    
@@ -1216,54 +1230,6 @@
     <!-- end of I18N test targets -->
 
     <!-- ============================================================================= -->
-    <!-- NetBeans targets: profiling et al                                             -->
-    <!-- ============================================================================= -->
-
-
-    <!-- Note if modifying the profile target, please be sure to up date the -->
-    <!-- NetBeans IDE profile target in this file -->
-    <target name="profile"
-            description="build and run PanelPro app with profiling"
-            depends="debug, runtime-library-selection">
-        <java classname="apps.PanelPro.PanelPro"
-              dir="."
-              fork="yes" >
-            <classpath refid="project.class.path"/>
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
-            <sysproperty key="log4j.ignoreTCL" path="true/"/>
-            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
-            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
-            <jvmarg value="-Xrunhprof:cpu=samples,heap=sites,file=log.txt,depth=10"/>
-        </java>
-    </target>
-
-    <!-- The next target is NetBeans-specific, but is here so it -->
-    <!-- can use other info defined in this file -->
-    <!-- The profiler is not so well integrated into the IDE and requires -->
-    <!-- the build target to be specified in the ANT build script -->
-    <target name="profile-nb" depends="debug, runtime-library-selection" description="build and run PanelPro app with NetBeans profiling">
-        <property name="antargline" value="PanelProConfig2.xml"/>
-        <fail unless="netbeans.home">This target can only run inside the NetBeans IDE.</fail>
-        <java classname="apps.PanelPro.PanelPro" dir="${basedir}" fork="yes" resultproperty="application.returncode">
-            <classpath refid="project.class.path"/>
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
-            <sysproperty key="log4j.ignoreTCL" path="true/"/>
-            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
-            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
-       <!--      <jvmarg value="${profiler.info.jvmargs.agent}"/> -->
-       <!-- <jvmarg value="-verbose"/> -->
-       <!-- <jvmarg value="-verbosegc"/> -->
-       <!-- <jvmarg value="-Xloggc:memory.vgc"/> --> <!-- for JTune -->
-            <jvmarg line="${jvm.args}"/>
-            <arg value="${antargline}"/>
-        </java>
-    </target>
-
-    <!-- end of NetBeans targets -->
-
-    <!-- ============================================================================= -->
     <!-- File-checking (e.g. XML tests) targets                                        -->
     <!-- ============================================================================= -->
 
@@ -1549,7 +1515,7 @@
         </fail>
     </target>
 
-    <target name="ci-test-appveyor" depends="tests, runtime-library-selection" description="run ci-tests using Appveyour via Junit5 Console Launcher">
+    <target name="ci-test-appveyor" depends="tests, runtime-library-selection" description="run ci-tests using Appveyor via Junit5 Console Launcher">
         <mkdir dir="${tempdir}"/>
         <mkdir dir="${testreport}"/>
         <jacoco:agent property="jacocoagent" destfile="${jacocoexec}" excludes="org.slf4j.*" />
@@ -1577,14 +1543,12 @@
 	    <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
 	    <arg line="-n '.*IT.*'" />
             <arg line="--reports-dir ${testreport}" />
-            <jvmarg value="-Xmx1536m"/>
+            <jvmarg value="-Xmx3000m"/> <!-- needs to cover ArchUnit test run under coverage -->
             <jvmarg value="${jacocoagent}"/>
             <jvmarg line="${jvm.args}"/>
         </java>
     </target>
 
-    <!-- Note if modifying the alltest target, please be sure to up date the -->
-    <!-- NetBeans IDE alltest target in nbproject/ide-targets.xml -->
     <target name="alltest" depends="debug, tests, runtime-library-selection" description="build and run AllTest suite">
         <java classname="apps.tests.AllTest"
           dir="."
@@ -1860,98 +1824,11 @@
             <packageset dir="${jjtreegen}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
-            <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
-            <arg value="-quiet"/>
-            <arg value="-splitindex"/>
-            <arg value="-J-Dhttp.agent=javadoc"/>
-
-            <!-- disable output of custom @navassoc tag - used for UML image generation -->
-            <tag name="navassoc" enabled="false"/>
-
-            <group title="Core" packages="jmri"/>
-            <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
-            <group title="Applications" packages="apps:apps.*"/>
-            <group title="Implementations" packages="jmri.implementation:jmri.implementation.*:jmri.managers:jmri.managers.*:jmri.progdebugger:jmri.layout"/>
-            <group title="Utilities" packages="jmri.util:jmri.util.*"/>
-            <group title="XML persistance" packages="jmri.configurexml:jmri.configurexml.*:apps.configurexml:apps.configurexml.*"/>
-            <group title="Web Services" packages="jmri.web:jmri.web.*:jmri.server:jmri.server.*"/>
-            <group title="Interface Server Support" packages="jmri.jmris:jmri.jmris.*"/>
-            <!-- Layout Connections last because so large -->
-            <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
-
-            <classpath refid="compile.class.path"/>
-            <doctitle><![CDATA[<h1>JMRI Library API</h1>]]>
-            </doctitle>
-            <bottom><![CDATA[<i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
-                    <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
-                       <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-                ]]>
-            </bottom>
-
-            <!-- <link href="http://java.sun.com/products/javacomm/reference/api/"/> redirected to next line -->
-            <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" />
-
-            <!-- <link href="https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.9.8/"/>  redirected to next line -->
-            <link href="https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.8/" />
-
-            <!-- <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>  redirected to next line -->
-            <link href="https://download.java.net/media/java3d/javadoc/1.3.2/" />
-
-            <!-- <link href="https://static.javadoc.io/org.openlcb/openlcb/0.7.23/"/>  redirected to next line -->
-            <link href="https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.23/" />
-
-            <!-- <link href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>  redirected to next line -->
-            <link href="https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
-
-            <!-- <link href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>  redirected to next line -->
-            <link href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
-
-            <link href="https://docs.oracle.com/javase/8/docs/api/"/>
-            <link href="http://www.jdom.org/docs/apidocs/"/>
-            <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
-            <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
-            <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-            <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/"/>
-            <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
-            <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
-            <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
-            <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->
-            <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jinputvalidator/0.8.0/" packagelistLoc="lib/jinputvalidator-0.8.0-package-list"/>
-            <link offline="true" href="https://static.javadoc.io/com.tngtech.archunit/archunit/0.11.0/" packagelistLoc="lib/archunit-0.11.0-package-list"/>
-
-        </javadoc>
-    </target>
-
-    <!-- same as javadoc target, but lints the javadoc without exclusions -->
-    <!-- can be removed once the number of accepted warnings drops below 100 -->
-    <!-- keep the maxwarns value in sync with javadoc target -->
-    <target name="javadoc-lint" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs">
-        <javadoc packagenames="jmri.*, apps.*"
-                 maxmemory="512m"
-                 overview="${source}/jmri/overview.html"
-                 destdir="${doctarget}"
-                 additionalparam="-breakiterator"
-                 author="true"
-                 version="false"
-                 public="yes"
-                 use="true"
-                 failonerror="true"
-                 source="8"
-                 windowtitle="JMRI API">
-
-            <packageset dir="${source}" defaultexcludes="yes">
-                <include name="jmri/**"/>
-                <include name="apps/**"/>
-            </packageset>
-            <packageset dir="${javaccgen}" defaultexcludes="yes">
-                <include name="jmri/**"/>
-            </packageset>
-            <packageset dir="${jjtreegen}" defaultexcludes="yes">
-                <include name="jmri/**"/>
-            </packageset>
+            
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="1650"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
+            <arg value="36"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
+            
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <arg value="-J-Dhttp.agent=javadoc"/>
@@ -2021,7 +1898,8 @@
     <!-- Requires Graphviz from http://www.graphviz.org            -->
     <!-- Does not work with Java 10 or later,                      -->
     <!-- see https://github.com/gboersma/uml-java-doclet           -->
-    <target name="javadoc-uml" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs with UML">
+    <target name="javadoc-uml" depends="check-java-version-requirement, init, jjdoc, compile-generated-source, plantuml" 
+                    description="create Javadocs with UML, requires Java 11">
         <javadoc packagenames="jmri.*, apps.*"
                  maxmemory="512m"
                  overview="${source}/jmri/overview.html"
@@ -2045,7 +1923,11 @@
             <packageset dir="${jjtreegen}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
-            <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
+            
+            <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
+            <arg value="-Xmaxwarns"/>
+            <arg value="36"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
+            
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <arg value="-J-Dhttp.agent=javadoc"/>
@@ -2053,16 +1935,14 @@
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
-            <doclet name="org.umlgraph.doclet.UmlGraphDoc"
-                    path="${libdir}/UmlGraph-5.7.jar">
-                <param name="-attributes"/>
-                <param name="-operations"/>
-                <param name="-qualify"/>
-                <param name="-types"/>
-                <!-- <param name="-visibility"/> not used, as only showing public visibility -->
-                <param name="-collapsible"/>  <!-- hide images at first on web pages -->
-                <param name="-inferdepvis" value="public"/> <!-- only show public -->
+            <doclet name="nl.talsmasoftware.umldoclet.UMLDoclet"
+                    path="${libdir}/umldoclet-2.0.9.jar">
+                <param name="-package"/>
+                <param name="--show-members=package"/>
+                <param name="-linksource"/>
+                <param name="-use"/>
             </doclet>
+            
             <group title="Core" packages="jmri"/>
             <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
             <group title="Applications" packages="apps:apps.*"/>
@@ -2086,40 +1966,29 @@
             <!-- <link href="http://java.sun.com/products/javacomm/reference/api/"/> redirected to next line -->
             <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" />
 
-            <!-- <link href="https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.9.8/"/>  redirected to next line -->
-            <!-- marking this offline as linking to JavaDoc hosted on javadoc.io seems to break the build -->
-            <!-- due to UmlGraph doclet attempting to interpret the injected Google Tag Manager script on javadoc.io -->
-            <link offline="true" href="https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.8/" packagelistLoc="lib/jackson-databind-2.9.8-package-list"/>
-
             <!-- <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>  redirected to next line -->
             <link href="https://download.java.net/media/java3d/javadoc/1.3.2/" />
-
-            <!-- <link href="https://static.javadoc.io/org.openlcb/openlcb/0.7.23/"/>  redirected to next line -->
-            <!-- marking this offline as linking to JavaDoc hosted on javadoc.io seems to break the build -->
-            <link offline="true" href="https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.23/" packagelistLoc="openlcb-0.7.23-package-list"/>
-
-            <!-- <link href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>  redirected to next line -->
-            <!-- marking this offline as linking to JavaDoc hosted on javadoc.io seems to break the build -->
-            <link offline="true" href="https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
-
-            <!-- <link href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>  redirected to next line -->
-            <!-- marking this offline as linking to JavaDoc hosted on javadoc.io seems to break the build -->
-            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
 
             <link href="https://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-            <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/"/>
-            <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
             <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->
             <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jinputvalidator/0.8.0/" packagelistLoc="lib/jinputvalidator-0.8.0-package-list"/>
             <link offline="true" href="https://static.javadoc.io/com.tngtech.archunit/archunit/0.11.0/" packagelistLoc="lib/archunit-0.11.0-package-list"/>
 
+            <link offline="true" href="https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.8/" packagelistLoc="lib/jackson-databind-2.9.8-package-list"/>
+            <link offline="true" href="https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.23/" packagelistLoc="openlcb-0.7.23-package-list"/>
+            <link offline="true" href="https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
+            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
+            <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/"/>
+            <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
+        
         </javadoc>
+        
         <apply executable="dot" dest="${doctarget}" parallel="false">
             <arg value="-Tpng"/>
             <arg value="-o"/>
@@ -2231,7 +2100,7 @@
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs-check.xml"
-
+                  failOnError="true"
                   effort="max"
                   reportLevel="low"
                   >
@@ -2248,7 +2117,6 @@
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs.xml"
-
                   effort="max"
                   reportLevel="low"
                   >
@@ -2265,7 +2133,7 @@
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs-check.xml"
-
+                  failOnError="true"
                   effort="max"
                   reportLevel="low"
                   >
@@ -2284,7 +2152,23 @@
             <!-- should match maven checkstyle configs -->
             <fileset dir="${basedir}">
                 <exclude name="**/*.jpg" />
+                <exclude name="**/*.PNG" />
                 <exclude name="**/*.jar" />
+                <exclude name="**/*.dll" />
+                <exclude name="**/*.dylib" />
+                <exclude name="**/*.so" />
+                <exclude name="**/*.exe" />
+                <exclude name="**/*.zip" />
+                <exclude name="**/*.icns" />
+                <exclude name="**/*.bat" />
+                <exclude name="**/*.ttf" />
+                <exclude name="**/*.vsd" />
+                <exclude name="**/*.wav" />
+                <exclude name="**/*.spj" />
+                <exclude name="**/*.pdf" />
+                <exclude name=".metadata/.plugins/org.eclipse.core.resources/**" />
+                <exclude name="help/en/JavaHelpSearch/**" />
+                <exclude name="help/fr/JavaHelpSearch/**" />
                 <exclude name="web/app/node_modules/**" />
                 <exclude name=".git/**" />
                 <exclude name="target/**" />

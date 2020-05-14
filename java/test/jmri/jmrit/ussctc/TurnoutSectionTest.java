@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Tests for TurnoutSection class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class TurnoutSectionTest {
 
@@ -192,7 +192,6 @@ public class TurnoutSectionTest {
     Sensor normSensor;
     Sensor revSensor;
     
-    // The minimal setup for log4J
     @org.junit.Before
     public void setUp() {
         JUnitUtil.setUp();

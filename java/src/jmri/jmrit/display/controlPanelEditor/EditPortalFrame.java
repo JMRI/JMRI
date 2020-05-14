@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -48,7 +46,6 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
     private PortalList _portalList;
     private JTextField _portalName;
     private Portal _currentPortal;
-    private JPanel _dndPanel;
 
     /* Ctor for fix a portal error  */
     public EditPortalFrame(String title, CircuitBuilder parent, OBlock block, Portal portal, PortalIcon icon) {
@@ -110,12 +107,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         portalPanel.add(new JScrollPane(_portalList));
 
         JButton clearButton = new JButton(Bundle.getMessage("buttonClearSelection"));
-        clearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                clearListSelection();
-            }
-        });
+        clearButton.addActionListener(a -> clearListSelection());
         panel = new JPanel();
         panel.add(clearButton);
         portalPanel.add(panel);
@@ -130,22 +122,12 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
 
         panel = new JPanel();
         JButton changeButton = new JButton(Bundle.getMessage("buttonChangeName"));
-        changeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                changePortalName();
-            }
-        });
+        changeButton.addActionListener(a -> changePortalName());
         changeButton.setToolTipText(Bundle.getMessage("ToolTipChangeName"));
         panel.add(changeButton);
 
         JButton deleteButton = new JButton(Bundle.getMessage("buttonDeletePortal"));
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                deletePortal();
-            }
-        });
+        deleteButton.addActionListener(a -> deletePortal());
         deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeletePortal"));
         panel.add(deleteButton);
         portalPanel.add(panel);
@@ -495,7 +477,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
 
     //////////////////////////// DnD ////////////////////////////
     protected JPanel makeDndIconPanel() {
-        _dndPanel = new JPanel();
+        JPanel _dndPanel = new JPanel();
 
         String fileName = "resources/icons/throttles/RoundRedCircle20.png";
         NamedIcon icon = new NamedIcon(fileName, fileName);

@@ -14,7 +14,6 @@ import org.junit.Before;
  */
 public class ZTC611XNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

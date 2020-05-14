@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * MemorySpinnerIconXmlTest.java
  *
- * Description: tests for the MemorySpinnerIconXml class
+ * Test for the MemorySpinnerIconXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class MemorySpinnerIconXmlTest {
       Assert.assertNotNull("MemorySpinnerIconXml constructor",new MemorySpinnerIconXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

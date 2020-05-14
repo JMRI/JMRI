@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * BlockContentsIconXmlTest.java
  *
- * Description: tests for the BlockContentsIconXml class
+ * Test for the BlockContentsIconXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class BlockContentsIconXmlTest {
       Assert.assertNotNull("BlockContentsIconXml constructor",new BlockContentsIconXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

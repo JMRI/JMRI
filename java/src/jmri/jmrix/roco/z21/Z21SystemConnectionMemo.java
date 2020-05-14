@@ -18,10 +18,10 @@ import org.slf4j.LoggerFactory;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010 copied from NCE into PowerLine for
+ * @author Bob Jacobsen Copyright (C) 2010 copied from NCE into PowerLine for
  * multiple connections by
- * @author	Ken Cameron Copyright (C) 2011 copied from PowerLine into z21 by
- * @author	Paul Bender Copyright (C) 2013,2019
+ * @author Ken Cameron Copyright (C) 2011 copied from PowerLine into z21 by
+ * @author Paul Bender Copyright (C) 2013,2019
  */
 public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -53,6 +53,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Traffic Controller for this instance.
+     * @param newtc Z21 traffic controller.
      */
     public void setTrafficController(Z21TrafficController newtc) {
         _tc = newtc;
@@ -65,6 +66,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Reporter Manager for this instance.
+     * @param rm reporter manager.
      */
     public void setReporterManager(Z21ReporterManager rm){
         _rm = rm;
@@ -81,6 +83,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * SensorManager for this instance.
+     * @param sm sensor manager.
      */
     public void setSensorManager(Z21SensorManager sm){
         _sm = sm;
@@ -203,9 +206,10 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         jmri.InstanceManager.setSensorManager(getSensorManager());
 
         // but make sure the LocoNet memo is set (for one feedback message).
-        Z21XNetProgrammerManager xpm = (Z21XNetProgrammerManager) _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();
-        xpm.setLocoNetMemo(_loconettunnel.getStreamPortController().getSystemConnectionMemo());
-
+        XNetProgrammerManager xpm = _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();
+        if ( xpm instanceof Z21XNetProgrammerManager) {
+            ((Z21XNetProgrammerManager) xpm).setLocoNetMemo(_loconettunnel.getStreamPortController().getSystemConnectionMemo());
+        }
         // setup the MultiMeter
         getMultiMeter();
 
@@ -228,6 +232,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Provide access to the Command Station for this particular connection.
      * <p>
      * NOTE: Command Station defaults to NULL
+     * @return command station, may be null.
      */
     public CommandStation getCommandStation() {
         return commandStation;
@@ -244,6 +249,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * connection.
      * <p>
      * NOTE: Command Station defaults to NULL
+     * @return Roco Z21 Command Station, may be null.
      */
     public RocoZ21CommandStation getRocoZ21CommandStation() {
         return z21CommandStation;
@@ -260,6 +266,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * connection.
      * <p>
      * NOTE: MultiMeter defaults to NULL
+     * @return MultiMeter, creates new if null.
      */
     public jmri.MultiMeter getMultiMeter() {
         if(meter == null){
@@ -275,6 +282,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Provide access to the Z21HeartBeat instance for this connection.
      * <p>
      * NOTE: HeartBeat defaults to NULL
+     * @return the HeartBeat, creates new if null.
      */
     public Z21HeartBeat getHeartBeat() {
         if(heartBeat == null){

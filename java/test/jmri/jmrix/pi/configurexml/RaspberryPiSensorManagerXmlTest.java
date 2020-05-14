@@ -18,7 +18,6 @@ public class RaspberryPiSensorManagerXmlTest {
       Assert.assertNotNull("RaspberryPiSensorManagerXml constructor", new RaspberryPiSensorManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

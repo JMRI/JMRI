@@ -1,7 +1,5 @@
 package jmri.managers;
 
-import java.beans.PropertyChangeListener;
-
 import jmri.JmriException;
 import jmri.jmrix.SystemConnectionMemo;
 
@@ -20,6 +18,7 @@ public class DefaultPowerManager extends AbstractPowerManager {
     // to free resources when no longer used
     @Override
     public void dispose() throws JmriException {
+        // do nothing
     }
 
 }

@@ -14,7 +14,7 @@ import org.junit.Test;
 /**
  * Tests for DecoderIndexFile class.
  *
- * @author	Bob Jacobsen, Copyright (c) 2001, 2002
+ * @author Bob Jacobsen, Copyright (c) 2001, 2002
  */
 public class DecoderIndexFileTest {
 

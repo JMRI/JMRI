@@ -161,7 +161,7 @@ public class LnTurnout extends AbstractTurnout {
                     try {
                         sendSetOffMessage(state);
                     } catch (Exception e) {
-                        log.error("Exception occurred while sending delayed off to turnout: " + e);
+                        log.error("Exception occurred while sending delayed off to turnout: {}", e);
                     }
                 }
             };

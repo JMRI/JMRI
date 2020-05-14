@@ -5,7 +5,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SensorTableTabActionTest extends AbstractTableTabActionBase {
 
@@ -30,7 +30,6 @@ public class SensorTableTabActionTest extends AbstractTableTabActionBase {
         Assert.assertTrue("Default include add button", a.includeAddButton());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

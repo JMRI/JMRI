@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrit.display.EditorScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -13,7 +14,7 @@ import jmri.jmrit.display.PositionableLabel;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DecoratorPanelTest {
 
@@ -41,7 +42,6 @@ public class DecoratorPanelTest {
         df.dispose();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -50,6 +50,7 @@ public class DecoratorPanelTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

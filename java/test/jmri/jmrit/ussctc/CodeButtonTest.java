@@ -6,7 +6,7 @@ import org.junit.*;
 /**
  * Tests for CodeButton class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class CodeButtonTest {
 
@@ -15,7 +15,6 @@ public class CodeButtonTest {
         new CodeButton("IS21", "IS22");
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

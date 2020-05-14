@@ -15,9 +15,9 @@ import org.junit.Test;
 /**
  * XNetStreamPortControllerTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.XNetStreamPortController class
+ * Test for the jmri.jmrix.lenz.XNetStreamPortController class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTestBase {
 
@@ -26,7 +26,6 @@ public class XNetStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortC
        Assert.assertNotNull("exists", apc);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
