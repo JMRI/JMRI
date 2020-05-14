@@ -567,11 +567,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         log.debug("propertyChange {} = {}", evt.getPropertyName(), evt.getNewValue());
         if (evt.getPropertyName().equals("Power")) {
-            try {
-                powerState = powerMgr.getPower();
-            } catch (JmriException ex) {
-                log.error("Exception getting power state {}", ex);
-            }
+            powerState = powerMgr.getPower();
             powerChanged = true;
         }
     }
