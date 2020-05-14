@@ -220,8 +220,8 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
                     // no action for address, name, or throttle property
                     break;
                 default:
-                    for ( int i = 0; i< jmri.Throttle.FUNCTION_STRING_ARRAY.length; i++ ) {
-                        if (k.equals(jmri.Throttle.FUNCTION_STRING_ARRAY[i])) {
+                    for ( int i = 0; i< this.throttle.getMaxFunctions(); i++ ) {
+                        if (k.equals(jmri.Throttle.getFunctionString(i))) {
                             this.throttle.setFunction(i,v.asBoolean());
                             break;
                         }
@@ -346,8 +346,8 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         data.put(ADDRESS, this.throttle.getLocoAddress().getNumber());
         data.put(SPEED, this.throttle.getSpeedSetting());
         data.put(FORWARD, this.throttle.getIsForward());
-        for ( int i = 0; i< Throttle.FUNCTION_STRING_ARRAY.length; i++ ) {
-            data.put(Throttle.FUNCTION_STRING_ARRAY[i], this.throttle.getFunction(i));
+        for ( int i = 0; i< this.throttle.getMaxFunctions(); i++ ) {
+            data.put(Throttle.getFunctionString(i), this.throttle.getFunction(i));
         }
         data.put(SPEED_STEPS, this.speedSteps);
         data.put(CLIENTS, InstanceManager.getDefault(JsonThrottleManager.class).getServers(this).size());

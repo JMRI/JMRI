@@ -979,8 +979,8 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
                 return t.getSpeedStepMode();
             }
         }
-        for ( int i = 0; i< Throttle.FUNCTION_STRING_ARRAY.length; i++ ) {
-            if (item.equals(Throttle.FUNCTION_STRING_ARRAY[i])) {
+        for ( int i = 0; i< t.getMaxFunctions(); i++ ) {
+            if (item.equals(Throttle.getFunctionString(i))) {
                 return t.getFunction(i);
             }
         }
