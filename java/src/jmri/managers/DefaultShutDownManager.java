@@ -5,11 +5,15 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
-import java.util.*;
 
+import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 
+import jmri.beans.Bean;
+import org.openide.util.RequestProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,17 +46,22 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
-public class DefaultShutDownManager implements ShutDownManager {
+public class DefaultShutDownManager extends Bean implements ShutDownManager {
 
     private static boolean shuttingDown = false;
     private final static Logger log = LoggerFactory.getLogger(DefaultShutDownManager.class);
-    private final ArrayList<ShutDownTask> tasks = new ArrayList<>();
+    private final List<ShutDownTask> tasks = new ArrayList<>();
+    private final Set<Callable<Boolean>> callables = new HashSet<>();
+    private final Set<Runnable> runnables = new HashSet<>();
     protected final Thread shutdownHook;
+    // use up to 8 threads for parallel tasks
+    private static final RequestProcessor RP = new RequestProcessor("On Start/Stop", 8); // NOI18N
 
     /**
      * Create a new shutdown manager.
      */
     public DefaultShutDownManager() {
+        super(false);
         // This shutdown hook allows us to perform a clean shutdown when
         // running in headless mode and SIGINT (Ctrl-C) or SIGTERM. It
         // executes the shutdown tasks without calling System.exit() since
@@ -81,6 +90,27 @@ public class DefaultShutDownManager implements ShutDownManager {
         } else {
             log.debug("already contains {}", s);
         }
+        this.runnables.add(s);
+        this.callables.add(s);
+        this.addPropertyChangeListener("shuttingDown", s);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    synchronized public void register(Callable task) {
+        Objects.requireNonNull(task, "Shutdown task cannot be null.");
+        this.callables.add(task);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    synchronized public void register(Runnable task) {
+        Objects.requireNonNull(task, "Shutdown task cannot be null.");
+        this.runnables.add(task);
     }
 
     /**
@@ -88,21 +118,55 @@ public class DefaultShutDownManager implements ShutDownManager {
      */
     @Override
     synchronized public void deregister(ShutDownTask s) {
-        if (s == null) {
-            // silently ignore null task
-            return;
-        }
-        if (this.tasks.contains(s)) {
-            this.tasks.remove(s);
-        }
+        this.removePropertyChangeListener("shuttingDown", s);
+        this.tasks.remove(s);
+        this.callables.remove(s);
+        this.runnables.remove(s);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
+    synchronized public void deregister(Callable task) {
+        this.callables.remove(task);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    synchronized public void deregister(Runnable task) {
+        this.runnables.remove(task);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings("deprecation")
     public List<ShutDownTask> tasks() {
         return Collections.unmodifiableList(tasks);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Callable<Boolean>> getCallables() {
+        List<Callable<Boolean>> list = new ArrayList<>();
+        list.addAll(callables);
+        return Collections.unmodifiableList(list);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Runnable> getRunnables() {
+        List<Runnable> list = new ArrayList<>();
+        list.addAll(runnables);
+        return Collections.unmodifiableList(list);
     }
 
     /**
@@ -147,24 +211,21 @@ public class DefaultShutDownManager implements ShutDownManager {
             log.debug("Shutting down with {} tasks", this.tasks.size());
             setShuttingDown(true);
             // First check if shut down is allowed
-            for (ShutDownTask task : tasks) {
-                if (!task.isShutdownAllowed()) {
+            for (Callable task : callables) {
+                try {
+                    if (task.call().equals(Boolean.FALSE)) {
+                        setShuttingDown(false);
+                        return false;
+                    }
+                } catch (Exception ex) {
+                    log.error("Unable to stop", ex);
                     setShuttingDown(false);
                     return false;
                 }
             }
-            // all shut down tasks must complete within _timeout_ seconds
-            long timeout = 30;
-            // trigger parallel tasks (see jmri.ShutDownTask#isParallel())
-            if (!this.runShutDownTasks(true)) {
-                return false;
-            }
-            log.debug("parallel tasks executed {} milliseconds after starting shutdown", new Date().getTime() - start.getTime());
-            // trigger non-parallel tasks
-            if (!this.runShutDownTasks(false)) {
-                return false;
-            }
-            log.debug("sequential tasks executed {} milliseconds after starting shutdown", new Date().getTime() - start.getTime());
+            // each shut down tasks must complete within _timeout_ milliseconds
+            int timeout = 30000;
+            runnables.forEach(task -> RP.post(task, timeout));
             // close any open windows by triggering a closing event
             // this gives open windows a final chance to perform any cleanup
             if (!GraphicsEnvironment.isHeadless()) {
@@ -182,19 +243,14 @@ public class DefaultShutDownManager implements ShutDownManager {
             log.debug("windows completed closing {} milliseconds after starting shutdown", new Date().getTime() - start.getTime());
             // wait for parallel tasks to complete
             synchronized (start) {
-                while (new ArrayList<>(this.tasks).stream().anyMatch((task) -> (task.isParallel() && !task.isComplete()))) {
+                while (!RP.isTerminated()) {
                     try {
-                        start.wait(100);
+                        RP.awaitTermination(100, TimeUnit.MILLISECONDS);
                     } catch (InterruptedException ex) {
-                        // do nothing
+                        // do nothing   
                     }
-                    if ((new Date().getTime() - start.getTime()) > (timeout * 1000)) { // milliseconds
-                        log.warn("Terminating without waiting for the following tasks to complete");
-                        this.tasks.forEach((task) -> {
-                            if (!task.isComplete()) {
-                                log.warn("\t{}", task.getName());
-                            }
-                        });
+                    if ((new Date().getTime() - start.getTime()) > timeout) {
+                        log.warn("Terminating without waiting for stop tasks to complete");
                         break;
                     }
                 }
@@ -211,47 +267,6 @@ public class DefaultShutDownManager implements ShutDownManager {
     }
 
     /**
-     * Run registered shutdown tasks. Any Exceptions are logged and otherwise
-     * ignored.
-     *
-     * @param isParallel true if parallel-capable shutdown tasks are to be run;
-     *                   false if shutdown tasks that must be run sequentially
-     *                   are to be run
-     * @return true if shutdown tasks ran; false if a shutdown task aborted the
-     *         shutdown sequence
-     */
-    private boolean runShutDownTasks(boolean isParallel) {
-        // can't return out of a stream or forEach loop
-        for (ShutDownTask task : new ArrayList<>(this.tasks)) {
-            if (task.isParallel() == isParallel) {
-                log.debug("Calling task \"{}\"", task.getName());
-                Date timer = new Date();
-                try {
-                    setShuttingDown(task.execute()); // if a task aborts the shutdown, stop shutting down
-                    if (!shuttingDown) {
-                        log.info("Program termination aborted by \"{}\"", task.getName());
-                        return false;  // abort early
-                    }
-                } catch (Exception e) {
-                    log.error("Error during processing of ShutDownTask \"{}\"", task.getName(), e);
-                } catch (Throwable e) {
-                    // try logging the error
-                    log.error("Unrecoverable error during processing of ShutDownTask \"{}\"", task.getName(), e);
-                    log.error("Terminating abnormally");
-                    // also dump error directly to System.err in hopes its more observable
-                    System.err.println("Unrecoverable error during processing of ShutDownTask \"" + task.getName() + "\"");
-                    System.err.println(e);
-                    System.err.println("Terminating abnormally");
-                    // forcably halt, do not restart, even if requested
-                    Runtime.getRuntime().halt(1);
-                }
-                log.debug("Task \"{}\" took {} milliseconds to execute", task.getName(), new Date().getTime() - timer.getTime());
-            }
-        }
-        return true;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -265,9 +280,11 @@ public class DefaultShutDownManager implements ShutDownManager {
      *
      * @param state true if shutting down; false otherwise
      */
-    protected static void setShuttingDown(boolean state) {
+    protected void setShuttingDown(boolean state) {
+        boolean old = shuttingDown;
         shuttingDown = state;
         log.debug("Setting shuttingDown to {}", state);
+        firePropertyChange("shuttingDown", old, state);
     }
 
 }

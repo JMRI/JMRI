@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SRCPTrafficController extends AbstractMRTrafficController
-        implements SRCPInterface, jmri.ShutDownTask {
+        implements SRCPInterface {
 
     protected SRCPSystemConnectionMemo _memo = null;
 
@@ -36,7 +36,8 @@ public class SRCPTrafficController extends AbstractMRTrafficController
      */
     public SRCPTrafficController() {
         super();
-        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(this);
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class)
+                .register(() -> this.sendSRCPMessage(new SRCPMessage("TERM 0 SESSION"), null));
     }
 
     // The methods to implement the SRCPInterface
@@ -297,51 +298,6 @@ public class SRCPTrafficController extends AbstractMRTrafficController
             }
 
         }
-    }
-
-    /**
-     * Ask if shut down is allowed.
-     * <p>
-     * The shut down manager must call this method first on all the tasks
-     * before starting to execute the method execute() on the tasks.
-     * <p>
-     * If this method returns false on any task, the shut down process must
-     * be aborted.
-     *
-     * @return true if it is OK to shut down, false to abort shut down.
-     */
-    @Override
-    public boolean isShutdownAllowed() {
-        return true;
-    }
-
-    /**
-     * Take the necessary action.
-     *
-     * @return true if the shutdown should continue, false to abort.
-     */
-    @Override
-    public boolean execute() {
-        // notify the server we are exiting.
-        sendSRCPMessage(new SRCPMessage("TERM 0 SESSION"), null);
-        // the server will send a reply of "101 INFO 0 SESSION <id>.
-        // but we aren't going to wait for the reply.
-        return true;
-    }
-
-    @Override
-    public String getName() {
-        return SRCPTrafficController.class.getName();
-    }
-
-    @Override
-    public boolean isParallel() {
-        return false;
-    }
-
-    @Override
-    public boolean isComplete() {
-        return !this.isParallel();
     }
 
     /**

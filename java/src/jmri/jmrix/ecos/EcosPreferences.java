@@ -1,8 +1,6 @@
 package jmri.jmrix.ecos;
 
 import jmri.InstanceManager;
-import jmri.ShutDownTask;
-import jmri.implementation.QuietShutDownTask;
 import jmri.jmrix.ecos.swing.preferences.PreferencesPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,15 +18,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
             log.debug("creating a new EcosPreferences object");
         }
 
-        ecosPreferencesShutDownTask = new QuietShutDownTask("Ecos Preferences Shutdown") {
-            @Override
-            public boolean execute() {
-                if (getChangeMade()) {
-                    InstanceManager.getDefault(jmri.ConfigureManager.class).storePrefs();
-                }
-                return true;
-            }
-        };
+        ecosPreferencesShutDownTask = () -> InstanceManager.getDefault(jmri.ConfigureManager.class).storePrefs();
         InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosPreferencesShutDownTask);
 
         adaptermemo = memo;
@@ -48,7 +38,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
         firePropertyChange("loaded", null, null);
     }
 
-    ShutDownTask ecosPreferencesShutDownTask = null;
+    Runnable ecosPreferencesShutDownTask = null;
 
     public static final int ASK = 0x00; // ie always ask the question
     public static final int NO = 0x01; //ie never do the operation

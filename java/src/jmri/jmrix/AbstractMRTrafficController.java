@@ -93,7 +93,7 @@ Note left of OKSENDMSGSTATE : Transient internal state\nwill transition when goi
 
 public abstract class AbstractMRTrafficController {
 
-    private ShutDownTask shutDownTask = null; // retain for possible removal.
+    private final Runnable shutDownTask = this::terminate; // retain for possible removal.
 
     /**
      * Create a new unnamed MRTrafficController.
@@ -111,7 +111,7 @@ public abstract class AbstractMRTrafficController {
         // in an unusable state. Once the shutdown task executes, the connection
         // must be considered permanently closed.
         
-        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask = new CleanupTask(this));
+        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
     }
 
     private boolean synchronizeRx = true;
@@ -1305,43 +1305,6 @@ public abstract class AbstractMRTrafficController {
      */
     protected volatile boolean threadStopRequest = false;
     
-    /**
-     * Internal class to handle traffic controller cleanup. The primary task of
-     * this thread is to make sure the DCC system has exited service mode when
-     * the program exits.
-     */
-    static class CleanupTask implements jmri.ShutDownTask {
-
-        AbstractMRTrafficController mTc;
-
-        CleanupTask(AbstractMRTrafficController pTc) {
-            mTc = pTc;
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public boolean isShutdownAllowed() {return true;}
-
-        /** {@inheritDoc} */
-        @Override
-        public boolean execute() {
-            mTc.terminate();
-            return true;
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public String getName() {return "ShutDownTask for "+mTc.getClass().getName();}
-
-        /** {@inheritDoc} */
-        @Override
-        public boolean isParallel() {return false;}
-
-        /** {@inheritDoc} */
-        @Override
-        public boolean isComplete() {return !this.isParallel();}
-    }
-
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractMRTrafficController.class);
 
 }

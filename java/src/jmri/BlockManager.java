@@ -42,13 +42,12 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     private final String powerManagerChangeName;
     public final ShutDownTask shutDownTask = new AbstractShutDownTask("Writing Blocks") {
         @Override
-        public boolean execute() {
+        public void run() {
             try {
                 new BlockValueFile().writeBlockValues();
             } catch (IOException ex) {
                 log.error("Exception writing blocks", ex);
             }
-            return true;
         }
     };
     

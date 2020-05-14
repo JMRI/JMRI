@@ -2,8 +2,11 @@ package jmri;
 
 import java.util.List;
 
+import java.util.Set;
+import java.util.concurrent.Callable;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
+import jmri.beans.PropertyChangeProvider;
 
 /**
  * Manage tasks to be completed when the program shuts down normally.
@@ -32,7 +35,7 @@ import javax.annotation.CheckForNull;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
-public interface ShutDownManager {
+public interface ShutDownManager extends PropertyChangeProvider {
 
     /**
      * Register a task object for later execution. An attempt to register an
@@ -44,7 +47,25 @@ public interface ShutDownManager {
     public void register(@Nonnull ShutDownTask task);
 
     /**
-     * Deregister a task object. Attempts to deregister a task that is not
+     * Register a task for verification that JMRI should stop. An attempt to
+     * register an already register task will be silently ignored.
+     *
+     * @param task the verification task
+     * @throws NullPointerException if the task is null
+     */
+    public void register(@Nonnull Callable task);
+
+    /**
+     * Register a task that runs when JMRI is stopping. An attempt to
+     * register an already register task will be silently ignored.
+     *
+     * @param task the execution task
+     * @throws NullPointerException if the task is null
+     */
+    public void register(@Nonnull Runnable task);
+
+    /**
+     * Deregister a task. Attempts to deregister a task that is not
      * registered are silently ignored.
      *
      * @param task the task not to execute
@@ -52,17 +73,41 @@ public interface ShutDownManager {
     public void deregister(@CheckForNull ShutDownTask task);
 
     /**
+     * Deregister a task. Attempts to deregister a task that is not
+     * registered are silently ignored.
+     *
+     * @param task the task not to call
+     */
+    public void deregister(@CheckForNull Callable task);
+
+    /**
+     * Deregister a task. Attempts to deregister a task that is not
+     * registered are silently ignored.
+     *
+     * @param task the task not to run
+     */
+    public void deregister(@CheckForNull Runnable task);
+
+    /**
      * Provide access to the current registered shutdown tasks.
      * <p>
      * Note that implementations are free to provide a copy of the list of
      * registered tasks and do not need to provide modifiable live access to the
      * internal list of registered tasks.
-     * 
+     *
      * @return the list of shutdown tasks or an empty list if no shutdown tasks
      *         are registered
+     * @deprecated since 4.21.1; use {@link #getCallables()} and {@link #getRunnables()} instead
      */
     @Nonnull
+    @Deprecated
     public List<ShutDownTask> tasks();
+
+    @Nonnull
+    public List<Callable<Boolean>> getCallables();
+    
+    @Nonnull
+    public List<Runnable> getRunnables();
 
     /**
      * Run the shutdown tasks, and then terminate the program with status 100 if
