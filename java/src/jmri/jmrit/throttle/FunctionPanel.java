@@ -12,6 +12,7 @@ import javax.swing.WindowConstants;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
+import jmri.Throttle;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import org.jdom2.Element;
@@ -211,11 +212,12 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences();
         // Buttons names, ids,
         for (int i = 0; i < NUM_FUNCTION_BUTTONS; i++) {
+            functionButton[i].setMaxFunction(29); // reset to 0-28, actual value updated further on.
             functionButton[i].setIdentity(i);
             functionButton[i].addFunctionListener(this);
             functionButton[i].setButtonLabel( i<3 ?
-                Bundle.getMessage(DccThrottle.FUNCTION_STRING_ARRAY[i])
-                : DccThrottle.FUNCTION_STRING_ARRAY[i] );
+                Bundle.getMessage(Throttle.getFunctionString(i))
+                : Throttle.getFunctionString(i) );
             functionButton[i].setDisplay(true);
             if ((i < 3) && preferences.isUsingIcons()) {
                 switch (i) {
@@ -289,11 +291,12 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 return;
             }
             RosterEntry rosterEntry = addressPanel.getRosterEntry();
-            if ((rosterEntry != null) && (log.isDebugEnabled())) {
-                log.debug("RosterEntry found: " + rosterEntry.getId());
+            if (rosterEntry != null) {
+                log.debug("RosterEntry found: {}", rosterEntry.getId());
             }
             int maxi = 0; // the number of function buttons defined for this entry
             for (int i = 0; i < FunctionPanel.NUM_FUNCTION_BUTTONS; i++) {
+                functionButton[i].setMaxFunction(mThrottle.getMaxFunctions());
                 functionButton[i].setIdentity(i); // full reset of function
                 functionButton[i].setState(mThrottle.getFunction(i)); // reset button state
                 if (rosterEntry != null) { // from here, update button text with roster data
@@ -375,13 +378,23 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        for (int i = 0; i <= 28; i++) {
-            if (e.getPropertyName().equals(DccThrottle.FUNCTION_STRING_ARRAY[i])) {
-                functionButton[i].setState(((Boolean) e.getNewValue()));
-                break; // stop the loop, only one function matched.
-            } else if (e.getPropertyName().equals(DccThrottle.FUNCTION_MOMENTARY_STRING_ARRAY[i])) {
-                functionButton[i].setIsLockable(!((Boolean) e.getNewValue()));
-                break; // stop the loop, only one function matched.
+        for (int i = 0; i < mThrottle.getMaxFunctions(); i++) {
+            if (e.getPropertyName().equals(Throttle.getFunctionString(i))) {
+                setButtonByFuncNumber(i,false,(Boolean) e.getNewValue());
+            } else if (e.getPropertyName().equals(Throttle.getFunctionMomentaryString(i))) {
+                setButtonByFuncNumber(i,true,!(Boolean) e.getNewValue());
+            }
+        }
+    }
+    
+    private void setButtonByFuncNumber(int function, boolean lockable, boolean newVal){
+        for (FunctionButton button : functionButton) {
+            if (button.getIdentity() == function) {
+                if (lockable) {
+                    button.setIsLockable(newVal);
+                } else {
+                    button.setState(newVal);
+                }
             }
         }
     }
