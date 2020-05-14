@@ -107,14 +107,14 @@ class LayoutEditorComponent extends JComponent {
     }
 
     private void drawPanelGrid(Graphics2D g2) {
-        int wideMod = layoutEditor.getGridSize() * layoutEditor.getGridSize2nd();
-        int wideMin = layoutEditor.getGridSize() / 2;
+        int wideMod = layoutEditor.gContext.getGridSize() * layoutEditor.gContext.getGridSize2nd();
+        int wideMin = layoutEditor.gContext.getGridSize() / 2;
 
         // granulize puts these on getGridSize() increments
         int minX = 0;
         int minY = 0;
-        int maxX = (int) MathUtil.granulize(layoutEditor.panelWidth, layoutEditor.getGridSize());
-        int maxY = (int) MathUtil.granulize(layoutEditor.panelHeight, layoutEditor.getGridSize());
+        int maxX = (int) MathUtil.granulize(layoutEditor.gContext.getLayoutWidth(), layoutEditor.gContext.getGridSize());
+        int maxY = (int) MathUtil.granulize(layoutEditor.gContext.getLayoutHeight(), layoutEditor.gContext.getGridSize());
 
         log.debug("drawPanelGrid: minX: {}, minY: {}, maxX: {}, maxY: {}", minX, minY, maxX, maxY);
 
@@ -127,7 +127,7 @@ class LayoutEditorComponent extends JComponent {
         g2.setStroke(narrow);
 
         // draw horizontal lines
-        for (int y = minY; y <= maxY; y += layoutEditor.getGridSize()) {
+        for (int y = minY; y <= maxY; y += layoutEditor.gContext.getGridSize()) {
             startPt.setLocation(minX, y);
             stopPt.setLocation(maxX, y);
 
@@ -141,7 +141,7 @@ class LayoutEditorComponent extends JComponent {
         }
 
         // draw vertical lines
-        for (int x = minX; x <= maxX; x += layoutEditor.getGridSize()) {
+        for (int x = minX; x <= maxX; x += layoutEditor.gContext.getGridSize()) {
             startPt.setLocation(x, minY);
             stopPt.setLocation(x, maxY);
 
@@ -490,7 +490,7 @@ class LayoutEditorComponent extends JComponent {
         // check for segment in progress
         if (layoutEditor.isEditable() && (layoutEditor.beginTrack != null) && layoutEditor.getLayoutEditorToolBarPanel().trackButton.isSelected()) {
             g2.setColor(layoutEditor.defaultTrackColor);
-            g2.setStroke(new BasicStroke(layoutEditor.sidelineTrackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+            g2.setStroke(new BasicStroke(layoutEditor.gContext.getSidelineTrackWidth(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
             g2.draw(new Line2D.Double(layoutEditor.beginLocation, layoutEditor.currentLocation));
 
             // highlight unconnected endpoints of all tracks

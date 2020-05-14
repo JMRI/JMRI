@@ -329,15 +329,27 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Tue Apr 28 12:46:54 PDT 2020</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest.xml</filename>
-      <filehistory />
+      <date>Wed May 13 07:32:01 PDT 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/versions/v4.19.6/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest-4-19-4.xml</filename>
+      <filehistory>
+        <operation>
+          <type>Load OK</type>
+          <date>Tue May 12 14:11:19 PDT 2020</date>
+          <filename>/Users/jake/Documents/Trains/JMRI/projects/versions/v4.19.4/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest-4-19-4.xml</filename>
+          <filehistory />
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Tue May 12 14:11:19 PDT 2020</date>
+          <filename />
+        </operation>
+      </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Tue Apr 28 12:46:54 PDT 2020</date>
+      <date>Wed May 13 07:32:06 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.6ish+jake+20200428T1945Z+R49ac2358e8 on Tue Apr 28 12:46:54 PDT 2020-->
+  <!--Written by JMRI version 4.19.6ish+jake+20200513T1417Z+Rdb3d7c2db9 on Wed May 13 07:32:06 PDT 2020-->
 </layout-config>
