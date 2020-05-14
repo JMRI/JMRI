@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson (C) 2012
  */
-public class MarklinPowerManager extends AbstractPowerManager implements MarklinListener {
+public class MarklinPowerManager extends AbstractPowerManager<MarklinSystemConnectionMemo> implements MarklinListener {
 
     MarklinTrafficController tc;
 

@@ -11,7 +11,7 @@ import jmri.managers.AbstractPowerManager;
  * @author Paul Bender Copyright (C) 2004
   *
  */
-public class XpaPowerManager extends AbstractPowerManager implements XpaListener {
+public class XpaPowerManager extends AbstractPowerManager<XpaSystemConnectionMemo> implements XpaListener {
 
     XpaTrafficController tc = null;
     boolean waiting = false;

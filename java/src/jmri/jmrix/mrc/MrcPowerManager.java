@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class MrcPowerManager
-        extends jmri.managers.AbstractPowerManager
+        extends jmri.managers.AbstractPowerManager<MrcSystemConnectionMemo>
         implements MrcTrafficListener {
 
     public MrcPowerManager(MrcSystemConnectionMemo memo) {
@@ -50,11 +50,6 @@ public class MrcPowerManager
         }
         power = v;
         firePropertyChange("Power", old, power); // NOI18N
-    }
-
-    @Override
-    public int getPower() {
-        return power;
     }
 
     // these next three public methods have been added so that other classes

@@ -84,6 +84,9 @@ public class CbusBasicNodeWithMgrsCommandStation extends CbusBasicNodeWithManage
         // listening for RSTAT flag bit 2 here rather than power manager in case in future 
         // we can direct to power zones rather than whole layout power
         // it's also a per command station report than a per layout report
+        // TODO: JMRI has multiple PowerManagers so let the correct PowerManager
+        // just handle this correctly instead of assuming that the default
+        // is a CbusPowerManager
         setTrackPower(( ( flags >> 2 ) & 1 ) == 1 );
         
         checkSingleFlag(3,"Command Station {} Reporting Bus Halted");
@@ -91,9 +94,10 @@ public class CbusBasicNodeWithMgrsCommandStation extends CbusBasicNodeWithManage
     }
     
     private void setTrackPower ( boolean powerOn ){
-        ( (CbusPowerManager) InstanceManager.getDefault(PowerManager.class))
-            .updatePower(powerOn ? PowerManager.ON : PowerManager.OFF);
-        
+        // TODO: let the PowerManager handle this -- JMRI has multiple power manager
+        // and we MUST NOT assume that the default is a CbusPowerManager
+        //( (CbusPowerManager) InstanceManager.getDefault(PowerManager.class))
+        //    .updatePower(powerOn ? PowerManager.ON : PowerManager.OFF);
     }
     
     private void checkSingleFlag(int flagNum, String errorText){

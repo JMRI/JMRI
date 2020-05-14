@@ -16,17 +16,18 @@ import jmri.jmrix.SystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2010
  * @author Randall Wood Copyright 2020
+ * @param <M> the type of SystemConnectionMemo supported by this PowerManager
  */
-abstract public class AbstractPowerManager extends PropertyChangeSupport implements PowerManager {
+abstract public class AbstractPowerManager<M extends SystemConnectionMemo> extends PropertyChangeSupport implements PowerManager {
 
-    private final SystemConnectionMemo memo;
+    protected final M memo;
     /**
      * Note that all changes must fire a property change with the old and new values
      */
     protected int power = UNKNOWN;
     private Instant lastOn;
 
-    public AbstractPowerManager(SystemConnectionMemo memo) {
+    public AbstractPowerManager(M memo) {
         this.memo = memo;
         TimeKeeper tk = new TimeKeeper();
         AbstractPowerManager.this.addPropertyChangeListener(tk);
@@ -36,7 +37,7 @@ abstract public class AbstractPowerManager extends PropertyChangeSupport impleme
      * {@inheritDoc}
      */
     @Override
-    public int getPower() throws JmriException {
+    public int getPower() {
         return power;
     }
 
@@ -61,12 +62,7 @@ abstract public class AbstractPowerManager extends PropertyChangeSupport impleme
         @Override
         public void propertyChange(PropertyChangeEvent e) {
             if (POWER.equals(e.getPropertyName())) {
-                int newPowerState;
-                try {
-                    newPowerState = getPower();
-                } catch (JmriException ex) {
-                    return;
-                }
+                int newPowerState = getPower();
                 if (newPowerState != power) {
                     power = newPowerState;
                     if (newPowerState == ON) {

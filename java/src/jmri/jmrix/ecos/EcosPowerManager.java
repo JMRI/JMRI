@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
-public class EcosPowerManager extends AbstractPowerManager implements EcosListener {
+public class EcosPowerManager extends AbstractPowerManager<EcosSystemConnectionMemo> implements EcosListener {
 
     EcosTrafficController tc;
 

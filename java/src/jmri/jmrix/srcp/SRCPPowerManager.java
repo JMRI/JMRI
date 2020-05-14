@@ -12,12 +12,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
-public class SRCPPowerManager extends AbstractPowerManager implements SRCPListener {
+public class SRCPPowerManager extends AbstractPowerManager<SRCPBusConnectionMemo> implements SRCPListener {
 
     boolean waiting = false;
     int onReply = UNKNOWN;
     int _bus = 0;
-    SRCPBusConnectionMemo _memo;
     SRCPTrafficController tc = null;
 
     public SRCPPowerManager(SRCPBusConnectionMemo memo, int bus) {

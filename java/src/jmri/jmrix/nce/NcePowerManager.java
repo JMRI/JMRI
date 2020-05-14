@@ -9,7 +9,7 @@ import jmri.managers.AbstractPowerManager;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class NcePowerManager extends AbstractPowerManager implements NceListener {
+public class NcePowerManager extends AbstractPowerManager<NceSystemConnectionMemo> implements NceListener {
 
     public NcePowerManager(NceSystemConnectionMemo memo) {
         this(memo.getNceTrafficController(), memo.getSystemPrefix());// connect to the TrafficManager

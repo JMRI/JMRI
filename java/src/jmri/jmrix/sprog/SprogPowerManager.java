@@ -3,6 +3,7 @@ package jmri.jmrix.sprog;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.jmrix.AbstractMessage;
+import jmri.managers.AbstractPowerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class SprogPowerManager extends jmri.managers.AbstractPowerManager
+public class SprogPowerManager extends AbstractPowerManager<SprogSystemConnectionMemo>
         implements SprogListener {
 
     SprogTrafficController trafficController = null;
@@ -30,6 +31,7 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
 
     @Override
     public void setPower(int v) throws JmriException {
+        int old = power;
         power = UNKNOWN; // while waiting for reply
         checkTC();
         if (v == ON) {
@@ -45,14 +47,13 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
             log.debug("setPower OFF");
             waiting = true;
             onReply = PowerManager.OFF;
-//            firePropertyChange("Power", null, null);
             // send "Kill main track"
             SprogMessage l = SprogMessage.getKillMain();
             for (int i = 0; i < 3; i++) {
                 trafficController.sendSprogMessage(l, this);
             }
         }
-        firePropertyChange("Power", null, null);
+        firePowerPropertyChange(old, power);
     }
 
     /**
@@ -61,13 +62,9 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
      * @param v new power state.
      */
     public void notePowerState(int v) {
+        int old = power;
         power = v;
-        firePropertyChange("Power", null, null);
-    }
-
-    @Override
-    public int getPower() {
-        return power;
+        firePowerPropertyChange(old, power);
     }
 
     /**
@@ -92,8 +89,9 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
     public void notifyReply(SprogReply m) {
         if (waiting) {
             log.debug("Reply while waiting");
+            int old = power;
             power = onReply;
-            firePropertyChange("Power", null, null);
+            firePowerPropertyChange(old, power);
         }
         waiting = false;
     }

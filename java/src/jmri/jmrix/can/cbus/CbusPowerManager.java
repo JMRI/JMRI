@@ -14,7 +14,7 @@ import jmri.managers.AbstractPowerManager;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew CRosland Copyright (C) 2009
  */
-public class CbusPowerManager extends AbstractPowerManager implements CanListener {
+public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMemo> implements CanListener {
 
     private TrafficController tc;
 

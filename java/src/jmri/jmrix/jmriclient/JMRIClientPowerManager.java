@@ -10,7 +10,7 @@ import jmri.managers.AbstractPowerManager;
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Paul Bender Copyright (C) 2010
  */
-public class JMRIClientPowerManager extends AbstractPowerManager implements JMRIClientListener {
+public class JMRIClientPowerManager extends AbstractPowerManager<JMRIClientSystemConnectionMemo> implements JMRIClientListener {
 
     JMRIClientTrafficController tc = null;
 

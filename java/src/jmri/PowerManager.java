@@ -63,7 +63,7 @@ public interface PowerManager extends PropertyChangeProvider {
     public void setPower(int v) throws JmriException;
 
     @CheckReturnValue
-    public int getPower() throws JmriException;
+    public int getPower();
 
     // to free resources when no longer used
     public void dispose() throws JmriException;

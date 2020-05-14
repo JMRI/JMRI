@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author B. Milhaupt Copyright (C)
  */
-public class LnPowerManager extends AbstractPowerManager implements LocoNetListener {
+public class LnPowerManager extends AbstractPowerManager<LocoNetSystemConnectionMemo> implements LocoNetListener {
 
     public LnPowerManager(LocoNetSystemConnectionMemo memo) {
         super(memo);
