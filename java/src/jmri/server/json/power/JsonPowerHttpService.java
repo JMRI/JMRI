@@ -21,15 +21,10 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @author Randall Wood Copyright 2016, 2018
  */
 public class JsonPowerHttpService extends JsonHttpService {
-
-    private static final Logger log = LoggerFactory.getLogger(JsonPowerHttpService.class);
 
     public JsonPowerHttpService(ObjectMapper mapper) {
         super(mapper);
