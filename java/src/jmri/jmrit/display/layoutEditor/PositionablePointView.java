@@ -19,7 +19,8 @@ import jmri.util.*;
 public class PositionablePointView extends LayoutTrackView {
 
     /**
-     * constructor method
+     * constructor method.
+     * @param point the positionable point.
      */
     public PositionablePointView(@Nonnull PositionablePoint point) {
         super(point);

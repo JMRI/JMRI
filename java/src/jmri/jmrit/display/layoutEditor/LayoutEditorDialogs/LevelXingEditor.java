@@ -39,7 +39,8 @@ import jmri.util.MathUtil;
 public class LevelXingEditor extends LayoutTurntableEditor {
 
     /**
-     * constructor method
+     * constructor method.
+     * @param layoutEditor main layout editor.
      */
     public LevelXingEditor(@Nonnull LayoutEditor layoutEditor) {
         super(layoutEditor);
@@ -68,6 +69,7 @@ public class LevelXingEditor extends LayoutTurntableEditor {
 
     /**
      * Edit a Level Crossing.
+     * @param levelXing the level crossing to edit.
      */
     public void editLayoutTrack(LevelXing levelXing) {
         sensorList.clear();
