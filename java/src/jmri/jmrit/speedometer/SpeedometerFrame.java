@@ -85,7 +85,10 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
     SensorIcon stopSensorIcon2;
 
     /**
-     *
+     * Set Input sensors.
+     * @param start start sensor name.
+     * @param stop1 stop sensor 1.
+     * @param stop2 stop sensor 2.
      * @param d1 First timer distance in current units. Express with the decimal
      *           marker in the current Locale.
      * @param d2 Second timer distance in current units. Express with the

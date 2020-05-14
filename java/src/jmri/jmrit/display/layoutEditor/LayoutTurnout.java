@@ -380,7 +380,15 @@ abstract public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * Main constructor method
+     * Main constructor method.
+     * @param id Layout Turnout ID.
+     * @param t type, e.g. LH_TURNOUT, WYE_TURNOUT
+     * @param c 2D point.
+     * @param rot rotation.
+     * @param xFactor horizontal factor.
+     * @param yFactor vertical factor.
+     * @param layoutEditor main layout editor.
+     * @param v version.
      */
     public LayoutTurnout(@Nonnull String id, TurnoutType t, @Nonnull Point2D c, double rot,
             double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
@@ -463,7 +471,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * Accessor methods
+     * Get the Version.
+     * @return turnout version.
      */
     public int getVersion() {
         return version;
@@ -1714,6 +1723,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     /**
      * Set up Layout Block(s) for this Turnout.
+     * @param newLayoutBlock the new layout block.
      */
     public void setLayoutBlock(LayoutBlock newLayoutBlock) {
         LayoutBlock blockA = getLayoutBlock();
@@ -3391,6 +3401,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     /**
      * "active" means that the object is still displayed, and should be stored.
+     * @return true if active, else false.
      */
     public boolean isActive() {
         return active;

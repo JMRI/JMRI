@@ -19,7 +19,8 @@ import jmri.util.*;
 public class LayoutRHTurnoutView extends LayoutTurnoutView {
 
     /**
-     * constructor method
+     * Constructor method.
+     * @param turnout the turnout to view.
      */
     public LayoutRHTurnoutView(@Nonnull LayoutRHTurnout turnout) {
         super(turnout);

@@ -80,6 +80,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
      * Create a new item in the enumeration, with a specified associated value.
      *
      * @param s Name of the enumeration item
+     * @param value item value.
      */
     public void addItem(String s, int value) {
         _valueArray[_nstored] = value;

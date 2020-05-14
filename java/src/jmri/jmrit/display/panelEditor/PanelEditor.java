@@ -485,8 +485,9 @@ public class PanelEditor extends Editor implements ItemListener {
     /**
      * Create sequence of panels, etc, for layout: JFrame contains its
      * ContentPane which contains a JPanel with BoxLayout (p1) which contains a
-     * JScollPane (js) which contains the targetPane
-     *
+     * JScollPane (js) which contains the targetPane.
+     * @param name the frame name.
+     * @return the frame.
      */
     public JmriJFrame makeFrame(String name) {
         JmriJFrame targetFrame = new JmriJFrame(name);

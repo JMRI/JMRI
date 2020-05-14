@@ -72,6 +72,8 @@ final public class LayoutEditorFindItems {
 
     /**
      * Returns an array list of track segments matching the block name.
+     * @param name block name.
+     * @return array of segments, may be null.
      */
     public ArrayList<TrackSegment> findTrackSegmentByBlock(String name) {
         if (name.isEmpty()) {

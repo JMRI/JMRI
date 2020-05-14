@@ -19,7 +19,8 @@ import jmri.util.*;
 public class LayoutDoubleXOverView extends LayoutXOverView {
 
     /**
-     * constructor method
+     * Constructor method.
+     * @param xover the layout double crossover to view.
      */
     public LayoutDoubleXOverView(@Nonnull LayoutDoubleXOver xover) {
         super(xover);

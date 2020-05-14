@@ -19,7 +19,8 @@ import jmri.util.*;
 public class TrackSegmentView extends LayoutTrackView {
 
     /**
-     * constructor method
+     * constructor method.
+     * @param track the track segment to view.
      */
     public TrackSegmentView(@Nonnull TrackSegment track) {
         super(track);

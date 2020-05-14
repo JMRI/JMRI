@@ -23,7 +23,10 @@ abstract public class LayoutTrack {
     protected LayoutEditor layoutEditor = null;
 
     /**
-     * constructor method
+     * Constructor method.
+     * @param ident track ID.
+     * @param c 2D point.
+     * @param layoutEditor main layout editor.
      */
     public LayoutTrack(@Nonnull String ident, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
         this.ident = ident;
@@ -32,7 +35,8 @@ abstract public class LayoutTrack {
     }
 
     /**
-     * accessor methods
+     * Get the track ID.
+     * @return track ident.
      */
     @Nonnull 
     final public String getId() {
@@ -197,6 +201,8 @@ abstract public class LayoutTrack {
 
     /**
      * Load a file for a specific arrow ending.
+     * @param n arrow style.
+     * @param arrowsCountMenu menu of which to add the arrow to.
      * @return An item for the arrow menu
      */
     public JCheckBoxMenuItem loadArrowImageToJCBItem(int n, JMenu arrowsCountMenu) {

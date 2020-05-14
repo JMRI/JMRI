@@ -144,6 +144,8 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
      * Internal method to invoke the factory, after all the logic for returning
      * an existing method has been invoked.
      *
+     * @param systemName system name.
+     * @param userName username.
      * @return never null
      */
     abstract protected Reporter createNewReporter(@Nonnull String systemName, String userName);

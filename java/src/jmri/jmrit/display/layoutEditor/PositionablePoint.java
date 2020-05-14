@@ -105,7 +105,8 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * Accessor methods
+     * Get the point type.
+     * @return point type, i.e. ANCHOR, END_BUMPER, EDGE_CONNECTOR
      */
     public PointType getType() {
         return type;

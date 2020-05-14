@@ -325,6 +325,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
 
     /**
      * Handle changes for intensity, rate, etc.
+     * @param e unused.
      */
     public void applyButtonActionPerformed(ActionEvent e) {
         if (to1.getSelectedItem() == null) {

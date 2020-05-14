@@ -275,9 +275,11 @@ public class DecVariableValue extends VariableValue
     ArrayList<DecVarSlider> sliders = new ArrayList<DecVarSlider>();
 
     /**
-     * Set a new value, including notification as needed. This does the
-     * conversion from string to int, so if the place where formatting needs to
-     * be applied
+     * Set a new value, including notification as needed.
+     * <p>
+     * This does the conversion from string to int, so if the place where 
+     * formatting needs to be applied.
+     * @param value new value.
      */
     public void setValue(int value) {
         int oldVal;
