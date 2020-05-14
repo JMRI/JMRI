@@ -24,12 +24,6 @@ import jmri.beans.PropertyChangeProvider;
  * ShutDownTasks should leave the system in a state that can continue, in case a
  * later task aborts the shutdown.
  * <p>
- * Although ShutDownTasks can use {@link ShutDownTask#isParallel()} to notify
- * the ShutDownManager that the ShutDownTask will spawn its own thread to
- * perform its task, there is no requirement that the ShutDownManager wait for
- * these tasks to complete (although it is possible to put a computer or command
- * station into a poor state by not waiting for these tasks to complete).
- * <p>
  * An instance of this is normally obtained from the instance manager, using may
  * assume that one is always present.
  *

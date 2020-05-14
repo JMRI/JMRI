@@ -53,7 +53,6 @@ public class SwingShutDownTask extends AbstractShutDownTask {
      * dialog without choosing any button is treated as aborting stopping the
      * app.
        * 
-     * @see #didClose()
      * @see #doClose()
      * @see #didPrompt()
      * @see #doPrompt()
@@ -103,8 +102,7 @@ public class SwingShutDownTask extends AbstractShutDownTask {
      * {@inheritDoc}
      * 
      * This implementation calls {@link #didPrompt()} if the user took the
-     * prompt action, and {@link #didClose()} if the user closed the dialog
-     * without clicking a button.
+     * prompt action.
      */
     @Override
     public void run() {

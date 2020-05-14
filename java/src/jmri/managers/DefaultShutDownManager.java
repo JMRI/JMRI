@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * <li>If the application has a graphical user interface, the application's main
  * thread is the event dispatching thread.</li>
  * <li>Application windows may contain code that <em>should</em> be run within a
- * registered {@link ShutDownTask#execute()} method, but are not. A side effect
+ * registered {@link ShutDownTask#run()} method, but are not. A side effect
  * of this assumption is that <em>all</em> displayable application windows are
  * closed by this implementation when shutdown() or restart() is called and a
  * ShutDownTask has not aborted the shutdown or restart.</li>

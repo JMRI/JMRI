@@ -93,13 +93,23 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
     }
     
     /**
-     * Check if action should be taken in {@link #run()} method.
-     * @return 
+     * Check if action should be taken in {@link #run()} method. This defaults
+     * to false, although the default implementation of {@link #call()} sets
+     * this to true.
+     * 
+     * @return true if action should be taken; false otherwise
      */
     public boolean isDoRun() {
         return doRun;
     }
 
+    /**
+     * Set if action should be taken in {@link #run()} method. Overriding
+     * implementations of {@link #call()} must call this to set
+     * {@link #isDoRun()} to true.
+       * 
+     * @param flag true if action should be taken; false otherwise
+     */
     public void setDoRun(boolean flag) {
         doRun = flag;
     }
