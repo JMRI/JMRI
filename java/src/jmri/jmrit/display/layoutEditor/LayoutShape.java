@@ -58,6 +58,7 @@ public class LayoutShape {
      * constructor method (used by XML loading code)
      *
      * @param name         the name of the shape
+     * @param t            the layout shape type.
      * @param layoutEditor reference to the LayoutEditor this shape is in
      */
     public LayoutShape(String name, LayoutShapeType t, LayoutEditor layoutEditor) {
@@ -259,9 +260,10 @@ public class LayoutShape {
     }
 
     /**
-     * get point
+     * Get point.
      *
-     * @param idx the index of the point to add
+     * @param idx the index of the point to add.
+     * @return the 2D point of the ID, MathUtil.zeroPoint2D if no result.
      */
     public Point2D getPoint(int idx) {
         Point2D result = MathUtil.zeroPoint2D;
@@ -589,7 +591,7 @@ public class LayoutShape {
                         LayoutShape ls = new LayoutShape(LayoutShape.this);
                         ls.setName(layoutEditor.getFinder().uniqueName("S"));
 
-                        double gridSize = layoutEditor.getGridSize();
+                        double gridSize = layoutEditor.gContext.getGridSize();
                         Point2D delta = new Point2D.Double(gridSize, gridSize);
                         for (LayoutShapePoint lsp : ls.getPoints()) {
                             lsp.setPoint(MathUtil.add(lsp.getPoint(), delta));
@@ -780,8 +782,9 @@ public class LayoutShape {
         }
 
         /**
-         * constructor method
+         * Constructor method.
          *
+         * @param t the layout shape point type.
          * @param c Point2D for initial point
          */
         public LayoutShapePoint(LayoutShapePointType t, Point2D c) {

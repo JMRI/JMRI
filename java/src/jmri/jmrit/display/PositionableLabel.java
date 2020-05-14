@@ -62,8 +62,9 @@ public class PositionableLabel extends JLabel implements Positionable {
     private int _degrees;
 
     /**
-     *
-     * @param editor where this label is displayed
+     * Create a new Positionable Label.
+     * @param s label string.
+     * @param editor where this label is displayed.
      */
     public PositionableLabel(String s, @Nonnull Editor editor) {
         super(s);

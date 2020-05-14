@@ -23,7 +23,8 @@ import jmri.util.*;
 public class LayoutSingleSlipEditor extends LayoutSlipEditor {
 
     /**
-     * constructor method
+     * constructor method.
+     * @param layoutEditor main layout editor.
      */
     public LayoutSingleSlipEditor(@Nonnull LayoutEditor layoutEditor) {
         super(layoutEditor);

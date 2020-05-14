@@ -973,7 +973,9 @@ public class LayoutTurntable extends LayoutTrack {
     private boolean active = true;
 
     /**
+     * Get if turntable is active.
      * "active" means that the object is still displayed, and should be stored.
+     * @return true if active, else false.
      */
     public boolean isActive() {
         return active;

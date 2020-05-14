@@ -27,9 +27,14 @@ public class SCWarrant extends Warrant {
     private boolean forward = true;
     private final boolean _allowShallowAllocation = false;
     private DccThrottle _throttle = null;
+    
     /**
-     * Create an object with no route defined. The list of BlockOrders is the
-     * route from an Origin to a Destination
+     * Create an object with no route defined.
+     * <p>
+     * The list of BlockOrders is the route from an Origin to a Destination.
+     * @param sName system name.
+     * @param uName username.
+     * @param TTP time to platform.
      */
     public SCWarrant(String sName, String uName, long TTP) {
         super(sName, uName);
@@ -253,6 +258,7 @@ public class SCWarrant extends Warrant {
     /**
      * Is the next block free or occupied, i.e do we risk to crash into an other train, if we proceed?
      * And is it allocated to us?
+     * @return true if allocated to us and unoccupied, else false.
      */
     public boolean isNextBlockFreeAndAllocated() {
         BlockOrder bo = getBlockOrderAt(_idxCurrentOrder+1);

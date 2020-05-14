@@ -151,7 +151,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
 
     /**
      * Run button pressed down, start the sequence operation.
-     *
+     * @param e unused.
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (!mRunButton.isSelected()) {

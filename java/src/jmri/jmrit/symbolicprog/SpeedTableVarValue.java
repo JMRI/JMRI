@@ -88,6 +88,22 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     /**
      * Create the object with a "standard format ctor".
+     * @param name name.
+     * @param comment comment.
+     * @param cvName cv name.
+     * @param readOnly true if read only, else false.
+     * @param infoOnly true if info only, else false.
+     * @param writeOnly true if write only, else false.
+     * @param opsOnly true if ops only, else false.
+     * @param cvNum cv number.
+     * @param mask cv mask.
+     * @param minVal minimum value.
+     * @param maxVal maximum value.
+     * @param v hashmap of string and cv value.
+     * @param status status label.
+     * @param stdname std name.
+     * @param entries number entries.
+     * @param mfxFlag set mx flag true or false.
      */
     public SpeedTableVarValue(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,

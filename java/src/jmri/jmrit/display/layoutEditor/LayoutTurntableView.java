@@ -19,7 +19,8 @@ import jmri.util.*;
 public class LayoutTurntableView extends LayoutTrackView {
 
     /**
-     * constructor method
+     * Constructor method.
+     * @param turntable the layout turntable to create view for.
      */
     public LayoutTurntableView(@Nonnull LayoutTurntable turntable) {
         super(turntable);

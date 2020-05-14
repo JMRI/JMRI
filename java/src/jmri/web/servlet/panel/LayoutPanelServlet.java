@@ -44,16 +44,16 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
 
         panel.setAttribute("name", name);
         panel.setAttribute("paneltype", getPanelType());
-        panel.setAttribute("height", Integer.toString(editor.getLayoutHeight()));
-        panel.setAttribute("width", Integer.toString(editor.getLayoutWidth()));
-        panel.setAttribute("panelheight", Integer.toString(editor.getLayoutHeight()));
-        panel.setAttribute("panelwidth", Integer.toString(editor.getLayoutWidth()));
+        panel.setAttribute("height", Integer.toString(editor.gContext.getLayoutHeight()));
+        panel.setAttribute("width", Integer.toString(editor.gContext.getLayoutWidth()));
+        panel.setAttribute("panelheight", Integer.toString(editor.gContext.getLayoutHeight()));
+        panel.setAttribute("panelwidth", Integer.toString(editor.gContext.getLayoutWidth()));
         panel.setAttribute("showtooltips", (editor.showToolTip()) ? "yes" : "no");
         panel.setAttribute("controlling", (editor.allControlling()) ? "yes" : "no");
-        panel.setAttribute("xscale", Float.toString((float) editor.getXScale()));
-        panel.setAttribute("yscale", Float.toString((float) editor.getYScale()));
-        panel.setAttribute("mainlinetrackwidth", Integer.toString(editor.getMainlineTrackWidth()));
-        panel.setAttribute("sidetrackwidth", Integer.toString(editor.getSidelineTrackWidth()));
+        panel.setAttribute("xscale", Float.toString((float) editor.gContext.getXScale()));
+        panel.setAttribute("yscale", Float.toString((float) editor.gContext.getYScale()));
+        panel.setAttribute("mainlinetrackwidth", Integer.toString(editor.gContext.getMainlineTrackWidth()));
+        panel.setAttribute("sidetrackwidth", Integer.toString(editor.gContext.getSidelineTrackWidth()));
         panel.setAttribute("turnoutcircles", (editor.getTurnoutCircles()) ? "yes" : "no");
         panel.setAttribute("turnoutcirclesize", Integer.toString(editor.getTurnoutCircleSize()));
         panel.setAttribute("turnoutdrawunselectedleg", (editor.isTurnoutDrawUnselectedLeg()) ? "yes" : "no");

@@ -82,6 +82,7 @@ public class DieselPane extends EnginePane {
 
     /**
      * Init Context.
+     * @param context unused.
      */
     @Override
     public void initContext(Object context) {
@@ -201,7 +202,9 @@ public class DieselPane extends EnginePane {
     }
 
     /**
-     * Respond to a throttle change. Basically, doesn't do anything
+     * Respond to a throttle change.
+     * Basically, doesn't do anything.
+     * @param e unused.
      */
     public void throttleChange(ChangeEvent e) {
         firePropertyChangeEvent(new PropertyChangeEvent(this, THROTTLE, throttle_setting, throttle_spinner.getModel().getValue()));
@@ -209,7 +212,8 @@ public class DieselPane extends EnginePane {
     }
 
     /**
-     * Respond to a start button press
+     * Respond to a start button press.
+     * @param e unused.
      */
     public void startButtonChange(ActionEvent e) {
         firePropertyChangeEvent(new PropertyChangeEvent(this, START, engine_is_started, start_button.isSelected()));
@@ -234,21 +238,24 @@ public class DieselPane extends EnginePane {
     }
 
     /**
-     * Return true if the start button is "on"
+     * Get if Engine is On.
+     * @return true if the start button is "on".
      */
     public boolean engineIsOn() {
         return start_button.isSelected();
     }
 
     /**
-     * Return current notch setting of the throttle slider
+     * Get Throttle notch.
+     * @return current notch setting of the throttle slider.
      */
     public int throttleNotch() {
         return (Integer) throttle_spinner.getModel().getValue();
     }
 
     /**
-     * set the throttle spinner value
+     * Set the Throttle spinner value.
+     * @param t new value.
      */
     @Override
     public void setThrottle(int t) {
