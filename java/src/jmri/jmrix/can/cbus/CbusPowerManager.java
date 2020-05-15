@@ -33,16 +33,31 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
         if (v == ON) {
             // send "Enable main track"
             tc.sendCanMessage(CbusMessage.getRequestTrackOn(tc.getCanid()), this);
-        }
-        else if (v == OFF) {
+        } else if (v == OFF) {
             // send "Kill main track"
             tc.sendCanMessage(CbusMessage.getRequestTrackOff(tc.getCanid()), this);
         }
         firePowerPropertyChange(old, power);
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * Notification to JMRI of main track power state. Does not send to Layout.
+     * Only used to bypass having the PowerManager respond to messages from the
+     * command station because I don't know why the PowerManager should not do
+     * the job the PowerManager API was created to do in the CBus package.
+     *
+     * @param newPower New Power Status
+     */
+    public void updatePower(int newPower) {
+        int oldPower = power;
+        if (oldPower != newPower) {
+            power = newPower;
+            firePowerPropertyChange(oldPower, power);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void dispose() throws JmriException {
@@ -59,7 +74,7 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
     // to listen for status changes from Cbus system
     @Override
     public void reply(CanReply m) {
-        if ( m.extendedOrRtr() ) {
+        if (m.extendedOrRtr()) {
             return;
         }
         int old = power;
@@ -73,9 +88,8 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
         firePowerPropertyChange(old, power);
     }
 
-    /** 
-     * Does not listen to outgoing messages.
-     * {@inheritDoc} 
+    /**
+     * Does not listen to outgoing messages. {@inheritDoc}
      */
     @Override
     public void message(CanMessage m) {
