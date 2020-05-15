@@ -44,7 +44,7 @@ abstract public class AbstractPowerServer implements PropertyChangeListener {
                 }
                 return false;
             } else {
-                p.addPropertyChangeListener(this);
+                p.addPropertyChangeListener(PowerManager.POWER, this);
             }
         }
         return true;
