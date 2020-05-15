@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 public class SprogPowerManager extends AbstractPowerManager<SprogSystemConnectionMemo>
         implements SprogListener {
 
+    boolean waiting = false;
+    int onReply = UNKNOWN;
     SprogTrafficController trafficController = null;
 
     public SprogPowerManager(SprogSystemConnectionMemo memo) {
@@ -23,11 +25,6 @@ public class SprogPowerManager extends AbstractPowerManager<SprogSystemConnectio
         trafficController = memo.getSprogTrafficController();
         trafficController.addSprogListener(this);
     }
-
-    int power = UNKNOWN;
-
-    boolean waiting = false;
-    int onReply = UNKNOWN;
 
     @Override
     public void setPower(int v) throws JmriException {
@@ -118,7 +115,6 @@ public class SprogPowerManager extends AbstractPowerManager<SprogSystemConnectio
             this.notifyReply((SprogReply) m);
         }
     }
-
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(SprogPowerManager.class);

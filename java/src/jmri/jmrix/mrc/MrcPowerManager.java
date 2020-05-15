@@ -33,8 +33,6 @@ public class MrcPowerManager
 
     }
 
-    protected int power = UNKNOWN;
-
     @Override
     public void setPower(int v) throws JmriException {
         //power = UNKNOWN;
