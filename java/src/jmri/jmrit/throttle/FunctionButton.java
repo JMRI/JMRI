@@ -46,6 +46,7 @@ public class FunctionButton extends JToggleButton {
     private String iconPath;
     private String selectedIconPath;
     private ToggleOrPressButtonModel _model;
+    private int _maxFunc;
 
     final static int BUT_HGHT;
     final static int BUT_WDTH;
@@ -573,21 +574,19 @@ public class FunctionButton extends JToggleButton {
         return isSelectedImageOK;
     }
     
-    private int _maxFunc;
-    
     /** 
-     * Set maximum function number hardware is capable of.
+     * Set maximum number of functions hardware is capable of.
      * @param maxfunc normally 29, 0-28.
      */
-    public void setMaxFunction( int maxfunc) {
+    public void setMaxFunctions( int maxfunc) {
         _maxFunc = maxfunc;
     }
     
     /**
-     * Get maximum function number hardware is capable of.
-     * @return maximum functions, normally 29, i.e. 0-28.
+     * Get maximum number of functions hardware is capable of.
+     * @return maximum number functions, normally 29, i.e. 0-28.
      */
-    public int getMaxFunction() {
+    public int getMaxFunctions() {
         return _maxFunc;
     }
 

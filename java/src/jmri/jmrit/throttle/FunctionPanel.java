@@ -212,7 +212,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences();
         // Buttons names, ids,
         for (int i = 0; i < NUM_FUNCTION_BUTTONS; i++) {
-            functionButton[i].setMaxFunction(29); // reset to 0-28, actual value updated further on.
+            functionButton[i].setMaxFunctions(29); // reset to 0-28, actual value updated further on.
             functionButton[i].setIdentity(i);
             functionButton[i].addFunctionListener(this);
             functionButton[i].setButtonLabel( i<3 ?
@@ -296,7 +296,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             }
             int maxi = 0; // the number of function buttons defined for this entry
             for (int i = 0; i < FunctionPanel.NUM_FUNCTION_BUTTONS; i++) {
-                functionButton[i].setMaxFunction(mThrottle.getMaxFunctions());
+                functionButton[i].setMaxFunctions(mThrottle.getMaxFunctions());
                 functionButton[i].setIdentity(i); // full reset of function
                 functionButton[i].setState(mThrottle.getFunction(i)); // reset button state
                 if (rosterEntry != null) { // from here, update button text with roster data
