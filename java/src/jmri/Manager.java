@@ -726,7 +726,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * items from the list of NamedBeans.
      *
      * @param e the data listener to add
-     * @deprecated since 4.19.6; use
+     * @deprecated since 4.21.1; use
      *             {@link #addPropertyChangeListener(String, PropertyChangeListener)}
      *             or {@link #addPropertyChangeListener(PropertyChangeListener)}
      *             instead, listening for changes to the
@@ -739,7 +739,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * Unregister a previously-added {@link ManagerDataListener}.
      *
      * @param e the data listener to remove
-     * @deprecated since 4.19.6; use
+     * @deprecated since 4.21.1; use
      *             {@link #removePropertyChangeListener(String, PropertyChangeListener)}
      *             or
      *             {@link #removePropertyChangeListener(PropertyChangeListener)}
@@ -758,7 +758,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * the sense that the manager must do a cumulative notification when done.
      *
      * @param muted true if notifications should be suppressed; false otherwise
-     * @deprecated since 4.19.6 without direct replacement
+     * @deprecated since 4.21.1 without direct replacement
      */
     @Deprecated
     public default void setDataListenerMute(boolean muted) {
@@ -770,7 +770,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      *
      * @param <E> the type to support listening for
      * @since JMRI 4.11.4
-     * @deprecated since 4.19.6 without direct replacement
+     * @deprecated since 4.21.1 without direct replacement
      */
     @Deprecated
     interface ManagerDataListener<E extends NamedBean> {
@@ -808,7 +808,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      *
      * @param <E> the type to support in the event
      * @since JMRI 4.11.4
-     * @deprecated since 4.19.6 without direct replacement
+     * @deprecated since 4.21.1 without direct replacement
      */
     @Deprecated
     @javax.annotation.concurrent.Immutable

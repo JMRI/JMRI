@@ -36,15 +36,21 @@ public class XNetPowerManager extends AbstractPowerManager<XNetSystemConnectionM
         int old = power;
         power = UNKNOWN;
         checkTC();
-        if (v == ON) {
-            // send RESUME_OPS
-            tc.sendXNetMessage(XNetMessage.getResumeOperationsMsg(), this);
-        } else if (v == OFF) {
-            // send EMERGENCY_OFF
-            tc.sendXNetMessage(XNetMessage.getEmergencyOffMsg(), this);
-        } else if (v == IDLE) {
-            // send EMERGENCY_STOP
-            tc.sendXNetMessage(XNetMessage.getEmergencyStopMsg(), this);
+        switch (v) {
+            case ON:
+                // send RESUME_OPS
+                tc.sendXNetMessage(XNetMessage.getResumeOperationsMsg(), this);
+                break;
+            case OFF:
+                // send EMERGENCY_OFF
+                tc.sendXNetMessage(XNetMessage.getEmergencyOffMsg(), this);
+                break;
+            case IDLE:
+                // send EMERGENCY_STOP
+                tc.sendXNetMessage(XNetMessage.getEmergencyStopMsg(), this);
+                break;
+            default:
+                break;
         }
         firePowerPropertyChange(old, power);
     }
@@ -68,31 +74,31 @@ public class XNetPowerManager extends AbstractPowerManager<XNetSystemConnectionM
     public void message(XNetReply m) {
         int old = power;
         log.debug("Message received: {}", m);
-        // First, we check for a "normal operations resumed message"
-        // This indicates the power to the track is ON
-        if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_INFO
-                && m.getElement(1) == jmri.jmrix.lenz.XNetConstants.BC_NORMAL_OPERATIONS) {
+        if (m.getElement(0) == XNetConstants.CS_INFO
+                && m.getElement(1) == XNetConstants.BC_NORMAL_OPERATIONS) {
+            // First, we check for a "normal operations resumed message"
+            // This indicates the power to the track is ON
             power = ON;
-        } // Next, we check for a Track Power Off message
-        // This indicates the power to the track is OFF
-        else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_INFO
-                && m.getElement(1) == jmri.jmrix.lenz.XNetConstants.BC_EVERYTHING_OFF) {
+        } else if (m.getElement(0) == XNetConstants.CS_INFO
+                && m.getElement(1) == XNetConstants.BC_EVERYTHING_OFF) {
+            // Next, we check for a Track Power Off message
+            // This indicates the power to the track is OFF
             power = OFF;
-        } // Then, we check for an "Emergency Stop" message
-        // This indicates the track power is ON, but all 
-        // locomotives are stopped
-        else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.BC_EMERGENCY_STOP
-                && m.getElement(1) == jmri.jmrix.lenz.XNetConstants.BC_EVERYTHING_OFF) {
+        } else if (m.getElement(0) == XNetConstants.BC_EMERGENCY_STOP
+                && m.getElement(1) == XNetConstants.BC_EVERYTHING_OFF) {
+            // Then, we check for an "Emergency Stop" message
+            // This indicates the track power is ON, but all 
+            // locomotives are stopped
             power = IDLE;
-        } // Next we check for a "Service Mode Entry" message
-        // This indicatse track power is off on the mainline.
-        else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_INFO
-                && m.getElement(1) == jmri.jmrix.lenz.XNetConstants.BC_SERVICE_MODE_ENTRY) {
+        } else if (m.getElement(0) == XNetConstants.CS_INFO
+                && m.getElement(1) == XNetConstants.BC_SERVICE_MODE_ENTRY) {
+            // Next we check for a "Service Mode Entry" message
+            // This indicatse track power is off on the mainline.
             power = OFF;
-        } // Finally, we look at for the response to a Command 
-        // Station Status Request
-        else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_REQUEST_RESPONSE
-                && m.getElement(1) == jmri.jmrix.lenz.XNetConstants.CS_STATUS_RESPONSE) {
+        } else if (m.getElement(0) == XNetConstants.CS_REQUEST_RESPONSE
+                && m.getElement(1) == XNetConstants.CS_STATUS_RESPONSE) {
+            // Finally, we look at for the response to a Command 
+            // Station Status Request
             int statusByte = m.getElement(2);
             if ((statusByte & 0x01) == 0x01) {
                 // Command station is in Emergency Off Mode
