@@ -1,0 +1,2253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>19</minor>
+    <test>6</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>IS101</systemName>
+      <userName>S-Alpha-Left-Approach</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS102</systemName>
+      <userName>S-Alpha-Left</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS103</systemName>
+      <userName>S-Alpha-Left-Ladder</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS104</systemName>
+      <userName>S-Alpha-Main</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS105</systemName>
+      <userName>S-Alpha-Side</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS106</systemName>
+      <userName>S-Alpha-Y1</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS107</systemName>
+      <userName>S-Alpha-Y2</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS108</systemName>
+      <userName>S-Beta-Left-Approach</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS109</systemName>
+      <userName>S-Beta-Right-Approach</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS110</systemName>
+      <userName>S-Beta-Xing-Aproach</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS111</systemName>
+      <userName>S-Beta-Left</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS112</systemName>
+      <userName>S-Beta-Main</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS113</systemName>
+      <userName>S-Beta-Side</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS114</systemName>
+      <userName>S-Beta-XO-AB</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS115</systemName>
+      <userName>S-Beta-XO-CD</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS116</systemName>
+      <userName>S-Left-Loop</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS117</systemName>
+      <userName>S-Left-Loop-TO</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS118</systemName>
+      <userName>S-Right-Loop</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS119</systemName>
+      <userName>S-TT-090</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS120</systemName>
+      <userName>S-TT-180</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS121</systemName>
+      <userName>S-TT-270</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS122</systemName>
+      <userName>S-Turntable</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS123</systemName>
+      <userName>S-Xing-AC</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS124</systemName>
+      <userName>S-Xing-BD</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS125</systemName>
+      <userName>S-Alpha-Right</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS126</systemName>
+      <userName>S-Alpha-Right-Approach</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS127</systemName>
+      <userName>S-Alpha-Right-Ladder</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS999</systemName>
+      <userName>Reset</userName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT101</systemName>
+      <userName>T-Loop</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT102</systemName>
+      <userName>T-Alpha-Left</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT103</systemName>
+      <userName>T-Slip-A</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT104</systemName>
+      <userName>T-Slip-B</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT105</systemName>
+      <userName>T-TT-000</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT106</systemName>
+      <userName>T-TT-090</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT107</systemName>
+      <userName>T-TT-180</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT108</systemName>
+      <userName>T-TT-270</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT109</systemName>
+      <userName>T-Alpha-Right</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT110</systemName>
+      <userName>T-Alpha-Side</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT111</systemName>
+      <userName>T-Beta-Left</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT112</systemName>
+      <userName>T-Beta-XO</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT113</systemName>
+      <userName>T-Alpha-Right-Y1</userName>
+    </turnout>
+  </turnouts>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0009)</systemName>
+      <userName>Alpha-TT</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0010)</systemName>
+      <userName>Alpha-Y2-EB</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0013)</systemName>
+      <userName>Alpha-Left-Y1</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0014)</systemName>
+      <userName>Alpha-Side-C</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0015)</systemName>
+      <userName>Alpha-Y1-B</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0016)</systemName>
+      <userName>Alpha-Y1-C</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0002)</systemName>
+      <userName>Loop-TO-B</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0003)</systemName>
+      <userName>Loop-TO-C</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0007)</systemName>
+      <userName>Alpha-Right-B</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0008)</systemName>
+      <userName>Alpha-Left-B</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0017)</systemName>
+      <userName>Alpha-Right-EC</userName>
+      <properties>
+        <property>
+          <key>intermediateSignal</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+      </properties>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0018)</systemName>
+      <userName>Beta-Left-EC</userName>
+      <properties>
+        <property>
+          <key>intermediateSignal</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+      </properties>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0019)</systemName>
+      <userName>Beta-Left-B</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0020)</systemName>
+      <userName>Beta-Left-C</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0024)</systemName>
+      <userName>Beta-XO-B</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0025)</systemName>
+      <userName>Beta-XO-D</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0026)</systemName>
+      <userName>Beta-Xing-A</userName>
+      <properties>
+        <property>
+          <key>intermediateSignal</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+      </properties>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0027)</systemName>
+      <userName>Beta-Xing-B</userName>
+      <properties>
+        <property>
+          <key>intermediateSignal</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+      </properties>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0028)</systemName>
+      <userName>Beta-Xing-C</userName>
+      <properties>
+        <property>
+          <key>intermediateSignal</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+      </properties>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-searchlight($0029)</systemName>
+      <userName>Beta-Xing-D</userName>
+      <properties>
+        <property>
+          <key>intermediateSignal</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+      </properties>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:two-searchlight($0001)</systemName>
+      <userName>Loop-TO-A</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:two-searchlight($0004)</systemName>
+      <userName>Alpha-Left-A</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:two-searchlight($0006)</systemName>
+      <userName>Alpha-Right-A</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:two-searchlight($0011)</systemName>
+      <userName>Alpha-Slip-B</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:two-searchlight($0012)</systemName>
+      <userName>Alpha-Slip-D</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:two-searchlight($0021)</systemName>
+      <userName>Beta-Left-A</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:two-searchlight($0022)</systemName>
+      <userName>Beta-XO-A</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:two-searchlight($0023)</systemName>
+      <userName>Beta-XO-C</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+  </signalmasts>
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <defaultspeed>Normal</defaultspeed>
+    <block systemName="IB:AUTO:0001">
+      <systemName>IB:AUTO:0001</systemName>
+      <userName>B-Left-Loop</userName>
+    </block>
+    <block systemName="IB:AUTO:0002">
+      <systemName>IB:AUTO:0002</systemName>
+      <userName>B-Left-Loop-TO</userName>
+    </block>
+    <block systemName="IB:AUTO:0003">
+      <systemName>IB:AUTO:0003</systemName>
+      <userName>B-Alpha-Left-Approach</userName>
+    </block>
+    <block systemName="IB:AUTO:0004">
+      <systemName>IB:AUTO:0004</systemName>
+      <userName>B-Alpha-Left</userName>
+    </block>
+    <block systemName="IB:AUTO:0005">
+      <systemName>IB:AUTO:0005</systemName>
+      <userName>B-Alpha-Main</userName>
+    </block>
+    <block systemName="IB:AUTO:0006">
+      <systemName>IB:AUTO:0006</systemName>
+      <userName>B-Alpha-Right</userName>
+    </block>
+    <block systemName="IB:AUTO:0007">
+      <systemName>IB:AUTO:0007</systemName>
+      <userName>B-Alpha-Right-Approach</userName>
+    </block>
+    <block systemName="IB:AUTO:0008">
+      <systemName>IB:AUTO:0008</systemName>
+      <userName>B-Turntable</userName>
+    </block>
+    <block systemName="IB:AUTO:0010">
+      <systemName>IB:AUTO:0010</systemName>
+      <userName>B-Alpha-Left-Ladder</userName>
+    </block>
+    <block systemName="IB:AUTO:0011">
+      <systemName>IB:AUTO:0011</systemName>
+      <userName>B-Alpha-Side</userName>
+    </block>
+    <block systemName="IB:AUTO:0012">
+      <systemName>IB:AUTO:0012</systemName>
+      <userName>B-Alpha-Y1</userName>
+    </block>
+    <block systemName="IB:AUTO:0013">
+      <systemName>IB:AUTO:0013</systemName>
+      <userName>B-Alpha-Y2</userName>
+    </block>
+    <block systemName="IB:AUTO:0014">
+      <systemName>IB:AUTO:0014</systemName>
+      <userName>B-Alpha-Right-Ladder</userName>
+    </block>
+    <block systemName="IB:AUTO:0015">
+      <systemName>IB:AUTO:0015</systemName>
+      <userName>B-TT-270</userName>
+    </block>
+    <block systemName="IB:AUTO:0016">
+      <systemName>IB:AUTO:0016</systemName>
+      <userName>B-TT-180</userName>
+    </block>
+    <block systemName="IB:AUTO:0017">
+      <systemName>IB:AUTO:0017</systemName>
+      <userName>B-TT-090</userName>
+    </block>
+    <block systemName="IB:AUTO:0018">
+      <systemName>IB:AUTO:0018</systemName>
+      <userName>B-Beta-Left-Approach</userName>
+    </block>
+    <block systemName="IB:AUTO:0019">
+      <systemName>IB:AUTO:0019</systemName>
+      <userName>B-Beta-Left</userName>
+    </block>
+    <block systemName="IB:AUTO:0020">
+      <systemName>IB:AUTO:0020</systemName>
+      <userName>B-Beta-Main</userName>
+    </block>
+    <block systemName="IB:AUTO:0021">
+      <systemName>IB:AUTO:0021</systemName>
+      <userName>B-Beta-Side</userName>
+    </block>
+    <block systemName="IB:AUTO:0022">
+      <systemName>IB:AUTO:0022</systemName>
+      <userName>B-Xing-AC</userName>
+    </block>
+    <block systemName="IB:AUTO:0023">
+      <systemName>IB:AUTO:0023</systemName>
+      <userName>B-Xing-BD</userName>
+    </block>
+    <block systemName="IB:AUTO:0024">
+      <systemName>IB:AUTO:0024</systemName>
+      <userName>B-Right-Loop</userName>
+    </block>
+    <block systemName="IB:AUTO:0026">
+      <systemName>IB:AUTO:0026</systemName>
+      <userName>B-Beta-Right-Approach</userName>
+    </block>
+    <block systemName="IB:AUTO:0027">
+      <systemName>IB:AUTO:0027</systemName>
+      <userName>B-Beta-XO-AB</userName>
+    </block>
+    <block systemName="IB:AUTO:0028">
+      <systemName>IB:AUTO:0028</systemName>
+      <userName>B-Beta-XO-CD</userName>
+    </block>
+    <block systemName="IB:AUTO:0029">
+      <systemName>IB:AUTO:0029</systemName>
+      <userName>B-Beta-Xing-Approach</userName>
+    </block>
+    <block systemName="IB:AUTO:0030">
+      <systemName>IB:AUTO:0030</systemName>
+      <userName>B-TT-000</userName>
+    </block>
+    <block systemName="IB:AUTO:0001" length="0.0" curve="0">
+      <systemName>IB:AUTO:0001</systemName>
+      <userName>B-Left-Loop</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Left-Loop</occupancysensor>
+      <path todir="64" fromdir="128" block="IB:AUTO:0002">
+        <beansetting setting="2">
+          <turnout systemName="T-Loop" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0002">
+        <beansetting setting="4">
+          <turnout systemName="T-Loop" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0002" length="0.0" curve="0">
+      <systemName>IB:AUTO:0002</systemName>
+      <userName>B-Left-Loop-TO</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Left-Loop-TO</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0001">
+        <beansetting setting="2">
+          <turnout systemName="T-Loop" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB:AUTO:0001">
+        <beansetting setting="4">
+          <turnout systemName="T-Loop" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0003" />
+    </block>
+    <block systemName="IB:AUTO:0003" length="0.0" curve="0">
+      <systemName>IB:AUTO:0003</systemName>
+      <userName>B-Alpha-Left-Approach</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Alpha-Left-Approach</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0002" />
+      <path todir="64" fromdir="128" block="IB:AUTO:0004" />
+    </block>
+    <block systemName="IB:AUTO:0004" length="0.0" curve="0">
+      <systemName>IB:AUTO:0004</systemName>
+      <userName>B-Alpha-Left</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Alpha-Left</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0003" />
+      <path todir="64" fromdir="128" block="IB:AUTO:0005">
+        <beansetting setting="2">
+          <turnout systemName="T-Alpha-Left" />
+        </beansetting>
+      </path>
+      <path todir="144" fromdir="96" block="IB:AUTO:0010">
+        <beansetting setting="4">
+          <turnout systemName="T-Alpha-Left" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0005" length="0.0" curve="0">
+      <systemName>IB:AUTO:0005</systemName>
+      <userName>B-Alpha-Main</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Alpha-Main</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0004">
+        <beansetting setting="2">
+          <turnout systemName="T-Alpha-Left" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0006">
+        <beansetting setting="2">
+          <turnout systemName="T-Alpha-Right" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0006" length="0.0" curve="0">
+      <systemName>IB:AUTO:0006</systemName>
+      <userName>B-Alpha-Right</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Alpha-Right</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0005">
+        <beansetting setting="2">
+          <turnout systemName="T-Alpha-Right" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0007" />
+      <path todir="160" fromdir="80" block="IB:AUTO:0014">
+        <beansetting setting="4">
+          <turnout systemName="T-Alpha-Right" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0007" length="0.0" curve="0">
+      <systemName>IB:AUTO:0007</systemName>
+      <userName>B-Alpha-Right-Approach</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Alpha-Right-Approach</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0006" />
+      <path todir="64" fromdir="128" block="IB:AUTO:0018" />
+    </block>
+    <block systemName="IB:AUTO:0008" length="0.0" curve="0">
+      <systemName>IB:AUTO:0008</systemName>
+      <userName>B-Turntable</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Turntable</occupancysensor>
+      <path todir="64" fromdir="128" block="IB:AUTO:0010" />
+      <path todir="128" fromdir="64" block="IB:AUTO:0030" />
+    </block>
+    <block systemName="IB:AUTO:0010" length="0.0" curve="0">
+      <systemName>IB:AUTO:0010</systemName>
+      <userName>B-Alpha-Left-Ladder</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Alpha-Left-Ladder</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0008" />
+      <path todir="96" fromdir="144" block="IB:AUTO:0004">
+        <beansetting setting="4">
+          <turnout systemName="T-Alpha-Left" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0011" />
+      <path todir="64" fromdir="128" block="IB:AUTO:0012" />
+    </block>
+    <block systemName="IB:AUTO:0011" length="0.0" curve="0">
+      <systemName>IB:AUTO:0011</systemName>
+      <userName>B-Alpha-Side</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Alpha-Side</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0010" />
+      <path todir="64" fromdir="128" block="IB:AUTO:0014">
+        <beansetting setting="4">
+          <turnout systemName="T-Alpha-Side" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0012" length="0.0" curve="0">
+      <systemName>IB:AUTO:0012</systemName>
+      <userName>B-Alpha-Y1</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Alpha-Y1</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0010" />
+      <path todir="64" fromdir="128" block="IB:AUTO:0014">
+        <beansetting setting="2">
+          <turnout systemName="T-Alpha-Right-Y1" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0013" length="0.0" curve="0">
+      <systemName>IB:AUTO:0013</systemName>
+      <userName>B-Alpha-Y2</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Alpha-Y2</occupancysensor>
+      <path todir="80" fromdir="160" block="IB:AUTO:0014">
+        <beansetting setting="4">
+          <turnout systemName="T-Alpha-Right-Y1" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0014" length="0.0" curve="0">
+      <systemName>IB:AUTO:0014</systemName>
+      <userName>B-Alpha-Right-Ladder</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Alpha-Right-Ladder</occupancysensor>
+      <path todir="80" fromdir="160" block="IB:AUTO:0006">
+        <beansetting setting="4">
+          <turnout systemName="T-Alpha-Right" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB:AUTO:0011">
+        <beansetting setting="4">
+          <turnout systemName="T-Alpha-Side" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB:AUTO:0012">
+        <beansetting setting="2">
+          <turnout systemName="T-Alpha-Right-Y1" />
+        </beansetting>
+        <beansetting setting="2">
+          <turnout systemName="T-Alpha-Side" />
+        </beansetting>
+      </path>
+      <path todir="160" fromdir="80" block="IB:AUTO:0013">
+        <beansetting setting="4">
+          <turnout systemName="T-Alpha-Right-Y1" />
+        </beansetting>
+        <beansetting setting="2">
+          <turnout systemName="T-Alpha-Side" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0015" length="0.0" curve="0">
+      <systemName>IB:AUTO:0015</systemName>
+      <userName>B-TT-270</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-TT-270</occupancysensor>
+    </block>
+    <block systemName="IB:AUTO:0016" length="0.0" curve="0">
+      <systemName>IB:AUTO:0016</systemName>
+      <userName>B-TT-180</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-TT-180</occupancysensor>
+    </block>
+    <block systemName="IB:AUTO:0017" length="0.0" curve="0">
+      <systemName>IB:AUTO:0017</systemName>
+      <userName>B-TT-090</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-TT-090</occupancysensor>
+    </block>
+    <block systemName="IB:AUTO:0018" length="0.0" curve="0">
+      <systemName>IB:AUTO:0018</systemName>
+      <userName>B-Beta-Left-Approach</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Beta-Left-Approach</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0007" />
+      <path todir="64" fromdir="128" block="IB:AUTO:0019" />
+    </block>
+    <block systemName="IB:AUTO:0019" length="0.0" curve="0">
+      <systemName>IB:AUTO:0019</systemName>
+      <userName>B-Beta-Left</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Beta-Left</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0018" />
+      <path todir="64" fromdir="128" block="IB:AUTO:0020">
+        <beansetting setting="2">
+          <turnout systemName="T-Beta-Left" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0021">
+        <beansetting setting="4">
+          <turnout systemName="T-Beta-Left" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0020" length="0.0" curve="0">
+      <systemName>IB:AUTO:0020</systemName>
+      <userName>B-Beta-Main</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Beta-Main</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0019">
+        <beansetting setting="2">
+          <turnout systemName="T-Beta-Left" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0028">
+        <beansetting setting="2">
+          <turnout systemName="T-Beta-XO" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0021" length="0.0" curve="0">
+      <systemName>IB:AUTO:0021</systemName>
+      <userName>B-Beta-Side</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Beta-Side</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0019">
+        <beansetting setting="4">
+          <turnout systemName="T-Beta-Left" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0027" />
+    </block>
+    <block systemName="IB:AUTO:0022" length="0.0" curve="0">
+      <systemName>IB:AUTO:0022</systemName>
+      <userName>B-Xing-AC</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Xing-AC</occupancysensor>
+      <path todir="160" fromdir="80" block="IB:AUTO:0024" />
+      <path todir="128" fromdir="64" block="IB:AUTO:0026" />
+    </block>
+    <block systemName="IB:AUTO:0023" length="0.0" curve="0">
+      <systemName>IB:AUTO:0023</systemName>
+      <userName>B-Xing-BD</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Xing-BD</occupancysensor>
+      <path todir="80" fromdir="160" block="IB:AUTO:0024" />
+      <path todir="144" fromdir="96" block="IB:AUTO:0029" />
+    </block>
+    <block systemName="IB:AUTO:0024" length="0.0" curve="0">
+      <systemName>IB:AUTO:0024</systemName>
+      <userName>B-Right-Loop</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Right-Loop</occupancysensor>
+      <path todir="160" fromdir="80" block="IB:AUTO:0023" />
+      <path todir="80" fromdir="160" block="IB:AUTO:0022" />
+    </block>
+    <block systemName="IB:AUTO:0026" length="0.0" curve="0">
+      <systemName>IB:AUTO:0026</systemName>
+      <userName>B-Beta-Right-Approach</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Beta-Right-Approach</occupancysensor>
+      <path todir="64" fromdir="128" block="IB:AUTO:0022" />
+      <path todir="128" fromdir="64" block="IB:AUTO:0028" />
+    </block>
+    <block systemName="IB:AUTO:0027" length="0.0" curve="0">
+      <systemName>IB:AUTO:0027</systemName>
+      <userName>B-Beta-XO-AB</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Beta-XO-AB</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0021" />
+      <path todir="64" fromdir="128" block="IB:AUTO:0028">
+        <beansetting setting="4">
+          <turnout systemName="T-Beta-XO" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0029">
+        <beansetting setting="2">
+          <turnout systemName="T-Beta-XO" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0028" length="0.0" curve="0">
+      <systemName>IB:AUTO:0028</systemName>
+      <userName>B-Beta-XO-CD</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Beta-XO-CD</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0020">
+        <beansetting setting="2">
+          <turnout systemName="T-Beta-XO" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0026" />
+      <path todir="128" fromdir="64" block="IB:AUTO:0027">
+        <beansetting setting="4">
+          <turnout systemName="T-Beta-XO" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0029" length="0.0" curve="0">
+      <systemName>IB:AUTO:0029</systemName>
+      <userName>B-Beta-Xing-Approach</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S-Beta-Xing-Aproach</occupancysensor>
+      <path todir="96" fromdir="144" block="IB:AUTO:0023" />
+      <path todir="128" fromdir="64" block="IB:AUTO:0027">
+        <beansetting setting="2">
+          <turnout systemName="T-Beta-XO" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0030" length="0.0" curve="0">
+      <systemName>IB:AUTO:0030</systemName>
+      <userName>B-TT-000</userName>
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB:AUTO:0008" />
+    </block>
+  </blocks>
+  <layoutblocks class="jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml" blockrouting="yes">
+    <layoutblock systemName="ILB1" occupancysensor="S-Left-Loop" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB1</systemName>
+      <userName>B-Left-Loop</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB2" occupancysensor="S-Left-Loop-TO" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB2</systemName>
+      <userName>B-Left-Loop-TO</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB3" occupancysensor="S-Alpha-Left-Approach" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB3</systemName>
+      <userName>B-Alpha-Left-Approach</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB4" occupancysensor="S-Alpha-Left" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB4</systemName>
+      <userName>B-Alpha-Left</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB5" occupancysensor="S-Alpha-Main" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB5</systemName>
+      <userName>B-Alpha-Main</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB6" occupancysensor="S-Alpha-Right" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB6</systemName>
+      <userName>B-Alpha-Right</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB7" occupancysensor="S-Alpha-Right-Approach" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB7</systemName>
+      <userName>B-Alpha-Right-Approach</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB8" occupancysensor="S-Turntable" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB8</systemName>
+      <userName>B-Turntable</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB9" occupancysensor="S-Alpha-Left-Ladder" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB9</systemName>
+      <userName>B-Alpha-Left-Ladder</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB10" occupancysensor="S-Alpha-Side" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB10</systemName>
+      <userName>B-Alpha-Side</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB11" occupancysensor="S-Alpha-Y1" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB11</systemName>
+      <userName>B-Alpha-Y1</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB12" occupancysensor="S-Alpha-Y2" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB12</systemName>
+      <userName>B-Alpha-Y2</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB13" occupancysensor="S-Alpha-Right-Ladder" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB13</systemName>
+      <userName>B-Alpha-Right-Ladder</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB14" occupancysensor="S-TT-270" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB14</systemName>
+      <userName>B-TT-270</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB15" occupancysensor="S-TT-180" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB15</systemName>
+      <userName>B-TT-180</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB16" occupancysensor="S-TT-090" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB16</systemName>
+      <userName>B-TT-090</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB17" occupancysensor="S-Beta-Left-Approach" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB17</systemName>
+      <userName>B-Beta-Left-Approach</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB18" occupancysensor="S-Beta-Left" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB18</systemName>
+      <userName>B-Beta-Left</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB19" occupancysensor="S-Beta-Main" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB19</systemName>
+      <userName>B-Beta-Main</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB20" occupancysensor="S-Beta-Side" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB20</systemName>
+      <userName>B-Beta-Side</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB21" occupancysensor="S-Xing-AC" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB21</systemName>
+      <userName>B-Xing-AC</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB22" occupancysensor="S-Xing-BD" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB22</systemName>
+      <userName>B-Xing-BD</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB23" occupancysensor="S-Right-Loop" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB23</systemName>
+      <userName>B-Right-Loop</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB24" occupancysensor="S-Beta-Right-Approach" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB24</systemName>
+      <userName>B-Beta-Right-Approach</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB25" occupancysensor="S-Beta-XO-AB" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB25</systemName>
+      <userName>B-Beta-XO-AB</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB26" occupancysensor="S-Beta-XO-CD" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB26</systemName>
+      <userName>B-Beta-XO-CD</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB27" occupancysensor="S-Beta-Xing-Aproach" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB27</systemName>
+      <userName>B-Beta-Xing-Approach</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB28" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB28</systemName>
+      <userName>B-TT-000</userName>
+    </layoutblock>
+  </layoutblocks>
+  <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
+    <route userName="Turnouts">
+      <systemName>IO:AUTO:0001</systemName>
+      <userName>Turnouts</userName>
+      <routeOutputTurnout systemName="T-Loop" state="CLOSED" />
+      <routeOutputTurnout systemName="T-Alpha-Left" state="CLOSED" />
+      <routeOutputTurnout systemName="T-Slip-A" state="CLOSED" />
+      <routeOutputTurnout systemName="T-Slip-B" state="CLOSED" />
+      <routeOutputTurnout systemName="T-TT-000" state="CLOSED" />
+      <routeOutputTurnout systemName="T-TT-090" state="CLOSED" />
+      <routeOutputTurnout systemName="T-TT-180" state="CLOSED" />
+      <routeOutputTurnout systemName="T-TT-270" state="CLOSED" />
+      <routeOutputTurnout systemName="T-Alpha-Right" state="CLOSED" />
+      <routeOutputTurnout systemName="T-Alpha-Side" state="CLOSED" />
+      <routeOutputTurnout systemName="T-Beta-Left" state="CLOSED" />
+      <routeOutputTurnout systemName="T-Beta-XO" state="CLOSED" />
+      <routeOutputTurnout systemName="T-Alpha-Right-Y1" state="CLOSED" />
+      <routeSensor systemName="IS999" mode="onActive" />
+    </route>
+    <route userName="Occupancy Sensors">
+      <systemName>IO:AUTO:0002</systemName>
+      <userName>Occupancy Sensors</userName>
+      <routeOutputSensor systemName="S-Alpha-Left-Approach" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Alpha-Left" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Alpha-Left-Ladder" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Alpha-Main" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Alpha-Side" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Alpha-Y1" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Alpha-Y2" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Beta-Left-Approach" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Beta-Right-Approach" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Beta-Xing-Aproach" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Beta-Left" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Beta-Main" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Beta-Side" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Beta-XO-AB" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Beta-XO-CD" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Left-Loop" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Left-Loop-TO" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Right-Loop" state="INACTIVE" />
+      <routeOutputSensor systemName="S-TT-090" state="INACTIVE" />
+      <routeOutputSensor systemName="S-TT-180" state="INACTIVE" />
+      <routeOutputSensor systemName="S-TT-270" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Turntable" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Xing-AC" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Xing-BD" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Alpha-Right" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Alpha-Right-Approach" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Alpha-Right-Ladder" state="INACTIVE" />
+      <routeSensor systemName="IS999" mode="onActive" />
+    </route>
+  </routes>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+    <signalmastlogic source="Alpha-Left-Y1">
+      <sourceSignalMast>Alpha-Left-Y1</sourceSignalMast>
+      <destinationMast destination="Alpha-TT">
+        <destinationSignalMast>Alpha-TT</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="Loop-TO-A">
+        <destinationSignalMast>Loop-TO-A</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Alpha-Side-C">
+      <sourceSignalMast>Alpha-Side-C</sourceSignalMast>
+      <destinationMast destination="Alpha-Right-EC">
+        <destinationSignalMast>Alpha-Right-EC</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Alpha-Y1-B">
+      <sourceSignalMast>Alpha-Y1-B</sourceSignalMast>
+      <destinationMast destination="Alpha-Right-EC">
+        <destinationSignalMast>Alpha-Right-EC</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Alpha-Y1-C">
+      <sourceSignalMast>Alpha-Y1-C</sourceSignalMast>
+      <destinationMast destination="Alpha-Right-EC">
+        <destinationSignalMast>Alpha-Right-EC</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Loop-TO-B">
+      <sourceSignalMast>Loop-TO-B</sourceSignalMast>
+      <destinationMast destination="Alpha-Left-A">
+        <destinationSignalMast>Alpha-Left-A</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Loop-TO-C">
+      <sourceSignalMast>Loop-TO-C</sourceSignalMast>
+      <destinationMast destination="Alpha-Left-A">
+        <destinationSignalMast>Alpha-Left-A</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <blocks>
+          <block>
+            <blockName>B-Left-Loop-TO</blockName>
+            <blockState>unoccupied</blockState>
+          </block>
+          <block>
+            <blockName>B-Alpha-Left-Approach</blockName>
+            <blockState>unoccupied</blockState>
+          </block>
+        </blocks>
+        <turnouts>
+          <turnout>
+            <turnoutName>T-Loop</turnoutName>
+            <turnoutState>thrown</turnoutState>
+          </turnout>
+        </turnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Alpha-Right-B">
+      <sourceSignalMast>Alpha-Right-B</sourceSignalMast>
+      <destinationMast destination="Alpha-Right-EC">
+        <destinationSignalMast>Alpha-Right-EC</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Alpha-Left-B">
+      <sourceSignalMast>Alpha-Left-B</sourceSignalMast>
+      <destinationMast destination="Loop-TO-A">
+        <destinationSignalMast>Loop-TO-A</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Alpha-Right-EC">
+      <sourceSignalMast>Alpha-Right-EC</sourceSignalMast>
+      <destinationMast destination="Beta-Left-A">
+        <destinationSignalMast>Beta-Left-A</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Beta-Left-EC">
+      <sourceSignalMast>Beta-Left-EC</sourceSignalMast>
+      <destinationMast destination="Alpha-Right-A">
+        <destinationSignalMast>Alpha-Right-A</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Beta-Left-B">
+      <sourceSignalMast>Beta-Left-B</sourceSignalMast>
+      <destinationMast destination="Beta-Left-EC">
+        <destinationSignalMast>Beta-Left-EC</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Beta-Left-C">
+      <sourceSignalMast>Beta-Left-C</sourceSignalMast>
+      <destinationMast destination="Beta-Left-EC">
+        <destinationSignalMast>Beta-Left-EC</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Beta-XO-B">
+      <sourceSignalMast>Beta-XO-B</sourceSignalMast>
+      <destinationMast destination="Beta-Left-C">
+        <destinationSignalMast>Beta-Left-C</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Beta-XO-D">
+      <sourceSignalMast>Beta-XO-D</sourceSignalMast>
+      <destinationMast destination="Beta-Xing-A">
+        <destinationSignalMast>Beta-Xing-A</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Beta-Xing-A">
+      <sourceSignalMast>Beta-Xing-A</sourceSignalMast>
+      <destinationMast destination="Beta-Xing-B">
+        <destinationSignalMast>Beta-Xing-B</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Beta-Xing-B">
+      <sourceSignalMast>Beta-Xing-B</sourceSignalMast>
+      <destinationMast destination="Beta-XO-B">
+        <destinationSignalMast>Beta-XO-B</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Beta-Xing-C">
+      <sourceSignalMast>Beta-Xing-C</sourceSignalMast>
+      <destinationMast destination="Beta-XO-C">
+        <destinationSignalMast>Beta-XO-C</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Beta-Xing-D">
+      <sourceSignalMast>Beta-Xing-D</sourceSignalMast>
+      <destinationMast destination="Beta-Xing-C">
+        <destinationSignalMast>Beta-Xing-C</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Loop-TO-A">
+      <sourceSignalMast>Loop-TO-A</sourceSignalMast>
+      <destinationMast destination="Loop-TO-B">
+        <destinationSignalMast>Loop-TO-B</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <blocks>
+          <block>
+            <blockName>B-Left-Loop</blockName>
+            <blockState>unoccupied</blockState>
+          </block>
+          <block>
+            <blockName>B-Left-Loop-TO</blockName>
+            <blockState>unoccupied</blockState>
+          </block>
+        </blocks>
+        <turnouts>
+          <turnout>
+            <turnoutName>T-Loop</turnoutName>
+            <turnoutState>thrown</turnoutState>
+          </turnout>
+        </turnouts>
+      </destinationMast>
+      <destinationMast destination="Loop-TO-C">
+        <destinationSignalMast>Loop-TO-C</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <blocks>
+          <block>
+            <blockName>B-Left-Loop</blockName>
+            <blockState>unoccupied</blockState>
+          </block>
+          <block>
+            <blockName>B-Left-Loop-TO</blockName>
+            <blockState>unoccupied</blockState>
+          </block>
+        </blocks>
+        <turnouts>
+          <turnout>
+            <turnoutName>T-Loop</turnoutName>
+            <turnoutState>closed</turnoutState>
+          </turnout>
+        </turnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Alpha-Left-A">
+      <sourceSignalMast>Alpha-Left-A</sourceSignalMast>
+      <destinationMast destination="Alpha-Side-C">
+        <destinationSignalMast>Alpha-Side-C</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="Alpha-Y1-C">
+        <destinationSignalMast>Alpha-Y1-C</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="Alpha-Right-B">
+        <destinationSignalMast>Alpha-Right-B</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Alpha-Right-A">
+      <sourceSignalMast>Alpha-Right-A</sourceSignalMast>
+      <destinationMast destination="Alpha-Y2-EB">
+        <destinationSignalMast>Alpha-Y2-EB</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="Alpha-Left-Y1">
+        <destinationSignalMast>Alpha-Left-Y1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="Alpha-Left-B">
+        <destinationSignalMast>Alpha-Left-B</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="Alpha-Slip-D">
+        <destinationSignalMast>Alpha-Slip-D</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Alpha-Slip-B">
+      <sourceSignalMast>Alpha-Slip-B</sourceSignalMast>
+      <destinationMast destination="Alpha-Side-C">
+        <destinationSignalMast>Alpha-Side-C</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="Alpha-Y1-C">
+        <destinationSignalMast>Alpha-Y1-C</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Alpha-Slip-D">
+      <sourceSignalMast>Alpha-Slip-D</sourceSignalMast>
+      <destinationMast destination="Alpha-TT">
+        <destinationSignalMast>Alpha-TT</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="Loop-TO-A">
+        <destinationSignalMast>Loop-TO-A</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Beta-Left-A">
+      <sourceSignalMast>Beta-Left-A</sourceSignalMast>
+      <destinationMast destination="Beta-XO-D">
+        <destinationSignalMast>Beta-XO-D</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="Beta-XO-A">
+        <destinationSignalMast>Beta-XO-A</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Beta-XO-A">
+      <sourceSignalMast>Beta-XO-A</sourceSignalMast>
+      <destinationMast destination="Beta-Xing-A">
+        <destinationSignalMast>Beta-Xing-A</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="Beta-Xing-D">
+        <destinationSignalMast>Beta-Xing-D</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Beta-XO-C">
+      <sourceSignalMast>Beta-XO-C</sourceSignalMast>
+      <destinationMast destination="Beta-Left-B">
+        <destinationSignalMast>Beta-Left-B</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+      <destinationMast destination="Beta-Left-C">
+        <destinationSignalMast>Beta-Left-C</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+  </signalmastlogics>
+  <logixs class="jmri.managers.configurexml.DefaultLogixManagerXml">
+    <logix userName="Init" enabled="yes">
+      <systemName>IX:RTXINITIALIZER</systemName>
+      <userName>Init</userName>
+      <logixConditional systemName="IX:RTXINITIALIZER1T" order="0" />
+    </logix>
+  </logixs>
+  <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
+    <conditional systemName="IX:RTXINITIALIZER1T" userName="Route 1C Init" antecedent="R1" logicType="3" triggerOnChange="yes">
+      <systemName>IX:RTXINITIALIZER1T</systemName>
+      <userName>Route 1C Init</userName>
+      <conditionalStateVariable operator="4" negated="no" type="0" systemName="IX:RTXINITIALIZER" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="9" systemName="Reset" data="2" delay="0" string="" />
+      <conditionalAction option="1" type="10" systemName="Reset" data="4" delay="1" string="1" />
+    </conditional>
+  </conditionals>
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Left Panel" x="13" y="33" windowheight="343" windowwidth="832" panelheight="352" panelwidth="854" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="no" snaponmove="no" antialiasing="yes" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <layoutTrackDrawingOptions name="Left Panel" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
+      <mainBallastColor>#000000</mainBallastColor>
+      <mainBallastWidth>0</mainBallastWidth>
+      <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
+      <mainBlockLineWidth>4</mainBlockLineWidth>
+      <mainRailColor>#404040</mainRailColor>
+      <mainRailCount>1</mainRailCount>
+      <mainRailGap>0</mainRailGap>
+      <mainRailWidth>2</mainRailWidth>
+      <mainTieColor>#000000</mainTieColor>
+      <mainTieGap>0</mainTieGap>
+      <mainTieLength>0</mainTieLength>
+      <mainTieWidth>0</mainTieWidth>
+      <sideBallastColor>#000000</sideBallastColor>
+      <sideBallastWidth>0</sideBallastWidth>
+      <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
+      <sideBlockLineWidth>2</sideBlockLineWidth>
+      <sideRailColor>#404040</sideRailColor>
+      <sideRailCount>1</sideRailCount>
+      <sideRailGap>0</sideRailGap>
+      <sideRailWidth>1</sideRailWidth>
+      <sideTieColor>#000000</sideTieColor>
+      <sideTieGap>0</sideTieGap>
+      <sideTieLength>0</sideTieLength>
+      <sideTieWidth>0</sideTieWidth>
+    </layoutTrackDrawingOptions>
+    <positionablelabel x="530" y="20" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Alpha" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <sensoricon sensor="Reset" x="10" y="10" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="true" icon="no" text="Reset" size="13" style="0" red="0" green="255" blue="0" hasBackground="yes" redBack="0" greenBack="0" blueBack="0" fixedWidth="50" fixedHeight="20" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+      <activeText text="Reset" red="255" green="0" blue="0" redBack="0" greenBack="0" blueBack="0" />
+      <inactiveText text="Reset" red="0" green="255" blue="0" redBack="0" greenBack="0" blueBack="0" />
+      <unknownText text="Reset" red="0" green="0" blue="255" />
+      <inconsistentText text="Reset" red="0" green="0" blue="0" />
+    </sensoricon>
+    <positionablelabel x="784" y="286" level="4" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="false" editable="false" text="X" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <sensoricon sensor="S-Alpha-Left" x="400" y="70" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Alpha-Left-Approach" x="300" y="70" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Alpha-Left-Ladder" x="410" y="140" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Alpha-Main" x="550" y="70" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Alpha-Right" x="690" y="70" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Alpha-Right-Approach" x="771" y="71" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Alpha-Right-Ladder" x="690" y="140" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Alpha-Side" x="550" y="120" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Alpha-Y1" x="550" y="150" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Alpha-Y2" x="550" y="180" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Left-Loop" x="60" y="60" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Left-Loop-TO" x="200" y="70" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-TT-090" x="350" y="180" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-TT-180" x="300" y="230" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-TT-270" x="240" y="190" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Turntable" x="340" y="140" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <signalmasticon signalmast="Loop-TO-A" x="235" y="85" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Loop-TO-B" x="126" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Loop-TO-C" x="126" y="74" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Alpha-Left-A" x="344" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Alpha-Left-B" x="425" y="85" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Alpha-Right-A" x="725" y="85" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Alpha-Right-B" x="636" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Alpha-Slip-B" x="356" y="134" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Alpha-Slip-D" x="465" y="115" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Alpha-Y2-EB" x="465" y="175" level="9" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Alpha-Side-C" x="629" y="134" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Alpha-Y1-B" x="599" y="195" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Alpha-Y1-C" x="599" y="164" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Alpha-Left-Y1" x="465" y="145" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Alpha-Right-EC" x="764" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Alpha-TT" x="321" y="115" level="9" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <layoutturnout ident="TO1" type="RH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="200.0" ycen="100.0" xa="230.0" ya="100.0" xb="170.0" yb="100.0" xc="170.0" yc="70.0" xd="230.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutRHTurnoutXml" turnoutname="T-Loop" blockname="B-Left-Loop-TO" connectaname="T6" connectbname="T1" connectcname="T2">
+      <signalAMast>Loop-TO-A</signalAMast>
+      <signalBMast>Loop-TO-B</signalBMast>
+      <signalCMast>Loop-TO-C</signalCMast>
+    </layoutturnout>
+    <layoutturnout ident="TO2" type="RH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="400.0" ycen="100.0" xa="380.0" ya="100.0" xb="420.0" yb="100.0" xc="420.0" yc="120.0" xd="380.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutRHTurnoutXml" turnoutname="T-Alpha-Left" blockname="B-Alpha-Left" connectaname="T6" connectbname="T8" connectcname="T7">
+      <signalAMast>Alpha-Left-A</signalAMast>
+      <signalBMast>Alpha-Left-B</signalBMast>
+    </layoutturnout>
+    <layoutturnout ident="TO5" type="LH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="700.0" ycen="100.0" xa="720.0" ya="100.0" xb="680.0" yb="100.0" xc="690.0" yc="110.0" xd="720.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutLHTurnoutXml" turnoutname="T-Alpha-Right" blockname="B-Alpha-Right" connectaname="T18" connectbname="T8" connectcname="T13">
+      <signalAMast>Alpha-Right-A</signalAMast>
+      <signalBMast>Alpha-Right-B</signalBMast>
+    </layoutturnout>
+    <layoutturnout ident="TO6" type="RH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="670.0" ycen="130.0" xa="680.0" ya="120.0" xb="660.0" yb="140.0" xc="650.0" yc="130.0" xd="680.0" yd="120.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutRHTurnoutXml" turnoutname="T-Alpha-Side" blockname="B-Alpha-Right-Ladder" connectaname="T13" connectbname="T19" connectcname="T17">
+      <signalCMast>Alpha-Side-C</signalCMast>
+    </layoutturnout>
+    <layoutturnout ident="TO3" type="RH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="4" xcen="640.0" ycen="160.0" xa="650.0" ya="150.0" xb="630.0" yb="170.0" xc="620.0" yc="160.0" xd="650.0" yd="150.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutRHTurnoutXml" turnoutname="T-Alpha-Right-Y1" blockname="B-Alpha-Right-Ladder" connectaname="T19" connectbname="T16" connectcname="T15">
+      <signalBMast>Alpha-Y1-B</signalBMast>
+      <signalCMast>Alpha-Y1-C</signalCMast>
+    </layoutturnout>
+    <tracksegment ident="T1" blockname="B-Left-Loop" connect1name="TO1" type1="TURNOUT_B" connect2name="A2" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T2" blockname="B-Left-Loop" connect1name="TO1" type1="TURNOUT_C" connect2name="A3" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T3" blockname="B-Left-Loop" connect1name="A2" type1="POS_POINT" connect2name="A3" type2="POS_POINT" dashed="no" mainline="no" hidden="no" arc="yes" flip="no" circle="yes" angle="180.0" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T4" blockname="B-TT-000" connect1name="TUR1" type1="TURNTABLE_RAY_0" connect2name="A1" type2="POS_POINT" dashed="no" mainline="no" hidden="no" arc="yes" flip="no" circle="yes" angle="88.09084756700364" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T5" blockname="B-Turntable" connect1name="A1" type1="POS_POINT" connect2name="SL2" type2="SLIP_B" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T6" blockname="B-Alpha-Left-Approach" connect1name="TO1" type1="TURNOUT_A" connect2name="TO2" type2="TURNOUT_A" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T7" blockname="B-Alpha-Left-Ladder" connect1name="TO2" type1="TURNOUT_C" connect2name="SL2" type2="SLIP_A" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T8" blockname="B-Alpha-Main" connect1name="TO2" type1="TURNOUT_B" connect2name="TO5" type2="TURNOUT_B" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T9" blockname="B-TT-270" connect1name="EB1" type1="POS_POINT" connect2name="TUR1" type2="TURNTABLE_RAY_3" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bumper end="start" color="#000000" linewidth="8" length="10" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T10" blockname="B-TT-180" connect1name="EB2" type1="POS_POINT" connect2name="TUR1" type2="TURNTABLE_RAY_2" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bumper end="start" color="#000000" linewidth="8" length="10" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T11" blockname="B-TT-090" connect1name="EB3" type1="POS_POINT" connect2name="TUR1" type2="TURNTABLE_RAY_1" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bumper end="start" color="#000000" linewidth="8" length="10" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T12" blockname="B-Alpha-Left-Ladder" connect1name="SL2" type1="SLIP_C" connect2name="A9" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T13" blockname="B-Alpha-Right-Ladder" connect1name="TO6" type1="TURNOUT_A" connect2name="TO5" type2="TURNOUT_C" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T15" blockname="B-Alpha-Y1" connect1name="A9" type1="POS_POINT" connect2name="TO3" type2="TURNOUT_C" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T17" blockname="B-Alpha-Side" connect1name="SL2" type1="SLIP_D" connect2name="TO6" type2="TURNOUT_C" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T18" blockname="B-Alpha-Right-Approach" connect1name="TO5" type1="TURNOUT_A" connect2name="EC1" type2="POS_POINT" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T14" blockname="B-Alpha-Y2" connect1name="EB4" type1="POS_POINT" connect2name="A4" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T19" blockname="B-Alpha-Right-Ladder" connect1name="TO6" type1="TURNOUT_B" connect2name="TO3" type2="TURNOUT_A" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T16" blockname="B-Alpha-Y2" connect1name="A4" type1="POS_POINT" connect2name="TO3" type2="TURNOUT_B" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="A1" type="ANCHOR" x="330.0" y="130.0" connect1name="T4" connect2name="T5" westboundsignalmast="Alpha-TT" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A2" type="ANCHOR" x="100.0" y="100.0" connect1name="T1" connect2name="T3" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A3" type="ANCHOR" x="100.0" y="70.0" connect1name="T2" connect2name="T3" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB1" type="END_BUMPER" x="230.0" y="190.0" connect1name="T9" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB2" type="END_BUMPER" x="300.0" y="250.0" connect1name="T10" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB3" type="END_BUMPER" x="370.0" y="190.0" connect1name="T11" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A9" type="ANCHOR" x="460.0" y="160.0" connect1name="T12" connect2name="T15" westboundsignalmast="Alpha-Left-Y1" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EC1" type="EDGE_CONNECTOR" x="800.0" y="100.0" connect1name="T18" connect2name="T1" eastboundsignalmast="Beta-Left-EC" westboundsignalmast="Alpha-Right-EC" linkedpanel="Right Panel" linkpointid="EC1" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB4" type="END_BUMPER" x="460.0" y="190.0" connect1name="T14" westboundsignalmast="Alpha-Y2-EB" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A4" type="ANCHOR" x="610.0" y="190.0" connect1name="T14" connect2name="T16" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <layoutSlip ident="SL2" slipType="DOUBLE_SLIP" hidden="no" disabled="no" disableWhenOccupied="no" xcen="430.0" ycen="130.0" xa="410.0" ya="110.0" xb="400.0" yb="130.0" blockname="B-Alpha-Left-Ladder" connectaname="T7" connectbname="T5" connectcname="T12" connectdname="T17" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutDoubleSlipXml">
+      <turnout>T-Slip-A</turnout>
+      <turnoutB>T-Slip-B</turnoutB>
+      <signalBMast>Alpha-Slip-B</signalBMast>
+      <signalDMast>Alpha-Slip-D</signalDMast>
+      <states>
+        <A-C>
+          <turnout>2</turnout>
+          <turnoutB>2</turnoutB>
+        </A-C>
+        <A-D>
+          <turnout>2</turnout>
+          <turnoutB>4</turnoutB>
+        </A-D>
+        <B-D>
+          <turnout>4</turnout>
+          <turnoutB>4</turnoutB>
+        </B-D>
+        <B-C>
+          <turnout>4</turnout>
+          <turnoutB>2</turnoutB>
+        </B-C>
+      </states>
+    </layoutSlip>
+    <layoutturntable ident="TUR1" radius="25.0" xcen="300.0" ycen="190.0" turnoutControlled="yes" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml">
+      <raytrack angle="0.0" connectname="T4" index="0" turnout="T-TT-000" turnoutstate="thrown" />
+      <raytrack angle="90.0" connectname="T11" index="1" turnout="T-TT-090" turnoutstate="thrown" />
+      <raytrack angle="180.0" connectname="T10" index="2" turnout="T-TT-180" turnoutstate="thrown" />
+      <raytrack angle="270.0" connectname="T9" index="3" turnout="T-TT-270" turnoutstate="thrown" />
+    </layoutturntable>
+  </LayoutEditor>
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Right Panel" x="261" y="377" windowheight="256" windowwidth="761" panelheight="316" panelwidth="828" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="no" snaponmove="no" antialiasing="yes" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <layoutTrackDrawingOptions name="Right Panel" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
+      <mainBallastColor>#000000</mainBallastColor>
+      <mainBallastWidth>0</mainBallastWidth>
+      <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
+      <mainBlockLineWidth>4</mainBlockLineWidth>
+      <mainRailColor>#404040</mainRailColor>
+      <mainRailCount>1</mainRailCount>
+      <mainRailGap>0</mainRailGap>
+      <mainRailWidth>2</mainRailWidth>
+      <mainTieColor>#000000</mainTieColor>
+      <mainTieGap>0</mainTieGap>
+      <mainTieLength>0</mainTieLength>
+      <mainTieWidth>0</mainTieWidth>
+      <sideBallastColor>#000000</sideBallastColor>
+      <sideBallastWidth>0</sideBallastWidth>
+      <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
+      <sideBlockLineWidth>2</sideBlockLineWidth>
+      <sideRailColor>#404040</sideRailColor>
+      <sideRailCount>1</sideRailCount>
+      <sideRailGap>0</sideRailGap>
+      <sideRailWidth>1</sideRailWidth>
+      <sideTieColor>#000000</sideTieColor>
+      <sideTieGap>0</sideTieGap>
+      <sideTieLength>0</sideTieLength>
+      <sideTieWidth>0</sideTieWidth>
+    </layoutTrackDrawingOptions>
+    <positionablelabel x="330" y="10" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Beta" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <sensoricon sensor="S-Beta-Left" x="160" y="120" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Beta-Left-Approach" x="90" y="120" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Beta-Main" x="330" y="120" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Beta-Side" x="330" y="40" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Beta-Right-Approach" x="490" y="120" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Beta-XO-AB" x="400" y="40" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Beta-XO-CD" x="400" y="120" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Beta-Xing-Aproach" x="490" y="40" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Right-Loop" x="670" y="160" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Xing-AC" x="570" y="120" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="S-Xing-BD" x="620" y="70" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="770" y="250" level="4" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="false" editable="false" text="X" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <signalmasticon signalmast="Beta-Left-EC" x="30" y="85" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Beta-Left-A" x="106" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Beta-Left-B" x="205" y="85" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Beta-Left-C" x="205" y="55" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Beta-XO-A" x="320" y="74" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Beta-XO-B" x="430" y="55" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Beta-XO-C" x="430" y="85" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Beta-XO-D" x="320" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Beta-Xing-A" x="540" y="104" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Beta-Xing-B" x="610" y="110" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Beta-Xing-C" x="620" y="85" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Beta-Xing-D" x="577" y="49" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="180" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <layoutturnout ident="TO1" type="LH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="170.0" ycen="100.0" xa="150.0" ya="100.0" xb="190.0" yb="100.0" xc="200.0" yc="70.0" xd="150.0" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutLHTurnoutXml" turnoutname="T-Beta-Left" blockname="B-Beta-Left" connectaname="T1" connectbname="T2" connectcname="T3">
+      <signalAMast>Beta-Left-A</signalAMast>
+      <signalBMast>Beta-Left-B</signalBMast>
+      <signalCMast>Beta-Left-C</signalCMast>
+    </layoutturnout>
+    <layoutturnout ident="TO2" type="RH_XOVER" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="400.0" ycen="85.0" xa="360.0" ya="70.0" xb="413.33332" yb="70.0" xc="440.0" yc="100.0" xd="386.66668" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutRHXOverXml" turnoutname="T-Beta-XO" blockname="B-Beta-XO-AB" blockcname="B-Beta-XO-CD" blockdname="B-Beta-XO-CD" connectaname="T3" connectbname="T4" connectcname="T5" connectdname="T2">
+      <signalAMast>Beta-XO-A</signalAMast>
+      <signalBMast>Beta-XO-B</signalBMast>
+      <signalCMast>Beta-XO-C</signalCMast>
+      <signalDMast>Beta-XO-D</signalDMast>
+    </layoutturnout>
+    <tracksegment ident="T1" blockname="B-Beta-Left-Approach" connect1name="EC1" type1="POS_POINT" connect2name="TO1" type2="TURNOUT_A" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T2" blockname="B-Beta-Main" connect1name="TO1" type1="TURNOUT_B" connect2name="TO2" type2="TURNOUT_D" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T3" blockname="B-Beta-Side" connect1name="TO1" type1="TURNOUT_C" connect2name="TO2" type2="TURNOUT_A" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T4" blockname="B-Beta-Xing-Approach" connect1name="TO2" type1="TURNOUT_B" connect2name="A2" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T5" blockname="B-Beta-Right-Approach" connect1name="TO2" type1="TURNOUT_C" connect2name="X1" type2="LEVEL_XING_A" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T6" blockname="B-Right-Loop" connect1name="X1" type1="LEVEL_XING_B" connect2name="X1" type2="LEVEL_XING_C" dashed="no" mainline="no" hidden="no" bezier="yes" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <controlpoints>
+        <controlpoint index="0" x="600.0" y="250.0" />
+        <controlpoint index="1" x="730.0" y="200.0" />
+        <controlpoint index="2" x="770.0" y="100.0" />
+      </controlpoints>
+    </tracksegment>
+    <tracksegment ident="T8" blockname="B-Beta-Xing-Approach" connect1name="A2" type1="POS_POINT" connect2name="X1" type2="LEVEL_XING_D" dashed="no" mainline="no" hidden="no" arc="yes" flip="no" circle="yes" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="EC1" type="EDGE_CONNECTOR" x="30.0" y="100.0" connect1name="T1" connect2name="T18" eastboundsignalmast="Beta-Left-EC" westboundsignalmast="Alpha-Right-EC" linkedpanel="Left Panel" linkpointid="EC1" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A2" type="ANCHOR" x="590.0" y="70.0" connect1name="T4" connect2name="T8" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <levelxing ident="X1" blocknameac="B-Xing-AC" blocknamebd="B-Xing-BD" connectaname="T5" connectbname="T6" connectcname="T6" connectdname="T8" xcen="600.0" ycen="100.0" xa="580.0" ya="100.0" xb="600.0" yb="120.0" class="jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml">
+      <signalAMast>Beta-Xing-A</signalAMast>
+      <signalBMast>Beta-Xing-B</signalBMast>
+      <signalCMast>Beta-Xing-C</signalCMast>
+      <signalDMast>Beta-Xing-D</signalDMast>
+    </levelxing>
+    <layoutShape ident="Platform" type="Filled" level="3" linewidth="2" lineColor="#663300" fillColor="#999900" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutShapeXml">
+      <points>
+        <point type="Straight" x="200.0" y="110.0" />
+        <point type="Straight" x="200.0" y="140.0" />
+        <point type="Straight" x="320.0" y="140.0" />
+        <point type="Straight" x="320.0" y="110.0" />
+        <point type="Straight" x="200.0" y="110.0" />
+      </points>
+    </layoutShape>
+  </LayoutEditor>
+  <filehistory>
+    <operation>
+      <type>Load OK</type>
+      <date>Thu May 14 07:27:45 PDT 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/versions/v4.19.6/java/test/jmri/jmrit/display/layoutEditor/load/DS-Sample-Layout-4-19-6.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Wed May 13 22:27:50 CDT 2020</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Wed May 13 22:27:59 CDT 2020</date>
+          <filename>/Users/das/JMRI/_Profiles/LE_Project.jmri/Complex%20Layout.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Wed May 13 22:26:11 CDT 2020</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Wed May 13 22:26:20 CDT 2020</date>
+              <filename>/Users/das/JMRI/_Profiles/LE_Project.jmri/Complex%20Layout.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Wed May 13 22:24:53 CDT 2020</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Wed May 13 22:25:02 CDT 2020</date>
+                  <filename>/Users/das/JMRI/_Profiles/LE_Project.jmri/Complex%20Layout.xml</filename>
+                  <filehistory>
+                    <operation>
+                      <type>app</type>
+                      <date>Wed May 13 22:23:23 CDT 2020</date>
+                      <filename>JMRI program</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Wed May 13 22:23:32 CDT 2020</date>
+                      <filename>/Users/das/JMRI/_Profiles/LE_Project.jmri/Complex%20Layout.xml</filename>
+                      <filehistory>
+                        <operation>
+                          <type>app</type>
+                          <date>Wed May 13 22:13:06 CDT 2020</date>
+                          <filename>JMRI program</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Wed May 13 22:13:14 CDT 2020</date>
+                          <filename>/Users/das/JMRI/_Profiles/LE_Project.jmri/Complex%20Layout.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Store</type>
+                          <date>Wed May 13 22:23:02 CDT 2020</date>
+                          <filename />
+                        </operation>
+                      </filehistory>
+                    </operation>
+                    <operation>
+                      <type>Store</type>
+                      <date>Wed May 13 22:24:40 CDT 2020</date>
+                      <filename />
+                    </operation>
+                  </filehistory>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Wed May 13 22:26:00 CDT 2020</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Wed May 13 22:26:53 CDT 2020</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Wed May 13 22:28:49 CDT 2020</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Thu May 14 07:27:49 PDT 2020</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.19.6ish+jake+20200514T1427Z+Rdb3d7c2db9 on Thu May 14 07:27:49 PDT 2020-->
+</layout-config>

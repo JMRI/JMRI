@@ -1,13 +1,17 @@
 This is a fast-evolving list of items for the restructuring of the display.layoutEditor package. 
 It's in no particular order, items are removed as done, so please don't consider it documentation.
 
-
+----
+## Development Branches
+ - LE-move-content-MVC-2-draws - pause point, (appears to) draw test layouts properly
+ - LE-move-content-MVC-working-on-3 - current working head from above
+ 
 ----
 
 ## MVC work
 
 
-Last:  TrackSegmentViewXml is storing as  class="TrackSegmentView" to ease file comparison; change back.
+- [ ] Last:  TrackSegmentViewXml is storing as  class="TrackSegmentView" to ease file comparison; change back.
 
 diff temp/temp/LayoutEditorTest.xml java/test/jmri/jmrit/display/layoutEditor/loadref/LayoutEditorTest.xml
 (There are two LayoutEditorTest.xml files in load, only one in loadref)
@@ -21,6 +25,7 @@ diff temp/temp/LayoutEditorTest.xml java/test/jmri/jmrit/display/layoutEditor/lo
 
 - [X] mainline in geometry classes (inc base clases, *Xml)
 - [ ] hidden in View
+    =========> Currently failing in load and store
 - [ ] flip in View
 - [ ] center in View
 - [ ] Decorations in View
@@ -708,4 +713,10 @@ Separate out LayoutEditor class to MVC parts:
 ![Separate out LayoutEditor class to MVC parts](migration/plan_4.png "Separate out LayoutEditor class to MVC parts")
 
  --- 
+ 
+ Go through the ExpectedState -> NamedBeanExpectedValue -> NamedBeanExpectedState -> BeanSetting
+ hierarchy to add Comparable, @Immutable as possible.  Path should use BeanSetting.compareTo instead of local logic.
+ While there, check (and document meaning of!) equals, hashCode
+ 
+ 
  

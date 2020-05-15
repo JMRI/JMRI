@@ -14,7 +14,7 @@
     </sensor>
   </sensors>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="7:32 AM">
+    <memory value="11:56 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -127,7 +127,7 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Wed May 13 07:32:08 PDT 2020</date>
+      <date>Thu May 14 11:56:15 PDT 2020</date>
       <filename>/Users/jake/Documents/Trains/JMRI/projects/versions/v4.19.6/java/test/jmri/jmrit/display/layoutEditor/load/OneOfEach-4-19-6.xml</filename>
       <filehistory>
         <operation>
@@ -166,9 +166,9 @@
     </operation>
     <operation>
       <type>Store</type>
-      <date>Wed May 13 07:32:13 PDT 2020</date>
+      <date>Thu May 14 11:56:20 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.6ish+jake+20200513T1417Z+Rdb3d7c2db9 on Wed May 13 07:32:13 PDT 2020-->
+  <!--Written by JMRI version 4.19.6ish+jake+20200514T1854Z+Rdb3d7c2db9 on Thu May 14 11:56:20 PDT 2020-->
 </layout-config>
