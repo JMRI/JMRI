@@ -2048,11 +2048,11 @@ function $drawTrackSegment($widget) {
     var $ep1, $ep2;
     [$ep1, $ep2] = $getEndPoints$($widget);
     if (typeof $ep1 === "undefined") {
-    		jmri.log("ERROR: can't draw tracksegment " + $widget.ident + ": connect1: " + $widget.connect1name + "." + $widget.type1 + " undefined.");
+    		console.error("ERROR: can't draw tracksegment " + $widget.ident + ": connect1: " + $widget.connect1name + "." + $widget.type1 + " undefined.");
         return;
     }
     if (typeof $ep2 === "undefined") {
-    		jmri.log("ERROR: can't draw tracksegment " + $widget.ident + ": connect2: " + $widget.connect2name + "." + $widget.type2 + " undefined.");
+    		console.error("ERROR: can't draw tracksegment " + $widget.ident + ": connect2: " + $widget.connect2name + "." + $widget.type2 + " undefined.");
     	return;
     }
 
@@ -2257,7 +2257,7 @@ function $drawIcon($widget) {
             $("#panel-area>#" + $widget.id + "-overlay").css(ovlCSS);
         }
     } else {
-        jmri.log("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
+        console.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
     }
     $setWidgetPosition($("#panel-area #" + $widget.id));
 }
@@ -2860,7 +2860,7 @@ function $drawLayoutShape($widget) {
                 }
                 $gCtx.quadraticCurveTo(p[0], p[1], midR[0], midR[1]);
             } else {
-                jmri.log("ERROR: unexpected LayoutShape point type '" + lspt + "' for " + $widget.ide);
+                console.error("ERROR: unexpected LayoutShape point type '" + lspt + "' for " + $widget.ide);
             }
         });   // $pts.each(function(idx, $lsp)
 
@@ -3473,7 +3473,7 @@ var $reDrawIcon = function($widget) {
     } else if ($widget['defaulticon']) {  //if state icon not found, use default icon if provided
         $('img#' + $widget.id).attr('src', $widget['defaulticon']);
     } else {
-        jmri.log("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
+        console.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
     }
 };
 
@@ -4013,7 +4013,7 @@ function setBlockColor(blockName, newColor) {
     if (isDefined($blk)) {
         $gBlks[blockName].blockcolor = newColor;
     } else {
-        jmri.log("ERROR: block " + blockName + " not found for color " + newColor);
+        console.error("ERROR: block " + blockName + " not found for color " + newColor);
     }
     $redrawBlock(blockName);
 }

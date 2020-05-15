@@ -955,7 +955,7 @@
                                 if (h) {
                                     h.call(this, o);
                                 } else if (!o.type) {
-                                    jmri.log("ERROR: missing type property in " + o);
+                                    console.error("ERROR: missing type property in " + o);
                                 } else if (!h) {
                                     jmri.log("Ignoring JSON type ", o.type);
                                 }
@@ -965,7 +965,7 @@
                             if (h) {
                                 h.call(this, m);
                             } else if (!m.type) {
-                                jmri.log("ERROR: missing type property in " + m);
+                                console.error("ERROR: missing type property in " + m);
                             } else if (!h) {
                                 jmri.log("Ignoring JSON type ", m.type);
                             }

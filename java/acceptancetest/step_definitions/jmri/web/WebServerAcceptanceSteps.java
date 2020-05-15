@@ -8,6 +8,8 @@ import java.util.logging.Level;
 
 import jmri.InstanceManager;
 import jmri.ConfigureManager;
+import org.apache.log4j.lf5.LogLevel;
+import org.assertj.core.api.Condition;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -114,15 +116,16 @@ public class WebServerAcceptanceSteps implements En {
         After(chrometags, NO_TIMEOUT, 0, () -> {
             LogEntries logEntries = webDriver.manage().logs().get(LogType.BROWSER);
 
+            logEntries.forEach(System.out::println);
+
+            Condition<LogEntry> error = new Condition<>( o -> o.getMessage().startsWith("ERROR"),"error");
+            Condition<LogEntry> severe = new Condition<>( o -> o.getLevel().equals(LogLevel.SEVERE),"severe");
+
             SoftAssertions softly = new SoftAssertions();
             for (LogEntry logEntry : logEntries) {
-                softly.assertThat(logEntry.getLevel())
+                softly.assertThat(logEntry)
                         .withFailMessage(String.format("%s:%s:%s",webDriver.getWrappedDriver().getClass(),logEntry.getLevel().getName(),logEntry.getMessage()))
-                        .isNotEqualTo(Level.WARNING)
-                        .isNotEqualTo(Level.SEVERE);
-                softly.assertThat(logEntry.getMessage())
-                        .withFailMessage(String.format("%s:%s:%s",webDriver.getWrappedDriver().getClass(),logEntry.getLevel().getName(),logEntry.getMessage()))
-                        .doesNotStartWith("ERROR");
+                        .is(error).is(severe);
             }
             softly.assertAll();
         });

@@ -51,8 +51,9 @@ public class BrowserFactory {
                     firefoxBinary.addCommandLineOptions("--headless");
                     FirefoxOptions firefoxOptions = new FirefoxOptions()
                             .setBinary(firefoxBinary)
-                            .setLogLevel(FirefoxDriverLogLevel.FATAL)
-                            .addPreference("devtools.console.stdout.content",true);
+                            .setLogLevel(FirefoxDriverLogLevel.FATAL);
+                    // the following causes javascript console messages to be output to standard out.
+                    //firefoxOptions.addPreference("devtools.console.stdout.content", true);
 
                     driver = new EventFiringWebDriver(new FirefoxDriver(firefoxOptions));
                     driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -71,7 +72,7 @@ public class BrowserFactory {
                     //}
                     chromeOptions.addArguments("--disable-extensions");
                     LoggingPreferences logPrefs = new LoggingPreferences();
-                    logPrefs.enable(LogType.BROWSER, Level.INFO);
+                    logPrefs.enable(LogType.BROWSER, Level.SEVERE);
                     chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
 
                     driver = new EventFiringWebDriver(new ChromeDriver(chromeOptions));
