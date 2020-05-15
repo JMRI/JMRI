@@ -116,8 +116,6 @@ public class WebServerAcceptanceSteps implements En {
         After(chrometags, NO_TIMEOUT, 0, () -> {
             LogEntries logEntries = webDriver.manage().logs().get(LogType.BROWSER);
 
-            logEntries.forEach(System.out::println);
-
             Condition<LogEntry> error = new Condition<>( o -> o.getMessage().startsWith("ERROR"),"error");
             Condition<LogEntry> severe = new Condition<>( o -> o.getLevel().equals(LogLevel.SEVERE),"severe");
 
