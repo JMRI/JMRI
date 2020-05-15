@@ -4,7 +4,7 @@
   <jmriversion>
     <major>4</major>
     <minor>19</minor>
-    <test>6</test>
+    <test>7</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -1327,7 +1327,7 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="8:13 AM">
+    <memory value="5:58 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -2340,14 +2340,14 @@
       <speed>Medium</speed>
       <permissive>no</permissive>
       <occupancysensor>BLOCK 43</occupancysensor>
-      <path todir="64" fromdir="128" block="IB19">
-        <beansetting setting="4">
-          <turnout systemName="354" />
-        </beansetting>
-      </path>
       <path todir="64" fromdir="128" block="IB16">
         <beansetting setting="4">
           <turnout systemName="350" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB19">
+        <beansetting setting="4">
+          <turnout systemName="354" />
         </beansetting>
       </path>
     </block>
@@ -2356,59 +2356,59 @@
       <userName>Block 12</userName>
       <permissive>no</permissive>
       <occupancysensor>BLOCK 12</occupancysensor>
-      <path todir="64" fromdir="128" block="IB29" />
       <path todir="64" fromdir="128" block="IB23">
         <beansetting setting="2">
           <turnout systemName="283" />
         </beansetting>
       </path>
+      <path todir="64" fromdir="128" block="IB29" />
     </block>
     <block systemName="IB3" length="0.0" curve="0">
       <systemName>IB3</systemName>
       <userName>Block 11</userName>
       <permissive>no</permissive>
       <occupancysensor>BLOCK 11</occupancysensor>
+      <path todir="64" fromdir="128" block="IB22" />
       <path todir="64" fromdir="128" block="IB28">
         <beansetting setting="2">
           <turnout systemName="310" />
         </beansetting>
       </path>
-      <path todir="64" fromdir="128" block="IB22" />
     </block>
     <block systemName="IB4" length="0.0" curve="0">
       <systemName>IB4</systemName>
       <userName>Block 01</userName>
       <permissive>no</permissive>
       <occupancysensor>BLOCK 01</occupancysensor>
+      <path todir="128" fromdir="64" block="IB22" />
       <path todir="64" fromdir="128" block="IB24" />
-      <path todir="128" fromdir="64" block="IB27">
-        <beansetting setting="4">
-          <turnout systemName="279" />
-        </beansetting>
-      </path>
       <path todir="64" fromdir="128" block="IB26">
         <beansetting setting="4">
           <turnout systemName="280" />
         </beansetting>
       </path>
-      <path todir="128" fromdir="64" block="IB22" />
+      <path todir="128" fromdir="64" block="IB27">
+        <beansetting setting="4">
+          <turnout systemName="279" />
+        </beansetting>
+      </path>
     </block>
     <block systemName="IB5" length="0.0" curve="0">
       <systemName>IB5</systemName>
       <userName>Block 22</userName>
       <permissive>no</permissive>
       <occupancysensor>BLOCK 22</occupancysensor>
-      <path todir="64" fromdir="128" block="IB30">
-        <beansetting setting="2">
-          <turnout systemName="319" />
-        </beansetting>
-      </path>
       <path todir="128" fromdir="64" block="IB29">
         <beansetting setting="2">
           <turnout systemName="310" />
         </beansetting>
         <beansetting setting="2">
           <turnout systemName="TaraJ Team Track Switch" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB30">
+        <beansetting setting="2">
+          <turnout systemName="319" />
         </beansetting>
       </path>
       <path todir="128" fromdir="64" block="IB:AUTO:0002">
@@ -2422,15 +2422,9 @@
       <userName>Block 21</userName>
       <permissive>no</permissive>
       <occupancysensor>BLOCK 21</occupancysensor>
-      <path todir="128" fromdir="64" block="IB28" />
       <path todir="16" fromdir="32" block="IB7">
         <beansetting setting="4">
           <turnout systemName="313" />
-        </beansetting>
-      </path>
-      <path todir="32" fromdir="16" block="IB:AUTO:0001">
-        <beansetting setting="4">
-          <turnout systemName="312" />
         </beansetting>
       </path>
       <path todir="64" fromdir="128" block="IB10">
@@ -2438,12 +2432,18 @@
           <turnout systemName="311" />
         </beansetting>
       </path>
+      <path todir="128" fromdir="64" block="IB28" />
       <path todir="64" fromdir="128" block="IB31">
         <beansetting setting="2">
           <turnout systemName="318" />
         </beansetting>
         <beansetting setting="2">
           <turnout systemName="313" />
+        </beansetting>
+      </path>
+      <path todir="32" fromdir="16" block="IB:AUTO:0001">
+        <beansetting setting="4">
+          <turnout systemName="312" />
         </beansetting>
       </path>
     </block>
@@ -2525,14 +2525,14 @@
       <speed>Slow</speed>
       <permissive>no</permissive>
       <occupancysensor>Dewitt yard</occupancysensor>
-      <path todir="64" fromdir="128" block="IB25">
-        <beansetting setting="4">
-          <turnout systemName="277" />
-        </beansetting>
-      </path>
       <path todir="128" fromdir="64" block="IB23">
         <beansetting setting="4">
           <turnout systemName="282" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB25">
+        <beansetting setting="4">
+          <turnout systemName="277" />
         </beansetting>
       </path>
     </block>
@@ -2561,14 +2561,14 @@
       <userName>CP 350</userName>
       <permissive>no</permissive>
       <occupancysensor>CP350</occupancysensor>
-      <path todir="64" fromdir="128" block="IB8" />
-      <path todir="128" fromdir="64" block="IB12">
-        <beansetting setting="2">
+      <path todir="128" fromdir="64" block="IB1">
+        <beansetting setting="4">
           <turnout systemName="350" />
         </beansetting>
       </path>
-      <path todir="128" fromdir="64" block="IB1">
-        <beansetting setting="4">
+      <path todir="64" fromdir="128" block="IB8" />
+      <path todir="128" fromdir="64" block="IB12">
+        <beansetting setting="2">
           <turnout systemName="350" />
         </beansetting>
       </path>
@@ -2578,12 +2578,12 @@
       <userName>Block  42</userName>
       <permissive>no</permissive>
       <occupancysensor>BLOCK 42</occupancysensor>
-      <path todir="128" fromdir="64" block="IB12" />
       <path todir="64" fromdir="128" block="IB12">
         <beansetting setting="2">
           <turnout systemName="NCE354" />
         </beansetting>
       </path>
+      <path todir="128" fromdir="64" block="IB12" />
     </block>
     <block systemName="IB18" length="0.0" curve="0">
       <systemName>IB18</systemName>
@@ -2606,62 +2606,49 @@
       <userName>CP 354</userName>
       <permissive>no</permissive>
       <occupancysensor>CP354</occupancysensor>
+      <path todir="128" fromdir="64" block="IB1">
+        <beansetting setting="4">
+          <turnout systemName="354" />
+        </beansetting>
+      </path>
       <path todir="128" fromdir="64" block="IB12">
         <beansetting setting="2">
           <turnout systemName="354" />
         </beansetting>
       </path>
       <path todir="64" fromdir="128" block="IB15" />
-      <path todir="128" fromdir="64" block="IB1">
-        <beansetting setting="4">
-          <turnout systemName="354" />
-        </beansetting>
-      </path>
     </block>
     <block systemName="IB22" length="0.0" curve="0">
       <systemName>IB22</systemName>
       <userName>CP 2831</userName>
       <permissive>no</permissive>
       <occupancysensor>CP2831</occupancysensor>
-      <path todir="160" fromdir="80" block="IB23">
-        <beansetting setting="4">
-          <turnout systemName="281" />
-        </beansetting>
-      </path>
+      <path todir="128" fromdir="64" block="IB3" />
+      <path todir="64" fromdir="128" block="IB4" />
       <path todir="64" fromdir="128" block="IB23">
         <beansetting setting="4">
           <turnout systemName="283" />
         </beansetting>
       </path>
-      <path todir="128" fromdir="64" block="IB3" />
-      <path todir="64" fromdir="128" block="IB4" />
+      <path todir="160" fromdir="80" block="IB23">
+        <beansetting setting="4">
+          <turnout systemName="281" />
+        </beansetting>
+      </path>
     </block>
     <block systemName="IB23" length="0.0" curve="0">
       <systemName>IB23</systemName>
       <userName>CP 2832</userName>
       <permissive>no</permissive>
       <occupancysensor>CP2832</occupancysensor>
-      <path todir="80" fromdir="160" block="IB22">
-        <beansetting setting="4">
-          <turnout systemName="281" />
-        </beansetting>
+      <path todir="128" fromdir="64" block="IB2">
         <beansetting setting="2">
-          <turnout systemName="282" />
+          <turnout systemName="283" />
         </beansetting>
       </path>
       <path todir="64" fromdir="128" block="IB13">
         <beansetting setting="4">
           <turnout systemName="282" />
-        </beansetting>
-      </path>
-      <path todir="128" fromdir="64" block="IB22">
-        <beansetting setting="4">
-          <turnout systemName="283" />
-        </beansetting>
-      </path>
-      <path todir="128" fromdir="64" block="IB2">
-        <beansetting setting="2">
-          <turnout systemName="283" />
         </beansetting>
       </path>
       <path todir="64" fromdir="128" block="IB18">
@@ -2672,12 +2659,27 @@
           <turnout systemName="282" />
         </beansetting>
       </path>
+      <path todir="80" fromdir="160" block="IB22">
+        <beansetting setting="4">
+          <turnout systemName="281" />
+        </beansetting>
+        <beansetting setting="2">
+          <turnout systemName="282" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB22">
+        <beansetting setting="4">
+          <turnout systemName="283" />
+        </beansetting>
+      </path>
     </block>
     <block systemName="IB24" length="0.0" curve="0">
       <systemName>IB24</systemName>
       <userName>CP 2761</userName>
       <permissive>no</permissive>
       <occupancysensor>CP2761</occupancysensor>
+      <path todir="128" fromdir="64" block="IB4" />
+      <path todir="64" fromdir="128" block="IB14" />
       <path todir="64" fromdir="128" block="IB25">
         <beansetting setting="4">
           <turnout systemName="278" />
@@ -2688,27 +2690,20 @@
           <turnout systemName="276" />
         </beansetting>
       </path>
-      <path todir="128" fromdir="64" block="IB4" />
-      <path todir="64" fromdir="128" block="IB14" />
     </block>
     <block systemName="IB25" length="0.0" curve="0">
       <systemName>IB25</systemName>
       <userName>CP 2762</userName>
       <permissive>no</permissive>
       <occupancysensor>CP2762</occupancysensor>
-      <path todir="128" fromdir="64" block="IB24">
-        <beansetting setting="4">
-          <turnout systemName="278" />
-        </beansetting>
-      </path>
-      <path todir="80" fromdir="160" block="IB24">
-        <beansetting setting="4">
-          <turnout systemName="276" />
-        </beansetting>
-      </path>
       <path todir="128" fromdir="64" block="IB13">
         <beansetting setting="4">
           <turnout systemName="277" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB15">
+        <beansetting setting="2">
+          <turnout systemName="276" />
         </beansetting>
       </path>
       <path todir="128" fromdir="64" block="IB18">
@@ -2719,9 +2714,14 @@
           <turnout systemName="277" />
         </beansetting>
       </path>
-      <path todir="64" fromdir="128" block="IB15">
-        <beansetting setting="2">
+      <path todir="80" fromdir="160" block="IB24">
+        <beansetting setting="4">
           <turnout systemName="276" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB24">
+        <beansetting setting="4">
+          <turnout systemName="278" />
         </beansetting>
       </path>
     </block>
@@ -2754,31 +2754,31 @@
       <userName>CP 3101</userName>
       <permissive>no</permissive>
       <occupancysensor>CP3101</occupancysensor>
-      <path todir="128" fromdir="64" block="IB29">
-        <beansetting setting="4">
-          <turnout systemName="310" />
-        </beansetting>
-      </path>
       <path todir="128" fromdir="64" block="IB3">
         <beansetting setting="2">
           <turnout systemName="310" />
         </beansetting>
       </path>
       <path todir="64" fromdir="128" block="IB6" />
+      <path todir="128" fromdir="64" block="IB29">
+        <beansetting setting="4">
+          <turnout systemName="310" />
+        </beansetting>
+      </path>
     </block>
     <block systemName="IB29" length="0.0" curve="0">
       <systemName>IB29</systemName>
       <userName>CP 3102</userName>
       <permissive>no</permissive>
       <occupancysensor>CP3102</occupancysensor>
-      <path todir="64" fromdir="128" block="IB28">
-        <beansetting setting="4">
-          <turnout systemName="310" />
-        </beansetting>
-      </path>
       <path todir="128" fromdir="64" block="IB2" />
       <path todir="64" fromdir="128" block="IB5">
         <beansetting setting="2">
+          <turnout systemName="310" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB28">
+        <beansetting setting="4">
           <turnout systemName="310" />
         </beansetting>
       </path>
@@ -2793,35 +2793,35 @@
           <turnout systemName="319" />
         </beansetting>
       </path>
+      <path todir="32" fromdir="16" block="IB8" />
       <path todir="128" fromdir="64" block="IB31">
         <beansetting setting="4">
           <turnout systemName="319" />
         </beansetting>
       </path>
-      <path todir="32" fromdir="16" block="IB8" />
     </block>
     <block systemName="IB31" length="0.0" curve="0">
       <systemName>IB31</systemName>
       <userName>CP 3181</userName>
       <permissive>no</permissive>
       <occupancysensor>CP3181</occupancysensor>
-      <path todir="128" fromdir="64" block="IB7">
-        <beansetting setting="4">
-          <turnout systemName="318" />
-        </beansetting>
-      </path>
       <path todir="128" fromdir="64" block="IB6">
         <beansetting setting="2">
           <turnout systemName="318" />
         </beansetting>
       </path>
-      <path todir="64" fromdir="128" block="IB30">
+      <path todir="128" fromdir="64" block="IB7">
         <beansetting setting="4">
-          <turnout systemName="319" />
+          <turnout systemName="318" />
         </beansetting>
       </path>
       <path todir="64" fromdir="128" block="IB9">
         <beansetting setting="2">
+          <turnout systemName="319" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB30">
+        <beansetting setting="4">
           <turnout systemName="319" />
         </beansetting>
       </path>
@@ -6207,8 +6207,8 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Wed May 13 08:13:17 PDT 2020</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/Jlang_Panel.xml</filename>
+      <date>Thu May 14 17:58:52 PDT 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/versions/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/Jlang_Panel.xml</filename>
       <filehistory>
         <operation>
           <type>Load OK</type>
@@ -6272,9 +6272,9 @@
     </operation>
     <operation>
       <type>Store</type>
-      <date>Wed May 13 08:13:21 PDT 2020</date>
+      <date>Thu May 14 17:58:57 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.6ish+jake+20200513T1504Z+R7bc8ca432e on Wed May 13 08:13:21 PDT 2020-->
+  <!--Written by JMRI version 4.19.7ish+jake+20200515T0055Z+Rff58a113c0 on Thu May 14 17:58:57 PDT 2020-->
 </layout-config>

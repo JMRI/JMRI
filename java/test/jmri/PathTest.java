@@ -102,7 +102,20 @@ public class PathTest {
 
         s.setState(Turnout.CLOSED);
         Assert.assertTrue("check path set", p.checkPathSet());
+    }
 
+    @Test
+    public void testToString() throws JmriException {
+        Path p = new Path();
+
+        Assert.assertEquals("Path: <no block>: ", p.toString());
+
+        TurnoutManager sm = jmri.InstanceManager.turnoutManagerInstance();
+        Turnout s = sm.provideTurnout("IT12");
+
+        p.addSetting(new BeanSetting(s, "IT12", Turnout.CLOSED));
+
+        Assert.assertEquals("Path: <no block>: IT12 with state Closed", p.toString());
     }
 
     @Test
