@@ -4,7 +4,7 @@
   <jmriversion>
     <major>4</major>
     <minor>19</minor>
-    <test>6</test>
+    <test>7</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -90,12 +90,12 @@
       <userName>Yard</userName>
       <permissive>no</permissive>
       <path todir="16" fromdir="32" block="IB3" />
+      <path todir="64" fromdir="128" block="IB4" />
       <path todir="80" fromdir="160" block="IB4">
         <beansetting setting="4">
           <turnout systemName="IT3" />
         </beansetting>
       </path>
-      <path todir="64" fromdir="128" block="IB4" />
       <path todir="128" fromdir="64" block="IB5">
         <beansetting setting="2">
           <turnout systemName="IT7" />
@@ -106,14 +106,14 @@
           <turnout systemName="IT9" />
         </beansetting>
       </path>
-      <path todir="144" fromdir="96" block="IB7">
-        <beansetting setting="4">
-          <turnout systemName="IT1" />
-        </beansetting>
-      </path>
       <path todir="80" fromdir="160" block="IB7">
         <beansetting setting="4">
           <turnout systemName="IT2" />
+        </beansetting>
+      </path>
+      <path todir="144" fromdir="96" block="IB7">
+        <beansetting setting="4">
+          <turnout systemName="IT1" />
         </beansetting>
       </path>
     </block>
@@ -128,12 +128,12 @@
       <systemName>IB4</systemName>
       <userName>East</userName>
       <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB1" />
       <path todir="160" fromdir="80" block="IB1">
         <beansetting setting="4">
           <turnout systemName="IT3" />
         </beansetting>
       </path>
-      <path todir="128" fromdir="64" block="IB1" />
       <path todir="128" fromdir="64" block="IB7">
         <beansetting setting="2">
           <turnout systemName="IT3" />
@@ -329,8 +329,8 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Thu May 14 11:55:38 PDT 2020</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/versions/v4.19.6/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest-4-19-6.xml</filename>
+      <date>Thu May 14 17:58:44 PDT 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/versions/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest-4-19-6.xml</filename>
       <filehistory>
         <operation>
           <type>Load OK</type>
@@ -359,9 +359,9 @@
     </operation>
     <operation>
       <type>Store</type>
-      <date>Thu May 14 11:55:43 PDT 2020</date>
+      <date>Thu May 14 17:58:49 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.6ish+jake+20200514T1854Z+Rdb3d7c2db9 on Thu May 14 11:55:43 PDT 2020-->
+  <!--Written by JMRI version 4.19.7ish+jake+20200515T0055Z+Rff58a113c0 on Thu May 14 17:58:49 PDT 2020-->
 </layout-config>
