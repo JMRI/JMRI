@@ -49,7 +49,7 @@ public interface PowerManager extends PropertyChangeProvider {
      * <p>
      * {@value #POWER_OPN}
      * 
-     * @deprecated since 4.19.6; use {@link #POWER} instead
+     * @deprecated since 4.21.1; use {@link #POWER} instead
      */
     @Deprecated
     static final String POWER_OPN = "Power"; // OPN == "Old Property Name" // NOI18N
