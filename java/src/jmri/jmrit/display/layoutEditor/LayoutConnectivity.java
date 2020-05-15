@@ -46,7 +46,9 @@ import org.slf4j.LoggerFactory;
 public class LayoutConnectivity {
 
     /**
-     * Constructor
+     * Constructor.
+     * @param b1 layout block 1.
+     * @param b2 layout block 2.
      */
     public LayoutConnectivity(LayoutBlock b1, LayoutBlock b2) {
         block1 = b1;
@@ -100,7 +102,8 @@ public class LayoutConnectivity {
     }
 
     /**
-     * Accessor routines
+     * Get Block 1.
+     * @return block 1, may be null.
      */
     public LayoutBlock getBlock1() {
         return block1;

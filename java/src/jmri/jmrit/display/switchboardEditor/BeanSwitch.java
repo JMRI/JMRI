@@ -71,13 +71,14 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     private final SwitchboardEditor _editor;
 
     /**
-     * Ctor
+     * Ctor.
      *
-     * @param index       DCC address
-     * @param bean        layout object to connect to
-     * @param switchName  descriptive name corresponding with system name to
-     *                    display in switch tooltip, i.e. LT1
-     * @param shapeChoice Button, Icon (static) or Drawing (vector graphics)
+     * @param index       DCC address.
+     * @param bean        layout object to connect to.
+     * @param switchName  descriptive name corresponding with system name to.
+     *                    display in switch tooltip, i.e. LT1.
+     * @param shapeChoice Button, Icon (static) or Drawing (vector graphics).
+     * @param editor      main switchboard editor.
      */
     public BeanSwitch(int index, NamedBean bean, String switchName, int shapeChoice, SwitchboardEditor editor) {
         _label = switchName;
@@ -591,7 +592,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      * (un)connected bean. Derived from
      * {@link jmri.jmrit.display.switchboardEditor.SwitchboardEditor#showPopUp(Positionable, MouseEvent)}
      *
-     * @param e the event
+     * @param e unused.
+     * @return true when pop up displayed.
      */
     public boolean showPopUp(MouseEvent e) {
         if (switchPopup != null) {
@@ -741,6 +743,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 
     /**
      * Invert attached object on the layout, if supported by its connection.
+     * @param set new inverted state, true for inverted, false for normal.
      */
     public void setBeanInverted(boolean set) {
         switch (beanTypeChar) {
@@ -832,6 +835,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     /**
      * Create new bean and connect it to this switch. Use type letter from
      * switch label (S, T or L).
+     * @param systemName system name of bean.
      */
     protected void connectNew(String systemName) {
         log.debug("Request new bean");

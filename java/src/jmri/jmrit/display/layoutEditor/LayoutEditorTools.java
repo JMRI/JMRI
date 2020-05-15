@@ -1085,11 +1085,20 @@ final public class LayoutEditorTools {
     | * Utility routines used by multiple tools *|
     \*==========================================*/
     /**
-     * Returns the layout turnout corresponding to a given turnout. If require
-     * double crossover is requested, and error message is sent to the user if
-     * the layout turnout is not a double crossover, and null is returned. If a
-     * layout turnout corresponding to the turnout is not found, an error
+     * Returns the layout turnout corresponding to a given turnout.
+     * <p>
+     * If require
+     * double crossover is requested, an error message is sent to the user if
+     * the layout turnout is not a double crossover, and null is returned.
+     * <p>
+     * If a layout turnout corresponding to the turnout is not found, an error
      * message is sent to the user and null is returned.
+     * 
+     * @param turnout the base turnout.
+     * @param requireDoubleXover true to force checking of turnout type.
+     * @param str error message string.
+     * @param theFrame main frame.
+     * @return layout turnout, may be null.
      */
     @CheckReturnValue
     public LayoutTurnout getLayoutTurnoutFromTurnout(
@@ -1132,6 +1141,10 @@ final public class LayoutEditorTools {
      * trailing blanks. If entry is required, and no entry is present, and error
      * message is sent. An error message also results if a signal head with the
      * entered name is not found in the SignalTable.
+     * @param signalNameComboBox the combo box with signal name selected.
+     * @param requireEntry true if mandatory field, else false.
+     * @param frame the main frame.
+     * @return signal head, may be null.
      */
     @CheckReturnValue
     public SignalHead getSignalHeadFromEntry(
@@ -1187,7 +1200,9 @@ final public class LayoutEditorTools {
     }
 
     /**
-     * Returns a SignalHead given a name
+     * Returns a SignalHead given a name.
+     * @param str signal head name.
+     * @return signal head, may be null.
      */
     @CheckReturnValue
     public SignalHead getHeadFromName(@CheckForNull String str) {
@@ -1272,7 +1287,9 @@ final public class LayoutEditorTools {
     }
 
     /**
-     * Returns true if an icon for the specified SignalHead is on the panel
+     * Get if signal head is on the panel.
+     * @param head the signal head to locate.
+     * @return true if an icon for the specified SignalHead is on the panel.
      */
     public boolean isHeadOnPanel(@Nonnull SignalHead head) {
         for (SignalHeadIcon h : layoutEditor.getSignalList()) {
@@ -1285,7 +1302,9 @@ final public class LayoutEditorTools {
 
     /**
      * Returns true if the specified Signal Head is assigned to an object on the
-     * panel, regardless of whether an icon is displayed or not
+     * panel, regardless of whether an icon is displayed or not.
+     * @param head the signal head to locate.
+     * @return true if the signal head is attached to a panel object.
      */
     public boolean isHeadAssignedAnywhere(@Nonnull SignalHead head) {
         String sName = head.getSystemName();
@@ -1331,7 +1350,8 @@ final public class LayoutEditorTools {
 
     /**
      * Removes the assignment of the specified SignalHead to either a turnout, a
-     * positionable point, or a level crossing wherever it is assigned
+     * positionable point, or a level crossing wherever it is assigned.
+     * @param head the signal head to be removed.
      */
     public void removeAssignment(@Nonnull SignalHead head) {
         String sName = head.getSystemName();
@@ -1404,7 +1424,8 @@ final public class LayoutEditorTools {
 
     /**
      * Removes the SignalHead with the specified name from the panel and from
-     * assignment to any turnout, positionable point, or level crossing
+     * assignment to any turnout, positionable point, or level crossing.
+     * @param signalName name of signal head to be removed.
      */
     public void removeSignalHeadFromPanel(@CheckForNull String signalName) {
         if ((signalName == null) || signalName.isEmpty()) {
@@ -7565,10 +7586,17 @@ final public class LayoutEditorTools {
 
     /**
      * Returns the Sensor corresponding to an entry field in the specified
-     * dialog. This also takes care of UpperCase and trimming of leading and
-     * trailing blanks. If entry is required, and no entry is present, and error
-     * message is sent. An error message also results if a sensor head with the
+     * dialog. 
+     * <p>
+     * This also takes care of UpperCase and trimming of leading and
+     * trailing blanks. 
+     * If entry is required, and no entry is present, an error message is sent. 
+     * An error message also results if a sensor head with the
      * entered name is not found in the SensorTable.
+     * @param sensorName sensor name.
+     * @param requireEntry true if mandatory field, else false.
+     * @param frame the main frame.
+     * @return sensor, may be null.
      */
     @CheckReturnValue
     public Sensor getSensorFromEntry(@CheckForNull String sensorName,
@@ -8153,6 +8181,10 @@ final public class LayoutEditorTools {
      * trailing blanks. If entry is required, and no entry is present, and error
      * message is sent. An error message also results if a signalMast head with
      * the entered name is not found in the SignalMastTable.
+     * @param signalMastName name of the signal mast.
+     * @param requireEntry true if a required field, else false.
+     * @param frame main frame.
+     * @return signal mast, may be null.
      */
     @CheckReturnValue
     public SignalMast getSignalMastFromEntry(@CheckForNull String signalMastName,
@@ -8181,7 +8213,9 @@ final public class LayoutEditorTools {
 
     /**
      * Returns true if the specified SignalMast is assigned to an object on the
-     * panel, regardless of whether an icon is displayed or not
+     * panel, regardless of whether an icon is displayed or not.
+     * @param signalMast the signal mast to query.
+     * @return true if associated with panel, else false.
      */
     public boolean isSignalMastAssignedAnywhere(@Nonnull SignalMast signalMast) {
         boolean result = false;
@@ -8242,7 +8276,8 @@ final public class LayoutEditorTools {
 
     /**
      * Removes the assignment of the specified SignalMast to either a turnout, a
-     * positionable point, or a level crossing wherever it is assigned
+     * positionable point, or a level crossing wherever it is assigned.
+     * @param signalMast the signal mast to remove.
      */
     public void removeSignalMastAssignment(@CheckForNull SignalMast signalMast) {
         if (signalMast == null) {
@@ -8293,7 +8328,8 @@ final public class LayoutEditorTools {
 
     /**
      * Removes the SignalMast with the specified name from the panel and from
-     * assignment to any turnout, positionable point, or level crossing
+     * assignment to any turnout, positionable point, or level crossing.
+     * @param signalMast the signal mast to remove.
      */
     public void removeSignalMastFromPanel(@Nonnull SignalMast signalMast) {
         removeSignalMastAssignment(signalMast);

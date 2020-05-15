@@ -19,7 +19,8 @@ import jmri.util.*;
 public class LayoutXOverView extends LayoutTurnoutView {
 
     /**
-     * constructor method
+     * Constructor method.
+     * @param xover the layout crossover.
      */
     public LayoutXOverView(@Nonnull LayoutXOver xover) {
         super(xover);

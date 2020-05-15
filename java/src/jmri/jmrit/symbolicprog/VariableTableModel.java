@@ -51,9 +51,17 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     protected transient volatile DecoderFile _df = null;
 
     /**
-     * Define the columns; values understood are: "Name", "Value", "Range",
-     * "Read", "Write", "Comment", "CV", "Mask", "State". For each, a property
-     * key in SymbolicProgBundle by the same name allows i18n
+     * Define the columns.
+     * <p>
+     * Values understood are: "Name", "Value", "Range",
+     * "Read", "Write", "Comment", "CV", "Mask", "State". 
+     * <p>
+     * For each, a property
+     * key in SymbolicProgBundle by the same name allows i18n.
+     * 
+     * @param status variable status.
+     * @param h values headers array.
+     * @param cvModel cv table model to use.
      */
     public VariableTableModel(JLabel status, String h[], CvTableModel cvModel) {
         super();
@@ -861,6 +869,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /**
      * Configure from a constant. This is like setRow (which processes a
      * variable Element).
+     * @param e element to set.
      */
     @SuppressFBWarnings(value = "NP_LOAD_OF_KNOWN_NULL_VALUE",
             justification = "null mask parameter to ConstantValue constructor expected.")
@@ -924,6 +933,14 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     /**
      * Programmatically create a new DecVariableValue from parameters.
+     * @param name variable name.
+     * @param CV CV string.
+     * @param comment variable comment.
+     * @param mask CV mask.
+     * @param readOnly true if read only, else false.
+     * @param infoOnly true if information only, else false.
+     * @param writeOnly true if write only, else false.
+     * @param opsOnly true if ops only, else false.
      */
     public void newDecVariableValue(String name, String CV, String comment, String mask,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly) {
@@ -1019,6 +1036,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /**
      * Represents any change to values, etc, hence rewriting the file is
      * desirable.
+     * @return true if dirty, else false.
      */
     public boolean fileDirty() {
         return _fileDirty;
@@ -1032,6 +1050,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /**
      * Check for change to values, etc, hence rewriting the decoder is
      * desirable.
+     * @return true if dirty, else false.
      */
     public boolean decoderDirty() {
         int len = rowVector.size();
@@ -1044,9 +1063,13 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     /**
-     * Returns the (first) variable that matches a given name string. Searches
+     * Returns the (first) variable that matches a given name string.
+     * <p>
+     * Searches
      * first for "item", the true name, but if none found will attempt to find a
      * matching "label". In that case, only the default language is checked.
+     * @param name search string.
+     * @return first matching variable found.
      */
     public VariableValue findVar(String name) {
         for (int i = 0; i < getRowCount(); i++) {

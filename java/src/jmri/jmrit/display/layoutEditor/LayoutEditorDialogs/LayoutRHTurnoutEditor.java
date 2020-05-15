@@ -21,7 +21,8 @@ import jmri.util.*;
 public class LayoutRHTurnoutEditor extends LayoutTurnoutEditor {
 
     /**
-     * constructor method
+     * constructor method.
+     * @param layoutEditor main layout editor.
      */
     public LayoutRHTurnoutEditor(@Nonnull LayoutEditor layoutEditor) {
         super(layoutEditor);
