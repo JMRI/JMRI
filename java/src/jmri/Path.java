@@ -425,8 +425,6 @@ public class Path implements Comparable<Path> {
             for (int i = 0; i < obj._beans.size(); i++) {
                 BeanSetting bs1 = this._beans.get(i);
                 BeanSetting bs2 = obj._beans.get(i);
-                if (bs1.getBean() == null && bs2.getBean() != null) return 1;
-                if (bs1.getBean() != null && bs2.getBean() == null) return -1;
                 if (bs1.getBean() != null && bs2.getBean() != null) {
                     retval = bs1.getBean().compareTo(bs2.getBean());
                     if (retval != 0) return retval;
