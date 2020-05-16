@@ -171,7 +171,7 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
         Assert.assertNotNull("LayoutSlipView single not null", lvs);
         Assert.assertNotNull("LayoutSlipView double not null", lvd);
 
-        lts.translateCoords(15.5F, 25.5F);
+        lvs.translateCoords(15.5F, 25.5F);
         Assert.assertEquals("lts.getCoordsCenter ",
                 new Point2D.Double(65.5, 125.5),
                 lvs.getCoordsCenter());
@@ -204,7 +204,7 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
                 new Point2D.Double(104.61538461538461, 38.92307692307692),
                 lvd.getCoordsForConnectionType(HitPointType.SLIP_RIGHT));
 
-        ltd.translateCoords(25.5F, 15.5F);
+        lvd.translateCoords(25.5F, 15.5F);
         Assert.assertEquals("ltd.getCoordsCenter ",
                 new Point2D.Double(125.5, 65.5),
                 lvd.getCoordsCenter());
@@ -288,61 +288,61 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
 
         Assert.assertEquals("lts.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(50.0, 100.0),
-                lts.getCoordsForConnectionType(HitPointType.NONE));
+                lvs.getCoordsForConnectionType(HitPointType.NONE));
         JUnitAppender.assertErrorMessage("single.getCoordsForConnectionType(NONE); Invalid Connection Type");
 
         Assert.assertEquals("lts.getCoordsForConnectionType(SLIP_A) is equal to...",
                 new Point2D.Double(35.85786437626905, 85.85786437626905),
-                lts.getCoordsForConnectionType(HitPointType.SLIP_A));
+                lvs.getCoordsForConnectionType(HitPointType.SLIP_A));
 
         Assert.assertEquals("lts.getCoordsForConnectionType(SLIP_B) is equal to...",
                 new Point2D.Double(30.20101012677667, 100.0),
-                lts.getCoordsForConnectionType(HitPointType.SLIP_B));
+                lvs.getCoordsForConnectionType(HitPointType.SLIP_B));
 
         Assert.assertEquals("lts.getCoordsForConnectionType(SLIP_C) is equal to...",
                 new Point2D.Double(64.14213562373095, 114.14213562373095),
-                lts.getCoordsForConnectionType(HitPointType.SLIP_C));
+                lvs.getCoordsForConnectionType(HitPointType.SLIP_C));
 
         Assert.assertEquals("lts.getCoordsForConnectionType(SLIP_D) is equal to...",
                 new Point2D.Double(69.79898987322333, 100.0),
-                lts.getCoordsForConnectionType(HitPointType.SLIP_D));
+                lvs.getCoordsForConnectionType(HitPointType.SLIP_D));
 
         Assert.assertEquals("lts.getCoordsForConnectionType(SLIP_LEFT) is equal to...",
                 new Point2D.Double(38.92307692307692, 95.38461538461539),
-                lts.getCoordsForConnectionType(HitPointType.SLIP_LEFT));
+                lvs.getCoordsForConnectionType(HitPointType.SLIP_LEFT));
 
         Assert.assertEquals("ltd.getCoordsForConnectionType(SLIP_RIGHT) is equal to...",
                 new Point2D.Double(104.61538461538461, 38.92307692307692),
-                ltd.getCoordsForConnectionType(HitPointType.SLIP_RIGHT));
+                lvd.getCoordsForConnectionType(HitPointType.SLIP_RIGHT));
 
         Assert.assertEquals("ltd.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(100.0, 50.0),
-                ltd.getCoordsForConnectionType(HitPointType.NONE));
+                lvd.getCoordsForConnectionType(HitPointType.NONE));
         JUnitAppender.assertErrorMessage("double.getCoordsForConnectionType(NONE); Invalid Connection Type");
 
         Assert.assertEquals("ltd.getCoordsForConnectionType(SLIP_A) is equal to...",
                 new Point2D.Double(85.85786437626905, 64.14213562373095),
-                ltd.getCoordsForConnectionType(HitPointType.SLIP_A));
+                lvd.getCoordsForConnectionType(HitPointType.SLIP_A));
 
         Assert.assertEquals("ltd.getCoordsForConnectionType(SLIP_B) is equal to...",
                 new Point2D.Double(100.0, 69.79898987322332),
-                ltd.getCoordsForConnectionType(HitPointType.SLIP_B));
+                lvd.getCoordsForConnectionType(HitPointType.SLIP_B));
 
         Assert.assertEquals("ltd.getCoordsForConnectionType(SLIP_C) is equal to...",
                 new Point2D.Double(114.14213562373095, 35.85786437626905),
-                ltd.getCoordsForConnectionType(HitPointType.SLIP_C));
+                lvd.getCoordsForConnectionType(HitPointType.SLIP_C));
 
         Assert.assertEquals("ltd.getCoordsForConnectionType(SLIP_D) is equal to...",
                 new Point2D.Double(100.0, 30.201010126776673),
-                ltd.getCoordsForConnectionType(HitPointType.SLIP_D));
+                lvd.getCoordsForConnectionType(HitPointType.SLIP_D));
 
         Assert.assertEquals("ltd.getCoordsForConnectionType(SLIP_LEFT) is equal to...",
                 new Point2D.Double(95.38461538461539, 61.07692307692308),
-                ltd.getCoordsForConnectionType(HitPointType.SLIP_LEFT));
+                lvd.getCoordsForConnectionType(HitPointType.SLIP_LEFT));
 
         Assert.assertEquals("ltd.getCoordsForConnectionType(SLIP_RIGHT) is equal to...",
                 new Point2D.Double(104.61538461538461, 38.92307692307692),
-                ltd.getCoordsForConnectionType(HitPointType.SLIP_RIGHT));
+                lvd.getCoordsForConnectionType(HitPointType.SLIP_RIGHT));
     }
 
     @Test
@@ -352,13 +352,15 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
 
-        Assert.assertEquals("lts.getBounds() is equal to...",
+
+        // +45, -45 in ctors is a 90 degree rotation
+        Assert.assertEquals("lvs.getBounds() is equal to...",
                 new Rectangle2D.Double(30.20101012677667, 85.85786437626905, 39.59797974644667, 28.284271247461902),
-                lts.getBounds());
-        ltd.getBounds();
-        Assert.assertEquals("ltd.getBounds() is equal to...",
-                new Rectangle2D.Double(30.20101012677667, 85.85786437626905, 39.59797974644667, 28.284271247461902),
-                lts.getBounds());
+                lvs.getBounds());
+
+        Assert.assertEquals("lvd.getBounds() is equal to...",
+                new Rectangle2D.Double(85.85786437626905, 30.201010126776673, 28.284271247461902, 39.59797974644665),
+                lvd.getBounds());
 
     }
 
