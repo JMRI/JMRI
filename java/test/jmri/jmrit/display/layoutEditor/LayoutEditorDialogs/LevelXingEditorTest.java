@@ -138,6 +138,7 @@ public class LevelXingEditorTest extends LayoutTrackEditorTest {
 
     private LayoutEditor layoutEditor = null;
     private LevelXing levelXing = null;
+    private LevelXingView levelXingView = null;
 
     @Before
     public void setUp() {
@@ -156,8 +157,9 @@ public class LevelXingEditorTest extends LayoutTrackEditorTest {
 
             // Level crossing
             point = MathUtil.add(point, delta);
-            levelXing = new LevelXing("Level Xing",
-                    point, layoutEditor);
+            levelXing = new LevelXing("Level Xing", layoutEditor); // point
+            levelXingView = new LevelXingView(levelXing, point, layoutEditor);
+            layoutEditor.addLayoutTrack(levelXing, levelXingView);
         }
     }
 

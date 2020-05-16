@@ -4,8 +4,7 @@ import java.awt.geom.Point2D;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.EditorManager;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.display.layoutEditor.PositionablePoint;
+import jmri.jmrit.display.layoutEditor.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
@@ -109,7 +108,9 @@ public class PositionablePointXml extends AbstractXmlAdapter {
         }
 
         // create the new PositionablePoint
-        PositionablePoint l = new PositionablePoint(name, type, new Point2D.Double(x, y), p);
+        PositionablePoint l = new PositionablePoint(name, type, p);
+        PositionablePointView pv = new PositionablePointView(l, new Point2D.Double(x, y), p);
+        p.addLayoutTrack(l, pv);
 
         // get remaining attributes
         Attribute a = element.getAttribute("connect1name");
@@ -160,7 +161,6 @@ public class PositionablePointXml extends AbstractXmlAdapter {
             }
         }
 
-        p.addLayoutTrack(l);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointXml.class);

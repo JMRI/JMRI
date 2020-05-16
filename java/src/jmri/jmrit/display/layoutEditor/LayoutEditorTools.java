@@ -26,7 +26,6 @@ import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import jmri.util.swing.JComboBoxUtil;
-import org.slf4j.*;
 
 /**
  * Layout Editor Tools provides tools making use of layout connectivity
@@ -1836,8 +1835,27 @@ final public class LayoutEditorTools {
      *  vertical, assumes horizontal, as done when setting signals at block boundary.
      *  "track" is a TrackSegment connected to "point".
      *  "point" is an anchor point serving as a block boundary.
+     * <p>
+     * This is the member function method, which is preferred. See the static
+     * method following.
      */
-    public static boolean isAtWestEndOfAnchor(TrackSegment t, PositionablePoint p) {
+    public boolean isAtWestEndOfAnchor(TrackSegment t, PositionablePoint p) {
+        return LayoutEditorTools.isAtWestEndOfAnchor(layoutEditor, t, p); // invoke status locally
+    }
+
+
+    /*
+     * Returns 'true' if "track" enters a block boundary at the west(north) end of
+     *  "point". Returns "false" otherwise. If track is neither horizontal or
+     *  vertical, assumes horizontal, as done when setting signals at block boundary.
+     *  "track" is a TrackSegment connected to "point".
+     *  "point" is an anchor point serving as a block boundary.
+     * <p>
+     * This is the static form, which requires context information from
+     * a passed LayoutEditor reference; the member function is preferred because
+     * some day we want to get rid of the LayoutEditor combined pseudo-global and panel reference.
+     */
+    public static boolean isAtWestEndOfAnchor(LayoutEditor layoutEditor, TrackSegment t, PositionablePoint p) {
         if (p.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
             if (p.getConnect1() == t) {
                 if (p.getConnect1Dir() == Path.NORTH || p.getConnect1Dir() == Path.WEST) {
@@ -1864,23 +1882,23 @@ final public class LayoutEditorTools {
 
         Point2D coords1;
         if (t.getConnect1() == p) {
-            coords1 = LayoutEditor.getCoords(t.getConnect2(), t.getType2());
+            coords1 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
         } else {
-            coords1 = LayoutEditor.getCoords(t.getConnect1(), t.getType1());
+            coords1 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
         }
 
         Point2D coords2;
         if (tx != null) {
             if (tx.getConnect1() == p) {
-                coords2 = LayoutEditor.getCoords(tx.getConnect2(), tx.getType2());
+                coords2 = layoutEditor.getCoords(tx.getConnect2(), tx.getType2());
             } else {
-                coords2 = LayoutEditor.getCoords(tx.getConnect1(), tx.getType1());
+                coords2 = layoutEditor.getCoords(tx.getConnect1(), tx.getType1());
             }
         } else {
             if (t.getConnect1() == p) {
-                coords2 = LayoutEditor.getCoords(t.getConnect1(), t.getType1());
+                coords2 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
             } else {
-                coords2 = LayoutEditor.getCoords(t.getConnect2(), t.getType2());
+                coords2 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
             }
         }
 
@@ -1907,8 +1925,8 @@ final public class LayoutEditorTools {
             return false;
         }
         return true;
-    }   //isAtWestEndOfAnchor
-
+    }
+    
     /*===========================*\
     |* setSignalsAtBlockBoundary *|
     \*===========================*/
@@ -2292,9 +2310,9 @@ final public class LayoutEditorTools {
         TrackSegment track1 = boundary.getConnect1();
         Point2D coords1;
         if (track1.getConnect1() == boundary) {
-            coords1 = LayoutEditor.getCoords(track1.getConnect2(), track1.getType2());
+            coords1 = layoutEditor.getCoords(track1.getConnect2(), track1.getType2());
         } else {
-            coords1 = LayoutEditor.getCoords(track1.getConnect1(), track1.getType1());
+            coords1 = layoutEditor.getCoords(track1.getConnect1(), track1.getType1());
         }
         TrackSegment track2 = boundary.getConnect2();
 
@@ -2313,9 +2331,9 @@ final public class LayoutEditorTools {
         }
         Point2D coords2;
         if (track2.getConnect1() == boundary) {
-            coords2 = LayoutEditor.getCoords(track2.getConnect2(), track2.getType2());
+            coords2 = layoutEditor.getCoords(track2.getConnect2(), track2.getType2());
         } else {
-            coords2 = LayoutEditor.getCoords(track2.getConnect1(), track2.getType1());
+            coords2 = layoutEditor.getCoords(track2.getConnect1(), track2.getType1());
         }
 
         placeSignalDirectionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coords2, coords1));
@@ -8641,9 +8659,9 @@ final public class LayoutEditorTools {
 
         Point2D pt2;
         if (t.getConnect1() == boundary) {
-            pt2 = LayoutEditor.getCoords(t.getConnect2(), t.getType2());
+            pt2 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
         } else {
-            pt2 = LayoutEditor.getCoords(t.getConnect1(), t.getType1());
+            pt2 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
         }
         setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
     }
@@ -8663,9 +8681,9 @@ final public class LayoutEditorTools {
 
         Point2D pt2;
         if (t.getConnect1() == boundary) {
-            pt2 = LayoutEditor.getCoords(t.getConnect2(), t.getType2());
+            pt2 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
         } else {
-            pt2 = LayoutEditor.getCoords(t.getConnect1(), t.getType1());
+            pt2 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
         }
         setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
 
@@ -9648,9 +9666,9 @@ final public class LayoutEditorTools {
             TrackSegment ts = (TrackSegment) obj;
             Point2D endPoint;
             if (ts.getConnect1() == layoutTurnout) {
-                endPoint = LayoutEditor.getCoords(ts.getConnect2(), ts.getType2());
+                endPoint = layoutEditor.getCoords(ts.getConnect2(), ts.getType2());
             } else {
-                endPoint = LayoutEditor.getCoords(ts.getConnect1(), ts.getType1());
+                endPoint = layoutEditor.getCoords(ts.getConnect1(), ts.getType1());
             }
             boolean isEast = false;
             if (MathUtil.equals(endPoint.getX(), p.getX())) {

@@ -42,8 +42,10 @@ public class PositionablePointView extends LayoutTrackView {
      * constructor method.
      * @param point the positionable point.
      */
-    public PositionablePointView(@Nonnull PositionablePoint point, @Nonnull LayoutEditor layoutEditor) {
-        super(point, layoutEditor);
+    public PositionablePointView(@Nonnull PositionablePoint point, 
+            Point2D c, 
+            @Nonnull LayoutEditor layoutEditor) {
+        super(point, c, layoutEditor);
         this.positionablePoint = point;
     }
 
@@ -80,9 +82,9 @@ public class PositionablePointView extends LayoutTrackView {
      *
      * @return the center coordinates
      */
-    final public Point2D getCoordsCenter() { // final for efficiency
-        return positionablePoint.getCoordsCenter() ;
-    }
+//     final public Point2D getCoordsCenter() { // final for efficiency
+//         return positionablePoint.getCoordsCenter() ;
+//     }
 
     /**
      * Set center coordinates  (temporary reflect to underlying PPoint, normally in LayoutTrackView base)
@@ -91,9 +93,9 @@ public class PositionablePointView extends LayoutTrackView {
      * idea, i.e. for Bezier curves
      * @param p the coordinates to set
      */
-    public void setCoordsCenter(@Nonnull Point2D p) {
-         positionablePoint.setCoordsCenter(p);
-    }
+//     public void setCoordsCenter(@Nonnull Point2D p) {
+//          positionablePoint.setCoordsCenter(p);
+//     }
 
    /**
      * Accessor methods
@@ -1464,9 +1466,9 @@ public class PositionablePointView extends LayoutTrackView {
         if (ts1 != null) {
             Point2D p1;
             if (ts1.getConnect1() == positionablePoint) {
-                p1 = LayoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
+                p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
             } else {
-                p1 = LayoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
+                p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
             }
             result = Path.computeDirection(getCoordsCenter(), p1);
         }
@@ -1856,14 +1858,14 @@ public class PositionablePointView extends LayoutTrackView {
                     lc = new LayoutConnectivity(blk1, blk2);
                     // determine direction from block 1 to block 2
                     if (ts1.getConnect1() == positionablePoint) {
-                        p1 = LayoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
+                        p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
                     } else {
-                        p1 = LayoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
+                        p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
                     }
                     if (ts2.getConnect1() == positionablePoint) {
-                        p2 = LayoutEditor.getCoords(ts2.getConnect2(), ts2.getType2());
+                        p2 = layoutEditor.getCoords(ts2.getConnect2(), ts2.getType2());
                     } else {
-                        p2 = LayoutEditor.getCoords(ts2.getConnect1(), ts2.getType1());
+                        p2 = layoutEditor.getCoords(ts2.getConnect1(), ts2.getType1());
                     }
                     lc.setDirection(Path.computeDirection(p1, p2));
                     // save Connections
@@ -1886,9 +1888,9 @@ public class PositionablePointView extends LayoutTrackView {
 
                     // determine direction from block 1 to block 2
                     if (ts1.getConnect1() == positionablePoint) {
-                        p1 = LayoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
+                        p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
                     } else {
-                        p1 = LayoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
+                        p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
                     }
 
                     //Need to find a way to compute the direction for this for a split over the panel

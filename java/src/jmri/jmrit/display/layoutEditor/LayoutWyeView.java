@@ -21,9 +21,17 @@ public class LayoutWyeView extends LayoutTurnoutView {
     /**
      * Constructor method.
      * @param wye the wye to base view on.
+     * @param c 2D point position.
+     * @param rot rotation.
+     * @param xFactor horizontal factor.
+     * @param yFactor vertical factor.
+     * @param layoutEditor main layout editor.
      */
-    public LayoutWyeView(@Nonnull LayoutWye wye, @Nonnull LayoutEditor layoutEditor) {
-        super(wye, layoutEditor);
+    public LayoutWyeView(@Nonnull LayoutWye wye, 
+            @Nonnull Point2D c, double rot,
+            double xFactor, double yFactor,
+            @Nonnull LayoutEditor layoutEditor) {
+        super(wye, c, rot, xFactor, yFactor, layoutEditor);
         // this.wye = wye;
     }
         

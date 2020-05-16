@@ -27,12 +27,6 @@ import static jmri.jmrit.display.layoutEditor.LevelXing.Geometry;
  */
 public class LevelXingView extends LayoutTrackView {
 
-    private Point2D dispA = new Point2D.Double(-20.0, 0.0);
-    private Point2D dispB = new Point2D.Double(-14.0, 14.0);
-
-    // temporary reference to the Editor that will eventually be part of View
-    private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor editor;
-
     /**
      * Constructor method.
      * @param xing the level crossing.
@@ -53,6 +47,12 @@ public class LevelXingView extends LayoutTrackView {
         this.xing = xing;
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor(layoutEditor);
     }
+
+    private Point2D dispA = new Point2D.Double(-20.0, 0.0);
+    private Point2D dispB = new Point2D.Double(-14.0, 14.0);
+
+    // temporary reference to the Editor that will eventually be part of View
+    private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor editor;
 
     final private LevelXing xing;
 

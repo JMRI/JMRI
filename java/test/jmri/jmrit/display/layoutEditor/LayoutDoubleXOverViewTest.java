@@ -19,11 +19,15 @@ public class  LayoutDoubleXOverViewTest extends  LayoutXOverViewTest {
 
     @Test
     public void testCtor() {
-        new LayoutDoubleXOverView(xover, layoutEditor);
+        new LayoutDoubleXOverView(xover, 
+            new Point2D.Double(150.0, 100.0), 
+            0., 100., 100., 
+            layoutEditor);
     }
 
     LayoutEditor layoutEditor;
     LayoutDoubleXOver xover;
+    LayoutDoubleXOverView xoverC;
     
     @Before
     public void setUp() {
@@ -33,9 +37,7 @@ public class  LayoutDoubleXOverViewTest extends  LayoutXOverViewTest {
 
             layoutEditor = new LayoutEditor();
             
-            Point2D point = new Point2D.Double(150.0, 100.0);
- 
-            xover = new LayoutDoubleXOver("XO", point, 0., 100., 100., layoutEditor);
+            xover = new LayoutDoubleXOver("XO", layoutEditor);
 
         }
     }

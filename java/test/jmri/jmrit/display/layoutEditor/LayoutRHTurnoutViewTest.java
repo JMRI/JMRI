@@ -19,7 +19,9 @@ public class LayoutRHTurnoutViewTest extends LayoutTurnoutViewTest {
 
     @Test
     public void testCtor() {
-        new LayoutRHTurnoutView(turnout, layoutEditor);
+        Point2D point = new Point2D.Double(150.0, 100.0);
+        
+        new LayoutRHTurnoutView(turnout, point, 99.0, 1.5, 1.6, layoutEditor);
     }
 
 
@@ -28,16 +30,13 @@ public class LayoutRHTurnoutViewTest extends LayoutTurnoutViewTest {
     
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
 
             layoutEditor = new LayoutEditor();
-            
-            Point2D point = new Point2D.Double(150.0, 100.0);
- 
-            turnout = new LayoutRHTurnout("Wye", point, 99.0, 1.5, 1.6, layoutEditor);
-
+             
+            turnout = new LayoutRHTurnout("Wye", layoutEditor);
         }
     }
 
@@ -49,6 +48,6 @@ public class LayoutRHTurnoutViewTest extends LayoutTurnoutViewTest {
         layoutEditor = null;
         turnout = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 }

@@ -32,6 +32,93 @@ import static jmri.jmrit.display.layoutEditor.LayoutTurnout.Geometry;
  */
 public class LayoutTurnoutView extends LayoutTrackView {
 
+    public LayoutTurnoutView(@Nonnull LayoutTurnout turnout, 
+            @Nonnull Point2D c, double rot,
+            @Nonnull LayoutEditor layoutEditor) {
+        this(turnout, c, rot, 1.0, 1.0, layoutEditor);
+    }
+    
+    /**
+     * Constructor method.
+     * @param turnout the layout turnout to create the view for.
+     */
+    public LayoutTurnoutView(@Nonnull LayoutTurnout turnout, 
+            @Nonnull Point2D c, double rot,
+            double xFactor, double yFactor,
+            @Nonnull LayoutEditor layoutEditor) {
+        super(turnout, c, layoutEditor);
+        this.turnout = turnout;
+
+        setIdent(turnout.getName());
+        
+        namedTurnout = null;
+        turnoutName = "";
+        mTurnoutListener = null;
+        disabled = false;
+        disableWhenOccupied = false;
+        type = turnout.getTurnoutType();
+        setVersion(turnout.getVersion());
+
+        // adjust initial coordinates
+        if (type == TurnoutType.LH_TURNOUT) {
+            dispB.setLocation(layoutEditor.getTurnoutBX(), 0.0);
+            dispA.setLocation(layoutEditor.getTurnoutCX(), -layoutEditor.getTurnoutWid());
+        } else if (type == TurnoutType.RH_TURNOUT) {
+            dispB.setLocation(layoutEditor.getTurnoutBX(), 0.0);
+            dispA.setLocation(layoutEditor.getTurnoutCX(), layoutEditor.getTurnoutWid());
+        } else if (type == TurnoutType.WYE_TURNOUT) {
+            dispB.setLocation(layoutEditor.getTurnoutBX(), 0.5 * layoutEditor.getTurnoutWid());
+            dispA.setLocation(layoutEditor.getTurnoutBX(), -0.5 * layoutEditor.getTurnoutWid());
+        } else if (type == TurnoutType.DOUBLE_XOVER) {
+            if (version == 2) {
+                super.setCoordsCenter(new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid()));
+                pointB.setLocation(layoutEditor.getXOverLong() * 2, 0);
+                pointC.setLocation(layoutEditor.getXOverLong() * 2, (layoutEditor.getXOverHWid() * 2));
+                pointD.setLocation(0, (layoutEditor.getXOverHWid() * 2));
+                super.setCoordsCenter(c);
+            } else {
+                dispB.setLocation(layoutEditor.getXOverLong(), -layoutEditor.getXOverHWid());
+                dispA.setLocation(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
+            }
+        } else if (type == TurnoutType.RH_XOVER) {
+            if (version == 2) {
+                super.setCoordsCenter(new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid()));
+                pointB.setLocation((layoutEditor.getXOverShort() + layoutEditor.getXOverLong()), 0);
+                pointC.setLocation(layoutEditor.getXOverLong() * 2, (layoutEditor.getXOverHWid() * 2));
+                pointD.setLocation((getCoordsCenter().getX() - layoutEditor.getXOverShort()), (layoutEditor.getXOverHWid() * 2));
+                super.setCoordsCenter(c);
+            } else {
+                dispB.setLocation(layoutEditor.getXOverShort(), -layoutEditor.getXOverHWid());
+                dispA.setLocation(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
+            }
+        } else if (type == TurnoutType.LH_XOVER) {
+            if (version == 2) {
+                super.setCoordsCenter(new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid()));
+
+                pointA.setLocation((getCoordsCenter().getX() - layoutEditor.getXOverShort()), 0);
+                pointB.setLocation((layoutEditor.getXOverLong() * 2), 0);
+                pointC.setLocation(layoutEditor.getXOverLong() + layoutEditor.getXOverShort(), (layoutEditor.getXOverHWid() * 2));
+                pointD.setLocation(0, (layoutEditor.getXOverHWid() * 2));
+
+                super.setCoordsCenter(c);
+            } else {
+                dispB.setLocation(layoutEditor.getXOverLong(), -layoutEditor.getXOverHWid());
+                dispA.setLocation(layoutEditor.getXOverShort(), layoutEditor.getXOverHWid());
+            }
+        }
+        
+        rotateCoords(rot);
+        
+        // adjust size of new turnout
+        Point2D pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
+                Math.round(dispB.getY() * yFactor));
+        dispB = pt;
+        pt = new Point2D.Double(Math.round(dispA.getX() * xFactor),
+                Math.round(dispA.getY() * yFactor));
+        dispA = pt;
+
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor(layoutEditor);
+    }
 
     /**
      * Returns true if this is a turnout (not a crossover or slip)
@@ -220,90 +307,6 @@ public class LayoutTurnoutView extends LayoutTrackView {
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor editor;
 
     final private LayoutTurnout turnout;
-
-    /**
-     * Constructor method.
-     * @param turnout the layout turnout to create the view for.
-     */
-    public LayoutTurnoutView(@Nonnull LayoutTurnout turnout, @Nonnull LayoutEditor layoutEditor) {
-        super(turnout, layoutEditor);
-        this.turnout = turnout;
-
-        setIdent(turnout.getName());
-        setCoordsCenter(turnout.getCoordsCenter());
-        Point2D c = getCoordsCenter();
-        
-        namedTurnout = null;
-        turnoutName = "";
-        mTurnoutListener = null;
-        disabled = false;
-        disableWhenOccupied = false;
-        type = turnout.getTurnoutType();
-        setVersion(turnout.getVersion());
-
-        // adjust initial coordinates
-        if (type == TurnoutType.LH_TURNOUT) {
-            dispB.setLocation(layoutEditor.getTurnoutBX(), 0.0);
-            dispA.setLocation(layoutEditor.getTurnoutCX(), -layoutEditor.getTurnoutWid());
-        } else if (type == TurnoutType.RH_TURNOUT) {
-            dispB.setLocation(layoutEditor.getTurnoutBX(), 0.0);
-            dispA.setLocation(layoutEditor.getTurnoutCX(), layoutEditor.getTurnoutWid());
-        } else if (type == TurnoutType.WYE_TURNOUT) {
-            dispB.setLocation(layoutEditor.getTurnoutBX(), 0.5 * layoutEditor.getTurnoutWid());
-            dispA.setLocation(layoutEditor.getTurnoutBX(), -0.5 * layoutEditor.getTurnoutWid());
-        } else if (type == TurnoutType.DOUBLE_XOVER) {
-            if (version == 2) {
-                super.setCoordsCenter(new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid()));
-                pointB.setLocation(layoutEditor.getXOverLong() * 2, 0);
-                pointC.setLocation(layoutEditor.getXOverLong() * 2, (layoutEditor.getXOverHWid() * 2));
-                pointD.setLocation(0, (layoutEditor.getXOverHWid() * 2));
-                super.setCoordsCenter(c);
-            } else {
-                dispB.setLocation(layoutEditor.getXOverLong(), -layoutEditor.getXOverHWid());
-                dispA.setLocation(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
-            }
-        } else if (type == TurnoutType.RH_XOVER) {
-            if (version == 2) {
-                super.setCoordsCenter(new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid()));
-                pointB.setLocation((layoutEditor.getXOverShort() + layoutEditor.getXOverLong()), 0);
-                pointC.setLocation(layoutEditor.getXOverLong() * 2, (layoutEditor.getXOverHWid() * 2));
-                pointD.setLocation((getCoordsCenter().getX() - layoutEditor.getXOverShort()), (layoutEditor.getXOverHWid() * 2));
-                super.setCoordsCenter(c);
-            } else {
-                dispB.setLocation(layoutEditor.getXOverShort(), -layoutEditor.getXOverHWid());
-                dispA.setLocation(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
-            }
-        } else if (type == TurnoutType.LH_XOVER) {
-            if (version == 2) {
-                super.setCoordsCenter(new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid()));
-
-                pointA.setLocation((getCoordsCenter().getX() - layoutEditor.getXOverShort()), 0);
-                pointB.setLocation((layoutEditor.getXOverLong() * 2), 0);
-                pointC.setLocation(layoutEditor.getXOverLong() + layoutEditor.getXOverShort(), (layoutEditor.getXOverHWid() * 2));
-                pointD.setLocation(0, (layoutEditor.getXOverHWid() * 2));
-
-                super.setCoordsCenter(c);
-            } else {
-                dispB.setLocation(layoutEditor.getXOverLong(), -layoutEditor.getXOverHWid());
-                dispA.setLocation(layoutEditor.getXOverShort(), layoutEditor.getXOverHWid());
-            }
-        }
-        
-        log.warn("we're not able to retrieve the rotation and scaling from the underlying track; it's in the coordinates");
-        rotateCoords(0.0);
-        double xFactor = 1.0;
-        double yFactor = 1.0;
-        
-        // adjust size of new turnout
-        Point2D pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
-                Math.round(dispB.getY() * yFactor));
-        dispB = pt;
-        pt = new Point2D.Double(Math.round(dispA.getX() * xFactor),
-                Math.round(dispA.getY() * yFactor));
-        dispA = pt;
-
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor(layoutEditor);
-    }
 
     /**
      * {@inheritDoc}

@@ -38,7 +38,7 @@ abstract public class LayoutTrackView {
      * @param track the layout track to view.
      */
     public LayoutTrackView(@Nonnull LayoutTrack track, @Nonnull LayoutEditor layoutEditor) {
-         // this.layoutTrack = track;
+         this.layoutTrack = track;
          this.layoutEditor = layoutEditor;
     }
 
@@ -46,70 +46,29 @@ abstract public class LayoutTrackView {
      * constructor method
      */
     public LayoutTrackView(@Nonnull LayoutTrack track, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
-         // this.layoutTrack = track;
+         this.layoutTrack = track;
          this.layoutEditor = layoutEditor;
          this.center = c;
     }
 
-    // temporary method to get a correct-type *View or subclass.
-    // Eventually, this will go away once *View's are created
-    // in a type-specific way with their underlying model objects
-    // @Deprecated // should be made not necessary
-    @Nonnull
-    static public LayoutTrackView makeTrackView(@Nonnull LayoutTrack trk, LayoutEditor layoutEditor) {
-    
-        if (trk instanceof LayoutTurnout) {
-
-            if (trk instanceof LayoutRHTurnout) { return new LayoutRHTurnoutView((LayoutRHTurnout)trk, layoutEditor); }
-            if (trk instanceof LayoutLHTurnout) { return new LayoutLHTurnoutView((LayoutLHTurnout)trk, layoutEditor); }
-            if (trk instanceof LayoutWye) { return new LayoutWyeView((LayoutWye)trk, layoutEditor); }
-
-            if (trk instanceof LayoutXOver) {
-                if (trk instanceof LayoutRHXOver) { return new LayoutRHXOverView((LayoutRHXOver)trk, layoutEditor); }
-                if (trk instanceof LayoutLHXOver) { return new LayoutLHXOverView((LayoutLHXOver)trk, layoutEditor); }
-                if (trk instanceof LayoutDoubleXOver) { return new LayoutDoubleXOverView((LayoutDoubleXOver)trk, layoutEditor); }
-                
-                return new LayoutXOverView((LayoutXOver)trk, layoutEditor);
-            }
-        
-            if (trk instanceof LayoutSlip) { 
-                if (trk instanceof LayoutSingleSlip) { return new LayoutSingleSlipView((LayoutSingleSlip)trk, layoutEditor); }
-                if (trk instanceof LayoutDoubleSlip) { return new LayoutDoubleSlipView((LayoutDoubleSlip)trk, layoutEditor); }
-                
-                return new LayoutSlipView((LayoutSlip)trk, layoutEditor); 
-            }
-        
-            return new LayoutTurnoutView((LayoutTurnout)trk, layoutEditor); 
-        }
-        if (trk instanceof TrackSegment) { return new TrackSegmentView((TrackSegment)trk, layoutEditor); }
-        if (trk instanceof PositionablePoint) { return new PositionablePointView((PositionablePoint)trk, layoutEditor); }
-        if (trk instanceof LevelXing) { return new LevelXingView((LevelXing)trk, layoutEditor); }
-        if (trk instanceof LayoutTurntable) { return new LayoutTurntableView((LayoutTurntable)trk, layoutEditor); }
-        
-        log.error("makeTrackView did not match type of {}", trk, new Exception("traceback"));
-        throw new IllegalArgumentException("no matching concrete type in the LayoutTrack tree");
-    }
-
-    // final private LayoutTrack layoutTrack;
+    final private LayoutTrack layoutTrack;
     final protected LayoutEditor layoutEditor;
 
     // Accessor Methods
     
     
     @Nonnull 
-    final public String getId() {
-        return ident;
+    final public String getId() {  // temporary Id vs name; is one for the View?
+        return layoutTrack.getId();
     }
 
     @Nonnull 
     final public String getName() {
-        return ident;
+        return layoutTrack.getName();
     }
 
-    private String ident = "";
-
     final protected void setIdent(@Nonnull String ident) {
-        this.ident = ident;
+        layoutTrack.setIdent(ident);
     }
     
     /**
@@ -523,16 +482,7 @@ abstract public class LayoutTrackView {
      * @return true if the connection for this connection type is free
      */
     public boolean isDisconnected(HitPointType connectionType) {
-        boolean result = false;
-        if (HitPointType.isConnectionHitType(connectionType)) {
-            try {
-                result = (null == getConnection(connectionType));
-            } catch (JmriException e) {
-                // this should never happen because isConnectionType() above would have caught an invalid connectionType.
-                log.error("Unexpected exception", e);
-            }
-        }
-        return result;
+        throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
     }
 
     /**

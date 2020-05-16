@@ -120,10 +120,8 @@ import org.slf4j.*;
 public class LayoutLHTurnout extends LayoutTurnout {
 
     public LayoutLHTurnout(@Nonnull String id,
-            @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor,
             @Nonnull LayoutEditor layoutEditor) {
-        this(id, c, rot, xFactor, yFactor, layoutEditor, 1);
+        this(id, layoutEditor, 1);
     }
 
     /**
@@ -136,9 +134,9 @@ public class LayoutLHTurnout extends LayoutTurnout {
      * @param layoutEditor main layout editor.
      * @param v version, unused.
      */
-    public LayoutLHTurnout(@Nonnull String id, @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
-        super(id, TurnoutType.LH_TURNOUT, c, rot, xFactor, yFactor, layoutEditor, 1);
+    public LayoutLHTurnout(@Nonnull String id, 
+            @Nonnull LayoutEditor layoutEditor, int v) {
+        super(id, TurnoutType.LH_TURNOUT, layoutEditor, 1);
     }
     
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutLHTurnout.class);

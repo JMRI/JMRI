@@ -120,25 +120,20 @@ import org.slf4j.*;
 public class LayoutDoubleXOver extends LayoutXOver {
 
     public LayoutDoubleXOver(@Nonnull String id,
-            @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor,
             @Nonnull LayoutEditor layoutEditor) {
-        this(id, c, rot, xFactor, yFactor, layoutEditor, 1);
+        this(id, layoutEditor, 1);
     }
 
     /**
      * Main constructor method.
      * @param id ID string.
-     * @param c 2D point.
-     * @param rot rotation.
-     * @param xFactor horizontal factor.
-     * @param yFactor vertical factor.
      * @param layoutEditor main layout editor.
      * @param v version, unused.
      */
-    public LayoutDoubleXOver(@Nonnull String id, @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
-        super(id, TurnoutType.DOUBLE_XOVER, c, rot, xFactor, yFactor, layoutEditor, 1);
+    public LayoutDoubleXOver(@Nonnull String id, 
+            @Nonnull LayoutEditor layoutEditor,
+            int v) {
+        super(id, TurnoutType.DOUBLE_XOVER, layoutEditor, v);
     }
     
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleXOver.class);

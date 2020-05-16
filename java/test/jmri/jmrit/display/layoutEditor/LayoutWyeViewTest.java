@@ -19,7 +19,9 @@ public class LayoutWyeViewTest extends LayoutTurnoutViewTest {
 
     @Test
     public void testCtor() {
-        new LayoutWyeView(wye, layoutEditor);
+        Point2D point = new Point2D.Double(150.0, 100.0);
+        
+        new LayoutWyeView(wye, point, 99.0, 1.5, 1.6, layoutEditor);
     }
 
     LayoutEditor layoutEditor;
@@ -27,15 +29,13 @@ public class LayoutWyeViewTest extends LayoutTurnoutViewTest {
     
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
 
             layoutEditor = new LayoutEditor();
-            
-            Point2D point = new Point2D.Double(150.0, 100.0);
- 
-            wye = new LayoutWye("Wye", point, 99.0, 1.5, 1.6, layoutEditor);
+             
+            wye = new LayoutWye("Wye", layoutEditor);
 
         }
     }
@@ -47,6 +47,6 @@ public class LayoutWyeViewTest extends LayoutTurnoutViewTest {
         }
         layoutEditor = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 }

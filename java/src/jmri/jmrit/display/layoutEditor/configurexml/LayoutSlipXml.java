@@ -205,14 +205,14 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         
         switch(type) {
             case DOUBLE_SLIP :
-                LayoutDoubleSlip lds = new LayoutDoubleSlip(name, new Point2D.Double(x, y), 0.0, p);
+                LayoutDoubleSlip lds = new LayoutDoubleSlip(name, p);
                 l = lds;
-                lv = new LayoutDoubleSlipView(lds, p);
+                lv = new LayoutDoubleSlipView(lds, new Point2D.Double(x, y), 0.0, p);
                 break;
             case SINGLE_SLIP :
-                LayoutSingleSlip lss = new LayoutSingleSlip(name, new Point2D.Double(x, y), 0.0, p);
+                LayoutSingleSlip lss = new LayoutSingleSlip(name, p);
                 l = lss;
-                lv = new LayoutSingleSlipView(lss, p);
+                lv = new LayoutSingleSlipView(lss, new Point2D.Double(x, y), 0.0, p);
                 break;
             default:
                 log.error("can't create slip {} with type {}", name, type);

@@ -54,6 +54,19 @@ import jmri.util.MathUtil;
  */
 public class LayoutTurntable extends LayoutTrack {
 
+    /**
+     * Constructor method
+     *
+     * @param id           the name for the turntable
+     * @param layoutEditor what layout editor panel to put it in
+     */
+    public LayoutTurntable(@Nonnull String id, @Nonnull LayoutEditor layoutEditor) {
+        super(id, layoutEditor);
+        
+        radius = 25.0; // initial default, change asap.
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurntableEditor(layoutEditor);
+    }
+
     // defined constants
     // operational instance variables (not saved between sessions)
     private NamedBeanHandle<LayoutBlock> namedLayoutBlock = null;
@@ -67,19 +80,6 @@ public class LayoutTurntable extends LayoutTrack {
     // temporary: this is referenced directly from LayoutTurntable, which 
     // should be using _functional_ accessors here.
     public final List<RayTrack> rayTrackList = new ArrayList<>(); // list of Ray Track objects
-
-    /**
-     * Constructor method
-     *
-     * @param id           the name for the turntable
-     * @param c            where to put it
-     * @param layoutEditor what layout editor panel to put it in
-     */
-    public LayoutTurntable(@Nonnull String id, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
-        super(id, c, layoutEditor);
-        radius = 25.0;
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurntableEditor(layoutEditor);
-    }
 
     /**
      * Get a string that represents this object. This should only be used for

@@ -23,6 +23,33 @@ import static jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType;
  */
 public class LayoutSlipView extends LayoutTurnoutView {
 
+    /**
+     * Constructor method.
+     * @param slip the layout sip to create view for.
+     * @param c 2D point.
+     * @param rot rotation.
+     * @param layoutEditor the layout editor.
+     */
+    public LayoutSlipView(@Nonnull LayoutSlip slip, 
+            Point2D c, double rot, 
+            @Nonnull LayoutEditor layoutEditor) {
+        super(slip, c, rot, layoutEditor);
+        this.slip = slip;
+
+        dispA = new Point2D.Double(-20.0, 0.0);
+        pointA = MathUtil.add(getCoordsCenter(), dispA);
+        pointC = MathUtil.subtract(getCoordsCenter(), dispA);
+        dispB = new Point2D.Double(-14.0, 14.0);
+        pointB = MathUtil.add(getCoordsCenter(), dispB);
+        pointD = MathUtil.subtract(getCoordsCenter(), dispB);
+
+        rotateCoords(rot);
+        
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutSlipEditor(layoutEditor);
+    }
+        
+    final private LayoutSlip slip;
+
     public int currentState = UNKNOWN;
 
     private String turnoutBName = "";
@@ -31,18 +58,6 @@ public class LayoutSlipView extends LayoutTurnoutView {
     private java.beans.PropertyChangeListener mTurnoutListener = null;
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutSlipEditor editor;
 
-    /**
-     * Constructor method.
-     * @param slip the layout sip to create view for.
-     */
-    public LayoutSlipView(@Nonnull LayoutSlip slip, @Nonnull LayoutEditor layoutEditor) {
-        super(slip, layoutEditor);
-        this.slip = slip;
-        
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutSlipEditor(layoutEditor);
-    }
-        
-    final private LayoutSlip slip;
 
     // this should only be used for debugging...
     @Override
@@ -381,14 +396,14 @@ public class LayoutSlipView extends LayoutTurnoutView {
         return pointD;
     }
 
-    protected Point2D getCoordsLeft() {
+    Point2D getCoordsLeft() {
         Point2D leftCenter = MathUtil.midPoint(getCoordsA(), getCoordsB());
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
         double leftFract = circleRadius / getCoordsCenter().distance(leftCenter);
         return MathUtil.lerp(getCoordsCenter(), leftCenter, leftFract);
     }
 
-    protected Point2D getCoordsRight() {
+    Point2D getCoordsRight() {
         Point2D rightCenter = MathUtil.midPoint(getCoordsC(), getCoordsD());
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
         double rightFract = circleRadius / getCoordsCenter().distance(rightCenter);

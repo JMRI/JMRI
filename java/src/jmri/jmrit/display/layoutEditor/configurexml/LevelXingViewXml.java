@@ -145,7 +145,7 @@ public class LevelXingViewXml extends AbstractXmlAdapter {
         }
 
         // create the new LevelXing
-        LevelXing lt = new LevelXing(name, new Point2D.Double(x, y), p);
+        LevelXing lt = new LevelXing(name, p);
         LevelXingView lv = new LevelXingView(lt, new Point2D.Double(x, y), p);
 
         // get remaining attributes

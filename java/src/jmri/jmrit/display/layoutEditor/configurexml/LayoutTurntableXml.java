@@ -108,8 +108,8 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
             log.error("failed to convert layoutturntable center or radius attributes");
         }
         // create the new LayoutTurntable
-        LayoutTurntable lt = new LayoutTurntable(name, new Point2D.Double(x, y), p);
-        LayoutTurntableView lv = new LayoutTurntableView(lt, p);
+        LayoutTurntable lt = new LayoutTurntable(name, p);
+        LayoutTurntableView lv = new LayoutTurntableView(lt, new Point2D.Double(x, y), p);
 
         p.addLayoutTrack(lt, lv);
 

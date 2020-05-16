@@ -213,46 +213,46 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         switch(type) {
 
             case RH_TURNOUT :
-                LayoutRHTurnout lrht = new LayoutRHTurnout(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version); 
+                LayoutRHTurnout lrht = new LayoutRHTurnout(name, p, version); 
                 l = lrht;
-                lv = new LayoutRHTurnoutView(lrht, p);
+                lv = new LayoutRHTurnoutView(lrht, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p);
                 break;
             case LH_TURNOUT :
-                LayoutLHTurnout llht = new LayoutLHTurnout(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                LayoutLHTurnout llht = new LayoutLHTurnout(name, p, version);
                 l = llht;
-                lv = new LayoutLHTurnoutView(llht, p);
+                lv = new LayoutLHTurnoutView(llht, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p);
                 break;
             case WYE_TURNOUT :
-                LayoutWye lwt = new LayoutWye(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                LayoutWye lwt = new LayoutWye(name, p, version);
                 l = lwt;
-                lv = new LayoutWyeView(lwt, p);
+                lv = new LayoutWyeView(lwt, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p);
                 break;
             case DOUBLE_XOVER :
-                LayoutDoubleXOver ldx = new LayoutDoubleXOver(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                LayoutDoubleXOver ldx = new LayoutDoubleXOver(name, p, version);
                 l = ldx;
-                lv = new LayoutDoubleXOverView(ldx, p);
+                lv = new LayoutDoubleXOverView(ldx, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p);
                 break;
             case RH_XOVER :
-                LayoutRHXOver lrx = new LayoutRHXOver(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                LayoutRHXOver lrx = new LayoutRHXOver(name, p, version);
                 l = lrx;
-                lv = new LayoutRHXOverView(lrx, p);
+                lv = new LayoutRHXOverView(lrx, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p);
                 break;
             case LH_XOVER :
-                LayoutLHXOver llx = new LayoutLHXOver(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                LayoutLHXOver llx = new LayoutLHXOver(name, p, version);
                 l = llx;
-                lv = new LayoutLHXOverView(llx, p);
+                lv = new LayoutLHXOverView(llx, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p);
                 break;
 
             case DOUBLE_SLIP :
-                LayoutDoubleSlip lds = new LayoutDoubleSlip(name, new Point2D.Double(x, y), 0.0, p);
+                LayoutDoubleSlip lds = new LayoutDoubleSlip(name, p);
                 l = lds;
-                lv = new LayoutDoubleSlipView(lds, p);
+                lv = new LayoutDoubleSlipView(lds, new Point2D.Double(x, y), 0.0, p);
                 log.error("Found DOUBLE_SLIP in LayoutTrack ctor for element {}", name);
                 break;
             case SINGLE_SLIP :
-                LayoutSingleSlip lss = new LayoutSingleSlip(name, new Point2D.Double(x, y), 0.0, p);
+                LayoutSingleSlip lss = new LayoutSingleSlip(name, p);
                 l = lss;
-                lv = new LayoutSingleSlipView(lss, p);
+                lv = new LayoutSingleSlipView(lss, new Point2D.Double(x, y), 0.0, p);
                 log.error("Found SINGLE_SLIP in LayoutTrack ctor for element {}", name);
                 break;
 

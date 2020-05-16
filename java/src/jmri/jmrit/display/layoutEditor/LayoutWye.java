@@ -3,15 +3,6 @@ package jmri.jmrit.display.layoutEditor;
 import static java.lang.Float.POSITIVE_INFINITY;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.text.MessageFormat;
 import java.util.*;
 import javax.annotation.*;
 import javax.swing.*;
@@ -19,7 +10,6 @@ import jmri.*;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.MathUtil;
-import org.slf4j.*;
 
 /**
  * A specialization of {@link LayoutTurnout}
@@ -81,25 +71,19 @@ import org.slf4j.*;
 public class LayoutWye extends LayoutTurnout {
 
     public LayoutWye(@Nonnull String id,
-            @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor,
             @Nonnull LayoutEditor layoutEditor) {
-        this(id, c, rot, xFactor, yFactor, layoutEditor, 1);
+        this(id, layoutEditor, 1);
     }
 
     /**
      * Main constructor method.
      * @param id wye id string.
-     * @param c 2D point position.
-     * @param rot rotation.
-     * @param xFactor horizontal factor.
-     * @param yFactor vertical factor.
-     * @param layoutEditor main layout editor.
      * @param v unused.
      */
-    public LayoutWye(@Nonnull String id, @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
-        super(id, TurnoutType.WYE_TURNOUT, c, rot, xFactor, yFactor, layoutEditor, 1);
+    public LayoutWye(@Nonnull String id,
+            @Nonnull LayoutEditor layoutEditor, 
+            int v) {
+        super(id, TurnoutType.WYE_TURNOUT, layoutEditor, 1);
     }
     
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutWye.class);

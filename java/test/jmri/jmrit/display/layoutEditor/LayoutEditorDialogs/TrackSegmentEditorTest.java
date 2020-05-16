@@ -150,6 +150,7 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
 
     private LayoutEditor layoutEditor = null;
     private TrackSegment trackSegment = null;
+    private TrackSegmentView trackSegmentView = null;
 
     @Before
     public void setUp() {
@@ -168,11 +169,19 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
             Point2D delta = new Point2D.Double(50.0, 10.0);
 
             // Track Segment
-            PositionablePoint pp1 = new PositionablePoint("a", PositionablePoint.PointType.ANCHOR, point, layoutEditor);
+            PositionablePoint pp1 = new PositionablePoint("a", PositionablePoint.PointType.ANCHOR, layoutEditor);
+            PositionablePointView pp1v = new PositionablePointView(pp1, point, layoutEditor);
+            layoutEditor.addLayoutTrack(pp1, pp1v);
+                       
             point = MathUtil.add(point, delta);
-            PositionablePoint pp2 = new PositionablePoint("b", PositionablePoint.PointType.ANCHOR, point, layoutEditor);
+            PositionablePoint pp2 = new PositionablePoint("b", PositionablePoint.PointType.ANCHOR, layoutEditor);
+            PositionablePointView pp2v = new PositionablePointView(pp2, point, layoutEditor);
+            layoutEditor.addLayoutTrack(pp2, pp2v);
+            
             trackSegment = new TrackSegment("Segment", pp1, HitPointType.POS_POINT, pp2, HitPointType.POS_POINT, 
                                             false, layoutEditor);
+            trackSegmentView = new TrackSegmentView(trackSegment, layoutEditor);
+            layoutEditor.addLayoutTrack(trackSegment, trackSegmentView);
         }
     }
 

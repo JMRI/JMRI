@@ -600,8 +600,8 @@ final public class LayoutEditorChecks {
                 LayoutTrack c2 = ts.getConnect2();
                 if ((c1 != null) && (c2 != null)) {
                     // if length is zero...
-                    Point2D end1 = LayoutEditor.getCoords(ts.getConnect1(), ts.getType1());
-                    Point2D end2 = LayoutEditor.getCoords(ts.getConnect2(), ts.getType2());
+                    Point2D end1 = layoutEditor.getCoords(ts.getConnect1(), ts.getType1());
+                    Point2D end2 = layoutEditor.getCoords(ts.getConnect2(), ts.getType2());
                     if (MathUtil.distance(end1, end2) <= 4.0) {
                         linearBezierTrackSegments.add(ts);
                         continue;   // so we don't get added again
@@ -687,8 +687,8 @@ final public class LayoutEditorChecks {
                 LayoutTrack c1 = ts.getConnect1();
                 LayoutTrack c2 = ts.getConnect2();
                 if ((c1 != null) && (c2 != null)) {
-                    Point2D end1 = LayoutEditor.getCoords(c1, ts.getType1());
-                    Point2D end2 = LayoutEditor.getCoords(c2, ts.getType2());
+                    Point2D end1 = layoutEditor.getCoords(c1, ts.getType1());
+                    Point2D end2 = layoutEditor.getCoords(c2, ts.getType2());
                     double chordLength = MathUtil.distance(end1, end2);
                     if (chordLength <= 4.0) {
                         continue;   //skip short segments

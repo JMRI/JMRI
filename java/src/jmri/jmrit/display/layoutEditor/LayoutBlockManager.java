@@ -445,7 +445,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             // block boundary is at an Anchor Point
             //    LayoutEditorTools tools = panel.getLETools(); //TODO: Dead-code strip this
             PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr, (TrackSegment) connected);
-            boolean block1IsWestEnd = LayoutEditorTools.isAtWestEndOfAnchor(tr, p);
+            boolean block1IsWestEnd = LayoutEditorTools.isAtWestEndOfAnchor(panel, tr, p);
 
             if ((block1IsWestEnd && facingIsBlock1) || (!block1IsWestEnd && !facingIsBlock1)) {
                 //block1 is on the west (north) end of the block boundary
@@ -1597,7 +1597,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             //block boundary is at an Anchor Point
             PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr, (TrackSegment) connected);
 
-            boolean block1IsWestEnd = LayoutEditorTools.isAtWestEndOfAnchor(tr, p);
+            boolean block1IsWestEnd = LayoutEditorTools.isAtWestEndOfAnchor(panel, tr, p);
             log.debug("Track is west end? {}", block1IsWestEnd);
             if ((block1IsWestEnd && facingIsBlock1) || (!block1IsWestEnd && !facingIsBlock1)) {
                 //block1 is on the west (north) end of the block boundary
@@ -1931,13 +1931,13 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             //   LayoutEditorTools tools = panel.getLETools(); //TODO: Dead-code strip this
 
             if (east) {
-                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(panel, pp.getConnect1(), pp)) {
                     tr = pp.getConnect2();
                 } else {
                     tr = pp.getConnect1();
                 }
             } else {
-                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(panel, pp.getConnect1(), pp)) {
                     tr = pp.getConnect1();
                 } else {
                     tr = pp.getConnect2();
@@ -2046,13 +2046,13 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             //            LayoutEditorTools tools = panel.getLETools(); //TODO: Dead-code strip this
 
             if (east) {
-                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(panel, pp.getConnect1(), pp)) {
                     tr = pp.getConnect2();
                 } else {
                     tr = pp.getConnect1();
                 }
             } else {
-                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(panel, pp.getConnect1(), pp)) {
                     tr = pp.getConnect1();
                 } else {
                     tr = pp.getConnect2();
@@ -2210,13 +2210,13 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             // LayoutEditorTools tools = panel.getLETools(); //TODO: Dead-code strip this
 
             if (east) {
-                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(panel, pp.getConnect1(), pp)) {
                     tr = pp.getConnect1();
                 } else {
                     tr = pp.getConnect2();
                 }
             } else {
-                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(panel, pp.getConnect1(), pp)) {
                     tr = pp.getConnect2();
                 } else {
                     tr = pp.getConnect1();

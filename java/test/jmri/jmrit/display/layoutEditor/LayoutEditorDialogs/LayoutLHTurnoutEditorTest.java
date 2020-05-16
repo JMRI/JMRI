@@ -43,6 +43,7 @@ public class LayoutLHTurnoutEditorTest extends LayoutTurnoutEditorTest {
 
     private LayoutEditor layoutEditor = null;
     private LayoutLHTurnout leftHandLayoutTurnout = null;
+    private LayoutLHTurnoutView leftHandLayoutTurnoutView = null;
 
     @Before
     public void setUp() {
@@ -59,9 +60,13 @@ public class LayoutLHTurnoutEditorTest extends LayoutTurnoutEditorTest {
             Point2D point = new Point2D.Double(150.0, 100.0);
             Point2D delta = new Point2D.Double(50.0, 10.0);
 
-            // RH Turnout
+            // LH Turnout
             point = MathUtil.add(point, delta);
-            leftHandLayoutTurnout = new LayoutLHTurnout("LH Turnout", point, 33.0, 1.1, 1.2, layoutEditor);
+            leftHandLayoutTurnout = new LayoutLHTurnout("LH Turnout", layoutEditor); // point, 33.0, 1.1, 1.2, 
+            leftHandLayoutTurnoutView = new LayoutLHTurnoutView(leftHandLayoutTurnout, 
+                                                point, 33.0, 1.1, 1.2,
+                                                layoutEditor); 
+            layoutEditor.addLayoutTrack(leftHandLayoutTurnout, leftHandLayoutTurnoutView);
         }
     }
 
@@ -79,6 +84,7 @@ public class LayoutLHTurnoutEditorTest extends LayoutTurnoutEditorTest {
         }
 
         leftHandLayoutTurnout = null;
+        leftHandLayoutTurnoutView = null;
         layoutEditor = null;
 
         JUnitUtil.resetWindows(false, false);

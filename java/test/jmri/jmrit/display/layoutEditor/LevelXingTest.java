@@ -21,7 +21,7 @@ public class LevelXingTest {
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
-        LevelXing t = new LevelXing("test", new Point2D.Double(0.0, 0.0),e);
+        LevelXing t = new LevelXing("test", e);  // new Point2D.Double(0.0, 0.0),
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(e);
     }

@@ -19,7 +19,8 @@ public class LayoutSingleSlipViewTest extends LayoutSlipViewTest {
 
     @Test
     public void testCtor() {
-        new LayoutSingleSlipView(slip, layoutEditor);
+        Point2D point = new Point2D.Double(150.0, 100.0);
+        new LayoutSingleSlipView(slip, point, 0.0, layoutEditor);
     }
 
     LayoutEditor layoutEditor;
@@ -33,9 +34,8 @@ public class LayoutSingleSlipViewTest extends LayoutSlipViewTest {
 
             layoutEditor = new LayoutEditor();
             
-            Point2D point = new Point2D.Double(150.0, 100.0);
  
-            slip = new LayoutSingleSlip("Slip", point, 0.0, layoutEditor);
+            slip = new LayoutSingleSlip("Slip", layoutEditor);
 
         }
     }

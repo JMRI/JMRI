@@ -233,8 +233,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
             // Turntable
             point = MathUtil.add(point, delta);
-            layoutTurntable = new LayoutTurntable("Turntable",
-                    point, layoutEditor);
+            layoutTurntable = new LayoutTurntable("Turntable", layoutEditor);
 
         }
     }

@@ -68,8 +68,10 @@ public class PositionablePoint extends LayoutTrack {
     private NamedBeanHandle<Sensor> eastBoundSensorNamed = null;
     private NamedBeanHandle<Sensor> westBoundSensorNamed = null;
 
-    public PositionablePoint(String id, PointType t, Point2D c, LayoutEditor layoutEditor) {
-        super(id, c, layoutEditor);
+//    public PositionablePoint(String id, PointType t, Point2D c, LayoutEditor layoutEditor) {
+//        super(id, c, layoutEditor);
+    public PositionablePoint(String id, PointType t, LayoutEditor layoutEditor) {
+        super(id, layoutEditor);
 
         if ((t == PointType.ANCHOR) || (t == PointType.END_BUMPER) || (t == PointType.EDGE_CONNECTOR)) {
             type = t;
@@ -1487,9 +1489,9 @@ public class PositionablePoint extends LayoutTrack {
         if (ts1 != null) {
             Point2D p1;
             if (ts1.getConnect1() == this) {
-                p1 = LayoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
+                p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
             } else {
-                p1 = LayoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
+                p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
             }
             result = Path.computeDirection(getCoordsCenter(), p1);
         }
@@ -1889,14 +1891,14 @@ public class PositionablePoint extends LayoutTrack {
                     lc = new LayoutConnectivity(blk1, blk2);
                     // determine direction from block 1 to block 2
                     if (ts1.getConnect1() == this) {
-                        p1 = LayoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
+                        p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
                     } else {
-                        p1 = LayoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
+                        p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
                     }
                     if (ts2.getConnect1() == this) {
-                        p2 = LayoutEditor.getCoords(ts2.getConnect2(), ts2.getType2());
+                        p2 = layoutEditor.getCoords(ts2.getConnect2(), ts2.getType2());
                     } else {
-                        p2 = LayoutEditor.getCoords(ts2.getConnect1(), ts2.getType1());
+                        p2 = layoutEditor.getCoords(ts2.getConnect1(), ts2.getType1());
                     }
                     lc.setDirection(Path.computeDirection(p1, p2));
                     // save Connections
@@ -1919,9 +1921,9 @@ public class PositionablePoint extends LayoutTrack {
 
                     // determine direction from block 1 to block 2
                     if (ts1.getConnect1() == this) {
-                        p1 = LayoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
+                        p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
                     } else {
-                        p1 = LayoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
+                        p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
                     }
 
                     //Need to find a way to compute the direction for this for a split over the panel

@@ -23,24 +23,6 @@ import jmri.util.swing.JmriColorChooser;
  */
 public class TrackSegmentView extends LayoutTrackView {
 
-    // persistent instances variables (saved between sessions)
-    private boolean dashed = false;
-    
-    private boolean arc = false;
-    private boolean circle = false;
-    private boolean flip = false;
-    private double angle = 0.0D;
-    
-    private boolean changed = false;
-    private boolean bezier = false;
-
-    // for Bezier
-    private final ArrayList<Point2D> bezierControlPoints = new ArrayList<>(); // list of control point displacements
-
-    // temporary reference to the Editor that will eventually be part of View
-    private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor editor;
-
-
     public TrackSegmentView(@Nonnull TrackSegment track, @Nonnull LayoutEditor layoutEditor) {
         super(track, layoutEditor);
         this.trackSegment = track;
@@ -58,6 +40,23 @@ public class TrackSegmentView extends LayoutTrackView {
                 
         setupDefaultBumperSizes(layoutEditor);
     }
+
+    // persistent instances variables (saved between sessions)
+    private boolean dashed = false;
+    
+    private boolean arc = false;
+    private boolean circle = false;
+    private boolean flip = false;
+    private double angle = 0.0D;
+    
+    private boolean changed = false;
+    private boolean bezier = false;
+
+    // for Bezier
+    private final ArrayList<Point2D> bezierControlPoints = new ArrayList<>(); // list of control point displacements
+
+    // temporary reference to the Editor that will eventually be part of View
+    private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor editor;
 
     final private TrackSegment trackSegment;
     
@@ -183,8 +182,8 @@ public class TrackSegmentView extends LayoutTrackView {
                     // then use control point to calculate arc
                     // adjacent connections must be defined...
                     if ((getConnect1() != null) && (getConnect2() != null)) {
-                        Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
-                        Point2D end2 = LayoutEditor.getCoords(getConnect2(), getType2());
+                        Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
+                        Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
                         double chordLength = MathUtil.distance(end1, end2);
 
                         // get first and last control points
@@ -277,10 +276,10 @@ public class TrackSegmentView extends LayoutTrackView {
     public double getDirectionRAD() {
         Point2D ep1 = getCoordsCenter(), ep2 = getCoordsCenter();
         if (getConnect1() != null) {
-            ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
+            ep1 = layoutEditor.getCoords(getConnect1(), getType1());
         }
         if (getConnect2() != null) {
-            ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
+            ep2 = layoutEditor.getCoords(getConnect2(), getType2());
         }
         return (Math.PI / 2.D) - MathUtil.computeAngleRAD(ep1, ep2);
     }
@@ -539,10 +538,10 @@ public class TrackSegmentView extends LayoutTrackView {
 
         Point2D ep1 = getCoordsCenter(), ep2 = getCoordsCenter();
         if (getConnect1() != null) {
-            ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
+            ep1 = layoutEditor.getCoords(getConnect1(), getType1());
         }
         if (getConnect2() != null) {
-            ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
+            ep2 = layoutEditor.getCoords(getConnect2(), getType2());
         }
 
         result = new Rectangle2D.Double(ep1.getX(), ep1.getY(), 0, 0);
@@ -1491,9 +1490,11 @@ public class TrackSegmentView extends LayoutTrackView {
                 newAnchor, HitPointType.POS_POINT,
                 getConnect2(), getType2(),
                 trackSegment.isMainline(), layoutEditor);
+        TrackSegmentView ntsv = new TrackSegmentView(newTrackSegment, 
+                layoutEditor);
         log.error("temporary: splitTrackSegment created track without view, didn't include isDashed() ");
         // add it to known tracks
-        layoutEditor.addLayoutTrack(newTrackSegment);
+        layoutEditor.addLayoutTrack(newTrackSegment, ntsv);
         layoutEditor.setDirty();
 
         // copy attributes to new track segment
@@ -1600,7 +1601,7 @@ public class TrackSegmentView extends LayoutTrackView {
         if (index > 0) {
             addPoint = MathUtil.midPoint(getBezierControlPoint(index - 1), addPoint);
         } else {
-            Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
+            Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
             addPoint = MathUtil.midPoint(ep1, addPoint);
         }
         bezierControlPoints.add(index, addPoint);
@@ -1615,7 +1616,7 @@ public class TrackSegmentView extends LayoutTrackView {
             addPoint = MathUtil.midPoint(addPoint, getBezierControlPoint(index + 1));
             bezierControlPoints.add(index + 1, addPoint);
         } else {
-            Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
+            Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
             addPoint = MathUtil.midPoint(addPoint, ep2);
             bezierControlPoints.add(addPoint);
         }
@@ -1659,8 +1660,8 @@ public class TrackSegmentView extends LayoutTrackView {
                     // TODO: and place the control points halfway between that and the two endpoints
 
                     // set default control point displacements
-                    Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
-                    Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
+                    Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+                    Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
 
                     // compute orthogonal offset0 with length one third the distance from ep1 to ep2
                     Point2D offset = MathUtil.subtract(ep2, ep1);
@@ -1864,8 +1865,8 @@ public class TrackSegmentView extends LayoutTrackView {
 
         if ((getConnect1() != null) && (getConnect2() != null)) {
             // get the end points
-            Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
-            Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
+            Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+            Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
 
             if (isCircle()) {
                 result = getCoordsCenter(); // new Point2D.Double(centreX, centreY);
@@ -2025,11 +2026,11 @@ public class TrackSegmentView extends LayoutTrackView {
     protected void calculateTrackSegmentAngle() {
         Point2D pt1, pt2;
         if (isFlip()) {
-            pt1 = LayoutEditor.getCoords(getConnect2(), getType2());
-            pt2 = LayoutEditor.getCoords(getConnect1(), getType1());
+            pt1 = layoutEditor.getCoords(getConnect2(), getType2());
+            pt2 = layoutEditor.getCoords(getConnect1(), getType1());
         } else {
-            pt1 = LayoutEditor.getCoords(getConnect1(), getType1());
-            pt2 = LayoutEditor.getCoords(getConnect2(), getType2());
+            pt1 = layoutEditor.getCoords(getConnect1(), getType1());
+            pt2 = layoutEditor.getCoords(getConnect2(), getType2());
         }
         if ((getTmpPt1() != pt1) || (getTmpPt2() != pt2) || trackNeedsRedraw()) {
             setTmpPt1(pt1);
@@ -2121,8 +2122,12 @@ public class TrackSegmentView extends LayoutTrackView {
                 Point2D[] points = getBezierPoints();
                 MathUtil.drawBezier(g2, points);
             } else {
-                Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
-                Point2D end2 = LayoutEditor.getCoords(getConnect2(), getType2());
+                Point2D end1 = layoutEditor.getCoords(
+                                    getConnect1(), 
+                                    getType1());
+                Point2D end2 = layoutEditor.getCoords(
+                                    getConnect2(), 
+                                    getType2());
 
                 g2.draw(new Line2D.Double(end1, end2));
             }
@@ -2162,8 +2167,8 @@ public class TrackSegmentView extends LayoutTrackView {
                 MathUtil.drawBezier(g2, points, -railDisplacement);
                 MathUtil.drawBezier(g2, points, +railDisplacement);
             } else {
-                Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
-                Point2D end2 = LayoutEditor.getCoords(getConnect2(), getType2());
+                Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
+                Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
 
                 Point2D delta = MathUtil.subtract(end2, end1);
                 Point2D vector = MathUtil.normalize(delta, railDisplacement);
@@ -2193,8 +2198,8 @@ public class TrackSegmentView extends LayoutTrackView {
     protected void drawEditControls(Graphics2D g2) {
         g2.setColor(Color.black);
         if (isShowConstructionLines()) {
-            Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
-            Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
+            Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+            Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
             if (isCircle()) {
                 // draw radiuses
                 Point2D circleCenterPoint = getCoordsCenterCircle();
@@ -2240,8 +2245,8 @@ public class TrackSegmentView extends LayoutTrackView {
 
         log.trace("TrackSegmentView: drawDecorations arrowStyle {}",arrowStyle);
 // get end points and calculate start/stop angles (in radians)
-        Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
-        Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
+        Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+        Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
         Point2D p1, p2, p3, p4, p5, p6, p7;
         Point2D p1P = ep1, p2P = ep2, p3P, p4P, p5P, p6P, p7P;
         double startAngleRAD, stopAngleRAD;
@@ -2631,8 +2636,8 @@ public class TrackSegmentView extends LayoutTrackView {
      */
     @Nonnull
     private Point2D[] getBezierPoints() {
-        Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
-        Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
+        Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+        Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
         int cnt = bezierControlPoints.size() + 2;
         Point2D[] points = new Point2D[cnt];
         points[0] = ep1;
@@ -3685,8 +3690,8 @@ public class TrackSegmentView extends LayoutTrackView {
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(trackSegment, lt, getType1(), null);
                     lc.setDirection(Path.computeDirection(
-                            LayoutEditor.getCoords(getConnect2(), getType2()),
-                            LayoutEditor.getCoords(getConnect1(), getType1())));
+                            layoutEditor.getCoords(getConnect2(), getType2()),
+                            layoutEditor.getCoords(getConnect1(), getType1())));
                     results.add(lc);
                 }
             } else if (HitPointType.isLevelXingHitType(getType1())) {
@@ -3703,8 +3708,8 @@ public class TrackSegmentView extends LayoutTrackView {
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(trackSegment, lx, getType1(), null);
                     lc.setDirection(Path.computeDirection(
-                            LayoutEditor.getCoords(getConnect2(), getType2()),
-                            LayoutEditor.getCoords(getConnect1(), getType1())));
+                            layoutEditor.getCoords(getConnect2(), getType2()),
+                            layoutEditor.getCoords(getConnect1(), getType1())));
                     results.add(lc);
                 }
             } else if (HitPointType.isSlipHitType(getType1())) {
@@ -3716,8 +3721,8 @@ public class TrackSegmentView extends LayoutTrackView {
                     log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(trackSegment, ls, getType1(), null);
-                    lc.setDirection(Path.computeDirection(LayoutEditor.getCoords(getConnect2(),
-                            getType2()), LayoutEditor.getCoords(getConnect1(), getType1())));
+                    lc.setDirection(Path.computeDirection(layoutEditor.getCoords(getConnect2(),
+                            getType2()), layoutEditor.getCoords(getConnect1(), getType1())));
                     results.add(lc);
                 }
             }
@@ -3744,8 +3749,8 @@ public class TrackSegmentView extends LayoutTrackView {
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(trackSegment, lt, getType2(), null);
                     lc.setDirection(Path.computeDirection(
-                            LayoutEditor.getCoords(getConnect1(), getType1()),
-                            LayoutEditor.getCoords(getConnect2(), getType2())));
+                            layoutEditor.getCoords(getConnect1(), getType1()),
+                            layoutEditor.getCoords(getConnect2(), getType2())));
                     results.add(lc);
                 }
             } else if (HitPointType.isLevelXingHitType(getType2())) {
@@ -3762,8 +3767,8 @@ public class TrackSegmentView extends LayoutTrackView {
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(trackSegment, lx, getType2(), null);
                     lc.setDirection(Path.computeDirection(
-                            LayoutEditor.getCoords(getConnect1(), getType1()),
-                            LayoutEditor.getCoords(getConnect2(), getType2())));
+                            layoutEditor.getCoords(getConnect1(), getType1()),
+                            layoutEditor.getCoords(getConnect2(), getType2())));
                     results.add(lc);
                 }
             } else if (HitPointType.isSlipHitType(getType2())) {
@@ -3776,8 +3781,8 @@ public class TrackSegmentView extends LayoutTrackView {
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(trackSegment, ls, getType2(), null);
                     lc.setDirection(Path.computeDirection(
-                            LayoutEditor.getCoords(getConnect1(), getType1()),
-                            LayoutEditor.getCoords(getConnect2(), getType2())));
+                            layoutEditor.getCoords(getConnect1(), getType1()),
+                            layoutEditor.getCoords(getConnect2(), getType2())));
                     results.add(lc);
                 }
             }

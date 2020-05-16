@@ -19,7 +19,9 @@ public class LayoutDoubleSlipViewTest extends LayoutSlipViewTest {
 
     @Test
     public void testCtor() {
-        new LayoutDoubleSlipView(dslip, layoutEditor);
+        Point2D point = new Point2D.Double(150.0, 100.0);
+        
+        new LayoutDoubleSlipView(dslip, point, 0.0, layoutEditor);
     }
 
     LayoutEditor layoutEditor;
@@ -32,10 +34,8 @@ public class LayoutDoubleSlipViewTest extends LayoutSlipViewTest {
             JUnitUtil.resetProfileManager();
 
             layoutEditor = new LayoutEditor();
-            
-            Point2D point = new Point2D.Double(150.0, 100.0);
- 
-            dslip = new LayoutDoubleSlip("DoubleSlip", point, 0.0, layoutEditor);
+             
+            dslip = new LayoutDoubleSlip("DoubleSlip", layoutEditor);
 
         }
     }

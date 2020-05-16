@@ -42,9 +42,13 @@ public class LayoutTurntableView extends LayoutTrackView {
     /**
      * Constructor method.
      * @param turntable the layout turntable to create view for.
+     * @param c            where to put it
+     * @param layoutEditor what layout editor panel to put it in
      */
-    public LayoutTurntableView(@Nonnull LayoutTurntable turntable, @Nonnull LayoutEditor layoutEditor) {
-        super(turntable, layoutEditor);
+    public LayoutTurntableView(@Nonnull LayoutTurntable turntable, 
+                @Nonnull Point2D c, 
+                @Nonnull LayoutEditor layoutEditor) {
+        super(turntable, c, layoutEditor);
         this.turntable = turntable;
         
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurntableEditor(layoutEditor);

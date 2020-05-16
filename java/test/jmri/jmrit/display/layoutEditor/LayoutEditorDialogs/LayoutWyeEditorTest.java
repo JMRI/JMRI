@@ -43,6 +43,7 @@ public class LayoutWyeEditorTest extends LayoutTurnoutEditorTest {
 
     private LayoutEditor layoutEditor = null;
     private LayoutWye layoutWye = null;
+    private LayoutWyeView layoutWyeView = null;
 
     @Before
     public void setUp() {
@@ -61,7 +62,9 @@ public class LayoutWyeEditorTest extends LayoutTurnoutEditorTest {
 
             // Wye
             point = MathUtil.add(point, delta);
-            layoutWye = new LayoutWye("Wye", point, 33.0, 1.1, 1.2, layoutEditor);
+            layoutWye = new LayoutWye("Wye", layoutEditor);
+            layoutWyeView = new LayoutWyeView(layoutWye, point, 33.0, 1.1, 1.2, layoutEditor);
+            layoutEditor.addLayoutTrack(layoutWye, layoutWyeView);
         }
     }
 

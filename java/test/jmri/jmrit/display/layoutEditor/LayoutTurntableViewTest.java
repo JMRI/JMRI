@@ -17,7 +17,9 @@ public class LayoutTurntableViewTest extends LayoutTrackViewTest {
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        new LayoutTurntableView(turntable, layoutEditor);
+        Point2D point = new Point2D.Double(150.0, 100.0);
+        
+        new LayoutTurntableView(turntable, point, layoutEditor);
     }
 
     LayoutEditor layoutEditor;
@@ -31,28 +33,7 @@ public class LayoutTurntableViewTest extends LayoutTrackViewTest {
 
             layoutEditor = new LayoutEditor();
             
-            Point2D point = new Point2D.Double(150.0, 100.0);
-            //Point2D delta = new Point2D.Double(50.0, 75.0);
-
-            //ltRH = new LayoutRHTurnout("Right Hand", point, 33.0, 1.1, 1.2, layoutEditor);
-
-            //point = MathUtil.add(point, delta);
-            //ltLH = new LayoutLHTurnout("Left Hand", point, 66.0, 1.3, 1.4, layoutEditor);
-
-            //point = MathUtil.add(point, delta);
-            //ltWY = new LayoutWye("Wye", point, 99.0, 1.5, 1.6, layoutEditor);
-
-            //point = MathUtil.add(point, delta);
-            //ltDX = new LayoutDoubleXOver("Double XOver", point, 132.0, 1.7, 1.8, layoutEditor);
-
-            //point = MathUtil.add(point, delta);
-            //ltRX = new LayoutRHXOver("Right Hand XOver", point, 165.0, 1.9, 2.0, layoutEditor);
-
-            //point = MathUtil.add(point, delta);
-            //ltLX = new LayoutLHXOver("Left Hand XOver", point, 198.0, 2.1, 2.2, layoutEditor);
-
-            turntable = new LayoutTurntable("T1", point, layoutEditor);
-
+            turntable = new LayoutTurntable("T1", layoutEditor);
         }
     }
 

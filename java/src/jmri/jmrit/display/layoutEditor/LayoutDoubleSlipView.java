@@ -21,9 +21,12 @@ public class LayoutDoubleSlipView extends LayoutSlipView {
     /**
      * Constructor method.
      * @param slip the layout double slip to view.
+     * @param c 2D point.
+     * @param rot rotation.
+     * @param layoutEditor main layout editor.
      */
-    public LayoutDoubleSlipView(@Nonnull LayoutDoubleSlip slip, @Nonnull LayoutEditor layoutEditor) {
-        super(slip, layoutEditor);
+    public LayoutDoubleSlipView(@Nonnull LayoutDoubleSlip slip, Point2D c, double rot, @Nonnull LayoutEditor layoutEditor) {
+        super(slip, c, rot, layoutEditor);
         // this.slip = slip;
     }
         

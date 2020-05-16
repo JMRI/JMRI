@@ -19,7 +19,9 @@ public class  LayoutLHXOverViewTest extends  LayoutXOverViewTest {
 
     @Test
     public void testCtor() {
-        new LayoutLHXOverView(xover, layoutEditor);
+        Point2D point = new Point2D.Double(150.0, 100.0);
+        
+        new LayoutLHXOverView(xover, point, 99.0, 1.5, 1.6, layoutEditor);
     }
 
     LayoutEditor layoutEditor;
@@ -32,10 +34,8 @@ public class  LayoutLHXOverViewTest extends  LayoutXOverViewTest {
             JUnitUtil.resetProfileManager();
 
             layoutEditor = new LayoutEditor();
-            
-            Point2D point = new Point2D.Double(150.0, 100.0);
- 
-            xover = new LayoutLHXOver("Wye", point, 99.0, 1.5, 1.6, layoutEditor);
+             
+            xover = new LayoutLHXOver("Wye", layoutEditor);
 
         }
     }

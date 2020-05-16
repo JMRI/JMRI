@@ -133,7 +133,8 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
 
 
     private LayoutEditor layoutEditor = null;
-    private LayoutSlip doubleLayoutSlip = null;
+    private LayoutDoubleSlip doubleLayoutSlip = null;
+    private LayoutDoubleSlipView doubleLayoutSlipView = null;
 
     @Before
     public void setUp() {
@@ -152,8 +153,9 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
 
             // doubleLayoutSlip
             point = MathUtil.add(point, delta);
-            doubleLayoutSlip = new LayoutDoubleSlip("Double Slip",
-                    point, 0.0, layoutEditor);
+            doubleLayoutSlip = new LayoutDoubleSlip("Double Slip", layoutEditor); // point, 0.0, 
+            doubleLayoutSlipView = new LayoutDoubleSlipView(doubleLayoutSlip, point, 0.0, layoutEditor);
+            layoutEditor.addLayoutTrack(doubleLayoutSlip, doubleLayoutSlipView);
 
         }
     }

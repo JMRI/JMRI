@@ -22,8 +22,11 @@ public class LayoutXOverView extends LayoutTurnoutView {
      * Constructor method.
      * @param xover the layout crossover.
      */
-    public LayoutXOverView(@Nonnull LayoutXOver xover, @Nonnull LayoutEditor layoutEditor) {
-        super(xover, layoutEditor);
+    public LayoutXOverView(@Nonnull LayoutXOver xover, 
+            @Nonnull Point2D c, double rot,
+            double xFactor, double yFactor, 
+            @Nonnull LayoutEditor layoutEditor) {
+        super(xover, c, rot, xFactor, yFactor, layoutEditor);
         // this.xover = xover;
     }
         

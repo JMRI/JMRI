@@ -13,11 +13,8 @@ It's in no particular order, items are removed as done, so please don't consider
 
 - [ ] Last:  TrackSegmentViewXml is storing as  class="TrackSegmentView" to ease file comparison; change back.
 
-diff temp/temp/LayoutEditorTest.xml java/test/jmri/jmrit/display/layoutEditor/loadref/LayoutEditorTest.xml
-(There are two LayoutEditorTest.xml files in load, only one in loadref)
-- [ ] turntable doesn't echo positions right
-- [ ] xing doesn't echo positions right
-
+ - [ ] Make up and check an extensive Turnout test panel - rotate, scale, translate plus rays
+ - [ ] Make up and check an extensive Slip test panel - rotate, scale, translate plus rays 
 
 - [X] Turntable Ray display
   - [ ] Turntable ray location for information split between topo and View classes; add decorator in view.
@@ -32,7 +29,7 @@ diff temp/temp/LayoutEditorTest.xml java/test/jmri/jmrit/display/layoutEditor/lo
     - [ ] arrowstyle in View
     - [ ] bridge in View
     - [ ] tunnel in View
-- [ ] center in view
+
 - [ ] create popup et al (inc member vars) in view
 - [ ] Turnout state in connectivity
 - [ ] Block and connectivity checks to, well, connectivity
@@ -84,6 +81,7 @@ Go through and confirm individually:
         LayoutXOver
 
 In LayoutTurnoutView (temp) ctor:
+
 ```
         if (rot != 0.0) log.warn("we're not able to retrieve the rotation from the underlying track; it's in the coordinates")
         rotateCoords(rot);
@@ -95,9 +93,13 @@ In LayoutTurnoutView (temp) ctor:
                 Math.round(dispA.getY() * yFactor));
         dispA = pt;
 ```
+
 Should we just be sucking over all the variables from the track?  But it won't have them anymore
 (This is a tricky ctor; is it ever used with rot != 0?)
 
+---
+
+- [ ] Getting "not stabilized after check" - what does that mean for tests?
 
 ---
 
@@ -186,6 +188,24 @@ java/src/jmri/jmrit/display/layoutEditor//LayoutBlock.java:    public String get
 java/src/jmri/jmrit/display/layoutEditor//LayoutTrack.java:    final public String getId() {
 ```
 
+---
+
+Structural navigation issue that has to eventually be resolved:
+
+A LayoutTrackView-subclass object Xv has a LayoutTrack Xt. 
+Xt is linked via the usual connection mechanism to Yt, which has a view Tv.
+Xa wants the coordinates of that far end, which it needs to get from Yv
+
+Right now, that goes through the Map<LayoutTrack, LayoutTrackView> in a LayoutEditor
+object held by Xv from it's construction time. 
+ - That forces a 1-1 model-view connection within a LayoutEditor object; is that OK?
+
+Because navigation is _really_ spread around, this adds more requirements to pass around and 
+hold a LayoutEditor reference, which is hard.  And the LayoutEditor class has a _lot_ of duties.
+
+Consider the Swing approach, where things are held within collections that can he navigated
+up/down/sideways rather than a common map.
+
 
 ---
 
@@ -245,6 +265,9 @@ This needs to get hooked up properly:
 Way too many calls to repaint, particularly during loading.  Add a global "wait for later", perhaps protected by a keep-alive (or set a 'no repaint-before' timer)
 
 ---
+ Duplicate runs of tests in LayoutTurnoutTest because it's inherited by lots. Break them up?
+ 
+---
 
 About writing out the image files in tests:
 
@@ -259,6 +282,7 @@ About writing out the image files in tests:
 
  TrackSegment HIDECON as an EnumSet
  https://docs.oracle.com/javase/7/docs/api/java/util/EnumSet.html
+ 
 ``` 
      public enum Style {
         BOLD, ITALIC, UNDERLINE, STRIKETHROUGH

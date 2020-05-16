@@ -21,9 +21,18 @@ public class LayoutLHTurnoutView extends LayoutTurnoutView {
     /**
      * Constructor method.
      * @param turnout the layout left hand turnout to create view for.
+     * @param c 2D point.
+     * @param rot rotation.
+     * @param xFactor horizontal factor.
+     * @param yFactor vertical factor.
+     * @param layoutEditor main layout editor.
      */
-    public LayoutLHTurnoutView(@Nonnull LayoutLHTurnout turnout, @Nonnull LayoutEditor layoutEditor) {
-        super(turnout, layoutEditor);
+    public LayoutLHTurnoutView(@Nonnull LayoutLHTurnout turnout, 
+            @Nonnull Point2D c, double rot,
+            double xFactor, double yFactor,
+            @Nonnull LayoutEditor layoutEditor) {
+        super(turnout, c, rot, xFactor, yFactor, layoutEditor);
+        
         // this.turnout = turnout;
     }
         

@@ -120,10 +120,8 @@ import org.slf4j.*;
 public class LayoutLHXOver extends LayoutXOver {
 
     public LayoutLHXOver(@Nonnull String id,
-            @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor,
             @Nonnull LayoutEditor layoutEditor) {
-        this(id, c, rot, xFactor, yFactor, layoutEditor, 1);
+        this(id, layoutEditor, 1);
     }
 
     /**
@@ -136,9 +134,10 @@ public class LayoutLHXOver extends LayoutXOver {
      * @param layoutEditor main layout editor.
      * @param v version, unused.
      */
-    public LayoutLHXOver(@Nonnull String id, @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
-        super(id, TurnoutType.LH_XOVER, c, rot, xFactor, yFactor, layoutEditor, 1);
+    public LayoutLHXOver(@Nonnull String id, 
+            @Nonnull LayoutEditor layoutEditor, 
+            int v) {
+        super(id, TurnoutType.LH_XOVER, layoutEditor, 1);
     }
     
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutXOver.class);

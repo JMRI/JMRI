@@ -35,6 +35,59 @@ import jmri.util.swing.JmriColorChooser;
  */
 public class TrackSegment extends LayoutTrack {
 
+    public TrackSegment(@Nonnull String id,
+            @CheckForNull LayoutTrack c1, HitPointType t1,
+            @CheckForNull LayoutTrack c2, HitPointType t2,
+            boolean main,
+            @Nonnull LayoutEditor layoutEditor) {
+        super(id, layoutEditor);
+
+        // validate input
+        if ((c1 == null) || (c2 == null)) {
+            log.error("Invalid object in TrackSegment constructor call - {}", id);
+        }
+
+        if (HitPointType.isConnectionHitType(t1)) {
+            connect1 = c1;
+            type1 = t1;
+        } else {
+            log.error("Invalid connect type 1 ('{}') in TrackSegment constructor - {}", t1, id);
+        }
+        if (HitPointType.isConnectionHitType(t2)) {
+            connect2 = c2;
+            type2 = t2;
+        } else {
+            log.error("Invalid connect type 2 ('{}') in TrackSegment constructor - {}", t2, id);
+        }
+
+        mainline = main;
+        
+        setupDefaultBumperSizes(layoutEditor);
+
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
+    }
+
+    // alternate constructor for loading layout editor panels
+    public TrackSegment(@Nonnull String id,
+            @CheckForNull String c1Name, HitPointType t1,
+            @CheckForNull String c2Name, HitPointType t2,
+            boolean main,
+            @Nonnull LayoutEditor layoutEditor) {
+        super(id, layoutEditor);
+
+        tConnect1Name = c1Name;
+        type1 = t1;
+        tConnect2Name = c2Name;
+        type2 = t2;
+
+        mainline = main;
+        
+        setupDefaultBumperSizes(layoutEditor);
+        
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
+    }
+
+
     // defined constants
     // operational instance variables (not saved between sessions)
     private NamedBeanHandle<LayoutBlock> namedLayoutBlock = null;
@@ -63,75 +116,6 @@ public class TrackSegment extends LayoutTrack {
 
     // temporary reference to the Editor that will eventually be part of View
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor editor;
-
-    // (temporary dummy ctor for backward compatibility, ignores hidden)
-     private TrackSegment(@Nonnull String id,
-            @CheckForNull LayoutTrack c1, HitPointType t1,
-            @CheckForNull LayoutTrack c2, HitPointType t2,
-            boolean hidden, boolean main,
-            @Nonnull LayoutEditor layoutEditor) {
-        this(id, c1, t1, c2, t2, main, layoutEditor);
-    }
-       
-    public TrackSegment(@Nonnull String id,
-            @CheckForNull LayoutTrack c1, HitPointType t1,
-            @CheckForNull LayoutTrack c2, HitPointType t2,
-            boolean main,
-            @Nonnull LayoutEditor layoutEditor) {
-        super(id, MathUtil.zeroPoint2D, layoutEditor);
-
-        // validate input
-        if ((c1 == null) || (c2 == null)) {
-            log.error("Invalid object in TrackSegment constructor call - {}", id);
-        }
-
-        if (HitPointType.isConnectionHitType(t1)) {
-            connect1 = c1;
-            type1 = t1;
-        } else {
-            log.error("Invalid connect type 1 ('{}') in TrackSegment constructor - {}", t1, id);
-        }
-        if (HitPointType.isConnectionHitType(t2)) {
-            connect2 = c2;
-            type2 = t2;
-        } else {
-            log.error("Invalid connect type 2 ('{}') in TrackSegment constructor - {}", t2, id);
-        }
-
-        mainline = main;
-        
-        setupDefaultBumperSizes(layoutEditor);
-
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
-    }
-
-    // (temporary dummy ctor for backward compatibility, ignores hidden)
-     private TrackSegment(@Nonnull String id,
-            @CheckForNull String c1Name, HitPointType t1,
-            @CheckForNull String c2Name, HitPointType t2,
-            boolean hidden, boolean main,
-            @Nonnull LayoutEditor layoutEditor) {
-        this(id, c1Name, t1, c2Name, t2, main, layoutEditor);
-    }
-    // alternate constructor for loading layout editor panels
-    public TrackSegment(@Nonnull String id,
-            @CheckForNull String c1Name, HitPointType t1,
-            @CheckForNull String c2Name, HitPointType t2,
-            boolean main,
-            @Nonnull LayoutEditor layoutEditor) {
-        super(id, MathUtil.zeroPoint2D, layoutEditor);
-
-        tConnect1Name = c1Name;
-        type1 = t1;
-        tConnect2Name = c2Name;
-        type2 = t2;
-
-        mainline = main;
-        
-        setupDefaultBumperSizes(layoutEditor);
-        
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
-    }
 
     /**
      * Get debugging string for the TrackSegment.
@@ -312,8 +296,8 @@ public class TrackSegment extends LayoutTrack {
                     // then use control point to calculate arc
                     // adjacent connections must be defined...
                     if ((connect1 != null) && (connect2 != null)) {
-                        Point2D end1 = LayoutEditor.getCoords(connect1, type1);
-                        Point2D end2 = LayoutEditor.getCoords(connect2, type2);
+                        Point2D end1 = layoutEditor.getCoords(connect1, type1);
+                        Point2D end2 = layoutEditor.getCoords(connect2, type2);
                         double chordLength = MathUtil.distance(end1, end2);
 
                         // get first and last control points
@@ -403,10 +387,10 @@ public class TrackSegment extends LayoutTrack {
     public double getDirectionRAD() {
         Point2D ep1 = getCoordsCenter(), ep2 = getCoordsCenter();
         if (connect1 != null) {
-            ep1 = LayoutEditor.getCoords(connect1, getType1());
+            ep1 = layoutEditor.getCoords(connect1, getType1());
         }
         if (connect2 != null) {
-            ep2 = LayoutEditor.getCoords(connect2, getType2());
+            ep2 = layoutEditor.getCoords(connect2, getType2());
         }
         return (Math.PI / 2.D) - MathUtil.computeAngleRAD(ep1, ep2);
     }
@@ -768,10 +752,10 @@ public class TrackSegment extends LayoutTrack {
 
         Point2D ep1 = getCoordsCenter(), ep2 = getCoordsCenter();
         if (getConnect1() != null) {
-            ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
+            ep1 = layoutEditor.getCoords(getConnect1(), getType1());
         }
         if (getConnect2() != null) {
-            ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
+            ep2 = layoutEditor.getCoords(getConnect2(), getType2());
         }
 
         result = new Rectangle2D.Double(ep1.getX(), ep1.getY(), 0, 0);
@@ -787,7 +771,7 @@ public class TrackSegment extends LayoutTrack {
     private final JCheckBoxMenuItem flippedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("FlippedCheckBoxMenuItemTitle"));
 
     /**
-     * Maximum length of the bumper decoration.
+     * Maximum length of the bumper decoration. (temporary:  why here instead of View?)
      */
     public static final int MAX_BUMPER_LENGTH = 40;
     public static final int MAX_BUMPER_WIDTH = 10;
@@ -802,7 +786,7 @@ public class TrackSegment extends LayoutTrack {
     private static final int MAX_TUNNEL_FLOOR_WIDTH = 40;
     private static final int MAX_TUNNEL_LINE_WIDTH = 9;
     private static final int MAX_TUNNEL_ENTRANCE_WIDTH = 80;
-
+    
     /**
      * Helper method, which adds "Set value" item to the menu. The value can be
      * optionally range-checked. Item will be appended at the end of the menu.
@@ -1690,79 +1674,79 @@ public class TrackSegment extends LayoutTrack {
      * split track segment into two track segments with an anchor between
      */
     public void splitTrackSegment() {
-        // create a new anchor
-        Point2D p = getCentreSeg();
-        PositionablePoint newAnchor = layoutEditor.addAnchor(p);
-        // link it to me
-        layoutEditor.setLink(newAnchor, HitPointType.POS_POINT, this, HitPointType.TRACK);
-
-        // get unique name for a new track segment
-        String name = layoutEditor.getFinder().uniqueName("T", 1);
-
-        // create it between the new anchor and my connect2(/type2)
-        TrackSegment newTrackSegment = new TrackSegment(name,
-                newAnchor, HitPointType.POS_POINT,
-                connect2, type2,
-                isMainline(), layoutEditor);
-        log.error("splitTrackSegment creating track without view (temporary), didn't handle isDashed()");
-        // add it to known tracks
-        layoutEditor.addLayoutTrack(newTrackSegment);
-        layoutEditor.setDirty();
-
-        // copy attributes to new track segment
-        newTrackSegment.setLayoutBlock(this.getLayoutBlock());
-        newTrackSegment.setArc(this.isArc());
-        newTrackSegment.setCircle(this.isCircle());
-        // split any angle between the two new track segments
-        newTrackSegment.setAngle(this.getAngle() / 2.0);
-        this.setAngle(this.getAngle() / 2.0);
-        // newTrackSegment.setBezier(this.isBezier());
-        newTrackSegment.setFlip(this.isFlip());
-
-        // copy over decorations
-        Map<String, String> d = new HashMap<>();
-        this.getDecorations().forEach((k, v) -> {
-            if (k.equals("arrow")) {                // if this is an arrow
-                if (this.isArrowEndStop()) {        // and it's on the stop end
-                    d.put(k, v);                    // copy it to new track
-                    this.setArrowEndStop(false);    // and remove it from this track
-                }
-            } else if (k.equals("bumper")) {        // if this is an end bumper
-                if (this.isBumperEndStop()) {       // amd it's on the stop end
-                    d.put(k, v);                    // copy it to new track
-                    this.setBumperEndStop(false);   // and remove it from this track
-                }
-            } else {                                // otherwise...
-                d.put(k, v);                        // copy to new track
-            }
-        });
-        newTrackSegment.setDecorations(d);
-
-        // link my connect2 to the new track segment
-        if (connect2 instanceof PositionablePoint) {
-            PositionablePoint pp = (PositionablePoint) connect2;
-            pp.replaceTrackConnection(this, newTrackSegment);
-        } else {
-            layoutEditor.setLink(connect2, type2, newTrackSegment, HitPointType.TRACK);
-        }
-
-        // link the new anchor to the new track segment
-        layoutEditor.setLink(newAnchor, HitPointType.POS_POINT, newTrackSegment, HitPointType.TRACK);
-
-        // link me to the new newAnchor
-        connect2 = newAnchor;
-        type2 = HitPointType.POS_POINT;
-
-        // check on layout block
-        LayoutBlock b = this.getLayoutBlock();
-
-        if (b != null) {
-            newTrackSegment.setLayoutBlock(b);
-            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-            newTrackSegment.updateBlockInfo();
-        }
-        layoutEditor.setDirty();
-        layoutEditor.redrawPanel();
+//         create a new anchor
+//         Point2D p = getCentreSeg();
+//         PositionablePoint newAnchor = layoutEditor.addAnchor(p);
+//         link it to me
+//         layoutEditor.setLink(newAnchor, HitPointType.POS_POINT, this, HitPointType.TRACK);
+// 
+//         get unique name for a new track segment
+//         String name = layoutEditor.getFinder().uniqueName("T", 1);
+// 
+//         create it between the new anchor and my connect2(/type2)
+//         TrackSegment newTrackSegment = new TrackSegment(name,
+//                 newAnchor, HitPointType.POS_POINT,
+//                 connect2, type2,
+//                 isMainline(), layoutEditor);
+//         log.error("splitTrackSegment creating track without view (temporary), didn't handle isDashed()");
+//         add it to known tracks
+//         layoutEditor.addLayoutTrack(newTrackSegment);
+//         layoutEditor.setDirty();
+// 
+//         copy attributes to new track segment
+//         newTrackSegment.setLayoutBlock(this.getLayoutBlock());
+//         newTrackSegment.setArc(this.isArc());
+//         newTrackSegment.setCircle(this.isCircle());
+//         split any angle between the two new track segments
+//         newTrackSegment.setAngle(this.getAngle() / 2.0);
+//         this.setAngle(this.getAngle() / 2.0);
+//         newTrackSegment.setBezier(this.isBezier());
+//         newTrackSegment.setFlip(this.isFlip());
+// 
+//         copy over decorations
+//         Map<String, String> d = new HashMap<>();
+//         this.getDecorations().forEach((k, v) -> {
+//             if (k.equals("arrow")) {                // if this is an arrow
+//                 if (this.isArrowEndStop()) {        // and it's on the stop end
+//                     d.put(k, v);                    // copy it to new track
+//                     this.setArrowEndStop(false);    // and remove it from this track
+//                 }
+//             } else if (k.equals("bumper")) {        // if this is an end bumper
+//                 if (this.isBumperEndStop()) {       // amd it's on the stop end
+//                     d.put(k, v);                    // copy it to new track
+//                     this.setBumperEndStop(false);   // and remove it from this track
+//                 }
+//             } else {                                // otherwise...
+//                 d.put(k, v);                        // copy to new track
+//             }
+//         });
+//         newTrackSegment.setDecorations(d);
+// 
+//         link my connect2 to the new track segment
+//         if (connect2 instanceof PositionablePoint) {
+//             PositionablePoint pp = (PositionablePoint) connect2;
+//             pp.replaceTrackConnection(this, newTrackSegment);
+//         } else {
+//             layoutEditor.setLink(connect2, type2, newTrackSegment, HitPointType.TRACK);
+//         }
+// 
+//         link the new anchor to the new track segment
+//         layoutEditor.setLink(newAnchor, HitPointType.POS_POINT, newTrackSegment, HitPointType.TRACK);
+// 
+//         link me to the new newAnchor
+//         connect2 = newAnchor;
+//         type2 = HitPointType.POS_POINT;
+// 
+//         check on layout block
+//         LayoutBlock b = this.getLayoutBlock();
+// 
+//         if (b != null) {
+//             newTrackSegment.setLayoutBlock(b);
+//             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+//             newTrackSegment.updateBlockInfo();
+//         }
+//         layoutEditor.setDirty();
+//         layoutEditor.redrawPanel();
     }   // splitTrackSegment
 
     /**
@@ -1816,7 +1800,7 @@ public class TrackSegment extends LayoutTrack {
         if (index > 0) {
             addPoint = MathUtil.midPoint(getBezierControlPoint(index - 1), addPoint);
         } else {
-            Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
+            Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
             addPoint = MathUtil.midPoint(ep1, addPoint);
         }
         bezierControlPoints.add(index, addPoint);
@@ -1831,7 +1815,7 @@ public class TrackSegment extends LayoutTrack {
             addPoint = MathUtil.midPoint(addPoint, getBezierControlPoint(index + 1));
             bezierControlPoints.add(index + 1, addPoint);
         } else {
-            Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
+            Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
             addPoint = MathUtil.midPoint(addPoint, ep2);
             bezierControlPoints.add(addPoint);
         }
@@ -1875,8 +1859,8 @@ public class TrackSegment extends LayoutTrack {
                     // TODO: and place the control points halfway between that and the two endpoints
 
                     // set default control point displacements
-                    Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
-                    Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
+                    Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+                    Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
 
                     // compute orthogonal offset0 with length one third the distance from ep1 to ep2
                     Point2D offset = MathUtil.subtract(ep2, ep1);
@@ -2082,8 +2066,8 @@ public class TrackSegment extends LayoutTrack {
 
         if ((connect1 != null) && (connect2 != null)) {
             // get the end points
-            Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
-            Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
+            Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+            Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
 
             if (isCircle()) {
                 result = getCoordsCenter(); // new Point2D.Double(centreX, centreY);
@@ -2245,11 +2229,11 @@ public class TrackSegment extends LayoutTrack {
     protected void calculateTrackSegmentAngle() {
         Point2D pt1, pt2;
         if (isFlip()) {
-            pt1 = LayoutEditor.getCoords(getConnect2(), getType2());
-            pt2 = LayoutEditor.getCoords(getConnect1(), getType1());
+            pt1 = layoutEditor.getCoords(getConnect2(), getType2());
+            pt2 = layoutEditor.getCoords(getConnect1(), getType1());
         } else {
-            pt1 = LayoutEditor.getCoords(getConnect1(), getType1());
-            pt2 = LayoutEditor.getCoords(getConnect2(), getType2());
+            pt1 = layoutEditor.getCoords(getConnect1(), getType1());
+            pt2 = layoutEditor.getCoords(getConnect2(), getType2());
         }
         if ((getTmpPt1() != pt1) || (getTmpPt2() != pt2) || trackNeedsRedraw()) {
             setTmpPt1(pt1);
@@ -2391,6 +2375,7 @@ public class TrackSegment extends LayoutTrack {
     /** {@inheritDoc} */
     @Override
     public Map<String, String> getDecorations() {
+        throw new IllegalArgumentException("should have called in View instead of Object (temporary)");
 //         if (decorations == null) {
 //             decorations = new HashMap<>();
 //         } // if (decorathions != null)
@@ -2505,7 +2490,7 @@ public class TrackSegment extends LayoutTrack {
 // 
 //             decorations.put("tunnel", String.join(";", tunnelValues));
 //         }   // if (tunnelSideLeft || tunnelSideRight)
-        return decorations;
+//        return decorations;
     } 
 
     /** {@inheritDoc} */
@@ -3258,8 +3243,8 @@ public class TrackSegment extends LayoutTrack {
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, lt, type1, null);
                     lc.setDirection(Path.computeDirection(
-                            LayoutEditor.getCoords(getConnect2(), type2),
-                            LayoutEditor.getCoords(getConnect1(), type1)));
+                            layoutEditor.getCoords(getConnect2(), type2),
+                            layoutEditor.getCoords(getConnect1(), type1)));
                     results.add(lc);
                 }
             } else if (HitPointType.isLevelXingHitType(type1)) {
@@ -3276,8 +3261,8 @@ public class TrackSegment extends LayoutTrack {
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, lx, type1, null);
                     lc.setDirection(Path.computeDirection(
-                            LayoutEditor.getCoords(getConnect2(), type2),
-                            LayoutEditor.getCoords(getConnect1(), type1)));
+                            layoutEditor.getCoords(getConnect2(), type2),
+                            layoutEditor.getCoords(getConnect1(), type1)));
                     results.add(lc);
                 }
             } else if (HitPointType.isSlipHitType(type1)) {
@@ -3289,8 +3274,8 @@ public class TrackSegment extends LayoutTrack {
                     log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, ls, type1, null);
-                    lc.setDirection(Path.computeDirection(LayoutEditor.getCoords(getConnect2(),
-                            type2), LayoutEditor.getCoords(getConnect1(), type1)));
+                    lc.setDirection(Path.computeDirection(layoutEditor.getCoords(getConnect2(),
+                            type2), layoutEditor.getCoords(getConnect1(), type1)));
                     results.add(lc);
                 }
             }
@@ -3317,8 +3302,8 @@ public class TrackSegment extends LayoutTrack {
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, lt, type2, null);
                     lc.setDirection(Path.computeDirection(
-                            LayoutEditor.getCoords(getConnect1(), type1),
-                            LayoutEditor.getCoords(getConnect2(), type2)));
+                            layoutEditor.getCoords(getConnect1(), type1),
+                            layoutEditor.getCoords(getConnect2(), type2)));
                     results.add(lc);
                 }
             } else if (HitPointType.isLevelXingHitType(type2)) {
@@ -3335,8 +3320,8 @@ public class TrackSegment extends LayoutTrack {
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, lx, type2, null);
                     lc.setDirection(Path.computeDirection(
-                            LayoutEditor.getCoords(getConnect1(), type1),
-                            LayoutEditor.getCoords(getConnect2(), type2)));
+                            layoutEditor.getCoords(getConnect1(), type1),
+                            layoutEditor.getCoords(getConnect2(), type2)));
                     results.add(lc);
                 }
             } else if (HitPointType.isSlipHitType(type2)) {
@@ -3349,8 +3334,8 @@ public class TrackSegment extends LayoutTrack {
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, ls, type2, null);
                     lc.setDirection(Path.computeDirection(
-                            LayoutEditor.getCoords(getConnect1(), type1),
-                            LayoutEditor.getCoords(getConnect2(), type2)));
+                            layoutEditor.getCoords(getConnect1(), type1),
+                            layoutEditor.getCoords(getConnect2(), type2)));
                     results.add(lc);
                 }
             }

@@ -2693,9 +2693,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void addTurntable(@Nonnull Point2D pt) {
         // get unique name
         String name = finder.uniqueName("TUR", ++numLayoutTurntables);
-        LayoutTurntable lt = new LayoutTurntable(name, pt, this);
+        LayoutTurntable lt = new LayoutTurntable(name, this);
+        LayoutTurntableView ltv = new LayoutTurntableView(lt, pt, this);
 
-        addLayoutTrack(lt);
+        addLayoutTrack(lt,ltv);
 
         lt.addRay(0.0);
         lt.addRay(90.0);
@@ -3242,16 +3243,24 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
-     * get the coordinates for the connection type of the specified object
+     * Get the coordinates for the connection type of the specified LayoutTrack.
+     * <p>
+     * This uses the current LayoutEditor object to map
+     * a LayoutTrack (no coordinates) object to _a_ specific
+     * LayoutTrackView object in the current LayoutEditor i.e. window.
+     * This allows the same model object in two windows, but not 
+     * twice in a single window.
      *
      * @param layoutTrack    the object (Layout track subclass)
      * @param connectionType the type of connection
      * @return the coordinates for the connection type of the specified object
      */
     @Nonnull
-    public static Point2D getCoords(@Nonnull LayoutTrack layoutTrack, HitPointType connectionType) {
-        assert layoutTrack != null;
-        return layoutTrack.getCoordsForConnectionType(connectionType);
+    public Point2D getCoords(@Nonnull LayoutTrack trk, HitPointType connectionType) {
+        assert trk != null;
+        assert trk instanceof LayoutTrack;
+        
+        return getLayoutTrackView(trk).getCoordsForConnectionType(connectionType);
     }
 
     @Override
@@ -4733,9 +4742,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         // create object
         PositionablePoint o = new PositionablePoint(name,
-                PositionablePoint.PointType.ANCHOR, p, this);
-
-        addLayoutTrack(o);
+                PositionablePoint.PointType.ANCHOR, this);
+        PositionablePointView pv = new PositionablePointView(o,currentPoint, this);
+        addLayoutTrack(o, pv);
+        
         unionToPanelBounds(o.getBounds());
         setDirty();
 
@@ -4751,9 +4761,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         // create object
         PositionablePoint o = new PositionablePoint(name,
-                PositionablePoint.PointType.END_BUMPER, currentPoint, this);
+                PositionablePoint.PointType.END_BUMPER, this);
+        PositionablePointView pv = new PositionablePointView(o, currentPoint, this);
+        addLayoutTrack(o, pv);
 
-        addLayoutTrack(o);
         unionToPanelBounds(o.getBounds());
         setDirty();
     }
@@ -4767,9 +4778,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         // create object
         PositionablePoint o = new PositionablePoint(name,
-                PositionablePoint.PointType.EDGE_CONNECTOR, currentPoint, this);
-
-        addLayoutTrack(o);
+                PositionablePoint.PointType.EDGE_CONNECTOR, this);
+        PositionablePointView pv = new PositionablePointView(o, currentPoint, this);
+        addLayoutTrack(o, pv);
+        
         unionToPanelBounds(o.getBounds());
         setDirty();
     }
@@ -4786,9 +4798,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 foundTrack, foundHitPointType,
                 leToolBarPanel.mainlineTrack.isSelected(), this);
 
-        log.error("(temporary) addTrackSegment didn't make view, didn't handle leToolBarPanel.dashedLine.isSelected() ");
-        addLayoutTrack(newTrack);
-        unionToPanelBounds(newTrack.getBounds());
+        TrackSegmentView tsv = new TrackSegmentView(
+                newTrack,
+                this
+            );
+        addLayoutTrack(newTrack, tsv);
+        unionToPanelBounds(tsv.getBounds());
         setDirty();
 
         // link to connected objects
@@ -4831,10 +4846,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         String name = finder.uniqueName("X", ++numLevelXings);
 
         // create object
-        LevelXing o = new LevelXing(name, currentPoint, this);
-
-        addLayoutTrack(o);
+        LevelXing o = new LevelXing(name, this);
+        LevelXingView ov = new LevelXingView(o, currentPoint, this);
+        addLayoutTrack(o, ov);
+        
         unionToPanelBounds(o.getBounds());
+        
         setDirty();
 
         // check on layout block
@@ -4892,20 +4909,25 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         // create object
         LayoutSlip o; 
+        LayoutSlipView ov;
         switch(type) {
             case DOUBLE_SLIP :
-                o = new LayoutDoubleSlip(name, currentPoint, rot, this);
+                LayoutDoubleSlip lds = new LayoutDoubleSlip(name, this);
+                o = lds;
+                ov = new LayoutDoubleSlipView(lds, currentPoint, rot, this);
                 break;
             case SINGLE_SLIP :
-                o = new LayoutSingleSlip(name, currentPoint, rot, this);
+                LayoutSingleSlip lss = new LayoutSingleSlip(name, this);
+                o = lss;
+                ov = new LayoutSingleSlipView(lss, currentPoint, rot, this);
                 break;
             default:
                 log.error("can't create slip {} with type {}", name, type);
                 return; // without creating
         }
 
-        addLayoutTrack(o);
-        unionToPanelBounds(o.getBounds());
+        addLayoutTrack(o, ov);
+        unionToPanelBounds(ov.getBounds());
         setDirty();
 
         // check on layout block
@@ -4997,33 +5019,50 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         // create object - check all types, although not clear all actually reach here
         LayoutTurnout o; 
+        LayoutTurnoutView ov; 
         switch(type) {
 
             case RH_TURNOUT :
-                o = new LayoutRHTurnout(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
+                LayoutRHTurnout lrht = new LayoutRHTurnout(name, this);
+                o = lrht;
+                ov = new LayoutRHTurnoutView(lrht, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
             case LH_TURNOUT :
-                o = new LayoutLHTurnout(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
+                LayoutLHTurnout llht = new LayoutLHTurnout(name, this);
+                o = llht;
+                ov = new LayoutLHTurnoutView(llht, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
             case WYE_TURNOUT :
-                o = new LayoutWye(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
+                LayoutWye lw = new LayoutWye(name, this);
+                o = lw;
+                ov = new LayoutWyeView(lw, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
             case DOUBLE_XOVER :
-                o = new LayoutDoubleXOver(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
+                LayoutDoubleXOver ldx = new LayoutDoubleXOver(name, this);
+                o = ldx;
+                ov = new LayoutDoubleXOverView(ldx, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
             case RH_XOVER :
-                o = new LayoutRHXOver(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
+                LayoutRHXOver lrx = new LayoutRHXOver(name, this);
+                o = lrx;
+                ov = new LayoutRHXOverView(lrx, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
             case LH_XOVER :
-                o = new LayoutLHXOver(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
+                LayoutLHXOver llx = new LayoutLHXOver(name, this);
+                o = llx;
+                ov = new LayoutLHXOverView(llx, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
 
             case DOUBLE_SLIP :
-                o = new LayoutDoubleSlip(name, currentPoint, rot, this);
+                LayoutDoubleSlip lds = new LayoutDoubleSlip(name, this);
+                o = lds;
+                ov = new LayoutDoubleSlipView(lds, currentPoint, rot, this);
                 log.error("Found SINGLE_SLIP in addLayoutTurnout for element {}", name);
                 break;
             case SINGLE_SLIP :
-                o = new LayoutSingleSlip(name, currentPoint, rot, this);
+                LayoutSingleSlip lss = new LayoutSingleSlip(name, this);
+                o = lss;
+                ov = new LayoutSingleSlipView(lss, currentPoint, rot, this);
                 log.error("Found SINGLE_SLIP in addLayoutTurnout for element {}", name);
                 break;
 
@@ -5032,8 +5071,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 return; // without creating
         }
         
-        addLayoutTrack(o);
-        unionToPanelBounds(o.getBounds());
+        addLayoutTrack(o, ov);
+        unionToPanelBounds(ov.getBounds());
         setDirty();
 
         // check on layout block
@@ -7626,22 +7665,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private final Map<LayoutTrack, LayoutTrackView> trkToView = new HashMap<>();
     private final Map<LayoutTrackView, LayoutTrack> viewToTrk = new HashMap<>();
 
-    /**
-     * Add a LayoutTrack to the list of LayoutTrack family objects.
-     * @param trk the layout track to add.
-     */
-    final public void addLayoutTrack(@Nonnull LayoutTrack trk) {
-        // create the view on the fly
-        LayoutTrackView v = LayoutTrackView.makeTrackView(trk, this);
-    
-        log.trace("addLayoutTrack created LayoutTrackView {} of type {}", v, v.getClass().getName());
-        
-        addLayoutTrack(trk, v);
-    }
-
     // temporary
     final public LayoutTrackView getLayoutTrackView(LayoutTrack trk) {
         LayoutTrackView lv = trkToView.get(trk);
+        if (lv == null) {
+            log.warn("No View found for {} class {}", trk, trk.getClass());
+            throw new IllegalArgumentException("No View found: "+trk.getClass());
+        }
         if (lv instanceof LayoutTrackView) return (LayoutTrackView) lv;
         else log.error("wrong type {} {} found {}", trk, trk.getClass(), lv);
         throw new IllegalArgumentException("Wrong type: "+trk.getClass());
@@ -7649,6 +7679,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     // temporary
     final public LevelXingView getLevelXingView(LevelXing xing) {
         LayoutTrackView lv = trkToView.get(xing);
+        if (lv == null) {
+            log.warn("No View found for {} class {}", xing, xing.getClass());
+            throw new IllegalArgumentException("No View found: "+xing.getClass());
+        }
         if (lv instanceof LevelXingView) return (LevelXingView) lv;
         else log.error("wrong type {} {} found {}", xing, xing.getClass(), lv);
         throw new IllegalArgumentException("Wrong type: "+xing.getClass());
@@ -7656,6 +7690,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     // temporary
     final public LayoutTurnoutView getLayoutTurnoutView(LayoutTurnout to) {
         LayoutTrackView lv = trkToView.get(to);
+        if (lv == null) {
+            log.warn("No View found for {} class {}", to, to.getClass());
+            throw new IllegalArgumentException("No View found: "+to);
+        }
         if (lv instanceof LayoutTurnoutView) return (LayoutTurnoutView) lv;
         else log.error("wrong type {} {} found {}", to, to.getClass(), lv);
         throw new IllegalArgumentException("Wrong type: "+to.getClass());
@@ -7664,11 +7702,15 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     // temporary
     final public LayoutTurntableView getLayoutTurntableView(LayoutTurntable to) {
         LayoutTrackView lv = trkToView.get(to);
+        if (lv == null) {
+            log.warn("No View found for {} class {}", to, to.getClass());
+            throw new IllegalArgumentException("No matching View found: "+to);
+        }
         if (lv instanceof LayoutTurntableView) return (LayoutTurntableView) lv;
         else log.error("wrong type {} {} found {}", to, to.getClass(), lv);
         throw new IllegalArgumentException("Wrong type: "+to.getClass());
     }
-    
+        
     /**
      * Add a LayoutTrack and LayoutTrackView to the list of 
      * LayoutTrack family objects.

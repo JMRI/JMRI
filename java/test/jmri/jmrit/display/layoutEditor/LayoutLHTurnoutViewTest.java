@@ -19,23 +19,28 @@ public class LayoutLHTurnoutViewTest extends LayoutTurnoutViewTest {
 
     @Test
     public void testCtor() {
-        new LayoutLHTurnoutView(turnout, layoutEditor);
+        Point2D point = new Point2D.Double(150.0, 100.0);
+
+        new LayoutLHTurnoutView(turnout, point, 99.0, 1.5, 1.6, layoutEditor);
     }
 
     LayoutEditor layoutEditor;
     LayoutLHTurnout turnout;
+    LayoutLHTurnoutView turnoutView;
     
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
 
             layoutEditor = new LayoutEditor();
-            
-            Point2D point = new Point2D.Double(150.0, 100.0);
- 
-            turnout = new LayoutLHTurnout("Wye", point, 99.0, 1.5, 1.6, layoutEditor);
+             
+            turnout = new LayoutLHTurnout("LH", layoutEditor);
+            turnoutView = new LayoutLHTurnoutView(turnout, 
+                                            jmri.util.MathUtil.zeroPoint2D, 0., 1., 1.,
+                                            layoutEditor);
+            layoutEditor.addLayoutTrack(turnout, turnoutView);
 
         }
     }
@@ -48,6 +53,6 @@ public class LayoutLHTurnoutViewTest extends LayoutTurnoutViewTest {
         layoutEditor = null;
         turnout = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 }

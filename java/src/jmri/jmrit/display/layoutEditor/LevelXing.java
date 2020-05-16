@@ -53,6 +53,17 @@ import jmri.util.MathUtil;
  */
 public class LevelXing extends LayoutTrack {
 
+    /**
+     * Constructor.
+     * @param id ID string.
+     * @param c the point location.
+     * @param layoutEditor the main layout editor.
+     */
+    public LevelXing(String id, LayoutEditor layoutEditor) {
+        super(id, layoutEditor);
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor(layoutEditor);
+    }
+
     // defined constants
     // operational instance variables (not saved between sessions)
     private NamedBeanHandle<LayoutBlock> namedLayoutBlockAC = null;
@@ -78,30 +89,20 @@ public class LevelXing extends LayoutTrack {
     private LayoutTrack connectC = null;
     private LayoutTrack connectD = null;
 
-    private Point2D dispA = new Point2D.Double(-20.0, 0.0);
-    private Point2D dispB = new Point2D.Double(-14.0, 14.0);
+//     private Point2D dispA = new Point2D.Double(-20.0, 0.0);
+//     private Point2D dispB = new Point2D.Double(-14.0, 14.0);
 
     // public static final int POINTA = 0x01;
     // public static final int POINTB = 0x10;
     // public static final int POINTC = 0x20;
     // public static final int POINTD = 0x30;
+    
     public enum Geometry {
         POINTA, POINTB, POINTC, POINTD
     }
 
     // temporary reference to the Editor that will eventually be part of View
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor editor;
-
-    /**
-     * Constructor method.
-     * @param id ID string.
-     * @param c the point location.
-     * @param layoutEditor the main layout editor.
-     */
-    public LevelXing(String id, Point2D c, LayoutEditor layoutEditor) {
-        super(id, c, layoutEditor);
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor(layoutEditor);
-    }
 
     // this should only be used for debugging
     @Override

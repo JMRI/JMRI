@@ -19,14 +19,22 @@ import jmri.util.*;
 public class LayoutLHXOverView extends LayoutXOverView {
 
     /**
-     * Constructor method.
+     * Main constructor method.
      * @param xover the layout left hand crossover to view.
+     * @param c 2D point.
+     * @param rot rotation.
+     * @param xFactor horizontal factor.
+     * @param yFactor vertical factor.
+     * @param layoutEditor main layout editor.
      */
-    public LayoutLHXOverView(@Nonnull LayoutLHXOver xover, @Nonnull LayoutEditor layoutEditor) {
-        super(xover, layoutEditor);
-        // this.xover = xover;
+    public LayoutLHXOverView(@Nonnull LayoutLHXOver xover, 
+            @Nonnull Point2D c, double rot,
+            double xFactor, double yFactor,
+            @Nonnull LayoutEditor layoutEditor) {
+        super(xover, c, rot, xFactor, yFactor, layoutEditor);
+       // this.xover = xover;
     }
-        
+
     // final private LayoutLHXOver xover;
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutLHXOverView.class);

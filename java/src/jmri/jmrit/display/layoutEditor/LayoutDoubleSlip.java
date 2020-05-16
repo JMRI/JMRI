@@ -53,12 +53,10 @@ public class LayoutDoubleSlip extends LayoutSlip {
     /**
      * Constructor method.
      * @param id double slip ID.
-     * @param c 2D point.
-     * @param rot rotation.
      * @param layoutEditor main layout editor.
      */
-    public LayoutDoubleSlip(String id, Point2D c, double rot, LayoutEditor layoutEditor) {
-        super(id, c, rot, layoutEditor, TurnoutType.DOUBLE_SLIP);
+    public LayoutDoubleSlip(String id, LayoutEditor layoutEditor) {
+        super(id, layoutEditor, TurnoutType.DOUBLE_SLIP);
     }
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleSlip.class);

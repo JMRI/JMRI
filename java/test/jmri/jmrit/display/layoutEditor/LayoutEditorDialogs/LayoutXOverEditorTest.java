@@ -31,9 +31,6 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
         new LayoutXOverEditor(null);
     }
 
-    private LayoutEditor layoutEditor = null;
-    private LayoutDoubleXOver doubleXoverLayoutTurnout = null;
-
     @Test
     public void testEditXOverDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -192,6 +189,11 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
     }
 
 
+    private LayoutEditor layoutEditor = null;
+    private LayoutDoubleXOver doubleXoverLayoutTurnout = null;
+    private LayoutDoubleXOverView doubleXoverLayoutTurnoutView = null;
+
+
     @Before
     public void setUp() {
         super.setUp();
@@ -210,7 +212,12 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
             point = MathUtil.add(point, delta);
 
             // Double crossover
-            doubleXoverLayoutTurnout = new LayoutDoubleXOver("Double Xover", point, 33.0, 1.1, 1.2, layoutEditor);
+            doubleXoverLayoutTurnout = new LayoutDoubleXOver("Double Xover", layoutEditor); // point, 33.0, 1.1, 1.2, 
+            doubleXoverLayoutTurnoutView = new LayoutDoubleXOverView(doubleXoverLayoutTurnout, 
+                                                    point, 33.0, 1.1, 1.2, 
+                                                    layoutEditor);
+            layoutEditor.addLayoutTrack(doubleXoverLayoutTurnout, doubleXoverLayoutTurnoutView);
+
         }
     }
 

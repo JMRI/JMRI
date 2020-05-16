@@ -21,9 +21,17 @@ public class LayoutDoubleXOverView extends LayoutXOverView {
     /**
      * Constructor method.
      * @param xover the layout double crossover to view.
+     * @param c 2D point.
+     * @param rot rotation.
+     * @param xFactor horizontal factor.
+     * @param yFactor vertical factor.
+     * @param layoutEditor main layout editor.
      */
-    public LayoutDoubleXOverView(@Nonnull LayoutDoubleXOver xover, @Nonnull LayoutEditor layoutEditor) {
-        super(xover, layoutEditor);
+    public LayoutDoubleXOverView(@Nonnull LayoutDoubleXOver xover, 
+            @Nonnull Point2D c, double rot,
+            double xFactor, double yFactor,
+            @Nonnull LayoutEditor layoutEditor) {
+        super(xover, c, rot, xFactor, yFactor, layoutEditor);
         // this.xover = xover;
     }
         

@@ -92,7 +92,8 @@ public class LayoutSingleSlipEditorTest extends LayoutSlipEditorTest {
     }
 
     private LayoutEditor layoutEditor = null;
-    private LayoutSlip singleLayoutSlip = null;
+    private LayoutSingleSlip singleLayoutSlip = null;
+    private LayoutSingleSlipView singleLayoutSlipView = null;
 
     @Before
     public void setUp() {
@@ -111,8 +112,12 @@ public class LayoutSingleSlipEditorTest extends LayoutSlipEditorTest {
 
             // Single doubleLayoutSlip
             point = MathUtil.add(point, delta);
-            singleLayoutSlip = new LayoutSingleSlip("Single Slip",
-                    point, 0.0, layoutEditor);
+            singleLayoutSlip = new LayoutSingleSlip("Single Slip",  // point, 0.0, 
+                    layoutEditor);
+            singleLayoutSlipView = new LayoutSingleSlipView(singleLayoutSlip,
+                    point, 0.0, 
+                    layoutEditor);
+            layoutEditor.addLayoutTrack(singleLayoutSlip, singleLayoutSlipView);
 
         }
     }

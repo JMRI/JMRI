@@ -19,7 +19,9 @@ public class LevelXingViewTest extends LayoutTrackViewTest {
 
     @Test
     public void testCtor() {
-        new LevelXingView(xing, layoutEditor);
+        Point2D point = new Point2D.Double(150.0, 100.0);
+
+        new LevelXingView(xing, point, layoutEditor);
     }
 
     LayoutEditor layoutEditor;
@@ -32,10 +34,8 @@ public class LevelXingViewTest extends LayoutTrackViewTest {
             JUnitUtil.resetProfileManager();
 
             layoutEditor = new LayoutEditor();
-            
-            Point2D point = new Point2D.Double(150.0, 100.0);
- 
-            xing = new LevelXing("X1", point, layoutEditor);
+             
+            xing = new LevelXing("X1", layoutEditor);
 
         }
     }
