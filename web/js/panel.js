@@ -29,6 +29,8 @@
  *
  **********************************************************************************************/
 
+var log = new Logger();
+
 //persistent (global) variables
 var $gWidgets = {};         //array of all widget objects, key=CSSId
 var $gPanelList = {};       //store list of available panels
@@ -2048,11 +2050,11 @@ function $drawTrackSegment($widget) {
     var $ep1, $ep2;
     [$ep1, $ep2] = $getEndPoints$($widget);
     if (typeof $ep1 === "undefined") {
-    		console.error("ERROR: can't draw tracksegment " + $widget.ident + ": connect1: " + $widget.connect1name + "." + $widget.type1 + " undefined.");
+    		log.error("ERROR: can't draw tracksegment " + $widget.ident + ": connect1: " + $widget.connect1name + "." + $widget.type1 + " undefined.");
         return;
     }
     if (typeof $ep2 === "undefined") {
-    		console.error("ERROR: can't draw tracksegment " + $widget.ident + ": connect2: " + $widget.connect2name + "." + $widget.type2 + " undefined.");
+    		log.error("ERROR: can't draw tracksegment " + $widget.ident + ": connect2: " + $widget.connect2name + "." + $widget.type2 + " undefined.");
     	return;
     }
 
@@ -2257,7 +2259,7 @@ function $drawIcon($widget) {
             $("#panel-area>#" + $widget.id + "-overlay").css(ovlCSS);
         }
     } else {
-        console.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
+        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
     }
     $setWidgetPosition($("#panel-area #" + $widget.id));
 }
@@ -2860,7 +2862,7 @@ function $drawLayoutShape($widget) {
                 }
                 $gCtx.quadraticCurveTo(p[0], p[1], midR[0], midR[1]);
             } else {
-                console.error("ERROR: unexpected LayoutShape point type '" + lspt + "' for " + $widget.ide);
+                log.error("ERROR: unexpected LayoutShape point type '" + lspt + "' for " + $widget.ide);
             }
         });   // $pts.each(function(idx, $lsp)
 
@@ -3473,7 +3475,7 @@ var $reDrawIcon = function($widget) {
     } else if ($widget['defaulticon']) {  //if state icon not found, use default icon if provided
         $('img#' + $widget.id).attr('src', $widget['defaulticon']);
     } else {
-        console.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
+        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
     }
 };
 
@@ -4013,7 +4015,7 @@ function setBlockColor(blockName, newColor) {
     if (isDefined($blk)) {
         $gBlks[blockName].blockcolor = newColor;
     } else {
-        console.error("ERROR: block " + blockName + " not found for color " + newColor);
+        log.error("ERROR: block " + blockName + " not found for color " + newColor);
     }
     $redrawBlock(blockName);
 }

@@ -26,6 +26,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.assertj.core.api.Assertions.allOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Sets.newLinkedHashSet;
 
@@ -116,14 +117,15 @@ public class WebServerAcceptanceSteps implements En {
         After(chrometags, NO_TIMEOUT, 0, () -> {
             LogEntries logEntries = webDriver.manage().logs().get(LogType.BROWSER);
 
-            Condition<LogEntry> error = new Condition<>( o -> o.getMessage().startsWith("ERROR")
-                    && o.getLevel().equals(Level.SEVERE),"error");
+            Condition<LogEntry> error = new Condition<>( o -> o.getMessage().contains("ERROR:"),"error");
+
+            Condition<LogEntry> severe = new Condition<>( o -> o.getLevel().equals(Level.SEVERE),"severe");
 
             SoftAssertions softly = new SoftAssertions();
             for (LogEntry logEntry : logEntries) {
                 softly.assertThat(logEntry)
                         .withFailMessage(String.format("%s:%s:%s",webDriver.getWrappedDriver().getClass(),logEntry.getLevel().getName(),logEntry.getMessage()))
-                        .isNot(error);
+                        .isNot(allOf(severe,error));
             }
             softly.assertAll();
         });
