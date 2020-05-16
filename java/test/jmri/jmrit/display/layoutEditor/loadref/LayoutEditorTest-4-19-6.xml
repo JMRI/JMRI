@@ -58,6 +58,12 @@
       <systemName>IM1</systemName>
       <userName>XYZZY</userName>
     </memory>
+    <memory value="4:00 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
   </memories>
   <blocks class="jmri.configurexml.BlockManagerXml">
     <defaultspeed>Normal</defaultspeed>
@@ -106,7 +112,7 @@
           <turnout systemName="IT9" />
         </beansetting>
       </path>
-      <path todir="80" fromdir="160" block="IB7">
+      <path todir="64" fromdir="128" block="IB7">
         <beansetting setting="4">
           <turnout systemName="IT2" />
         </beansetting>
@@ -169,7 +175,7 @@
           <turnout systemName="IT1" />
         </beansetting>
       </path>
-      <path todir="160" fromdir="80" block="IB1">
+      <path todir="128" fromdir="64" block="IB1">
         <beansetting setting="4">
           <turnout systemName="IT2" />
         </beansetting>
@@ -211,6 +217,7 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri May 15 09:43:35 PDT 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Layout Editor Test" x="0" y="100" windowheight="360" windowwidth="670" panelheight="1054" panelwidth="1916" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="yes" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="magenta" turnoutcirclesize="3" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
     <layoutTrackDrawingOptions name="Layout Editor Test" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
       <mainBallastColor>#000000</mainBallastColor>
@@ -296,7 +303,7 @@
     <positionablepoint ident="A4" type="ANCHOR" x="150.0" y="220.0" connect1name="T18" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
     <positionablepoint ident="A5" type="ANCHOR" x="420.0" y="240.0" connect1name="T20" connect2name="T21" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
     <positionablepoint ident="A6" type="ANCHOR" x="500.0" y="140.0" connect1name="T22" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <levelxing ident="X1" blocknameac="Yard" blocknamebd="Yard" connectaname="T10" connectbname="T9" connectdname="T11" xcen="260.0" ycen="70.0" xa="240.0" ya="60.0" xb="240.0" yb="80.0" class="jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml" />
+    <levelxing ident="X1" blocknameac="Yard" blocknamebd="Yard" connectaname="T10" connectbname="T9" connectdname="T11" xcen="260.0" ycen="70.0" xa="240.0" ya="70.0" xb="246.0" yb="84.0" class="jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml" />
     <layoutSlip ident="SL1" slipType="DOUBLE_SLIP" hidden="yes" disabled="yes" disableWhenOccupied="yes" xcen="300.0" ycen="90.0" xa="280.0" ya="80.0" xb="280.0" yb="100.0" blockname="Yard" connectbname="T18" connectcname="T22" connectdname="T17" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutDoubleSlipXml">
       <turnout>IT5</turnout>
       <turnoutB>IT6</turnoutB>
@@ -319,7 +326,7 @@
         </B-C>
       </states>
     </layoutSlip>
-    <layoutturntable ident="TUR1" radius="35.0" xcen="200.0" ycen="200.0" turnoutControlled="no" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml">
+    <layoutturntable ident="TUR1" radius="25.0" xcen="200.0" ycen="200.0" turnoutControlled="no" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml">
       <raytrack angle="0.0" index="0" />
       <raytrack angle="90.0" index="1" />
       <raytrack angle="180.0" index="2" />
@@ -329,39 +336,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Thu May 14 17:58:44 PDT 2020</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/versions/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest-4-19-6.xml</filename>
-      <filehistory>
-        <operation>
-          <type>Load OK</type>
-          <date>Tue Apr 28 12:56:01 PDT 2020</date>
-          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest-4-19-6.xml</filename>
-          <filehistory>
-            <operation>
-              <type>Load OK</type>
-              <date>Sun Apr 26 15:57:57 PDT 2020</date>
-              <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest.xml</filename>
-              <filehistory />
-            </operation>
-            <operation>
-              <type>Store</type>
-              <date>Sun Apr 26 15:57:57 PDT 2020</date>
-              <filename />
-            </operation>
-          </filehistory>
-        </operation>
-        <operation>
-          <type>Store</type>
-          <date>Tue Apr 28 12:56:01 PDT 2020</date>
-          <filename />
-        </operation>
-      </filehistory>
+      <date>Fri May 15 09:43:36 PDT 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest-4-19-6.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Thu May 14 17:58:49 PDT 2020</date>
+      <date>Fri May 15 09:43:43 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.7ish+jake+20200515T0055Z+Rff58a113c0 on Thu May 14 17:58:49 PDT 2020-->
+  <!--Written by JMRI version 4.19.7ish+jake+20200515T1642Z+Rdec10019ba on Fri May 15 09:43:43 PDT 2020-->
 </layout-config>

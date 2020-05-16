@@ -2,11 +2,7 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
 import jmri.configurexml.AbstractXmlAdapter;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.display.layoutEditor.LayoutSlip;
-import jmri.jmrit.display.layoutEditor.LayoutSingleSlip;
-import jmri.jmrit.display.layoutEditor.LayoutDoubleSlip;
-import jmri.jmrit.display.layoutEditor.TrackSegment;
+import jmri.jmrit.display.layoutEditor.*;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -205,17 +201,25 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
 
         // create the new LayoutSlip
         LayoutSlip l; 
+        LayoutSlipView lv; 
+        
         switch(type) {
             case DOUBLE_SLIP :
-                l = new LayoutDoubleSlip(name, new Point2D.Double(x, y), 0.0, p);
+                LayoutDoubleSlip lds = new LayoutDoubleSlip(name, new Point2D.Double(x, y), 0.0, p);
+                l = lds;
+                lv = new LayoutDoubleSlipView(lds, p);
                 break;
             case SINGLE_SLIP :
-                l = new LayoutSingleSlip(name, new Point2D.Double(x, y), 0.0, p);
+                LayoutSingleSlip lss = new LayoutSingleSlip(name, new Point2D.Double(x, y), 0.0, p);
+                l = lss;
+                lv = new LayoutSingleSlipView(lss, p);
                 break;
             default:
                 log.error("can't create slip {} with type {}", name, type);
                 return; // without creating
         }
+
+        p.addLayoutTrack(l, lv);
 
         // get remaining attributes
         l.setTurnout(getElement(element, "turnout"));
@@ -278,7 +282,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
         try {
-            l.setHidden(element.getAttribute("hidden").getBooleanValue());
+            lv.setHidden(element.getAttribute("hidden").getBooleanValue());
         } catch (DataConversionException e1) {
             log.warn("unable to convert layout turnout hidden attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
@@ -336,7 +340,6 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
                         bc.getChild("turnoutB").getText());
             }
         }
-        p.addLayoutTrack(l);
     }
 
     String getElement(Element el, String child) {

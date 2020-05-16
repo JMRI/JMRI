@@ -342,11 +342,11 @@ public class PositionablePointTest extends LayoutTrackTest {
         PositionablePoint ppB = new PositionablePoint("B", PositionablePoint.PointType.ANCHOR, new Point2D.Double(10.0, 10.0), le);
         PositionablePoint ppC = new PositionablePoint("C", PositionablePoint.PointType.ANCHOR, new Point2D.Double(20.0, 20.0), le);
         PositionablePoint ppD = new PositionablePoint("D", PositionablePoint.PointType.ANCHOR, new Point2D.Double(30.0, 30.0), le);
-        TrackSegment tsAB = new TrackSegment("testAB", ppA, HitPointType.POS_POINT, ppB, HitPointType.POS_POINT, false, false, le);
+        TrackSegment tsAB = new TrackSegment("testAB", ppA, HitPointType.POS_POINT, ppB, HitPointType.POS_POINT, false, le);
         Assert.assertNotNull("Track Segment AB exists", tsAB);
-        TrackSegment tsBC = new TrackSegment("testBC", ppB, HitPointType.POS_POINT, ppC, HitPointType.POS_POINT, false, false, le);
+        TrackSegment tsBC = new TrackSegment("testBC", ppB, HitPointType.POS_POINT, ppC, HitPointType.POS_POINT, false, le);
         Assert.assertNotNull("Track Segment BC exists", tsBC);
-        TrackSegment tsCD = new TrackSegment("testCD", ppC, HitPointType.POS_POINT, ppD, HitPointType.POS_POINT, false, false, le);
+        TrackSegment tsCD = new TrackSegment("testCD", ppC, HitPointType.POS_POINT, ppD, HitPointType.POS_POINT, false, le);
         Assert.assertNotNull("Track Segment CD exists", tsCD);
 
         // test non-null track segment

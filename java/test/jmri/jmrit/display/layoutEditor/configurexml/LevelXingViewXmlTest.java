@@ -1,6 +1,5 @@
-package jmri.jmrit.display.configurexml;
+package jmri.jmrit.display.layoutEditor.configurexml;
 
-import jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,14 +13,13 @@ import org.junit.Test;
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
-public class LevelXingXmlTest {
+public class LevelXingViewXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("LevelXingXml constructor", new LevelXingXml());
+      Assert.assertNotNull("LevelXingXml constructor",new LevelXingViewXml());
     }
 
-    // from here down is testing infrastructure
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -32,3 +30,4 @@ public class LevelXingXmlTest {
         JUnitUtil.tearDown();
     }
 }
+

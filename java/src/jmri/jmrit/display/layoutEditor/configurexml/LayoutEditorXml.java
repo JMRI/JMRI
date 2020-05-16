@@ -170,9 +170,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             if (! (lt instanceof LayoutSlip) )
                 storeOne(panel, lt); 
         }
-        for (LayoutTrackView lt : p.getTrackSegmentViews()) {storeOne(panel, lt); }
+        for (LayoutTrackView lv : p.getTrackSegmentViews()) {storeOne(panel, lv); }
         for (LayoutTrack lt : p.getPositionablePoints())    {storeOne(panel, lt); }
-        for (LayoutTrack lt : p.getLevelXings())            {storeOne(panel, lt); }
+        for (LayoutTrackView lv : p.getLevelXingViews())    {storeOne(panel, lv); }
         for (LayoutTrack lt : p.getLayoutSlips())           {storeOne(panel, lt); }
         for (LayoutTrack lt : p.getLayoutTurntables())      {storeOne(panel, lt); }
         

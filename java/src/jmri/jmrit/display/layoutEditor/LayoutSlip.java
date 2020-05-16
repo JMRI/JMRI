@@ -87,7 +87,8 @@ abstract public class LayoutSlip extends LayoutTurnout {
             log.error("{}.setSlipType({}); invalid slip type", getName(), type); // I18IN
         }
         
-        rotateCoords(rot);
+        log.info("temporary: we're not doing the initial rotation of the turnout in Ctor because don't have View yet");
+        // rotateCoords(rot);
 
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutSlipEditor(layoutEditor);
     }
@@ -805,13 +806,13 @@ abstract public class LayoutSlip extends LayoutTurnout {
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
-            JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
-            hiddenCheckBoxMenuItem.setSelected(isHidden());
-            popup.add(hiddenCheckBoxMenuItem);
-            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e1) -> {
-                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e1.getSource();
-                setHidden(o.isSelected());
-            });
+//             JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
+//             hiddenCheckBoxMenuItem.setSelected(isHidden());
+//             popup.add(hiddenCheckBoxMenuItem);
+//             hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e1) -> {
+//                 JCheckBoxMenuItem o = (JCheckBoxMenuItem) e1.getSource();
+//                 setHidden(o.isSelected());
+//             });
 
             JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
             cbmi.setSelected(disabled);

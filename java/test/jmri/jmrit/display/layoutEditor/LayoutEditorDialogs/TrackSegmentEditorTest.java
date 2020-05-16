@@ -172,7 +172,7 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
             point = MathUtil.add(point, delta);
             PositionablePoint pp2 = new PositionablePoint("b", PositionablePoint.PointType.ANCHOR, point, layoutEditor);
             trackSegment = new TrackSegment("Segment", pp1, HitPointType.POS_POINT, pp2, HitPointType.POS_POINT, 
-                                            false, false, layoutEditor);
+                                            false, layoutEditor);
         }
     }
 

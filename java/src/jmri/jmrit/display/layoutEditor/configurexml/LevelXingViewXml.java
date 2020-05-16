@@ -19,9 +19,9 @@ import org.slf4j.LoggerFactory;
  * @author David Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2019
  */
-public class LevelXingXml extends AbstractXmlAdapter {
+public class LevelXingViewXml extends AbstractXmlAdapter {
 
-    public LevelXingXml() {
+    public LevelXingViewXml() {
     }
 
     /**
@@ -33,84 +33,86 @@ public class LevelXingXml extends AbstractXmlAdapter {
     @Override
     public Element store(Object o) {
 
-        LevelXing p = (LevelXing) o;
-
+        
+        LevelXingView lv = (LevelXingView) o;
+        LevelXing lt = lv.getLevelXing();
+        
         Element element = new Element("levelxing");
 
         // include attributes
-        element.setAttribute("ident", p.getId());
-        if (!p.getBlockNameAC().isEmpty()) {
-            element.setAttribute("blocknameac", p.getBlockNameAC());
+        element.setAttribute("ident", lt.getId());
+        if (!lt.getBlockNameAC().isEmpty()) {
+            element.setAttribute("blocknameac", lt.getBlockNameAC());
         }
-        if (!p.getBlockNameBD().isEmpty()) {
-            element.setAttribute("blocknamebd", p.getBlockNameBD());
+        if (!lt.getBlockNameBD().isEmpty()) {
+            element.setAttribute("blocknamebd", lt.getBlockNameBD());
         }
-        if (p.getConnectA() != null) {
-            element.setAttribute("connectaname", ((TrackSegment) p.getConnectA()).getId());
+        if (lt.getConnectA() != null) {
+            element.setAttribute("connectaname", ((TrackSegment) lt.getConnectA()).getId());
         }
-        if (p.getConnectB() != null) {
-            element.setAttribute("connectbname", ((TrackSegment) p.getConnectB()).getId());
+        if (lt.getConnectB() != null) {
+            element.setAttribute("connectbname", ((TrackSegment) lt.getConnectB()).getId());
         }
-        if (p.getConnectC() != null) {
-            element.setAttribute("connectcname", ((TrackSegment) p.getConnectC()).getId());
+        if (lt.getConnectC() != null) {
+            element.setAttribute("connectcname", ((TrackSegment) lt.getConnectC()).getId());
         }
-        if (p.getConnectD() != null) {
-            element.setAttribute("connectdname", ((TrackSegment) p.getConnectD()).getId());
+        if (lt.getConnectD() != null) {
+            element.setAttribute("connectdname", ((TrackSegment) lt.getConnectD()).getId());
         }
-        if (p.isHidden()) {
+        if (lv.isHidden()) {
             element.setAttribute("hidden", "yes");
         }
-        if (!p.getSignalAName().isEmpty()) {
-            element.setAttribute("signalaname", p.getSignalAName());
+        if (!lt.getSignalAName().isEmpty()) {
+            element.setAttribute("signalaname", lt.getSignalAName());
         }
-        if (!p.getSignalBName().isEmpty()) {
-            element.setAttribute("signalbname", p.getSignalBName());
+        if (!lt.getSignalBName().isEmpty()) {
+            element.setAttribute("signalbname", lt.getSignalBName());
         }
-        if (!p.getSignalCName().isEmpty()) {
-            element.setAttribute("signalcname", p.getSignalCName());
+        if (!lt.getSignalCName().isEmpty()) {
+            element.setAttribute("signalcname", lt.getSignalCName());
         }
-        if (!p.getSignalDName().isEmpty()) {
-            element.setAttribute("signaldname", p.getSignalDName());
+        if (!lt.getSignalDName().isEmpty()) {
+            element.setAttribute("signaldname", lt.getSignalDName());
         }
-        Point2D coords = p.getCoordsCenter();
+        Point2D coords = lv.getCoordsCenter();
         element.setAttribute("xcen", "" + coords.getX());
         element.setAttribute("ycen", "" + coords.getY());
-        coords = p.getCoordsA();
+        coords = lv.getCoordsA();
         element.setAttribute("xa", "" + coords.getX());
         element.setAttribute("ya", "" + coords.getY());
-        coords = p.getCoordsB();
+        coords = lv.getCoordsB();
         element.setAttribute("xb", "" + coords.getX());
         element.setAttribute("yb", "" + coords.getY());
 
-        if (!p.getSignalAMastName().isEmpty()) {
-            element.addContent(new Element("signalAMast").addContent(p.getSignalAMastName()));
+        if (!lt.getSignalAMastName().isEmpty()) {
+            element.addContent(new Element("signalAMast").addContent(lt.getSignalAMastName()));
         }
 
-        if (!p.getSignalBMastName().isEmpty()) {
-            element.addContent(new Element("signalBMast").addContent(p.getSignalBMastName()));
+        if (!lt.getSignalBMastName().isEmpty()) {
+            element.addContent(new Element("signalBMast").addContent(lt.getSignalBMastName()));
         }
-        if (!p.getSignalCMastName().isEmpty()) {
-            element.addContent(new Element("signalCMast").addContent(p.getSignalCMastName()));
+        if (!lt.getSignalCMastName().isEmpty()) {
+            element.addContent(new Element("signalCMast").addContent(lt.getSignalCMastName()));
         }
-        if (!p.getSignalDMastName().isEmpty()) {
-            element.addContent(new Element("signalDMast").addContent(p.getSignalDMastName()));
-        }
-
-        if (!p.getSensorAName().isEmpty()) {
-            element.addContent(new Element("sensorA").addContent(p.getSensorAName()));
+        if (!lt.getSignalDMastName().isEmpty()) {
+            element.addContent(new Element("signalDMast").addContent(lt.getSignalDMastName()));
         }
 
-        if (!p.getSensorBName().isEmpty()) {
-            element.addContent(new Element("sensorB").addContent(p.getSensorBName()));
-        }
-        if (!p.getSensorCName().isEmpty()) {
-            element.addContent(new Element("sensorC").addContent(p.getSensorCName()));
-        }
-        if (!p.getSensorDName().isEmpty()) {
-            element.addContent(new Element("sensorD").addContent(p.getSensorDName()));
+        if (!lt.getSensorAName().isEmpty()) {
+            element.addContent(new Element("sensorA").addContent(lt.getSensorAName()));
         }
 
-        element.setAttribute("class", getClass().getName());
+        if (!lt.getSensorBName().isEmpty()) {
+            element.addContent(new Element("sensorB").addContent(lt.getSensorBName()));
+        }
+        if (!lt.getSensorCName().isEmpty()) {
+            element.addContent(new Element("sensorC").addContent(lt.getSensorCName()));
+        }
+        if (!lt.getSensorDName().isEmpty()) {
+            element.addContent(new Element("sensorD").addContent(lt.getSensorDName()));
+        }
+
+        element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml"); // temporary // getClass().getName());
         return element;
     }
 
@@ -270,5 +272,5 @@ public class LevelXingXml extends AbstractXmlAdapter {
         p.addLayoutTrack(lt, lv);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LevelXingXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LevelXingViewXml.class);
 }

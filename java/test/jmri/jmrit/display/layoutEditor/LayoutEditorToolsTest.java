@@ -270,7 +270,7 @@ public class LayoutEditorToolsTest {
         TrackSegment trackSegment = new TrackSegment(uName,
                 layoutTurnout, types[idx],
                 positionablePoints[idx], HitPointType.POS_POINT,
-                false, false, layoutEditor);
+                false, layoutEditor);
         Assert.assertNotNull("trackSegment not null", trackSegment);
         layoutEditor.addLayoutTrack(trackSegment);
         try {

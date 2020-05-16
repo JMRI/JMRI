@@ -207,34 +207,52 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         }
 
         // create the new LayoutTurnout of the correct type
-        LayoutTurnout l; 
+        LayoutTurnoutView lv; 
+        LayoutTurnout l;
+        
         switch(type) {
 
             case RH_TURNOUT :
-                l = new LayoutRHTurnout(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                LayoutRHTurnout lrht = new LayoutRHTurnout(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version); 
+                l = lrht;
+                lv = new LayoutRHTurnoutView(lrht, p);
                 break;
             case LH_TURNOUT :
-                l = new LayoutLHTurnout(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                LayoutLHTurnout llht = new LayoutLHTurnout(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                l = llht;
+                lv = new LayoutLHTurnoutView(llht, p);
                 break;
             case WYE_TURNOUT :
-                l = new LayoutWye(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                LayoutWye lwt = new LayoutWye(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                l = lwt;
+                lv = new LayoutWyeView(lwt, p);
                 break;
             case DOUBLE_XOVER :
-                l = new LayoutDoubleXOver(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                LayoutDoubleXOver ldx = new LayoutDoubleXOver(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                l = ldx;
+                lv = new LayoutDoubleXOverView(ldx, p);
                 break;
             case RH_XOVER :
-                l = new LayoutRHXOver(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                LayoutRHXOver lrx = new LayoutRHXOver(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                l = lrx;
+                lv = new LayoutRHXOverView(lrx, p);
                 break;
             case LH_XOVER :
-                l = new LayoutLHXOver(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                LayoutLHXOver llx = new LayoutLHXOver(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                l = llx;
+                lv = new LayoutLHXOverView(llx, p);
                 break;
 
             case DOUBLE_SLIP :
-                l = new LayoutDoubleSlip(name, new Point2D.Double(x, y), 0.0, p);
+                LayoutDoubleSlip lds = new LayoutDoubleSlip(name, new Point2D.Double(x, y), 0.0, p);
+                l = lds;
+                lv = new LayoutDoubleSlipView(lds, p);
                 log.error("Found DOUBLE_SLIP in LayoutTrack ctor for element {}", name);
                 break;
             case SINGLE_SLIP :
-                l = new LayoutSingleSlip(name, new Point2D.Double(x, y), 0.0, p);
+                LayoutSingleSlip lss = new LayoutSingleSlip(name, new Point2D.Double(x, y), 0.0, p);
+                l = lss;
+                lv = new LayoutSingleSlipView(lss, p);
                 log.error("Found SINGLE_SLIP in LayoutTrack ctor for element {}", name);
                 break;
 
@@ -242,6 +260,8 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
                 log.error("can't create LayoutTrack {} with type {}", name, type);
                 return; // without creating
         }
+
+        p.addLayoutTrack(l, lv);
 
         // get remaining attributes
         Attribute a = element.getAttribute("turnoutname");
@@ -357,7 +377,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
         try {
-            l.setHidden(element.getAttribute("hidden").getBooleanValue());
+            lv.setHidden(element.getAttribute("hidden").getBooleanValue());
         } catch (DataConversionException e1) {
             log.warn("unable to convert layout turnout hidden attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
@@ -367,7 +387,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
             try {
                 x = element.getAttribute("xa").getFloatValue();
                 y = element.getAttribute("ya").getFloatValue();
-                l.setCoordsA(new Point2D.Double(x, y));
+                lv.setCoordsA(new Point2D.Double(x, y));
             } catch (org.jdom2.DataConversionException e) {
                 log.error("failed to convert layoutturnout b coords attribute");
             } catch (java.lang.NullPointerException e) {
@@ -384,7 +404,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         try {
             x = element.getAttribute("xc").getFloatValue();
             y = element.getAttribute("yc").getFloatValue();
-            l.setCoordsC(new Point2D.Double(x, y));
+            lv.setCoordsC(new Point2D.Double(x, y));
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert layoutturnout c coords attribute");
         }
@@ -392,7 +412,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
             try {
                 x = element.getAttribute("xd").getFloatValue();
                 y = element.getAttribute("yd").getFloatValue();
-                l.setCoordsD(new Point2D.Double(x, y));
+                lv.setCoordsD(new Point2D.Double(x, y));
             } catch (org.jdom2.DataConversionException e) {
                 log.error("failed to convert layoutturnout c coords attribute");
             } catch (java.lang.NullPointerException e) {
@@ -409,8 +429,6 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         l.setSensorB(getElement(element, "sensorB"));
         l.setSensorC(getElement(element, "sensorC"));
         l.setSensorD(getElement(element, "sensorD"));
-
-        p.addLayoutTrack(l);
     }
 
     String getElement(Element el, String child) {

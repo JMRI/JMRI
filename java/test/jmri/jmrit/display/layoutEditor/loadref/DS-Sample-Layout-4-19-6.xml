@@ -4,7 +4,7 @@
   <jmriversion>
     <major>4</major>
     <minor>19</minor>
-    <test>6</test>
+    <test>7</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -121,6 +121,9 @@
       <systemName>IS999</systemName>
       <userName>Reset</userName>
     </sensor>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
@@ -181,6 +184,14 @@
       <userName>T-Alpha-Right-Y1</userName>
     </turnout>
   </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="4:00 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
     <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:basic:one-low($0009)</systemName>
@@ -585,12 +596,12 @@
       <userName>B-Alpha-Left-Ladder</userName>
       <permissive>no</permissive>
       <occupancysensor>S-Alpha-Left-Ladder</occupancysensor>
-      <path todir="128" fromdir="64" block="IB:AUTO:0008" />
       <path todir="96" fromdir="144" block="IB:AUTO:0004">
         <beansetting setting="4">
           <turnout systemName="T-Alpha-Left" />
         </beansetting>
       </path>
+      <path todir="128" fromdir="64" block="IB:AUTO:0008" />
       <path todir="64" fromdir="128" block="IB:AUTO:0011" />
       <path todir="64" fromdir="128" block="IB:AUTO:0012" />
     </block>
@@ -753,8 +764,8 @@
       <userName>B-Right-Loop</userName>
       <permissive>no</permissive>
       <occupancysensor>S-Right-Loop</occupancysensor>
-      <path todir="160" fromdir="80" block="IB:AUTO:0023" />
       <path todir="80" fromdir="160" block="IB:AUTO:0022" />
+      <path todir="160" fromdir="80" block="IB:AUTO:0023" />
     </block>
     <block systemName="IB:AUTO:0026" length="0.0" curve="0">
       <systemName>IB:AUTO:0026</systemName>
@@ -1508,6 +1519,7 @@
       <conditionalAction option="1" type="10" systemName="Reset" data="4" delay="1" string="1" />
     </conditional>
   </conditionals>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri May 15 15:57:59 PDT 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Left Panel" x="13" y="33" windowheight="343" windowwidth="832" panelheight="352" panelwidth="854" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="no" snaponmove="no" antialiasing="yes" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
     <layoutTrackDrawingOptions name="Left Panel" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
       <mainBallastColor>#000000</mainBallastColor>
@@ -2155,99 +2167,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Thu May 14 11:54:58 PDT 2020</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/versions/v4.19.6/java/test/jmri/jmrit/display/layoutEditor/load/DS-Sample-Layout-4-19-6.xml</filename>
-      <filehistory>
-        <operation>
-          <type>app</type>
-          <date>Wed May 13 22:27:50 CDT 2020</date>
-          <filename>JMRI program</filename>
-        </operation>
-        <operation>
-          <type>Load OK</type>
-          <date>Wed May 13 22:27:59 CDT 2020</date>
-          <filename>/Users/das/JMRI/_Profiles/LE_Project.jmri/Complex%20Layout.xml</filename>
-          <filehistory>
-            <operation>
-              <type>app</type>
-              <date>Wed May 13 22:26:11 CDT 2020</date>
-              <filename>JMRI program</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Wed May 13 22:26:20 CDT 2020</date>
-              <filename>/Users/das/JMRI/_Profiles/LE_Project.jmri/Complex%20Layout.xml</filename>
-              <filehistory>
-                <operation>
-                  <type>app</type>
-                  <date>Wed May 13 22:24:53 CDT 2020</date>
-                  <filename>JMRI program</filename>
-                </operation>
-                <operation>
-                  <type>Load OK</type>
-                  <date>Wed May 13 22:25:02 CDT 2020</date>
-                  <filename>/Users/das/JMRI/_Profiles/LE_Project.jmri/Complex%20Layout.xml</filename>
-                  <filehistory>
-                    <operation>
-                      <type>app</type>
-                      <date>Wed May 13 22:23:23 CDT 2020</date>
-                      <filename>JMRI program</filename>
-                    </operation>
-                    <operation>
-                      <type>Load OK</type>
-                      <date>Wed May 13 22:23:32 CDT 2020</date>
-                      <filename>/Users/das/JMRI/_Profiles/LE_Project.jmri/Complex%20Layout.xml</filename>
-                      <filehistory>
-                        <operation>
-                          <type>app</type>
-                          <date>Wed May 13 22:13:06 CDT 2020</date>
-                          <filename>JMRI program</filename>
-                        </operation>
-                        <operation>
-                          <type>Load OK</type>
-                          <date>Wed May 13 22:13:14 CDT 2020</date>
-                          <filename>/Users/das/JMRI/_Profiles/LE_Project.jmri/Complex%20Layout.xml</filename>
-                        </operation>
-                        <operation>
-                          <type>Store</type>
-                          <date>Wed May 13 22:23:02 CDT 2020</date>
-                          <filename />
-                        </operation>
-                      </filehistory>
-                    </operation>
-                    <operation>
-                      <type>Store</type>
-                      <date>Wed May 13 22:24:40 CDT 2020</date>
-                      <filename />
-                    </operation>
-                  </filehistory>
-                </operation>
-                <operation>
-                  <type>Store</type>
-                  <date>Wed May 13 22:26:00 CDT 2020</date>
-                  <filename />
-                </operation>
-              </filehistory>
-            </operation>
-            <operation>
-              <type>Store</type>
-              <date>Wed May 13 22:26:53 CDT 2020</date>
-              <filename />
-            </operation>
-          </filehistory>
-        </operation>
-        <operation>
-          <type>Store</type>
-          <date>Wed May 13 22:28:49 CDT 2020</date>
-          <filename />
-        </operation>
-      </filehistory>
+      <date>Fri May 15 15:58:02 PDT 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/DS-Sample-Layout-4-19-6.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Thu May 14 11:55:02 PDT 2020</date>
+      <date>Fri May 15 15:58:07 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.6ish+jake+20200514T1854Z+Rdb3d7c2db9 on Thu May 14 11:55:02 PDT 2020-->
+  <!--Written by JMRI version 4.19.7ish+jake+20200515T2257Z+Rdec10019ba on Fri May 15 15:58:07 PDT 2020-->
 </layout-config>

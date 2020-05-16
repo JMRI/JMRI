@@ -7592,6 +7592,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    public @Nonnull
+    List<LevelXingView> getLevelXingViews() {
+        return getLayoutTrackViewsOfClass(LevelXingView.class)
+                .map(LevelXingView.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
     /**
      * Read-only access to the list of LayoutTrack family objects.
      * The returned list will throw UnsupportedOperationException
@@ -7632,6 +7639,36 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         addLayoutTrack(trk, v);
     }
 
+    // temporary
+    final public LayoutTrackView getLayoutTrackView(LayoutTrack trk) {
+        LayoutTrackView lv = trkToView.get(trk);
+        if (lv instanceof LayoutTrackView) return (LayoutTrackView) lv;
+        else log.error("wrong type {} {} found {}", trk, trk.getClass(), lv);
+        throw new IllegalArgumentException("Wrong type: "+trk.getClass());
+    }
+    // temporary
+    final public LevelXingView getLevelXingView(LevelXing xing) {
+        LayoutTrackView lv = trkToView.get(xing);
+        if (lv instanceof LevelXingView) return (LevelXingView) lv;
+        else log.error("wrong type {} {} found {}", xing, xing.getClass(), lv);
+        throw new IllegalArgumentException("Wrong type: "+xing.getClass());
+    }
+    // temporary
+    final public LayoutTurnoutView getLayoutTurnoutView(LayoutTurnout to) {
+        LayoutTrackView lv = trkToView.get(to);
+        if (lv instanceof LayoutTurnoutView) return (LayoutTurnoutView) lv;
+        else log.error("wrong type {} {} found {}", to, to.getClass(), lv);
+        throw new IllegalArgumentException("Wrong type: "+to.getClass());
+    }
+    
+    // temporary
+    final public LayoutTurntableView getLayoutTurntableView(LayoutTurntable to) {
+        LayoutTrackView lv = trkToView.get(to);
+        if (lv instanceof LayoutTurntableView) return (LayoutTurntableView) lv;
+        else log.error("wrong type {} {} found {}", to, to.getClass(), lv);
+        throw new IllegalArgumentException("Wrong type: "+to.getClass());
+    }
+    
     /**
      * Add a LayoutTrack and LayoutTrackView to the list of 
      * LayoutTrack family objects.

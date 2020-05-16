@@ -449,7 +449,10 @@ abstract public class LayoutTurnout extends LayoutTrack {
                 dispA.setLocation(layoutEditor.getXOverShort(), layoutEditor.getXOverHWid());
             }
         }
-        rotateCoords(rot);
+        
+        log.info("temporary: we're not doing the initial rotation of the turnout in Ctor because don't have View yet");
+        //rotateCoords(rot);
+        
         // adjust size of new turnout
         Point2D pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
                 Math.round(dispB.getY() * yFactor));
@@ -1491,38 +1494,23 @@ abstract public class LayoutTurnout extends LayoutTrack {
     }
 
     public Point2D getCoordsA() {
-        if (isTurnoutTypeXover()) {
-            if (version == 2) {
-                return pointA;
-            }
-            return MathUtil.subtract(getCoordsCenter(), dispA);
-        } else if (getTurnoutType() == TurnoutType.WYE_TURNOUT) {
-            return MathUtil.subtract(getCoordsCenter(), MathUtil.midPoint(dispB, dispA));
-        } else {
-            return MathUtil.subtract(getCoordsCenter(), dispB);
-        }
+        log.debug("temporary getCoordsA should have been called through View");
+        return layoutEditor.getLayoutTurnoutView(this).getCoordsA();    
     }
 
     public Point2D getCoordsB() {
-        if ((version == 2) && isTurnoutTypeXover()) {
-            return pointB;
-        }
-        return MathUtil.add(getCoordsCenter(), dispB);
+        log.debug("temporary getCoordsB should have been called through View");
+        return layoutEditor.getLayoutTurnoutView(this).getCoordsB();    
     }
 
     public Point2D getCoordsC() {
-        if ((version == 2) && isTurnoutTypeXover()) {
-            return pointC;
-        }
-        return MathUtil.add(getCoordsCenter(), dispA);
+        log.debug("temporary getCoordsC should have been called through View");
+        return layoutEditor.getLayoutTurnoutView(this).getCoordsC();    
     }
 
     public Point2D getCoordsD() {
-        if ((version == 2) && isTurnoutTypeXover()) {
-            return pointD;
-        }
-        // only allowed for single and double crossovers
-        return MathUtil.subtract(getCoordsCenter(), dispB);
+        log.debug("temporary getCoordsD should have been called through View");
+        return layoutEditor.getLayoutTurnoutView(this).getCoordsD();    
     }
 
     /**
@@ -2234,191 +2222,33 @@ abstract public class LayoutTurnout extends LayoutTrack {
      */
     @Override
     public void setCoordsCenter(@Nonnull Point2D p) {
-        Point2D offset = MathUtil.subtract(p, getCoordsCenter());
-        pointA = MathUtil.add(pointA, offset);
-        pointB = MathUtil.add(pointB, offset);
-        pointC = MathUtil.add(pointC, offset);
-        pointD = MathUtil.add(pointD, offset);
-        super.setCoordsCenter(p);
+        log.debug("temporary setCoordsCenter should have been called through View");
+        layoutEditor.getLayoutTurnoutView(this).setCoordsCenter(p);
     }
 
     private void reCalculateCenter() {
-        super.setCoordsCenter(MathUtil.midPoint(pointA, pointC));
+        log.debug("temporary reCalculateCenter should have been called through View");
+        layoutEditor.getLayoutTurnoutView(this).reCalculateCenter();
     }
 
     public void setCoordsA(@Nonnull Point2D p) {
-        pointA = p;
-        if (version == 2) {
-            reCalculateCenter();
-        }
-        double x = getCoordsCenter().getX() - p.getX();
-        double y = getCoordsCenter().getY() - p.getY();
-        if (getTurnoutType() == TurnoutType.DOUBLE_XOVER) {
-            dispA = new Point2D.Double(x, y);
-            // adjust to maintain rectangle
-            double oldLength = MathUtil.length(dispB);
-            double newLength = Math.hypot(x, y);
-            dispB = MathUtil.multiply(dispB, newLength / oldLength);
-        } else if ((getTurnoutType() == TurnoutType.RH_XOVER)
-                || (getTurnoutType() == TurnoutType.LH_XOVER)) {
-            dispA = new Point2D.Double(x, y);
-            // adjust to maintain the parallelogram
-            double a = 0.0;
-            double b = -y;
-            double xi = 0.0;
-            double yi = b;
-            if ((dispB.getX() + x) != 0.0) {
-                a = (dispB.getY() + y) / (dispB.getX() + x);
-                b = -y + (a * x);
-                xi = -b / (a + (1.0 / a));
-                yi = (a * xi) + b;
-            }
-            if (getTurnoutType() == TurnoutType.RH_XOVER) {
-                x = xi - (0.333333 * (-x - xi));
-                y = yi - (0.333333 * (-y - yi));
-            } else if (getTurnoutType() == TurnoutType.LH_XOVER) {
-                x = xi - (3.0 * (-x - xi));
-                y = yi - (3.0 * (-y - yi));
-            }
-            dispB = new Point2D.Double(x, y);
-        } else if (getTurnoutType() == TurnoutType.WYE_TURNOUT) {
-            // modify both to maintain same angle at wye
-            double temX = (dispB.getX() + dispA.getX());
-            double temY = (dispB.getY() + dispA.getY());
-            double temXx = (dispB.getX() - dispA.getX());
-            double temYy = (dispB.getY() - dispA.getY());
-            double tan = Math.sqrt(((temX * temX) + (temY * temY))
-                    / ((temXx * temXx) + (temYy * temYy)));
-            double xx = x + (y / tan);
-            double yy = y - (x / tan);
-            dispA = new Point2D.Double(xx, yy);
-            xx = x - (y / tan);
-            yy = y + (x / tan);
-            dispB = new Point2D.Double(xx, yy);
-        } else {
-            dispB = new Point2D.Double(x, y);
-        }
+        log.debug("temporary setCoordsA should have been called through View");
+        layoutEditor.getLayoutTurnoutView(this).setCoordsA(p);    
     }
 
     public void setCoordsB(Point2D p) {
-        pointB = p;
-        double x = getCoordsCenter().getX() - p.getX();
-        double y = getCoordsCenter().getY() - p.getY();
-        dispB = new Point2D.Double(-x, -y);
-        if ((getTurnoutType() == TurnoutType.DOUBLE_XOVER)
-                || (getTurnoutType() == TurnoutType.WYE_TURNOUT)) {
-            // adjust to maintain rectangle or wye shape
-            double oldLength = MathUtil.length(dispA);
-            double newLength = Math.hypot(x, y);
-            dispA = MathUtil.multiply(dispA, newLength / oldLength);
-        } else if ((getTurnoutType() == TurnoutType.RH_XOVER)
-                || (getTurnoutType() == TurnoutType.LH_XOVER)) {
-            // adjust to maintain the parallelogram
-            double a = 0.0;
-            double b = y;
-            double xi = 0.0;
-            double yi = b;
-            if ((dispA.getX() - x) != 0.0) {
-                if ((-dispA.getX() + x) == 0) {
-                    /* we can in some situations eg 90' vertical end up with a 0 value,
-                    so hence remove a small amount so that we
-                    don't have a divide by zero issue */
-                    x = x - 0.0000000001;
-                }
-                a = (dispA.getY() - y) / (dispA.getX() - x);
-                b = y - (a * x);
-                xi = -b / (a + (1.0 / a));
-                yi = (a * xi) + b;
-            }
-            if (getTurnoutType() == TurnoutType.LH_XOVER) {
-                x = xi - (0.333333 * (x - xi));
-                y = yi - (0.333333 * (y - yi));
-            } else if (getTurnoutType() == TurnoutType.RH_XOVER) {
-                x = xi - (3.0 * (x - xi));
-                y = yi - (3.0 * (y - yi));
-            }
-            dispA = new Point2D.Double(x, y);
-        }
+        log.debug("temporary setCoordsB should have been called through View");
+        layoutEditor.getLayoutTurnoutView(this).setCoordsB(p);    
     }
 
     public void setCoordsC(Point2D p) {
-        pointC = p;
-        if (version == 2) {
-            reCalculateCenter();
-        }
-        double x = getCoordsCenter().getX() - p.getX();
-        double y = getCoordsCenter().getY() - p.getY();
-        dispA = new Point2D.Double(-x, -y);
-        if ((getTurnoutType() == TurnoutType.DOUBLE_XOVER)
-                || (getTurnoutType() == TurnoutType.WYE_TURNOUT)) {
-            // adjust to maintain rectangle or wye shape
-            double oldLength = MathUtil.length(dispB);
-            double newLength = Math.hypot(x, y);
-            dispB = MathUtil.multiply(dispB, newLength / oldLength);
-        } else if ((getTurnoutType() == TurnoutType.RH_XOVER)
-                || (getTurnoutType() == TurnoutType.LH_XOVER)) {
-            double a = 0.0;
-            double b = -y;
-            double xi = 0.0;
-            double yi = b;
-            if ((dispB.getX() + x) != 0.0) {
-                if ((-dispB.getX() + x) == 0) {
-                    /* we can in some situations eg 90' vertical end up with a 0 value,
-                    so hence remove a small amount so that we
-                    don't have a divide by zero issue */
-
-                    x = x - 0.0000000001;
-                }
-                a = (-dispB.getY() + y) / (-dispB.getX() + x);
-                b = -y + (a * x);
-                xi = -b / (a + (1.0 / a));
-                yi = (a * xi) + b;
-            }
-            if (getTurnoutType() == TurnoutType.RH_XOVER) {
-                x = xi - (0.333333 * (-x - xi));
-                y = yi - (0.333333 * (-y - yi));
-            } else if (getTurnoutType() == TurnoutType.LH_XOVER) {
-                x = xi - (3.0 * (-x - xi));
-                y = yi - (3.0 * (-y - yi));
-            }
-            dispB = new Point2D.Double(-x, -y);
-        }
+        log.debug("temporary setCoordsC should have been called through View");
+        layoutEditor.getLayoutTurnoutView(this).setCoordsC(p);    
     }
 
     public void setCoordsD(Point2D p) {
-        pointD = p;
-
-        // only used for crossovers
-        double x = getCoordsCenter().getX() - p.getX();
-        double y = getCoordsCenter().getY() - p.getY();
-        dispB = new Point2D.Double(x, y);
-        if (getTurnoutType() == TurnoutType.DOUBLE_XOVER) {
-            // adjust to maintain rectangle
-            double oldLength = MathUtil.length(dispA);
-            double newLength = Math.hypot(x, y);
-            dispA = MathUtil.multiply(dispA, newLength / oldLength);
-        } else if ((getTurnoutType() == TurnoutType.RH_XOVER)
-                || (getTurnoutType() == TurnoutType.LH_XOVER)) {
-            // adjust to maintain the parallelogram
-            double a = 0.0;
-            double b = y;
-            double xi = 0.0;
-            double yi = b;
-            if ((dispA.getX() + x) != 0.0) {
-                a = (dispA.getY() + y) / (dispA.getX() + x);
-                b = -y + (a * x);
-                xi = -b / (a + (1.0 / a));
-                yi = (a * xi) + b;
-            }
-            if (getTurnoutType() == TurnoutType.LH_XOVER) {
-                x = xi - (0.333333 * (-x - xi));
-                y = yi - (0.333333 * (-y - yi));
-            } else if (getTurnoutType() == TurnoutType.RH_XOVER) {
-                x = xi - (3.0 * (-x - xi));
-                y = yi - (3.0 * (-y - yi));
-            }
-            dispA = new Point2D.Double(x, y);
-        }
+        log.debug("temporary setCoordsD should have been called through View");
+        layoutEditor.getLayoutTurnoutView(this).setCoordsD(p);    
     }
 
     /**
@@ -2426,16 +2256,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
      */
     @Override
     public void scaleCoords(double xFactor, double yFactor) {
-        Point2D factor = new Point2D.Double(xFactor, yFactor);
-        super.setCoordsCenter(MathUtil.granulize(MathUtil.multiply(getCoordsCenter(), factor), 1.0));
-
-        dispA = MathUtil.granulize(MathUtil.multiply(dispA, factor), 1.0);
-        dispB = MathUtil.granulize(MathUtil.multiply(dispB, factor), 1.0);
-
-        pointA = MathUtil.granulize(MathUtil.multiply(pointA, factor), 1.0);
-        pointB = MathUtil.granulize(MathUtil.multiply(pointB, factor), 1.0);
-        pointC = MathUtil.granulize(MathUtil.multiply(pointC, factor), 1.0);
-        pointD = MathUtil.granulize(MathUtil.multiply(pointD, factor), 1.0);
+        log.debug("temporary scaleCoords should have been called through View");
+        layoutEditor.getLayoutTurnoutView(this).scaleCoords(xFactor, yFactor);    
     }
 
     /**
@@ -2443,12 +2265,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
      */
     @Override
     public void translateCoords(double xFactor, double yFactor) {
-        Point2D factor = new Point2D.Double(xFactor, yFactor);
-        super.setCoordsCenter(MathUtil.add(getCoordsCenter(), factor));
-        pointA = MathUtil.add(pointA, factor);
-        pointB = MathUtil.add(pointB, factor);
-        pointC = MathUtil.add(pointC, factor);
-        pointD = MathUtil.add(pointD, factor);
+        log.debug("temporary translateCoords should have been called through View");
+        layoutEditor.getLayoutTurnoutView(this).scaleCoords(xFactor, yFactor);    
     }
 
     /**
@@ -2456,22 +2274,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
      */
     @Override
     public void rotateCoords(double angleDEG) {
-        // rotate coordinates
-        double rotRAD = Math.toRadians(angleDEG);
-        double sineRot = Math.sin(rotRAD);
-        double cosineRot = Math.cos(rotRAD);
-
-        // rotate displacements around origin {0, 0}
-        Point2D center_temp = getCoordsCenter();
-        super.setCoordsCenter(MathUtil.zeroPoint2D);
-        dispA = rotatePoint(dispA, sineRot, cosineRot);
-        dispB = rotatePoint(dispB, sineRot, cosineRot);
-        super.setCoordsCenter(center_temp);
-
-        pointA = rotatePoint(pointA, sineRot, cosineRot);
-        pointB = rotatePoint(pointB, sineRot, cosineRot);
-        pointC = rotatePoint(pointC, sineRot, cosineRot);
-        pointD = rotatePoint(pointD, sineRot, cosineRot);
+        log.debug("temporary rotateCoords should have been called through View");
+        layoutEditor.getLayoutTurnoutView(this).rotateCoords(angleDEG);    
     }
 
     /**
@@ -2890,13 +2694,13 @@ abstract public class LayoutTurnout extends LayoutTrack {
             }
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
-            JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
-            hiddenCheckBoxMenuItem.setSelected(isHidden());
-            popup.add(hiddenCheckBoxMenuItem);
-            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e1) -> {
-                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e1.getSource();
-                setHidden(o.isSelected());
-            });
+//             JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
+//             hiddenCheckBoxMenuItem.setSelected(isHidden());
+//             popup.add(hiddenCheckBoxMenuItem);
+//             hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e1) -> {
+//                 JCheckBoxMenuItem o = (JCheckBoxMenuItem) e1.getSource();
+//                 setHidden(o.isSelected());
+//             });
 
             JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
             cbmi.setSelected(disabled);

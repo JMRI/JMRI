@@ -61,8 +61,10 @@ public class TrackSegmentView extends LayoutTrackView {
 
     final private TrackSegment trackSegment;
     
+    // temporary?
     @Nonnull
     public TrackSegment getTrackSegment() { return trackSegment; }
+    
     /**
      * Get debugging string for the TrackSegment.
      *
@@ -2236,7 +2238,7 @@ public class TrackSegmentView extends LayoutTrackView {
     @Override
     protected void drawDecorations(Graphics2D g2) {
 
-        log.warn("TrackSegmentView: drawDecorations arrowStyle {}",arrowStyle);
+        log.trace("TrackSegmentView: drawDecorations arrowStyle {}",arrowStyle);
 // get end points and calculate start/stop angles (in radians)
         Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
         Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
@@ -2648,7 +2650,7 @@ public class TrackSegmentView extends LayoutTrackView {
             boolean dirOut,
             int offset) {
         Point2D p1, p2, p3, p4, p5, p6;
-        log.warn("drawArrow in TrackSegmentView");
+        log.trace("drawArrow in TrackSegmentView");
         switch (arrowStyle) {
             default: {
                 arrowStyle = 0;

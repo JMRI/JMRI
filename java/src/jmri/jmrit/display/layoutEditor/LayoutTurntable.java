@@ -530,17 +530,8 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     public Point2D getCoordsForConnectionType(HitPointType connectionType) {
-        Point2D result = getCoordsCenter();
-        if (HitPointType.TURNTABLE_CENTER == connectionType) {
-            // nothing to see here, move along...
-            // (results are already correct)
-        } else if (HitPointType.isTurntableRayHitType(connectionType)) {
-            result = getRayCoordsIndexed(connectionType.turntableTrackIndex());
-        } else {
-            log.error("{}.getCoordsForConnectionType({}); Invalid connection type",
-                    getName(), connectionType); // NOI18N
-        }
-        return result;
+        log.info("getCoordsForConnectionType should have called View instead of temporary");
+        return layoutEditor.getLayoutTurntableView(this).getCoordsForConnectionType( connectionType );
     }
 
     /**
@@ -650,9 +641,8 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     public void scaleCoords(double xFactor, double yFactor) {
-        Point2D factor = new Point2D.Double(xFactor, yFactor);
-        super.setCoordsCenter(MathUtil.granulize(MathUtil.multiply(getCoordsCenter(), factor), 1.0));
-        radius *= Math.hypot(xFactor, yFactor);
+        log.info("scaleCoords should have called View instead of temporary");
+        layoutEditor.getLayoutTurntableView(this).scaleCoords( xFactor, yFactor);
     }
 
     /**
@@ -664,8 +654,8 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     public void translateCoords(double xFactor, double yFactor) {
-        Point2D factor = new Point2D.Double(xFactor, yFactor);
-        super.setCoordsCenter(MathUtil.add(getCoordsCenter(), factor));
+        log.info("translateCoords should have called View instead of temporary");
+        layoutEditor.getLayoutTurntableView(this).translateCoords( xFactor, yFactor);
     }
 
     /**
@@ -673,10 +663,8 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     public void rotateCoords(double angleDEG) {
-        // rotate all rayTracks
-        rayTrackList.forEach((rayTrack) -> {
-            rayTrack.setAngle(rayTrack.getAngle() + angleDEG);
-        });
+        log.info("rotateCoords should have called View instead of temporary");
+        layoutEditor.getLayoutTurntableView(this).rotateCoords(angleDEG);
     }
 
     /**
@@ -684,42 +672,44 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     protected HitPointType findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        HitPointType result = HitPointType.NONE;  // assume point not on connection
-        // note: optimization here: instead of creating rectangles for all the
-        // points to check below, we create a rectangle for the test point
-        // and test if the points below are in that rectangle instead.
-        Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
-        Point2D p, minPoint = MathUtil.zeroPoint2D;
-
-        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-        double distance, minDistance = POSITIVE_INFINITY;
-        if (!requireUnconnected) {
-            // check the center point
-            p = getCoordsCenter();
-            distance = MathUtil.distance(p, hitPoint);
-            if (distance < minDistance) {
-                minDistance = distance;
-                minPoint = p;
-                result = HitPointType.TURNTABLE_CENTER;
-            }
-        }
-
-        for (int k = 0; k < getNumberRays(); k++) {
-            if (!requireUnconnected || (getRayConnectOrdered(k) == null)) {
-                p = getRayCoordsOrdered(k);
-                distance = MathUtil.distance(p, hitPoint);
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    minPoint = p;
-                    result = HitPointType.turntableTrackIndexedValue(k);
-                }
-            }
-        }
-        if ((useRectangles && !r.contains(minPoint))
-                || (!useRectangles && (minDistance > circleRadius))) {
-            result = HitPointType.NONE;
-        }
-        return result;
+        log.info("findHitPointType should have called View instead of temporary");
+        return layoutEditor.getLayoutTurntableView(this).findHitPointType(hitPoint, useRectangles, requireUnconnected);
+//         HitPointType result = HitPointType.NONE;  // assume point not on connection
+//         // note: optimization here: instead of creating rectangles for all the
+//         // points to check below, we create a rectangle for the test point
+//         // and test if the points below are in that rectangle instead.
+//         Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
+//         Point2D p, minPoint = MathUtil.zeroPoint2D;
+// 
+//         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+//         double distance, minDistance = POSITIVE_INFINITY;
+//         if (!requireUnconnected) {
+//             // check the center point
+//             p = getCoordsCenter();
+//             distance = MathUtil.distance(p, hitPoint);
+//             if (distance < minDistance) {
+//                 minDistance = distance;
+//                 minPoint = p;
+//                 result = HitPointType.TURNTABLE_CENTER;
+//             }
+//         }
+// 
+//         for (int k = 0; k < getNumberRays(); k++) {
+//             if (!requireUnconnected || (getRayConnectOrdered(k) == null)) {
+//                 p = getRayCoordsOrdered(k);
+//                 distance = MathUtil.distance(p, hitPoint);
+//                 if (distance < minDistance) {
+//                     minDistance = distance;
+//                     minPoint = p;
+//                     result = HitPointType.turntableTrackIndexedValue(k);
+//                 }
+//             }
+//         }
+//         if ((useRectangles && !r.contains(minPoint))
+//                 || (!useRectangles && (minDistance > circleRadius))) {
+//             result = HitPointType.NONE;
+//         }
+//         return result;
     }
 
     public String tLayoutBlockName = "";
@@ -762,7 +752,7 @@ public class LayoutTurntable extends LayoutTrack {
         turnoutControlled = boo;
     }
 
-    private JPopupMenu popupMenu = null;
+    //private JPopupMenu popupMenu = null;
 
     /**
      * {@inheritDoc}
@@ -770,126 +760,131 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     @Nonnull
     protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
-        if (popupMenu != null) {
-            popupMenu.removeAll();
-        } else {
-            popupMenu = new JPopupMenu();
-        }
-
-        JMenuItem jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Turntable")) + getName());
-        jmi.setEnabled(false);
-
-        LayoutBlock lb = getLayoutBlock();
-        if (lb == null) {
-            jmi = popupMenu.add(Bundle.getMessage("NoBlock"));
-        } else {
-            String displayName = lb.getDisplayName();
-            jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + displayName);
-        }
-        jmi.setEnabled(false);
-
-        /// if there are any track connections
-        if (!rayTrackList.isEmpty()) {
-            JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections"));
-            rayTrackList.forEach((rt) -> {
-                TrackSegment ts = rt.getConnect();
-                if (ts != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "" + rt.getConnectionIndex()) + ts.getName()) {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            layoutEditor.setSelectionRect(ts.getBounds());
-                            ts.showPopup();
-                        }
-                    });
-                }
-            });
-            popupMenu.add(connectionsMenu);
-        }
-
-        popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
-
-        popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                editor.editLayoutTrack(LayoutTurntable.this);
-            }
-        });
-        popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (layoutEditor.removeTurntable(LayoutTurntable.this)) {
-                    // Returned true if user did not cancel
-                    remove();
-                    dispose();
-                }
-            }
-        });
-        layoutEditor.setShowAlignmentMenu(popupMenu);
-        popupMenu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
-        return popupMenu;
+        throw new IllegalArgumentException("should have called View instead of temporary");
+//         if (popupMenu != null) {
+//             popupMenu.removeAll();
+//         } else {
+//             popupMenu = new JPopupMenu();
+//         }
+// 
+//         JMenuItem jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Turntable")) + getName());
+//         jmi.setEnabled(false);
+// 
+//         LayoutBlock lb = getLayoutBlock();
+//         if (lb == null) {
+//             jmi = popupMenu.add(Bundle.getMessage("NoBlock"));
+//         } else {
+//             String displayName = lb.getDisplayName();
+//             jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + displayName);
+//         }
+//         jmi.setEnabled(false);
+// 
+//         /// if there are any track connections
+//         if (!rayTrackList.isEmpty()) {
+//             JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections"));
+//             rayTrackList.forEach((rt) -> {
+//                 TrackSegment ts = rt.getConnect();
+//                 if (ts != null) {
+//                     connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "" + rt.getConnectionIndex()) + ts.getName()) {
+//                         @Override
+//                         public void actionPerformed(ActionEvent e) {
+//                             layoutEditor.setSelectionRect(ts.getBounds());
+//                             ts.showPopup();
+//                         }
+//                     });
+//                 }
+//             });
+//             popupMenu.add(connectionsMenu);
+//         }
+// 
+//         popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
+// 
+//         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 editor.editLayoutTrack(LayoutTurntable.this);
+//             }
+//         });
+//         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 if (layoutEditor.removeTurntable(LayoutTurntable.this)) {
+//                     // Returned true if user did not cancel
+//                     remove();
+//                     dispose();
+//                 }
+//             }
+//         });
+//         layoutEditor.setShowAlignmentMenu(popupMenu);
+//         popupMenu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+//         return popupMenu;
     }
 
-    private JPopupMenu rayPopup = null;
+    // private JPopupMenu rayPopup = null;
 
     protected void showRayPopUp(MouseEvent e, int index) {
-        if (rayPopup != null) {
-            rayPopup.removeAll();
-        } else {
-            rayPopup = new JPopupMenu();
-        }
-
-        for (RayTrack rt : rayTrackList) {
-            if (rt.getConnectionIndex() == index) {
-                JMenuItem jmi = rayPopup.add("Turntable Ray " + index);
-                jmi.setEnabled(false);
-
-                rayPopup.add(new AbstractAction(
-                        Bundle.getMessage("MakeLabel",
-                                Bundle.getMessage("Connected"))
-                        + rt.getConnect().getName()) {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        LayoutEditorFindItems lf = layoutEditor.getFinder();
-                        LayoutTrack lt = lf.findObjectByName(rt.getConnect().getName());
-                        // this shouldn't ever be null... however...
-                        if (lt != null) {
-                            layoutEditor.setSelectionRect(lt.getBounds());
-                            lt.showPopup();
-                        }
-                    }
-                });
-
-                if (rt.getTurnout() != null) {
-                    String info = rt.getTurnout().getDisplayName();
-                    String stateString = getTurnoutStateString(rt.getTurnoutState());
-                    if (!stateString.isEmpty()) {
-                        info += " (" + stateString + ")";
-                    }
-                    jmi = rayPopup.add(info);
-                    jmi.setEnabled(false);
-
-                    rayPopup.add(new JSeparator(JSeparator.HORIZONTAL));
-
-                    JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
-                    cbmi.setSelected(rt.isDisabled());
-                    rayPopup.add(cbmi);
-                    cbmi.addActionListener((java.awt.event.ActionEvent e2) -> {
-                        JCheckBoxMenuItem o = (JCheckBoxMenuItem) e2.getSource();
-                        rt.setDisabled(o.isSelected());
-                    });
-
-                    cbmi = new JCheckBoxMenuItem(Bundle.getMessage("DisabledWhenOccupied"));
-                    cbmi.setSelected(rt.isDisabledWhenOccupied());
-                    rayPopup.add(cbmi);
-                    cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                        JCheckBoxMenuItem o = (JCheckBoxMenuItem) e3.getSource();
-                        rt.setDisabledWhenOccupied(o.isSelected());
-                    });
-                }
-                rayPopup.show(e.getComponent(), e.getX(), e.getY());
-                break;
-            }
-        }
+        throw new IllegalArgumentException("should have called View instead of temporary");
+        //log.info("should have called View instead of temporary");
+        // return layoutEditor.getLevelXingView(this)....;
+        
+//         if (rayPopup != null) {
+//             rayPopup.removeAll();
+//         } else {
+//             rayPopup = new JPopupMenu();
+//         }
+// 
+//         for (RayTrack rt : rayTrackList) {
+//             if (rt.getConnectionIndex() == index) {
+//                 JMenuItem jmi = rayPopup.add("Turntable Ray " + index);
+//                 jmi.setEnabled(false);
+// 
+//                 rayPopup.add(new AbstractAction(
+//                         Bundle.getMessage("MakeLabel",
+//                                 Bundle.getMessage("Connected"))
+//                         + rt.getConnect().getName()) {
+//                     @Override
+//                     public void actionPerformed(ActionEvent e) {
+//                         LayoutEditorFindItems lf = layoutEditor.getFinder();
+//                         LayoutTrack lt = lf.findObjectByName(rt.getConnect().getName());
+//                         // this shouldn't ever be null... however...
+//                         if (lt != null) {
+//                             layoutEditor.setSelectionRect(lt.getBounds());
+//                             lt.showPopup();
+//                         }
+//                     }
+//                 });
+// 
+//                 if (rt.getTurnout() != null) {
+//                     String info = rt.getTurnout().getDisplayName();
+//                     String stateString = getTurnoutStateString(rt.getTurnoutState());
+//                     if (!stateString.isEmpty()) {
+//                         info += " (" + stateString + ")";
+//                     }
+//                     jmi = rayPopup.add(info);
+//                     jmi.setEnabled(false);
+// 
+//                     rayPopup.add(new JSeparator(JSeparator.HORIZONTAL));
+// 
+//                     JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
+//                     cbmi.setSelected(rt.isDisabled());
+//                     rayPopup.add(cbmi);
+//                     cbmi.addActionListener((java.awt.event.ActionEvent e2) -> {
+//                         JCheckBoxMenuItem o = (JCheckBoxMenuItem) e2.getSource();
+//                         rt.setDisabled(o.isSelected());
+//                     });
+// 
+//                     cbmi = new JCheckBoxMenuItem(Bundle.getMessage("DisabledWhenOccupied"));
+//                     cbmi.setSelected(rt.isDisabledWhenOccupied());
+//                     rayPopup.add(cbmi);
+//                     cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                         JCheckBoxMenuItem o = (JCheckBoxMenuItem) e3.getSource();
+//                         rt.setDisabledWhenOccupied(o.isSelected());
+//                     });
+//                 }
+//                 rayPopup.show(e.getComponent(), e.getX(), e.getY());
+//                 break;
+//             }
+//         }
     }
 
     /**
@@ -953,15 +948,15 @@ public class LayoutTurntable extends LayoutTrack {
      * Clean up when this object is no longer needed. Should not be called while
      * the object is still displayed; see remove().
      */
-    public void dispose() {
-        if (popupMenu != null) {
-            popupMenu.removeAll();
-        }
-        popupMenu = null;
-        rayTrackList.forEach((rt) -> {
-            rt.dispose();
-        });
-    }
+//     public void dispose() {
+//         if (popupMenu != null) {
+//             popupMenu.removeAll();
+//         }
+//         popupMenu = null;
+//         rayTrackList.forEach((rt) -> {
+//             rt.dispose();
+//         });
+//     }
 
     /**
      * Remove this object from display and persistance.
@@ -1229,76 +1224,18 @@ public class LayoutTurntable extends LayoutTrack {
      * This type of track has none, so this method is empty.
      */
     @Override
-    protected void drawDecorations(Graphics2D g2) {}
+    protected void drawDecorations(Graphics2D g2) {
+        throw new IllegalArgumentException("should have called View instead of temporary");
+        //log.debug("should have called View instead of temporary");
+        // return layoutEditor.getTurntableView(this).findHitPointType(hitPoint, useRectangles, requireUnconnected);
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
-        float trackWidth = 2.F;
-        float halfTrackWidth = trackWidth / 2.f;
-        double radius = getRadius(), diameter = 2.f * radius;
-
-        if (isBlock && isMain) {
-            double radius2 = Math.max(radius / 4.f, trackWidth * 2);
-            double diameter2 = radius2 * 2.f;
-            Stroke stroke = g2.getStroke();
-            Color color = g2.getColor();
-            // draw turntable circle - default track color, side track width
-            g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-            g2.setColor(layoutEditor.getDefaultTrackColorColor());
-            g2.draw(new Ellipse2D.Double(getCoordsCenter().getX() - radius, getCoordsCenter().getY() - radius, diameter, diameter));
-            g2.draw(new Ellipse2D.Double(getCoordsCenter().getX() - radius2, getCoordsCenter().getY() - radius2, diameter2, diameter2));
-            g2.setStroke(stroke);
-            g2.setColor(color);
-        }
-
-        // draw ray tracks
-        for (int j = 0; j < getNumberRays(); j++) {
-            boolean main = false;
-            Color color = null;
-            TrackSegment ts = getRayConnectOrdered(j);
-            if (ts != null) {
-                main = ts.isMainline();
-            }
-
-            if (isBlock) {
-                if (ts == null) {
-                    g2.setColor(layoutEditor.getDefaultTrackColorColor());
-                } else {
-                    LayoutBlock lb = ts.getLayoutBlock();
-                    if (lb != null) {
-                        color = g2.getColor();
-                        setColorForTrackBlock(g2, lb);
-                    }
-                }
-            }
-
-            Point2D pt2 = getRayCoordsOrdered(j);
-            Point2D delta = MathUtil.normalize(MathUtil.subtract(pt2, getCoordsCenter()), radius);
-            Point2D pt1 = MathUtil.add(getCoordsCenter(), delta);
-            if (main == isMain) {
-                g2.draw(new Line2D.Double(pt1, pt2));
-            }
-            if (isMain && isTurnoutControlled() && (getPosition() == j)) {
-                if (isBlock) {
-                    LayoutBlock lb = getLayoutBlock();
-                    if (lb != null) {
-                        color = (color == null) ? g2.getColor() : color;
-                        setColorForTrackBlock(g2, lb);
-                    } else {
-                        g2.setColor(layoutEditor.getDefaultTrackColorColor());
-                    }
-                }
-                delta = MathUtil.normalize(delta, radius - halfTrackWidth);
-                pt1 = MathUtil.subtract(getCoordsCenter(), delta);
-                g2.draw(new Line2D.Double(pt1, pt2));
-            }
-            if (color != null) {
-                g2.setColor(color); /// restore previous color
-            }
-        }
+        throw new IllegalArgumentException("should have called View instead of temporary");
     }
 
     /**
@@ -1306,53 +1243,7 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
-        float trackWidth = 2.F;
-        float halfTrackWidth = trackWidth / 2.f;
-
-        // draw ray tracks
-        for (int j = 0; j < getNumberRays(); j++) {
-            boolean main = false;
-//            Color c = null;
-            TrackSegment ts = getRayConnectOrdered(j);
-            if (ts != null) {
-                main = ts.isMainline();
-//                LayoutBlock lb = ts.getLayoutBlock();
-//                if (lb != null) {
-//                    c = g2.getColor();
-//                    setColorForTrackBlock(g2, lb);
-//                }
-            }
-            Point2D pt2 = getRayCoordsOrdered(j);
-            Point2D vDelta = MathUtil.normalize(MathUtil.subtract(pt2, getCoordsCenter()), radius);
-            Point2D vDeltaO = MathUtil.normalize(MathUtil.orthogonal(vDelta), railDisplacement);
-            Point2D pt1 = MathUtil.add(getCoordsCenter(), vDelta);
-            Point2D pt1L = MathUtil.subtract(pt1, vDeltaO);
-            Point2D pt1R = MathUtil.add(pt1, vDeltaO);
-            Point2D pt2L = MathUtil.subtract(pt2, vDeltaO);
-            Point2D pt2R = MathUtil.add(pt2, vDeltaO);
-            if (main == isMain) {
-                g2.draw(new Line2D.Double(pt1L, pt2L));
-                g2.draw(new Line2D.Double(pt1R, pt2R));
-            }
-            if (isMain && isTurnoutControlled() && (getPosition() == j)) {
-//                LayoutBlock lb = getLayoutBlock();
-//                if (lb != null) {
-//                    c = g2.getColor();
-//                    setColorForTrackBlock(g2, lb);
-//                } else {
-//                    g2.setColor(layoutEditor.getDefaultTrackColorColor());
-//                }
-                vDelta = MathUtil.normalize(vDelta, radius - halfTrackWidth);
-                pt1 = MathUtil.subtract(getCoordsCenter(), vDelta);
-                pt1L = MathUtil.subtract(pt1, vDeltaO);
-                pt1R = MathUtil.add(pt1, vDeltaO);
-                g2.draw(new Line2D.Double(pt1L, pt2L));
-                g2.draw(new Line2D.Double(pt1R, pt2R));
-            }
-//            if (c != null) {
-//                g2.setColor(c); /// restore previous color
-//            }
-        }
+        throw new IllegalArgumentException("should have called View instead of temporary");
     }
 
     /**
@@ -1360,17 +1251,7 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
-        for (int j = 0; j < getNumberRays(); j++) {
-            if (  (specificType == HitPointType.NONE)
-                    || (specificType == (HitPointType.turntableTrackIndexedValue(j)))
-                ) 
-            {
-                if (getRayConnectOrdered(j) == null) {
-                    Point2D pt = getRayCoordsOrdered(j);
-                    g2.fill(trackControlCircleAt(pt));
-                }
-            }
-        }
+        throw new IllegalArgumentException("should have called View instead of temporary");
     }
 
     /**
@@ -1380,18 +1261,7 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {
-        if (isTurnoutControlled()) {
-            // draw control circles at all but current position ray tracks
-            for (int j = 0; j < getNumberRays(); j++) {
-                if (getPosition() != j) {
-                    RayTrack rt = rayTrackList.get(j);
-                    if (!rt.isDisabled() && !(rt.isDisabledWhenOccupied() && rt.isOccupied())) {
-                        Point2D pt = getRayCoordsOrdered(j);
-                        g2.draw(trackControlCircleAt(pt));
-                    }
-                }
-            }
-        }
+        throw new IllegalArgumentException("should have called View instead of temporary");
     }
 
     /**
@@ -1401,20 +1271,7 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     protected void drawEditControls(Graphics2D g2) {
-        Point2D pt = getCoordsCenter();
-        g2.setColor(layoutEditor.getDefaultTrackColorColor());
-        g2.draw(trackControlCircleAt(pt));
-
-        for (int j = 0; j < getNumberRays(); j++) {
-            pt = getRayCoordsOrdered(j);
-
-            if (getRayConnectOrdered(j) == null) {
-                g2.setColor(Color.red);
-            } else {
-                g2.setColor(Color.green);
-            }
-            g2.draw(layoutEditor.layoutEditorControlRectAt(pt));
-        }
+        throw new IllegalArgumentException("should have called View instead of temporary");
     }
 
     /**

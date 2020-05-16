@@ -29,9 +29,6 @@ import jmri.util.swing.JmriColorChooser;
  * nodes must be via TrackSegments.
  * <p>
  * TrackSegments carry Block information, as do LayoutTurnouts and LevelXings.
- * <p>
- * TrackSegments may be drawn as dashed lines or solid lines. In addition
- * TrackSegments may be hidden when the panel is not in EditMode.
  *
  * @author Dave Duchamp Copyright (p) 2004-2009
  * @author George Warner Copyright (c) 2017-2019
@@ -68,7 +65,7 @@ public class TrackSegment extends LayoutTrack {
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor editor;
 
     // (temporary dummy ctor for backward compatibility, ignores hidden)
-     public TrackSegment(@Nonnull String id,
+     private TrackSegment(@Nonnull String id,
             @CheckForNull LayoutTrack c1, HitPointType t1,
             @CheckForNull LayoutTrack c2, HitPointType t2,
             boolean hidden, boolean main,
@@ -109,7 +106,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     // (temporary dummy ctor for backward compatibility, ignores hidden)
-     public TrackSegment(@Nonnull String id,
+     private TrackSegment(@Nonnull String id,
             @CheckForNull String c1Name, HitPointType t1,
             @CheckForNull String c2Name, HitPointType t2,
             boolean hidden, boolean main,
@@ -785,7 +782,7 @@ public class TrackSegment extends LayoutTrack {
 
     private JPopupMenu popupMenu = null;
     private final JCheckBoxMenuItem mainlineCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("MainlineCheckBoxMenuItemTitle"));
-    private final JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("HiddenCheckBoxMenuItemTitle"));
+//     private final JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("HiddenCheckBoxMenuItemTitle"));
     private final JCheckBoxMenuItem dashedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("DashedCheckBoxMenuItemTitle"));
     private final JCheckBoxMenuItem flippedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("FlippedCheckBoxMenuItemTitle"));
 
@@ -914,10 +911,10 @@ public class TrackSegment extends LayoutTrack {
         mainlineCheckBoxMenuItem.setToolTipText(Bundle.getMessage("MainlineCheckBoxMenuItemToolTip"));
         mainlineCheckBoxMenuItem.setSelected(mainline);
 
-        popupMenu.add(hiddenCheckBoxMenuItem);
-        hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setHidden(hiddenCheckBoxMenuItem.isSelected()));
-        hiddenCheckBoxMenuItem.setToolTipText(Bundle.getMessage("HiddenCheckBoxMenuItemToolTip"));
-        hiddenCheckBoxMenuItem.setSelected(isHidden());
+//         popupMenu.add(hiddenCheckBoxMenuItem);
+//         hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setHidden(hiddenCheckBoxMenuItem.isSelected()));
+//         hiddenCheckBoxMenuItem.setToolTipText(Bundle.getMessage("HiddenCheckBoxMenuItemToolTip"));
+//         hiddenCheckBoxMenuItem.setSelected(isHidden());
 
         popupMenu.add(dashedCheckBoxMenuItem);
         dashedCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setDashed(dashedCheckBoxMenuItem.isSelected()));

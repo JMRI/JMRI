@@ -14,12 +14,24 @@ import org.junit.*;
 public class LayoutTurnoutTest extends LayoutTrackTest {
 
     private static LayoutEditor layoutEditor = null;
-    private LayoutTurnout ltRH = null;
-    private LayoutTurnout ltLH = null;
-    private LayoutTurnout ltWY = null;
-    private LayoutTurnout ltDX = null;
-    private LayoutTurnout ltRX = null;
-    private LayoutTurnout ltLX = null;
+
+    private LayoutRHTurnout ltRH = null;
+    private LayoutRHTurnoutView ltRHv = null;
+    
+    private LayoutLHTurnout ltLH = null;
+    private LayoutLHTurnoutView ltLHv = null;
+    
+    private LayoutWye ltWY = null;
+    private LayoutWyeView ltWYv = null;
+    
+    private LayoutDoubleXOver ltDX = null;
+    private LayoutDoubleXOverView ltDXv = null;
+    
+    private LayoutRHXOver ltRX = null;
+    private LayoutRHXOverView ltRXv = null;
+    
+    private LayoutLHXOver ltLX = null;
+    private LayoutLHXOverView ltLXv = null;
 
     @Test
     public void testEnums() {

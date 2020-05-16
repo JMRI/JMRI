@@ -110,10 +110,13 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
         // create the new LayoutTurntable
         LayoutTurntable lt = new LayoutTurntable(name, new Point2D.Double(x, y), p);
         LayoutTurntableView lv = new LayoutTurntableView(lt, p);
+
+        p.addLayoutTrack(lt, lv);
+
         lv.setCoordsCenter(new Point2D.Double(x, y));
         log.trace("LayoutTurntable at {}, {}", x, y);
         
-        lv.setRadius(radius);
+        lt.setRadius(radius);
 
         // get remaining attribute
         Attribute a = element.getAttribute("blockname");
@@ -167,7 +170,6 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
                 }
             }
         }
-        p.addLayoutTrack(lt, lv);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntableXml.class);

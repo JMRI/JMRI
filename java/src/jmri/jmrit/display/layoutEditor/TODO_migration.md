@@ -25,7 +25,7 @@ diff temp/temp/LayoutEditorTest.xml java/test/jmri/jmrit/display/layoutEditor/lo
 
 - [X] mainline in geometry classes (inc base clases, *Xml)
 - [ ] hidden in View
-    =========> Currently failing in load and store
+    =========> Referenced from various "Tools" calculations that don't use View, so proxied for now
 - [ ] flip in View
 - [ ] center in View
 - [ ] Decorations in View
@@ -687,6 +687,10 @@ There's got to be a better way than all those code replications on connectionA, 
 Similarly, having connection and a HitPointType as separate is screaming for a combined data type.
 
 ---
+
+"version" in LayoutTurnout (and others?) is really another kind of type, as it's used at runtime and load/store
+---
+
 
 LayoutTrackDrawingOptions is mutable and doesn't have a constant hash
 

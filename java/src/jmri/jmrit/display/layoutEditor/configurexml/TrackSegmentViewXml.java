@@ -261,6 +261,7 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
                 con1Name, type1, con2Name, type2,
                 main, p);
         TrackSegmentView lv = new TrackSegmentView(lt, p);
+        lv.setHidden(hide);
         
         lv.setDashed(dash);
         lv.setArc( getAttributeBooleanValue(element, "arc", false) );

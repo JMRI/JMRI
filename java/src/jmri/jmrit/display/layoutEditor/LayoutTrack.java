@@ -274,20 +274,14 @@ abstract public class LayoutTrack {
      * @return true if hidden; false otherwise
      */
     final public boolean isHidden() {
-        return hidden;
+        return layoutEditor.getLayoutTrackView(this).isHidden();
     }
 
     final public void setHidden(boolean hide) {
-        if (hidden != hide) {
-            hidden = hide;
-            if (layoutEditor != null) {
-                layoutEditor.redrawPanel();
-            }
-        }
+        layoutEditor.getLayoutTrackView(this).setHidden(hide);
     }
 
-    private boolean hidden = false;
-
+ 
     /*
     * non-accessor methods
      */

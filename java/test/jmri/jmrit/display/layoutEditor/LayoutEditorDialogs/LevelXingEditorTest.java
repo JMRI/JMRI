@@ -165,7 +165,6 @@ public class LevelXingEditorTest extends LayoutTrackEditorTest {
     public void tearDown() {
         if (levelXing != null) {
             levelXing.remove();
-            levelXing.dispose();
         }
 
         if (layoutEditor != null) {

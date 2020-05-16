@@ -243,7 +243,6 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
     public void tearDown() {
         if (layoutTurntable != null) {
             layoutTurntable.remove();
-            layoutTurntable.dispose();
         }
 
         if (layoutEditor != null) {

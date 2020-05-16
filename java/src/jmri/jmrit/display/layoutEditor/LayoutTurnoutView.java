@@ -2076,7 +2076,8 @@ public class LayoutTurnoutView extends LayoutTrackView {
         super.setCoordsCenter(p);
     }
 
-    private void reCalculateCenter() {
+    // temporary should be private once LayoutTurnout no longer needs it
+    void reCalculateCenter() {
         super.setCoordsCenter(MathUtil.midPoint(pointA, pointC));
     }
 
