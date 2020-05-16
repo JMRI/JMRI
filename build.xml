@@ -280,7 +280,8 @@
     <macrodef name="quiet">
         <element name="body" implicit="yes"/>
         <sequential>
-            <script language="javascript" >
+            <!--
+            <script language="javascript" manager="javax"><![CDATA[
                 // to see type of 1st logger, uncomment the following
                 //echo = JMRI.createTask("echo");
                 //echo.setMessage(Object.prototype.toString.call(project.getBuildListeners().firstElement()));
@@ -290,14 +291,17 @@
                 if (Object.prototype.toString.call(project.getBuildListeners().firstElement()) == "[object org.apache.tools.ant.DefaultLogger]") {
                     project.getBuildListeners().firstElement().setMessageOutputLevel(0);
                 }
-            </script>
+            ]]></script>
+            -->
             <body/>
-            <script language="javascript" >
+            <!--
+            <script language="javascript" manager="javax"><![CDATA[
                 // TODO: restore last log level instead of going to fixed value "2"
                 if (Object.prototype.toString.call(project.getBuildListeners().firstElement()) == "[object org.apache.tools.ant.DefaultLogger]") {
                     project.getBuildListeners().firstElement().setMessageOutputLevel(2);
                 }
-            </script>
+            ]]></script>
+            -->
         </sequential>
     </macrodef>
 
