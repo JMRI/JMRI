@@ -299,7 +299,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
             
             mapToEnum = new HashMap<String, T>();
             for (T t : clazz.getEnumConstants() ) {
-                mapToEnum.put(t.toString(), t);
+                mapToEnum.put(t.name(), t);
             }
             
         }
@@ -311,7 +311,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         @Override
         @Nonnull
         public String outputFromEnum(@Nonnull T e) {
-                String retval = e.toString();
+                String retval = e.name();
                 log.trace("from {} make String {}} for {}", e, retval, clazz);
                 return retval;
         }
@@ -391,7 +391,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
             
             this.mapFromEnum = new HashMap<T, String>();
             for (T t : clazz.getEnumConstants() ) {
-                this.mapFromEnum.put(t, t.toString());
+                this.mapFromEnum.put(t, t.name());
             }
         }
 
