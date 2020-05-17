@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class OlcbConfigurationManagerTest {
         
@@ -71,10 +71,11 @@ public class OlcbConfigurationManagerTest {
     @AfterClass
     public static void postClassTearDown() {
         if(scm != null && scm.getInterface() !=null ) {
-           scm.getInterface().dispose();
+            scm.getTrafficController().terminateThreads();
+            scm.getInterface().dispose();
         }
         scm = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

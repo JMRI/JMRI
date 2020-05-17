@@ -145,7 +145,7 @@ public class ReportPanel extends JPanel {
     }
     
     // made static, public, not final so can be changed via script
-    static public String requestURL = "http://jmri.org/problem-report.php";  //NOI18N
+    static public String requestURL = "http://jmri.org/problem-report.php";  // NOI18N
 
     @SuppressWarnings("unchecked")
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -173,7 +173,7 @@ public class ReportPanel extends JPanel {
             // build detailed error report (include context if selected)
             String report = descField.getText() + "\r\n";
             if (checkContext.isSelected()) {
-                report += "=========================================================\r\n"; //NOI18N
+                report += "=========================================================\r\n"; // NOI18N
                 report += (new ReportContext()).getReport(checkNetwork.isSelected() && checkNetwork.isEnabled());
             }
             msg.addFormField("problem", report);
@@ -274,10 +274,10 @@ public class ReportPanel extends JPanel {
             }
 
         } catch (IOException ex) {
-            log.error("Error when attempting to send report: " + ex);
+            log.error("Error when attempting to send report: {}", ex);
             sendButton.setEnabled(true);
         } catch (AddressException ex) {
-            log.error("Invalid email address: " + ex);
+            log.error("Invalid email address: {}", ex);
             JOptionPane.showMessageDialog(null, rb.getString("ErrAddress"), rb.getString("ErrTitle"), JOptionPane.ERROR_MESSAGE); // TODO add Bundle to folder and use ErrorTitle key in NamedBeanBundle props
             sendButton.setEnabled(true);
         }
@@ -293,6 +293,10 @@ public class ReportPanel extends JPanel {
         File[] files = source.listFiles();
 
         log.debug("Add directory: {}", directory);
+        if ( files == null ) {
+            log.warn("No files in directory {}",source);
+            return;
+        }
 
         for (File file : files) {
             // if current file is a directory, call recursively
@@ -302,7 +306,7 @@ public class ReportPanel extends JPanel {
                     try {
                         out.putNextEntry(new ZipEntry(directory + file.getName() + "/"));
                     } catch (IOException ex) {
-                        log.error("Exception when adding directory: " + ex);
+                        log.error("Exception when adding directory: {}", ex);
                     }
                     addDirectory(out, file, directory + file.getName() + "/");
                 } else {
@@ -330,9 +334,9 @@ public class ReportPanel extends JPanel {
                     log.debug("Skip file: {}{}", directory, file.getName());
                 }
             } catch (FileNotFoundException ex) {
-                log.error("Exception when adding file: " + ex);
+                log.error("Exception when adding file: {}", ex);
             } catch (IOException ex) {
-                log.error("Exception when adding file: " + ex);
+                log.error("Exception when adding file: {}", ex);
             }
         }
     }

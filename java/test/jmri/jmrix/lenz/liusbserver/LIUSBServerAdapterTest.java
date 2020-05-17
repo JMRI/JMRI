@@ -10,7 +10,7 @@ import org.junit.Assert;
  * Tests for the jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter
  * class.
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LIUSBServerAdapterTest {
 

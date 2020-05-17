@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 public class OlimexRfid1356mifareProtocol extends RfidProtocol {
 
     public static final int SPECIFICMAXSIZE = 13;
-    public final String initialize = "mt100\r\ne0\r\n"; //NOI18N
+    public final String initialize = "mt100\r\ne0\r\n"; // NOI18N
 
     public static final int getMaxSize() {
         return SPECIFICMAXSIZE;

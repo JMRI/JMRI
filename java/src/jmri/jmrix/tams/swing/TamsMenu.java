@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Create a "Systems" menu containing the Tams-specific tools.
  *
  * Based on work by Bob Jacobsen
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class TamsMenu extends JMenu {
 

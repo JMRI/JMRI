@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import jmri.Disposable;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.trains.TrainLogger;
@@ -28,7 +29,7 @@ import jmri.web.server.WebServerPreferences;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010, 2012, 2014
  */
-public class Setup implements InstanceManagerAutoDefault, Disposable {
+public class Setup extends PropertyChangeSupport implements InstanceManagerAutoDefault, Disposable {
 
     public static final String NONE = "";
 
@@ -306,6 +307,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     private boolean allowCarsReturnStaging = false; // allow cars on a turn to return to staging if necessary (prevent build failure)
     private boolean promptFromStaging = false; // prompt user to specify which departure staging track to use
     private boolean promptToStaging = false; // prompt user to specify which arrival staging track to use
+    private boolean tryNormalModeStaging = true; // try normal build if route length failure using aggressive
 
     private boolean generateCsvManifest = false; // when true generate csv manifest
     private boolean generateCsvSwitchList = false; // when true generate csv switch list
@@ -325,12 +327,12 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     private boolean showTrackMoves = false; // when true show track moves in table
 
     // property changes
-    public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange"; //  NOI18N
-    public static final String MANIFEST_CSV_PROPERTY_CHANGE = "setupManifestCSVChange"; //  NOI18N
-    public static final String REAL_TIME_PROPERTY_CHANGE = "setupSwitchListRealTime"; //  NOI18N
-    public static final String SHOW_TRACK_MOVES_PROPERTY_CHANGE = "setupShowTrackMoves"; //  NOI18N
-    public static final String SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE = "saveTrainManifestChange"; //  NOI18N
-    public static final String ALLOW_CARS_TO_RETURN_PROPERTY_CHANGE = "allowCarsToReturnChange"; //  NOI18N
+    public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange"; // NOI18N
+    public static final String MANIFEST_CSV_PROPERTY_CHANGE = "setupManifestCSVChange"; // NOI18N
+    public static final String REAL_TIME_PROPERTY_CHANGE = "setupSwitchListRealTime"; // NOI18N
+    public static final String SHOW_TRACK_MOVES_PROPERTY_CHANGE = "setupShowTrackMoves"; // NOI18N
+    public static final String SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE = "saveTrainManifestChange"; // NOI18N
+    public static final String ALLOW_CARS_TO_RETURN_PROPERTY_CHANGE = "allowCarsToReturnChange"; // NOI18N
 
     public static boolean isMainMenuEnabled() {
         InstanceManager.getDefault(OperationsSetupXml.class); // load file
@@ -356,9 +358,9 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static void setAutoSaveEnabled(boolean enabled) {
         getDefault().autoSave = enabled;
         if (enabled) {
-            new AutoSave().start();
+            AutoSave.start();
         } else {
-            new AutoSave().stop();
+            AutoSave.stop();
         }
     }
 
@@ -557,6 +559,14 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
 
     public static void setPromptToStagingEnabled(boolean enabled) {
         getDefault().promptToStaging = enabled;
+    }
+    
+    public static boolean isStagingTryNormalBuildEnabled() {
+        return getDefault().tryNormalModeStaging;
+    }
+
+    public static void setStagingTryNormalBuildEnabled(boolean enabled) {
+        getDefault().tryNormalModeStaging = enabled;
     }
 
     public static boolean isGenerateCsvManifestEnabled() {
@@ -1960,6 +1970,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         values.setAttribute(Xml.ALLOW_RETURN_STAGING, isAllowReturnToStagingEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PROMPT_STAGING_ENABLED, isPromptFromStagingEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PROMPT_TO_STAGING_ENABLED, isPromptToStagingEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.STAGING_TRY_NORMAL, isStagingTryNormalBuildEnabled() ? Xml.TRUE : Xml.FALSE);
 
         values.setAttribute(Xml.GENERATE_CSV_MANIFEST, isGenerateCsvManifestEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.GENERATE_CSV_SWITCH_LIST, isGenerateCsvSwitchListEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -2631,6 +2642,11 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
                 log.debug("promptToStagingEnabled: {}", enable);
                 setPromptToStagingEnabled(enable.equals(Xml.TRUE));
             }
+            if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.STAGING_TRY_NORMAL)) != null) {
+                String enable = a.getValue();
+                log.debug("stagingTryNormalEnabled: {}", enable);
+                setStagingTryNormalBuildEnabled(enable.equals(Xml.TRUE));
+            }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.GENERATE_CSV_MANIFEST)) != null) {
                 String enable = a.getValue();
                 log.debug("generateCvsManifest: {}", enable);
@@ -2916,19 +2932,9 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         }
     }
 
-    static java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(Setup.class);
-
-    public static synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public static synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     protected static void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         InstanceManager.getDefault(OperationsSetupXml.class).setDirty(true);
-        pcs.firePropertyChange(p, old, n);
+        getDefault().firePropertyChange(p, old, n);
     }
 
     public static Setup getDefault() {
@@ -2939,7 +2945,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
 
     @Override
     public void dispose() {
-        new AutoSave().stop();
+        AutoSave.stop();
     }
 
 }

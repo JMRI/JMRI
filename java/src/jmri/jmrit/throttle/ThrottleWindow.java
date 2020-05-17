@@ -3,7 +3,6 @@ package jmri.jmrit.throttle;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -12,7 +11,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -65,6 +63,8 @@ public class ThrottleWindow extends JmriJFrame {
 
     private String titleText = "";
     private String titleTextType = "rosterID";
+    private boolean isEditMode = true;
+
 
     private PowerManager powerMgr = null;
 
@@ -272,7 +272,7 @@ public class ThrottleWindow extends JmriJFrame {
         jbMode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                switchMode();
+                setEditMode( !isEditMode );
             }
         });
         throttleToolBar.add(jbMode);
@@ -300,22 +300,34 @@ public class ThrottleWindow extends JmriJFrame {
         add(throttleToolBar, BorderLayout.PAGE_START);
     }
 
-    private boolean isEditMode = true;
-
-    private void switchMode() {
-        isEditMode = !isEditMode;
+    public void setEditMode(boolean mode) {
+        if (mode == isEditMode)
+            return;
+        isEditMode = mode;
         if (!throttleFrames.isEmpty()) {
             for (Iterator<ThrottleFrame> tfi = throttleFrames.values().iterator(); tfi.hasNext();) {
-                tfi.next().switchMode();
+                tfi.next().setEditMode(isEditMode);
             }
         }
         updateGUI();
     }
 
+    public boolean getEditMode() {
+        return isEditMode;
+    }
+
+    /**
+     * @deprecated since 4.19.5; use {@link #setEditMode(boolean)} instead
+     */
+    @Deprecated
+    public void switchMode() {
+        setEditMode(!isEditMode);
+    }
+
     public Jynstrument ynstrument(String path) {
         Jynstrument it = JynstrumentFactory.createInstrument(path, this);
         if (it == null) {
-            log.error("Error while creating Jynstrument " + path);
+            log.error("Error while creating Jynstrument {}", path);
             return null;
         }
         ThrottleFrame.setTransparent(it, true);
@@ -433,7 +445,7 @@ public class ThrottleWindow extends JmriJFrame {
 
             @Override
             public void actionPerformed(ActionEvent ev) {
-                switchMode();
+                setEditMode(!isEditMode);
             }
         });
         JMenuItem viewThrottlesList = new JMenuItem(Bundle.getMessage("ThrottleMenuViewViewThrottleList"));
@@ -488,7 +500,7 @@ public class ThrottleWindow extends JmriJFrame {
                     try {
                         powerMgr.setPower(PowerManager.ON);
                     } catch (JmriException e1) {
-                        log.error("Error when setting power " + e1);
+                        log.error("Error when setting power {}", e1);
                     }
                 }
             });
@@ -502,7 +514,7 @@ public class ThrottleWindow extends JmriJFrame {
                     try {
                         powerMgr.setPower(PowerManager.OFF);
                     } catch (JmriException e1) {
-                        log.error("Error when setting power " + e1);
+                        log.error("Error when setting power {}", e1);
                     }
                 }
             });
@@ -567,7 +579,7 @@ public class ThrottleWindow extends JmriJFrame {
 
     public void setCurrentThrottleFrame(ThrottleFrame tf) {
         if (getCurrentThrottleFrame() != null) {
-            log.debug("setCurrentThrottleFrame from " + getCurrentThrottleFrame().getAddressPanel().getCurrentAddress() + " to " + tf.getAddressPanel().getCurrentAddress());
+            log.debug("setCurrentThrottleFrame from {} to {}", getCurrentThrottleFrame().getAddressPanel().getCurrentAddress(), tf.getAddressPanel().getCurrentAddress());
         }
         pcs.firePropertyChange("ThrottleFrame", getCurrentThrottleFrame(), tf);
         currentThrottleFrame = tf;
@@ -657,7 +669,7 @@ public class ThrottleWindow extends JmriJFrame {
         throttlesPanel.add(tp, txt);
         throttlesLayout.show(throttlesPanel, txt);
         if (!isEditMode) {
-            tp.switchMode();
+            tp.setEditMode(isEditMode);
         }
         updateGUI();
     }
@@ -696,6 +708,7 @@ public class ThrottleWindow extends JmriJFrame {
         Element me = new Element("ThrottleWindow");
         me.setAttribute("title", titleText);
         me.setAttribute("titleType", titleTextType);
+        me.setAttribute("isEditMode",  String.valueOf(isEditMode));
 
         java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1);
         children.add(WindowPreferences.getPreferences(this));
@@ -738,7 +751,7 @@ public class ThrottleWindow extends JmriJFrame {
                         }
 
                     } catch (Exception ex) {
-                        log.debug("Got exception (no panic) " + ex);
+                        log.debug("Got exception (no panic) {}", ex);
                     }
                 }
             }
@@ -757,6 +770,9 @@ public class ThrottleWindow extends JmriJFrame {
         if (e.getAttribute("titleType") != null) {
             setTitleTextType(e.getAttribute("titleType").getValue());
         }
+        if (e.getAttribute("isEditMode") != null) {
+            isEditMode = Boolean.valueOf(e.getAttribute("isEditMode").getValue());
+        }
 
         Element window = e.getChild("window");
         if (window != null) {
@@ -773,6 +789,7 @@ public class ThrottleWindow extends JmriJFrame {
                     tf = addThrottleFrame();
                 }
                 tf.setXml(tfes.get(i));
+                tf.setEditMode(isEditMode);
             }
         }
 

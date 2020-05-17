@@ -9,7 +9,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -270,8 +270,18 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         boolean f21 = false;
         instance.setF21(f21);
     }
+    
+    @Test
+    @Override
+    public void testOutOfRangeSetFunction(){
+        instance.setFunction(-1, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
+        
+        instance.setFunction(29, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 29");
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: 29");
+    }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

@@ -1,14 +1,18 @@
 package jmri.jmrix.internal;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assumptions.assumeThat;
+
 import jmri.NamedBean;
 import jmri.Turnout;
+import jmri.implementation.AbstractTurnout;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.internal.InternalTurnoutManager class.
  *
- * @author	Bob Jacobsen Copyright 2016
+ * @author Bob Jacobsen Copyright 2016
  */
 public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -82,8 +86,72 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         list.add(tSpaceLLEE);
     }
 
+    @Test
+    public void testFollowingTurnouts() {
+        assumeThat(AbstractTurnout.DELAYED_FEEDBACK_INTERVAL)
+                .as("Turnout delay less than JUnitUnit waitfor max delay")
+                .isLessThan(JUnitUtil.WAITFOR_MAX_DELAY);
+        Turnout t1 = l.provideTurnout("IT1");
+        Turnout t2 = l.provideTurnout("IT2");
+        
+        assertThat(t1.getKnownState()).isEqualTo(Turnout.UNKNOWN);
+        assertThat(t2.getKnownState()).isEqualTo(Turnout.UNKNOWN);
+        assertThat(t1.getFeedbackMode()).isEqualTo(Turnout.DIRECT);
+        assertThat(t2.getFeedbackMode()).isEqualTo(Turnout.DIRECT);
+        assertThat(t1.getLeadingTurnout()).isNull();
+        assertThat(t2.getLeadingTurnout()).isNull();
+        assertThat(t1.isFollowingCommandedState()).isTrue();
+        assertThat(t2.isFollowingCommandedState()).isTrue();
+
+        t1.setCommandedState(Turnout.CLOSED);
+        assertThat(t1.getKnownState()).isEqualTo(Turnout.CLOSED);
+        assertThat(t2.getKnownState()).isEqualTo(Turnout.UNKNOWN);
+
+        t2.setLeadingTurnout(t1);
+        assertThat(t1.getKnownState()).isEqualTo(Turnout.CLOSED);
+        assertThat(t2.getKnownState()).isEqualTo(Turnout.UNKNOWN);
+
+        t1.setCommandedState(Turnout.THROWN);
+        assertThat(t1.getKnownState()).isEqualTo(Turnout.THROWN);
+        assertThat(t2.getKnownState()).isEqualTo(Turnout.THROWN);
+        
+        t1.setFeedbackMode(Turnout.DELAYED);
+        t1.setCommandedState(Turnout.CLOSED);
+        assertThat(t1.getKnownState()).isEqualTo(Turnout.INCONSISTENT);
+        assertThat(t2.getKnownState()).isEqualTo(Turnout.INCONSISTENT);
+        JUnitUtil.waitFor(() -> t1.getKnownState() == Turnout.CLOSED);
+        assertThat(t1.getKnownState()).isEqualTo(Turnout.CLOSED);
+        assertThat(t2.getKnownState()).isEqualTo(Turnout.CLOSED);
+        
+        // verify no stack overflow when following in a circular pattern
+        t1.setFeedbackMode(Turnout.DIRECT);
+        t1.setLeadingTurnout(t2);
+        assertThat(t1.getLeadingTurnout()).isEqualTo(t2);
+        assertThat(t2.getLeadingTurnout()).isEqualTo(t1);
+        // will throw stack overflow if not correctly implemented
+        t1.setCommandedState(Turnout.THROWN);
+        assertThat(t1.getKnownState()).isEqualTo(Turnout.THROWN);
+        assertThat(t2.getKnownState()).isEqualTo(Turnout.THROWN);
+        // will throw stack overflow if not correctly implemented
+        t2.setCommandedState(Turnout.CLOSED);
+        assertThat(t1.getKnownState()).isEqualTo(Turnout.CLOSED);
+        assertThat(t2.getKnownState()).isEqualTo(Turnout.CLOSED);
+        
+        // verify
+        t1.setFeedbackMode(Turnout.DELAYED);
+        t1.setLeadingTurnout(null);
+        t2.setFollowingCommandedState(false);
+        assertThat(t1.getCommandedState()).isEqualTo(Turnout.CLOSED);
+        assertThat(t2.getCommandedState()).isEqualTo(Turnout.CLOSED);
+        t1.setCommandedState(Turnout.THROWN);
+        assertThat(t1.getKnownState()).isEqualTo(Turnout.INCONSISTENT);
+        assertThat(t2.getKnownState()).isEqualTo(Turnout.INCONSISTENT);
+        JUnitUtil.waitFor(() -> t1.getKnownState() == Turnout.CLOSED);
+        assertThat(t1.getKnownState()).isEqualTo(Turnout.THROWN);
+        assertThat(t2.getKnownState()).isEqualTo(Turnout.CLOSED);
+    }
+    
     // from here down is testing infrastructure
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

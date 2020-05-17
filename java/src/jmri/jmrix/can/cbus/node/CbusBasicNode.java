@@ -5,7 +5,6 @@ import java.util.concurrent.CopyOnWriteArraySet;
 // import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusSend;
-import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,13 +25,11 @@ public class CbusBasicNode {
     
     public CbusSend send;
     
-    
-    
     // data members to hold contact with the property listeners
     protected final CopyOnWriteArraySet<PropertyChangeListener> _listeners;
     
     /**
-     * Create a new CbusBasicNodeWithChangeListener
+     * Create a new CbusBasicNodeWithChangeListener.
      *
      * @param connmemo The CAN Connection to use
      * @param nodenumber The Node Number
@@ -50,7 +47,7 @@ public class CbusBasicNode {
     }
     
     /**
-     * Register for notification if any of the properties change
+     * Register for notification if any of the properties change.
      *
      * @param l The Listener to attach to Node
      */
@@ -63,7 +60,7 @@ public class CbusBasicNode {
     }
     
     /**
-     * Remove notification listener
+     * Remove notification listener.
      * @param l Listener to remove
      */
     public void removePropertyChangeListener(PropertyChangeListener l) {
@@ -99,14 +96,12 @@ public class CbusBasicNode {
             return;
         }
         _listeners.forEach((listener) -> {
-            ThreadingUtil.runOnGUI( ()->{
-                listener.propertyChange(new java.beans.PropertyChangeEvent(this, property, oldValue, newValue));
-            });
+            listener.propertyChange(new java.beans.PropertyChangeEvent(this, property, oldValue, newValue));
         });
     }
     
     /**
-     * Returns Node Number
+     * Returns Node Number.
      *
      * @return Node Number,1-65535
      */
@@ -115,7 +110,7 @@ public class CbusBasicNode {
     }
     
     /**
-     * Set Node Number
+     * Set Node Number.
      * @param newnumber Node Number, should be 1-65535
      */
     public void setNodeNumber ( int newnumber ) {
@@ -124,7 +119,7 @@ public class CbusBasicNode {
     }
 
     /**
-     * Set Node CAN ID
+     * Set Node CAN ID.
      * @param newcanid CAN ID of the node
      */
     public final void setCanId ( int newcanid ) {
@@ -133,7 +128,8 @@ public class CbusBasicNode {
     }
     
     /**
-     * Node CAN ID, min 1 , ( max 128? )
+     * Get the Node CAN ID.
+     * min 1 , ( max 128? )
      * @return CAN ID of the node, -1 if unset
      */
     public int getNodeCanId() {
@@ -141,7 +137,7 @@ public class CbusBasicNode {
     }
 
     /**
-     * Set flag for this Node in Setup Mode
+     * Set flag for this Node in Setup Mode.
      * <p>
      * Does NOT send instruction to actual node
      *
@@ -153,7 +149,7 @@ public class CbusBasicNode {
     }
     
     /**
-     * Get if this Node is in Setup Mode
+     * Get if this Node is in Setup Mode.
      *
      * @return true if in Setup, else false
      */
@@ -162,7 +158,7 @@ public class CbusBasicNode {
     }
     
     /**
-     * Set if the Node is in Learn Mode
+     * Set if the Node is in Learn Mode.
      * Used to track node status, does NOT update Physical Node
      * 
      * @param inlearnmode set true if in Learn else false
@@ -176,7 +172,7 @@ public class CbusBasicNode {
     }
     
     /**
-     * Get if the Node is in Learn Mode
+     * Get if the Node is in Learn Mode.
      * <p>
      * Defaults to false if unset
      * 
@@ -187,7 +183,7 @@ public class CbusBasicNode {
     }
 
     /**
-     * Set if the Node is in FLiM Mode
+     * Set if the Node is in FLiM Mode.
      * <p>
      * Defaults to true if unset
      * 
@@ -198,7 +194,7 @@ public class CbusBasicNode {
     }    
     
     /**
-     * Get if the Node is in FLiM Mode
+     * Get if the Node is in FLiM Mode.
      * <p>
      * Defaults to true if unset
      * 

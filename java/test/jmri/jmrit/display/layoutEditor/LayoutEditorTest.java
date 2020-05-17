@@ -20,6 +20,7 @@ import org.netbeans.jemmy.operators.JMenuOperator;
  *
  * @author Paul Bender Copyright (C) 2016
  * @author George Warner Copyright (C) 2019
+ * @author Bob Jacobsen Copyright (C) 2020
  */
 public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
@@ -52,6 +53,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
             jfo.closeFrameWithConfirmations();
             e = null;
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
@@ -70,6 +72,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assert.assertNotNull("exists", e);
         JUnitUtil.dispose(e);
     }
+
 
     @Test
     @Ignore("Test fails to find and close dialog on Jenkins")
@@ -111,7 +114,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
             return !(misc1.isAlive());
         }, "misc1 finished");
         JUnitUtil.dispose(e);
-        e=null; // prevent closing the window using the operator in shutDown.
+        e = null; // prevent closing the window using the operator in shutDown.
     }
 
     @Test
@@ -136,7 +139,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Failing to set second zoom") 
+    @Ignore("Failing to set second zoom")
     public void testGetSetZoom() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((m) -> {
@@ -218,14 +221,14 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     public void testGetLayoutWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("layout width", 0, e.getLayoutWidth());
+        Assert.assertEquals("layout width", 0, e.gContext.getLayoutWidth());
     }
 
     @Test
     public void testGetLayoutHeight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("layout height", 0, e.getLayoutHeight());
+        Assert.assertEquals("layout height", 0, e.gContext.getLayoutHeight());
     }
 
     @Test
@@ -233,7 +236,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to screen width - 20
         int w = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 20);
-        Assert.assertEquals("window width", w, e.getWindowWidth());
+        Assert.assertEquals("window width", w, e.gContext.getWindowWidth());
     }
 
     @Test
@@ -241,21 +244,21 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to screen height - 120
         int h = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 120);
-        Assert.assertEquals("window height", h, e.getWindowHeight());
+        Assert.assertEquals("window height", h, e.gContext.getWindowHeight());
     }
 
     @Test
     public void testGetUpperLeftX() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("upper left X", 0, e.getUpperLeftX());
+        Assert.assertEquals("upper left X", 0, e.gContext.getUpperLeftX());
     }
 
     @Test
     public void testGetUpperLeftY() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("upper left Y", 0, e.getUpperLeftY());
+        Assert.assertEquals("upper left Y", 0, e.gContext.getUpperLeftY());
     }
 
     @Test
@@ -264,86 +267,86 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         ThreadingUtil.runOnGUI(() -> {
             // set the panel dimensions to known values
             e.setLayoutDimensions(100, 100, 100, 100, 100, 100);
-            Assert.assertEquals("layout width after set", 100, e.getLayoutWidth());
-            Assert.assertEquals("layout height after set", 100, e.getLayoutHeight());
-            Assert.assertEquals("window width after set", 100, e.getWindowWidth());
-            Assert.assertEquals("window height after set", 100, e.getWindowHeight());
-            Assert.assertEquals("upper left X after set", 100, e.getUpperLeftX());
-            Assert.assertEquals("upper left Y after set", 100, e.getUpperLeftX());
+            Assert.assertEquals("layout width after set", 100, e.gContext.getLayoutWidth());
+            Assert.assertEquals("layout height after set", 100, e.gContext.getLayoutHeight());
+            Assert.assertEquals("window width after set", 100, e.gContext.getWindowWidth());
+            Assert.assertEquals("window height after set", 100, e.gContext.getWindowHeight());
+            Assert.assertEquals("upper left X after set", 100, e.gContext.getUpperLeftX());
+            Assert.assertEquals("upper left Y after set", 100, e.gContext.getUpperLeftX());
         });
     }
 
     @Test
     public void testSetGrideSize() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("grid size after set", 100, e.setGridSize(100));
+        Assert.assertEquals("grid size after set", 100, e.gContext.setGridSize(100));
     }
 
     @Test
     public void testGetGrideSize() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 10.
-        Assert.assertEquals("grid size", 10, e.getGridSize());
+        Assert.assertEquals("grid size", 10, e.gContext.getGridSize());
     }
 
     @Test
     public void testGetMainlineTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 4.
-        Assert.assertEquals("mainline track width", 4, e.getMainlineTrackWidth());
+        Assert.assertEquals("mainline track width", 4, e.gContext.getMainlineTrackWidth());
     }
 
     @Test
     public void testSetMainlineTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setMainlineTrackWidth(10);
-        Assert.assertEquals("mainline track width after set", 10, e.getMainlineTrackWidth());
+        e.gContext.setMainlineTrackWidth(10);
+        Assert.assertEquals("mainline track width after set", 10, e.gContext.getMainlineTrackWidth());
     }
 
     @Test
     public void testGetSidelineTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 2.
-        Assert.assertEquals("side track width", 2, e.getSidelineTrackWidth());
+        Assert.assertEquals("side track width", 2, e.gContext.getSidelineTrackWidth());
     }
 
     @Test
     public void testSetSideTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setSidelineTrackWidth(10);
-        Assert.assertEquals("Side track width after set", 10, e.getSidelineTrackWidth());
+        e.gContext.setSidelineTrackWidth(10);
+        Assert.assertEquals("Side track width after set", 10, e.gContext.getSidelineTrackWidth());
     }
 
     @Test
     public void testGetXScale() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 1.
-        Assert.assertEquals("XScale", 1.0, e.getXScale(), 0.0);
+        Assert.assertEquals("XScale", 1.0, e.gContext.getXScale(), 0.0);
     }
 
     @Test
     public void testSetXScale() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setXScale(2.0);
-        Assert.assertEquals("XScale after set ", 2.0, e.getXScale(), 0.0);
+        e.gContext.setXScale(2.0);
+        Assert.assertEquals("XScale after set ", 2.0, e.gContext.getXScale(), 0.0);
     }
 
     @Test
     public void testGetYScale() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 1.
-        Assert.assertEquals("YScale", 1.0, e.getYScale(), 0.0);
+        Assert.assertEquals("YScale", 1.0, e.gContext.getYScale(), 0.0);
     }
 
     @Test
     public void testSetYScale() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setYScale(2.0);
-        Assert.assertEquals("YScale after set ", 2.0, e.getYScale(), 0.0);
+        e.gContext.setYScale(2.0);
+        Assert.assertEquals("YScale after set ", 2.0, e.gContext.getYScale(), 0.0);
     }
 
     @Test
@@ -391,22 +394,22 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
         LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock("ILB999", "Test Block");
         Assert.assertNotNull("layoutBlock created", layoutBlock);
-        
+
         Assert.assertEquals("BlockTrackColor default", e.getDefaultTrackColorColor(), layoutBlock.getBlockTrackColor());
         layoutBlock.setBlockTrackColor(Color.pink);
         Assert.assertEquals("BlockTrackColor set to pink", Color.pink, layoutBlock.getBlockTrackColor());
-        
+
         Assert.assertEquals("BlockOccupiedColor default", e.getDefaultOccupiedTrackColorColor(), layoutBlock.getBlockOccupiedColor());
         layoutBlock.setBlockOccupiedColor(Color.pink);
         Assert.assertEquals("BlockOccupiedColor set to pink", Color.pink, layoutBlock.getBlockOccupiedColor());
-        
+
         Assert.assertEquals("BlockExtraColor default", e.getDefaultAlternativeTrackColorColor(), layoutBlock.getBlockExtraColor());
         layoutBlock.setBlockExtraColor(Color.pink);
         Assert.assertEquals("BlockExtraColor set to pink", Color.pink, layoutBlock.getBlockExtraColor());
 
         int changed = e.setAllTracksToDefaultColors();
         Assert.assertEquals("setAllTracksToDefaultColors changed one block", 1, changed);
-        
+
         Assert.assertEquals("BlockTrackColor back to default", e.getDefaultTrackColorColor(), layoutBlock.getBlockTrackColor());
         Assert.assertEquals("BlockOccupiedColor back to default", e.getDefaultOccupiedTrackColorColor(), layoutBlock.getBlockOccupiedColor());
         Assert.assertEquals("BlockExtraColor back to default", e.getDefaultAlternativeTrackColorColor(), layoutBlock.getBlockExtraColor());
@@ -1021,5 +1024,5 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         JUnitUtil.dispose(e);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LayoutEditorTest.class.getName());
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorTest.class.getName());
 }

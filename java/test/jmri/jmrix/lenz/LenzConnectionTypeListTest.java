@@ -9,9 +9,9 @@ import org.junit.Test;
 /**
  * LenzConnectionTypeListTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.LenzConnectionTypeList class
+ * Test for the jmri.jmrix.lenz.LenzConnectionTypeList class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class LenzConnectionTypeListTest {
 
@@ -21,7 +21,6 @@ public class LenzConnectionTypeListTest {
         Assert.assertNotNull(c);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

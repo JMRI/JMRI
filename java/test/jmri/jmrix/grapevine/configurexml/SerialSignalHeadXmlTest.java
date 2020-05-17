@@ -23,7 +23,6 @@ public class SerialSignalHeadXmlTest {
       Assert.assertNotNull("SerialSignalHeadXml constructor", new SerialSignalHeadXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -5,10 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -34,8 +32,8 @@ import jmri.jmrit.logix.OBlock;
 
 class ConvertDialog extends JDialog {
 
-        private CircuitBuilder _parent;
-        private PositionableLabel _pos;
+        private final CircuitBuilder _parent;
+        private final PositionableLabel _pos;
         FamilyItemPanel _panel;
         DisplayFrame _filler;
 
@@ -58,7 +56,7 @@ class ConvertDialog extends JDialog {
             ActionListener updateAction;
             if (pos instanceof TurnoutIcon) {
                 title = "IndicatorTO";
-                _panel = new IndicatorTOItemPanel(_filler, title, null, null, cb._editor) {
+                _panel = new IndicatorTOItemPanel(_filler, title, null, null) {
                     @Override
                     protected void showIcons() {
                          super.showIcons();
@@ -70,12 +68,10 @@ class ConvertDialog extends JDialog {
                         displayIcons();
                     }
                 };
-                updateAction = (ActionEvent a) -> {
-                    convertTO(block);
-                };
+                updateAction = (ActionEvent a) -> convertTO(block);
             } else {
                 title = "IndicatorTrack";
-                _panel = new IndicatorItemPanel(_filler, title, null, cb._editor) {
+                _panel = new IndicatorItemPanel(_filler, title, null) {
                     @Override
                     protected void showIcons() {
                         super.showIcons();
@@ -87,24 +83,14 @@ class ConvertDialog extends JDialog {
                         displayIcons();
                     }
                 };
-                updateAction = (ActionEvent a) -> {
-                    convertSeg(block);
-                };
+                updateAction = (ActionEvent a) -> convertSeg(block);
             }
             _panel.init(updateAction);
             
-/*            JPanel content = new JPanel();
-            content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
-            content.add(new JLabel(Bundle.getMessage("notIndicatorIcon")));
-            content.add(_panel);
-            Dimension dim = content.getPreferredSize();
-            */
             JPanel buttonPanel = _panel.getBottomPanel();
             _panel.getUpdateButton().setText(Bundle.getMessage("convert"));
             JButton button = new JButton(Bundle.getMessage("skip"));
-            button.addActionListener((ActionEvent a) -> {
-                dispose();
-            });
+            button.addActionListener((ActionEvent a) -> dispose());
             buttonPanel.add(button);
             JPanel p = new JPanel();
              p.add(new JLabel(Bundle.getMessage("notIndicatorIcon")));
@@ -138,17 +124,15 @@ class ConvertDialog extends JDialog {
         private void convertTO(OBlock block) {
             IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_parent._editor);
             t.setOccBlockHandle(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(block.getSystemName(), block));
-            t.setTurnout(((TurnoutIcon) _pos).getNamedTurnout());
+            if ( _pos instanceof TurnoutIcon ) {
+                t.setTurnout(((TurnoutIcon) _pos).getNamedTurnout());
+            }
             t.setFamily(_panel.getFamilyName());
 
             HashMap<String, HashMap<String, NamedIcon>> iconMap = ((IndicatorTOItemPanel)_panel).getIconMaps();
-            Iterator<Entry<String, HashMap<String, NamedIcon>>> it = iconMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, HashMap<String, NamedIcon>> entry = it.next();
+            for (Entry<String, HashMap<String, NamedIcon>> entry : iconMap.entrySet()) {
                 String status = entry.getKey();
-                Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
-                while (iter.hasNext()) {
-                    Entry<String, NamedIcon> ent = iter.next();
+                for (Entry<String, NamedIcon> ent : entry.getValue().entrySet()) {
                     t.setIcon(status, ent.getKey(), new NamedIcon(ent.getValue()));
                 }
             }
@@ -164,9 +148,7 @@ class ConvertDialog extends JDialog {
             t.setFamily(_panel.getFamilyName());
 
             HashMap<String, NamedIcon> iconMap = _panel.getIconMap();
-            Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
+            for (Entry<String, NamedIcon> entry : iconMap.entrySet()) {
                 t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
             }
             t.setLevel(Editor.TURNOUTS);

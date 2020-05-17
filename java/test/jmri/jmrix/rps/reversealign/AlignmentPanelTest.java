@@ -17,7 +17,7 @@ import jmri.jmrix.rps.RpsSystemConnectionMemo;
 /**
  * JUnit tests for the rps.AlignmentPanel class.
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  */
 public class AlignmentPanelTest {
 

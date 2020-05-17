@@ -1,37 +1,27 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.tools.LocationsByCarTypeFrame;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarColors;
-import jmri.jmrit.operations.rollingstock.cars.CarLengths;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarOwners;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.tools.TrainsByCarTypeFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for editing a car attribute.
@@ -125,8 +115,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new CarAttributeAction(Bundle.getMessage("CarQuantity"), this));
-        toolMenu.add(new CarDeleteAttributeAction(Bundle.getMessage("DeleteUnusedAttributes"), this));
+        toolMenu.add(new CarAttributeAction(this));
+        toolMenu.add(new CarDeleteAttributeAction(this));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         // add help menu to window
@@ -192,7 +182,6 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         }
         String[] item = {itemName};
         if (_comboboxName.equals(TYPE)) {
-            item = itemName.split("-");
             // can't have the " & " as part of the type name
             if (itemName.contains(CarLoad.SPLIT_CHAR)) {
                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carNameNoAndChar"),
@@ -200,6 +189,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
                         JOptionPane.ERROR_MESSAGE);
                 return false;
             }
+            item = itemName.split(TrainCommon.HYPHEN);
         }
         if (item[0].length() > Control.max_len_string_attibute) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carAttribute"),
@@ -442,13 +432,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
             if (_comboboxName.equals(ROAD)) {
                 for (RollingStock rs : InstanceManager.getDefault(EngineManager.class).getList()) {
                     if (rs.getRoadName().equals(item)) {
-                        log.info("Engine (" +
-                                rs.getRoadName() +
-                                " " +
-                                rs.getNumber() +
-                                ") has assigned road name (" +
-                                item +
-                                ")"); // NOI18N
+                        log.info("Engine ({} {}) has assigned road name ({})", rs.getRoadName(), rs.getNumber(), item); // NOI18N
                         return;
                     }
                 }
@@ -498,7 +482,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         InstanceManager.getDefault(CarLengths.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
         carManager.removePropertyChangeListener(this);
-        firePcs(DISPOSE, _comboboxName, null);
+        firePropertyChange(DISPOSE, _comboboxName, null);
         super.dispose();
     }
 
@@ -529,24 +513,6 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateCarQuanity();
         }
-    }
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    // note firePropertyChange occurs during frame creation
-    private void firePcs(String p, Object old, Object n) {
-        log.debug("CarAttribute firePropertyChange {}", p);
-        pcs.firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(CarAttributeEditFrame.class);

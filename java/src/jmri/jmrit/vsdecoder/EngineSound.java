@@ -256,7 +256,7 @@ class EngineSound extends VSDSound {
     protected int setXMLSleepInterval(Element e) {
         String a = e.getChildText("sleep-interval");
         if ((a != null) && (!a.isEmpty())) {
-            // Make some restrictions, since engine_gain is used for calculations later
+            // Make some restrictions, since the variable is used for calculations later
             int sleep_interval = Integer.parseInt(a);
             if ((sleep_interval < 38) || (sleep_interval > 55)) {
                 log.info("Invalid sleep-interval {} was set to default {}", sleep_interval, default_sleep_interval);

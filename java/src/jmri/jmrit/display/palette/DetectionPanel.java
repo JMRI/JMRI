@@ -1,11 +1,8 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -17,7 +14,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
-import jmri.Path;
 import jmri.Sensor;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OPath;
@@ -29,14 +25,14 @@ import jmri.jmrit.picker.PickPanel;
  */
 public class DetectionPanel extends JPanel {
 
-    private JTextField _occDetectorName = new JTextField(); // can be either a Sensor or OBlock name
+    private final JTextField _occDetectorName = new JTextField(); // can be either a Sensor or OBlock name
     private JFrame _pickFrame;
-    private JButton _openPicklistButton;
-    private JPanel _trainIdPanel;
+    private final JButton _openPicklistButton;
+    private final JPanel _trainIdPanel;
     private JCheckBox _showTrainName;
     private OBlock _block;
-    private JPanel _blockPathPanel;
-    private ItemPanel _parent;
+    private final JPanel _blockPathPanel;
+    private final ItemPanel _parent;
     private ArrayList<JCheckBox> _pathBoxes;
     private JPanel _checkBoxPanel;
 
@@ -47,12 +43,7 @@ public class DetectionPanel extends JPanel {
     public DetectionPanel(ItemPanel parent) {
         super();
         _parent = parent;
-        _occDetectorName.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                checkDetection();
-            }
-        });
+        _occDetectorName.addActionListener(e -> checkDetection());
         _occDetectorName.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
@@ -64,14 +55,11 @@ public class DetectionPanel extends JPanel {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(makeSensorPanel(_occDetectorName, "DetectionSensor", "ToolTipOccupancySensor"));
         _openPicklistButton = new JButton(Bundle.getMessage("OpenPicklist"));
-        _openPicklistButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                if (_pickFrame == null) {
-                    openPickList();
-                } else {
-                    closePickList();
-                }
+        _openPicklistButton.addActionListener(a -> {
+            if (_pickFrame == null) {
+                openPickList();
+            } else {
+                closePickList();
             }
         });
         JPanel p = new JPanel();
@@ -212,12 +200,12 @@ public class DetectionPanel extends JPanel {
     }
 
     public ArrayList<String> getPaths() {
-        ArrayList<String> paths = new ArrayList<String>();
+        ArrayList<String> paths = new ArrayList<>();
         if (_pathBoxes != null) {
-            for (int i = 0; i < _pathBoxes.size(); i++) {
-                if (_pathBoxes.get(i).isSelected()) {
+            for (JCheckBox pathBox : _pathBoxes) {
+                if (pathBox.isSelected()) {
                     // displayed path names are padded to 25 charts
-                    paths.add(_pathBoxes.get(i).getName().trim());
+                    paths.add(pathBox.getName().trim());
                 }
             }
         }
@@ -229,12 +217,12 @@ public class DetectionPanel extends JPanel {
             _pathBoxes = null;
             return;
         }
-        for (int k = 0; k < iconPath.size(); k++) {
-            for (int i = 0; i < _pathBoxes.size(); i++) {
+        for (String s : iconPath) {
+            for (JCheckBox pathBox : _pathBoxes) {
                 // displayed path names are padded to 25 charts
-                String name = _pathBoxes.get(i).getName().trim();
-                if (iconPath.get(k).equals(name)) {
-                    _pathBoxes.get(i).setSelected(true);
+                String name = pathBox.getName().trim();
+                if (s.equals(name)) {
+                    pathBox.setSelected(true);
                 }
             }
         }
@@ -255,7 +243,7 @@ public class DetectionPanel extends JPanel {
             } else {
                 Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);
                 if (sensor == null) {
-                    JOptionPane.showMessageDialog(_parent._paletteFrame,
+                    JOptionPane.showMessageDialog(_parent._frame,
                             Bundle.getMessage("InvalidOccDetector", name),
                             Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                     _occDetectorName.setText(null);
@@ -277,10 +265,9 @@ public class DetectionPanel extends JPanel {
                 Bundle.getMessage("circuitPaths")));
         _checkBoxPanel.add(Box.createHorizontalStrut(100));
         _block = block;
-        _pathBoxes = new ArrayList<JCheckBox>();
-        List<Path> paths = _block.getPaths();
-        for (int i = 0; i < paths.size(); i++) {
-            String name = ((OPath) paths.get(i)).getName();
+        _pathBoxes = new ArrayList<>();
+        _block.getPaths().stream().filter(o -> o instanceof OPath)
+                      .map(o -> ((OPath) o).getName()).forEach( name -> {
             if (name.length() < 25) {
                 char[] ca = new char[25];
                 for (int j = 0; j < name.length(); j++) {
@@ -295,7 +282,7 @@ public class DetectionPanel extends JPanel {
             box.setName(name);
             _pathBoxes.add(box);
             _checkBoxPanel.add(box);
-        }
+        });
         _blockPathPanel.add(_checkBoxPanel, 1);
         _blockPathPanel.setVisible(true);
     }

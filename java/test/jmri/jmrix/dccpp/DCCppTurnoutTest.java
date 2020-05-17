@@ -10,10 +10,10 @@ import org.junit.Test;
 /**
  * DCCppThrottleTest.java
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppTurnout class
+ * Test for the jmri.jmrix.dccpp.DCCppTurnout class
  *
- * @author	Paul Bender
- * @author	Mark Underwood
+ * @author Paul Bender
+ * @author Mark Underwood
  */
 public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
@@ -167,7 +167,6 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
     }
 
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

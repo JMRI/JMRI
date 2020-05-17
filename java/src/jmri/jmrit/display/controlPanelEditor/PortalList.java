@@ -24,7 +24,7 @@ import jmri.jmrit.logix.Portal;
  */
 public class PortalList extends JList<Portal> {
 
-    private PortalListModel _portalListModel;
+    private final PortalListModel _portalListModel;
 
     PortalList(OBlock block, EditFrame parent) {
         super();
@@ -68,7 +68,7 @@ public class PortalList extends JList<Portal> {
     static class PortalListModel extends AbstractListModel<Portal> implements PropertyChangeListener {
 
         OBlock _homeBlock;
-        private EditFrame _parent;
+        private final EditFrame _parent;
         List<Portal> _list = new ArrayList<>();
 
         PortalListModel(OBlock block, EditFrame parent) {

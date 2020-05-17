@@ -120,7 +120,7 @@ public class SpecificTrafficController extends SerialTrafficController {
     @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (logDebug) {
-            log.debug("forward " + m);
+            log.debug("forward {}", m);
         }
         super.forwardToPort(m, reply);
     }
@@ -184,7 +184,7 @@ public class SpecificTrafficController extends SerialTrafficController {
             }
         }
         if (logDebug) {
-            log.debug("end of message: " + msg);
+            log.debug("end of message: {}", msg);
         }
         return false;
     }
@@ -197,7 +197,7 @@ public class SpecificTrafficController extends SerialTrafficController {
     protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         byte char1 = readByteProtected(istream);
         if (logDebug) {
-            log.debug("loadChars: " + char1);
+            log.debug("loadChars: {}", char1);
         }
         if ((char1 & 0xFF) == Constants.HEAD_STX) {  // 0x02 means start of command.
             msg.setElement(0, char1);
@@ -248,11 +248,11 @@ public class SpecificTrafficController extends SerialTrafficController {
                 msg.setElement(3, x10Flag);
                 if ((x10Flag&0xFF) == Constants.FLAG_X10_RECV_CMD) {
                     if (logDebug) {
-                        log.debug("loadChars: X10 Command Poll Received " + X10Sequence.houseValueToText((rawX10data & 0xF0) >> 4) + " " + X10Sequence.functionName((rawX10data & 0x0F)));
+                        log.debug("loadChars: X10 Command Poll Received {} {}", X10Sequence.houseValueToText((rawX10data & 0xF0) >> 4), X10Sequence.functionName((rawX10data & 0x0F)));
                     }
                 } else {
                     if (logDebug) {
-                        log.debug("loadChars: X10 Unit Poll Received " + X10Sequence.houseValueToText((rawX10data & 0xF0) >> 4) + " " + X10Sequence.formatCommandByte(rawX10data));
+                        log.debug("loadChars: X10 Unit Poll Received {} {}", X10Sequence.houseValueToText((rawX10data & 0xF0) >> 4), X10Sequence.formatCommandByte(rawX10data));
                     }
                 }
             } else if ((char2 & 0xFF) == Constants.POLL_REQ_BUTTON) {  // 0x54 means interface button received command.
@@ -264,7 +264,7 @@ public class SpecificTrafficController extends SerialTrafficController {
             } else {
                 msg.setElement(1, char2);
                 if (logDebug) {
-                    log.debug("loadChars: Unknown cmd byte " + char2);
+                    log.debug("loadChars: Unknown cmd byte {}", char2);
                 }
             }
         }

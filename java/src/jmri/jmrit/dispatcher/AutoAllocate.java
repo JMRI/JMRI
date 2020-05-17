@@ -81,6 +81,7 @@ public class AutoAllocate {
     }
 
     // operational variables
+    private static final jmri.NamedBean.DisplayOptions USERSYS = jmri.NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;
     private DispatcherFrame _dispatcher = null;
     private ConnectivityUtil _conUtil = null;
     private final List<AllocationPlan> _planList = new ArrayList<>();
@@ -111,7 +112,7 @@ public class AutoAllocate {
                 // Check to see if there is a sensor temporarily block allocation blocking allocation
                 ActiveTrain activeTrain = ar.getActiveTrain();
                 String trainName = activeTrain.getTrainName();
-                log.trace("{}: try to allocate [{}]", trainName, ar.getSectionName());
+                log.trace("{}: try to allocate [{}]", trainName, ar.getSection().getDisplayName(USERSYS));
                 if (activeTrain.getLastAllocatedSection() != null) {
                     //do stuff associated with the last allocated section
                     Transit arTransit = activeTrain.getTransit();
@@ -169,13 +170,13 @@ public class AutoAllocate {
                                     sS = sectionsInSeq.get(iSectionsInSeq).getSection();
                                     seqNumberfound = iSectionsInSeq; // save for later
                                     //debug code
-                                    log.trace("SectionName[{}] getState[{}] occupancy[{}] ", sS.getUserName(),
+                                    log.trace("SectionName[{}] getState[{}] occupancy[{}] ", sS.getDisplayName(USERSYS),
                                             sS.getState(), sS.getOccupancy());
                                     if (sS.getState() != Section.FREE) {
-                                        log.debug("{}: Forward section [{}] unavailable", trainName, sS.getUserName());
+                                        log.debug("{}: Forward section [{}] unavailable", trainName, sS.getDisplayName(USERSYS));
                                         areForwardsFree = false;
                                     } else if (sS.getOccupancy() != Section.UNOCCUPIED) {
-                                        log.debug("{}: Forward section [{}] is not unoccupied", trainName, sS.getUserName());
+                                        log.debug("{}: Forward section [{}] is not unoccupied", trainName, sS.getDisplayName(USERSYS));
                                         areForwardsFree = false;
                                     } else {
                                         areForwardsFree = true;
@@ -198,7 +199,7 @@ public class AutoAllocate {
 //                            continue;
 //                        }
                         allocateMore(ar);
-                        continue;                        
+                        continue;
                     }
                 }
                 log.trace("Using Regular");
@@ -297,9 +298,7 @@ public class AutoAllocate {
                     }
                 }
             } catch (RuntimeException e) {
-                log.warn(
-                        "scanAllocationRequestList - maybe the allocationrequest was removed due to a terminating train??" +
-                                e.toString());
+                log.warn("scanAllocationRequestList - maybe the allocationrequest was removed due to a terminating train??{}", e.toString());
                 continue;
             }
         }
@@ -417,7 +416,7 @@ public class AutoAllocate {
             try {
                 sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
                 if (sensor.getKnownState() == Sensor.ACTIVE) {
-                    log.trace("Sensor[{}] InActive", sensor.getUserName());
+                    log.trace("Sensor[{}] InActive", sensor.getDisplayName(USERSYS));
                     at.initializeRestartAllocationSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor));
                     return true;
                 }
@@ -500,7 +499,7 @@ public class AutoAllocate {
     // and go no farther than the number requested, or the next safe section.
     // return true if allocation successful, false otherwise
     private boolean allocateMore(AllocationRequest ar) {
-        log.trace("in allocateMore, ar.Section={}", ar.getSectionName());
+        log.trace("in allocateMore, ar.Section={}", ar.getSection().getDisplayName(USERSYS));
         int allocateSectionsAhead = ar.getActiveTrain().getAllocateMethod();
         if (allocateSectionsAhead == ActiveTrain.ALLOCATE_AS_FAR_AS_IT_CAN) {
             _dispatcher.allocateSection(ar, null);
@@ -538,7 +537,7 @@ public class AutoAllocate {
                 // last allocated section exists and is not occupied but is a Passing point
                 // block further allocations till occupied.
                 log.trace("{}: not at end of safe allocations, [{}] not allocated", ar.getActiveTrain().getTrainName(),
-                        ar.getSectionName());
+                        ar.getSection().getDisplayName(USERSYS));
                 return false;
             } else if (allocateBySafeSections) {
                 log.trace("auto allocating Section keep going");
@@ -562,7 +561,7 @@ public class AutoAllocate {
 
         }
         log.debug("{}: auto allocating Section {}", ar.getActiveTrain().getTrainName(),
-                ar.getSectionName());
+                ar.getSection().getDisplayName(USERSYS));
         _dispatcher.allocateSection(ar, null);
         return true;
     }
@@ -1384,9 +1383,9 @@ public class AutoAllocate {
 
         if (!sec.equals(mActiveTrain.getNextSectionToAllocate())) {
             log.error("Allocation request section does not match active train next section to allocate");
-            log.error("Section to allocate {}", sec.getDisplayName());
+            log.error("Section to allocate {}", sec.getDisplayName(USERSYS));
             if (mActiveTrain.getNextSectionToAllocate() != null) {
-                log.error("Active Train expected {}", mActiveTrain.getNextSectionToAllocate().getDisplayName());
+                log.error("Active Train expected {}", mActiveTrain.getNextSectionToAllocate().getDisplayName(USERSYS));
             }
             return false;
         }

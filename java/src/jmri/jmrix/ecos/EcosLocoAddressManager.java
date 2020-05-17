@@ -286,6 +286,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
      * Forget a NamedBean Object created outside the manager.
      * <p>
      * The non-system-specific RouteManager uses this method.
+     * @param s Ecos Loco Address to de-register.
      */
     public void deregister(EcosLocoAddress s) {
         s.removePropertyChangeListener(this);
@@ -401,23 +402,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
             dialog.setVisible(true);
         }
         return true;
-    }
-
-    private java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    @Override
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
     }
 
     /**

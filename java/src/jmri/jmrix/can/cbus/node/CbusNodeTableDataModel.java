@@ -147,40 +147,44 @@ public class CbusNodeTableDataModel extends CbusBasicNodeTableFetch implements C
         }
         
         int evRow = getNodeRowFromNodeNum((( CbusNode ) ev.getSource()).getNodeNumber());
-
-        switch (ev.getPropertyName()) {
-            case "SINGLENVUPDATE":
-            case "ALLNVUPDATE":
-                fireTableCellUpdated(evRow, BYTES_REMAINING_COLUMN);
-                fireTableCellUpdated(evRow, NODE_TOTAL_BYTES_COLUMN);
-                break;
-            case "ALLEVUPDATE":
-            case "SINGLEEVUPDATE":
-                fireTableCellUpdated(evRow, NODE_EVENT_INDEX_VALID_COLUMN);
-                fireTableCellUpdated(evRow, NODE_EVENTS_COLUMN);
-                fireTableCellUpdated(evRow, BYTES_REMAINING_COLUMN);
-                fireTableCellUpdated(evRow, NODE_TOTAL_BYTES_COLUMN);
-                break;
-            case "BACKUPS":
-                fireTableCellUpdated(evRow, SESSION_BACKUP_STATUS_COLUMN);
-                fireTableCellUpdated(evRow, NUMBER_BACKUPS_COLUMN);
-                fireTableCellUpdated(evRow, LAST_BACKUP_COLUMN);
-                break;
-            case "PARAMETER":
-                fireTableRowsUpdated(evRow,evRow);
-                break;
-            case "LEARNMODE":
-                fireTableCellUpdated(evRow,NODE_IN_LEARN_MODE_COLUMN);
-                break;
-            case "NAMECHANGE":
-                fireTableCellUpdated(evRow,NODE_USER_NAME_COLUMN);
-                break;
-            case "CANID":
-                fireTableCellUpdated(evRow,CANID_COLUMN);
-                break;
-            default:
-                break;
+        if (evRow<0){
+            return;
         }
+        ThreadingUtil.runOnGUIEventually( ()->{
+            switch (ev.getPropertyName()) {
+                case "SINGLENVUPDATE":
+                case "ALLNVUPDATE":
+                    fireTableCellUpdated(evRow, BYTES_REMAINING_COLUMN);
+                    fireTableCellUpdated(evRow, NODE_TOTAL_BYTES_COLUMN);
+                    break;
+                case "ALLEVUPDATE":
+                case "SINGLEEVUPDATE":
+                    fireTableCellUpdated(evRow, NODE_EVENT_INDEX_VALID_COLUMN);
+                    fireTableCellUpdated(evRow, NODE_EVENTS_COLUMN);
+                    fireTableCellUpdated(evRow, BYTES_REMAINING_COLUMN);
+                    fireTableCellUpdated(evRow, NODE_TOTAL_BYTES_COLUMN);
+                    break;
+                case "BACKUPS":
+                    fireTableCellUpdated(evRow, SESSION_BACKUP_STATUS_COLUMN);
+                    fireTableCellUpdated(evRow, NUMBER_BACKUPS_COLUMN);
+                    fireTableCellUpdated(evRow, LAST_BACKUP_COLUMN);
+                    break;
+                case "PARAMETER":
+                    fireTableRowsUpdated(evRow,evRow);
+                    break;
+                case "LEARNMODE":
+                    fireTableCellUpdated(evRow,NODE_IN_LEARN_MODE_COLUMN);
+                    break;
+                case "NAMECHANGE":
+                    fireTableCellUpdated(evRow,NODE_USER_NAME_COLUMN);
+                    break;
+                case "CANID":
+                    fireTableCellUpdated(evRow,CANID_COLUMN);
+                    break;
+                default:
+                    break;
+            }
+        });
     }
     
     private NodeConfigToolPane searchFeedbackPanel;
@@ -291,12 +295,7 @@ public class CbusNodeTableDataModel extends CbusBasicNodeTableFetch implements C
     }
     
     public boolean startupComplete(){
-    if ( !searchXmlComplete &&
-        searchForNodesTask != null){
-        return false;
-    }
-    
-        return true;
+        return !(!searchXmlComplete && searchForNodesTask != null);
     }
     
     /**

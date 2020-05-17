@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * PowerManager implementation for controlling layout power
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class SRCPPowerManager implements PowerManager, SRCPListener {
 
@@ -134,7 +134,7 @@ public class SRCPPowerManager implements PowerManager, SRCPListener {
     @Override
     public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {
         if (log.isDebugEnabled()) {
-            log.debug("reply called with simpleNode " + n.jjtGetValue());
+            log.debug("reply called with simpleNode {}", n.jjtGetValue());
         }
         reply(new SRCPReply(n));
     }

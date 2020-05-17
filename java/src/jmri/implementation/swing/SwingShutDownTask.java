@@ -84,7 +84,7 @@ public class SwingShutDownTask extends AbstractShutDownTask {
                     return doClose();
                 default:
                     // unexpected value, log but continue
-                    log.error("unexpected selection: " + selectedValue);
+                    log.error("unexpected selection: {}", selectedValue);
                     return true;
             }
         }

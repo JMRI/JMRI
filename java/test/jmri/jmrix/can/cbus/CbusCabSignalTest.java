@@ -48,7 +48,6 @@ public class CbusCabSignalTest extends jmri.implementation.DefaultCabSignalTest 
     }
 
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -76,6 +75,7 @@ public class CbusCabSignalTest extends jmri.implementation.DefaultCabSignalTest 
         tc = null;
         cs.dispose();
         cs = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

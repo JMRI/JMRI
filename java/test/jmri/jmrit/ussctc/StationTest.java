@@ -6,7 +6,7 @@ import org.junit.*;
 /**
  * Tests for Station classes in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class StationTest {
 
@@ -105,7 +105,6 @@ public class StationTest {
     CodeLine codeline;
     CodeButton button;
         
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

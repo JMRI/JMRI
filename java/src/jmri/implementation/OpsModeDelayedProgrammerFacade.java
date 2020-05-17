@@ -93,7 +93,7 @@ public class OpsModeDelayedProgrammerFacade extends AbstractProgrammerFacade imp
         log.debug("useProgrammer entry: _usingProgrammer is {}", _usingProgrammer);
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
+                log.info("programmer already in use by {}", _usingProgrammer);
             }
             throw new jmri.ProgrammerException("programmer in use");
         } else {
@@ -138,7 +138,7 @@ public class OpsModeDelayedProgrammerFacade extends AbstractProgrammerFacade imp
                 _delay = _writeDelay;
                 break;
             default:
-                log.error("Unexpected state on reply: " + state);
+                log.error("Unexpected state on reply: {}", state);
                 // clean up as much as possible
                 _usingProgrammer = null;
                 state = ProgState.NOTPROGRAMMING;
@@ -152,7 +152,7 @@ public class OpsModeDelayedProgrammerFacade extends AbstractProgrammerFacade imp
             jmri.ProgListener temp = _usingProgrammer;
             _usingProgrammer = null; // done
             state = ProgState.NOTPROGRAMMING;
-            log.debug("notifying value " + value + " status " + status);
+            log.debug("notifying value {} status {}", value, status);
             temp.programmingOpReply(value, status);
         }, _delay);
 

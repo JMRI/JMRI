@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import java.util.Arrays;
 import java.util.Collection;
 import javax.swing.JFrame;
+
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -90,6 +91,7 @@ public class EditorIconFrameTest {
           JUnitUtil.dispose(e);
        }
        e = null;
+       JUnitUtil.deregisterBlockManagerShutdownTask();
        JUnitUtil.tearDown();
     }
 

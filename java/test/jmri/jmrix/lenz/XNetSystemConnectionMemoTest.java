@@ -6,20 +6,19 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
 /**
  * XNetSystemConnectionMemoTest.java
+ * <p>
+ * Test for the jmri.jmrix.lenz.XNetSystemConnectionMemo class
  *
- * Description:	tests for the jmri.jmrix.lenz.XNetSystemConnectionMemo class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
     @Test
     @Override
     public void testCtor() {
-        XNetSystemConnectionMemo t = (XNetSystemConnectionMemo)scm;
+        XNetSystemConnectionMemo t = (XNetSystemConnectionMemo) scm;
         Assert.assertNotNull(t);
         Assert.assertNotNull(t.getXNetTrafficController());
         // While we are constructing the memo, we should also set the 
@@ -47,11 +46,11 @@ public class XNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
     @Test
     public void testProivdesConsistManagerMultiMaus() {
         // infrastructure objects
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation(){
-          @Override
-          public int getCommandStationType(){
-              return(0x10); // MultiMaus
-          }
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation() {
+            @Override
+            public int getCommandStationType() {
+                return (0x10); // MultiMaus
+            }
         });
 
         XNetSystemConnectionMemo t = new XNetSystemConnectionMemo();
@@ -63,11 +62,11 @@ public class XNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
     @Test
     public void testProivdesCommandStaitonCompact() {
         // infrastructure objects
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation(){
-          @Override
-          public int getCommandStationType(){
-              return(0x02); // Lenz Compact/Atlas Commander
-          }
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation() {
+            @Override
+            public int getCommandStationType() {
+                return (0x02); // Lenz Compact/Atlas Commander
+            }
         });
 
         XNetSystemConnectionMemo t = new XNetSystemConnectionMemo();
@@ -76,17 +75,16 @@ public class XNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
         Assert.assertFalse(t.provides(jmri.CommandStation.class));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation(){
-          @Override
-          public int getCommandStationType(){
-              return(0x00); // LZV100
-          }
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation() {
+            @Override
+            public int getCommandStationType() {
+                return (0x00); // LZV100
+            }
         });
 
         XNetSystemConnectionMemo memo = new XNetSystemConnectionMemo(tc);
@@ -99,7 +97,7 @@ public class XNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
     @After
     @Override
     public void tearDown() {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

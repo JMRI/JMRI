@@ -50,7 +50,7 @@ public class DCCppTurnoutReplyCache implements DCCppListener {
         try {
             if (messageCache[pNumber] != null) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Message for turnout " + pNumber + " cached.");
+                    log.debug("Message for turnout {} cached.", pNumber);
                 }
                 turnout.message(messageCache[pNumber]);
             } else {
@@ -98,7 +98,7 @@ public class DCCppTurnoutReplyCache implements DCCppListener {
     @Override
     synchronized public void message(DCCppReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("received message: " + l);
+            log.debug("received message: {}", l);
         }
         if (l.isTurnoutReply()) {
      // cache the message for later requests
@@ -116,7 +116,7 @@ public class DCCppTurnoutReplyCache implements DCCppListener {
     @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 

@@ -240,7 +240,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                 try {
                     timeToPlatform = TTP.getLongValue();
                 } catch (DataConversionException e) {
-                    log.debug("ignoring DataConversionException (and reverting to default value): "+e.toString());
+                    log.debug("ignoring DataConversionException (and reverting to default value): {}", e.toString());
                 }
             }
 
@@ -249,7 +249,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                 log.info("Warrant \"{}\" (userName={}) previously loaded. This version not loaded.", sysName, userName);
                 continue;
             }
-            if (SCWa) {
+            if (SCWa && warrant instanceof SCWarrant) {
                 if (elem.getAttribute("forward") != null) {
                     ((SCWarrant)warrant).setForward(elem.getAttribute("forward").getValue().equals("true"));
                 }
@@ -291,7 +291,9 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                 if (elem.getAttribute("forward") != null) {
                     forward = elem.getAttribute("forward").getValue().equals("true");
                 }
-                ((SCWarrant)warrant).setForward(forward);
+                if (warrant instanceof SCWarrant) {
+                    ((SCWarrant)warrant).setForward(forward);
+                }
                 warrant.setNoRamp(SCWa);
                 warrant.setShareRoute(SCWa);
             }

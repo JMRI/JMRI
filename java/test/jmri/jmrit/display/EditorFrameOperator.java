@@ -10,7 +10,7 @@ import org.netbeans.jemmy.operators.JMenuOperator;
 /**
  * Jemmy Operator for Editor panels swing interfaces.
  *
- * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author Bob Jacobsen Copyright 2009, 2010
  * @author  Paul Bender Copyright 2017
  */
 public class EditorFrameOperator extends JFrameOperator {

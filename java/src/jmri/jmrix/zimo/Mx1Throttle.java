@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
 
@@ -81,7 +81,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         // Always need speed command before function group command to reset consist pointer
         /*int data = 0x00 |
          (f8 ? 0x08 : 0) |
-         (f7 ? 0x04 : 0)	|
+         (f7 ? 0x04 : 0) |
          (f6 ? 0x02 : 0) |
          (f5 ? 0x01 : 0);
         
@@ -105,7 +105,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
 
     /**
      * Send the message to set the state of functions F13 to F20 in function
-     * Group 4 {@literal &} 5
+     * Group 4 and 5
      */
     @Override
     protected void sendFunctionGroup4() {
@@ -155,7 +155,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Set the speed and direction.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
@@ -165,9 +165,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         sendSpeedCmd();
-        if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting); //IN18N
-        }
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
     }
 
@@ -202,7 +200,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
                 value = 2; // emergency stop
             }
             int speedC = (value & 0x1F) >> 1;
-            int c = (value & 0x01) << 4;	// intermediate speed step
+            int c = (value & 0x01) << 4; // intermediate speed step
 
             speedC = speedC + c;
             value = (isForward ? 0x60 : 0x40) | speedC;
@@ -243,9 +241,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
         log.debug("setIsForward= {}", forward);
-        if (old != isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, isForward); //IN18N
-        }
+        firePropertyChange(ISFORWARD, old, isForward);
     }
 
     @Override

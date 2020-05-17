@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implements MqttCallback {
 
     private final static String PROTOCOL = "tcp://";
-    private final static String CLID = "JMRI";
     private final static String DEFAULT_BASETOPIC = "/trains/";
     
     public String baseTopic = DEFAULT_BASETOPIC;
@@ -61,7 +60,15 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
                 options.put(option2Name, new Option("MQTT channel :", new String[]{baseTopic, DEFAULT_BASETOPIC}));
             }
 
-            String clientID = CLID + "-" + this.getUserName();
+            //generate a unique client ID based on the network ID and the system prefix of the MQTT connection.
+            String clientID = jmri.util.node.NodeIdentity.networkIdentity() + getSystemPrefix();
+
+            //ensure that only valid characters are included in the client ID
+            clientID = clientID.replaceAll("[^A-Za-z0-9]", "");
+            //ensure the length of the client ID doesn't exceed the guaranteed acceptable length of 23
+            if (clientID.length() > 23) {
+                clientID = clientID.substring(clientID.length() - 23);
+            }
             mqttClient = new MqttClient(PROTOCOL + getCurrentPortName(), clientID);
             mqttClient.connect();
         } catch (MqttException ex) {

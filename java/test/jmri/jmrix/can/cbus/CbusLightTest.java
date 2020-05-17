@@ -337,6 +337,7 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         m.setElement(0, 0x91); // ACOF OPC
         ((CbusLight)t).message(m);
         Assert.assertTrue(t.getState() == Light.OFF);
+        Assert.assertTrue(tcis.outbound.isEmpty());
  
     }
     
@@ -366,6 +367,7 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         m.setRtr(false);
         ((CbusLight)t).message(m);
         Assert.assertTrue(t.getState() == Light.ON);
+        Assert.assertTrue(tcis.outbound.isEmpty());
         
     }
     
@@ -394,6 +396,7 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         
         ((CbusLight) t).reply(r);
         Assert.assertTrue(t.getState() == Light.ON);
+        Assert.assertTrue(tcis.outbound.isEmpty());
         
     }
     
@@ -419,6 +422,7 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         r.setElement(0, 0x91); // ACOF OPC
         ((CbusLight) t).reply(r);
         Assert.assertTrue(t.getState() == Light.OFF);
+        Assert.assertTrue(tcis.outbound.isEmpty());
   
     }
 
@@ -443,6 +447,7 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         m.setElement(0, 0x99); // ASOF OPC
         ((CbusLight)t).message(m);
         Assert.assertTrue(t.getState() == Light.OFF);
+        Assert.assertTrue(tcis.outbound.isEmpty());
         
     }
     
@@ -467,6 +472,8 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         r.setElement(0, 0x99); // ASOF OPC
         ((CbusLight) t).reply(r);
         Assert.assertTrue(t.getState() == Light.OFF);
+        
+        Assert.assertTrue(tcis.outbound.isEmpty());
         
     }
 
@@ -529,7 +536,6 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

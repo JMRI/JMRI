@@ -16,7 +16,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusSensor class.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     
@@ -442,7 +442,6 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     
     private TrafficControllerScaffold tcis;
     
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

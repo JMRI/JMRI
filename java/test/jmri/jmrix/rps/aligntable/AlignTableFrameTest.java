@@ -8,7 +8,7 @@ import jmri.jmrix.rps.RpsSystemConnectionMemo;
 /**
  * Test simple functioning of AlignTableFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class AlignTableFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -20,16 +20,16 @@ public class AlignTableFrameTest extends jmri.util.JmriJFrameTestBase {
         JUnitUtil.setUp();
         JUnitUtil.initRosterConfigManager();
         memo = new RpsSystemConnectionMemo();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new AlignTableFrame(memo);
-	    }
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new AlignTableFrame(memo);
+        }
     }
 
     @After
     @Override
     public void tearDown() {
-	    memo = null;
+        memo = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-    	super.tearDown();
+        super.tearDown();
     }
 }

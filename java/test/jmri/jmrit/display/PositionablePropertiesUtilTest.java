@@ -3,6 +3,7 @@ package jmri.jmrit.display;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,7 +13,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PositionablePropertiesUtilTest {
 
@@ -49,7 +50,6 @@ public class PositionablePropertiesUtilTest {
         Assert.assertEquals("No Change Font",f,label.getFont());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -58,6 +58,7 @@ public class PositionablePropertiesUtilTest {
     @After
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

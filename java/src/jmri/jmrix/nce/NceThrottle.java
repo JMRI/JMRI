@@ -245,7 +245,7 @@ public class NceThrottle extends AbstractThrottle {
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Set the speed and direction.
      * <p>
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
@@ -256,7 +256,7 @@ public class NceThrottle extends AbstractThrottle {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         if (log.isDebugEnabled()) {
-            log.debug("setSpeedSetting= " + speed);
+            log.debug("setSpeedSetting= {}", speed);
         }
 
         // The NCE USB doesn't support the NMRA packet format
@@ -348,9 +348,7 @@ public class NceThrottle extends AbstractThrottle {
             tc.sendNceMessage(m, null);
 
         }
-        if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
-        }
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
     }
 
@@ -359,12 +357,8 @@ public class NceThrottle extends AbstractThrottle {
         boolean old = isForward;
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
-        if (log.isDebugEnabled()) {
-            log.debug("setIsForward= " + forward);
-        }
-        if (old != isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, isForward);
-        }
+        log.debug("setIsForward= {}", forward);
+        firePropertyChange(ISFORWARD, old, isForward);
     }
 
     @Override

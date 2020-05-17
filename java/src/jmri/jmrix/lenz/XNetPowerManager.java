@@ -123,7 +123,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
     @Override
     public void message(XNetReply m) {
         if (log.isDebugEnabled()) {
-            log.debug("Message received: " + m.toString());
+            log.debug("Message received: {}", m.toString());
         }
         // First, we check for a "normal operations resumed message"
         // This indicates the power to the track is ON
@@ -193,7 +193,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 

@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Tests for the DefaultSignalSystem interface implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class DefaultSignalSystemTest {
 

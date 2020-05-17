@@ -54,7 +54,7 @@ public class SerialDriverAdapter extends SerialPortController {
                 log.debug("Serial framing was observed as: {} {}", activeSerialPort.isReceiveFramingEnabled(),
                         activeSerialPort.getReceiveFramingByte());
             } catch (Exception ef) {
-                log.debug("failed to set serial framing: " + ef);
+                log.debug("failed to set serial framing: {}", ef);
             }
 
             // set timeout; framing should work before this anyway
@@ -194,7 +194,8 @@ public class SerialDriverAdapter extends SerialPortController {
 
     /**
      * Get an array of valid values for "option 2"; used to display valid
-     * options. May not be null, but may have zero entries
+     * options.May not be null, but may have zero entries
+     * @return zero entries.
      */
     public String[] validOption2() {
         return new String[]{""};

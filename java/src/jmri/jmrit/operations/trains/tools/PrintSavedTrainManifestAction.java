@@ -30,12 +30,12 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
 
     private final static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestAction.class);
 
-    public PrintSavedTrainManifestAction(String actionName, boolean isPreview, Train train) {
-        super(actionName);
+    public PrintSavedTrainManifestAction(boolean isPreview, Train train) {
+        super(isPreview ? Bundle.getMessage("MenuItemPreviewSavedManifest") : Bundle.getMessage("MenuItemPrintSavedManifest"));
         _isPreview = isPreview;
         _train = train;
         setEnabled(Setup.isSaveTrainManifestsEnabled());
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
     }
 
     /**

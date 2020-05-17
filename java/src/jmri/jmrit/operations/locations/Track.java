@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.Reporter;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
@@ -34,7 +35,7 @@ import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
  *
  * @author Daniel Boudreau Copyright (C) 2008 - 2014
  */
-public class Track {
+public class Track extends PropertyChangeSupport {
 
     public static final String NONE = "";
 
@@ -1661,7 +1662,7 @@ public class Track {
         }
         Schedule schedule = getSchedule();
         if (schedule == null) {
-            log.error("No name schedule for id: " + getScheduleId());
+            log.error("No name schedule for id: {}", getScheduleId());
             return NONE;
         }
         return schedule.getName();
@@ -1673,7 +1674,7 @@ public class Track {
         }
         Schedule schedule = InstanceManager.getDefault(ScheduleManager.class).getScheduleById(getScheduleId());
         if (schedule == null) {
-            log.error("No schedule for id: " + getScheduleId());
+            log.error("No schedule for id: {}", getScheduleId());
         }
         return schedule;
     }
@@ -1695,7 +1696,7 @@ public class Track {
         if (_scheduleId.equals(NONE) && !_scheduleName.equals(NONE)) {
             Schedule schedule = InstanceManager.getDefault(ScheduleManager.class).getScheduleByName(_scheduleName);
             if (schedule == null) {
-                log.error("No schedule for name: " + _scheduleName);
+                log.error("No schedule for name: {}", _scheduleName);
             } else {
                 _scheduleId = schedule.getId();
             }
@@ -1781,7 +1782,7 @@ public class Track {
     public ScheduleItem getNextScheduleItem() {
         Schedule sch = getSchedule();
         if (sch == null) {
-            log.warn("Can not find schedule (" + getScheduleId() + ") assigned to track (" + getName() + ")");
+            log.warn("Can not find schedule ({}) assigned to track ({})", getScheduleId(), getName());
             return null;
         }
         List<ScheduleItem> items = sch.getItemsBySequenceList();
@@ -2163,7 +2164,7 @@ public class Track {
                             car.getLoadName(), currentSi.getTypeName(), currentTrainScheduleName, currentSi.getRoadName(),
                             currentSi.getReceiveLoadName()});
         } else {
-            log.error("ERROR Track " + getName() + " current schedule item is null!");
+            log.error("ERROR Track {} current schedule item is null!", getName());
             return SCHEDULE + " ERROR Track " + getName() + " current schedule item is null!"; // NOI18N
         }
         return OKAY;
@@ -3035,19 +3036,9 @@ public class Track {
         return e;
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         InstanceManager.getDefault(LocationManagerXml.class).setDirty(true);
-        pcs.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     /*

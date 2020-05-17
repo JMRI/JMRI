@@ -8,7 +8,7 @@ import org.junit.*;
 /**
  * Tests for OccupancyLock classes in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class OccupancyLockTest {
 
@@ -122,7 +122,6 @@ public class OccupancyLockTest {
         Assert.assertTrue(!lock.isLockClear());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -7,14 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <p>
- * Title: XNetTrafficRouterTest </p>
- * <p>
- * Description: </p>
- * <p>
- * Copyright: Copyright (c) 2002</p>
  *
- * @author Bob Jacobsen
+ * @author Bob Jacobsen Copyright 2002
  */
 public class XNetTrafficRouterTest {
 
@@ -148,7 +142,7 @@ public class XNetTrafficRouterTest {
 
     @After
     public void tearDown() {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

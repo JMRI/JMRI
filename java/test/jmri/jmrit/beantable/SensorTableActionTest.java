@@ -1,6 +1,6 @@
 package jmri.jmrit.beantable;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -63,7 +63,7 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
             is1.setKnownState(Sensor.ACTIVE);
             is2.setKnownState(Sensor.INACTIVE);
         } catch (jmri.JmriException reason) {
-            log.warn("Exception flipping sensor is1: " + reason);
+            log.warn("Exception flipping sensor is1: {}", reason);
         }
 
         // set graphic state column display preference to false, read by createModel()
@@ -158,7 +158,6 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
     }
 
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

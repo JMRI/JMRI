@@ -54,7 +54,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
     protected void setString(@Nonnull String newValue) {
         Object _old = this._knownString;
         this._knownString = newValue;
-        firePropertyChange("State", _old, _knownString); //NOI18N
+        firePropertyChange("State", _old, _knownString); // NOI18N
     }
 
     /** {@inheritDoc} */

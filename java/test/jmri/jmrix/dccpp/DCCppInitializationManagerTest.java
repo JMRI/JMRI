@@ -8,10 +8,10 @@ import org.junit.Assert;
 /**
  * DCCppInitializationManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppInitializationManager class
+ * Test for the jmri.jmrix.dccpp.DCCppInitializationManager class
  *
- * @author	Paul Bender
- * @author	Mark Underwood
+ * @author Paul Bender
+ * @author Mark Underwood
  */
 public class DCCppInitializationManagerTest {
 

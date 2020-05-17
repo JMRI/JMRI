@@ -45,6 +45,30 @@ public final class JUnitSwingUtil {
         return retval;
     }
 
+    /**
+     * Store the displayed content of a JComponent to a file
+     * <p>
+     * Note: this does no adjustment, e.g. pack, etc. That should have been
+     * already been done as required.
+     *
+     * @param component Typically a JComponent, could be a JFrame, the item to
+     *                      be returned
+     * @param size      dimension of image to capture
+     * @param filename  filename to write
+     */
+    public static void writeDisplayedContentToFile(java.awt.Container component, 
+                                                    Dimension size, Point upLeft, java.io.File filename)
+                                    throws java.io.IOException {
+        BufferedImage image = new BufferedImage(size.width, size.height, BufferedImage.TYPE_4BYTE_ABGR);
+        Graphics2D g2 = image.createGraphics();
+        component.paint(g2);
+
+        g2.dispose();
+
+        javax.imageio.ImageIO.write(image, "png", filename); // NOI18N
+
+    }
+
     public static enum Pixel {
 
         TRANSPARENT(0x00000000),

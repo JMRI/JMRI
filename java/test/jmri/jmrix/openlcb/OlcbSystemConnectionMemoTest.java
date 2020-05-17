@@ -10,10 +10,10 @@ import jmri.jmrix.can.TestTrafficController;
 /**
  * OlcbSystemConnectionMemoTest.java
  *
- * Description:	tests for the jmri.jmrix.openlcb.OlcbSystemConnectionMemo class
+ * Test for the jmri.jmrix.openlcb.OlcbSystemConnectionMemo class
  *
- * @author	Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2016	
+ * @author Bob Jacobsen
+ * @author      Paul Bender Copyright (C) 2016
  */
 public class OlcbSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -24,7 +24,6 @@ public class OlcbSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
        Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -37,8 +36,9 @@ public class OlcbSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
     @Override
     @After
     public void tearDown() {
+        ((OlcbSystemConnectionMemo)scm).getTrafficController().terminateThreads();
+        scm.dispose();
         scm = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

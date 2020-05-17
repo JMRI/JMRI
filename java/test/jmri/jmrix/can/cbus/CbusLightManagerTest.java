@@ -303,18 +303,20 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Assert.assertEquals("ML100001", NameValidity.VALID, l.validSystemNameFormat("MS100001"));
         Assert.assertEquals("ML-100001", NameValidity.VALID, l.validSystemNameFormat("MS-100001"));
 
+        Assert.assertEquals("ML+1;+0", NameValidity.VALID, l.validSystemNameFormat("ML+1;+0"));
+        Assert.assertEquals("ML+1;-0", NameValidity.VALID, l.validSystemNameFormat("ML+1;-0"));
+        Assert.assertEquals("ML+0;+17", NameValidity.VALID, l.validSystemNameFormat("ML+0;+17"));
+        Assert.assertEquals("ML+0;-17", NameValidity.VALID, l.validSystemNameFormat("ML+0;-17"));
+        Assert.assertEquals("ML+0", NameValidity.VALID, l.validSystemNameFormat("ML+0"));
+        Assert.assertEquals("ML-0", NameValidity.VALID, l.validSystemNameFormat("ML-0"));
+        
         Assert.assertEquals("M", NameValidity.INVALID, l.validSystemNameFormat("M"));
         Assert.assertEquals("ML", NameValidity.INVALID, l.validSystemNameFormat("ML"));
         Assert.assertEquals("ML-65536", NameValidity.INVALID, l.validSystemNameFormat("ML-65536"));
         Assert.assertEquals("ML65536", NameValidity.INVALID, l.validSystemNameFormat("ML65536"));
-        Assert.assertEquals("ML+1;+0", NameValidity.INVALID, l.validSystemNameFormat("ML+1;+0"));
-        Assert.assertEquals("ML+1;-0", NameValidity.INVALID, l.validSystemNameFormat("ML+1;-0"));
-        Assert.assertEquals("ML+0;+17", NameValidity.INVALID, l.validSystemNameFormat("ML+0;+17"));
-        Assert.assertEquals("ML+0;-17", NameValidity.INVALID, l.validSystemNameFormat("ML+0;-17"));
-        Assert.assertEquals("ML+0", NameValidity.INVALID, l.validSystemNameFormat("ML+0"));
-        Assert.assertEquals("ML-0", NameValidity.INVALID, l.validSystemNameFormat("ML-0"));
         Assert.assertEquals("ML7;0", NameValidity.INVALID, l.validSystemNameFormat("ML7;0"));
         Assert.assertEquals("ML0;7", NameValidity.INVALID, l.validSystemNameFormat("ML0;7"));
+
     }
 
     @Test
@@ -349,7 +351,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tc;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

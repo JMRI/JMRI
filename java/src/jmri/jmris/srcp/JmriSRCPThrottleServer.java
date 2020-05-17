@@ -382,7 +382,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (log.isDebugEnabled()) {
-                log.debug("Property change event received " + e.getPropertyName() + " / " + e.getNewValue());
+                log.debug("Property change event received {} / {}", e.getPropertyName(), e.getNewValue());
             }
             switch (e.getPropertyName()) {
                 case Throttle.SPEEDSETTING:

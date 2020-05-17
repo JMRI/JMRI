@@ -130,16 +130,15 @@ public class CircuitBuilderTest {
     }
 
     @Test
-//    @org.junit.Ignore ("'OK' button does not dismiss dialog.")
     public void testEditPortalError() {
         getCPEandCB();
-
+/*
         new Thread(() -> {
             JFrameOperator jfo = new JFrameOperator("Edit \"WestSiding\" Portals");
             JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("incompleteCircuit"));
             JButtonOperator jbo = new JButtonOperator(jdo, "OK");
             jbo.push();
-        }).start();
+        }).start();*/
 
         cb.editPortalError("EastExit-EastJunction");
 
@@ -209,6 +208,7 @@ public class CircuitBuilderTest {
         if (cpe != null) {
             cpe.dispose();
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
     private final static Logger log = LoggerFactory.getLogger(CircuitBuilderTest.class);

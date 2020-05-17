@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Test simple functioning of SimpleLightCtrlFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SimpleLightCtrlFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -16,9 +16,9 @@ public class SimpleLightCtrlFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new SimpleLightCtrlFrame();
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new SimpleLightCtrlFrame();
+        }
     }
 
     @After

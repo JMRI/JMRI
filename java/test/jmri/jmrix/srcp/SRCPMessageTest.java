@@ -9,9 +9,9 @@ import org.junit.Test;
 /**
  * SRCPMessageTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPMessage class
+ * Test for the jmri.jmrix.srcp.SRCPMessage class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  * @author  Paul Bender Copyright (C) 2017
  */
 public class SRCPMessageTest extends jmri.jmrix.AbstractMessageTestBase {
@@ -151,7 +151,6 @@ public class SRCPMessageTest extends jmri.jmrix.AbstractMessageTestBase {
       SRCPMessage.getWriteRegister(2,10,5);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

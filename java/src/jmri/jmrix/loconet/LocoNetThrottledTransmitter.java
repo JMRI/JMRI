@@ -165,7 +165,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
 
                     // normal request
                     if (log.isDebugEnabled()) {
-                        log.debug("forwarding message: " + m.getMessage());
+                        log.debug("forwarding message: {}", m.getMessage());
                     }
                     controller.sendLocoNetMessage(m.getMessage());
                     // and go round again

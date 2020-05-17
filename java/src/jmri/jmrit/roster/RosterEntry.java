@@ -8,10 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Writer;
 import java.text.*;
-import java.util.ArrayList;
 import java.util.*;
-import java.util.List;
-import java.util.ResourceBundle;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.ImageIcon;
@@ -307,11 +304,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 // oops - change filename and try again
                 newFilename = oldFilename.substring(0, oldFilename.length() - 4) + count + ".xml";
                 count++;
-                log.debug("try to use " + newFilename + " as filename instead of " + oldFilename);
+                log.debug("try to use {} as filename instead of {}", newFilename, oldFilename);
                 testFile = new File(Roster.getDefault().getRosterFilesLocation() + newFilename);
             }
             setFileName(newFilename);
-            log.debug("new filename: " + getFileName());
+            log.debug("new filename: {}", getFileName());
         }
     }
 
@@ -474,11 +471,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         try {
             n = Integer.parseInt(getDccAddress());
         } catch (NumberFormatException e) {
-            log.error("Illegal format for DCC address roster entry: \""
-                    + getId()
-                    + "\" value: \""
-                    + getDccAddress()
-                    + "\"");
+            log.error("Illegal format for DCC address roster entry: \"{}\" value: \"{}\"", getId(), getDccAddress());
             n = 0;
         }
         return new DccLocoAddress(n, _protocol);
@@ -647,7 +640,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         functionImages = Collections.synchronizedMap(new HashMap<>());
         functionLockables = Collections.synchronizedMap(new HashMap<>());
         if (log.isDebugEnabled()) {
-            log.debug("ctor from element " + e);
+            log.debug("ctor from element {}", e);
         }
         Attribute a;
         if ((a = e.getAttribute("id")) != null) {
@@ -1284,7 +1277,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             mRootElement = df.rootFromName(fullFilename);
         } catch (JDOMException
                 | IOException e) {
-            log.error("Exception while loading loco XML file: " + getFileName() + " exception: " + e);
+            log.error("Exception while loading loco XML file: {} exception: {}", getFileName(), e);
         }
 
         try {
@@ -1521,9 +1514,12 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Separate write statements for text and line feeds to work around the
      * HardcopyWriter bug that misplaces borders.
      *
-     * @param w the writer used to print
+     * @param w the HardcopyWriter used to print
      */
     public void printEntryDetails(Writer w) {
+        if (!(w instanceof HardcopyWriter)){
+            throw new IllegalArgumentException("No HardcopyWriter instance passed");
+        }
         int linesadded = -1;
         String title;
         String leftMargin = "   "; // 3 spaces in front of legend labels
@@ -1667,7 +1663,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 w.write(newLine, 0, 1);
             }
         } catch (IOException e) {
-            log.error("Error printing RosterEntry: " + e);
+            log.error("Error printing RosterEntry: {}", e);
         }
     }
 
@@ -1695,7 +1691,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 k++;
             }
         } catch (IOException e) {
-            log.error("Error printing RosterEntry: " + e);
+            log.error("Error printing RosterEntry: {}", e);
         }
         return k;
     }
@@ -1727,12 +1723,12 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 //Piece too long to fit. Extract a piece the size of the textSpace
                 //and check for farthest right space for word wrapping.
                 if (log.isDebugEnabled()) {
-                    log.debug("token: /" + commentToken + "/");
+                    log.debug("token: /{}/", commentToken);
                 }
                 while (startIndex < commentToken.length()) {
                     String tokenPiece = commentToken.substring(startIndex, startIndex + textSpace);
                     if (log.isDebugEnabled()) {
-                        log.debug("loop: /" + tokenPiece + "/ " + tokenPiece.lastIndexOf(" "));
+                        log.debug("loop: /{}/ {}", tokenPiece, tokenPiece.lastIndexOf(" "));
                     }
                     if (tokenPiece.lastIndexOf(" ") == -1) {
                         //If no spaces, put the whole piece in the vector and add a line feed, then
@@ -1745,7 +1741,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                         //last space and put in the vector as well as a line feed
                         endIndex = tokenPiece.lastIndexOf(" ") + 1;
                         if (log.isDebugEnabled()) {
-                            log.debug("/" + tokenPiece + "/ " + startIndex + " " + endIndex);
+                            log.debug("/{}/ {} {}", tokenPiece, startIndex, endIndex);
                         }
                         textVector.addElement(tokenPiece.substring(0, endIndex));
                         textVector.addElement(newLine);

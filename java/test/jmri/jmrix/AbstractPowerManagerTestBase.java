@@ -14,8 +14,8 @@ import org.junit.Test;
  * Instead, this forms the base for test classes, including providing some
  * common tests.
  *
- * @author	Bob Jacobsen Copyright 2007
- * @author	Bob Jacobsen Copyright (C) 2017
+ * @author Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright (C) 2017
  */
 public abstract class AbstractPowerManagerTestBase {
 
@@ -30,9 +30,9 @@ public abstract class AbstractPowerManagerTestBase {
 
     protected abstract void hearIdle();
 
-    protected abstract void sendOnReply();	  // get a reply to On command from layout
+    protected abstract void sendOnReply();  // get a reply to On command from layout
 
-    protected abstract void sendOffReply();   // get a reply to Off command from layout
+    protected abstract void sendOffReply(); // get a reply to Off command from layout
     
     protected abstract void sendIdleReply();
 
@@ -46,7 +46,7 @@ public abstract class AbstractPowerManagerTestBase {
 
     protected abstract boolean outboundIdleOK(int index);
 
-    protected PowerManager p = null;	// holds objects under test
+    protected PowerManager p = null; // holds objects under test
 
     static protected boolean listenerResult = false;
 

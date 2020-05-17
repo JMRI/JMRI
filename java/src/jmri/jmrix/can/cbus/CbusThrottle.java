@@ -82,9 +82,9 @@ public class CbusThrottle extends AbstractThrottle {
         log.debug("Setting throttle initial values");
         updateSpeedSetting( speed & 0x7f );
         updateIsForward ( (speed & 0x80) == 0x80 );
-        updateFunctionGroup1(f0f4);
-        updateFunctionGroup2(f5f8);
-        updateFunctionGroup3(f9f12);
+        updateFunctionGroup(1,f0f4);
+        updateFunctionGroup(2,f5f8);
+        updateFunctionGroup(3,f9f12);
     }
 
     /**
@@ -137,12 +137,7 @@ public class CbusThrottle extends AbstractThrottle {
      */
     @Override
     protected void sendFunctionGroup1() {
-        int new_fn = ((getF0() ? CbusConstants.CBUS_F0 : 0)
-                | (getF1() ? CbusConstants.CBUS_F1 : 0)
-                | (getF2() ? CbusConstants.CBUS_F2 : 0)
-                | (getF3() ? CbusConstants.CBUS_F3 : 0)
-                | (getF4() ? CbusConstants.CBUS_F4 : 0));
-        cs.setFunctions(1, _handle, new_fn);
+        sendFunctionGroup(1);
     }
 
     /**
@@ -150,11 +145,7 @@ public class CbusThrottle extends AbstractThrottle {
      */
     @Override
     protected void sendFunctionGroup2() {
-        int new_fn = ((getF5() ? CbusConstants.CBUS_F5 : 0)
-                | (getF6() ? CbusConstants.CBUS_F6 : 0)
-                | (getF7() ? CbusConstants.CBUS_F7 : 0)
-                | (getF8() ? CbusConstants.CBUS_F8 : 0));
-        cs.setFunctions(2, _handle, new_fn);
+        sendFunctionGroup(2);
     }
 
     /**
@@ -162,11 +153,7 @@ public class CbusThrottle extends AbstractThrottle {
      */
     @Override
     protected void sendFunctionGroup3() {
-        int new_fn = ((getF9() ? CbusConstants.CBUS_F9 : 0)
-                | (getF10() ? CbusConstants.CBUS_F10 : 0)
-                | (getF11() ? CbusConstants.CBUS_F11 : 0)
-                | (getF12() ? CbusConstants.CBUS_F12 : 0));
-        cs.setFunctions(3, _handle, new_fn);
+        sendFunctionGroup(3);
     }
 
     /**
@@ -175,15 +162,7 @@ public class CbusThrottle extends AbstractThrottle {
      */
     @Override
     protected void sendFunctionGroup4() {
-        int new_fn = ((getF13() ? CbusConstants.CBUS_F13 : 0)
-                | (getF14() ? CbusConstants.CBUS_F14 : 0)
-                | (getF15() ? CbusConstants.CBUS_F15 : 0)
-                | (getF16() ? CbusConstants.CBUS_F16 : 0)
-                | (getF17() ? CbusConstants.CBUS_F17 : 0)
-                | (getF18() ? CbusConstants.CBUS_F18 : 0)
-                | (getF19() ? CbusConstants.CBUS_F19 : 0)
-                | (getF20() ? CbusConstants.CBUS_F20 : 0));
-        cs.setFunctions(4, _handle, new_fn);
+        sendFunctionGroup(4);
     }
 
     /**
@@ -192,85 +171,25 @@ public class CbusThrottle extends AbstractThrottle {
      */
     @Override
     protected void sendFunctionGroup5() {
-        int new_fn = ((getF21() ? CbusConstants.CBUS_F21 : 0)
-                | (getF22() ? CbusConstants.CBUS_F22 : 0)
-                | (getF23() ? CbusConstants.CBUS_F23 : 0)
-                | (getF24() ? CbusConstants.CBUS_F24 : 0)
-                | (getF25() ? CbusConstants.CBUS_F25 : 0)
-                | (getF26() ? CbusConstants.CBUS_F26 : 0)
-                | (getF27() ? CbusConstants.CBUS_F27 : 0)
-                | (getF28() ? CbusConstants.CBUS_F28 : 0));
-        cs.setFunctions(5, _handle, new_fn);
+        sendFunctionGroup(5);
+    }
+    
+    protected void sendFunctionGroup(int group) {
+        int totVal = 0;
+        for ( int i=0; i<=28; i++ ){
+            if (FUNCTION_GROUPS[i]==group && getFunction(i)){
+                totVal = totVal + CbusConstants.CBUS_FUNCTION_BITS[i];
+            }
+        }
+        cs.setFunctions(group, _handle, totVal);
     }
 
-    /**
-     * Update the state of locomotive functions F0, F1, F2, F3, F4 in response
-     * to a message from the hardware
-     * @param fns int value Fn 0-4
-     */
-    protected void updateFunctionGroup1(int fns) {
-        updateFunction( 0, (fns & CbusConstants.CBUS_F0) == CbusConstants.CBUS_F0 );
-        updateFunction( 1, (fns & CbusConstants.CBUS_F1) == CbusConstants.CBUS_F1);
-        updateFunction( 2, (fns & CbusConstants.CBUS_F2) == CbusConstants.CBUS_F2);
-        updateFunction( 3, (fns & CbusConstants.CBUS_F3) == CbusConstants.CBUS_F3);
-        updateFunction( 4, (fns & CbusConstants.CBUS_F4) == CbusConstants.CBUS_F4);
-    }
-
-    /**
-     * Update the state of locomotive functions F5, F6, F7, F8 in response to a
-     * message from the hardware
-     * @param fns int value Fn 5-8
-     */
-    protected void updateFunctionGroup2(int fns) {
-        updateFunction( 5, (fns & CbusConstants.CBUS_F5) == CbusConstants.CBUS_F5);
-        updateFunction( 6, (fns & CbusConstants.CBUS_F6) == CbusConstants.CBUS_F6);
-        updateFunction( 7, (fns & CbusConstants.CBUS_F7) == CbusConstants.CBUS_F7);
-        updateFunction( 8, (fns & CbusConstants.CBUS_F8) == CbusConstants.CBUS_F8);
-    }
-
-    /**
-     * Update the state of locomotive functions F9, F10, F11, F12 in response to
-     * a message from the hardware
-     * @param fns int value Fn 9-12
-     */
-    protected void updateFunctionGroup3(int fns) {
-        updateFunction( 9, (fns & CbusConstants.CBUS_F9) == CbusConstants.CBUS_F9);
-        updateFunction( 10, (fns & CbusConstants.CBUS_F10) == CbusConstants.CBUS_F10);
-        updateFunction( 11, (fns & CbusConstants.CBUS_F11) == CbusConstants.CBUS_F11);
-        updateFunction( 12, (fns & CbusConstants.CBUS_F12) == CbusConstants.CBUS_F12);
-    }
-
-    /**
-     * Update the state of locomotive functions F13, F14, F15, F16, F17, F18,
-     * F19, F20 in response to a message from the hardware
-     * @param fns int value Fn 13-20
-     */
-    protected void updateFunctionGroup4(int fns) {
-        
-        updateFunction( 13 , ((fns & CbusConstants.CBUS_F13) == CbusConstants.CBUS_F13));
-        updateFunction( 14 , ((fns & CbusConstants.CBUS_F14) == CbusConstants.CBUS_F14));
-        updateFunction( 15 , ((fns & CbusConstants.CBUS_F15) == CbusConstants.CBUS_F15));
-        updateFunction( 16 , ((fns & CbusConstants.CBUS_F16) == CbusConstants.CBUS_F16));
-        updateFunction( 17 , ((fns & CbusConstants.CBUS_F17) == CbusConstants.CBUS_F17));
-        updateFunction( 18 , ((fns & CbusConstants.CBUS_F18) == CbusConstants.CBUS_F18));
-        updateFunction( 19 , ((fns & CbusConstants.CBUS_F19) == CbusConstants.CBUS_F19));
-        updateFunction( 20 , ((fns & CbusConstants.CBUS_F20) == CbusConstants.CBUS_F20));
-    }
-
-    /**
-     * Update the state of locomotive functions F21, F22, F23, F24, F25, F26,
-     * F27, F28 in response to a message from the hardware
-     * @param fns int value Fn 21-28
-     */
-    protected void updateFunctionGroup5(int fns) {
-        updateFunction( 21 , ((fns & CbusConstants.CBUS_F21) == CbusConstants.CBUS_F21));
-        updateFunction( 22 , ((fns & CbusConstants.CBUS_F22) == CbusConstants.CBUS_F22));
-        updateFunction( 23 , ((fns & CbusConstants.CBUS_F23) == CbusConstants.CBUS_F23));
-        updateFunction( 24 , ((fns & CbusConstants.CBUS_F24) == CbusConstants.CBUS_F24));
-        updateFunction( 25 , ((fns & CbusConstants.CBUS_F25) == CbusConstants.CBUS_F25));
-        updateFunction( 26 , ((fns & CbusConstants.CBUS_F26) == CbusConstants.CBUS_F26));
-        updateFunction( 27 , ((fns & CbusConstants.CBUS_F27) == CbusConstants.CBUS_F27));
-        updateFunction( 28 , ((fns & CbusConstants.CBUS_F28) == CbusConstants.CBUS_F28));
+    protected void updateFunctionGroup(int group, int fns) {
+        for ( int i=0; i<=28; i++ ){
+            if (FUNCTION_GROUPS[i]==group){
+                updateFunction( i, (fns & CbusConstants.CBUS_FUNCTION_BITS[i]) == CbusConstants.CBUS_FUNCTION_BITS[i] );
+            }
+        }
     }
 
     /**
@@ -298,7 +217,7 @@ public class CbusThrottle extends AbstractThrottle {
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
             sendToLayout();
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
+            firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
             record(this.speedSetting); // float
         }
     }
@@ -345,7 +264,7 @@ public class CbusThrottle extends AbstractThrottle {
         }
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
+            firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
             record(this.speedSetting); // float
         }
     }
@@ -361,7 +280,7 @@ public class CbusThrottle extends AbstractThrottle {
         this.isForward = forward;
         if (old != this.isForward) {
             sendToLayout();
-            notifyPropertyChangeListener(ISFORWARD, old, isForward);
+            firePropertyChange(ISFORWARD, old, isForward);
         }
     }
     
@@ -415,7 +334,7 @@ public class CbusThrottle extends AbstractThrottle {
      */
     protected void setStolen(boolean isStolen){
         if (isStolen != _isStolen){
-            notifyPropertyChangeListener("IsAvailable", isStolen, _isStolen); // PCL is opposite of local boolean
+            firePropertyChange("IsAvailable", isStolen, _isStolen); // PCL is opposite of local boolean
             _isStolen = isStolen;
         }
         if (isStolen){ // stop keep-alive messages

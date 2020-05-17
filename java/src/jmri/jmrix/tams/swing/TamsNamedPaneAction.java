@@ -10,18 +10,30 @@ import jmri.util.swing.WindowInterface;
  *
  * Based on work by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class TamsNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
-     * Enhanced constructor for placing the pane in various GUIs
+     * Enhanced constructor for placing the pane in various GUIs.
+     * @param s action name.
+     * @param wi window interface in use.
+     * @param paneClass pane class.
+     * @param memo system connection.
      */
     public TamsNamedPaneAction(String s, WindowInterface wi, String paneClass, TamsSystemConnectionMemo memo) {
         super(s, wi, paneClass);
         this.memo = memo;
     }
 
+    /**
+     * Enhanced constructor for placing the pane in various GUIs.
+     * @param s action name.
+     * @param i icon to use
+     * @param wi window interface in use.
+     * @param paneClass pane class.
+     * @param memo system connection.
+     */
     public TamsNamedPaneAction(String s, Icon i, WindowInterface wi, String paneClass, TamsSystemConnectionMemo memo) {
         super(s, i, wi, paneClass);
         this.memo = memo;

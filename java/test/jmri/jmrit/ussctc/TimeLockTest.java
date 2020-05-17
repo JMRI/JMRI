@@ -8,7 +8,7 @@ import org.junit.*;
 /**
  * Tests for TimeLock class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class TimeLockTest {
 
@@ -129,7 +129,6 @@ public class TimeLockTest {
     }
 
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

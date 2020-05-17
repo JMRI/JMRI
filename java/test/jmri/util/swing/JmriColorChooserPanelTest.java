@@ -32,7 +32,6 @@ public class JmriColorChooserPanelTest {
         Assert.assertEquals("display name", "JMRI", panel.getDisplayName());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

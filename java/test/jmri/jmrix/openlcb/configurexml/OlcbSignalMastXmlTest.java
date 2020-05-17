@@ -17,7 +17,7 @@ import org.junit.*;
 /**
  * OlcbSignalMastXmlTest
  *
- * Description: tests for the OlcbSignalMastXml class
+ * Test for the OlcbSignalMastXml class
  *
  * @author   Bob Jacobsen Copyright (C) 2018
  */
@@ -27,11 +27,6 @@ public class OlcbSignalMastXmlTest {
     static Connection connection;
     static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
     static java.util.ArrayList<Message> messages;
-
-    @Test
-    public void testCtor(){
-        Assert.assertNotNull("OlcbSignalMastXml constructor",new OlcbSignalMastXml());
-    }
 
     @Test
     public void testStore(){
@@ -84,7 +79,7 @@ public class OlcbSignalMastXmlTest {
             }
         });
         
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
     @After
@@ -93,7 +88,7 @@ public class OlcbSignalMastXmlTest {
     }
 
     @AfterClass
-    public static void postClassTearDown() throws Exception {
+    public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
         }

@@ -6,7 +6,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
@@ -83,6 +82,10 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
     private String title;
     private String lastUsedSaveFile = null;
+
+    private boolean isEditMode = true;
+    private boolean willSwitch = false;
+
     private static final String DEFAULT_THROTTLE_FILENAME = "JMRI_ThrottlePreference.xml";
 
     public static String getDefaultThrottleFolder() {
@@ -219,7 +222,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
         boolean switchAfter = false;
         if (!isEditMode) {
-            switchMode();
+            setEditMode(true);
             switchAfter = true;
         }
 
@@ -256,7 +259,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
 //     checkPosition();
         if (switchAfter) {
-            switchMode();
+            setEditMode(false);
         }
     }
 
@@ -546,22 +549,33 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
     }
 
-    private boolean isEditMode = true;
-    private boolean willSwitch = false;
-
-    public void switchMode() {
+    public void setEditMode(boolean mode) {
+        if (mode == isEditMode)
+            return;
         if (isVisible()) {
-            if (isEditMode) {
+            if (!mode) {
                 playRendering();
             } else {
                 editRendering();
             }
-            isEditMode = !isEditMode;
+            isEditMode = mode;
             willSwitch = false;
         } else {
-            willSwitch = !willSwitch;
+            willSwitch = true;
         }
         throttleWindow.updateGUI();
+    }
+
+    public boolean getEditMode() {
+        return isEditMode;
+    }
+
+    /**
+     * @deprecated since 4.19.5; use {@link #setEditMode(boolean)} instead
+     */
+    @Deprecated
+    public void switchMode() {
+        setEditMode(!isEditMode);
     }
 
     /**
@@ -638,7 +652,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                     }
                 } catch (Exception exc) {
                     if (log.isDebugEnabled()) {
-                        log.debug("Got exception, can ignore :" + exc);
+                        log.debug("Got exception, can ignore :{}", exc);
                     }
                 }
             }
@@ -680,7 +694,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     public Element getXml() {
         boolean switchAfter = false;
         if (!isEditMode) {
-            switchMode();
+            setEditMode(true);
             switchAfter = true;
         }
 
@@ -728,7 +742,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
         me.setContent(children);
         if (switchAfter) {
-            switchMode();
+            setEditMode(false);
         }
         return me;
     }
@@ -768,7 +782,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
         boolean switchAfter = false;
         if (!isEditMode) {
-            switchMode();
+            setEditMode(true);
             switchAfter = true;
         }
 
@@ -827,7 +841,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
         setFrameTitle();
         if (switchAfter) {
-            switchMode();
+            setEditMode(false);
         }
     }
 
@@ -874,7 +888,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     public void componentShown(ComponentEvent e) {
         throttleWindow.setCurrentThrottleFrame(this);
         if (willSwitch) {
-            switchMode();
+            setEditMode(this.throttleWindow.getEditMode());
             repaint();
         }
         throttleWindow.updateGUI();

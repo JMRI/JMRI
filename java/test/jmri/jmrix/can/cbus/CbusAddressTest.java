@@ -322,24 +322,6 @@ public class CbusAddressTest {
     }
     
     @Test
-    public void testvalidateSysName() {
-        try {
-            CbusAddress.validateSysName("+0");
-            Assert.fail("Expected exception not thrown");
-        } catch (IllegalArgumentException ex) {
-            Assert.assertEquals("Event cannot be 0 in address: +0", ex.getMessage());
-        }
-
-        try {
-            Assert.assertEquals("-0",null,CbusAddress.validateSysName("-0"));
-            Assert.fail("Expected exception not thrown");
-        } catch (IllegalArgumentException ex) {
-            Assert.assertEquals("Event cannot be 0 in address: -0", ex.getMessage());
-        }   
-
-    }
-    
-    @Test
     public void testhashcode() {
         CbusAddress a = new CbusAddress("X9801D203A4");
         Assert.assertEquals("a hashcode is present",530,a.hashCode());
@@ -372,7 +354,6 @@ public class CbusAddressTest {
     }
     
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -258,7 +258,6 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
         JUnitUtil.dispose(f);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -272,6 +271,7 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
     @After
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

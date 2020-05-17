@@ -55,7 +55,7 @@ public class SerialDriverAdapter extends SerialPortAdapter {
                 log.debug("Serial framing was observed as: {} {}", activeSerialPort.isReceiveFramingEnabled(),
                         activeSerialPort.getReceiveFramingByte());
             } catch (Exception ef) {
-                log.debug("failed to set serial framing: " + ef);
+                log.debug("failed to set serial framing: {}", ef);
             }
 
             // set timeout; framing should work before this anyway
@@ -76,14 +76,7 @@ public class SerialDriverAdapter extends SerialPortAdapter {
             // report status?
             if (log.isInfoEnabled()) {
                 // report now
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud with"
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
             if (log.isDebugEnabled()) {
                 // report additional status
@@ -108,6 +101,7 @@ public class SerialDriverAdapter extends SerialPortAdapter {
 
     /**
      * Can the port accept additional characters? Yes, always
+     * @return always true.
      */
     public boolean okToSend() {
         return true;
@@ -196,22 +190,6 @@ public class SerialDriverAdapter extends SerialPortAdapter {
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new SerialDriverAdapter();
-        }
-        return mInstance;
-    }
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static SerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

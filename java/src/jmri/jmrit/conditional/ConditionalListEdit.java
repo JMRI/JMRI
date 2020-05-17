@@ -453,8 +453,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 if (cName != null) {
                     c = _conditionalManager.getBySystemName(cName);
                     if (c == null) {
-                        log.error("Invalid conditional system name when calculating - " // NOI18N
-                                + cName);
+                        log.error("Invalid conditional system name when calculating - {}", cName);
                     } else {
                         // calculate without taking any action
                         c.calculate(false, null);
@@ -493,8 +492,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 Logix p = _logixManager.getByUserName(uName);
                 if (p != null) {
                     // Logix with this user name already exists
-                    log.error("Failure to update Logix with Duplicate User Name: " // NOI18N
-                            + uName);
+                    log.error("Failure to update Logix with Duplicate User Name: {}", uName);
                     JOptionPane.showMessageDialog(_editLogixFrame,
                             Bundle.getMessage("Error6"),
                             Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -574,8 +572,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         }
         if (_curConditional == null) {
             // should never get here unless there is an assignment conflict
-            log.error("Failure to create Conditional with System Name: " // NOI18N
-                    + cName);
+            log.error("Failure to create Conditional with System Name: {}", cName);
             return;
         }
         // add to Logix at the end of the calculate order
@@ -644,8 +641,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             Conditional p = _conditionalManager.getByUserName(logix, uName);
             if (p != null) {
                 // Conditional with this user name already exists
-                log.error("Failure to update Conditional with Duplicate User Name: " // NOI18N
-                        + uName);
+                log.error("Failure to update Conditional with Duplicate User Name: {}", uName);
                 JOptionPane.showMessageDialog(_editConditionalFrame,
                         Bundle.getMessage("Error10"),    // NOI18N
                         Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -3489,7 +3485,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             }
             currentChooser = scriptFileChooser;
         } else {
-            log.warn("Unexpected actionType[" + actionType.name() + "] = " + actionType.toString());  // NOI18N
+            log.warn("Unexpected actionType[{}] = {}", actionType.name(), actionType.toString());  // NOI18N
             if (defaultFileChooser == null) {
                 defaultFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
                 defaultFileChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
@@ -3506,7 +3502,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _longActionString.setText(FileUtil.getPortableFilename(currentChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException ex) {
                 if (log.isDebugEnabled()) {
-                    log.error("exception setting file location: " + ex);  // NOI18N
+                    log.error("exception setting file location: {}", ex);  // NOI18N
                 }
                 _longActionString.setText("");
             }
@@ -4206,6 +4202,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 if (cn == null) {
                     String sName = _curLogix.getConditionalByNumberOrder(row);
                     Conditional cdl = _conditionalManager.getBySystemName(sName);
+                    if (cdl==null){
+                        log.error("No conditional {} while editing user name",sName);
+                        return;
+                    }
                     cdl.setUserName(uName);
                     fireTableRowsUpdated(row, row);
 
@@ -4214,15 +4214,14 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     if (refList != null) {
                         for (String ref : refList) {
                             Conditional cRef = _conditionalManager.getBySystemName(ref);
+                            if (cRef==null){
+                                continue;
+                            }
                             List<ConditionalVariable> varList = cRef.getCopyOfStateVariables();
                             for (ConditionalVariable var : varList) {
                                 // Find the affected conditional variable
                                 if (var.getName().equals(sName)) {
-                                    if (uName.length() > 0) {
-                                        var.setGuiName(uName);
-                                    } else {
-                                        var.setGuiName(sName);
-                                    }
+                                    var.setGuiName( (uName.length() > 0) ? uName : sName );
                                 }
                             }
                             cRef.setStateVariables(varList);
@@ -4365,7 +4364,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             ConditionalVariable variable = _variableList.get(row);
             switch (col) {
                 case ROWNUM_COLUMN:
-                    return ("R" + (row + 1)); //NOI18N
+                    return ("R" + (row + 1)); // NOI18N
                 case AND_COLUMN:
                     if (row == 0) { //removed: || _logicType == Conditional.MIXED
                         return "";

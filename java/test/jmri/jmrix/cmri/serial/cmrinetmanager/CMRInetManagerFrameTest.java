@@ -8,7 +8,7 @@ import org.junit.*;
 /**
  * Test simple functioning of CMRInetManagerFrame
  *
- * @author	Chuck Catania Copyright (C) 2017
+ * @author Chuck Catania Copyright (C) 2017
  */
 public class CMRInetManagerFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -17,9 +17,9 @@ public class CMRInetManagerFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new CMRInetManagerFrame(new CMRISystemConnectionMemo()); 
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new CMRInetManagerFrame(new CMRISystemConnectionMemo());
+        }
     }
 
     @After

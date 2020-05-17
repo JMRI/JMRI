@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * TripleTurnoutSignalHeadXmlTest.java
  *
- * Description: tests for the TripleTurnoutSignalHeadXml class
+ * Test for the TripleTurnoutSignalHeadXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class TripleTurnoutSignalHeadXmlTest {
       Assert.assertNotNull("TripleTurnoutSignalHeadXml constructor",new TripleTurnoutSignalHeadXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

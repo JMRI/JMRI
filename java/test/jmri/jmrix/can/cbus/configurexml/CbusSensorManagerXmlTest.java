@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * CbusSensorManagerXmlTest.java
  *
- * Description: tests for the CbusSensorManagerXml class
+ * Test for the CbusSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class CbusSensorManagerXmlTest {
       Assert.assertNotNull("CbusSensorManagerXml constructor",new CbusSensorManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

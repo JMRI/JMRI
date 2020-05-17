@@ -1,7 +1,7 @@
 /**
  * JUnit tests for the EasyDccProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.easydcc;
 
@@ -160,7 +160,6 @@ public class EasyDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     int rcvdStatus;
     int rcvdInvoked;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

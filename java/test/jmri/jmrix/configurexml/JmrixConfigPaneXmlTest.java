@@ -18,7 +18,6 @@ public class JmrixConfigPaneXmlTest {
       Assert.assertNotNull("JmrixConfigPaneXml constructor", new JmrixConfigPaneXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

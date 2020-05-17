@@ -9,7 +9,7 @@ import org.openlcb.*;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbLightManager class.
  *
- * @author	Jeff Collell
+ * @author Jeff Collell
  */
 public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
@@ -98,7 +98,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         t1.setUserName("after");
         Light t2 = l.getByUserName("after");
         Assert.assertEquals("same object", t1, t2);
-        Assert.assertEquals("no old object", null, l.getByUserName("before"));
+        Assert.assertNull("no old object", l.getByUserName("before"));
     }
 
     @Test
@@ -109,7 +109,6 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Assert.assertNull(l.getLight(name.toLowerCase()));
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -145,11 +144,11 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             }
         });
     
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
     @AfterClass
-    public static void postClassTearDown() throws Exception {
+    public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
         }

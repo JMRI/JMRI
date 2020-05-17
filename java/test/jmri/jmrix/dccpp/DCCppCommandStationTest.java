@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * DCCppCommandStationTest.java
  * <p>
- * Description: tests for the jmri.jmrix.dccpp.DCCppCommandStation class
+ * Test for the jmri.jmrix.dccpp.DCCppCommandStation class
  *
  * @author Paul Bender
  * @author Mark Underwood

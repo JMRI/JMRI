@@ -111,9 +111,11 @@ public class CatalogTreeModel extends DefaultTreeModel implements InstanceManage
         if (fp.isDirectory()) {
             // work on the kids
             String[] sp = fp.list();
-            for (String sp1 : sp) {
-                log.debug("Descend into file: {}",sp1);
-                insertFileNodes(sp1, path + "/" + sp1, newElement);
+            if (sp!=null) {
+                for (String sp1 : sp) {
+                    log.debug("Descend into file: {}",sp1);
+                    insertFileNodes(sp1, path + "/" + sp1, newElement);
+                }
             }
         }
     }

@@ -6,14 +6,13 @@ import org.junit.*;
 /**
  * AnymaDMX_ConnectionConfigXmlTest.java
  * <p>
- * Description: tests for the AnymaDMX_ConnectionConfigXml class
+ * Test for the AnymaDMX_ConnectionConfigXml class
  *
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
  */
 public class AnymaDMX_ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractUsbConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

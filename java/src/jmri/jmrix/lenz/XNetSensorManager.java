@@ -121,7 +121,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 

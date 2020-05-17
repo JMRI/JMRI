@@ -33,7 +33,7 @@ public class AcelaMonAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("AcelaMonAction starting AcelaMonFrame: Exception: " + ex.toString());
+            log.warn("AcelaMonAction starting AcelaMonFrame: Exception: {}", ex.toString());
         }
         f.setVisible(true);
     }

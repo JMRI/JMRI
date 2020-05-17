@@ -160,16 +160,16 @@ public class CbusNodeTableDataModelTest {
         t = new CbusNodeTableDataModel(
             memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
         
+        
         Assert.assertEquals("tcis empty to start", 0 ,tcis.outbound.size() );
+        
+        t.provideNodeByNodeNum(123);
         
         for (int i = 0; i <t.getColumnCount(); i++) {
             Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
-            Assert.assertTrue("column has a width", CbusNodeTableDataModel.getPreferredWidth(i) > 0 );
         }
         
         Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown 999") );
-        Assert.assertTrue("column has NO width", CbusNodeTableDataModel.getPreferredWidth(999) > 0 );
-        Assert.assertNull("column class null", t.getColumnClass(999));
         
         Assert.assertTrue("cell not editable", 
             t.isCellEditable(0,CbusNodeTableDataModel.NODE_NUMBER_COLUMN) == false );
@@ -367,7 +367,6 @@ public class CbusNodeTableDataModelTest {
     private TrafficControllerScaffold tcis;
     private CbusNodeTableDataModel t;
     
-    // The minimal setup for log4J
     @Before
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();

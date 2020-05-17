@@ -27,7 +27,6 @@ public class ManuallySetRouteTest {
         Assert.assertNotNull("exists",t);  // NOI18N
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -216,12 +216,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         JPanel pRoadOption = new JPanel();
         pRoadOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RoadOption")));
         pRoadOption.add(roadOptionButton);
-        roadOptionButton.addActionListener(new TrainRoadOptionsAction(Bundle.getMessage("MenuItemRoadOptions"), this));
+        roadOptionButton.addActionListener(new TrainRoadOptionsAction(this));
         
         JPanel pLoadOption = new JPanel();
         pLoadOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LoadOption")));
         pLoadOption.add(loadOptionButton);
-        loadOptionButton.addActionListener(new TrainLoadOptionsAction(Bundle.getMessage("MenuItemLoadOptions"), this));
+        loadOptionButton.addActionListener(new TrainLoadOptionsAction(this));
 
         roadAndLoadStatusPanel.add(pRoadOption);
         roadAndLoadStatusPanel.add(pLoadOption);
@@ -375,24 +375,24 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     private void loadToolMenu(JMenu toolMenu) {
         toolMenu.removeAll();
         // first 5 menu items will also close when the edit train window closes
-        toolMenu.add(new TrainEditBuildOptionsAction(Bundle.getMessage("MenuItemBuildOptions"), this));
-        toolMenu.add(new TrainLoadOptionsAction(Bundle.getMessage("MenuItemLoadOptions"), this));
-        toolMenu.add(new TrainRoadOptionsAction(Bundle.getMessage("MenuItemRoadOptions"), this));
-        toolMenu.add(new TrainManifestOptionAction(Bundle.getMessage("MenuItemOptions"), this));
-        toolMenu.add(new TrainScriptAction(Bundle.getMessage("MenuItemScripts"), this));
+        toolMenu.add(new TrainEditBuildOptionsAction(this));
+        toolMenu.add(new TrainLoadOptionsAction(this));
+        toolMenu.add(new TrainRoadOptionsAction(this));
+        toolMenu.add(new TrainManifestOptionAction(this));
+        toolMenu.add(new TrainScriptAction(this));
         
-        toolMenu.add(new TrainCopyAction(Bundle.getMessage("TitleTrainCopy"), _train));
-        toolMenu.add(new TrainByCarTypeAction(Bundle.getMessage("MenuItemShowCarTypes"), _train));
-        toolMenu.add(new TrainConductorAction(Bundle.getMessage("TitleTrainConductor"), _train));
+        toolMenu.add(new TrainCopyAction(_train));
+        toolMenu.add(new TrainByCarTypeAction(_train));
+        toolMenu.add(new TrainConductorAction(_train));
         toolMenu.addSeparator();
-        toolMenu.add(new PrintTrainAction(Bundle.getMessage("MenuItemPrint"), false, this));
-        toolMenu.add(new PrintTrainAction(Bundle.getMessage("MenuItemPreview"), true, this));
-        toolMenu.add(new PrintTrainManifestAction(Bundle.getMessage("MenuItemPrintManifest"), false, _train));
-        toolMenu.add(new PrintTrainManifestAction(Bundle.getMessage("MenuItemPreviewManifest"), true, _train));
-        toolMenu.add(new PrintTrainBuildReportAction(Bundle.getMessage("MenuItemPrintBuildReport"), false, _train));
-        toolMenu.add(new PrintTrainBuildReportAction(Bundle.getMessage("MenuItemPreviewBuildReport"), true, _train));
-        toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPrintSavedManifest"), false, _train));
-        toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPreviewSavedManifest"), true, _train));
+        toolMenu.add(new PrintTrainAction(false, this));
+        toolMenu.add(new PrintTrainAction(true, this));
+        toolMenu.add(new PrintTrainManifestAction(false, _train));
+        toolMenu.add(new PrintTrainManifestAction(true, _train));
+        toolMenu.add(new PrintTrainBuildReportAction(false, _train));
+        toolMenu.add(new PrintTrainBuildReportAction(true, _train));
+        toolMenu.add(new PrintSavedTrainManifestAction(false, _train));
+        toolMenu.add(new PrintSavedTrainManifestAction(true, _train));
     }
 
     // Save, Delete, Add, Edit, Reset, Set, Clear
@@ -615,7 +615,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     private void reportTrainExists(String s) {
-        log.info("Can not " + s + ", train already exists");
+        log.info("Can not {}, train already exists", s);
         JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameExists"), MessageFormat.format(Bundle
                 .getMessage("CanNot"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
     }
@@ -708,7 +708,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
     public void locationCheckBoxActionPerformed(java.awt.event.ActionEvent ae) {
         JCheckBox b = (JCheckBox) ae.getSource();
-        log.debug("checkbox change " + b.getText());
+        log.debug("checkbox change {}", b.getText());
         if (_train == null) {
             return;
         }
@@ -861,7 +861,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
     public void typeCheckBoxActionPerformed(java.awt.event.ActionEvent ae) {
         JCheckBox b = (JCheckBox) ae.getSource();
-        log.debug("checkbox change " + b.getText());
+        log.debug("checkbox change {}", b.getText());
         if (_train == null) {
             return;
         }

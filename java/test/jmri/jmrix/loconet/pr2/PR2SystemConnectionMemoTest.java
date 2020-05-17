@@ -7,11 +7,10 @@ import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PR2SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

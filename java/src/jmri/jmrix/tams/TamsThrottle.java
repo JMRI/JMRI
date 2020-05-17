@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
-import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 import jmri.util.StringUtil;
 import org.slf4j.Logger;
@@ -159,7 +158,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Set the speed and direction.
      * <p>
      * This intentionally skips the emergency stop value of 1.
      *
@@ -200,9 +199,8 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         tc.sendTamsMessage(tm, this);
         tmq.add(tm);
 
-        if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
-        }
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        record(speed);
     }
 
     @Override
@@ -210,9 +208,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         boolean old = isForward;
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
-        if (old != isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, isForward);
-        }
+        firePropertyChange(ISFORWARD, old, isForward);
     }
 
     private final DccLocoAddress address;
@@ -229,6 +225,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         active = false;
         TamsMessage tm = TamsMessage.getXEvtLok();
         tc.removePollMessage(tm, this);
+        finishRecord();
     }
 
     @Override
@@ -294,12 +291,12 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
                     appendFuncString(0,sb,((tr.getElement(3) & 0x40) == 64));
                     
                     if (((tr.getElement(3) & 0x80) == 0) && isForward) {
-                        notifyPropertyChangeListener(ISFORWARD, isForward, false);
                         isForward = false;
+                        firePropertyChange(ISFORWARD, true, isForward);
                     }
                     if (((tr.getElement(3) & 0x80) == 128) && !isForward) {
-                        notifyPropertyChangeListener(ISFORWARD, isForward, true);
                         isForward = true;
+                        firePropertyChange(ISFORWARD, false, isForward);
                     }
                     
                     appendFuncString(1,sb,((tr.getElement(1) & 0x01) == 0x01));
@@ -331,11 +328,11 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
                     updateFunction(0,lines[3].equals("1"));
                     
                     if (lines[4].equals("r") && isForward) {
-                        notifyPropertyChangeListener(ISFORWARD, isForward, false);
                         isForward = false;
+                        firePropertyChange(ISFORWARD, true, isForward);
                     } else if (lines[4].equals("f") && !isForward) {
-                        notifyPropertyChangeListener(ISFORWARD, isForward, true);
                         isForward = true;
+                        firePropertyChange(ISFORWARD, false, isForward);
                     }
                     
                     updateFunction(1,lines[5].equals("1"));

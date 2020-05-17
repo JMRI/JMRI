@@ -41,7 +41,7 @@ public class LnMessageClientAction extends AbstractAction {
             // configure the other instance objects
             client.configureLocalServices();
         } catch (LocoNetException ex) {
-            log.warn("Exception: " + ex);
+            log.warn("Exception: {}", ex);
         }
     }
 }

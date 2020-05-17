@@ -158,8 +158,7 @@ public class SignalTableModel extends AbstractTableModel {
         }
         _signalList = tempList;
         if (log.isDebugEnabled()) {
-            log.debug("makeList exit: _signalList has "
-                    + _signalList.size() + " rows.");
+            log.debug("makeList exit: _signalList has {} rows.", _signalList.size());
         }
     }
 

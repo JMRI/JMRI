@@ -64,7 +64,7 @@ public class TrackReporterTest extends jmri.implementation.AbstractRailComReport
    @Override
    @After
    public void tearDown(){
-	   r = null;
+       r = null;
        JUnitUtil.tearDown();
    }
 

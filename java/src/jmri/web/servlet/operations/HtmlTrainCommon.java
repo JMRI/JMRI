@@ -52,7 +52,8 @@ public class HtmlTrainCommon extends TrainCommon {
             is = new FileInputStream(Bundle.getMessage(locale, "ManifestStrings.properties"));
             strings.load(is);
             is.close();
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             if (is != null) {
                 is.close();
             }
@@ -111,7 +112,7 @@ public class HtmlTrainCommon extends TrainCommon {
         for (String attribute : format) {
             builder.append(
                     String.format(locale, strings.getProperty("Attribute"), getCarAttribute(car, attribute, PICKUP,
-                                    !LOCAL), attribute.toLowerCase())).append(" "); // NOI18N
+                            !LOCAL), attribute.toLowerCase())).append(" "); // NOI18N
         }
         log.debug("Picking up car {}", builder);
         return String.format(locale, strings.getProperty(this.resourcePrefix + "PickUpCar"), builder.toString()); // NOI18N
@@ -248,11 +249,9 @@ public class HtmlTrainCommon extends TrainCommon {
         if (attribute.equals(Setup.NUMBER)) {
             return splitString(rs.getNumber());
         } else if (attribute.equals(Setup.ROAD)) {
-            return StringEscapeUtils.escapeHtml4(rs.getRoadName());
+            return StringEscapeUtils.escapeHtml4(rs.getRoadName().split("-")[0]);
         } else if (attribute.equals(Setup.TYPE)) {
-            String[] type = rs.getTypeName().split("-"); // second half of string
-            // can be anything
-            return type[0];
+            return rs.getTypeName().split("-")[0];
         } else if (attribute.equals(Setup.LENGTH)) {
             return rs.getLength();
         } else if (attribute.equals(Setup.COLOR)) {
@@ -266,9 +265,9 @@ public class HtmlTrainCommon extends TrainCommon {
             return "";
         } else if (attribute.equals(Setup.LOCATION) && !isPickup && !isLocal) {
             return ""; // we don't have the car's origin, so nothing to return
-// Note that the JSON database does have the car's origin, so this could be fixed.
-//			return String.format(locale, strings.getProperty("FromLocation"), StringEscapeUtils.escapeHtml4(rs
-//					.getLocationName()));
+            // Note that the JSON database does have the car's origin, so this could be fixed.
+//            return String.format(locale, strings.getProperty("FromLocation"), StringEscapeUtils.escapeHtml4(rs
+//                    .getLocationName()));
         } else if (attribute.equals(Setup.DESTINATION) && isPickup) {
             return String.format(locale, strings.getProperty("ToLocation"), StringEscapeUtils
                     .escapeHtml4(splitString(rs.getDestinationName())));
@@ -278,7 +277,7 @@ public class HtmlTrainCommon extends TrainCommon {
         } else if (attribute.equals(Setup.DEST_TRACK)) {
             return String.format(locale, strings.getProperty("ToLocationAndTrack"), StringEscapeUtils
                     .escapeHtml4(splitString(rs.getDestinationName())), StringEscapeUtils.escapeHtml4(splitString(rs
-                                    .getDestinationTrackName())));
+                    .getDestinationTrackName())));
         } else if (attribute.equals(Setup.OWNER)) {
             return StringEscapeUtils.escapeHtml4(rs.getOwner());
         } else if (attribute.equals(Setup.COMMENT)) {

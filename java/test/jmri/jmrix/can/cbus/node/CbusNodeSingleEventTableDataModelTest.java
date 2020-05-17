@@ -2,6 +2,8 @@ package jmri.jmrix.can.cbus.node;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.assertj.swing.edt.GuiActionRunner;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
@@ -40,15 +42,16 @@ public class CbusNodeSingleEventTableDataModelTest {
 
         assertThat(t.isTableLoaded()).isFalse();
         
-        for (int i = 0; i <t.getColumnCount(); i++) {
-            assertThat(t.getColumnName(i)).isNotEmpty();
-            assertThat(CbusNodeSingleEventTableDataModel.getPreferredWidth(i)).isGreaterThan(0);
-        }
-        
-        assertThat(t.getColumnName(999)).isEqualTo("unknown 999");
-        
-        assertThat(CbusNodeSingleEventTableDataModel.getPreferredWidth(999)).isGreaterThan(0);
-                
+        GuiActionRunner.execute(() -> {
+            for (int i = 0; i <t.getColumnCount(); i++) {
+                assertThat(t.getColumnName(i)).isNotEmpty();
+                assertThat(CbusNodeSingleEventTableDataModel.getPreferredWidth(i)).isGreaterThan(0);
+            }
+            
+            assertThat(t.getColumnName(999)).isEqualTo("unknown 999");
+            
+            assertThat(CbusNodeSingleEventTableDataModel.getPreferredWidth(999)).isGreaterThan(0);
+        });
     }
 
     @Test
@@ -182,7 +185,6 @@ public class CbusNodeSingleEventTableDataModelTest {
     }
     
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

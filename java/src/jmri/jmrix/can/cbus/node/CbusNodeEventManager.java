@@ -476,7 +476,7 @@ public class CbusNodeEventManager {
             }
             else {
                 err = "Event Write Failed with "+ _node.getNodeTimerManager().sendEvErrorCount +" errors.";
-                log.error(err + " Node {}.", _node );
+                log.error("{} Node {}.", err, _node);
                 
             }
             // notify ui's

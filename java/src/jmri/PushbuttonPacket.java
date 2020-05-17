@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  *
  *
- * NCE is the easliest to implement, CV556 = 0 disable lockout, CV556 = 1 enable
+ * NCE is the easiest to implement, CV556 = 0 disable lockout, CV556 = 1 enable
  * lockout
  *
  * CVP is a bit tricker, CV514 controls the lockout for four turnouts. Each
@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * Lock all inputs 0 Unlock 1 3 Unlock 2 12 Unlock 3 48 Unlock 4 192 Unlock all
  * 255
  *
- * Each CVP can operate up to four turnouts, luckly for us, they are sequential.
+ * Each CVP can operate up to four turnouts, lucky for us, they are sequential.
  * Also note that CVP decoder's use the old legacy format for ops mode
  * programming.
  *
@@ -50,8 +50,11 @@ public class PushbuttonPacket {
         CVP_2Bname};
 
     /**
+     * @param prefix system prefix.
+     * @param turnoutNum turnout number.
+     * @param locked true if locked, else false.
      * @throws IllegalArgumentException if input not OK
-     * @return a DCC packet
+     * @return a DCC packet.
      */
     @Nonnull
     public static byte[] pushbuttonPkt(@Nonnull String prefix, int turnoutNum, boolean locked) {
@@ -84,7 +87,7 @@ public class PushbuttonPacket {
             }
             return bl;
         } else {
-            log.error("Invalid decoder name for turnout " + turnoutNum);
+            log.error("Invalid decoder name for turnout {}", turnoutNum);
             throw new IllegalArgumentException("Illegal decoder name");
         }
     }
@@ -120,9 +123,7 @@ public class PushbuttonPacket {
                 } else if (CVP_2Bname.equals(t.getDecoderName())) {
                     button = twoButton;
                 } else {
-                    log.warn("Turnout " + modTurnoutNum
-                            + ", all CVP turnouts on one decoder should be "
-                            + CVP_1Bname + " or " + CVP_2Bname);
+                    log.warn("Turnout {}, all CVP turnouts on one decoder should be " + CVP_1Bname + " or " + CVP_2Bname, modTurnoutNum);
                 }
                 // zero out the bits if the turnout is locked
                 if (t.getLocked(Turnout.PUSHBUTTONLOCKOUT)) {

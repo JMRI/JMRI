@@ -228,7 +228,7 @@ public class ConditionalEditBase {
     String makeAntecedent(List<ConditionalVariable> variableList) {
         StringBuilder antecedent = new StringBuilder(64);
         if (variableList.size() != 0) {
-            String row = "R"; //NOI18N
+            String row = "R"; // NOI18N
             if (variableList.get(0).isNegated()) {
                 antecedent.append("not ");
             }
@@ -363,8 +363,7 @@ public class ConditionalEditBase {
             Conditional p = _conditionalManager.getByUserName(logix, uName);
             if (p != null) {
                 // Conditional with this user name already exists
-                log.error("Failure to update Conditional with Duplicate User Name: " // NOI18N
-                        + uName);
+                log.error("Failure to update Conditional with Duplicate User Name: {}", uName);
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("Error10"), // NOI18N
                         Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -1409,7 +1408,7 @@ public class ConditionalEditBase {
             l = InstanceManager.lightManagerInstance().getBySystemName(name);
         }
         if (l == null) {
-            messageInvalidActionItemName(name, "Light"); //NOI18N
+            messageInvalidActionItemName(name, "Light"); // NOI18N
         }
         return l;
     }

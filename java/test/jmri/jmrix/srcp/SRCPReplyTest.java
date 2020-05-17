@@ -12,9 +12,9 @@ import org.junit.Test;
 /**
  * SRCPReplyTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPReply class
+ * Test for the jmri.jmrix.srcp.SRCPReply class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  * @author  Paul Bender Copyright (C) 2017
  */
 public class SRCPReplyTest extends jmri.jmrix.AbstractMessageTestBase {
@@ -83,7 +83,6 @@ public class SRCPReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         jmri.util.JUnitAppender.assertErrorMessage("Unable to get number from reply: \"12345678910 100 OK REASON GOES HERE\"");
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -93,7 +92,7 @@ public class SRCPReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	m = msg = null;
+        m = msg = null;
         JUnitUtil.tearDown();
     }
 }

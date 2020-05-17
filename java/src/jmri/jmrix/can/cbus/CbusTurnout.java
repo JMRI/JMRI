@@ -15,10 +15,10 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class CbusTurnout extends jmri.implementation.AbstractTurnout
-        implements CanListener {
+        implements CanListener, CbusEventInterface {
 
-    CbusAddress addrThrown;   // go to thrown state
-    CbusAddress addrClosed;   // go to closed state
+    private CbusAddress addrThrown;   // go to thrown state
+    private CbusAddress addrClosed;   // go to closed state
 
     protected CbusTurnout(String prefix, String address, TrafficController tc) {
         super(prefix + "T" + address);
@@ -48,7 +48,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
                 } else if (address.startsWith("-")) {
                     addrClosed = new CbusAddress("+" + address.substring(1));
                 } else {
-                    log.error("can't make 2nd event from systemname " + address);
+                    log.error("can't make 2nd event from systemname {}", address);
                     return;
                 }
                 break;
@@ -263,6 +263,22 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     @Override
     public boolean canInvert() {
         return true;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CanMessage getBeanOnMessage(){
+        return checkEvent(getAddrClosed());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CanMessage getBeanOffMessage(){
+        return checkEvent(getAddrThrown());
     }
 
     /**

@@ -9,9 +9,9 @@ import org.junit.Test;
 /**
  * RfidConnectionTypeListTest.java
  *
- * Description:	tests for the jmri.jmrix.rfid.RfidConnectionTypeList class
+ * Test for the jmri.jmrix.rfid.RfidConnectionTypeList class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class RfidConnectionTypeListTest {
 
@@ -21,7 +21,6 @@ public class RfidConnectionTypeListTest {
         Assert.assertNotNull(c);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -823,7 +823,6 @@ public class LightControlTest {
     private Light l;
     private LightControl lc;
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

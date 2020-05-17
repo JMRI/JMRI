@@ -9,7 +9,6 @@ import org.junit.Before;
  */
 public class XpaMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -26,6 +25,7 @@ public class XpaMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     @Override
     @After
     public void tearDown() {
+        panel = pane = null;
         JUnitUtil.tearDown();
     }
 }

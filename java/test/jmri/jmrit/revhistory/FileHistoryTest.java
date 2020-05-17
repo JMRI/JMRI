@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Tests for the jmrit.revhistory package & jmrit.revhistory.FileHistory class.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class FileHistoryTest{
 
@@ -87,7 +87,6 @@ public class FileHistoryTest{
         Assert.assertEquals(expected, result);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

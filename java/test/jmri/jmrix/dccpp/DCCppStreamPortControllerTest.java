@@ -13,10 +13,10 @@ import org.junit.Test;
 /**
  * DCCppStreamPortControllerTest.java
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppStreamPortController class
+ * Test for the jmri.jmrix.dccpp.DCCppStreamPortController class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
- * @author	Mark Underwood (C) 2015
+ * @author Paul Bender Copyright (C) 2012,2016
+ * @author Mark Underwood (C) 2015
  */
 public class DCCppStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTestBase {
 
@@ -25,7 +25,6 @@ public class DCCppStreamPortControllerTest extends jmri.jmrix.AbstractStreamPort
        Assert.assertNotNull("exists", apc);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

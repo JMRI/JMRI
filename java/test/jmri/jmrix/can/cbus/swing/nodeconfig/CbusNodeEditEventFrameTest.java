@@ -102,7 +102,7 @@ public class CbusNodeEditEventFrameTest {
         nodeModel = null;
         memo = null;
         tcis = null;
-        
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeEditEventFrameTest.class);

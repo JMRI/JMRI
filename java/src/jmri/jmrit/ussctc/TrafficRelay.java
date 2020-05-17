@@ -30,6 +30,7 @@ public class TrafficRelay implements Lock {
     /**
      * @param signal SignalHeadSection at far end of this route
      * @param direction Setting that, if present in the far SignalHeadSection, means to lock
+     * @param beans bean setting array.
      */
     public TrafficRelay(SignalHeadSection signal, CodeGroupThreeBits direction, BeanSetting[] beans) {
         this.farSignal = signal;

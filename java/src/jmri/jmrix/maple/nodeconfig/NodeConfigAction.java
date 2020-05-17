@@ -31,7 +31,7 @@ public class NodeConfigAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: {}", ex.toString());
         }
         f.setLocation(100, 30);
         f.setVisible(true);

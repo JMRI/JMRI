@@ -7,7 +7,7 @@ import org.junit.Before;
 /**
  * Test simple functioning of DuplexGroupScanPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class DuplexGroupScanPanelTest extends jmri.util.swing.JmriPanelTest {
 

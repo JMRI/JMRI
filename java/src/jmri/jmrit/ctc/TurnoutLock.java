@@ -21,22 +21,22 @@ One would NOT check OpSw21, and then one would have to write JMRI software (or a
 to process the message from the DS54/DS64, and then send the appropriate turnout
 "CLOSED/THROWN" command to the turnout to effect the change.
 
-Advantage:	No turnout movement when crew requests change unless allowed by Dispatcher.
+Advantage:      No turnout movement when crew requests change unless allowed by Dispatcher.
 Disadvantage:   Software MUST be running in order to throw turnout "normally".  In other
-		words cannot run the layout without the computer, and with all turnouts
-		controlled by the dispatcher set to "local control".
+                words cannot run the layout without the computer, and with all turnouts
+                controlled by the dispatcher set to "local control".
 
 This modules way:
 The purpose of this module is to "countermand" attempts by the field crews to throw
 a switch that is under dispatcher control.  This works ONLY for switches that have feedback.
 
-Advantage:	Computer NOT necessary to throw switch.
+Advantage:      Computer NOT necessary to throw switch.
 Disadvantage:   Switch will "partially throw" until the feedback contact changes and sends
                 a message to the software, which then countermands it.  If a train is on the
-		switch, it may be derailed.
+                switch, it may be derailed.
 
 NOTES:
-	If a route is cleared thru, you MUST be prevented from UNLOCKING a locked switch.
+    If a route is cleared thru, you MUST be prevented from UNLOCKING a locked switch.
 Failure to provide such an object will just allow unlocking while a route is cleared thru.
 
 If dispatcherSensorLockToggle is None, then INSURE that you call "ExternalLockTurnout" at some

@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * XNetExceptionTest.java
  *
- * Description: tests for the jmri.jmrix.lenz.XNetException class
+ * Test for the jmri.jmrix.lenz.XNetException class
  *
  * @author Paul Bender
  */

@@ -12,9 +12,9 @@ import javax.annotation.CheckForNull;
  * implementing this interface still need to ensure that
  * {@link java.beans.PropertyChangeEvent}s are fired when properties are set.
  * <p>
- * {@link ArbitraryBean}, {@link Bean}, {@link ConstrainedBean}, and
- * {@link PropertyChangeProviderImpl} all provide complete implementations of
- * this interface.
+ * {@link ArbitraryBean}, {@link Bean}, {@link ConstrainedBean},
+ * {@link PropertyChangeSupport}, and {@link VetoableChangeSupport} all provide
+ * complete implementations of this interface.
  * <p>
  * This interface defines all public methods of
  * {@link java.beans.PropertyChangeSupport} except the methods to fire

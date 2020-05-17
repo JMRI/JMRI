@@ -10,10 +10,10 @@ import jmri.util.JUnitUtil;
 /**
  * JUnit tests for the NceReplyclass
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class NceReplyTest extends jmri.jmrix.AbstractMessageTestBase {
-        
+
     private NceTrafficController tc = null;
     private NceReply msg = null;
 
@@ -145,7 +145,7 @@ public class NceReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         msg.setElement(1, 0x34);
         msg.setElement(2, 0x01);
         msg.setElement(3, 0x02);
-        Assert.assertEquals("string value","12 34 01 02", msg.toString());
+        Assert.assertEquals("string value", "12 34 01 02", msg.toString());
     }
 
     @Test
@@ -155,7 +155,7 @@ public class NceReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         msg.setElement(1, 0x34);
         msg.setElement(2, 0x01);
         msg.setElement(3, 0x02);
-        Assert.assertEquals("monitor string value","Reply: 12 34 01 02", msg.toMonitorString());
+        Assert.assertEquals("monitor string value", "Reply: 12 34 01 02", msg.toMonitorString());
     }
 
     @Test
@@ -205,8 +205,8 @@ public class NceReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	    m = msg = null;
-	    tc = null;
+        m = msg = null;
+        tc = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }

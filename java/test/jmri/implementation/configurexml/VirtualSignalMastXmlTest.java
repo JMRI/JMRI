@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * VirtualSignalMastXmlTest.java
  *
- * Description: tests for the VirtualSignalMastXml class
+ * Test for the VirtualSignalMastXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class VirtualSignalMastXmlTest {
       Assert.assertNotNull("VirtualSignalMastXml constructor",new VirtualSignalMastXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

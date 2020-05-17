@@ -13,9 +13,9 @@ import org.junit.Test;
 /**
  * IdentifyLocoTest.java
  * <p>
- * Description:	tests for the jmrit.roster.IdentifyLoco class
+ * Test for the jmrit.roster.IdentifyLoco class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class IdentifyLocoTest {
 

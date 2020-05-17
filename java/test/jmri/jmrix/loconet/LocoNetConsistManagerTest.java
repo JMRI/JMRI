@@ -18,7 +18,6 @@ public class LocoNetConsistManagerTest extends jmri.implementation.AbstractConsi
        Assert.assertTrue("CS Consist Possible",cm.isCommandStationConsistPossible());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp()  {

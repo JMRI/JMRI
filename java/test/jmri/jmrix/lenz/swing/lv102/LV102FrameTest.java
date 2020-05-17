@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.jmrix.lenz.swing.lv102.LV102Frame class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LV102FrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -19,7 +19,6 @@ public class LV102FrameTest extends jmri.util.JmriJFrameTestBase {
         operator.pushCloseButton();
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

@@ -16,7 +16,6 @@ public class AbstractThrottleManagerTest extends jmri.managers.AbstractThrottleM
 
     AbstractThrottleManager t = null;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

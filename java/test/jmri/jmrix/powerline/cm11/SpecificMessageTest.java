@@ -7,7 +7,7 @@ import org.junit.Assert;
 /**
  * JUnit tests for the cm11.SpecficMessage class.
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008
  */
 public class SpecificMessageTest {
 

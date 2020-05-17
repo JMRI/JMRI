@@ -7,13 +7,12 @@ import org.junit.Before;
 /**
  * XNetThrottleManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.XNetThrottleManager class
+ * Test for the jmri.jmrix.lenz.XNetThrottleManager class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -24,7 +23,7 @@ public class XNetThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
     @After
     public  void tearDown() {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

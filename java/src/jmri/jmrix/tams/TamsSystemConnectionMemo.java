@@ -16,7 +16,7 @@ import jmri.util.NamedBeanComparator;
  *
  * Based on work by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -43,6 +43,7 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return Tams Traffic Controller.
      */
     public TamsTrafficController getTrafficController() {
         return et;
@@ -87,8 +88,9 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Provides access to the Programmer for this particular connection. NOTE:
-     * Programmer defaults to null
+     * Provides access to the Programmer for this particular connection.
+     * NOTE: Programmer defaults to null
+     * @return programmer manager.
      */
     public TamsProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {

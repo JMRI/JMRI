@@ -79,7 +79,7 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
 
     @Override
     protected List<String> getPortNames() {
-        log.debug("*	getPortNames()");
+        log.debug("*   getPortNames()");
         return getAdapter().getPortNames();
     }
 

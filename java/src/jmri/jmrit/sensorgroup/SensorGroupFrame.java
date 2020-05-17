@@ -31,7 +31,6 @@ import jmri.Sensor;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.implementation.SensorGroupConditional;
 import jmri.swing.RowSorterUtil;
-import jmri.util.AlphanumComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -184,7 +183,10 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         for (i = 0; i < logix.getNumConditionals(); i++) {
             String name = logix.getConditionalByNumberOrder(i);
             Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(name);
-            String uname = c.getUserName();
+            String uname = null;
+            if (c !=null) {
+                uname = c.getUserName();
+            }            
             if (uname != null) {
                 groupModel.addElement(uname.substring(ConditionalUserPrefix.length()));
             }
@@ -299,7 +301,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                 if (cSystemName.equalsIgnoreCase(name) || cUserName.equals(name)) {     // Ignore case for compatibility
                     Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(name);
                     if (c == null) {
-                        log.error("Conditional \"" + name + "\" expected but NOT found in Logix " + logix.getSystemName());
+                        log.error("Conditional \"{}\" expected but NOT found in Logix {}", name, logix.getSystemName());
                     } else {
                         List<ConditionalVariable> variableList = c.getCopyOfStateVariables();
                         for (int k = 0; k < variableList.size(); k++) {
@@ -379,7 +381,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
             if (cSystemName.equals(name) || cUserName.equals(name)) {
                 Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(name);
                 if (c == null) {
-                    log.error("Conditional \"" + name + "\" expected but NOT found in Logix " + logix.getSystemName());
+                    log.error("Conditional \"{}\" expected but NOT found in Logix {}", name, logix.getSystemName());
                 } else {
                     logix.deleteConditional(cSystemName);
                     break;

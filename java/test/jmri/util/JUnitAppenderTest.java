@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.util.JUnitAppender class.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class JUnitAppenderTest {
 
@@ -71,7 +71,7 @@ public class JUnitAppenderTest {
         String msg = "Message for testing to find";
         log.error("Dummy");
         Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
-        log.error(msg+" foo");
+        log.error("{} foo", msg);
         Assert.assertNotNull(JUnitAppender.checkForMessageStartingWith(msg));
         // second not match
         Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
@@ -86,7 +86,7 @@ public class JUnitAppenderTest {
         String msg = "Message for testing to find";
         log.error("Dummy");
         Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
-        log.warn(msg+" foo");
+        log.warn("{} foo", msg);
         Assert.assertNotNull(JUnitAppender.checkForMessageStartingWith(msg));
         Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
         log.warn(msg);
@@ -99,7 +99,7 @@ public class JUnitAppenderTest {
         String msg = "Message for testing to find";
         log.error("Dummy");
         Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
-        log.info(msg+" foo");
+        log.info("{} foo", msg);
         Assert.assertNotNull(JUnitAppender.checkForMessageStartingWith(msg));
         Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
         log.info(msg);

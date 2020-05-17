@@ -45,7 +45,7 @@ public class BlockEditAction extends BeanEditAction<Block> {
     @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.BlockEdit";
-    } //IN18N
+    } // NOI18N
 
     @Override
     protected void initPanels() {

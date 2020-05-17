@@ -11,7 +11,7 @@ import java.awt.GraphicsEnvironment;
 /**
  * Test simple functioning of CMRInetMetricsCollector
  *
- * @author	Chuck Catania Copyright (C) 2017, 2018
+ * @author Chuck Catania Copyright (C) 2017, 2018
  */
 public class CMRInetMetricsCollectorTest {
 

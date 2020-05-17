@@ -1,27 +1,18 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import javax.annotation.Nonnull;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
-import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.PreviewPanel;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
-import jmri.util.swing.DrawSquares;
-import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,40 +33,27 @@ import org.slf4j.LoggerFactory;
  * devices.
  * @see jmri.jmrit.display.DisplayFrame for class diagram for the palette package.
  *
- * @author Pete Cressman Copyright (c) 2010
+ * @author Pete Cressman Copyright (c) 2010, 2020
  * @author Egbert Broerse Copyright 2017
  */
 public abstract class ItemPanel extends JPanel {
 
-    protected DisplayFrame _paletteFrame;
+    protected DisplayFrame _frame;
     protected String _itemType;
-    protected Editor _editor;
     protected boolean _initialized = false; // has init() been run
     protected boolean _update = false;      // editing existing icon, do not allow icon dragging. Set in init()
     protected boolean _suppressDragging;
     protected JTextField _linkName = new JTextField(30);
-    static Color _grayColor = new Color(235, 235, 235);
-    static Color _darkGrayColor = new Color(150, 150, 150);
-    static protected Color[] colorChoice = new Color[]{Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
-    /**
-     * Array of BufferedImage backgrounds loaded as background image in Preview (not shared across tabs)
-     */
-    protected BufferedImage[] _backgrounds;
-    /**
-     * JComboBox to choose the above backgrounds
-     */
-    protected JComboBox<String> _bgColorBox = null;
+    protected PreviewPanel _previewPanel;
     /**
      * Constructor for all item types.
      *
      * @param parentFrame ItemPalette instance
      * @param type        identifier of the ItemPanel type
-     * @param editor      Editor that called this ItemPalette
      */
-    public ItemPanel(DisplayFrame parentFrame, String type, Editor editor) {
-        _paletteFrame = parentFrame;
+    public ItemPanel(DisplayFrame parentFrame, String type) {
+        _frame = parentFrame;
         _itemType = type;
-        updateBackgrounds(editor);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
@@ -98,20 +76,19 @@ public abstract class ItemPanel extends JPanel {
      */
     abstract public void init(ActionListener doneAction);
 
+    /**
+     * A different panel has the focus and may have a different panel background
+     * or a PreviewPanel has changed a viewing background
+     *
+    protected void editorChange() {
+    }*/
 
-    protected void setEditor(Editor ed) {
-        updateBackgrounds(ed);    // editor change may change panel background
-        if (_bgColorBox != null) {
-            _bgColorBox.setSelectedIndex(_paletteFrame.getPreviewBg());
+    protected void previewColorChange() {
+        if (_previewPanel != null) {
+            _previewPanel.setBackgroundSelection(_frame.getPreviewBg());
+            _previewPanel.invalidate();
         }
     }
-
-    /*
-     * Notification to itemPanel to update child dialogs, if any
-     */
-    abstract protected void setPreviewBg(int index);
-    
-    abstract protected void updateBackground0(BufferedImage im);
 
     public boolean oktoUpdate() {
         return true;
@@ -132,96 +109,6 @@ public abstract class ItemPanel extends JPanel {
         panel.setToolTipText(Bundle.getMessage("ToolTipLink"));
         blurb.add(panel);
         add(blurb);
-    }
-
-    /**
-     * Create panel element containing [Set background:] drop down list.
-     *
-     * @see DecoratorPanel
-     * @param preview1 preview pane1 to set background image on
-     * @param preview2 (optional) second preview pane1 to set background image on
-     * @return JPanel with label and drop down with actions
-     */
-    protected JPanel makeBgButtonPanel(ImagePanel preview1, ImagePanel preview2) {
-        if (_bgColorBox == null) {
-            _bgColorBox = new JComboBox<>();
-            _bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, but too long for combo
-            _bgColorBox.addItem(Bundle.getMessage("White"));
-            _bgColorBox.addItem(Bundle.getMessage("LightGray"));
-            _bgColorBox.addItem(Bundle.getMessage("DarkGray"));
-            _bgColorBox.addItem(Bundle.getMessage("Checkers"));
-            _bgColorBox.setSelectedIndex(_paletteFrame.getPreviewBg()); // Global field, starts as 0 = panel bg color
-            _bgColorBox.addActionListener((ActionEvent e) -> {
-                if (_backgrounds != null) {
-                    int previewBgSet = _bgColorBox.getSelectedIndex();
-                    _paletteFrame.setPreviewBg(previewBgSet); // store user choice in field on parent
-                    setPreviewBg(previewBgSet);
-                    // load background image
-                    log.debug("ItemPalette setImage called {}", previewBgSet);
-                    if (preview1 != null) {
-                        preview1.setImage(_backgrounds[previewBgSet]);
-                        preview1.revalidate(); // force redraw
-                    }
-                    if (preview2 != null) {
-                        preview2.setImage(_backgrounds[previewBgSet]);
-                        preview2.revalidate(); // force redraw
-                    }
-                } else {
-                    log.debug("imgArray is empty");
-                }
-            });
-        }
-        JPanel backgroundPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        backgroundPanel.add(new JLabel(Bundle.getMessage("setBackground")));
-        backgroundPanel.add(_bgColorBox);
-        return backgroundPanel;
-    }
-
-    /**
-     * Create array of backgrounds for preview pane.
-     * @param ed Panel editor
-     */
-    protected void updateBackgrounds(Editor ed) {
-        _editor = ed;
-        Color currentBackground = ed.getTargetPanel().getBackground(); // start using Panel background color
-        _backgrounds = makeBackgrounds(_backgrounds, currentBackground);
-    }
-
-    static protected BufferedImage[] makeBackgrounds(BufferedImage[] backgrounds, Color panelBackground) {
-        if (backgrounds == null) { // reduces load but will not redraw for new size
-            backgrounds = new BufferedImage[5];
-            for (int i = 1; i <= 3; i++) {
-                backgrounds[i] = DrawSquares.getImage(500, 400, 10, colorChoice[i - 1], colorChoice[i - 1]);
-                // [i-1] because choice 0 is not in colorChoice[]
-            }
-            backgrounds[4] = DrawSquares.getImage(500, 400, 10, Color.white, _grayColor);
-        }
-        // always update background from Panel Editor
-        backgrounds[0] = DrawSquares.getImage(500, 400, 10, panelBackground, panelBackground);
-        log.debug("makeBackgrounds backgrounds[0] = {}", backgrounds[0]);
-        return backgrounds;
-    }
-
-    protected JPanel makePreviewPanel(ImagePanel panel1, ImagePanel panel2) {
-        JPanel previewPanel = new JPanel();
-        previewPanel.setLayout(new BoxLayout(previewPanel, BoxLayout.Y_AXIS));
-        previewPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
-                Bundle.getMessage("PreviewBorderTitle")));
-        makeBgButtonPanel(panel1, panel2);
-        if (_bgColorBox != null) {
-            JPanel bkgdBoxPanel = new JPanel();
-            bkgdBoxPanel.add(new JLabel(Bundle.getMessage("setBackground"), SwingConstants.RIGHT));
-            bkgdBoxPanel.add(_bgColorBox);
-            previewPanel.add(bkgdBoxPanel);            
-            _bgColorBox.setSelectedIndex(_paletteFrame.getPreviewBg());
-        }
-        if (panel1 != null) {
-            previewPanel.add(panel1);            
-        }
-        if (panel2 != null) {
-            previewPanel.add(panel2);            
-        }
-        return previewPanel;
     }
 
     public void closeDialogs() {
@@ -293,32 +180,30 @@ public abstract class ItemPanel extends JPanel {
         }
     }
 
-    static String redX = "resources/icons/misc/X-red.gif";
-
     @Nonnull
     static protected HashMap<String, NamedIcon> makeNewIconMap(String type) {
         HashMap<String, NamedIcon> newMap = new HashMap<>();
         String[] names = getNames(type);
-        for (int i = 0; i < names.length; i++) {
-            NamedIcon icon = new jmri.jmrit.catalog.NamedIcon(redX, redX);
-            newMap.put(names[i], icon);
+        for (String name : names) {
+            NamedIcon icon = new NamedIcon(ItemPalette.RED_X, ItemPalette.RED_X);
+            newMap.put(name, icon);
         }
         return newMap;
     }
 
     static protected void checkIconMap(String type, HashMap<String, NamedIcon> map) {
         String[] names = getNames(type);
-        for (int i = 0; i < names.length; i++) {
-            if (map.get(names[i]) == null) {
-                NamedIcon icon = new jmri.jmrit.catalog.NamedIcon(redX, redX);
+        for (String name : names) {
+            if (map.get(name) == null) {
+                NamedIcon icon = new NamedIcon(ItemPalette.RED_X, ItemPalette.RED_X);
                 // store RedX as default icon if icon not set
-                map.put(names[i], icon);
+                map.put(name, icon);
             }
         }
     }
 
     protected DisplayFrame getParentFrame() {
-        return _paletteFrame;
+        return _frame;
     }
 
     // oldDim old panel size,
@@ -334,22 +219,25 @@ public abstract class ItemPanel extends JPanel {
         }
         Dimension deltaDim = shellDimension(this);
         if (isPalette && _initialized) {
-            _paletteFrame.reSize(ItemPalette._tabPane, deltaDim, newDim, _editor);
+            _frame.reSize(ItemPalette._tabPane, deltaDim, newDim);
         } else if (_update || _initialized) {
-            _paletteFrame.reSize(_paletteFrame, deltaDim, newDim, _editor);                            
+            _frame.reSize(_frame, deltaDim, newDim);                            
         }
     }
 
     public Dimension shellDimension(ItemPanel panel) {
         if (panel instanceof FamilyItemPanel) {
             if (panel._itemType.equals("SignalMast") || panel._itemType.equals("Reporter")) {
-                return new Dimension(23, 138);
+                return new Dimension(23, 136);
+            }
+            if (panel._itemType.equals("RPSReporter") || panel._itemType.equals("Portal")) {
+                return new Dimension(10, 80);
             }
             return new Dimension(23, 122);
         } else if (panel instanceof IconItemPanel) {
-            return new Dimension(23, 106);
+            return new Dimension(20, 90);
         }
-        return new Dimension(25, 140);
+        return new Dimension(8, 120);
     }
     private final static Logger log = LoggerFactory.getLogger(ItemPanel.class);
 }

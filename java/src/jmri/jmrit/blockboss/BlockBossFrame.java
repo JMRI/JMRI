@@ -893,7 +893,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
             }
             cancel.setText(Bundle.getMessage("ButtonClose")); // when Apply has been clicked at least once, this is not Cancel
         } catch (Exception e) {
-            log.error("An error occurred creating the Simple Signal Logic for" + e.toString());
+            log.error("An error occurred creating the Simple Signal Logic for{}", e.toString());
             statusBar.setText(Bundle.getMessage("ApplyErrorDialog"));
             // JOptionPane.showMessageDialog(this, Bundle.getMessage("ApplyErrorDialog"));
         }
@@ -1142,6 +1142,6 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         inComboBox.setSelectedIndex(-1);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockBossLogic.class);
+    private final static Logger log = LoggerFactory.getLogger(BlockBossFrame.class);
 
 }

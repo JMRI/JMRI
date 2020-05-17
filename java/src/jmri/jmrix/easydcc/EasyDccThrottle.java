@@ -118,7 +118,7 @@ public class EasyDccThrottle extends AbstractThrottle {
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Set the speed and direction.
      * <p>
      * This intentionally skips the emergency stop value of 1.
      *
@@ -195,9 +195,7 @@ public class EasyDccThrottle extends AbstractThrottle {
 
         tc.sendEasyDccMessage(m, null);
 
-        if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
-        }
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
     }
 
@@ -206,9 +204,7 @@ public class EasyDccThrottle extends AbstractThrottle {
         boolean old = isForward;
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
-        if (old != isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, isForward);
-        }
+        firePropertyChange(ISFORWARD, old, isForward);
     }
 
     private DccLocoAddress address;

@@ -13,21 +13,8 @@ macOS binaries are treated slightly differently, see the README file there.
 #### Updates
 
 If you make a change in this directory (add/change/remove a file), please make corresponding changes in the control files that are used for various JMRI development and release operations:
-- build.xml - used by Ant, and in turn by various IDEs. Note that in addition to changing the classpath entry or entries, you should also check to make sure that the three javadoc targets are linking to the proper sources.
+- build.xml - used by Ant; note that in addition to changing the classpath entry or entries, you should also ensure the three javadoc targets are linking to the proper sources
 - pom.xml - used by Maven (see notes below)
-- nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
-- .factorypath - used by Visual Studio Code
-
-On macOS, most of these changes can be affected with (Javadoc links will need to fixed manually):
-```
-find . -type f -not -path './.git/*' -exec gsed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
-```
-(you may need to install gsed using [Homebrew](http://brew.sh)) by running `brew install gnu-sed`)
-
-On Linux, these same changes can be affected with (Javadoc links will need to fixed manually):
-```
-find . -type f -not -path './.git/*' -exec sed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
-```
 
 If the specific library being added or updated is not published to [Maven Central](http://maven.org) by the upstream provider, run the following command after updating the pom.xml file, replacing the tokens in ALL CAPS with the correct values for that library:
 ```
@@ -38,6 +25,12 @@ for example:
 mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplugin -Dversion=0.0 -Durl=file:./lib -DrepositoryId=lib -DupdateReleaseInfo=true -Dfile=./lib/jhidrawplugin.jar
 ```
 After that, add and commit the additional files that were created within lib/
+
+After you have committed your changes, please run
+```
+./scripts/check_lib_dates
+```
+which checks the dates of the control files to make sure they've benen updated when lib/ is updated
 
 ### Specific components:
 
@@ -288,11 +281,22 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - Usage info at https://github.com/phamernik/i18nchecker/blob/master/README.md
 - Additional useful information at https://blogs.oracle.com/geertjan/entry/i18nchecker and https://blogs.oracle.com/geertjan/entry/i18nchecker_part_2
 
+##### PlantUML
+- plantuml.jar
+            from plantuml.org
+- umldoclet-2.0.9.jar	
+    from https://github.com/talsma-ict/umldoclet
+    
 ##### rscbundlecheck.jar
 - check for duplicated properties
 
 ##### system-rules-1.16.0.jar
 - Handle rules for testing calls to java.System methods
+
+##### springframework-*
+- version 5.1.14
+- from https://search.maven.org/search?q=g:org.springframework%20v:5.1.14.RELEASE
+- Mocks Java Servlet requests and responses
 
 ##### AppleJavaExtensions.jar
 - version 1.5

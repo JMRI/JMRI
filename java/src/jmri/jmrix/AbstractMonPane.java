@@ -245,7 +245,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         alwaysOnTopCheckBox.setSelected(pm.getSimplePreferenceState(alwaysOnTopCheck));
         Component ancestor = getTopLevelAncestor();
         if (ancestor instanceof JmriJFrame) {
-            ((JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
+            ((JmriJFrame) ancestor).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
         } else {
             // this pane isn't yet part of a frame,
             // which can be normal, but
@@ -303,6 +303,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         JPanel pane2 = new JPanel();
         pane2.setLayout(new BoxLayout(pane2, BoxLayout.X_AXIS));
         pane2.add(filterLabel);
+        filterLabel.setLabelFor(filterField);
         pane2.add(filterField);
         pane2.add(openFileChooserButton);
         pane2.add(startLogButton);

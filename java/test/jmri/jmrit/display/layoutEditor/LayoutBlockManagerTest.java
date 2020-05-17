@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of LayoutBlockManager
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class LayoutBlockManagerTest {
 
@@ -29,5 +29,5 @@ public class LayoutBlockManagerTest {
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
-    // private final static Logger log = LoggerFactory.getLogger(LayoutEditorActionTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorActionTest.class);
 }

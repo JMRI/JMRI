@@ -15,7 +15,7 @@ import org.junit.Test;
  * itself a test class, e.g. should not be added to a suite. Instead, this forms
  * the base for test classes, including providing some common tests.
  *
- * @author	Bob Jacobsen 2016 from AbstractLightTestBase (which was called AbstractLightTest at the time)
+ * @author Bob Jacobsen 2016 from AbstractLightTestBase (which was called AbstractLightTest at the time)
  * @author  Paul Bender Copyright (C) 2018
 */
 public abstract class AbstractSensorTestBase {
@@ -35,12 +35,11 @@ public abstract class AbstractSensorTestBase {
     @Before
     abstract public void setUp(); // load t with actual object; create scaffolds as needed
 
-    protected AbstractSensor t = null;	// holds object under test; set by setUp()
+    protected AbstractSensor t = null; // holds object under test; set by setUp()
 
     static protected boolean listenerResult = false;
 
     protected class Listen implements PropertyChangeListener {
-
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
@@ -80,7 +79,7 @@ public abstract class AbstractSensorTestBase {
 
     @Test
     public void testDispose() throws JmriException {
-        t.setState(Sensor.ACTIVE);  	// in case registration with TrafficController is deferred to after first use
+        t.setState(Sensor.ACTIVE); // in case registration with TrafficController is deferred to after first use
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 0, numListeners());
     }
@@ -105,7 +104,7 @@ public abstract class AbstractSensorTestBase {
     public void testInvertAfterInactive() throws JmriException {
         Assume.assumeTrue(t.canInvert());
         t.setState(Sensor.INACTIVE);
-	t.setInverted(true);
+        t.setInverted(true);
         // check
         Assert.assertEquals("state 1", Sensor.ACTIVE, t.getState());
         Assert.assertEquals("state 2", "Active", t.describeState(t.getState()));

@@ -1,6 +1,6 @@
 package jmri.jmrit.beantable;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
@@ -134,7 +134,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 }
                 Block b = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(name);
                 if (b == null) {
-                    log.debug("requested getValue(\"" + name + "\"), Block doesn't exist");
+                    log.debug("requested getValue(\"{}\"), Block doesn't exist", name);
                     return "(no Block)";
                 }
                 Object m = b.getValue();
@@ -186,12 +186,12 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             public Object getValueAt(int row, int col) {
                 // some error checking
                 if (row >= sysNameList.size()) {
-                    log.debug("requested getValueAt(\"" + row + "\"), row outside of range");
+                    log.debug("requested getValueAt(\"{}\"), row outside of range", row);
                     return "Error table size";
                 }
                 Block b = getBySystemName(sysNameList.get(row));
                 if (b == null) {
-                    log.debug("requested getValueAt(\"" + row + "\"), Block doesn't exist");
+                    log.debug("requested getValueAt(\"{}\"), Block doesn't exist", row);
                     return "(no Block)";
                 }
                 if (col == DIRECTIONCOL) {
@@ -791,7 +791,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenus before 'Window' and 'Help'
         int offset = 1;
-        log.debug("setMenuBar number of menu items = " + pos);
+        log.debug("setMenuBar number of menu items = {}", pos);
         for (int i = 0; i <= pos; i++) {
             if (menuBar.getComponent(i) instanceof JMenu) {
                 if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
@@ -904,7 +904,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddBlock"), false, true);
-            addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); //NOI18N
+            addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); // NOI18N
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             ActionListener oklistener = new ActionListener() {
                 @Override

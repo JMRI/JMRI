@@ -57,6 +57,9 @@ public class SerialTurnout extends AbstractTurnout {
      * Create a Turnout object, with both system and user names.
      * <p>
      * 'systemName' was previously validated in SerialTurnoutManager
+     * @param systemName system name.
+     * @param userName user name.
+     * @param memo system connection.
      */
     public SerialTurnout(@Nonnull String systemName, String userName, CMRISystemConnectionMemo memo) {
         super(systemName, userName);
@@ -86,7 +89,7 @@ public class SerialTurnout extends AbstractTurnout {
             // first look for the double case, which we can't handle
             if ((newState & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN: " + newState);
+                log.error("Cannot command both CLOSED and THROWN: {}", newState);
                 return;
             } else {
                 // send a CLOSED command
@@ -109,7 +112,7 @@ public class SerialTurnout extends AbstractTurnout {
      @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton ");
+            log.debug("Send command to {} Pushbutton ", _pushButtonLockout ? "Lock" : "Unlock");
         }
     }
 
