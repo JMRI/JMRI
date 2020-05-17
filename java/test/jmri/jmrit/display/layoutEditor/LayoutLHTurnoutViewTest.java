@@ -26,7 +26,6 @@ public class LayoutLHTurnoutViewTest extends LayoutTurnoutViewTest {
         new LayoutLHTurnoutView(turnout, point, 99.0, 1.5, 1.6, layoutEditor);
     }
 
-    LayoutEditor layoutEditor;
     LayoutLHTurnout turnout;
     LayoutLHTurnoutView turnoutView;
     
