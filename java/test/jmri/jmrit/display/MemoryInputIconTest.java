@@ -16,7 +16,6 @@ public class MemoryInputIconTest extends PositionableJPanelTest {
         Assert.assertNotNull("exists", p);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

@@ -323,7 +323,7 @@ public abstract class Apps3 extends AppsBase {
             }
 
             // rapid language set; must follow up later with full setting as part of preferences
-            apps.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
+            jmri.util.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }

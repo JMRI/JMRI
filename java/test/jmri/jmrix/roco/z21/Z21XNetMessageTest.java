@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class Z21XNetMessageTest extends jmri.jmrix.lenz.XNetMessageTest {
 
@@ -66,7 +66,6 @@ public class Z21XNetMessageTest extends jmri.jmrix.lenz.XNetMessageTest {
         Assert.assertEquals("Set Turnout Closed Monitor String", Bundle.getMessage("Z21LAN_X_SET_TURNOUT", 1, "activate", 0, true), m.toMonitorString());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

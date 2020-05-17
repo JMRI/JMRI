@@ -11,7 +11,7 @@ import org.junit.*;
 /**
  * Test simple functioning of EditNodeFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class XBeeEditNodeFrameTest extends jmri.util.JmriJFrameTestBase {
 

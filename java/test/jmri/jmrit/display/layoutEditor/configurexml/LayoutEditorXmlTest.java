@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * LayoutEditorXmlTest.java
  *
- * Description: tests for the LayoutEditorXml class
+ * Test for the LayoutEditorXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class LayoutEditorXmlTest {
       Assert.assertNotNull("LayoutEditorXml constructor",new LayoutEditorXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

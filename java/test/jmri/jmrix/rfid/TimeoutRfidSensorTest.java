@@ -9,9 +9,9 @@ import org.junit.Test;
 /**
  * TimeoutRfidSensorTest.java
  *
- * Description:	tests for the jmri.jmrix.rfid.TimeoutRfidSensor class
+ * Test for the jmri.jmrix.rfid.TimeoutRfidSensor class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class TimeoutRfidSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -33,7 +33,6 @@ public class TimeoutRfidSensorTest extends jmri.implementation.AbstractSensorTes
        Assert.assertNotNull("exists", s);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp(){

@@ -11,7 +11,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class EditNodeFrameTest extends jmri.util.JmriJFrameTestBase {
 

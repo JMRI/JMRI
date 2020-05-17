@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * TripleOutputSignalHeadXmlTest.java
  *
- * Description: tests for the TripleOutputSignalHeadXml class
+ * Test for the TripleOutputSignalHeadXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class TripleOutputSignalHeadXmlTest {
       Assert.assertNotNull("TripleOutputSignalHeadXml constructor",new TripleOutputSignalHeadXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

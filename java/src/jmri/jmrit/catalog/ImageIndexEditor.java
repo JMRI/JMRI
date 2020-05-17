@@ -4,7 +4,6 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Set;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;

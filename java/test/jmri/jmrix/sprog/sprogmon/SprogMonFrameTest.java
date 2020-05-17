@@ -9,11 +9,11 @@ import org.junit.*;
 /**
  * Test simple functioning of SprogMonFrame 
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SprogMonFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    	private SprogTrafficControlScaffold stcs = null;
+    private SprogTrafficControlScaffold stcs = null;
     private SprogSystemConnectionMemo m = null;
 
     @Before
@@ -24,18 +24,18 @@ public class SprogMonFrameTest extends jmri.util.JmriJFrameTestBase {
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
         m.configureCommandStation();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new SprogMonFrame(m);
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new SprogMonFrame(m);
+        }
     }
 
     @After
     @Override
     public void tearDown() {
         m.getSlotThread().interrupt();
-        JUnitUtil.waitFor(() -> {return m.getSlotThread().getState() == Thread.State.TERMINATED;}, "Slot thread failed to stop");
+        JUnitUtil.waitFor(() -> m.getSlotThread().getState() == Thread.State.TERMINATED, "Slot thread failed to stop");
         stcs.dispose();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-    	super.tearDown();
+        super.tearDown();
     }
 }

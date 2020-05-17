@@ -28,7 +28,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
 
     public MrcOpsModeProgrammer(MrcSystemConnectionMemo memo, int pAddress, boolean pLongAddr) {
         super(memo);
-        log.debug("MRC ops mode programmer " + pAddress + " " + pLongAddr); // NOI18N
+        log.debug("MRC ops mode programmer {} {}", pAddress, pLongAddr); // NOI18N
         if (pLongAddr) {
             addressLo = pAddress;
             addressHi = pAddress >> 8;
@@ -95,7 +95,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         try {
             wait(200);
         } catch (InterruptedException e) {
-            log.debug("unexpected exception " + e); // NOI18N
+            log.debug("unexpected exception {}", e); // NOI18N
         }
         super.notifyProgListenerEnd(value, status);
     }

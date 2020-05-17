@@ -22,6 +22,7 @@ public class DebugThrottleManager extends AbstractThrottleManager {
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public DebugThrottleManager(jmri.jmrix.SystemConnectionMemo memo) {
         super(memo);
@@ -32,7 +33,7 @@ public class DebugThrottleManager extends AbstractThrottleManager {
         if (a instanceof DccLocoAddress) {
             // Immediately trigger the callback.
             DccLocoAddress address = (DccLocoAddress) a;
-            log.debug("new debug throttle for " + address);
+            log.debug("new debug throttle for {}", address);
             notifyThrottleKnown(new DebugThrottle(address, adapterMemo), a);
         }
         else {
@@ -68,7 +69,7 @@ public class DebugThrottleManager extends AbstractThrottleManager {
 
     @Override
     public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
-        log.debug("disposeThrottle called for " + t);
+        log.debug("disposeThrottle called for {}", t);
         if (super.disposeThrottle(t, l)) {
             if (t instanceof DebugThrottle) {
                 DebugThrottle lnt = (DebugThrottle) t;

@@ -5,9 +5,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JPanel;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.JFrame;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -18,7 +16,7 @@ import org.junit.Test;
 /**
  * Base class for tests for Positionable objects. 
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 abstract public class PositionableTestBase {
 

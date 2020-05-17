@@ -11,8 +11,10 @@ public class FrmAbout extends javax.swing.JFrame {
 
     private static final String FORM_PROPERTIES = "dlgAbout";
     private final AwtWindowProperties _mAwtWindowProperties;
+    
     /**
-     * Creates new form dlgAbout
+     * Creates new form dlgAbout.
+     * @param awtWindowProperties window properties.
      */
     public FrmAbout(AwtWindowProperties awtWindowProperties) {
         super();

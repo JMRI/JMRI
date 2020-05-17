@@ -12,10 +12,10 @@ import org.junit.Test;
 /**
  * Test simple functioning of JMRIClientMonAction
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class JMRIClientMonActionTest {
-	
+
     private JMRIClientSystemConnectionMemo memo = null;
 
     @Test
@@ -34,8 +34,8 @@ public class JMRIClientMonActionTest {
 
     @After
     public void tearDown() {
-	    memo = null;
+        memo = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-    	JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 }

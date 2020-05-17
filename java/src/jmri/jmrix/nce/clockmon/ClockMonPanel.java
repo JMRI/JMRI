@@ -603,7 +603,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
         if (clockMode == SYNCMODE_NCE_MASTER) {
             if (priorClockReadPacket != null && priorNceRatio != nceLastRatio) {
                 if (log.isDebugEnabled()) {
-                    log.debug("NCE Change Rate from cab: prior vs last: " + priorNceRatio + " vs " + nceLastRatio);
+                    log.debug("NCE Change Rate from cab: prior vs last: {} vs {}", priorNceRatio, nceLastRatio);
                 }
                 rateNce.setText("" + nceLastRatio);
                 nceSyncInitStateCounter = 1;
@@ -614,7 +614,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
         if (clockMode == SYNCMODE_NCE_MASTER) {
             if (priorClockReadPacket != null && priorNceRunning != nceLastRunning) {
                 if (log.isDebugEnabled()) {
-                    log.debug("NCE Stop/Start: prior vs last: " + priorNceRunning + " vs " + nceLastRunning);
+                    log.debug("NCE Stop/Start: prior vs last: {} vs {}", priorNceRunning, nceLastRunning);
                 }
                 if (nceLastRunning) {
                     nceSyncInitStateCounter = 1;
@@ -1194,7 +1194,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
             try {
                 internalClock.setRate(newInternalRate);
                 if (log.isDebugEnabled()) {
-                    log.debug("changing internal rate: " + newInternalRate);
+                    log.debug("changing internal rate: {}", newInternalRate);
                 }
             } catch (TimebaseRateException e) {
                 log.error("recomputeNceSync: Failed setting new internal rate: {}", newInternalRate);
@@ -1383,7 +1383,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
                         diffTime = nceTime;
                     }
                     if (log.isDebugEnabled()) {
-                        log.debug("new diffTime: " + diffTime + " = " + nceTime + " - " + intTime);
+                        log.debug("new diffTime: {} = {} - {}", diffTime, nceTime, intTime);
                     }
                     // save error to array
                     while (priorDiffs.size() >= MAX_ERROR_ARRAY) {

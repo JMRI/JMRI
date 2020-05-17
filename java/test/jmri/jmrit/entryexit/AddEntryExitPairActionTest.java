@@ -1,9 +1,7 @@
 package jmri.jmrit.entryexit;
 
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -27,7 +25,6 @@ public class AddEntryExitPairActionTest {
         JUnitUtil.dispose(e);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

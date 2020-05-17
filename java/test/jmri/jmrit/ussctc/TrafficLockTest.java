@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Tests for TrafficLock class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class TrafficLockTest {
 
@@ -38,7 +38,6 @@ public class TrafficLockTest {
     }
 
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

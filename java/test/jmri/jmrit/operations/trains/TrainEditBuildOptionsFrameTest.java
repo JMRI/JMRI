@@ -17,7 +17,7 @@ import jmri.util.swing.JemmyUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
 
@@ -283,7 +283,6 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

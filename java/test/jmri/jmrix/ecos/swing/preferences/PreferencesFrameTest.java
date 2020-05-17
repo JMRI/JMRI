@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Test simple functioning of PreferencesFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class PreferencesFrameTest extends jmri.util.JmriJFrameTestBase {
 

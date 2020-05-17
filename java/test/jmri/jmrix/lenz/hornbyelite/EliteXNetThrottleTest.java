@@ -11,9 +11,9 @@ import org.junit.Test;
 /**
  * EliteXNetThrottleTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.EliteXNetThrottle class
+ * Test for the jmri.jmrix.lenz.EliteXNetThrottle class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -374,7 +374,6 @@ public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup5() {
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -389,7 +388,7 @@ public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     @After
     public void tearDown() {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

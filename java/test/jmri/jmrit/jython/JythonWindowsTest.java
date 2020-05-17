@@ -2,9 +2,7 @@ package jmri.jmrit.jython;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -18,7 +16,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  *
  * Some of these tests are here, as they're cross-class functions
  *
- * @author	Bob Jacobsen Copyright 2009, 2016
+ * @author Bob Jacobsen Copyright 2009, 2016
  */
 public class JythonWindowsTest {
 

@@ -345,7 +345,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1;  // count the number of menus to insert the TableMenus before 'Window' and 'Help'
         int offset = 1;
-        log.debug("setMenuBar number of menu items = " + pos);  // NOI18N
+        log.debug("setMenuBar number of menu items = {}", pos);  // NOI18N
         for (int i = 0; i <= pos; i++) {
             if (menuBar.getComponent(i) instanceof JMenu) {
                 if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {  // NOI18N
@@ -1139,7 +1139,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             Logix x = _logixManager.getBySystemName(sName);
             if (x == null) {
                 // Logix does not exist, so cannot be edited
-                log.error("No Logix with system name: " + sName);
+                log.error("No Logix with system name: {}", sName);
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("LogixError5"),
                         Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -1426,8 +1426,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             Conditional p = _conditionalManager.getByUserName(logix, uName);
             if (p != null) {
                 // Conditional with this user name already exists
-                log.error("Failure to update Conditional with Duplicate User Name: " // NOI18N
-                        + uName);
+                log.error("Failure to update Conditional with Duplicate User Name: {}", uName);
                 JOptionPane.showMessageDialog(
                         null, Bundle.getMessage("LogixError10"), // NOI18N
                         Bundle.getMessage("ErrorTitle"), // NOI18N

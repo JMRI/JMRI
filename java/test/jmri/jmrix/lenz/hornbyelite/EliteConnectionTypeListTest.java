@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * EliteConnectionTypeListTest.java
  *
- * Description: tests for the jmri.jmrix.lenz.EliteConnectionTypeList class
+ * Test for the jmri.jmrix.lenz.EliteConnectionTypeList class
  *
  * @author Paul Bender
  */

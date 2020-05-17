@@ -86,6 +86,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     /**
      * Public method to notify user of Turnout creation error.
+     * @param conflict human readable name of turnout with conflict.
+     * @param bitNum conflict bit number.
      */
     public void notifyTurnoutCreationError(String conflict, int bitNum) {
         JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssignDialog", bitNum, conflict) + "\n" +
@@ -204,6 +206,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     /**
      * Public method to notify user when the second bit of a proposed two output
      * bit turnout has a conflict with another assigned bit.
+     * @param conflict human readable name of turnout with conflict.
+     * @param bitNum conflict bit number.
      */
     public void notifySecondBitConflict(String conflict, int bitNum) {
         JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssign2Dialog", bitNum, conflict) + "\n" +

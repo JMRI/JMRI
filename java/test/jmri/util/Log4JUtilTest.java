@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.util.Log4JUtil class.
  *
- * @author	Bob Jacobsen Copyright 2003, 2009, 2010, 2015
+ * @author Bob Jacobsen Copyright 2003, 2009, 2010, 2015
  */
 public class Log4JUtilTest {
 
@@ -131,7 +131,6 @@ public class Log4JUtilTest {
         Assert.assertEquals(2, Log4JUtil.shortenStacktrace(ex).getStackTrace().length);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();

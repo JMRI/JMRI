@@ -27,7 +27,6 @@ public class LengthPanelTest {
         Assert.assertNotNull("exists", panel);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

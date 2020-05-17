@@ -145,7 +145,7 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
 
     /**
      * {@inheritDoc}
-     * This format matches @CanReply
+     * This format matches {@link CanReply}
      */
     @Override
     public String toMonitorString() {

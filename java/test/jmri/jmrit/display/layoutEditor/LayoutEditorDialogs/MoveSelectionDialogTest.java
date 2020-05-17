@@ -3,9 +3,6 @@ package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JTextField;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
 
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -21,7 +18,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 /**
  * Test simple functioning of moveSelectionDialog
  *
- * @author	George Warner Copyright (C) 2019
+ * @author George Warner Copyright (C) 2019
  */
 public class MoveSelectionDialogTest {
 

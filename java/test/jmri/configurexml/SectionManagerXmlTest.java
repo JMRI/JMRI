@@ -2,7 +2,6 @@ package jmri.configurexml;
 
 import java.util.List;
 import jmri.Block;
-import jmri.BlockManager;
 import jmri.ConfigureManager;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
@@ -10,7 +9,6 @@ import jmri.Memory;
 import jmri.Path;
 import jmri.Section;
 import jmri.Sensor;
-import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.Test;
 import org.junit.After;

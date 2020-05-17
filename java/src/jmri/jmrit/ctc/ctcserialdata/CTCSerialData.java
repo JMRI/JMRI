@@ -211,7 +211,7 @@ public class CTCSerialData {
             try (XMLDecoder xmlDecoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(filename)))) {
                 _mOtherData = (OtherData) xmlDecoder.readObject();
                 // triggers unchecked warning
-                _mCodeButtonHandlerDataArrayList = (ArrayList<CodeButtonHandlerData>) xmlDecoder.readObject();	// Type safety: Unchecked cast from Object to ArrayList<>
+                _mCodeButtonHandlerDataArrayList = (ArrayList<CodeButtonHandlerData>) xmlDecoder.readObject(); // Type safety: Unchecked cast from Object to ArrayList<>
             }
             returnValue = true;
         } catch (IOException e) {

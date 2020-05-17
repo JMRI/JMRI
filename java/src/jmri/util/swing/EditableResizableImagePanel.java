@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.util.logging.Level;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import jmri.util.FileUtil;
@@ -182,8 +181,8 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
                     }
                 } catch (IOException e) {
                     log.error("URIsDropped: error while copying new file, using original file");
-                    log.error("URIsDropped: Error : "+ e.getMessage());
-                    log.error("URIsDropped: URI : "+uris[0]);
+                    log.error("URIsDropped: Error : {}", e.getMessage());
+                    log.error("URIsDropped: URI : {}", uris[0]);
                     dest = src;
                 } finally {
                     try {

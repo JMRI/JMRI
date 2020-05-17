@@ -66,7 +66,7 @@ public abstract class BeanTableModel extends AbstractTableModel {
             case SNAME_COLUMN:  // slot number
                 return getManager().getSystemNameList().get(r);
             default:
-                log.warn("getValueAt should not have been asked about c=" + c);
+                log.warn("getValueAt should not have been asked about c={}", c);
                 return null;
         }
     }

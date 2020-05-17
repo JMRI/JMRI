@@ -9,7 +9,7 @@ import org.junit.*;
 /**
  * Tests for SignalHeadSection class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class SignalHeadSectionTest {
 
@@ -317,7 +317,6 @@ public class SignalHeadSectionTest {
     SignalHead ih3;
     SignalHead ih4;
     
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

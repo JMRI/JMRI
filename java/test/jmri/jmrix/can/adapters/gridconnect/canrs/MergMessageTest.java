@@ -52,7 +52,6 @@ public class MergMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("extended format 4 byte", ":X91A85678R12345678;", g.toString());
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -72,7 +71,7 @@ public class MergMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	m = g = null;
+        m = g = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 

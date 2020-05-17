@@ -6,7 +6,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensor class.
  *
- * @author	Bob Jacobsen Copyright 2001, 2002
+ * @author Bob Jacobsen Copyright 2001, 2002
  */
 public class LnCommandStationTypeTest {
 
@@ -133,7 +133,6 @@ public class LnCommandStationTypeTest {
         Assert.assertFalse("MM loco reset expect false", LnCommandStationType.COMMAND_STATION_MM.getSupportsLocoReset());
         }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

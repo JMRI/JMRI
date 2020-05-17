@@ -8,30 +8,30 @@ import org.junit.Before;
  * Tests for SpecificReply class.
  *
  * @author Paul Bender Copyright (C) 2016
- **/
-
+ *
+ */
 public class SpecificReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
-   private SpecificTrafficController tc = null;
+    private SpecificTrafficController tc = null;
 
-   @Before
-   @Override
-   public void setUp() {
+    @Before
+    @Override
+    public void setUp() {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         tc = new SpecificTrafficController(new SpecificSystemConnectionMemo());
         m = new SpecificReply(tc);
 
-   }
+    }
 
-   @After
-   public void tearDown(){
+    @After
+    public void tearDown() {
         tc = null;
-	m = null;
+        m = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
-   }
+    }
 
 }

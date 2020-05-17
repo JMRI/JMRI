@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Test stealing behavior of MultiThrottle
  *
- * @author	Paul Bender Copyright (C) 2018
+ * @author Paul Bender Copyright (C) 2018
  */
 public class MultiThrottleStealTest {
 

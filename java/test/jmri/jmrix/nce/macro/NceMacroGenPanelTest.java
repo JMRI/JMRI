@@ -7,7 +7,7 @@ import org.junit.Before;
 /**
  * Test simple functioning of NceMacroGenPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class NceMacroGenPanelTest extends jmri.util.swing.JmriPanelTest {
 

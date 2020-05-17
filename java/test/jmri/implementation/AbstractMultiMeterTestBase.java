@@ -13,13 +13,13 @@ import org.junit.Test;
  * not itself a test class, e.g. should not be added to a suite. Instead, this
  * forms the base for test classes, including providing some common tests.
  *
- * @author	Bob Jacobsen 2002, 2004, 2005, 2007, 2008
- * @author  Paul Bender Copyright (C) 2017	
+ * @author Bob Jacobsen 2002, 2004, 2005, 2007, 2008
+ * @author  Paul Bender Copyright (C) 2017
  */
 public abstract class AbstractMultiMeterTestBase {
 
     @Before
-    abstract public void setUp();    	// load mm with actual object; create scaffolds as needed
+    abstract public void setUp(); // load mm with actual object; create scaffolds as needed
 
     @After
     @javax.annotation.OverridingMethodsMustInvokeSuper
@@ -29,7 +29,7 @@ public abstract class AbstractMultiMeterTestBase {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    protected MultiMeter mm = null;	// holds objects under test
+    protected MultiMeter mm = null; // holds objects under test
 
     protected class Listen implements PropertyChangeListener {
     

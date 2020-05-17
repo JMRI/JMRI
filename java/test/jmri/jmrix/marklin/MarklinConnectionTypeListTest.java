@@ -9,9 +9,9 @@ import org.junit.Test;
 /**
  * MarklinConnectionTypeListTest.java
  *
- * Description:	tests for the jmri.jmrix.marklin.MarklinConnectionTypeList class
+ * Test for the jmri.jmrix.marklin.MarklinConnectionTypeList class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class MarklinConnectionTypeListTest {
 
@@ -21,7 +21,6 @@ public class MarklinConnectionTypeListTest {
         Assert.assertNotNull(c);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

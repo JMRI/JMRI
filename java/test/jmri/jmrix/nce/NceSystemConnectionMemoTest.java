@@ -6,7 +6,7 @@ import org.junit.*;
 /**
  * JUnit tests for the NceSystemConnectionMemo class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class NceSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 

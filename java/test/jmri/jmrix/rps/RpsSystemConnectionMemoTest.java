@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class RpsSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
@@ -36,7 +36,6 @@ public class RpsSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
         JUnitAppender.assertWarnMessage("need to have three coordinates in point 2: \"(1)\"");
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

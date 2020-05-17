@@ -12,7 +12,6 @@ import jmri.jmrix.loconet.streamport.LnStreamConnectionConfig;
  */
 public class LnStreamConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractStreamConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

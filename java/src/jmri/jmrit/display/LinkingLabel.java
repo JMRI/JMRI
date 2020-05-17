@@ -68,7 +68,7 @@ public class LinkingLabel extends PositionableLabel implements LinkingObject {
 //    public void doMouseReleased(MouseEvent event) {}
     @Override
     public void doMouseClicked(MouseEvent event) {
-        log.debug("click to " + url);
+        log.debug("click to {}", url);
         try {
             if (url.startsWith("frame:")) {
                 // locate JmriJFrame and push to front
@@ -85,7 +85,7 @@ public class LinkingLabel extends PositionableLabel implements LinkingObject {
                         jframe.repaint();
                     });
                 } else {
-                    log.error("Frame '" + frame + "' not found, cannot link to it.");
+                    log.error("Frame '{}' not found, cannot link to it.", frame);
                 }
             } else if (url.length() > 0) {
                 jmri.util.ExternalLinkContentViewerUI.activateURL(new java.net.URL(url));

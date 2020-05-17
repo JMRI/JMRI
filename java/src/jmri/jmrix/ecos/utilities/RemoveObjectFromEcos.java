@@ -21,7 +21,7 @@ public class RemoveObjectFromEcos implements EcosListener {
     public void removeObjectFromEcos(String ecosObject, EcosTrafficController etc) {
         tc = etc;
         _ecosObject = ecosObject;
-        log.debug("Call to delete Object " + ecosObject + " from the Ecos");
+        log.debug("Call to delete Object {} from the Ecos", ecosObject);
         tc = etc;
         String message = "request(" + _ecosObject + ", control, view)";
         EcosMessage m = new EcosMessage(message);
@@ -44,7 +44,7 @@ public class RemoveObjectFromEcos implements EcosListener {
              * attempt we try a forced control, if that fails we inform the user
              * and reset the counter to zero.
              */
-            log.info("We have no control over the ecos object " + _ecosObject + "Retry Counter = " + ecosretry);
+            log.info("We have no control over the ecos object {}Retry Counter = {}", _ecosObject, ecosretry);
             retryControl();
         }
     }
@@ -57,7 +57,7 @@ public class RemoveObjectFromEcos implements EcosListener {
             String message = "request(" + _ecosObject + ", control)";
             EcosMessage ms = new EcosMessage(message);
             tc.sendEcosMessage(ms, this);
-            log.error("JMRI has no control over the ecos object " + _ecosObject + ". Retrying Attempt " + ecosretry);
+            log.error("JMRI has no control over the ecos object {}. Retrying Attempt {}", _ecosObject, ecosretry);
         } //We do not want to do a force control over an object when we are trying to delete it, bad things might happen on the layout if we do this!
         else {
             javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("DeleteFromEcosWarning"),

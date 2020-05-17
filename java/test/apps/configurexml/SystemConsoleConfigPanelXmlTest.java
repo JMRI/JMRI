@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * SystemConsoleConfigPanelXmlTest.java
  *
- * Description: tests for the SystemConsoleConfigPanelXml class
+ * Test for the SystemConsoleConfigPanelXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class SystemConsoleConfigPanelXmlTest {
       Assert.assertNotNull("SystemConsoleConfigPanelXml constructor",new SystemConsoleConfigPanelXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

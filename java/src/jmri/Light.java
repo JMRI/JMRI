@@ -366,6 +366,7 @@ public interface Light extends DigitalIO, AnalogIO {
      * Add a LightControl to this Light.
      * <p>
      * Duplicates are considered the same, hence not added
+     * @param c the light control to add.
      */
     public void addLightControl(@Nonnull jmri.implementation.LightControl c);
 

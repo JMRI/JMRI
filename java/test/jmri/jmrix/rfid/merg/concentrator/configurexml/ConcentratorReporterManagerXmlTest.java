@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * ConcentratorReporterManagerXmlTest.java
  *
- * Description: tests for the ConcentratorReporterManagerXml class
+ * Test for the ConcentratorReporterManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class ConcentratorReporterManagerXmlTest {
       Assert.assertNotNull("ConcentratorReporterManagerXml constructor",new ConcentratorReporterManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

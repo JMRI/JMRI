@@ -17,6 +17,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -239,7 +240,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         for (int index = start; index < carList.size(); index++) {
             Car c = carList.get(index);
             if (c != null) {
-                String[] number = c.getNumber().split("-");
+                String[] number = c.getNumber().split(TrainCommon.HYPHEN);
                 // check for wild card '*'
                 if (roadNumber.startsWith("*")) {
                     String rN = roadNumber.substring(1);

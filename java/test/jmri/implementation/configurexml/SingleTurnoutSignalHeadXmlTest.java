@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * SingleTurnoutSignalHeadXmlTest.java
  *
- * Description: tests for the SingleTurnoutSignalHeadXml class
+ * Test for the SingleTurnoutSignalHeadXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class SingleTurnoutSignalHeadXmlTest {
       Assert.assertNotNull("SingleTurnoutSignalHeadXml constructor",new SingleTurnoutSignalHeadXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

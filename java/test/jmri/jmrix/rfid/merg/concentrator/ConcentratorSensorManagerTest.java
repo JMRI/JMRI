@@ -9,9 +9,9 @@ import org.junit.Test;
 /**
  * ConcentratorSensorManagerTest.java
  * <p>
- * Description:	tests for the ConcentratorSensorManager class
+ * Test for the ConcentratorSensorManager class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class ConcentratorSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -27,7 +27,6 @@ public class ConcentratorSensorManagerTest extends jmri.managers.AbstractSensorM
         Assert.assertNotNull(l);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

@@ -1,9 +1,7 @@
 package jmri.jmrit.logix;
 
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.util.JUnitUtil;
@@ -15,7 +13,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SpeedProfilePanelTest {
 
@@ -27,7 +25,6 @@ public class SpeedProfilePanelTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

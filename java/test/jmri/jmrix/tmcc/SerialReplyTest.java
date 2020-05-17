@@ -8,7 +8,7 @@ import org.junit.Before;
 /**
  * JUnit tests for the SerialMessage class.
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class SerialReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
@@ -49,15 +49,15 @@ public class SerialReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @Before
     @Override
-    public void setUp(){
-	JUnitUtil.setUp();
+    public void setUp() {
+        JUnitUtil.setUp();
         m = msg = new SerialReply();
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         m = msg = null;
-	JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

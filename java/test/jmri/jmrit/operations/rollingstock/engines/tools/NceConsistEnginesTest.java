@@ -8,7 +8,7 @@ import jmri.util.JUnitOperationsUtil;
 
 /**
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class NceConsistEnginesTest extends OperationsTestCase {
 

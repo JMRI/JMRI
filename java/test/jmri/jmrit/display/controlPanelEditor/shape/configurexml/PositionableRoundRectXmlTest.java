@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * PositionableRoundRectXmlTest.java
  *
- * Description: tests for the PositionableRoundRectXml class
+ * Test for the PositionableRoundRectXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class PositionableRoundRectXmlTest {
       Assert.assertNotNull("PositionableRoundRectXml constructor",new PositionableRoundRectXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

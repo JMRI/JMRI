@@ -45,7 +45,6 @@ public class LIUSBServerXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketize
         Assert.assertEquals("remaining ", 0, p.tostream.available());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

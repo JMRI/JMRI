@@ -9,7 +9,6 @@ import jmri.BeanSetting;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Turnout;
-import jmri.jmrit.display.Positionable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

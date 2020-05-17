@@ -136,7 +136,7 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
                         if (icon != null) {
                             l.setIcon(status, state.getName(), icon);
                         } else {
-                            log.info(msg + " removed for url= " + name);
+                            log.info("{} removed for url= {}", msg, name);
                             return;
                         }
                     }

@@ -16,7 +16,7 @@ import jmri.Turnout;
 /**
  * Tests for the jmri.jmrix.ieee802154.xbee.XBeeTurnoutManager class.
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -103,7 +103,6 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertFalse(s.isEmpty());
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

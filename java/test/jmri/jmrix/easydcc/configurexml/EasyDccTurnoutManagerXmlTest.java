@@ -18,7 +18,6 @@ public class EasyDccTurnoutManagerXmlTest {
       Assert.assertNotNull("EasyDccTurnoutManagerXml constructor", new EasyDccTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

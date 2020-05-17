@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JUnit tests for the SerialTrafficController class
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  */
 public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTrafficControllerTest {
 
@@ -55,8 +55,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i
-                    + " reply=" + rcvdReply);
+            log.debug("past loop, i={} reply={}", i, rcvdReply);
         }
         if (i == 0) {
             log.warn("waitForReply saw an immediate return; is threading right?");

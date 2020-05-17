@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Tests for the SignalHeadSignalMast implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  * updated to JUnit4 2016
  */
 public class SignalHeadSignalMastTest {
@@ -209,7 +209,6 @@ public class SignalHeadSignalMastTest {
 
     // from here down is testing infrastructure
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

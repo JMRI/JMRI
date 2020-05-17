@@ -45,12 +45,13 @@ import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JmriColorChooser;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -204,7 +205,7 @@ public class PanelEditor extends Editor implements ItemListener {
                     if (newName == null) {
                         return;  // cancelled
                     }
-                    if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(newName)) {
+                    if (InstanceManager.getDefault(EditorManager.class).contains(newName)) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("CanNotRename"), Bundle.getMessage("PanelExist"),
                                 JOptionPane.ERROR_MESSAGE);
                         return;
@@ -214,7 +215,6 @@ public class PanelEditor extends Editor implements ItemListener {
                         ((JFrame) ancestor).setTitle(newName);
                     }
                     editor.setTitle();
-                    InstanceManager.getDefault(PanelMenu.class).renameEditorPanel(editor);
                 }
 
                 ActionListener init(PanelEditor e) {
@@ -485,8 +485,9 @@ public class PanelEditor extends Editor implements ItemListener {
     /**
      * Create sequence of panels, etc, for layout: JFrame contains its
      * ContentPane which contains a JPanel with BoxLayout (p1) which contains a
-     * JScollPane (js) which contains the targetPane
-     *
+     * JScollPane (js) which contains the targetPane.
+     * @param name the frame name.
+     * @return the frame.
      */
     public JmriJFrame makeFrame(String name) {
         JmriJFrame targetFrame = new JmriJFrame(name);
@@ -786,7 +787,7 @@ public class PanelEditor extends Editor implements ItemListener {
         _selectRect = null;
 
         // if not sending MouseClicked, do it here
-        if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent()) {
+        if (InstanceManager.getDefault(GuiLafPreferencesManager.class).isNonStandardMouseEvent()) {
             mouseClicked(event);
         }
         _targetPanel.repaint(); // needed for ToolTip

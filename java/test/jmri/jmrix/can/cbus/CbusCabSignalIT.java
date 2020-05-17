@@ -1,9 +1,7 @@
 package jmri.jmrix.can.cbus;
 
-import jmri.BlockManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
-import jmri.ShutDownManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.TrafficControllerScaffold;
@@ -22,7 +20,6 @@ public class CbusCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
     private CanSystemConnectionMemo memo;
     private TrafficController tc;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -36,7 +33,6 @@ public class CbusCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
         JUnitUtil.initLayoutBlockManager();
         JUnitUtil.initDefaultSignalMastManager();
         JUnitUtil.initSignalMastLogicManager();
-        InstanceManager.setDefault(jmri.jmrit.display.PanelMenu.class,new jmri.jmrit.display.PanelMenu());
 
         // prepare the cab signal
         memo = new CanSystemConnectionMemo();

@@ -48,13 +48,16 @@ public class WarrantManager extends AbstractManager<Warrant>
     }
 
     /**
-     * Method to create a new Warrant if it does not exist Returns null if a
-     * Warrant with the same systemName or userName already exists, or if there
-     * is trouble creating a new Warrant.
+     * Method to create a new Warrant if it does not exist.
+     * <p>
+     * Returns null if a Warrant with the same systemName or userName already 
+     * exists, or if there is trouble creating a new Warrant.
      *
-     * @param systemName the system name
-     * @param userName   the user name
-     * @return an existing warrant if found or a new warrant
+     * @param systemName the system name.
+     * @param userName   the user name.
+     * @param SCWa       true for a new SCWarrant, false for a new Warrant.
+     * @param TTP        the time to platform.
+     * @return an existing warrant if found or a new warrant, may be null.
      */
     public Warrant createNewWarrant(String systemName, String userName, boolean SCWa, long TTP) {
         log.debug("createNewWarrant {} SCWa= {}",systemName,SCWa);

@@ -1,9 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -13,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class ItemPaletteTest {
 

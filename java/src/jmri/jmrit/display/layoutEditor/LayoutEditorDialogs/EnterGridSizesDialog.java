@@ -31,13 +31,13 @@ public class EnterGridSizesDialog {
     |* Dialog box to enter new grid sizes *|
     \*====================================*/
     //operational variables for enter grid sizes pane
-    private transient JmriJFrame enterGridSizesFrame = null;
+    private JmriJFrame enterGridSizesFrame = null;
     private boolean enterGridSizesOpen = false;
     private boolean gridSizesChange = false;
-    private final transient JTextField primaryGridSizeField = new JTextField(6);
-    private final transient JTextField secondaryGridSizeField = new JTextField(6);
-    private transient JButton gridSizesDone;
-    private transient JButton gridSizesCancel;
+    private final JTextField primaryGridSizeField = new JTextField(6);
+    private final JTextField secondaryGridSizeField = new JTextField(6);
+    private JButton gridSizesDone;
+    private JButton gridSizesCancel;
 
     //display dialog for entering grid sizes
     @InvokeOnGuiThread
@@ -95,8 +95,8 @@ public class EnterGridSizesDialog {
         }
 
         //Set up for Entry of Track Widths
-        primaryGridSizeField.setText(Integer.toString(layoutEditor.getGridSize()));
-        secondaryGridSizeField.setText(Integer.toString(layoutEditor.getGridSize2nd()));
+        primaryGridSizeField.setText(Integer.toString(layoutEditor.gContext.getGridSize()));
+        secondaryGridSizeField.setText(Integer.toString(layoutEditor.gContext.getGridSize2nd()));
         enterGridSizesFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent event) {
@@ -131,8 +131,8 @@ public class EnterGridSizesDialog {
             return;
         }
 
-        if (!MathUtil.equals(layoutEditor.getGridSize2nd(), siz)) {
-            layoutEditor.setGridSize2nd((int) siz);
+        if (!MathUtil.equals(layoutEditor.gContext.getGridSize2nd(), siz)) {
+            layoutEditor.gContext.setGridSize2nd((int) siz);
             gridSizesChange = true;
         }
 
@@ -151,8 +151,8 @@ public class EnterGridSizesDialog {
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
         } else {
-            if (!MathUtil.equals(layoutEditor.getGridSize(), siz)) {
-                layoutEditor.setGridSize((int) siz);
+            if (!MathUtil.equals(layoutEditor.gContext.getGridSize(), siz)) {
+                layoutEditor.gContext.setGridSize((int) siz);
                 gridSizesChange = true;
             }
             gridSizesCancelPressed(null);
@@ -192,6 +192,6 @@ public class EnterGridSizesDialog {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(
 //            EnterGridSizesDialog.class);
 }

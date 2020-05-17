@@ -30,7 +30,6 @@ import javax.swing.event.ListSelectionEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import apps.AppsBase;
 import apps.gui3.tabbedpreferences.EditConnectionPreferencesDialog;
 import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
 import jmri.Application;
@@ -340,7 +339,7 @@ public class JmriConfigurationManager implements ConfigureManager {
 
         if (Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName()).equals(selectedValue)) {
             // Exit program
-            AppsBase.handleQuit();
+            handleQuit();
 
         } else if (Bundle.getMessage("ErrorDialogButtonContinue").equals(selectedValue)) {
             // Do nothing. Let the program continue
@@ -348,15 +347,27 @@ public class JmriConfigurationManager implements ConfigureManager {
         } else if (Bundle.getMessage("ErrorDialogButtonEditConnections").equals(selectedValue)) {
            if (EditConnectionPreferencesDialog.showDialog()) {
                 // Restart program
-                AppsBase.handleRestart();
+               try {
+                   InstanceManager.getDefault(jmri.ShutDownManager.class).restart();
+               } catch (Exception er) {
+                   log.error("Continuing after error in handleRestart", er);
+               }
             } else {
                 // Quit program
-                AppsBase.handleQuit();
+                handleQuit();
             }
 
         } else {
             // Exit program
-            AppsBase.handleQuit();
+            handleQuit();
+        }
+    }
+
+    private void handleQuit(){
+        try {
+            InstanceManager.getDefault(jmri.ShutDownManager.class).shutdown();
+        } catch (Exception e) {
+            log.error("Continuing after error in handleQuit", e);
         }
     }
 

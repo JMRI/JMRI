@@ -100,8 +100,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
                 "Select one roster entry", "Select roster entry",
                 0, JOptionPane.INFORMATION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), selections}, null);
-        log.debug("Dialog value " + retval + " selected " + selections.getSelectedIndex() + ":\""
-                + selections.getSelectedItem() + "\""); // TODO I18N
+        log.debug("Dialog value {} selected {}:\"{}\"", retval, selections.getSelectedIndex(), selections.getSelectedItem()); // TODO I18N
         if (retval != 1) {
             return false;  // user didn't select
         }
@@ -120,7 +119,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
         this.mFromEntry = mFromEntry;
         mFromFilename = mFromEntry.getFileName();
         mFullFromFilename = Roster.getDefault().getRosterFilesLocation() + mFromFilename;
-        log.debug(" from resolves to \"" + mFromFilename + "\", \"" + mFullFromFilename + "\"");
+        log.debug(" from resolves to \"{}\", \"{}\"", mFromFilename, mFullFromFilename);
     }
 
     boolean selectNewToEntryID() {
@@ -170,7 +169,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
         mFromFile = fileChooser.getSelectedFile();
         mFromFilename = mFromFile.getName();
         mFullFromFilename = mFromFile.getAbsolutePath();
-        log.debug("New from file: " + mFromFilename + " at " + mFullFromFilename);
+        log.debug("New from file: {} at {}", mFromFilename, mFullFromFilename);
         return true;
     }
 
@@ -189,7 +188,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
         mToFile = fileChooser.getSelectedFile();
         mToFilename = mToFile.getName();
         mFullToFilename = mToFile.getAbsolutePath();
-        log.debug("New to file: " + mToFilename + " at " + mFullToFilename);
+        log.debug("New to file: {} at {}", mToFilename, mFullToFilename);
         return true;
     }
 

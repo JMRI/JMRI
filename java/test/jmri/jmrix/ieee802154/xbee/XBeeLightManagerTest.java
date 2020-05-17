@@ -16,9 +16,9 @@ import jmri.Light;
 /**
  * XBeeLightManagerTest.java
  * <p>
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeLightManager class
+ * Test for the jmri.jmrix.ieee802154.xbee.XBeeLightManager class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 

@@ -33,7 +33,7 @@ public class SerialMonFrameTest {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("SerialMonAction starting SerialMonFrame: Exception: " + ex.toString());
+            log.warn("SerialMonAction starting SerialMonFrame: Exception: {}", ex.toString());
         }
         f.pack();
         f.setVisible(true);
@@ -117,7 +117,7 @@ public class SerialMonFrameTest {
         @Override
         public void sendSerialMessage(SerialMessage m, jmri.jmrix.tmcc.SerialListener l) {
             if (log.isDebugEnabled()) {
-                log.debug("sendMessage [" + m + "]");
+                log.debug("sendMessage [{}]", m);
             }
             // save a copy
             outbound.addElement(m);
@@ -131,7 +131,7 @@ public class SerialMonFrameTest {
         protected void sendTestMessage(SerialMessage m) {
             // forward a test message to Listeners
             if (log.isDebugEnabled()) {
-                log.debug("sendTestMessage    [" + m + "]");
+                log.debug("sendTestMessage    [{}]", m);
             }
             notifyMessage(m, null);
             return;
@@ -140,7 +140,7 @@ public class SerialMonFrameTest {
         protected void sendTestReply(SerialReply m) {
             // forward a test message to Listeners
             if (log.isDebugEnabled()) {
-                log.debug("sendTestReply    [" + m + "]");
+                log.debug("sendTestReply    [{}]", m);
             }
             notifyReply(m, null);
             return;

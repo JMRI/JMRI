@@ -20,7 +20,6 @@ public class DrawSquaresTest {
         Assert.assertNotNull("exists", bi);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -1,24 +1,23 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.JOptionPane;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Exports the Engine roster into a comma delimitated file (CSV). Order stored:
@@ -29,6 +28,8 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class ExportEngines extends XmlFile {
+    
+    protected static final String LOCATION_TRACK_SEPARATOR = "-";
 
     public ExportEngines() {
         // nothing to do
@@ -68,7 +69,7 @@ public class ExportEngines extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete: " + e);
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}", e);
         }
     }
 
@@ -94,7 +95,7 @@ public class ExportEngines extends XmlFile {
                     Bundle.getMessage("Owner"),
                     Bundle.getMessage("Built"),
                     Bundle.getMessage("Location"),
-                    "-",
+                    LOCATION_TRACK_SEPARATOR,
                     Bundle.getMessage("Track"),
                     Bundle.getMessage("Consist"),
                     Bundle.getMessage("Moves"),
@@ -115,7 +116,7 @@ public class ExportEngines extends XmlFile {
                         engine.getOwner(),
                         engine.getBuilt(),
                         engine.getLocationName(),
-                        "-",
+                        LOCATION_TRACK_SEPARATOR,
                         engine.getTrackName(),
                         engine.getConsistName(),
                         engine.getMoves(),
@@ -129,12 +130,12 @@ public class ExportEngines extends XmlFile {
             }
             fileOut.flush();
             fileOut.close();
-            log.info("Exported " + engineList.size() + " engines to file " + defaultOperationsFilename());
+            log.info("Exported {} engines to file {}", engineList.size(), defaultOperationsFilename());
             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedEnginesToFile"),
                     new Object[]{engineList.size(), defaultOperationsFilename()}), Bundle.getMessage("ExportComplete"),
                     JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
-            log.error("Can not open export engines CSV file: " + file.getName());
+            log.error("Can not open export engines CSV file: {}", file.getName());
             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedEnginesToFile"),
                     new Object[]{0, defaultOperationsFilename()}), Bundle.getMessage("ExportFailed"),
                     JOptionPane.ERROR_MESSAGE);

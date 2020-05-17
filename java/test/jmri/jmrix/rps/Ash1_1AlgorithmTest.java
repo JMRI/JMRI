@@ -14,7 +14,7 @@ import org.junit.Test;
  *
  * The default transmitter location is (3,2,1)
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  */
 public class Ash1_1AlgorithmTest {
 

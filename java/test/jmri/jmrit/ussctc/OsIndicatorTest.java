@@ -1,10 +1,8 @@
 package jmri.jmrit.ussctc;
 
-import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
-import jmri.ShutDownManager;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
@@ -16,7 +14,7 @@ import org.junit.Test;
 /**
  * Tests for classes in the jmri.jmrit.ussctc.OsIndicator class
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2015
+ * @author Bob Jacobsen Copyright 2003, 2007, 2015
  */
 public class OsIndicatorTest {
 

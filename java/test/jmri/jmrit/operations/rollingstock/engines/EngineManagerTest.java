@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.Train;
  * Everything Consist: Everything Import: Everything EngineManager: Engine
  * register/deregister EngineManager: Consists
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class EngineManagerTest extends OperationsTestCase {
 
@@ -362,8 +362,8 @@ public class EngineManagerTest extends OperationsTestCase {
 
         // release engines from trains
         e2.setTrain(null);
-        e4.setTrain(null);	// e4 is located in the middle of the route, therefore not available
-        e6.setTrain(null);	// e6 is located at the end of the route, therefore not available
+        e4.setTrain(null); // e4 is located in the middle of the route, therefore not available
+        e6.setTrain(null); // e6 is located at the end of the route, therefore not available
 
         // there should be more engines now
         List<Engine> engineList = manager.getAvailableTrainList(t1);

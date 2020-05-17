@@ -14,7 +14,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Test simple functioning of SpeedometerAction
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SpeedometerActionTest {
 

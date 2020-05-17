@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a PacketGenFrame object.
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
 public class PacketGenAction extends AbstractAction {
 

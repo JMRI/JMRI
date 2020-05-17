@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
  *
  * @see java.util.ArrayList
  * @see java.util.List
- * @author	Bob Jacobsen, Copyright (C) 2017
+ * @author Bob Jacobsen, Copyright (C) 2017
  */
 public class NonNullArrayList<E> extends ArrayList<E> {
 

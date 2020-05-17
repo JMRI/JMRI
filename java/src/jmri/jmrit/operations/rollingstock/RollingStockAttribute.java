@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.TrainCommon;
 
 /**
  * Represents an attribute a rolling stock can have. Some attributes are length,
@@ -83,9 +84,9 @@ public abstract class RollingStockAttribute extends PropertyChangeSupport {
             for (int i = 0; i < lengths.length; i++) {
                 try {
                     Integer.parseInt(lengths[i]);
-                    log.error("length " + i + " = " + lengths[i]);
+                    log.error("length {} = {}", i, lengths[i]);
                 } catch (NumberFormatException ee) {
-                    log.error("length " + i + " = " + lengths[i] + " is not a valid number!");
+                    log.error("length {} = {} is not a valid number!", i, lengths[i]);
                 }
             }
         }
@@ -156,7 +157,7 @@ public abstract class RollingStockAttribute extends PropertyChangeSupport {
             maxName = "";
             maxNameSubStringLength = getMinNameLength();
             for (String name : getNames()) {
-                String[] subString = name.split("-");
+                String[] subString = name.split(TrainCommon.HYPHEN);
                 if (subString[0].length() > maxNameSubStringLength) {
                     maxName = name;
                     maxNameSubStringLength = subString[0].length();

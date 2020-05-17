@@ -1,19 +1,15 @@
 package apps.gui3.tabbedpreferences;
 
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TabbedPreferencesTest extends jmri.util.swing.JmriPanelTest {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

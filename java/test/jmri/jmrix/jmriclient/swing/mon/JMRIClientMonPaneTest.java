@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of JMRIClientMonPane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class JMRIClientMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
@@ -37,11 +37,11 @@ public class JMRIClientMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     @After
     @Override
     public void tearDown() {
-	    memo = null;
-	    panel = pane = null;
-	    helpTarget = null;
-	    title = null;
+        memo = null;
+        panel = pane = null;
+        helpTarget = null;
+        title = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-    	JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 }

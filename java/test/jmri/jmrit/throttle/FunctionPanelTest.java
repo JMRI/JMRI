@@ -11,10 +11,10 @@ import org.junit.Test;
 /**
  * Test simple functioning of FunctionPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class FunctionPanelTest {
-        
+
     FunctionPanel frame; // not a panel despite class name
 
     @Test
@@ -24,28 +24,28 @@ public class FunctionPanelTest {
     }
 
     @Test
-    public void testGetFunctionButtons(){
+    public void testGetFunctionButtons() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         FunctionButton fba[] = frame.getFunctionButtons();
-	    Assert.assertNotNull("Function Button Array exists",fba);
-	    Assert.assertEquals("Function Button Array has right length",29,fba.length);
+        Assert.assertNotNull("Function Button Array exists", fba);
+        Assert.assertEquals("Function Button Array has right length", 29, fba.length);
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new FunctionPanel();
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new FunctionPanel();
         }
     }
 
     @After
     public void tearDown() {
-        if(frame!=null){
-          frame.dispose();
+        if (frame != null) {
+            frame.dispose();
         }
-        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
     }
 }

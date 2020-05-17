@@ -18,7 +18,6 @@ public class DefaultRouteManagerTest extends AbstractProvidingManagerTestBase<jm
         Assert.assertNotNull("exists", l);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

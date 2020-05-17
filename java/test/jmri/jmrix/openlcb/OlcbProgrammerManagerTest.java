@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * OlcbProgrammerManagerTest.java
  *
- * Description: tests for the jmri.jmrix.openlcb.OlcbProgrammerManager class
+ * Test for the jmri.jmrix.openlcb.OlcbProgrammerManager class
  *
  * @author Bob Jacobsen
  */

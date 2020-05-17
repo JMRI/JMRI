@@ -178,7 +178,7 @@ public class LocoIcon extends PositionableLabel {
     }
 
     public void setLocoColor(String color) {
-        log.debug("Set loco color to " + color);
+        log.debug("Set loco color to {}", color);
         if (color.equals(WHITE)) {
             super.updateIcon(white);
             _locoColor = Color.WHITE;

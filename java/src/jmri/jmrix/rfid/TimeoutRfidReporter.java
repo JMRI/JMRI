@@ -67,7 +67,7 @@ public class TimeoutRfidReporter extends RfidReporter {
 
     private void cleanUpTimeout() {
         if (logDebug) {
-            log.debug("Cleanup timeout thread for " + mSystemName);
+            log.debug("Cleanup timeout thread for {}", mSystemName);
         }
         timeoutThread = null;
     }
@@ -90,7 +90,7 @@ public class TimeoutRfidReporter extends RfidReporter {
             }
             TimeoutRfidReporter.super.notify(null);
             if (logDebug) {
-                log.debug("Timeout-" + mSystemName);
+                log.debug("Timeout-{}", mSystemName);
             }
             cleanUpTimeout();
         }

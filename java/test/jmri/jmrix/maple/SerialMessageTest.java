@@ -6,23 +6,23 @@ import org.junit.*;
 /**
  * JUnit tests for the SerialMessage class.
  *
- * @author	Bob Jacobsen Copyright 2003, 2008
+ * @author Bob Jacobsen Copyright 2003, 2008
  */
 public class SerialMessageTest extends jmri.jmrix.AbstractMessageTestBase {
-        
+
     private SerialMessage msg = null;
 
     @Before
     @Override
     public void setUp() {
-	JUnitUtil.setUp();
+        JUnitUtil.setUp();
         m = msg = new SerialMessage(1);
     }
 
     @After
-    public void tearDown(){
-	m = msg = null;
-	JUnitUtil.tearDown();
+    public void tearDown() {
+        m = msg = null;
+        JUnitUtil.tearDown();
     }
 
     public void testToBinaryString() {

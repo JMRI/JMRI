@@ -95,12 +95,12 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
                 writer.write(s, 0, s.length());
             }
         } catch (IOException ex) {
-            log.warn("error during printing: " + ex);
+            log.warn("error during printing: {}", ex);
         }
 
         // Loop through the Roster, printing a 1 line list entry as needed
         List<RosterEntry> l = r.matchingList(null, null, null, null, null, null, null); // take all
-        log.debug("Roster list size: " + l.size());
+        log.debug("Roster list size: {}", l.size());
         // print table column headers, match column order + widths with RosterEntry#PrintEntryLine
         // fields copied from RosterTableModel#getColumnName(int)
         String headerText = "";
@@ -130,7 +130,7 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
         writer.write("\n", 0, 1);
         writer.write(headerText);
         } catch (IOException ex) {
-            log.warn("error during printing: " + ex);
+            log.warn("error during printing: {}", ex);
         }
 
         for (RosterEntry re : l) {

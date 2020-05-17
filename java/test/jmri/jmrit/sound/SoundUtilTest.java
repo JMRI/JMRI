@@ -11,7 +11,7 @@ import org.junit.Test;
  * <p>
  * Note: This makes noise!
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  * @author Randall Wood (C) 2016
  */
 public class SoundUtilTest {

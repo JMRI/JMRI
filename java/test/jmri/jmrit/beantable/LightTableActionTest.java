@@ -1,6 +1,6 @@
 package jmri.jmrit.beantable;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -734,7 +734,6 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         Assert.assertEquals("Message did not appear", toTest, lblFeedback.getText());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

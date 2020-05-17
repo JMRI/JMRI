@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract partial implementation of a MemoryManager.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         implements MemoryManager {

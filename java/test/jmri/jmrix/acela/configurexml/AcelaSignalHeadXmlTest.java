@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * AcelaSignalHeadXmlTest.java
  *
- * Description: tests for the AcelaSignalHeadXml class
+ * Test for the AcelaSignalHeadXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -22,7 +22,6 @@ public class AcelaSignalHeadXmlTest {
       Assert.assertNotNull("AcelaSignalHeadXml constructor",new AcelaSignalHeadXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

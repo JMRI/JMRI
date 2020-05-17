@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Tests for CombinedLock classes in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class CombinedLockTest {
 
@@ -64,7 +64,6 @@ public class CombinedLockTest {
     }
 
         
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
