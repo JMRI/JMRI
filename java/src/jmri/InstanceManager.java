@@ -423,6 +423,20 @@ public final class InstanceManager {
     }
 
     /**
+     * Check if a particular type has been initialized without
+     * triggering an automatic initialization.
+     *
+     * @param <T>  The type of the class
+     * @param type The class type
+     * @return true if an item is available as a default for the given type;
+     *         false otherwise
+     */
+    public static <T> boolean isInitialized(@Nonnull Class<T> type) {
+        return getDefault().managerLists.get(type) != null;
+    }
+
+
+    /**
      * Dump generic content of InstanceManager by type.
      *
      * @return A formatted multiline list of managed objects
