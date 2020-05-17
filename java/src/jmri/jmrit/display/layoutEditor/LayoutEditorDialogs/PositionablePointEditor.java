@@ -36,7 +36,7 @@ public class PositionablePointEditor extends LayoutTrackEditor {
      * Edit a PositionablePoint
      */
     @Override
-    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
+    public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView) {
         log.error("no editor installed for PositionablePoint", new Exception("traceback"));
     }
     

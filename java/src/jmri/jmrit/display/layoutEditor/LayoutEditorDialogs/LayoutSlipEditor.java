@@ -46,6 +46,7 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
     | Edit Layout Slip |
     \*================*/
     // variables for Edit slip Crossing pane
+    private LayoutSlipView layoutSlipView = null;
     private LayoutSlip layoutSlip = null;
 
     private JmriJFrame editLayoutSlipFrame = null;
@@ -64,11 +65,12 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
      * Edit a Slip.
      */
     @Override
-    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
-        if ( layoutTrack instanceof LayoutSlip ) {
-            this.layoutSlip = (LayoutSlip) layoutTrack;
+    public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView) {
+        if ( layoutTrackView instanceof LayoutSlipView ) {
+            this.layoutSlipView = (LayoutSlipView) layoutTrackView;
+            this.layoutSlip = this.layoutSlipView.getSlip();
         } else {
-            log.error("editLayoutTrack called with wrong type {}", layoutTrack, new Exception("traceback"));
+            log.error("editLayoutTrack called with wrong type {}", layoutTrackView, new Exception("traceback"));
         }
         sensorList.clear();
 

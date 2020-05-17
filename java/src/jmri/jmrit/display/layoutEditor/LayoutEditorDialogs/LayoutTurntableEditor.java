@@ -38,6 +38,7 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
     \*==============*/
     // variables for Edit Turntable pane
     private LayoutTurntable layoutTurntable = null;
+    private LayoutTurntableView layoutTurntableView = null;
 
     private JmriJFrame editLayoutTurntableFrame = null;
     private final JTextField editLayoutTurntableRadiusTextField = new JTextField(8);
@@ -60,11 +61,12 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
      * Edit a Turntable.
      */
     @Override
-    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
-        if ( layoutTrack instanceof LayoutTurntable ) {
-            this.layoutTurntable = (LayoutTurntable) layoutTrack;
+    public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView) {
+        if ( layoutTrackView instanceof LayoutTurntableView ) {
+            this.layoutTurntableView = (LayoutTurntableView) layoutTrackView;
+            this.layoutTurntable = this.layoutTurntableView.getTurntable();
         } else {
-            log.error("editLayoutTrack called with wrong type {}", layoutTrack, new Exception("traceback"));
+            log.error("editLayoutTrack called with wrong type {}", layoutTrackView, new Exception("traceback"));
         }
         sensorList.clear();
 

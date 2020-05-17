@@ -56,6 +56,7 @@ public class LayoutTurntableView extends LayoutTrackView {
 
     final private LayoutTurntable turntable;
    
+    final public LayoutTurntable getTurntable() { return turntable; }
 
     /**
      * Get a string that represents this object. This should only be used for
@@ -660,7 +661,7 @@ public class LayoutTurntableView extends LayoutTrackView {
         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                editor.editLayoutTrack(turntable);
+                editor.editLayoutTrack(LayoutTurntableView.this);
             }
         });
         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {

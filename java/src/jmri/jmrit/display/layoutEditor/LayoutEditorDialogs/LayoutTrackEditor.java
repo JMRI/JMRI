@@ -70,7 +70,7 @@ abstract public class LayoutTrackEditor {
         log.error("makeTrackEditor did not match type of {}", layoutTrack, new Exception("traceback"));
         return new LayoutTrackEditor(layoutEditor){
             @Override
-            public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
+            public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView) {
                 log.error("Not a valid LayoutTrackEditor implementation", new Exception("traceback"));
             }
         };
@@ -80,7 +80,7 @@ abstract public class LayoutTrackEditor {
      * Launch the editor for a particular LayoutTrack-tree object.
      * @param layoutTrack the layout track to edit.
      */
-    abstract public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack);
+    abstract public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView);
     
     final protected LayoutEditor layoutEditor;
 

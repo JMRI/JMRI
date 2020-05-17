@@ -337,37 +337,6 @@ public class TrackSegmentTest extends LayoutTrackTest {
         }
     }
 
-    @Test
-    public void test_findHitPointType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        if ((layoutEditor != null) && (trackSegment != null)) {
-            Point2D ccc = trackSegment.getCentreSeg();
-            Assert.assertEquals("trackSegment.findHitPointType()", HitPointType.TRACK, trackSegment.findHitPointType(ccc, false, false));
-            Assert.assertEquals("trackSegment.findHitPointType()", HitPointType.NONE, trackSegment.findHitPointType(ccc, false, true));
-            Assert.assertEquals("trackSegment.findHitPointType()", HitPointType.TRACK, trackSegment.findHitPointType(ccc, true, false));
-            Assert.assertEquals("trackSegment.findHitPointType()", HitPointType.NONE, trackSegment.findHitPointType(ccc, true, true));
-
-            Point2D ep1 = trackSegment.getConnect1().getCoordsForConnectionType(trackSegment.getType1());
-            Assert.assertEquals("trackSegment.findHitPointType()", HitPointType.TRACK, trackSegment.findHitPointType(ep1, false, false));
-            Assert.assertEquals("trackSegment.findHitPointType()", HitPointType.NONE, trackSegment.findHitPointType(ep1, false, true));
-            Assert.assertEquals("trackSegment.findHitPointType()", HitPointType.TRACK, trackSegment.findHitPointType(ep1, true, false));
-            Assert.assertEquals("trackSegment.findHitPointType()", HitPointType.NONE, trackSegment.findHitPointType(ep1, true, true));
-
-            Point2D ep2 = trackSegment.getConnect2().getCoordsForConnectionType(trackSegment.getType2());
-            Assert.assertEquals("trackSegment.findHitPointType()", HitPointType.TRACK, trackSegment.findHitPointType(ep2, false, false));
-            Assert.assertEquals("trackSegment.findHitPointType()", HitPointType.NONE, trackSegment.findHitPointType(ep2, false, true));
-            Assert.assertEquals("trackSegment.findHitPointType()", HitPointType.TRACK, trackSegment.findHitPointType(ep2, true, false));
-            Assert.assertEquals("trackSegment.findHitPointType()", HitPointType.NONE, trackSegment.findHitPointType(ep2, true, true));
-
-            trackSegment.setCircle(true);
-            Point2D cp = trackSegment.getCoordsCenterCircle();
-            Assert.assertEquals("trackSegment.findHitPointType()", HitPointType.TRACK_CIRCLE_CENTRE, trackSegment.findHitPointType(cp, false, false));
-            Assert.assertEquals("trackSegment.findHitPointType()", HitPointType.NONE, trackSegment.findHitPointType(cp, false, true));
-            Assert.assertEquals("trackSegment.findHitPointType()", HitPointType.TRACK_CIRCLE_CENTRE, trackSegment.findHitPointType(cp, true, false));
-            Assert.assertEquals("trackSegment.findHitPointType()", HitPointType.NONE, trackSegment.findHitPointType(cp, true, true));
-        }
-    }
-
     /*
      *  Arrow Decorations
      */

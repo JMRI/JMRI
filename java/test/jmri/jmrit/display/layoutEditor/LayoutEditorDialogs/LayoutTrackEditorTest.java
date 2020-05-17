@@ -29,7 +29,7 @@ public class LayoutTrackEditorTest {
     public void testHasNxSensorPairsNull() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(null) { // core of abstract class
-            public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {}
+            public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrack) {}
         };
 
         Assert.assertFalse("null block NxSensorPairs", layoutTrackEditor.hasNxSensorPairs(null));
@@ -39,7 +39,7 @@ public class LayoutTrackEditorTest {
     public void testHasNxSensorPairsDisconnectedBlock() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(null) { // core of abstract class
-            public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {}
+            public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrack) {}
         };
 
         LayoutBlock b = new LayoutBlock("test", "test");
@@ -50,7 +50,7 @@ public class LayoutTrackEditorTest {
     public void testShowSensorMessage() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(null) { // core of abstract class
-            public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {}
+            public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrack) {}
         };
 
         layoutTrackEditor.sensorList.add("Test");

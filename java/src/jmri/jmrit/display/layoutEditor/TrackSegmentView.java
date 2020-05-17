@@ -59,8 +59,8 @@ public class TrackSegmentView extends LayoutTrackView {
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor editor;
 
     final private TrackSegment trackSegment;
-    
-    // temporary?
+ 
+     // temporary?
     @Nonnull
     public TrackSegment getTrackSegment() { return trackSegment; }
     
@@ -1260,7 +1260,7 @@ public class TrackSegmentView extends LayoutTrackView {
         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                editor.editLayoutTrack(trackSegment);
+                editor.editLayoutTrack(TrackSegmentView.this);
             }
         });
         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {

@@ -58,7 +58,7 @@ public class LayoutSlipView extends LayoutTurnoutView {
     private java.beans.PropertyChangeListener mTurnoutListener = null;
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutSlipEditor editor;
 
-
+    public LayoutSlip getSlip() {return slip; }
     // this should only be used for debugging...
     @Override
     public String toString() {
@@ -533,7 +533,7 @@ public class LayoutSlipView extends LayoutTurnoutView {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    editor.editLayoutTrack(slip);
+                    editor.editLayoutTrack(LayoutSlipView.this);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {

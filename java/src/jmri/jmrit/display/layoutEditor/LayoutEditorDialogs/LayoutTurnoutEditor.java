@@ -46,6 +46,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
     | Edit Layout Turnout |
     \*===================*/
     // variables for Edit Layout Turnout pane
+    protected LayoutTurnoutView layoutTurnoutView = null;
     protected LayoutTurnout layoutTurnout = null;
 
     protected JmriJFrame editLayoutTurnoutFrame = null;
@@ -80,9 +81,10 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
      * Invoked for any of the subtypes, has conditional code for crossovers
      */
     @Override
-    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
-        if ( layoutTrack instanceof LayoutTurnout ) {
-            this.layoutTurnout = (LayoutTurnout) layoutTrack;
+    public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView) {
+        if ( layoutTrackView instanceof LayoutTurnoutView ) {
+            this.layoutTurnoutView = (LayoutTurnoutView) layoutTrackView;
+            this.layoutTurnout = this.layoutTurnoutView.getLayoutTurnout();
         } else {
             log.error("editLayoutTrack called with wrong type {}", layoutTurnout, new Exception("traceback"));
         }

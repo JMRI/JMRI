@@ -42,7 +42,7 @@ public class LayoutSingleSlipEditorTest extends LayoutSlipEditorTest {
         LayoutSingleSlipEditor editor = new LayoutSingleSlipEditor(layoutEditor);
 
         // Edit the single Slip
-        editor.editLayoutTrack(singleLayoutSlip);
+        editor.editLayoutTrack(singleLayoutSlipView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
         // Select turnout A

@@ -1021,218 +1021,7 @@ public class LevelXing extends LayoutTrack {
      @Nonnull
      protected JPopupMenu showPopup(@CheckForNull MouseEvent mouseEvent) {
         throw new IllegalArgumentException("should have called View instead of temporary");
-//         if (popup != null) {
-//             popup.removeAll();
-//         } else {
-//             popup = new JPopupMenu();
-//         }
-//         if (layoutEditor.isEditable()) {
-//             JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LevelCrossing")) + getName());
-//             jmi.setEnabled(false);
-// 
-//             boolean blockACAssigned = false;
-//             boolean blockBDAssigned = false;
-//             if (getLayoutBlockAC() == null) {
-//                 jmi = popup.add(Bundle.getMessage("NoBlockX", "AC"));
-//             } else {
-//                 jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "AC")) + getLayoutBlockAC().getDisplayName());
-//                 blockACAssigned = true;
-//             }
-//             jmi.setEnabled(false);
-// 
-//             if (getLayoutBlockBD() == null) {
-//                 jmi = popup.add(Bundle.getMessage("NoBlockX", "BD"));
-//             } else {
-//                 jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "BD")) + getLayoutBlockBD().getDisplayName());
-//                 blockBDAssigned = true;
-//             }
-//             jmi.setEnabled(false);
-// 
-//             // if there are any track connections
-//             if ((connectA != null) || (connectB != null)
-//                     || (connectC != null) || (connectD != null)) {
-//                 JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
-//                 if (connectA != null) {
-//                     connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + connectA.getName()) {
-//                         @Override
-//                         public void actionPerformed(ActionEvent e) {
-//                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-//                             LayoutTrack lt = lf.findObjectByName(connectA.getName());
-//                             // this shouldn't ever be null... however...
-//                             if (lt != null) {
-//                                 layoutEditor.setSelectionRect(lt.getBounds());
-//                                 lt.showPopup();
-//                             }
-//                         }
-//                     });
-//                 }
-//                 if (connectB != null) {
-//                     connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + connectB.getName()) {
-//                         @Override
-//                         public void actionPerformed(ActionEvent e) {
-//                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-//                             LayoutTrack lt = lf.findObjectByName(connectB.getName());
-//                             // this shouldn't ever be null... however...
-//                             if (lt != null) {
-//                                 layoutEditor.setSelectionRect(lt.getBounds());
-//                                 lt.showPopup();
-//                             }
-//                         }
-//                     });
-//                 }
-//                 if (connectC != null) {
-//                     connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + connectC.getName()) {
-//                         @Override
-//                         public void actionPerformed(ActionEvent e) {
-//                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-//                             LayoutTrack lt = lf.findObjectByName(connectC.getName());
-//                             // this shouldn't ever be null... however...
-//                             if (lt != null) {
-//                                 layoutEditor.setSelectionRect(lt.getBounds());
-//                                 lt.showPopup();
-//                             }
-//                         }
-//                     });
-//                 }
-//                 if (connectD != null) {
-//                     connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + connectD.getName()) {
-//                         @Override
-//                         public void actionPerformed(ActionEvent e) {
-//                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-//                             LayoutTrack lt = lf.findObjectByName(connectD.getName());
-//                             // this shouldn't ever be null... however...
-//                             if (lt != null) {
-//                                 layoutEditor.setSelectionRect(lt.getBounds());
-//                                 lt.showPopup();
-//                             }
-//                         }
-//                     });
-//                 }
-//                 popup.add(connectionsMenu);
-//             }
-// 
-//             popup.add(new JSeparator(JSeparator.HORIZONTAL));
-// 
-// //             JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
-// //             hiddenCheckBoxMenuItem.setSelected(isHidden());
-// //             popup.add(hiddenCheckBoxMenuItem);
-// //             hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setHidden(hiddenCheckBoxMenuItem.isSelected()));
-// 
-//             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
-//                 @Override
-//                 public void actionPerformed(ActionEvent e) {
-//                     editor.editLayoutTrack(LevelXing.this);
-//                 }
-//             });
-//             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
-//                 @Override
-//                 public void actionPerformed(ActionEvent e) {
-//                     if (canRemove() && layoutEditor.removeLevelXing(LevelXing.this)) {
-//                         // Returned true if user did not cancel
-//                         remove();
-//                         dispose();
-//                     }
-//                 }
-//             });
-//             if (blockACAssigned && blockBDAssigned) {
-//                 AbstractAction ssaa = new AbstractAction(Bundle.getMessage("SetSignals")) {
-//                     @Override
-//                     public void actionPerformed(ActionEvent e) {
-//                         // bring up signals at level crossing tool dialog
-//                         LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
-//                         layoutEditor.getLETools().
-//                                 setSignalsAtLevelXingFromMenu(LevelXing.this,
-//                                         letbp.signalIconEditor,
-//                                         letbp.signalFrame);
-//                     }
-//                 };
-//                 JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
-//                 if (layoutEditor.getLETools().
-//                         addLevelXingSignalHeadInfoToMenu(LevelXing.this, jm)) {
-//                     jm.add(ssaa);
-//                     popup.add(jm);
-//                 } else {
-//                     popup.add(ssaa);
-//                 }
-//             }
-// 
-//             final String[] boundaryBetween = getBlockBoundaries();
-//             boolean blockBoundaries = false;
-//             if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
-//                 if (blockACAssigned && !blockBDAssigned) {
-//                     popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
-//                         @Override
-//                         public void actionPerformed(ActionEvent e) {
-//                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockAC());
-//                             routeTableAction.actionPerformed(e);
-//                         }
-//                     });
-//                 } else if (!blockACAssigned && blockBDAssigned) {
-//                     popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
-//                         @Override
-//                         public void actionPerformed(ActionEvent e) {
-//                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockBD());
-//                             routeTableAction.actionPerformed(e);
-//                         }
-//                     });
-//                 } else if (blockACAssigned && blockBDAssigned) {
-//                     JMenu viewRouting = new JMenu(Bundle.getMessage("ViewBlockRouting"));
-//                     viewRouting.add(new AbstractAction(getLayoutBlockAC().getDisplayName()) {
-//                         @Override
-//                         public void actionPerformed(ActionEvent e) {
-//                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction(getLayoutBlockAC().getDisplayName(), getLayoutBlockAC());
-//                             routeTableAction.actionPerformed(e);
-//                         }
-//                     });
-// 
-//                     viewRouting.add(new AbstractAction(getLayoutBlockBD().getDisplayName()) {
-//                         @Override
-//                         public void actionPerformed(ActionEvent e) {
-//                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction(getLayoutBlockBD().getDisplayName(), getLayoutBlockBD());
-//                             routeTableAction.actionPerformed(e);
-//                         }
-//                     });
-// 
-//                     popup.add(viewRouting);
-//                 }
-//             }
-// 
-//             for (int i = 0; i < 4; i++) {
-//                 if (boundaryBetween[i] != null) {
-//                     blockBoundaries = true;
-//                 }
-//             }
-//             if (blockBoundaries) {
-//                 popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
-//                     @Override
-//                     public void actionPerformed(ActionEvent e) {
-//                         LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
-//                         layoutEditor.getLETools().
-//                                 setSignalMastsAtLevelXingFromMenu(
-//                                         LevelXing.this, boundaryBetween,
-//                                         letbp.signalFrame);
-//                     }
-//                 });
-//                 popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
-//                     @Override
-//                     public void actionPerformed(ActionEvent e) {
-//                         LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
-//                         layoutEditor.getLETools().setSensorsAtLevelXingFromMenu(
-//                                 LevelXing.this, boundaryBetween,
-//                                 letbp.sensorIconEditor,
-//                                 letbp.sensorFrame);
-//                     }
-//                 });
-//             }
-// 
-//             layoutEditor.setShowAlignmentMenu(popup);
-//             popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
-//         } else if (!viewAdditionalMenu.isEmpty()) {
-//             setAdditionalViewPopUpMenu(popup);
-//             popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
-//         }
-//         return popup;
-    }   // showPopup
+    } 
 
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
@@ -1393,18 +1182,6 @@ public class LevelXing extends LayoutTrack {
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
         throw new IllegalArgumentException("should have called View instead of temporary");
-//         if (isMain == isMainlineAC()) {
-//             if (isBlock) {
-//                 setColorForTrackBlock(g2, getLayoutBlockAC());
-//             }
-//             g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
-//         }
-//         if (isMain == isMainlineBD()) {
-//             if (isBlock) {
-//                 setColorForTrackBlock(g2, getLayoutBlockBD());
-//             }
-//             g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
-//         }
     }
 
     /**
@@ -1413,81 +1190,6 @@ public class LevelXing extends LayoutTrack {
     @Override
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
         throw new IllegalArgumentException("should have called View instead of temporary");
-//         Point2D pA = getCoordsA();
-//         Point2D pB = getCoordsB();
-//         Point2D pC = getCoordsC();
-//         Point2D pD = getCoordsD();
-//         Point2D pM = getCoordsCenter();
-// 
-//         Point2D vAC = MathUtil.normalize(MathUtil.subtract(pC, pA), railDisplacement);
-//         double dirAC_DEG = MathUtil.computeAngleDEG(pA, pC);
-//         Point2D vACo = MathUtil.orthogonal(vAC);
-//         Point2D pAL = MathUtil.subtract(pA, vACo);
-//         Point2D pAR = MathUtil.add(pA, vACo);
-//         Point2D pCL = MathUtil.subtract(pC, vACo);
-//         Point2D pCR = MathUtil.add(pC, vACo);
-// 
-//         Point2D vBD = MathUtil.normalize(MathUtil.subtract(pD, pB), railDisplacement);
-//         double dirBD_DEG = MathUtil.computeAngleDEG(pB, pD);
-//         Point2D vBDo = MathUtil.orthogonal(vBD);
-//         Point2D pBL = MathUtil.subtract(pB, vBDo);
-//         Point2D pBR = MathUtil.add(pB, vBDo);
-//         Point2D pDL = MathUtil.subtract(pD, vBDo);
-//         Point2D pDR = MathUtil.add(pD, vBDo);
-// 
-//         double deltaDEG = MathUtil.absDiffAngleDEG(dirAC_DEG, dirBD_DEG);
-//         double deltaRAD = Math.toRadians(deltaDEG);
-// 
-//         double hypotK = railDisplacement / Math.cos((PI - deltaRAD) / 2.0);
-//         double hypotV = railDisplacement / Math.cos(deltaRAD / 2.0);
-// 
-//         log.debug("dir AC: {}, BD: {}, diff: {}", dirAC_DEG, dirBD_DEG, deltaDEG);
-// 
-//         Point2D vDisK = MathUtil.normalize(MathUtil.add(vAC, vBD), hypotK);
-//         Point2D vDisV = MathUtil.normalize(MathUtil.orthogonal(vDisK), hypotV);
-//         Point2D pKL = MathUtil.subtract(pM, vDisK);
-//         Point2D pKR = MathUtil.add(pM, vDisK);
-//         Point2D pVL = MathUtil.subtract(pM, vDisV);
-//         Point2D pVR = MathUtil.add(pM, vDisV);
-// 
-//         if (isMain == isMainlineAC()) {
-//             // this is the *2.0 vector (rail gap) for the AC diamond parts
-//             Point2D vAC2 = MathUtil.normalize(vAC, 2.0);
-//             // KL toward C, VR toward A, VL toward C and KR toward A
-//             Point2D pKLtC = MathUtil.add(pKL, vAC2);
-//             Point2D pVRtA = MathUtil.subtract(pVR, vAC2);
-//             Point2D pVLtC = MathUtil.add(pVL, vAC2);
-//             Point2D pKRtA = MathUtil.subtract(pKR, vAC2);
-// 
-//             // draw right AC rail: AR====KL == VR====CR
-//             g2.draw(new Line2D.Double(pAR, pKL));
-//             g2.draw(new Line2D.Double(pKLtC, pVRtA));
-//             g2.draw(new Line2D.Double(pVR, pCR));
-// 
-//             // draw left AC rail: AL====VL == KR====CL
-//             g2.draw(new Line2D.Double(pAL, pVL));
-//             g2.draw(new Line2D.Double(pVLtC, pKRtA));
-//             g2.draw(new Line2D.Double(pKR, pCL));
-//         }
-//         if (isMain == isMainlineBD()) {
-//             // this is the *2.0 vector (rail gap) for the BD diamond parts
-//             Point2D vBD2 = MathUtil.normalize(vBD, 2.0);
-//             // VR toward D, KR toward B, KL toward D and VL toward B
-//             Point2D pVRtD = MathUtil.add(pVR, vBD2);
-//             Point2D pKRtB = MathUtil.subtract(pKR, vBD2);
-//             Point2D pKLtD = MathUtil.add(pKL, vBD2);
-//             Point2D pVLtB = MathUtil.subtract(pVL, vBD2);
-// 
-//             // draw right BD rail: BR====VR == KR====DR
-//             g2.draw(new Line2D.Double(pBR, pVR));
-//             g2.draw(new Line2D.Double(pVRtD, pKRtB));
-//             g2.draw(new Line2D.Double(pKR, pDR));
-// 
-//             // draw left BD rail: BL====KL == VL====DL
-//             g2.draw(new Line2D.Double(pBL, pKL));
-//             g2.draw(new Line2D.Double(pKLtD, pVLtB));
-//             g2.draw(new Line2D.Double(pVL, pDL));
-//         }
     }
 
     /**
@@ -1496,25 +1198,6 @@ public class LevelXing extends LayoutTrack {
     @Override
     protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
         throw new IllegalArgumentException("should have called View instead of temporary");
-//         if (((specificType == HitPointType.NONE) || (specificType == HitPointType.LEVEL_XING_A))
-//                 && (getConnectA() == null)) {
-//             g2.fill(trackControlCircleAt(getCoordsA()));
-//         }
-// 
-//         if (((specificType == HitPointType.NONE) || (specificType == HitPointType.LEVEL_XING_B))
-//                 && (getConnectB() == null)) {
-//             g2.fill(trackControlCircleAt(getCoordsB()));
-//         }
-// 
-//         if (((specificType == HitPointType.NONE) || (specificType == HitPointType.LEVEL_XING_C))
-//                 && (getConnectC() == null)) {
-//             g2.fill(trackControlCircleAt(getCoordsC()));
-//         }
-// 
-//         if (((specificType == HitPointType.NONE) || (specificType == HitPointType.LEVEL_XING_D))
-//                 && (getConnectD() == null)) {
-//             g2.fill(trackControlCircleAt(getCoordsD()));
-//         }
     }
 
     /*
@@ -1522,7 +1205,6 @@ public class LevelXing extends LayoutTrack {
      */
     @Override
     public void reCheckBlockBoundary() {
-        throw new IllegalArgumentException("should have called View instead of temporary");
         // nothing to see here... move along...
     }
 

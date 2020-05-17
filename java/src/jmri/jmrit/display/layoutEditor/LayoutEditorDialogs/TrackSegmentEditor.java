@@ -37,6 +37,7 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
     // ********** specific to TrackSegment
 
     // variables for Edit Track Segment pane
+    private TrackSegmentView trackSegmentView;
     private TrackSegment trackSegment;
 
     private JmriJFrame editTrackSegmentFrame = null;
@@ -61,12 +62,13 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
      */
     @InvokeOnGuiThread
     @Override
-    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
-        if ( layoutTrack instanceof TrackSegment ) {
-            this.trackSegment = (TrackSegment) layoutTrack;
+    public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView) {
+        if ( layoutTrackView instanceof TrackSegmentView ) {
+            this.trackSegmentView = (TrackSegmentView) layoutTrackView;
+            this.trackSegment = this.trackSegmentView.getTrackSegment();
         } else {
             log.error("editLayoutTrack received type {} content {}", 
-                    layoutTrack.getClass(), layoutTrack, 
+                    layoutTrackView.getClass(), layoutTrackView, 
                     new Exception("traceback"));
         }
         sensorList.clear();

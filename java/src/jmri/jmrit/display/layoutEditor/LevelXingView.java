@@ -772,7 +772,7 @@ public class LevelXingView extends LayoutTrackView {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    editor.editLayoutTrack(xing);
+                    editor.editLayoutTrack(LevelXingView.this);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {

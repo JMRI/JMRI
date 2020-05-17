@@ -51,7 +51,6 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
         setIdent(turnout.getName());
 
-        //TurnoutType type = turnout.getTurnoutType();
         int version = turnout.getVersion();
 
         // adjust initial coordinates
@@ -294,6 +293,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor editor;
 
     final private LayoutTurnout turnout;
+    public final LayoutTurnout getLayoutTurnout() { return turnout; }  // getTurnout() gets the real Turnout in the LayoutTurnout
 
     /**
      * {@inheritDoc}
@@ -677,6 +677,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         return turnout.getConnectD();
     }
 
+    @Nonnull  // temporary?  Might want to run all calls through this class; but this is getModel equiv
     public Turnout getTurnout() {
         return turnout.getTurnout();
     }
@@ -1770,7 +1771,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    editor.editLayoutTrack(turnout);
+                    editor.editLayoutTrack(LayoutTurnoutView.this);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {

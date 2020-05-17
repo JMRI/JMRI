@@ -58,11 +58,7 @@ Go through and confirm individually:
         LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
         LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
 
- - Check all ctors handling arguments, storage properly (paired objects for now)
-        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
-        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
-        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
-        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+ - [x] Check all ctors handling arguments, storage properly (paired objects for now)
 
  - Editor creates them the right way (addLayoutTurnout, addLayoutSlip, etc in LE)
         LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
@@ -70,7 +66,13 @@ Go through and confirm individually:
         LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
         LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
 
+ - Make a final pass to get rid of commented methods (i.e. from migration)
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
 
+LayoutTurnout & LayoutTurnoutView setTrackSegmentBlock(..) is a bad split implementation, needs to be redone into parts
  
 ## once moved to View, break down to subclasses to removing dynamic typing
 
@@ -135,6 +137,13 @@ Where do the PositionablePoint editors for End Bumper, etc live? they're not rea
 > Making them subclasses would simplify the showPopup method but makes the type change more difficult since it 
 > requires an object swap (unless there is a Java trick that I don't know).
 
+---
+Migration removal sequence:
+ - set base-class abstract method to 
+   - non-abstract and final (which flushes out overrides) and
+   - throws IllegalArgumentException
+ - Comment out the implementations
+ - Change name (i.e. add X) to flush out uses
 
 ---
 

@@ -52,6 +52,7 @@ abstract public class LayoutTrackView {
     }
 
     final private LayoutTrack layoutTrack;
+
     final protected LayoutEditor layoutEditor;
 
     // Accessor Methods

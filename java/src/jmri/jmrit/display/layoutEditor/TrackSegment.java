@@ -735,723 +735,725 @@ public class TrackSegment extends LayoutTrack {
     @Override
     @Nonnull
     protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
-        if (popupMenu != null) {
-            popupMenu.removeAll();
-        } else {
-            popupMenu = new JPopupMenu();
-        }
-
-        String info = Bundle.getMessage("TrackSegment");
-        if (isArc()) {
-            if (isCircle()) {
-                info = info + " (" + Bundle.getMessage("Circle") + ")";
-            } else {
-                info = info + " (" + Bundle.getMessage("Ellipse") + ")";
-            }
-        } else if (isBezier()) {
-            info = info + " (" + Bundle.getMessage("Bezier") + ")";
-        } else {
-            info = info + " (" + Bundle.getMessage("Line") + ")";
-        }
-
-        JMenuItem jmi = popupMenu.add(Bundle.getMessage("MakeLabel", info) + getName());
-        jmi.setEnabled(false);
-
-        if (namedLayoutBlock == null) {
-            jmi = popupMenu.add(Bundle.getMessage("NoBlock"));
-        } else {
-            jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
-        }
-        jmi.setEnabled(false);
-
-        // if there are any track connections
-        if ((connect1 != null) || (connect2 != null)) {
-            JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
-            if (connect1 != null) {
-                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "1") + connect1.getName()) {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        LayoutEditorFindItems lf = layoutEditor.getFinder();
-                        LayoutTrack lt = lf.findObjectByName(connect1.getName());
-                        // this shouldn't ever be null... however...
-                        if (lt != null) {
-                            layoutEditor.setSelectionRect(lt.getBounds());
-                            lt.showPopup();
-                        }
-                    }
-                });
-            }
-            if (connect2 != null) {
-                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "2") + connect2.getName()) {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        LayoutEditorFindItems lf = layoutEditor.getFinder();
-                        LayoutTrack lt = lf.findObjectByName(connect2.getName());
-                        // this shouldn't ever be null... however...
-                        if (lt != null) {
-                            layoutEditor.setSelectionRect(lt.getBounds());
-                            lt.showPopup();
-                        }
-                    }
-                });
-            }
-            popupMenu.add(connectionsMenu);
-        }
-
-        popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
-
-        popupMenu.add(mainlineCheckBoxMenuItem);
-        mainlineCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setMainline(mainlineCheckBoxMenuItem.isSelected()));
-        mainlineCheckBoxMenuItem.setToolTipText(Bundle.getMessage("MainlineCheckBoxMenuItemToolTip"));
-        mainlineCheckBoxMenuItem.setSelected(mainline);
-
-//         popupMenu.add(hiddenCheckBoxMenuItem);
-//         hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setHidden(hiddenCheckBoxMenuItem.isSelected()));
-//         hiddenCheckBoxMenuItem.setToolTipText(Bundle.getMessage("HiddenCheckBoxMenuItemToolTip"));
-//         hiddenCheckBoxMenuItem.setSelected(isHidden());
-
-        popupMenu.add(dashedCheckBoxMenuItem);
-        dashedCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setDashed(dashedCheckBoxMenuItem.isSelected()));
-        dashedCheckBoxMenuItem.setToolTipText(Bundle.getMessage("DashedCheckBoxMenuItemToolTip"));
-        dashedCheckBoxMenuItem.setSelected(dashed);
-
-        if (isArc()) {
-            popupMenu.add(flippedCheckBoxMenuItem);
-            flippedCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setFlip(flippedCheckBoxMenuItem.isSelected()));
-            flippedCheckBoxMenuItem.setToolTipText(Bundle.getMessage("FlippedCheckBoxMenuItemToolTip"));
-            flippedCheckBoxMenuItem.setSelected(isFlip());
-        }
-
-        //
-        // decorations menu
-        //
-        JMenu decorationsMenu = new JMenu(Bundle.getMessage("DecorationMenuTitle"));
-        decorationsMenu.setToolTipText(Bundle.getMessage("DecorationMenuToolTip"));
-
-        JCheckBoxMenuItem jcbmi;
-
-        //
-        // arrows menus
-        //
-        // arrows can only be added at edge connector
-        //
-        boolean hasEC1 = false;
-        if (type1 == HitPointType.POS_POINT) {
-            PositionablePoint pp = (PositionablePoint) connect1;
-            if (pp.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
-                hasEC1 = true;
-            }
-        }
-        boolean hasEC2 = false;
-        if (type2 == HitPointType.POS_POINT) {
-            PositionablePoint pp = (PositionablePoint) connect2;
-            if (pp.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
-                hasEC2 = true;
-            }
-        }
-        if (hasEC1 || hasEC2) {
-            JMenu arrowsMenu = new JMenu(Bundle.getMessage("ArrowsMenuTitle"));
-            decorationsMenu.setToolTipText(Bundle.getMessage("ArrowsMenuToolTip"));
-            decorationsMenu.add(arrowsMenu);
-
-            JMenu arrowsCountMenu = new JMenu(Bundle.getMessage("DecorationStyleMenuTitle"));
-            arrowsCountMenu.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-            arrowsMenu.add(arrowsCountMenu);
-
-            jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
-            arrowsCountMenu.add(jcbmi);
-            jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart(false);
-                setArrowEndStop(false);
-                // setArrowStyle(0);
-            });
-            jcbmi.setSelected(arrowStyle == 0);
-
-            // configure the arrows
-            for (int i = 1; i < NUM_ARROW_TYPES; i++) {
-                jcbmi = loadArrowImageToJCBItem(i, arrowsCountMenu);
-                final int n = i;
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                    setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
-                    setArrowStyle(n);
-                });
-                jcbmi.setSelected(arrowStyle == i);            
-            }
-
-            if (hasEC1 && hasEC2) {
-                JMenu arrowsEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
-                arrowsEndMenu.setToolTipText(Bundle.getMessage("DecorationEndMenuToolTip"));
-                arrowsMenu.add(arrowsEndMenu);
-
-                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
-                arrowsEndMenu.add(jcbmi);
-                jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    setArrowEndStart(false);
-                    setArrowEndStop(false);
-                });
-                jcbmi.setSelected(!arrowEndStart && !arrowEndStop);
-
-                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationStartMenuItemTitle"));
-                arrowsEndMenu.add(jcbmi);
-                jcbmi.setToolTipText(Bundle.getMessage("DecorationStartMenuItemToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    setArrowEndStart(true);
-                    setArrowEndStop(false);
-                });
-                jcbmi.setSelected(arrowEndStart && !arrowEndStop);
-
-                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEndMenuItemTitle"));
-                arrowsEndMenu.add(jcbmi);
-                jcbmi.setToolTipText(Bundle.getMessage("DecorationEndMenuItemToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    setArrowEndStop(true);
-                    setArrowEndStart(false);
-                });
-                jcbmi.setSelected(!arrowEndStart && arrowEndStop);
-
-                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
-                arrowsEndMenu.add(jcbmi);
-                jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    setArrowEndStart(true);
-                    setArrowEndStop(true);
-                });
-                jcbmi.setSelected(arrowEndStart && arrowEndStop);
-            }
-
-            JMenu arrowsDirMenu = new JMenu(Bundle.getMessage("ArrowsDirectionMenuTitle"));
-            arrowsDirMenu.setToolTipText(Bundle.getMessage("ArrowsDirectionMenuToolTip"));
-            arrowsMenu.add(arrowsDirMenu);
-
-            jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
-            arrowsDirMenu.add(jcbmi);
-            jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowDirIn(false);
-                setArrowDirOut(false);
-            });
-            jcbmi.setSelected(!arrowDirIn && !arrowDirOut);
-
-            jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionInMenuItemTitle"));
-            arrowsDirMenu.add(jcbmi);
-            jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionInMenuItemToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowDirIn(true);
-                setArrowDirOut(false);
-            });
-            jcbmi.setSelected(arrowDirIn && !arrowDirOut);
-
-            jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionOutMenuItemTitle"));
-            arrowsDirMenu.add(jcbmi);
-            jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionOutMenuItemToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowDirOut(true);
-                setArrowDirIn(false);
-            });
-            jcbmi.setSelected(!arrowDirIn && arrowDirOut);
-
-            jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionBothMenuItemTitle"));
-            arrowsDirMenu.add(jcbmi);
-            jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionBothMenuItemToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowDirIn(true);
-                setArrowDirOut(true);
-            });
-            jcbmi.setSelected(arrowDirIn && arrowDirOut);
-
-            jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
-            jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                Color newColor = JmriColorChooser.showDialog(null, "Choose a color", arrowColor);
-                if ((newColor != null) && !newColor.equals(arrowColor)) {
-                    setArrowColor(newColor);
-                }
-            });
-            jmi.setForeground(arrowColor);
-            jmi.setBackground(ColorUtil.contrast(arrowColor));
-
-            jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                    Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + arrowLineWidth));
-            jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                // prompt for arrow line width
-                int newValue = QuickPromptUtil.promptForInt(layoutEditor,
-                        Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
-                        Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
-                        arrowLineWidth);
-                setArrowLineWidth(newValue);
-            });
-
-            jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                    Bundle.getMessage("DecorationLengthMenuItemTitle")) + arrowLength));
-            jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                // prompt for arrow length
-                int newValue = QuickPromptUtil.promptForInt(layoutEditor,
-                        Bundle.getMessage("DecorationLengthMenuItemTitle"),
-                        Bundle.getMessage("DecorationLengthMenuItemTitle"),
-                        arrowLength);
-                setArrowLength(newValue);
-            });
-
-            jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                    Bundle.getMessage("DecorationGapMenuItemTitle")) + arrowGap));
-            jmi.setToolTipText(Bundle.getMessage("DecorationGapMenuItemToolTip"));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                // prompt for arrow gap
-                int newValue = QuickPromptUtil.promptForInt(layoutEditor,
-                        Bundle.getMessage("DecorationGapMenuItemTitle"),
-                        Bundle.getMessage("DecorationGapMenuItemTitle"),
-                        arrowGap);
-                setArrowGap(newValue);
-            });
-        }
-
-        //
-        // bridge menus
-        //
-        JMenu bridgeMenu = new JMenu(Bundle.getMessage("BridgeMenuTitle"));
-        decorationsMenu.setToolTipText(Bundle.getMessage("BridgeMenuToolTip"));
-        decorationsMenu.add(bridgeMenu);
-
-        JMenu bridgeSideMenu = new JMenu(Bundle.getMessage("DecorationSideMenuTitle"));
-        bridgeSideMenu.setToolTipText(Bundle.getMessage("DecorationSideMenuToolTip"));
-        bridgeMenu.add(bridgeSideMenu);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
-        bridgeSideMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBridgeSideLeft(false);
-            setBridgeSideRight(false);
-        });
-        jcbmi.setSelected(!bridgeSideLeft && !bridgeSideRight);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideLeftMenuItemTitle"));
-        bridgeSideMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationSideLeftMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBridgeSideLeft(true);
-            setBridgeSideRight(false);
-        });
-        jcbmi.setSelected(bridgeSideLeft && !bridgeSideRight);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideRightMenuItemTitle"));
-        bridgeSideMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationSideRightMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBridgeSideRight(true);
-            setBridgeSideLeft(false);
-        });
-        jcbmi.setSelected(!bridgeSideLeft && bridgeSideRight);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
-        bridgeSideMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBridgeSideLeft(true);
-            setBridgeSideRight(true);
-        });
-        jcbmi.setSelected(bridgeSideLeft && bridgeSideRight);
-
-        JMenu bridgeEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
-        bridgeEndMenu.setToolTipText(Bundle.getMessage("DecorationEndMenuToolTip"));
-        bridgeMenu.add(bridgeEndMenu);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
-        bridgeEndMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBridgeHasEntry(false);
-            setBridgeHasExit(false);
-        });
-        jcbmi.setSelected(!bridgeHasEntry && !bridgeHasExit);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEntryMenuItemTitle"));
-        bridgeEndMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationEntryMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBridgeHasEntry(true);
-            setBridgeHasExit(false);
-        });
-        jcbmi.setSelected(bridgeHasEntry && !bridgeHasExit);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationExitMenuItemTitle"));
-        bridgeEndMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationExitMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBridgeHasExit(true);
-            setBridgeHasEntry(false);
-        });
-        jcbmi.setSelected(!bridgeHasEntry && bridgeHasExit);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
-        bridgeEndMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBridgeHasEntry(true);
-            setBridgeHasExit(true);
-        });
-        jcbmi.setSelected(bridgeHasEntry && bridgeHasExit);
-
-        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
-        jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
-        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            Color newColor = JmriColorChooser.showDialog(null, "Choose a color", bridgeColor);
-            if ((newColor != null) && !newColor.equals(bridgeColor)) {
-                setBridgeColor(newColor);
-            }
-        });
-        jmi.setForeground(bridgeColor);
-        jmi.setBackground(ColorUtil.contrast(bridgeColor));
-
-        addNumericMenuItem(bridgeMenu,
-                "DecorationLineWidthMenuItemTitle", "DecorationLineWidthMenuItemToolTip",
-                this::getBridgeLineWidth, this::setBridgeLineWidth,
-                QuickPromptUtil.checkIntRange(1, MAX_BRIDGE_LINE_WIDTH, null));
-
-        addNumericMenuItem(bridgeMenu,
-                "BridgeApproachWidthMenuItemTitle", "BridgeApproachWidthMenuItemToolTip",
-                this::getBridgeApproachWidth, this::setBridgeApproachWidth,
-                QuickPromptUtil.checkIntRange(4, MAX_BRIDGE_APPROACH_WIDTH, null));
-
-        addNumericMenuItem(bridgeMenu,
-                "BridgeDeckWidthMenuItemTitle", "BridgeDeckWidthMenuItemToolTip",
-                this::getBridgeDeckWidth, this::setBridgeDeckWidth,
-                QuickPromptUtil.checkIntRange(1, MAX_BRIDGE_DECK_WIDTH, null));
-
-        //
-        // end bumper menus
-        //
-        // end bumper decorations can only be on end bumpers
-        //
-        boolean hasEB1 = false;
-        if (type1 == HitPointType.POS_POINT) {
-            PositionablePoint pp = (PositionablePoint) connect1;
-            if (pp.getType() == PositionablePoint.PointType.END_BUMPER) {
-                hasEB1 = true;
-            }
-        }
-        boolean hasEB2 = false;
-        if (type2 == HitPointType.POS_POINT) {
-            PositionablePoint pp = (PositionablePoint) connect2;
-            if (pp.getType() == PositionablePoint.PointType.END_BUMPER) {
-                hasEB2 = true;
-            }
-        }
-        if (hasEB1 || hasEB2) {
-            JMenu endBumperMenu = new JMenu(Bundle.getMessage("EndBumperMenuTitle"));
-            decorationsMenu.setToolTipText(Bundle.getMessage("EndBumperMenuToolTip"));
-            decorationsMenu.add(endBumperMenu);
-
-            if (hasEB1 && hasEB2) {
-                JMenu endBumperEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
-                endBumperEndMenu.setToolTipText(Bundle.getMessage("DecorationEndMenuToolTip"));
-                endBumperMenu.add(endBumperEndMenu);
-
-                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
-                endBumperEndMenu.add(jcbmi);
-                jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    setBumperEndStart(false);
-                    setBumperEndStop(false);
-                });
-                jcbmi.setSelected(!bumperEndStart && !bumperEndStop);
-
-                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationStartMenuItemTitle"));
-                endBumperEndMenu.add(jcbmi);
-                jcbmi.setToolTipText(Bundle.getMessage("DecorationStartMenuItemToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    setBumperEndStart(true);
-                    setBumperEndStop(false);
-                });
-                jcbmi.setSelected(bumperEndStart && !bumperEndStop);
-
-                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEndMenuItemTitle"));
-                endBumperEndMenu.add(jcbmi);
-                jcbmi.setToolTipText(Bundle.getMessage("DecorationEndMenuItemToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    setBumperEndStart(false);
-                    setBumperEndStop(true);
-                });
-                jcbmi.setSelected(!bumperEndStart && bumperEndStop);
-
-                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
-                endBumperEndMenu.add(jcbmi);
-                jcbmi.setToolTipText(Bundle.getMessage("DecorationEndMenuItemToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    setBumperEndStart(true);
-                    setBumperEndStop(true);
-                });
-                jcbmi.setSelected(bumperEndStart && bumperEndStop);
-            } else {
-                JCheckBoxMenuItem enableCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("EndBumperEnableMenuItemTitle"));
-                enableCheckBoxMenuItem.setToolTipText(Bundle.getMessage("EndBumperEnableMenuItemToolTip"));
-
-                endBumperMenu.add(enableCheckBoxMenuItem);
-                enableCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    if ((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.END_BUMPER)) {
-                        setBumperEndStart(enableCheckBoxMenuItem.isSelected());
-                    }
-                    if ((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.END_BUMPER)) {
-                        setBumperEndStop(enableCheckBoxMenuItem.isSelected());
-                    }
-                });
-                enableCheckBoxMenuItem.setSelected(bumperEndStart || bumperEndStop);
-            }
-
-            jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
-            jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                Color newColor = JmriColorChooser.showDialog(null, "Choose a color", bumperColor);
-                if ((newColor != null) && !newColor.equals(bumperColor)) {
-                    setBumperColor(newColor);
-                }
-            });
-            jmi.setForeground(bumperColor);
-            jmi.setBackground(ColorUtil.contrast(bumperColor));
-
-            jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                    Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + bumperLineWidth));
-            jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                // prompt for width
-                int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
-                        Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
-                        Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
-                        getBumperLineWidth(), t -> {
-                            if (t < 0 || t > TrackSegment.MAX_BUMPER_WIDTH) {
-                                throw new IllegalArgumentException(
-                                        Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegment.MAX_BUMPER_WIDTH));
-                            }
-                            return true;
-                        });
-                setBumperLineWidth(newValue);
-            });
-
-            jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                    Bundle.getMessage("DecorationLengthMenuItemTitle")) + bumperLength));
-            jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                // prompt for length
-                int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
-                        Bundle.getMessage("DecorationLengthMenuItemTitle"),
-                        Bundle.getMessage("DecorationLengthMenuItemTitle"),
-                        bumperLength, t -> {
-                            if (t < 0 || t > MAX_BUMPER_LENGTH) {
-                                throw new IllegalArgumentException(
-                                        Bundle.getMessage("DecorationLengthMenuItemRange", MAX_BUMPER_LENGTH));
-                            }
-                            return true;
-                        });
-                setBumperLength(newValue);
-            });
-        }
-
-        //
-        // tunnel menus
-        //
-        JMenu tunnelMenu = new JMenu(Bundle.getMessage("TunnelMenuTitle"));
-        decorationsMenu.setToolTipText(Bundle.getMessage("TunnelMenuToolTip"));
-        decorationsMenu.add(tunnelMenu);
-
-        JMenu tunnelSideMenu = new JMenu(Bundle.getMessage("DecorationSideMenuTitle"));
-        tunnelSideMenu.setToolTipText(Bundle.getMessage("DecorationSideMenuToolTip"));
-        tunnelMenu.add(tunnelSideMenu);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
-        tunnelSideMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setTunnelSideLeft(false);
-            setTunnelSideRight(false);
-        });
-        jcbmi.setSelected(!tunnelSideLeft && !tunnelSideRight);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideLeftMenuItemTitle"));
-        tunnelSideMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationSideLeftMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setTunnelSideLeft(true);
-            setTunnelSideRight(false);
-        });
-        jcbmi.setSelected(tunnelSideLeft && !tunnelSideRight);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideRightMenuItemTitle"));
-        tunnelSideMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationSideRightMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setTunnelSideRight(true);
-            setTunnelSideLeft(false);
-        });
-        jcbmi.setSelected(!tunnelSideLeft && tunnelSideRight);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
-        tunnelSideMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setTunnelSideLeft(true);
-            setTunnelSideRight(true);
-        });
-        jcbmi.setSelected(tunnelSideLeft && tunnelSideRight);
-
-        JMenu tunnelEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
-        tunnelEndMenu.setToolTipText(Bundle.getMessage("DecorationEndMenuToolTip"));
-        tunnelMenu.add(tunnelEndMenu);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
-        tunnelEndMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setTunnelHasEntry(false);
-            setTunnelHasExit(false);
-        });
-        jcbmi.setSelected(!tunnelHasEntry && !tunnelHasExit);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEntryMenuItemTitle"));
-        tunnelEndMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationEntryMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setTunnelHasEntry(true);
-            setTunnelHasExit(false);
-        });
-        jcbmi.setSelected(tunnelHasEntry && !tunnelHasExit);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationExitMenuItemTitle"));
-        tunnelEndMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationExitMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setTunnelHasExit(true);
-            setTunnelHasEntry(false);
-        });
-        jcbmi.setSelected(!tunnelHasEntry && tunnelHasExit);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
-        tunnelEndMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setTunnelHasEntry(true);
-            setTunnelHasExit(true);
-        });
-        jcbmi.setSelected(tunnelHasEntry && tunnelHasExit);
-
-        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
-        jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
-        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            Color newColor = JmriColorChooser.showDialog(null, "Choose a color", tunnelColor);
-            if ((newColor != null) && !newColor.equals(tunnelColor)) {
-                setTunnelColor(newColor);
-            }
-        });
-        jmi.setForeground(tunnelColor);
-        jmi.setBackground(ColorUtil.contrast(tunnelColor));
-
-        addNumericMenuItem(tunnelMenu,
-                "TunnelFloorWidthMenuItemTitle", "TunnelFloorWidthMenuItemToolTip",
-                this::getTunnelFloorWidth, this::setTunnelFloorWidth,
-                QuickPromptUtil.checkIntRange(1, MAX_TUNNEL_FLOOR_WIDTH, null));
-        addNumericMenuItem(tunnelMenu,
-                "DecorationLineWidthMenuItemTitle", "DecorationLineWidthMenuItemToolTip",
-                this::getTunnelLineWidth, this::setTunnelLineWidth,
-                QuickPromptUtil.checkIntRange(1, MAX_TUNNEL_LINE_WIDTH, null));
-        addNumericMenuItem(tunnelMenu,
-                "TunnelEntranceWidthMenuItemTitle", "TunnelEntranceWidthMenuItemToolTip",
-                this::getTunnelEntranceWidth, this::setTunnelEntranceWidth,
-                QuickPromptUtil.checkIntRange(1, MAX_TUNNEL_ENTRANCE_WIDTH, null));
-
-        popupMenu.add(decorationsMenu);
-
-        popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
-        popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                editor.editLayoutTrack(TrackSegment.this);
-            }
-        });
-        popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (canRemove()) {
-                    layoutEditor.removeTrackSegment(TrackSegment.this);
-                    remove();
-                    dispose();
-                }
-            }
-        });
-        popupMenu.add(new AbstractAction(Bundle.getMessage("SplitTrackSegment")) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                splitTrackSegment();
-            }
-        });
-
-        JMenu lineType = new JMenu(Bundle.getMessage("ChangeTo"));
-        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Line")) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                changeType(0);
-            }
-        }));
-        jmi.setSelected(!isArc() && !isBezier());
-
-        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Circle")) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                changeType(1);
-            }
-        }));
-        jmi.setSelected(isArc() && isCircle());
-
-        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Ellipse")) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                changeType(2);
-            }
-        }));
-        jmi.setSelected(isArc() && !isCircle());
-
-        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Bezier")) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                changeType(3);
-            }
-        }));
-        jmi.setSelected(!isArc() && isBezier());
-
-        popupMenu.add(lineType);
-
-        if (isArc() || isBezier()) {
-            if (hideConstructionLines()) {
-                popupMenu.add(new AbstractAction(Bundle.getMessage("ShowConstruct")) {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        hideConstructionLines(SHOWCON);
-                    }
-                });
-            } else {
-                popupMenu.add(new AbstractAction(Bundle.getMessage("HideConstruct")) {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        hideConstructionLines(HIDECON);
-                    }
-                });
-            }
-        }
-        if ((namedLayoutBlock != null) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())) {
-            popupMenu.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
-                    routeTableAction.actionPerformed(e);
-                }
-            });
-        }
-        popupMenu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
-        return popupMenu;
-    }   // showPopup
+        throw new IllegalArgumentException("should have been called through View");
+    }
+//         if (popupMenu != null) {
+//             popupMenu.removeAll();
+//         } else {
+//             popupMenu = new JPopupMenu();
+//         }
+// 
+//         String info = Bundle.getMessage("TrackSegment");
+//         if (isArc()) {
+//             if (isCircle()) {
+//                 info = info + " (" + Bundle.getMessage("Circle") + ")";
+//             } else {
+//                 info = info + " (" + Bundle.getMessage("Ellipse") + ")";
+//             }
+//         } else if (isBezier()) {
+//             info = info + " (" + Bundle.getMessage("Bezier") + ")";
+//         } else {
+//             info = info + " (" + Bundle.getMessage("Line") + ")";
+//         }
+// 
+//         JMenuItem jmi = popupMenu.add(Bundle.getMessage("MakeLabel", info) + getName());
+//         jmi.setEnabled(false);
+// 
+//         if (namedLayoutBlock == null) {
+//             jmi = popupMenu.add(Bundle.getMessage("NoBlock"));
+//         } else {
+//             jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
+//         }
+//         jmi.setEnabled(false);
+// 
+//         // if there are any track connections
+//         if ((connect1 != null) || (connect2 != null)) {
+//             JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
+//             if (connect1 != null) {
+//                 connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "1") + connect1.getName()) {
+//                     @Override
+//                     public void actionPerformed(ActionEvent e) {
+//                         LayoutEditorFindItems lf = layoutEditor.getFinder();
+//                         LayoutTrack lt = lf.findObjectByName(connect1.getName());
+//                         // this shouldn't ever be null... however...
+//                         if (lt != null) {
+//                             layoutEditor.setSelectionRect(lt.getBounds());
+//                             lt.showPopup();
+//                         }
+//                     }
+//                 });
+//             }
+//             if (connect2 != null) {
+//                 connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "2") + connect2.getName()) {
+//                     @Override
+//                     public void actionPerformed(ActionEvent e) {
+//                         LayoutEditorFindItems lf = layoutEditor.getFinder();
+//                         LayoutTrack lt = lf.findObjectByName(connect2.getName());
+//                         // this shouldn't ever be null... however...
+//                         if (lt != null) {
+//                             layoutEditor.setSelectionRect(lt.getBounds());
+//                             lt.showPopup();
+//                         }
+//                     }
+//                 });
+//             }
+//             popupMenu.add(connectionsMenu);
+//         }
+// 
+//         popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
+// 
+//         popupMenu.add(mainlineCheckBoxMenuItem);
+//         mainlineCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setMainline(mainlineCheckBoxMenuItem.isSelected()));
+//         mainlineCheckBoxMenuItem.setToolTipText(Bundle.getMessage("MainlineCheckBoxMenuItemToolTip"));
+//         mainlineCheckBoxMenuItem.setSelected(mainline);
+// 
+// //         popupMenu.add(hiddenCheckBoxMenuItem);
+// //         hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setHidden(hiddenCheckBoxMenuItem.isSelected()));
+// //         hiddenCheckBoxMenuItem.setToolTipText(Bundle.getMessage("HiddenCheckBoxMenuItemToolTip"));
+// //         hiddenCheckBoxMenuItem.setSelected(isHidden());
+// 
+//         popupMenu.add(dashedCheckBoxMenuItem);
+//         dashedCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setDashed(dashedCheckBoxMenuItem.isSelected()));
+//         dashedCheckBoxMenuItem.setToolTipText(Bundle.getMessage("DashedCheckBoxMenuItemToolTip"));
+//         dashedCheckBoxMenuItem.setSelected(dashed);
+// 
+//         if (isArc()) {
+//             popupMenu.add(flippedCheckBoxMenuItem);
+//             flippedCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setFlip(flippedCheckBoxMenuItem.isSelected()));
+//             flippedCheckBoxMenuItem.setToolTipText(Bundle.getMessage("FlippedCheckBoxMenuItemToolTip"));
+//             flippedCheckBoxMenuItem.setSelected(isFlip());
+//         }
+// 
+//         //
+//         // decorations menu
+//         //
+//         JMenu decorationsMenu = new JMenu(Bundle.getMessage("DecorationMenuTitle"));
+//         decorationsMenu.setToolTipText(Bundle.getMessage("DecorationMenuToolTip"));
+// 
+//         JCheckBoxMenuItem jcbmi;
+// 
+//         //
+//         // arrows menus
+//         //
+//         // arrows can only be added at edge connector
+//         //
+//         boolean hasEC1 = false;
+//         if (type1 == HitPointType.POS_POINT) {
+//             PositionablePoint pp = (PositionablePoint) connect1;
+//             if (pp.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
+//                 hasEC1 = true;
+//             }
+//         }
+//         boolean hasEC2 = false;
+//         if (type2 == HitPointType.POS_POINT) {
+//             PositionablePoint pp = (PositionablePoint) connect2;
+//             if (pp.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
+//                 hasEC2 = true;
+//             }
+//         }
+//         if (hasEC1 || hasEC2) {
+//             JMenu arrowsMenu = new JMenu(Bundle.getMessage("ArrowsMenuTitle"));
+//             decorationsMenu.setToolTipText(Bundle.getMessage("ArrowsMenuToolTip"));
+//             decorationsMenu.add(arrowsMenu);
+// 
+//             JMenu arrowsCountMenu = new JMenu(Bundle.getMessage("DecorationStyleMenuTitle"));
+//             arrowsCountMenu.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+//             arrowsMenu.add(arrowsCountMenu);
+// 
+//             jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+//             arrowsCountMenu.add(jcbmi);
+//             jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+//             jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                 setArrowEndStart(false);
+//                 setArrowEndStop(false);
+//                 // setArrowStyle(0);
+//             });
+//             jcbmi.setSelected(arrowStyle == 0);
+// 
+//             // configure the arrows
+//             for (int i = 1; i < NUM_ARROW_TYPES; i++) {
+//                 jcbmi = loadArrowImageToJCBItem(i, arrowsCountMenu);
+//                 final int n = i;
+//                 jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                     setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
+//                     setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
+//                     setArrowStyle(n);
+//                 });
+//                 jcbmi.setSelected(arrowStyle == i);            
+//             }
+// 
+//             if (hasEC1 && hasEC2) {
+//                 JMenu arrowsEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
+//                 arrowsEndMenu.setToolTipText(Bundle.getMessage("DecorationEndMenuToolTip"));
+//                 arrowsMenu.add(arrowsEndMenu);
+// 
+//                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+//                 arrowsEndMenu.add(jcbmi);
+//                 jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+//                 jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                     setArrowEndStart(false);
+//                     setArrowEndStop(false);
+//                 });
+//                 jcbmi.setSelected(!arrowEndStart && !arrowEndStop);
+// 
+//                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationStartMenuItemTitle"));
+//                 arrowsEndMenu.add(jcbmi);
+//                 jcbmi.setToolTipText(Bundle.getMessage("DecorationStartMenuItemToolTip"));
+//                 jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                     setArrowEndStart(true);
+//                     setArrowEndStop(false);
+//                 });
+//                 jcbmi.setSelected(arrowEndStart && !arrowEndStop);
+// 
+//                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEndMenuItemTitle"));
+//                 arrowsEndMenu.add(jcbmi);
+//                 jcbmi.setToolTipText(Bundle.getMessage("DecorationEndMenuItemToolTip"));
+//                 jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                     setArrowEndStop(true);
+//                     setArrowEndStart(false);
+//                 });
+//                 jcbmi.setSelected(!arrowEndStart && arrowEndStop);
+// 
+//                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
+//                 arrowsEndMenu.add(jcbmi);
+//                 jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
+//                 jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                     setArrowEndStart(true);
+//                     setArrowEndStop(true);
+//                 });
+//                 jcbmi.setSelected(arrowEndStart && arrowEndStop);
+//             }
+// 
+//             JMenu arrowsDirMenu = new JMenu(Bundle.getMessage("ArrowsDirectionMenuTitle"));
+//             arrowsDirMenu.setToolTipText(Bundle.getMessage("ArrowsDirectionMenuToolTip"));
+//             arrowsMenu.add(arrowsDirMenu);
+// 
+//             jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+//             arrowsDirMenu.add(jcbmi);
+//             jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+//             jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                 setArrowDirIn(false);
+//                 setArrowDirOut(false);
+//             });
+//             jcbmi.setSelected(!arrowDirIn && !arrowDirOut);
+// 
+//             jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionInMenuItemTitle"));
+//             arrowsDirMenu.add(jcbmi);
+//             jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionInMenuItemToolTip"));
+//             jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                 setArrowDirIn(true);
+//                 setArrowDirOut(false);
+//             });
+//             jcbmi.setSelected(arrowDirIn && !arrowDirOut);
+// 
+//             jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionOutMenuItemTitle"));
+//             arrowsDirMenu.add(jcbmi);
+//             jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionOutMenuItemToolTip"));
+//             jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                 setArrowDirOut(true);
+//                 setArrowDirIn(false);
+//             });
+//             jcbmi.setSelected(!arrowDirIn && arrowDirOut);
+// 
+//             jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionBothMenuItemTitle"));
+//             arrowsDirMenu.add(jcbmi);
+//             jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionBothMenuItemToolTip"));
+//             jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                 setArrowDirIn(true);
+//                 setArrowDirOut(true);
+//             });
+//             jcbmi.setSelected(arrowDirIn && arrowDirOut);
+// 
+//             jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
+//             jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
+//             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                 Color newColor = JmriColorChooser.showDialog(null, "Choose a color", arrowColor);
+//                 if ((newColor != null) && !newColor.equals(arrowColor)) {
+//                     setArrowColor(newColor);
+//                 }
+//             });
+//             jmi.setForeground(arrowColor);
+//             jmi.setBackground(ColorUtil.contrast(arrowColor));
+// 
+//             jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+//                     Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + arrowLineWidth));
+//             jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
+//             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                 // prompt for arrow line width
+//                 int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+//                         Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+//                         Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+//                         arrowLineWidth);
+//                 setArrowLineWidth(newValue);
+//             });
+// 
+//             jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+//                     Bundle.getMessage("DecorationLengthMenuItemTitle")) + arrowLength));
+//             jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
+//             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                 // prompt for arrow length
+//                 int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+//                         Bundle.getMessage("DecorationLengthMenuItemTitle"),
+//                         Bundle.getMessage("DecorationLengthMenuItemTitle"),
+//                         arrowLength);
+//                 setArrowLength(newValue);
+//             });
+// 
+//             jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+//                     Bundle.getMessage("DecorationGapMenuItemTitle")) + arrowGap));
+//             jmi.setToolTipText(Bundle.getMessage("DecorationGapMenuItemToolTip"));
+//             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                 // prompt for arrow gap
+//                 int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+//                         Bundle.getMessage("DecorationGapMenuItemTitle"),
+//                         Bundle.getMessage("DecorationGapMenuItemTitle"),
+//                         arrowGap);
+//                 setArrowGap(newValue);
+//             });
+//         }
+// 
+//         //
+//         // bridge menus
+//         //
+//         JMenu bridgeMenu = new JMenu(Bundle.getMessage("BridgeMenuTitle"));
+//         decorationsMenu.setToolTipText(Bundle.getMessage("BridgeMenuToolTip"));
+//         decorationsMenu.add(bridgeMenu);
+// 
+//         JMenu bridgeSideMenu = new JMenu(Bundle.getMessage("DecorationSideMenuTitle"));
+//         bridgeSideMenu.setToolTipText(Bundle.getMessage("DecorationSideMenuToolTip"));
+//         bridgeMenu.add(bridgeSideMenu);
+// 
+//         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+//         bridgeSideMenu.add(jcbmi);
+//         jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+//         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             setBridgeSideLeft(false);
+//             setBridgeSideRight(false);
+//         });
+//         jcbmi.setSelected(!bridgeSideLeft && !bridgeSideRight);
+// 
+//         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideLeftMenuItemTitle"));
+//         bridgeSideMenu.add(jcbmi);
+//         jcbmi.setToolTipText(Bundle.getMessage("DecorationSideLeftMenuItemToolTip"));
+//         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             setBridgeSideLeft(true);
+//             setBridgeSideRight(false);
+//         });
+//         jcbmi.setSelected(bridgeSideLeft && !bridgeSideRight);
+// 
+//         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideRightMenuItemTitle"));
+//         bridgeSideMenu.add(jcbmi);
+//         jcbmi.setToolTipText(Bundle.getMessage("DecorationSideRightMenuItemToolTip"));
+//         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             setBridgeSideRight(true);
+//             setBridgeSideLeft(false);
+//         });
+//         jcbmi.setSelected(!bridgeSideLeft && bridgeSideRight);
+// 
+//         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
+//         bridgeSideMenu.add(jcbmi);
+//         jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
+//         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             setBridgeSideLeft(true);
+//             setBridgeSideRight(true);
+//         });
+//         jcbmi.setSelected(bridgeSideLeft && bridgeSideRight);
+// 
+//         JMenu bridgeEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
+//         bridgeEndMenu.setToolTipText(Bundle.getMessage("DecorationEndMenuToolTip"));
+//         bridgeMenu.add(bridgeEndMenu);
+// 
+//         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+//         bridgeEndMenu.add(jcbmi);
+//         jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+//         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             setBridgeHasEntry(false);
+//             setBridgeHasExit(false);
+//         });
+//         jcbmi.setSelected(!bridgeHasEntry && !bridgeHasExit);
+// 
+//         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEntryMenuItemTitle"));
+//         bridgeEndMenu.add(jcbmi);
+//         jcbmi.setToolTipText(Bundle.getMessage("DecorationEntryMenuItemToolTip"));
+//         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             setBridgeHasEntry(true);
+//             setBridgeHasExit(false);
+//         });
+//         jcbmi.setSelected(bridgeHasEntry && !bridgeHasExit);
+// 
+//         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationExitMenuItemTitle"));
+//         bridgeEndMenu.add(jcbmi);
+//         jcbmi.setToolTipText(Bundle.getMessage("DecorationExitMenuItemToolTip"));
+//         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             setBridgeHasExit(true);
+//             setBridgeHasEntry(false);
+//         });
+//         jcbmi.setSelected(!bridgeHasEntry && bridgeHasExit);
+// 
+//         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
+//         bridgeEndMenu.add(jcbmi);
+//         jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
+//         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             setBridgeHasEntry(true);
+//             setBridgeHasExit(true);
+//         });
+//         jcbmi.setSelected(bridgeHasEntry && bridgeHasExit);
+// 
+//         jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
+//         jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
+//         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             Color newColor = JmriColorChooser.showDialog(null, "Choose a color", bridgeColor);
+//             if ((newColor != null) && !newColor.equals(bridgeColor)) {
+//                 setBridgeColor(newColor);
+//             }
+//         });
+//         jmi.setForeground(bridgeColor);
+//         jmi.setBackground(ColorUtil.contrast(bridgeColor));
+// 
+//         addNumericMenuItem(bridgeMenu,
+//                 "DecorationLineWidthMenuItemTitle", "DecorationLineWidthMenuItemToolTip",
+//                 this::getBridgeLineWidth, this::setBridgeLineWidth,
+//                 QuickPromptUtil.checkIntRange(1, MAX_BRIDGE_LINE_WIDTH, null));
+// 
+//         addNumericMenuItem(bridgeMenu,
+//                 "BridgeApproachWidthMenuItemTitle", "BridgeApproachWidthMenuItemToolTip",
+//                 this::getBridgeApproachWidth, this::setBridgeApproachWidth,
+//                 QuickPromptUtil.checkIntRange(4, MAX_BRIDGE_APPROACH_WIDTH, null));
+// 
+//         addNumericMenuItem(bridgeMenu,
+//                 "BridgeDeckWidthMenuItemTitle", "BridgeDeckWidthMenuItemToolTip",
+//                 this::getBridgeDeckWidth, this::setBridgeDeckWidth,
+//                 QuickPromptUtil.checkIntRange(1, MAX_BRIDGE_DECK_WIDTH, null));
+// 
+//         //
+//         // end bumper menus
+//         //
+//         // end bumper decorations can only be on end bumpers
+//         //
+//         boolean hasEB1 = false;
+//         if (type1 == HitPointType.POS_POINT) {
+//             PositionablePoint pp = (PositionablePoint) connect1;
+//             if (pp.getType() == PositionablePoint.PointType.END_BUMPER) {
+//                 hasEB1 = true;
+//             }
+//         }
+//         boolean hasEB2 = false;
+//         if (type2 == HitPointType.POS_POINT) {
+//             PositionablePoint pp = (PositionablePoint) connect2;
+//             if (pp.getType() == PositionablePoint.PointType.END_BUMPER) {
+//                 hasEB2 = true;
+//             }
+//         }
+//         if (hasEB1 || hasEB2) {
+//             JMenu endBumperMenu = new JMenu(Bundle.getMessage("EndBumperMenuTitle"));
+//             decorationsMenu.setToolTipText(Bundle.getMessage("EndBumperMenuToolTip"));
+//             decorationsMenu.add(endBumperMenu);
+// 
+//             if (hasEB1 && hasEB2) {
+//                 JMenu endBumperEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
+//                 endBumperEndMenu.setToolTipText(Bundle.getMessage("DecorationEndMenuToolTip"));
+//                 endBumperMenu.add(endBumperEndMenu);
+// 
+//                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+//                 endBumperEndMenu.add(jcbmi);
+//                 jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+//                 jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                     setBumperEndStart(false);
+//                     setBumperEndStop(false);
+//                 });
+//                 jcbmi.setSelected(!bumperEndStart && !bumperEndStop);
+// 
+//                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationStartMenuItemTitle"));
+//                 endBumperEndMenu.add(jcbmi);
+//                 jcbmi.setToolTipText(Bundle.getMessage("DecorationStartMenuItemToolTip"));
+//                 jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                     setBumperEndStart(true);
+//                     setBumperEndStop(false);
+//                 });
+//                 jcbmi.setSelected(bumperEndStart && !bumperEndStop);
+// 
+//                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEndMenuItemTitle"));
+//                 endBumperEndMenu.add(jcbmi);
+//                 jcbmi.setToolTipText(Bundle.getMessage("DecorationEndMenuItemToolTip"));
+//                 jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                     setBumperEndStart(false);
+//                     setBumperEndStop(true);
+//                 });
+//                 jcbmi.setSelected(!bumperEndStart && bumperEndStop);
+// 
+//                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
+//                 endBumperEndMenu.add(jcbmi);
+//                 jcbmi.setToolTipText(Bundle.getMessage("DecorationEndMenuItemToolTip"));
+//                 jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                     setBumperEndStart(true);
+//                     setBumperEndStop(true);
+//                 });
+//                 jcbmi.setSelected(bumperEndStart && bumperEndStop);
+//             } else {
+//                 JCheckBoxMenuItem enableCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("EndBumperEnableMenuItemTitle"));
+//                 enableCheckBoxMenuItem.setToolTipText(Bundle.getMessage("EndBumperEnableMenuItemToolTip"));
+// 
+//                 endBumperMenu.add(enableCheckBoxMenuItem);
+//                 enableCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                     if ((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.END_BUMPER)) {
+//                         setBumperEndStart(enableCheckBoxMenuItem.isSelected());
+//                     }
+//                     if ((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.END_BUMPER)) {
+//                         setBumperEndStop(enableCheckBoxMenuItem.isSelected());
+//                     }
+//                 });
+//                 enableCheckBoxMenuItem.setSelected(bumperEndStart || bumperEndStop);
+//             }
+// 
+//             jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
+//             jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
+//             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                 Color newColor = JmriColorChooser.showDialog(null, "Choose a color", bumperColor);
+//                 if ((newColor != null) && !newColor.equals(bumperColor)) {
+//                     setBumperColor(newColor);
+//                 }
+//             });
+//             jmi.setForeground(bumperColor);
+//             jmi.setBackground(ColorUtil.contrast(bumperColor));
+// 
+//             jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+//                     Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + bumperLineWidth));
+//             jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
+//             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                 // prompt for width
+//                 int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
+//                         Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+//                         Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+//                         getBumperLineWidth(), t -> {
+//                             if (t < 0 || t > TrackSegment.MAX_BUMPER_WIDTH) {
+//                                 throw new IllegalArgumentException(
+//                                         Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegment.MAX_BUMPER_WIDTH));
+//                             }
+//                             return true;
+//                         });
+//                 setBumperLineWidth(newValue);
+//             });
+// 
+//             jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+//                     Bundle.getMessage("DecorationLengthMenuItemTitle")) + bumperLength));
+//             jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
+//             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//                 // prompt for length
+//                 int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
+//                         Bundle.getMessage("DecorationLengthMenuItemTitle"),
+//                         Bundle.getMessage("DecorationLengthMenuItemTitle"),
+//                         bumperLength, t -> {
+//                             if (t < 0 || t > MAX_BUMPER_LENGTH) {
+//                                 throw new IllegalArgumentException(
+//                                         Bundle.getMessage("DecorationLengthMenuItemRange", MAX_BUMPER_LENGTH));
+//                             }
+//                             return true;
+//                         });
+//                 setBumperLength(newValue);
+//             });
+//         }
+// 
+//         //
+//         // tunnel menus
+//         //
+//         JMenu tunnelMenu = new JMenu(Bundle.getMessage("TunnelMenuTitle"));
+//         decorationsMenu.setToolTipText(Bundle.getMessage("TunnelMenuToolTip"));
+//         decorationsMenu.add(tunnelMenu);
+// 
+//         JMenu tunnelSideMenu = new JMenu(Bundle.getMessage("DecorationSideMenuTitle"));
+//         tunnelSideMenu.setToolTipText(Bundle.getMessage("DecorationSideMenuToolTip"));
+//         tunnelMenu.add(tunnelSideMenu);
+// 
+//         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+//         tunnelSideMenu.add(jcbmi);
+//         jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+//         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             setTunnelSideLeft(false);
+//             setTunnelSideRight(false);
+//         });
+//         jcbmi.setSelected(!tunnelSideLeft && !tunnelSideRight);
+// 
+//         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideLeftMenuItemTitle"));
+//         tunnelSideMenu.add(jcbmi);
+//         jcbmi.setToolTipText(Bundle.getMessage("DecorationSideLeftMenuItemToolTip"));
+//         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             setTunnelSideLeft(true);
+//             setTunnelSideRight(false);
+//         });
+//         jcbmi.setSelected(tunnelSideLeft && !tunnelSideRight);
+// 
+//         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideRightMenuItemTitle"));
+//         tunnelSideMenu.add(jcbmi);
+//         jcbmi.setToolTipText(Bundle.getMessage("DecorationSideRightMenuItemToolTip"));
+//         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             setTunnelSideRight(true);
+//             setTunnelSideLeft(false);
+//         });
+//         jcbmi.setSelected(!tunnelSideLeft && tunnelSideRight);
+// 
+//         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
+//         tunnelSideMenu.add(jcbmi);
+//         jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
+//         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             setTunnelSideLeft(true);
+//             setTunnelSideRight(true);
+//         });
+//         jcbmi.setSelected(tunnelSideLeft && tunnelSideRight);
+// 
+//         JMenu tunnelEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
+//         tunnelEndMenu.setToolTipText(Bundle.getMessage("DecorationEndMenuToolTip"));
+//         tunnelMenu.add(tunnelEndMenu);
+// 
+//         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+//         tunnelEndMenu.add(jcbmi);
+//         jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+//         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             setTunnelHasEntry(false);
+//             setTunnelHasExit(false);
+//         });
+//         jcbmi.setSelected(!tunnelHasEntry && !tunnelHasExit);
+// 
+//         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEntryMenuItemTitle"));
+//         tunnelEndMenu.add(jcbmi);
+//         jcbmi.setToolTipText(Bundle.getMessage("DecorationEntryMenuItemToolTip"));
+//         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             setTunnelHasEntry(true);
+//             setTunnelHasExit(false);
+//         });
+//         jcbmi.setSelected(tunnelHasEntry && !tunnelHasExit);
+// 
+//         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationExitMenuItemTitle"));
+//         tunnelEndMenu.add(jcbmi);
+//         jcbmi.setToolTipText(Bundle.getMessage("DecorationExitMenuItemToolTip"));
+//         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             setTunnelHasExit(true);
+//             setTunnelHasEntry(false);
+//         });
+//         jcbmi.setSelected(!tunnelHasEntry && tunnelHasExit);
+// 
+//         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
+//         tunnelEndMenu.add(jcbmi);
+//         jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
+//         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             setTunnelHasEntry(true);
+//             setTunnelHasExit(true);
+//         });
+//         jcbmi.setSelected(tunnelHasEntry && tunnelHasExit);
+// 
+//         jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
+//         jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
+//         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+//             Color newColor = JmriColorChooser.showDialog(null, "Choose a color", tunnelColor);
+//             if ((newColor != null) && !newColor.equals(tunnelColor)) {
+//                 setTunnelColor(newColor);
+//             }
+//         });
+//         jmi.setForeground(tunnelColor);
+//         jmi.setBackground(ColorUtil.contrast(tunnelColor));
+// 
+//         addNumericMenuItem(tunnelMenu,
+//                 "TunnelFloorWidthMenuItemTitle", "TunnelFloorWidthMenuItemToolTip",
+//                 this::getTunnelFloorWidth, this::setTunnelFloorWidth,
+//                 QuickPromptUtil.checkIntRange(1, MAX_TUNNEL_FLOOR_WIDTH, null));
+//         addNumericMenuItem(tunnelMenu,
+//                 "DecorationLineWidthMenuItemTitle", "DecorationLineWidthMenuItemToolTip",
+//                 this::getTunnelLineWidth, this::setTunnelLineWidth,
+//                 QuickPromptUtil.checkIntRange(1, MAX_TUNNEL_LINE_WIDTH, null));
+//         addNumericMenuItem(tunnelMenu,
+//                 "TunnelEntranceWidthMenuItemTitle", "TunnelEntranceWidthMenuItemToolTip",
+//                 this::getTunnelEntranceWidth, this::setTunnelEntranceWidth,
+//                 QuickPromptUtil.checkIntRange(1, MAX_TUNNEL_ENTRANCE_WIDTH, null));
+// 
+//         popupMenu.add(decorationsMenu);
+// 
+//         popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
+//         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 editor.editLayoutTrack(TrackSegment.this);
+//             }
+//         });
+//         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 if (canRemove()) {
+//                     layoutEditor.removeTrackSegment(TrackSegment.this);
+//                     remove();
+//                     dispose();
+//                 }
+//             }
+//         });
+//         popupMenu.add(new AbstractAction(Bundle.getMessage("SplitTrackSegment")) {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 splitTrackSegment();
+//             }
+//         });
+// 
+//         JMenu lineType = new JMenu(Bundle.getMessage("ChangeTo"));
+//         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Line")) {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 changeType(0);
+//             }
+//         }));
+//         jmi.setSelected(!isArc() && !isBezier());
+// 
+//         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Circle")) {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 changeType(1);
+//             }
+//         }));
+//         jmi.setSelected(isArc() && isCircle());
+// 
+//         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Ellipse")) {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 changeType(2);
+//             }
+//         }));
+//         jmi.setSelected(isArc() && !isCircle());
+// 
+//         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Bezier")) {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 changeType(3);
+//             }
+//         }));
+//         jmi.setSelected(!isArc() && isBezier());
+// 
+//         popupMenu.add(lineType);
+// 
+//         if (isArc() || isBezier()) {
+//             if (hideConstructionLines()) {
+//                 popupMenu.add(new AbstractAction(Bundle.getMessage("ShowConstruct")) {
+//                     @Override
+//                     public void actionPerformed(ActionEvent e) {
+//                         hideConstructionLines(SHOWCON);
+//                     }
+//                 });
+//             } else {
+//                 popupMenu.add(new AbstractAction(Bundle.getMessage("HideConstruct")) {
+//                     @Override
+//                     public void actionPerformed(ActionEvent e) {
+//                         hideConstructionLines(HIDECON);
+//                     }
+//                 });
+//             }
+//         }
+//         if ((namedLayoutBlock != null) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())) {
+//             popupMenu.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
+//                 @Override
+//                 public void actionPerformed(ActionEvent e) {
+//                     AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
+//                     routeTableAction.actionPerformed(e);
+//                 }
+//             });
+//         }
+//         popupMenu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+//         return popupMenu;
+//     }   // showPopup
 
     /**
      * {@inheritDoc}

@@ -42,7 +42,7 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
         LayoutDoubleSlipEditor editor = new LayoutDoubleSlipEditor(layoutEditor);
 
         // Edit the double Slip
-        editor.editLayoutTrack(doubleLayoutSlip);
+        editor.editLayoutTrack(doubleLayoutSlipView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
         // Select turnout A
@@ -100,7 +100,7 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
         LayoutDoubleSlipEditor editor = new LayoutDoubleSlipEditor(layoutEditor);
 
         // Edit the double doubleLayoutSlip
-        editor.editLayoutTrack(doubleLayoutSlip);
+        editor.editLayoutTrack(doubleLayoutSlipView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
         // Invoke layout block editor with no block assigned
@@ -123,7 +123,7 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
         LayoutDoubleSlipEditor editor = new LayoutDoubleSlipEditor(layoutEditor);
 
         // Edit the double doubleLayoutSlip
-        editor.editLayoutTrack(doubleLayoutSlip);
+        editor.editLayoutTrack(doubleLayoutSlipView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();

@@ -37,7 +37,7 @@ public class LayoutWyeEditorTest extends LayoutTurnoutEditorTest {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         LayoutWyeEditor editor = new LayoutWyeEditor(layoutEditor);
-        turnoutTestSequence(editor, layoutWye);
+        turnoutTestSequence(editor, layoutWyeView);
     }
 
 
