@@ -2,12 +2,13 @@ This is a fast-evolving list of items for the restructuring of the display.layou
 It's in no particular order, items are removed as done, so please don't consider it documentation.
 
 ----
+## Development Tags
+  = LE-MVC-2 M-V split in place, passing tests
+
 ## Development Branches
  - LE-move-content-MVC-2-draws - pause point, (appears to) draw test layouts properly (tagged as LE-MVC-2 M-V)
  - LE-move-content-MVC-working-on-3 - current working head from above
  
- ## Development Tags
-  = LE-MVC-2 M-V split in place, passing tests
 ----
 
 ## MVC work
@@ -83,24 +84,14 @@ LayoutTurnout & LayoutTurnoutView setTrackSegmentBlock(..) is a bad split implem
         LayoutTurnout
         LayoutSlip
         LayoutXOver
+        
+ - lots of messages in place for bad routine; some throw IllegalArgumentException
+ 
+---
 
-In LayoutTurnoutView (temp) ctor:
-
-```
-        if (rot != 0.0) log.warn("we're not able to retrieve the rotation from the underlying track; it's in the coordinates")
-        rotateCoords(rot);
-        // adjust size of new turnout
-        Point2D pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
-                Math.round(dispB.getY() * yFactor));
-        dispB = pt;
-        pt = new Point2D.Double(Math.round(dispA.getX() * xFactor),
-                Math.round(dispA.getY() * yFactor));
-        dispA = pt;
-```
-
-Should we just be sucking over all the variables from the track?  But it won't have them anymore
-(This is a tricky ctor; is it ever used with rot != 0?)
-
+Concerned over e.g.  `getConnect2() == myTrk` as code transitions LayoutTrack -> LayoutTrackView. 
+ = [ ] Change to .equals()
+ - [ ] Provide an equals that will take either for now.
 ---
 
 - [ ] Getting "not stabilized after check" - what does that mean for tests?
@@ -116,6 +107,7 @@ as people lay out their layout on separate models.  (Another demo of the shortag
 Add View ctors that (because it's not got a Track object) knows to create the
 track object
  - [ ] LayoutEditor#add of just View pulls Track
+ 
 --- 
 
   Store is done from LayoutTrack child, without access to View and LayoutEditor (for nav).
@@ -217,7 +209,9 @@ hold a LayoutEditor reference, which is hard.  And the LayoutEditor class has a 
 Consider the Swing approach, where things are held within collections that can he navigated
 up/down/sideways rather than a common map.
 
-
+ - [ ] should getLayoutTurnout() et al be public (getModel()?)
+ - [ ] add a pointer LayoutTrack -> to avoid lookup?
+ 
 ---
 
 ## Code Pushes
