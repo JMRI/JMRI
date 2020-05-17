@@ -3,7 +3,7 @@ package jmri.web.servlet.directory;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 
 /**
- * @author Randall Wood (C) 2016
+ * @author Randall Wood Copyright 2016, 2020
  */
 public class DirectoryHandler extends ResourceHandler {
 
@@ -28,7 +28,7 @@ public class DirectoryHandler extends ResourceHandler {
     /**
      * Default handler constructor.
      * 
-     * @deprecated since 4.19.5 without replacement; use
+     * @deprecated since 4.19.7 without replacement; use
      *             {@link #DirectoryHandler(String)} instead
      */
     @Deprecated

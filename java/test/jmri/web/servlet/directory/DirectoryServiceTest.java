@@ -20,7 +20,7 @@ import jmri.util.JUnitUtil;
 
 /**
  *
- * @author Randall Wood Copyright 2017
+ * @author Randall Wood Copyright 2017, 2020
  */
 public class DirectoryServiceTest {
 

@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * in {@link org.eclipse.jetty.util.resource.Resource} so that directory
  * listings can include the complete JMRI look and feel.
  *
- * @author Randall Wood (C) 2016
+ * @author Randall Wood Copright 2016, 2020
  */
 public class DirectoryResource extends PathResource {
 

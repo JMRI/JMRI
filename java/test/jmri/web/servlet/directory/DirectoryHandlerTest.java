@@ -15,7 +15,8 @@ import jmri.util.JUnitUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright 2017
+ * @author Randall Wood Copyright 2020
  */
 public class DirectoryHandlerTest {
 
