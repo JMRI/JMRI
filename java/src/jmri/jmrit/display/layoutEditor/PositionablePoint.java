@@ -226,17 +226,6 @@ public class PositionablePoint extends LayoutTrack {
         //nothing to see here... move along...
     }
 
-    /**
-     * @return the bounds of this positional point
-     */
-    @Override
-    public Rectangle2D getBounds() {
-        Point2D c = getCoordsCenter();
-        //Note: empty bounds don't draw...
-        // so now I'm making them 0.5 bigger in all directions (1 pixel total)
-        return new Rectangle2D.Double(c.getX() - 0.5, c.getY() - 0.5, 1.0, 1.0);
-    }
-
     private PositionablePoint linkedPoint;
 
     public String getLinkedEditorName() {
@@ -1633,55 +1622,6 @@ public class PositionablePoint extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected HitPointType findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        HitPointType result = HitPointType.NONE;  // assume point not on connection
-        //note: optimization here: instead of creating rectangles for all the
-        // points to check below, we create a rectangle for the test point
-        // and test if the points below are in that rectangle instead.
-        Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
-        Point2D p, minPoint = MathUtil.zeroPoint2D;
-
-        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-        double distance, minDistance = Float.POSITIVE_INFINITY;
-
-        if (!requireUnconnected || (getConnect1() == null)
-                || ((getType() == PointType.ANCHOR) && (getConnect2() == null))) {
-            // test point control rectangle
-            p = getCoordsCenter();
-            distance = MathUtil.distance(p, hitPoint);
-            if (distance < minDistance) {
-                minDistance = distance;
-                minPoint = p;
-                result = HitPointType.POS_POINT;
-            }
-        }
-        if ((useRectangles && !r.contains(minPoint))
-                || (!useRectangles && (minDistance > circleRadius))) {
-            result = HitPointType.NONE;
-        }
-        return result;
-    }   // findHitPointType
-
-    /**
-     * return the coordinates for a specified connection type
-     *
-     * @param connectionType the connection type
-     * @return the coordinates for the specified connection type
-     */
-    @Override
-    public Point2D getCoordsForConnectionType(HitPointType connectionType) {
-        Point2D result = getCoordsCenter();
-        if (connectionType != HitPointType.POS_POINT) {
-            log.error("{}.getCoordsForConnectionType({}); Invalid Connection Type",
-                    getName(), connectionType); //I18IN
-        }
-        return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public LayoutTrack getConnection(HitPointType connectionType) throws jmri.JmriException {
         LayoutTrack result = null;
         if (connectionType == HitPointType.POS_POINT) {
@@ -1789,43 +1729,6 @@ public class PositionablePoint extends LayoutTrack {
                 g2.fill(trackControlCircleAt(getCoordsCenter()));
             }
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void drawEditControls(Graphics2D g2) {
-        log.trace("PositionablePoint::drawEditControls");
-        TrackSegment ts1 = getConnect1();
-        if (ts1 == null) {
-            g2.setColor(Color.red);
-        } else {
-            TrackSegment ts2 = null;
-            if (getType() == PointType.ANCHOR) {
-                ts2 = getConnect2();
-            } else if (getType() == PointType.EDGE_CONNECTOR) {
-                if (getLinkedPoint() != null) {
-                    ts2 = getLinkedPoint().getConnect1();
-                }
-            }
-            if ((getType() != PointType.END_BUMPER) && (ts2 == null)) {
-                g2.setColor(Color.yellow);
-            } else {
-                g2.setColor(Color.green);
-            }
-        }
-        g2.draw(layoutEditor.layoutEditorControlRectAt(getCoordsCenter()));
-    }   // drawEditControls
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void drawTurnoutControls(Graphics2D g2) {
-        log.trace("PositionablePoint::drawTurnoutControls");
-        // PositionablePoints don't have turnout controls...
-        // nothing to see here... move along...
     }
 
     /**

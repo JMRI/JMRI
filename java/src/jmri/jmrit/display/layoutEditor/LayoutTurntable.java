@@ -169,23 +169,6 @@ public class LayoutTurntable extends LayoutTrack {
         }
     }
 
-    /*
-     * non-accessor methods
-     */
-    /**
-     * @return the bounds of this turntable.
-     */
-    @Override
-    public Rectangle2D getBounds() {
-        Rectangle2D result;
-
-        result = new Rectangle2D.Double(getCoordsCenter().getX(), getCoordsCenter().getY(), 0, 0);
-        for (int k = 0; k < getNumberRays(); k++) {
-            result.add(getRayCoordsOrdered(k));
-        }
-        return result;
-    }
-
     /**
      * Add a ray at the specified angle.
      *
@@ -523,18 +506,6 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Get the coordinates for a specified connection type.
-     *
-     * @param connectionType the connection type
-     * @return the coordinates
-     */
-    @Override
-    public Point2D getCoordsForConnectionType(HitPointType connectionType) {
-        log.info("getCoordsForConnectionType should have called View instead of temporary");
-        return layoutEditor.getLayoutTurntableView(this).getCoordsForConnectionType( connectionType );
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -665,51 +636,6 @@ public class LayoutTurntable extends LayoutTrack {
     public void rotateCoords(double angleDEG) {
         log.info("rotateCoords should have called View instead of temporary");
         layoutEditor.getLayoutTurntableView(this).rotateCoords(angleDEG);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected HitPointType findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        log.info("findHitPointType should have called View instead of temporary");
-        return layoutEditor.getLayoutTurntableView(this).findHitPointType(hitPoint, useRectangles, requireUnconnected);
-//         HitPointType result = HitPointType.NONE;  // assume point not on connection
-//         // note: optimization here: instead of creating rectangles for all the
-//         // points to check below, we create a rectangle for the test point
-//         // and test if the points below are in that rectangle instead.
-//         Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
-//         Point2D p, minPoint = MathUtil.zeroPoint2D;
-// 
-//         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-//         double distance, minDistance = POSITIVE_INFINITY;
-//         if (!requireUnconnected) {
-//             // check the center point
-//             p = getCoordsCenter();
-//             distance = MathUtil.distance(p, hitPoint);
-//             if (distance < minDistance) {
-//                 minDistance = distance;
-//                 minPoint = p;
-//                 result = HitPointType.TURNTABLE_CENTER;
-//             }
-//         }
-// 
-//         for (int k = 0; k < getNumberRays(); k++) {
-//             if (!requireUnconnected || (getRayConnectOrdered(k) == null)) {
-//                 p = getRayCoordsOrdered(k);
-//                 distance = MathUtil.distance(p, hitPoint);
-//                 if (distance < minDistance) {
-//                     minDistance = distance;
-//                     minPoint = p;
-//                     result = HitPointType.turntableTrackIndexedValue(k);
-//                 }
-//             }
-//         }
-//         if ((useRectangles && !r.contains(minPoint))
-//                 || (!useRectangles && (minDistance > circleRadius))) {
-//             result = HitPointType.NONE;
-//         }
-//         return result;
     }
 
     public String tLayoutBlockName = "";
@@ -1219,18 +1145,6 @@ public class LayoutTurntable extends LayoutTrack {
     }   // class RayTrack
 
     /**
-     * Draw track decorations.
-     * 
-     * This type of track has none, so this method is empty.
-     */
-    @Override
-    protected void drawDecorations(Graphics2D g2) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
-        //log.debug("should have called View instead of temporary");
-        // return layoutEditor.getTurntableView(this).findHitPointType(hitPoint, useRectangles, requireUnconnected);
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -1251,26 +1165,6 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
-    }
-
-    /**
-     * Draw this turntable's controls.
-     *
-     * @param g2 the graphics port to draw to
-     */
-    @Override
-    protected void drawTurnoutControls(Graphics2D g2) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
-    }
-
-    /**
-     * Draw this turntable's edit controls.
-     *
-     * @param g2 the graphics port to draw to
-     */
-    @Override
-    protected void drawEditControls(Graphics2D g2) {
         throw new IllegalArgumentException("should have called View instead of temporary");
     }
 

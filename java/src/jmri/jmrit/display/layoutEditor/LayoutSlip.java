@@ -217,7 +217,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
         return name;
     }
 
-    private String getSlipStateString(int slipState) {
+    String getSlipStateString(int slipState) { // package access for View forward
         String result = Bundle.getMessage("BeanStateUnknown");
         switch (slipState) {
             case STATE_AC: {
@@ -312,7 +312,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
         }
     }
 
-    private void setSlipState(int newSlipState) {
+    void setSlipState(int newSlipState) { // package for View forward
         if (disableWhenOccupied && isOccupied()) {
             log.debug("Turnout not changed as Block is Occupied");
         } else if (!disabled) {
@@ -332,7 +332,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
      *
      * @return true if occupied
      */
-    private boolean isOccupied() {
+    boolean isOccupied() {  // package for View forward
         Boolean result = false; // assume failure (pessimist!)
         switch (getSlipState()) {
             case STATE_AC: {
@@ -373,7 +373,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
     /**
      * Activate/Deactivate turnout to redraw when turnout state changes
      */
-    private void activateTurnout() {
+    void activateTurnout() { // for View access
         if (namedTurnout != null) {
             namedTurnout.getBean().addPropertyChangeListener(mTurnoutListener
                     = (java.beans.PropertyChangeEvent e) -> {
@@ -389,7 +389,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
         updateState();
     }
 
-    private void deactivateTurnout() {
+    void deactivateTurnout() { // for View access
         if (mTurnoutListener != null) {
             if (namedTurnout != null) {
                 namedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
@@ -435,39 +435,6 @@ abstract public class LayoutSlip extends LayoutTurnout {
 //         return MathUtil.lerp(getCoordsCenter(), rightCenter, rightFract);
 //     }
 
-    /**
-     * return the coordinates for the specified connection type
-     *
-     * @param connectionType the connection type
-     * @return the Point2D coordinates
-     */
-//     @Override
-//     public Point2D getCoordsForConnectionType(HitPointType connectionType) {
-//         Point2D result = getCoordsCenter();
-//         switch (connectionType) {
-//             case SLIP_A:
-//                 result = getCoordsA();
-//                 break;
-//             case SLIP_B:
-//                 result = getCoordsB();
-//                 break;
-//             case SLIP_C:
-//                 result = getCoordsC();
-//                 break;
-//             case SLIP_D:
-//                 result = getCoordsD();
-//                 break;
-//             case SLIP_LEFT:
-//                 result = getCoordsLeft();
-//                 break;
-//             case SLIP_RIGHT:
-//                 result = getCoordsRight();
-//                 break;
-//             default:
-//                 log.error("{}.getCoordsForConnectionType({}); Invalid Connection Type", getName(), connectionType); // I18IN
-//         }
-//         return result;
-//     }
 
     /**
      * {@inheritDoc}
@@ -530,128 +497,6 @@ abstract public class LayoutSlip extends LayoutTurnout {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        HitPointType result = HitPointType.NONE;  // assume point not on connection
-// 
-//         if (!requireUnconnected) {
-//             // calculate radius of turnout control circle
-//             double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-// 
-//             // get left and right centers
-//             Point2D leftCenter = getCoordsLeft();
-//             Point2D rightCenter = getCoordsRight();
-// 
-//             if (useRectangles) {
-//                 // calculate turnout's left control rectangle
-//                 Rectangle2D leftRectangle = layoutEditor.layoutEditorControlCircleRectAt(leftCenter);
-//                 if (leftRectangle.contains(hitPoint)) {
-//                     // point is in this turnout's left control rectangle
-//                     result = HitPointType.SLIP_LEFT;
-//                 }
-//                 Rectangle2D rightRectangle = layoutEditor.layoutEditorControlCircleRectAt(rightCenter);
-//                 if (rightRectangle.contains(hitPoint)) {
-//                     // point is in this turnout's right control rectangle
-//                     result = HitPointType.SLIP_RIGHT;
-//                 }
-//             } else {
-//                 // check east/west turnout control circles
-//                 double leftDistance = hitPoint.distance(leftCenter);
-//                 double rightDistance = hitPoint.distance(rightCenter);
-// 
-//                 if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
-//                     // mouse was pressed on this slip
-//                     result = (leftDistance < rightDistance) ? HitPointType.SLIP_LEFT : HitPointType.SLIP_RIGHT;
-//                 }
-//             }
-//         }
-// 
-//         // have we found anything yet?
-//         if (result == HitPointType.NONE) {
-//             // rather than create rectangles for all the points below and
-//             // see if the passed in point is in one of those rectangles
-//             // we can create a rectangle for the passed in point and then
-//             // test if any of the points below are in that rectangle instead.
-//             Rectangle2D r = layoutEditor.layoutEditorControlRectAt(hitPoint);
-// 
-//             if (!requireUnconnected || (getConnectA() == null)) {
-//                 // check the A connection point
-//                 if (r.contains(getCoordsA())) {
-//                     result = HitPointType.SLIP_A;
-//                 }
-//             }
-// 
-//             if (!requireUnconnected || (getConnectB() == null)) {
-//                 // check the B connection point
-//                 if (r.contains(getCoordsB())) {
-//                     result = HitPointType.SLIP_B;
-//                 }
-//             }
-// 
-//             if (!requireUnconnected || (getConnectC() == null)) {
-//                 // check the C connection point
-//                 if (r.contains(getCoordsC())) {
-//                     result = HitPointType.SLIP_C;
-//                 }
-//             }
-// 
-//             if (!requireUnconnected || (getConnectD() == null)) {
-//                 // check the D connection point
-//                 if (r.contains(getCoordsD())) {
-//                     result = HitPointType.SLIP_D;
-//                 }
-//             }
-//         }
-        return result;
-    }   // findHitPointType
-
-    /*
-    * Modify coordinates methods
-     */
-    /**
-     * set center coordinates
-     *
-     * @param p the coordinates to set
-     */
-//     @Override
-//     public void setCoordsCenter(@Nonnull Point2D p) {
-//         super.setCoordsCenter(p);
-//         pointA = MathUtil.add(getCoordsCenter(), dispA);
-//         pointB = MathUtil.add(getCoordsCenter(), dispB);
-//         pointC = MathUtil.subtract(getCoordsCenter(), dispA);
-//         pointD = MathUtil.subtract(getCoordsCenter(), dispB);
-//     }
-// 
-//     @Override
-//     public void setCoordsA(@Nonnull Point2D p) {
-//         pointA = p;
-//         dispA = MathUtil.subtract(pointA, getCoordsCenter());
-//         pointC = MathUtil.subtract(getCoordsCenter(), dispA);
-//     }
-// 
-//     @Override
-//     public void setCoordsB(@Nonnull Point2D p) {
-//         pointB = p;
-//         dispB = MathUtil.subtract(pointB, getCoordsCenter());
-//         pointD = MathUtil.subtract(getCoordsCenter(), dispB);
-//     }
-// 
-//     @Override
-//     public void setCoordsC(@Nonnull Point2D p) {
-//         pointC = p;
-//         dispA = MathUtil.subtract(getCoordsCenter(), pointC);
-//         pointA = MathUtil.add(getCoordsCenter(), dispA);
-//     }
-// 
-//     @Override
-//     public void setCoordsD(@Nonnull Point2D p) {
-//         pointD = p;
-//         dispB = MathUtil.subtract(getCoordsCenter(), pointD);
-//         pointB = MathUtil.add(getCoordsCenter(), dispB);
-//     }
 
     JPopupMenu popup = null;
 
@@ -1013,7 +858,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
         removeSML(getSignalDMast());
     }
 
-    private void disableSML(SignalMast signalMast) {
+    void disableSML(SignalMast signalMast) {  //  package for View
         if (signalMast == null) {
             return;
         }
@@ -1052,7 +897,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
     }
 
     // Internal call to update the state of the slip depending upon the turnout states.
-    private void updateState() {
+    void updateState() { //  package for View
         if ((getTurnout() != null) && (getTurnoutB() != null)) {
             int state_a = getTurnout().getKnownState();
             int state_b = getTurnoutB().getKnownState();
@@ -1074,7 +919,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
      *
      * @return true if either turnout is inconsistent.
      */
-    private boolean isTurnoutInconsistent() {
+    boolean isTurnoutInconsistent() { //  package for View
         Turnout tA = getTurnout();
         if (tA != null && tA.getKnownState() == INCONSISTENT) {
             return true;
@@ -1483,65 +1328,6 @@ abstract public class LayoutSlip extends LayoutTurnout {
 //             g2.fill(trackControlCircleAt(getCoordsD()));
 //         }
     }
-
-    @Override
-    protected void drawTurnoutControls(Graphics2D g2) {
-//         if (!disabled && !(disableWhenOccupied && isOccupied())) {
-//             // TODO: query user base if this is "acceptable" (can obstruct state)
-//             if (false) {
-//                 int stateA = UNKNOWN;
-//                 Turnout toA = getTurnout();
-//                 if (toA != null) {
-//                     stateA = toA.getKnownState();
-//                 }
-// 
-//                 Color foregroundColor = g2.getColor();
-//                 Color backgroundColor = g2.getBackground();
-// 
-//                 if (stateA == Turnout.THROWN) {
-//                     g2.setColor(backgroundColor);
-//                 } else if (stateA != Turnout.CLOSED) {
-//                     g2.setColor(Color.GRAY);
-//                 }
-//                 Point2D rightCircleCenter = getCoordsRight();
-//                 if (layoutEditor.isTurnoutFillControlCircles()) {
-//                     g2.fill(trackControlCircleAt(rightCircleCenter));
-//                 } else {
-//                     g2.draw(trackControlCircleAt(rightCircleCenter));
-//                 }
-//                 if (stateA != Turnout.CLOSED) {
-//                     g2.setColor(foregroundColor);
-//                 }
-// 
-//                 int stateB = UNKNOWN;
-//                 Turnout toB = getTurnoutB();
-//                 if (toB != null) {
-//                     stateB = toB.getKnownState();
-//                 }
-// 
-//                 if (stateB == Turnout.THROWN) {
-//                     g2.setColor(backgroundColor);
-//                 } else if (stateB != Turnout.CLOSED) {
-//                     g2.setColor(Color.GRAY);
-//                 }
-//                 // drawHidden left/right turnout control circles
-//                 Point2D leftCircleCenter = getCoordsLeft();
-//                 if (layoutEditor.isTurnoutFillControlCircles()) {
-//                     g2.fill(trackControlCircleAt(leftCircleCenter));
-//                 } else {
-//                     g2.draw(trackControlCircleAt(leftCircleCenter));
-//                 }
-//                 if (stateB != Turnout.CLOSED) {
-//                     g2.setColor(foregroundColor);
-//                 }
-//             } else {
-//                 Point2D rightCircleCenter = getCoordsRight();
-//                 g2.draw(trackControlCircleAt(rightCircleCenter));
-//                 Point2D leftCircleCenter = getCoordsLeft();
-//                 g2.draw(trackControlCircleAt(leftCircleCenter));
-//             }
-//         }
-    } // drawTurnoutControls
 
     public static class TurnoutState {
 

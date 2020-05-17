@@ -359,10 +359,13 @@ abstract public class LayoutTrackView {
     final protected Point2D rotatePoint(@Nonnull Point2D p, double sineRot, double cosineRot) {
         double cX = center.getX();
         double cY = center.getY();
+
         double deltaX = p.getX() - cX;
         double deltaY = p.getY() - cY;
+
         double x = cX + cosineRot * deltaX - sineRot * deltaY;
         double y = cY + sineRot * deltaX + cosineRot * deltaY;
+
         return new Point2D.Double(x, y);
     }
 

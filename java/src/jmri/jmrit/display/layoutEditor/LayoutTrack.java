@@ -234,21 +234,27 @@ abstract public class LayoutTrack {
      *
      * @param g2 the graphics context
      */
-    abstract protected void drawEditControls(Graphics2D g2);
+    final protected void drawEditControls(Graphics2D g2) {
+        throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
+    }
 
     /**
      * Draw the turnout controls
      *
      * @param g2 the graphics context
      */
-    abstract protected void drawTurnoutControls(Graphics2D g2);
+    final protected void drawTurnoutControls(Graphics2D g2) {
+        throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
+    }
 
     /**
      * Draw track decorations
      *
      * @param g2 the graphics context
      */
-    abstract protected void drawDecorations(Graphics2D g2);
+    protected void drawDecorations(Graphics2D g2) {
+        throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
+    }
 
     /**
      * Get the hidden state of the track element.
@@ -362,7 +368,10 @@ abstract public class LayoutTrack {
      * @return the location type for the point (or NONE)
      * @since 7.4.3
      */
-    abstract protected HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected);
+    final protected HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
+        log.info("findHitPointType should have called View instead of temporary");
+        return layoutEditor.getLayoutTrackView(this).findHitPointType(hitPoint, useRectangles, requireUnconnected);
+    }
 
     // optional useRectangles & requireUnconnected parameters default to false
     final protected HitPointType findHitPointType(@Nonnull Point2D p) {
@@ -381,12 +390,20 @@ abstract public class LayoutTrack {
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
-    abstract public Point2D getCoordsForConnectionType(HitPointType connectionType);
+    final public Point2D getCoordsForConnectionType(HitPointType connectionType) {
+        // final here to force pass over to View tree (method is temporary here)
+        log.debug("calling temporary getCoordsForConnectionType method");
+        return layoutEditor.getLayoutTrackView(this).getCoordsForConnectionType(connectionType);
+    }
 
     /**
      * @return the bounds of this track
      */
-    abstract public Rectangle2D getBounds();
+    final public Rectangle2D getBounds() {
+        // final here to force pass over to View tree (method is temporary here)
+        log.debug("calling temporary getCoordsForConnectionType method");
+        return layoutEditor.getLayoutTrackView(this).getBounds();
+    }
 
     /**
      * show the popup menu for this layout track

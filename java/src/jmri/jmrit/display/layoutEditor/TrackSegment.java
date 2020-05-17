@@ -674,96 +674,6 @@ public class TrackSegment extends LayoutTrack {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected HitPointType findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        HitPointType result = HitPointType.NONE;  // assume point not on connection
-
-        if (!requireUnconnected) {
-            // note: optimization here: instead of creating rectangles for all the
-            // points to check below, we create a rectangle for the test point
-            // and test if the points below are in that rectangle instead.
-            Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
-            Point2D p, minPoint = MathUtil.zeroPoint2D;
-            double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-            double distance, minDistance = Float.POSITIVE_INFINITY;
-
-            if (isCircle()) {
-                p = getCoordsCenterCircle();
-                distance = MathUtil.distance(p, hitPoint);
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    minPoint = p;
-                    result = HitPointType.TRACK_CIRCLE_CENTRE;
-                }
-            } else if (isBezier()) {
-                // hit testing for the control points
-                for (int index = 0; index < bezierControlPoints.size(); index++) {
-                    p = bezierControlPoints.get(index);
-                    distance = MathUtil.distance(p, hitPoint);
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        minPoint = p;
-                        result = HitPointType.bezierPointIndexedValue(index);
-                    }
-                }
-            }
-            p = getCentreSeg();
-            if (r.contains(p)) {
-                distance = MathUtil.distance(p, hitPoint);
-                if (distance <= minDistance) {
-                    minDistance = distance;
-                    minPoint = p;
-                    result = HitPointType.TRACK;
-                }
-            }
-            if ((result != HitPointType.NONE) && (useRectangles ? !r.contains(minPoint) : (minDistance > circleRadius))) {
-                result = HitPointType.NONE;
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Get the coordinates for a specified connection type.
-     *
-     * @param connectionType the connection type
-     * @return the coordinates for the specified connection type
-     */
-    @Override
-    public Point2D getCoordsForConnectionType(HitPointType connectionType) {
-        Point2D result = getCentreSeg();
-        if (connectionType == HitPointType.TRACK_CIRCLE_CENTRE) {
-            result = getCoordsCenterCircle();
-        } else if (HitPointType.isBezierHitType(connectionType)) {
-            result = getBezierControlPoint(connectionType.bezierPointIndex());
-        }
-        return result;
-    }
-
-    /**
-     * @return the bounds of this track segment
-     */
-    @Override
-    public Rectangle2D getBounds() {
-        Rectangle2D result;
-
-        Point2D ep1 = getCoordsCenter(), ep2 = getCoordsCenter();
-        if (getConnect1() != null) {
-            ep1 = layoutEditor.getCoords(getConnect1(), getType1());
-        }
-        if (getConnect2() != null) {
-            ep2 = layoutEditor.getCoords(getConnect2(), getType2());
-        }
-
-        result = new Rectangle2D.Double(ep1.getX(), ep1.getY(), 0, 0);
-        result.add(ep2);
-
-        return result;
-    }
-
     private JPopupMenu popupMenu = null;
     private final JCheckBoxMenuItem mainlineCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("MainlineCheckBoxMenuItemTitle"));
 //     private final JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("HiddenCheckBoxMenuItemTitle"));
@@ -2323,19 +2233,6 @@ public class TrackSegment extends LayoutTrack {
     @Override
     protected void highlightUnconnected(Graphics2D g2, HitPointType selectedType) {
         log.info("highlightUnconnected is temporary, but was invoked", new Exception("traceback"));
-    }
-
-    /**
-     * temporary fill of abstract from above
-     */
-    @Override
-    protected void drawEditControls(Graphics2D g2) {
-        log.info("drawEditControls is temporary, but was invoked", new Exception("traceback"));
-    }
-
-    @Override
-    protected void drawTurnoutControls(Graphics2D g2) {
-        log.info("drawTurnoutControls is temporary, but was invoked", new Exception("traceback"));
     }
 
     /**

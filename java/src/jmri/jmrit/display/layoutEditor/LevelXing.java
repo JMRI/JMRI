@@ -703,34 +703,6 @@ public class LevelXing extends LayoutTrack {
         return layoutEditor.getLevelXingView(this).getCoordsD();
     }
 
-//     *
-//      * Get the coordinates for a specified connection type.
-//      *
-//      * @param connectionType the connection type
-//      * @return the coordinates for the specified connection type
-//      */
-    @Override
-    public Point2D getCoordsForConnectionType(HitPointType connectionType) {
-        log.debug("should have called View instead of temporary in getCoordsForConnectionType");
-        return layoutEditor.getLevelXingView(this).getCoordsForConnectionType(connectionType);
-    }
-    
-    /**
-     * @return the bounds of this crossing
-     */
-     @Override
-     public Rectangle2D getBounds() {
-        throw new IllegalArgumentException("should have called View instead of temporary");
-//         Rectangle2D result;
-// 
-//         Point2D pointA = getCoordsA();
-//         result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
-//         result.add(getCoordsB());
-//         result.add(getCoordsC());
-//         result.add(getCoordsD());
-//         return result;
-     }
-
     /**
      * Add Layout Blocks.
      * @param newLayoutBlock the layout block to add.
@@ -918,15 +890,6 @@ public class LevelXing extends LayoutTrack {
 //         super.setCoordsCenter(center_temp);
 // 
      }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected HitPointType findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        log.debug("should have called View instead of temporary");
-        return layoutEditor.getLevelXingView(this).findHitPointType(hitPoint, useRectangles, requireUnconnected);
-    }
     
     // initialization instance variables (used when loading a LayoutEditor)
     public String connectAName = "";
@@ -1421,15 +1384,6 @@ public class LevelXing extends LayoutTrack {
 //         }
 //     }
 // 
-    /**
-     * Draw track decorations.
-     * 
-     * This type of track has none, so this method is empty.
-     */
-    @Override
-    protected void drawDecorations(Graphics2D g2) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
-    }
 
     /**
      * Draw this level crossing.
@@ -1561,48 +1515,6 @@ public class LevelXing extends LayoutTrack {
 //                 && (getConnectD() == null)) {
 //             g2.fill(trackControlCircleAt(getCoordsD()));
 //         }
-    }
-
-    @Override
-    protected void drawEditControls(Graphics2D g2) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
-//         g2.setColor(layoutEditor.getDefaultTrackColorColor());
-//         g2.draw(trackEditControlCircleAt(getCoordsCenter()));
-// 
-//         if (getConnectA() == null) {
-//             g2.setColor(Color.magenta);
-//         } else {
-//             g2.setColor(Color.blue);
-//         }
-//         g2.draw(layoutEditor.layoutEditorControlRectAt(getCoordsA()));
-// 
-//         if (getConnectB() == null) {
-//             g2.setColor(Color.red);
-//         } else {
-//             g2.setColor(Color.green);
-//         }
-//         g2.draw(layoutEditor.layoutEditorControlRectAt(getCoordsB()));
-// 
-//         if (getConnectC() == null) {
-//             g2.setColor(Color.red);
-//         } else {
-//             g2.setColor(Color.green);
-//         }
-//         g2.draw(layoutEditor.layoutEditorControlRectAt(getCoordsC()));
-// 
-//         if (getConnectD() == null) {
-//             g2.setColor(Color.red);
-//         } else {
-//             g2.setColor(Color.green);
-//         }
-//         g2.draw(layoutEditor.layoutEditorControlRectAt(getCoordsD()));
-    }
-
-    @Override
-    protected void drawTurnoutControls(Graphics2D g2) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
-        // LevelXings don't have turnout controls...
-        // nothing to see here... move along...
     }
 
     /*
