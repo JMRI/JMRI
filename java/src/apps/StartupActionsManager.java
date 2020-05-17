@@ -63,7 +63,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
      * <p>
      * Loads the startup action preferences and, if all required managers have
      * initialized without exceptions, performs those actions. Startup actions
-     * are only performed if {@link apps.startup.StartupModel#isValid()} is true
+     * are only performed if {@link StartupModel#isValid()} is true
      * for the action. It is assumed that the action has retained an Exception
      * that can be used to explain why isValid() is false.
      */
