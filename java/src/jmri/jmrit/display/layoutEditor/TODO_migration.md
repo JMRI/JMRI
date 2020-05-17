@@ -3,9 +3,11 @@ It's in no particular order, items are removed as done, so please don't consider
 
 ----
 ## Development Branches
- - LE-move-content-MVC-2-draws - pause point, (appears to) draw test layouts properly
+ - LE-move-content-MVC-2-draws - pause point, (appears to) draw test layouts properly (tagged as LE-MVC-2 M-V)
  - LE-move-content-MVC-working-on-3 - current working head from above
  
+ ## Development Tags
+  = LE-MVC-2 M-V split in place, passing tests
 ----
 
 ## MVC work

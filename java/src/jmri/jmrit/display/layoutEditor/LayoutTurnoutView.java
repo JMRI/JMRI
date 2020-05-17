@@ -1152,15 +1152,15 @@ public class LayoutTurnoutView extends LayoutTrackView {
     }
 
     public boolean isMainlineB() {
-        return turnout.isMainlineA();
+        return turnout.isMainlineB();
     }
 
     public boolean isMainlineC() {
-        return turnout.isMainlineA();
+        return turnout.isMainlineC();
     }
 
     public boolean isMainlineD() {
-        return turnout.isMainlineA();
+        return turnout.isMainlineD();
     }
 
     /**
