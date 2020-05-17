@@ -144,24 +144,55 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
     public void testGetBounds() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
+            // the commented out tests were from the older code,
+            // which relied on execution order of the side-effects
+            // from the testSetUpDefaultSize test.
         Assert.assertEquals("ltRH.getBounds() is equal to...",
-                new Rectangle2D.Double(121.0, 80.0, 58.0, 55.0),
+                // new Rectangle2D.Double(121.0, 80.0, 58.0, 55.0),
+                new Rectangle2D.Double(132.0, 87.0, 36.0, 36.0),
                 ltRHv.getBounds());
+
         Assert.assertEquals("ltLH.getBounds() is equal to...",
-                new Rectangle2D.Double(184.0, 135.0, 50.0, 80.0),
+                // new Rectangle2D.Double(184.0, 135.0, 50.0, 80.0),
+                new Rectangle2D.Double(189.0, 149.0, 33.0, 52.0),
                 ltLHv.getBounds());
+
         Assert.assertEquals("ltWY.getBounds() is equal to...",
-                new Rectangle2D.Double(232.0, 201.0, 25.0, 100.0),
+                // new Rectangle2D.Double(232.0, 201.0, 25.0, 100.0),
+                new Rectangle2D.Double(238.0, 218.5, 16.5, 64.5),
                 ltWYv.getBounds());
+
         Assert.assertEquals("ltDX.getBounds() is equal to...",
-                new Rectangle2D.Double(199.0, 213.0, 202.0, 224.0),
+                // new Rectangle2D.Double(199.0, 213.0, 202.0, 224.0),
+                new Rectangle2D.Double(253.0, 273.0, 94.0, 104.0),
                 ltDXv.getBounds());
+
         Assert.assertEquals("ltRX.getBounds() is equal to...",
-                new Rectangle2D.Double(223.0, 345.0, 254.0, 110.0),
+                // new Rectangle2D.Double(223.0, 345.0, 254.0, 110.0),
+                new Rectangle2D.Double(290.0, 376.0, 120.0, 48.0),
                 ltRXv.getBounds());
+
         Assert.assertEquals("ltLX.getBounds() is equal to...",
-                new Rectangle2D.Double(259.0, 413.0, 282.0, 124.0),
+                // new Rectangle2D.Double(259.0, 413.0, 282.0, 124.0),
+                new Rectangle2D.Double(334.0, 447.0, 132.0, 56.0),
                 ltLXv.getBounds());
+    }
+
+    @Test
+    public void testSetUpDefaultSize() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+
+        // note: Not really testing anything here,
+        // this is just for code coverage. But note that it
+        // modifies the current layout manager, which must
+        // be refreshed before the next test.
+        ltRHv.setUpDefaultSize();
+        ltLHv.setUpDefaultSize();
+        ltWYv.setUpDefaultSize();
+        ltDXv.setUpDefaultSize();
+        ltRXv.setUpDefaultSize();
+        ltLXv.setUpDefaultSize();
     }
 
     private static LayoutEditor layoutEditor = null;
@@ -195,16 +226,11 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
             JUnitUtil.initInternalTurnoutManager();
             JUnitUtil.initInternalSensorManager();
             JUnitUtil.initInternalSignalHeadManager();
-            layoutEditor = new LayoutEditor();
         }
     }
 
     @AfterClass
     public static void afterClass() {
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
-        }
-        layoutEditor = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
@@ -213,6 +239,8 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
     public void setUp() {
         JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
+            layoutEditor = new LayoutEditor();
+
             Point2D point = new Point2D.Double(150.0, 100.0);
             Point2D delta = new Point2D.Double(50.0, 75.0);
 
@@ -279,6 +307,10 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
             ltLX.dispose();
             ltLX = null;
         }
+        if (layoutEditor != null) {
+            JUnitUtil.dispose(layoutEditor);
+        }
+        layoutEditor = null;
     }
 
 }

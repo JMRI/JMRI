@@ -596,21 +596,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
     }
 
     @Test
-    public void testSetUpDefaultSize() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
-
-        // note: Not really testing anything here,
-        // this is just for code coverage.
-        ltRH.setUpDefaultSize();
-        ltLH.setUpDefaultSize();
-        ltWY.setUpDefaultSize();
-        ltDX.setUpDefaultSize();
-        ltRX.setUpDefaultSize();
-        ltLX.setUpDefaultSize();
-    }
-
-    @Test
     public void testGetStateDefault() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);

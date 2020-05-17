@@ -365,7 +365,7 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
     }
 
     // from here down is testing infrastructure
-    private static LayoutEditor layoutEditor = null;
+    private LayoutEditor layoutEditor = null;
     
     private LayoutSingleSlip      lts = null;
     private LayoutSingleSlipView  lvs = null;
@@ -378,6 +378,7 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
         super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.resetProfileManager();
+        
         if (!GraphicsEnvironment.isHeadless()) {
             layoutEditor = new LayoutEditor();
             
