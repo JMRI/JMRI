@@ -17,22 +17,22 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
     @Test
     public void testGetCoordsCenter() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LayoutEditor exists", le);
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
-        PositionablePoint pp1 = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, le);
+        PositionablePoint pp1 = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, layoutEditor);
         Assert.assertNotNull("exists", pp1);
-        PositionablePointView pp1v = new PositionablePointView(pp1, MathUtil.zeroPoint2D, le);
+        PositionablePointView pp1v = new PositionablePointView(pp1, MathUtil.zeroPoint2D, layoutEditor);
         Assert.assertNotNull("exists", pp1v);
-        le.addLayoutTrack(pp1, pp1v);
+        layoutEditor.addLayoutTrack(pp1, pp1v);
         
         Assert.assertEquals("getCoordsCenter equal to zeroPoint2D", MathUtil.zeroPoint2D, pp1.getCoordsCenter());
 
         Point2D point2 = new Point2D.Double(666.6, 999.9);
-        PositionablePoint pp2 = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, le);
+        PositionablePoint pp2 = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, layoutEditor);
         Assert.assertNotNull("exists", pp2);
-        PositionablePointView pp2v = new PositionablePointView(pp2, point2, le);
+        PositionablePointView pp2v = new PositionablePointView(pp2, point2, layoutEditor);
         Assert.assertNotNull("exists", pp2v);
-        le.addLayoutTrack(pp2, pp2v);
+        layoutEditor.addLayoutTrack(pp2, pp2v);
 
         Assert.assertEquals("getCoordsCenter equal to {666.6, 999.9}", point2, pp2.getCoordsCenter());
     }
@@ -40,12 +40,12 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
     @Test
     public void testSetCoords() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LayoutEditor exists", le);
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, le);
-        PositionablePointView ppv = new PositionablePointView(pp, MathUtil.zeroPoint2D, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, layoutEditor);
+        PositionablePointView ppv = new PositionablePointView(pp, MathUtil.zeroPoint2D, layoutEditor);
         Assert.assertNotNull("exists", pp);
-        le.addLayoutTrack(pp, ppv);
+        layoutEditor.addLayoutTrack(pp, ppv);
         Assert.assertEquals("getCoordsCenter equal to zeroPoint2D", MathUtil.zeroPoint2D, ppv.getCoordsCenter());
 
         Point2D point2 = new Point2D.Double(666.6, 999.9);
@@ -56,13 +56,13 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
     @Test
     public void testScaleCoords() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LayoutEditor exists", le);
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         Point2D point = new Point2D.Double(666.6, 999.9);
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, le);
-        PositionablePointView ppv = new PositionablePointView(pp, point, le);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, layoutEditor);
+        PositionablePointView ppv = new PositionablePointView(pp, point, layoutEditor);
         Assert.assertNotNull("exists", pp);
-        le.addLayoutTrack(pp, ppv);
+        layoutEditor.addLayoutTrack(pp, ppv);
 
         ppv.scaleCoords(2.F, 2.F);
         Point2D pointX2 = MathUtil.granulize(MathUtil.multiply(point, 2.0), 1.0);
@@ -72,12 +72,12 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
     @Test
     public void testTranslateCoords() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LayoutEditor exists", le);
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         Point2D point = new Point2D.Double(666.6, 999.9);
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, le);
-        PositionablePointView ppv = new PositionablePointView(pp, point, le);
-        le.addLayoutTrack(pp, ppv);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, layoutEditor);
+        PositionablePointView ppv = new PositionablePointView(pp, point, layoutEditor);
+        layoutEditor.addLayoutTrack(pp, ppv);
         Assert.assertNotNull("exists", pp);
 
         Point2D delta = new Point2D.Float(333.3F, 444.4F);
@@ -89,12 +89,12 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
     @Test
     public void testGetBounds() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LayoutEditor exists", le);
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         Point2D point = new Point2D.Double(666.6, 999.9);
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, le);
-        PositionablePointView ppv = new PositionablePointView(pp, point, le);
-        le.addLayoutTrack(pp, ppv);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, layoutEditor);
+        PositionablePointView ppv = new PositionablePointView(pp, point, layoutEditor);
+        layoutEditor.addLayoutTrack(pp, ppv);
         Assert.assertNotNull("exists", pp);
 
         Rectangle2D bounds = new Rectangle2D.Double(point.getX() - 0.5, point.getY() - 0.5, 1.0, 1.0);
@@ -104,12 +104,12 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
     @Test
     public void testMaxWidthAndHeight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LayoutEditor exists", le);
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         Point2D point = new Point2D.Double(666.6, 999.9);
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.EDGE_CONNECTOR, le);
-        PositionablePointView ppv = new PositionablePointView(pp, point, le);
-        le.addLayoutTrack(pp, ppv);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.EDGE_CONNECTOR, layoutEditor);
+        PositionablePointView ppv = new PositionablePointView(pp, point, layoutEditor);
+        layoutEditor.addLayoutTrack(pp, ppv);
         Assert.assertNotNull("exists", pp);
 
         Assert.assertTrue("maxWidth == 5", pp.maxWidth() == 5);
@@ -119,12 +119,12 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
     @Test
     public void testFindHitPointType() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LayoutEditor exists", le);
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         Point2D thePoint = new Point2D.Double(666.6, 999.9);
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, le);
-        PositionablePointView ppv = new PositionablePointView(pp, thePoint, le);
-        le.addLayoutTrack(pp, ppv);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, layoutEditor);
+        PositionablePointView ppv = new PositionablePointView(pp, thePoint, layoutEditor);
+        layoutEditor.addLayoutTrack(pp, ppv);
         Assert.assertNotNull("exists", pp);
 
         // first, try hit
@@ -139,12 +139,12 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
     @Test
     public void testGetCoordsForConnectionType() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LayoutEditor exists", le);
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         Point2D thePoint = new Point2D.Double(666.6, 999.9);
-        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, le);
-        PositionablePointView ppv = new PositionablePointView(pp, thePoint, le);
-        le.addLayoutTrack(pp, ppv);
+        PositionablePoint pp = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, layoutEditor);
+        PositionablePointView ppv = new PositionablePointView(pp, thePoint, layoutEditor);
+        layoutEditor.addLayoutTrack(pp, ppv);
         Assert.assertNotNull("exists", pp);
 
         // test failure
@@ -158,37 +158,28 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
     }
 
 
-
-
-    LayoutEditor le;
     PositionablePoint pPoint;
     PositionablePointView pPointV;
     
     @Before
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
-
-            le = new LayoutEditor();
             
             Point2D point2D = new Point2D.Double(150.0, 100.0);
  
-            pPoint = new PositionablePoint("PP", PositionablePoint.PointType.ANCHOR, le);
-            pPointV = new PositionablePointView(pPoint, point2D, le);
-            le.addLayoutTrack(pPoint, pPointV);
+            pPoint = new PositionablePoint("PP", PositionablePoint.PointType.ANCHOR, layoutEditor);
+            pPointV = new PositionablePointView(pPoint, point2D, layoutEditor);
+            layoutEditor.addLayoutTrack(pPoint, pPointV);
 
         }
     }
 
     @After
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
-        if (le != null) {
-            JUnitUtil.dispose(le);
-        }
-        le = null;
         pPoint = null;
-        JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 }

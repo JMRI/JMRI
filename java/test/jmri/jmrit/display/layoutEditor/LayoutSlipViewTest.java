@@ -18,6 +18,7 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
     @Test
     public void testSetCoordsCenter() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -90,6 +91,7 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
     @Test
     public void testScaleCoords() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -282,6 +284,7 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
     @Test
     public void testGetCoordsForConnectionType() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -348,6 +351,7 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
     @Test
     public void testGetBounds() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -365,8 +369,6 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
     }
 
     // from here down is testing infrastructure
-    private LayoutEditor layoutEditor = null;
-    
     private LayoutSingleSlip      lts = null;
     private LayoutSingleSlipView  lvs = null;
     
@@ -374,14 +376,11 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
     private LayoutDoubleSlipView  lvd = null;
 
     @Before
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
         super.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.resetProfileManager();
         
-        if (!GraphicsEnvironment.isHeadless()) {
-            layoutEditor = new LayoutEditor();
-            
+        if (!GraphicsEnvironment.isHeadless()) {            
             lts = new LayoutSingleSlip("single", layoutEditor);
             lvs = new LayoutSingleSlipView(lts, new Point2D.Double(50.0, 100.0), +45.0, layoutEditor);
             layoutEditor.addLayoutTrack(lts, lvs);
@@ -393,6 +392,7 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
     }
 
     @After
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
         if (lts != null) {
             lts.remove();
@@ -406,12 +406,6 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
             ltd = null;
             lvd = null;
         }
-
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
-        }
-        layoutEditor = null;
-        JUnitUtil.deregisterBlockManagerShutdownTask();
 
         super.tearDown();
     }

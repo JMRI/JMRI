@@ -19,36 +19,29 @@ public class LevelXingViewTest extends LayoutTrackViewTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         Point2D point = new Point2D.Double(150.0, 100.0);
 
         new LevelXingView(xing, point, layoutEditor);
     }
 
-    LayoutEditor layoutEditor;
     LevelXing xing;
     
     @Before
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
-
-            layoutEditor = new LayoutEditor();
-             
             xing = new LevelXing("X1", layoutEditor);
-
         }
     }
 
     @After
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
-        }
-        layoutEditor = null;
         xing = null;
-        JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
 }

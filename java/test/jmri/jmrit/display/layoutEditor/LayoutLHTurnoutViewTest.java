@@ -19,6 +19,8 @@ public class LayoutLHTurnoutViewTest extends LayoutTurnoutViewTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         Point2D point = new Point2D.Double(150.0, 100.0);
 
         new LayoutLHTurnoutView(turnout, point, 99.0, 1.5, 1.6, layoutEditor);
@@ -29,13 +31,10 @@ public class LayoutLHTurnoutViewTest extends LayoutTurnoutViewTest {
     LayoutLHTurnoutView turnoutView;
     
     @Before
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
         super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
-
-            layoutEditor = new LayoutEditor();
-             
             turnout = new LayoutLHTurnout("LH", layoutEditor);
             turnoutView = new LayoutLHTurnoutView(turnout, 
                                             jmri.util.MathUtil.zeroPoint2D, 0., 1., 1.,
@@ -46,13 +45,9 @@ public class LayoutLHTurnoutViewTest extends LayoutTurnoutViewTest {
     }
 
     @After
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
-        }
-        layoutEditor = null;
         turnout = null;
-        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 }

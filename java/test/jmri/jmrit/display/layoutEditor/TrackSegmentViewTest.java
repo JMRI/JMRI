@@ -19,19 +19,17 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new TrackSegmentView(segment, layoutEditor);
     }
 
-    LayoutEditor layoutEditor;
     TrackSegment segment;
     
     @Before
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
-
-            layoutEditor = new LayoutEditor();
             
 //             PositionablePoint p1 = new PositionablePoint("A1", PositionablePoint.PointType.ANCHOR, new Point2D.Double(10.0, 20.0), layoutEditor);
 //             PositionablePoint p2 = new PositionablePoint("A2", PositionablePoint.PointType.ANCHOR, new Point2D.Double(20.0, 33.0), layoutEditor);
@@ -44,13 +42,9 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
     }
 
     @After
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
-        }
-        layoutEditor = null;
         segment = null;
-        JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 }

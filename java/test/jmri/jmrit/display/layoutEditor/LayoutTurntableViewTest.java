@@ -22,29 +22,22 @@ public class LayoutTurntableViewTest extends LayoutTrackViewTest {
         new LayoutTurntableView(turntable, point, layoutEditor);
     }
 
-    LayoutEditor layoutEditor;
     LayoutTurntable turntable;
     
     @Before
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
-
-            layoutEditor = new LayoutEditor();
             
             turntable = new LayoutTurntable("T1", layoutEditor);
         }
     }
 
     @After
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
-        }
-        layoutEditor = null;
-        JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
 }

@@ -195,8 +195,6 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
         ltLXv.setUpDefaultSize();
     }
 
-    private static LayoutEditor layoutEditor = null;
-
     private LayoutRHTurnout ltRH = null;
     private LayoutRHTurnoutView ltRHv = null;
     
@@ -236,10 +234,10 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
     }
 
     @Before
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
-        JUnitUtil.resetProfileManager();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            layoutEditor = new LayoutEditor();
 
             Point2D point = new Point2D.Double(150.0, 100.0);
             Point2D delta = new Point2D.Double(50.0, 75.0);
@@ -276,6 +274,7 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
     }
 
     @After
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
         if (ltRH != null) {
             ltRH.remove();
@@ -307,10 +306,7 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
             ltLX.dispose();
             ltLX = null;
         }
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
-        }
-        layoutEditor = null;
+        super.tearDown();
     }
 
 }

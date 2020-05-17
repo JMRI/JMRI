@@ -19,35 +19,29 @@ public class LayoutSingleSlipViewTest extends LayoutSlipViewTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         Point2D point = new Point2D.Double(150.0, 100.0);
+
         new LayoutSingleSlipView(slip, point, 0.0, layoutEditor);
     }
 
-    LayoutEditor layoutEditor;
     LayoutSingleSlip slip;
     
     @Before
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
-
-            layoutEditor = new LayoutEditor();
-            
- 
             slip = new LayoutSingleSlip("Slip", layoutEditor);
 
         }
     }
 
     @After
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
-        }
-        layoutEditor = null;
         slip = null;
-        JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 }

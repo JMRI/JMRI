@@ -19,21 +19,20 @@ public class LayoutDoubleSlipViewTest extends LayoutSlipViewTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         Point2D point = new Point2D.Double(150.0, 100.0);
         
         new LayoutDoubleSlipView(dslip, point, 0.0, layoutEditor);
     }
 
-    LayoutEditor layoutEditor;
     LayoutDoubleSlip dslip;
     
     @Before
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
-
-            layoutEditor = new LayoutEditor();
              
             dslip = new LayoutDoubleSlip("DoubleSlip", layoutEditor);
 
@@ -41,13 +40,9 @@ public class LayoutDoubleSlipViewTest extends LayoutSlipViewTest {
     }
 
     @After
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
-        }
-        layoutEditor = null;
         dslip = null;
-        JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 }

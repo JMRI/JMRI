@@ -19,22 +19,20 @@ public class  LayoutRHXOverViewTest extends  LayoutXOverViewTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         Point2D point = new Point2D.Double(150.0, 100.0);
         
         new LayoutRHXOverView(xover, point, 99.0, 1.5, 1.6, layoutEditor);
     }
 
-
-    LayoutEditor layoutEditor;
     LayoutRHXOver xover;
     
     @Before
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
-
-            layoutEditor = new LayoutEditor();
              
             xover = new LayoutRHXOver("Wye", layoutEditor);
 
@@ -42,13 +40,9 @@ public class  LayoutRHXOverViewTest extends  LayoutXOverViewTest {
     }
 
     @After
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
-        }
-        layoutEditor = null;
         xover = null;
-        JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 }
