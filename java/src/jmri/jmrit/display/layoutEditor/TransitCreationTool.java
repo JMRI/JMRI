@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2011
  * @author George Warner Copyright (c) 2017-2018
  */
-public class TransitCreationTool {
+final public class TransitCreationTool {
 
     public TransitCreationTool() {
     }
@@ -111,5 +111,5 @@ public class TransitCreationTool {
         return !list.isEmpty();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TransitCreationTool.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitCreationTool.class);
 }

@@ -172,6 +172,10 @@ public class PaneSet {
     /**
      * Create a single pane from a "pane" element in programmer or decoder
      * definition
+     * @param name pane name.
+     * @param pane pane element.
+     * @param modelElem model element.
+     * @param r roster entry.
      */
     public void newPane(String name, Element pane, Element modelElem, RosterEntry r) {
         if (log.isDebugEnabled()) {
@@ -189,7 +193,8 @@ public class PaneSet {
     }
 
     /**
-     * Store current content to file
+     * Store current content to file.
+     * @param re roster entry to store.
      */
     public void storeFile(RosterEntry re) {
         // set up file write

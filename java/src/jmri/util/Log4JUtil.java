@@ -51,10 +51,15 @@ public class Log4JUtil {
 
     /**
      * Emit a particular WARNING-level message just once.
+     * <p>
+     * Goal is to be lightweight and fast;
+     * this will only be used in a few places,
+     * and only those should appear in data structure.
+     * @param logger The Logger to warn.
+     * @param msg Message.
+     * @param args Message Arguments.
      * @return true if the log was emitted this time
      */
-    // Goal is to be lightweight and fast; this will only be used in a few places,
-    // and only those should appear in data structure.
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_UNKNOWN_ARRAY",justification="Passing varargs array through")
     static public boolean warnOnce(@Nonnull Logger logger, @Nonnull String msg, Object... args) {
         Set<String> loggerSet = warnedOnce.get(logger);
@@ -91,11 +96,14 @@ public class Log4JUtil {
     
     /**
      * Warn that a deprecated method has been invoked.
-     * Can also be used to warn of some deprecated condition, i.e.
-     * obsolete-format input data.
      * <p>
-     * Thie logging is turned off by default during testing to
+     * Can also be used to warn of some deprecated condition,
+     * i.e. obsolete-format input data.
+     * <p>
+     * The logging is turned off by default during testing to
      * simplify updating tests when warnings are added.
+     * @param logger The Logger to warn.
+     * @param methodName method name.
      */
      static public void deprecationWarning(@Nonnull Logger logger, @Nonnull String methodName) {
         if (logDeprecations) {
@@ -111,6 +119,7 @@ public class Log4JUtil {
      * Should only be used by test code. We denote this
      * by marking it deprecated, but we don't intend to remove it.
      * (Might have to if we start removing deprecated references from test code)
+     * @param log true to log deprecations, else false.
      * @deprecated - do not remove
      */
     @Deprecated // do not remove
@@ -122,6 +131,7 @@ public class Log4JUtil {
      * Should only be used by test code. We denote this
      * by marking it deprecated, but we don't intend to remove it.
      * (Might have to if we start removing deprecated references from test code)
+     * @return true if deprecation warnings are logged.
      * @deprecated - do not remove
      */
     @Deprecated // do not remove
@@ -267,6 +277,7 @@ public class Log4JUtil {
      * <p>
      * If you then pass it to 
      * Log4J for logging, it'll take up less space.
+     * @param <T> Throwable generic
      * @param t The Throwable to truncate and return
      * @return The original object with truncated stack trace
      */
@@ -288,6 +299,7 @@ public class Log4JUtil {
      * <p>
      * If you then pass it to 
      * Log4J for logging, it'll take up less space.
+     * @param <T> Throwable generic
      * @param t The Throwable to truncate and return
      * @param len The number of stack trace entries to keep.
      * @return The original object with truncated stack trace

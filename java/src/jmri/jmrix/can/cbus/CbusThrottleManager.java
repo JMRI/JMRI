@@ -448,33 +448,11 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                 while (itr.hasNext()) {
                     CbusThrottle throttle = softThrottles.get(itr.next());
                     if (throttle.getHandle() == handle) {
-                        
                         // if something external to JMRI is sharing a session
                         // dispatch is invalid
                         throttle.setDispatchActive(false);
-                        
-                        // Set the throttle session to match the DFUN packet received
-                        // log.debug("DFUN group: " + m.getElement(2) + " Fns: " + m.getElement(3) + " for session: " + m.getElement(1));
-                        switch (m.getElement(2)) {
-                            case 1:
-                                throttle.updateFunctionGroup1(m.getElement(3));
-                                break;
-                            case 2:
-                                throttle.updateFunctionGroup2(m.getElement(3));
-                                break;
-                            case 3:
-                                throttle.updateFunctionGroup3(m.getElement(3));
-                                break;
-                            case 4:
-                                throttle.updateFunctionGroup4(m.getElement(3));
-                                break;
-                            case 5:
-                                throttle.updateFunctionGroup5(m.getElement(3));
-                                break;
-                            default:
-                                log.error("Unrecognised function group");
-                                break;
-                        }
+                        throttle.updateFunctionGroup(m.getElement(2),m.getElement(3));
+
                     }
                 }
                 break;
@@ -486,9 +464,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                 while (itr.hasNext()) {
                     CbusThrottle throttle = softThrottles.get(itr.next());
                     if (throttle.getHandle() == handle) {
-                        
-                        // if something external to JMRI is sharing a session
-                        // dispatch is invalid
+                        // dispatch is invalid if something external to JMRI is sharing a session
                         throttle.setDispatchActive(false);
                         throttle.updateFunction(m.getElement(2), (opc == CbusConstants.CBUS_DFNON));
                     }

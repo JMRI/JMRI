@@ -176,7 +176,10 @@ public abstract class AbstractMRTrafficController {
 
     /**
      * Implement this to forward a specific message type to a protocol-specific
-     * listener interface. This puts the casting into the concrete class.
+     * listener interface.
+     * This puts the casting into the concrete class.
+     * @param client abstract listener.
+     * @param m message to forward.
      */
     protected abstract void forwardMessage(AbstractMRListener client, AbstractMRMessage m);
 
@@ -1034,6 +1037,7 @@ public abstract class AbstractMRTrafficController {
      * <p>
      * (This is public for testing purposes) Runs in the "Receive" thread.
      *
+     * @throws java.io.IOException on error.
      */
     public void handleOneIncomingReply() throws IOException {
         // we sit in this until the message is complete, relying on
@@ -1153,8 +1157,10 @@ public abstract class AbstractMRTrafficController {
         }
     }
 
-    /*
+    /**
      * Log an error message for a message received in an unexpected state.
+     * @param State message state.
+     * @param msgString message string.
      */
     protected void unexpectedReplyStateError(int State, String msgString) {
        String[] packages = this.getClass().getName().split("\\.");
@@ -1163,9 +1169,10 @@ public abstract class AbstractMRTrafficController {
        log.error("reply complete in unexpected state: {} was {} in class {}", State, msgString, name);
     }
 
-    /*
+    /**
      * for testing purposes, let us be able to find out
-     * what the last sender was
+     * what the last sender was.
+     * @return last sender, mLastSender.
      */
     public AbstractMRListener getLastSender() {
         return mLastSender;

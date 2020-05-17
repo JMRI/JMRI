@@ -29,6 +29,12 @@
         <surname>Le Marchand</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
@@ -75,6 +81,12 @@
       <date>2019-01-03</date>
       <authorinitials>ALM</authorinitials>
       <revremark>CV9 as enum</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2020-05-02</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>disable CV50 and CV63 for Sound-Decoder</revremark>
     </revision>
   </revhistory>
   <!-- Calls to std NMRA templates   -->
@@ -898,7 +910,7 @@
     <label xml:lang="ca">Freqüència del motor </label>
   </variable>
   <!-- EMF equivalent for Doehler und Haass -->
-  <variable CV="50" default="2" item="Load Control" tooltip="0=CV56, 1=hard, 2=soft, 3=very soft" exclude="Combo sound decoders">
+  <variable CV="50" default="2" item="Load Control" tooltip="0=CV56, 1=hard, 2=soft, 3=very soft" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018)">
     <enumVal>
       <enumChoice choice="According to CV56" value="0">
         <choice>According to CV56</choice>
@@ -976,7 +988,7 @@
     <label xml:lang="de">Kennlinie</label>
     <label xml:lang="ca">Tipus de corba de velocitat</label>
   </variable>
-  <variable CV="63" default="0" item="Start delay for speed step 1" tooltip="CV63 (0-250)" exclude="Combo sound decoders">
+  <variable CV="63" default="0" item="Start delay for speed step 1" tooltip="CV63 (0-250)" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018)">
     <decVal min="0" max="250"/>
     <label>Start delay for speed step 1</label>
     <label xml:lang="it">Inizio ritardo velocità step 1</label>

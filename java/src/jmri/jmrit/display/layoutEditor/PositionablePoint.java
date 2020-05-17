@@ -13,7 +13,7 @@ import java.util.*;
 import javax.annotation.*;
 import javax.swing.*;
 import jmri.*;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.*;
 import jmri.util.swing.*;
@@ -105,7 +105,8 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * Accessor methods
+     * Get the point type.
+     * @return point type, i.e. ANCHOR, END_BUMPER, EDGE_CONNECTOR
      */
     public PointType getType() {
         return type;
@@ -133,7 +134,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     private void setTypeAnchor() {
-        ident = layoutEditor.getFinder().uniqueName("A", 1);
+        setIdent(layoutEditor.getFinder().uniqueName("A", 1));
         type = PointType.ANCHOR;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
@@ -158,7 +159,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     private void setTypeEndBumper() {
-        ident = layoutEditor.getFinder().uniqueName("EB", 1);
+        setIdent(layoutEditor.getFinder().uniqueName("EB", 1));
         type = PointType.END_BUMPER;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
@@ -173,7 +174,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     private void setTypeEdgeConnector() {
-        ident = layoutEditor.getFinder().uniqueName("EC", 1);
+        setIdent(layoutEditor.getFinder().uniqueName("EC", 1));
         type = PointType.EDGE_CONNECTOR;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
@@ -202,7 +203,7 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
+        super.setCoordsCenter(MathUtil.granulize(MathUtil.multiply(getCoordsCenter(), factor), 1.0));
     }
 
     /**
@@ -211,7 +212,7 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     public void translateCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        center = MathUtil.add(center, factor);
+        super.setCoordsCenter(MathUtil.add(getCoordsCenter(), factor));
     }
 
     /**
@@ -972,80 +973,22 @@ public class PositionablePoint extends LayoutTrack {
 
                 jcbmi.setSelected((connect1.getArrowStyle() == 0) || !etherEnd);
 
-                ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle1.png"));
-                jcbmi = new JCheckBoxMenuItem(imageIcon);
-                arrowsCountMenu.add(jcbmi);
-                jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    if (connect1.getConnect1() == this) {
-                        connect1.setArrowEndStart(true);
-                    }
-                    if (connect1.getConnect2() == this) {
-                        connect1.setArrowEndStop(true);
-                    }
-                    connect1.setArrowStyle(1);
-                });
-                jcbmi.setSelected((connect1.getArrowStyle() == 1) && etherEnd);
+                // configure the arrows
+                for (int i = 1; i < NUM_ARROW_TYPES; i++) {
+                    jcbmi = loadArrowImageToJCBItem(i, arrowsCountMenu);
+                    final int n = i;
+                    jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                        if (connect1.getConnect1() == this) {
+                            connect1.setArrowEndStart(true);
+                        }
+                        if (connect1.getConnect2() == this) {
+                            connect1.setArrowEndStop(true);
+                        }
+                        connect1.setArrowStyle(n);
+                    });
+                    jcbmi.setSelected((connect1.getArrowStyle() == i) && etherEnd);             
+                }
 
-                imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle2.png"));
-                jcbmi = new JCheckBoxMenuItem(imageIcon);
-                arrowsCountMenu.add(jcbmi);
-                jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    if (connect1.getConnect1() == this) {
-                        connect1.setArrowEndStart(true);
-                    }
-                    if (connect1.getConnect2() == this) {
-                        connect1.setArrowEndStop(true);
-                    }
-                    connect1.setArrowStyle(2);
-                });
-                jcbmi.setSelected((connect1.getArrowStyle() == 2) && etherEnd);
-
-                imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle3.png"));
-                jcbmi = new JCheckBoxMenuItem(imageIcon);
-                arrowsCountMenu.add(jcbmi);
-                jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    if (connect1.getConnect1() == this) {
-                        connect1.setArrowEndStart(true);
-                    }
-                    if (connect1.getConnect2() == this) {
-                        connect1.setArrowEndStop(true);
-                    }
-                    connect1.setArrowStyle(3);
-                });
-                jcbmi.setSelected((connect1.getArrowStyle() == 3) && etherEnd);
-
-                imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle4.png"));
-                jcbmi = new JCheckBoxMenuItem(imageIcon);
-                arrowsCountMenu.add(jcbmi);
-                jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    if (connect1.getConnect1() == this) {
-                        connect1.setArrowEndStart(true);
-                    }
-                    if (connect1.getConnect2() == this) {
-                        connect1.setArrowEndStop(true);
-                    }
-                    connect1.setArrowStyle(4);
-                });
-                jcbmi.setSelected((connect1.getArrowStyle() == 4) && etherEnd);
-
-                imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle5.png"));
-                jcbmi = new JCheckBoxMenuItem(imageIcon);
-                arrowsCountMenu.add(jcbmi);
-                jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    if (connect1.getConnect1() == this) {
-                        connect1.setArrowEndStart(true);
-                    }
-                    if (connect1.getConnect2() == this) {
-                        connect1.setArrowEndStop(true);
-                    }
-                    connect1.setArrowStyle(5);
-                });
-                jcbmi.setSelected((connect1.getArrowStyle() == 5) && etherEnd);
 
                 JMenu arrowsDirMenu = new JMenu(Bundle.getMessage("ArrowsDirectionMenuTitle"));
                 arrowsDirMenu.setToolTipText(Bundle.getMessage("ArrowsDirectionMenuToolTip"));
@@ -1266,11 +1209,7 @@ public class PositionablePoint extends LayoutTrack {
                             }
 
                             // remove connect2 from the layoutEditor's list of layout tracks
-                            if (layoutEditor.getLayoutTracks().contains(connect2)) {
-                                layoutEditor.getLayoutTracks().remove(connect2);
-                                layoutEditor.setDirty();
-                                layoutEditor.redrawPanel();
-                            }
+                            layoutEditor.removeLayoutTrackAndRedraw(connect2);
 
                             //update affected block
                             LayoutBlock block = connect2.getLayoutBlock();
@@ -1293,11 +1232,7 @@ public class PositionablePoint extends LayoutTrack {
                             }
 
                             // remove pp_this from the layoutEditor's list of layout tracks
-                            if (layoutEditor.getLayoutTracks().contains(pp_this)) {
-                                layoutEditor.getLayoutTracks().remove(pp_this);
-                                layoutEditor.setDirty();
-                                layoutEditor.redrawPanel();
-                            }
+                            layoutEditor.removeLayoutTrackAndRedraw(pp_this);
                             pp_this.remove();
                             pp_this.dispose();
 
@@ -1597,8 +1532,8 @@ public class PositionablePoint extends LayoutTrack {
 
     public JPanel getLinkPanel() {
         editorCombo = new JComboBox<>();
-        ArrayList<LayoutEditor> panels
-                = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+        Set<LayoutEditor> panels
+                = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
         editorCombo.addItem(new JCBHandle<>("None"));
         if (panels.contains(layoutEditor)) {
             panels.remove(layoutEditor);
@@ -1754,7 +1689,7 @@ public class PositionablePoint extends LayoutTrack {
         } else {
             String errString = MessageFormat.format("{0}.getConnection({1}); Invalid Connection Type",
                     getName(), connectionType); //I18IN
-            log.error(errString);
+            log.error("will throw {}", errString);
             throw new jmri.JmriException(errString);
         }
         return result;
@@ -2159,6 +2094,6 @@ public class PositionablePoint extends LayoutTrack {
         // nothing to see here, move along...
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePoint.class);
 
 }

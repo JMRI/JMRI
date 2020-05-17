@@ -37,7 +37,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
             sendMessageMethod.invoke(a, "Hello World");
         });
         assertThat(thrown).withFailMessage("Unablle to execute send message: {}").isNull();
-        assertThat(sb.toString()).isEqualTo("Hello World").withFailMessage("SendMessage Check");
+        assertThat(sb.toString()).withFailMessage("SendMessage Check").isEqualTo("Hello World");
     }
 
     // test sending a message.
@@ -53,7 +53,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
             sendMessageMethod.invoke(a, "Hello World");
         });
         assertThat(thrown).withFailMessage("Unablle to execute send message: {}").isNull();
-        assertThat(jcs.getOutput()).isEqualTo("Hello World").withFailMessage("SendMessage Check");
+        assertThat(jcs.getOutput()).withFailMessage("SendMessage Check").isEqualTo("Hello World");
     }
 
     // override the default permissions.
@@ -63,7 +63,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
         SimpleLightServer a = (SimpleLightServer)ls;
         Throwable thrown = catchThrowable( () -> a.sendErrorStatus("IT1"));
         assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
-        assertThat(sb.toString()).isEqualTo("LIGHT ERROR\n").withFailMessage("sendErrorStatus check");
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("LIGHT ERROR\n");
     }
 
     // test sending an ON status message.
@@ -72,7 +72,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
         SimpleLightServer a = (SimpleLightServer)ls;
         Throwable thrown = catchThrowable( () -> a.sendStatus("IL1", jmri.Light.ON));
         assertThat(thrown).withFailMessage("Exception sending ON Status").isNull();
-        assertThat(sb.toString()).isEqualTo("LIGHT IL1 ON\n").withFailMessage("sendErrorStatus check");
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("LIGHT IL1 ON\n");
     }
 
     // test sending an OFF status message.
@@ -81,7 +81,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
         SimpleLightServer a = (SimpleLightServer)ls;
         Throwable thrown = catchThrowable( () -> a.sendStatus("IL1", jmri.Light.OFF));
         assertThat(thrown).withFailMessage("Exception sending OFF Status").isNull();
-        assertThat(sb.toString()).isEqualTo("LIGHT IL1 OFF\n").withFailMessage("sendErrorStatus check");
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("LIGHT IL1 OFF\n");
     }
 
     // test sending an ON status message.
@@ -90,7 +90,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
         SimpleLightServer a = (SimpleLightServer)ls;
         Throwable thrown = catchThrowable( () -> a.sendStatus("IL1", 255));
         assertThat(thrown).withFailMessage("Exception sending UNKNOWN Status").isNull();
-        assertThat(sb.toString()).isEqualTo("LIGHT IL1 UNKNOWN\n").withFailMessage("sendErrorStatus check");
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("LIGHT IL1 UNKNOWN\n");
     }
 
     // test parsing an ON status message.
@@ -100,9 +100,9 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
         Throwable thrown = catchThrowable( () -> a.parseStatus("LIGHT IL1 ON\n"));
         assertThat(thrown).withFailMessage("Exception retrieving Status").isNull();
         jmri.Light light = (jmri.InstanceManager.getDefault(jmri.LightManager.class)).getLight("IL1");
-        assertThat(light.getState()).isEqualTo(jmri.Light.ON).withFailMessage("Parse On Status Check");
+        assertThat(light.getState()).withFailMessage("Parse On Status Check").isEqualTo(jmri.Light.ON);
         // parsing the status also causes a message to return to the client.
-        assertThat(sb.toString()).isEqualTo("LIGHT IL1 ON\n").withFailMessage("sendErrorStatus check");
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("LIGHT IL1 ON\n");
     }
 
     // test parsing an OFF status message.
@@ -113,9 +113,9 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
         SimpleLightServer a = (SimpleLightServer)ls;
         Throwable thrown = catchThrowable( () -> a.parseStatus("LIGHT IL1 OFF\n"));
         assertThat(thrown).withFailMessage("Exception retrieving Status").isNull();
-        assertThat(light.getState()).isEqualTo(jmri.Light.OFF).withFailMessage("Parse OFF Status Check");
+        assertThat(light.getState()).withFailMessage("Parse OFF Status Check").isEqualTo(jmri.Light.OFF);
         // parsing the status also causes a message to return to the client.
-        assertThat(sb.toString()).isEqualTo("LIGHT IL1 OFF\n").withFailMessage("parse OFF Status check");
+        assertThat(sb.toString()).withFailMessage("parse OFF Status check").isEqualTo("LIGHT IL1 OFF\n");
     }
 
     // test parsing an UNKNOWN status message.

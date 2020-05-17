@@ -618,10 +618,10 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             l.tLayoutBlockName = a.getValue();
         }
 
-        p.getLayoutTracks().add(l);
+        p.addLayoutTrack(l);
     }
 
     static final EnumIO<HitPointType> htpMap = new EnumIoNamesNumbers<>(HitPointType.class);
     
-    private final static Logger log = LoggerFactory.getLogger(TrackSegmentXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegmentXml.class);
 }

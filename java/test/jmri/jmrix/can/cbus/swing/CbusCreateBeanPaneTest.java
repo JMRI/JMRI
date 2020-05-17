@@ -54,7 +54,7 @@ public class CbusCreateBeanPaneTest  {
         f.setVisible(true);
         JFrameOperator jfo = new JFrameOperator( "Test CBUS Create Bean" );
         
-        CbusEventTableDataModel dm = new CbusEventTableDataModel(memo,0,0);
+        dm = new CbusEventTableDataModel(memo,0,0);
         dm.provideEvent(123, 456).setName("TestEvent1");
         dm.provideEvent(0, 7);
         JTable table = new JTable(dm);
@@ -100,8 +100,6 @@ public class CbusCreateBeanPaneTest  {
         new JButtonOperator(jfo,0).doClick();
         assertEquals("NewName",bean.getUserName());
         
-        dm.skipSaveOnDispose();
-        dm.dispose();
         dh.dispose();
         
     }
@@ -111,6 +109,7 @@ public class CbusCreateBeanPaneTest  {
     
     private CanSystemConnectionMemo memo;
     private TestPane mainPane;
+    private CbusEventTableDataModel dm;
 
     @BeforeEach
     public void setUp() {
@@ -125,13 +124,17 @@ public class CbusCreateBeanPaneTest  {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.tearDown();
         if(!GraphicsEnvironment.isHeadless()){
             memo.dispose();
             memo = null;
             mainPane.dispose();
             mainPane = null;
         }
+        if (dm!=null){
+            dm.skipSaveOnDispose();
+            dm.dispose();
+        }
+        JUnitUtil.tearDown();
     }
 
 }

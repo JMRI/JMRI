@@ -40,6 +40,9 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
         boolean turnoutControl = p.isTurnoutControlled();
         // include attributes
         element.setAttribute("ident", p.getId());
+        if (!p.getBlockName().isEmpty()) {
+            element.setAttribute("blockname", p.getBlockName());
+        }
         element.setAttribute("radius", "" + p.getRadius());
         Point2D coords = p.getCoordsCenter();
         element.setAttribute("xcen", "" + coords.getX());
@@ -107,6 +110,12 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
         LayoutTurntable l = new LayoutTurntable(name, new Point2D.Double(x, y), p);
         l.setRadius(radius);
 
+        // get remaining attribute
+        Attribute a = element.getAttribute("blockname");
+        if (a != null) {
+            l.tLayoutBlockName = a.getValue();
+        }
+
         try {
             l.setTurnoutControlled(element.getAttribute("turnoutControlled").getBooleanValue());
         } catch (DataConversionException e1) {
@@ -127,7 +136,7 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
                     log.error("failed to convert ray track angle or index attributes");
                 }
                 String connectName = "";
-                Attribute a = value.getAttribute("connectname");
+                a = value.getAttribute("connectname");
                 if (a != null) {
                     connectName = a.getValue();
                 }
@@ -153,8 +162,8 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
                 }
             }
         }
-        p.getLayoutTracks().add(l);
+        p.addLayoutTrack(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurntableXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntableXml.class);
 }

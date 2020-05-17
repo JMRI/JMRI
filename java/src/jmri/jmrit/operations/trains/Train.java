@@ -21,12 +21,13 @@ import jmri.InstanceManager;
 import jmri.beans.Identifiable;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
@@ -1521,30 +1522,18 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         int builtYear = -1900;
         try {
             startYear = Integer.parseInt(getBuiltStartYear());
-        } catch (NumberFormatException e1) {
+        } catch (NumberFormatException e) {
             log.debug("Train ({}) built start date not initialized, start: {}", getName(), getBuiltStartYear());
         }
         try {
             endYear = Integer.parseInt(getBuiltEndYear());
-        } catch (NumberFormatException e1) {
+        } catch (NumberFormatException e) {
             log.debug("Train ({}) built end date not initialized, end: {}", getName(), getBuiltEndYear());
         }
         try {
-            builtYear = Integer.parseInt(date);
-        } catch (NumberFormatException e1) {
-            // log.debug("Built date: "+date+" isn't an integer");
-            // maybe the built date is in the format month-year
-            String[] built = date.split("-");
-            if (built.length == 2) {
-                try {
-                    builtYear = Integer.parseInt(built[1]);
-                } catch (NumberFormatException e2) {
-                    log.debug("Unable to parse car built date {}", date);
-                }
-            }
-        }
-        if (builtYear < 100) {
-            builtYear = builtYear + 1900;
+            builtYear = Integer.parseInt(RollingStockManager.convertBuildDate(date));
+        } catch (NumberFormatException e) {
+            log.debug("Unable to parse car built date {}", date);
         }
         if (startYear < builtYear && builtYear < endYear) {
             return true;
@@ -3341,6 +3330,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     /*
      * The train icon is moved to route location (rl) for this train
      */
+    @SuppressWarnings("null")
     protected void moveTrainIcon(RouteLocation rl) {
         _trainIconRl = rl;
         // create train icon if at departure or if program has been restarted
@@ -3468,7 +3458,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         // if there's a panel specified, get it and place icon
         if (!Setup.getPanelName().equals(Setup.NONE)) {
-            Editor editor = InstanceManager.getDefault(PanelMenu.class).getEditorByName(Setup.getPanelName());
+            Editor editor = InstanceManager.getDefault(EditorManager.class).get(Setup.getPanelName());
             if (editor != null) {
                 _trainIcon = editor.addTrainIcon(getIconName());
                 _trainIcon.setTrain(this);

@@ -26,8 +26,8 @@ import org.slf4j.LoggerFactory;
 public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
     private final LayoutEditor layoutEditor;
-    private transient final LayoutTrackDrawingOptions leLTDOptions;
-    private transient LayoutTrackDrawingOptions ltdOptions = null;
+    private final LayoutTrackDrawingOptions leLTDOptions;
+    private LayoutTrackDrawingOptions ltdOptions = null;
 
     private final String classicPresetName = Bundle.getMessage("ClassicPresetName");
     private final String draftingPresetName = Bundle.getMessage("DraftingPresetName");
@@ -37,10 +37,13 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private final String csdazd71PresetName = Bundle.getMessage("CsdAzd71PresetName");
     private final String customPresetName = Bundle.getMessage("CustomPresetName");
 
-    private transient final List<LayoutTrackDrawingOptions> ltdoList = new ArrayList<>();
+    private final List<LayoutTrackDrawingOptions> ltdoList = new ArrayList<>();
 
     /**
-     * Creates new form LayoutTrackDrawingOptionsDialog
+     * Creates new form LayoutTrackDrawingOptionsDialog.
+     * @param layoutEditor the main layout editor panel.
+     * @param modal true if frame should be modal, else false.
+     * @param ltdOptions the layout track drawing options.
      */
     public LayoutTrackDrawingOptionsDialog(LayoutEditor layoutEditor, boolean modal,
             LayoutTrackDrawingOptions ltdOptions) {
@@ -1469,6 +1472,6 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     /*====================*\
     |* initialize logging *|
     \*====================*/
-    private transient final static Logger log
+    private final static Logger log
             = LoggerFactory.getLogger(LayoutTrackDrawingOptionsDialog.class);
 }

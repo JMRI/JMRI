@@ -127,12 +127,19 @@ public class LayoutRHTurnout extends LayoutTurnout {
     }
 
     /**
-     * Main constructor method
+     * Main constructor method.
+     * @param id turnout ID string.
+     * @param c 2D point.
+     * @param rot rotation.
+     * @param xFactor horizontal factor.
+     * @param yFactor vertical factor.
+     * @param layoutEditor main layout editor.
+     * @param v version, unused.
      */
     public LayoutRHTurnout(@Nonnull String id, @Nonnull Point2D c, double rot,
             double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
         super(id, TurnoutType.RH_TURNOUT, c, rot, xFactor, yFactor, layoutEditor, 1);
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(LayoutRHTurnout.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutRHTurnout.class);
 }

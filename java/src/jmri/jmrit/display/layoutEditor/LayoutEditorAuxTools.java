@@ -16,18 +16,21 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This module manages block connectivity for its associated LayoutEditor.
  * <p>
+ * A single object of this type, obtained via {@link LayoutEditor#getLEAuxTools()}
+ * is shared across all instances of {@link ConnectivityUtil}.
+ * <p>
  * The tools in this module are accessed via the Tools menu in Layout Editor, or
  * directly from LayoutEditor or LayoutEditor specific modules.
  *
  * @author Dave Duchamp Copyright (c) 2008
  * @author George Warner Copyright (c) 2017-2018
  */
-public class LayoutEditorAuxTools {
+final public class LayoutEditorAuxTools {
     // constants
 
     // operational instance variables
-    private LayoutEditor layoutEditor = null;
-    private List<LayoutConnectivity> cList = new ArrayList<>(); //LayoutConnectivity list
+    final private LayoutEditor layoutEditor;
+    final private List<LayoutConnectivity> cList = new ArrayList<>(); //LayoutConnectivity list
     private boolean blockConnectivityChanged = false;  // true if block connectivity may have changed
     private boolean initialized = false;
 
@@ -42,10 +45,12 @@ public class LayoutEditorAuxTools {
     }
 
     /**
-     * Get Connectivity involving a specific Layout Block
+     * Get Connectivity involving a specific Layout Block.
      * <p>
      * This routine returns an ArrayList of BlockConnectivity objects involving
      * the specified LayoutBlock.
+     * @param blk the layout block.
+     * @return the layout connectivity list, not null.
      */
     public List<LayoutConnectivity> getConnectivityList(LayoutBlock blk) {
         if (!initialized) {
@@ -88,7 +93,7 @@ public class LayoutEditorAuxTools {
             log.error("Call to initialize a connectivity list that has already been initialized");  // NOI18N
             return;
         }
-        cList = new ArrayList<>();
+        cList.clear(); 
         List<LayoutConnectivity> lcs = null;
 
         for (LayoutTrack lt : layoutEditor.getLayoutTracks()) {
@@ -230,6 +235,9 @@ public class LayoutEditorAuxTools {
      * right-handed turnout via the throat track), the search is stopped. The
      * search is also stopped when the track reaches a different block (or an
      * undefined block), or reaches an end bumper.
+     * @param p path to follow until branch.
+     * @param lc layout connectivity.
+     * @param layoutBlock the layout block.
      */
     public void addBeanSettings(Path p, LayoutConnectivity lc, LayoutBlock layoutBlock) {
         p.clearSettings();

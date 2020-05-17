@@ -21,6 +21,7 @@ public class XNetConsistManager extends AbstractConsistManager {
      * Constructor - call the constructor for the superclass, and initialize the
      * consist reader thread, which retrieves consist information from the
      * command station.
+     * @param systemMemo system connection.
      */
     public XNetConsistManager(XNetSystemConnectionMemo systemMemo) {
         super();

@@ -281,6 +281,12 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - Usage info at https://github.com/phamernik/i18nchecker/blob/master/README.md
 - Additional useful information at https://blogs.oracle.com/geertjan/entry/i18nchecker and https://blogs.oracle.com/geertjan/entry/i18nchecker_part_2
 
+##### PlantUML
+- plantuml.jar
+            from plantuml.org
+- umldoclet-2.0.9.jar	
+    from https://github.com/talsma-ict/umldoclet
+    
 ##### rscbundlecheck.jar
 - check for duplicated properties
 

@@ -30,7 +30,8 @@ public class Z21Reply extends AbstractMRReply {
     /**
      * This ctor interprets the byte array as a sequence of characters to send.
      *
-     * @param a Array of bytes to send
+     * @param a Array of bytes to send.
+     * @param l length of reply.
      */
     public Z21Reply(byte[] a, int l) {
         super();

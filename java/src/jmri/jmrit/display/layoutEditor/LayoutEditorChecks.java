@@ -16,7 +16,7 @@ import org.slf4j.*;
  *
  * @author George Warner Copyright (c) 2017-2018
  */
-public class LayoutEditorChecks {
+final public class LayoutEditorChecks {
 
     private final LayoutEditor layoutEditor;
     private final JMenu checkMenu = new JMenu(Bundle.getMessage("CheckMenuTitle"));
@@ -375,7 +375,8 @@ public class LayoutEditorChecks {
             layoutEditor.clearSelectionGroups();
             layoutEditor.amendSelectionGroup(layoutTrack);
 
-            layoutEditor.getLayoutTrackEditors().editLayoutTrack(layoutTrack);
+            // temporary call, should be replaced by access through View class
+            jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTrackEditor.makeTrackEditor(layoutTrack, layoutEditor);
         } else {
             layoutEditor.clearSelectionGroups();
         }

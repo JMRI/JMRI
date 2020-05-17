@@ -14,12 +14,14 @@ public interface DccCommandStation {
     /**
      * Does this command station have a "service mode", where it stops normal
      * train operation while programming?
+     * @return has service mode.
      */
     public boolean getHasServiceMode();
 
     /**
      * If this command station has a service mode, is the command station
      * currently in that mode?
+     * @return if in service mode.
      */
     public boolean getInServiceMode();
 
@@ -27,7 +29,7 @@ public interface DccCommandStation {
      * Provides an-implementation specific version string from the command
      * station. In general, this should be as close as possible to what the
      * command station replied when asked; it should not be reformatted
-     *
+     * @return version.
      */
     public String getVersionString();
 }

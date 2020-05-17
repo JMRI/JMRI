@@ -58,10 +58,12 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
         InstanceManager.setThrottleManager(getThrottleManager());
 
-        if (getProgrammerManager().isAddressedModePossible()) {
+        // We register a programmer based on whether the hardware is available,
+        // not whether the functionality is available
+        if (getProgrammerManager().isAddressedModeHardwareAvailable()) {
             InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
-        if (getProgrammerManager().isGlobalProgrammerAvailable()) {
+        if (getProgrammerManager().isGlobalProgrammerHardwareAvailable()) {
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
         

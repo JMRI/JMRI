@@ -69,14 +69,20 @@ public abstract class ImportRollingStock extends Thread {
         fstatus.setVisible(true);
     }
 
-    protected String[] parseCommaLine(String line, int arraySize) {
-        String[] outLine = new String[arraySize];
+    /*
+     * Needs to handle empty lines
+     */
+    protected String[] parseCommaLine(String line) {
+        String[] outLine = new String[0];
         try {
             CSVRecord record = CSVParser.parse(line, CSVFormat.DEFAULT).getRecords().get(0);
+            outLine = new String[record.size()];
             // load output array to prevent NPE
             for (int i = 0; i < outLine.length; i++) {
                 outLine[i] = record.get(i);
             }
+        } catch (IndexOutOfBoundsException e) {
+            // do nothing blank line
         } catch (IOException ex) {
             log.error("Error parsing CSV: {}", line, ex);
             Arrays.fill(outLine, ""); // NOI18N

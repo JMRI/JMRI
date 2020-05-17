@@ -336,7 +336,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
                         bc.getChild("turnoutB").getText());
             }
         }
-        p.getLayoutTracks().add(l);
+        p.addLayoutTrack(l);
     }
 
     String getElement(Element el, String child) {
@@ -346,5 +346,5 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         return "";
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutSlipXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipXml.class);
 }

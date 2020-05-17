@@ -32,6 +32,7 @@ public class LocoBufferIIAdapter extends LocoBufferAdapter {
 
     /**
      * Get a String that says what Option 1 represents.
+     * @return human readable string form uses LocoBuffer-II.
      */
     public String option1Name() {
         return Bundle.getMessage("XconnectionUsesLabel", "LocoBuffer-II");

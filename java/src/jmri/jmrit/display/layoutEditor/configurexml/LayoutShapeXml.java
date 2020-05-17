@@ -179,5 +179,5 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
         p.getLayoutShapes().add(s);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutShapeXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutShapeXml.class);
 }

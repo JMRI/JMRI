@@ -1181,7 +1181,6 @@
             <xs:enumeration value="LH_TURNOUT"></xs:enumeration>
             <xs:enumeration value="WYE_TURNOUT"></xs:enumeration>
             <xs:enumeration value="DOUBLE_XOVER"></xs:enumeration>
-            <xs:enumeration value="TURNOUT_D"></xs:enumeration>
             <xs:enumeration value="RH_XOVER"></xs:enumeration>
             <xs:enumeration value="LH_XOVER"></xs:enumeration>
             <xs:enumeration value="SINGLE_SLIP"></xs:enumeration>
@@ -1822,6 +1821,9 @@
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="ident" type="beanNameType" use="required">
         <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name=" blockname" type="beanNameType">
+        <xs:annotation><xs:documentation>Added 4.19.6 to identify block to which turntable belongs</xs:documentation></xs:annotation>
       </xs:attribute>
       <xs:attribute name="radius" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="xcen" type="xs:float" use="required"></xs:attribute>

@@ -50,8 +50,9 @@ public class OlcbAddress {
     static final int NODEFACTOR = 100000;
 
     /** 
-     * Construct from OlcbEvent
+     * Construct from OlcbEvent.
      *
+     * @param e the event ID.
      */
     public OlcbAddress(EventID e) {
         byte[] contents = e.getContents();
@@ -161,9 +162,12 @@ public class OlcbAddress {
 
     /**
      * Confirm that the address string (provided earlier) is fully
-     * valid.  This is an expensive call. It's complete-compliance done
+     * valid.
+     * <p>
+     * This is an expensive call. It's complete-compliance done
      * using a regular expression. It can reject some 
      * forms that the code will normally handle OK.
+     * @return true if valid, else false.
      */
     public boolean check() {
         return getMatcher().reset(aString).matches();
@@ -260,7 +264,8 @@ public class OlcbAddress {
     }
 
     /**
-     * Provide as dotted pairs
+     * Provide as dotted pairs.
+     * @return dotted pair form off string.
      */
     public String toDottedString() {
         String retval = "";
