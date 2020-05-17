@@ -101,7 +101,19 @@ public class AbstractXmlAdapterTest{
         Assert.assertEquals(21., adapter.getAttributeFloatValue(testEl, "t21", 12.f), 0.001);
     }
         
-    enum testEnum {Foo, Bar, Biff}
+    enum testEnum {
+        Foo,
+        Bar,
+        Biff;
+        
+        // The purpose of this method is to ensure that the EnumIO method
+        // doesn't use the method toString() since it could return a different
+        // value than the name of the enum, for example a localized name.
+        @Override
+        public String toString() {
+            return "A string";
+        }
+    }
     
     @Test
     public void testEnumIoOrdinals() {
