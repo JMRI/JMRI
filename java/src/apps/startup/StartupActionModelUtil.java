@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (c) 2016
  */
-public class StartupActionModelUtil extends Bean {
+public class StartupActionModelUtil extends Bean implements jmri.StartupActionModelUtil {
 
     private HashMap<Class<?>, ActionAttributes> actions = null;
     private HashMap<String, Class<?>> overrides = null;
@@ -41,6 +41,7 @@ public class StartupActionModelUtil extends Bean {
         });
     }
 
+    @Override
     @CheckForNull
     public String getActionName(@Nonnull Class<?> clazz) {
         this.prepareActionsHashMap();
@@ -48,6 +49,7 @@ public class StartupActionModelUtil extends Bean {
         return attrs != null ? attrs.name : null;
     }
 
+    @Override
     @CheckForNull
     public String getActionName(@Nonnull String className) {
         if (!className.isEmpty()) {
@@ -60,6 +62,7 @@ public class StartupActionModelUtil extends Bean {
         return null;
     }
 
+    @Override
     public boolean isSystemConnectionAction(@Nonnull Class<?> clazz) {
         this.prepareActionsHashMap();
         if (this.actions.containsKey(clazz)) {
@@ -68,6 +71,7 @@ public class StartupActionModelUtil extends Bean {
         return false;
     }
 
+    @Override
     public boolean isSystemConnectionAction(@Nonnull String className) {
         if (!className.isEmpty()) {
             try {
@@ -79,6 +83,7 @@ public class StartupActionModelUtil extends Bean {
         return false;
     }
 
+    @Override
     @CheckForNull
     public String getClassName(@CheckForNull String name) {
         if (name != null && !name.isEmpty()) {
@@ -92,6 +97,7 @@ public class StartupActionModelUtil extends Bean {
         return null;
     }
 
+    @Override
     @CheckForNull
     public String[] getNames() {
         this.prepareActionsHashMap();
@@ -105,12 +111,14 @@ public class StartupActionModelUtil extends Bean {
         return this.actionNames.toArray(new String[this.actionNames.size()]);
     }
 
+    @Override
     @Nonnull
     public Class<?>[] getClasses() {
         this.prepareActionsHashMap();
         return actions.keySet().toArray(new Class<?>[actions.size()]);
     }
 
+    @Override
     public void addAction(@Nonnull String strClass, @Nonnull String name) throws ClassNotFoundException {
         this.prepareActionsHashMap();
         this.actionNames = null;
@@ -126,6 +134,7 @@ public class StartupActionModelUtil extends Bean {
         this.firePropertyChange("length", null, null);
     }
 
+    @Override
     public void removeAction(@Nonnull String strClass) throws ClassNotFoundException {
         this.prepareActionsHashMap();
         this.actionNames = null;
@@ -168,6 +177,7 @@ public class StartupActionModelUtil extends Bean {
         }
     }
 
+    @Override
     @CheckForNull
     public String getOverride(@CheckForNull String name) {
         this.prepareActionsHashMap();

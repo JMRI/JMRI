@@ -1,6 +1,5 @@
 package jmri.jmrix;
 
-import apps.startup.StartupActionModelUtil;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -23,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 import jmri.InstanceManager;
+import jmri.StartupActionModelUtil;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import org.slf4j.Logger;

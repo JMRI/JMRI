@@ -1,7 +1,5 @@
 package jmri.jmrix;
 
-import apps.startup.StartupActionModelUtil;
-
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -10,6 +8,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.ConsistManager;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.StartupActionModelUtil;
 import jmri.beans.Bean;
 import jmri.implementation.DccConsistManager;
 import jmri.implementation.NmraConsistManager;
@@ -259,10 +258,10 @@ public abstract class SystemConnectionMemo extends Bean {
     }
 
     private void changeActionList(boolean add) {
-        StartupActionModelUtil util = StartupActionModelUtil.getDefault();
+        StartupActionModelUtil util = InstanceManager.getNullableDefault(StartupActionModelUtil.class);
         ResourceBundle rb = getActionModelResourceBundle();
-        if (rb == null) {
-            // don't bother trying if there is no ActionModelResourceBundle
+        if (rb == null || util == null) {
+            // don't bother trying if there is no ActionModelResourceBundle or StartupActionModelUtil
             return;
         }
         log.debug("Removing actions from bundle {}", rb.getBaseBundleName());
