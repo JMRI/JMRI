@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * {@link jmri.util.startup.StartupActionFactory} instances.
  *
  * @author Bob Jacobsen Copyright 2003, 2007, 2014
- * @see jmri.util.startup.AbstractActionModelFactory
+ * @see AbstractActionModelFactory
  */
 public abstract class AbstractActionModel implements StartupModel {
 
