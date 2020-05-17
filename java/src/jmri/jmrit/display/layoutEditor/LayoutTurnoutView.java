@@ -21,7 +21,8 @@ import jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType;
 public class LayoutTurnoutView extends LayoutTrackView {
 
     /**
-     * constructor method
+     * Constructor method.
+     * @param turnout the layout turnout to create the view for.
      */
     public LayoutTurnoutView(@Nonnull LayoutTurnout turnout) {
         super(turnout);

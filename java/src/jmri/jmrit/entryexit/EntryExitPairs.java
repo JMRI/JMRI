@@ -684,6 +684,10 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
     /**
      * @since 4.17.4
      * Register in Property Change Listener.
+     * @param source the source bean.
+     * @param destination the destination bean.
+     * @param panel the layout editor panel.
+     * @param id the points details id.
      */
     public void addNXDestination(NamedBean source, NamedBean destination, LayoutEditor panel, String id) {
         if (source == null) {

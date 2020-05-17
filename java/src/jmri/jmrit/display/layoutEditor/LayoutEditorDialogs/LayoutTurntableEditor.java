@@ -26,7 +26,8 @@ import jmri.NamedBean.DisplayOptions;
 public class LayoutTurntableEditor extends LayoutTrackEditor {
 
     /**
-     * constructor method
+     * constructor method.
+     * @param layoutEditor main layout editor.
      */
     public LayoutTurntableEditor(@Nonnull LayoutEditor layoutEditor) {
         super(layoutEditor);
@@ -319,7 +320,8 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
         private final DecimalFormat twoDForm = new DecimalFormat("#.00");
 
         /**
-         * constructor method
+         * constructor method.
+         * @param rayTrack the single ray track to edit.
          */
         public TurntableRayPanel(@Nonnull LayoutTurntable.RayTrack rayTrack) {
             this.rayTrack = rayTrack;

@@ -96,8 +96,10 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
     }
 
     /**
+     * Create a new Programmer Service Mode Pane.
      * @param direction controls layout, either BoxLayout.X_AXIS or
      *                  BoxLayout.Y_AXIS
+     * @param group     mode button group.
      */
     public ProgServiceModePane(int direction, javax.swing.ButtonGroup group) {
         modeGroup = group;

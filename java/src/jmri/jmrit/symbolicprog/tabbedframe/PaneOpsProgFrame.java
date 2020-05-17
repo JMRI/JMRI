@@ -39,8 +39,11 @@ public class PaneOpsProgFrame extends PaneProgFrame {
      * get the programming mode panel (none) and to hear if there is read mode
      * (no)
      *
-     * @param decoderFile XML file defining the decoder contents
-     * @param r           RosterEntry for information on this locomotive
+     * @param decoderFile XML file defining the decoder contents.
+     * @param r           RosterEntry for information on this locomotive.
+     * @param name        frame title.
+     * @param file        programmer file.
+     * @param p           Programmer object to be used.
      */
     public PaneOpsProgFrame(DecoderFile decoderFile, RosterEntry r,
             String name, String file, Programmer p) {

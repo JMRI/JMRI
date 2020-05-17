@@ -127,7 +127,14 @@ public class LayoutDoubleXOver extends LayoutXOver {
     }
 
     /**
-     * Main constructor method
+     * Main constructor method.
+     * @param id ID string.
+     * @param c 2D point.
+     * @param rot rotation.
+     * @param xFactor horizontal factor.
+     * @param yFactor vertical factor.
+     * @param layoutEditor main layout editor.
+     * @param v version, unused.
      */
     public LayoutDoubleXOver(@Nonnull String id, @Nonnull Point2D c, double rot,
             double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
