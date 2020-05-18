@@ -4,9 +4,9 @@ import jmri.Sensor;
 
 abstract class RouteElement {
 
-    String _sysName;
-    String _userName;
-    boolean _included;
+    private final String _sysName;
+    private final String _userName;
+    private boolean _included;
     int _setToState;
 
     RouteElement(String sysName, String userName) {

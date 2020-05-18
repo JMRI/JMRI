@@ -88,6 +88,4 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         return Bundle.getMessage("TitleRouteTable");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RouteTableAction.class);
-
 }

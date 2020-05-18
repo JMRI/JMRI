@@ -7,17 +7,17 @@ import jmri.Turnout;
 
 public class RouteEditFrame extends RouteAddFrame {
 
-    String systemName = null;
+    private final String systemName;
 
     public RouteEditFrame(String systemName) {
         this(Bundle.getMessage("TitleEditRoute"),systemName);
     }
 
-    public RouteEditFrame(String name,String systemName) {
+    private RouteEditFrame(String name, String systemName) {
         this(name,false,true,systemName);
     }
 
-    public RouteEditFrame(String name, boolean saveSize, boolean savePosition,String systemName) {
+    private RouteEditFrame(String name, boolean saveSize, boolean savePosition, String systemName) {
         super(name, saveSize, savePosition);
         this.systemName = systemName;
     }

@@ -25,87 +25,82 @@ import java.util.ArrayList;
 
 public class RouteAddFrame extends JmriJFrame {
 
-    protected ArrayList<RouteTurnout> _turnoutList;      // array of all Turnouts
-    protected ArrayList<RouteTurnout> _includedTurnoutList;
+    ArrayList<RouteTurnout> _turnoutList;      // array of all Turnouts
+    private ArrayList<RouteTurnout> _includedTurnoutList;
 
-    protected ArrayList<RouteSensor> _sensorList;        // array of all Sensors
-    protected ArrayList<RouteSensor> _includedSensorList;
+    ArrayList<RouteSensor> _sensorList;        // array of all Sensors
+    private ArrayList<RouteSensor> _includedSensorList;
 
-    JTextField _systemName = new JTextField(10);
-    JTextField _userName = new JTextField(22);
-    JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
-    String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
-    jmri.UserPreferencesManager pref;
+    final JTextField _systemName = new JTextField(10);
+    final JTextField _userName = new JTextField(22);
+    final JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
+    private final String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
+    private jmri.UserPreferencesManager pref;
 
     RouteTurnoutModel _routeTurnoutModel;
     JScrollPane _routeTurnoutScrollPane;
     RouteSensorModel _routeSensorModel;
     JScrollPane _routeSensorScrollPane;
 
-    JTextField soundFile = new JTextField(20);
-    JTextField scriptFile = new JTextField(20);
+    final JTextField soundFile = new JTextField(20);
+    final JTextField scriptFile = new JTextField(20);
     NamedBeanComboBox<Sensor> turnoutsAlignedSensor;
 
     NamedBeanComboBox<Sensor> sensor1;
 
-    JComboBox<String> sensor1mode = new JComboBox<>(sensorInputModes);
+    final JComboBox<String> sensor1mode = new JComboBox<>(sensorInputModes);
     NamedBeanComboBox<Sensor> sensor2;
-    JComboBox<String> sensor2mode = new JComboBox<>(sensorInputModes);
+    final JComboBox<String> sensor2mode = new JComboBox<>(sensorInputModes);
     NamedBeanComboBox<Sensor> sensor3;
-    JComboBox<String> sensor3mode = new JComboBox<>(sensorInputModes);
+    final JComboBox<String> sensor3mode = new JComboBox<>(sensorInputModes);
 
     NamedBeanComboBox<Turnout> cTurnout;
     NamedBeanComboBox<Turnout> cLockTurnout;
-    JSpinner timeDelay = new JSpinner();
+    final JSpinner timeDelay = new JSpinner();
 
-    JComboBox<String> cTurnoutStateBox = new JComboBox<>(turnoutInputModes);
-    JComboBox<String> cLockTurnoutStateBox = new JComboBox<>(lockTurnoutInputModes);
+    final JComboBox<String> cTurnoutStateBox = new JComboBox<>(turnoutInputModes);
+    final JComboBox<String> cLockTurnoutStateBox = new JComboBox<>(lockTurnoutInputModes);
 
-    ButtonGroup selGroup = null;
-    JRadioButton allButton = null;
-    JRadioButton includedButton = null;
+    private JRadioButton allButton = null;
 
-    JLabel nameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
-    JLabel userLabel = new JLabel(Bundle.getMessage("LabelUserName"));
-    JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
+    final JLabel nameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+    private final JLabel userLabel = new JLabel(Bundle.getMessage("LabelUserName"));
+    final JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
 
-    JButton createButton = new JButton(Bundle.getMessage("ButtonCreate"));
-    JButton editButton = new JButton(Bundle.getMessage("ButtonEdit"));
-    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-    JButton cancelEditButton = new JButton(Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit"))); // I18N for word sequence "Cancel Edit"
-    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete") + " " + Bundle.getMessage("BeanNameRoute")); // I18N "Delete Route"
-    JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
-    JButton exportButton = new JButton(Bundle.getMessage("ButtonExport"));
+    final JButton createButton = new JButton(Bundle.getMessage("ButtonCreate"));
+    final JButton editButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    final JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+    final JButton cancelEditButton = new JButton(Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit"))); // I18N for word sequence "Cancel Edit"
+    final JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete") + " " + Bundle.getMessage("BeanNameRoute")); // I18N "Delete Route"
+    final JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
+    final JButton exportButton = new JButton(Bundle.getMessage("ButtonExport"));
 
-    static final String createInst = Bundle.getMessage("RouteAddStatusInitial1", Bundle.getMessage("ButtonCreate")); // I18N to include original button name in help string
-    static final String editInst = Bundle.getMessage("RouteAddStatusInitial2", Bundle.getMessage("ButtonEdit"));
+    private static final String createInst = Bundle.getMessage("RouteAddStatusInitial1", Bundle.getMessage("ButtonCreate")); // I18N to include original button name in help string
+    private static final String editInst = Bundle.getMessage("RouteAddStatusInitial2", Bundle.getMessage("ButtonEdit"));
     static final String updateInst = Bundle.getMessage("RouteAddStatusInitial3", Bundle.getMessage("ButtonUpdate"));
     static final String cancelInst = Bundle.getMessage("RouteAddStatusInitial4", Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit")));
 
-    JLabel status1 = new JLabel(createInst);
-    JLabel status2 = new JLabel(editInst);
-
-    JPanel p2xt = null;   // Turnout list table
-    JPanel p2xs = null;   // Sensor list table
+    final JLabel status1 = new JLabel(createInst);
+    final JLabel status2 = new JLabel(editInst);
 
     Route curRoute = null;
-    boolean routeDirty = false;  // true to fire reminder to save work
+    private boolean routeDirty = false;  // true to fire reminder to save work
     boolean editMode = false;
     private boolean showAll = true;   // false indicates show only included Turnouts
 
-    public final String LOGIX_SYS_NAME;
-    public final String CONDITIONAL_SYS_PREFIX;
-    protected static int ROW_HEIGHT;
+    private final String LOGIX_SYS_NAME;
+    private final String CONDITIONAL_SYS_PREFIX;
+    static int ROW_HEIGHT;
 
     public RouteAddFrame() {
         this(Bundle.getMessage("TitleAddRoute"), false, true);
     }
 
-    public RouteAddFrame(String name) {
+    private RouteAddFrame(String name) {
         this(name,false,true);
     }
 
-    public RouteAddFrame(String name, boolean saveSize, boolean savePosition) {
+    RouteAddFrame(String name, boolean saveSize, boolean savePosition) {
         super(name, saveSize, savePosition);
         String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();
         LOGIX_SYS_NAME = logixPrefix + ":RTX:";
@@ -179,9 +174,7 @@ public class RouteAddFrame extends JmriJFrame {
         ps.add(nameLabel);
         ps.add(_systemName);
         ps.add(_autoSystemName);
-        _autoSystemName.addActionListener((ActionEvent e1) -> {
-            autoSystemName();
-        });
+        _autoSystemName.addActionListener((ActionEvent e1) -> autoSystemName());
         if (pref.getSimplePreferenceState(systemNameAuto)) {
             _autoSystemName.setSelected(true);
         }
@@ -199,7 +192,7 @@ public class RouteAddFrame extends JmriJFrame {
         // add Turnout Display Choice
         JPanel py = new JPanel();
         py.add(new JLabel(Bundle.getMessage("Show") + ":"));
-        selGroup = new ButtonGroup();
+        ButtonGroup selGroup = new ButtonGroup();
         allButton = new JRadioButton(Bundle.getMessage("All"), true);
         selGroup.add(allButton);
         py.add(allButton);
@@ -211,7 +204,7 @@ public class RouteAddFrame extends JmriJFrame {
                 _routeSensorModel.fireTableDataChanged();
             }
         });
-        includedButton = new JRadioButton(Bundle.getMessage("Included"), false);
+        JRadioButton includedButton = new JRadioButton(Bundle.getMessage("Included"), false);
         selGroup.add(includedButton);
         py.add(includedButton);
         includedButton.addActionListener((ActionEvent e1) -> {
@@ -228,7 +221,8 @@ public class RouteAddFrame extends JmriJFrame {
         contentPanel.add(py);
 
         // add Turnout table
-        p2xt = new JPanel();
+        // Turnout list table
+        JPanel p2xt = new JPanel();
         JPanel p2xtSpace = new JPanel();
         p2xtSpace.setLayout(new BoxLayout(p2xtSpace, BoxLayout.Y_AXIS));
         p2xtSpace.add(new JLabel("XXX"));
@@ -284,7 +278,8 @@ public class RouteAddFrame extends JmriJFrame {
         p2xt.setVisible(true);
 
         // add Sensor table
-        p2xs = new JPanel();
+        // Sensor list table
+        JPanel p2xs = new JPanel();
         JPanel p2xsSpace = new JPanel();
         p2xsSpace.setLayout(new BoxLayout(p2xsSpace, BoxLayout.Y_AXIS));
         p2xsSpace.add(new JLabel("XXX"));
@@ -342,17 +337,13 @@ public class RouteAddFrame extends JmriJFrame {
         p25.add(new JLabel(Bundle.getMessage("LabelPlaySound")));
         p25.add(soundFile);
         JButton ss = new JButton("..."); //NO18N
-        ss.addActionListener((ActionEvent e1) -> {
-            setSoundPressed();
-        });
+        ss.addActionListener((ActionEvent e1) -> setSoundPressed());
         ss.setToolTipText(Bundle.getMessage("TooltipOpenFile", Bundle.getMessage("BeanNameAudio")));
         p25.add(ss);
         p25.add(new JLabel(Bundle.getMessage("LabelRunScript")));
         p25.add(scriptFile);
         ss = new JButton("..."); //NO18N
-        ss.addActionListener((ActionEvent e1) -> {
-            setScriptPressed();
-        });
+        ss.addActionListener((ActionEvent e1) -> setScriptPressed());
         ss.setToolTipText(Bundle.getMessage("TooltipOpenFile", Bundle.getMessage("Script")));
         p25.add(ss);
         contentPanel.add(p25);
@@ -497,9 +488,7 @@ public class RouteAddFrame extends JmriJFrame {
         deleteButton.setToolTipText(Bundle.getMessage("TooltipDeleteRoute"));
         // Update Route button
         pb.add(updateButton);
-        updateButton.addActionListener((ActionEvent e1) -> {
-            updatePressed(e1, false);
-        });
+        updateButton.addActionListener((ActionEvent e1) -> updatePressed(e1, false));
         updateButton.setToolTipText(Bundle.getMessage("TooltipUpdateRoute"));
         // Export button
         pb.add(exportButton);
@@ -549,22 +538,22 @@ public class RouteAddFrame extends JmriJFrame {
     /**
      * Initialize list of included turnout positions.
      */
-    void initializeIncludedList() {
+    private void initializeIncludedList() {
         _includedTurnoutList = new ArrayList<>();
-        for (int i = 0; i < _turnoutList.size(); i++) {
-            if (_turnoutList.get(i).isIncluded()) {
-                _includedTurnoutList.add(_turnoutList.get(i));
+        for (RouteTurnout routeTurnout : _turnoutList) {
+            if (routeTurnout.isIncluded()) {
+                _includedTurnoutList.add(routeTurnout);
             }
         }
         _includedSensorList = new ArrayList<>();
-        for (int i = 0; i < _sensorList.size(); i++) {
-            if (_sensorList.get(i).isIncluded()) {
-                _includedSensorList.add(_sensorList.get(i));
+        for (RouteSensor routeSensor : _sensorList) {
+            if (routeSensor.isIncluded()) {
+                _includedSensorList.add(routeSensor);
             }
         }
     }
 
-    void autoSystemName() {
+    private void autoSystemName() {
         if (_autoSystemName.isSelected()) {
             _systemName.setEnabled(false);
             nameLabel.setEnabled(false);
@@ -574,14 +563,14 @@ public class RouteAddFrame extends JmriJFrame {
         }
     }
 
-    void showReminderMessage() {
+    private void showReminderMessage() {
         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                 showInfoMessage(Bundle.getMessage("ReminderTitle"),  // NOI18N
                         Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemRouteTable")),  // NOI18N
                         getClassName(), "remindSaveRoute"); // NOI18N
     }
 
-    int sensorModeFromBox(JComboBox<String> box) {
+    private int sensorModeFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
 
@@ -597,7 +586,7 @@ public class RouteAddFrame extends JmriJFrame {
         box.setSelectedItem(result);
     }
 
-    int turnoutModeFromBox(JComboBox<String> box) {
+    private int turnoutModeFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, turnoutInputModeValues, turnoutInputModes);
 
@@ -619,7 +608,7 @@ public class RouteAddFrame extends JmriJFrame {
      *
      * @param e the action event
      */
-    void createPressed(ActionEvent e) {
+    private void createPressed(ActionEvent e) {
         if (!_autoSystemName.isSelected()) {
             if (!checkNewNamesOK()) {
                 return;
@@ -636,7 +625,7 @@ public class RouteAddFrame extends JmriJFrame {
      *
      * @param e the action event
      */
-    void editPressed(ActionEvent e) {
+    private void editPressed(ActionEvent e) {
         // identify the Route with this name if it already exists
         String sName = _systemName.getText();
         Route g = InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
@@ -759,7 +748,7 @@ public class RouteAddFrame extends JmriJFrame {
      *
      * @return whether name entered is allowed
      */
-    boolean checkNewNamesOK() {
+    private boolean checkNewNamesOK() {
         // Get system name and user name from Add Route pane
         String sName = _systemName.getText();
         String uName = _userName.getText();
@@ -795,7 +784,7 @@ public class RouteAddFrame extends JmriJFrame {
      *
      * @return the new/updated Route object
      */
-    Route checkNamesOK() {
+    private Route checkNamesOK() {
         // Get system name and user name
         String sName = _systemName.getText();
         String uName = _userName.getText();
@@ -830,28 +819,22 @@ public class RouteAddFrame extends JmriJFrame {
      * Set the Turnout information for adding or editing.
      *
      * @param g the route to add the turnout to
-     * @return number of turnouts in route
      */
-    int setTurnoutInformation(Route g) {
-        for (int i = 0; i < _includedTurnoutList.size(); i++) {
-            RouteTurnout t = _includedTurnoutList.get(i);
+    private void setTurnoutInformation(Route g) {
+        for (RouteTurnout t : _includedTurnoutList) {
             g.addOutputTurnout(t.getDisplayName(), t.getState());
         }
-        return _includedTurnoutList.size();
     }
 
     /**
      * Sets the Sensor information for adding or editing.
      *
      * @param g the route to add the sensor to
-     * @return number of sensors in route
      */
-    int setSensorInformation(Route g) {
-        for (int i = 0; i < _includedSensorList.size(); i++) {
-            RouteSensor s = _includedSensorList.get(i);
+    private void setSensorInformation(Route g) {
+        for (RouteSensor s : _includedSensorList) {
             g.addOutputSensor(s.getDisplayName(), s.getState());
         }
-        return _includedSensorList.size();
     }
 
     /**
@@ -859,7 +842,7 @@ public class RouteAddFrame extends JmriJFrame {
      *
      * @param g the route to configure
      */
-    void setControlInformation(Route g) {
+    private void setControlInformation(Route g) {
         // Get sensor control information if any
         Sensor sensor = sensor1.getSelectedItem();
         if (sensor != null) {
@@ -911,12 +894,12 @@ public class RouteAddFrame extends JmriJFrame {
         }
     }
 
-    JFileChooser soundChooser = null;
+    private JFileChooser soundChooser = null;
 
     /**
      * Set the sound file.
      */
-    void setSoundPressed() {
+    private void setSoundPressed() {
         if (soundChooser == null) {
             soundChooser = new JFileChooser(FileUtil.getUserFilesPath());
             soundChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
@@ -933,12 +916,12 @@ public class RouteAddFrame extends JmriJFrame {
         }
     }
 
-    JFileChooser scriptChooser = null;
+    private JFileChooser scriptChooser = null;
 
     /**
      * Set the script file.
      */
-    void setScriptPressed() {
+    private void setScriptPressed() {
         if (scriptChooser == null) {
             scriptChooser = jmri.jmrit.XmlFile.userFileChooser("Python script files", "py");
         }
@@ -959,7 +942,7 @@ public class RouteAddFrame extends JmriJFrame {
      *
      * @param e the action event
      */
-    void deletePressed(ActionEvent e) {
+    private void deletePressed(ActionEvent e) {
         // route is already deactivated, just delete it
         InstanceManager.getDefault(jmri.RouteManager.class).deleteRoute(curRoute);
 
@@ -973,7 +956,7 @@ public class RouteAddFrame extends JmriJFrame {
      * @param e        the action event
      * @param newRoute true if a new route; false otherwise
      */
-    void updatePressed(ActionEvent e, boolean newRoute) {
+    private void updatePressed(ActionEvent e, boolean newRoute) {
         // Check if the User Name has been changed
         String uName = _userName.getText();
         Route g = checkNamesOK();
@@ -1002,7 +985,7 @@ public class RouteAddFrame extends JmriJFrame {
         status1.setText((newRoute ? Bundle.getMessage("RouteAddStatusCreated") : Bundle.getMessage("RouteAddStatusUpdated")) + ": \"" + uName + "\" (" + _includedTurnoutList.size() + " " + Bundle.getMessage("Turnouts") + ", " + _includedSensorList.size() + " " + Bundle.getMessage("Sensors") + ")");
     }
 
-    void finishUpdate() {
+    private void finishUpdate() {
         // move to show all Turnouts if not there
         cancelIncludedOnly();
         // Provide feedback to user
@@ -1031,7 +1014,7 @@ public class RouteAddFrame extends JmriJFrame {
         }
     }
 
-    void clearPage() {
+    private void clearPage() {
         _systemName.setText("");
         _userName.setText("");
         sensor1.setSelectedItem(null);
@@ -1056,7 +1039,7 @@ public class RouteAddFrame extends JmriJFrame {
      *
      * @param e the action event
      */
-    void exportPressed(ActionEvent e) {
+    private void exportPressed(ActionEvent e) {
         curRoute = checkNamesOK();
         String sName = _systemName.getText();
         if (sName.length() == 0) {
@@ -1078,16 +1061,14 @@ public class RouteAddFrame extends JmriJFrame {
         /////////////////// Construct output actions for change to true //////////////////////
         ArrayList<ConditionalAction> actionList = new ArrayList<>();
 
-        for (int i = 0; i < _includedSensorList.size(); i++) {
-            RouteSensor rSensor = _includedSensorList.get(i);
+        for (RouteSensor rSensor : _includedSensorList) {
             String name = rSensor.getUserName();
             if (name == null || name.length() == 0) {
                 name = rSensor.getSysName();
             }
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, Conditional.Action.SET_SENSOR, name, rSensor.getState(), ""));
         }
-        for (int i = 0; i < _includedTurnoutList.size(); i++) {
-            RouteTurnout rTurnout = _includedTurnoutList.get(i);
+        for (RouteTurnout rTurnout : _includedTurnoutList) {
             String name = rTurnout.getUserName();
             if (name == null || name.length() == 0) {
                 name = rTurnout.getSysName();
@@ -1127,8 +1108,8 @@ public class RouteAddFrame extends JmriJFrame {
         // remove old Conditionals for actions (ver 2.5.2 only -remove a bad idea)
         char[] ch = sName.toCharArray();
         int hash = 0;
-        for (int i = 0; i < ch.length; i++) {
-            hash += ch[i];
+        for (char value : ch) {
+            hash += value;
         }
         String cSystemName = CONDITIONAL_SYS_PREFIX + "T" + hash;
         removeConditionals(cSystemName, logix);
@@ -1183,8 +1164,7 @@ public class RouteAddFrame extends JmriJFrame {
             cUserName = turnoutsAlignedSensor.getSelectedItemDisplayName() + "A " + uName; // NOI18N
 
             ArrayList<ConditionalVariable> variableList = new ArrayList<>();
-            for (int i = 0; i < _includedTurnoutList.size(); i++) {
-                RouteTurnout rTurnout = _includedTurnoutList.get(i);
+            for (RouteTurnout rTurnout : _includedTurnoutList) {
                 String name = rTurnout.getUserName();
                 if (name == null || name.length() == 0) {
                     name = rTurnout.getSysName();
@@ -1236,8 +1216,7 @@ public class RouteAddFrame extends JmriJFrame {
                 option = Conditional.ACTION_OPTION_ON_CHANGE;
                 type = Route.TOGGLE;
             }
-            for (int i = 0; i < _includedTurnoutList.size(); i++) {
-                RouteTurnout rTurnout = _includedTurnoutList.get(i);
+            for (RouteTurnout rTurnout : _includedTurnoutList) {
                 String name = rTurnout.getUserName();
                 if (name == null || name.length() == 0) {
                     name = rTurnout.getSysName();
@@ -1248,8 +1227,7 @@ public class RouteAddFrame extends JmriJFrame {
                 // add non-toggle actions on
                 option = Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE;
                 type = Turnout.UNLOCKED;
-                for (int i = 0; i < _includedTurnoutList.size(); i++) {
-                    RouteTurnout rTurnout = _includedTurnoutList.get(i);
+                for (RouteTurnout rTurnout : _includedTurnoutList) {
                     String name = rTurnout.getUserName();
                     if (name == null || name.length() == 0) {
                         name = rTurnout.getSysName();
@@ -1275,7 +1253,7 @@ public class RouteAddFrame extends JmriJFrame {
         finishUpdate();
     }
 
-    boolean removeConditionals(String cSystemName, Logix logix) {
+    private boolean removeConditionals(String cSystemName, Logix logix) {
         Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(cSystemName);
         if (c != null) {
             logix.deleteConditional(cSystemName);
@@ -1302,17 +1280,17 @@ public class RouteAddFrame extends JmriJFrame {
      * @throws IllegalArgumentException if "user input no good"
      */
     // why are the controls being passed, and not their selections?
-    int makeSensorConditional(NamedBeanComboBox<Sensor> jmriBox, JComboBox<String> sensorbox, int numConds, boolean onChange, ArrayList<ConditionalAction> actionList, ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
+    private int makeSensorConditional(NamedBeanComboBox<Sensor> jmriBox, JComboBox<String> sensorbox, int numConds, boolean onChange, ArrayList<ConditionalAction> actionList, ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
         ConditionalVariable cVar = makeCtrlSensorVar(jmriBox, sensorbox, false, onChange);
         if (cVar != null) {
             ArrayList<ConditionalVariable> varList = new ArrayList<>();
             varList.add(cVar);
-            for (int i = 0; i < vetoList.size(); i++) {
-                varList.add(cloneVariable(vetoList.get(i)));
+            for (ConditionalVariable conditionalVariable : vetoList) {
+                varList.add(cloneVariable(conditionalVariable));
             }
             String cSystemName = prefix + numConds + "T";
             String cUserName = jmriBox.getSelectedItemDisplayName() + numConds + "C " + uName;
-            Conditional c = null;
+            Conditional c;
             try {
                 c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(cSystemName, cUserName);
             } catch (Exception ex) {
@@ -1349,17 +1327,17 @@ public class RouteAddFrame extends JmriJFrame {
      * @throws IllegalArgumentException if "user input no good"
      */
     // why are the controls being passed, and not their selections?
-    int makeTurnoutConditional(NamedBeanComboBox<Turnout> jmriBox, JComboBox<String> box, int numConds, boolean onChange, ArrayList<ConditionalAction> actionList, ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
+    private int makeTurnoutConditional(NamedBeanComboBox<Turnout> jmriBox, JComboBox<String> box, int numConds, boolean onChange, ArrayList<ConditionalAction> actionList, ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
         ConditionalVariable cVar = makeCtrlTurnoutVar(jmriBox, box, false, onChange);
         if (cVar != null) {
             ArrayList<ConditionalVariable> varList = new ArrayList<>();
             varList.add(cVar);
-            for (int i = 0; i < vetoList.size(); i++) {
-                varList.add(cloneVariable(vetoList.get(i)));
+            for (ConditionalVariable conditionalVariable : vetoList) {
+                varList.add(cloneVariable(conditionalVariable));
             }
             String cSystemName = prefix + numConds + "T";
             String cUserName = jmriBox.getSelectedItemDisplayName() + numConds + "C " + uName;
-            Conditional c = null;
+            Conditional c;
             try {
                 c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(cSystemName, cUserName);
             } catch (Exception ex) {
@@ -1379,18 +1357,17 @@ public class RouteAddFrame extends JmriJFrame {
         return numConds;
     }
 
-    void handleCreateException(String sysName) {
+    private void handleCreateException(String sysName) {
         JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorRouteAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"), Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
     }
 
-    ConditionalVariable cloneVariable(ConditionalVariable v) {
+    private ConditionalVariable cloneVariable(ConditionalVariable v) {
         return new ConditionalVariable(v.isNegated(), v.getOpern(), v.getType(), v.getName(), v.doTriggerActions());
     }
 
-    ArrayList<ConditionalAction> cloneActionList(ArrayList<ConditionalAction> actionList, int option) {
+    private ArrayList<ConditionalAction> cloneActionList(ArrayList<ConditionalAction> actionList, int option) {
         ArrayList<ConditionalAction> list = new ArrayList<>();
-        for (int i = 0; i < actionList.size(); i++) {
-            ConditionalAction action = actionList.get(i);
+        for (ConditionalAction action : actionList) {
             ConditionalAction clone = new DefaultConditionalAction();
             clone.setType(action.getType());
             clone.setOption(option);
@@ -1402,7 +1379,7 @@ public class RouteAddFrame extends JmriJFrame {
         return list;
     }
 
-    ConditionalVariable makeCtrlSensorVar(NamedBeanComboBox<Sensor> jmriBox, JComboBox<String> sensorbox, boolean makeVeto, boolean onChange) {
+    private ConditionalVariable makeCtrlSensorVar(NamedBeanComboBox<Sensor> jmriBox, JComboBox<String> sensorbox, boolean makeVeto, boolean onChange) {
         String devName = jmriBox.getSelectedItemDisplayName();
         if (jmriBox.getSelectedItem() == null /*|| devName.length() == 0*/) {
             return null;
@@ -1454,7 +1431,7 @@ public class RouteAddFrame extends JmriJFrame {
         return new ConditionalVariable(negated, oper, type, devName, trigger);
     }
 
-    ConditionalVariable makeCtrlTurnoutVar(NamedBeanComboBox<Turnout> jmriBox, JComboBox<String> box, boolean makeVeto, boolean onChange) {
+    private ConditionalVariable makeCtrlTurnoutVar(NamedBeanComboBox<Turnout> jmriBox, JComboBox<String> box, boolean makeVeto, boolean onChange) {
 
         if (jmriBox.getSelectedItem() == null) {
             return null;
@@ -1512,14 +1489,14 @@ public class RouteAddFrame extends JmriJFrame {
      *
      * @param e the action event
      */
-    void cancelAddPressed(ActionEvent e) {
+    private void cancelAddPressed(ActionEvent e) {
         cancelAdd();
     }
 
     /**
      * Cancel Add mode.
      */
-    void cancelAdd() {
+    private void cancelAdd() {
         if (routeDirty) {
             showReminderMessage();
         }
@@ -1539,14 +1516,14 @@ public class RouteAddFrame extends JmriJFrame {
      *
      * @param e the action event
      */
-    void cancelPressed(ActionEvent e) {
+    private void cancelPressed(ActionEvent e) {
         cancelEdit();
     }
 
     /**
      * Cancels edit mode
      */
-    void cancelEdit() {
+    private void cancelEdit() {
         if (editMode) {
             status1.setText(createInst);
             status2.setText(editInst);
@@ -1560,7 +1537,7 @@ public class RouteAddFrame extends JmriJFrame {
     /**
      * Cancel included Turnouts only option
      */
-    void cancelIncludedOnly() {
+    private void cancelIncludedOnly() {
         if (!showAll) {
             allButton.doClick();
         }
@@ -1569,7 +1546,7 @@ public class RouteAddFrame extends JmriJFrame {
     /**
      * Base table model for selecting outputs.
      */
-    public abstract class RouteOutputModel extends AbstractTableModel implements PropertyChangeListener {
+    abstract class RouteOutputModel extends AbstractTableModel implements PropertyChangeListener {
 
         @Override
         public Class<?> getColumnClass(int c) {
@@ -1588,7 +1565,7 @@ public class RouteAddFrame extends JmriJFrame {
             }
         }
 
-        public void dispose() {
+        void dispose() {
             InstanceManager.turnoutManagerInstance().removePropertyChangeListener(this);
         }
 
@@ -1607,10 +1584,10 @@ public class RouteAddFrame extends JmriJFrame {
             return ((c == INCLUDE_COLUMN) || (c == STATE_COLUMN));
         }
 
-        public static final int SNAME_COLUMN = 0;
-        public static final int UNAME_COLUMN = 1;
-        public static final int INCLUDE_COLUMN = 2;
-        public static final int STATE_COLUMN = 3;
+        static final int SNAME_COLUMN = 0;
+        static final int UNAME_COLUMN = 1;
+        static final int INCLUDE_COLUMN = 2;
+        static final int STATE_COLUMN = 3;
 
     }
 
@@ -1750,23 +1727,23 @@ public class RouteAddFrame extends JmriJFrame {
 
 
 
-    private static String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),
+    private static final String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),
             Bundle.getMessage("ColumnUserName"),
             Bundle.getMessage("Include"),
             Bundle.getMessage("ColumnLabelSetState")};
-    private static String SET_TO_ACTIVE = Bundle.getMessage("Set") + " " + Bundle.getMessage("SensorStateActive");
-    private static String SET_TO_INACTIVE = Bundle.getMessage("Set") + " " + Bundle.getMessage("SensorStateInactive");
+    private static final String SET_TO_ACTIVE = Bundle.getMessage("Set") + " " + Bundle.getMessage("SensorStateActive");
+    private static final String SET_TO_INACTIVE = Bundle.getMessage("Set") + " " + Bundle.getMessage("SensorStateInactive");
 
-    private static String SET_TO_TOGGLE = Bundle.getMessage("Set") + " " + Bundle.getMessage("Toggle");
+    private static final String SET_TO_TOGGLE = Bundle.getMessage("Set") + " " + Bundle.getMessage("Toggle");
 
-    private static String[] sensorInputModes = new String[]{
+    private static final String[] sensorInputModes = new String[]{
             Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SensorStateActive"),
             Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SensorStateInactive"),
             Bundle.getMessage("OnConditionChange"),
             "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SensorStateActive"),
             "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SensorStateInactive")
     };
-    private static int[] sensorInputModeValues = new int[]{Route.ONACTIVE, Route.ONINACTIVE, Route.ONCHANGE,
+    private static final int[] sensorInputModeValues = new int[]{Route.ONACTIVE, Route.ONINACTIVE, Route.ONCHANGE,
             Route.VETOACTIVE, Route.VETOINACTIVE};
 
     // This group will get runtime updates to system-specific contents at
@@ -1791,7 +1768,7 @@ public class RouteAddFrame extends JmriJFrame {
     };
 
     // safe methods to set tho above 4 static field values
-    private static int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE,
+    private static final int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE,
             Route.VETOCLOSED, Route.VETOTHROWN};
 
     private static void setClosedString(@Nonnull String newVal) {
