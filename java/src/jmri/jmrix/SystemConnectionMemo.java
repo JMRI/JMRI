@@ -15,6 +15,7 @@ import jmri.implementation.DccConsistManager;
 import jmri.implementation.NmraConsistManager;
 import jmri.util.NamedBeanComparator;
 
+import jmri.util.startup.StartupActionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,7 +63,6 @@ public abstract class SystemConnectionMemo extends Bean {
             }
             log.debug("created user name {}{}", prefix, x);
         }
-        addToActionList();
         // reset to null so these get set by the first setPrefix/setUserName
         // call after construction
         this.prefixAsLoaded = null;
@@ -204,12 +204,12 @@ public abstract class SystemConnectionMemo extends Bean {
     }
 
     public void dispose() {
-        removeFromActionList();
         SystemConnectionMemoManager.getDefault().deregister(this);
     }
 
     /**
      * Get if the System Connection is currently Disabled.
+     *
      * @return true if Disabled, else false.
      */
     public boolean getDisabled() {
@@ -219,9 +219,9 @@ public abstract class SystemConnectionMemo extends Bean {
     /**
      * Set if the System Connection is currently Disabled.
      * <p>
-     * disabledAsLoaded is only set once.
-     * Sends PropertyChange on change of disabled status.
-     * 
+     * disabledAsLoaded is only set once. Sends PropertyChange on change of
+     * disabled status.
+     *
      * @param disabled true to disable, false to enable.
      */
     public void setDisabled(boolean disabled) {
@@ -241,12 +241,22 @@ public abstract class SystemConnectionMemo extends Bean {
      * Get the Comparator to be used for two NamedBeans. This is typically an
      * {@link NamedBeanComparator}, but may be any Comparator that works for
      * this connection type.
-     * 
+     *
      * @param <B>  the type of NamedBean
      * @param type the class of NamedBean
      * @return the Comparator
      */
     public abstract <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type);
+
+    /**
+     * Provide a factory for getting startup actions.
+     *
+     * @return the factory
+     */
+    @Nonnull
+    public StartupActionFactory getActionFactory() {
+        return new ResourceBundleStartupActionFactory(getActionModelResourceBundle());
+    }
 
     protected abstract ResourceBundle getActionModelResourceBundle();
 
@@ -254,6 +264,12 @@ public abstract class SystemConnectionMemo extends Bean {
         changeActionList(true);
     }
 
+    /**
+     * Remove actions from the action list.
+     * 
+     * @deprecated since 4.19.7 without direct replacement
+     */
+    @Deprecated
     protected final void removeFromActionList() {
         changeActionList(false);
     }
@@ -280,8 +296,8 @@ public abstract class SystemConnectionMemo extends Bean {
     }
 
     /**
-     * Get if connection is dirty.
-     * Checked fields are disabled, prefix, userName
+     * Get if connection is dirty. Checked fields are disabled, prefix, userName
+     *
      * @return true if changed since loaded
      */
     public boolean isDirty() {

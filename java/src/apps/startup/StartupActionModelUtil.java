@@ -1,5 +1,7 @@
 package apps.startup;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,8 +10,10 @@ import java.util.ResourceBundle;
 import java.util.ServiceLoader;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
+import jmri.Disposable;
 import jmri.InstanceManager;
 import jmri.beans.Bean;
+import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.swing.SystemConnectionAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,13 +24,14 @@ import org.slf4j.LoggerFactory;
  * populated by {@link jmri.util.startup.StartupActionFactory} instances
  * registered with a {@link java.util.ServiceLoader}.
  *
- * @author Randall Wood (c) 2016
+ * @author Randall Wood Copyright 2016, 2020
  */
-public class StartupActionModelUtil extends Bean {
+public class StartupActionModelUtil extends Bean implements Disposable {
 
     private HashMap<Class<?>, ActionAttributes> actions = null;
     private HashMap<String, Class<?>> overrides = null;
     private ArrayList<String> actionNames = null; // built on demand, invalidated in changes to actions
+    private PropertyChangeListener listener = this::connectionChanged;
     private final static Logger log = LoggerFactory.getLogger(StartupActionModelUtil.class);
 
     /**
@@ -40,6 +45,11 @@ public class StartupActionModelUtil extends Bean {
         return InstanceManager.getOptionalDefault(StartupActionModelUtil.class).orElseGet(() -> {
             return InstanceManager.setDefault(StartupActionModelUtil.class, new StartupActionModelUtil());
         });
+    }
+
+    public StartupActionModelUtil() {
+        InstanceManager.addPropertyChangeListener(InstanceManager.getListPropertyName(SystemConnectionMemo.class), listener);
+        InstanceManager.getList(SystemConnectionMemo.class).forEach(memo -> addActions(memo.getActionFactory()));
     }
 
     @CheckForNull
@@ -157,22 +167,21 @@ public class StartupActionModelUtil extends Bean {
             });
             @SuppressWarnings("deprecation")
             ServiceLoader<apps.startup.StartupActionFactory> asLoader = ServiceLoader.load(apps.startup.StartupActionFactory.class);
-            asLoader.forEach(factory -> {
-                Arrays.stream(factory.getActionClasses()).forEach(clazz -> {
-                    this.actions.put(clazz, new ActionAttributes(factory.getTitle(clazz), clazz));
-                    Arrays.stream(factory.getOverriddenClasses(clazz)).forEach(overridden -> this.overrides.put(overridden, clazz));
-                });
-            });
+            asLoader.forEach(factory -> addActions(factory));
             asLoader.reload(); // allow factories to be garbage collected
             ServiceLoader<jmri.util.startup.StartupActionFactory> jusLoader = ServiceLoader.load(jmri.util.startup.StartupActionFactory.class);
-            jusLoader.forEach(factory -> {
-                Arrays.stream(factory.getActionClasses()).forEach(clazz -> {
-                    this.actions.put(clazz, new ActionAttributes(factory.getTitle(clazz), clazz));
-                    Arrays.stream(factory.getOverriddenClasses(clazz)).forEach(overridden -> this.overrides.put(overridden, clazz));
-                });
-            });
+            jusLoader.forEach(factory -> addActions(factory));
             jusLoader.reload(); // allow factories to be garbage collected
+            firePropertyChange("length", 0, actions.size());
         }
+    }
+
+    private void addActions(jmri.util.startup.StartupActionFactory factory) {
+        Arrays.stream(factory.getActionClasses()).forEach(clazz -> {
+            actions.put(clazz, new ActionAttributes(factory.getTitle(clazz), clazz));
+            Arrays.stream(factory.getOverriddenClasses(clazz))
+                    .forEach(overridden -> overrides.put(overridden, clazz));
+        });
     }
 
     @CheckForNull
@@ -182,6 +191,28 @@ public class StartupActionModelUtil extends Bean {
             return this.overrides.get(name).getName();
         }
         return null;
+    }
+
+    @Override
+    public void dispose() {
+        InstanceManager.removePropertyChangeListener(InstanceManager.getListPropertyName(SystemConnectionMemo.class), listener);
+    }
+
+    private void connectionChanged(PropertyChangeEvent evt) {
+        prepareActionsHashMap();
+        actionNames = null;
+        int size = actions.size();
+        Object src = evt.getNewValue();
+        if (src instanceof SystemConnectionMemo) {
+            addActions(((SystemConnectionMemo) src).getActionFactory());
+        } else {
+            src = evt.getOldValue();
+            if (src instanceof SystemConnectionMemo) {
+                Arrays.stream(((SystemConnectionMemo) src).getActionFactory().getActionClasses())
+                        .forEach(clazz -> this.actions.remove(clazz));
+            }
+        }
+        firePropertyChange("length", size, actions.size());
     }
 
     private static class ActionAttributes {
