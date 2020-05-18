@@ -29,7 +29,7 @@ public abstract class AbstractActionModel implements StartupModel {
     private String systemPrefix = ""; // NOI18N
     private String className = ""; // NOI18N
     private final List<Exception> exceptions = new ArrayList<>();
-    private final static Logger log = LoggerFactory.getLogger(AbstractActionModel.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractActionModel.class);
 
     public String getClassName() {
         return this.className;
@@ -111,6 +111,7 @@ public abstract class AbstractActionModel implements StartupModel {
         return Bundle.getMessage("AbstractActionModel.InvalidAction", super.toString());
     }
 
+    @SuppressWarnings("unchecked") // parametized cast of action cannot be checked
     @Override
     public void performAction() throws JmriException {
         log.debug("Invoke Action from {}", className);
@@ -119,7 +120,7 @@ public abstract class AbstractActionModel implements StartupModel {
             if (SystemConnectionAction.class.isAssignableFrom(action.getClass())) {
                 SystemConnectionMemo memo = ConnectionNameFromSystemName.getSystemConnectionMemoFromSystemPrefix(this.getSystemPrefix());
                 if (memo != null) {
-                    ((SystemConnectionAction) action).setSystemConnectionMemo(memo);
+                    ((SystemConnectionAction<SystemConnectionMemo>) action).setSystemConnectionMemo(memo);
                 } else {
                     log.warn("Connection \"{}\" does not exist and cannot be assigned to action {}\nThis warning can be silenced by configuring the connection associated with the startup action.", this.getSystemPrefix(), className);
                 }
