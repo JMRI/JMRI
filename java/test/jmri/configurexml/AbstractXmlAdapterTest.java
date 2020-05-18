@@ -131,6 +131,9 @@ public class AbstractXmlAdapterTest{
         
         Assert.assertEquals("Foo", map.outputFromEnum(testEnum.Foo));
         Assert.assertEquals(testEnum.Biff, map.inputFromString("Biff"));
+        
+        Assert.assertEquals(null, map.inputFromString("FooBar"));
+        JUnitAppender.assertErrorMessage("from String FooBar get null for class jmri.configurexml.AbstractXmlAdapterTest$testEnum");
     }
 
     @Test
