@@ -13,11 +13,11 @@ public class RouteEditFrame extends RouteAddFrame {
         this(Bundle.getMessage("TitleEditRoute"),systemName);
     }
 
-    private RouteEditFrame(String name, String systemName) {
+    public RouteEditFrame(String name, String systemName) {
         this(name,false,true,systemName);
     }
 
-    private RouteEditFrame(String name, boolean saveSize, boolean savePosition, String systemName) {
+    public RouteEditFrame(String name, boolean saveSize, boolean savePosition, String systemName) {
         super(name, saveSize, savePosition);
         this.systemName = systemName;
     }

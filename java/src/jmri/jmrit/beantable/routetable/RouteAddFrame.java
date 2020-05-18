@@ -96,11 +96,11 @@ public class RouteAddFrame extends JmriJFrame {
         this(Bundle.getMessage("TitleAddRoute"), false, true);
     }
 
-    private RouteAddFrame(String name) {
+    public RouteAddFrame(String name) {
         this(name,false,true);
     }
 
-    RouteAddFrame(String name, boolean saveSize, boolean savePosition) {
+    public RouteAddFrame(String name, boolean saveSize, boolean savePosition) {
         super(name, saveSize, savePosition);
         String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();
         LOGIX_SYS_NAME = logixPrefix + ":RTX:";
