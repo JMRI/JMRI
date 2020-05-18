@@ -72,10 +72,6 @@ public class ThrottleWindow extends JmriJFrame {
     private static int NEXT_THROTTLE_KEY = KeyEvent.VK_RIGHT;
     private static int PREV_THROTTLE_KEY = KeyEvent.VK_LEFT;
 
-    private final static int MOVE_TO_FUNCTIONS  = KeyEvent.VK_F;
-    private final static int MOVE_TO_CONTROL    = KeyEvent.VK_C;
-    private final static int MOVE_TO_ADDRESS    = KeyEvent.VK_A;
-
     private HashMap<String, ThrottleFrame> throttleFrames = new HashMap<String, ThrottleFrame>(5);
     private int cardCounterID = 0; // to generate unique names for each card
     private int cardCounterNB = 1; // real counter
