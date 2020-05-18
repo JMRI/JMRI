@@ -322,7 +322,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         public T inputFromString(@Nonnull String s) {
                 T retval = mapToEnum.get(s);
                 if (retval == null) {
-                    log.error("from String {} get {} for {}", s, retval, clazz);
+                    log.error("from String {} get null for {}", s, clazz);
                 } else {
                     log.trace("from String {} get {} for {}", s, retval, clazz);
                 }
