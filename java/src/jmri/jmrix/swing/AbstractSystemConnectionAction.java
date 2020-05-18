@@ -13,9 +13,9 @@ import jmri.jmrix.SystemConnectionMemo;
  * @author Randall Wood Copyright 2020
  * @param <M> the specific type of SystemConnectionMemo supported by this action
  */
-public abstract class AbstractSystemConnectionAction<M extends SystemConnectionMemo> extends AbstractAction implements SystemConnectionAction {
+public abstract class AbstractSystemConnectionAction<M extends SystemConnectionMemo> extends AbstractAction implements SystemConnectionAction<M> {
 
-    private M memo = null;
+    private transient M memo = null;
 
     protected AbstractSystemConnectionAction(String name, M memo) {
         super(name);
@@ -35,11 +35,16 @@ public abstract class AbstractSystemConnectionAction<M extends SystemConnectionM
      * <p>
      * Note that this accepts any subclass of SystemConnectionMemo, not just
      * subclasses of M, to avoid compilation problems elsewhere.
+     * 
+     * @throws IllegalArgumentException if the memo is not assignable from any
+     *                                  class listed in
+     *                                  {@link #getSystemConnectionMemoClasses()}
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public void setSystemConnectionMemo(SystemConnectionMemo memo) throws IllegalArgumentException {
+    public void setSystemConnectionMemo(M memo) {
         if (getSystemConnectionMemoClasses().stream().anyMatch(memo.getClass()::isAssignableFrom)) {
-            this.memo = (M) memo;
+            this.memo = memo;
         } else {
             throw new IllegalArgumentException(memo.getClass() + " is not valid for " + this.getClass());
         }

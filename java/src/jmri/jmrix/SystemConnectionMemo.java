@@ -1,7 +1,5 @@
 package jmri.jmrix;
 
-import apps.startup.StartupActionModelUtil;
-
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -250,7 +248,9 @@ public abstract class SystemConnectionMemo extends Bean {
 
     /**
      * Provide a factory for getting startup actions.
-     *
+     * <p>
+     * This is a bound, read-only, property under the name "actionFactory".
+     * 
      * @return the factory
      */
     @Nonnull
@@ -260,8 +260,14 @@ public abstract class SystemConnectionMemo extends Bean {
 
     protected abstract ResourceBundle getActionModelResourceBundle();
 
+    /**
+     * Add actions to the action list.
+     * 
+     * @deprecated since 4.19.7 without direct replacement
+     */
+    @Deprecated
     protected final void addToActionList() {
-        changeActionList(true);
+        // do nothing
     }
 
     /**
@@ -271,28 +277,7 @@ public abstract class SystemConnectionMemo extends Bean {
      */
     @Deprecated
     protected final void removeFromActionList() {
-        changeActionList(false);
-    }
-
-    private void changeActionList(boolean add) {
-        StartupActionModelUtil util = StartupActionModelUtil.getDefault();
-        ResourceBundle rb = getActionModelResourceBundle();
-        if (rb == null) {
-            // don't bother trying if there is no ActionModelResourceBundle
-            return;
-        }
-        log.debug("Removing actions from bundle {}", rb.getBaseBundleName());
-        rb.keySet().forEach(key -> {
-            try {
-                if (add) {
-                    util.addAction(key, rb.getString(key));
-                } else {
-                    util.removeAction(key);
-                }
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class \"{}\"", key);
-            }
-        });
+        // do nothing
     }
 
     /**
