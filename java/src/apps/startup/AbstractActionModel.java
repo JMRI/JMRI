@@ -9,6 +9,7 @@ import javax.annotation.CheckForNull;
 import javax.swing.Action;
 import jmri.JmriException;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.jmrix.swing.SystemConnectionAction;
 import jmri.util.ConnectionNameFromSystemName;
 import org.slf4j.Logger;
@@ -82,6 +83,9 @@ public abstract class AbstractActionModel implements StartupModel {
             try {
                 // don't need return value, just want to know if exception is triggered
                 Class.forName(className);
+                if (isSystemConnectionAction()) {
+                    return SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForSystemPrefix(systemPrefix) != null;
+                }
                 return true;
             } catch (ClassNotFoundException ex) {
                 return false;
