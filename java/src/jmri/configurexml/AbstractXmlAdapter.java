@@ -297,7 +297,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         public EnumIoNames(@Nonnull Class<T> clazz) {
             this.clazz = clazz;
             
-            mapToEnum = new HashMap<String, T>();
+            mapToEnum = new HashMap<>();
             for (T t : clazz.getEnumConstants() ) {
                 mapToEnum.put(t.name(), t);
             }
@@ -312,7 +312,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         @Nonnull
         public String outputFromEnum(@Nonnull T e) {
                 String retval = e.name();
-                log.trace("from {} make String {}} for {}", e, retval, clazz);
+                log.trace("from {} make String {} for {}", e, retval, clazz);
                 return retval;
         }
         
@@ -321,7 +321,11 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         @Nonnull
         public T inputFromString(@Nonnull String s) {
                 T retval = mapToEnum.get(s);
-                log.trace("from String {} get {}} for {}", s, retval, clazz);
+                if (retval == null) {
+                    log.error("from String {} get {} for {}", s, retval, clazz);
+                } else {
+                    log.trace("from String {} get {} for {}", s, retval, clazz);
+                }
                 return retval;
         }
     }
@@ -389,7 +393,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
             
             this.mapToEnum = mapToEnum;
             
-            this.mapFromEnum = new HashMap<T, String>();
+            this.mapFromEnum = new HashMap<>();
             for (T t : clazz.getEnumConstants() ) {
                 this.mapFromEnum.put(t, t.name());
             }
@@ -404,7 +408,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         @Nonnull
         public String outputFromEnum(@Nonnull T e) {
             String retval = mapFromEnum.get(e);
-            log.trace("from {} make String {}} for {}", e, retval, clazz);
+            log.trace("from {} make String {} for {}", e, retval, clazz);
             return retval;
         }
         
@@ -413,7 +417,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         @Nonnull
         public T inputFromString(@Nonnull String s) {
             T retval = mapToEnum.get(s);
-            log.trace("from String {} get {}} for {}", s, retval, clazz);
+            log.trace("from String {} get {} for {}", s, retval, clazz);
             return retval;
         }
     }
