@@ -80,7 +80,6 @@ public class DecoratorPanel extends JPanel {
     protected int _selectedButton;  // allow access for testing
     private String _selectedState;
     private boolean _isPositionableLabel;
-    private boolean _hasTextStates;
 
     Editor _editor;
     protected DisplayFrame _frame;
@@ -114,7 +113,7 @@ public class DecoratorPanel extends JPanel {
         }
     }
 
-    private class TextPanel extends JPanel {
+    static class TextPanel extends JPanel {
         String _state;
         TextPanel(String state) {
             _state = state;
@@ -132,7 +131,6 @@ public class DecoratorPanel extends JPanel {
         _samples.put("Text", sample);
         _selectedState = "Text";
         _isPositionableLabel = true;
-        _hasTextStates = false;
         _textEditComponent = makeTextPanel("Text", sample, true);
         _samplePanel.add(sample);
         _previewPanel = new PreviewPanel(_frame, _samplePanel, null, true);
@@ -147,13 +145,14 @@ public class DecoratorPanel extends JPanel {
         item.remove();      // don't need copy any more. Removes ghost image of PositionableJPanels
 //        _util = pos.getPopupUtility().clone(pos, pos.getTextComponent());
         _isPositionableLabel = (pos instanceof PositionableLabel);
-        _hasTextStates = (pos instanceof SensorIcon && !((SensorIcon)pos).isIcon());
         
         _samplePanel.setBackground(_editor.getTargetPanel().getBackground());
         _previewPanel = new PreviewPanel(_frame, _samplePanel, null, false);
 
-        if (_hasTextStates) {
+        boolean hasTextStates;
+        if (pos instanceof SensorIcon && !((SensorIcon)pos).isIcon()) {
             SensorIcon si = (SensorIcon) pos;
+            hasTextStates = true;
             if (!si.isIcon() && si.isText()) {
                 _tabPane = new JTabbedPane();
                 _tabPane.addChangeListener(c -> {
@@ -197,6 +196,7 @@ public class DecoratorPanel extends JPanel {
                 _textEditComponent = _tabPane;
             }   // else a non-text SensorIcon cannot be decorated.
         } else { // not a SensorIcon
+            hasTextStates = false;
             PositionableLabel sample = new PositionableLabel("", _editor);
             sample.setForeground(_util.getForeground());
             sample.setBackground(_util.getBackground());
@@ -237,7 +237,7 @@ public class DecoratorPanel extends JPanel {
                         util.getFixedWidth(), util.getFixedHeight(), pos.getWidth(), pos.getHeight());
             }
         }
-        finishInit(_hasTextStates);
+        finishInit(hasTextStates);
     }
 
     private void finishInit(boolean addCaption) {
@@ -301,7 +301,7 @@ public class DecoratorPanel extends JPanel {
         Color panelBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
         _chooser = JmriColorChooser.extendColorChooser(new JColorChooser(panelBackground));
         _chooser.getSelectionModel().addChangeListener(c -> {
-            ChooserColorChange();
+            chooserColorChange();
         });
         _chooser.setPreviewPanel(new JPanel());
         JmriColorChooser.suppressAddRecentColor(true);
@@ -486,7 +486,7 @@ public class DecoratorPanel extends JPanel {
         return button;
     }
 
-    private void ChooserColorChange() {
+    private void chooserColorChange() {
         PositionableLabel pos =_samples.get(_selectedState);
         PositionablePopupUtil util = pos.getPopupUtility();
         switch (_selectedButton) {
@@ -509,7 +509,7 @@ public class DecoratorPanel extends JPanel {
                 log.warn("Unexpected color change for state {}, button# {}", _selectedState, _selectedButton);
                 break;
         }
-        log.debug("ChooserColorChange opaque= {} _selectedState= {} _selectedButton= {} color= {}",
+        log.debug("chooserColorChange opaque= {} _selectedState= {} _selectedButton= {} color= {}",
                 pos.isOpaque(), _selectedState, _selectedButton, _chooser.getColor().toString());
         updateSamples();
     }
