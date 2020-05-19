@@ -11,8 +11,6 @@ import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This module handles configuration for LayoutShape objects for a LayoutEditor.
@@ -91,10 +89,9 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
 
         String name = element.getAttribute("ident").getValue();
 
-        LayoutShape.LayoutShapeType type = LayoutShape.LayoutShapeType.Open;
-        try {
-            type = sTypeEnumMap.inputFromAttribute(element.getAttribute("type"));
-        } catch (java.lang.NullPointerException e) {
+        LayoutShape.LayoutShapeType type = sTypeEnumMap.inputFromAttribute(element.getAttribute("type"));
+        if (type == null) {
+            type = LayoutShape.LayoutShapeType.Open;
             log.error("Layout Shape type attribute not found.");
         }
 
@@ -151,11 +148,10 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
                     for (int i = 0; i < elementList.size(); i++) {
                         Element relem = elementList.get(i);
 
-                        LayoutShape.LayoutShapePointType pointType = LayoutShape.LayoutShapePointType.Straight;
-                        try {
-                            pointType = pTypeEnumMap.inputFromAttribute(relem.getAttribute("type"));
-                        } catch (java.lang.NullPointerException e) {
-                            log.error("Layout Shape Point #{} type attribute not found.", i, e);
+                        LayoutShape.LayoutShapePointType pointType = pTypeEnumMap.inputFromAttribute(relem.getAttribute("type"));
+                        if (pointType == null) {
+                            pointType = LayoutShape.LayoutShapePointType.Straight;
+                            log.error("Layout Shape Point #{} type attribute not found.", i);
                         }
                         double x = 0.0;
                         double y = 0.0;

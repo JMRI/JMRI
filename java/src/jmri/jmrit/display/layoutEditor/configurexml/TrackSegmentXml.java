@@ -245,12 +245,11 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             attribute = element.getAttribute("type1");
             type1 = HitPointType.valueOf(attribute.getValue());
         } catch (IllegalArgumentException | NullPointerException e) {
-            try {
-                if (attribute == null) {
-                    throw new NullPointerException();
-                }
-                type1 = htpMap.inputFromAttribute(attribute);
-            } catch (NullPointerException e1) {
+            HitPointType t = null;
+            if (attribute != null) t = htpMap.inputFromAttribute(attribute);
+            if (t != null) {
+                type1 = t;
+            } else {
                 log.error("failed to convert tracksegment type1 attribute");
             }
         }
@@ -260,12 +259,11 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             attribute = element.getAttribute("type2");
             type2 = HitPointType.valueOf(attribute.getValue());
         } catch (IllegalArgumentException | NullPointerException e) {
-            try {
-                if (attribute == null) {
-                    throw new NullPointerException();
-                }
-                type2 = htpMap.inputFromAttribute(attribute);
-            } catch (NullPointerException e1) {
+            HitPointType t = null;
+            if (attribute != null) t = htpMap.inputFromAttribute(attribute);
+            if (t != null) {
+                type2 = t;
+            } else {
                 log.error("failed to convert tracksegment type2 attribute");
             }
         }

@@ -2,11 +2,17 @@ package jmri.configurexml;
 
 import java.util.HashMap;
 
+import javax.annotation.Nonnull;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.*;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * JUnit tests for the AbstractXmlAdapter class itself
@@ -123,6 +129,8 @@ public class AbstractXmlAdapterTest{
         Assert.assertEquals(testEnum.Foo, map.inputFromString("0"));
         Assert.assertEquals("2", map.outputFromEnum(testEnum.Biff));
         Assert.assertEquals(testEnum.Biff, map.inputFromString("2"));
+        
+        Assert.assertNull(map.inputFromString(null));
     }
 
     @Test
@@ -134,6 +142,8 @@ public class AbstractXmlAdapterTest{
         
         Assert.assertEquals(null, map.inputFromString("FooBar"));
         JUnitAppender.assertErrorMessage("from String FooBar get null for class jmri.configurexml.AbstractXmlAdapterTest$testEnum");
+        
+        Assert.assertNull(map.inputFromString(null));
     }
 
     @Test
@@ -157,6 +167,8 @@ public class AbstractXmlAdapterTest{
         Assert.assertEquals("Foo", map.outputFromEnum(testEnum.Foo));
         Assert.assertEquals(testEnum.Foo, map.inputFromString("foo"));
         Assert.assertEquals(testEnum.Foo, map.inputFromString("4"));
+        
+        Assert.assertNull(map.inputFromString(null));
     }
 
     @Test
@@ -185,15 +197,46 @@ public class AbstractXmlAdapterTest{
         Assert.assertEquals("FOO", map.outputFromEnum(testEnum.Foo));
         Assert.assertEquals(testEnum.Foo, map.inputFromString("foo"));
         Assert.assertEquals(testEnum.Foo, map.inputFromString("4"));
+        
+        Assert.assertNull(map.inputFromString(null));
     }
+    
+    @Test
+    public void testEnumException() {
+        AbstractXmlAdapter.EnumIO<testEnum> map = new AbstractXmlAdapter.EnumIoOrdinals<>(testEnum.class);
+        
+        Assert.assertNull(map.inputFromString("Test"));
+        JUnitAppender.assertErrorMessage("from String null get null for class jmri.configurexml.AbstractXmlAdapterTest$testEnum");
+    }
+    
+    public static class EnumIoException <T extends Enum<T>> extends AbstractXmlAdapter.EnumIO<T> {
+    
+        public EnumIoException(@Nonnull Class<T> clazz) {
+            super(clazz);
+        }
+        
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull
+        public String outputFromEnum(@Nonnull T e) {
+            return e.name();
+        }
+        
+        /** {@inheritDoc} */
+        @Override
+        public T internalInputFromString(String s) {
+            // throw an exception that is not expected
+            throw new IllegalMonitorStateException();
+        }
 
-
-    @Before
+    }
+    
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

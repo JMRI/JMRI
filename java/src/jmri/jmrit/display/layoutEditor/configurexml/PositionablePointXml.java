@@ -97,14 +97,18 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 
         // get attributes
         String name = element.getAttribute("ident").getValue();
-        PositionablePoint.PointType type = PositionablePoint.PointType.ANCHOR;
         double x = 0.0;
         double y = 0.0;
         try {
             x = element.getAttribute("x").getFloatValue();
             y = element.getAttribute("y").getFloatValue();
-            type = pTypeEnumMap.inputFromAttribute(element.getAttribute("type"));
         } catch (org.jdom2.DataConversionException e) {
+            log.error("failed to convert positionablepoint attribute");
+        }
+        
+        PositionablePoint.PointType type = pTypeEnumMap.inputFromAttribute(element.getAttribute("type"));
+        if (type == null) {
+            type = PositionablePoint.PointType.ANCHOR;
             log.error("failed to convert positionablepoint attribute");
         }
 

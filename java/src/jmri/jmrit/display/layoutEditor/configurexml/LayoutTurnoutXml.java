@@ -188,12 +188,17 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         String name = element.getAttribute("ident").getValue();
         double x = 0.0;
         double y = 0.0;
-        LayoutTurnout.TurnoutType type = LayoutTurnout.TurnoutType.NONE;
+        
         try {
             x = element.getAttribute("xcen").getFloatValue();
             y = element.getAttribute("ycen").getFloatValue();
-            type = tTypeEnumMap.inputFromAttribute(element.getAttribute("type"));
         } catch (org.jdom2.DataConversionException e) {
+            log.error("failed to convert layoutturnout attribute");
+        }
+
+        LayoutTurnout.TurnoutType type = tTypeEnumMap.inputFromAttribute(element.getAttribute("type"));
+        if (type == null) {
+            type = LayoutTurnout.TurnoutType.NONE;
             log.error("failed to convert layoutturnout attribute");
         }
 

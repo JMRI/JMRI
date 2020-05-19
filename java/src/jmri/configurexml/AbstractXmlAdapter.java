@@ -220,9 +220,17 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
 
     /**
      * Base for support of Enum load/store to XML files.
+     * 
+     * @param <T> the enum type that this class handles
      */
     public static abstract class EnumIO <T extends Enum<T>> { // public to be usable by adapters in other configXML packages
 
+        public EnumIO(@Nonnull Class<T> clazz) {
+            this.clazz = clazz;
+        }
+        
+        protected final Class<T> clazz;
+        
         /**
          * Convert an enum value to a String for storage in an XML file.
          * @param e enum value.
@@ -233,19 +241,37 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         
         /**
          * Convert a String value from an XML file to an enum value.
+         * This method never throws any exception.
+         * @param s storage string.
+         * @return enum value or null if enum is not found.
+         */
+        public final T inputFromString(String s) {
+            if (s == null) {
+                log.trace("from String null get null for {}", clazz);
+                return null;
+            }
+            try {
+                return internalInputFromString(s);
+            } catch (RuntimeException e) {
+                log.error("from String null get null for {}", clazz);
+                return null;
+            }
+        }
+        
+        /**
+         * Convert a String value from an XML file to an enum value.
          * @param s storage string
          * @return enum value.
          */
         @Nonnull
-        abstract public T inputFromString(@Nonnull String s);
-
+        abstract protected T internalInputFromString(@Nonnull String s);
+        
         /**
          * Convert a JDOM Attribute from an XML file to an enum value
          * @param a JDOM attribute.
-         * @return enum value.
+         * @return enum value or null if enum is not found.
          */
-        @Nonnull
-        public T inputFromAttribute(@Nonnull Attribute a) {
+        public final T inputFromAttribute(Attribute a) {
             return inputFromString(a.getValue());
         }
     }
@@ -261,9 +287,8 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
     public static class EnumIoOrdinals <T extends Enum<T>> extends EnumIO<T> { // public to be usable by adapters in other configXML packages
     
         public EnumIoOrdinals(@Nonnull Class<T> clazz) {
-            this.clazz = clazz;
+            super(clazz);
         }
-        Class<T> clazz;
 
         /** {@inheritDoc} */
         @Override
@@ -275,8 +300,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         
         /** {@inheritDoc} */
         @Override
-        @Nonnull
-        public T inputFromString(@Nonnull String s) {
+        public T internalInputFromString(String s) {
             int content = Integer.parseInt(s);
             return clazz.getEnumConstants()[content];
         }
@@ -295,7 +319,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
          * @param clazz enum class.
          */
         public EnumIoNames(@Nonnull Class<T> clazz) {
-            this.clazz = clazz;
+            super(clazz);
             
             mapToEnum = new HashMap<>();
             for (T t : clazz.getEnumConstants() ) {
@@ -304,7 +328,6 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
             
         }
 
-        Class<T> clazz;
         final Map<String, T> mapToEnum;
         
         /** {@inheritDoc} */
@@ -318,8 +341,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         
         /** {@inheritDoc} */
         @Override
-        @Nonnull
-        public T inputFromString(@Nonnull String s) {
+        public T internalInputFromString(String s) {
                 T retval = mapToEnum.get(s);
                 if (retval == null) {
                     log.error("from String {} get null for {}", s, clazz);
@@ -373,7 +395,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
          * be written out. 
          */
         public EnumIoMapped(@Nonnull Class<T> clazz, @Nonnull Map<String, T> mapToEnum, @Nonnull Map<T, String> mapFromEnum) {
-            this.clazz = clazz;
+            super(clazz);
             
             this.mapToEnum = mapToEnum;
             
@@ -389,7 +411,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
          * The mapping from enums to Strings uses the enum names.
          */
         public EnumIoMapped(@Nonnull Class<T> clazz, @Nonnull Map<String, T> mapToEnum) {
-            this.clazz = clazz;
+            super(clazz);
             
             this.mapToEnum = mapToEnum;
             
@@ -399,7 +421,6 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
             }
         }
 
-        Class<T> clazz;
         final Map<T, String> mapFromEnum;
         final Map<String, T> mapToEnum;
         
@@ -414,8 +435,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         
         /** {@inheritDoc} */
         @Override
-        @Nonnull
-        public T inputFromString(@Nonnull String s) {
+        public T internalInputFromString(String s) {
             T retval = mapToEnum.get(s);
             log.trace("from String {} get {} for {}", s, retval, clazz);
             return retval;
