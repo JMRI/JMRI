@@ -253,7 +253,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
             try {
                 return internalInputFromString(s);
             } catch (RuntimeException e) {
-                log.error("from String null get null for {}", clazz);
+                log.error("from String null get null for {}", clazz, e);
                 return null;
             }
         }
