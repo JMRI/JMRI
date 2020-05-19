@@ -59,7 +59,7 @@ Le type de signal sp&#233;cifique exemple  "double searchlight" ou "double feux 
 <br>
 		Vous pouvez ajouter une ic&#244;ne M&#226;t de Signalisation dans l'&#201;diteur de Panneau en cliquant-droit n'importe o&#249; et choisir Ajouter &#233;l&#233;ment -->M&#226;t de Signalisation.<br>
 		Dans l'&#201;diteur de R&#233;seau entrez l'adresse du M&#226;t de Signalisation et Maj-Clic sur un aiguillage ou un point d'ancrage sur le panneau o&#249; vous voulez placer un Signal. L'ic&#244;ne M&#226;t de Signalisation affichera l'image sp&#233;cifi&#233;e dans la d&#233;finition d'apparence pour ce type de M&#226;t et de syst&#232;me particulier. Les ic&#244;nes de Signaux affich&#233;es sur votre panneau sont une partie d'un Syst&#232;me de Signaux et ils ne peuvent pas &#234;tre chang&#233;s individuellement par l'utilisateur comme les ic&#244;nes d'Aiguillage. <br>
-		L'image sur la droite: Ic&#244;nes Signaux R&#232;gle 281 du Syst&#232;me de Signaux ARR-2. <!-- icons from AAR-2 xml appearance definition xml March 2014 --> <a href="http://jmri.org/xml/signals/AAR-1946/aspects.xml"><img src="images/AAR-2Clear.png" width="187" height="187" align="right" border="1"></a><br>&nbsp;
+		L'image sur la droite: Ic&#244;nes Signaux R&#232;gle 281 du Syst&#232;me de Signaux ARR-2. <!-- icons from AAR-2 xml appearance definition xml March 2014 --> <a href="https://jmri.org/xml/signals/AAR-1946/aspects.xml"><img src="images/AAR-2Clear.png" width="187" height="187" align="right" border="1"></a><br>&nbsp;
 		</li>
 <li><b><a href="SignalGroups.shtml">Groupes de Signaux</a></b> sont utilis&#233;s pour d&#233;finir un nombre de Feux de Signalisation, o&#249; seul un Feu de Signalisation peut &#234;tre allum&#233; &#224; un moment donn&#233; 
 Les Groupes de Signaux doivent &#234;tre utilis&#233;s o&#249; des indicateurs suppl&#233;mentaires	pour aider le M&#226;t Signal, comme &#224; une Jonction, un Itin&#233;raire, ou affichages de Vitesse. Ces indicateurs fournissent une information suppl&#233;mentaire au conducteur qui n'est pas donn&#233;e par le M&#226;t Signal principal. De tels indicateurs sont vus fr&#233;quemment en Signalisation Europ&#233;enne et Britannique.</li>
@@ -188,7 +188,7 @@ Les utilisateurs JMRI ont fourni les Aspect pr&#233;-d&#233;finis des Syst&#232;
     <br>
 </dl>
 	
-	<p>La liste la plus &#224; jour des aspect des syst&#232;me de Signalisation dans JMRI peut &#234;tre trouv&#233;e &#224; <a href="http://jmri.org/xml/signals/">http://jmri.org/xml/signals/</a>.
+	<p>La liste la plus &#224; jour des aspect des syst&#232;me de Signalisation dans JMRI peut &#234;tre trouv&#233;e &#224; <a href="https://jmri.org/xml/signals/">https://jmri.org/xml/signals/</a>.
 
 		<p>Pour cr&#233;er votre propre D&#233;finition de Syst&#232;me de Signalisation suivre ces <a href="DefineNewAspects.shtml">Instructions</a>.
 Si vous cr&#233;ez une nouvelle d&#233;finition pour un autre chemin de fer ou &#233;poque,

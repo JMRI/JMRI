@@ -35,9 +35,9 @@ notre sch&#233;ma, voir la
 
 <p>
 Le schema actuel peut &#234;tre vue en ligne dans le
-<a href="http://jmri.org/xml/schema">r&#233;pertoire schema</a>.
+<a href="https://jmri.org/xml/schema">r&#233;pertoire schema</a>.
 Le plus couramment utilis&#233; est le
-<a href="http://jmri.org/xml/schema/layout.xsd">schema pour les fichiers de panneaux layout.xsd</a>.
+<a href="https://jmri.org/xml/schema/layout.xsd">schema pour les fichiers de panneaux layout.xsd</a>.
 Voir ci-dessous comment ils sont organis&#233;s.
 
 <h2>Acc&#232;s aux D&#233;finitions de Sch&#233;ma</h2>
@@ -213,7 +213,7 @@ dans leur contenu de t&#234;te:
 Stylesheets tourne le code XML comme ce sch&#233;ma, dans une forme lisible par l'utilisateur
 quand le XML est analys&#233; et affich&#233; par un navigateur.
 Pour un exemple, cliquez sur ce lien pour le fichier sch&#233;ma
-<a href="http://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a>
+<a href="https://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a>
 Notre norme stylesheet est assez basique.
 Elle montre juste quelques structure basique. Si quelqu'un conna&#238;t une meilleur Stylsheet, nous 
 pourront certainement basculer vers elle.
@@ -313,7 +313,7 @@ Une classe particuli&#232;re *XML est l'unit&#233; de r&#233;utilisation.
 
 <p>
 Un bon nombre de classes descendent de jmri.configurexml.XmAdapter:
-( <a href="http://jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">voir JavaDoc</a> )
+( <a href="https://jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">voir JavaDoc</a> )
 
 <p>
 Par convention, fournir &lt;xsd:annotation&gt;&lt;xsd:appinfo&gt; &#233;l&#233;ment contenant 
@@ -336,7 +336,7 @@ Nous nous dirigeons vers la structuration de notre XML en utilisant le
 Dans ce style, les &#233;l&#233;ments de niveau sup&#233;rieur qui sont &#233;crits par classe ont des types d&#233;finis.
 Tous les &#233;l&#233;ments qui se trouvent dans ceux-ci sont d&#233;finis de fa&#231;on anonyme, au sein de ces &#233;l&#233;ments.
 Pour un exemple, voir le fichier
-<a href="http://jmri.org/xml/schema/types/sensors.xsd">types/sensors.xsd</a>
+<a href="https://jmri.org/xml/schema/types/sensors.xsd">types/sensors.xsd</a>
 qui d&#233;finit un type pour l'&#233;l&#233;ment "sensors",&#233;crit pour SensorManagers.
 Dans ce cadre, il est inclus une d&#233;finition d'un &#233;l&#233;ment capteur,et un &#233;l&#233;ment
 "comment" dans ce contexte.
@@ -348,7 +348,7 @@ les classes qui font la lecture et l'&#233;criture.
 <p>
 Il y a quelques &#233;l&#233;ments (&#233;l&#233;ments et groupes d'attributs) qui s'&#233;tendent sur plusieurs types.
 Ils sont d&#233;finis dans le fichier
-<a href="http://jmri.org/xml/schema/types/general.xsd">types/general.xsd</a> .
+<a href="https://jmri.org/xml/schema/types/general.xsd">types/general.xsd</a> .
 
 <p>
 Plus d'informations sur les mod&#232;les de conception de sch&#233;mas XML est disponible &#224;
@@ -393,7 +393,7 @@ Une liste partielle des types pr&#233;d&#233;finis:
 </dl>
 
 Pour d'autres, naviguer sur les
-<a href="http://jmri.org/xml/schema/types/general.xsd">types g&#233;n&#233;raux de schema</a>.
+<a href="https://jmri.org/xml/schema/types/general.xsd">types g&#233;n&#233;raux de schema</a>.
 
 <h2>Normes Externes et Travaux Futurs</h2>
 
@@ -424,7 +424,7 @@ et n'est pas enti&#232;rement compatible avec les versions d'autres logiciels qu
 Nous utilisons l'espace de noms normal de DocBook 5.0 , de sorte que nous pouvons facilement convertir plus tard &#224;
 un schema plus complet de fa&#231;on transparente.
 Notre schema plus petit est situ&#233; &#224;
-<a href="http://jmri.org/xml/schema/docbook/docbook.xsd">http://jmri.org/xml/schema /docbook/docbook.xsd</a>
+<a href="https://jmri.org/xml/schema/docbook/docbook.xsd">https://jmri.org/xml/schema /docbook/docbook.xsd</a>
 (Notre emplacement de schema habituel). Il est <em>seulement</em>
 r&#233;f&#233;renc&#233; &#224; partir de fichiers de schema JMRI, et non pas les fichiers d'instance,
 afin que nous puissions plus tard convertir avec le travail fini.</p></li>

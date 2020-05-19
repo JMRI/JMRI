@@ -116,8 +116,8 @@ et sont v&#233;rifi&#233;s
     <li>contact -</li>
 </ul>
 <p>Finalement, une partie du site est g&#233;n&#233;r&#233; &#224; partir de la source JMRI elle-m&#234;me, plut&#244;t que d'&#234;tre contenue 
-dans la source. Le <a href="http://jmri.org/JavaDoc/doc">JavaDoc</a> est une telle section, avec une partie de 
-l'information <a href="http://jmri.org/xml/XSLT">human-readable </a> au sujet des d&#233;codeurs d&#233;finis.
+dans la source. Le <a href="https://jmri.org/JavaDoc/doc">JavaDoc</a> est une telle section, avec une partie de 
+l'information <a href="https://jmri.org/xml/XSLT">human-readable </a> au sujet des d&#233;codeurs d&#233;finis.
 
 <h2>Mise &#224; Jour du site jmri.org</h2>
 
@@ -262,7 +262,7 @@ les liens symboliques qui permettent &#224; votre serveur web de voir le haut du
 <a name="catalog" id="catalog"></a><h3>Installation d'un catalogue local XML</h3>
 
 Beaucoup de fichiers JMRI XML contiennent XIncludes qui r&#233;f&#233;rence 
-d'autres fichiers XML avec des URLs comme "http://jmri.org/xml/schema/types/turnouts-2-9-6.xsd".
+d'autres fichiers XML avec des URLs comme "https://jmri.org/xml/schema/types/turnouts-2-9-6.xsd".
 Quand un programme JMRI rencontre ceux-ci, il les convertit automatiquement en 
 fichier de r&#233;f&#233;rence locale. D'autre outils comme NetBeans ou xmllint, ne savent pas le faire.
 <p>
@@ -290,7 +290,7 @@ L'installation d'un catalogue local XML, et ensuite dir &#224; vos outils pour l
     &lt;?xml version='1.0'?&gt;
 	&lt;catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"&gt;
 
-	 &lt;rewriteURI uriStartString="http://jmri.org/xml/"
+	 &lt;rewriteURI uriStartString="https://jmri.org/xml/"
      rewritePrefix="http://localhost/xml/" /&gt;
 
     &lt;/catalog&gt;

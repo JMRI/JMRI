@@ -115,16 +115,16 @@ xsltproc scom.xsl decoder-template.xml > decoder-gen.xml
           The processing instruction must appear at the start of the decoder definition:
       </p>
       <pre>
-&lt;?transform-xslt href="http://jmri.org/xml/decoders/scom.xsl"?>
+&lt;?transform-xslt href="https://jmri.org/xml/decoders/scom.xsl"?>
       </pre>
       <p>
           So the decoder template's header would look like:
       </p>
       <pre>
 &lt;?xml version="1.0" encoding="utf-8"?>
-&lt;?transform-xslt href="http://jmri.org/xml/decoders/scom.xsl"?>
+&lt;?transform-xslt href="https://jmri.org/xml/decoders/scom.xsl"?>
 &lt;decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" >
+    xsi:noNamespaceSchemaLocation="https://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" >
 
     &lt;decoder>
 ...
@@ -480,7 +480,7 @@ xsltproc scom.xsl decoder-template.xml > decoder-gen.xml
       </p>
       <pre>
 &lt;variable item="Aspect{$index} LED1 Out" CV="{$CV2}" mask="XXXVVVVV" default="0">
-    &lt;xi:include href="http://jmri.org/xml/decoders/tvd/LedOutput.xml"/>
+    &lt;xi:include href="https://jmri.org/xml/decoders/tvd/LedOutput.xml"/>
 &lt;/variable>
       </pre>
       <p>
@@ -496,7 +496,7 @@ xsltproc scom.xsl decoder-template.xml > decoder-gen.xml
       </pre>
       <p>
           The second issue is that the <i>xi:include</i> must use URLs that JMRI is able to <b>resolve locally</b>. Otherwise, the DecoderPro would attempt to download
-          parts of the definition from the Internet, which requires an online connection - and is slow. The prefix <b>http://jmri.org/xml</b> is guaranteed to resolve
+          parts of the definition from the Internet, which requires an online connection - and is slow. The prefix <b>https://jmri.org/xml</b> is guaranteed to resolve
           to the <b>xml</b> directory of your local JMRI installation. For more mapping, please see other JMRI documentation.
       </p>
       </div><!-- close #mainContent -->

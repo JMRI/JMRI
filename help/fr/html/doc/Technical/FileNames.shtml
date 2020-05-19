@@ -85,7 +85,7 @@
       conversion d&eacute;crits ci-dessous.
 
       <h2>Impl&eacute;mentation</h2>La classe <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html">jmri.util.FileUtil</a>
+      "https://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html">jmri.util.FileUtil</a>
       fournit des routines de traduction automatique pour faire :
 
       <dl>

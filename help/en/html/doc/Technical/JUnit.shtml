@@ -733,7 +733,7 @@
       </ul>
 
       <p>For example, if creating a thread based on <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">
       AbstractAutomat</a>, you can check the start with:</p>
 <pre style="font-family: monospace;">
     AbsractAutomat p = new MyThreadClass();
@@ -940,7 +940,7 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
         <code>@Ignore</code> without an argument
         will compile, but Jenkins will mark it as an error.
         <p>Also note the 
-        <a href="http://jmri.org/JavaDoc/doc/jmri/util/junit/annotations/ToDo.html">@jmri.util.junit.annotations.ToDo annotation</a>
+        <a href="https://jmri.org/JavaDoc/doc/jmri/util/junit/annotations/ToDo.html">@jmri.util.junit.annotations.ToDo annotation</a>
         which indicates that this needs work and provides some more information 
         about what needs to be done.
         <p>
@@ -954,7 +954,7 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
         applicable for a specific system's hardware.  In that case, you 
         provide a null body to do nothing, and mark the test as not applicable
         with the 
-        <a href="http://jmri.org/JavaDoc/doc/jmri/util/junit/annotations/NotApplicable.html">@jmri.util.junit.annotations.NotApplicable</a>
+        <a href="https://jmri.org/JavaDoc/doc/jmri/util/junit/annotations/NotApplicable.html">@jmri.util.junit.annotations.NotApplicable</a>
         annotation like this:
 <pre style="font-family: monospace;">
         @Override
@@ -1124,7 +1124,7 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       pack another frame, you'll have problems unless you either:
       <ul>
         <li>Do all those operations on the GUI thread by enclosing them in 
-            <a href="http://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnGUI-jmri.util.ThreadingUtil.ThreadAction-">jmri.util.ThreadingUtil.runOnGUI</a>
+            <a href="https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnGUI-jmri.util.ThreadingUtil.ThreadAction-">jmri.util.ThreadingUtil.runOnGUI</a>
             calls so that the entire sequence of operations is done on the Swing.
             This is what's normally done in Swing applications, and it's a test
             of the real operation.

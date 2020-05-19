@@ -34,9 +34,9 @@
       page</a>.</p>
 
       <p>The current schema can be seen online in the <a href=
-      "http://jmri.org/xml/schema">schema directory</a>. The most
+      "https://jmri.org/xml/schema">schema directory</a>. The most
       commonly used one is the <a href=
-      "http://jmri.org/xml/schema/layout.xsd">layout.xsd schema for
+      "https://jmri.org/xml/schema/layout.xsd">layout.xsd schema for
       panel files</a>. See below on how it's organized.</p>
 
       <h2>Access to Schema Definitions</h2>JMRI uses XML Schema to
@@ -174,7 +174,7 @@
                 point to the most recent layout.xsd version in line 3:<br>
                 <code>&lt;layout-config
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-7-2.xsd"&gt;
+                xsi:noNamespaceSchemaLocation="https://jmri.org/xml/schema/layout-4-7-2.xsd"&gt;
                 </code>
             </li>
 
@@ -237,7 +237,7 @@
 </pre>Stylesheets turn XML code, like this schema, into a
       human-readable form when the XML is parsed and displayed by a
       browser. For an example of that, click on this link to the
-      <a href="http://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a>
+      <a href="https://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a>
       schema file. Our standard stylesheet is pretty basic. It just
       shows basic structure. If anybody knows of a better
       stylesheet, we can certainly switch to it. 
@@ -356,7 +356,7 @@
 
       <p>Lots of classes descend from jmri.configurexml.XmAdapter:
       (<a href=
-      "http://jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">see
+      "https://jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">see
       Javadoc</a>)</p>
 
       <p>By convention, provide
@@ -383,7 +383,7 @@
       elements that are within those are defined anonymously,
       within those elements. For an example of this, see the
       <a href=
-      "http://jmri.org/xml/schema/types/sensors.xsd">types/sensors.xsd</a>
+      "https://jmri.org/xml/schema/types/sensors.xsd">types/sensors.xsd</a>
       file, which defines a type for the "sensors" element written
       for SensorManagers. Within that, there is included a
       definition of a "Sensor" element, and a "comment" element
@@ -395,7 +395,7 @@
 
       <p>There are a few items (elements and attribute groups) that
       extend across multiple types. They are defined in the
-      <a href="http://jmri.org/xml/schema/types/general.xsd">types/general.xsd</a>
+      <a href="https://jmri.org/xml/schema/types/general.xsd">types/general.xsd</a>
       file.</p>
 
       <p>More information on XML schema design patterns is
@@ -470,7 +470,7 @@
 
         <dd>yes, no, maybe</dd>
       </dl>For others, browse the <a href=
-      "http://jmri.org/xml/schema/types/general.xsd">general types
+      "https://jmri.org/xml/schema/types/general.xsd">general types
       schema</a>.
 
       <h2>External Standards and Future Work</h2>The <a href=
@@ -516,7 +516,7 @@
           namespace, so we can later easily convert to a more
           complete schema transparently. Our smaller schema is
           located at <a href=
-          "http://jmri.org/xml/schema/docbook/docbook.xsd">http://jmri.org/xml/schema/docbook/docbook.xsd</a>
+          "https://jmri.org/xml/schema/docbook/docbook.xsd">https://jmri.org/xml/schema/docbook/docbook.xsd</a>
           (our usual schema location). It is <em>only</em>
           referenced from JMRI schema files, not instance files, so
           that we can later convert with finite work.</p>

@@ -442,7 +442,7 @@ displayed from the text in the "label" attribute, which is:
         xml/decoders/esu</dd>
       </dl>The format for an include is:
       <pre style="font-family: monospace;">
-     &lt;xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/&gt;
+     &lt;xi:include href="https://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/&gt;
 </pre>The program searches for those fragment files first in the
 preferences directory, then in the program directory. The full path
 must be present, e.g. you need an xml directory that contains a

@@ -771,7 +771,7 @@
               <li>JMRI normally sends an "ON" LocoNet message followed by an
               "OFF" LocoNet message when controlling switches, just like Digitrax
               throttles do.  <span class="since">Since
-              <a href="http://jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">
+              <a href="https://jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">
               JMRI 4.15.7</a></span>, it is possible to configure JMRI to send
               only "ON" messages to turnouts, without sending "OFF" messages.  Many
               accessory decoders work well when only receiving "ON" messages.
@@ -834,7 +834,7 @@
                   types may require similar re-configuration to be controllable.
                   </li>
                   <li><span class="since">Since
-                  <a href="http://jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">
+                  <a href="https://jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">
                   JMRI 4.15.7</a></span>, JMRI provides a feature which "bypasses"
                   the command station's "Bushby" feature and therefore allows JMRI
                   to control those devices which are controlled by turnout control

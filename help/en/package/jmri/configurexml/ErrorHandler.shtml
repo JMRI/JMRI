@@ -118,7 +118,7 @@
                                         <td>Attribute "error" must be declared for element type "sensoricon"</td>
                                         <td><ol>
                                                 <li>Remove the text <code>&lt;!DOCTYPE layout-config SYSTEM "layout-config.dtd"&gt;</code></li>
-                                                <li>Replace <code>&lt;layout-config&gt;</code> with <code>&lt;layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout.xsd"&gt;</code>.
+                                                <li>Replace <code>&lt;layout-config&gt;</code> with <code>&lt;layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://jmri.org/xml/schema/layout.xsd"&gt;</code>.
                                                 </li>
                                             </ol>
                                         </td>

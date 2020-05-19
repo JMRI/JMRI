@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?transform-xslt href="http://jmri.org/xml/decoders/scom.xsl"?>
+<?transform-xslt href="https://jmri.org/xml/decoders/scom.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2004, 2020 All rights reserved -->
 <!-- $Id$ -->
 <!--                                                                        -->
@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" >
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" >
     <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20181201"/>
     <version author="Petr Šídlo sidlo64@hotmail.com" version="2" lastUpdated="20190220"/>
     <version author="Petr Šídlo sidlo64@hotmail.com" version="3" lastUpdated="20190305"/>

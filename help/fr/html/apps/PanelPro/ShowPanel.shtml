@@ -41,11 +41,11 @@
 
       <p>Un exemple important de ceci est disponible en tant que
       <a href=
-      "http://jmri.org/community/examples/SPShastaConfigFile.pdf">fichier
+      "https://jmri.org/community/examples/SPShastaConfigFile.pdf">fichier
       PDF</a> . Ce sont les informations de configuration, y
       compris itin&eacute;raires, Logix, etc, pour le sch&eacute;ma
       <a href=
-      "http://jmri.org/community/examples/SPShasta.shtml">SP Shasta
+      "https://jmri.org/community/examples/SPShasta.shtml">SP Shasta
       Itin&eacute;raires</a> .</p>
 
       <p>Pour visualiser votre propre fichier panneau, il suffit de
@@ -75,7 +75,7 @@
           Pour ce faire, changer la deuxi&egrave;me ligne du
           fichier en:
           <code>
-  &lt;xml-stylesheet href = "http://jmri.org/xml/XSLT/panelfile.xsl"type = "text/xsl"&gt;
+  &lt;xml-stylesheet href = "https://jmri.org/xml/XSLT/panelfile.xsl"type = "text/xsl"&gt;
           </code>
         </li>
 
@@ -86,7 +86,7 @@
           "XML/XSLT/panelfile.xsl" dans votre r&eacute;pertoire de
           distribution JMRI, ou obtenir la version la plus
           r&eacute;cente de JMRI en t&eacute;l&eacute;chargeant
-          <a href="http://jmri.org/xml/XSLT/panelfile.xsl">ce
+          <a href="https://jmri.org/xml/XSLT/panelfile.xsl">ce
           lien</a> . Placez une copie de ce fichier dans le
           m&ecirc;me r&eacute;pertoire que le fichier de panneau
           que vous souhaitez afficher. Puis changez la
@@ -103,14 +103,14 @@ Dites au navigateur de la prendre &#224; partir d'un serveur web JMRI.
 <p>
 Pour ce faire, changer la deuxi&#232;me ligne du fichier en:
 <code>
- &lt;?xml-stylesheet href = "http://jmri.org/xml/XSLT/panelfile.xsl"type = "text/xsl"?&gt;
+ &lt;?xml-stylesheet href = "https://jmri.org/xml/XSLT/panelfile.xsl"type = "text/xsl"?&gt;
 </code>
 <li>
 Placez le fichier feuille de style dans le m&#234;me endroit que votre fichier de panneau, et
 dire au navigateur de l'utiliser.
 <p>
 Pour ce faire, d'abord trouver le fichier "xml/XSLT/panelfile.xsl" dans votre r&#233;pertoire de distribution JMRI, ou obtenir la version la plus r&#233;cente de JMRI en t&#233;l&#233;chargeant
-<a href=  "http://jmri.org/xml/XSLT/panelfile.xsl"> ce lien </a>.
+<a href=  "https://jmri.org/xml/XSLT/panelfile.xsl"> ce lien </a>.
 Placez une copie de ce fichier dans le m&#234;me r&#233;pertoire que le fichier de panneau que vous souhaitez afficher.
 Puis changez la deuxi&#232;me ligne de votre fichier de panneau en:
 <code>
