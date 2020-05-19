@@ -263,7 +263,6 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
          * @param s storage string
          * @return enum value.
          */
-        @Nonnull
         abstract protected T internalInputFromString(@Nonnull String s);
         
         /**
