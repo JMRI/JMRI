@@ -294,7 +294,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
                 if (pm.getPower() == jmri.PowerManager.ON) {
                     lastTimeLayoutPowerOn = Instant.now();
                 }
-            } catch (JmriException | NoSuchMethodError xe) {
+            } catch (NoSuchMethodError xe) {
                 // do nothing
             }
         }

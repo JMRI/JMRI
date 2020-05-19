@@ -144,11 +144,7 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
     public void testImplementsIdle() {
         if (p.implementsIdle()) {
             hearIdle();
-            try {
-                Assert.assertEquals("power state", PowerManager.IDLE, p.getPower());
-            } catch (JmriException e) {
-                Assert.fail("JmriJException occured invoking p.getPower()");
-            }
+            Assert.assertEquals("power state", PowerManager.IDLE, p.getPower());
         }
     }
 
