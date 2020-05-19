@@ -12,9 +12,9 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
 public class Mx1MonPanelAction extends Mx1NamedPaneAction {
 
     public Mx1MonPanelAction() {
-            super("Mx1 Command Monitor",
-                    new JmriJFrameInterface(),
-                    Mx1MonPanel.class.getName(),
-                    InstanceManager.getDefault(Mx1SystemConnectionMemo.class));
+        super("Mx1 Command Monitor",
+                new JmriJFrameInterface(),
+                Mx1MonPanel.class.getName(),
+                InstanceManager.getDefault(Mx1SystemConnectionMemo.class));
     }
 }
