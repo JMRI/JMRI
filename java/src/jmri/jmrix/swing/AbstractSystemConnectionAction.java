@@ -32,9 +32,6 @@ public abstract class AbstractSystemConnectionAction<M extends SystemConnectionM
 
     /**
      * {@inheritDoc}
-     * <p>
-     * Note that this accepts any subclass of SystemConnectionMemo, not just
-     * subclasses of M, to avoid compilation problems elsewhere.
      * 
      * @throws IllegalArgumentException if the memo is not assignable from any
      *                                  class listed in
