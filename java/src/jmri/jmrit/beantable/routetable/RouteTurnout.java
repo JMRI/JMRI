@@ -3,6 +3,18 @@ package jmri.jmrit.beantable.routetable;
 import jmri.Route;
 import jmri.Turnout;
 
+/**
+ * Route Table RouteTurnout Elements.
+ *
+ * Split from {@link jmri.jmrit.beantable.RouteTableAction}
+ *
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2007
+ * @author Simon Reader Copyright (C) 2008
+ * @author Pete Cressman Copyright (C) 2009
+ * @author Egbert Broerse Copyright (C) 2016
+ * @author Paul Bender Colyright (C) 2020
+ */
 class RouteTurnout extends RouteElement {
     private final String SET_TO_CLOSED;
     private final  String SET_TO_THROWN;

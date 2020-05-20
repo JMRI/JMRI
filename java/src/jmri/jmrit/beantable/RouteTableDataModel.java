@@ -9,6 +9,18 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 
+/**
+ * TableDataModel for the Route Table.
+ *
+ * Split from {@link RouteTableAction}
+ *
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2007
+ * @author Simon Reader Copyright (C) 2008
+ * @author Pete Cressman Copyright (C) 2009
+ * @author Egbert Broerse Copyright (C) 2016
+ * @author Paul Bender Colyright (C) 2020
+ */
 public class RouteTableDataModel extends BeanTableDataModel<Route> {
 
     private static final int ENABLECOL = NUMCOLUMN;

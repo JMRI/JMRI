@@ -8,6 +8,18 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
+/**
+ * Enable creation of a Logix from a Route.
+ *
+ * Split from {@link jmri.jmrit.beantable.RouteTableAction}
+ *
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2007
+ * @author Simon Reader Copyright (C) 2008
+ * @author Pete Cressman Copyright (C) 2009
+ * @author Egbert Broerse Copyright (C) 2016
+ * @author Paul Bender Colyright (C) 2020
+ */
 public class RouteExportToLogix {
 
     private final String LOGIX_SYS_NAME;

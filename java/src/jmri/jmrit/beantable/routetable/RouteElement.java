@@ -2,6 +2,18 @@ package jmri.jmrit.beantable.routetable;
 
 import jmri.Sensor;
 
+/**
+ * Base class Route Table RouteElements.
+ *
+ * Split from {@link jmri.jmrit.beantable.RouteTableAction}
+ *
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2007
+ * @author Simon Reader Copyright (C) 2008
+ * @author Pete Cressman Copyright (C) 2009
+ * @author Egbert Broerse Copyright (C) 2016
+ * @author Paul Bender Colyright (C) 2020
+ */
 abstract class RouteElement {
 
     private final String _sysName;
