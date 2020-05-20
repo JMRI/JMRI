@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
- * Base set of tests for decendents of the jmri.jmris.AbstractPowerServer class
+ * Base set of tests for descendants of the jmri.jmris.AbstractPowerServer class
  *
  * @author Paul Bender Copyright (C) 2018
  */
