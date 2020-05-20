@@ -142,6 +142,9 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
      * Can provide some mechanism to prompt for user for one last chance to
      * change his/her mind.
      *
+     * @param entry Roster entry being operated on
+     * @param filename Just name of file
+     * @param fullFileName including path
      * @return true if user says to continue
      */
     boolean userOK(String entry, String filename, String fullFileName) {
