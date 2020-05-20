@@ -62,7 +62,8 @@ public class AbstractRouteAddEditFrame extends JmriJFrame {
     private static final int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE,
             Route.VETOCLOSED, Route.VETOTHROWN};
 
-    private static final Logger log = LoggerFactory.getLogger(RouteAddFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractRouteAddEditFrame.class);
+
     static int ROW_HEIGHT;
     // This group will get runtime updates to system-specific contents at
     // the start of buildModel() above.  This is done to prevent
