@@ -1,9 +1,6 @@
 package jmri.jmrit.beantable.routetable;
 
-import jmri.InstanceManager;
-import jmri.Route;
-import jmri.Sensor;
-import jmri.Turnout;
+import jmri.*;
 import jmri.swing.NamedBeanComboBox;
 import jmri.swing.RowSorterUtil;
 import jmri.util.AlphanumComparator;
@@ -25,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AbstractRouteAddEditFrame extends JmriJFrame {
+
+    protected RouteManager routeManager;
+
     static final String updateInst = Bundle.getMessage("RouteAddStatusInitial3", Bundle.getMessage("ButtonUpdate"));
     static final String cancelInst = Bundle.getMessage("RouteAddStatusInitial4", Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit")));
     static final String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),
@@ -45,9 +45,11 @@ public class AbstractRouteAddEditFrame extends JmriJFrame {
     };
     private static final int[] sensorInputModeValues = new int[]{Route.ONACTIVE, Route.ONINACTIVE, Route.ONCHANGE,
             Route.VETOACTIVE, Route.VETOINACTIVE};
+
     // safe methods to set tho above 4 static field values
     private static final int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE,
             Route.VETOCLOSED, Route.VETOTHROWN};
+
     private static final Logger log = LoggerFactory.getLogger(RouteAddFrame.class);
     static int ROW_HEIGHT;
     // This group will get runtime updates to system-specific contents at
@@ -93,9 +95,11 @@ public class AbstractRouteAddEditFrame extends JmriJFrame {
     final JButton exportButton = new JButton(Bundle.getMessage("ButtonExport"));
     final JLabel status1 = new JLabel(createInst);
     final JLabel status2 = new JLabel(editInst);
+
     private final String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
-    protected ArrayList<RouteTurnout> _turnoutList;      // array of all Turnouts
-    protected ArrayList<RouteSensor> _sensorList;        // array of all Sensors
+
+    ArrayList<RouteTurnout> _turnoutList;      // array of all Turnouts
+    ArrayList<RouteSensor> _sensorList;        // array of all Sensors
     RouteTurnoutModel _routeTurnoutModel;
     JScrollPane _routeTurnoutScrollPane;
     RouteSensorModel _routeSensorModel;
@@ -136,6 +140,9 @@ public class AbstractRouteAddEditFrame extends JmriJFrame {
                 Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getThrownText(),
                 Bundle.getMessage("OnConditionChange")
         });
+
+        routeManager = InstanceManager.getDefault(RouteManager.class);
+
     }
 
     protected static void setClosedString(@Nonnull String newVal) {
@@ -671,10 +678,10 @@ public class AbstractRouteAddEditFrame extends JmriJFrame {
     private void editPressed(ActionEvent e) {
         // identify the Route with this name if it already exists
         String sName = _systemName.getText();
-        Route g = InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
+        Route g = routeManager.getBySystemName(sName);
         if (g == null) {
             sName = _userName.getText();
-            g = InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(sName);
+            g = routeManager.getByUserName(sName);
             if (g == null) {
                 // Route does not exist, so cannot be edited
                 status1.setText(Bundle.getMessage("RouteAddStatusErrorNotFound"));
@@ -802,7 +809,7 @@ public class AbstractRouteAddEditFrame extends JmriJFrame {
         Route g;
         // check if a Route with the same user name exists
         if (!uName.equals("")) {
-            g = InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(uName);
+            g = routeManager.getByUserName(uName);
             if (g != null) {
                 // Route already exists
                 status1.setText(Bundle.getMessage("LightError8"));
@@ -810,8 +817,8 @@ public class AbstractRouteAddEditFrame extends JmriJFrame {
             }
         }
         // check if a Route with this system name already exists
-        sName = InstanceManager.getDefault(jmri.RouteManager.class).makeSystemName(sName);
-        g = InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
+        sName = routeManager.makeSystemName(sName);
+        g = routeManager.getBySystemName(sName);
         if (g != null) {
             // Route already exists
             status1.setText(Bundle.getMessage("LightError1"));
@@ -834,7 +841,7 @@ public class AbstractRouteAddEditFrame extends JmriJFrame {
         if (_autoSystemName.isSelected() && !editMode) {
             log.debug("checkNamesOK new autogroup");
             // create new Route with auto system name
-            g = InstanceManager.getDefault(jmri.RouteManager.class).newRoute(uName);
+            g = routeManager.newRoute(uName);
         } else {
             if (sName.length() == 0) {
                 status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
@@ -842,8 +849,8 @@ public class AbstractRouteAddEditFrame extends JmriJFrame {
                 return null;
             }
             try {
-                sName = InstanceManager.getDefault(jmri.RouteManager.class).makeSystemName(sName);
-                g = InstanceManager.getDefault(jmri.RouteManager.class).provideRoute(sName, uName);
+                sName = routeManager.makeSystemName(sName);
+                g = routeManager.provideRoute(sName, uName);
             } catch (IllegalArgumentException ex) {
                 g = null; // for later check
             }
@@ -982,7 +989,7 @@ public class AbstractRouteAddEditFrame extends JmriJFrame {
      */
     private void deletePressed(ActionEvent e) {
         // route is already deactivated, just delete it
-        InstanceManager.getDefault(jmri.RouteManager.class).deleteRoute(curRoute);
+        routeManager.deleteRoute(curRoute);
 
         curRoute = null;
         finishUpdate();

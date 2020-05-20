@@ -12,7 +12,7 @@ import java.util.List;
  */
 class RouteSensorModel extends RouteOutputModel {
 
-    private AbstractRouteAddEditFrame routeAddFrame;
+    private final AbstractRouteAddEditFrame routeAddFrame;
 
     RouteSensorModel(AbstractRouteAddEditFrame routeAddFrame) {
         this.routeAddFrame = routeAddFrame;
