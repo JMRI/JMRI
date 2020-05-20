@@ -239,6 +239,7 @@ public class VSDManagerFrame extends JmriJFrame {
 
     /**
      * Handle "Add" button press
+     * @param e Event that fired this change
      */
     protected void addButtonPressed(ActionEvent e) {
         log.debug("Add button pressed");
@@ -264,6 +265,7 @@ public class VSDManagerFrame extends JmriJFrame {
 
     /**
      * Callback for the Config Dialog
+     * @param event Event that fired this change
      */
     protected void addButtonPropertyChange(PropertyChangeEvent event) {
         log.debug("internal config dialog handler");
@@ -312,6 +314,7 @@ public class VSDManagerFrame extends JmriJFrame {
 
     /**
      * Handle property change event from one of the VSDControls
+     * @param event Event that fired this change
      */
     protected void vsdControlPropertyChange(PropertyChangeEvent event) {
         String property = event.getPropertyName();
@@ -339,9 +342,10 @@ public class VSDManagerFrame extends JmriJFrame {
 
     /**
      * Handle master volume slider change
+     * @param event Event that fired this change
      */
-    protected void volumeChange(ChangeEvent e) {
-        JSlider v = (JSlider) e.getSource();
+    protected void volumeChange(ChangeEvent event) {
+        JSlider v = (JSlider) event.getSource();
         log.debug("Volume slider moved. value: {}", v.getValue());
         master_volume = v.getValue();
         firePropertyChange(VOLUME_CHANGE, master_volume, null);

@@ -17,8 +17,6 @@ import jmri.jmrit.roster.IdentifyLoco;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide GUI controls to select a known loco via the Roster.
@@ -201,6 +199,6 @@ abstract public class KnownLocoSelPane extends LocoSelPane {
     abstract protected void startProgrammer(DecoderFile decoderFile, RosterEntry r,
             String programmerName);
 
-    private final static Logger log = LoggerFactory.getLogger(KnownLocoSelPane.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(KnownLocoSelPane.class);
 
 }

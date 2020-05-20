@@ -57,6 +57,8 @@ public class QsiTrafficController implements QsiInterface, Runnable {
 
     /**
      * Forward a QsiMessage to all registered QsiInterface listeners.
+     * @param m message to forward.
+     * @param notMe Listener to hear the returned status
      */
     @SuppressWarnings("unchecked")
     protected void notifyMessage(QsiMessage m, QsiListener notMe) {

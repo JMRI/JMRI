@@ -236,6 +236,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     /**
      * If there are fixed points specified, set linear step settings to them.
+     * @param modifiedStepIndex 
      *
      */
     void matchPoints(int modifiedStepIndex) {
@@ -549,6 +550,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     /**
      * Set the values to a straight line from _min to _max
+     * @param e Event triggering this operation
      */
     void doForceStraight(java.awt.event.ActionEvent e) {
         _cvMap.get(cvList[0]).setValue(_min);
@@ -558,6 +560,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     /**
      * Set the values to a straight line from existing ends
+     * @param e Event triggering this operation
      */
     void doMatchEnds(java.awt.event.ActionEvent e) {
         int first = _cvMap.get(cvList[0]).getValue();
@@ -576,6 +579,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     /**
      * Set a constant ratio curve
+     * @param e Event triggering this operation
      */
     void doRatioCurve(java.awt.event.ActionEvent e) {
         double first = _cvMap.get(cvList[0]).getValue();
@@ -601,6 +605,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     /**
      * Set a log curve
+     * @param e Event triggering this operation
      */
     void doLogCurve(java.awt.event.ActionEvent e) {
         double first = _cvMap.get(cvList[0]).getValue();
@@ -625,6 +630,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     /**
      * Shift the curve one CV to left. The last entry is left unchanged.
+     * @param e Event triggering this operation
      */
     void doShiftLeft(java.awt.event.ActionEvent e) {
         for (int i = 0; i < nValues - 1; i++) {
@@ -636,6 +642,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     /**
      * Shift the curve one CV to right. The first entry is left unchanged.
+     * @param e Event triggering this operation
      */
     void doShiftRight(java.awt.event.ActionEvent e) {
         for (int i = nValues - 1; i > 0; i--) {

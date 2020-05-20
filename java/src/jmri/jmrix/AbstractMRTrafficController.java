@@ -187,6 +187,7 @@ public abstract class AbstractMRTrafficController {
      * Invoked if it's appropriate to do low-priority polling of the command
      * station, this should return the next message to send, or null if the
      * TrafficController should just sleep.
+     * @return Formatted poll message
      */
     protected abstract AbstractMRMessage pollMessage();
 
@@ -612,6 +613,7 @@ public abstract class AbstractMRTrafficController {
      *
      * @param msg    the output byte stream
      * @param offset the first byte not yet used
+     * @param m   output message to extend
      */
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
         if (!m.isBinary()) {
@@ -924,6 +926,8 @@ public abstract class AbstractMRTrafficController {
     /**
      * Dummy routine, to be filled by protocols that have to skip some
      * start-of-message characters.
+     * @param istream input source
+     * @throws IOException from underlying operations
      */
     protected void waitForStartOfReply(DataInputStream istream) throws IOException {
     }

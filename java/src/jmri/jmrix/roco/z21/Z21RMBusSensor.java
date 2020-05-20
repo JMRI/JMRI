@@ -141,6 +141,7 @@ public class Z21RMBusSensor extends AbstractSensor implements Z21Listener {
 
     /**
      * Package protected routine to get the Sensor Base Address.
+     * @return address for this module.
      */
     int getModuleAddress() {
         return moduleAddress;

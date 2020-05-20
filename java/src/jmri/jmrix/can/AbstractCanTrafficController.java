@@ -172,6 +172,7 @@ abstract public class AbstractCanTrafficController
 
     /**
      * Get the correct concrete class for the hardware connection message
+     * @param returns new blank message
      */
     abstract protected AbstractMRMessage newMessage();
 

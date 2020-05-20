@@ -484,6 +484,7 @@ public class SpjFile {
 
         /**
          * Data record associated with this header is being being repositioned.
+         * @param newRecordStart identify the new start record
          */
         void updateStart(int newRecordStart) {
             //int oldRecordStart = getRecordStart();

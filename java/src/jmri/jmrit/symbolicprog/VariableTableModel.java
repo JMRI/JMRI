@@ -416,15 +416,15 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * If there's a "default" attribute, or matching defaultItem element, set that value to start.
      *
      * @param e Element that's source of info
-     * @param var Variable to load
+     * @param variable Variable to load
      * @return true if the value was set
      */
-    boolean setDefaultValue(Element e, VariableValue v) {
+    boolean setDefaultValue(Element e, VariableValue variable) {
         Attribute a;
         boolean set = false;
         if ((a = e.getAttribute("default")) != null) {
             String val = a.getValue();
-            v.setIntValue(Integer.parseInt(val));
+            variable.setIntValue(Integer.parseInt(val));
             set = true;
         }
         // check for matching child

@@ -225,7 +225,8 @@ public class SCWarrant extends Warrant {
     }
     
     /**
-     * wait until there is a train in the start block.
+     * Wait until there is a train in the start block.
+     * @return true if block not UNOCCUPIED
      */
     protected boolean isStartBlockOccupied() {
         int blockState = getBlockOrderAt(0).getBlock().getState();
@@ -302,6 +303,7 @@ public class SCWarrant extends Warrant {
     
     /**
      * Are we still in the start block?
+     * @return true if still in start block
      */
     boolean inStartBlock() {
         return (_idxCurrentOrder == 0);
@@ -309,6 +311,7 @@ public class SCWarrant extends Warrant {
     
     /**
      * Are we close to the destination block?
+     * @return true if close
      */
     boolean approchingDestination() {
         float distance = 0;
@@ -359,6 +362,7 @@ public class SCWarrant extends Warrant {
      /**
      * Do what the title says. But make sure not to set the turnouts if already done, since that 
      * would just cause all signals to go to Stop aspects and thus cause a jerky train movement.
+     * @param startIndex Allocate starting with this index
      */
     protected void allocateBlocksAndSetTurnouts(int startIndex) {
         log.debug("{} allocateBlocksAndSetTurnouts startIndex={} _orders.size()={}",_trainName,startIndex,getBlockOrders().size());
@@ -483,6 +487,7 @@ public class SCWarrant extends Warrant {
      * Deallocate all blocks up to and including idx, but only on these conditions in order to ensure that only a consecutive list of blocks are allocated at any time:
      *     1. Only if our train has left not only this block, but also all previous blocks.
      *     2. Only if the block shall not be re-used ahead and all block up until the block are allocated.
+     * @param idx Index of final block
      */
     protected void deallocateUpToBlock(int idx) {
         for (int i=0; i<=idx; i++) {

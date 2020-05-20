@@ -311,6 +311,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      * Hopefully this ALM writer is unique, so there won't be two writes to the
      * same ALM going on at the same time; the LocoNet is not well synchronized
      * against that.
+     * @param block within the ALM space
      */
     void sendWrite(int block) {
         int arg1 = retrieve(block, 0);
