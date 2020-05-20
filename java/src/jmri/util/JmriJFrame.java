@@ -737,6 +737,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * The returned list is a copy made at the time of the call, so it can be
      * manipulated as needed by the caller.
      *
+     * @param <T> generic JmriJframe.
      * @param type The Class the list should be limited to.
      * @return An ArrayList of Frames.
      */

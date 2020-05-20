@@ -105,7 +105,8 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * Accessor methods
+     * Get the point type.
+     * @return point type, i.e. ANCHOR, END_BUMPER, EDGE_CONNECTOR
      */
     public PointType getType() {
         return type;
@@ -1473,6 +1474,7 @@ public class PositionablePoint extends LayoutTrack {
 
     /**
      * "active" means that the object is still displayed, and should be stored.
+     * @return true if active
      */
     protected boolean isActive() {
         return active;

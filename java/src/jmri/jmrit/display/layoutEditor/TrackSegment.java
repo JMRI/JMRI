@@ -187,11 +187,12 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * replace old track connection with new track connection
+     * Replace old track connection with new track connection.
      *
-     * @param oldTrack the old track connection
-     * @param newTrack the new track connection
-     * @return true if successful
+     * @param oldTrack the old track connection.
+     * @param newTrack the new track connection.
+     * @param newType the hit point type.
+     * @return true if successful.
      */
     public boolean replaceTrackConnection(@CheckForNull LayoutTrack oldTrack, @CheckForNull LayoutTrack newTrack, HitPointType newType) {
         boolean result = false; // assume failure (pessimist!)
@@ -415,6 +416,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * Determine if we need to redraw a curved piece of track. Saves having to
      * recalculate the circle details each time.
+     * @return true if needs redraw, else false.
      */
     public boolean trackNeedsRedraw() {
         return changed;
@@ -1744,6 +1746,8 @@ public class TrackSegment extends LayoutTrack {
 
     /**
      * Display popup menu for information and editing.
+     * @param e mouse event, for co-ordinates of popup.
+     * @param hitPointType the hit point type.
      */
     protected void showBezierPopUp(MouseEvent e, HitPointType hitPointType) {
         int bezierControlPointIndex = hitPointType.bezierPointIndex();
@@ -1901,6 +1905,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * Get state. "active" means that the object is still displayed, and should
      * be stored.
+     * @return true if still displayed, else false.
      */
     public boolean isActive() {
         return active;
@@ -1930,6 +1935,7 @@ public class TrackSegment extends LayoutTrack {
      * <li>HIDECON or otherwise set HIDECON
      * </ul>
      * Then always redraw the LayoutEditor panel and set it dirty.
+     * @param hide HIDECONALL, SHOWCON, HIDECON.
      */
     public void hideConstructionLines(int hide) {
         if (hide == HIDECONALL) {
@@ -2169,9 +2175,11 @@ public class TrackSegment extends LayoutTrack {
         chordLength = chord;
     }
 
-    /*
-    * Called when the user changes the angle dynamically in edit mode
-    * by dragging the centre of the cirle.
+    /**
+     * Called when the user changes the angle dynamically in edit mode
+     * by dragging the centre of the circle.
+     * @param x new width.
+     * @param y new height.
      */
     protected void reCalculateTrackSegmentAngle(double x, double y) {
         if (!isBezier()) {
@@ -2210,8 +2218,8 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
-    /*
-    * Calculate the initally parameters for drawing a circular track segment.
+    /**
+     * Calculate the initial parameters for drawing a circular track segment.
      */
     protected void calculateTrackSegmentAngle() {
         Point2D pt1, pt2;
@@ -3357,6 +3365,7 @@ public class TrackSegment extends LayoutTrack {
      * The 0 (none) and 1 through 5 arrow decorations are keyed to 
      * files like program:resources/icons/decorations/ArrowStyle1.png
      * et al.
+     * @return arrow style, 0 is none.
      */
     public int getArrowStyle() {
         return arrowStyle;
@@ -3367,6 +3376,7 @@ public class TrackSegment extends LayoutTrack {
      * The 0 (none) and 1 through 5 arrow decorations are keyed to 
      * files like program:resources/icons/decorations/ArrowStyle1.png
      * et al.
+     * @param newVal the arrow style index, 0 is none.
      */
     public void setArrowStyle(int newVal) {
         if (arrowStyle != newVal) {

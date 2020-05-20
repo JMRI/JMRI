@@ -16,7 +16,7 @@ import org.slf4j.*;
  *
  * @author George Warner Copyright (c) 2017-2018
  */
-public class LayoutEditorChecks {
+final public class LayoutEditorChecks {
 
     private final LayoutEditor layoutEditor;
     private final JMenu checkMenu = new JMenu(Bundle.getMessage("CheckMenuTitle"));

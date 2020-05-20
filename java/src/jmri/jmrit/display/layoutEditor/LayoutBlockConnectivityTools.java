@@ -19,7 +19,7 @@ import org.slf4j.MDC;
  * @author Kevin Dickerson Copyright (C) 2011
  * @author George Warner Copyright (c) 2017-2018
  */
-public class LayoutBlockConnectivityTools {
+final public class LayoutBlockConnectivityTools {
 
     public LayoutBlockConnectivityTools() {
     }

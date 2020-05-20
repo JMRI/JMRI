@@ -25,7 +25,8 @@ import jmri.util.*;
 public class LayoutDoubleXOverEditor extends LayoutXOverEditor {
 
     /**
-     * constructor method
+     * constructor method.
+     * @param layoutEditor main layout editor.
      */
     public LayoutDoubleXOverEditor(@Nonnull LayoutEditor layoutEditor) {
         super(layoutEditor);

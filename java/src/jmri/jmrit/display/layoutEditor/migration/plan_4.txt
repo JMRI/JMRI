@@ -1,0 +1,59 @@
+@startuml
+
+
+package javax.swing {
+    class JComponent
+}
+
+package jmri {
+    interface StructureStuff {
+        == Structure ==
+    }
+}
+
+package display.layoutEditor {
+
+  class LayoutStructure {
+    == Structure ==
+  }
+  note right : Purely structural\naccess, could move\nup to another package
+
+  class LayoutTrack {
+    == Structure ==
+  }
+  class LayoutTurnout
+
+  LayoutTrack <|-- LayoutTurnout
+
+  class LayoutEditorView {
+    == GUI ==
+  }
+  note right : Hold GUI for\nediting structure\nand for display
+  class LayoutTrackView {
+    == GUI ==
+  }
+  class LayoutTurnoutView
+
+  LayoutTrackView <|-- LayoutTurnoutView
+  
+  LayoutTrack *-- LayoutTrackView
+  LayoutTurnout *-- LayoutTurnoutView
+  
+  LayoutStructure *-- LayoutEditorView
+  LayoutTurnoutView *-- LayoutEditorView
+  
+}
+
+StructureStuff <|-- LayoutStructure
+LayoutTrack *-- LayoutStructure
+
+JComponent *-- LayoutEditorView
+JComponent <|-- LayoutEditorView
+
+package jmrit.something {
+    class DoStuffWithStructure
+}
+
+StructureStuff *-- DoStuffWithStructure
+
+@end

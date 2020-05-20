@@ -380,7 +380,15 @@ abstract public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * Main constructor method
+     * Main constructor method.
+     * @param id Layout Turnout ID.
+     * @param t type, e.g. LH_TURNOUT, WYE_TURNOUT
+     * @param c 2D point.
+     * @param rot rotation.
+     * @param xFactor horizontal factor.
+     * @param yFactor vertical factor.
+     * @param layoutEditor main layout editor.
+     * @param v version.
      */
     public LayoutTurnout(@Nonnull String id, TurnoutType t, @Nonnull Point2D c, double rot,
             double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
@@ -463,7 +471,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * Accessor methods
+     * Get the Version.
+     * @return turnout version.
      */
     public int getVersion() {
         return version;
@@ -1632,10 +1641,10 @@ abstract public class LayoutTurnout extends LayoutTrack {
      */
     protected void setUpDefaultSize() {
         // remove the overall scale factor
-        double bX = dispB.getX() / layoutEditor.getXScale();
-        double bY = dispB.getY() / layoutEditor.getYScale();
-        double cX = dispA.getX() / layoutEditor.getXScale();
-        double cY = dispA.getY() / layoutEditor.getYScale();
+        double bX = dispB.getX() / layoutEditor.gContext.getXScale();
+        double bY = dispB.getY() / layoutEditor.gContext.getYScale();
+        double cX = dispA.getX() / layoutEditor.gContext.getXScale();
+        double cY = dispA.getY() / layoutEditor.gContext.getYScale();
         // calculate default parameters according to type of turnout
         double lenB = Math.hypot(bX, bY);
         double lenC = Math.hypot(cX, cY);
@@ -1653,12 +1662,12 @@ abstract public class LayoutTurnout extends LayoutTrack {
             layoutEditor.setTurnoutWid(Math.round(distBC + 0.1));
         } else {
             if (version == 2) {
-                double aX = pointA.getX() / layoutEditor.getXScale();
-                double aY = pointA.getY() / layoutEditor.getYScale();
-                bX = pointB.getX() / layoutEditor.getXScale();
-                bY = pointB.getY() / layoutEditor.getYScale();
-                cX = pointC.getX() / layoutEditor.getXScale();
-                cY = pointC.getY() / layoutEditor.getYScale();
+                double aX = pointA.getX() / layoutEditor.gContext.getXScale();
+                double aY = pointA.getY() / layoutEditor.gContext.getYScale();
+                bX = pointB.getX() / layoutEditor.gContext.getXScale();
+                bY = pointB.getY() / layoutEditor.gContext.getYScale();
+                cX = pointC.getX() / layoutEditor.gContext.getXScale();
+                cY = pointC.getY() / layoutEditor.gContext.getYScale();
                 double lenAB = Math.hypot(bX - aX, bY - aY);
                 if (getTurnoutType() == TurnoutType.DOUBLE_XOVER) {
                     double lenBC = Math.hypot(bX - cX, bY - cY);
@@ -1678,7 +1687,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     double lenBC = Math.hypot(bX - cX, bY - cY);
                     layoutEditor.setXOverHWid(Math.round(lenBC / 2));
                 } else if (getTurnoutType() == TurnoutType.LH_XOVER) {
-                    double dY = pointD.getY() / layoutEditor.getYScale();
+                    double dY = pointD.getY() / layoutEditor.gContext.getYScale();
                     lenAB = lenAB / 3;
                     layoutEditor.setXOverShort(Math.round(lenAB));
                     layoutEditor.setXOverLong(Math.round(lenAB * 2));
@@ -1714,6 +1723,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     /**
      * Set up Layout Block(s) for this Turnout.
+     * @param newLayoutBlock the new layout block.
      */
     public void setLayoutBlock(LayoutBlock newLayoutBlock) {
         LayoutBlock blockA = getLayoutBlock();
@@ -3391,6 +3401,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     /**
      * "active" means that the object is still displayed, and should be stored.
+     * @return true if active, else false.
      */
     public boolean isActive() {
         return active;

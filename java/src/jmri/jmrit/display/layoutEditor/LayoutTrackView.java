@@ -19,7 +19,8 @@ import jmri.util.*;
 public class LayoutTrackView {
 
     /**
-     * constructor method
+     * Constructor method.
+     * @param track the layout track to view.
      */
     public LayoutTrackView(@Nonnull LayoutTrack track) {
          this.layoutTrack = track;

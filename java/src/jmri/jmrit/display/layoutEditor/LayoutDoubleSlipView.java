@@ -19,7 +19,8 @@ import jmri.util.*;
 public class LayoutDoubleSlipView extends LayoutSlipView {
 
     /**
-     * constructor method
+     * Constructor method.
+     * @param slip the layout double slip to view.
      */
     public LayoutDoubleSlipView(@Nonnull LayoutDoubleSlip slip) {
         super(slip);

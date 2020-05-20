@@ -21,7 +21,8 @@ import jmri.util.*;
 public class LayoutDoubleSlipEditor extends LayoutSlipEditor {
 
     /**
-     * constructor method
+     * constructor method.
+     * @param layoutEditor main layout editor.
      */
     public LayoutDoubleSlipEditor(@Nonnull LayoutEditor layoutEditor) {
         super(layoutEditor);

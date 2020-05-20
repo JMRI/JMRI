@@ -19,7 +19,8 @@ import jmri.util.*;
 public class LayoutSingleSlipView extends LayoutSlipView {
 
     /**
-     * constructor method
+     * Constructor method.
+     * @param slip the slip to create view for.
      */
     public LayoutSingleSlipView(@Nonnull LayoutSingleSlip slip) {
         super(slip);
