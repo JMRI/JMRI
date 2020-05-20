@@ -411,6 +411,10 @@ public final class InstanceManager {
 
     /**
      * Check if a default has been set for the given type.
+     * <p>
+     * As a side-effect, then (a) ensures that the list for the given 
+     * type exists, though it may be empty, and (b) if it had to create
+     * the list, a PropertyChangeEvent is fired to denote that.
      *
      * @param <T>  The type of the class
      * @param type The class type
@@ -424,7 +428,9 @@ public final class InstanceManager {
 
     /**
      * Check if a particular type has been initialized without
-     * triggering an automatic initialization.
+     * triggering an automatic initialization. The existence or
+     * non-existence of the corresponding list is not changed, and 
+     * no PropertyChangeEvent is fired.
      *
      * @param <T>  The type of the class
      * @param type The class type
