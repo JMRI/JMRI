@@ -69,8 +69,6 @@ public class RouteExportToLogix {
 
         removeOldConditionalNames(route,logix);
 
-        String cUserName;
-
         ///////////////// Make Trigger Conditionals //////////////////////
         int numConds = 1; // passed through all these, with new value returned each time
         numConds = makeSensorConditional(route.getRouteSensor(0), route.getRouteSensorMode(0), numConds, false, actionList, vetoList, logix, logixSystemName, uName);
@@ -90,8 +88,6 @@ public class RouteExportToLogix {
 
         logix.activateLogix();
         routeManager.deleteRoute(route);
-        //status1.setText(Bundle.getMessage("BeanNameRoute") + "\"" + uName + "\" " + Bundle.getMessage("RouteAddStatusExported") + " (" + addFrame.get_includedTurnoutList().size() + Bundle.getMessage("Turnouts") + ", " + addFrame.get_includedSensorList().size() + " " + Bundle.getMessage("Sensors") + ")");
-        //finishUpdate();
     }
 
     private void addRouteAlignmentSensorToLogix(String logixSystemName, Route route, String uName, Logix logix) {
@@ -397,9 +393,6 @@ public class RouteExportToLogix {
         return new ConditionalVariable(negated, oper, type, devName, trigger);
     }
 
-    //private void handleCreateException(String sysName) {
-    //    JOptionPane.showMessageDialog(addFrame, Bundle.getMessage("ErrorRouteAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"), Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-    //}
 
     private ConditionalVariable cloneVariable(ConditionalVariable v) {
         return new ConditionalVariable(v.isNegated(), v.getOpern(), v.getType(), v.getName(), v.doTriggerActions());

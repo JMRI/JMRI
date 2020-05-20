@@ -4,16 +4,16 @@ import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Table model for selecting Turnouts and Turnout State.
  */
 class RouteTurnoutModel extends RouteOutputModel {
 
-    private RouteAddFrame routeAddFrame;
+    private AbstractRouteAddEditFrame routeAddFrame;
 
-    RouteTurnoutModel(RouteAddFrame routeAddFrame) {
+    RouteTurnoutModel(AbstractRouteAddEditFrame routeAddFrame) {
         this.routeAddFrame = routeAddFrame;
         InstanceManager.turnoutManagerInstance().addPropertyChangeListener(this);
     }
@@ -29,7 +29,7 @@ class RouteTurnoutModel extends RouteOutputModel {
 
     @Override
     public Object getValueAt(int r, int c) {
-        ArrayList<RouteTurnout> turnoutList;
+        List<RouteTurnout> turnoutList;
         if (routeAddFrame.isShowAll()) {
             turnoutList = routeAddFrame.get_turnoutList();
         } else {
@@ -56,7 +56,7 @@ class RouteTurnoutModel extends RouteOutputModel {
 
     @Override
     public void setValueAt(Object type, int r, int c) {
-        ArrayList<RouteTurnout> turnoutList;
+        List<RouteTurnout> turnoutList;
         if (routeAddFrame.isShowAll()) {
             turnoutList = routeAddFrame.get_turnoutList();
         } else {

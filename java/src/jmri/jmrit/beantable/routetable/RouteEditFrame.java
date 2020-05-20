@@ -5,7 +5,7 @@ import jmri.Route;
 import jmri.Sensor;
 import jmri.Turnout;
 
-public class RouteEditFrame extends RouteAddFrame {
+public class RouteEditFrame extends AbstractRouteAddEditFrame {
 
     private final String systemName;
 
@@ -20,6 +20,7 @@ public class RouteEditFrame extends RouteAddFrame {
     public RouteEditFrame(String name, boolean saveSize, boolean savePosition, String systemName) {
         super(name, saveSize, savePosition);
         this.systemName = systemName;
+        initComponents();
     }
 
     @Override

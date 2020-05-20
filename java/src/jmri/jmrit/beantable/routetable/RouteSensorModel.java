@@ -4,16 +4,17 @@ import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Set up table for selecting Sensors and Sensor State.
  */
 class RouteSensorModel extends RouteOutputModel {
 
-    private RouteAddFrame routeAddFrame;
+    private AbstractRouteAddEditFrame routeAddFrame;
 
-    RouteSensorModel(RouteAddFrame routeAddFrame) {
+    RouteSensorModel(AbstractRouteAddEditFrame routeAddFrame) {
         this.routeAddFrame = routeAddFrame;
         InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
     }
@@ -29,7 +30,7 @@ class RouteSensorModel extends RouteOutputModel {
 
     @Override
     public Object getValueAt(int r, int c) {
-        ArrayList<RouteSensor> sensorList;
+        List<RouteSensor> sensorList;
         if (routeAddFrame.isShowAll()) {
             sensorList = routeAddFrame.get_sensorList();
         } else {
@@ -56,7 +57,7 @@ class RouteSensorModel extends RouteOutputModel {
 
     @Override
     public void setValueAt(Object type, int r, int c) {
-        ArrayList<RouteSensor> sensorList;
+        List<RouteSensor> sensorList;
         if (routeAddFrame.isShowAll()) {
             sensorList = routeAddFrame.get_sensorList();
         } else {
