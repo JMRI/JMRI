@@ -293,6 +293,9 @@
         <li>Bill Chown, who did a lot of work on the MRC decoder
         definitions</li>
 
+        <li>chriswhy00, <!-- chriswhy00 -->
+        who fixed a tough bug in the speed-profiling code.
+        
         <li>Bob Clearfield, who helped fix some broken links</li>
 
         <li>Nigel Cliffe, who updated the CT Elektronik decoder
@@ -463,6 +466,10 @@
         provided some Digitrax definition files, and translated
         much of DecoderPro into German</li>
 
+        <li><a href="http://github.com">GitHub</a>, 
+        who hosts a large part of our 
+        development and distribution infrastructure.
+        
         <li>Joseph Goldstone, who put together the javax.comm
         implementation for Mac OS X</li>
 
@@ -637,7 +644,7 @@
         <li>James Koretsky, who contributed the Burlington Northern
         1989 signal definition</li>
         
-        <li>>Github user Koryphon, real name unknown, who contributed to the MacOS X documentation.
+        <li>Github user Koryphon, real name unknown, who contributed to the MacOS X documentation.
         
         <li>Matjaz Krajnc, who provided better code and icons for
         the web throttle</li>
@@ -794,9 +801,9 @@
         computers.</li>
 
         <li>The good people at <a href=
-        "http://www.mindvision.com/">MindVision</a>, who are
-        letting us use their excellent Installer Vise to build our
-        Windows installer</li>
+        "http://www.mindvision.com/">MindVision</a>, who
+        let us use their excellent Installer Vise to build our
+        early Windows installers.</li>
 
         <li>Elmer McKay, who provided a nice <a href=
         "html/tools/signaling/IntroToSignalingYourMRR.html">help
@@ -1050,8 +1057,8 @@
 
         <LI>The good people at
             <A HREF="http://www.tagadab.com">Tagadab</a>
-            who provide site hosting, and continuous integration resources
-            for JMRI development
+            who provided site hosting, and continuous integration resources
+            for JMRI development for several years.
 
         <li>Suzie Tall, who provided several North American and
         international signal definitions, including definitions for
@@ -1080,6 +1087,11 @@
         Android, adds scripts, helps with web server, particularly
         client-side panels and updates Dispatcher</li>
 
+        <li><a href="https://travis-ci.org">Travis-CI.org</a>, 
+        who provide a large part of our 
+        <a href="https://www.jmri.org/help/en/html/doc/Technical/ContinuousIntegration.shtml">Continuous Integration</a>
+        infrastructure.
+        
         <li>Dale Tripp, who co-wrote the 2009 version of the
         DecoderPro manual and provided the decoder definition for
         the Kato FL12 <a name="U" id="U"></a></li>
