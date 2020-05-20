@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
-public class KnownLocoSelPane extends LocoSelPane {
+abstract public class KnownLocoSelPane extends LocoSelPane {
 
     public KnownLocoSelPane(JLabel s, boolean ident, ProgModeSelector selector) {
         mCanIdent = ident;
@@ -191,13 +191,15 @@ public class KnownLocoSelPane extends LocoSelPane {
         }
     }
 
-    /**
-     * meant to be overridden to start the desired type of programmer
+ 
+    /*
+     * Start the programming operation(s).
+     * @param decoderFile contains decoder definition
+     * @param r contains locomotive-specific roster information
+     * @param programmerName used to find the right programmer for the operation.
      */
-    protected void startProgrammer(DecoderFile decoderFile, RosterEntry r,
-            String programmerName) {
-        log.error("startProgrammer method in NewLocoSelPane should have been overridden");
-    }
+    abstract protected void startProgrammer(DecoderFile decoderFile, RosterEntry r,
+            String programmerName);
 
     private final static Logger log = LoggerFactory.getLogger(KnownLocoSelPane.class);
 
