@@ -24,7 +24,7 @@ public class ResourceBundleStartupActionFactory extends AbstractStartupActionFac
     @Override
     public String getTitle(Class<?> clazz, Locale locale) throws IllegalArgumentException {
         if (Arrays.asList(getActionClasses()).contains(clazz)) {
-            return ResourceBundle.getBundle(bundle.getBaseBundleName(), locale).getString(clazz.getCanonicalName());
+            return ResourceBundle.getBundle(bundle.getBaseBundleName(), locale).getString(clazz.getName());
         }
         throw new IllegalArgumentException();
     }
