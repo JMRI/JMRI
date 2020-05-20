@@ -207,6 +207,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
 
     /**
      * Pick a color for the next set of measurement lines to draw
+     * @return Color for next line chosen via algorithm
      */
     Color nextColor() {
         int red = Math.min(255, ((measurementColor >> 2) & 0x1) * 255 / 1);

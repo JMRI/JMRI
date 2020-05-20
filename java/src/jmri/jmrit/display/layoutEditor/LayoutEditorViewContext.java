@@ -87,8 +87,11 @@ final public class LayoutEditorViewContext {
         gridSize1st = newSize;
         return gridSize1st;
     }
+
     /**
-     * Default/initial value set to 10
+     * Get the width drawing the grid; 10 is the 
+     * default/initial value.
+     * @return current value
      */
     final public int getGridSize() {
         return gridSize1st;
@@ -99,8 +102,11 @@ final public class LayoutEditorViewContext {
         gridSize2nd = newSize;
         return gridSize2nd;
     }
+
     /**
-     * Default/initial value set to 10
+     * Get the width for 2nd drawing of the grid; 10 is the 
+     * default/initial value.
+     * @return current value
      */
     final public int getGridSize2nd() {
         return gridSize2nd;
@@ -112,21 +118,32 @@ final public class LayoutEditorViewContext {
     final public void setMainlineTrackWidth(float width) {
         mainlineTrackWidth = (int)width;
     }
+
     /**
-     * Default/initial value set to 4.0F
+     * Get the width for drawing mainline track; 4 is the 
+     * default/initial value.
+     * @return current value
      */
     final public int getMainlineTrackWidth() {
         return (int) mainlineTrackWidth;
     }
     private float mainlineTrackWidth = 4.0F; 
 
-    // also found in LayoutTrackDrawingOptions? 
-    // why is this a float?
+    /**
+     * Set the width for sideline track; note 
+     * that the stored and retrievable value is an integer.
+     * @param width Value to store; will be cast to (int)
+     */
+    // also found in LayoutTrackDrawingOptions? (temporary?)
+    // why is this a float? (temporary?)
     final public void setSidelineTrackWidth(float width) {
         sidelineTrackWidth = (int)width;
     }
+
     /**
-     * Default/initial value set to 2.0F
+     * Get the width for drawing sideline track; 2 is the 
+     * default/initial value.
+     * @return current value
      */
     final public int getSidelineTrackWidth() {
         return (int) sidelineTrackWidth;
@@ -134,7 +151,9 @@ final public class LayoutEditorViewContext {
     private float sidelineTrackWidth = 2.0F;
 
     /**
-     * Default/initial value set to 1.0
+     * Get the X-axis scaling value; 1.0 is the 
+     * default/initial value.
+     * @return current value
      */
     final public double getXScale() {
         return xScale;
@@ -145,7 +164,9 @@ final public class LayoutEditorViewContext {
     private double xScale = 1.0;
 
     /**
-     * Default/initial value set to 1.0
+     * Get the Y-axis scaling value; 1.0 is the 
+     * default/initial value.
+     * @return current value
      */
     final public double getYScale() {
         return yScale;

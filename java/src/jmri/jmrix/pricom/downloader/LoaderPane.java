@@ -104,6 +104,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
     /**
      * Open button has been pushed, create the actual display connection
+     * @param e Event from pressed button
      */
     void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
         log.info("Open button pushed");
@@ -241,6 +242,8 @@ public class LoaderPane extends javax.swing.JPanel {
 
         /**
          * Send the next message of the download.
+         * @param buffer holds message to be sent
+         * @param length length of message within buffer
          */
         void nextMessage(byte[] buffer, int length) {
 
@@ -603,6 +606,7 @@ public class LoaderPane extends javax.swing.JPanel {
      * <p>
      * The last two bytes of the buffer hold the checksum, and are not included
      * in the checksum.
+     * @param buffer Buffer holding the message to be get a CRC
      */
     void CRC_block(byte[] buffer) {
         long crc = 0;
@@ -620,6 +624,8 @@ public class LoaderPane extends javax.swing.JPanel {
 
     /**
      * Check to see if message starts transmission
+     * @param buffer Buffer holding the message to be checked
+     * @return True if buffer is a upload-ready message
      */
     boolean isUploadReady(byte[] buffer) {
         if (buffer[0] != 31) {
@@ -642,6 +648,8 @@ public class LoaderPane extends javax.swing.JPanel {
 
     /**
      * Check to see if this is a request for the next block
+     * @param buffer Buffer holding the message to be checked
+     * @return True if buffer is a sent-next message
      */
     boolean isSendNext(byte[] buffer) {
         if (buffer[0] != 31) {
@@ -665,6 +673,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
     /**
      * Get output data length from 1st message
+     * @return buffer Message from which length is to be extracted
      */
     int getDataSize(byte[] buffer) {
         if (buffer[4] == 44) {
@@ -679,6 +688,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
     /**
      * Return a properly formatted boot message, complete with CRC
+     * @return buffer Contains boot message that's been created
      */
     byte[] bootMessage() {
         byte[] buffer = new byte[]{99, 0, 0, 0, 0};
