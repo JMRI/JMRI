@@ -393,17 +393,19 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /**
      * If there are any modifier elements, process them by e.g. setting
      * attributes on the VariableValue.
+     * @param e Element that's source of info
+     * @param variable Variable to load
      */
-    protected void processModifierElements(final Element e, final VariableValue v) {
+    protected void processModifierElements(final Element e, final VariableValue variable) {
         QualifierAdder qa = new QualifierAdder() {
             @Override
-            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
-                return new ValueQualifier(v, var, Integer.parseInt(value), relation);
+            protected Qualifier createQualifier(VariableValue variable2, String relation, String value) {
+                return new ValueQualifier(variable, variable2, Integer.parseInt(value), relation);
             }
 
             @Override
             protected void addListener(java.beans.PropertyChangeListener qc) {
-                v.addPropertyChangeListener(qc);
+                variable.addPropertyChangeListener(qc);
             }
         };
 
@@ -413,6 +415,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /**
      * If there's a "default" attribute, or matching defaultItem element, set that value to start.
      *
+     * @param e Element that's source of info
+     * @param var Variable to load
      * @return true if the value was set
      */
     boolean setDefaultValue(Element e, VariableValue v) {
@@ -462,6 +466,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * compositeChoiceGroup elements as needed.
      * <p>
      * Adapted from handleEnumValChildren for use in LocoIO.
+     * @param e Element that's source of info
+     * @param var Variable to load
      */
     protected void handleCompositeValChildren(Element e, CompositeVariableValue var) {
         List<Element> local = e.getChildren();
@@ -532,6 +538,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /**
      * Recursively walk the child enumChoice elements, working through the
      * enumChoiceGroup elements as needed.
+     * @param e Element that's source of info
+     * @param var Variable to load
      */
     protected void handleEnumValChildren(Element e, EnumVariableValue var) {
         List<Element> local = e.getChildren();
