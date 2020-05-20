@@ -2,6 +2,7 @@ package jmri;
 
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.beans.PropertyChangeProvider;
 
 /**
@@ -145,13 +146,20 @@ public interface Throttle extends PropertyChangeProvider {
     }
     
     /**
-     * Get maximum number of functions supported by this Throttle.
-     * Typically returns 29, i.e. 0-28.
-     * This is the hardware maximum value.
-     * For roster entry max. see jmri.jmrit.roster.RosterEntry.getMAXFNNUM()
-     * @return max number of functions supported by this hardware type.
+     * Get copy of function array.
+     * Typically returns array length of 29, i.e. 0-28.
+     * @return function array, length dependant by hardware type.
      */
-    public abstract int getMaxFunctions();
+    @Nonnull
+    public abstract boolean[] getFunctions();
+    
+    /**
+     * Get copy of function momentary status array.
+     * Typically returns array length of 29, i.e. 0-28.
+     * @return momentary function array, length dependant by hardware type.
+     */
+    @Nonnull
+    public abstract boolean[] getFunctionsMomentary();
     
     /**
      * Speed - expressed as a value {@literal 0.0 -> 1.0.} Negative means

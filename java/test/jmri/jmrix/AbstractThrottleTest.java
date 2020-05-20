@@ -778,9 +778,14 @@ public class AbstractThrottleTest {
     
     @Test
     public void testTotalFunctions() {
-        Assert.assertEquals("Total Functions", 29, instance.getMaxFunctions());
+        Assert.assertEquals("Total Functions", 29, instance.getFunctions().length);
     }
 
+    @Test
+    public void testTotalFunctionsMomentary() {
+        Assert.assertEquals("Total Momentary Functions", 29, instance.getFunctionsMomentary().length);
+    }
+    
     @Test
     public void testOutOfRangeUpdateFunction(){
         

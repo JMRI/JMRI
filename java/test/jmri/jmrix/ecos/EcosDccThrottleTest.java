@@ -442,7 +442,13 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
     @Test
     @Override
     public void testTotalFunctions() {
-        Assert.assertEquals("Total Functions", 32, instance.getMaxFunctions());
+        Assert.assertEquals("Total Functions", 32, instance.getFunctions().length);
+    }
+    
+    @Test
+    @Override
+    public void testTotalFunctionsMomentary() {
+        Assert.assertEquals("Total Momentary Functions", 32, instance.getFunctionsMomentary().length);
     }
 
     @Test

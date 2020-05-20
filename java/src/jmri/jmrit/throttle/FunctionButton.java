@@ -9,8 +9,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
+import jmri.Throttle;
 import jmri.util.FileUtil;
 import jmri.util.swing.ResizableImagePanel;
 import jmri.util.swing.ToggleOrPressButtonModel;
@@ -46,7 +48,7 @@ public class FunctionButton extends JToggleButton {
     private String iconPath;
     private String selectedIconPath;
     private ToggleOrPressButtonModel _model;
-    private int _maxFunc;
+    private Throttle _throttle;
 
     final static int BUT_HGHT;
     final static int BUT_WDTH;
@@ -575,19 +577,20 @@ public class FunctionButton extends JToggleButton {
     }
     
     /** 
-     * Set maximum number of functions hardware is capable of.
-     * @param maxfunc normally 29, 0-28.
+     * Set Throttle.
+     * @param throttle the throttle that this button is associated with.
      */
-    public void setMaxFunctions( int maxfunc) {
-        _maxFunc = maxfunc;
+    protected void setThrottle( Throttle throttle) {
+        _throttle = throttle;
     }
     
     /**
-     * Get maximum number of functions hardware is capable of.
-     * @return maximum number functions, normally 29, i.e. 0-28.
+     * Get Throttle for this button.
+     * @return throttle associated with this button.  May be null if no throttle currently associated.
      */
-    public int getMaxFunctions() {
-        return _maxFunc;
+    @CheckForNull
+    protected Throttle getThrottle() {
+        return _throttle;
     }
 
     private final static Logger log = LoggerFactory.getLogger(FunctionButton.class);

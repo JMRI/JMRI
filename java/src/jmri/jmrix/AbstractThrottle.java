@@ -175,8 +175,17 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * {@inheritDoc}
      */
     @Override
-    public int getMaxFunctions() {
-        return FUNCTION_BOOLEAN_ARRAY.length;
+    public boolean[] getFunctions() {
+        return Arrays.copyOf(FUNCTION_BOOLEAN_ARRAY,FUNCTION_BOOLEAN_ARRAY.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean[] getFunctionsMomentary() {
+        return Arrays.copyOf(FUNCTION_MOMENTARY_BOOLEAN_ARRAY,
+            FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length);
     }
     
     /**

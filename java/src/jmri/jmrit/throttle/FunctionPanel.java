@@ -212,7 +212,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences();
         // Buttons names, ids,
         for (int i = 0; i < NUM_FUNCTION_BUTTONS; i++) {
-            functionButton[i].setMaxFunctions(29); // reset to 0-28, actual value updated further on.
+            functionButton[i].setThrottle(mThrottle);
             functionButton[i].setIdentity(i);
             functionButton[i].addFunctionListener(this);
             functionButton[i].setButtonLabel( i<3 ?
@@ -296,7 +296,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             }
             int maxi = 0; // the number of function buttons defined for this entry
             for (int i = 0; i < FunctionPanel.NUM_FUNCTION_BUTTONS; i++) {
-                functionButton[i].setMaxFunctions(mThrottle.getMaxFunctions());
                 functionButton[i].setIdentity(i); // full reset of function
                 functionButton[i].setState(mThrottle.getFunction(i)); // reset button state
                 if (rosterEntry != null) { // from here, update button text with roster data
@@ -378,7 +377,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        for (int i = 0; i < mThrottle.getMaxFunctions(); i++) {
+        for (int i = 0; i < mThrottle.getFunctions().length; i++) {
             if (e.getPropertyName().equals(Throttle.getFunctionString(i))) {
                 setButtonByFuncNumber(i,false,(Boolean) e.getNewValue());
             } else if (e.getPropertyName().equals(Throttle.getFunctionMomentaryString(i))) {
