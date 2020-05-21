@@ -215,6 +215,10 @@ public class AlignmentPanel extends javax.swing.JPanel
 
     /**
      * Service routine for finding a Point3d from input fields
+     * @param x X coordinate of resulting point
+     * @param y Y coordinate of resulting point
+     * @param z Z coordinate of resulting point
+     * @return point from coordinates
      */
     Point3d getPoint(JTextField x, JTextField y, JTextField z) {
         float xval = Float.valueOf(x.getText()).floatValue();
@@ -589,6 +593,7 @@ public class AlignmentPanel extends javax.swing.JPanel
 
         /**
          * Service routine for finding a Point3d from input fields
+         * @return Point from input coordinate values
          */
         Point3d getPoint() {
             float xval = Float.valueOf(xl.getText()).floatValue();
@@ -599,6 +604,7 @@ public class AlignmentPanel extends javax.swing.JPanel
 
         /**
          * Service routine for setting the receiver input fields from a Point3d
+         * @param p Specific input point
          */
         void setPoint(Point3d p) {
             xl.setText("" + p.x);

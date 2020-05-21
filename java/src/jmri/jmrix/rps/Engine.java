@@ -412,6 +412,7 @@ public class Engine implements ReadingListener {
     /**
      * The real core of the polling, this selects the next one to poll. -1 means
      * none selected, try again later.
+     * @return index to poll next
      */
     int selectNextPoll() {
         int startindex = pollIndex;
@@ -504,6 +505,8 @@ public class Engine implements ReadingListener {
      * Waits specified time, and then checks to see if response has been
      * returned. If not, it waits again (twice) by 1/2 the interval, then
      * finally polls anyway.
+     * @param pollingInterval in milliseconds
+     * @throws InterruptedException in theory, but not in practice.
      */
     void waitBeforeNextPoll(int pollingInterval) throws InterruptedException {
         synchronized (this) {

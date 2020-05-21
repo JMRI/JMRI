@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
+import jmri.Throttle;
 import jmri.util.FileUtil;
 import jmri.util.swing.EditableResizableImagePanel;
 
@@ -155,6 +156,10 @@ public class FunctionButtonPropertyEditor extends JDialog {
         textField.setText(button.getButtonLabel());
         lockableCheckBox.setSelected(button.getIsLockable());
         idField.setText(String.valueOf(button.getIdentity()));
+        Throttle mThrottle = button.getThrottle();
+        if (mThrottle!=null) {
+            idField.setToolTipText(Bundle.getMessage("MaxFunction",mThrottle.getFunctions().length -1));
+        }
         fontField.setText(String.valueOf(button.getFont().getSize()));
         visibleCheckBox.setSelected(button.getDisplay());
         _imageFilePath.setImagePath(button.getIconPath());
@@ -201,14 +206,21 @@ public class FunctionButtonPropertyEditor extends JDialog {
         StringBuffer errors = new StringBuffer();
         int errorNumber = 0;
         /* ID >=0 && ID <= 28 */
+        
+        Throttle mThrottle = button.getThrottle();
+        if (mThrottle==null) {
+            return false;
+        }
+        
         try {
             int id = Integer.parseInt(idField.getText());
-            if ((id < 0) || id > 28) {
+            if ((id < 0) || id >= mThrottle.getFunctions().length) {
                 throw new NumberFormatException("");
             }
         } catch (NumberFormatException ex) {
             errors.append(String.valueOf(++errorNumber)).append(". ");
-            errors.append(Bundle.getMessage("ErrorFunctionKeyRange")).append("\n");
+            errors.append(Bundle.getMessage("ErrorFunctionKeyRange",
+                mThrottle.getFunctions().length-1)).append("\n");
         }
 
         /* font > 0 */
