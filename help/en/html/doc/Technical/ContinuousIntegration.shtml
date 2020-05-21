@@ -184,7 +184,7 @@
         <ul>
             <li><a href="#coveralls">Coveralls</a>
             <li><a href="#codeclimate">CodeClimate</a>
-
+        </ul>
       <a name="coveralls" id="coveralls"></a>
       <h3>Coveralls</h3>
       The 
