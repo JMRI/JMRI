@@ -2847,11 +2847,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     public class TextAttrDialog extends DisplayFrame {
 
-        Positionable _pos;
-        DecoratorPanel _decorator;
-        BufferedImage[] _backgrounds;
+        public Positionable _pos;
+        public DecoratorPanel _decorator;
 
-        TextAttrDialog(Positionable p, Editor ed) {
+        public TextAttrDialog(Positionable p, Editor ed) {
             super(Bundle.getMessage("TextAttributes"), ed);
             _pos = p;
             JPanel panel = new JPanel();
@@ -2875,20 +2874,20 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
             doneButton.addActionListener(a -> {
                 PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
-                _decorator.setSuppressRecentColor(false);
                 _decorator.setAttributes(_pos);
-                if (_selectionGroup == null) {
-                    setAttributes(util, _pos);
-                } else {
+                if (_selectionGroup != null) {
                     setSelectionsAttributes(util, _pos);
+                } else {
+                    setAttributes(util, _pos);
                 }
+                _decorator.close();
                dispose();
             });
             panel0.add(doneButton);
 
             JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
             cancelButton.addActionListener(a -> {
-                _decorator.setSuppressRecentColor(false);
+                _decorator.close();
                 dispose();
             });
             panel0.add(cancelButton);

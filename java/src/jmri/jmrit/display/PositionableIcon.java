@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -45,6 +46,11 @@ public class PositionableIcon extends PositionableLabel {
         pos._rotate = _rotate;
         pos._iconMap = cloneMap(_iconMap, pos);
         return super.finishClone(pos);
+    }
+
+    public Collection<String> getStateNameCollection() {
+        log.error("getStateNameCollection() must be implemented by extensions!");
+        return null;
     }
 
     /**
@@ -160,4 +166,5 @@ public class PositionableIcon extends PositionableLabel {
         return clone;
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionableIcon.class);
 }
