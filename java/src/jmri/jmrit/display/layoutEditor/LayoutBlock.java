@@ -4528,6 +4528,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     /**
      * When a route is created, check to see if the through path that this route
      * relates to is active.
+     * @param r The route to check
+     * @return true if that route is active
      */
     boolean checkIsRouteOnValidThroughPath(Routes r) {
         for (ThroughPaths t : throughPaths) {
@@ -4608,6 +4610,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Set the valid flag for routes that are on a valid through path.
+     * @param nxtHopActive the start of the route
+     * @param state the state to set into the valid flag
      */
     void setRoutesValid(Block nxtHopActive, boolean state) {
         List<Routes> rtr = getRouteByNeighbour(nxtHopActive);

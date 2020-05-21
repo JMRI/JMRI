@@ -18,6 +18,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.SensorManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.server.json.JsonServerPreferences;
 import jmri.managers.DefaultPowerManager;
 import jmri.server.json.JSON;
@@ -101,7 +102,7 @@ public class JsonServletTest {
      */
     @Test
     public void testDoGetPowerWithGoodId() throws IOException, ServletException {
-        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager());
+        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)));
         request.setRequestURI("/json/power");
         MockHttpServletResponse response = new MockHttpServletResponse();
         JsonServlet instance = new MockJsonServlet();
@@ -126,7 +127,7 @@ public class JsonServletTest {
      */
     @Test
     public void testDoGetPowerWithBadId() throws IOException, ServletException {
-        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager());
+        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)));
         request.setRequestURI("/json/power");
         MockHttpServletResponse response = new MockHttpServletResponse();
         JsonServlet instance = new MockJsonServlet();
@@ -149,7 +150,7 @@ public class JsonServletTest {
      */
     @Test
     public void testDoGetPowerNoVersion() throws IOException, ServletException {
-        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager());
+        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)));
         request.setRequestURI("/json/power");
         MockHttpServletResponse response = new MockHttpServletResponse();
         JsonServlet instance = new MockJsonServlet();
@@ -170,7 +171,7 @@ public class JsonServletTest {
      */
     @Test
     public void testDoGetPowerV5() throws IOException, ServletException {
-        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager());
+        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)));
         request.setRequestURI("/json/v5/power");
         MockHttpServletResponse response = new MockHttpServletResponse();
         JsonServlet instance = new MockJsonServlet();
@@ -191,7 +192,7 @@ public class JsonServletTest {
      */
     @Test
     public void testDoGetPowerV4() throws IOException, ServletException {
-        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager());
+        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)));
         request.setRequestURI("/json/v4/power");
         MockHttpServletResponse response = new MockHttpServletResponse();
         JsonServlet instance = new MockJsonServlet();
@@ -214,7 +215,7 @@ public class JsonServletTest {
      */
     @Test
     public void testDoPostPowerV5Content() throws IOException, ServletException, JmriException {
-        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager());
+        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)));
         assertEquals(PowerManager.UNKNOWN, InstanceManager.getDefault(PowerManager.class).getPower());
         request.setRequestURI("/json/v5/power");
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -239,7 +240,7 @@ public class JsonServletTest {
      */
     @Test
     public void testDoPostPowerV5Parameters() throws IOException, ServletException, JmriException {
-        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager());
+        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)));
         assertEquals(PowerManager.UNKNOWN, InstanceManager.getDefault(PowerManager.class).getPower());
         // content type must not be JSON to use parameters
         request.setContentType("");

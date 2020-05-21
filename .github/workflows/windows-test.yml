@@ -1,7 +1,7 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: Static Analysis
+name: Windows CI Tests
 
 on: [ push, pull_request ]
 #  push:
@@ -12,7 +12,7 @@ on: [ push, pull_request ]
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -26,16 +26,7 @@ jobs:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
-    - name: Build with Maven
+    - name: Test with Maven
       run: |
-        # compile with ECJ for warnings or errors
-        #mvn -P test-warnings-check clean compile 
-        mvn antrun:run -Danttarget=tests-warnings-check
-        # run Spotbugs and Checkstyle
-        mvn clean test -U -P travis-spotbugs --batch-mode --file=pom.xml
-        # run Javadoc
-        mvn javadoc:javadoc -U --batch-mode --file=pom.xml
-        # check html
-        mvn exec:exec -P travis-scanhelp --file=pom.xml
-        #run Architecture tests
-        mvn -Dtest=jmri.ArchitectureTest,jmri.util.FileLineEndingsTest test --file=pom.xml
+        # run all tests using maven
+        mvn test

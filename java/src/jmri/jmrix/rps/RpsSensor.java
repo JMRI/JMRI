@@ -101,6 +101,7 @@ public class RpsSensor extends AbstractSensor
     /**
      * Notify parameter listeners that a device has left the region covered by
      * this sensor
+     * @param id Number of region being left
      */
     void notifyLeaving(Integer id) {
         firePropertyChange("Leaving", null, id);
@@ -109,6 +110,7 @@ public class RpsSensor extends AbstractSensor
     /**
      * Notify parameter listeners that a device has entered the region covered
      * by this sensor
+     * @param id Number of region being entered
      */
     void notifyArriving(Integer id) {
         firePropertyChange("Arriving", null, id);
