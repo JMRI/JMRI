@@ -249,7 +249,13 @@ public class DecoratorPanel extends JPanel {
         }
         JPanel colorButtons = makeColorPanel(addCaption);
         makeColorChooser();
-        this.add(makeFontPanel(addCaption));
+        JPanel panel = makeFontPanel();
+        if (addCaption) {
+            JPanel p = new JPanel();
+            p.add(new JLabel(Bundle.getMessage("StateTextBlurb1")));
+            panel.add(p);
+        }
+        this.add(panel);
         if (addCaption) {
             JPanel p = new JPanel();
             p.add(new JLabel(Bundle.getMessage("StateTextBlurb3")));
@@ -352,7 +358,7 @@ public class DecoratorPanel extends JPanel {
         }
     }
 
-    private JPanel makeFontPanel(boolean addCaption) {
+    private JPanel makeFontPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(BorderFactory.createTitledBorder(
@@ -383,12 +389,6 @@ public class DecoratorPanel extends JPanel {
             sizePanel.add(makeSpinPanel("fixedHeight", _heightSpin, listener));
         }
         panel.add(sizePanel);
-
-        if (addCaption) {
-            JPanel p = new JPanel();
-            p.add(new JLabel(Bundle.getMessage("StateTextBlurb1")));
-            panel.add(p);
-        }
         return panel;
     }
 
