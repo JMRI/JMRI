@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -831,6 +833,57 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
             CbusConstants.CBUS_F24 + CbusConstants.CBUS_F25 + CbusConstants.CBUS_F26);
         assertFunctionsOn(new int[]{24,25,26});
         
+    }
+    
+    private boolean listenerkicked;
+    private boolean listenerakicked;
+    
+    @Test
+    public void testFunction0Listener(){
+    
+        listenerkicked = false;
+        PropertyChangeListener l = (PropertyChangeEvent evt) -> {
+            listenerkicked = true;
+        };
+        PropertyChangeListener la = (PropertyChangeEvent evt) -> {
+            listenerakicked = true;
+        };
+        
+        instance.addPropertyChangeListener("F0", l);
+        instance.addPropertyChangeListener("F1", la);
+        
+        instance.setF0(true);
+        
+        Assert.assertEquals("F0 listener triggered", true, listenerkicked);
+        Assert.assertEquals("F1 listener triggered", false, listenerakicked);
+        
+        instance.removePropertyChangeListener(l);
+        instance.removePropertyChangeListener(la);
+    
+    }
+    
+    @Test
+    public void testFunction7Listener(){
+    
+        listenerkicked = false;
+        PropertyChangeListener l = (PropertyChangeEvent evt) -> {
+            listenerkicked = true;
+        };
+        PropertyChangeListener la = (PropertyChangeEvent evt) -> {
+            listenerakicked = true;
+        };
+        
+        instance.addPropertyChangeListener("F0", l);
+        instance.addPropertyChangeListener("F7", la);
+        
+        instance.setFunction(7,true);
+        
+        Assert.assertEquals("F0 listener triggered", false, listenerkicked);
+        Assert.assertEquals("F7 listener triggered", true, listenerakicked);
+        
+        instance.removePropertyChangeListener(l);
+        instance.removePropertyChangeListener(la);
+    
     }
     
 
