@@ -115,6 +115,9 @@
       specific commit by including "[ci skip]" (including the
       brackets, but not the quotes) anywhere in the commit message
       if so desired.</p>
+      
+      <p>Travis is controlled by the .travis.yml file. 
+        Much of the work is done by the scripts/travis.sh script.
 
       <a name="appveyor" id="appveyor"></a>
       <h3>AppVeyor CI</h3>
@@ -138,7 +141,10 @@
       <p>Although it is possible to enable AppVeyor to build
       commits to your own fork of the JMRI repositories, it's a bit
       complicated to do it within the AppVeyor security model.</p>
-
+        
+      <p>AppVeyor is controlled by the appveyor.yml file.
+        Much of the work is done by Maven via the
+        "mvn --quiet test -P appveyor --batch-mode" command.
 
       <a name="actions" id="actions"></a>
       <h3>GitHub Actions</h3>
@@ -154,6 +160,10 @@
             make sure Javadocs build cleanly, etc.
         <li>Run the JUnit tests on a Windows machine, as a parallel check to AppVeyor.
     </ul>
+    <p>
+      These checks are defined by files in the .github/workflows/
+        directory.
+      <p>
       These normally run both on PRs to the main JMRI/JMRI
       repository, but also on pushes and PRs to your own repository.
       If you want to turn that off, 
@@ -208,8 +218,9 @@
       make updates where they make sense, so that things are continuously improving, 
       but not every suggestion it makes is worth it, or even appropriate. We 
       don't require this to be clean before merging.
-
-
+      
+      <p>Code Climate is controlled by the .codeclimate.yml file.
+      
 
       <a name="independent" id="independent"></a>
       <h2>Independent Checks with Jenkins</h2>
