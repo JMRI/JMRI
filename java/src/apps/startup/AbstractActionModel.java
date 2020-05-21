@@ -70,7 +70,7 @@ public abstract class AbstractActionModel implements StartupModel {
     }
 
     public boolean isSystemConnectionAction() {
-        String name = this.getName();
+        String name = this.getClassName();
         if (name != null) {
             return StartupActionModelUtil.getDefault().isSystemConnectionAction(name);
         }
