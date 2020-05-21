@@ -21,7 +21,7 @@ public class KnownLocoSelPaneTest {
     public void testCTor() {
         JLabel jl = new JLabel("test selector");
         ProgModePane pmp = new ProgModePane(javax.swing.BoxLayout.X_AXIS);
-        KnownLocoSelPane t = new KnownLocoSelPane(false){
+        KnownLocoSelPane t = new KnownLocoSelPane(jl, false, pmp){
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry r,
                                         String programmerName) {
                 log.error("Should have not been invoked, even in test");
