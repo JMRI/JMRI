@@ -432,7 +432,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         for (Element defaultItem : elements) {
             if (_df != null && DecoderFile.isIncluded(defaultItem, _df.getProductID(), _df.getModel(), _df.getFamily(), "", "")) {
                 log.debug("element included by productID={} model={} family={}", _df.getProductID(), _df.getModel(), _df.getFamily());
-                v.setIntValue(Integer.parseInt(defaultItem.getAttribute("default").getValue()));
+                variable.setIntValue(Integer.parseInt(defaultItem.getAttribute("default").getValue()));
                 return true;
             }
         }
