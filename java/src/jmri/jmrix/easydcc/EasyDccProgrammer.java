@@ -129,7 +129,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
      * @param val Value to program
      * @param cvnum CV number to address
      * @return formatted message for layout
-     * @throws ProgrammerException if programmer or mode not available
+     * @throws jmri.ProgrammerException if programmer or mode not available
      */
     protected EasyDccMessage progTaskStart(ProgrammingMode mode, int val, int cvnum) throws jmri.ProgrammerException {
         // val = -1 for read command; mode is direct, etc

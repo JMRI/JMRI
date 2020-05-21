@@ -241,6 +241,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
      * value.
      * <p>
      * If the value is larger than any defined, a new one is created.
+     * @param value What to set to.
      */
     protected void selectValue(int value) {
         if (_nstored > 0) {

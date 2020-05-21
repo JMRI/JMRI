@@ -229,7 +229,8 @@ public class VSDManagerFrame extends JmriJFrame {
     }
 
     /**
-     * Handle "Mute" button press
+     * Handle "Mute" button press.
+     * @param e Event that kicked this off.
      */
     protected void muteButtonPressed(ActionEvent e) {
         JToggleButton b = (JToggleButton) e.getSource();

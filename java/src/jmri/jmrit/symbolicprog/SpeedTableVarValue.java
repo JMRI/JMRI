@@ -236,7 +236,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
 
     /**
      * If there are fixed points specified, set linear step settings to them.
-     * @param modifiedStepIndex 
+     * @param modifiedStepIndex Index of requested break point
      *
      */
     void matchPoints(int modifiedStepIndex) {

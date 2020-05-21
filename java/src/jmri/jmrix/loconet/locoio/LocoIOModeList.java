@@ -119,6 +119,7 @@ public class LocoIOModeList {
      *
      * @param lim one of a list of defined port operation modes
      * @param address the address for this port
+     * @return low-bits value
      */
     protected int addressToValue1(LocoIOMode lim, int address) {
         if (lim == null) {
@@ -132,6 +133,7 @@ public class LocoIOModeList {
      *
      * @param lim one of a list of defined port operation modes
      * @param address the address for this port
+     * @return high-bits value
      */
     protected int addressToValue2(LocoIOMode lim, int address) {
         if (lim == null) {
@@ -159,6 +161,7 @@ public class LocoIOModeList {
      * @param sv index of SV value to create, ignored
      * @param v2mask mask to apply on Value2
      * @param address the address for this port
+     * @return 2-byte value
      */
     protected int addressToValues(int opcode, int sv, int v2mask, int address) {
         int v1 = 0;

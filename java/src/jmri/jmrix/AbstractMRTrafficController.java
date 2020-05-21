@@ -599,6 +599,7 @@ public abstract class AbstractMRTrafficController {
      * Add header to the outgoing byte stream.
      *
      * @param msg the output byte stream
+     * @param m Message results
      * @return next location in the stream to fill
      */
     protected int addHeaderToOutput(byte[] msg, AbstractMRMessage m) {
@@ -910,6 +911,7 @@ public abstract class AbstractMRTrafficController {
     /**
      * Report an error on the receive loop. Separated so tests can suppress, even
      * though message is asynchronous.
+     * @param e Exception encountered at lower level to trigger error, or null
      */
     protected void reportReceiveLoopException(Exception e) {
         log.error("run: Exception: {} in {}", e.toString(), this.getClass().toString(), e);

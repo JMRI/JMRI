@@ -196,6 +196,9 @@ public class LoaderEngine {
      * nextWavTransfer() until it says it's complete.
      *
      * @param type Either TYPE_SDF or TYPE_WAV for the data type
+     * @param handle Handle number for the following data
+     * @param name Name of the transfer
+     * @param contents Data to download
      * @return Prepared message 
      */
     LocoNetMessage initTransfer(int type, int handle, String name, byte[] contents) {
@@ -282,6 +285,7 @@ public class LoaderEngine {
     /**
      * Get a message to start the download of data
      *
+     * @param type Either TYPE_SDF or TYPE_WAV for the data type
      * @param handle Handle number for the following data
      * @param length Total length of the WAV data to load
      * @return Prepared message 
@@ -306,6 +310,7 @@ public class LoaderEngine {
     /**
      * Get a message to tell the PR2 to store length bytes of data (following)
      *
+     * @param type Either TYPE_SDF or TYPE_WAV for the data type
      * @param handle   Handle number for the following data
      * @param contents Data to download
      * @return Prepared message 
