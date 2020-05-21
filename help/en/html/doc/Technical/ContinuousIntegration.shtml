@@ -45,12 +45,39 @@
       quickly. There's a 
       <a href="CI-status.shtml">CI status page</a>
       that shows the combined status of that.</p>
+      <p>
+      We divide these into three groups:
+      <ul>
+        <li><a href="#mandatory">Mandatory checks</a> that  
+                must be OK before the change will be merged.
+        <li><a href="#optional">Optional checks</a> that  
+                provide additional information on the code.
+                These don't have to be completely cleared before
+                a change is merged, but their observations
+                should be considered and their metrics should be 
+                improving.
+        <li><a href="#independent">Independent checks</a> that  
+                are run by our
+                <a href="#jenkins">Jenkins instance</a>
+                on a periodic basis to look for deeper
+                problems.
+        </ul>
 
-      <p>We also use two additional CI engines to test every change
-      entered into our GitHub code repository.</p>
-
+      <a name="mandatory" id="mandatory"></a>
+      <h2>Mandatory Checks</h2>
+      
+      We use three CI engines to test every proposed change
+      entered into our GitHub code repository before it gets
+      merged. 
+        <ul>
+            <li><a href="#travis">Travis</a>
+            <li><a href="#appveyor">AppVeyor</a>
+            <li><a href="#actions">GitHub Actions</a>
+            <li><a href="#wip">WIP check</a>
+        </ul>
+        
       <a name="travis" id="travis"></a>
-      <h2>Travis CI</h2>
+      <h3>Travis CI</h3>
       We use <a href=
       "https://travis-ci.org/">Travis CI</a> to do integration/test
       builds on Linux for every pull into our main <a href=
@@ -90,7 +117,7 @@
       if so desired.</p>
 
       <a name="appveyor" id="appveyor"></a>
-      <h2>AppVeyor CI</h2>
+      <h3>AppVeyor CI</h3>
       We use 
       <a href="http://www.appveyor.com">AppVeyor CI</a>
       to do
@@ -112,8 +139,70 @@
       commits to your own fork of the JMRI repositories, it's a bit
       complicated to do it within the AppVeyor security model.</p>
 
-      <a name="jenkins" id="jenkins"></a>
-      <h2>Jenkins</h2>
+
+      <a name="actions" id="actions"></a>
+      <h3>GitHub Actions</h3>
+      We use 
+      <a href="https://github.com/features/actions">GitHub Actions</a>
+      to do two things on 
+      every pull into our
+      main <a href="http://github.com/JMRI">GitHub</a>
+      repositories.
+    <ul>
+        <li>Run a series of static checks: Run Spotbugs and the compiler warning checks,
+            make sure Javadocs build cleanly, etc.
+        <li>Run the JUnit tests on a Windows machine, as a parallel check to AppVeyor.
+    </ul>
+
+      <a name="wip" id="wip"></a>
+      <h3>WIP</h3>
+      We use the 
+      <a href="https://github.com/apps/wip">WIP check</a>
+      to allow somebody to mark a PR as 
+      "Work in Progress" (WIP) by putting WIP
+      in the title line.  The PR will then not be merged
+      until the WIP is removed.
+      
+
+    <a name="optional" id="optional"></a>
+    <h2>Optional Checks</h2>
+        We also run some advisory checkers. Although we 
+        don't require that they pass, we strongly recommend
+        that people look at them and try to improve 
+        their metrics of test coverage, simplicity and 
+        understandability, etc.
+        <ul>
+            <li><a href="#coveralls">Coveralls</a>
+            <li><a href="#codeclimate">CodeClimate</a>
+
+      <a name="coveralls" id="coveralls"></a>
+      <h3>Coveralls</h3>
+      The 
+      <a href="https://coveralls.io/github/JMRI">Coveralls check</a>
+      does a deep check of which parts of the code were run
+      during the test steps, and which were left uncovered.
+      This can be very useful information when writing tests
+      to make sure your code is working properly. In general,
+      you should try to increase the code coverage, even if just a bit,
+      with every PR.  
+
+      <a name="CodeClimate" id="CodeClimate"></a>
+      <h3>Code Climate</h3>
+      The 
+      <a href="https://codeclimate.com/github/JMRI/JMRI/">Code Climate</a>
+      points out places where the code appears to be complex in various ways.
+      (It also provides coverage information, though 
+      <a href="#coveralls">Coveralls</a>
+      seems to 
+      do a better job of that.) We recommend you look at those results and
+      make updates where they make sense, so that things are continuously improving, 
+      but not every suggestion it makes is worth it, or even appropriate. We 
+      don't require this to be clean before merging.
+
+
+
+      <a name="independent" id="independent"></a>
+      <h2>Independent Checks with Jenkins</h2>
       JMRI uses the <a href=
       "http://jenkins-ci.org/">Jenkins</a> continuous integration
       engine for integration and test builds. This includes keeping
@@ -122,9 +211,7 @@
       development builds, and building final releases.
 
       <p>Our primary Jenkins engine is at <a href=
-      "http://builds.jmri.org/jenkins/">http://builds.jmri.org/jenkins/</a>,
-      also known as <a href=
-      "http://jmri.tagadab.com/jenkins/">http://jmri.tagadab.com/jenkins/</a>.
+      "http://builds.jmri.org/jenkins/">http://builds.jmri.org/jenkins/</a>.
       Because it's hosted outside the US, we force its
       Java locale to US English by setting the 
       <code>LC_ALL</code> environment variable to
@@ -134,6 +221,7 @@
       "https://jmri.ci.cloudbees.com">https://jmri.ci.cloudbees.com</a>.
       but that's now inactive -->
 
+      <a name="jenkins" id="jenkins"></a>
       <p>Specific Jenkins results of interest:</p>
 
       <ul>
