@@ -148,11 +148,21 @@
       every pull into our
       main <a href="http://github.com/JMRI">GitHub</a>
       repositories.
+      <a href="images/ActionSettings.png"><img src="images/ActionSettings.png" align="right" width="331" height="167"></a>
     <ul>
         <li>Run a series of static checks: Run Spotbugs and the compiler warning checks,
             make sure Javadocs build cleanly, etc.
         <li>Run the JUnit tests on a Windows machine, as a parallel check to AppVeyor.
     </ul>
+      These normally run both on PRs to the main JMRI/JMRI
+      repository, but also on pushes and PRs to your own repository.
+      If you want to turn that off, 
+      <ol>
+       <li>On the page for your own repository, select "Settings"
+       <li>From the left sidebar, select "Actions"
+       <li>Pick on option for what can run. The bottom
+        option turns everything off for you locally.
+      </ol>
 
       <a name="wip" id="wip"></a>
       <h3>WIP</h3>
