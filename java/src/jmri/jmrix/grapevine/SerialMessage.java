@@ -173,6 +173,11 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      * common. That forces the passing of arguments as numbers. Short messages
      * are marked by having missing bytes put to -1 in the arguments.
      * See the Grapevine <a href="package-summary.html">Binary Message Format Summary</a>
+     * @param b1 1st message byte
+     * @param b2 2nd message byte
+     * @param b3 3rd message byte
+     * @param b4 4th message byte
+     * @return Human-readable form
      */
     static String staticFormat(int b1, int b2, int b3, int b4) {
         String result;

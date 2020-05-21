@@ -186,6 +186,7 @@ public class AddSignalMastPanel extends JPanel {
 
     /**
      * Select a particular signal implementation to display.
+     * @param view The signal implementation pane name to display
      */
     void selection(String view) {
         log.trace(" selection({}) start", view);
@@ -427,6 +428,7 @@ public class AddSignalMastPanel extends JPanel {
      * Check of user name done when creating new SignalMast.
      * In case of error, it looks a message and (if not headless) shows a dialog.
      *
+     * @param nam User name to be checked
      * @return true if OK to proceed
      */
     boolean checkUserName(String nam) {
