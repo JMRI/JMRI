@@ -552,6 +552,12 @@
             outputdirectory="${jjtreegen}/jmri/jmris/simpleserver/parser"
             javacchome="${libdir}"/>
         </quiet>
+        <!-- Turn all Javadoc comments in generated code into plain comments -->
+        <replaceregexp match="\/\*\*" replace="\/\*" flags="g">
+            <fileset dir="${jjtreegen}">
+                <include name="**/*.java"/>
+            </fileset>
+        </replaceregexp>
     </target>
 
 
@@ -705,7 +711,7 @@
             <compilerarg line="-encoding utf-8"/>
             <compilerarg value="-Xlint:unchecked"/>
             <compilerarg value="-Xpkginfo:always"/>  <!-- compile all package-info.java to avoid empty-file warnings -->
-            <compilerarg value="-Xmaxwarns"/><compilerarg value="2000"/><!-- change from default 100 warnings -->
+            <compilerarg value="-Xmaxwarns"/><compilerarg value="2000"/><!-- default is 100, here to make it easy to change -->
         </javac>
     </target>
 
@@ -1808,11 +1814,13 @@
                  additionalparam="-breakiterator"
                  author="true"
                  version="false"
-                 public="yes"
+                 package="yes"
                  use="true"
                  failonerror="true"
+                 failonwarning="true"
                  source="8"
-                 windowtitle="JMRI API">
+                 windowtitle="JMRI API"
+            >
 
             <packageset dir="${source}" defaultexcludes="yes">
                 <include name="jmri/**"/>
@@ -1827,7 +1835,7 @@
             
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="36"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
+            <arg value="100"/><!-- default is 100; keep synced with pom.xml, other javadoc targets -->
             
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
@@ -1907,11 +1915,13 @@
                  additionalparam="-breakiterator"
                  author="true"
                  version="false"
-                 public="yes"
+                 package="yes"
                  use="true"
                  failonerror="true"
+                 failonwarning="true"
                  source="8"
-                 windowtitle="JMRI API">
+                 windowtitle="JMRI API"
+            >
 
             <packageset dir="${source}" defaultexcludes="yes">
                 <include name="jmri/**"/>
@@ -1922,11 +1932,11 @@
             </packageset>
             <packageset dir="${jjtreegen}" defaultexcludes="yes">
                 <include name="jmri/**"/>
-            </packageset>
+            </packageset> -->
             
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="36"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
+            <arg value="100"/><!-- default is 100; keep synced with pom.xml, other javadoc targets -->
             
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
