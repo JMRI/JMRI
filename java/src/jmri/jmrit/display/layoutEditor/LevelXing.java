@@ -1012,16 +1012,16 @@ public class LevelXing extends LayoutTrack {
         return references;
     }
 
-    JPopupMenu popup = null;
+//    JPopupMenu popup = null;
 
     /**
      * {@inheritDoc}
      */
-     @Override
-     @Nonnull
-     protected JPopupMenu showPopup(@CheckForNull MouseEvent mouseEvent) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
-    } 
+//      @Override
+//      @Nonnull
+//      protected JPopupMenu showPopup(@CheckForNull MouseEvent mouseEvent) {
+//         throw new IllegalArgumentException("should have called View instead of temporary");
+//     } 
 
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
@@ -1179,19 +1179,19 @@ public class LevelXing extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
-    @Override
-    protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
-    }
+//     @Override
+//     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
+//         throw new IllegalArgumentException("should have called View instead of temporary");
+//     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
-    }
-
+//     @Override
+//     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+//         throw new IllegalArgumentException("should have called View instead of temporary");
+//     }
+// 
     /**
      * {@inheritDoc}
      */

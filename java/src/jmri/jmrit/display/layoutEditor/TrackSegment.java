@@ -732,11 +732,11 @@ public class TrackSegment extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-    @Override
-    @Nonnull
-    protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
-        throw new IllegalArgumentException("should have been called through View");
-    }
+//     @Override
+//     @Nonnull
+//     protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
+//         throw new IllegalArgumentException("should have been called through View");
+//     }
 //         if (popupMenu != null) {
 //             popupMenu.removeAll();
 //         } else {
@@ -2216,18 +2216,18 @@ public class TrackSegment extends LayoutTrack {
     /**
      * temporary fill of abstract from above
      */
-    @Override
-    protected void draw1(Graphics2D g2, boolean b, boolean f) {
-        log.info("draw2 is temporary, but was invoked", new Exception("traceback"));
-    }
+//     @Override
+//     protected void draw1(Graphics2D g2, boolean b, boolean f) {
+//         log.info("draw2 is temporary, but was invoked", new Exception("traceback"));
+//     }
 
     /**
      * temporary fill of abstract from above
      */
-    @Override
-    protected void draw2(Graphics2D g2, boolean b, float f) {
-        log.info("draw2 is temporary, but was invoked", new Exception("traceback"));
-    }
+//     @Override
+//     protected void draw2(Graphics2D g2, boolean b, float f) {
+//         log.info("draw2 is temporary, but was invoked", new Exception("traceback"));
+//     }
 
     /**
      * temporary fill of abstract from above

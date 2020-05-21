@@ -683,10 +683,10 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-    @Override
-    @Nonnull
-    protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
+//     @Override
+//     @Nonnull
+//     protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
+//         throw new IllegalArgumentException("should have called View instead of temporary");
 //         if (popupMenu != null) {
 //             popupMenu.removeAll();
 //         } else {
@@ -744,12 +744,13 @@ public class LayoutTurntable extends LayoutTrack {
 //         layoutEditor.setShowAlignmentMenu(popupMenu);
 //         popupMenu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
 //         return popupMenu;
-    }
+//    }
 
     // private JPopupMenu rayPopup = null;
 
     protected void showRayPopUp(MouseEvent e, int index) {
         throw new IllegalArgumentException("should have called View instead of temporary");
+    }
         //log.info("should have called View instead of temporary");
         // return layoutEditor.getLevelXingView(this)....;
         
@@ -811,7 +812,7 @@ public class LayoutTurntable extends LayoutTrack {
 //                 break;
 //             }
 //         }
-    }
+//    }
 
     /**
      * Set turntable position to the ray with this index.
@@ -1147,18 +1148,18 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-    @Override
-    protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
-    }
+//     @Override
+//     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
+//         throw new IllegalArgumentException("should have called View instead of temporary");
+//     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
-    }
+//     @Override
+//     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+//         throw new IllegalArgumentException("should have called View instead of temporary");
+//     }
 
     /**
      * {@inheritDoc}

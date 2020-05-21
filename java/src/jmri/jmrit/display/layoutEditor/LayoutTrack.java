@@ -183,7 +183,9 @@ abstract public class LayoutTrack {
      * @param isMain  true if drawing mainlines
      * @param isBlock true if drawing block lines
      */
-    abstract protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
+    final protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {  /* temporary */
+        throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
+    }
 
     /**
      * draw two lines (rails)
@@ -192,7 +194,9 @@ abstract public class LayoutTrack {
      * @param isMain           true if drawing mainlines
      * @param railDisplacement the offset from center to draw the lines
      */
-    abstract protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement);
+    final protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) { /* temporary */
+        throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
+    }
 
     /**
      * draw hidden track
@@ -412,7 +416,10 @@ abstract public class LayoutTrack {
      * @return the popup menu for this layout track
      */
     @Nonnull
-    abstract protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent);
+    final protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
+        log.error("LayoutTrack.showPopup should have been called through View");
+        return layoutEditor.getLayoutTrackView(this).showPopup(mouseEvent);
+    }
 
     /**
      * show the popup menu for this layout track
