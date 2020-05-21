@@ -610,11 +610,11 @@ public class LayoutTurntable extends LayoutTrack {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
-    @Override
-    public void scaleCoords(double xFactor, double yFactor) {
-        log.info("scaleCoords should have called View instead of temporary");
-        layoutEditor.getLayoutTurntableView(this).scaleCoords( xFactor, yFactor);
-    }
+//     @Override
+//     public void scaleCoords(double xFactor, double yFactor) {
+//         log.info("scaleCoords should have called View instead of temporary");
+//         layoutEditor.getLayoutTurntableView(this).scaleCoords( xFactor, yFactor);
+//     }
 
     /**
      * Translate (2D move) this LayoutTrack's coordinates by the x and y
@@ -623,20 +623,20 @@ public class LayoutTurntable extends LayoutTrack {
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
-    @Override
-    public void translateCoords(double xFactor, double yFactor) {
-        log.info("translateCoords should have called View instead of temporary");
-        layoutEditor.getLayoutTurntableView(this).translateCoords( xFactor, yFactor);
-    }
+//     @Override
+//     public void translateCoords(double xFactor, double yFactor) {
+//         log.info("translateCoords should have called View instead of temporary");
+//         layoutEditor.getLayoutTurntableView(this).translateCoords( xFactor, yFactor);
+//     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void rotateCoords(double angleDEG) {
-        log.info("rotateCoords should have called View instead of temporary");
-        layoutEditor.getLayoutTurntableView(this).rotateCoords(angleDEG);
-    }
+//     @Override
+//     public void rotateCoords(double angleDEG) {
+//         log.info("rotateCoords should have called View instead of temporary");
+//         layoutEditor.getLayoutTurntableView(this).rotateCoords(angleDEG);
+//     }
 
     public String tLayoutBlockName = "";
 
@@ -1164,11 +1164,11 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-    @Override
-    protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
-    }
-
+//     @Override
+//     protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
+//         throw new IllegalArgumentException("should have called View instead of temporary");
+//     }
+// 
     /**
      * {@inheritDoc}
      */

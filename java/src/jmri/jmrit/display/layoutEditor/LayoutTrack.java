@@ -92,15 +92,15 @@ abstract public class LayoutTrack {
      * idea, i.e. for Bezier curves
      * @param p the coordinates to set
      */
-    public void setCoordsCenter(@Nonnull Point2D p) { // temporary until coords always in Views
-        log.info("setCoordsCenter should have called View instead of temporary");
+    final public void setCoordsCenter(@Nonnull Point2D p) { // temporary until coords always in Views
+        log.error("setCoordsCenter should have called View instead of temporary");
         layoutEditor.getLayoutTrackView(this).setCoordsCenter(p);
     }
 
     /**
      * @return true if this track segment has decorations
      */
-    public boolean hasDecorations() {
+    final public boolean hasDecorations() {
         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
     }
 
@@ -109,7 +109,7 @@ abstract public class LayoutTrack {
      *
      * @return the decorations
      */
-    public Map<String, String> getDecorations() {
+    final public Map<String, String> getDecorations() {
         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
     }
 
@@ -122,7 +122,7 @@ abstract public class LayoutTrack {
      *          to specific value strings ("single", "entry;right", ), perhaps
      *          including multiple values separated by semicolons.
      */
-    public void setDecorations(Map<String, String> decorations) {
+    final public void setDecorations(Map<String, String> decorations) {
         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
     }
 
@@ -216,7 +216,7 @@ abstract public class LayoutTrack {
      * @param arrowsCountMenu menu of which to add the arrow to.
      * @return An item for the arrow menu
      */
-    public JCheckBoxMenuItem loadArrowImageToJCBItem(int n, JMenu arrowsCountMenu) {
+    final public JCheckBoxMenuItem loadArrowImageToJCBItem(int n, JMenu arrowsCountMenu) {
         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
     }
     
@@ -226,7 +226,9 @@ abstract public class LayoutTrack {
      * @param g2           the graphics context
      * @param specificType the specific connection to draw (or NONE for all)
      */
-    abstract protected void highlightUnconnected(Graphics2D g2, HitPointType specificType);
+    final protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
+        throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
+    }
 
     // optional parameter specificType = NONE
     final protected void highlightUnconnected(Graphics2D g2) {
@@ -256,7 +258,7 @@ abstract public class LayoutTrack {
      *
      * @param g2 the graphics context
      */
-    protected void drawDecorations(Graphics2D g2) {
+    final void drawDecorations(Graphics2D g2) {
         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
     }
 
@@ -340,7 +342,9 @@ abstract public class LayoutTrack {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
-    abstract public void scaleCoords(double xFactor, double yFactor);
+    final public void scaleCoords(double xFactor, double yFactor) {
+        throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
+    }
 
     /**
      * translate this LayoutTrack's coordinates by the x and y factors
@@ -348,14 +352,18 @@ abstract public class LayoutTrack {
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
-    abstract public void translateCoords(double xFactor, double yFactor);
+    final public void translateCoords(double xFactor, double yFactor) {
+        throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
+    }
 
     /**
      * rotate this LayoutTrack's coordinates by angleDEG's
      *
      * @param angleDEG the amount to rotate in degrees
      */
-    abstract public void rotateCoords(double angleDEG);
+    final public void rotateCoords(double angleDEG){
+        throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
+    }
 
     final protected Point2D rotatePoint(@Nonnull Point2D p, double sineRot, double cosineRot) {
         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");

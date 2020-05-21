@@ -202,29 +202,29 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void scaleCoords(double xFactor, double yFactor) {
-        Point2D factor = new Point2D.Double(xFactor, yFactor);
-        super.setCoordsCenter(MathUtil.granulize(MathUtil.multiply(getCoordsCenter(), factor), 1.0));
-    }
+//     @Override
+//     public void scaleCoords(double xFactor, double yFactor) {
+//         Point2D factor = new Point2D.Double(xFactor, yFactor);
+//         super.setCoordsCenter(MathUtil.granulize(MathUtil.multiply(getCoordsCenter(), factor), 1.0));
+//     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void translateCoords(double xFactor, double yFactor) {
-        Point2D factor = new Point2D.Double(xFactor, yFactor);
-        super.setCoordsCenter(MathUtil.add(getCoordsCenter(), factor));
-    }
+//     @Override
+//     public void translateCoords(double xFactor, double yFactor) {
+//         Point2D factor = new Point2D.Double(xFactor, yFactor);
+//         super.setCoordsCenter(MathUtil.add(getCoordsCenter(), factor));
+//     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void rotateCoords(double angleDEG) {
-        //can't really rotate a point... so...
-        //nothing to see here... move along...
-    }
+//     @Override
+//     public void rotateCoords(double angleDEG) {
+//         //can't really rotate a point... so...
+//         //nothing to see here... move along...
+//     }
 
     private PositionablePoint linkedPoint;
 
@@ -1694,10 +1694,10 @@ public class PositionablePoint extends LayoutTrack {
      * 
      * This type of track has none, so this method is empty.
      */
-    @Override
-    protected void drawDecorations(Graphics2D g2) {
-        log.trace("PositionablePoint::drawDecorations");
-    }
+//     @Override
+//     protected void drawDecorations(Graphics2D g2) {
+//         log.trace("PositionablePoint::drawDecorations");
+//     }
 
     /**
      * {@inheritDoc}
@@ -1720,16 +1720,16 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-    @Override
-    protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
-        log.trace("PositionablePoint::highlightUnconnected");
-        if ((specificType == HitPointType.NONE) || (specificType == HitPointType.POS_POINT)) {
-            if ((getConnect1() == null)
-                    || ((getType() == PointType.ANCHOR) && (getConnect2() == null))) {
-                g2.fill(trackControlCircleAt(getCoordsCenter()));
-            }
-        }
-    }
+//     @Override
+//     protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
+//         log.trace("PositionablePoint::highlightUnconnected");
+//         if ((specificType == HitPointType.NONE) || (specificType == HitPointType.POS_POINT)) {
+//             if ((getConnect1() == null)
+//                     || ((getType() == PointType.ANCHOR) && (getConnect2() == null))) {
+//                 g2.fill(trackControlCircleAt(getCoordsCenter()));
+//             }
+//         }
+//     }
 
     /**
      * {@inheritDoc}

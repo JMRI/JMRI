@@ -851,32 +851,32 @@ public class LevelXing extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void scaleCoords(double xFactor, double yFactor) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
+//     @Override
+//     public void scaleCoords(double xFactor, double yFactor) {
+//         throw new IllegalArgumentException("should have called View instead of temporary");
 //         Point2D factor = new Point2D.Double(xFactor, yFactor);
 //         super.setCoordsCenter(MathUtil.granulize(MathUtil.multiply(getCoordsCenter(), factor), 1.0));
 //         dispA = MathUtil.granulize(MathUtil.multiply(dispA, factor), 1.0);
 //         dispB = MathUtil.granulize(MathUtil.multiply(dispB, factor), 1.0);
-    }
+//    }
 
     /**
      * {@inheritDoc}
      */
-     @Override
-     public void translateCoords(double xFactor, double yFactor) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
-
+//      @Override
+//      public void translateCoords(double xFactor, double yFactor) {
+//         throw new IllegalArgumentException("should have called View instead of temporary");
+// 
 //         Point2D factor = new Point2D.Double(xFactor, yFactor);
 //         super.setCoordsCenter(MathUtil.add(getCoordsCenter(), factor));
-    }
+//    }
 
     /**
      * {@inheritDoc}
      */
-     @Override
-     public void rotateCoords(double angleDEG) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
+//      @Override
+//      public void rotateCoords(double angleDEG) {
+//         throw new IllegalArgumentException("should have called View instead of temporary");
 //         // rotate coordinates
 //         double rotRAD = Math.toRadians(angleDEG);
 //         double sineRot = Math.sin(rotRAD);
@@ -889,7 +889,7 @@ public class LevelXing extends LayoutTrack {
 //         dispB = rotatePoint(dispB, sineRot, cosineRot);
 //         super.setCoordsCenter(center_temp);
 // 
-     }
+//     }
     
     // initialization instance variables (used when loading a LayoutEditor)
     public String connectAName = "";
@@ -1195,10 +1195,10 @@ public class LevelXing extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-    @Override
-    protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
-    }
+//     @Override
+//     protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
+//         throw new IllegalArgumentException("should have called View instead of temporary");
+//     }
 
     /*
     * {@inheritDoc}

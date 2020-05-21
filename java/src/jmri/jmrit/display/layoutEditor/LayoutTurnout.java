@@ -1968,11 +1968,11 @@ abstract public class LayoutTurnout extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void setCoordsCenter(@Nonnull Point2D p) {
-        log.debug("temporary setCoordsCenter should have been called through View");
-        layoutEditor.getLayoutTurnoutView(this).setCoordsCenter(p);
-    }
+//     @Override
+//     public void setCoordsCenter(@Nonnull Point2D p) {
+//         log.debug("temporary setCoordsCenter should have been called through View");
+//         layoutEditor.getLayoutTurnoutView(this).setCoordsCenter(p);
+//     }
 
     private void reCalculateCenter() {
         log.debug("temporary reCalculateCenter should have been called through View");
@@ -2002,29 +2002,29 @@ abstract public class LayoutTurnout extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void scaleCoords(double xFactor, double yFactor) {
-        log.debug("temporary scaleCoords should have been called through View");
-        layoutEditor.getLayoutTurnoutView(this).scaleCoords(xFactor, yFactor);    
-    }
+//     @Override
+//     public void scaleCoords(double xFactor, double yFactor) {
+//         log.debug("temporary scaleCoords should have been called through View");
+//         layoutEditor.getLayoutTurnoutView(this).scaleCoords(xFactor, yFactor);    
+//     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void translateCoords(double xFactor, double yFactor) {
-        log.debug("temporary translateCoords should have been called through View");
-        layoutEditor.getLayoutTurnoutView(this).scaleCoords(xFactor, yFactor);    
-    }
+//     @Override
+//     public void translateCoords(double xFactor, double yFactor) {
+//         log.debug("temporary translateCoords should have been called through View");
+//         layoutEditor.getLayoutTurnoutView(this).scaleCoords(xFactor, yFactor);    
+//     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void rotateCoords(double angleDEG) {
-        log.debug("temporary rotateCoords should have been called through View");
-        layoutEditor.getLayoutTurnoutView(this).rotateCoords(angleDEG);    
-    }
+//     @Override
+//     public void rotateCoords(double angleDEG) {
+//         log.debug("temporary rotateCoords should have been called through View");
+//         layoutEditor.getLayoutTurnoutView(this).rotateCoords(angleDEG);    
+//     }
 
     /**
      * Activate/Deactivate turnout to redraw when turnout state changes
@@ -3000,8 +3000,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
      * 
      * This type of track has none, so this method is empty.
      */
-    @Override
-    protected void drawDecorations(Graphics2D g2) {}
+//     @Override
+//     protected void drawDecorations(Graphics2D g2) {}
 
     /**
      * {@inheritDoc}
@@ -4023,29 +4023,29 @@ abstract public class LayoutTurnout extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-    @Override
-    protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
-        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.TURNOUT_A))
-                && (getConnectA() == null)) {
-            g2.fill(trackControlCircleAt(getCoordsA()));
-        }
-
-        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.TURNOUT_B))
-                && (getConnectB() == null)) {
-            g2.fill(trackControlCircleAt(getCoordsB()));
-        }
-
-        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.TURNOUT_C))
-                && (getConnectC() == null)) {
-            g2.fill(trackControlCircleAt(getCoordsC()));
-        }
-        if (isTurnoutTypeXover()) {
-            if (((specificType == HitPointType.NONE) || (specificType == HitPointType.TURNOUT_D))
-                    && (getConnectD() == null)) {
-                g2.fill(trackControlCircleAt(getCoordsD()));
-            }
-        }
-    }
+//     @Override
+//     protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
+//         if (((specificType == HitPointType.NONE) || (specificType == HitPointType.TURNOUT_A))
+//                 && (getConnectA() == null)) {
+//             g2.fill(trackControlCircleAt(getCoordsA()));
+//         }
+// 
+//         if (((specificType == HitPointType.NONE) || (specificType == HitPointType.TURNOUT_B))
+//                 && (getConnectB() == null)) {
+//             g2.fill(trackControlCircleAt(getCoordsB()));
+//         }
+// 
+//         if (((specificType == HitPointType.NONE) || (specificType == HitPointType.TURNOUT_C))
+//                 && (getConnectC() == null)) {
+//             g2.fill(trackControlCircleAt(getCoordsC()));
+//         }
+//         if (isTurnoutTypeXover()) {
+//             if (((specificType == HitPointType.NONE) || (specificType == HitPointType.TURNOUT_D))
+//                     && (getConnectD() == null)) {
+//                 g2.fill(trackControlCircleAt(getCoordsD()));
+//             }
+//         }
+//     }
 
 
     /*

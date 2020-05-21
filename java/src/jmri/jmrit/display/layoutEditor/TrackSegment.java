@@ -550,54 +550,54 @@ public class TrackSegment extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void scaleCoords(double xFactor, double yFactor) {
-        Point2D factor = new Point2D.Double(xFactor, yFactor);
-        super.setCoordsCenter(MathUtil.multiply(getCoordsCenter(), factor));
-        if (isBezier()) {
-            for (Point2D p : bezierControlPoints) {
-                p.setLocation(MathUtil.multiply(p, factor));
-            }
-        }
-    }
+//     @Override
+//     public void scaleCoords(double xFactor, double yFactor) {
+//         Point2D factor = new Point2D.Double(xFactor, yFactor);
+//         super.setCoordsCenter(MathUtil.multiply(getCoordsCenter(), factor));
+//         if (isBezier()) {
+//             for (Point2D p : bezierControlPoints) {
+//                 p.setLocation(MathUtil.multiply(p, factor));
+//             }
+//         }
+//     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void translateCoords(double xFactor, double yFactor) {
-        super.setCoordsCenter(MathUtil.add(getCoordsCenter(), new Point2D.Double(xFactor, yFactor)));
-    }
+//     @Override
+//     public void translateCoords(double xFactor, double yFactor) {
+//         super.setCoordsCenter(MathUtil.add(getCoordsCenter(), new Point2D.Double(xFactor, yFactor)));
+//     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void rotateCoords(double angleDEG) {
-        if (isBezier()) {
-            for (Point2D p : bezierControlPoints) {
-                p.setLocation(MathUtil.rotateDEG(p, getCoordsCenter(), angleDEG));
-            }
-        }
-    }
+//     @Override
+//     public void rotateCoords(double angleDEG) {
+//         if (isBezier()) {
+//             for (Point2D p : bezierControlPoints) {
+//                 p.setLocation(MathUtil.rotateDEG(p, getCoordsCenter(), angleDEG));
+//             }
+//         }
+//     }
 
     /**
      * Set center coordinates.
      *
      * @param newCenterPoint the coordinates to set
      */
-    @Override
-    public void setCoordsCenter(@Nonnull Point2D newCenterPoint) {
-        if (getCoordsCenter() != newCenterPoint) {
-            if (isBezier()) {
-                Point2D delta = MathUtil.subtract(newCenterPoint, getCoordsCenter());
-                for (Point2D p : bezierControlPoints) {
-                    p.setLocation(MathUtil.add(p, delta));
-                }
-            }
-            super.setCoordsCenter(newCenterPoint);
-        }
-    }
+//     @Override
+//     public void setCoordsCenter(@Nonnull Point2D newCenterPoint) {
+//         if (getCoordsCenter() != newCenterPoint) {
+//             if (isBezier()) {
+//                 Point2D delta = MathUtil.subtract(newCenterPoint, getCoordsCenter());
+//                 for (Point2D p : bezierControlPoints) {
+//                     p.setLocation(MathUtil.add(p, delta));
+//                 }
+//             }
+//             super.setCoordsCenter(newCenterPoint);
+//         }
+//     }
 
     // initialization instance variables (used when loading a LayoutEditor)
     public String tConnect1Name = "";
@@ -2077,10 +2077,10 @@ public class TrackSegment extends LayoutTrack {
      *
      * @param p the coordinates to set
      */
-    public void setCoordsCenterCircle(Point2D p) {
-        centreX = p.getX();
-        centreY = p.getY();
-    }
+//     public void setCoordsCenterCircle(Point2D p) {
+//         centreX = p.getX();
+//         centreY = p.getY();
+//     }
 
     private double chordLength;
 
@@ -2232,11 +2232,11 @@ public class TrackSegment extends LayoutTrack {
     /**
      * temporary fill of abstract from above
      */
-    @Override
-    protected void highlightUnconnected(Graphics2D g2, HitPointType selectedType) {
-        log.info("highlightUnconnected is temporary, but was invoked", new Exception("traceback"));
-    }
-
+//     @Override
+//     protected void highlightUnconnected(Graphics2D g2, HitPointType selectedType) {
+//         log.info("highlightUnconnected is temporary, but was invoked", new Exception("traceback"));
+//     }
+// 
     /**
      * temporary fill of abstract from above
      */
@@ -2248,10 +2248,10 @@ public class TrackSegment extends LayoutTrack {
     /**
      * temporary fill of abstract from above
      */
-    @Override
-    protected void drawDecorations(Graphics2D g2) {
-        log.info("drawDecorations is temporary, but was invoked", new Exception("traceback"));
-    }
+//     @Override
+//     protected void drawDecorations(Graphics2D g2) {
+//         log.info("drawDecorations is temporary, but was invoked", new Exception("traceback"));
+//     }
 
     /*======================*\
     |* decoration accessors *|
@@ -2263,18 +2263,18 @@ public class TrackSegment extends LayoutTrack {
     // and hasDecorations calls.
     
     /** {@inheritDoc} */
-    @Override
-    public boolean hasDecorations() {
-        return ((arrowStyle > 0)
-                || (bridgeSideLeft || bridgeSideRight)
-                || (bumperEndStart || bumperEndStop)
-                || (tunnelSideLeft || tunnelSideRight));
-    }
+//     @Override
+//     public boolean hasDecorations() {
+//         return ((arrowStyle > 0)
+//                 || (bridgeSideLeft || bridgeSideRight)
+//                 || (bumperEndStart || bumperEndStop)
+//                 || (tunnelSideLeft || tunnelSideRight));
+//     }
 
     /** {@inheritDoc} */
-    @Override
-    public Map<String, String> getDecorations() {
-        throw new IllegalArgumentException("should have called in View instead of Object (temporary)");
+//     @Override
+//     public Map<String, String> getDecorations() {
+//         throw new IllegalArgumentException("should have called in View instead of Object (temporary)");
 //         if (decorations == null) {
 //             decorations = new HashMap<>();
 //         } // if (decorathions != null)
@@ -2390,11 +2390,11 @@ public class TrackSegment extends LayoutTrack {
 //             decorations.put("tunnel", String.join(";", tunnelValues));
 //         }   // if (tunnelSideLeft || tunnelSideRight)
 //        return decorations;
-    } 
+//    } 
 
     /** {@inheritDoc} */
-    @Override
-    public void setDecorations(Map<String, String> decorations) {
+//     @Override
+//     public void setDecorations(Map<String, String> decorations) {
 //         Color defaultTrackColor = layoutEditor.getDefaultTrackColorColor();
 //         super.setDecorations(decorations);
 //         if (decorations != null) {
@@ -2619,7 +2619,7 @@ public class TrackSegment extends LayoutTrack {
 //                 }
 //             }   // for (Map.Entry<String, String> entry : decorations.entrySet())
 //         } // if (decorathions != null)
-    }   // setDirections
+//    }   // setDirections
 
     /** 
      * Arrow decoration accessor.
@@ -2628,9 +2628,9 @@ public class TrackSegment extends LayoutTrack {
      * et al.
      * @return arrow style, 0 is none.
      */
-    public int getArrowStyle() {
-        return arrowStyle;
-    }
+   public int getArrowStyle() {
+       return arrowStyle;
+   }
 
     /** 
      * Set the arrow decoration.

@@ -1309,8 +1309,8 @@ abstract public class LayoutSlip extends LayoutTurnout {
     /**
      * {@inheritDoc}
      */
-    @Override
-    protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
+//     @Override
+//     protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
 //         if (((specificType == HitPointType.NONE) || (specificType == HitPointType.SLIP_A))
 //                 && (getConnectA() == null)) {
 //             g2.fill(trackControlCircleAt(getCoordsA()));
@@ -1330,7 +1330,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
 //                 && (getConnectD() == null)) {
 //             g2.fill(trackControlCircleAt(getCoordsD()));
 //         }
-    }
+//    }
 
     public static class TurnoutState {
 
