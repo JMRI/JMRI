@@ -1,14 +1,15 @@
 package jmri.jmrix;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assumptions.assumeThat;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.NamedBean;
-
 import jmri.util.startup.StartupActionFactory;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assumptions.assumeThat;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -37,7 +38,10 @@ abstract public class SystemConnectionMemoTestBase {
         assumeThat(scm.getActionModelResourceBundle()).as("provides ResourceBundle").isNotNull();
         StartupActionFactory f = scm.getActionFactory();
         assertThat(f).as("provides StartupActionFactory").isNotNull();
-        Arrays.stream(f.getActionClasses()).forEach(a -> assertThat(f.getTitle(a)).as("has title for %s", a).isNotNull());
+        Arrays.stream(f.getActionClasses()).forEach(a -> {
+            assertThat(f.getTitle(a)).as("has title for %s", a).isNotNull();
+            assertThatCode(() -> a.getDeclaredConstructor().newInstance()).doesNotThrowAnyException();
+        });
     }
 
     @Test
