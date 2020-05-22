@@ -19,10 +19,11 @@ import org.junit.Test;
  * Abstract base class for SystemConnectionMemo objects.
  *
  * @author Paul Bender Copyright (C) 2017
+ * @param <M> the supported memo class
  */
-abstract public class SystemConnectionMemoTestBase {
+abstract public class SystemConnectionMemoTestBase<M extends SystemConnectionMemo> {
 
-    protected SystemConnectionMemo scm = null;
+    protected M scm = null;
 
     public void getTest(Class t) {
         if (scm.provides(t)) {
