@@ -1,8 +1,5 @@
 package jmri.jmrix.swing;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import javax.swing.AbstractAction;
 import jmri.jmrix.SystemConnectionMemo;
 
