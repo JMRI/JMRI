@@ -28,13 +28,18 @@ public class PacketGenAction extends SRCPSystemConnectionAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        PacketGenFrame f = new PacketGenFrame(getSystemConnectionMemo());
-        try {
-            f.initComponents();
-        } catch (Exception ex) {
-            log.error("Exception: {}", ex.toString());
+        SRCPSystemConnectionMemo memo = getSystemConnectionMemo();
+        if (memo == null) {
+            log.error("No SRCP connection.");
+        } else {
+            PacketGenFrame f = new PacketGenFrame(memo);
+            try {
+                f.initComponents();
+            } catch (Exception ex) {
+                log.error("Unexpected exception", ex);
+            }
+            f.setVisible(true);
         }
-        f.setVisible(true);
     }
     private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class);
 }
