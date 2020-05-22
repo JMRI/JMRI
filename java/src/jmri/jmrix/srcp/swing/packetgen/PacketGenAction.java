@@ -1,8 +1,9 @@
 package jmri.jmrix.srcp.swing.packetgen;
 
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
+import jmri.InstanceManager;
 import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
+import jmri.jmrix.swing.AbstractSystemConnectionAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,22 +12,23 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
-public class PacketGenAction extends AbstractAction {
+public class PacketGenAction extends AbstractSystemConnectionAction<SRCPSystemConnectionMemo> {
 
-    private SRCPSystemConnectionMemo _memo = null;
-
-    public PacketGenAction(String s,SRCPSystemConnectionMemo memo) {
-        super(s);
-        _memo = memo;
+    public PacketGenAction(String s, SRCPSystemConnectionMemo memo) {
+        super(s, memo);
     }
 
     public PacketGenAction(SRCPSystemConnectionMemo memo) {
-        this(Bundle.getMessage("MenuItemSendSRCPCommand"),memo);
+        this(Bundle.getMessage("MenuItemSendSRCPCommand"), memo);
+    }
+
+    public PacketGenAction() {
+        this(InstanceManager.getDefault(SRCPSystemConnectionMemo.class));
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        PacketGenFrame f = new PacketGenFrame(_memo);
+        PacketGenFrame f = new PacketGenFrame(getSystemConnectionMemo());
         try {
             f.initComponents();
         } catch (Exception ex) {

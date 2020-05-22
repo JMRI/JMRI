@@ -15,12 +15,14 @@ import org.junit.Test;
  */
 public class SRCPBusConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
+    private SRCPSystemConnectionMemo memo;
+    private SRCPTrafficController tc;
 
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        scm = new SRCPBusConnectionMemo(new SRCPTrafficController() {
+        tc = new SRCPTrafficController() {
             @Override
             public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
             }
@@ -30,7 +32,9 @@ public class SRCPBusConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTe
             @Override
             public void receiveLoop(){
             }
-        }, "A", 1);
+        };
+        memo = new SRCPSystemConnectionMemo(tc);
+        scm = memo.getMemo(1);
     }
 
     @Override
@@ -42,7 +46,8 @@ public class SRCPBusConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTe
     @Override
     @After
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tc.terminateThreads();
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 }
