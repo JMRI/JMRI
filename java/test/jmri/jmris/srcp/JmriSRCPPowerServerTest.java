@@ -48,25 +48,17 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
     @Override
     @Test
     public void testPropertyChangeOnStatus() {
-        try {
-            Mockito.when(powerManager.getPower()).thenReturn(PowerManager.ON);
-            ps.propertyChange(new PropertyChangeEvent(powerManager, "Power", PowerManager.OFF, PowerManager.ON));
-            assertThat(sb.toString()).withFailMessage("status as a result of property change on").endsWith("100 INFO 0 POWER ON\n\r");
-        } catch (JmriException je) {
-            //false exception due to mocking
-        }
+        Mockito.when(powerManager.getPower()).thenReturn(PowerManager.ON);
+        ps.propertyChange(new PropertyChangeEvent(powerManager, "Power", PowerManager.OFF, PowerManager.ON));
+        assertThat(sb.toString()).withFailMessage("status as a result of property change on").endsWith("100 INFO 0 POWER ON\n\r");
     }
 
     @Override
     @Test
     public void testPropertyChangeOffStatus()  {
-        try {
-            Mockito.when(powerManager.getPower()).thenReturn(PowerManager.OFF);
-            ps.propertyChange(new PropertyChangeEvent(powerManager, "Power", PowerManager.ON, PowerManager.OFF));
-            assertThat(sb.toString()).withFailMessage("status as a result of property change off").endsWith("100 INFO 0 POWER OFF\n\r");
-        } catch (JmriException je) {
-            //false exception due to mocking
-        }
+        Mockito.when(powerManager.getPower()).thenReturn(PowerManager.OFF);
+        ps.propertyChange(new PropertyChangeEvent(powerManager, "Power", PowerManager.ON, PowerManager.OFF));
+        assertThat(sb.toString()).withFailMessage("status as a result of property change off").endsWith("100 INFO 0 POWER OFF\n\r");
     }
 
     /**

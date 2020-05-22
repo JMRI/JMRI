@@ -15,6 +15,7 @@ import jmri.*;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.*;
+import jmri.NamedBean.DisplayOptions;
 
 /**
  * MVC Editor component for PositionablePoint objects.
@@ -25,7 +26,8 @@ import jmri.util.*;
 public class LayoutTurntableEditor extends LayoutTrackEditor {
 
     /**
-     * constructor method
+     * constructor method.
+     * @param layoutEditor main layout editor.
      */
     public LayoutTurntableEditor(@Nonnull LayoutEditor layoutEditor) {
         super(layoutEditor);
@@ -40,7 +42,10 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
     private JmriJFrame editLayoutTurntableFrame = null;
     private final JTextField editLayoutTurntableRadiusTextField = new JTextField(8);
     private final JTextField editLayoutTurntableAngleTextField = new JTextField(8);
-
+    private final NamedBeanComboBox<Block> editLayoutTurntableBlockNameComboBox = new NamedBeanComboBox<>(
+             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
+    private JButton editLayoutTurntableSegmentEditBlockButton;
+     
     private JPanel editLayoutTurntableRayPanel;
     private JButton editLayoutTurntableAddRayTrackButton;
     private JCheckBox editLayoutTurntableDccControlledCheckBox;
@@ -100,6 +105,22 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             editLayoutTurntableAngleTextField.setToolTipText(Bundle.getMessage("RayAngleHint"));  // NOI18N
             headerPane.add(panel2);
 
+            // setup block name
+             JPanel panel2a = new JPanel();
+             panel2a.setLayout(new FlowLayout());
+             JLabel blockNameLabel = new JLabel(Bundle.getMessage("BlockID"));  // NOI18N
+             panel2a.add(blockNameLabel);
+             blockNameLabel.setLabelFor(editLayoutTurntableBlockNameComboBox);
+             LayoutEditor.setupComboBox(editLayoutTurntableBlockNameComboBox, false, true, true);
+             editLayoutTurntableBlockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
+             panel2a.add(editLayoutTurntableBlockNameComboBox);
+
+             // Edit Block
+             panel2a.add(editLayoutTurntableSegmentEditBlockButton = new JButton(Bundle.getMessage("EditBlock", "")));  // NOI18N
+             editLayoutTurntableSegmentEditBlockButton.addActionListener(this::editLayoutTurntableEditBlockPressed);
+             editLayoutTurntableSegmentEditBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
+             headerPane.add(panel2a);
+             
             // setup add ray track button
             JPanel panel3 = new JPanel();
             panel3.setLayout(new FlowLayout());
@@ -153,7 +174,35 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
         editLayoutTurntableOpen = true;
     }   // editLayoutTurntable
 
-    //Remove old rays and add them back in
+    @InvokeOnGuiThread
+    private void editLayoutTurntableEditBlockPressed(ActionEvent a) {
+         // check if a block name has been entered
+         String newName = editLayoutTurntableBlockNameComboBox.getSelectedItemDisplayName();
+         if (newName == null) {
+             newName = "";
+         }
+         if ((layoutTurntable.getBlockName().isEmpty())
+                 || !layoutTurntable.getBlockName().equals(newName)) {
+             // get new block, or null if block has been removed
+             layoutTurntable.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
+             editLayoutTurntableNeedsRedraw = true;
+             ///layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+             ///layoutTurntable.updateBlockInfo();
+         }
+         // check if a block exists to edit
+         LayoutBlock blockToEdit = layoutTurntable.getLayoutBlock();
+         if (blockToEdit == null) {
+             JOptionPane.showMessageDialog(editLayoutTurntableFrame,
+                     Bundle.getMessage("Error1"), // NOI18N
+                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
+             return;
+         }
+         blockToEdit.editLayoutBlock(editLayoutTurntableFrame);
+         layoutEditor.setDirty();
+         editLayoutTurntableNeedsRedraw = true;
+     }
+
+    // Remove old rays and add them back in
     private void updateRayPanel() {
         for (Component comp : editLayoutTurntableRayPanel.getComponents()) {
             editLayoutTurntableRayPanel.remove(comp);
@@ -161,12 +210,12 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
 
         // Create list of turnouts to be retained in the NamedBeanComboBox
         turntableTurnouts.clear();
-        for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayList()) {
+        for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayTrackList()) {
             turntableTurnouts.add(rt.getTurnout());
         }
 
         editLayoutTurntableRayPanel.setLayout(new BoxLayout(editLayoutTurntableRayPanel, BoxLayout.Y_AXIS));
-        for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayList()) {
+        for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayTrackList()) {
             editLayoutTurntableRayPanel.add(new TurntableRayPanel(rt));
         }
         editLayoutTurntableRayPanel.revalidate();
@@ -200,6 +249,20 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
     }
 
     private void editLayoutTurntableDonePressed(ActionEvent a) {
+        // check if Block changed
+        String newName = editLayoutTurntableBlockNameComboBox.getSelectedItemDisplayName();
+        if (newName == null) {
+            newName = "";
+        }
+
+        if ((layoutTurntable.getBlockName().isEmpty()) || !layoutTurntable.getBlockName().equals(newName)) {
+            // get new block, or null if block has been removed
+            layoutTurntable.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
+            editLayoutTurntableNeedsRedraw = true;
+            ///layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+            ///layoutTurntable.updateBlockInfo();
+        }
+
         // check if new radius was entered
         String str = editLayoutTurntableRadiusTextField.getText();
         if (!str.equals(editLayoutTurntableOldRadius)) {
@@ -257,7 +320,8 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
         private final DecimalFormat twoDForm = new DecimalFormat("#.00");
 
         /**
-         * constructor method
+         * constructor method.
+         * @param rayTrack the single ray track to edit.
          */
         public TurntableRayPanel(@Nonnull LayoutTurntable.RayTrack rayTrack) {
             this.rayTrack = rayTrack;

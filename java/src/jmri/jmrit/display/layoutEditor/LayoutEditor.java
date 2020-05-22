@@ -28,6 +28,7 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.*;
+import jmri.jmrit.display.EditorManager;
 import jmri.configurexml.StoreXmlUserAction;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.dispatcher.*;
@@ -61,7 +62,7 @@ import jmri.util.swing.*;
  * @author Dave Duchamp Copyright: (c) 2004-2007
  * @author George Warner Copyright: (c) 2017-2019
  */
-public class LayoutEditor extends PanelEditor implements MouseWheelListener {
+final public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
 
     // Operational instance variables - not saved to disk
@@ -95,31 +96,28 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private  TrackSegment newTrack = null;
     private  boolean panelChanged = false;
 
-    private  int gridSize1st = 10;    // grid size in pixels
-    private  int gridSize2nd = 10;    // secondary grid
-
     // size of point boxes
-    protected static final double SIZE = 3.0;
-    protected static final double SIZE2 = SIZE * 2.; // must be twice SIZE
+    public static final double SIZE = 3.0;
+    public static final double SIZE2 = SIZE * 2.; // must be twice SIZE
 
-    protected Color turnoutCircleColor = Color.black; // matches earlier versions
-    protected Color turnoutCircleThrownColor = Color.black;
-    protected boolean turnoutFillControlCircles = false;
-    protected int turnoutCircleSize = 4; // matches earlier versions
+    public Color turnoutCircleColor = Color.black; // matches earlier versions
+    public Color turnoutCircleThrownColor = Color.black;
+    private boolean turnoutFillControlCircles = false;
+    private int turnoutCircleSize = 4; // matches earlier versions
 
     // use turnoutCircleSize when you need an int and these when you need a double
     // note: these only change when setTurnoutCircleSize is called
     // using these avoids having to call getTurnoutCircleSize() and
     // the multiply (x2) and the int -> double conversion overhead
-    protected  double circleRadius = SIZE * getTurnoutCircleSize();
-    protected  double circleDiameter = 2.0 * circleRadius;
+    public  double circleRadius = SIZE * getTurnoutCircleSize();
+    public  double circleDiameter = 2.0 * circleRadius;
 
     // selection variables
-    protected  boolean selectionActive = false;
+    public  boolean selectionActive = false;
     private  double selectionX = 0.0;
     private  double selectionY = 0.0;
-    protected  double selectionWidth = 0.0;
-    protected  double selectionHeight = 0.0;
+    public  double selectionWidth = 0.0;
+    public  double selectionHeight = 0.0;
 
     // Option menu items
     private  JCheckBoxMenuItem editModeCheckBoxMenuItem = null;
@@ -182,19 +180,19 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     // Selected point information
     private final  Point2D startDelta = new Point2D.Double(0.0, 0.0); // starting delta coordinates
-    protected  Object selectedObject = null;       // selected object, null if nothing selected
-    protected  Object prevSelectedObject = null;   // previous selected object, for undo
+    public  Object selectedObject = null;       // selected object, null if nothing selected
+    public  Object prevSelectedObject = null;   // previous selected object, for undo
     private  HitPointType selectedHitPointType = HitPointType.NONE;         // hit point type within the selected object
 
-    protected  LayoutTrack foundTrack = null;      // found object, null if nothing found
-    protected  Point2D foundLocation = new Point2D.Double(0.0, 0.0); // location of found object
-    protected  HitPointType foundHitPointType = HitPointType.NONE;          // connection type within the found object
+    public  LayoutTrack foundTrack = null;      // found object, null if nothing found
+    private  Point2D foundLocation = new Point2D.Double(0.0, 0.0); // location of found object
+    public  HitPointType foundHitPointType = HitPointType.NONE;          // connection type within the found object
 
-    protected  LayoutTrack beginTrack = null;      // begin track segment connection object, null if none
-    protected  Point2D beginLocation = new Point2D.Double(0.0, 0.0); // location of begin object
-    protected  HitPointType beginHitPointType = HitPointType.NONE; // connection type within begin connection object
+    public  LayoutTrack beginTrack = null;      // begin track segment connection object, null if none
+    public  Point2D beginLocation = new Point2D.Double(0.0, 0.0); // location of begin object
+    private  HitPointType beginHitPointType = HitPointType.NONE; // connection type within begin connection object
 
-    protected  Point2D currentLocation = new Point2D.Double(0.0, 0.0); // current location
+    public  Point2D currentLocation = new Point2D.Double(0.0, 0.0); // current location
 
     // Lists of items that describe the Layout, and allow it to be drawn
     // Each of the items must be saved to disk over sessions
@@ -213,6 +211,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private  List<SignalHeadIcon> signalList = new ArrayList<>();                // Signal Head Icons
     private  List<SignalMastIcon> signalMastList = new ArrayList<>();            // Signal Mast Icons
 
+    public final LayoutEditorViewContext gContext = new LayoutEditorViewContext(); // public for now, as things work access changes
+    
     @Nonnull
     public List<SensorIcon> getSensorList() {
         return sensorList;
@@ -251,36 +251,21 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private  int numLayoutTurntables = 0;
     private  int numShapes = 0;
 
-    protected  LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
+    private  LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
 
     @Nonnull
     public LayoutEditorFindItems getFinder() {
         return finder;
     }
 
-    // persistent instance variables - saved to disk with Save Panel
-    private  int upperLeftX = 0; // Note: These are _WINDOW_ upper left x & y
-    private  int upperLeftY = 0; // (not panel)
-
-    private  int windowWidth = 0;
-    private  int windowHeight = 0;
-
-    protected  int panelWidth = 0;
-    protected  int panelHeight = 0;
-
-    protected  float mainlineTrackWidth = 4.0F;
-    protected  float sidelineTrackWidth = 2.0F;
-
-    protected  Color mainlineTrackColor = Color.DARK_GRAY;
-    protected  Color sidelineTrackColor = Color.DARK_GRAY;
-    protected  Color defaultTrackColor = Color.DARK_GRAY;
-    protected  Color defaultOccupiedTrackColor = Color.red;
-    protected  Color defaultAlternativeTrackColor = Color.white;
+    private  Color mainlineTrackColor = Color.DARK_GRAY;
+    private  Color sidelineTrackColor = Color.DARK_GRAY;
+    public  Color defaultTrackColor = Color.DARK_GRAY;
+    private  Color defaultOccupiedTrackColor = Color.red;
+    private  Color defaultAlternativeTrackColor = Color.white;
     private  Color defaultTextColor = Color.black;
 
     private  String layoutName = "";
-    private  double xScale = 1.0;
-    private  double yScale = 1.0;
     private  boolean animatingLayout = true;
     private  boolean showHelpBar = true;
     private  boolean drawGrid = true;
@@ -289,10 +274,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private  boolean snapToGridOnMove = false;
     private  boolean snapToGridInvert = false;
 
-    protected  boolean antialiasingOn = false;
-    protected  boolean highlightSelectedBlockFlag = false;
+    public  boolean antialiasingOn = false;
+    public  boolean highlightSelectedBlockFlag = false;
 
-    protected  boolean turnoutCirclesWithoutEditMode = false;
+    public  boolean turnoutCirclesWithoutEditMode = false;
     private  boolean tooltipsWithoutEditMode = false;
     private  boolean tooltipsInEditMode = true;
 
@@ -317,9 +302,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private final  double maxZoom = 8.0;
 
     // A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
-    protected  HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
+    private  HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
 
-    protected enum ToolBarSide {
+    private enum ToolBarSide {
         eTOP("top"),
         eLEFT("left"),
         eBOTTOM("bottom"),
@@ -404,25 +389,21 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         // set to full screen
         Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
-        windowWidth = screenDim.width - 20;
-        windowHeight = screenDim.height - 120;
+        gContext.setWindowWidth(screenDim.width - 20);
+        gContext.setWindowHeight(screenDim.height - 120);
 
         // Let Editor make target, and use this frame
         super.setTargetPanel(null, null);
-        super.setTargetPanelSize(windowWidth, windowHeight);
+        super.setTargetPanelSize(gContext.getWindowWidth(), gContext.getWindowHeight());
         setSize(screenDim.width, screenDim.height);
 
         // register the resulting panel for later configuration
-        ConfigureManager cm = InstanceManager.getNullableDefault(ConfigureManager.class
-        );
-        if (cm != null) {
-            cm.registerUser(this);
-        }
+        InstanceManager.getOptionalDefault(ConfigureManager.class)
+                .ifPresent(cm -> cm.registerUser(this));
 
         // confirm that panel hasn't already been loaded
-        if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
-            log.warn(
-                    "File contains a panel with the same name ({}) as an existing panel", name);
+        if (!this.equals(InstanceManager.getDefault(EditorManager.class).get(name))) {
+            log.warn("File contains a panel with the same name ({}) as an existing panel", name);
         }
         setFocusable(true);
         addKeyListener(this);
@@ -680,7 +661,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     @Override
-    protected void init(String name) {
+    public void init(String name) {
     }
 
     @Override
@@ -708,7 +689,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     @Override
-    protected void targetWindowClosingEvent(WindowEvent e) {
+    public void targetWindowClosingEvent(WindowEvent e) {
         boolean save = (isDirty() || (savedEditMode != isEditable())
                 || (savedPositionable != allPositionable())
                 || (savedControlLayout != allControlling())
@@ -778,7 +759,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param menuBar to add the option menu to
      * @return option menu that was added
      */
-    protected JMenu setupOptionMenu(@Nonnull JMenuBar menuBar) {
+    private JMenu setupOptionMenu(@Nonnull JMenuBar menuBar) {
         JMenu optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
 
         optionMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("OptionsMnemonic")));
@@ -1028,7 +1009,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             if (newName != null) {
                 if (!newName.equals(getLayoutName())) {
-                    if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(newName)) {
+                    if (InstanceManager.getDefault(EditorManager.class).contains(newName)) {
                         JOptionPane.showMessageDialog(
                                 null, Bundle.getMessage("CanNotRename"), Bundle.getMessage("PanelExist"),
                                 JOptionPane.ERROR_MESSAGE);
@@ -1036,7 +1017,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         setTitle(newName);
                         setLayoutName(newName);
                         getLayoutTrackDrawingOptions().setName(newName);
-                        InstanceManager.getDefault(PanelMenu.class).renameEditorPanel(LayoutEditor.this);
                         setDirty();
 
                         if (toolBarSide.equals(ToolBarSide.eFLOAT) && isEditable()) {
@@ -1091,7 +1071,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             optionMenu.add(locationItem);
             locationItem.addActionListener((ActionEvent event) -> {
                 setCurrentPositionAndSize();
-                log.debug("Bounds:{}, {}, {}, {}, {}, {}", upperLeftX, upperLeftY, windowWidth, windowHeight, panelWidth, panelHeight);
+                log.debug("Bounds:{}, {}, {}, {}, {}, {}", gContext.getUpperLeftX(), gContext.getUpperLeftY(), gContext.getWindowWidth(), gContext.getWindowHeight(), gContext.getLayoutWidth(), gContext.getLayoutHeight());
             });
         }
 
@@ -1398,10 +1378,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (layoutTrackDrawingOptions == null) {
             layoutTrackDrawingOptions = new LayoutTrackDrawingOptions(getLayoutName());
             // integrate LayoutEditor drawing options with previous drawing options
-            layoutTrackDrawingOptions.setMainBlockLineWidth((int) mainlineTrackWidth);
-            layoutTrackDrawingOptions.setSideBlockLineWidth((int) sidelineTrackWidth);
-            layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
-            layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
+            layoutTrackDrawingOptions.setMainBlockLineWidth(gContext.getMainlineTrackWidth());
+            layoutTrackDrawingOptions.setSideBlockLineWidth(gContext.getSidelineTrackWidth());
+            layoutTrackDrawingOptions.setMainRailWidth(gContext.getMainlineTrackWidth());
+            layoutTrackDrawingOptions.setSideRailWidth(gContext.getSidelineTrackWidth());
             layoutTrackDrawingOptions.setMainRailColor(mainlineTrackColor);
             layoutTrackDrawingOptions.setSideRailColor(sidelineTrackColor);
             layoutTrackDrawingOptions.setBlockDefaultColor(defaultTrackColor);
@@ -1421,8 +1401,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         layoutTrackDrawingOptions = ltdo;
 
         // integrate LayoutEditor drawing options with previous drawing options
-        mainlineTrackWidth = layoutTrackDrawingOptions.getMainBlockLineWidth();
-        sidelineTrackWidth = layoutTrackDrawingOptions.getSideBlockLineWidth();
+        gContext.setMainlineTrackWidth( layoutTrackDrawingOptions.getMainBlockLineWidth() );
+        gContext.setSidelineTrackWidth( layoutTrackDrawingOptions.getSideBlockLineWidth() );
         mainlineTrackColor = layoutTrackDrawingOptions.getMainRailColor();
         sidelineTrackColor = layoutTrackDrawingOptions.getSideRailColor();
         redrawPanel();
@@ -1436,7 +1416,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      *
      * @param menuBar the menu bar to add the Tools menu to
      */
-    protected void setupToolsMenu(@Nonnull JMenuBar menuBar) {
+    private void setupToolsMenu(@Nonnull JMenuBar menuBar) {
         JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
 
         toolsMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuToolsMnemonic")));
@@ -1812,8 +1792,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 JScrollBar vsb = scrollPane.getVerticalScrollBar();
 
                 // Increase scroll bar unit increments!!!
-                vsb.setUnitIncrement(gridSize1st);
-                hsb.setUnitIncrement(gridSize1st);
+                vsb.setUnitIncrement(gContext.getGridSize());
+                hsb.setUnitIncrement(gContext.getGridSize());
 
                 // add scroll bar adjustment listeners
                 vsb.addAdjustmentListener(this::scrollBarAdjusted);
@@ -1889,9 +1869,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         double ratioY = (oldMaxY < 1) ? 0 : oldY / oldMaxY;
 
         // calculate the new X maximum and value
-        int panelHeight = (int) (targetPanelSize.getHeight());
-        int scrollHeight = (int) scrollBounds.getHeight();
-        int newMaxY = Math.max(panelHeight - scrollHeight, 0);
+        int tempPanelHeight = (int) (targetPanelSize.getHeight());
+        int tempScrollHeight = (int) scrollBounds.getHeight();
+        int newMaxY = Math.max(tempPanelHeight - tempScrollHeight, 0);
         int newY = (int) (newMaxY * ratioY);
         vertScroll.setMaximum(newMaxY);
         vertScroll.setValue(newY);
@@ -2166,7 +2146,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         // put a grid size margin around it
-        result = MathUtil.inset(result, gridSize1st * gridSize2nd / -2.0);
+        result = MathUtil.inset(result, gContext.getGridSize() * gContext.getGridSize2nd() / -2.0);
 
         return result;
     }
@@ -2319,7 +2299,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Remove marker icons from panel
      */
     @Override
-    protected void removeMarkers() {
+    public void removeMarkers() {
         for (int i = markerImage.size(); i > 0; i--) {
             LocoIcon il = markerImage.get(i - 1);
 
@@ -2337,7 +2317,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Assign the block from the toolbar to all selected layout tracks
      */
-    protected void assignBlockToSelection() {
+    private void assignBlockToSelection() {
         String newName = leToolBarPanel.blockIDComboBox.getSelectedItemDisplayName();
         if (newName == null) {
             newName = "";
@@ -2354,17 +2334,18 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * scale all LayoutTracks coordinates by the x and y factors
+     * scale all LayoutTracks coordinates by the x and y factors.
      *
-     * @param xFactor the amount to scale X coordinates
-     * @param yFactor the amount to scale Y coordinates
+     * @param xFactor the amount to scale X coordinates.
+     * @param yFactor the amount to scale Y coordinates.
+     * @return true when complete.
      */
     public boolean scaleTrack(float xFactor, float yFactor) {
         getLayoutTracks().forEach((lt) -> lt.scaleCoords(xFactor, yFactor));
 
         // update the overall scale factors
-        xScale *= xFactor;
-        yScale *= yFactor;
+        gContext.setXScale(gContext.getXScale() * xFactor);
+        gContext.setYScale(gContext.getYScale() * yFactor);
 
         resizePanelBounds(true);
         return true;
@@ -2597,23 +2578,23 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private void alignToGrid(List<Positionable> positionables, List<LayoutTrack> tracks, List<LayoutShape> shapes) {
         for (Positionable positionable : positionables) {
-            Point2D newLocation = MathUtil.granulize(positionable.getLocation(), gridSize1st);
+            Point2D newLocation = MathUtil.granulize(positionable.getLocation(), gContext.getGridSize());
             positionable.setLocation((int) (newLocation.getX()), (int) newLocation.getY());
         }
         for (LayoutTrack lt : tracks) {
-            lt.setCoordsCenter(MathUtil.granulize(lt.getCoordsCenter(), gridSize1st));
+            lt.setCoordsCenter(MathUtil.granulize(lt.getCoordsCenter(), gContext.getGridSize()));
             if (lt instanceof LayoutTurntable) {
                 LayoutTurntable tt = (LayoutTurntable) lt;
-                for (LayoutTurntable.RayTrack rt : tt.getRayList()) {
+                for (LayoutTurntable.RayTrack rt : tt.getRayTrackList()) {
                     int rayIndex = rt.getConnectionIndex();
-                    tt.setRayCoordsIndexed(MathUtil.granulize(tt.getRayCoordsIndexed(rayIndex), gridSize1st), rayIndex);
+                    tt.setRayCoordsIndexed(MathUtil.granulize(tt.getRayCoordsIndexed(rayIndex), gContext.getGridSize()), rayIndex);
                 }
             }
         }
         for (LayoutShape ls : shapes) {
-            ls.setCoordsCenter(MathUtil.granulize(ls.getCoordsCenter(), gridSize1st));
+            ls.setCoordsCenter(MathUtil.granulize(ls.getCoordsCenter(), gContext.getGridSize()));
             for (int idx = 0; idx < ls.getNumberPoints(); idx++) {
-                ls.setPoint(idx, MathUtil.granulize(ls.getPoint(idx), gridSize1st));
+                ls.setPoint(idx, MathUtil.granulize(ls.getPoint(idx), gContext.getGridSize()));
             }
         }
 
@@ -2627,20 +2608,20 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         Dimension dim = getSize();
 
         // Compute window size based on LayoutEditor size
-        windowHeight = dim.height;
-        windowWidth = dim.width;
+        gContext.setWindowHeight(dim.height);
+        gContext.setWindowWidth(dim.width);
 
         // Compute layout size based on LayoutPane size
         dim = getTargetPanelSize();
-        panelWidth = (int) (dim.width / getZoom());
-        panelHeight = (int) (dim.height / getZoom());
+        gContext.setLayoutWidth( (int) (dim.width / getZoom()) );
+        gContext.setLayoutHeight( (int) (dim.height / getZoom()) );
         adjustScrollBars();
 
         Point pt = getLocationOnScreen();
-        upperLeftX = pt.x;
-        upperLeftY = pt.y;
+        gContext.setUpperLeftY(pt.x);
+        gContext.setUpperLeftY(pt.y);
 
-        log.debug("setCurrentPositionAndSize Position - {},{} WindowSize - {},{} PanelSize - {},{}", upperLeftX, upperLeftY, windowWidth, windowHeight, panelWidth, panelHeight);
+        log.debug("setCurrentPositionAndSize Position - {},{} WindowSize - {},{} PanelSize - {},{}", gContext.getUpperLeftX(), gContext.getUpperLeftY(), gContext.getWindowWidth(), gContext.getWindowHeight(), gContext.getLayoutWidth(), gContext.getLayoutHeight());
         setDirty();
     }
 
@@ -2680,7 +2661,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 getTurnoutCircleSize() == inSize, a);
     }
 
-    protected void setOptionMenuTurnoutCircleSize() {
+    private void setOptionMenuTurnoutCircleSize() {
         String tcs = Integer.toString(getTurnoutCircleSize());
         Enumeration<AbstractButton> e = turnoutCircleSizeButtonGroup.getElements();
         while (e.hasMoreElements()) {
@@ -3270,7 +3251,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
                 if (snapToGridOnAdd != snapToGridInvert) {
                     // this snaps the current point to the grid
-                    currentPoint = MathUtil.granulize(currentPoint, gridSize1st);
+                    currentPoint = MathUtil.granulize(currentPoint, gContext.getGridSize());
                     xLoc = (int) currentPoint.getX();
                     yLoc = (int) currentPoint.getY();
                     leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
@@ -3580,7 +3561,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Select the menu items to display for the Positionable's popup.
      */
     @Override
-    protected void showPopUp(@Nonnull Positionable p, @Nonnull MouseEvent event) {
+    public void showPopUp(@Nonnull Positionable p, @Nonnull MouseEvent event) {
         if (!((Component) p).isVisible()) {
             return; // component must be showing on the screen to determine its location
         }
@@ -4079,11 +4060,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         be.setCoordsCenter(offset);
     }
 
-    protected  List<Positionable> _positionableSelection = new ArrayList<>();
-    protected  List<LayoutTrack> _layoutTrackSelection = new ArrayList<>();
-    protected  List<LayoutShape> _layoutShapeSelection = new ArrayList<>();
+    public  List<Positionable> _positionableSelection = new ArrayList<>();
+    public  List<LayoutTrack> _layoutTrackSelection = new ArrayList<>();
+    public  List<LayoutShape> _layoutShapeSelection = new ArrayList<>();
 
-    protected void createSelectionGroups() {
+    private void createSelectionGroups() {
         Rectangle2D selectionRect = getSelectionRect();
 
         getContents().forEach((o) -> {
@@ -4190,7 +4171,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         redrawPanel();
     }
 
-    protected void amendSelectionGroup(@Nonnull LayoutTrack p) {
+    public void amendSelectionGroup(@Nonnull LayoutTrack p) {
         if (_layoutTrackSelection.contains(p)) {
             _layoutTrackSelection.remove(p);
         } else {
@@ -4200,7 +4181,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         redrawPanel();
     }
 
-    protected void amendSelectionGroup(@Nonnull LayoutShape ls) {
+    public void amendSelectionGroup(@Nonnull LayoutShape ls) {
         if (_layoutShapeSelection.contains(ls)) {
             _layoutShapeSelection.remove(ls);
         } else {
@@ -4277,7 +4258,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         redrawPanel();
     }
 
-    protected boolean showAlignPopup() {
+    private boolean showAlignPopup() {
         return ((_positionableSelection.size() > 0)
                 || (_layoutTrackSelection.size() > 0)
                 || (_layoutShapeSelection.size() > 0));
@@ -4482,7 +4463,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             if ((selectedObject != null) && isMetaDown(event) && allPositionable()) {
                 if (snapToGridOnMove != snapToGridInvert) {
                     // this snaps currentPoint to the grid
-                    currentPoint = MathUtil.granulize(currentPoint, gridSize1st);
+                    currentPoint = MathUtil.granulize(currentPoint, gContext.getGridSize());
                     xLoc = (int) currentPoint.getX();
                     yLoc = (int) currentPoint.getY();
                     leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
@@ -4706,7 +4687,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     @Nonnull
-    protected PositionablePoint addAnchor(@Nonnull Point2D p) {
+    public PositionablePoint addAnchor(@Nonnull Point2D p) {
         // get unique name
         String name = finder.uniqueName("A", ++numAnchors);
 
@@ -4978,22 +4959,22 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         switch(type) {
 
             case RH_TURNOUT :
-                o = new LayoutRHTurnout(name, currentPoint, rot, xScale, yScale, this);
+                o = new LayoutRHTurnout(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
             case LH_TURNOUT :
-                o = new LayoutLHTurnout(name, currentPoint, rot, xScale, yScale, this);
+                o = new LayoutLHTurnout(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
             case WYE_TURNOUT :
-                o = new LayoutWye(name, currentPoint, rot, xScale, yScale, this);
+                o = new LayoutWye(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
             case DOUBLE_XOVER :
-                o = new LayoutDoubleXOver(name, currentPoint, rot, xScale, yScale, this);
+                o = new LayoutDoubleXOver(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
             case RH_XOVER :
-                o = new LayoutRHXOver(name, currentPoint, rot, xScale, yScale, this);
+                o = new LayoutRHXOver(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
             case LH_XOVER :
-                o = new LayoutLHXOver(name, currentPoint, rot, xScale, yScale, this);
+                o = new LayoutLHXOver(name, currentPoint, rot, gContext.getXScale(), gContext.getYScale(), this);
                 break;
 
             case DOUBLE_SLIP :
@@ -5159,7 +5140,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (result) {   // only need to test Turntable turnouts if we haven't failed yet...
             // ensure that this turntable turnout is unique among turnouts in this Layout
             for (LayoutTurntable tt : getLayoutTurntables()) {
-                for (LayoutTurntable.RayTrack ray : tt.getRayList()) {
+                for (LayoutTurntable.RayTrack ray : tt.getRayTrackList()) {
                     t = ray.getTurnout();
                     if (t != null) {
                         String sname = t.getSystemName();
@@ -5191,11 +5172,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param toObject      the object to link to
      * @param toPointType   the object type to link to
      */
-    protected void setLink(@Nonnull LayoutTrack fromObject, HitPointType fromPointType,
+    public void setLink(@Nonnull LayoutTrack fromObject, HitPointType fromPointType,
             @Nonnull LayoutTrack toObject, HitPointType toPointType) {
         switch (fromPointType) {
             case POS_POINT: {
-                if (toPointType == HitPointType.TRACK) {
+                if ( (toPointType == HitPointType.TRACK) && (fromObject instanceof PositionablePoint) ) {
                     ((PositionablePoint) fromObject).setTrackConnection((TrackSegment) toObject);
                 } else {
                     log.error("Attempt to link a non-TRACK connection ('{}')to a Positionable Point ('{}')",
@@ -5231,9 +5212,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
 
             default: {
-                if (HitPointType.isTurntableRayHitType(fromPointType)) {
-                    ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
-                            fromPointType.turntableTrackIndex() );
+                if (HitPointType.isTurntableRayHitType(fromPointType)  && (fromObject instanceof LayoutTurntable)) {
+                    if (toObject instanceof TrackSegment) {
+                        ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
+                                fromPointType.turntableTrackIndex() );
+                    } else {
+                        log.warn("setLink found expected toObject type {} with fromPointType {} fromObject type {}", 
+                                    toObject.getClass(), fromPointType, fromObject.getClass(), new Exception("traceback") );
+                    }
+                } else {
+                    log.warn("setLink found expected fromObject type {} with fromPointType {} toObject type {}", 
+                                fromObject.getClass(), fromPointType, toObject.getClass(), new Exception("traceback") );                    
                 }
                 break;
             }
@@ -5385,7 +5374,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param s the object to remove
      * @return true if found
      */
-    protected boolean remove(@Nonnull Object s) {
+    private boolean remove(@Nonnull Object s) {
         boolean found = false;
 
         if (backgroundImage.contains(s)) {
@@ -5619,7 +5608,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param o the PositionablePoint to remove
      * @return true if removed
      */
-    protected boolean removePositionablePoint(@Nonnull PositionablePoint o) {
+    public boolean removePositionablePoint(@Nonnull PositionablePoint o) {
         // First verify with the user that this is really wanted, only show message if there is a bit of track connected
         if ((o.getConnect1() != null) || (o.getConnect2() != null)) {
             if (!noWarnPositionablePoint) {
@@ -5678,7 +5667,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param o the LayoutTurnout to remove
      * @return true if removed
      */
-    protected boolean removeLayoutTurnout(@Nonnull LayoutTurnout o) {
+    public boolean removeLayoutTurnout(@Nonnull LayoutTurnout o) {
         // First verify with the user that this is really wanted
         if (!noWarnLayoutTurnout) {
             int selectedValue = JOptionPane.showOptionDialog(this,
@@ -5784,7 +5773,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param o the LevelXing to remove
      * @return true if removed
      */
-    protected boolean removeLevelXing(@Nonnull LevelXing o) {
+    public boolean removeLevelXing(@Nonnull LevelXing o) {
         // First verify with the user that this is really wanted
         if (!noWarnLevelXing) {
             int selectedValue = JOptionPane.showOptionDialog(this,
@@ -5862,7 +5851,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param o the LayoutSlip to remove
      * @return true if removed
      */
-    protected boolean removeLayoutSlip(@Nonnull LayoutTurnout o) {
+    public boolean removeLayoutSlip(@Nonnull LayoutTurnout o) {
         if (!(o instanceof LayoutSlip)) {
             return false;
         }
@@ -5938,7 +5927,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param o the LayoutTurntable to remove
      * @return true if removed
      */
-    protected boolean removeTurntable(@Nonnull LayoutTurntable o) {
+    public boolean removeTurntable(@Nonnull LayoutTurntable o) {
         // First verify with the user that this is really wanted
         if (!noWarnTurntable) {
             int selectedValue = JOptionPane.showOptionDialog(this,
@@ -5987,7 +5976,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      *
      * @param o the TrackSegment to remove
      */
-    protected void removeTrackSegment(@Nonnull TrackSegment o) {
+    public void removeTrackSegment(@Nonnull TrackSegment o) {
         // save affected blocks
         LayoutBlock block1 = null;
         LayoutBlock block2 = null;
@@ -6462,7 +6451,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Add a Reporter Icon to the panel
+     * Add a Reporter Icon to the panel.
+     * @param reporter the reporter icon to add.
+     * @param xx the horizontal location.
+     * @param yy the vertical location.
      */
     public void addReporter(@Nonnull Reporter reporter, int xx, int yy) {
         ReporterIcon l = new ReporterIcon(this);
@@ -6556,17 +6548,21 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         setDirty();
     }
 
-    /**
-     * Remove a background image from the list of background images
-     *
-     * @param b PositionableLabel to remove
-     */
-    protected void removeBackground(@Nonnull PositionableLabel b) {
-        if (backgroundImage.contains(b)) {
-            backgroundImage.remove(b);
-            setDirty();
-        }
-    }
+    // there is no way to call this; could that
+    //    private boolean remove(@Nonnull Object s)
+    // is being used instead.
+    //
+    ///**
+    // * Remove a background image from the list of background images
+    // *
+    // * @param b PositionableLabel to remove
+    // */
+    //private void removeBackground(@Nonnull PositionableLabel b) {
+    //    if (backgroundImage.contains(b)) {
+    //        backgroundImage.remove(b);
+    //        setDirty();
+    //    }
+    //}
 
     /**
      * add a layout shape to the list of layout shapes
@@ -6575,7 +6571,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @return the LayoutShape
      */
     @Nonnull
-    protected LayoutShape addLayoutShape(@Nonnull Point2D p) {
+    private LayoutShape addLayoutShape(@Nonnull Point2D p) {
         // get unique name
         String name = finder.uniqueName("S", ++numShapes);
 
@@ -6593,7 +6589,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param s the LayoutShape to add
      * @return true if added
      */
-    protected boolean removeLayoutShape(@Nonnull LayoutShape s) {
+    public boolean removeLayoutShape(@Nonnull LayoutShape s) {
         boolean result = false;
         if (layoutShapes.contains(s)) {
             layoutShapes.remove(s);
@@ -6635,9 +6631,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Set object location and size for icon and label object as it is created.
      * Size comes from the preferredSize; location comes from the fields where
      * the user can spec it.
+     * @param obj the positionable object.
      */
     @Override
-    protected void setNextLocation(@Nonnull Positionable obj) {
+    public void setNextLocation(@Nonnull Positionable obj) {
         obj.setLocation(xLoc, yLoc);
     }
 
@@ -6781,69 +6778,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return animatingLayout;
     }
 
-    public int getLayoutWidth() {
-        return panelWidth;
-    }
-
-    public int getLayoutHeight() {
-        return panelHeight;
-    }
-
-    public int getWindowWidth() {
-        return windowWidth;
-    }
-
-    public int getWindowHeight() {
-        return windowHeight;
-    }
-
-    public int getUpperLeftX() {
-        return upperLeftX;
-    }
-
-    public int getUpperLeftY() {
-        return upperLeftY;
-    }
-
     public boolean getScroll() {
         // deprecated but kept to allow opening files
         // on version 2.5.1 and earlier
         return _scrollState != Editor.SCROLL_NONE;
     }
 
-    public int setGridSize(int newSize) {
-        gridSize1st = newSize;
-        return gridSize1st;
-    }
-
-    public int getGridSize() {
-        return gridSize1st;
-    }
-
-    public int setGridSize2nd(int newSize) {
-        gridSize2nd = newSize;
-        return gridSize2nd;
-    }
-
-    public int getGridSize2nd() {
-        return gridSize2nd;
-    }
-
-    public int getMainlineTrackWidth() {
-        return (int) mainlineTrackWidth;
-    }
-
-    public int getSidelineTrackWidth() {
-        return (int) sidelineTrackWidth;
-    }
-
-    public double getXScale() {
-        return xScale;
-    }
-
-    public double getYScale() {
-        return yScale;
-    }
 
 //    public Color getDefaultBackgroundColor() {
 //        return defaultBackgroundColor;
@@ -6987,12 +6927,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     public void setLayoutDimensions(int windowWidth, int windowHeight, int windowX, int windowY, int panelWidth, int panelHeight, boolean merge) {
 
-        upperLeftX = windowX;
-        upperLeftY = windowY;
-        setLocation(upperLeftX, upperLeftY);
+        gContext.setUpperLeftX(windowX);
+        gContext.setUpperLeftY(windowY);
+        setLocation(gContext.getUpperLeftX(), gContext.getUpperLeftY());
 
-        this.windowWidth = windowWidth;
-        this.windowHeight = windowHeight;
+        gContext.setWindowWidth(windowWidth);
+        gContext.setWindowHeight(windowHeight);
         setSize(windowWidth, windowHeight);
 
         Rectangle2D panelBounds = new Rectangle2D.Double(0.0, 0.0, panelWidth, panelHeight);
@@ -7005,7 +6945,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     @Nonnull
     public Rectangle2D getPanelBounds() {
-        return new Rectangle2D.Double(0.0, 0.0, panelWidth, panelHeight);
+        return new Rectangle2D.Double(0.0, 0.0, gContext.getLayoutWidth(), gContext.getLayoutHeight());
     }
 
     public void setPanelBounds(@Nonnull Rectangle2D newBounds) {
@@ -7013,16 +6953,16 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         newBounds = newBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
         if (!getPanelBounds().equals(newBounds)) {
-            panelWidth = (int) newBounds.getWidth();
-            panelHeight = (int) newBounds.getHeight();
+            gContext.setLayoutWidth((int) newBounds.getWidth());
+            gContext.setLayoutHeight( (int) newBounds.getHeight());
             resetTargetSize();
         }
         log.debug("setPanelBounds(({})", newBounds);
     }
 
     private void resetTargetSize() {
-        int newTargetWidth = (int) (panelWidth * getZoom());
-        int newTargetHeight = (int) (panelHeight * getZoom());
+        int newTargetWidth = (int) (gContext.getLayoutWidth() * getZoom());
+        int newTargetHeight = (int) (gContext.getLayoutHeight() * getZoom());
 
         Dimension targetPanelSize = getTargetPanelSize();
         int oldTargetWidth = (int) targetPanelSize.getWidth();
@@ -7040,7 +6980,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         Rectangle2D result = getPanelBounds();
 
         // make room to expand
-        Rectangle2D b = MathUtil.inset(bounds, gridSize1st * gridSize2nd / -2.0);
+        Rectangle2D b = MathUtil.inset(bounds, gContext.getGridSize() * gContext.getGridSize2nd() / -2.0);
 
         // don't let origin go negative
         b = b.createIntersection(MathUtil.zeroToInfinityRectangle2D);
@@ -7049,14 +6989,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         setPanelBounds(result);
         return result;
-    }
-
-    public void setMainlineTrackWidth(int w) {
-        mainlineTrackWidth = w;
-    }
-
-    public void setSidelineTrackWidth(int w) {
-        sidelineTrackWidth = w;
     }
 
     /**
@@ -7108,7 +7040,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Should only be invoked on the GUI (Swing) thread
+     * Should only be invoked on the GUI (Swing) thread.
+     * @param state true to fill in turnout control circles, else false.
      */
     @InvokeOnGuiThread
     public void setTurnoutFillControlCircles(boolean state) {
@@ -7130,7 +7063,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Should only be invoked on the GUI (Swing) thread
+     * Should only be invoked on the GUI (Swing) thread.
+     * @param state true to draw unselected legs, else false.
      */
     @InvokeOnGuiThread
     public void setTurnoutDrawUnselectedLeg(boolean state) {
@@ -7156,20 +7090,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JmriColorChooser.addRecentColor(color);
     }
 
-    public void setXScale(double xSc) {
-        xScale = xSc;
-    }
-
-    public void setYScale(double ySc) {
-        yScale = ySc;
-    }
-
     public void setLayoutName(@Nonnull String name) {
         layoutName = name;
     }
-
+    
     /**
-     * Should only be invoked on the GUI (Swing) thread
+     * Should only be invoked on the GUI (Swing) thread.
+     * @param state true to show the help bar, else false.
      */
     @InvokeOnGuiThread  // due to the setSelected call on a possibly-visible item
     public void setShowHelpBar(boolean state) {
@@ -7196,7 +7123,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Should only be invoked on the GUI (Swing) thread
+     * Should only be invoked on the GUI (Swing) thread.
+     * @param state true to show the draw grid, else false.
      */
     @InvokeOnGuiThread
     public void setDrawGrid(boolean state) {
@@ -7207,7 +7135,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Should only be invoked on the GUI (Swing) thread
+     * Should only be invoked on the GUI (Swing) thread.
+     * @param state true to set snap to grid on add, else false.
      */
     @InvokeOnGuiThread
     public void setSnapOnAdd(boolean state) {
@@ -7218,7 +7147,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Should only be invoked on the GUI (Swing) thread
+     * Should only be invoked on the GUI (Swing) thread.
+     * @param state true to set snap on move, else false.
      */
     @InvokeOnGuiThread
     public void setSnapOnMove(boolean state) {
@@ -7229,7 +7159,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Should only be invoked on the GUI (Swing) thread
+     * Should only be invoked on the GUI (Swing) thread.
+     * @param state true to set anti-aliasing flag on, else false.
      */
     @InvokeOnGuiThread
     public void setAntialiasingOn(boolean state) {
@@ -7278,7 +7209,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //
     // highlight the block selected by the specified combo Box
     //
-    protected boolean highlightBlockInComboBox(@Nonnull NamedBeanComboBox<Block> inComboBox) {
+    public boolean highlightBlockInComboBox(@Nonnull NamedBeanComboBox<Block> inComboBox) {
         return highlightBlock(inComboBox.getSelectedItem());
     }
 
@@ -7416,7 +7347,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     // reset turnout sizes to program defaults
-    protected void resetTurnoutSize() {
+    private void resetTurnoutSize() {
         turnoutBX = LayoutTurnout.turnoutBXDefault;
         turnoutCX = LayoutTurnout.turnoutCXDefault;
         turnoutWid = LayoutTurnout.turnoutWidDefault;
@@ -7468,7 +7399,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * is the 'target' pane where the layout is displayed
      */
     @Override
-    protected void paintTargetPanel(@Nonnull Graphics g) {
+    public void paintTargetPanel(@Nonnull Graphics g) {
         // Nothing to do here
         // All drawing has been moved into LayoutEditorComponent
         // which calls draw.
@@ -7477,8 +7408,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     // get selection rectangle
-    protected @Nonnull
-    Rectangle2D getSelectionRect() {
+    @Nonnull
+    public Rectangle2D getSelectionRect() {
         double selX = Math.min(selectionX, selectionX + selectionWidth);
         double selY = Math.min(selectionY, selectionY + selectionHeight);
         return new Rectangle2D.Double(selX, selY,
@@ -7519,7 +7450,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         // redrawPanel(); // createSelectionGroups already calls this
     }
 
-    protected void setSelectRect(Rectangle rectangle) {
+    public void setSelectRect(Rectangle rectangle) {
         _selectRect = rectangle;
     }
 
@@ -7609,10 +7540,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Read-only access to the list of 
-     * LayoutTrack family objects. The returned
-     * list will throw UnsupportedOperationException
+     * Read-only access to the list of LayoutTrack family objects.
+     * The returned list will throw UnsupportedOperationException
      * if you attempt to modify it.
+     * @return unmodifiable copy of layout track list.
      */
     @Nonnull
     final public List<LayoutTrack> getLayoutTracks() {
@@ -7620,10 +7551,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Read-only access to the list of 
-     * LayoutTrackView family objects. The returned
-     * list will throw UnsupportedOperationException
+     * Read-only access to the list of LayoutTrackView family objects.
+     * The returned list will throw UnsupportedOperationException
      * if you attempt to modify it.
+     * @return unmodifiable copy of track views.
      */
     @Nonnull
     final public List<LayoutTrackView> getLayoutTrackViews() {
@@ -7636,10 +7567,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private final Map<LayoutTrackView, LayoutTrack> viewToTrk = new HashMap<>();
 
     /**
-     * Add a LayoutTrack to the list of 
-     * LayoutTrack family objects.
+     * Add a LayoutTrack to the list of LayoutTrack family objects.
+     * @param trk the layout track to add.
      */
-    @Nonnull
     final public void addLayoutTrack(@Nonnull LayoutTrack trk) {
         log.trace("addLayoutTrack {}", trk);
         if (layoutTrackList.contains(trk)) log.warn("LayoutTrack {} already being maintained", trk.getName());
@@ -7654,8 +7584,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     /**
      * If item present, delete from the list of LayoutTracks
-     * and force a dirty redraw
-     *
+     * and force a dirty redraw.
+     * @param trk the layout track to remove and redraw.
      * @return true is item was deleted and a redraw done.
      */
     final public boolean removeLayoutTrackAndRedraw(@Nonnull LayoutTrack trk) {
@@ -7672,7 +7602,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     
     /**
      * If item present, delete from the list of LayoutTracks
-     * and force a dirty redraw
+     * and force a dirty redraw.
+     * @param trk the layout track to remove.
      */
     final public void removeLayoutTrack(@Nonnull LayoutTrack trk) {
         log.trace("removeLayoutTrack {}", trk);
@@ -7715,7 +7646,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     @Override
-    protected boolean showAlignPopup(@Nonnull Positionable l) {
+    public boolean showAlignPopup(@Nonnull Positionable l) {
         return false;
     }
 
@@ -8039,7 +7970,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
-//    protected void rename(String inFrom, String inTo) {
+//    private void rename(String inFrom, String inTo) {
 //
 //    }
     @Override
@@ -8323,6 +8254,5 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     // initialize logging
-    private  final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditor.class
-    );
+    private  final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditor.class);
 }

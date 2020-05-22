@@ -58,6 +58,8 @@ public class OutputBits {
      * <p>
      * Note: state = 'true' for 0, 'false' for 1.
      * Bits are numbered from 1 (not 0)
+     * @param bitNumber bit index number starting from 1.
+     * @param state true for 0, false for 1.
      */
     public void setOutputBit(int bitNumber, boolean state) {
         // validate that this bitNumber is defined
@@ -81,6 +83,7 @@ public class OutputBits {
      * <p>
      * Bits are numbered from 1 (not 0).
      *
+     * @param bitNumber bit number to check, index starts at 1.
      * @return 'true' for 0, 'false' for 1
      */
     public boolean getOutputBit(int bitNumber) {
@@ -103,6 +106,9 @@ public class OutputBits {
 
     /**
      * Create a Transmit packet (SerialMessage).
+     * @param startBitNum start bit number.
+     * @param endBitNum end bit number.
+     * @return serial message.
      */
     public SerialMessage createOutPacket(int startBitNum, int endBitNum) {
         int nBits = endBitNum - startBitNum + 1;

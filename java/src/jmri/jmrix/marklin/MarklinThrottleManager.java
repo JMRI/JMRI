@@ -18,6 +18,7 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public MarklinThrottleManager(MarklinSystemConnectionMemo memo) {
         super(memo);

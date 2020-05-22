@@ -290,10 +290,14 @@ public class CbusNodeEditEventFrame extends JmriJFrame
     public void propertyChange(PropertyChangeEvent ev){
         
         if (ev.getPropertyName().equals("DELETEEVCOMPLETE")) {
-            notifyDeleteEvoutcome(ev.getNewValue().toString());
+            jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
+                notifyDeleteEvoutcome(ev.getNewValue().toString());
+            });
         }
         if (ev.getPropertyName().equals("ADDEVCOMPLETE")) {
-            notifyLearnEvoutcome(ev.getNewValue().toString());
+            jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
+                notifyLearnEvoutcome(ev.getNewValue().toString());
+            });
         }
     }
     

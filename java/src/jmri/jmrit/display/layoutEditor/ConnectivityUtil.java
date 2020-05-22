@@ -38,17 +38,20 @@ import org.slf4j.LoggerFactory;
  * <p>
  * The methods in this module are accessed via direct calls from the inquiring
  * method.
+ * <p>
+ * A single object of this type, obtained via {@link LayoutEditor#getConnectivityUtil()}
+ * is shared across all instances of {@link LayoutBlock}.
  *
  * @author Dave Duchamp Copyright (c) 2009
  * @author George Warner Copyright (c) 2017-2018
  */
-public class ConnectivityUtil {
+final public class ConnectivityUtil {
 
     // constants
     // operational instance variables
-    private LayoutEditor layoutEditor = null;
-    private LayoutEditorAuxTools auxTools = null;
-    private LayoutBlockManager layoutBlockManager = null;
+    final private LayoutEditor layoutEditor;
+    final private LayoutEditorAuxTools auxTools;
+    final private LayoutBlockManager layoutBlockManager;
 
     private final int TRACKNODE_CONTINUING = 0;
     private final int TRACKNODE_DIVERGING = 1;
@@ -57,7 +60,7 @@ public class ConnectivityUtil {
     // constructor method
     public ConnectivityUtil(LayoutEditor thePanel) {
         layoutEditor = thePanel;
-        auxTools = new LayoutEditorAuxTools(layoutEditor);
+        auxTools = layoutEditor.getLEAuxTools();
         layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
     }
 

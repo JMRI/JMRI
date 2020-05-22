@@ -22,6 +22,7 @@ public class CbusDccProgrammerManagerTest {
     
     private TrafficControllerScaffold tc;
     private CanSystemConnectionMemo memo;
+    private CbusPreferences prefs;
 
     @Before
     public void setUp() {
@@ -29,6 +30,8 @@ public class CbusDccProgrammerManagerTest {
         tc = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
+        prefs = new CbusPreferences();
+        jmri.InstanceManager.store(prefs,CbusPreferences.class );
     }
 
     @After

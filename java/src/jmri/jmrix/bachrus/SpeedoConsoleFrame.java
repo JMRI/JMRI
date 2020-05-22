@@ -1149,15 +1149,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         if (pm == null) {
             return;
         }
-        try {
-            if (pm.getPower() == PowerManager.ON) {
-                trackPowerButton.setText(Bundle.getMessage("PowerDown"));
-                //statusLabel.setText(Bundle.getMessage("StatTOn"));
-            } else if (pm.getPower() == PowerManager.OFF) {
-                trackPowerButton.setText(Bundle.getMessage("PowerUp"));
-                //statusLabel.setText(Bundle.getMessage("StatTOff"));
-            }
-        } catch (JmriException ex) {
+        if (pm.getPower() == PowerManager.ON) {
+            trackPowerButton.setText(Bundle.getMessage("PowerDown"));
+            //statusLabel.setText(Bundle.getMessage("StatTOn"));
+        } else if (pm.getPower() == PowerManager.OFF) {
+            trackPowerButton.setText(Bundle.getMessage("PowerUp"));
+            //statusLabel.setText(Bundle.getMessage("StatTOff"));
         }
     }
 

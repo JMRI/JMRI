@@ -40,6 +40,7 @@ public class PollTablePane extends javax.swing.JPanel {
 
     /**
      * Constructor method
+     * @param flag the ModifiedFlag tag.
      */
     public PollTablePane(jmri.ModifiedFlag flag) {
         super();

@@ -19,7 +19,8 @@ import jmri.util.*;
 public class LayoutSlipView extends LayoutTurnoutView {
 
     /**
-     * constructor method
+     * Constructor method.
+     * @param slip the layout sip to create view for.
      */
     public LayoutSlipView(@Nonnull LayoutSlip slip) {
         super(slip);

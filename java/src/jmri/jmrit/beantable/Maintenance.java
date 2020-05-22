@@ -9,6 +9,7 @@ import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.Vector;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -25,7 +26,8 @@ import javax.annotation.*;
 
 import jmri.*;
 import jmri.jmrit.blockboss.BlockBossLogic;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import org.slf4j.Logger;
@@ -1104,9 +1106,8 @@ public class Maintenance {
 
         found = false;
         empty = true;
-        List<jmri.jmrit.display.Editor> panelList = InstanceManager.getDefault(PanelMenu.class).getEditorPanelList();
-        for (int i = 0; i < panelList.size(); i++) {
-            jmri.jmrit.display.Editor panelEditor = panelList.get(i);
+        Set<Editor> panelList = InstanceManager.getDefault(EditorManager.class).getAll();
+        for (Editor panelEditor : panelList) {
             name = panelEditor.getTitle();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
                     new Object[]{" ", rbm.getString("Panel"), name, name});

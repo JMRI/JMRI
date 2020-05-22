@@ -19,17 +19,10 @@ public class SprogThrottleManager extends AbstractThrottleManager {
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public SprogThrottleManager(SprogSystemConnectionMemo memo) {
         super(memo);
-    }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SprogThrottleManager instance() {
-        return null;
     }
 
     boolean throttleInUse = false;

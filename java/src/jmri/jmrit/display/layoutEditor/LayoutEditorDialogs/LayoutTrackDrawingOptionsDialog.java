@@ -40,7 +40,10 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private final List<LayoutTrackDrawingOptions> ltdoList = new ArrayList<>();
 
     /**
-     * Creates new form LayoutTrackDrawingOptionsDialog
+     * Creates new form LayoutTrackDrawingOptionsDialog.
+     * @param layoutEditor the main layout editor panel.
+     * @param modal true if frame should be modal, else false.
+     * @param ltdOptions the layout track drawing options.
      */
     public LayoutTrackDrawingOptionsDialog(LayoutEditor layoutEditor, boolean modal,
             LayoutTrackDrawingOptions ltdOptions) {

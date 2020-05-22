@@ -35,7 +35,8 @@ import jmri.util.MathUtil;
 public class LayoutSlipEditor extends LayoutTurnoutEditor {
 
     /**
-     * constructor method
+     * constructor method.
+     * @param layoutEditor main layout editor.
      */
     public LayoutSlipEditor(@Nonnull LayoutEditor layoutEditor) {
         super(layoutEditor);

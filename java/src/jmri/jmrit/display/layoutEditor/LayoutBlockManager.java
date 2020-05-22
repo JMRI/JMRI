@@ -2,12 +2,14 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.Block;
 import jmri.BlockManager;
+import jmri.jmrit.display.EditorManager;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBean;
@@ -60,6 +62,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * name must be present. If the user name is not present, the new
      * LayoutBlock is not created, and null is returned.
      *
+     * @param systemName block system name.
+     * @param userName block username, must be non-empty.
      * @return null if a LayoutBlock with the same systemName or userName
      *         already exists, or if there is trouble creating a new LayoutBlock
      */
@@ -120,14 +124,11 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckReturnValue
     @CheckForNull
     public LayoutBlock createNewLayoutBlock() {
-        boolean found = true;
-
-        while (found) {
+        while (true) {
             String sName = "ILB" + blkNum;
             LayoutBlock block = getBySystemName(sName);
 
             if (block == null) {
-                found = false;
                 String uName = "AUTOBLK:" + blkNum;
                 block = new LayoutBlock(sName, uName);
                 register(block);
@@ -136,11 +137,11 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
             blkNum++;
         }
-        return null;
     }
 
     /**
      * Remove an existing LayoutBlock.
+     * @param block the block to remove.
      */
     public void deleteLayoutBlock(LayoutBlock block) {
         deregister(block);
@@ -150,6 +151,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * Get an existing LayoutBlock. First looks up assuming that name is a User
      * Name. If this fails, looks up assuming that name is a System Name.
      *
+     * @param name ideally block username, can be system name.
      * @return LayoutBlock, or null if not found by either user name or system
      *         name
      */
@@ -179,6 +181,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * Find a LayoutBlock with a specified Sensor assigned as its occupancy
      * sensor.
      *
+     * @param s the sensor to search for.
      * @return the block or null if no existing LayoutBlock has the Sensor
      *         assigned
      */
@@ -196,6 +199,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Find a LayoutBlock with a specified Memory assigned as its value display.
      *
+     * @param m the memory to search for.
      * @return the block or null if no existing LayoutBlock has the memory
      *         assigned.
      */
@@ -288,6 +292,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * turnouts of a THROAT_TO_THROAT turnout or a 3-way turnout. "null" is
      * returned for block boundaries exiting a THROAT_TO_THROAT turnout block,
      * since there are no signals that apply there.
+     * @param facingBlock the facing block.
+     * @param protectedBlock the protected block.
+     * @return the signal head, may be null.
      */
     @CheckReturnValue
     @CheckForNull
@@ -1168,7 +1175,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         //block boundary must be at a level crossing
-        if (HitPointType.isLevelXingHitType(cType)) {
+        if (!HitPointType.isLevelXingHitType(cType)) {
             log.error("{} {} Block Boundary not identified correctly - Blocks {}, {}",
                     cType, connected, facingBlock.getDisplayName(), protectedBlock.getDisplayName());
 
@@ -1223,7 +1230,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Get the named bean of either a Sensor or signalmast facing into a
      * specified Block from a specified protected Block.
-     *
+     * @param facingBlock the facing block.
+     * @param panel the main layout editor.
      * @return The assigned sensor or signal mast as a named bean
      */
     @CheckReturnValue
@@ -1243,6 +1251,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Get a Signal Mast that is assigned to a block which has an end bumper at
      * one end.
+     * @param facingBlock the facing block.
+     * @param panel the main layout editor.
+     * @return the signal mast.
      */
     @CheckReturnValue
     @CheckForNull
@@ -1309,6 +1320,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Get a Sensor facing into a specific Block. This is used for Blocks that
      * have an end bumper at one end.
+     * @param facingBlock the facing block.
+     * @param panel the main layout editor.
+     * @return the facing sensor.
      */
     @CheckReturnValue
     @CheckForNull
@@ -1375,7 +1389,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Get the named bean of either a Sensor or signalmast facing into a
      * specified Block from a specified protected Block.
-     *
+     * @param facingBlock the facing block.
+     * @param protectedBlock the protected block.
+     * @param panel the main layout editor.
      * @return The assigned sensor or signal mast as a named bean
      */
     @CheckReturnValue
@@ -1408,6 +1424,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * Get the Signal Mast facing into a specified Block from a specified
      * protected Block.
      *
+     * @param facingBlock the facing block.
+     * @param protectedBlock the protected block.
+     * @param panel the main layout editor.
      * @return The assigned signalMast.
      */
     @CheckReturnValue
@@ -1423,7 +1442,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Get the Sensor facing into a specified Block from a specified protected
      * Block.
-     *
+     * @param facingBlock the facing block.
+     * @param protectedBlock the protected block.
+     * @param panel the main layout editor.
      * @return The assigned sensor
      */
     @CheckReturnValue
@@ -1438,6 +1459,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * Get a facing bean into a specified Block from a specified protected
      * Block.
      *
+     * @param facingBlock the facing block.
+     * @param protectedBlock the protected block.
      * @param panel the layout editor panel the block is assigned, if null then
      *              the maximum connected panel of the facing block is used
      * @param T     The class of the item that we are looking for, either
@@ -1746,7 +1769,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        if (HitPointType.isLevelXingHitType(cType)) {
+        if (!HitPointType.isLevelXingHitType(cType)) {
             log.error("Block Boundary not identified correctly - Blocks {}, {}", facingBlock.getDisplayName(),
                     protectedBlock.getDisplayName());
 
@@ -1799,6 +1822,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * for a given facing block and protected block combination. See
      * #getFacingSignalMast() and #getFacingSignalHead() as to how they deal
      * with what each returns.
+     * @param facingBlock the facing block to search for.
+     * @param protectedBlock the protected block to search for.
      *
      * @return either a signalMast or signalHead
      */
@@ -1867,8 +1892,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @CheckForNull NamedBean bean,
             @CheckForNull LayoutEditor panel) {
         if (panel == null) {
-            List<LayoutEditor> panels = InstanceManager.getDefault(jmri.jmrit.display.PanelMenu.class)
-                    .getLayoutEditorPanelList();
+            Set<LayoutEditor> panels = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
             List<LayoutBlock> protectingBlocks = new ArrayList<>();
             for (LayoutEditor p : panels) {
                 protectingBlocks = getProtectingBlocksByBeanByPanel(bean, p);
@@ -1985,6 +2009,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     /**
      * Get the LayoutBlock that a given sensor is protecting.
+     * @param sensorName the sensor name to search for.
+     * @param panel the layout editor panel.
+     * @return the layout block, may be null.
      */
     @CheckReturnValue
     @CheckForNull
@@ -2070,6 +2097,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     /**
      * Get the LayoutBlock that a given sensor is protecting.
+     * @param sensor sensor to search for.
+     * @param panel layout editor panel to search.
+     * @return the layout block, may be null.
      */
     @CheckReturnValue
     @CheckForNull
@@ -2103,17 +2133,27 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     /**
      * Get the LayoutBlock that a given sensor is facing.
+     * @param sensorName the sensor name.
+     * @param panel the layout editor panel.
+     * @return the facing layout block, may be null.
      */
     @CheckReturnValue
     @CheckForNull
     public LayoutBlock getFacingBlockBySensor(@Nonnull String sensorName,
             @CheckForNull LayoutEditor panel) {
-        Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(sensorName);
-        return (sensor == null) ? null : getFacingBlockBySensor(sensor, panel);
+        LayoutBlock result = null;  //assume failure (pessimist!)
+        if (panel != null) {
+            Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+            result = (sensor == null) ? null : getFacingBlockBySensor(sensor, panel);
+        }
+        return result;
     }
 
     /**
      * Get the LayoutBlock that a given signal is facing.
+     * @param signalMast the signal mast to search for.
+     * @param panel the layout editor panel.
+     * @return the layout block, may be null.
      */
     @CheckReturnValue
     @CheckForNull
@@ -2137,8 +2177,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @Nonnull NamedBean bean,
             LayoutEditor panel) {
         if (panel == null) {
-            List<LayoutEditor> panels = InstanceManager.getDefault(jmri.jmrit.display.PanelMenu.class).
-                    getLayoutEditorPanelList();
+            Set<LayoutEditor> panels = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
             LayoutBlock returnBlock = null;
             for (LayoutEditor p : panels) {
                 returnBlock = getFacingBlockByBeanByPanel(bean, p);
@@ -2300,6 +2339,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     /**
      * Get the LayoutBlock that a given sensor is facing.
+     * @param sensor the sensor to search for.
+     * @param panel the layout editor panel to search.
+     * @return the layout block, may be null.
      */
     @CheckReturnValue
     @CheckForNull
@@ -2313,17 +2355,23 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckForNull
     public LayoutBlock getProtectedBlock(
             @Nonnull SignalHead signalHead, @CheckForNull LayoutEditor panel) {
-        String userName = signalHead.getUserName();
-        LayoutBlock protect = (userName == null) ? null : getProtectedBlock(userName, panel);
+        LayoutBlock result = null;  //assume failure (pessimist!)
+        if (panel != null) {
+            String userName = signalHead.getUserName();
+            result = (userName == null) ? null : getProtectedBlock(userName, panel);
 
-        if (protect == null) {
-            protect = getProtectedBlock(signalHead.getSystemName(), panel);
+            if (result == null) {
+                result = getProtectedBlock(signalHead.getSystemName(), panel);
+            }
         }
-        return protect;
+        return result;
     }
 
     /**
      * Get the LayoutBlock that a given signal is protecting.
+     * @param signalName the signal name to search for.
+     * @param panel the main layout editor panel.
+     * @return the layout block, may be null.
      */
     /* @TODO This needs to be expanded to cover turnouts and level crossings. */
     @CheckReturnValue
@@ -2355,16 +2403,22 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @CheckForNull
     public LayoutBlock getFacingBlock(
             @Nonnull SignalHead signalHead, @CheckForNull LayoutEditor panel) {
-        String userName = signalHead.getUserName();
-        LayoutBlock facing = (userName == null) ? null : getFacingBlock(userName, panel);
-        if (facing == null) {
-            facing = getFacingBlock(signalHead.getSystemName(), panel);
+        LayoutBlock result = null;  //assume failure (pessimist!)
+        if (panel != null) {
+            String userName = signalHead.getUserName();
+            result = (userName == null) ? null : getFacingBlock(userName, panel);
+            if (result == null) {
+                result = getFacingBlock(signalHead.getSystemName(), panel);
+            }
         }
-        return facing;
+        return result;
     }
 
     /**
      * Get the LayoutBlock that a given signal is facing.
+     * @param signalName signal name.
+     * @param panel layout editor panel.
+     * @return the facing layout block.
      */
     /* @TODO This needs to be expanded to cover turnouts and level crossings. */
     @CheckReturnValue
@@ -2398,6 +2452,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * <p>
      * Warnings are always on when program starts up. Once stopped by the user,
      * these messages may not be switched on again until program restarts.
+     * @return true if connectivity warning flag set, else false.
      */
     public boolean warn() {
         return warnConnectivity;
@@ -2541,6 +2596,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Assign a sensor to the routing protocol, that changes state dependant
      * upon if the routing protocol has stabilised or is under going a change.
+     * @param pName sensor name, will be provided if not existing.
+     * @throws jmri.JmriException if no sensor manager.
+     * 
      */
     public void setStabilisedSensor(@Nonnull String pName) throws jmri.JmriException {
         if (InstanceManager.getNullableDefault(jmri.SensorManager.class) != null) {
@@ -2571,6 +2629,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Get the sensor used to indicate if the routing protocol has stabilised or
      * not.
+     * @return routing stability sensor, may be null.
      */
     public Sensor getStabilisedSensor() {
         if (namedStabilisedIndicator == null) {
@@ -2580,7 +2639,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
-     * Get the sensor used for the stability indication
+     * Get the sensor used for the stability indication.
+     * @return stability sensor, may be null.
      */
     @CheckReturnValue
     @CheckForNull

@@ -83,6 +83,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
 
     /**
      * ************* pseudo inheritance to DetectionPanel ******************
+     * @return getShowTrainName status from detection panel.
      */
     public boolean getShowTrainName() {
         return _detectPanel.getShowTrainName();
@@ -122,7 +123,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     /**
-     * ****************************************************
+     * {@inheritDoc} 
      */
     @Override
     protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {

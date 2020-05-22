@@ -19,7 +19,8 @@ import jmri.util.*;
 public class LevelXingView extends LayoutTrackView {
 
     /**
-     * constructor method
+     * Constructor method.
+     * @param xing the level crossing.
      */
     public LevelXingView(@Nonnull LevelXing xing) {
         super(xing);

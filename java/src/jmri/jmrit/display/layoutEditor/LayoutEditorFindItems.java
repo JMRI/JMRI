@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author George Warner Copyright (c) 2017-2018
  */
-public class LayoutEditorFindItems {
+final public class LayoutEditorFindItems {
 
     private final LayoutEditor layoutEditor;
 
@@ -72,6 +72,8 @@ public class LayoutEditorFindItems {
 
     /**
      * Returns an array list of track segments matching the block name.
+     * @param name block name.
+     * @return array of segments, may be null.
      */
     public ArrayList<TrackSegment> findTrackSegmentByBlock(String name) {
         if (name.isEmpty()) {

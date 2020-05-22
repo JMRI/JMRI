@@ -86,8 +86,11 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
 
     /**
-     * Edit a new value into the CV. Only use this for external edits, e.g. set
-     * form a GUI, not for internal uses, as it sets the state to EDITED
+     * Edit a new value into the CV.
+     * <p>
+     * Only use this for external edits, e.g. set form a GUI.
+     * Not for internal uses, as it sets the state to EDITED.
+     * @param value new CV value.
      */
     public void setValue(int value) {
         log.debug("CV {} value changed from {} to {}", number(), _value, value); // NOI18N
@@ -117,7 +120,8 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
 
     /**
-     * Set state value and send notification. Also sets GUI color as needed.
+     * Set state value and send notification.Also sets GUI color as needed.
+     * @param state new state, e.g READ, UNKNOWN, SAME.
      */
     public void setState(int state) {
         if (log.isDebugEnabled()) {  // stateToString overhead
@@ -236,6 +240,7 @@ public class CvValue extends AbstractValue implements ProgListener {
     /**
      * Set bean keeping track of whether this CV is intended to be read-only.
      * Does not otherwise affect behaviour! Default is "false".
+     * @param is read-only flag, true or false.
      */
     public void setReadOnly(boolean is) {
         _readOnly = is;
@@ -246,6 +251,7 @@ public class CvValue extends AbstractValue implements ProgListener {
     /**
      * Retrieve bean keeping track of whether this CV is intended to be
      * read-only. Does not otherwise affect behaviour! Default is "false".
+     * @return read-only flag.
      */
     public boolean getReadOnly() {
         return _readOnly;
@@ -254,6 +260,7 @@ public class CvValue extends AbstractValue implements ProgListener {
     /**
      * Set bean keeping track of whether this CV is intended to be used as
      * info-only. Does not otherwise affect behaviour! Default is "false".
+     * @param is info-only flag, true or false.
      */
     public void setInfoOnly(boolean is) {
         _infoOnly = is;
@@ -264,6 +271,7 @@ public class CvValue extends AbstractValue implements ProgListener {
     /**
      * Retrieve bean keeping track of whether this CV is intended to be used as
      * info-only. Does not otherwise affect behaviour! Default is "false".
+     * @return write-only flag.
      */
     public boolean getInfoOnly() {
         return _infoOnly;
@@ -272,6 +280,7 @@ public class CvValue extends AbstractValue implements ProgListener {
     /**
      * Set bean keeping track of whether this CV is intended to be used as
      * write-only. Does not otherwise affect behaviour! Default is "false".
+     * @param is write-only flag, true or false.
      */
     public void setWriteOnly(boolean is) {
         _writeOnly = is;
@@ -281,7 +290,11 @@ public class CvValue extends AbstractValue implements ProgListener {
 
     /**
      * Retrieve bean keeping track of whether this CV is intended to be used as
-     * write-only. Does not otherwise affect behaviour! Default is "false".
+     * write-only.
+     * <p>
+     * Does not otherwise affect behaviour!
+     * Default is "false".
+     * @return write-only flag.
      */
     public boolean getWriteOnly() {
         return _writeOnly;

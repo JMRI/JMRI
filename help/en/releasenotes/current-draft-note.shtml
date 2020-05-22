@@ -66,8 +66,7 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Support for <a href="https://www.jmri.org/help/en/html/hardware/can/cbus/CbusFastClock.shtml"
-                >CBUS Fast Clock</a> messaging.</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
@@ -346,14 +345,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li>
-	            Lots of internal work to improve Layout Editor structure
-	            so that new features can be added more reliably. Please
-	            keep an eye out for any new issues!
-	            <p>
-	            Note that files written by 4.19.6 may not be readable 
-	            by JMRI 4.19.5 and before.
-	        </li>
+	        <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -457,7 +449,7 @@
 
 	    <h4>Cab Signals</h4>
             <ul>
-                <li></li>
+                <li>Better set row height in table.</li>
             </ul>
 
     	<h4>Simple Signal Logic</h4>
@@ -479,7 +471,18 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Added key shortcuts to the throttle window. Hold the shift
+                down, press and release key
+            <ul>
+                <li>A to switch to the "Address" section
+                <li>F to switch to the "Functions" section
+                <li>C to switch to the "Control" section which sets speed
+            </ul>
+                This is in addition to left arrow and right arrow, which 
+                move from one throttle to the next if you have more than one open.
+                Please note that this act when the key is released.
+            </li>
+            
         </ul>
 
     <h3>Timetable</h3>
@@ -521,9 +524,7 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Added a separate volume control for each decoder. See
-            <a href="https://groups.io/g/jmriusers/topic/vsdecoder_enhancement_request/73168521">
-            more details</a>.</li>
+            <li>Documentation updated regarding "VSD headless mode", "steam1 top speed reverse" and "sleep interval".</li>
         </ul>
 
     <h3>Miscellaneous</h3>

@@ -15,13 +15,17 @@ public interface XNetPortController extends jmri.jmrix.PortAdapter {
     public boolean status();
 
     /**
-     * Can the port accept additional characters? This might go false for short
+     * Can the port accept additional characters?
+     * <p>
+     * This might go false for short
      * intervals, but it might also stick off if something goes wrong.
+     * @return true if OK to send, else false.
      */
     public boolean okToSend();
 
     /**
      * We need a way to say if the output buffer is empty or not.
+     * @param s true to set buffer empty, else false.
      */
     public void setOutputBufferEmpty(boolean s);
 

@@ -520,6 +520,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
      * operations, we want to be able to check and see if we are
      * currently programming before allowing the Traffic Controller 
      * to send a request to exit service mode.
+     * @return true if programmer busy, else false.
      */
     public synchronized boolean programmerBusy() {
         return (progState != NOTPROGRAMMING);

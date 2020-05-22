@@ -25,7 +25,8 @@ import jmri.util.*;
 abstract public class LayoutTrackEditor {
 
     /**
-     * constructor method
+     * constructor method.
+     * @param layoutEditor main layout editor.
      */
     public LayoutTrackEditor(@Nonnull LayoutEditor layoutEditor) {
          this.layoutEditor = layoutEditor;
@@ -76,7 +77,8 @@ abstract public class LayoutTrackEditor {
     }
     
     /**
-     * Launch the editor for a particular LayoutTrack-tree object
+     * Launch the editor for a particular LayoutTrack-tree object.
+     * @param layoutTrack the layout track to edit.
      */
     abstract public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack);
     
