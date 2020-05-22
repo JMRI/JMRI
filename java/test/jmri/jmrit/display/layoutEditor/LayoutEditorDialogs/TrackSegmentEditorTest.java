@@ -35,8 +35,8 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
-        trackSegment.setArc(true);
-        trackSegment.setCircle(true);
+        trackSegmentView.setArc(true);
+        trackSegmentView.setCircle(true);
         createBlocks();
 
         TrackSegmentEditor editor = new TrackSegmentEditor(layoutEditor);
@@ -90,8 +90,8 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
     @Test
     public void testEditTrackSegmentCancel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        trackSegment.setArc(false);
-        trackSegment.setCircle(false);
+        trackSegmentView.setArc(false);
+        trackSegmentView.setCircle(false);
 
         TrackSegmentEditor editor = new TrackSegmentEditor(layoutEditor);
         
@@ -129,8 +129,8 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
     @Test
     public void testEditTrackSegmentError() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        trackSegment.setArc(true);
-        trackSegment.setCircle(true);
+        trackSegmentView.setArc(true);
+        trackSegmentView.setCircle(true);
 
         TrackSegmentEditor editor = new TrackSegmentEditor(layoutEditor);
         
@@ -188,8 +188,8 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
     @After
     public void tearDown() {
         if (trackSegment != null) {
+            trackSegmentView.dispose();
             trackSegment.remove();
-            trackSegment.dispose();
         }
 
         if (layoutEditor != null) {
@@ -197,6 +197,7 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
             efo.closeFrameWithConfirmations();
         }
         trackSegment = null;
+        trackSegmentView = null;
         layoutEditor = null;
 
         JUnitUtil.resetWindows(false, false);

@@ -3055,7 +3055,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         if (layoutTrack != null) {
             foundTrack = layoutTrack;
-            foundLocation = layoutTrack.getCoordsForConnectionType(foundHitPointType);
+            
+            // have to convert to View to get screen coordinates
+            LayoutTrackView ltv = this.getLayoutTrackView(layoutTrack);
+            foundLocation = ltv.getCoordsForConnectionType(foundHitPointType);
+            
             /// foundNeedsConnect = isDisconnected(foundHitPointType);
             result = true;
         }
@@ -4107,14 +4111,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     private void createSelectionGroups() {
         Rectangle2D selectionRect = getSelectionRect();
-        
-        new Exception("temporary traceback").printStackTrace();
-        
+
         getContents().forEach((o) -> {
             if (selectionRect.contains(o.getLocation())) {
             
-                log.error("found item o of class {}", o.getClass()); // temporary
-                
+                log.trace("found item o of class {}", o.getClass());
                 if (!_positionableSelection.contains(o)) {
                     _positionableSelection.add(o);
                 }

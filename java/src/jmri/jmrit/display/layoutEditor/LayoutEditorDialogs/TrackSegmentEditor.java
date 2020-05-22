@@ -159,7 +159,7 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
         } else {
             editTrackSegmentMainlineComboBox.setSelectedIndex(editTrackSegmentSideTrackIndex);
         }
-        if (trackSegment.isDashed()) {
+        if (trackSegmentView.isDashed()) {
             editTrackSegmentDashedComboBox.setSelectedIndex(editTrackSegmentDashedIndex);
         } else {
             editTrackSegmentDashedComboBox.setSelectedIndex(editTrackSegmentSolidIndex);
@@ -169,8 +169,8 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
         editTrackSegmentBlockNameComboBox.getEditor().setItem(block);   // Select the item via the editor, empty text field if null
         editTrackSegmentBlockNameComboBox.setEnabled(!hasNxSensorPairs(trackSegment.getLayoutBlock()));
 
-        if (trackSegment.isArc() && trackSegment.isCircle()) {
-            editTrackSegmentArcTextField.setText("" + trackSegment.getAngle());
+        if (trackSegmentView.isArc() && trackSegmentView.isCircle()) {
+            editTrackSegmentArcTextField.setText("" + trackSegmentView.getAngle());
             editTrackSegmentArcTextField.setEnabled(true);
         } else {
             editTrackSegmentArcTextField.setEnabled(false);
@@ -219,8 +219,8 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
     @InvokeOnGuiThread
     private void editTracksegmentDonePressed(ActionEvent a) {
         // set dashed
-        boolean oldDashed = trackSegment.isDashed();
-        trackSegment.setDashed(editTrackSegmentDashedComboBox.getSelectedIndex() == editTrackSegmentDashedIndex);
+        boolean oldDashed = trackSegmentView.isDashed();
+        trackSegmentView.setDashed(editTrackSegmentDashedComboBox.getSelectedIndex() == editTrackSegmentDashedIndex);
 
         // set mainline
         boolean oldMainline = trackSegment.isMainline();
@@ -230,17 +230,17 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
         boolean oldHidden = trackSegmentView.isHidden();
         trackSegmentView.setHidden(editTrackSegmentHiddenCheckBox.isSelected());
 
-        if (trackSegment.isArc()) {
+        if (trackSegmentView.isArc()) {
             try {
                 double newAngle = Double.parseDouble(editTrackSegmentArcTextField.getText());
-                trackSegment.setAngle(newAngle);
+                trackSegmentView.setAngle(newAngle);
                 editTrackSegmentNeedsRedraw = true;
             } catch (NumberFormatException e) {
-                editTrackSegmentArcTextField.setText("" + trackSegment.getAngle());
+                editTrackSegmentArcTextField.setText("" + trackSegmentView.getAngle());
             }
         }
         // check if anything changed
-        if ((oldDashed != trackSegment.isDashed())
+        if ((oldDashed != trackSegmentView.isDashed())
                 || (oldMainline != trackSegment.isMainline())
                 || (oldHidden != trackSegmentView.isHidden())) {
             editTrackSegmentNeedsRedraw = true;

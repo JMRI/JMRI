@@ -334,8 +334,6 @@ public class TrackSegmentView extends LayoutTrackView {
     // only implemented here to suppress "does not override abstract method " error in compiler
     @Override
     public void setConnection(HitPointType connectionType, @CheckForNull LayoutTrack o, HitPointType type) throws jmri.JmriException {
-        // nothing to see here, move along
-        throw new jmri.JmriException("Use setConnect1() or setConnect2() instead.");
     }
 
     public int getNumberOfBezierControlPoints() {
@@ -1499,13 +1497,13 @@ public class TrackSegmentView extends LayoutTrackView {
 
         // copy attributes to new track segment
         newTrackSegment.setLayoutBlock(this.getLayoutBlock());
-        newTrackSegment.setArc(this.isArc());
-        newTrackSegment.setCircle(this.isCircle());
+        ntsv.setArc(this.isArc());
+        ntsv.setCircle(this.isCircle());
         // split any angle between the two new track segments
-        newTrackSegment.setAngle(this.getAngle() / 2.0);
+        ntsv.setAngle(this.getAngle() / 2.0);
         this.setAngle(this.getAngle() / 2.0);
         // newTrackSegment.setBezier(this.isBezier());
-        newTrackSegment.setFlip(this.isFlip());
+        ntsv.setFlip(this.isFlip());
 
         // copy over decorations
         Map<String, String> d = new HashMap<>();

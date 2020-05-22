@@ -127,10 +127,6 @@ public class LayoutLHXOver extends LayoutXOver {
     /**
      * Main constructor method.
      * @param id crossover ID string.
-     * @param c 2D point.
-     * @param rot rotation.
-     * @param xFactor horizontal factor.
-     * @param yFactor vertical factor.
      * @param layoutEditor main layout editor.
      * @param v version, unused.
      */

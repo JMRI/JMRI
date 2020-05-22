@@ -25,15 +25,15 @@ It's in no particular order, items are removed as done, so please don't consider
 
 - [X] mainline in geometry classes (inc base clases, *Xml)
 - [ ] hidden in View
-    =========> Referenced from various "Tools" calculations that don't use View, so proxied for now
-- [ ] flip in View
+    =========> Referenced from various "Tools" calculations that don't use View, so isHidden() proxied for now
+- [x] flip in View
 - [ ] center in View
 - [ ] Decorations in View
     - [ ] arrowstyle in View
     - [ ] bridge in View
     - [ ] tunnel in View
 
-- [ ] create popup et al (inc member vars) in view
+- [x] create popup et al (inc member vars) in view
 - [ ] Turnout state in connectivity
 - [ ] Block and connectivity checks to, well, connectivity
 
@@ -92,6 +92,10 @@ LayoutTurnout & LayoutTurnoutView setTrackSegmentBlock(..) is a bad split implem
 Concerned over e.g.  `getConnect2() == myTrk` as code transitions LayoutTrack -> LayoutTrackView. 
  = [ ] Change to .equals()
  - [ ] Provide an equals that will take either for now.
+ 
+ Also need a solution and tests for `getConnect().callViewMethod()`; do these
+ need to move up? How?
+ 
 ---
 
 - [ ] Getting "not stabilized after check" - what does that mean for tests?
@@ -120,6 +124,8 @@ track object
 Eventually, *View classes should receive a reference to the *ViewContext object(s) and
 use that as an accessor instead of the LayoutEditor reference.
 
+Start by giving LayoutEditor an Interface, and passing that.
+
 ---
 
 Where do the PositionablePoint editors for End Bumper, etc live? they're not really editors: From Dave Sand:
@@ -132,12 +138,13 @@ Where do the PositionablePoint editors for End Bumper, etc live? they're not rea
 > requires an object swap (unless there is a Java trick that I don't know).
 
 ---
+
 Migration removal sequence:
  - set base-class abstract method to 
    - non-abstract and final (which flushes out overrides) and
-   - throws IllegalArgumentException
+   - throws IllegalArgumentException (or log error and forward if still needed for a case)
  - Comment out the implementations
- - Change name (i.e. add X) to flush out uses
+ - Set private name to flush out uses at compile time
 
 ---
 
@@ -270,7 +277,14 @@ This needs to get hooked up properly:
 Way too many calls to repaint, particularly during loading.  Add a global "wait for later", perhaps protected by a keep-alive (or set a 'no repaint-before' timer)
 
 ---
+   
+Move list management entirely out of Layout Manager to decrease size & complexity, and add a central repository (also accessible via InstanceManager)
+   
+---
+
  Duplicate runs of tests in LayoutTurnoutTest because it's inherited by lots. Break them up?
+ 
+ We're now creating a LayoutEditor for each test in some classes (instead of sharing across tests) to reset it's addTrk(..) contents.  Slow...
  
 ---
 
@@ -329,10 +343,6 @@ TrackSegment.java:        //nothing to see here, move along
 ---
 
 Fix `//([a-zA-Z])` comments with `// \1`
-   
----
-   
-Move list management entirely out of Layout Manager to decrease size & complexity, and add a central repository (also accessible via InstanceManager)
    
 ---
 

@@ -48,12 +48,6 @@ abstract public class LayoutTrack {
         this.ident = ident;
         this.layoutEditor = layoutEditor;
     }
-//     public LayoutTrack(@Nonnull String ident, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
-//         this.ident = ident;
-//         this.layoutEditor = layoutEditor;
-//         
-//         log.error("LayoutTrack ctor ignoring point at {}", c);
-//     }
 
     /**
      * Get the track ID.
@@ -107,28 +101,6 @@ abstract public class LayoutTrack {
         return layoutEditor.getLayoutTrackView(this).hasDecorations();
     }
 
-    /**
-     * Get current decorations
-     *
-     * @return the decorations
-     */
-//     final public Map<String, String> getDecorations() {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
-
-    /**
-     * Set new decorations 
-     *
-     * This is a complete replacement of the decorations, not an appending.
-     *
-     * @param decorations A map from strings ("arrow", "bridge", "bumper",..)
-     *          to specific value strings ("single", "entry;right", ), perhaps
-     *          including multiple values separated by semicolons.
-     */
-//     final public void setDecorations(Map<String, String> decorations) {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
-
     protected static final int NUM_ARROW_TYPES = 6;  // temporary: why here? now view?
 
     /**
@@ -141,89 +113,8 @@ abstract public class LayoutTrack {
         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
     }
 
-    // these are convenience methods to return circles & rectangle used to draw onscreen
-    //
-    // compute the control point rect at inPoint; use the turnout circle size
-//     final public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
-
-    // compute the turnout circle at inPoint (used for drawing)
-//     final public Ellipse2D trackControlCircleAt(@Nonnull Point2D inPoint) {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
-
-    // compute the turnout circle control rect at inPoint
-//     final public Rectangle2D trackControlCircleRectAt(@Nonnull Point2D inPoint) {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
-
-//     final protected Color getColorForTrackBlock(@CheckForNull LayoutBlock lb, boolean check) {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
-
-    // optional parameter forceTrack = false
-    // temporary - needs to go away eventually
-//     final protected Color getColorForTrackBlock(@CheckForNull LayoutBlock lb) {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
-
-//     final protected Color setColorForTrackBlock(Graphics2D g2,
-//             @CheckForNull LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
-
-//     final protected Color setColorForTrackBlock(Graphics2D g2, @CheckForNull LayoutBlock lb) {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
-
     abstract public boolean isMainline();
 
-    /**
-     * draw one line (Ballast, ties, center or 3rd rail, block lines)
-     *
-     * @param g2      the graphics context
-     * @param isMain  true if drawing mainlines
-     * @param isBlock true if drawing block lines
-     */
-//     final protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {  /* temporary */
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
-
-    /**
-     * draw two lines (rails)
-     *
-     * @param g2               the graphics context
-     * @param isMain           true if drawing mainlines
-     * @param railDisplacement the offset from center to draw the lines
-     */ 
-//     final protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) { /* temporary */
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
-// 
-
-    /**
-     * draw hidden track
-     *
-     * @param g2 the graphics context
-     */
-    // abstract protected void drawHidden(Graphics2D g2);
-    // note: placeholder until I get this implemented in all sub-classes
-    // TODO: replace with abstract declaration (above)
-//     final protected void drawHidden(Graphics2D g2) {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
-
-    /**
-     * Load a file for a specific arrow ending.
-     * @param n arrow style.
-     * @param arrowsCountMenu menu of which to add the arrow to.
-     * @return An item for the arrow menu
-     */
-//     final public JCheckBoxMenuItem loadArrowImageToJCBItem(int n, JMenu arrowsCountMenu) {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
-    
     /**
      * highlight unconnected connections
      *
@@ -241,14 +132,6 @@ abstract public class LayoutTrack {
         layoutEditor.getLayoutTrackView(this).highlightUnconnected(g2);
     }
 
-    /**
-     * draw the edit controls
-     *
-     * @param g2 the graphics context
-     */
-//     final protected void drawEditControls(Graphics2D g2) {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
 
     /**
      * Draw the turnout controls
@@ -260,15 +143,6 @@ abstract public class LayoutTrack {
     }
 
     /**
-     * Draw track decorations
-     *
-     * @param g2 the graphics context
-     */
-//     final void drawDecorations(Graphics2D g2) {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
-// 
-    /**
      * Get the hidden state of the track element.
      *
      * @return true if hidden; false otherwise
@@ -278,12 +152,6 @@ abstract public class LayoutTrack {
                 jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
         return layoutEditor.getLayoutTrackView(this).isHidden();
     }
-
-//     final private void setHidden(boolean hide) {
-//         log.error("setHidden should have called in view instead of object (temporary)");
-//         layoutEditor.getLayoutTrackView(this).setHidden(hide);
-//     }
-// 
  
     /*
     * non-accessor methods
@@ -376,10 +244,6 @@ abstract public class LayoutTrack {
         log.error("rotateCoords should have been called in view instead of object (temporary)");
         layoutEditor.getLayoutTrackView(this).rotateCoords(angleDEG);
     }
-
-//     final protected Point2D rotatePoint(@Nonnull Point2D p, double sineRot, double cosineRot) {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
 
     /**
      * find the hit (location) type for a point

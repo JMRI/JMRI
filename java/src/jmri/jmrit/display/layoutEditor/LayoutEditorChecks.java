@@ -607,7 +607,7 @@ final public class LayoutEditorChecks {
                         continue;   // so we don't get added again
                     }
                     // if control points are collinear...
-                    boolean good = true; //assume success (optimist!)
+                    boolean good = true;
                     for (Point2D cp : ts.getBezierControlPoints()) {
                         if (Math.abs(MathUtil.distance(end1, end2, cp)) > 1.0) {
                             good = false;
