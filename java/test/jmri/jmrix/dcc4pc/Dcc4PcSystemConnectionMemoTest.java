@@ -1,6 +1,7 @@
 package jmri.jmrix.dcc4pc;
 
 import jmri.InstanceManager;
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -13,7 +14,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class Dcc4PcSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase<Dcc4PcSystemConnectionMemo> {
+public class Dcc4PcSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Dcc4PcSystemConnectionMemo> {
 
     @Override
     @Test

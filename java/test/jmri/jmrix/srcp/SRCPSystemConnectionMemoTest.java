@@ -1,5 +1,6 @@
 package jmri.jmrix.srcp;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -8,12 +9,12 @@ import org.junit.Test;
 
 /**
  * SRCPSystemConnectionMemoTest.java
- *
+ * <p>
  * Test for the jmri.jmrix.srcp.SRCPSystemConnectionMemo class
  *
  * @author Bob Jacobsen
  */
-public class SRCPSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class SRCPSystemConnectionMemoTest extends SystemConnectionMemoTestBase<SRCPSystemConnectionMemo> {
 
     @Test
     public void testTCCtor() {
@@ -29,8 +30,8 @@ public class SRCPSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
     @Override
@@ -42,11 +43,13 @@ public class SRCPSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
             public void sendSRCPMessage(SRCPMessage m, SRCPListener l) {
                 // we aren't actually sending anything to a layout.
             }
+
             @Override
-            public void transmitLoop(){
+            public void transmitLoop() {
             }
+
             @Override
-            public void receiveLoop(){
+            public void receiveLoop() {
             }
         };
         scm = new SRCPSystemConnectionMemo("D", "SRCP", et);
@@ -55,7 +58,8 @@ public class SRCPSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
     @Override
     @After
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        scm.getTrafficController().terminateThreads();
+        scm.dispose();
         JUnitUtil.tearDown();
     }
 }

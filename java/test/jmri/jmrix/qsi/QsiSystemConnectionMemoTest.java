@@ -1,5 +1,6 @@
 package jmri.jmrix.qsi;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,28 +11,28 @@ import org.junit.Test;
  * JUnit tests for the QsiSystemConnectionMemo class
  * <p>
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class QsiSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
-    
+public class QsiSystemConnectionMemoTest extends SystemConnectionMemoTestBase<QsiSystemConnectionMemo> {
+
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
-    @Override 
+    @Override
     @Before
-    public void setUp(){
-       JUnitUtil.setUp();
-       new QsiTrafficControlScaffold();
-       scm = new QsiSystemConnectionMemo();
+    public void setUp() {
+        JUnitUtil.setUp();
+        // new QsiTrafficControlScaffold();
+        scm = new QsiSystemConnectionMemo();
     }
 
     @Override
     @After
-    public void tearDown(){
-       JUnitUtil.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

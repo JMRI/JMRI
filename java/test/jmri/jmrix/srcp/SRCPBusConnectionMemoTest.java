@@ -1,5 +1,6 @@
 package jmri.jmrix.srcp;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -8,12 +9,12 @@ import org.junit.Test;
 
 /**
  * SRCPBusConnectionMemoTest.java
- *
+ * <p>
  * Test for the jmri.jmrix.srcp.SRCPBusConnectionMemo class
  *
  * @author Bob Jacobsen
  */
-public class SRCPBusConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class SRCPBusConnectionMemoTest extends SystemConnectionMemoTestBase<SRCPBusConnectionMemo> {
 
     private SRCPSystemConnectionMemo memo;
     private SRCPTrafficController tc;
@@ -26,11 +27,13 @@ public class SRCPBusConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTe
             @Override
             public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
             }
+
             @Override
-            public void transmitLoop(){
+            public void transmitLoop() {
             }
+
             @Override
-            public void receiveLoop(){
+            public void receiveLoop() {
             }
         };
         memo = new SRCPSystemConnectionMemo(tc);
@@ -39,8 +42,8 @@ public class SRCPBusConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTe
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
     @Override
