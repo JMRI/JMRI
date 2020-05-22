@@ -1,9 +1,8 @@
 package jmri.jmrix.powerline.swing.packetgen;
 
 import java.awt.event.ActionEvent;
-import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
-import jmri.jmrix.swing.AbstractSystemConnectionAction;
+import jmri.jmrix.powerline.swing.PowerlineSystemConnectionAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * connection
  * @author kcameron Copyright (C) 2011
  */
-public class SerialPacketGenAction extends AbstractSystemConnectionAction<SerialSystemConnectionMemo> {
+public class SerialPacketGenAction extends PowerlineSystemConnectionAction {
 
     public SerialPacketGenAction(String s, SerialTrafficController tc) {
         super(s, tc.getAdapterMemo());

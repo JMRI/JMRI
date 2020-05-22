@@ -3,7 +3,7 @@ package jmri.jmrix.srcp.swing.packetgen;
 import java.awt.event.ActionEvent;
 import jmri.InstanceManager;
 import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
-import jmri.jmrix.swing.AbstractSystemConnectionAction;
+import jmri.jmrix.srcp.swing.SRCPSystemConnectionAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
-public class PacketGenAction extends AbstractSystemConnectionAction<SRCPSystemConnectionMemo> {
+public class PacketGenAction extends SRCPSystemConnectionAction {
 
     public PacketGenAction(String s, SRCPSystemConnectionMemo memo) {
         super(s, memo);

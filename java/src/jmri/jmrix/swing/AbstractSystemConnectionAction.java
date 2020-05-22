@@ -46,16 +46,4 @@ public abstract class AbstractSystemConnectionAction<M extends SystemConnectionM
             throw new IllegalArgumentException(memo.getClass() + " is not valid for " + this.getClass());
         }
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return a set containing one entry allowing any SystemConnectionMemo to
-     *         be used
-     */
-    @Override
-    public Set<Class<? extends SystemConnectionMemo>> getSystemConnectionMemoClasses() {
-        return new HashSet<>(Arrays.asList(SystemConnectionMemo.class));
-    }
-
 }
