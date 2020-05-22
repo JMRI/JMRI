@@ -25,7 +25,7 @@ public class PacketGenAction extends XBeeSystemConnectionAction {
     }
 
     public PacketGenAction(String s) {
-        this(InstanceManager.getDefault(XBeeConnectionMemo.class));
+        this(InstanceManager.getNullableDefault(XBeeConnectionMemo.class));
     }
 
     public PacketGenAction() {
