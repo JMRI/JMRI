@@ -2,6 +2,7 @@ package jmri.jmrix.grapevine.packetgen;
 
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
+import jmri.InstanceManager;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.swing.GrapevineSystemConnectionAction;
 import org.slf4j.Logger;
@@ -20,6 +21,10 @@ public class SerialPacketGenAction extends GrapevineSystemConnectionAction {
 
     public SerialPacketGenAction(GrapevineSystemConnectionMemo memo) {
         this(Bundle.getMessage("SendXCommandTitle", Bundle.getMessage("MenuSystem")), memo);
+    }
+
+    public SerialPacketGenAction() {
+        this(InstanceManager.getNullableDefault(GrapevineSystemConnectionMemo.class));
     }
 
     @Override
