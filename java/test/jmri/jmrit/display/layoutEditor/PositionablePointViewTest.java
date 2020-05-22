@@ -25,7 +25,7 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
         Assert.assertNotNull("exists", pp1v);
         layoutEditor.addLayoutTrack(pp1, pp1v);
         
-        Assert.assertEquals("getCoordsCenter equal to zeroPoint2D", MathUtil.zeroPoint2D, pp1.getCoordsCenter());
+        Assert.assertEquals("getCoordsCenter equal to zeroPoint2D", MathUtil.zeroPoint2D, pp1v.getCoordsCenter());
 
         Point2D point2 = new Point2D.Double(666.6, 999.9);
         PositionablePoint pp2 = new PositionablePoint("test", PositionablePoint.PointType.ANCHOR, layoutEditor);
@@ -34,7 +34,7 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
         Assert.assertNotNull("exists", pp2v);
         layoutEditor.addLayoutTrack(pp2, pp2v);
 
-        Assert.assertEquals("getCoordsCenter equal to {666.6, 999.9}", point2, pp2.getCoordsCenter());
+        Assert.assertEquals("getCoordsCenter equal to {666.6, 999.9}", point2, pp2v.getCoordsCenter());
     }
 
     @Test
@@ -46,6 +46,7 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
         PositionablePointView ppv = new PositionablePointView(pp, MathUtil.zeroPoint2D, layoutEditor);
         Assert.assertNotNull("exists", pp);
         layoutEditor.addLayoutTrack(pp, ppv);
+        
         Assert.assertEquals("getCoordsCenter equal to zeroPoint2D", MathUtil.zeroPoint2D, ppv.getCoordsCenter());
 
         Point2D point2 = new Point2D.Double(666.6, 999.9);
@@ -149,12 +150,12 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
 
         // test failure
         Assert.assertEquals("pp.getCoordsForConnectionType(LayoutEditor.HitPointTypes.NONE) == {666.6, 999.9}",
-                thePoint, pp.getCoordsForConnectionType(HitPointType.NONE));
+                thePoint, ppv.getCoordsForConnectionType(HitPointType.NONE));
         JUnitAppender.assertErrorMessage("test.getCoordsForConnectionType(NONE); Invalid Connection Type");
 
         // test success
         Assert.assertEquals("pp.getCoordsForConnectionType(LayoutEditor.HitPointTypes.POS_POINT) == {666.6, 999.9}",
-                thePoint, pp.getCoordsForConnectionType(HitPointType.POS_POINT));
+                thePoint, ppv.getCoordsForConnectionType(HitPointType.POS_POINT));
     }
 
 

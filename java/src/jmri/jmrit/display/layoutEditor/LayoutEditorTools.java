@@ -597,6 +597,30 @@ final public class LayoutEditorTools {
         }
     }   //setSignalsDonePressed
 
+    /**
+     * Checks the turnout name (could also be a crossover, ...)
+     * 1) checks setSignalsAtTurnoutFromMenuFlag (bis setSignalsAtXoverTurnoutFromMenuFlag)
+     *      skip to 6 if true
+     * 2) get a name string from turnoutComboBox (bis NamedBean.normalizeUserName(xoverTurnoutName) ),
+     *      showing an error dialog if not present
+     * 3) Gets turnout by that name, showing a error and returning false if not
+     * 4) (??) if the turnout's user name is non-existant or not matching, reset the turnout name string source
+     *              used in 2 (does this ever work?)
+     * 5) Search through all LayoutTurnout (and subclass) objects, looking for a match. If
+     *          is the other type (LayoutTurnout vs XOver or vice-versa), so an error,
+     *          call a cancel routine and return false. Save the found item in the
+     *          'layoutTurnout' non-local variable 
+     * 
+     * 6) If the above succeed in finding a layoutTurnout, calculate an angle and 
+     *          store in the `placeSignalDirectionDEG` non-local variable
+     *          and return true (success)
+     * 7) Finally, show an error saying the turnout is not displayed on this panel and return false.
+     * 
+     * In summary, this makes some checks, and then (re)loads the 'layoutTurnout' and 
+     * 'placeSignalDirectionDEG' non-local variables, returning true for success
+     *
+     * @return true if ok, false if not for various reasons
+     */
     private boolean getTurnoutInformation(boolean isCrossover) {
         String str = "";
         if (isCrossover ? !setSignalsAtXoverTurnoutFromMenuFlag : !setSignalsAtTurnoutFromMenuFlag) {
@@ -653,11 +677,14 @@ final public class LayoutEditorTools {
         }
 
         if (layoutTurnout != null) {
-            Point2D coordsA = layoutTurnout.getCoordsA(), coords2;
+            // convert to view to get angle on screen display
+            LayoutTurnoutView ltv = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+            
+            Point2D coordsA = ltv.getCoordsA(), coords2;
             if (isCrossover) {
-                coords2 = layoutTurnout.getCoordsB();
+                coords2 = ltv.getCoordsB();
             } else {
-                coords2 = layoutTurnout.getCoordsCenter();
+                coords2 = ltv.getCoordsCenter();
             }
             placeSignalDirectionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coords2, coordsA));
             return true;

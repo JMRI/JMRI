@@ -1524,7 +1524,7 @@ public class TrackSegmentView extends LayoutTrackView {
                 d.put(k, v);                        // copy to new track
             }
         });
-        newTrackSegment.setDecorations(d);
+        ntsv.setDecorations(d);
 
         // link my getConnect2() to the new track segment
         if (getConnect2() instanceof PositionablePoint) {

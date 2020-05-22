@@ -24,7 +24,7 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
         Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         Point2D newCenterPoint = new Point2D.Double(75.0, 150.0);
-        lts.setCoordsCenter(newCenterPoint);
+        lvs.setCoordsCenter(newCenterPoint);
         Assert.assertEquals("lts.getCoordsCenter ", newCenterPoint, lvs.getCoordsCenter());
 
         Assert.assertEquals("lts.getCoordsA() is equal to...",
@@ -52,7 +52,7 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
                 lvs.getCoordsLeft());
 
         newCenterPoint = new Point2D.Double(150.0, 75.0);
-        ltd.setCoordsCenter(newCenterPoint);
+        lvd.setCoordsCenter(newCenterPoint);
         Assert.assertEquals("ltd.getCoordsForConnectionType(SLIP_RIGHT) is equal to...",
                 new Point2D.Double(154.6153846153846, 63.92307692307692),
                 lvd.getCoordsForConnectionType(HitPointType.SLIP_RIGHT));
@@ -96,7 +96,7 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
 
-        lts.scaleCoords(1.5F, 2.5F);
+        lvs.scaleCoords(1.5F, 2.5F);
         Assert.assertEquals("lts.getCoordsCenter ",
                 new Point2D.Double(75.0, 250.0),
                 lvs.getCoordsCenter());
@@ -129,7 +129,7 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
                 new Point2D.Double(104.61538461538461, 38.92307692307692),
                 lvd.getCoordsForConnectionType(HitPointType.SLIP_RIGHT));
 
-        ltd.scaleCoords(2.5F, 1.5F);
+        lvd.scaleCoords(2.5F, 1.5F);
         Assert.assertEquals("ltd.getCoordsCenter ",
                 new Point2D.Double(250.0, 75.0),
                 lvd.getCoordsCenter());

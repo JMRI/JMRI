@@ -4107,9 +4107,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     private void createSelectionGroups() {
         Rectangle2D selectionRect = getSelectionRect();
-
+        
+        new Exception("temporary traceback").printStackTrace();
+        
         getContents().forEach((o) -> {
             if (selectionRect.contains(o.getLocation())) {
+            
+                log.error("found item o of class {}", o.getClass()); // temporary
+                
                 if (!_positionableSelection.contains(o)) {
                     _positionableSelection.add(o);
                 }
@@ -7707,6 +7712,18 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             throw new IllegalArgumentException("No matching View found: "+to);
         }
         if (lv instanceof LayoutTurntableView) return (LayoutTurntableView) lv;
+        else log.error("wrong type {} {} found {}", to, to.getClass(), lv);
+        throw new IllegalArgumentException("Wrong type: "+to.getClass());
+    }
+        
+    // temporary
+    final public TrackSegmentView getTrackSegmentView(TrackSegment to) {
+        LayoutTrackView lv = trkToView.get(to);
+        if (lv == null) {
+            log.warn("No View found for {} class {}", to, to.getClass());
+            throw new IllegalArgumentException("No matching View found: "+to);
+        }
+        if (lv instanceof TrackSegmentView) return (TrackSegmentView) lv;
         else log.error("wrong type {} {} found {}", to, to.getClass(), lv);
         throw new IllegalArgumentException("Wrong type: "+to.getClass());
     }

@@ -181,7 +181,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
 
         setUpForEdit();
         
-        editLayoutTurnoutHiddenCheckBox.setSelected(layoutTurnout.isHidden());
+        editLayoutTurnoutHiddenCheckBox.setSelected(layoutTurnoutView.isHidden());
 
         List<Turnout> currentTurnouts = new ArrayList<>();
         currentTurnouts.add(layoutTurnout.getTurnout());
@@ -411,9 +411,9 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         checkBlock234Changed();
                 
         // set hidden
-        boolean oldHidden = layoutTurnout.isHidden();
-        layoutTurnout.setHidden(editLayoutTurnoutHiddenCheckBox.isSelected());
-        if (oldHidden != layoutTurnout.isHidden()) {
+        boolean oldHidden = layoutTurnoutView.isHidden();
+        layoutTurnoutView.setHidden(editLayoutTurnoutHiddenCheckBox.isSelected());
+        if (oldHidden != layoutTurnoutView.isHidden()) {
             editLayoutTurnoutNeedRedraw = true;
         }
         editLayoutTurnoutOpen = false;

@@ -164,7 +164,7 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
         } else {
             editTrackSegmentDashedComboBox.setSelectedIndex(editTrackSegmentSolidIndex);
         }
-        editTrackSegmentHiddenCheckBox.setSelected(trackSegment.isHidden());
+        editTrackSegmentHiddenCheckBox.setSelected(trackSegmentView.isHidden());
         Block block = InstanceManager.getDefault(BlockManager.class).getBlock(trackSegment.getBlockName());
         editTrackSegmentBlockNameComboBox.getEditor().setItem(block);   // Select the item via the editor, empty text field if null
         editTrackSegmentBlockNameComboBox.setEnabled(!hasNxSensorPairs(trackSegment.getLayoutBlock()));
@@ -227,8 +227,8 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
         trackSegment.setMainline(editTrackSegmentMainlineComboBox.getSelectedIndex() == editTrackSegmentMainlineTrackIndex);
 
         // set hidden
-        boolean oldHidden = trackSegment.isHidden();
-        trackSegment.setHidden(editTrackSegmentHiddenCheckBox.isSelected());
+        boolean oldHidden = trackSegmentView.isHidden();
+        trackSegmentView.setHidden(editTrackSegmentHiddenCheckBox.isSelected());
 
         if (trackSegment.isArc()) {
             try {
@@ -242,7 +242,7 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
         // check if anything changed
         if ((oldDashed != trackSegment.isDashed())
                 || (oldMainline != trackSegment.isMainline())
-                || (oldHidden != trackSegment.isHidden())) {
+                || (oldHidden != trackSegmentView.isHidden())) {
             editTrackSegmentNeedsRedraw = true;
         }
         // check if Block changed

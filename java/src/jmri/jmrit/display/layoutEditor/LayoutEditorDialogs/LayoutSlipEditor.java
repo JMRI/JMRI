@@ -170,7 +170,7 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
             contentPane.add(panel5);
         }
 
-        editLayoutSlipHiddenBox.setSelected(layoutSlip.isHidden());
+        editLayoutSlipHiddenBox.setSelected(layoutSlipView.isHidden());
 
         // Set up for Edit
         List<Turnout> currentTurnouts = new ArrayList<>();
@@ -208,7 +208,7 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
      * with fixed geometry
      */
     private void drawSlipState(Graphics2D g2, int state) {
-        Point2D cenP = layoutSlip.getCoordsCenter();
+        Point2D cenP = layoutSlipView.getCoordsCenter();
         Point2D A = MathUtil.subtract(layoutSlip.getCoordsA(), cenP);
         Point2D B = MathUtil.subtract(layoutSlip.getCoordsB(), cenP);
         Point2D C = MathUtil.subtract(layoutSlip.getCoordsC(), cenP);
@@ -450,9 +450,9 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
         }
 
         // set hidden
-        boolean oldHidden = layoutSlip.isHidden();
-        layoutSlip.setHidden(editLayoutSlipHiddenBox.isSelected());
-        if (oldHidden != layoutSlip.isHidden()) {
+        boolean oldHidden = layoutSlipView.isHidden();
+        layoutSlipView.setHidden(editLayoutSlipHiddenBox.isSelected());
+        if (oldHidden != layoutSlipView.isHidden()) {
             editLayoutSlipNeedsRedraw = true;
         }
 

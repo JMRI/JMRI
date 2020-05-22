@@ -385,14 +385,9 @@ public class TrackSegment extends LayoutTrack {
      * @return the direction (in radians)
      */
     public double getDirectionRAD() {
-        Point2D ep1 = getCoordsCenter(), ep2 = getCoordsCenter();
-        if (connect1 != null) {
-            ep1 = layoutEditor.getCoords(connect1, getType1());
-        }
-        if (connect2 != null) {
-            ep2 = layoutEditor.getCoords(connect2, getType2());
-        }
-        return (Math.PI / 2.D) - MathUtil.computeAngleRAD(ep1, ep2);
+        log.error("getDirectionRAD should have called View instead of TrackSegment (temporary)",
+                jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
+        return layoutEditor.getTrackSegmentView(this).getDirectionRAD();
     }
 
     /**
@@ -404,7 +399,9 @@ public class TrackSegment extends LayoutTrack {
      * @return the direction (in degrees)
      */
     public double getDirectionDEG() {
-        return Math.toDegrees(getDirectionRAD());
+        log.error("getDirectionDEG should have called View instead of TrackSegment (temporary)",
+                jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
+        return layoutEditor.getTrackSegmentView(this).getDirectionDEG();
     }
 
     /**
