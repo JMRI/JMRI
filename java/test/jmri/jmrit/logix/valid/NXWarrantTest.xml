@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
-<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>15</minor>
-    <test>5</test>
+    <minor>19</minor>
+    <test>7</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
-    <sensor inverted="false">
-      <systemName>ISCLOCKRUNNING</systemName>
-    </sensor>
     <sensor inverted="false">
       <systemName>IS0</systemName>
       <userName>WestSensor</userName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS1</systemName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS10</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS2</systemName>
@@ -46,6 +40,12 @@
     <sensor inverted="false">
       <systemName>IS9</systemName>
     </sensor>
+    <sensor inverted="false">
+      <systemName>IS10</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
@@ -57,9 +57,6 @@
     <defaultthrownspeed>Restricted</defaultthrownspeed>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT1</systemName>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT10</systemName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT2</systemName>
@@ -85,17 +82,18 @@
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT9</systemName>
     </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT10</systemName>
+    </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="7:05 PM">
+    <memory value="3:36 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
       <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
-  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
-  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml">
     <oblock systemName="OB0" userName="West" length="1270.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>West</userName>
@@ -447,14 +445,14 @@
       <throttleCommand time="1000" command="Speed" value="0.16550002" block="OB1" />
       <throttleCommand time="1000" command="Speed" value="0.23205002" block="OB1" />
       <throttleCommand time="1000" command="Speed" value="0.30525503" block="OB1" />
-      <throttleCommand time="410" command="NoOp" value="Enter Block" block="OB6" />
-      <throttleCommand time="589" command="Speed" value="0.3857805" block="OB6" />
-      <throttleCommand time="1082" command="NoOp" value="Enter Block" block="OB3" />
-      <throttleCommand time="0" command="Speed" value="0.47435856" block="OB3" />
+      <throttleCommand time="400" command="NoOp" value="Enter Block" block="OB6" />
+      <throttleCommand time="600" command="Speed" value="0.3857805" block="OB6" />
+      <throttleCommand time="800" command="NoOp" value="Enter Block" block="OB3" />
+      <throttleCommand time="200" command="Speed" value="0.47435856" block="OB3" />
       <throttleCommand time="1000" command="Speed" value="0.5" block="OB3" />
-      <throttleCommand time="2683" command="NoOp" value="Enter Block" block="OB7" />
-      <throttleCommand time="2441" command="Speed" value="0.39282054" block="OB7" />
-      <throttleCommand time="646" command="NoOp" value="Enter Block" block="OB5" />
+      <throttleCommand time="1000" command="NoOp" value="Enter Block" block="OB7" />
+      <throttleCommand time="1000" command="Speed" value="0.39282054" block="OB7" />
+      <throttleCommand time="600" command="NoOp" value="Enter Block" block="OB5" />
       <throttleCommand time="353" command="Speed" value="0.29538468" block="OB5" />
       <throttleCommand time="100" command="Speed" value="0.20680663" block="OB5" />
       <throttleCommand time="100" command="Speed" value="0.12628113" block="OB5" />
@@ -477,9 +475,9 @@
       </blockOrder>
       <throttleCommand time="0" command="F0" value="true" block="OB6" />
       <throttleCommand time="100" command="Forward" value="true" block="OB6" />
-      <throttleCommand time="1000" command="F2" value="true" block="OB6" />
-      <throttleCommand time="2500" command="F2" value="false" block="OB6" />
-      <throttleCommand time="1000" command="F2" value="true" block="OB6" />
+      <throttleCommand time="100" command="F2" value="true" block="OB6" />
+      <throttleCommand time="500" command="F2" value="false" block="OB6" />
+      <throttleCommand time="500" command="F2" value="true" block="OB6" />
       <throttleCommand time="2500" command="F2" value="false" block="OB6" />
       <throttleCommand time="0" command="Speed" value="0.008" block="OB6" />
       <throttleCommand time="1000" command="Speed" value="0.016800001" block="OB6" />
@@ -541,10 +539,10 @@
       </blockOrder>
       <throttleCommand time="0" command="F0" value="true" block="OB7" />
       <throttleCommand time="100" command="Forward" value="true" block="OB7" />
-      <throttleCommand time="1000" command="F2" value="true" block="OB7" />
-      <throttleCommand time="2500" command="F2" value="false" block="OB7" />
-      <throttleCommand time="1000" command="F2" value="true" block="OB7" />
-      <throttleCommand time="2500" command="F2" value="false" block="OB7" />
+      <throttleCommand time="200" command="F2" value="true" block="OB7" />
+      <throttleCommand time="500" command="F2" value="false" block="OB7" />
+      <throttleCommand time="500" command="F2" value="true" block="OB7" />
+      <throttleCommand time="500" command="F2" value="false" block="OB7" />
       <throttleCommand time="0" command="Speed" value="0.008" block="OB7" />
       <throttleCommand time="1000" command="Speed" value="0.016800001" block="OB7" />
       <throttleCommand time="1000" command="Speed" value="0.026480002" block="OB7" />
@@ -615,9 +613,9 @@
       </blockOrder>
       <throttleCommand time="0" command="F0" value="true" block="OB0" />
       <throttleCommand time="100" command="Forward" value="true" block="OB0" />
-      <throttleCommand time="1000" command="F2" value="true" block="OB0" />
-      <throttleCommand time="2500" command="F2" value="false" block="OB0" />
-      <throttleCommand time="1000" command="F2" value="true" block="OB0" />
+      <throttleCommand time="100" command="F2" value="true" block="OB0" />
+      <throttleCommand time="500" command="F2" value="false" block="OB0" />
+      <throttleCommand time="500" command="F2" value="true" block="OB0" />
       <throttleCommand time="2500" command="F2" value="false" block="OB0" />
       <throttleCommand time="0" command="Speed" value="0.008" block="OB0" />
       <throttleCommand time="1000" command="Speed" value="0.016800001" block="OB0" />
@@ -679,7 +677,7 @@
     <logicDelay>500</logicDelay>
   </signalmastlogics>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon May 18 10:30:41 PDT 2015" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
-  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="NXWarrantTest" x="798" y="638" height="280" width="691" editable="no" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" redBackground="255" greenBackground="224" blueBackground="12" state="0" shapeSelect="yes">
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="NXWarrantTest" x="669" y="582" height="280" width="691" editable="no" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" redBackground="255" greenBackground="224" blueBackground="12" state="0" shapeSelect="yes">
     <icons>
       <visible>
         <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
@@ -1577,37 +1575,54 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Thu Apr 04 19:03:48 PDT 2019</date>
+      <date>Wed May 20 15:27:06 PDT 2020</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Thu Apr 04 19:03:57 PDT 2019</date>
-      <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
+      <date>Wed May 20 15:28:11 PDT 2020</date>
+      <filename>/C:/JMRI/java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Thu Apr 04 11:10:42 PDT 2019</date>
+          <date>Thu Apr 04 19:03:48 PDT 2019</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Thu Apr 04 11:10:58 PDT 2019</date>
+          <date>Thu Apr 04 19:03:57 PDT 2019</date>
           <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
-          <filehistory />
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Thu Apr 04 11:10:42 PDT 2019</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Thu Apr 04 11:10:58 PDT 2019</date>
+              <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
+              <filehistory />
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Thu Apr 04 11:25:03 PDT 2019</date>
+              <filename />
+            </operation>
+          </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Thu Apr 04 11:25:03 PDT 2019</date>
+          <date>Thu Apr 04 19:05:10 PDT 2019</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Thu Apr 04 19:05:10 PDT 2019</date>
+      <date>Wed May 20 15:36:20 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.15.5ish+pete_+2019-04-05T02:03:41Z+R3eabc83dbe on Thu Apr 04 19:05:10 PDT 2019-->
+  <!--Written by JMRI version 4.19.7ish+pete_+2020-05-20T22:26:58Z+R5132235ba8 on Wed May 20 15:36:20 PDT 2020-->
 </layout-config>

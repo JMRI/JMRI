@@ -112,7 +112,7 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
     @Override
     public void closeDialogs() {
         if (_decorator != null) {
-            _decorator.setSuppressRecentColor(false);
+            _decorator.close();
         }
         super.closeDialogs();
     }
