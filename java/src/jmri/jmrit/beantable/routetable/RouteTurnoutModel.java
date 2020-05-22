@@ -20,7 +20,7 @@ import java.util.List;
  */
 class RouteTurnoutModel extends RouteOutputModel {
 
-    private AbstractRouteAddEditFrame routeAddFrame;
+    private final AbstractRouteAddEditFrame routeAddFrame;
 
     RouteTurnoutModel(AbstractRouteAddEditFrame routeAddFrame) {
         this.routeAddFrame = routeAddFrame;

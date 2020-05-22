@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class AbstractRouteAddEditFrame extends JmriJFrame {
 
-    protected RouteManager routeManager;
+    protected final RouteManager routeManager;
 
     static final String updateInst = Bundle.getMessage("RouteAddStatusInitial3", Bundle.getMessage("ButtonUpdate"));
     static final String cancelInst = Bundle.getMessage("RouteAddStatusInitial4", Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit")));

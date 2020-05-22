@@ -68,11 +68,11 @@ public class RouteExportToLogix {
         ArrayList<ConditionalAction> actionList = getConditionalActions(route);
 
         String file = route.getOutputSoundName();
-        if (file.length() > 0) {
+        if (file!=null && file.length() > 0) {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, Conditional.Action.PLAY_SOUND, "", -1, FileUtil.getPortableFilename(file)));
         }
         file = route.getOutputScriptName();
-        if (file.length() > 0) {
+        if (file!=null && file.length() > 0) {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, Conditional.Action.RUN_SCRIPT, "", -1, FileUtil.getPortableFilename(file)));
         }
 
