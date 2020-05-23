@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 public class CanisbSerialDriverAdapter extends GcSerialDriverAdapter {
 
     public CanisbSerialDriverAdapter() {
-        super();
+        super("S");
         option2Name = "CANID";
         options.put(option2Name, new Option(Bundle.getMessage("JMRICANID"), new String[]{"127", "126", "125", "124", "123", "122", "121", "120"}));
     }

@@ -104,7 +104,7 @@ log4j.category.org.jdom2.transform=SEVERE
 # log4j.category.jmri.jmrit.progsupport=TRACE
 # log4j.category.jmri.jmrit.symbolicprog.tabbedframe=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG
-log4j.category.jmri.jmrix.can=DEBUG
+# log4j.category.jmri.jmrix=DEBUG
 # log4j.category.jmri.jmrix.nce.NceTrafficController=WARN
 # log4j.category.org.eclipse.jetty=INFO
 
