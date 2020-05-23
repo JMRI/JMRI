@@ -1566,7 +1566,6 @@
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-util-lookup</artifactId>
             <version>${netbeans.version}</version>
-            <scope>compile</scope>
         </dependency>
         <!-- hid4java for cross-platform HID USB -->
         <dependency>
