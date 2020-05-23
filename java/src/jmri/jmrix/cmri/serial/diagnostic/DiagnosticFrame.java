@@ -1138,6 +1138,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 
     /**
      * Create an Transmit packet (SerialMessage).
+     * @return loaded packet to transmit
      */
     SerialMessage createOutPacket() {
         // Count the number of DLE's to be inserted

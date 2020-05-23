@@ -1,7 +1,7 @@
 package apps;
 
-import apps.startup.AbstractStartupActionFactory;
-import apps.startup.StartupActionFactory;
+import jmri.util.startup.AbstractStartupActionFactory;
+import jmri.util.startup.StartupActionFactory;
 import java.util.Locale;
 import org.openide.util.lookup.ServiceProvider;
 

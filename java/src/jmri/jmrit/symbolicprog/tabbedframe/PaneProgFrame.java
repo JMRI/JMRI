@@ -94,6 +94,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * appropriate.
      * <p>
      * A null value is ignored (?)
+     * @return new mode panel for inclusion in the GUI
      */
     abstract protected JPanel getModePane();
 
@@ -1198,6 +1199,11 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     /**
      * If there are any modifier elements, process them.
+     * @param e Process the contents of this element
+     * @param pane Destination of any visible items
+     * @param model Used to locate any needed variables
+     * @param tabPane For overall GUI navigation
+     * @param index Which pane in the overall window
      */
     protected void processModifierElements(Element e, final PaneProgPane pane, VariableTableModel model, final JTabbedPane tabPane, final int index) {
         QualifierAdder qa = new QualifierAdder() {

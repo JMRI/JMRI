@@ -375,6 +375,8 @@ abstract public class AbstractPortController implements PortAdapter {
     /**
      * Service method to purge a stream of initial contents
      * while opening the connection.
+     * @param serialStream input data
+     * @throws java.io.IOException from underlying operations
      */
      @SuppressFBWarnings(value = "SR_NOT_CHECKED", justification = "skipping all, don't care what skip() returns")
      protected void purgeStream(@Nonnull java.io.InputStream serialStream) throws java.io.IOException {

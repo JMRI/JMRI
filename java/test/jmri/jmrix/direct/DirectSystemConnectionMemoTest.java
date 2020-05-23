@@ -1,5 +1,6 @@
 package jmri.jmrix.direct;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
@@ -9,7 +10,7 @@ import org.junit.Before;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class DirectSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class DirectSystemConnectionMemoTest extends SystemConnectionMemoTestBase<DirectSystemConnectionMemo> {
 
     // Ctor etc are tested in MemoTestBase
 

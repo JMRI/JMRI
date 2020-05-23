@@ -75,9 +75,10 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
     /**
      * Get the Register Number for this Throttle's assigned address
+     * @return register number currently
      */
     int getRegisterNum() {
- return(tc.getCommandStation().getRegisterNum(this.getDccAddress()));
+        return (tc.getCommandStation().getRegisterNum(this.getDccAddress()));
     }
 
     /**
