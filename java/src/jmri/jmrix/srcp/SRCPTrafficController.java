@@ -2,6 +2,8 @@ package jmri.jmrix.srcp;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -30,14 +32,14 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         implements SRCPInterface {
 
     protected SRCPSystemConnectionMemo _memo = null;
+    final Runnable shutDownTask = () -> sendSRCPMessage(new SRCPMessage("TERM 0 SESSION"), null);
 
     /**
      * Create a new SRCPTrafficController instance.
      */
     public SRCPTrafficController() {
         super();
-        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class)
-                .register(() -> this.sendSRCPMessage(new SRCPMessage("TERM 0 SESSION"), null));
+        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
     }
 
     // The methods to implement the SRCPInterface
@@ -77,9 +79,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
      */
     @Override
     public void receiveLoop() {
-        if (log.isDebugEnabled()) {
-            log.debug("SRCP receiveLoop starts");
-        }
+        log.debug("SRCP receiveLoop starts");
         SRCPClientParser parser = new SRCPClientParser(istream);
         while (true) {
             try {
@@ -99,9 +99,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                 } catch (InterruptedException | InvocationTargetException ex) {
                     log.error("Unexpected exception in invokeAndWait:", ex);
                 }
-                if (log.isDebugEnabled()) {
-                    log.debug("dispatch thread invoked");
-                }
+                log.debug("dispatch thread invoked");
 
                 log.debug("Mode {} child contains {}", mode, ((SimpleNode) e.jjtGetChild(1)).jjtGetValue());
                 //if (mode==HANDSHAKEMODE && ((String)((SimpleNode)e.jjtGetChild(1)).jjtGetValue()).contains("GO")) mode=RUNMODE;
@@ -161,9 +159,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                     default: {
                         replyInDispatch = false;
                         if (allowUnexpectedReply == true) {
-                            if (log.isDebugEnabled()) {
-                                log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, e.toString());
-                            }
+                            log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, e);
 
                             synchronized (xmtRunnable) {
                                 // The transmit thread sometimes gets stuck
@@ -173,12 +169,13 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                                 xmtRunnable.notify();
                             }
                         } else {
-                            unexpectedReplyStateError(mCurrentState,e.toString());
+                            unexpectedReplyStateError(mCurrentState, e.toString());
                         }
                     }
                 }
 
-            } catch (ParseException pe) {
+            }
+            catch (ParseException pe) {
                 rcvException = true;
                 reportReceiveLoopException(pe);
                 break;
@@ -204,8 +201,9 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 
     /**
      * Forward a SRCPReply to all registered SRCPInterface listeners.
+     *
      * @param client WHo should receive the reply
-     * @param n relevant node
+     * @param n      relevant node
      */
     protected void forwardReply(AbstractMRListener client, SimpleNode n) {
         ((SRCPListener) client).reply(n);
@@ -225,7 +223,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
     }
 
     /**
-     * Forward a preformatted message to the actual interface.
+     * {@inheritDoc}
      */
     @Override
     public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
@@ -252,13 +250,12 @@ public class SRCPTrafficController extends AbstractMRTrafficController
     @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         int index = msg.getNumDataElements() - 1;
-        if (msg.getElement(index) == 0x0D) {
-            return true;
-        }
-        if (msg.getElement(index) == 0x0A) {
-            return true;
-        } else {
-            return false;
+        switch (msg.getElement(index)) {
+            case 0x0D:
+            case 0x0A:
+                return true;
+            default:
+                return false;
         }
     }
 
@@ -281,9 +278,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         int cnt = v.size();
         for (int i = 0; i < cnt; i++) {
             AbstractMRListener client = v.elementAt(i);
-            if (log.isDebugEnabled()) {
-                log.debug("notify client: {}", client);
-            }
+            log.debug("notify client: {}", client);
             try {
                 //skip dest for now, we'll send the message to there last.
                 if (dest != client) {
@@ -330,6 +325,3 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 
     private final static Logger log = LoggerFactory.getLogger(SRCPTrafficController.class);
 }
-
-
-
