@@ -41,7 +41,6 @@ abstract public class ConfigurationManager {
      * @return Copy of System Options Array
      */
     static public String[] getSystemOptions() {
-        log.debug("SystemOptions are {}", Arrays.copyOf(options, options.length));
         return Arrays.copyOf(options, options.length);
     }
 
