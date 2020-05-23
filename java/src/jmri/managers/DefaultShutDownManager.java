@@ -288,16 +288,14 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         firePropertyChange(PROP_SHUTTING_DOWN, old, state);
     }
 
-    final class ProxyTask extends Task implements TaskListener {
+    static final class ProxyTask extends Task implements TaskListener {
         private int cnt;
 
         public ProxyTask(Collection<? extends Task> waitFor) {
             super(null);
             this.cnt = waitFor.size();
             notifyRunning();
-            for (Task t : waitFor) {
-                t.addTaskListener(this);
-            }
+            waitFor.forEach(t -> t.addTaskListener(this));
         }
 
         @Override
