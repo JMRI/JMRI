@@ -8,6 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+/**
+ * Tests for jmri.jmrit.beantable.routtable.RouteExportToLogix
+ *
+ * @author Paul Bender Copyright (C) 2020
+ */
 class RouteExportToLogixTest {
 
     private LogixManager lm;
@@ -43,5 +48,4 @@ class RouteExportToLogixTest {
         new RouteExportToLogix("IO12345",rm,lm,cm).export();
         Mockito.verify(rm).deleteRoute(r);
     }
-
 }
