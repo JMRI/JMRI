@@ -8,12 +8,17 @@ import java.awt.event.WindowEvent;
 
 import java.util.*;
 import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 
 import jmri.beans.Bean;
+import jmri.util.ThreadingUtil;
+
 import org.openide.util.RequestProcessor;
+import org.openide.util.Task;
+import org.openide.util.TaskListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,13 +54,15 @@ import org.slf4j.LoggerFactory;
 public class DefaultShutDownManager extends Bean implements ShutDownManager {
 
     private static boolean shuttingDown = false;
-    private final static Logger log = LoggerFactory.getLogger(DefaultShutDownManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultShutDownManager.class);
     private final List<ShutDownTask> tasks = new ArrayList<>();
     private final Set<Callable<Boolean>> callables = new HashSet<>();
     private final Set<Runnable> runnables = new HashSet<>();
     protected final Thread shutdownHook;
     // use up to 8 threads for parallel tasks
     private static final RequestProcessor RP = new RequestProcessor("On Start/Stop", 8); // NOI18N
+    private static final String NO_NULL_TASK = "Shutdown task cannot be null."; // NOI18N
+    private static final String PROP_SHUTTING_DOWN = "shuttingDown"; // NOI18N
 
     /**
      * Create a new shutdown manager.
@@ -68,10 +75,8 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         // calling System.exit() within a shutdown hook will cause the
         // application to hang.
         // This shutdown hook also allows OS X Application->Quit to trigger our
-        // shutdown tasks, since that simply calls System.exit();
-        this.shutdownHook = jmri.util.ThreadingUtil.newThread(() -> {
-            DefaultShutDownManager.this.shutdown(0, false);
-        });
+        // shutdown tasks, since that simply calls System.exit()
+        this.shutdownHook = ThreadingUtil.newThread(() -> DefaultShutDownManager.this.shutdown(0, false));
         try {
             Runtime.getRuntime().addShutdownHook(this.shutdownHook);
         } catch (IllegalStateException ex) {
@@ -83,8 +88,8 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      * {@inheritDoc}
      */
     @Override
-    synchronized public void register(ShutDownTask s) {
-        Objects.requireNonNull(s, "Shutdown task cannot be null.");
+    public synchronized void register(ShutDownTask s) {
+        Objects.requireNonNull(s, NO_NULL_TASK);
         if (!this.tasks.contains(s)) {
             this.tasks.add(s);
         } else {
@@ -92,15 +97,15 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         }
         this.runnables.add(s);
         this.callables.add(s);
-        this.addPropertyChangeListener("shuttingDown", s);
+        this.addPropertyChangeListener(PROP_SHUTTING_DOWN, s);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    synchronized public void register(Callable<Boolean> task) {
-        Objects.requireNonNull(task, "Shutdown task cannot be null.");
+    public synchronized void register(Callable<Boolean> task) {
+        Objects.requireNonNull(task, NO_NULL_TASK);
         this.callables.add(task);
     }
 
@@ -108,8 +113,8 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      * {@inheritDoc}
      */
     @Override
-    synchronized public void register(Runnable task) {
-        Objects.requireNonNull(task, "Shutdown task cannot be null.");
+    public synchronized void register(Runnable task) {
+        Objects.requireNonNull(task, NO_NULL_TASK);
         this.runnables.add(task);
     }
 
@@ -117,8 +122,8 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      * {@inheritDoc}
      */
     @Override
-    synchronized public void deregister(ShutDownTask s) {
-        this.removePropertyChangeListener("shuttingDown", s);
+    public synchronized void deregister(ShutDownTask s) {
+        this.removePropertyChangeListener(PROP_SHUTTING_DOWN, s);
         this.tasks.remove(s);
         this.callables.remove(s);
         this.runnables.remove(s);
@@ -128,7 +133,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      * {@inheritDoc}
      */
     @Override
-    synchronized public void deregister(Callable task) {
+    public synchronized void deregister(Callable<Boolean> task) {
         this.callables.remove(task);
     }
 
@@ -136,7 +141,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      * {@inheritDoc}
      */
     @Override
-    synchronized public void deregister(Runnable task) {
+    public synchronized void deregister(Runnable task) {
         this.runnables.remove(task);
     }
 
@@ -211,9 +216,9 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
             log.debug("Shutting down with {} tasks", this.tasks.size());
             setShuttingDown(true);
             // First check if shut down is allowed
-            for (Callable task : callables) {
+            for (Callable<Boolean> task : callables) {
                 try {
-                    if (task.call().equals(Boolean.FALSE)) {
+                    if (Boolean.FALSE.equals(task.call())) {
                         setShuttingDown(false);
                         return false;
                     }
@@ -225,11 +230,10 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
             }
             // each shut down tasks must complete within _timeout_ milliseconds
             int timeout = 30000;
-            runnables.forEach(task -> RP.post(task, timeout));
             // close any open windows by triggering a closing event
             // this gives open windows a final chance to perform any cleanup
             if (!GraphicsEnvironment.isHeadless()) {
-                Arrays.asList(Frame.getFrames()).stream().forEach((frame) -> {
+                Arrays.asList(Frame.getFrames()).stream().forEach(frame -> {
                     // do not run on thread, or in parallel, as System.exit()
                     // will get called before windows can close
                     if (frame.isDisplayable()) { // dispose() has not been called
@@ -242,18 +246,15 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
             }
             log.debug("windows completed closing {} milliseconds after starting shutdown", new Date().getTime() - start.getTime());
             // wait for parallel tasks to complete
-            synchronized (start) {
-                while (!RP.isTerminated()) {
-                    try {
-                        RP.awaitTermination(100, TimeUnit.MILLISECONDS);
-                    } catch (InterruptedException ex) {
-                        // do nothing   
-                    }
-                    if ((new Date().getTime() - start.getTime()) > timeout) {
-                        log.warn("Terminating without waiting for stop tasks to complete");
-                        break;
-                    }
+            try {
+                if (!runnables.isEmpty() && !new ProxyTask(runnables.stream()
+                        .map(task -> RP.post(task, 0, Thread.currentThread().getPriority()))
+                        .collect(Collectors.toSet()))
+                                .waitFinished(timeout)) {
+                    log.warn("Terminating without waiting for stop tasks to complete");
                 }
+            } catch (InterruptedException ex) {
+                // do nothing
             }
             // success
             log.debug("Shutdown took {} milliseconds.", new Date().getTime() - start.getTime());
@@ -284,7 +285,26 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         boolean old = shuttingDown;
         shuttingDown = state;
         log.debug("Setting shuttingDown to {}", state);
-        firePropertyChange("shuttingDown", old, state);
+        firePropertyChange(PROP_SHUTTING_DOWN, old, state);
     }
 
+    final class ProxyTask extends Task implements TaskListener {
+        private int cnt;
+
+        public ProxyTask(Collection<? extends Task> waitFor) {
+            super(null);
+            this.cnt = waitFor.size();
+            notifyRunning();
+            for (Task t : waitFor) {
+                t.addTaskListener(this);
+            }
+        }
+
+        @Override
+        public synchronized void taskFinished(Task task) {
+            if (--cnt == 0) {
+                notifyFinished();
+            }
+        }
+    }
 }

@@ -71,7 +71,7 @@ public interface ShutDownManager extends PropertyChangeProvider {
      *
      * @param task the task not to call
      */
-    public void deregister(@CheckForNull Callable task);
+    public void deregister(@CheckForNull Callable<Boolean> task);
 
     /**
      * Deregister a task. Attempts to deregister a task that is not
