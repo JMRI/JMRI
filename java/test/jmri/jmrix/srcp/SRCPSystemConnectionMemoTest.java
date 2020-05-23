@@ -26,6 +26,8 @@ public class SRCPSystemConnectionMemoTest extends SystemConnectionMemoTestBase<S
         };
         SRCPSystemConnectionMemo m = new SRCPSystemConnectionMemo(et);
         Assert.assertNotNull(m);
+        m.getTrafficController().terminateThreads();
+        m.dispose();
     }
 
     @Override
