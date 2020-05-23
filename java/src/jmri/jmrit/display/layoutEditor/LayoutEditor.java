@@ -3256,7 +3256,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * This allows the same model object in two windows, but not 
      * twice in a single window.
      *
-     * @param layoutTrack    the object (Layout track subclass)
+     * @param trk    the object (LayoutTrack subclass)
      * @param connectionType the type of connection
      * @return the coordinates for the connection type of the specified object
      */
@@ -3271,7 +3271,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * Get the coordinates for the connection type of the specified LayoutTrackView
      * or subtype.
      *
-     * @param layoutTrack    the object (Layout track subclass)
+     * @param trkv    the object (LayoutTrackView subclass)
      * @param connectionType the type of connection
      * @return the coordinates for the connection type of the specified object
      */
@@ -7724,9 +7724,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             log.warn("No View found for {} class {}", trk, trk.getClass());
             throw new IllegalArgumentException("No View found: "+trk.getClass());
         }
-        if (lv instanceof LayoutTrackView) return (LayoutTrackView) lv;
-        else log.error("wrong type {} {} found {}", trk, trk.getClass(), lv);
-        throw new IllegalArgumentException("Wrong type: "+trk.getClass());
+        return lv;
     }
     // temporary
     final public LevelXingView getLevelXingView(LevelXing xing) {

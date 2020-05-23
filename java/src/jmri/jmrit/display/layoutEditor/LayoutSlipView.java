@@ -52,9 +52,6 @@ public class LayoutSlipView extends LayoutTurnoutView {
 
     public int currentState = UNKNOWN;
 
-    private String turnoutBName = "";
-
-    private java.beans.PropertyChangeListener mTurnoutListener = null;
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutSlipEditor editor;
 
     public LayoutSlip getSlip() {return slip; }
@@ -133,10 +130,6 @@ public class LayoutSlipView extends LayoutTurnoutView {
        slip.toggleState(selectedPointType);
     }
 
-    private void setSlipState(int newSlipState) {
-       slip.setSlipState(newSlipState);
-    }
-
     /**
      * is this turnout occupied?
      *
@@ -144,17 +137,6 @@ public class LayoutSlipView extends LayoutTurnoutView {
      */
     private boolean isOccupied() {
        return slip.isOccupied();
-    }
-
-    /**
-     * Activate/Deactivate turnout to redraw when turnout state changes
-     */
-    private void activateTurnout() {
-        slip.activateTurnout();
-    }
-
-    private void deactivateTurnout() {
-        slip.deactivateTurnout();
     }
 
     @Override
@@ -679,15 +661,6 @@ public class LayoutSlipView extends LayoutTurnoutView {
         slip.remove();
     }
 
-    private void disableSML(SignalMast signalMast) {
-        slip.disableSML(signalMast);
-    }
-
-    // HashMap<Integer, TurnoutState> turnoutStates = new LinkedHashMap<>(4);
-
-//     public HashMap<Integer, TurnoutState> getTurnoutStates() {
-//         return slip.getTurnoutStates();
-//     }
 
     public int getTurnoutState(@Nonnull Turnout turn, int state) {
        return slip.getTurnoutState(turn, state);
@@ -703,11 +676,6 @@ public class LayoutSlipView extends LayoutTurnoutView {
 
     public void setTurnoutStates(int state, @Nonnull String turnStateA, @Nonnull String turnStateB) {
         slip.setTurnoutStates(state, turnStateA, turnStateB);
-    }
-
-    // Internal call to update the state of the slip depending upon the turnout states.
-    private void updateState() {
-        slip.updateState();
     }
 
     /**

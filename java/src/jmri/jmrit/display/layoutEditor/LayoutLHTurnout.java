@@ -127,10 +127,6 @@ public class LayoutLHTurnout extends LayoutTurnout {
     /**
      * Main constructor method.
      * @param id turnout ID string.
-     * @param c 2D point.
-     * @param rot rotation.
-     * @param xFactor horizontal factor.
-     * @param yFactor vertical factor.
      * @param layoutEditor main layout editor.
      * @param v version, unused.
      */

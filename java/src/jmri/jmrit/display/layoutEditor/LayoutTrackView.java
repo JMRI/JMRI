@@ -545,5 +545,5 @@ abstract public class LayoutTrackView {
      */
     abstract public void setAllLayoutBlocks(LayoutBlock layoutBlock);
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrackView.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrackView.class);
 }

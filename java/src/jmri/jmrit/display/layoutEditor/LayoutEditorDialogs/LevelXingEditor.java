@@ -70,7 +70,7 @@ public class LevelXingEditor extends LayoutTurntableEditor {
 
     /**
      * Edit a Level Crossing.
-     * @param levelXing the level crossing to edit.
+     * @param levelXingView the level crossing to edit.
      */
     public void editLayoutTrack(LevelXingView levelXingView) {
     try {

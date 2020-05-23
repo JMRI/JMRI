@@ -162,9 +162,7 @@ public class LayoutModelsScaffold implements LayoutModels {
             log.warn("No View found for {} class {}", trk, trk.getClass());
             throw new IllegalArgumentException("No View found: "+trk.getClass());
         }
-        if (lv instanceof LayoutTrackView) return (LayoutTrackView) lv;
-        else log.error("wrong type {} {} found {}", trk, trk.getClass(), lv);
-        throw new IllegalArgumentException("Wrong type: "+trk.getClass());
+        return lv;
     }
     // temporary
     public LevelXingView getLevelXingView(LevelXing xing) {

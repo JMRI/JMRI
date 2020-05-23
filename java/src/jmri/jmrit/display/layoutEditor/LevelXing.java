@@ -56,12 +56,10 @@ public class LevelXing extends LayoutTrack {
     /**
      * Constructor.
      * @param id ID string.
-     * @param c the point location.
      * @param layoutEditor the main layout editor.
      */
     public LevelXing(String id, LayoutEditor layoutEditor) {
         super(id, layoutEditor);
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor(layoutEditor);
     }
 
     // defined constants
@@ -88,21 +86,13 @@ public class LevelXing extends LayoutTrack {
     private LayoutTrack connectB = null;
     private LayoutTrack connectC = null;
     private LayoutTrack connectD = null;
-
-//     private Point2D dispA = new Point2D.Double(-20.0, 0.0);
-//     private Point2D dispB = new Point2D.Double(-14.0, 14.0);
-
-    // public static final int POINTA = 0x01;
-    // public static final int POINTB = 0x10;
-    // public static final int POINTC = 0x20;
-    // public static final int POINTD = 0x30;
     
     public enum Geometry {
         POINTA, POINTB, POINTC, POINTD
     }
 
     // temporary reference to the Editor that will eventually be part of View
-    private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor editor;
+    //private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor editor;
 
     // this should only be used for debugging
     @Override
@@ -848,49 +838,6 @@ public class LevelXing extends LayoutTrack {
         layoutEditor.getLevelXingView(this).setCoordsD(p); // temporary
     }
 
-    /**
-     * {@inheritDoc}
-     */
-//     @Override
-//     public void scaleCoords(double xFactor, double yFactor) {
-//         throw new IllegalArgumentException("should have called View instead of temporary");
-//         Point2D factor = new Point2D.Double(xFactor, yFactor);
-//         super.setCoordsCenter(MathUtil.granulize(MathUtil.multiply(getCoordsCenter(), factor), 1.0));
-//         dispA = MathUtil.granulize(MathUtil.multiply(dispA, factor), 1.0);
-//         dispB = MathUtil.granulize(MathUtil.multiply(dispB, factor), 1.0);
-//    }
-
-    /**
-     * {@inheritDoc}
-     */
-//      @Override
-//      public void translateCoords(double xFactor, double yFactor) {
-//         throw new IllegalArgumentException("should have called View instead of temporary");
-// 
-//         Point2D factor = new Point2D.Double(xFactor, yFactor);
-//         super.setCoordsCenter(MathUtil.add(getCoordsCenter(), factor));
-//    }
-
-    /**
-     * {@inheritDoc}
-     */
-//      @Override
-//      public void rotateCoords(double angleDEG) {
-//         throw new IllegalArgumentException("should have called View instead of temporary");
-//         // rotate coordinates
-//         double rotRAD = Math.toRadians(angleDEG);
-//         double sineRot = Math.sin(rotRAD);
-//         double cosineRot = Math.cos(rotRAD);
-// 
-//         // rotate displacements around origin {0, 0}
-//         Point2D center_temp = getCoordsCenter();
-//         super.setCoordsCenter(MathUtil.zeroPoint2D);
-//         dispA = rotatePoint(dispA, sineRot, cosineRot);
-//         dispB = rotatePoint(dispB, sineRot, cosineRot);
-//         super.setCoordsCenter(center_temp);
-// 
-//     }
-    
     // initialization instance variables (used when loading a LayoutEditor)
     public String connectAName = "";
     public String connectBName = "";
@@ -1012,16 +959,6 @@ public class LevelXing extends LayoutTrack {
         return references;
     }
 
-//    JPopupMenu popup = null;
-
-    /**
-     * {@inheritDoc}
-     */
-//      @Override
-//      @Nonnull
-//      protected JPopupMenu showPopup(@CheckForNull MouseEvent mouseEvent) {
-//         throw new IllegalArgumentException("should have called View instead of temporary");
-//     } 
 
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];

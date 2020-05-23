@@ -78,7 +78,7 @@ abstract public class LayoutTrackEditor {
     
     /**
      * Launch the editor for a particular LayoutTrack-tree object.
-     * @param layoutTrack the layout track to edit.
+     * @param layoutTrackView the layout track view to edit.
      */
     abstract public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView);
     

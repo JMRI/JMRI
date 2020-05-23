@@ -40,7 +40,6 @@ abstract public class LayoutTrack {
     /**
      * Constructor method.
      * @param ident track ID.
-     * @param c 2D point.
      * @param layoutEditor main layout editor.
      */
     // public LayoutTrack(@Nonnull String ident, @Nonnull LayoutModels layoutEditor) { // preferred

@@ -188,7 +188,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
      * @return boolean true if single track entrance
      */
     public boolean hasEnteringSingleTrack() {
-        return turnout.hasEnteringSingleTrack(getTurnoutType());
+        return LayoutTurnout.hasEnteringSingleTrack(getTurnoutType());
     }
 
     /**
@@ -232,14 +232,6 @@ public class LayoutTurnoutView extends LayoutTrackView {
     protected NamedBeanHandle<Turnout> namedTurnout = null;
     // Second turnout is used to either throw a second turnout in a cross over or if one turnout address is used to throw two physical ones
     protected NamedBeanHandle<Turnout> secondNamedTurnout = null;
-
-    private java.beans.PropertyChangeListener mTurnoutListener = null;
-    
-    // persistent instances variables (saved between sessions)
-    // these should be the system or user name of an existing physical turnout
-    // private String turnoutName = "";
-    // private String secondTurnoutName = "";
-    // private boolean secondTurnoutInverted = false;
 
     // default is package protected
     protected NamedBeanHandle<LayoutBlock> namedLayoutBlockA = null;
@@ -1428,17 +1420,6 @@ public class LayoutTurnoutView extends LayoutTrackView {
         pointB = rotatePoint(pointB, sineRot, cosineRot);
         pointC = rotatePoint(pointC, sineRot, cosineRot);
         pointD = rotatePoint(pointD, sineRot, cosineRot);
-    }
-
-    /**
-     * Activate/Deactivate turnout to redraw when turnout state changes
-     */
-    private void activateTurnout() {
-        throw new IllegalArgumentException("should be called at all");
-    }
-
-    private void deactivateTurnout() {
-        throw new IllegalArgumentException("should be called at all");
     }
 
     /**

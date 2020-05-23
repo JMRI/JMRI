@@ -132,7 +132,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
         super(id, layoutEditor);
         
         type = t;
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor(layoutEditor);
     }
 
     protected LayoutTurnout(@Nonnull String id,
@@ -149,10 +148,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
      * Main constructor method.
      * @param id Layout Turnout ID.
      * @param t type, e.g. LH_TURNOUT, WYE_TURNOUT
-     * @param c 2D point.
-     * @param rot rotation.
-     * @param xFactor horizontal factor.
-     * @param yFactor vertical factor.
      * @param layoutEditor main layout editor.
      * @param v version.
      */
@@ -168,8 +163,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
         disableWhenOccupied = false;
         type = t;
         version = v;
-
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor(layoutEditor);
     }
 
     // Defined constants for turnout types
@@ -387,7 +380,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     private final boolean useBlockSpeed = false;
     
     // temporary reference to the Editor that will eventually be part of View
-    private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor editor;
+    // private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor editor;
 
     /**
      * {@inheritDoc}
@@ -1936,11 +1929,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return (isMainlineA() || isMainlineB() || isMainlineC() || isMainlineD());
     }
 
-    private void reCalculateCenter() {
-        log.debug("temporary reCalculateCenter should have been called through View");
-        layoutEditor.getLayoutTurnoutView(this).reCalculateCenter();
-    }
-
     public void setCoordsA(@Nonnull Point2D p) {
         log.debug("temporary setCoordsA should have been called through View");
         layoutEditor.getLayoutTurnoutView(this).setCoordsA(p);    
@@ -3006,23 +2994,23 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    private static class AbstractActionImpl extends AbstractAction {
-
-        private final String blockName;
-        private final LayoutBlock layoutBlock;
-
-        public AbstractActionImpl(String name, String blockName, LayoutBlock layoutBlock) {
-            super(name);
-            this.blockName = blockName;
-            this.layoutBlock = layoutBlock;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockName, layoutBlock);
-            routeTableAction.actionPerformed(e);
-        }
-    }
+//     private static class AbstractActionImpl extends AbstractAction {
+// 
+//         private final String blockName;
+//         private final LayoutBlock layoutBlock;
+// 
+//         public AbstractActionImpl(String name, String blockName, LayoutBlock layoutBlock) {
+//             super(name);
+//             this.blockName = blockName;
+//             this.layoutBlock = layoutBlock;
+//         }
+// 
+//         @Override
+//         public void actionPerformed(ActionEvent e) {
+//             AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockName, layoutBlock);
+//             routeTableAction.actionPerformed(e);
+//         }
+//     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnout.class);
 }

@@ -445,7 +445,8 @@ public class LayoutEditorToolsTest {
         ThreadingUtil.runOnLayoutEventually(() -> {
             Point2D point = new Point2D.Double(150.0, 100.0);
             LevelXing lx = new LevelXing("LevelCrossing", layoutEditor);
-            LevelXingView lxv = new LevelXingView(lx, point, layoutEditor);
+            // LevelXingView lxv = new LevelXingView(lx, point, layoutEditor);
+            
             lx.setLayoutBlockAC(layoutBlocks.get(0));
             lx.setLayoutBlockBD(layoutBlocks.get(1));
 

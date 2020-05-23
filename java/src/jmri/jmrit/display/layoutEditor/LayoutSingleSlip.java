@@ -53,8 +53,6 @@ public class LayoutSingleSlip extends LayoutSlip {
     /**
      * Constructor method.
      * @param id slip ID.
-     * @param c 2D point.
-     * @param rot rotation.
      * @param layoutEditor main layout editor.
      */
     public LayoutSingleSlip(String id, LayoutEditor layoutEditor) {

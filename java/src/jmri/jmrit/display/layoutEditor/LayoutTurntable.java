@@ -64,7 +64,6 @@ public class LayoutTurntable extends LayoutTrack {
         super(id, layoutEditor);
         
         radius = 25.0; // initial default, change asap.
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurntableEditor(layoutEditor);
     }
 
     // defined constants
@@ -74,7 +73,7 @@ public class LayoutTurntable extends LayoutTrack {
     private boolean turnoutControlled = false;
     private double radius = 25.0;
     private int lastKnownIndex = -1;
-    private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurntableEditor editor;
+
     // persistent instance variables (saved between sessions)
     
     // temporary: this is referenced directly from LayoutTurntable, which 
@@ -601,42 +600,6 @@ public class LayoutTurntable extends LayoutTrack {
         return false;
     }
 
-    //
-    // Modify coordinates methods
-    //
-    /**
-     * Scale this LayoutTrack's coordinates by the x and y factors.
-     *
-     * @param xFactor the amount to scale X coordinates
-     * @param yFactor the amount to scale Y coordinates
-     */
-//     @Override
-//     public void scaleCoords(double xFactor, double yFactor) {
-//         log.info("scaleCoords should have called View instead of temporary");
-//         layoutEditor.getLayoutTurntableView(this).scaleCoords( xFactor, yFactor);
-//     }
-
-    /**
-     * Translate (2D move) this LayoutTrack's coordinates by the x and y
-     * factors.
-     *
-     * @param xFactor the amount to translate X coordinates
-     * @param yFactor the amount to translate Y coordinates
-     */
-//     @Override
-//     public void translateCoords(double xFactor, double yFactor) {
-//         log.info("translateCoords should have called View instead of temporary");
-//         layoutEditor.getLayoutTurntableView(this).translateCoords( xFactor, yFactor);
-//     }
-
-    /**
-     * {@inheritDoc}
-     */
-//     @Override
-//     public void rotateCoords(double angleDEG) {
-//         log.info("rotateCoords should have called View instead of temporary");
-//         layoutEditor.getLayoutTurntableView(this).rotateCoords(angleDEG);
-//     }
 
     public String tLayoutBlockName = "";
 
@@ -677,76 +640,6 @@ public class LayoutTurntable extends LayoutTrack {
     public void setTurnoutControlled(boolean boo) {
         turnoutControlled = boo;
     }
-
-    //private JPopupMenu popupMenu = null;
-
-    /**
-     * {@inheritDoc}
-     */
-//     @Override
-//     @Nonnull
-//     protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
-//         throw new IllegalArgumentException("should have called View instead of temporary");
-//         if (popupMenu != null) {
-//             popupMenu.removeAll();
-//         } else {
-//             popupMenu = new JPopupMenu();
-//         }
-// 
-//         JMenuItem jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Turntable")) + getName());
-//         jmi.setEnabled(false);
-// 
-//         LayoutBlock lb = getLayoutBlock();
-//         if (lb == null) {
-//             jmi = popupMenu.add(Bundle.getMessage("NoBlock"));
-//         } else {
-//             String displayName = lb.getDisplayName();
-//             jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + displayName);
-//         }
-//         jmi.setEnabled(false);
-// 
-//         /// if there are any track connections
-//         if (!rayTrackList.isEmpty()) {
-//             JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections"));
-//             rayTrackList.forEach((rt) -> {
-//                 TrackSegment ts = rt.getConnect();
-//                 if (ts != null) {
-//                     connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "" + rt.getConnectionIndex()) + ts.getName()) {
-//                         @Override
-//                         public void actionPerformed(ActionEvent e) {
-//                             layoutEditor.setSelectionRect(ts.getBounds());
-//                             ts.showPopup();
-//                         }
-//                     });
-//                 }
-//             });
-//             popupMenu.add(connectionsMenu);
-//         }
-// 
-//         popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
-// 
-//         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
-//             @Override
-//             public void actionPerformed(ActionEvent e) {
-//                 editor.editLayoutTrack(LayoutTurntable.this);
-//             }
-//         });
-//         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
-//             @Override
-//             public void actionPerformed(ActionEvent e) {
-//                 if (layoutEditor.removeTurntable(LayoutTurntable.this)) {
-//                     // Returned true if user did not cancel
-//                     remove();
-//                     dispose();
-//                 }
-//             }
-//         });
-//         layoutEditor.setShowAlignmentMenu(popupMenu);
-//         popupMenu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
-//         return popupMenu;
-//    }
-
-    // private JPopupMenu rayPopup = null;
 
     protected void showRayPopUp(MouseEvent e, int index) {
         throw new IllegalArgumentException("should have called View instead of temporary");
