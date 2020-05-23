@@ -42,14 +42,15 @@ public class SprogSystemConnectionMemoTest extends SystemConnectionMemoTestBase<
     @Override
     @Test
     public void testProvidesConsistManager() {
+        SprogSystemConnectionMemo memo = new SprogSystemConnectionMemo();
         // by default, does.
-        Assert.assertTrue("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
+        Assert.assertTrue("Provides ConsistManager", memo.provides(jmri.ConsistManager.class));
         // In service mode, does not.
-        scm.setSprogMode(SprogMode.SERVICE);
-        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
+        memo.setSprogMode(SprogMode.SERVICE);
+        Assert.assertFalse("Provides ConsistManager", memo.provides(jmri.ConsistManager.class));
         // In ops mode, does.
-        scm.setSprogMode(SprogMode.OPS);
-        Assert.assertTrue("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
+        memo.setSprogMode(SprogMode.OPS);
+        Assert.assertTrue("Provides ConsistManager", memo.provides(jmri.ConsistManager.class));
     }
 
     @Override
