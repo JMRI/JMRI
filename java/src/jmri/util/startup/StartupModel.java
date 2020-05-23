@@ -33,7 +33,7 @@ public interface StartupModel {
 
     /**
      * Test is model is a valid model. Invalid models will not be shown or saved
-     * by {@link apps.startup.StartupActionsPreferencesPanel}.
+     * by the Startup Actions Preferences panel.
      *
      * @return true if valid; false otherwise
      */
