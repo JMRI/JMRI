@@ -443,7 +443,7 @@ public class LayoutEditorToolsTest {
     public void testSetSignalsAtLevelXingFromMenu() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
-            Point2D point = new Point2D.Double(150.0, 100.0);
+            // Point2D point = new Point2D.Double(150.0, 100.0);
             LevelXing lx = new LevelXing("LevelCrossing", layoutEditor);
             // LevelXingView lxv = new LevelXingView(lx, point, layoutEditor);
             

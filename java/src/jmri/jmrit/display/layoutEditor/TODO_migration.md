@@ -16,8 +16,8 @@ It's in no particular order, items are removed as done, so please don't consider
 ## MVC work
 
 
-- [ ] Last:  TrackSegmentViewXml is storing as  class="TrackSegmentView" to ease file comparison; change back.
 
+ - [X] Make up and check a test panel for all 8 track directions (NORTH, NORTH_EAST, etc)
  - [ ] Make up and check an extensive Turnout test panel - rotate, scale, translate plus rays
  - [ ] Make up and check an extensive Slip test panel - rotate, scale, translate plus rays 
 
@@ -30,10 +30,12 @@ It's in no particular order, items are removed as done, so please don't consider
     =========> Referenced from various "Tools" calculations that don't use View, so isHidden() proxied for now
 - [x] flip in View
 - [ ] center in View
-- [ ] Decorations in View
-    - [ ] arrowstyle in View
-    - [ ] bridge in View
-    - [ ] tunnel in View
+- [ ] Decorations only in View
+    - [ ] arrowstyle only in View
+        =========>  arrows include connectivity, will need additional work
+    - [X] bridge only in View
+    - [X] tunnel only in View
+    - [ ] bumpers only in View
 
 - [x] create popup et al (inc member vars) in view
 - [ ] Turnout state in connectivity
@@ -43,15 +45,16 @@ Go through and confirm individually:
 
  - Remove topology variables from View
         LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
-        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
-        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
-        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+        LayoutTurnout LayoutWye
+        LayoutSlip 
+        LayoutXOver
  - Remove view variables from topology
         LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
-        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
-        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
-        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+        LayoutTurnout LayoutWye
+        LayoutSlip 
+        LayoutXOver
         
+ - [ ] Load & Store: TrackSegmentViewXml et al storing as  class="TrackSegmentView" to ease file comparison & for compatibility; change back after figuring out compatibility
  - load with specific view
         LayoutTrack LayoutTurntable LevelXing  PositionablePoint *TrackSegment 
         LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
@@ -71,6 +74,12 @@ Go through and confirm individually:
         LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
         LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
 
+ - Complete head comments
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint *TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+
  - Make a final pass to get rid of commented methods (i.e. from migration)
         LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
         LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
@@ -81,13 +90,13 @@ LayoutTurnout & LayoutTurnoutView setTrackSegmentBlock(..) is a bad split implem
  
 ## once moved to View, break down to subclasses to removing dynamic typing
 
- - move typed code down
+ - move typed code down from:
         LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
         LayoutTurnout
         LayoutSlip
         LayoutXOver
         
- - lots of messages in place for bad routine; some throw IllegalArgumentException
+ - lots of messages in place for bad routine; some throw IllegalArgumentException, force out by compilation checks
  
 ---
 
