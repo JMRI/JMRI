@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
-import jmri.ShutDownTask;
 import jmri.server.json.JSON;
 import jmri.server.web.spi.WebServerConfiguration;
 import jmri.util.FileUtil;
