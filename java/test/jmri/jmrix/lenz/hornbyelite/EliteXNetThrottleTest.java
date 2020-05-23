@@ -10,12 +10,14 @@ import org.junit.Test;
 
 /**
  * EliteXNetThrottleTest.java
+ * <p>
+ * Test for the jmri.jmrix.lenz.EliteXNetThrottle class
  *
- * Description:	tests for the jmri.jmrix.lenz.EliteXNetThrottle class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
+
+    private EliteXNetSystemConnectionMemo memo;
 
     @Test
     public void testCtor() {
@@ -39,7 +41,7 @@ public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     @Test
     public void testGetSpeedIncrement() {
-        float expResult = 1.0F/126.0F;
+        float expResult = 1.0F / 126.0F;
         float result = instance.getSpeedIncrement();
         Assert.assertEquals(expResult, result, 0.0);
     }
@@ -374,22 +376,22 @@ public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup5() {
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-        EliteXNetSystemConnectionMemo memo = new EliteXNetSystemConnectionMemo(tc);
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,memo.getThrottleManager());
-        instance = new EliteXNetThrottle(memo,new jmri.DccLocoAddress(42,false), tc);
+        memo = new EliteXNetSystemConnectionMemo(tc);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, memo.getThrottleManager());
+        instance = new EliteXNetThrottle(memo, new jmri.DccLocoAddress(42, false), tc);
     }
 
     @Override
     @After
     public void tearDown() {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        memo.getXNetTrafficController().terminateThreads();
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

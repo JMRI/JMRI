@@ -103,9 +103,6 @@ public class RouteFinder implements Runnable {
                 log.debug("level {} has {} nodes. quit= {}", level, nodes.size(), _quit);
             }
             level++;
-            if (_quit) {
-                break;
-            }
         }
         jmri.util.ThreadingUtil.runOnLayout(() -> {
             if (_destNodes.isEmpty()) {
@@ -175,10 +172,10 @@ public class RouteFinder implements Runnable {
                                 && _dEntryName.equals(pName)) {
                             _destNodes.add(child);
                         }
-                        children.add(child);
-                        if (_quit) {
-                            break;
-                        }
+                    }
+                    children.add(child);
+                    if (_quit) {
+                        break;
                     }
                 }
             } else {

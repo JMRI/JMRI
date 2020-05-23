@@ -15,7 +15,7 @@ import org.junit.Test;
 /**
  * Tests the ProxyTurnoutManager.
  *
- * @author	Bob Jacobsen 2003, 2006, 2008, 2014, 2018
+ * @author Bob Jacobsen 2003, 2006, 2008, 2014, 2018
  */
 public class ProxyTurnoutManagerTest {
 
@@ -23,7 +23,7 @@ public class ProxyTurnoutManagerTest {
         return "JT" + i;
     }
 
-    protected TurnoutManager l = null;	// holds objects under test
+    protected TurnoutManager l = null; // holds objects under test
 
     static protected boolean listenerResult = false;
 

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * MemoryInputIconXmlTest.java
  *
- * Description: tests for the MemoryInputIconXml class
+ * Test for the MemoryInputIconXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class MemoryInputIconXmlTest {
       Assert.assertNotNull("MemoryInputIconXml constructor",new MemoryInputIconXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

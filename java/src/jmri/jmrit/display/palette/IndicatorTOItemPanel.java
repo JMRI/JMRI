@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -107,14 +106,10 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         String family = null;
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> families
                 = ItemPalette.getLevel4FamilyMaps(_itemType);
-        Iterator<Entry<String, HashMap<String, HashMap<String, NamedIcon>>>> it = families.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, HashMap<String, HashMap<String, NamedIcon>>> entry = it.next();
+        for (Entry<String, HashMap<String, HashMap<String, NamedIcon>>> entry : families.entrySet()) {
             family = entry.getKey();
             log.debug("FamilyKey = {}", family);
-            Iterator<Entry<String, HashMap<String, NamedIcon>>> iter = entry.getValue().entrySet().iterator();
-            while (iter.hasNext()) {
-                Entry<String, HashMap<String, NamedIcon>> ent = iter.next();
+            for (Entry<String, HashMap<String, NamedIcon>> ent : entry.getValue().entrySet()) {
                 HashMap<String, NamedIcon> subFamily = iconMaps.get(ent.getKey());
                 if (!mapsAreEqual(ent.getValue(), subFamily)) {
                     family = null;
@@ -230,31 +225,26 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         c.gridheight = 1;
         c.gridy = -1;
 
-        Iterator<Entry<String, HashMap<String, NamedIcon>>> it = map.entrySet().iterator();
-        while (it.hasNext()) {
+        for (Entry<String, HashMap<String, NamedIcon>> stringHashMapEntry : map.entrySet()) {
             c.gridx = 0;
             c.gridy++;
 
-            Entry<String, HashMap<String, NamedIcon>> entry = it.next();
-            String stateName = entry.getKey();
+            String stateName = stringHashMapEntry.getKey();
             JPanel panel = new JPanel();
             panel.add(new JLabel(ItemPalette.convertText(stateName)));
             panel.setOpaque(false);
             gridbag.setConstraints(panel, c);
             _iconPanel.add(panel);
             c.gridx++;
-            HashMap<String, NamedIcon> iconMap = entry.getValue();
+            HashMap<String, NamedIcon> iconMap = stringHashMapEntry.getValue();
             ItemPanel.checkIconMap("Turnout", iconMap); // NOI18N
-            Iterator<Entry<String, NamedIcon>> iter = iconMap.entrySet().iterator();
-            while (iter.hasNext()) {
-                Entry<String, NamedIcon> ent = iter.next();
+            for (Entry<String, NamedIcon> ent : iconMap.entrySet()) {
                 String borderName = ItemPalette.convertText(ent.getKey());
                 NamedIcon icon = new NamedIcon(ent.getValue());    // make copy for possible reduction
                 icon.reduceTo(100, 100, 0.2);
                 panel = new JPanel();
                 panel.setOpaque(false);
-                panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
-                        borderName));
+                panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), borderName));
                 //if (log.isDebugEnabled()) log.debug("addIcons2Panel: "+borderName+" icon at ("
                 //                                    +c.gridx+","+c.gridy+") width= "+icon.getIconWidth()+
                 //                                    " height= "+icon.getIconHeight());
@@ -265,8 +255,8 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
                 }
                 image.setToolTipText(icon.getName());
                 panel.add(image);
-//                int width = Math.max(85, panel.getPreferredSize().width);
-//                panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
+                //                int width = Math.max(85, panel.getPreferredSize().width);
+                //                panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
                 gridbag.setConstraints(panel, c);
                 _iconPanel.add(panel);
                 c.gridx++;
@@ -299,14 +289,11 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         _bottom1Panel = new JPanel();
         _bottom1Panel.setLayout(new FlowLayout());
         _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
-        _showIconsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                if (_iconPanel.isVisible()) {
-                    hideIcons();
-                } else {
-                    showIcons();
-                }
+        _showIconsButton.addActionListener(a -> {
+            if (_iconPanel.isVisible()) {
+                hideIcons();
+            } else {
+                showIcons();
             }
         });
         _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipShowIcons"));
@@ -326,12 +313,9 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
             // bail out
             return false;
         }
-        Iterator<String> iter = ItemPalette.getLevel4FamilyMaps(_itemType).keySet().iterator();
-        while (iter.hasNext()) {
-            if (family.equals(iter.next())) {
-                JOptionPane.showMessageDialog(_frame,
-                        Bundle.getMessage("DuplicateFamilyName", family, _itemType),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+        for (String s : ItemPalette.getLevel4FamilyMaps(_itemType).keySet()) {
+            if (family.equals(s)) {
+                JOptionPane.showMessageDialog(_frame, Bundle.getMessage("DuplicateFamilyName", family, _itemType), Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return false;
             }
         }
@@ -370,12 +354,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
     protected void addCreateDeleteFamilyButtons() {
         super.addCreateDeleteFamilyButtons();
         JButton renameButton = new JButton(Bundle.getMessage("renameFamily"));
-        renameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                renameFamily();
-           }
-        });
+        renameButton.addActionListener(a -> renameFamily());
         _bottom1Panel.add(renameButton, 1);
     }
     /**
@@ -398,8 +377,8 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
     private void createNewFamily(String family) {
         log.debug("createNewFamily for {}. family = \"{}\"", _itemType, family);
         _iconGroupsMap = new HashMap<>();
-        for (int i = 0; i < STATUS_KEYS.length; i++) {
-            _iconGroupsMap.put(STATUS_KEYS[i], makeNewIconMap("Turnout")); // NOI18N
+        for (String statusKey : STATUS_KEYS) {
+            _iconGroupsMap.put(statusKey, makeNewIconMap("Turnout")); // NOI18N
         }
         ItemPalette.addLevel4Family(_itemType, family, _iconGroupsMap);
         _tablePanel.setVisible(true);
@@ -554,13 +533,9 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
                 t.setTurnout(bean.getSystemName());
                 t.setFamily(_family);
 
-                Iterator<Entry<String, HashMap<String, NamedIcon>>> it = iconMap.entrySet().iterator();
-                while (it.hasNext()) {
-                    Entry<String, HashMap<String, NamedIcon>> entry = it.next();
+                for (Entry<String, HashMap<String, NamedIcon>> entry : iconMap.entrySet()) {
                     String status = entry.getKey();
-                    Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
-                    while (iter.hasNext()) {
-                        Entry<String, NamedIcon> ent = iter.next();
+                    for (Entry<String, NamedIcon> ent : entry.getValue().entrySet()) {
                         t.setIcon(status, ent.getKey(), new NamedIcon(ent.getValue()));
                     }
                 }

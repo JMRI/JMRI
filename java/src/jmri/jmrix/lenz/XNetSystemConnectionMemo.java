@@ -59,6 +59,7 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * Provide access to the TrafficController for this particular connection.
+     * @return traffic controller.
      */
     public XNetTrafficController getXNetTrafficController() {
         return xt;
@@ -79,6 +80,7 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
      * Provide access to the Programmer for this particular connection.
      * <p>
      * NOTE: Programmer defaults to null
+     * @return programmer manager.
      */
     public XNetProgrammerManager getProgrammerManager() {
         return programmerManager;
@@ -131,6 +133,7 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
      * Provide access to the SensorManager for this particular connection.
      * <p>
      * NOTE: SensorManager defaults to NULL
+     * @return sensor manager.
      */
     public SensorManager getSensorManager() {
         return sensorManager;
@@ -147,6 +150,7 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
      * Provide access to the TurnoutManager for this particular connection.
      * <p>
      * NOTE: TurnoutManager defaults to NULL
+     * @return turnout manager.
      */
     public TurnoutManager getTurnoutManager() {
         return turnoutManager;
@@ -163,6 +167,7 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
      * Provide access to the LightManager for this particular connection.
      * <p>
      * NOTE: LightManager defaults to NULL
+     * @return light manager.
      */
     public LightManager getLightManager() {
         return lightManager;
@@ -179,6 +184,7 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
      * Provide access to the Command Station for this particular connection.
      * <p>
      * NOTE: Command Station defaults to NULL
+     * @return command station.
      */
     public CommandStation getCommandStation() {
         return commandStation;
@@ -197,6 +203,7 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
      * Provide access to the Lenz Command Station for this particular connection.
      * <p>
      * NOTE: Lenz Command Station defaults to NULL
+     * @return Lenz command station.
      */
     public LenzCommandStation getLenzCommandStation() {
         return lenzCommandStation;

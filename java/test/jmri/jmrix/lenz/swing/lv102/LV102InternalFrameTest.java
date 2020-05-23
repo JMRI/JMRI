@@ -11,9 +11,9 @@ import org.junit.Test;
 /**
  * LV102InternalFrameTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.swing.lv102.LV102InternalFrame class
+ * Test for the jmri.jmrix.lenz.swing.lv102.LV102InternalFrame class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LV102InternalFrameTest {
 
@@ -59,7 +59,6 @@ public class LV102InternalFrameTest {
     }
 
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

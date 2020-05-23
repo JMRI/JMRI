@@ -125,10 +125,10 @@ public class LoadVSDFileAction extends AbstractAction {
             return vsdfile.isInitialized();
 
         } catch (java.util.zip.ZipException ze) {
-            log.error("ZipException opening file " + fp, ze);
+            log.error("ZipException opening file {}", fp, ze);
             return false;
         } catch (java.io.IOException ze) {
-            log.error("IOException opening file " + fp, ze);
+            log.error("IOException opening file {}", fp, ze);
             return false;
         }
 

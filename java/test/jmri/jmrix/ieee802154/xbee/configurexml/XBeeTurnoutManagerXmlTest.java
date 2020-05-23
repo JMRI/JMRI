@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * XBeeTurnoutManagerXmlTest.java
  *
- * Description: tests for the XBeeTurnoutManagerXml class
+ * Test for the XBeeTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class XBeeTurnoutManagerXmlTest {
       Assert.assertNotNull("XBeeTurnoutManagerXml constructor",new XBeeTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

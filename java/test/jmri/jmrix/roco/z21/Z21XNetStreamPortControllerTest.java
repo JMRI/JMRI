@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.roco.z21.z21XNetStreamPortController class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class Z21XNetStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTestBase {
 
@@ -22,7 +22,6 @@ public class Z21XNetStreamPortControllerTest extends jmri.jmrix.AbstractStreamPo
         Assert.assertNotNull("exists", apc);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

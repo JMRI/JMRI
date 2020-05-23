@@ -144,8 +144,6 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Assert.assertFalse("F27 off",(boolean) tm.getThrottleInfo(addr,Throttle.F27));
         Assert.assertFalse("F28 off",(boolean) tm.getThrottleInfo(addr,Throttle.F28));
         
-        JUnitAppender.assertErrorMessageStartsWith("Unrecognised function group");
-        
     }
     
     @Test
@@ -182,7 +180,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
             JUnitUtil.waitFor(()->{ return(tm.getThrottleInfo(addr,_f).equals(false)); }, "Function loop off " + i);          
         }
         
-        JUnitAppender.assertWarnMessage("Unhandled function number: 255");
+        JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 255");
     }
     
     @Test
@@ -486,7 +484,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -538,7 +536,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
             @Override
             public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -632,7 +630,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
             @Override
             public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -706,7 +704,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
             @Override
             public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -787,7 +785,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
             @Override
             public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -861,7 +859,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
             @Override
             public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
             
@@ -1000,12 +998,12 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @Test
     @Override
     public void testGetThrottleInfo() {
-        DccLocoAddress addr = new DccLocoAddress(42,false);
-		Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(addr));
-        Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(42,false));
-		Assert.assertNull("NULL",tm.getThrottleInfo(addr,Throttle.F28));
+        DccLocoAddress addr = new DccLocoAddress(42, false);
+        Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(addr));
+        Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(42, false));
+        Assert.assertNull("NULL", tm.getThrottleInfo(addr, Throttle.F28));
         CbusThrottleListen throtListen = new CbusThrottleListen();
-        tm.requestThrottle(addr,throtListen,true);
+        tm.requestThrottle(addr, throtListen, true);
         
         Assert.assertEquals("address request message", "[78] 40 00 2A",
             tc.outbound.elementAt(tc.outbound.size() - 1).toString()); // OPC 0x40 RLOC Request Loco
@@ -1063,7 +1061,6 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     private boolean failedThrottleRequest = false;
     private TrafficControllerScaffold tc;
     
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

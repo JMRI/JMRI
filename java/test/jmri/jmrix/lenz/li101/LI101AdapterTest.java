@@ -9,9 +9,9 @@ import org.junit.Test;
 /**
  * LI101AdapterTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.li101.LI101Adapter class
+ * Test for the jmri.jmrix.lenz.li101.LI101Adapter class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LI101AdapterTest {
 
@@ -21,7 +21,6 @@ public class LI101AdapterTest {
         Assert.assertNotNull(a);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

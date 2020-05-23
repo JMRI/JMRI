@@ -31,7 +31,6 @@ public class DCCppOverTcpPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketizer
     public void testInbound() throws Exception {
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

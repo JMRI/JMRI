@@ -16,7 +16,7 @@ import org.junit.Test;
  * <p>
  * Implementing subclasses should provide static "main" and "suite" methods.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 abstract public class AbstractAlgorithmTestBase {
 

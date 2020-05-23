@@ -22,7 +22,7 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
     protected int maxN() { return 100; }
 
     // implementing classes must provide these abstract members:
-    abstract public void setUp();    	// load l with actual object; create scaffolds as needed, tag @Before
+    abstract public void setUp(); // load l with actual object; create scaffolds as needed, tag @Before
 
     abstract public String getSystemName(String i);
 

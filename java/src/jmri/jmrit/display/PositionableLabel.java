@@ -62,8 +62,9 @@ public class PositionableLabel extends JLabel implements Positionable {
     private int _degrees;
 
     /**
-     *
-     * @param editor where this label is displayed
+     * Create a new Positionable Label.
+     * @param s label string.
+     * @param editor where this label is displayed.
      */
     public PositionableLabel(String s, @Nonnull Editor editor) {
         super(s);
@@ -590,9 +591,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _iconEditor.setIcon(0, "plainIcon", icon);
         _iconEditor.makeIconPanel(false);
 
-        ActionListener addIconAction = (ActionEvent a) -> {
-            editIcon();
-        };
+        ActionListener addIconAction = (ActionEvent a) -> editIcon();
         _iconEditor.complete(addIconAction, true, false, true);
 
     }
@@ -623,8 +622,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     public DisplayFrame makePaletteFrame(String title) {
         jmri.jmrit.display.palette.ItemPalette.loadIcons();
 
-        DisplayFrame paletteFrame = new DisplayFrame(title, _editor);
-        return paletteFrame;
+        return new DisplayFrame(title, _editor);
     }
 
     public void initPaletteFrame(DisplayFrame paletteFrame, @Nonnull ItemPanel itemPanel) {
@@ -666,9 +664,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _paletteFrame = makePaletteFrame(
                 java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameTurnout")));
         _iconItemPanel = new IconItemPanel(_paletteFrame, "Icon"); // NOI18N
-        ActionListener updateAction = (ActionEvent a) -> {
-                updateIconItem();
-         };
+        ActionListener updateAction = (ActionEvent a) -> updateIconItem();
         _iconItemPanel.init(updateAction);
         initPaletteFrame(_paletteFrame, _iconItemPanel);
     }
@@ -761,9 +757,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             disableItem = new JCheckBoxMenuItem(Bundle.getMessage("Disable"));
             disableItem.setSelected(!_controlling);
             popup.add(disableItem);
-            disableItem.addActionListener((java.awt.event.ActionEvent e) -> {
-                setControlling(!disableItem.isSelected());
-            });
+            disableItem.addActionListener((java.awt.event.ActionEvent e) -> setControlling(!disableItem.isSelected()));
             return true;
         }
         return false;

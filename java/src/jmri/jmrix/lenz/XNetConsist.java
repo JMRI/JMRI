@@ -30,8 +30,11 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     protected XNetTrafficController tc = null; // hold the traffic controller associated with this consist.
 
     /**
-     * Initialize a consist for the specific address. Default consist type is an
-     * advanced consist.
+     * Initialize a consist for the specific address.
+     * Default consist type is an advanced consist.
+     * @param address loco address.
+     * @param controller system connection traffic controller.
+     * @param systemMemo system connection.
      */
     public XNetConsist(int address, XNetTrafficController controller, XNetSystemConnectionMemo systemMemo) {
         super(address);
@@ -44,8 +47,11 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     }
 
     /**
-     * Initialize a consist for the specific address. Default consist type is an
-     * advanced consist.
+     * Initialize a consist for the specific address.
+     * Default consist type is an advanced consist.
+     * @param address loco address.
+     * @param controller system connection traffic controller.
+     * @param systemMemo system connection.
      */
     public XNetConsist(DccLocoAddress address, XNetTrafficController controller, XNetSystemConnectionMemo systemMemo) {
         super(address);
@@ -545,7 +551,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 

@@ -10,11 +10,11 @@ import org.junit.Test;
 /**
  * JMRIClientTurnoutManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientTurnoutManager
+ * Test for the jmri.jmrix.jmriclient.JMRIClientTurnoutManager
  * class
  *
- * @author	Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2012,2016	
+ * @author Bob Jacobsen
+ * @author      Paul Bender Copyright (C) 2012,2016
  */
 public class JMRIClientTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -28,7 +28,6 @@ public class JMRIClientTurnoutManagerTest extends jmri.managers.AbstractTurnoutM
         Assert.assertNotNull(l);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

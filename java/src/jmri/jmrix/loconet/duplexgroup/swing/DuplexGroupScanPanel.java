@@ -284,7 +284,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         }
         if (index != -1) {
             if (index == 16) {
-                log.error(Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum) + "\n");
+                log.error("{}\n", Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum));
 
             }
             dci[index].numSamples++;
@@ -301,7 +301,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
             graphicArea.repaint();
 
         } else {
-            log.error(Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum) + "\n");
+            log.error("{}\n", Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum));
         }
     }
 

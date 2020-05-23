@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * Parts of this code are derived from the
  * jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter class.
  *
- * @author	Paul Bender Copyright (C) 2014
+ * @author Paul Bender Copyright (C) 2014
  */
 public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
 
@@ -33,6 +33,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
 
     /**
      * Build a new XpressNet tunnel.
+     * @param memo system connection.
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SC_START_IN_CTOR", justification="done at end, waits for data")
     public Z21XPressNetTunnel(Z21SystemConnectionMemo memo) {
@@ -49,7 +50,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());
+            log.error("init (pipe): Exception: {}", e.toString());
             return;
         }
 
@@ -235,6 +236,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     /**
      * Package protected method to retrieve the stream port controller
      * associated with this tunnel.
+     * @return controller in use
      */
     jmri.jmrix.lenz.XNetStreamPortController getStreamPortController() {
        return xsc;
@@ -243,6 +245,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     /**
      * Package protected method to set the stream port controller
      * associated with this tunnel.
+     * @param x controller to retain
      */
     void setStreamPortController(jmri.jmrix.lenz.XNetStreamPortController x){
         xsc = x;

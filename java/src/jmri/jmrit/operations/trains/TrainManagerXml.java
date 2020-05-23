@@ -89,14 +89,14 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
 
         // suppress rootFromName(name) warning message by checking to see if file exists
         if (findFile(name) == null) {
-            log.debug(name + " file could not be found");
+            log.debug("{} file could not be found", name);
             fileLoaded = true; // set flag, could be the first time
             return;
         }
         // find root
         Element root = rootFromName(name);
         if (root == null) {
-            log.debug(name + " file could not be read");
+            log.debug("{} file could not be read", name);
             return;
         }
 

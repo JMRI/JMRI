@@ -1,10 +1,7 @@
 package jmri.jmrit.whereused;
 
-import java.util.ArrayList;
+import jmri.jmrit.display.EditorManager;
 import java.util.Enumeration;
-import java.util.List;
-import java.util.SortedSet;
-import javax.swing.JTextArea;
 
 import jmri.*;
 import jmri.jmrit.blockboss.BlockBossLogic;
@@ -453,15 +450,14 @@ public class WhereUsedCollectors {
      */
     static String checkPanels(NamedBean bean) {
         StringBuilder sb = new StringBuilder();
-        InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getEditorsList().forEach((panel) -> {
-            panel.getUsageReport(bean).forEach((report) -> {
+        InstanceManager.getDefault(EditorManager.class).getAll().forEach(panel -> 
+            panel.getUsageReport(bean).forEach(report -> {
                 if (panel instanceof SwitchboardEditor) {
                     sb.append(Bundle.getMessage("ReferenceLineName", report.usageData));  // NOI18N
                 } else {
                     sb.append(Bundle.getMessage("ReferenceLinePanel", panel.getTitle(), report.usageData));  // NOI18N
                 }
-            });
-        });
+            }));
         return addHeader(sb, "ReferencePanels");  // NOI18N
     }
 

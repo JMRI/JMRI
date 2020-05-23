@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * PositionablePointXmlTest.java
  *
- * Description: tests for the PositionablePointXml class
+ * Test for the PositionablePointXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class PositionablePointXmlTest {
       Assert.assertNotNull("PositionablePointXml constructor",new PositionablePointXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

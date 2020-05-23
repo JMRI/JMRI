@@ -105,7 +105,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
                 table.getAAClass().addToFrame(f);
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
-            log.error(ex.toString() + " in add to Frame " + dataTabs.getSelectedIndex() + " " + dataTabs.getSelectedComponent());
+            log.error("{} in add to Frame {} {}", ex.toString(), dataTabs.getSelectedIndex(), dataTabs.getSelectedComponent());
         }
     }
 
@@ -114,7 +114,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
         try {
             tabbedTableArray.get(dataTabs.getSelectedIndex()).getAAClass().setMenuBar(f);
         } catch (ArrayIndexOutOfBoundsException ex) {
-            log.error(ex.toString() + " in add to Menu " + dataTabs.getSelectedIndex() + " " + dataTabs.getSelectedComponent());
+            log.error("{} in add to Menu {} {}", ex.toString(), dataTabs.getSelectedIndex(), dataTabs.getSelectedComponent());
         }
     }
 
@@ -132,7 +132,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
         try {
             tabbedTableArray.get(dataTabs.getSelectedIndex()).getDataTable().print(mode, headerFormat, footerFormat);
         } catch (java.awt.print.PrinterException e1) {
-            log.warn("error printing: " + e1, e1);
+            log.warn("error printing: {}", e1, e1);
         } catch (NullPointerException ex) {
             log.error("Trying to print returned a NPE error");
         }

@@ -127,6 +127,7 @@ public class JsonBlockSocketServiceTest {
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

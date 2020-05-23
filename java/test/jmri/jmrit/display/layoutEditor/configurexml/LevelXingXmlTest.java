@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * LevelXingXmlTest.java
  *
- * Description: tests for the LevelXingXml class
+ * Test for the LevelXingXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class LevelXingXmlTest {
       Assert.assertNotNull("LevelXingXml constructor",new LevelXingXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

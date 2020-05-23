@@ -88,7 +88,6 @@ public class ScaleTest {
         jmri.util.JUnitAppender.assertWarnMessage("The ratio change for HO scale to 123.0 was rejected: Reason: Test Ratio Veto");
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

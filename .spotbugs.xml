@@ -16,6 +16,11 @@
      </Match>
 
      <Match>
+        <!-- Minimal messages can be very useful at DEBUG or TRACE level -->
+        <Bug pattern="SLF4J_SIGN_ONLY_FORMAT" />
+     </Match>
+     
+     <Match>
        <!-- Design issue -->
        <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
      </Match>
@@ -53,6 +58,12 @@
      <Match>
        <!-- JMRI does not use serialization, permanently ignore -->
        <Bug code="Se,SnVI" />
+     </Match>
+
+
+     <Match>
+       <!-- JMRI code is written with static final loggers. -->
+       <Bug pattern="SLF4J_LOGGER_SHOULD_BE_NON_STATIC" />
      </Match>
 
 </FindBugsFilter>

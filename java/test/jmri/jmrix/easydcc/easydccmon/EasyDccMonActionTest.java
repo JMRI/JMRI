@@ -10,7 +10,7 @@ import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 /**
  * JUnit tests for the EasyDccProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class EasyDccMonActionTest {
 

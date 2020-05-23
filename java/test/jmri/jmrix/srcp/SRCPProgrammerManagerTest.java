@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * SRCPProgrammerManagerTest.java
  *
- * Description: tests for the jmri.jmrix.srcp.SRCPProgrammerManager class
+ * Test for the jmri.jmrix.srcp.SRCPProgrammerManager class
  *
  * @author Bob Jacobsen
  */

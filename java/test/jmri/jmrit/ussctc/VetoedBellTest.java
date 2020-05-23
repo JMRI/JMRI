@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Tests for VetoedBell class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class VetoedBellTest {
 
@@ -54,7 +54,6 @@ public class VetoedBellTest {
     Sensor veto;
     Turnout bellTurnout;
     
-    // The minimal setup for log4J
     @org.junit.Before
     public void setUp() {
         JUnitUtil.setUp();

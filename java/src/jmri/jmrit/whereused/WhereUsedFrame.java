@@ -4,12 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 import jmri.*;
 import jmri.jmrit.entryexit.DestinationPoints;
@@ -146,6 +142,8 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
      * <p>
      * The selected object is passed to the appropriate detail class which returns a populated textarea.
      * The textarea is formatted and inserted into a scrollable panel.
+     * @param type Indicated type of item being examined
+     * @param bean The bean being examined
      */
     void buildWhereUsedListing(ItemType type, NamedBean bean) {
         switch (type) {

@@ -24,7 +24,7 @@ abstract public class AbstractRouteServer {
     private final static Logger log = LoggerFactory.getLogger(AbstractRouteServer.class);
 
     public AbstractRouteServer() {
-        routes = new HashMap<String, RouteListener>();
+        routes = new HashMap<>();
     }
 
     /*

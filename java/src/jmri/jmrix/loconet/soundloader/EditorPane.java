@@ -121,7 +121,10 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
         save.setEnabled(true);
         revalidate();
         // major resize, repack
-        ((JFrame) getTopLevelAncestor()).pack();
+        java.awt.Container co = getTopLevelAncestor();
+        if ( co instanceof JFrame ) {
+            ((JFrame) co).pack();
+        }
     }
 
     void saveFile(String name) throws IOException {

@@ -8,7 +8,7 @@ import org.junit.Before;
  * Note: Standalone only allows _one_ NamedBean, named e.g. RR1, which means
  * certain tests are defaulted away.
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class StandaloneReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 

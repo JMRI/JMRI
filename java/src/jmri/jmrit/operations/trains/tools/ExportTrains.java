@@ -64,7 +64,7 @@ public class ExportTrains extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete: " + e);
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}", e);
         }
     }
 
@@ -197,7 +197,7 @@ public class ExportTrains extends XmlFile {
                     Bundle.getMessage("ExportComplete"),
                     JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
-            log.error("Can not open export trains CSV file: " + file.getName());
+            log.error("Can not open export trains CSV file: {}", file.getName());
             JOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ExportedTrainsToFile"), new Object[]{
                 0, defaultOperationsFilename()}),

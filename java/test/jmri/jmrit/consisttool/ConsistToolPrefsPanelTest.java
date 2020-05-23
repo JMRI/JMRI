@@ -8,7 +8,7 @@ import org.junit.*;
 /**
  * Test simple functioning of ConsistToolPrefsPanel 
  *
- * @author	Paul Bender Copyright (C) 2019
+ * @author Paul Bender Copyright (C) 2019
  */
 public class ConsistToolPrefsPanelTest {
 

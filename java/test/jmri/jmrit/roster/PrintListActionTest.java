@@ -7,7 +7,7 @@ import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2018	
+ * @author Paul Bender Copyright (C) 2018
  */
 public class PrintListActionTest {
 
@@ -21,7 +21,6 @@ public class PrintListActionTest {
         JUnitUtil.dispose(jf);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

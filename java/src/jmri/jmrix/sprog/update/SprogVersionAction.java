@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to get SPROG firmware version
  *
- * @author	Andrew Crosland Copyright (C) 2004
+ * @author Andrew Crosland Copyright (C) 2004
  */
 public class SprogVersionAction extends AbstractAction {
 
@@ -27,7 +27,7 @@ public class SprogVersionAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("SprogIIUpdateAction starting SprogIIUpdateFrame: Exception: " + ex.toString());
+            log.warn("SprogIIUpdateAction starting SprogIIUpdateFrame: Exception: {}", ex.toString());
         }
 //        f.setVisible(true);
     }

@@ -85,7 +85,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      * <p>
      * If we're waiting for this, it indicates successful end of a write ALM
      * sequence.
-     *
+     * @param msg Message, which might or might not be LACK
      */
     void lackMsg(LocoNetMessage msg) {
         if (handleNextLACK) {
@@ -100,7 +100,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      * If we're an image, just record information from a WRITE.
      * <p>
      * If we're not an image, reply to all commands
-     *
+     * @param msg Message to decode and fill out
      */
     void writeMsg(LocoNetMessage msg) {
         // sort out the ATASK
@@ -198,7 +198,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
                 }
                 return;
             default:
-                log.warn("Unexpected ATASK: " + msg.getElement(3));
+                log.warn("Unexpected ATASK: {}", msg.getElement(3));
                 return;
         }
     }
@@ -274,6 +274,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      * Create and send the LocoNet message to read a particular block.
      * <p>
      * The results will return later.
+     * @param block Which block to read?
      */
     void sendRead(int block) {
         LocoNetMessage l = new LocoNetMessage(16);
@@ -311,6 +312,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      * Hopefully this ALM writer is unique, so there won't be two writes to the
      * same ALM going on at the same time; the LocoNet is not well synchronized
      * against that.
+     * @param block within the ALM space
      */
     void sendWrite(int block) {
         int arg1 = retrieve(block, 0);

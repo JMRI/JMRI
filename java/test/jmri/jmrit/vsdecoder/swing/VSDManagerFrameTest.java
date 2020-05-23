@@ -1,6 +1,7 @@
 package jmri.jmrit.vsdecoder.swing;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -10,14 +11,13 @@ import org.junit.*;
  */
 public class VSDManagerFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new VSDManagerFrame();
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new VSDManagerFrame();
+        }
     }
 
     @After
@@ -26,7 +26,7 @@ public class VSDManagerFrameTest extends jmri.util.JmriJFrameTestBase {
 
         // this created an audio manager, clean that up
         jmri.InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
-
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 

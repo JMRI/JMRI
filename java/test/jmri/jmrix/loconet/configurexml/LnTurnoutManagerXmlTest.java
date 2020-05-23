@@ -59,10 +59,8 @@ public class LnTurnoutManagerXmlTest {
     LocoNetSystemConnectionMemo memo;
     LnTurnoutManager lmtm;
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
         // prepare an interface
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();

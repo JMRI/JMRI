@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Test simple functioning of PacketGenFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class PacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
 

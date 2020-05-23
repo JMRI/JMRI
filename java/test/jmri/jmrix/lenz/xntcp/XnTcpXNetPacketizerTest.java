@@ -147,7 +147,6 @@ public class XnTcpXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest 
     }
 
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

@@ -392,8 +392,10 @@ public class JUnitOperationsUtil {
         route.addLocation(chelmsford);
         RouteLocation rlC = route.addLocation(chelmsford); // enter 2nd time for train reversal
         rlC.setTrainDirection(RouteLocation.SOUTH);
+        rlC.setTrainIconX(126);
         RouteLocation rlB = route.addLocation(boston);
         rlB.setTrainDirection(RouteLocation.SOUTH);
+        rlB.setTrainIconX(26);
         RouteLocation rlA = route.addLocation(acton);
         rlA.setTrainDirection(RouteLocation.SOUTH);
         rlA.setPickUpAllowed(false); // don't include cars at destination

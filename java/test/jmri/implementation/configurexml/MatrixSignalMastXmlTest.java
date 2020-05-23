@@ -18,7 +18,6 @@ public class MatrixSignalMastXmlTest {
       Assert.assertNotNull("MatrixSignalMastXml constructor", new MatrixSignalMastXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

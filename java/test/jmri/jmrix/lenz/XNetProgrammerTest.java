@@ -1,9 +1,9 @@
 /**
  * XNetProgrammerTest.java
  *
- * Description:	JUnit tests for the XNetProgrammer class
+ * JUnit tests for the XNetProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.lenz;
 
@@ -287,6 +287,8 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     // Test to make sure the getCanWrite(int,string) function works correctly
     @Test
     public void testGetCanWriteV35LZ100() {
+        // clean up from setup before overwriting
+        t.terminateThreads();
         // infrastructure objects
         LenzCommandStation cs = new LenzCommandStation();
         t = new XNetInterfaceScaffold(cs);
@@ -324,6 +326,8 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     // Test to make sure the getCanWrite(int,string) function works correctly
     @Test
     public void testGetCanWriteV36LZ100() {
+        // clean up from setup before overwriting
+        t.terminateThreads();
         // infrastructure objects
         LenzCommandStation cs = new LenzCommandStation();
         t = new XNetInterfaceScaffold(cs);
@@ -361,6 +365,8 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     // Test to make sure the getCanWrite(int,string) function works correctly
     @Test
     public void testGetCanWriteV30LH200() {
+        // clean up from setup before overwriting
+        t.terminateThreads();
         // infrastructure objects
         LenzCommandStation cs = new LenzCommandStation();
         t = new XNetInterfaceScaffold(cs);
@@ -398,6 +404,8 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     // Test to make sure the getCanWrite(int,string) function works correctly
     @Test
     public void testGetCanWriteV40MultiMaus() {
+        // clean up from setup before overwriting
+        t.terminateThreads();
         // infrastructure objects
         LenzCommandStation cs = new LenzCommandStation();
         t = new XNetInterfaceScaffold(cs);
@@ -435,6 +443,8 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     // Test to make sure the getCanRead(int,string) function works correctly
     @Test
     public void testGetCanReadV35LZ100() {
+        // clean up from setup before overwriting
+        t.terminateThreads();
         // infrastructure objects
         LenzCommandStation cs = new LenzCommandStation();
         t = new XNetInterfaceScaffold(cs);
@@ -473,6 +483,8 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     // Test to make sure the getCanRead(int,string) function works correctly
     @Test
     public void testGetCanReadV36LZ100() {
+        // clean up from setup before overwriting
+        t.terminateThreads();
         // infrastructure objects
         LenzCommandStation cs = new LenzCommandStation();
         t = new XNetInterfaceScaffold(cs);
@@ -504,6 +516,8 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     // Test to make sure the getCanRead(int,string) function works correctly
     @Test
     public void testGetCanReadV30LH200() {
+        // clean up from setup before overwriting
+        t.terminateThreads();
         // infrastructure objects
         LenzCommandStation cs = new LenzCommandStation();
         t = new XNetInterfaceScaffold(cs);
@@ -535,6 +549,8 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     // Test to make sure the getCanRead(int,string) function works correctly
     @Test
     public void testGetCanReadV40MultiMaus() {
+        // clean up from setup before overwriting
+        t.terminateThreads();
         // infrastructure objects
         LenzCommandStation cs = new LenzCommandStation();
         t = new XNetInterfaceScaffold(cs);
@@ -577,16 +593,16 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 super.restartTimer(RESTART_TIME);
             }
         };
-	programmer=p;
+        programmer = p;
     }
 
     @Override
     @After
     public void tearDown() {
+        t.terminateThreads();
         t = null;
         l = null;
-        programmer=p=null;
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        programmer = p = null;
         JUnitUtil.tearDown();
     }
 

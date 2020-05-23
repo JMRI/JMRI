@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class CbusDccProgrammerManagerTest {
 
@@ -22,14 +22,16 @@ public class CbusDccProgrammerManagerTest {
     
     private TrafficControllerScaffold tc;
     private CanSystemConnectionMemo memo;
+    private CbusPreferences prefs;
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         tc = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
+        prefs = new CbusPreferences();
+        jmri.InstanceManager.store(prefs,CbusPreferences.class );
     }
 
     @After

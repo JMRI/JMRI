@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * Tests for classes in the jmri.jmrit.automat package
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class AutomatTest {
 

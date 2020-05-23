@@ -522,9 +522,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _sysNameText.setPreferredSize(
                     new Dimension(150, _sysNameText.getPreferredSize().height + 2));
             _addTableButton = new JButton(Bundle.getMessage("addToTable"));
-            _addTableButton.addActionListener((ActionEvent a) -> {
-                addToTable();
-            });
+            _addTableButton.addActionListener((ActionEvent a) -> addToTable());
             _addTableButton.setEnabled(false);
             _addTableButton.setToolTipText(Bundle.getMessage("ToolTipWillActivate"));
             p.add(_sysNameText);
@@ -553,14 +551,10 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         _addButton.setEnabled(true);
         if (changeIcon) {
             _changeButton = new JButton(Bundle.getMessage("ButtonChangeIcon"));
-            _changeButton.addActionListener((ActionEvent a) -> {
-                addCatalog();
-            });
+            _changeButton.addActionListener((ActionEvent a) -> addCatalog());
             p.add(_changeButton);
             _closeButton = new JButton(Bundle.getMessage("ButtonCloseCatalog"));
-            _closeButton.addActionListener((ActionEvent a) -> {
-                closeCatalog();
-            });
+            _closeButton.addActionListener((ActionEvent a) -> closeCatalog());
             _closeButton.setVisible(false);
             p.add(_closeButton);
         }

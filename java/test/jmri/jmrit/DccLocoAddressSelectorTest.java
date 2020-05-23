@@ -8,7 +8,7 @@ import org.junit.*;
 /**
  * Test simple functioning of DccLocoAddressSelector
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
  * @author      Paul Bender Copyright (C) 2018
  */
 public class DccLocoAddressSelectorTest {
@@ -126,7 +126,7 @@ public class DccLocoAddressSelectorTest {
 
     @After
     public void tearDown() {
-	sel = null;
+        sel = null;
         jmri.util.JUnitUtil.tearDown();
     }
 

@@ -1,22 +1,21 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.JOptionPane;
-import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.setup.Setup;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Exports the car roster into a comma delimitated file (CSV).
@@ -26,6 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ExportCars extends XmlFile {
 
+    protected static final String LOCATION_TRACK_SEPARATOR = "-";
     List<Car> _carList;
 
     public ExportCars(List<Car> carList) {
@@ -66,7 +66,7 @@ public class ExportCars extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete: " + e);
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}", e);
         }
     }
 
@@ -91,7 +91,7 @@ public class ExportCars extends XmlFile {
                     Bundle.getMessage("Owner"),
                     Bundle.getMessage("Built"),
                     Bundle.getMessage("Location"),
-                    "-",
+                    LOCATION_TRACK_SEPARATOR,
                     Bundle.getMessage("Track"),
                     Bundle.getMessage("Load"),
                     Bundle.getMessage("Kernel"),
@@ -104,15 +104,15 @@ public class ExportCars extends XmlFile {
                     Bundle.getMessage("Pickup"),
                     Bundle.getMessage("Last"),
                     Bundle.getMessage("RWELocation"),
-                    "-",
+                    LOCATION_TRACK_SEPARATOR,
                     Bundle.getMessage("Track"),
                     Bundle.getMessage("RWELoad"),
                     Bundle.getMessage("Train"),
                     Bundle.getMessage("Destination"),
-                    "-",
+                    LOCATION_TRACK_SEPARATOR,
                     Bundle.getMessage("Track"),
                     Bundle.getMessage("FinalDestination"),
-                    "-",
+                    LOCATION_TRACK_SEPARATOR,
                     Bundle.getMessage("Track"));
 
             // store car number, road, type, length, weight, color, owner, built date, location and track name
@@ -126,7 +126,7 @@ public class ExportCars extends XmlFile {
                         car.getOwner(),
                         car.getBuilt(),
                         car.getLocationName(),
-                        "-",
+                        LOCATION_TRACK_SEPARATOR,
                         car.getTrackName(),
                         car.getLoadName(),
                         car.getKernelName(),
@@ -139,20 +139,20 @@ public class ExportCars extends XmlFile {
                         car.getPickupScheduleName(),
                         car.getLastDate(),
                         car.getReturnWhenEmptyDestinationName(),
-                        "-",
+                        LOCATION_TRACK_SEPARATOR,
                         car.getReturnWhenEmptyDestTrackName(),
                         car.getReturnWhenEmptyLoadName(),
                         car.getTrainName(),
                         car.getDestinationName(),
-                        "-",
+                        LOCATION_TRACK_SEPARATOR,
                         car.getDestinationTrackName(),
                         car.getFinalDestinationName(),
-                        "-",
+                        LOCATION_TRACK_SEPARATOR,
                         car.getFinalDestinationTrackName());
             }
             fileOut.flush();
             fileOut.close();
-            log.info("Exported " + _carList.size() + " cars to file " + defaultOperationsFilename());
+            log.info("Exported {} cars to file {}", _carList.size(), defaultOperationsFilename());
             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedCarsToFile"), new Object[]{
                 _carList.size(), defaultOperationsFilename()}), Bundle.getMessage("ExportComplete"),
                     JOptionPane.INFORMATION_MESSAGE);

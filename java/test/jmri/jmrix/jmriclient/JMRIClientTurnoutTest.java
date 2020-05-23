@@ -6,7 +6,7 @@ import jmri.util.JUnitUtil;
 /**
  * Tests for the jmri.jmrix.jmriclient.JMRIClientTurnout class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  * @author  Paul Bender Copyright (C) 2017
  */
 public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase  {
@@ -40,7 +40,6 @@ public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTe
         Assert.assertEquals("controller listeners remaining", 1, numListeners());
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

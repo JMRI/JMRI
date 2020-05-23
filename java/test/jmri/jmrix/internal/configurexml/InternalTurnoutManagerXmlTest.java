@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * InternalTurnoutManagerXmlTest.java
  *
- * Description: tests for the InternalTurnoutManagerXml class
+ * Test for the InternalTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class InternalTurnoutManagerXmlTest {
       Assert.assertNotNull("InternalTurnoutManagerXml constructor",new InternalTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

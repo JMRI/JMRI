@@ -12,7 +12,7 @@ import org.junit.Assert;
 /**
  * LI100XNetInitializationManagerTest.java
  *
- * Description: tests for the
+ * Test for the
  * jmri.jmrix.lenz.li100.LI100XNetInitializationManager class
  *
  * @author Paul Bender
@@ -49,7 +49,7 @@ public class LI100XNetInitializationManagerTest {
 
     @After
     public void tearDown() throws Exception {
-	    jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
     }
 

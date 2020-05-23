@@ -407,7 +407,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 return;
             }
             // use a thread to allow table updates during build
-            build = new Thread(new Runnable() {
+            build = jmri.util.ThreadingUtil.newThread(new Runnable() {
                 @Override
                 public void run() {
                     train.build();
@@ -484,7 +484,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 train.terminate();
             }
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR)) {
-            log.debug("Enable conductor for train (" + train.getName() + ")");
+            log.debug("Enable conductor for train ({})", train.getName());
             launchConductor(train);
         }
     }

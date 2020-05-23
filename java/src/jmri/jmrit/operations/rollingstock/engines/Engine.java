@@ -416,7 +416,7 @@ public class Engine extends RollingStock {
                     _consist.setConsistNumber(Integer.parseInt(a.getValue()));
                 }
             } else {
-                log.error("Consist " + a.getValue() + " does not exist");
+                log.error("Consist {} does not exist", a.getValue());
             }
         }
         addPropertyChangeListeners();

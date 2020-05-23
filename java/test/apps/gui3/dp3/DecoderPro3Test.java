@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * Description: Tests for the DecoderPro3 application.
+ * Tests for the DecoderPro3 application.
  *
  * @author Paul Bender Copyright (C) 2016
  */
@@ -57,7 +57,6 @@ public class DecoderPro3Test {
         JUnitUtil.disposeFrame("DecoderPro Wizard", false, false);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

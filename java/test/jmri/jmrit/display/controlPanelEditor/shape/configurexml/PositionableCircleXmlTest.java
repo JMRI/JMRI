@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * PositionableCircleXmlTest.java
  *
- * Description: tests for the PositionableCircleXml class
+ * Test for the PositionableCircleXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class PositionableCircleXmlTest {
       Assert.assertNotNull("PositionableCircleXml constructor",new PositionableCircleXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

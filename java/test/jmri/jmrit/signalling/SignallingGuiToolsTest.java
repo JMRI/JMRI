@@ -7,7 +7,7 @@ import org.netbeans.jemmy.operators.JDialogOperator;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SignallingGuiToolsTest {
 
@@ -90,7 +90,6 @@ public class SignallingGuiToolsTest {
         sf.dispose();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

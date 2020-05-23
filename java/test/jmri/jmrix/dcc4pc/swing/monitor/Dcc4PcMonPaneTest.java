@@ -7,7 +7,7 @@ import org.junit.Before;
 /**
  * Test simple functioning of Dcc4PcMonPane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class Dcc4PcMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
@@ -23,5 +23,8 @@ public class Dcc4PcMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Override
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        panel = pane = null;
+        JUnitUtil.tearDown();
+    }
 }

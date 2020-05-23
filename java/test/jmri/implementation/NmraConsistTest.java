@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of NmraConsist
  *
- * @author	Paul Copyright (C) 2016
+ * @author Paul Copyright (C) 2016
  */
 public class NmraConsistTest extends AbstractConsistTestBase {
 
@@ -31,7 +31,6 @@ public class NmraConsistTest extends AbstractConsistTestBase {
         Assert.assertNotNull(c);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

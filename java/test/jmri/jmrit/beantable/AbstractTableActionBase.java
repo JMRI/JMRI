@@ -93,8 +93,8 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
     }
 
     @Test
-    public void testHelpTarget(){
-        Assert.assertEquals("help target",helpTarget,a.helpTarget());
+    public void testHelpTarget() {
+        Assert.assertEquals("help target", helpTarget, a.helpTarget());
     }
 
     @Test
@@ -105,27 +105,27 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
-        JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
         new QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-        JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCancel"));
+        JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
 
     /**
-     * @return the name of the frame resulting from add being pressed, as 
+     * @return the name of the frame resulting from add being pressed, as
      *         returned from the Bundle.
      */
     abstract public String getAddFrameName();
 
     /**
-     * @return the name of the frame resulting from edit being pressed, as 
+     * @return the name of the frame resulting from edit being pressed, as
      *         returned from the Bundle.
      */
-    public String getEditFrameName(){
-	    // defaults to the same as the add frame name
-	    return getAddFrameName();
+    public String getEditFrameName() {
+        // defaults to the same as the add frame name
+        return getAddFrameName();
     }
 
     @Test
@@ -136,18 +136,18 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
-	JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
-	//Enter 1 in the text field labeled "Hardware address:"
+        // Enter 1 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
         // set to "1"
         new JTextFieldOperator(hwAddressField).setText("1");
 
-	//and press create
-	JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        //and press create
+        JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
@@ -161,30 +161,29 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
 
         // find the "Add... " button and press it.
         JFrameOperator jfo = new JFrameOperator(f);
-	JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
+        JemmyUtil.pressButton(jfo, Bundle.getMessage("ButtonAdd"));
         JFrame f1 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
-	//Enter 1 in the text field labeled "Hardware address:"
+        //Enter 1 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
         // set to "1"
         new JTextFieldOperator(hwAddressField).enterText("1");
 
-	//and press create
-	JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        //and press create
+        JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
 
         JTableOperator tbl = new JTableOperator(jfo, 0);
-	// find the "Edit" button and press it.  This is in the table body.
-	tbl.clickOnCell(0,tbl.findColumn(Bundle.getMessage("ButtonEdit")));
+        // find the "Edit" button and press it.  This is in the table body.
+        tbl.clickOnCell(0, tbl.findColumn(Bundle.getMessage("ButtonEdit")));
         JFrame f2 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-	JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
+        JemmyUtil.pressButton(new JFrameOperator(f2), Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f2);
 
-	JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
-
 
     /**
      * Derived classes should use this method to set a.

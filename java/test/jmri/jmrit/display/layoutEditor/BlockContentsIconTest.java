@@ -85,11 +85,11 @@ public class BlockContentsIconTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-	    if(!GraphicsEnvironment.isHeadless()){
+        if (!GraphicsEnvironment.isHeadless()) {
             jmri.Block block = jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
             to = new BlockContentsIcon("test", new LayoutEditor());
             to.setBlock(new jmri.NamedBeanHandle<>("IB1", block));
-	    }
+        }
     }
 
     @After

@@ -33,13 +33,15 @@ public class CbusNodeFromFcuTableDataModelTest {
         CbusNodeFromFcuTableDataModel t = new CbusNodeFromFcuTableDataModel(
             memo, 3,CbusNodeFromFcuTableDataModel.FCU_MAX_COLUMN);
         
+        Assert.assertTrue("default getRowCount 0",t.getRowCount() == 0 );
+        t.provideNodeByNodeNum(123);
+        Assert.assertTrue("default getRowCount 0",t.getRowCount() == 1 );
+        
         for (int i = 0; i <t.getColumnCount(); i++) {
             Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
-            Assert.assertTrue("column has a width", CbusNodeFromFcuTableDataModel.getPreferredWidth(i) > 0 );
         }
         
         Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown 999") );
-        Assert.assertTrue("column has NO width", CbusNodeFromFcuTableDataModel.getPreferredWidth(999) > 0 );
         
         Assert.assertTrue("cell not editable", 
             t.isCellEditable(0,CbusNodeFromFcuTableDataModel.FCU_NODE_NUMBER_COLUMN) == false );
@@ -50,17 +52,16 @@ public class CbusNodeFromFcuTableDataModelTest {
         Assert.assertTrue("column class string", 
             t.getColumnClass(CbusNodeFromFcuTableDataModel.FCU_NODE_USER_NAME_COLUMN) == String.class );
             
-        Assert.assertTrue("column class null", t.getColumnClass(999) == null );
         
         Assert.assertTrue("default getNodeByNodeNum 1234",t.getNodeByNodeNum(1234) == null);
         Assert.assertTrue("default getNodeRowFromNodeNum 1234",t.getNodeRowFromNodeNum(1234) == -1 );
-        Assert.assertTrue("default getRowCount 0",t.getRowCount() == 0 );
+        
         
         t.provideNodeByNodeNum(1234);
         
         Assert.assertTrue("default getNodeByNodeNum 1234",t.getNodeByNodeNum(1234) != null);
-        Assert.assertTrue("default getNodeRowFromNodeNum 1234",t.getNodeRowFromNodeNum(1234) == 0 );
-        Assert.assertTrue("default getRowCount 0",t.getRowCount() == 1 );
+        Assert.assertTrue("default getNodeRowFromNodeNum 1234",t.getNodeRowFromNodeNum(1234) == 1 );
+        Assert.assertTrue("default getRowCount 0",t.getRowCount() == 2 );
         
         t.dispose();
 
@@ -105,7 +106,6 @@ public class CbusNodeFromFcuTableDataModelTest {
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

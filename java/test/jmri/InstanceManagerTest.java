@@ -65,6 +65,21 @@ public class InstanceManagerTest {
         Assert.assertTrue("2nd addressed programmer manager is default", InstanceManager.getDefault(AddressedProgrammerManager.class) == m2);
     }
 
+    @Test
+    public void testIsInitialized() {
+        // counts on the following test class to be loaded
+        Assert.assertFalse(InstanceManager.isInitialized(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
+        Assert.assertFalse(InstanceManager.isInitialized(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
+        
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
+        
+        Assert.assertTrue(InstanceManager.isInitialized(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
+    }
+    
+    static public class InstanceManagerInitCheck implements jmri.InstanceManagerAutoDefault {
+        public InstanceManagerInitCheck() {}
+    }
+    
     // the following test was moved from jmri.jmrit.symbolicprog.PackageTet when
     // it was converted to JUnit4 format.  It seemed out of place there.
     // check configuring the programmer
@@ -370,6 +385,7 @@ public class InstanceManagerTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

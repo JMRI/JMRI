@@ -189,7 +189,7 @@ public class SignallingPanel extends JmriPanel {
                 if (useLayoutEditor.isSelected()) {
                     try {
                         boolean valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedItem(),
-                                destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.MASTTOMAST);
+                                destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.Routing.MASTTOMAST);
                         if (!valid) {
                             JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));
                         }
@@ -245,7 +245,7 @@ public class SignallingPanel extends JmriPanel {
                         }
                         try {
                             valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedItem(),
-                                    destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.MASTTOMAST);
+                                    destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.Routing.MASTTOMAST);
                             if (!valid) {
                                 JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));
                             }
@@ -856,7 +856,7 @@ public class SignallingPanel extends JmriPanel {
             boolean valid;
             try {
                 valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMast,
-                        destMast, LayoutBlockConnectivityTools.MASTTOMAST);
+                        destMast, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
                 if (!valid) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));
                     return;
@@ -2100,9 +2100,12 @@ public class SignallingPanel extends JmriPanel {
             Vector<String> comboaspects = boxMap.get(this.getValueAt(row, SNAME_COLUMN));
             if (comboaspects == null) {
                 // create a new one with correct aspects
-                comboaspects = InstanceManager.getDefault(jmri.SignalMastManager.class)
-                        .getSignalMast((String) this.getValueAt(row, SNAME_COLUMN)).getValidAspects();
-                boxMap.put(this.getValueAt(row, SNAME_COLUMN), comboaspects); // and store it
+                SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class)
+                    .getSignalMast((String) this.getValueAt(row, SNAME_COLUMN));
+                if (mast!=null) {
+                    comboaspects = mast.getValidAspects();
+                    boxMap.put(this.getValueAt(row, SNAME_COLUMN), comboaspects); // and store it
+                }
             }
             return comboaspects;
         }

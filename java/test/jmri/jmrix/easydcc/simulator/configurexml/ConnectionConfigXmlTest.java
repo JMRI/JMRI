@@ -11,7 +11,6 @@ import jmri.jmrix.easydcc.simulator.ConnectionConfig;
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSimulatorConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -23,6 +22,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSim
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;

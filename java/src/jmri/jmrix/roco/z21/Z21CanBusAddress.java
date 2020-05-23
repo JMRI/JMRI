@@ -31,6 +31,8 @@ public class Z21CanBusAddress {
      * Public static method to parse a Z21CanBus system name.
      * Note: Bits are numbered from 0.
      *
+     * @param systemName system name.
+     * @param prefix system prefix.
      * @return the hardware address number, return -1 if an error is found
      */
     public static int getBitFromSystemName(String systemName, String prefix) {
@@ -143,6 +145,9 @@ public class Z21CanBusAddress {
      * Public static method to validate system name format.
      * Logging of handled cases no higher than WARN.
      *
+     * @param systemName system name.
+     * @param type bean type, S for Sensor, T for Turnout.
+     * @param prefix system prefix.
      * @return VALID if system name has a valid format, else return INVALID
      */
     public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
@@ -162,6 +167,8 @@ public class Z21CanBusAddress {
     /**
      * Public static method to check the user name for a valid system name.
      *
+     * @param systemName system name.
+     * @param prefix system prefix.
      * @return "" (null string) if the system name is not valid or does not exist
      */
     public static String getUserNameFromSystemName(String systemName, String prefix) {

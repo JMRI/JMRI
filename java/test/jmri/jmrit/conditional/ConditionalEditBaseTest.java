@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
+
 import jmri.Conditional;
 
 /*
@@ -91,6 +92,7 @@ public class ConditionalEditBaseTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

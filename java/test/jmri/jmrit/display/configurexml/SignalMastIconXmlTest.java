@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * SignalMastIconXmlTest.java
  *
- * Description: tests for the SignalMastIconXml class
+ * Test for the SignalMastIconXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class SignalMastIconXmlTest {
       Assert.assertNotNull("SignalMastIconXml constructor",new SignalMastIconXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

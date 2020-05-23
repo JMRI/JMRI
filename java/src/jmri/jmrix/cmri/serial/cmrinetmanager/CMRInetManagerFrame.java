@@ -14,7 +14,7 @@ import jmri.jmrix.cmri.serial.serialmon.*;
 
 /**
  * Frame for a table view to manage a CMRInet network.
- * @author	 Chuck Catania   Copyright (C) 2014, 2015, 2016, 2017
+ * @author  Chuck Catania   Copyright (C) 2014, 2015, 2016, 2017
  */
 public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
 
@@ -47,7 +47,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
 
     public CMRInetManagerFrame(CMRISystemConnectionMemo memo) {
         super();
-	    _memo = memo;
+        _memo = memo;
     }
 
     protected javax.swing.JTextField pollIntervalField = new javax.swing.JTextField();
@@ -60,8 +60,8 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
         initializeNodes();
 
         // set the frame's initial state
-        setTitle(Bundle.getMessage("WindowTitle") + " - Connection "+_memo.getUserName());
-        setSize(1200,300);
+        setTitle(Bundle.getMessage("WindowTitle") + " - Connection " + _memo.getUserName());
+        setSize(1200, 300);
 
         Container contentPane = getContentPane();
         contentPane.setLayout(new FlowLayout());
@@ -77,7 +77,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
         nodeTable.setGridColor(Color.black);
         nodeTable.setRowSelectionAllowed(false);
         nodeTable.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
-        nodeTable.setPreferredScrollableViewportSize(new java.awt.Dimension(300,350));
+        nodeTable.setPreferredScrollableViewportSize(new java.awt.Dimension(300, 350));
         nodeTable.setRowHeight(30);
         nodeTable.getTableHeader().setReorderingAllowed(false);
         TableColumnModel pollListColumnModel = nodeTable.getColumnModel();
@@ -128,9 +128,9 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
 
         JScrollPane nodeTableScrollPane = new JScrollPane(nodeTable);
 
-        Border pollListBorderTitled = BorderFactory.createTitledBorder(pollListBorder," ",
-                                                                    TitledBorder.LEFT,TitledBorder.ABOVE_TOP);
-        pollListPanel.add(nodeTableScrollPane,BorderLayout.EAST);
+        Border pollListBorderTitled = BorderFactory.createTitledBorder(pollListBorder, " ",
+                TitledBorder.LEFT, TitledBorder.ABOVE_TOP);
+        pollListPanel.add(nodeTableScrollPane, BorderLayout.EAST);
         pollListPanel.setBorder(pollListBorderTitled);
         // Set the scroll window size
         setPreferredSize(new Dimension(750, 500));
@@ -153,95 +153,94 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
         // Setup window buttons
         // --------------------
         JPanel panel3 = new JPanel();
-        panel3.setLayout(new BoxLayout(panel3,BoxLayout.LINE_AXIS));
+        panel3.setLayout(new BoxLayout(panel3, BoxLayout.LINE_AXIS));
         panel3.setPreferredSize(new Dimension(600, 45));
 
         // --------------------------
         // Set up Halt Polling button
         // --------------------------
         haltPollButton.setVisible(true);
-        haltPollButton.setToolTipText(Bundle.getMessage("HaltPollButtonTip") );
-	haltPollButton.addActionListener(new java.awt.event.ActionListener() {
+        haltPollButton.setToolTipText(Bundle.getMessage("HaltPollButtonTip"));
+        haltPollButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-					haltpollButtonActionPerformed(e);
-				}
-			});
-         SerialTrafficController stc = _memo.getTrafficController();
-         if (stc.getPollNetwork())
-             haltPollButton.setText(Bundle.getMessage("HaltPollButtonText"));
-         else
-             haltPollButton.setText(Bundle.getMessage("ResumePollButtonText"));
-         panel3.add(haltPollButton);
+                haltpollButtonActionPerformed(e);
+            }
+        });
+        SerialTrafficController stc = _memo.getTrafficController();
+        if (stc.getPollNetwork()) {
+            haltPollButton.setText(Bundle.getMessage("HaltPollButtonText"));
+        } else {
+            haltPollButton.setText(Bundle.getMessage("ResumePollButtonText"));
+        }
+        panel3.add(haltPollButton);
 
-         // --------------------------
-         // Set up Open monitor button
-         // --------------------------
-         monitorButton.setVisible(true);
-         monitorButton.setToolTipText(Bundle.getMessage("MonitorButtonTip") );
-         monitorButton.addActionListener(new java.awt.event.ActionListener() {
-                 @Override
-                 public void actionPerformed(java.awt.event.ActionEvent e) {
-					monitorButtonActionPerformed(e);
-				}
-			});
-         panel3.add(monitorButton);
-         
-         // -----------------------------
-         // Set up Network Metrics button
-         // -----------------------------
-         netStatsButton.setVisible(false);
-         netStatsButton.setToolTipText(Bundle.getMessage("NetStatsButtonTip") );
-         netStatsButton.addActionListener(new java.awt.event.ActionListener() {
-                 @Override
-                 public void actionPerformed(java.awt.event.ActionEvent e) {
-					netStatsButtonActionPerformed(e);
-				}
-			});
-         panel3.add(netStatsButton);
-         panel3.add(Box.createRigidArea(new Dimension(30,0)));
-         
-         // ------------------
-         // Set up Done button
-         // ------------------
-         doneButton.setVisible(true);
-         doneButton.setToolTipText(Bundle.getMessage("DoneButtonTip") );
-         doneButton.addActionListener(new java.awt.event.ActionListener()
-             {
-                 @Override
-                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                     doneButtonActionPerformed();
-                 }
-             });
-         panel3.add(doneButton);
-         contentPane13.add(panel3);
-         
-         addHelpMenu("package.jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetManagerFrame", true);
-         
-         // pack for display
-         pack();
-         
+        // --------------------------
+        // Set up Open monitor button
+        // --------------------------
+        monitorButton.setVisible(true);
+        monitorButton.setToolTipText(Bundle.getMessage("MonitorButtonTip"));
+        monitorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                monitorButtonActionPerformed(e);
+            }
+        });
+        panel3.add(monitorButton);
+
+        // -----------------------------
+        // Set up Network Metrics button
+        // -----------------------------
+        netStatsButton.setVisible(false);
+        netStatsButton.setToolTipText(Bundle.getMessage("NetStatsButtonTip"));
+        netStatsButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                netStatsButtonActionPerformed(e);
+            }
+        });
+        panel3.add(netStatsButton);
+        panel3.add(Box.createRigidArea(new Dimension(30, 0)));
+
+        // ------------------
+        // Set up Done button
+        // ------------------
+        doneButton.setVisible(true);
+        doneButton.setToolTipText(Bundle.getMessage("DoneButtonTip"));
+        doneButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                doneButtonActionPerformed();
+            }
+        });
+        panel3.add(doneButton);
+        contentPane13.add(panel3);
+
+        addHelpMenu("package.jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetManagerFrame", true);
+
+        // pack for display
+        pack();
+
     }
     
     /**
      * Method to initialize configured nodes and set up the node select combo box
      */
     public void initializeNodes() {
-	// get all configured nodes
+        // get all configured nodes
         SerialNode node = (SerialNode) _memo.getTrafficController().getNode(0);
         int index = 1;
-        while (node != null)
-            {
-                cmriNode.add(node);
-                // set the polling sequence to the ordinal value in the list
-                if (cmriNode.get(index-1).getPollListPosition() == 0) {
-                    cmriNode.get(index-1).setPollListPosition(index);
-                }
-                node = (SerialNode) _memo.getTrafficController().getNode(index);
-                
-                index ++;
-                
+        while (node != null) {
+            cmriNode.add(node);
+            // set the polling sequence to the ordinal value in the list
+            if (cmriNode.get(index - 1).getPollListPosition() == 0) {
+                cmriNode.get(index - 1).setPollListPosition(index);
             }
+            node = (SerialNode) _memo.getTrafficController().getNode(index);
+
+            index++;
+
+        }
     }
     
     // --------------------------------------------
@@ -269,7 +268,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
         }
         catch (Exception ex)
             {
-                log.info("Exception-C2: "+ex.toString());
+                log.info("Exception-C2: {}", ex.toString());
             }
     }
     
@@ -284,7 +283,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
         }
         catch (Exception ex)
             {
-                log.info("Exception-C2: "+ex.toString());
+                log.info("Exception-C2: {}", ex.toString());
             }
     }
     
@@ -303,81 +302,87 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
     /**
      * Set up table for displaying bit assignments
      */
-    public class NodeTableModel extends AbstractTableModel
-    {
+    public class NodeTableModel extends AbstractTableModel {
+
         @Override
-        public String getColumnName(int c) {return pollListColumnsNames[c];}
+        public String getColumnName(int c) {
+            return pollListColumnsNames[c];
+        }
+
         @Override
         public Class<?> getColumnClass(int c) {
             switch (c) {
-            case ENABLED_COLUMN:
-                return Boolean.class;
-            case POLLSEQ_COLUMN:
-                return Integer.class;
-            case NODENUM_COLUMN:
-                return Integer.class;
-            default:
-                return String.class;
+                case ENABLED_COLUMN:
+                    return Boolean.class;
+                case POLLSEQ_COLUMN:
+                    return Integer.class;
+                case NODENUM_COLUMN:
+                    return Integer.class;
+                default:
+                    return String.class;
             }
         }
+
         @Override
-	public boolean isCellEditable(int r,int c)
-        {
-            switch (c)
-                {
+        public boolean isCellEditable(int r, int c) {
+            switch (c) {
                 case ENABLED_COLUMN:
                     return (true);
                 default:
-                }
-            
+            }
+
             return (false);
-            
+
         }
+
         @Override
-        public int getColumnCount () {return NUM_COLUMNS;}
+        public int getColumnCount() {
+            return NUM_COLUMNS;
+        }
+
         @Override
-        public int getRowCount () {return cmriNode.size();}
+        public int getRowCount() {
+            return cmriNode.size();
+        }
+
         @Override
-        public Object getValueAt (int r,int c)
-        {
-            switch(c)
-                {
+        public Object getValueAt(int r, int c) {
+            switch (c) {
                 case POLLSEQ_COLUMN:
                     return cmriNode.get(r).getPollListPosition();
-                    
+
                 case ENABLED_COLUMN:
-                    if (cmriNode.get(r).getPollingEnabled())
+                    if (cmriNode.get(r).getPollingEnabled()) {
                         return true;
-                    else
+                    } else {
                         return false;
-                    
+                    }
+
                 case NODENUM_COLUMN:
                     return cmriNode.get(r).getNodeAddress();
-                    
+
                 case NODETYPE_COLUMN:
-                    return "  "+nodeTypes[cmriNode.get(r).getNodeType()];
-                    
+                    return "  " + nodeTypes[cmriNode.get(r).getNodeType()];
+
                 case STATUS_COLUMN:
                     fireTableDataChanged();
                     return pollStatus[cmriNode.get(r).getPollStatus()];
-                    
+
                 case NODEDESC_COLUMN:
-                    return " "+cmriNode.get(r).getcmriNodeDesc();
-                    
+                    return " " + cmriNode.get(r).getcmriNodeDesc();
+
                 default:
-                }
+            }
             return "";
         }
-        
+
         @Override
-	public void setValueAt(Object value, int r, int c)
-        {
-            switch(c)
-                {
+        public void setValueAt(Object value, int r, int c) {
+            switch (c) {
                 case POLLSEQ_COLUMN:
-                    cmriNode.get(r).setPollListPosition((Integer)value);
+                    cmriNode.get(r).setPollListPosition((Integer) value);
                     fireTableDataChanged();
-                    
+
                     break;
                 case ENABLED_COLUMN:
                     cmriNode.get(r).setPollingEnabled(!cmriNode.get(r).getPollingEnabled());
@@ -386,17 +391,17 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
                     cmriNode.get(r).setPollStatus(cmriNode.get(r).getPollStatus());
                     break;
                 default:
-                }
+            }
         }
-        
-        public static final int POLLSEQ_COLUMN  = 0;
-        public static final int ENABLED_COLUMN  = 1;
-        public static final int NODENUM_COLUMN  = 2;
+
+        public static final int POLLSEQ_COLUMN = 0;
+        public static final int ENABLED_COLUMN = 1;
+        public static final int NODENUM_COLUMN = 2;
         public static final int NODETYPE_COLUMN = 3;
-        public static final int STATUS_COLUMN   = 4;
+        public static final int STATUS_COLUMN = 4;
         public static final int NODEDESC_COLUMN = 5;
-        public static final int NUM_COLUMNS = NODEDESC_COLUMN+1;
-        
+        public static final int NUM_COLUMNS = NODEDESC_COLUMN + 1;
+
     }
     
     private String[] pollListColumnsNames = {"Poll Seq", "Enabled", "Node", "Type", "Status", "Description"};

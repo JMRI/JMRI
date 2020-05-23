@@ -6,7 +6,7 @@ import org.junit.*;
 /**
  * Base tests for StreamConnectionConfig objects.
  *
- * @author Paul Bender Copyright (C) 2018	
+ * @author Paul Bender Copyright (C) 2018
  */
 abstract public class AbstractStreamConnectionConfigTestBase extends jmri.jmrix.AbstractConnectionConfigTestBase {
 

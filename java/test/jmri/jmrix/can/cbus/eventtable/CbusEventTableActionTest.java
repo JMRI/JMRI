@@ -1,16 +1,22 @@
 package jmri.jmrix.can.cbus.eventtable;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.nio.file.Path;
+import jmri.InstanceManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
-import jmri.jmrix.can.cbus.CbusPreferences;
-import jmri.util.JUnitAppender;
+import jmri.jmrix.can.cbus.*;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.io.TempDir;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JCheckBoxOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
 
 /**
  *
@@ -21,192 +27,203 @@ public class CbusEventTableActionTest {
 
     @Test
     public void testCTor() {
-        
-        CbusEventTableAction t = new CbusEventTableAction(null);
-        Assert.assertNotNull("exists",t);
+        CbusEventTableAction t = new CbusEventTableAction(model);
+        assertThat(t).isNotNull();
     }
     
     @Test
-    public void testLoadXmlNoFilePresent() {
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    public void testDeleteConfirm() {
         
-        CbusEventTableAction t = model.getCbusEventTableAction();
-        Assert.assertNotNull("exists",t);
+        assertThat(model.getRowCount()).isEqualTo(0);
         
-        Assert.assertTrue(model.getRowCount()==0);
+        model.provideEvent(111, 222);
+        model.provideEvent(333, 444);
+        model.provideEvent(555, 666);
         
-        t.restoreEventsFromXmlTablestart();
-        Assert.assertTrue(model.getRowCount()==0);
-        
-    }
+        assertThat(model.getRowCount()).isEqualTo(3);
     
-    @Test
-    public void testLoadGoodFile() throws java.io.IOException, java.text.ParseException {
         
-        CbusEventTableAction t = model.getCbusEventTableAction();
-        CbusEventTableAction.CbusEventTableXmlFile x = new CbusEventTableAction.CbusEventTableXmlFile();
-
-        java.io.File dir = new java.io.File("java/test/jmri/jmrix/can/cbus/eventtable/");
-        java.io.File systemFile = new java.io.File(dir, "EventTableData-1.xml");
-
-        java.nio.file.Files.copy(systemFile.toPath(), x.getFile(true).toPath(), 
-            java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-            
-        t.restoreEventsFromXmlTablestart();
+        Thread cancel_thread = new Thread(() -> {
+            JDialogOperator jfo = new JDialogOperator( Bundle.getMessage("DelEvPopTitle") );
+            new JButtonOperator(jfo,"Cancel").doClick();
+        });
+        cancel_thread.setName("CBUS Cancel Delete Event Dialog Table Close Thread");
+        cancel_thread.start();
         
-        Assert.assertEquals("Entries loaded",3,model.getRowCount());
+        model.ta.buttonDeleteClicked(1);
         
-        CbusTableEvent te = model.provideEvent(0,1);
-        Assert.assertNotNull("exists",te);
-        Assert.assertEquals("te 1 name", "Short Event 1",te.getName() );
-        Assert.assertEquals("te 1 comment", "Short Event 1 Comment",te.getComment() );
-        Assert.assertEquals("te 1 on 0", 0, te.getTotalOn() );
-        Assert.assertEquals("te 1 off 0", 0, te.getTotalOff() );
-        Assert.assertEquals("te 1 in 0", 0, te.getTotalIn() );
-        Assert.assertEquals("te 1 out 0", 0, te.getTotalOut() );
-        Assert.assertEquals("te 1 state unknown",CbusTableEvent.EvState.UNKNOWN,te.getState());
-        Assert.assertEquals("te 1 date unknown",null,te.getDate());
+        JUnitUtil.waitFor(()->{return !(cancel_thread.isAlive());}, "CBUS Cancel Delete Event Dialog closed");
+        assertThat(model.getRowCount()).isEqualTo(3);
         
-        te = model.provideEvent(0,2);
-        Assert.assertNotNull("exists",te);
-        Assert.assertEquals("te 2 name", "Short Event 2",te.getName() );
-        Assert.assertEquals("te 2 comment", "Short Event 2 Comment",te.getComment() );
-        Assert.assertEquals("te 2 on 0", 123456, te.getTotalOn() );
-        Assert.assertEquals("te 2 off 0", 234567, te.getTotalOff() );
-        Assert.assertEquals("te 2 in 0", 345678, te.getTotalIn() );
-        Assert.assertEquals("te 2 out 0", 456789, te.getTotalOut() );
-        Assert.assertEquals("te 2 state unknown",CbusTableEvent.EvState.UNKNOWN,te.getState());
-        Assert.assertEquals(t.xmlDateStyle.parse("2019-08-22 15:23:49"), te.getDate());
         
-        te = model.provideEvent(65535,65535);
-        Assert.assertNotNull("exists",te);
-        Assert.assertEquals("te 65535 - 65535 name", "Long Event Node 65535 Event 65535",te.getName() );
-        Assert.assertEquals("te 65535 - 65535 comment", "",te.getComment() );
-        Assert.assertEquals("te 65535 - 65535 on 0", 0, te.getTotalOn() );
-        Assert.assertEquals("te 65535 - 65535 off 0", 20, te.getTotalOff() );
-        Assert.assertEquals("te 65535 - 65535 in 0", 30, te.getTotalIn() );
-        Assert.assertEquals("te 65535 - 65535 out 0", 40, te.getTotalOut() );
-        Assert.assertEquals("te 65535 - 65535 state unknown",CbusTableEvent.EvState.UNKNOWN,te.getState());
-        Assert.assertEquals("te 65535 - 65535 date unknown",null,te.getDate());
+        Thread dialog_thread = new Thread(() -> {
+            JDialogOperator jfo = new JDialogOperator( Bundle.getMessage("DelEvPopTitle") );
+            new JButtonOperator(jfo,"OK").doClick();
+        });
+        dialog_thread.setName("CBUS Delete Event Dialog Table Close Thread");
+        dialog_thread.start();
         
-        Assert.assertEquals("Still 3 Entries loaded",3,model.getRowCount());
-    }
-    
-    @Test
-    public void testLoadBadFile() throws java.io.IOException {
+        Thread dialog_thread2 = new Thread(() -> {
+            JDialogOperator jfo = new JDialogOperator( Bundle.getMessage("DelEvPopTitle") );
+            new JCheckBoxOperator(jfo,Bundle.getMessage("PopupSessionConfirmDel")).doClick();
+            new JButtonOperator(jfo,"OK").doClick();
+        });
+        dialog_thread2.setName("CBUS Delete Event Dialog Table Close Thread");
         
-        CbusEventTableAction t = model.getCbusEventTableAction();
-        CbusEventTableAction.CbusEventTableXmlFile x = new CbusEventTableAction.CbusEventTableXmlFile();
-
-        java.io.File dir = new java.io.File("java/test/jmri/jmrix/can/cbus/eventtable/");
-        java.io.File systemFile = new java.io.File(dir, "EventTableData-2.xml");
-
-        java.nio.file.Files.copy(systemFile.toPath(), x.getFile(true).toPath(), 
-            java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-            
-        t.restoreEventsFromXmlTablestart();
         
-        JUnitAppender.assertErrorMessageStartsWith("Node or event number missing in event [[Attribute: NodeNum");
-        JUnitAppender.assertErrorMessageStartsWith("Node or event number missing in event [[Attribute: EventNum");
-        JUnitAppender.assertErrorMessageStartsWith("Incorrect off / on / in / out value in event [[Attribute:");
-        JUnitAppender.assertErrorMessageStartsWith("Incorrect off / on / in / out value in event [[Attribute:");
-        JUnitAppender.assertErrorMessageStartsWith("Incorrect off / on / in / out value in event [[Attribute:");
-        JUnitAppender.assertErrorMessageStartsWith("Incorrect off / on / in / out value in event [[Attribute:");
-        JUnitAppender.assertErrorMessageStartsWith("Incorrect off / on / in / out value in event [[Attribute:");
-        JUnitAppender.assertErrorMessageStartsWith("Incorrect off / on / in / out value in event [[Attribute:");
-        JUnitAppender.assertErrorMessageStartsWith("Incorrect off / on / in / out value in event [[Attribute:");
-        JUnitAppender.assertErrorMessageStartsWith("Incorrect off / on / in / out value in event [[Attribute:");        
-        JUnitAppender.assertErrorMessageStartsWith("Unable to parse date [[Attribute: NodeNum=");
-        JUnitAppender.assertErrorMessageStartsWith("Incorrect off / on / in / out value in event [[Attribute:");
-        JUnitAppender.assertErrorMessageStartsWith("Unable to parse date [[Attribute: NodeNum=");
-        JUnitAppender.assertErrorMessageStartsWith("Incorrect off / on / in / out value in event [[Attribute:");
+        model.ta.buttonDeleteClicked(1);
         
-        Assert.assertEquals("9 Entry loaded",9,model.getRowCount());
-        Assert.assertTrue(model.seeIfEventOnTable(0,1)>-1);
-        Assert.assertTrue(model.seeIfEventOnTable(11,22)>-1);
-        Assert.assertTrue(model.seeIfEventOnTable(11,33)>-1);
-        Assert.assertTrue(model.seeIfEventOnTable(11,44)>-1);
-        Assert.assertTrue(model.seeIfEventOnTable(11,55)>-1);
-        Assert.assertTrue(model.seeIfEventOnTable(22,22)>-1);
-        Assert.assertTrue(model.seeIfEventOnTable(22,33)>-1);
-        Assert.assertTrue(model.seeIfEventOnTable(22,44)>-1);
-        Assert.assertTrue(model.seeIfEventOnTable(22,55)>-1);
+        JUnitUtil.waitFor(()->{return !(dialog_thread.isAlive());}, "CBUS Delete Event Dialog closed");
+        
+        assertThat(model.getRowCount()).isEqualTo(2);
+        // String events = model._mainArray.toString();
+        assertEquals("[NN:111 EN:222 , NN:555 EN:666 ]",model._mainArray.toString());
+        
+        dialog_thread2.start();
+        
+        model.ta.buttonDeleteClicked(0);
+        
+        JUnitUtil.waitFor(()->{return !(dialog_thread2.isAlive());}, "CBUS Delete Event 2nd Dialog closed");
+        
+        assertThat(model.getRowCount()).isEqualTo(1);
+        assertEquals("[NN:555 EN:666 ]",model._mainArray.toString());
+        
+        model.ta.buttonDeleteClicked(0);
+        assertThat(model.getRowCount()).isEqualTo(0);
         
     }
     
     @Test
-    public void testSaveFile() throws java.text.ParseException {
+    public void testAddBeanToEvent(){
+    
+        assertThat(model.getRowCount()).isEqualTo(0);
         
-        CbusEventTableAction t = model.getCbusEventTableAction();
+        CbusTableEvent evA = model.provideEvent(111, 222);
+        assertThat(model.getRowCount()).isEqualTo(1);
+        assertThat(evA.getBeans(CbusEventDataElements.EvState.ON).getActionA().size()).isEqualTo(0);
+        assertThat(evA.getBeans(CbusEventDataElements.EvState.ON).getActionB().size()).isEqualTo(0);
+        assertThat(evA.getBeans(CbusEventDataElements.EvState.OFF).getActionA().size()).isEqualTo(0);
+        assertThat(evA.getBeans(CbusEventDataElements.EvState.OFF).getActionB().size()).isEqualTo(0);
         
-        Assert.assertTrue(model.getRowCount()==0);
+        sm.provideSensor("+N111E222").setUserName("SensorA");
+        assertThat(model.getRowCount()).isEqualTo(1);
+        assertThat(evA.getBeans(CbusEventDataElements.EvState.ON).getActionA().size()).isEqualTo(1);
+        assertThat(evA.getBeans(CbusEventDataElements.EvState.ON).getActionB().size()).isEqualTo(0);
+        assertThat(evA.getBeans(CbusEventDataElements.EvState.OFF).getActionA().size()).isEqualTo(0);
+        assertThat(evA.getBeans(CbusEventDataElements.EvState.OFF).getActionB().size()).isEqualTo(1);
+        assertEquals("Sensor Active: SensorA",evA.getBeans(CbusEventDataElements.EvState.ON).toString());
+        assertEquals("Sensor Inactive: SensorA",evA.getBeans(CbusEventDataElements.EvState.OFF).toString());
         
-        CbusTableEvent event1 = model.provideEvent(111,222);
-        event1.setTotalOn(1);
-        event1.setTotalOff(2);
-        event1.setName("My Test Event 1 Name");
-        event1.setDate(t.xmlDateStyle.parse("2019-08-22 13:45:49"));
+        sm.provideSensor("+N111E222").setInverted(true);
+        assertEquals("Sensor Inactive: SensorA",evA.getBeans(CbusEventDataElements.EvState.ON).toString());
+        assertEquals("Sensor Active: SensorA",evA.getBeans(CbusEventDataElements.EvState.OFF).toString());
         
-        CbusTableEvent event2 = model.provideEvent(333,444);
-        event2.setTotalIn(3);
-        event2.setTotalOut(4);
-        event2.setComment("My Test Event 2 Comment");
+        sm.provideSensor("+N111E222").setInverted(false);
+        assertEquals("Sensor Active: SensorA",evA.getBeans(CbusEventDataElements.EvState.ON).toString());
+        assertEquals("Sensor Inactive: SensorA",evA.getBeans(CbusEventDataElements.EvState.OFF).toString());
         
-        Assert.assertTrue("Row Count after adding 2 events",model.getRowCount()==2);
+        lm.provideLight("-N333E444").setUserName("LightA");
+        assertThat(model.getRowCount()).isEqualTo(2);
+        CbusTableEvent lE = model.provideEvent(333, 444);
+        assertEquals("Light Off: LightA",lE.getBeans(CbusEventDataElements.EvState.ON).toString());
+        assertEquals("Light On: LightA",lE.getBeans(CbusEventDataElements.EvState.OFF).toString());
+                
+        tm.provideTurnout("+123;+456").setUserName("TurnoutA");
+        assertThat(model.getRowCount()).isEqualTo(4);
+        CbusTableEvent toEv1 = model.provideEvent(0, 123);
+        CbusTableEvent toEv2 = model.provideEvent(0, 456);
+        assertThat(model.getRowCount()).isEqualTo(4);
         
-        t.storeEventsToXml();
+        assertEquals("Turnout Thrown: TurnoutA",toEv1.getBeans(CbusEventDataElements.EvState.ON).toString());
+        assertEquals("",toEv1.getBeans(CbusEventDataElements.EvState.OFF).toString());
+        assertEquals("Turnout Closed: TurnoutA",toEv2.getBeans(CbusEventDataElements.EvState.ON).toString());
+        assertEquals("",toEv2.getBeans(CbusEventDataElements.EvState.OFF).toString());
         
-        model.clearAllEvents();
-        Assert.assertTrue("Row Count before restore 0",model.getRowCount()==0);
+        tm.provideTurnout("+123;+456").setInverted(true);
+        assertEquals("Turnout Closed: TurnoutA",toEv1.getBeans(CbusEventDataElements.EvState.ON).toString());
+        assertEquals("",toEv1.getBeans(CbusEventDataElements.EvState.OFF).toString());
+        assertEquals("Turnout Thrown: TurnoutA",toEv2.getBeans(CbusEventDataElements.EvState.ON).toString());
+        assertEquals("",toEv2.getBeans(CbusEventDataElements.EvState.OFF).toString());
         
-        t.restoreEventsFromXmlTablestart();
-        Assert.assertTrue("Row Count after restore 2",model.getRowCount()==2);
-        
-        CbusTableEvent te = model.provideEvent(111,222);
-        Assert.assertNotNull("te 1 exists",te);
-        Assert.assertEquals("te 1 name", "My Test Event 1 Name",te.getName() );
-        Assert.assertEquals("te 1 comment", "",te.getComment() );
-        Assert.assertEquals("te 1 on 1", 1, te.getTotalOn() );
-        Assert.assertEquals("te 1 off 2", 2, te.getTotalOff() );
-        Assert.assertEquals("te 1 in 0", 0, te.getTotalIn() );
-        Assert.assertEquals("te 1 out 0", 0, te.getTotalOut() );
-        Assert.assertEquals("te 1 state unknown",CbusTableEvent.EvState.UNKNOWN,te.getState());
-        Assert.assertEquals(t.xmlDateStyle.parse("2019-08-22 13:45:49"), te.getDate());
-        
-        te = model.provideEvent(333,444);
-        Assert.assertNotNull("te 2 exists",te);
-        Assert.assertEquals("te 2 name", "",te.getName() );
-        Assert.assertEquals("te 2 comment", "My Test Event 2 Comment",te.getComment() );
-        Assert.assertEquals("te 2 on 0", 0, te.getTotalOn() );
-        Assert.assertEquals("te 2 off 0", 0, te.getTotalOff() );
-        Assert.assertEquals("te 2 in 0", 3, te.getTotalIn() );
-        Assert.assertEquals("te 2 out 0", 4, te.getTotalOut() );
-        Assert.assertEquals("te 2 state unknown",CbusTableEvent.EvState.UNKNOWN,te.getState());
-        Assert.assertEquals(null, te.getDate());
+        lm.provideLight("+789;X0A").setUserName("LightB");
+        assertThat(model.getRowCount()).isEqualTo(5);
+        CbusTableEvent lsE = model.provideEvent(0, 789);
+        assertEquals("Light On: LightB",lsE.getBeans(CbusEventDataElements.EvState.ON).toString());
+        assertEquals("",lsE.getBeans(CbusEventDataElements.EvState.OFF).toString());
+
+        sm.provideSensor("+N111E222").dispose();
+        lm.provideLight("-N333E444").dispose();
+        tm.provideTurnout("+123;+456").dispose();
+        lm.provideLight("+789;X0A").dispose();
+    
     }
+    
+    @Test
+    public void testResetSession(){
+    
+        
+        model.provideEvent(0, 1).bumpDirection(CbusConstants.EVENT_DIR_OUT);
+        model.provideEvent(0, 2).bumpDirection(CbusConstants.EVENT_DIR_IN);
+        model.provideEvent(0, 2).bumpDirection(CbusConstants.EVENT_DIR_IN);
+        
+        model.provideEvent(0, 1).setState(CbusEventDataElements.EvState.ON);
+        model.provideEvent(0, 1).setState(CbusEventDataElements.EvState.OFF);
+        model.provideEvent(0, 2).setState(CbusEventDataElements.EvState.ON);
+        
+        assertThat(model.provideEvent(0, 1).getSessionInOut(false)).isEqualTo(1);
+        assertThat(model.provideEvent(0, 2).getSessionInOut(true)).isEqualTo(2);
+        assertThat(model.provideEvent(0, 1).getSessionOnOff(true)).isEqualTo(1);
+        assertThat(model.provideEvent(0, 1).getSessionOnOff(false)).isEqualTo(1);
+        assertThat(model.provideEvent(0, 2).getSessionOnOff(true)).isEqualTo(1);
+        
+        model.ta.resetAllSessionTotals();
+
+        assertThat(model.provideEvent(0, 1).getSessionInOut(false)).isEqualTo(0);
+        assertThat(model.provideEvent(0, 2).getSessionInOut(true)).isEqualTo(0);
+        assertThat(model.provideEvent(0, 1).getSessionOnOff(true)).isEqualTo(0);
+        assertThat(model.provideEvent(0, 1).getSessionOnOff(false)).isEqualTo(0);
+        assertThat(model.provideEvent(0, 2).getSessionOnOff(true)).isEqualTo(0);
+        
+    }
+    
+    
+    @TempDir 
+    protected Path tempDir;
     
     private CbusEventTableDataModel model;
     private TrafficControllerScaffold tcis;
     private CanSystemConnectionMemo memo;
     
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    private CbusTurnoutManager tm;
+    private CbusLightManager lm;
+    private CbusSensorManager sm;
+    
+    // InstanceManager.setDefault(jmri.SensorManager.class,new CbusSensorManager(memo));
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
-        
         tcis = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcis);
-        jmri.InstanceManager.store(new CbusPreferences(),CbusPreferences.class );
+        
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
+        
+        tm = new CbusTurnoutManager(memo);
+        sm = new CbusSensorManager(memo);
+        lm = new CbusLightManager(memo);
+        InstanceManager.setDefault(jmri.TurnoutManager.class,tm);
+        InstanceManager.setDefault(jmri.SensorManager.class,sm);
+        InstanceManager.setDefault(jmri.LightManager.class,lm);
+        
+        InstanceManager.store(new CbusPreferences(),CbusPreferences.class );
         model = new CbusEventTableDataModel( memo,4,CbusEventTableDataModel.MAX_COLUMN);
       
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         
         model.skipSaveOnDispose();
@@ -215,6 +232,9 @@ public class CbusEventTableActionTest {
         memo = null;
         tcis.terminateThreads();
         tcis = null;
+        lm.dispose();
+        tm.dispose();
+        sm.dispose();
         
         JUnitUtil.tearDown();
 

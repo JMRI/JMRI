@@ -3,8 +3,6 @@ package jmri.jmrix.can.cbus.node;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane;
@@ -67,28 +65,6 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     }
 
     /**
-     * Configure a table to have our standard rows and columns.
-     * <p>
-     * This is optional, in that other table formats can use this table model.
-     * But we put it here to help keep it consistent.
-     * @param eventTable Table to be Configured
-     */
-    public void configureTable(JTable eventTable) {
-        // allow reordering of the columns
-        eventTable.getTableHeader().setReorderingAllowed(true);
-
-        // shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        eventTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-        // resize columns as requested
-        for (int i = 0; i < eventTable.getColumnCount(); i++) {
-            int width = getPreferredWidth(i);
-            eventTable.getColumnModel().getColumn(i).setPreferredWidth(width);
-        }
-        eventTable.sizeColumnsToFit(-1);
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -110,28 +86,6 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
                 return ("Index");
             default:
                 return "unknown " + col; // NOI18N
-        }
-    }
-
-    /**
-     * Returns int of startup column widths
-     * @param col int col number
-     * @return Preferred Initial Column Width
-     */
-    public static int getPreferredWidth(int col) {
-        switch (col) {
-            case NODE_EDIT_BUTTON_COLUMN:
-            case EVENT_NUMBER_COLUMN:
-            case NODE_NUMBER_COLUMN:
-            case EV_INDEX_COLUMN:
-                return new JTextField(5).getPreferredSize().width;
-            case NODE_NAME_COLUMN:
-            case EVENT_NAME_COLUMN:
-                return new JTextField(11).getPreferredSize().width;
-            case EV_VARS_COLUMN:
-                return new JTextField(16).getPreferredSize().width;
-            default:
-                return new JTextField(" <unknown> ").getPreferredSize().width; // NOI18N
         }
     }
     

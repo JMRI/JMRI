@@ -22,7 +22,7 @@ import org.junit.*;
 /**
  * Integration Tests for DefaultCabSignal
  *
- * @author Paul Bender Copyright (C) 2019	
+ * @author Paul Bender Copyright (C) 2019
  */
 public class DefaultCabSignalIT {
 
@@ -49,7 +49,7 @@ public class DefaultCabSignalIT {
         // Find new window by name (should be more distinctive, comes from sample file)
         EditorFrameOperator to = new EditorFrameOperator("Cab Signal Test");
         LayoutEditor le = (LayoutEditor) jmri.util.JmriJFrame.getFrame("Cab Signal Test");
-        InstanceManager.getDefault(jmri.jmrit.display.PanelMenu.class).addEditorPanel(le);
+        InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).add(le);
         jmri.SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
         smlm.initialise();
         for(jmri.SignalMastLogic sml:smlm.getSignalMastLogicList()) {
@@ -167,7 +167,6 @@ public class DefaultCabSignalIT {
         }
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -180,7 +179,6 @@ public class DefaultCabSignalIT {
         JUnitUtil.initLayoutBlockManager();
         JUnitUtil.initDefaultSignalMastManager();
         JUnitUtil.initSignalMastLogicManager();
-        InstanceManager.setDefault(jmri.jmrit.display.PanelMenu.class,new jmri.jmrit.display.PanelMenu());
         cs = new DefaultCabSignal(new DccLocoAddress(1234,true));
     }
 
@@ -188,9 +186,10 @@ public class DefaultCabSignalIT {
     public void tearDown() {
         cs.dispose(); // verify no exceptions
         cs = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultCabSignalTest.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultCabSignalIT.class);
 
 }

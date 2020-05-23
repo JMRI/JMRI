@@ -7,7 +7,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -72,7 +72,6 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     
     private TrafficControllerScaffold tcis;
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

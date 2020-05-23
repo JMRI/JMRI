@@ -36,12 +36,12 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
     
     @Override
     protected void sendIdleReply() {
-        return;
+        // do nothing
     }
 
     @Override
     protected void hearIdle() {
-        return;
+        // do nothing
     }
 
     @Override
@@ -99,7 +99,6 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
 
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

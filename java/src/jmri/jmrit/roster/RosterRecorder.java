@@ -44,6 +44,7 @@ public class RosterRecorder extends Thread {
 
     /**
      * Added or removed RosterEntry, make sure we're listening appropriately.
+     * @param e The event that indicated the change.
      */
     void changedRoster(java.beans.PropertyChangeEvent e) {
         log.debug("changedRoster");
@@ -63,6 +64,7 @@ public class RosterRecorder extends Thread {
 
     /**
      * Changed RosterEntry changed RosterEntry fires off store.
+     * @param e The event that indicated the change.
      */
     void changedEntry(java.beans.PropertyChangeEvent e) {
         log.debug("changedEntry");

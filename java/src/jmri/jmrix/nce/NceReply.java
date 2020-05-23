@@ -99,8 +99,8 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
      * {@inheritDoc}
      */
     @Override
-    public String toMonitorString(){
-	    return nceMon.displayReply(this);
+    public String toMonitorString() {
+        return nceMon.displayReply(this);
     }
 
 }

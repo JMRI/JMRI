@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * Description: Tests for the JmriFaceless application.
+ * Tests for the JmriFaceless application.
  *
  * @author Paul Bender Copyright (C) 2016
  */
@@ -55,7 +55,6 @@ public class JmriFacelessTest {
         AppsBase.handleQuit();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -462,7 +462,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
                 setColor(COLOR_DIFF);
                 break;
             default:
-                log.error("Inconsistent state: " + _state);
+                log.error("Inconsistent state: {}", _state);
         }
         if (_state != state || _state == UNKNOWN) {
             prop.firePropertyChange("State", Integer.valueOf(_state), Integer.valueOf(state));

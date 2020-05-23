@@ -5,13 +5,19 @@
          all cleared out. -->
          
     <!-- Suppress high bugs which we _don't_ want to fail CI until we can get them removed -->
+     <Match>
+        <Confidence value="1" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
+        <Or>
+           <Bug pattern="SLF4J_FORMAT_SHOULD_BE_CONST" />
+           <Bug pattern="SLF4J_PLACE_HOLDER_MISMATCH" />
+        </Or>
+     </Match>
 
     <!-- Suppress medium bugs which we _don't_ want to fail CI until we can get them removed -->
      <Match>
         <Confidence value="2" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
-           <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
         </Or>
      </Match>
 
@@ -19,8 +25,6 @@
      <Match>
         <Confidence value="3" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
-           <Bug pattern="BC_UNCONFIRMED_CAST" />
-           <Bug pattern="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE" />
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
            <Bug pattern="LI_LAZY_INIT_STATIC" />
            <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" />
@@ -42,6 +46,11 @@
      <Match>
        <!-- Minor clarity issue -->
        <Bug pattern="RI_REDUNDANT_INTERFACES" />
+     </Match>
+
+     <Match>
+        <!-- Minimal messages can be very useful at DEBUG or TRACE level -->
+        <Bug pattern="SLF4J_SIGN_ONLY_FORMAT" />
      </Match>
 
      <Match>
@@ -82,6 +91,11 @@
      <Match>
        <!-- JMRI does not use serialization, permanently ignore -->
        <Bug code="Se,SnVI" />
+     </Match>
+
+     <Match>
+       <!-- JMRI code is written with static final loggers. -->
+       <Bug pattern="SLF4J_LOGGER_SHOULD_BE_NON_STATIC" />
      </Match>
 
 </FindBugsFilter>

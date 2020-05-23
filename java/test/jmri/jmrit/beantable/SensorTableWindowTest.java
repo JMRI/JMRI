@@ -26,8 +26,8 @@ import org.netbeans.jemmy.util.NameComponentChooser;
 /**
  * Swing tests for the sensor table.
  *
- * @author	Bob Jacobsen Copyright 2009, 2010
- * @author	Egbert Broerse Copyright 2018
+ * @author Bob Jacobsen Copyright 2009, 2010
+ * @author Egbert Broerse Copyright 2018
  */
 public class SensorTableWindowTest {
 

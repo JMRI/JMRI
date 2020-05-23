@@ -176,6 +176,10 @@ public class CompositeVariableValue extends EnumVariableValue {
 
     /**
      * Add a setting to an existing choice.
+     * @param choice existing choice.
+     * @param varName variable name.
+     * @param variable variable value.
+     * @param value setting value.
      */
     public void addSetting(String choice, String varName, VariableValue variable, String value) {
         SettingList s = choiceHash.get(choice);

@@ -4,7 +4,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
-import jmri.Throttle;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 
@@ -41,6 +40,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
     /**
      * Constructor
+     * @param memo system connection.
+     * @param controller system connection traffic controller.
      */
     public XNetThrottle(XNetSystemConnectionMemo memo, XNetTrafficController controller) {
         super(memo);
@@ -50,7 +51,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     /**
-     * Constructor
+     * Constructor.
+     * @param memo system connection.
+     * @param address loco address.
+     * @param controller system connection traffic controller.
      */
     public XNetThrottle(XNetSystemConnectionMemo memo, LocoAddress address, XNetTrafficController controller) {
         super(memo);
@@ -152,7 +156,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     @Override
     protected void sendMomentaryFunctionGroup1() {
         XNetMessage msg = XNetMessage.getFunctionGroup1SetMomMsg(this.getDccAddress(),
-                f0Momentary, f1Momentary, f2Momentary, f3Momentary, f4Momentary);
+           getFunctionMomentary(0), getFunctionMomentary(1), getFunctionMomentary(2),
+           getFunctionMomentary(3), getFunctionMomentary(4));
         // now, queue the message for sending to the command station
         queueMessage(msg, THROTTLEFUNCSENT);
     }
@@ -164,7 +169,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     @Override
     protected void sendMomentaryFunctionGroup2() {
         XNetMessage msg = XNetMessage.getFunctionGroup2SetMomMsg(this.getDccAddress(),
-                f5Momentary, f6Momentary, f7Momentary, f8Momentary);
+            getFunctionMomentary(5), getFunctionMomentary(6),
+            getFunctionMomentary(7), getFunctionMomentary(8));
         // now, queue the message for sending to the command station
         queueMessage(msg, THROTTLEFUNCSENT);
     }
@@ -176,20 +182,24 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     @Override
     protected void sendMomentaryFunctionGroup3() {
         XNetMessage msg = XNetMessage.getFunctionGroup3SetMomMsg(this.getDccAddress(),
-                f9Momentary, f10Momentary, f11Momentary, f12Momentary);
+            getFunctionMomentary(9), getFunctionMomentary(10),
+           getFunctionMomentary(11), getFunctionMomentary(12));
         // now, queue the message for sending to the command station
         queueMessage(msg, THROTTLEFUNCSENT);
     }
 
     /**
-     * Send the XpressNet message to set the momentary state of functions F13,
-     * F14, F15, F16, F17, F18, F19, F20.
+     * Send the XpressNet message to set the momentary state of functions
+     * F13, F14, F15, F16, F17, F18, F19, F20.
      */
     @Override
     protected void sendMomentaryFunctionGroup4() {
         if (csVersionSupportsHighFunctions()) {
-            XNetMessage msg = XNetMessage.getFunctionGroup4SetMomMsg(this.getDccAddress(), f13Momentary, f14Momentary,
-                    f15Momentary, f16Momentary, f17Momentary, f18Momentary, f19Momentary, f20Momentary);
+            XNetMessage msg = XNetMessage.getFunctionGroup4SetMomMsg(this.getDccAddress(), 
+           getFunctionMomentary(13), getFunctionMomentary(14),
+           getFunctionMomentary(15), getFunctionMomentary(16),
+           getFunctionMomentary(17), getFunctionMomentary(18),
+           getFunctionMomentary(19), getFunctionMomentary(20));
             // now, queue the message for sending to the command station
             queueMessage(msg, THROTTLEFUNCSENT);
         }
@@ -202,8 +212,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     @Override
     protected void sendMomentaryFunctionGroup5() {
         if (csVersionSupportsHighFunctions()) {
-            XNetMessage msg = XNetMessage.getFunctionGroup5SetMomMsg(this.getDccAddress(), f21Momentary, f22Momentary,
-                    f23Momentary, f24Momentary, f25Momentary, f26Momentary, f27Momentary, f28Momentary);
+            XNetMessage msg = XNetMessage.getFunctionGroup5SetMomMsg(this.getDccAddress(), 
+                getFunctionMomentary(21), getFunctionMomentary(22), getFunctionMomentary(23),
+                getFunctionMomentary(24), getFunctionMomentary(25), getFunctionMomentary(26),
+                getFunctionMomentary(27), getFunctionMomentary(28));
             // now, queue the message for sending to the command station
             queueMessage(msg, THROTTLEFUNCSENT);
         }
@@ -583,6 +595,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     // Used for return values from Status requests.
     /**
      * Get SpeedStep and availability information.
+     * @param b1 1st byte of message to examine
      */
     protected void parseSpeedAndAvailability(int b1) {
         /* the first data bite indicates the speed step mode, and
@@ -619,6 +632,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
     /**
      * Get Speed and Direction information.
+     * @param b2 2nd byte of message to examine
      */
     protected void parseSpeedAndDirection(int b2) {
         /* the second byte indicates the speed and direction setting */
@@ -749,146 +763,53 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         log.trace("Parsing Function Momentary status, function bytes: {} and {}",
                 b3, b4);
         /* data byte 3 is the momentary status of F0 F4 F3 F2 F1 */
-        checkForFunctionMomentaryValueChange(Throttle.F0Momentary, b3, 0x10, getF0Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F1Momentary, b3, 0x01, getF1Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F2Momentary, b3, 0x02, getF2Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F3Momentary, b3, 0x04, getF3Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F4Momentary, b3, 0x08, getF4Momentary());
+        checkForFunctionMomentaryValueChange(0, b3, 0x10, getF0Momentary());
+        checkForFunctionMomentaryValueChange(1, b3, 0x01, getF1Momentary());
+        checkForFunctionMomentaryValueChange(2, b3, 0x02, getF2Momentary());
+        checkForFunctionMomentaryValueChange(3, b3, 0x04, getF3Momentary());
+        checkForFunctionMomentaryValueChange(4, b3, 0x08, getF4Momentary());
         /* data byte 4 is the momentary status of F12 F11 F10 F9 F8 F7 F6 F5 */
-        checkForFunctionMomentaryValueChange(Throttle.F5Momentary, b4, 0x01, getF5Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F6Momentary, b4, 0x02, getF6Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F7Momentary, b4, 0x04, getF7Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F8Momentary, b4, 0x08, getF8Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F9Momentary, b4, 0x10, getF9Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F10Momentary, b4, 0x20, getF10Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F11Momentary, b4, 0x40, getF11Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F12Momentary, b4, 0x80, getF12Momentary());
+        checkForFunctionMomentaryValueChange(5, b4, 0x01, getF5Momentary());
+        checkForFunctionMomentaryValueChange(6, b4, 0x02, getF6Momentary());
+        checkForFunctionMomentaryValueChange(7, b4, 0x04, getF7Momentary());
+        checkForFunctionMomentaryValueChange(8, b4, 0x08, getF8Momentary());
+        checkForFunctionMomentaryValueChange(9, b4, 0x10, getF9Momentary());
+        checkForFunctionMomentaryValueChange(10, b4, 0x20, getF10Momentary());
+        checkForFunctionMomentaryValueChange(11, b4, 0x40, getF11Momentary());
+        checkForFunctionMomentaryValueChange(12, b4, 0x80, getF12Momentary());
     }
 
     protected void parseFunctionHighMomentaryInformation(int b3, int b4) {
         log.trace("Parsing Function F13-F28 Momentary status, function bytes: {} and {}",
                 b3, b4);
         /* data byte 3 is the momentary status of F20 F19 F17 F16 F15 F14 F13 */
-        checkForFunctionMomentaryValueChange(Throttle.F14Momentary, b3, 0x02, getF14Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F15Momentary, b3, 0x04, getF15Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F16Momentary, b3, 0x08, getF16Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F17Momentary, b3, 0x10, getF17Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F18Momentary, b3, 0x20, getF18Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F19Momentary, b3, 0x40, getF19Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F20Momentary, b3, 0x80, getF20Momentary());
+        checkForFunctionMomentaryValueChange(13, b3, 0x01, getFunctionMomentary(13));
+        checkForFunctionMomentaryValueChange(14, b3, 0x02, getF14Momentary());
+        checkForFunctionMomentaryValueChange(15, b3, 0x04, getF15Momentary());
+        checkForFunctionMomentaryValueChange(16, b3, 0x08, getF16Momentary());
+        checkForFunctionMomentaryValueChange(17, b3, 0x10, getF17Momentary());
+        checkForFunctionMomentaryValueChange(18, b3, 0x20, getF18Momentary());
+        checkForFunctionMomentaryValueChange(19, b3, 0x40, getF19Momentary());
+        checkForFunctionMomentaryValueChange(20, b3, 0x80, getF20Momentary());
         /* data byte 4 is the momentary status of F28 F27 F26 F25 F24 F23 F22 F21 */
-        checkForFunctionMomentaryValueChange(Throttle.F21Momentary, b4, 0x01, getF21Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F22Momentary, b4, 0x02, getF22Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F23Momentary, b4, 0x04, getF23Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F24Momentary, b4, 0x08, getF24Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F25Momentary, b4, 0x10, getF25Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F26Momentary, b4, 0x20, getF26Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F27Momentary, b4, 0x40, getF27Momentary());
-        checkForFunctionMomentaryValueChange(Throttle.F28Momentary, b4, 0x80, getF28Momentary());
+        checkForFunctionMomentaryValueChange(21, b4, 0x01, getF21Momentary());
+        checkForFunctionMomentaryValueChange(22, b4, 0x02, getF22Momentary());
+        checkForFunctionMomentaryValueChange(23, b4, 0x04, getF23Momentary());
+        checkForFunctionMomentaryValueChange(24, b4, 0x08, getF24Momentary());
+        checkForFunctionMomentaryValueChange(25, b4, 0x10, getF25Momentary());
+        checkForFunctionMomentaryValueChange(26, b4, 0x20, getF26Momentary());
+        checkForFunctionMomentaryValueChange(27, b4, 0x40, getF27Momentary());
+        checkForFunctionMomentaryValueChange(28, b4, 0x80, getF28Momentary());
     }
 
-    protected void checkForFunctionMomentaryValueChange(String Function, int bytevalue, int bitmask, boolean currentValue) {
+    protected void checkForFunctionMomentaryValueChange(int funcNum, int bytevalue, int bitmask, boolean currentValue) {
         if ((bytevalue & bitmask) == bitmask && !currentValue) {
-            notifyFunctionMomentaryChanged(Function, true);
+            updateFunctionMomentary(funcNum, true);
         } else if ((bytevalue & bitmask) == 0x00 && currentValue) {
-            notifyFunctionMomentaryChanged(Function, false);
+            updateFunctionMomentary(funcNum, false);
         }
     }
-
-    protected void notifyFunctionMomentaryChanged(String function, boolean newValue) {
-        switch (function) {
-            case Throttle.F0Momentary:
-                firePropertyChange(Throttle.F0Momentary, this.f0Momentary, this.f0Momentary = newValue);
-                break;
-            case Throttle.F1Momentary:
-                firePropertyChange(Throttle.F1Momentary, this.f1Momentary, this.f1Momentary = newValue);
-                break;
-            case Throttle.F2Momentary:
-                firePropertyChange(Throttle.F2Momentary, this.f2Momentary, this.f2Momentary = newValue);
-                break;
-            case Throttle.F3Momentary:
-                firePropertyChange(Throttle.F3Momentary, this.f3Momentary, this.f3Momentary = newValue);
-                break;
-            case Throttle.F4Momentary:
-                firePropertyChange(Throttle.F4Momentary, this.f4Momentary, this.f4Momentary = newValue);
-                break;
-            case Throttle.F5Momentary:
-                firePropertyChange(Throttle.F5Momentary, this.f5Momentary, this.f5Momentary = newValue);
-                break;
-            case Throttle.F6Momentary:
-                firePropertyChange(Throttle.F6Momentary, this.f6Momentary, this.f6Momentary = newValue);
-                break;
-            case Throttle.F7Momentary:
-                firePropertyChange(Throttle.F7Momentary, this.f7Momentary, this.f7Momentary = newValue);
-                break;
-            case Throttle.F8Momentary:
-                firePropertyChange(Throttle.F8Momentary, this.f8Momentary, this.f8Momentary = newValue);
-                break;
-            case Throttle.F9Momentary:
-                firePropertyChange(Throttle.F8Momentary, this.f9Momentary, this.f9Momentary = newValue);
-                break;
-            case Throttle.F10Momentary:
-                firePropertyChange(Throttle.F10Momentary, this.f10Momentary, this.f10Momentary = newValue);
-                break;
-            case Throttle.F11Momentary:
-                firePropertyChange(Throttle.F11Momentary, this.f11Momentary, this.f11Momentary = newValue);
-                break;
-            case Throttle.F12Momentary:
-                firePropertyChange(Throttle.F12Momentary, this.f12Momentary, this.f12Momentary = newValue);
-                break;
-            case Throttle.F13Momentary:
-                firePropertyChange(Throttle.F13Momentary, this.f13Momentary, this.f13Momentary = newValue);
-                break;
-            case Throttle.F14Momentary:
-                firePropertyChange(Throttle.F14Momentary, this.f14Momentary, this.f14Momentary = newValue);
-                break;
-            case Throttle.F15Momentary:
-                firePropertyChange(Throttle.F15Momentary, this.f15Momentary, this.f15Momentary = newValue);
-                break;
-            case Throttle.F16Momentary:
-                firePropertyChange(Throttle.F16Momentary, this.f16Momentary, this.f16Momentary = newValue);
-                break;
-            case Throttle.F17Momentary:
-                firePropertyChange(Throttle.F17Momentary, this.f17Momentary, this.f17Momentary = newValue);
-                break;
-            case Throttle.F18Momentary:
-                firePropertyChange(Throttle.F18Momentary, this.f18Momentary, this.f18Momentary = newValue);
-                break;
-            case Throttle.F19Momentary:
-                firePropertyChange(Throttle.F19Momentary, this.f19Momentary, this.f19Momentary = newValue);
-                break;
-            case Throttle.F20Momentary:
-                firePropertyChange(Throttle.F20Momentary, this.f20Momentary, this.f20Momentary = newValue);
-                break;
-            case Throttle.F21Momentary:
-                firePropertyChange(Throttle.F21Momentary, this.f21Momentary, this.f21Momentary = newValue);
-                break;
-            case Throttle.F22Momentary:
-                firePropertyChange(Throttle.F22Momentary, this.f22Momentary, this.f22Momentary = newValue);
-                break;
-            case Throttle.F23Momentary:
-                firePropertyChange(Throttle.F23Momentary, this.f23Momentary, this.f23Momentary = newValue);
-                break;
-            case Throttle.F24Momentary:
-                firePropertyChange(Throttle.F24Momentary, this.f24Momentary, this.f24Momentary = newValue);
-                break;
-            case Throttle.F25Momentary:
-                firePropertyChange(Throttle.F25Momentary, this.f25Momentary, this.f25Momentary = newValue);
-                break;
-            case Throttle.F26Momentary:
-                firePropertyChange(Throttle.F26Momentary, this.f26Momentary, this.f26Momentary = newValue);
-                break;
-            case Throttle.F27Momentary:
-                firePropertyChange(Throttle.F27Momentary, this.f27Momentary, this.f27Momentary = newValue);
-                break;
-            case Throttle.F28Momentary:
-                firePropertyChange(Throttle.F28Momentary, this.f28Momentary, this.f28Momentary = newValue);
-                break;
-            default:
-                log.trace("Attempt to set unknonw function {} to {}", function, newValue);
-        }
-    }
-
+    
     /**
      * Set the internal isAvailable property.
      * 
@@ -981,6 +902,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
     /**
      * Queue a message.
+     * @param m message to send
+     * @param s state
      */
     protected synchronized void queueMessage(XNetMessage m, int s) {
         log.debug("adding message to message queue");

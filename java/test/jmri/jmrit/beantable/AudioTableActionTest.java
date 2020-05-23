@@ -7,7 +7,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AudioTableActionTest extends AbstractTableActionBase<Audio> {
 
@@ -77,7 +77,6 @@ public class AudioTableActionTest extends AbstractTableActionBase<Audio> {
     public void testEditButton() {
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -85,7 +84,7 @@ public class AudioTableActionTest extends AbstractTableActionBase<Audio> {
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         helpTarget = "package.jmri.jmrit.beantable.AudioTable";
-	    a = new AudioTableAction();
+        a = new AudioTableAction();
     }
 
     @After

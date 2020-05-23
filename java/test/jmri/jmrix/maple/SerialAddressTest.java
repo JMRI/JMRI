@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the SerialAddress utility class.
  *
- * @author	Dave Duchamp Copyright 2004
+ * @author Dave Duchamp Copyright 2004
  */
 public class SerialAddressTest {
 
@@ -230,7 +230,6 @@ public class SerialAddressTest {
 
     private MapleSystemConnectionMemo memo = null;
 
-    // The minimal setup for log4J
     @After
     public void tearDown() {
         memo = null;

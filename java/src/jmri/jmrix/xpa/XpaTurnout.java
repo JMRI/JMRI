@@ -10,7 +10,7 @@ import javax.annotation.concurrent.GuardedBy;
  * Xpa+Modem implementation of the Turnout interface.
  * <p>
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
  */
 public class XpaTurnout extends AbstractTurnout {
 
@@ -52,7 +52,7 @@ public class XpaTurnout extends AbstractTurnout {
             // first look for the double case, which we can't handle
             if ((s & _mThrown ) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
+                log.error("Cannot command both CLOSED and THROWN {}", s);
                 return;
             } else {
                 // send a CLOSED command
@@ -68,7 +68,7 @@ public class XpaTurnout extends AbstractTurnout {
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton PT" + _number);
+            log.debug("Send command to {} Pushbutton PT{}", _pushButtonLockout ? "Lock" : "Unlock", _number);
         }
     }
 

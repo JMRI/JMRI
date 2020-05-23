@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * LayoutShapeXmlTest.java
  *
- * Description: tests for the LayoutShapeXml class
+ * Test for the LayoutShapeXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class LayoutShapeXmlTest {
       Assert.assertNotNull("LayoutShapeXml constructor",new LayoutShapeXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

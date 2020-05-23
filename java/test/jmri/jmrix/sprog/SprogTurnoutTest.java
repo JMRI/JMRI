@@ -31,7 +31,6 @@ public class SprogTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         Assert.assertEquals("content", "O 81 FB 7A", stcs.outbound.elementAt(stcs.outbound.size() - 1).toString());  // CLOSED message
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

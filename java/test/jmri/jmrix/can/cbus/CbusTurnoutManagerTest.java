@@ -260,16 +260,17 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertEquals("MT100001", NameValidity.VALID, l.validSystemNameFormat("MT100001"));
         Assert.assertEquals("MT-100001", NameValidity.VALID, l.validSystemNameFormat("MT-100001"));
 
+        Assert.assertEquals("MT+1;+0", NameValidity.VALID, l.validSystemNameFormat("MT+1;+0"));
+        Assert.assertEquals("MT+1;-0", NameValidity.VALID, l.validSystemNameFormat("MT+1;-0"));
+        Assert.assertEquals("MT+0;+17", NameValidity.VALID, l.validSystemNameFormat("MT+0;+17"));
+        Assert.assertEquals("MT+0;-17", NameValidity.VALID, l.validSystemNameFormat("MT+0;-17"));
+        Assert.assertEquals("MT+0", NameValidity.VALID, l.validSystemNameFormat("MT+0"));
+        Assert.assertEquals("MT-0", NameValidity.VALID, l.validSystemNameFormat("MT-0"));
+        
         Assert.assertEquals("M", NameValidity.INVALID, l.validSystemNameFormat("M"));
         Assert.assertEquals("MT", NameValidity.INVALID, l.validSystemNameFormat("MT"));
         Assert.assertEquals("MT-65536", NameValidity.INVALID, l.validSystemNameFormat("MT-65536"));
         Assert.assertEquals("MT65536", NameValidity.INVALID, l.validSystemNameFormat("MT65536"));
-        Assert.assertEquals("MT+1;+0", NameValidity.INVALID, l.validSystemNameFormat("MT+1;+0"));
-        Assert.assertEquals("MT+1;-0", NameValidity.INVALID, l.validSystemNameFormat("MT+1;-0"));
-        Assert.assertEquals("MT+0;+17", NameValidity.INVALID, l.validSystemNameFormat("MT+0;+17"));
-        Assert.assertEquals("MT+0;-17", NameValidity.INVALID, l.validSystemNameFormat("MT+0;-17"));
-        Assert.assertEquals("MT+0", NameValidity.INVALID, l.validSystemNameFormat("MT+0"));
-        Assert.assertEquals("MT-0", NameValidity.INVALID, l.validSystemNameFormat("MT-0"));
         Assert.assertEquals("MT7;0", NameValidity.INVALID, l.validSystemNameFormat("MT7;0"));
         Assert.assertEquals("MT0;7", NameValidity.INVALID, l.validSystemNameFormat("MT0;7"));
     }
@@ -288,9 +289,9 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertEquals("+N45E23", "+N45E23", l.getNextValidAddress("+N45E22", "M"));        
         
         try {
-            Assert.assertNull("null", l.getNextValidAddress(null, "M"));
+            Assert.assertNull("null", l.getNextValidAddress("", "M"));
         } catch (JmriException ex) {
-            Assert.assertEquals("java.lang.IllegalArgumentException: No address Passed ", ex.getMessage());
+            Assert.assertEquals("java.lang.IllegalArgumentException: Address Too Short? : ", ex.getMessage());
         }
     }
 
@@ -357,7 +358,6 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     private TrafficControllerScaffold tcis;
     private CanSystemConnectionMemo memo;
     
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

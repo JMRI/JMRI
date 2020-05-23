@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
  * Put this at the end of a PackageTest file to 
  * have execution wait so that you can e.g. get a 
  * thread or heap dump at the end of execution.
- * @author Bob Jacobsen 2019	
+ * @author Bob Jacobsen 2019
  */
 @Disabled("Tests test failure, should never be a part of a normal test suite")
 public class TestWaitsForever {
@@ -22,7 +22,6 @@ public class TestWaitsForever {
         this.wait();
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

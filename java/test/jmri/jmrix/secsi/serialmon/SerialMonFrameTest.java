@@ -8,7 +8,7 @@ import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 /**
  * Test simple functioning of SerialMonFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SerialMonFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -19,16 +19,16 @@ public class SerialMonFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         memo = new SecsiSystemConnectionMemo();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new SerialMonFrame(memo);
-	    }
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new SerialMonFrame(memo);
+        }
     }
 
     @After
     @Override
     public void tearDown() {
         memo.getTrafficController().terminateThreads();
-	    memo = null;
-    	super.tearDown();
+        memo = null;
+        super.tearDown();
     }
 }

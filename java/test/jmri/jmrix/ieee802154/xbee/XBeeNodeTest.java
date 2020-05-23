@@ -8,9 +8,9 @@ import org.junit.*;
 /**
  * XBeeNodeTest.java
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeNode class
+ * Test for the jmri.jmrix.ieee802154.xbee.XBeeNode class
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class XBeeNodeTest{
 
@@ -161,7 +161,6 @@ public class XBeeNodeTest{
         Assert.assertEquals("Global Transmit Address",node.getXBeeAddress64(),node.getPreferedTransmitAddress());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * LayoutTurntableXmlTest.java
  *
- * Description: tests for the LayoutTurntableXml class
+ * Test for the LayoutTurntableXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class LayoutTurntableXmlTest {
       Assert.assertNotNull("LayoutTurntableXml constructor",new LayoutTurntableXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

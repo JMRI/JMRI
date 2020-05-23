@@ -7,9 +7,9 @@ import org.junit.*;
 /**
  * OlcbProgrammerTest.java
  *
- * Description:	tests for the jmri.jmrix.openlcb.OlcbProgrammer class
+ * Test for the jmri.jmrix.openlcb.OlcbProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -34,10 +34,7 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
                 programmer.getMode());        
     }
-    
-    @Test
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

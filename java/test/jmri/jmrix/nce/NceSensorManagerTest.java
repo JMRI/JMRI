@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the NceAIU class.
  *
- * @author	Bob Jacobsen Copyright 2002
+ * @author Bob Jacobsen Copyright 2002
  * @author Paul Bender Copyright (C) 2016
  */
 public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {

@@ -10,15 +10,14 @@ import org.junit.*;
  */
 public class BlockBossFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new BlockBossFrame();
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new BlockBossFrame();
+        }
     }
 
     @After
@@ -28,5 +27,4 @@ public class BlockBossFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(BlockBossFrameTest.class);
-
 }

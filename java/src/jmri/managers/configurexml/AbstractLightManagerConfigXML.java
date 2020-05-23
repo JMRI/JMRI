@@ -114,13 +114,13 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
      * parent of the set of Light elements.
      *
      * @param lights Element containing the Light elements to load.
+     * @return true when complete, false on error.
      */
     public boolean loadLights(Element lights) {
         boolean result = true;
         List<Element> lightList = lights.getChildren("light");
         log.debug("Found {} lights", lightList.size());
         LightManager lm = InstanceManager.lightManagerInstance();
-        lm.setDataListenerMute(true);
 
         for (Element el : lightList) {
             String sysName = getSystemName(el);
@@ -303,7 +303,6 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             lgt.activateLight();
         }
 
-        lm.setDataListenerMute(false);
         return result;
     }
 

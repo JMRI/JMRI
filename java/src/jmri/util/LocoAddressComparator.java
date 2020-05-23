@@ -8,7 +8,7 @@ import jmri.LocoAddress;
  * <p>
  * Compares objects based on protocol and then address.
  *
- * @author	Paul Bender Copyright (C) 2015
+ * @author Paul Bender Copyright (C) 2015
  */
 public class LocoAddressComparator implements Comparator<LocoAddress> {
 

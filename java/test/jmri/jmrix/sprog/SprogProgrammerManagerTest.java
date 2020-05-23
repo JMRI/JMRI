@@ -27,7 +27,6 @@ public class SprogProgrammerManagerTest {
        Assert.assertNotNull("exists",new SprogProgrammerManager(op,SprogConstants.SprogMode.SERVICE,m));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

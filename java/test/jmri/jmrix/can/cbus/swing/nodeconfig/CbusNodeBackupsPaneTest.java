@@ -1,47 +1,48 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
-import java.awt.GraphicsEnvironment;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.nio.file.Path;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.operators.*;
 
 /**
  * Test simple functioning of CbusNodeBackupsPane
  *
- * @author	Paul Bender Copyright (C) 2016
- * @author	Steve Young Copyright (C) 2019
+ * @author Paul Bender Copyright (C) 2016
+ * @author Steve Young Copyright (C) 2019
  */
 public class CbusNodeBackupsPaneTest {
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        CbusNodeBackupsPane t = new CbusNodeBackupsPane(null);
+        t = new CbusNodeBackupsPane(null);
         
-        Assert.assertNotNull("exists",t);
-        Assert.assertNotNull("exists",nodeToEdit);
+        assertThat(t).isNotNull();
+        assertThat(nodeToEdit).isNotNull();
         
     }
     
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testTableData() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         nodeToEdit.getNodeBackupManager().doLoad();
         
-        CbusNodeBackupsPane t = new CbusNodeBackupsPane(null);
+        t = new CbusNodeBackupsPane(null);
         t.initComponents();
         
         t.setNode(nodeToEdit);
@@ -57,14 +58,14 @@ public class CbusNodeBackupsPaneTest {
 
         JTableOperator tbl = new JTableOperator(new JFrameOperator(f), 0);
         
-        Assert.assertEquals("0 entry in node xml",0, nodeToEdit.getNodeBackupManager().getBackups().size());
+        assertEquals(0, nodeToEdit.getNodeBackupManager().getBackups().size(),"0 entry in node xml");
         
-        Assert.assertTrue("Initially empty table",tbl.getRowCount()==0);
-        Assert.assertEquals("column count 5",5,tbl.getColumnCount());
+        assertThat(tbl.getRowCount()).withFailMessage("No Rows at Startup").isEqualTo(0);
+        assertThat(tbl.getColumnCount()).withFailMessage("column count").isEqualTo(5);
         
         JemmyUtil.pressButton(frame,("Create New Backup"));
         
-        Assert.assertEquals("1 entry in node xml",1, nodeToEdit.getNodeBackupManager().getBackups().size());
+        assertEquals(1, nodeToEdit.getNodeBackupManager().getBackups().size(),"1 entry in node xml");
         
         f.dispose();
         t.dispose();
@@ -72,20 +73,21 @@ public class CbusNodeBackupsPaneTest {
     
     }
     
+    private CbusNodeBackupsPane t;
     
     private CbusNodeTableDataModel nodeModel;
     private CbusNode nodeToEdit;
     private CanSystemConnectionMemo memo;
     // private TrafficControllerScaffold tcis;
     
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
-    @Before
+    @TempDir 
+    protected Path tempDir;
+    
+    @BeforeEach
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(tempDir.toFile()));
         memo = new CanSystemConnectionMemo();
         
         nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
@@ -96,7 +98,7 @@ public class CbusNodeBackupsPaneTest {
         
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         nodeModel.dispose();
         nodeToEdit.dispose();

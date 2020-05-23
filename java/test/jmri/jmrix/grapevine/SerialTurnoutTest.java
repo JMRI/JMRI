@@ -11,7 +11,7 @@ import org.junit.Before;
 /**
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class, low address.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 

@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class ConsistTest extends OperationsTestCase {

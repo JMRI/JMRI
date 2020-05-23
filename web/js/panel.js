@@ -24,7 +24,6 @@
  *
  *  DONE: draw dashed curves
  *  DONE: handle drawn ellipse (see LMRC APB)
- *  DONE: connect turnouts to layoutturntable rays and make clickable (see WhichWay)
  *  DONE: address color differences between java panel and javascript panel (e.g. lightGray)
  *  DONE: make turnout, levelXing occupancy work like LE panels (more than just checking A)
  *
@@ -51,21 +50,21 @@ var INACTIVE = '4';
 var THROWN = '4';
 var INCONSISTENT = '8';
 
-var PT_CEN = ".1";          //named constants for point types
-var PT_A = ".2";
-var PT_B = ".3";
-var PT_C = ".4";
-var PT_D = ".5";
+var PT_CEN = ".POS_POINT";          //named constants for point types
+var PT_A = ".TURNOUT_A";
+var PT_B = ".TURNOUT_B";
+var PT_C = ".TURNOUT_C";
+var PT_D = ".TURNOUT_D";
 
-var LEVEL_XING_A = ".6";
-var LEVEL_XING_B = ".7";
-var LEVEL_XING_C = ".8";
-var LEVEL_XING_D = ".9";
+var LEVEL_XING_A = ".LEVEL_XING_A";
+var LEVEL_XING_B = ".LEVEL_XING_B";
+var LEVEL_XING_C = ".LEVEL_XING_C";
+var LEVEL_XING_D = ".LEVEL_XING_D";
 
-var SLIP_A = ".21";
-var SLIP_B = ".22";
-var SLIP_C = ".23";
-var SLIP_D = ".24";
+var SLIP_A = ".SLIP_A";
+var SLIP_B = ".SLIP_B";
+var SLIP_C = ".SLIP_C";
+var SLIP_D = ".SLIP_D";
 
 var STATE_AC = 0x02;
 var STATE_BD = 0x04;
@@ -83,14 +82,14 @@ var LUNAR = 0x40;
 var FLASHLUNAR = 0x80;
 var HELD = 0x0100;  //additional to deal with "Held" pseudo-state
 
-var RH_TURNOUT = 1; //named constants for turnout types
-var LH_TURNOUT = 2;
-var WYE_TURNOUT = 3;
-var DOUBLE_XOVER = 4;
-var RH_XOVER = 5;
-var LH_XOVER = 6;
-var SINGLE_SLIP = 7;
-var DOUBLE_SLIP = 8;
+var RH_TURNOUT = "RH_TURNOUT"; //named constants for turnout types
+var LH_TURNOUT = "LH_TURNOUT";
+var WYE_TURNOUT = "WYE_TURNOUT";
+var DOUBLE_XOVER = "DOUBLE_XOVER";
+var RH_XOVER = "RH_XOVER";
+var LH_XOVER = "LH_XOVER";
+var SINGLE_SLIP = "SINGLE_SLIP";
+var DOUBLE_SLIP = "DOUBLE_SLIP";
 
 var jmri = null;
 
@@ -993,7 +992,6 @@ function processPanelXML($returnedData, $success, $xhr) {
     });
     $("#panel-area").width($gPanel.panelwidth);
     $("#panel-area").height($gPanel.panelheight);
-    setTitle($gPanel["name"]);
 
     //insert the canvas layer and set up context used by layouteditor "drawn" objects, set some defaults
     if ($gPanel.paneltype == "LayoutPanel") {
@@ -1428,20 +1426,15 @@ function processPanelXML($returnedData, $success, $xhr) {
 
                 case "drawn" :
                     if (jmri_logging) {
-                        jmri.log("case drawm " + $widget.widgetType);
+                        jmri.log("case drawn " + $widget.widgetType);
                         $logProperties($widget);
                     }
                     switch ($widget.widgetType) {
                         case "positionablepoint" :
                             //jmri.log("#### Positionable Point ####");
                             //just store these points in persistent variable for use when drawing tracksegments and layoutturnouts
-                            //id is ident plus ".type", e.g. "A4.2"
-                            $gPts[$widget.ident + "." + $widget.type] = $widget;
-                            //End bumpers and Connectors use wrong type, so also store type 1
-                            if (($widget.ident.substring(0, 2) == "EB") ||
-                                 ($widget.ident.substring(0, 2) == "EC")) {
-                                    $gPts[$widget.ident + ".1"] = $widget;
-                            }
+                            //End bumpers and Connectors use wrong type, so always store as .POS_POINT
+                            $gPts[$widget.ident + ".POS_POINT"] = $widget;
                             break;
                         case "layoutblock" :
                             $widget['state'] = UNKNOWN;  //add a state member for this block
@@ -1756,7 +1749,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget.raytracks.each(function(i, item) {
                                 $logProperties(item);
                                 //note:the 50 offset is due to TrackSegment.java TURNTABLE_RAY_OFFSET
-                                var rayID = $widget.ident + "." + (50 + item.attributes.index.value * 1);
+                                //var rayID = $widget.ident + "." + (50 + item.attributes.index.value * 1);
+                                var rayID = $widget.ident + ".TURNTABLE_RAY_" + (item.attributes.index.value * 1);
                                 var $t = {ident:rayID};
                                 var $angle = $toRadians(item.attributes.angle.value);
                                 $t['x'] = $txcen + (($tr + $cr) * Math.sin($angle));
@@ -1936,7 +1930,7 @@ function $handleClick(e) {
         $widget.raytracks.each(function(i, item) {
             $logProperties(item);
             //note:offset 50 is due to TrackSegment.java TURNTABLE_RAY_OFFSET
-            var rayID = $turntableID + "." + (50 + item.attributes.index.value * 1);
+            var rayID = $turntableID + ".TURNTABLE_RAY_" + (item.attributes.index.value * 1);
             if (rayID == $rayID) {
                 if (isDefined(item.attributes.turnout)) {
                     var turnout = item.attributes.turnout.value;
@@ -2054,15 +2048,15 @@ function $drawTrackSegment($widget) {
     var $ep1, $ep2;
     [$ep1, $ep2] = $getEndPoints$($widget);
     if (typeof $ep1 === "undefined") {
-    	if (jmri_logging) {
+//    	if (jmri_logging) {
     		jmri.log("can't draw tracksegment " + $widget.ident + ": connect1: " + $widget.connect1name + "." + $widget.type1 + " undefined.");
-    	}
+//    	}
         return;
     }
     if (typeof $ep2 === "undefined") {
-    	if (jmri_logging) {
+//    	if (jmri_logging) {
     		jmri.log("can't draw tracksegment " + $widget.ident + ": connect2: " + $widget.connect2name + "." + $widget.type2 + " undefined.");
-    	}
+//    	}
     	return;
     }
 
@@ -2292,7 +2286,8 @@ function $drawTurntable($widget) {
     //loop thru raytracks drawing each one (and control circles if it has a turnout)
     $widget.raytracks.each(function(i, item) {
         $logProperties(item);
-        var rayID = $widget.ident + "." + (50 + item.attributes.index.value * 1);
+        //var rayID = $widget.ident + "." + (50 + item.attributes.index.value * 1);
+        var rayID = $widget.ident + ".TURNTABLE_RAY_" + (item.attributes.index.value * 1);
         var $t = $gPts[rayID];
         //draw the line from ray endpoint to turntable edge
         var $t1 = [];
@@ -3789,7 +3784,8 @@ var requestPanelXML = function(panelName) {
         type: "GET",
         url: "/panel/" + panelName + "?format=xml", //request proper url
         success: function(data, textStatus, jqXHR) {
-            processPanelXML(data, textStatus, jqXHR);
+            processPanelXML(data, textStatus, jqXHR);          
+            setTitle($gPanel["name"]);  //set final title once load completes, helps with testing  
         },
         error: function( jqXHR, textStatus, errorThrown) {
             alert("Error retrieving panel xml from server.  Please press OK to retry.\n\nDetails: " + textStatus + " - " + errorThrown);
@@ -4163,7 +4159,7 @@ $(document).ready(function() {
         $("#panel-area").addClass("show").removeClass("hidden");
 
         // include name of panel in page title. Will be updated to userName later
-        setTitle(panelName);
+        setTitle("Loading " + panelName + "...");
 
         //get updates to fast clock rate
         getRateFactor();

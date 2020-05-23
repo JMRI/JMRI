@@ -1,8 +1,10 @@
 package jmri.jmrix.cmri.serial.serialmon;
 
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
+import javax.swing.Action;
+import jmri.InstanceManager;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.cmri.swing.CMRISystemConnectionAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,29 +13,34 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class SerialMonAction extends AbstractAction {
-
-    private CMRISystemConnectionMemo _memo = null;
+public class SerialMonAction extends CMRISystemConnectionAction {
 
     public SerialMonAction(String s, CMRISystemConnectionMemo memo) {
-        super(s);
-        _memo = memo;
+        super(s, memo);
     }
 
     public SerialMonAction(CMRISystemConnectionMemo memo) {
-        this(Bundle.getMessage("SerialCommandMonTitle"),memo);
+        this(Bundle.getMessage("SerialCommandMonTitle"), memo);
+    }
+
+    public SerialMonAction() {
+        this(InstanceManager.getNullableDefault(CMRISystemConnectionMemo.class));
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // create a SerialMonFrame
-        SerialMonFrame f = new SerialMonFrame(_memo);
-        try {
-            f.initComponents();
-        } catch (Exception ex) {
-            log.warn("SerialMonAction starting SerialMonFrame: Exception: " + ex.toString());
+        CMRISystemConnectionMemo memo = getSystemConnectionMemo();
+        if (memo != null) {
+            SerialMonFrame f = new SerialMonFrame(memo);
+            try {
+                f.initComponents();
+            } catch (Exception ex) {
+                log.warn("Exception starting SerialMonFrame", ex);
+            }
+            f.setVisible(true);
+        } else {
+            log.error("Not performing action {} because there is no connection", getValue(Action.NAME));
         }
-        f.setVisible(true);
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialMonAction.class);

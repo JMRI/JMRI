@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandleManager;
@@ -190,6 +191,7 @@ public class SignalSystemTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
     

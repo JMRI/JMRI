@@ -31,14 +31,15 @@ import org.slf4j.LoggerFactory;
 /**
  * Pane for user management of RPS alignment.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class AlignTablePane extends javax.swing.JPanel {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.aligntable.AlignTableBundle");
 
     /**
-     * Constructor method
+     * Constructor method.
+     * @param flag the ModifiedFlag tag.
      */
     public AlignTablePane(jmri.ModifiedFlag flag) {
         super();
@@ -397,7 +398,7 @@ public class AlignTablePane extends javax.swing.JPanel {
                     flag.setModifiedFlag(true);
                     break;
                 default:
-                    log.error("setValueAt of column " + c);
+                    log.error("setValueAt of column {}", c);
             }
         }
     }

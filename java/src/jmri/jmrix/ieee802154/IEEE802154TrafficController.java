@@ -120,7 +120,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
     @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (logDebug) {
-            log.debug("forward " + m);
+            log.debug("forward {}", m);
         }
         super.forwardToPort(m, reply);
     }

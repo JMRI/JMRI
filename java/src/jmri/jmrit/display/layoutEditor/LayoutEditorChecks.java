@@ -16,30 +16,30 @@ import org.slf4j.*;
  *
  * @author George Warner Copyright (c) 2017-2018
  */
-public class LayoutEditorChecks {
+final public class LayoutEditorChecks {
 
     private final LayoutEditor layoutEditor;
-    private JMenu checkMenu = new JMenu(Bundle.getMessage("CheckMenuTitle"));
-    private JMenuItem checkInProgressMenuItem = new JMenuItem(Bundle.getMessage("CheckInProgressMenuItemTitle"));
-    private JMenuItem checkNoResultsMenuItem = new JMenuItem(Bundle.getMessage("CheckNoResultsMenuItemTitle"));
+    private final JMenu checkMenu = new JMenu(Bundle.getMessage("CheckMenuTitle"));
+    private final JMenuItem checkInProgressMenuItem = new JMenuItem(Bundle.getMessage("CheckInProgressMenuItemTitle"));
+    private final JMenuItem checkNoResultsMenuItem = new JMenuItem(Bundle.getMessage("CheckNoResultsMenuItemTitle"));
 
     // Check for Un-Connected Tracks
-    private JMenu checkUnConnectedTracksMenu = new JMenu(Bundle.getMessage("CheckUnConnectedTracksMenuTitle"));
+    private final JMenu checkUnConnectedTracksMenu = new JMenu(Bundle.getMessage("CheckUnConnectedTracksMenuTitle"));
 
     // Check for Un-Blocked Tracks
-    private JMenu checkUnBlockedTracksMenu = new JMenu(Bundle.getMessage("CheckUnBlockedTracksMenuTitle"));
+    private final JMenu checkUnBlockedTracksMenu = new JMenu(Bundle.getMessage("CheckUnBlockedTracksMenuTitle"));
 
     // Check for Non-Contiguous Blocks
-    private JMenu checkNonContiguousBlocksMenu = new JMenu(Bundle.getMessage("CheckNonContiguousBlocksMenuTitle"));
+    private final JMenu checkNonContiguousBlocksMenu = new JMenu(Bundle.getMessage("CheckNonContiguousBlocksMenuTitle"));
 
     // Check for Unnecessary Anchors
-    private JMenu checkUnnecessaryAnchorsMenu = new JMenu(Bundle.getMessage("CheckUnnecessaryAnchorsMenuTitle"));
+    private final JMenu checkUnnecessaryAnchorsMenu = new JMenu(Bundle.getMessage("CheckUnnecessaryAnchorsMenuTitle"));
 
     // Check for Linear Bezier Track Segments
-    private JMenu checkLinearBezierTrackSegmentsMenu = new JMenu(Bundle.getMessage("CheckLinearBezierTrackSegmentsMenuTitle"));
+    private final JMenu checkLinearBezierTrackSegmentsMenu = new JMenu(Bundle.getMessage("CheckLinearBezierTrackSegmentsMenuTitle"));
 
     // Check for Fixed Radius Bezier Track Segments
-    private JMenu checkFixedRadiusBezierTrackSegmentsMenu = new JMenu(Bundle.getMessage("CheckFixedRadiusBezierTrackSegmentsMenuTitle"));
+    private final JMenu checkFixedRadiusBezierTrackSegmentsMenu = new JMenu(Bundle.getMessage("CheckFixedRadiusBezierTrackSegmentsMenuTitle"));
 
     /**
      * The constructor for this class
@@ -271,7 +271,7 @@ public class LayoutEditorChecks {
         // check all tracks for free connections
         List<String> trackNames = new ArrayList<>();
         for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
-            List<Integer> connections = layoutTrack.checkForFreeConnections();
+            List<HitPointType> connections = layoutTrack.checkForFreeConnections();
             if (!connections.isEmpty()) {
                 // add this track's name to the list of track names
                 trackNames.add(layoutTrack.getName());
@@ -287,9 +287,7 @@ public class LayoutEditorChecks {
                 // create a menu item for it
                 JCheckBoxMenuItem jmi = new JCheckBoxMenuItem(trackName);
                 checkUnConnectedTracksMenu.add(jmi);
-                jmi.addActionListener((ActionEvent event) -> {
-                    doCheckUnConnectedTracksMenuItem(trackName);
-                });
+                jmi.addActionListener((ActionEvent event) -> doCheckUnConnectedTracksMenuItem(trackName));
 
                 // if it's in the check marked set then (re-)checkmark it
                 if (checkMarkedMenuItemNamesSet.contains(trackName)) {
@@ -351,9 +349,7 @@ public class LayoutEditorChecks {
                 // create a menu item for it
                 JCheckBoxMenuItem jmi = new JCheckBoxMenuItem(trackName);
                 checkUnBlockedTracksMenu.add(jmi);
-                jmi.addActionListener((ActionEvent event) -> {
-                    doCheckUnBlockedTracksMenuItem(trackName);
-                });
+                jmi.addActionListener((ActionEvent event) -> doCheckUnBlockedTracksMenuItem(trackName));
 
                 // if it's in the check marked set then (re-)checkmark it
                 if (checkMarkedMenuItemNamesSet.contains(trackName)) {
@@ -379,7 +375,8 @@ public class LayoutEditorChecks {
             layoutEditor.clearSelectionGroups();
             layoutEditor.amendSelectionGroup(layoutTrack);
 
-            layoutEditor.getLayoutTrackEditors().editLayoutTrack(layoutTrack);
+            // temporary call, should be replaced by access through View class
+            jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTrackEditor.makeTrackEditor(layoutTrack, layoutEditor);
         } else {
             layoutEditor.clearSelectionGroups();
         }
@@ -417,9 +414,7 @@ public class LayoutEditorChecks {
                     JMenuItem subMenuItem = new JMenuItem(
                             Bundle.getMessage("MakeLabel", blockName) + "#" + (idx++));
                     jmi.add(subMenuItem);
-                    subMenuItem.addActionListener((ActionEvent event) -> {
-                        doCheckNonContiguousBlocksMenuItem(blockName, trackNameSet);
-                    });
+                    subMenuItem.addActionListener((ActionEvent event) -> doCheckNonContiguousBlocksMenuItem(blockName, trackNameSet));
                 }
             }
         }
@@ -484,7 +479,7 @@ public class LayoutEditorChecks {
         List<PositionablePoint> aatzlts = new ArrayList<>();
         for (PositionablePoint pp : layoutEditor.getPositionablePoints()) {
             // has to be an anchor...
-            if (pp.getType() == PositionablePoint.ANCHOR) {
+            if (pp.getType() == PositionablePoint.PointType.ANCHOR) {
                 // adjacent track segments must be defined...
                 TrackSegment ts1 = pp.getConnect1();
                 TrackSegment ts2 = pp.getConnect2();
@@ -510,6 +505,14 @@ public class LayoutEditorChecks {
                                 aatzlts.add(pp);
                                 continue;   // so we don't get added again
                             }
+                            // if track segments isMainline's don't match
+                            if (ts1.isMainline() != ts2.isMainline()) {
+                                continue;   // skip it
+                            }
+                            // if track segments isHidden's don't match
+                            if (ts1.isHidden() != ts2.isHidden()) {
+                                continue;   // skip it
+                            }
                             // if either track segment has decorations
                             if (ts1.hasDecorations() || ts2.hasDecorations()) {
                                 continue;   // skip it
@@ -521,7 +524,7 @@ public class LayoutEditorChecks {
                             if (MathUtil.equals(diffRAD, 0.0)
                                     || MathUtil.equals(diffRAD, Math.PI)) {
                                 aatzlts.add(pp);
-                                continue;   // so we don't get added again
+                                // so we don't get added again
                             }
                         }   // if blocknames are equal
                     }   // isn't arc, circle or bezier
@@ -537,9 +540,7 @@ public class LayoutEditorChecks {
             String anchorName = pp.getName();
             JMenuItem jmi = new JMenuItem(anchorName);
             checkUnnecessaryAnchorsMenu.add(jmi);
-            jmi.addActionListener((ActionEvent event) -> {
-                doCheckUnnecessaryAnchorsMenuItem(anchorName);
-            });
+            jmi.addActionListener((ActionEvent event) -> doCheckUnnecessaryAnchorsMenuItem(anchorName));
 
             // if it's in the check marked set then (re-)checkmark it
             if (checkMarkedMenuItemNamesSet.contains(anchorName)) {
@@ -594,7 +595,7 @@ public class LayoutEditorChecks {
 //                if (ts.getName().equals("T104")) {
 //                    log.debug("T104");
 //                }
-                // adjacent connections must be defined...
+// adjacent connections must be defined...
                 LayoutTrack c1 = ts.getConnect1();
                 LayoutTrack c2 = ts.getConnect2();
                 if ((c1 != null) && (c2 != null)) {
@@ -632,9 +633,7 @@ public class LayoutEditorChecks {
                 String name = ts.getName();
                 JMenuItem jmi = new JMenuItem(name);
                 checkLinearBezierTrackSegmentsMenu.add(jmi);
-                jmi.addActionListener((ActionEvent event) -> {
-                    doCheckLinearBezierTrackSegmentsMenuItem(name);
-                });
+                jmi.addActionListener((ActionEvent event) -> doCheckLinearBezierTrackSegmentsMenuItem(name));
 
                 // if it's in the check marked set then (re-)checkmark it
                 if (checkMarkedMenuItemNamesSet.contains(name)) {
@@ -756,9 +755,7 @@ public class LayoutEditorChecks {
                 String name = ts.getName();
                 JMenuItem jmi = new JMenuItem(name);
                 checkFixedRadiusBezierTrackSegmentsMenu.add(jmi);
-                jmi.addActionListener((ActionEvent event) -> {
-                    doCheckFixedRadiusBezierTrackSegmentsMenuItem(name);
-                });
+                jmi.addActionListener((ActionEvent event) -> doCheckFixedRadiusBezierTrackSegmentsMenuItem(name));
 
                 // if it's in the check marked set then (re-)checkmark it
                 if (checkMarkedMenuItemNamesSet.contains(name)) {

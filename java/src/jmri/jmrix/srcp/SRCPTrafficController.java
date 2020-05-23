@@ -102,8 +102,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                     log.debug("dispatch thread invoked");
                 }
 
-                log.debug("Mode " + mode + " child contains "
-                        + ((SimpleNode) e.jjtGetChild(1)).jjtGetValue());
+                log.debug("Mode {} child contains {}", mode, ((SimpleNode) e.jjtGetChild(1)).jjtGetValue());
                 //if (mode==HANDSHAKEMODE && ((String)((SimpleNode)e.jjtGetChild(1)).jjtGetValue()).contains("GO")) mode=RUNMODE;
 
                 SRCPClientVisitor v = new SRCPClientVisitor();
@@ -162,9 +161,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                         replyInDispatch = false;
                         if (allowUnexpectedReply == true) {
                             if (log.isDebugEnabled()) {
-                                log.debug("Allowed unexpected reply received in state: "
-                                        + mCurrentState + " was "
-                                        + e.toString());
+                                log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, e.toString());
                             }
 
                             synchronized (xmtRunnable) {
@@ -206,6 +203,8 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 
     /**
      * Forward a SRCPReply to all registered SRCPInterface listeners.
+     * @param client WHo should receive the reply
+     * @param n relevant node
      */
     protected void forwardReply(AbstractMRListener client, SimpleNode n) {
         ((SRCPListener) client).reply(n);
@@ -282,7 +281,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         for (int i = 0; i < cnt; i++) {
             AbstractMRListener client = v.elementAt(i);
             if (log.isDebugEnabled()) {
-                log.debug("notify client: " + client);
+                log.debug("notify client: {}", client);
             }
             try {
                 //skip dest for now, we'll send the message to there last.

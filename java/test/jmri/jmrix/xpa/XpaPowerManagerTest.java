@@ -6,7 +6,7 @@ import jmri.util.junit.annotations.NotApplicable;
 /**
  * Tests for the jmri.jmrix.xpa.XpaPowerManager class.
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 
@@ -77,13 +77,14 @@ public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase
     public void testStateOff() {
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         tc = new XpaTrafficControlScaffold();
-        p = new XpaPowerManager(tc);
+        XpaSystemConnectionMemo memo = new XpaSystemConnectionMemo();
+        memo.setXpaTrafficController(tc);
+        p = new XpaPowerManager(memo);
     }
 
     @After

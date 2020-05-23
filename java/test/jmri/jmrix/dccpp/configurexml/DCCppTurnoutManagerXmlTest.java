@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * DCCppTurnoutManagerXmlTest.java
  *
- * Description: tests for the DCCppTurnoutManagerXml class
+ * Test for the DCCppTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class DCCppTurnoutManagerXmlTest {
       Assert.assertNotNull("DCCppTurnoutManagerXml constructor",new DCCppTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -256,7 +256,7 @@ public class NceThrottle extends AbstractThrottle {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         if (log.isDebugEnabled()) {
-            log.debug("setSpeedSetting= " + speed);
+            log.debug("setSpeedSetting= {}", speed);
         }
 
         // The NCE USB doesn't support the NMRA packet format

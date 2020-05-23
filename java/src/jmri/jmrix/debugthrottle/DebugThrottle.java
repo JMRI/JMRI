@@ -16,7 +16,9 @@ import org.slf4j.LoggerFactory;
 public class DebugThrottle extends AbstractThrottle {
 
     /**
-     * Constructor
+     * Constructor.
+     * @param address loco address.
+     * @param memo system connection.
      */
     public DebugThrottle(DccLocoAddress address, SystemConnectionMemo memo) {
         super(memo);
@@ -89,7 +91,7 @@ public class DebugThrottle extends AbstractThrottle {
         log.debug("setSpeedSetting: float speed: {} for address {}", speed, this.address);
         float oldSpeed = this.speedSetting;
         if (speed > 1.0) {
-            log.warn("Speed was set too high: " + speed);
+            log.warn("Speed was set too high: {}", speed);
         }
         this.speedSetting = speed;
         firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);

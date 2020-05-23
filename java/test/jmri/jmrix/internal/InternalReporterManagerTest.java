@@ -8,9 +8,9 @@ import org.junit.Before;
 /**
  * Test the InternalReporterManager
  *
- * @author	Bob Jacobsen 2003, 2006, 2008
- * @author	Mark Underwood 2012
- * @author	Paul Bender 2016
+ * @author Bob Jacobsen 2003, 2006, 2008
+ * @author Mark Underwood 2012
+ * @author Paul Bender 2016
  */
 public class InternalReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
@@ -19,7 +19,6 @@ public class InternalReporterManagerTest extends jmri.managers.AbstractReporterM
         return "IR" + i;
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

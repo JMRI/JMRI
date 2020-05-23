@@ -45,13 +45,13 @@ public class NetworkDriverAdapter extends MarklinPortController {
         opened = false;
 
         if (m_HostName == null) {
-            log.error("No host name or port set :" + m_HostName + ":" + m_port);
+            log.error("No host name or port set :{}:{}", m_HostName, m_port);
             return;
         }
         try {
             opened = true;
         } catch (Exception e) {
-            log.error("a error opening network connection: " + e);
+            log.error("a error opening network connection: {}", e);
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
                         null, m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);

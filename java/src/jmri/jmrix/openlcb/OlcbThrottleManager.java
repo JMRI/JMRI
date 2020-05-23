@@ -29,8 +29,12 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
     @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
         // Immediately trigger the callback.
+        if (!(a instanceof DccLocoAddress)){
+            failedThrottleRequest(a, "Not a DccLocoAddress");
+            return;
+        }
         DccLocoAddress address = (DccLocoAddress) a;
-        log.debug("new debug throttle for " + address);
+        log.debug("new debug throttle for {}", address);
         notifyThrottleKnown(new OlcbThrottle(address, adapterMemo), a);
     }
 

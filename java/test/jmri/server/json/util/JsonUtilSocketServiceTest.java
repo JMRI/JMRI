@@ -7,6 +7,7 @@ import java.awt.GraphicsEnvironment;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.server.json.JsonServerPreferences;
@@ -38,7 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonUtilSocketServiceTest {
 
-    private Locale locale = Locale.ENGLISH;
+    private final Locale locale = Locale.ENGLISH;
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -57,6 +58,7 @@ public class JsonUtilSocketServiceTest {
     @After
     public void tearDown() {
         JUnitUtil.resetWindows(false, false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
@@ -69,7 +71,6 @@ public class JsonUtilSocketServiceTest {
      */
     @Test
     public void testOnMessage() throws Exception {
-        Locale locale = Locale.ENGLISH;
         JsonNode message;
         InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(true);
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -166,7 +167,6 @@ public class JsonUtilSocketServiceTest {
      */
     @Test
     public void testOnList() throws Exception {
-        Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode empty = connection.getObjectMapper().createObjectNode();
@@ -190,7 +190,6 @@ public class JsonUtilSocketServiceTest {
      */
     @Test
     public void testOnListConfigProfile() throws Exception {
-        Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode empty = connection.getObjectMapper().createObjectNode();
