@@ -4,10 +4,12 @@ It's in no particular order, items are removed as done, so please don't consider
 ----
 ## Development Tags
   = LE-MVC-2 M-V split in place, passing tests
+  = LE-MVC-3 Reducing duplicate code and redirects, passing tests, Javadoc warnings present
 
 ## Development Branches
  - LE-move-content-MVC-2-draws - pause point, (appears to) draw test layouts properly (tagged as LE-MVC-2 M-V)
- - LE-move-content-MVC-working-on-3 - current working head from above
+ - LE-move-content-MVC-working-on-3
+ - LE-move-content-MVC-working-on-4 - current working head from above
  
 ----
 
@@ -91,11 +93,26 @@ LayoutTurnout & LayoutTurnoutView setTrackSegmentBlock(..) is a bad split implem
 
 Concerned over e.g.  `getConnect2() == myTrk` as code transitions LayoutTrack -> LayoutTrackView. 
  = [ ] Change to .equals()
- - [ ] Provide an equals that will take either for now.
+ - [ ] Provide an equals that will take either for now. i.e. View.equals(Trk) compares the internal track, as does Trk.equals(View)
  
  Also need a solution and tests for `getConnect().callViewMethod()`; do these
  need to move up? How?
  
+---
+
+Added 'LayoutEditorAuxTools getLEAuxTools()' (which has state) to LayoutModels - what's up with that state? Really global?
+
+Direct access to LayoutEditorFindItems(LayoutModels) by constructing one where needed. The LayoutModels arg is for access to tracks et al; create via InstanceManager? Put in calls?
+
+This (from TrackSegment) shows that LayoutConnectivity has a "direction" from the screen coordinates; is that a real thing? How used?
+```
+    lc = new LayoutConnectivity(lb1, lb2);
+    lc.setConnections(this, lt, type1, null);
+    lc.setDirection(Path.computeDirection(
+            layoutEditor.getCoords(getConnect2(), type2),
+            layoutEditor.getCoords(getConnect1(), type1)));
+```
+
 ---
 
 - [ ] Getting "not stabilized after check" - what does that mean for tests?
@@ -107,10 +124,21 @@ There are _two_ geometries:  Layout and Screen. There can't be any clean corresp
 as people lay out their layout on separate models.  (Another demo of the shortage of single-meaning words)
 
 ---
+   
+Move list management entirely out of LayoutManager to a LayoutModels interface as a first step toward
+a separate central repository (also accessible via InstanceManager)
+- [X] Interface and scaffold present
+- [ ] Added to LayoutTrack and all children (rename layoutEditor member)
+- [ ] Added to LayoutTrack tests (instead of LayoutEditor layoutEditor)
 
-Add View ctors that (because it's not got a Track object) knows to create the
+The *View classes might want access to a JPanel for e.g. displaying a JDialog, how handle? Inject?
+
+---
+
+Add View ctors that (because it's not given a Track object) knows to create the
 track object
- - [ ] LayoutEditor#add of just View pulls Track
+
+ - [ ] LayoutEditor#add of just View pulls Track (but don't have add(LayoutTrack) without View)
  
 --- 
 
@@ -276,9 +304,6 @@ This needs to get hooked up properly:
 
 Way too many calls to repaint, particularly during loading.  Add a global "wait for later", perhaps protected by a keep-alive (or set a 'no repaint-before' timer)
 
----
-   
-Move list management entirely out of Layout Manager to decrease size & complexity, and add a central repository (also accessible via InstanceManager)
    
 ---
 
