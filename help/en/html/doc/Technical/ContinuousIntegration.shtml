@@ -70,17 +70,16 @@
       <ul>
         <li><a href="#travis">Travis</a></li>
 
-        <li><a href="#appveyor">AppVeyor</a></li>
-
         <li><a href="#actions">GitHub Actions</a></li>
 
         <li><a href="#wip">WIP check</a></li>
       </ul><a name="travis" id="travis"></a>
 
-      <h3>Travis CI</h3>We use <a href=
+      <h3>Travis CI</h3>
+      <p>We use <a href=
       "https://travis-ci.org/">Travis CI</a> to do integration/test
       builds on Linux for every pull into our main <a href=
-      "http://github.com/JMRI">GitHub</a> repositories.
+      "http://github.com/JMRI">GitHub</a> repositories.</p>
 
       <p>Travis will build any branch that contains a .travis.yml
       file. The build history for the main JMRI repository is at
@@ -119,33 +118,7 @@
       if so desired.</p>
 
       <p>Travis is controlled by the .travis.yml file. Much of the
-      work is done by the scripts/travis.sh script. <a name=
-      "appveyor" id="appveyor"></a></p>
-
-      <h3>AppVeyor CI</h3>We use <a href=
-      "http://www.appveyor.com">AppVeyor CI</a> to do
-      integration/test builds on Windows for every pull into our
-      main <a href="http://github.com/JMRI">GitHub</a>
-      repositories.
-
-      <p>AppVeyor will build any branch that contains a
-      appveyor.yml file. The build history for the main JMRI
-      repository is at <a href=
-      "https://ci.appveyor.com/project/JMRI/jmri">https://ci.appveyor.com/project/JMRI/jmri</a>.</p>
-
-      <p>AppVeyor normally runs the property-files checks (for
-      duplicate targets and other errors), followed by building the
-      code and running the "AllTest" test routine. A screen buffer
-      (not a real screen) is used for all the GUI tests.</p>
-
-      <p>Although it is possible to enable AppVeyor to build
-      commits to your own fork of the JMRI repositories, it's a bit
-      complicated to do it within the AppVeyor security model.</p>
-
-      <p>AppVeyor is controlled by the appveyor.yml file. Much of
-      the work is done by Maven via the "mvn --quiet test -P
-      appveyor --batch-mode" command. <a name="actions" id=
-      "actions"></a></p>
+      work is done by the scripts/travis.sh script. </p>
 
       <h3>GitHub Actions</h3>We use <a href=
       "https://github.com/features/actions">GitHub Actions</a> to
@@ -179,26 +152,67 @@
 
         <li>Pick on option for what can run. The bottom option
         turns everything off for you locally.</li>
-      </ol><a name="wip" id="wip"></a>
+      </ol>
+      Note that if you turn this off, the "Actions"
+      tab won't show in the GitHub web interface until
+      you turn it back on.
+      
 
-      <h3>WIP</h3>We use the <a href=
+      <a name="wip" id="wip"></a>
+      <h3>WIP</h3>
+      <p>We use the <a href=
       "https://github.com/apps/wip">WIP check</a> to allow somebody
       to mark a PR as "Work in Progress" (WIP) by putting WIP in
       the title line. The PR will then not be merged until the WIP
-      is removed. <a name="optional" id="optional"></a>
+      is removed. 
 
-      <h2>Optional Checks</h2>We also run some advisory checkers.
+      <a name="optional" id="optional"></a>
+      <h2>Optional Checks</h2>
+      
+      <p>We also run some advisory checkers.
       Although we don't require that they pass, we strongly
       recommend that people look at them and try to improve their
       metrics of test coverage, simplicity and understandability,
-      etc.
+      etc.</p>
 
       <ul>
+        <li><a href="#appveyor">AppVeyor</a></li>
+        
         <li><a href="#coveralls">Coveralls</a></li>
 
         <li><a href="#codeclimate">CodeClimate</a></li>
-      </ul><a name="coveralls" id="coveralls"></a>
+      </ul>
+      
 
+      <a name="appveyor" id="appveyor"></a>
+      <h3>AppVeyor CI</h3>
+      We use <a href=
+      "http://www.appveyor.com">AppVeyor CI</a> to do
+      integration/test builds on Windows for every pull into our
+      main <a href="http://github.com/JMRI">GitHub</a>
+      repositories.
+
+      <p>AppVeyor will build any branch that contains a
+      appveyor.yml file. The build history for the main JMRI
+      repository is at <a href=
+      "https://ci.appveyor.com/project/JMRI/jmri">https://ci.appveyor.com/project/JMRI/jmri</a>.</p>
+
+      <p>AppVeyor normally runs the property-files checks (for
+      duplicate targets and other errors), followed by building the
+      code and running the "AllTest" test routine. A screen buffer
+      (not a real screen) is used for all the GUI tests.</p>
+
+      <p>Although it is possible to enable AppVeyor to build
+      commits to your own fork of the JMRI repositories, it's a bit
+      complicated to do it within the AppVeyor security model.</p>
+
+      <p>AppVeyor is controlled by the appveyor.yml file. Much of
+      the work is done by Maven via the "mvn --quiet test -P
+      appveyor --batch-mode" command. <a name="actions" id=
+      "actions"></a></p>
+
+      
+      <a name="coveralls" id="coveralls"></a>
       <h3>Coveralls</h3>The <a href=
       "https://coveralls.io/github/JMRI">Coveralls check</a> does a
       deep check of which parts of the code were run during the
