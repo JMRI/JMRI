@@ -187,6 +187,7 @@ public abstract class AbstractMRTrafficController {
      * Invoked if it's appropriate to do low-priority polling of the command
      * station, this should return the next message to send, or null if the
      * TrafficController should just sleep.
+     * @return Formatted poll message
      */
     protected abstract AbstractMRMessage pollMessage();
 
@@ -598,6 +599,7 @@ public abstract class AbstractMRTrafficController {
      * Add header to the outgoing byte stream.
      *
      * @param msg the output byte stream
+     * @param m Message results
      * @return next location in the stream to fill
      */
     protected int addHeaderToOutput(byte[] msg, AbstractMRMessage m) {
@@ -612,6 +614,7 @@ public abstract class AbstractMRTrafficController {
      *
      * @param msg    the output byte stream
      * @param offset the first byte not yet used
+     * @param m   output message to extend
      */
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
         if (!m.isBinary()) {
@@ -908,6 +911,7 @@ public abstract class AbstractMRTrafficController {
     /**
      * Report an error on the receive loop. Separated so tests can suppress, even
      * though message is asynchronous.
+     * @param e Exception encountered at lower level to trigger error, or null
      */
     protected void reportReceiveLoopException(Exception e) {
         log.error("run: Exception: {} in {}", e.toString(), this.getClass().toString(), e);
@@ -924,6 +928,8 @@ public abstract class AbstractMRTrafficController {
     /**
      * Dummy routine, to be filled by protocols that have to skip some
      * start-of-message characters.
+     * @param istream input source
+     * @throws IOException from underlying operations
      */
     protected void waitForStartOfReply(DataInputStream istream) throws IOException {
     }

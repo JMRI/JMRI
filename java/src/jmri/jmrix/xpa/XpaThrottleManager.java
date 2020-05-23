@@ -67,7 +67,7 @@ public class XpaThrottleManager extends AbstractThrottleManager {
     /**
      * {@inheritDoc }
      *
-     * @return true
+     * @return true because this type of throttle has no long/short overlap
      */
     @Override
     public boolean addressTypeUnique() {
@@ -76,6 +76,8 @@ public class XpaThrottleManager extends AbstractThrottleManager {
 
     /**
      * Local method for deciding short/long address.
+     * @param num address to check
+     * @return true if valid as long address
      */
     static boolean isLongAddress(int num) {
         return (num >= 100);
