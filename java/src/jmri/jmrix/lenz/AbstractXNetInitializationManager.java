@@ -19,6 +19,7 @@ public abstract class AbstractXNetInitializationManager {
 
     /**
      * Define timeout used during initialization
+     * @return timout value in milliseconds
      */
     protected int getInitTimeout() {
         return 30000;

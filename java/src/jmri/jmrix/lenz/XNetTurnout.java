@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import jmri.implementation.AbstractTurnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.annotation.concurrent.GuardedBy;
 
 /**
@@ -289,6 +287,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      * a feedback message at initilization without changing the state of the
      * turnout with respect to whether or not a feedback request was sent. This
      * is used only when the turnout is created by on layout feedback.
+     * @param l Message to initialize
      */
     synchronized void initmessage(XNetReply l) {
         int oldState = internalState;
@@ -607,6 +606,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
          * known state.
          * If we're using DIRECT mode, all of this is handled from the
          * XpressNet Messages.
+         * @param event The event that causes this operation
          */
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent event) {
@@ -682,6 +682,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     
     /**
      * Queue a message.
+     * @param m Message to send
+     * @param s sequence
+     * @param l Listener to get notification of completion
      */
     protected synchronized void queueMessage(XNetMessage m, int s, XNetListener l) {
         log.debug("adding message {} to message queue.  Current Internal State {}",m,internalState);
@@ -723,6 +726,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(XNetTurnout.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XNetTurnout.class);
 
 }

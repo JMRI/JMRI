@@ -1,7 +1,5 @@
 package jmri.jmrix;
 
-import apps.startup.StartupActionModelUtil;
-
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -15,6 +13,7 @@ import jmri.implementation.DccConsistManager;
 import jmri.implementation.NmraConsistManager;
 import jmri.util.NamedBeanComparator;
 
+import jmri.util.startup.StartupActionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,7 +61,6 @@ public abstract class SystemConnectionMemo extends Bean {
             }
             log.debug("created user name {}{}", prefix, x);
         }
-        addToActionList();
         // reset to null so these get set by the first setPrefix/setUserName
         // call after construction
         this.prefixAsLoaded = null;
@@ -204,12 +202,12 @@ public abstract class SystemConnectionMemo extends Bean {
     }
 
     public void dispose() {
-        removeFromActionList();
         SystemConnectionMemoManager.getDefault().deregister(this);
     }
 
     /**
      * Get if the System Connection is currently Disabled.
+     *
      * @return true if Disabled, else false.
      */
     public boolean getDisabled() {
@@ -219,9 +217,9 @@ public abstract class SystemConnectionMemo extends Bean {
     /**
      * Set if the System Connection is currently Disabled.
      * <p>
-     * disabledAsLoaded is only set once.
-     * Sends PropertyChange on change of disabled status.
-     * 
+     * disabledAsLoaded is only set once. Sends PropertyChange on change of
+     * disabled status.
+     *
      * @param disabled true to disable, false to enable.
      */
     public void setDisabled(boolean disabled) {
@@ -241,47 +239,50 @@ public abstract class SystemConnectionMemo extends Bean {
      * Get the Comparator to be used for two NamedBeans. This is typically an
      * {@link NamedBeanComparator}, but may be any Comparator that works for
      * this connection type.
-     * 
+     *
      * @param <B>  the type of NamedBean
      * @param type the class of NamedBean
      * @return the Comparator
      */
     public abstract <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type);
 
+    /**
+     * Provide a factory for getting startup actions.
+     * <p>
+     * This is a bound, read-only, property under the name "actionFactory".
+     * 
+     * @return the factory
+     */
+    @Nonnull
+    public StartupActionFactory getActionFactory() {
+        return new ResourceBundleStartupActionFactory(getActionModelResourceBundle());
+    }
+
     protected abstract ResourceBundle getActionModelResourceBundle();
 
+    /**
+     * Add actions to the action list.
+     * 
+     * @deprecated since 4.19.7 without direct replacement
+     */
+    @Deprecated
     protected final void addToActionList() {
-        changeActionList(true);
-    }
-
-    protected final void removeFromActionList() {
-        changeActionList(false);
-    }
-
-    private void changeActionList(boolean add) {
-        StartupActionModelUtil util = StartupActionModelUtil.getDefault();
-        ResourceBundle rb = getActionModelResourceBundle();
-        if (rb == null) {
-            // don't bother trying if there is no ActionModelResourceBundle
-            return;
-        }
-        log.debug("Removing actions from bundle {}", rb.getBaseBundleName());
-        rb.keySet().forEach(key -> {
-            try {
-                if (add) {
-                    util.addAction(key, rb.getString(key));
-                } else {
-                    util.removeAction(key);
-                }
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class \"{}\"", key);
-            }
-        });
+        // do nothing
     }
 
     /**
-     * Get if connection is dirty.
-     * Checked fields are disabled, prefix, userName
+     * Remove actions from the action list.
+     * 
+     * @deprecated since 4.19.7 without direct replacement
+     */
+    @Deprecated
+    protected final void removeFromActionList() {
+        // do nothing
+    }
+
+    /**
+     * Get if connection is dirty. Checked fields are disabled, prefix, userName
+     *
      * @return true if changed since loaded
      */
     public boolean isDirty() {

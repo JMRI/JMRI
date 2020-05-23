@@ -115,7 +115,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     }
 
     private EcosPreferences p;
-    private ShutDownTask ecosLocoShutDownTask;
+    ShutDownTask ecosLocoShutDownTask;
     private EcosTrafficController tc;
 
     public EcosLocoAddress provideEcosLoco(String EcosObject, int DCCAddress) {

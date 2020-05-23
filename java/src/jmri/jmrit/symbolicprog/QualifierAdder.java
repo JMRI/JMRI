@@ -28,6 +28,7 @@ public abstract class QualifierAdder {
      * @param relation The relation term from the qualifier definition, e.g.
      *                 greater than
      * @param value    The value for the comparison
+     * @return the new Qualifier object for this request.
      */
     // e.g. return new PaneQualifier(pane, var, Integer.parseInt(value), relation, tabPane, index);
     abstract protected Qualifier createQualifier(VariableValue var, String relation, String value);

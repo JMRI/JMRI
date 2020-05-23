@@ -13,7 +13,7 @@ import org.junit.Test;
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
  */
-public class AnymaDMX_SystemConnectionMemoTest extends SystemConnectionMemoTestBase {
+public class AnymaDMX_SystemConnectionMemoTest extends SystemConnectionMemoTestBase<AnymaDMX_SystemConnectionMemo> {
 
     @Test
     public void testDefaultCtor() {

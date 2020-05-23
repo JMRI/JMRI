@@ -80,6 +80,7 @@ public class ProgCheckAction extends AbstractAction {
 
     /**
      * Check for names in programer that are not in names.xml
+     * @param file A decoder definition XML file to be checked
      */
     void warnMissingNames(File file) {
         String result = checkMissingNames(file);
@@ -137,6 +138,7 @@ public class ProgCheckAction extends AbstractAction {
 
     /**
      * Check for names in names.xml that are not in file
+     * @param file A decoder definition XML file to be checked
      */
     void warnIncompleteComprehensive(File file) {
         String result = checkIncompleteComprehensive(file);
@@ -203,6 +205,8 @@ public class ProgCheckAction extends AbstractAction {
     /**
      * Check if the name is a function name, e.g. "F5 controls output 8" or
      * "FL(f) controls output 14"
+     * @param name Possible function name to check
+     * @return true if the input is a valid name
      */
     static boolean functionMapName(String name) {
         if (numericPattern == null) {

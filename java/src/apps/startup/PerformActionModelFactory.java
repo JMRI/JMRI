@@ -1,5 +1,6 @@
 package apps.startup;
 
+import jmri.util.startup.StartupModel;
 import apps.PerformActionModel;
 import org.openide.util.lookup.ServiceProvider;
 
