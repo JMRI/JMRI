@@ -244,26 +244,26 @@ public class NamedBeanComboBoxTest {
         // should always match NONE
         t.setValidatingInput(false);
 
-        boolean v = GuiActionRunner.execute(() -> {
+        GuiActionRunner.execute(() -> {
             c.setText("");
-            return c.getInputVerifier().verify(c);
+            c.getInputVerifier().verify(c);
         });
         assertThat(c.getText()).isEqualTo("");
         assertThat(((JInputValidator) c.getInputVerifier()).getValidation().getType()).isEqualTo(Validation.Type.NONE);
         assertThat(t.getSelectedItem()).isNull();
 
-        v = GuiActionRunner.execute(() -> {
+        GuiActionRunner.execute(() -> {
             c.setText("IS1");
-            return c.getInputVerifier().verify(c);
+            c.getInputVerifier().verify(c);
         });
         assertThat(c.getText()).isEqualTo("IS1");
         assertThat(((JInputValidator) c.getInputVerifier()).getValidation().getType()).isEqualTo(Validation.Type.NONE);
         Sensor s1 = GuiActionRunner.execute(() -> t.getSelectedItem());
         assertThat(m.getBySystemName("IS1")).isEqualTo(s1);
 
-        v = GuiActionRunner.execute(() -> {
+        GuiActionRunner.execute(() -> {
             c.setText("K ");
-            return c.getInputVerifier().verify(c);
+            c.getInputVerifier().verify(c);
         });
         assertThat(c.getText()).isEqualTo("K ");
         assertThat(((JInputValidator) c.getInputVerifier()).getValidation().getType()).isEqualTo(Validation.Type.NONE);
@@ -276,26 +276,26 @@ public class NamedBeanComboBoxTest {
         // should match NONE when empty and DANGER otherwise
         t.setValidatingInput(true);
 
-        v = GuiActionRunner.execute(() -> {
+        GuiActionRunner.execute(() -> {
             c.setText("");
-            return c.getInputVerifier().verify(c);
+            c.getInputVerifier().verify(c);
         });
         assertThat(c.getText()).isEqualTo("");
         assertThat(((JInputValidator) c.getInputVerifier()).getValidation().getType()).isEqualTo(Validation.Type.NONE);
         assertThat(t.getSelectedItem()).isNull();
 
-        v = GuiActionRunner.execute(() -> {
+        GuiActionRunner.execute(() -> {
             c.setText("IS1");
-            return c.getInputVerifier().verify(c);
+            c.getInputVerifier().verify(c);
         });
         assertThat(c.getText()).isEqualTo("IS1");
         assertThat(((JInputValidator) c.getInputVerifier()).getValidation().getType()).isEqualTo(Validation.Type.INFORMATION);
         s1 = GuiActionRunner.execute(() -> t.getSelectedItem());
         assertThat(m.getBySystemName("IS1")).isEqualTo(s1);
 
-        v = GuiActionRunner.execute(() -> {
+        GuiActionRunner.execute(() -> {
             c.setText("K ");
-            return c.getInputVerifier().verify(c);
+            c.getInputVerifier().verify(c);
         });
         assertThat(c.getText()).isEqualTo("K ");
         assertThat(((JInputValidator) c.getInputVerifier()).getValidation().getType()).isEqualTo(Validation.Type.DANGER);
@@ -308,26 +308,26 @@ public class NamedBeanComboBoxTest {
         // should always match NONE
         t.setValidatingInput(false);
 
-        v = GuiActionRunner.execute(() -> {
+        GuiActionRunner.execute(() -> {
             c.setText("");
-            return c.getInputVerifier().verify(c);
+            c.getInputVerifier().verify(c);
         });
         assertThat(c.getText()).isEqualTo("");
         assertThat(((JInputValidator) c.getInputVerifier()).getValidation().getType()).isEqualTo(Validation.Type.NONE);
         assertThat(t.getSelectedItem()).isNull();
 
-        v = GuiActionRunner.execute(() -> {
+        GuiActionRunner.execute(() -> {
             c.setText("IS1");
-            return c.getInputVerifier().verify(c);
+            c.getInputVerifier().verify(c);
         });
         assertThat(c.getText()).isEqualTo("IS1");
         assertThat(((JInputValidator) c.getInputVerifier()).getValidation().getType()).isEqualTo(Validation.Type.NONE);
         s1 = GuiActionRunner.execute(() -> t.getSelectedItem());
         assertThat(m.getBySystemName("IS1")).isEqualTo(s1);
 
-        v = GuiActionRunner.execute(() -> {
+        GuiActionRunner.execute(() -> {
             c.setText("K ");
-            return c.getInputVerifier().verify(c);
+            c.getInputVerifier().verify(c);
         });
         assertThat(c.getText()).isEqualTo("K ");
         assertThat(((JInputValidator) c.getInputVerifier()).getValidation().getType()).isEqualTo(Validation.Type.NONE);
@@ -340,9 +340,9 @@ public class NamedBeanComboBoxTest {
         // should match DANGER with text "K " and NONE otherwise
         t.setValidatingInput(true);
 
-        v = GuiActionRunner.execute(() -> {
+        GuiActionRunner.execute(() -> {
             c.setText("");
-            return c.getInputVerifier().verify(c);
+            c.getInputVerifier().verify(c);
         });
         assertThat(c.getText()).isEqualTo("");
         assertThat(((JInputValidator) c.getInputVerifier()).getValidation().getType()).isEqualTo(Validation.Type.NONE);
@@ -350,18 +350,18 @@ public class NamedBeanComboBoxTest {
 
         t.setSelectedItem(null); // change selection to verify selection changes
         assertThat(t.getSelectedItem()).isNull();
-        v = GuiActionRunner.execute(() -> {
+        GuiActionRunner.execute(() -> {
             c.setText("IS1");
-            return c.getInputVerifier().verify(c);
+            c.getInputVerifier().verify(c);
         });
         assertThat(c.getText()).isEqualTo("IS1");
         assertThat(((JInputValidator) c.getInputVerifier()).getValidation().getType()).isEqualTo(Validation.Type.INFORMATION);
         s1 = GuiActionRunner.execute(() -> t.getSelectedItem());
         assertThat(m.getBySystemName("IS1")).isEqualTo(s1);
 
-        v = GuiActionRunner.execute(() -> {
+        GuiActionRunner.execute(() -> {
             c.setText("K ");
-            return c.getInputVerifier().verify(c);
+            c.getInputVerifier().verify(c);
         });
         assertThat(c.getText()).isEqualTo("K ");
         assertThat(((JInputValidator) c.getInputVerifier()).getValidation().getType()).isEqualTo(Validation.Type.DANGER);
