@@ -1,5 +1,7 @@
 package jmri.jmrix.ecos;
 
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -31,12 +33,13 @@ public class EcosSystemConnectionMemoTest extends SystemConnectionMemoTestBase<E
         scm.setEcosTrafficController(new EcosInterfaceScaffold());
         scm.configureManagers();
         scm.getPreferenceManager().setPreferencesLoaded();
-        jmri.InstanceManager.store(scm, EcosSystemConnectionMemo.class);
+        InstanceManager.store(scm, EcosSystemConnectionMemo.class);
     }
 
     @After
     @Override
     public void tearDown() {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(scm.getLocoAddressManager().ecosLocoShutDownTask);
         scm.getLocoAddressManager().terminateThreads();
         scm.getTrafficController().terminateThreads();
         scm.dispose();
