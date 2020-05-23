@@ -1,13 +1,13 @@
 package jmri.jmrit.logixng.ztest;
 
-import apps.startup.AbstractStartupActionFactory;
-import apps.startup.StartupActionFactory;
 import java.util.Locale;
+import jmri.util.startup.AbstractStartupActionFactory;
+import jmri.util.startup.StartupActionFactory;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * {@link apps.startup.StartupActionFactory} for the
- * {@link jmri.jmrit.timetable.swing.TimeTableAction}.
+ * {@link jmri.util.startup.StartupActionFactory} for the
+ * {@link jmri.jmrit.logixng.ztest.LogixNG_StartupAction}.
  *
  * @author Dave Sand Copyright (C) 2018
  */
