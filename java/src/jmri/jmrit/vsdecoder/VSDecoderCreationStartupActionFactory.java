@@ -1,12 +1,12 @@
 package jmri.jmrit.vsdecoder;
 
-import apps.startup.AbstractStartupActionFactory;
-import apps.startup.StartupActionFactory;
+import jmri.util.startup.AbstractStartupActionFactory;
+import jmri.util.startup.StartupActionFactory;
 import java.util.Locale;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * {@link apps.startup.StartupActionFactory} for the
+ * {@link jmri.util.startup.StartupActionFactory} for the
  * {@link jmri.jmrit.roster.swing.RosterFrameAction}.
  *
  * @author Randall Wood Copyright (C) 2016

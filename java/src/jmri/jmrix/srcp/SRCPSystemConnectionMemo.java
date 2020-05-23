@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.ShutDownManager;
 import jmri.util.NamedBeanComparator;
 
 /**
@@ -113,6 +114,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     @Override
     public void dispose() {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(et);
         et = null;
         InstanceManager.deregister(this, SRCPSystemConnectionMemo.class);
         if (cf != null) {

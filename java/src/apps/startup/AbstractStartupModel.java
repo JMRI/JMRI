@@ -1,5 +1,6 @@
 package apps.startup;
 
+import jmri.util.startup.StartupModel;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
