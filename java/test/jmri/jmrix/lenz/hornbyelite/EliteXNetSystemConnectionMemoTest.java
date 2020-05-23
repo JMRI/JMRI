@@ -29,6 +29,9 @@ public class EliteXNetSystemConnectionMemoTest extends SystemConnectionMemoTestB
 
     @Test
     public void testXNetTrafficControllerSetCtor() {
+        // cleanup traffic controller added in setup
+        scm.getXNetTrafficController().terminateThreads();
+
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
         Assert.assertNotNull(scm);
         // the default constructor does not set the traffic controller
