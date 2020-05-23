@@ -77,7 +77,7 @@ public class DefaultShutDownManagerTest {
         Assert.assertEquals(1, dsdm.getCallables().size());
         dsdm.register(task);
         Assert.assertEquals(1, dsdm.getCallables().size());
-        assertThatCode(() -> dsdm.register((Callable) null)).isInstanceOf(NullPointerException.class);
+        assertThatCode(() -> dsdm.register((Callable<Boolean>) null)).isInstanceOf(NullPointerException.class);
     }
 
     @Test
@@ -89,7 +89,7 @@ public class DefaultShutDownManagerTest {
         Assert.assertTrue(dsdm.getCallables().contains(task));
         dsdm.deregister(task);
         Assert.assertEquals(0, dsdm.getCallables().size());
-        assertThatCode(() -> dsdm.deregister((Callable) null)).doesNotThrowAnyException();
+        assertThatCode(() -> dsdm.deregister((Callable<Boolean>) null)).doesNotThrowAnyException();
     }
 
     @Test

@@ -980,7 +980,7 @@ public class JUnitUtil {
         }
         List<Callable<Boolean>> callables = sm.getCallables();
         while (!callables.isEmpty()) {
-            Callable callable = callables.get(0);
+            Callable<Boolean> callable = callables.get(0);
             sm.deregister(callable);
             callables = sm.getCallables(); // avoid ConcurrentModificationException
         }
@@ -1014,7 +1014,7 @@ public class JUnitUtil {
         }
         List<Callable<Boolean>> callables = sm.getCallables();
         while (!callables.isEmpty()) {
-            Callable callable = callables.get(0);
+            Callable<Boolean> callable = callables.get(0);
             log.error("Test {} left registered shutdown callable of type {}", getTestClassName(), callable.getClass(), 
                         Log4JUtil.shortenStacktrace(new Exception("traceback")));
             sm.deregister(callable);
