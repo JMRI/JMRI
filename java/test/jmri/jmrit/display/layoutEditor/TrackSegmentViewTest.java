@@ -132,6 +132,175 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
         }
     }
 
+
+
+    /*
+        Bridge Decorations
+     */
+    @Test
+    public void testDefaultIsSetBridgeSideRight() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertFalse("segmentView.isBridgeSideRight() == true (default).", segmentView.isBridgeSideRight());
+            segmentView.setBridgeSideRight(true);
+            Assert.assertTrue("segmentView.isBridgeSideRight() == false (after set).", segmentView.isBridgeSideRight());
+        }
+    }
+
+    @Test
+    public void testDefaultIsSetBridgeSideLeft() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertFalse("segmentView.isBridgeSideLeft() == true (default).", segmentView.isBridgeSideLeft());
+            segmentView.setBridgeSideLeft(true);
+            Assert.assertTrue("segmentView.isBridgeSideLeft() == false (after set).", segmentView.isBridgeSideLeft());
+        }
+    }
+
+    @Test
+    public void testDefaultIsSetBridgeHasEntry() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertFalse("segmentView.isBridgeHasEntry() == true (default).", segmentView.isBridgeHasEntry());
+            segmentView.setBridgeHasEntry(true);
+            Assert.assertTrue("segmentView.isBridgeHasEntry() == false (after set).", segmentView.isBridgeHasEntry());
+        }
+    }
+
+    @Test
+    public void testDefaultIsSetBridgeHasExit() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertFalse("segmentView.isBridgeHasExit() == true (default).", segmentView.isBridgeHasExit());
+            segmentView.setBridgeHasExit(true);
+            Assert.assertTrue("segmentView.isBridgeHasExit() == false (after set).", segmentView.isBridgeHasExit());
+        }
+    }
+
+    @Test
+    public void testDefaultGetSetBridgeDeckWidth() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertEquals("segmentView.getBridgeDeckWidth() == 10 (default).", 10, segmentView.getBridgeDeckWidth());
+            segmentView.setBridgeDeckWidth(-1);
+            Assert.assertNotEquals("segmentView.setBridgeDeckWidth(-1) not allowed.", -1, segmentView.getBridgeDeckWidth());
+            Assert.assertEquals("segmentView.getBridgeDeckWidth() == 6 (after set).", 6, segmentView.getBridgeDeckWidth());
+            segmentView.setBridgeDeckWidth(15);
+            Assert.assertEquals("segmentView.getBridgeDeckWidth() == 15 (after set).", 15, segmentView.getBridgeDeckWidth());
+        }
+    }
+
+    @Test
+    public void testDefaultGetSetBridgeLineWidth() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertEquals("segmentView.getBridgeLineWidth() == 1 (default).", 1, segmentView.getBridgeLineWidth());
+            segmentView.setBridgeLineWidth(-1);
+            Assert.assertNotEquals("segmentView.setBridgeLineWidth(-1) not allowed.", -1, segmentView.getBridgeLineWidth());
+            segmentView.setBridgeLineWidth(3);
+            Assert.assertEquals("segmentView.getBridgeLineWidth() == 3 (after set).", 3, segmentView.getBridgeLineWidth());
+        }
+    }
+
+    @Test
+    public void testDefaultGetSetBridgeApproachWidth() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertEquals("segmentView.getBridgeApproachWidth() == 4 (default).", 4, segmentView.getBridgeApproachWidth());
+            segmentView.setBridgeApproachWidth(-1);
+            Assert.assertNotEquals("segmentView.setBridgeApproachWidth(-1) not allowed.", -1, segmentView.getBridgeApproachWidth());
+            Assert.assertEquals("segmentView.getBridgeApproachWidth() == 8 (after set).", 8, segmentView.getBridgeApproachWidth());
+            segmentView.setBridgeApproachWidth(16);
+            Assert.assertEquals("segmentView.getBridgeApproachWidth() ==16 (after set).", 16, segmentView.getBridgeApproachWidth());
+        }
+    }
+
+
+
+    /*
+        Tunnel Decorations
+     */
+    @Test
+    public void testDefaultIsSetTunnelSideRight() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertFalse("segmentView.isTunnelSideRight() == true (default).", segmentView.isTunnelSideRight());
+            segmentView.setTunnelSideRight(true);
+            Assert.assertTrue("segmentView.isTunnelSideRight() == false (after set).", segmentView.isTunnelSideRight());
+        }
+    }
+
+    @Test
+    public void testDefaultIsSetTunnelSideLeft() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertFalse("segmentView.isTunnelSideLeft() == true (default).", segmentView.isTunnelSideLeft());
+            segmentView.setTunnelSideLeft(true);
+            Assert.assertTrue("segmentView.isTunnelSideLeft() == false (after set).", segmentView.isTunnelSideLeft());
+        }
+    }
+
+    @Test
+    public void testDefaultIsSetTunnelHasEntry() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertFalse("segmentView.isTunnelHasEntry() == true (default).", segmentView.isTunnelHasEntry());
+            segmentView.setTunnelHasEntry(true);
+            Assert.assertTrue("segmentView.isTunnelHasEntry() == false (after set).", segmentView.isTunnelHasEntry());
+        }
+    }
+
+    @Test
+    public void testDefaultIsSetTunnelHasExit() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertFalse("segmentView.isTunnelHasExit() == true (default).", segmentView.isTunnelHasExit());
+            segmentView.setTunnelHasExit(true);
+            Assert.assertTrue("segmentView.isTunnelHasExit() == false (after set).", segmentView.isTunnelHasExit());
+        }
+    }
+
+    @Test
+    public void testDefaultGetSetTunnelFloorWidth() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertEquals("segmentView.getTunnelFloorWidth() == 10 (default).", 10, segmentView.getTunnelFloorWidth());
+            segmentView.setTunnelFloorWidth(-1);
+            Assert.assertNotEquals("segmentView.setTunnelFloorWidth(-1) not allowed.", -1, segmentView.getTunnelFloorWidth());
+            segmentView.setTunnelFloorWidth(5);
+            Assert.assertEquals("segmentView.getTunnelFloorWidth() == 5 (after set).", 5, segmentView.getTunnelFloorWidth());
+        }
+    }
+
+    @Test
+    public void testDefaultGetSetTunnelLineWidth() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertEquals("segmentView.getTunnelLineWidth() == 1 (default).", 1, segmentView.getTunnelLineWidth());
+            segmentView.setTunnelLineWidth(-1);
+            Assert.assertNotEquals("segmentView.setTunnelLineWidth(-1) not allowed.", -1, segmentView.getTunnelLineWidth());
+            segmentView.setTunnelLineWidth(5);
+            Assert.assertEquals("segmentView.getTunnelLineWidth() == 5 (after set).", 5, segmentView.getTunnelLineWidth());
+        }
+    }
+
+    @Test
+    public void testDefaultGetSetTunnelEntranceWidth() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertEquals("segmentView.getTunnelEntranceWidth() == 16 (default).", 16, segmentView.getTunnelEntranceWidth());
+            segmentView.setTunnelEntranceWidth(-1);
+            Assert.assertNotEquals("segmentView.setTunnelEntranceWidth(-1) not allowed.", -1, segmentView.getTunnelEntranceWidth());
+            segmentView.setTunnelEntranceWidth(5);
+            Assert.assertEquals("segmentView.getTunnelEntranceWidth() == 5 (after set).", 5, segmentView.getTunnelEntranceWidth());
+        }
+    }
+
+
+
+
+
+
     TrackSegment segment;
     TrackSegmentView segmentView;
     

@@ -101,24 +101,6 @@ public class TrackSegment extends LayoutTrack {
     protected HitPointType type2 = HitPointType.NONE;
     private boolean mainline = false;
 
-    // eventually drop
-
-//     private boolean dashed = false;
-//     private boolean arc = false;
-//     private boolean flip = false;
-//     private double angle = 0.0D;
-//     private boolean circle = false;
-//     private boolean changed = false;
-//     private boolean bezier = false;
-
-
-
-    // for Bezier
-    // private final ArrayList<Point2D> bezierControlPoints = new ArrayList<>(); // list of control point displacements
-
-    // temporary reference to the Editor that will eventually be part of View
-    // private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor editor;
-
     /**
      * Get debugging string for the TrackSegment.
      *
@@ -233,21 +215,6 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * @return true if track segment should be drawn dashed
-     */
-//     public boolean isDashed() {
-//         return dashed;
-//     }
-
-//     public void setDashed(boolean dash) {
-//         if (dashed != dash) {
-//             dashed = dash;
-//             layoutEditor.redrawPanel();
-//             layoutEditor.setDirty();
-//         }
-//     }
-
-    /**
      * @return true if track segment is a main line
      */
     @Override
@@ -272,18 +239,6 @@ public class TrackSegment extends LayoutTrack {
             );
         return layoutEditor.getTrackSegmentView(this).isArc();
     }
-// 
-//     public void setArc(boolean boo) {
-//         if (arc != boo) {
-//             arc = boo;
-//             if (arc) {
-//                 circle = false;
-//                 bezier = false;
-//                 hideConstructionLines(SHOWCON);
-//             }
-//             changed = true;
-//         }
-//     }
 
     /**
      * @return true if track segment is circle
@@ -302,22 +257,6 @@ public class TrackSegment extends LayoutTrack {
         layoutEditor.getTrackSegmentView(this).setCircle(boo);
     }
 
-    /**
-     * @return true if track segment circle or arc should be drawn flipped
-     */
-//     public boolean isFlip() {
-//         return flip;
-//     }
-// 
-//     public void setFlip(boolean boo) {
-//         if (flip != boo) {
-//             flip = boo;
-//             changed = true;
-//             hideConstructionLines(SHOWCON);
-//             layoutEditor.redrawPanel();
-//             layoutEditor.setDirty();
-//         }
-//     }
 
     /**
      * @return true if track segment is a bezier curve
@@ -328,27 +267,6 @@ public class TrackSegment extends LayoutTrack {
             );
         return layoutEditor.getTrackSegmentView(this).isBezier();
     }
-
-//     public void setBezier(boolean boo) {
-//         if (bezier != boo) {
-//             bezier = boo;
-//             if (bezier) {
-//                 arc = false;
-//                 circle = false;
-//                 hideConstructionLines(SHOWCON);
-//             }
-//             changed = true;
-//         }
-//     }
-// 
-//     public double getAngle() {
-//         return angle;
-//     }
-// 
-//     public void setAngle(double x) {
-//         angle = MathUtil.pin(x, 0.0D, 180.0D);
-//         changed = true;
-//     }
 
     /**
      * Get the direction from end point 1 to 2
@@ -586,12 +504,6 @@ public class TrackSegment extends LayoutTrack {
         return result;
     }
 
-//     private JPopupMenu popupMenu = null;
-//     private final JCheckBoxMenuItem mainlineCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("MainlineCheckBoxMenuItemTitle"));
-//     private final JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("HiddenCheckBoxMenuItemTitle"));
-//     private final JCheckBoxMenuItem dashedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("DashedCheckBoxMenuItemTitle"));
-//     private final JCheckBoxMenuItem flippedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("FlippedCheckBoxMenuItemTitle"));
-
     /**
      * Maximum length of the bumper decoration. (temporary:  why here instead of View?)
      */
@@ -609,37 +521,6 @@ public class TrackSegment extends LayoutTrack {
     private static final int MAX_TUNNEL_LINE_WIDTH = 9;
     private static final int MAX_TUNNEL_ENTRANCE_WIDTH = 80;
     
-    /**
-     * Helper method, which adds "Set value" item to the menu. The value can be
-     * optionally range-checked. Item will be appended at the end of the menu.
-     *
-     * @param menu       the target menu.
-     * @param titleKey   bundle key for the menu title/dialog title
-     * @param toolTipKey bundle key for the menu item tooltip
-     * @param val        value getter
-     * @param set        value setter
-     * @param predicate  checking predicate, possibly null.
-     */
-//     private void addNumericMenuItem(@Nonnull JMenu menu,
-//             @Nonnull String titleKey, @Nonnull String toolTipKey,
-//             @Nonnull Supplier<Integer> val,
-//             @Nonnull Consumer<Integer> set,
-//             @CheckForNull Predicate<Integer> predicate) {
-//         int oldVal = val.get();
-//         JMenuItem jmi = menu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-//                 Bundle.getMessage(titleKey)) + oldVal));
-//         jmi.setToolTipText(Bundle.getMessage(toolTipKey));
-//         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-//             // prompt for lineWidth
-//             int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
-//                     Bundle.getMessage(titleKey),
-//                     Bundle.getMessage(titleKey),
-//                     // getting again, maybe something changed from the menu construction ?
-//                     val.get(), predicate);
-//             set.accept(newValue);
-//             layoutEditor.repaint();
-//         });
-//     }
 
     /**
      * {@inheritDoc}
@@ -874,26 +755,6 @@ public class TrackSegment extends LayoutTrack {
      * has been calculated. This prevents the need to recalculate the values
      * each time a re-draw is required.
      */
-//     private Point2D pt1;
-//     private Point2D pt2;
-// 
-//     public Point2D getTmpPt1() {
-//         return pt1;
-//     }
-// 
-//     public Point2D getTmpPt2() {
-//         return pt2;
-//     }
-// 
-//     public void setTmpPt1(Point2D Pt1) {
-//         pt1 = Pt1;
-//         changed = true;
-//     }
-// 
-//     public void setTmpPt2(Point2D Pt2) {
-//         pt2 = Pt2;
-//         changed = true;
-//     }
 
     private double cX;
 
@@ -952,21 +813,14 @@ public class TrackSegment extends LayoutTrack {
             );
         return layoutEditor.getTrackSegmentView(this).getCentreSegX();
     }
-// 
-//     public void setCentreSegX(double x) {
-//         super.setCoordsCenter(new Point2D.Double(x, getCentreSeg().getY()));
-//     }
-// 
+
     public double getCentreSegY() {
         log.error("getCentreSegY should have called View instead of TrackSegment (temporary)"
                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
         return layoutEditor.getTrackSegmentView(this).getCentreSegY();
     }
-// 
-//     public void setCentreSegY(double y) {
-//         super.setCoordsCenter(new Point2D.Double(getCentreSeg().getX(), y));
-//     }
+
 
     /**
      * @return the location of the middle of the segment (on the segment)
@@ -977,10 +831,7 @@ public class TrackSegment extends LayoutTrack {
             );
         return layoutEditor.getTrackSegmentView(this).getCentreSeg();
     }
-// 
-//     public void setCentreSeg(Point2D p) {
-//         super.setCoordsCenter(p);
-//     }
+
 
     // this is the center of the track segment when configured as a circle
     private double centreX;
@@ -1223,113 +1074,6 @@ public class TrackSegment extends LayoutTrack {
     }
     private int arrowGap = 1;
 
-    //
-    // bridge decoration accessors
-    //
-    public boolean isBridgeSideRight() {
-        return bridgeSideRight;
-    }
-
-    public void setBridgeSideRight(boolean newVal) {
-        if (bridgeSideRight != newVal) {
-            bridgeSideRight = newVal;
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private boolean bridgeSideRight = false;
-
-    public boolean isBridgeSideLeft() {
-        return bridgeSideLeft;
-    }
-
-    public void setBridgeSideLeft(boolean newVal) {
-        if (bridgeSideLeft != newVal) {
-            bridgeSideLeft = newVal;
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private boolean bridgeSideLeft = false;
-
-    public boolean isBridgeHasEntry() {
-        return bridgeHasEntry;
-    }
-
-    public void setBridgeHasEntry(boolean newVal) {
-        if (bridgeHasEntry != newVal) {
-            bridgeHasEntry = newVal;
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private boolean bridgeHasEntry = false;
-
-    public boolean isBridgeHasExit() {
-        return bridgeHasExit;
-    }
-
-    public void setBridgeHasExit(boolean newVal) {
-        if (bridgeHasExit != newVal) {
-            bridgeHasExit = newVal;
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private boolean bridgeHasExit = false;
-
-    public Color getBridgeColor() {
-        return bridgeColor;
-    }
-
-    public void setBridgeColor(Color newVal) {
-        if (bridgeColor != newVal) {
-            bridgeColor = newVal;
-            JmriColorChooser.addRecentColor(newVal);
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private Color bridgeColor = Color.BLACK;
-
-    public int getBridgeDeckWidth() {
-        return bridgeDeckWidth;
-    }
-
-    public void setBridgeDeckWidth(int newVal) {
-        if (bridgeDeckWidth != newVal) {
-            bridgeDeckWidth = Math.max(6, newVal);   // don't let value be less than 6
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private int bridgeDeckWidth = 10;
-
-    public int getBridgeLineWidth() {
-        return bridgeLineWidth;
-    }
-
-    public void setBridgeLineWidth(int newVal) {
-        if (bridgeLineWidth != newVal) {
-            bridgeLineWidth = Math.max(1, newVal);   // don't let value be less than 1
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private int bridgeLineWidth = 1;
-
-    public int getBridgeApproachWidth() {
-        return bridgeApproachWidth;
-    }
-
-    public void setBridgeApproachWidth(int newVal) {
-        if (bridgeApproachWidth != newVal) {
-            bridgeApproachWidth = Math.max(8, newVal);   // don't let value be less than 8
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private int bridgeApproachWidth = 4;
 
     //
     // bumper decoration accessors
@@ -1438,113 +1182,6 @@ public class TrackSegment extends LayoutTrack {
         bumperLength = Math.max(10, bumperLength);
     }
 
-    //
-    // tunnel decoration accessors
-    //
-    public boolean isTunnelSideRight() {
-        return tunnelSideRight;
-    }
-
-    public void setTunnelSideRight(boolean newVal) {
-        if (tunnelSideRight != newVal) {
-            tunnelSideRight = newVal;
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private boolean tunnelSideRight = false;
-
-    public boolean isTunnelSideLeft() {
-        return tunnelSideLeft;
-    }
-
-    public void setTunnelSideLeft(boolean newVal) {
-        if (tunnelSideLeft != newVal) {
-            tunnelSideLeft = newVal;
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private boolean tunnelSideLeft = false;
-
-    public boolean isTunnelHasEntry() {
-        return tunnelHasEntry;
-    }
-
-    public void setTunnelHasEntry(boolean newVal) {
-        if (tunnelHasEntry != newVal) {
-            tunnelHasEntry = newVal;
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private boolean tunnelHasEntry = false;
-
-    public boolean isTunnelHasExit() {
-        return tunnelHasExit;
-    }
-
-    public void setTunnelHasExit(boolean newVal) {
-        if (tunnelHasExit != newVal) {
-            tunnelHasExit = newVal;
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private boolean tunnelHasExit = false;
-
-    public Color getTunnelColor() {
-        return tunnelColor;
-    }
-
-    public void setTunnelColor(Color newVal) {
-        if (tunnelColor != newVal) {
-            tunnelColor = newVal;
-            JmriColorChooser.addRecentColor(newVal);
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private Color tunnelColor = Color.BLACK;
-
-    public int getTunnelFloorWidth() {
-        return tunnelFloorWidth;
-    }
-
-    public void setTunnelFloorWidth(int newVal) {
-        if (tunnelFloorWidth != newVal) {
-            tunnelFloorWidth = Math.max(4, newVal);   // don't let value be less than 4
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private int tunnelFloorWidth = 10;
-
-    public int getTunnelLineWidth() {
-        return tunnelLineWidth;
-    }
-
-    public void setTunnelLineWidth(int newVal) {
-        if (tunnelLineWidth != newVal) {
-            tunnelLineWidth = Math.max(1, newVal);   // don't let value be less than 1
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private int tunnelLineWidth = 1;
-
-    public int getTunnelEntranceWidth() {
-        return tunnelEntranceWidth;
-    }
-
-    public void setTunnelEntranceWidth(int newVal) {
-        if (tunnelEntranceWidth != newVal) {
-            tunnelEntranceWidth = Math.max(1, newVal);   // don't let value be less than 1
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private int tunnelEntranceWidth = 16;
 
     /**
      * {@inheritDoc}
