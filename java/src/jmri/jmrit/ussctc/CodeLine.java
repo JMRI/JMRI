@@ -91,6 +91,7 @@ public class CodeLine {
     
     /**
      * Request processing of an indication from the field
+     * @param station Station being addressed.
      */
     synchronized void requestSendCode(Station station) {
         log.debug("requestSendCode queued from {}", station.toString());
@@ -130,7 +131,8 @@ public class CodeLine {
     }
     
     /**
-     * Request processing of an indication from the field
+     * Request processing of an indication from the field.
+     * @param station Station being addressed.
      */
     synchronized void requestIndicationStart(Station station) {
         log.debug("requestIndicationStart queued from {}", station.toString());

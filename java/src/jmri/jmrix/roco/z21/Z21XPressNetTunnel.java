@@ -236,6 +236,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     /**
      * Package protected method to retrieve the stream port controller
      * associated with this tunnel.
+     * @return controller in use
      */
     jmri.jmrix.lenz.XNetStreamPortController getStreamPortController() {
        return xsc;
@@ -244,6 +245,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     /**
      * Package protected method to set the stream port controller
      * associated with this tunnel.
+     * @param x controller to retain
      */
     void setStreamPortController(jmri.jmrix.lenz.XNetStreamPortController x){
         xsc = x;

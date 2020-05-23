@@ -8,6 +8,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import jmri.DccThrottle;
+import jmri.Throttle;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.throttle.FunctionButton;
 import jmri.jmrit.throttle.FunctionListener;
@@ -151,8 +152,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             functionButton[i].setIdentity(i);
             functionButton[i].addFunctionListener(this);
             functionButton[i].setButtonLabel( i<3 ?
-                Bundle.getMessage(DccThrottle.FUNCTION_STRING_ARRAY[i])
-                : DccThrottle.FUNCTION_STRING_ARRAY[i] );
+                Bundle.getMessage(Throttle.getFunctionString(i))
+                : Throttle.getFunctionString(i) );
             if (i > 0) {
                 mainPanel.add(functionButton[i]);
                 if (i >= NUM_FUNC_BUTTONS_INIT) {
@@ -303,13 +304,13 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         }
         boolean isSet = ((Boolean) e.getNewValue());
         
-        for ( int i = 0; i< DccThrottle.FUNCTION_STRING_ARRAY.length; i++ ) {
-            if (functionName.equals(DccThrottle.FUNCTION_STRING_ARRAY[i])) {
+        for ( int i = 0; i< 29; i++ ) {
+            if (functionName.equals(Throttle.getFunctionString(i))) {
                 functionButton[i].setState(isSet);
                 break;
             }
-            if (functionName.equals(DccThrottle.FUNCTION_MOMENTARY_STRING_ARRAY[i])) {
-                functionName = "Lock" + DccThrottle.FUNCTION_STRING_ARRAY[i];
+            if (functionName.equals(Throttle.getFunctionMomentaryString(i))) {
+                functionName = "Lock" + Throttle.getFunctionString(i);
                 functionButton[0].setIsLockable(isSet);
                 _throttleFrame.setFunctionLock(functionName, isSet);
                 return;

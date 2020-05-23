@@ -659,6 +659,8 @@ public class SplitVariableValue extends VariableValue
 
     /**
      * Assigns a priority value to a given state.
+     * @param state State to be converted to a priority value
+     * @return Priority value from state, with UNKNOWN numerically highest
      */
     @SuppressFBWarnings(value = {"SF_SWITCH_NO_DEFAULT", "SF_SWITCH_FALLTHROUGH"}, justification = "Intentional fallthrough to produce correct value")
     int priorityValue(int state) {

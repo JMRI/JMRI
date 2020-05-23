@@ -267,6 +267,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
     /**
      * Package protected method to retrieve the stream port controller
      * associated with this tunnel.
+     * @return PortController for this connection
      */
     jmri.jmrix.loconet.streamport.LnStreamPortController getStreamPortController() {
        return lsc;
@@ -275,6 +276,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
     /**
      * Package protected method to set the stream port controller
      * associated with this tunnel.
+     * @param x PortController for this connection
      */
     void setStreamPortController(LnStreamPortController x){
         lsc = x;

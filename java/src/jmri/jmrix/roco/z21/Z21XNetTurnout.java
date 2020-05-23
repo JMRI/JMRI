@@ -80,6 +80,7 @@ public class Z21XNetTurnout extends XNetTurnout {
      * a feedback message at initialization without changing the state of the
      * turnout with respect to whether or not a feedback request was sent.
      * This is used only when the turnout is created by on layout feedback.
+     * @param l Init message
      */
     synchronized void initMessageZ21(XNetReply l) {
         int oldState = internalState;

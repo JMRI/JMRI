@@ -681,7 +681,8 @@ public class LocoIOData extends PropertyChangeSupport
     }
 
     /**
-     * Internal routine to handle timer starts and restarts.
+     * Internal routine to handle timer starts and restarts.    
+     * @param delay Milliseconds to wait
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
@@ -700,7 +701,9 @@ public class LocoIOData extends PropertyChangeSupport
 
     /**
      * Read an SV from a given LocoIO device.
-     *
+     * @param locoIOAddress primary board address
+     * @param locoIOSubAddress subaddress within board
+     * @param cv CV number to access
      */
     void sendReadCommand(int locoIOAddress, int locoIOSubAddress, int cv) {
         // remember current op is read
@@ -714,7 +717,10 @@ public class LocoIOData extends PropertyChangeSupport
 
     /**
      * Write an SV to a given LocoIO device.
-     *
+     * @param locoIOAddress primary board address
+     * @param locoIOSubAddress subaddress within board
+     * @param cv CV number to access
+     * @param data value to be written
      */
     void sendWriteCommand(int locoIOAddress, int locoIOSubAddress, int cv, int data) {
         // remember current op is write
