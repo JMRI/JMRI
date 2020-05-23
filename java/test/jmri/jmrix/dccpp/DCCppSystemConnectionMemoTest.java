@@ -27,6 +27,8 @@ public class DCCppSystemConnectionMemoTest extends SystemConnectionMemoTestBase<
 
     @Test
     public void testDCCppTrafficControllerSetCtor() {
+        // cleanup traffic controller from setup
+        scm.getDCCppTrafficController().terminateThreads();
         // infrastructure objects
         DCCppTrafficController tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
 

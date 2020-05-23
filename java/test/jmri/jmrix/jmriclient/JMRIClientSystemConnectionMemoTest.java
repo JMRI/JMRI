@@ -24,11 +24,16 @@ public class JMRIClientSystemConnectionMemoTest extends SystemConnectionMemoTest
 
     @Test
     public void testDefaultCtor() {
-        Assert.assertNotNull("Default Ctor", new JMRIClientSystemConnectionMemo());
+        JMRIClientSystemConnectionMemo memo = new JMRIClientSystemConnectionMemo();
+        Assert.assertNotNull("Default Ctor", memo);
+        memo.getJMRIClientTrafficController().terminateThreads();
+        memo.dispose();
     }
 
     @Test
     public void testSetTrafficController() {
+        // cleanup traffic controller from setup
+        scm.getJMRIClientTrafficController().terminateThreads();
         JMRIClientTrafficControlScaffold jcins = new JMRIClientTrafficControlScaffold();
         scm.setJMRIClientTrafficController(jcins);
         Assert.assertEquals("scm after set", jcins, scm.getJMRIClientTrafficController());

@@ -30,19 +30,23 @@ public class XNetSystemConnectionMemoTest extends SystemConnectionMemoTestBase<X
     public void testXNetTrafficControllerSetCtor() {
         // infrastructure objects
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
-
+        XNetSystemConnectionMemo memo = new XNetSystemConnectionMemo();
         // the default constructor does not set the traffic controller
-        Assert.assertNull(scm.getXNetTrafficController());
+        Assert.assertNull(memo.getXNetTrafficController());
         // so we need to do this ourselves.
-        scm.setXNetTrafficController(tc);
-        Assert.assertNotNull(scm.getXNetTrafficController());
+        memo.setXNetTrafficController(tc);
+        Assert.assertNotNull(memo.getXNetTrafficController());
         // and while we're doing that, we should also set the SystemConnectionMemo
         // parameter in the traffic controller.
-        Assert.assertNotNull(scm.getXNetTrafficController().getSystemConnectionMemo());
+        Assert.assertNotNull(memo.getXNetTrafficController().getSystemConnectionMemo());
+        // cleanup traffic controller
+        memo.getXNetTrafficController().terminateThreads();
     }
 
     @Test
     public void testProivdesConsistManagerMultiMaus() {
+        // cleanup traffic controller from setup
+        scm.getXNetTrafficController().terminateThreads();
         // infrastructure objects
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation() {
             @Override
@@ -58,6 +62,8 @@ public class XNetSystemConnectionMemoTest extends SystemConnectionMemoTestBase<X
 
     @Test
     public void testProivdesCommandStaitonCompact() {
+        // cleanup traffic controller from setup
+        scm.getXNetTrafficController().terminateThreads();
         // infrastructure objects
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation() {
             @Override
