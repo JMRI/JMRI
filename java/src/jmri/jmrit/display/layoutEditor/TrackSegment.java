@@ -513,14 +513,8 @@ public class TrackSegment extends LayoutTrack {
     private static final int MAX_ARROW_LINE_WIDTH = 5;
     private static final int MAX_ARROW_LENGTH = 60;
     private static final int MAX_ARROW_GAP = 40;
-    private static final int MAX_BRIDGE_LINE_WIDTH = 5;
-    private static final int MAX_BRIDGE_APPROACH_WIDTH = 100;
-    private static final int MAX_BRIDGE_DECK_WIDTH = 80;
-    private static final int MAX_BUMPER_LINE_WIDTH = 9;
-    private static final int MAX_TUNNEL_FLOOR_WIDTH = 40;
-    private static final int MAX_TUNNEL_LINE_WIDTH = 9;
-    private static final int MAX_TUNNEL_ENTRANCE_WIDTH = 80;
     
+    private static final int MAX_BUMPER_LINE_WIDTH = 9;
 
     /**
      * {@inheritDoc}
@@ -756,55 +750,55 @@ public class TrackSegment extends LayoutTrack {
      * each time a re-draw is required.
      */
 
-    private double cX;
-
-    public double getCX() {
-        return cX;
-    }
-
-    public void setCX(double CX) {
-        cX = CX;
-    }
-
-    private double cY;
-
-    public double getCY() {
-        return cY;
-    }
-
-    public void setCY(double CY) {
-        cY = CY;
-    }
-
-    private double cW;
-
-    public double getCW() {
-        return cW;
-    }
-
-    public void setCW(double CW) {
-        cW = CW;
-    }
-
-    private double cH;
-
-    public double getCH() {
-        return cH;
-    }
-
-    public void setCH(double CH) {
-        cH = CH;
-    }
-
-    private double startAdj;
-
-    public double getStartAdj() {
-        return startAdj;
-    }
-
-    public void setStartAdj(double startAdj) {
-        this.startAdj = startAdj;
-    }
+//     private double cX;
+// 
+//     public double getCX() {
+//         return cX;
+//     }
+// 
+//     public void setCX(double CX) {
+//         cX = CX;
+//     }
+// 
+//     private double cY;
+// 
+//     public double getCY() {
+//         return cY;
+//     }
+// 
+//     public void setCY(double CY) {
+//         cY = CY;
+//     }
+// 
+//     private double cW;
+// 
+//     public double getCW() {
+//         return cW;
+//     }
+// 
+//     public void setCW(double CW) {
+//         cW = CW;
+//     }
+// 
+//     private double cH;
+// 
+//     public double getCH() {
+//         return cH;
+//     }
+// 
+//     public void setCH(double CH) {
+//         cH = CH;
+//     }
+// 
+//     private double startAdj;
+// 
+//     public double getStartAdj() {
+//         return startAdj;
+//     }
+// 
+//     public void setStartAdj(double startAdj) {
+//         this.startAdj = startAdj;
+//     }
 
     // this is the center of the track segment (it is "on" the track segment)
     public double getCentreSegX() {

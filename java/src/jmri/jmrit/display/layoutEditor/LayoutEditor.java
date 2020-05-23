@@ -3263,7 +3263,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Nonnull
     public Point2D getCoords(@Nonnull LayoutTrack trk, HitPointType connectionType) {
         assert trk != null;
-        assert trk instanceof LayoutTrack;
         
         return getCoords(getLayoutTrackView(trk), connectionType);
     }
@@ -3279,7 +3278,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Nonnull
     public Point2D getCoords(@Nonnull LayoutTrackView trkv, HitPointType connectionType) {
         assert trkv != null;
-        assert trkv instanceof LayoutTrackView;
         
         return trkv.getCoordsForConnectionType(connectionType);
     }

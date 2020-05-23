@@ -836,7 +836,6 @@ public class LayoutTurntableView extends LayoutTrackView {
         
         // persistant instance variables
         private double rayAngle = 0.0;
-        private int connectionIndex = -1;
 
        /**
          * Get the angle for this ray.
