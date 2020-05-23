@@ -26,7 +26,9 @@ public class SprogCbusMenu extends JMenu {
 
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
         
-        panelItems = createPanelItems(memo);
+        if (memo != null) {
+            panelItems = createPanelItems(memo);
+        }
         
         for (Item item : panelItems) {
             if (item == null) {
