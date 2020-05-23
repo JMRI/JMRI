@@ -17,9 +17,9 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Andrew Crosland 2019
  */
-public class CanisbSerialDriverAdapter extends GcSerialDriverAdapter {
+public class CanSprogSerialDriverAdapter extends GcSerialDriverAdapter {
 
-    public CanisbSerialDriverAdapter() {
+    public CanSprogSerialDriverAdapter() {
         super();
         option2Name = "CANID";
         options.put(option2Name, new Option(Bundle.getMessage("JMRICANID"), new String[]{"127", "126", "125", "124", "123", "122", "121", "120"}));
@@ -77,6 +77,6 @@ public class CanisbSerialDriverAdapter extends GcSerialDriverAdapter {
         return 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CanisbSerialDriverAdapter.class);
+    private final static Logger log = LoggerFactory.getLogger(CanSprogSerialDriverAdapter.class);
 
 }
