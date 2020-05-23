@@ -38,7 +38,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
      * @param control sets _control flag which NEEDS CLARIFICATION.
      */
     public EcosDccThrottle(DccLocoAddress address, EcosSystemConnectionMemo memo, boolean control) {
-        super(memo);
+        super(memo,32);
         super.speedStepMode = SpeedStepMode.NMRA_DCC_128;
         p = memo.getPreferenceManager();
         tc = memo.getTrafficController();
@@ -47,8 +47,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
         this.speedSetting = 0;
         // Functions 0-31 default to false
-        FUNCTION_BOOLEAN_ARRAY = new boolean[32];
-
         this.address = address;
         this.isForward = true;
         this._control = control;

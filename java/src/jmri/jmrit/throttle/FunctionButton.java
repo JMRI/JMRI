@@ -9,8 +9,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
+import jmri.Throttle;
 import jmri.util.FileUtil;
 import jmri.util.swing.ResizableImagePanel;
 import jmri.util.swing.ToggleOrPressButtonModel;
@@ -46,6 +48,7 @@ public class FunctionButton extends JToggleButton {
     private String iconPath;
     private String selectedIconPath;
     private ToggleOrPressButtonModel _model;
+    private Throttle _throttle;
 
     final static int BUT_HGHT;
     final static int BUT_WDTH;
@@ -107,7 +110,7 @@ public class FunctionButton extends JToggleButton {
     /**
      * Set the function number this button will operate.
      *
-     * @param id An integer from 0 to 28.
+     * @param id An integer, minimum 0.
      */
     public void setIdentity(int id) {
         this.identity = id;
@@ -116,7 +119,7 @@ public class FunctionButton extends JToggleButton {
     /**
      * Get the function number this button operates.
      *
-     * @return An integer from 0 to 28.
+     * @return An integer, minimum 0.
      */
     public int getIdentity() {
         return identity;
@@ -571,6 +574,23 @@ public class FunctionButton extends JToggleButton {
      */
     public boolean isSelectedImageOK() {
         return isSelectedImageOK;
+    }
+    
+    /** 
+     * Set Throttle.
+     * @param throttle the throttle that this button is associated with.
+     */
+    protected void setThrottle( Throttle throttle) {
+        _throttle = throttle;
+    }
+    
+    /**
+     * Get Throttle for this button.
+     * @return throttle associated with this button.  May be null if no throttle currently associated.
+     */
+    @CheckForNull
+    protected Throttle getThrottle() {
+        return _throttle;
     }
 
     private final static Logger log = LoggerFactory.getLogger(FunctionButton.class);
