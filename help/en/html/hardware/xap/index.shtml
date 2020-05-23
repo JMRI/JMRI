@@ -61,7 +61,7 @@ like via the usual tables if desired. <a name="tools" id="tools">
       <h2>JMRI Tools</h2>
 
       <p>JMRI's support for xAP started with a simple <a href=
-      "http://jmri.org/jython/jython/xAPadapter.py">xAPadapter.py
+      "https://jmri.org/jython/jython/xAPadapter.py">xAPadapter.py
       script</a> available in JMRI 2.9.5 and later releases.
       Eventually, a full set of JMRI xAP tools will be available
       directly within the JMRI tool set. <a name="documentation"

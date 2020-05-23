@@ -114,7 +114,7 @@
       be dropped at the bottom of the JMRI main Window you can add
       some fast launchers for specific JMRI applications,
       particularly <a href=
-      "http://jmri.org/jython/Jynstruments/Launchers/Throttles.jyn/">
+      "https://jmri.org/jython/Jynstruments/Launchers/Throttles.jyn/">
       loading the default throttle layout button</a>.<br />
       <span style="font-style: italic;">Note: It is not possible to
       save customizations of steps 5) and 6) at the moment.</span> 
