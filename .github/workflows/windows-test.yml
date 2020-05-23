@@ -3,11 +3,11 @@
 
 name: Windows CI Tests
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [ push, pull_request ]
+#  push:
+#    branches: [ master ]
+#  pull_request:
+#    branches: [ master ]
 
 jobs:
   build:
@@ -29,4 +29,4 @@ jobs:
     - name: Test with Maven
       run: |
         # run all tests using maven
-        mvn test
+        mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"

@@ -28,7 +28,7 @@ public class SimpleVisitor extends JmriServerParserDefaultVisitor {
                try{
                   ((jmri.jmris.simpleserver.SimplePowerServer)
                    data).sendStatus(InstanceManager.getDefault(jmri.PowerManager.class).getPower());
-               } catch(java.io.IOException | jmri.JmriException je){
+               } catch(java.io.IOException je){
                    log.error("Error sending Power status to client {}",je);
                }
         }else{

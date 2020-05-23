@@ -131,6 +131,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
     /**
      * Send output bytes, e.g. characters controlling operation, with small
      * delays between the characters. This is used to reduce overrrun problems.
+     * @param bytes Array of characters to be sent one at a time
      */
     synchronized void sendBytes(byte[] bytes) {
         try {
@@ -353,6 +354,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
     /**
      * Handle the message which lists the receiver numbers. Just makes an array
      * of those, which is not actually used.
+     * @param s Input line
      */
     void setReceivers(String s) {
         try {
@@ -386,6 +388,9 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
 
     /**
      * Convert input line to Reading object.
+     * @param s The line of input
+     * @return A Reading object with content parsed from the input line
+     * @throws IOException from underlying I/O
      */
     Reading makeReading(String s) throws IOException {
         if (first) {

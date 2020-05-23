@@ -308,7 +308,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
     /**
      * Create a well-formed message from a String. String is expected to be space
      * seperated hex bytes or CbusAddress, e.g.: 12 34 56 or +n4e1
-     *
+     * @param s Input information
      * @return The packet, with contents filled-in
      */
     CanMessage createPacket(String s) {

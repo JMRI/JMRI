@@ -1,5 +1,6 @@
 package jmri;
 
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.DefaultPowerManager;
 
 /**
@@ -20,8 +21,7 @@ import jmri.managers.DefaultPowerManager;
  */
 public class PowerManagerScaffold extends DefaultPowerManager {
 
-    @Override
-    public String getUserName() {
-        return "test";
+    public PowerManagerScaffold() {
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 }

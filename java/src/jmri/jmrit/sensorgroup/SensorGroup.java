@@ -33,6 +33,7 @@ public class SensorGroup {
 
     /**
      * Create one, looking up an existing one if present
+     * @param name Name of the group
      */
     SensorGroup(String name) {
         this.name = name;

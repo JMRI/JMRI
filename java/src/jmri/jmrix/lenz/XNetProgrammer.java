@@ -548,6 +548,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
     /**
      * Internal method to notify of the final result
+     * @param value Value returned
+     * @param status Status of operation
      */
     protected void notifyProgListenerEnd(int value, int status) {
         log.debug("notifyProgListenerEnd value {} status {}.",value,status);
