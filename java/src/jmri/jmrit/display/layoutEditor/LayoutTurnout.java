@@ -127,9 +127,6 @@ import org.slf4j.*;
  */
 abstract public class LayoutTurnout extends LayoutTrack {
 
-//    protected LayoutTurnout(@Nonnull String id,
-//            @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor, TurnoutType t) {
-//        super(id, c, layoutEditor);
     protected LayoutTurnout(@Nonnull String id,
             @Nonnull LayoutEditor layoutEditor, TurnoutType t) {
         super(id, layoutEditor);
@@ -138,21 +135,11 @@ abstract public class LayoutTurnout extends LayoutTrack {
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor(layoutEditor);
     }
 
-//     protected LayoutTurnout(@Nonnull String id,
-//             @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
-//         this(id, c, layoutEditor, TurnoutType.NONE);
-//     }
     protected LayoutTurnout(@Nonnull String id,
             @Nonnull LayoutEditor layoutEditor) {
         this(id, layoutEditor, TurnoutType.NONE);
     }
 
-//     public LayoutTurnout(@Nonnull String id, TurnoutType t,
-//             @Nonnull Point2D c, double rot,
-//             double xFactor, double yFactor,
-//             @Nonnull LayoutEditor layoutEditor) {
-//         this(id, t, c, rot, xFactor, yFactor, layoutEditor, 1);
-//     }
     public LayoutTurnout(@Nonnull String id, TurnoutType t,
             @Nonnull LayoutEditor layoutEditor) {
         this(id, t, layoutEditor, 1);
@@ -169,9 +156,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
      * @param layoutEditor main layout editor.
      * @param v version.
      */
-//     public LayoutTurnout(@Nonnull String id, TurnoutType t, @Nonnull Point2D c, double rot,
-//             double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
-//         super(id, c, layoutEditor);
     public LayoutTurnout(@Nonnull String id, TurnoutType t, 
             @Nonnull LayoutEditor layoutEditor, 
             int v) {
@@ -305,14 +289,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return hasEnteringDoubleTrack(getTurnoutType());
     }
 
-    // defined constants - link types
-    // public static final int NO_LINK = 0;
-    // public static final int FIRST_3_WAY = 1;       // this turnout is the first turnout of a 3-way
-    // turnout pair (closest to the throat)
-    // public static final int SECOND_3_WAY = 2;      // this turnout is the second turnout of a 3-way
-    // turnout pair (furthest from the throat)
-    // public static final int THROAT_TO_THROAT = 3;  // this turnout is one of two throat-to-throat
-    // turnouts - no signals at throat
     public enum LinkType {
         NO_LINK,
         FIRST_3_WAY, // this turnout is the first turnout of a 3-way
@@ -402,13 +378,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     public boolean disabled = false;
     public boolean disableWhenOccupied = false;
-
-//     public Point2D dispB = new Point2D.Double(20.0, 0.0);
-//     public Point2D dispA = new Point2D.Double(20.0, 10.0);
-//     public Point2D pointA = new Point2D.Double(0, 0);
-//     public Point2D pointB = new Point2D.Double(40, 0);
-//     public Point2D pointC = new Point2D.Double(60, 20);
-//     public Point2D pointD = new Point2D.Double(20, 20);
 
     private int version = 1;
 

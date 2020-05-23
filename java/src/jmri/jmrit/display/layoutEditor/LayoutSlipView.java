@@ -53,7 +53,6 @@ public class LayoutSlipView extends LayoutTurnoutView {
     public int currentState = UNKNOWN;
 
     private String turnoutBName = "";
-    private NamedBeanHandle<Turnout> namedTurnoutB = null;
 
     private java.beans.PropertyChangeListener mTurnoutListener = null;
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutSlipEditor editor;
