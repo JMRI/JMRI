@@ -293,6 +293,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor editor;
 
     final private LayoutTurnout turnout;
+    
     public final LayoutTurnout getLayoutTurnout() { return turnout; }  // getTurnout() gets the real Turnout in the LayoutTurnout
 
     /**
@@ -480,67 +481,6 @@ public class LayoutTurnoutView extends LayoutTrackView {
      */
     public ArrayList<String> getBeanReferences(String pointName) {
         throw new IllegalArgumentException("should be called on LayoutTurnout");
-//         ArrayList<String> references = new ArrayList<>();
-//         if (pointName.equals("A") || pointName.equals("All")) {  // NOI18N
-//             if (!getSignalAMastName().isEmpty()) {
-//                 references.add(getSignalAMastName());
-//             }
-//             if (!getSensorAName().isEmpty()) {
-//                 references.add(getSensorAName());
-//             }
-//             if (!getSignalA1Name().isEmpty()) {
-//                 references.add(getSignalA1Name());
-//             }
-//             if (!getSignalA2Name().isEmpty()) {
-//                 references.add(getSignalA2Name());
-//             }
-//             if (!getSignalA3Name().isEmpty()) {
-//                 references.add(getSignalA3Name());
-//             }
-//         }
-//         if (pointName.equals("B") || pointName.equals("All")) {  // NOI18N
-//             if (!getSignalBMastName().isEmpty()) {
-//                 references.add(getSignalBMastName());
-//             }
-//             if (!getSensorBName().isEmpty()) {
-//                 references.add(getSensorBName());
-//             }
-//             if (!getSignalB1Name().isEmpty()) {
-//                 references.add(getSignalB1Name());
-//             }
-//             if (!getSignalB2Name().isEmpty()) {
-//                 references.add(getSignalB2Name());
-//             }
-//         }
-//         if (pointName.equals("C") || pointName.equals("All")) {  // NOI18N
-//             if (!getSignalCMastName().isEmpty()) {
-//                 references.add(getSignalCMastName());
-//             }
-//             if (!getSensorCName().isEmpty()) {
-//                 references.add(getSensorCName());
-//             }
-//             if (!getSignalC1Name().isEmpty()) {
-//                 references.add(getSignalC1Name());
-//             }
-//             if (!getSignalC2Name().isEmpty()) {
-//                 references.add(getSignalC2Name());
-//             }
-//         }
-//         if (pointName.equals("D") || pointName.equals("All")) {  // NOI18N
-//             if (!getSignalDMastName().isEmpty()) {
-//                 references.add(getSignalDMastName());
-//             }
-//             if (!getSensorDName().isEmpty()) {
-//                 references.add(getSensorDName());
-//             }
-//             if (!getSignalD1Name().isEmpty()) {
-//                 references.add(getSignalD1Name());
-//             }
-//             if (!getSignalD2Name().isEmpty()) {
-//                 references.add(getSignalD2Name());
-//             }
-//         }
-//         return references;
     }
 
     @Nonnull
@@ -973,7 +913,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
     }
 
     public void setLayoutBlockD(LayoutBlock newLayoutBlock) {
-        turnout.setLayoutBlockC(newLayoutBlock);
+        turnout.setLayoutBlockD(newLayoutBlock);
     }
 
     public void setLayoutBlockByName(@Nonnull String name) {

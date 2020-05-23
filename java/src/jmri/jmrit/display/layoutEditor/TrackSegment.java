@@ -1026,16 +1026,6 @@ public class TrackSegment extends LayoutTrack {
         return getCentre();
     }
 
-    /**
-     * set center coordinates
-     *
-     * @param p the coordinates to set
-     */
-//     public void setCoordsCenterCircle(Point2D p) {
-//         centreX = p.getX();
-//         centreY = p.getY();
-//     }
-
     private double chordLength;
 
     public double getChordLength() {
@@ -1058,83 +1048,6 @@ public class TrackSegment extends LayoutTrack {
             );
         layoutEditor.getTrackSegmentView(this).reCalculateTrackSegmentAngle(x, y);
     }
-
-    /**
-     * Calculate the initial parameters for drawing a circular track segment.
-     */
-//     protected void calculateTrackSegmentAngle() {
-//         Point2D pt1, pt2;
-//         if (isFlip()) {
-//             pt1 = layoutEditor.getCoords(getConnect2(), getType2());
-//             pt2 = layoutEditor.getCoords(getConnect1(), getType1());
-//         } else {
-//             pt1 = layoutEditor.getCoords(getConnect1(), getType1());
-//             pt2 = layoutEditor.getCoords(getConnect2(), getType2());
-//         }
-//         if ((getTmpPt1() != pt1) || (getTmpPt2() != pt2) || trackNeedsRedraw()) {
-//             setTmpPt1(pt1);
-//             setTmpPt2(pt2);
-// 
-//             double pt1x = pt1.getX();
-//             double pt1y = pt1.getY();
-//             double pt2x = pt2.getX();
-//             double pt2y = pt2.getY();
-// 
-//             if (getAngle() == 0.0D) {
-//                 setTmpAngle(90.0D);
-//             } else {
-//                 setTmpAngle(getAngle());
-//             }
-//             // Convert angle to radiants in order to speed up math
-//             double halfAngleRAD = Math.toRadians(getTmpAngle()) / 2.D;
-// 
-//             // Compute arc's chord
-//             double a = pt2x - pt1x;
-//             double o = pt2y - pt1y;
-//             double chord = Math.hypot(a, o);
-//             setChordLength(chord);
-// 
-//             // Make sure chord is not null
-//             // In such a case (ep1 == ep2), there is no arc to draw
-//             if (chord > 0.D) {
-//                 double radius = (chord / 2.D) / Math.sin(halfAngleRAD);
-//                 // Circle
-//                 double startRad = Math.atan2(a, o) - halfAngleRAD;
-//                 setStartAdj(Math.toDegrees(startRad));
-//                 if (isCircle()) {
-//                     // Circle - Compute center
-//                     setCentreX(pt2x - Math.cos(startRad) * radius);
-//                     setCentreY(pt2y + Math.sin(startRad) * radius);
-// 
-//                     // Circle - Compute rectangle required by Arc2D.Double
-//                     setCW(radius * 2.0D);
-//                     setCH(radius * 2.0D);
-//                     setCX(getCentreX() - radius);
-//                     setCY(getCentreY() - radius);
-// 
-//                     // Compute where to locate the control circle on the circle segment
-//                     Point2D offset = new Point2D.Double(
-//                             +radius * Math.cos(startRad + halfAngleRAD),
-//                             -radius * Math.sin(startRad + halfAngleRAD));
-//                     setCentreSeg(MathUtil.add(getCentre(), offset));
-//                 } else {
-//                     // Ellipse - Round start angle to the closest multiple of 90
-//                     setStartAdj(Math.round(getStartAdj() / 90.0D) * 90.0D);
-//                     // Ellipse - Compute rectangle required by Arc2D.Double
-//                     setCW(Math.abs(a) * 2.0D);
-//                     setCH(Math.abs(o) * 2.0D);
-//                     // Ellipse - Adjust rectangle corner, depending on quadrant
-//                     if (o * a < 0.0D) {
-//                         a = -a;
-//                     } else {
-//                         o = -o;
-//                     }
-//                     setCX(Math.min(pt1x, pt2x) - Math.max(a, 0.0D));
-//                     setCY(Math.min(pt1y, pt2y) - Math.max(o, 0.0D));
-//                 }
-//             }
-//         }
-//     }   // calculateTrackSegmentAngle
 
 
     /**

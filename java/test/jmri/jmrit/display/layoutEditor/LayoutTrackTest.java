@@ -26,17 +26,12 @@ public class LayoutTrackTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
-        if (!GraphicsEnvironment.isHeadless()) {
-            le = new LayoutEditor();
-        }
+        
+        le = new LayoutEditor();
     }
     
     @After
     public void tearDown() {
-        if (le != null) {
-            JUnitUtil.dispose(le);
-        }
         le = null;
         JUnitUtil.tearDown();
     }

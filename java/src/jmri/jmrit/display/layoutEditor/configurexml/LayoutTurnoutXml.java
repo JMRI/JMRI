@@ -52,18 +52,23 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         Point2D coords = p.getCoordsCenter();
         element.setAttribute("xcen", "" + coords.getX());
         element.setAttribute("ycen", "" + coords.getY());
+        
         coords = p.getCoordsA();
         element.setAttribute("xa", "" + coords.getX());
         element.setAttribute("ya", "" + coords.getY());
+        
         coords = p.getCoordsB();
         element.setAttribute("xb", "" + coords.getX());
         element.setAttribute("yb", "" + coords.getY());
+        
         coords = p.getCoordsC();
         element.setAttribute("xc", "" + coords.getX());
         element.setAttribute("yc", "" + coords.getY());
+        
         coords = p.getCoordsD();
         element.setAttribute("xd", "" + coords.getX());
         element.setAttribute("yd", "" + coords.getY());
+        
         element.setAttribute("ver", "" + p.getVersion());
         element.setAttribute("class", getClass().getName());
 

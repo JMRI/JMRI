@@ -11,7 +11,7 @@ import jmri.*;
 import jmri.util.*;
 
 /**
- * MVC View component for the LayoutTrack hierarchy.
+ * MVC View component abstract base for the LayoutTrack hierarchy.
  * <p>
  * This contains the display information, including screen geometry, for a LayoutEditor panel.
  * The geometry/connectivity information is held in {@link LayoutTrack} subclasses.
@@ -22,10 +22,6 @@ import jmri.util.*;
  *   <li>Flipped status; drawing details like bezier curve points
  *   <li>Various decorations: arrows, tunnels, bridges
  *   <li>Hidden status
- *   <li>
- *   <li>
- *   <li>
- *   <li>
  * </ul>
  *
  * @author Bob Jacobsen  Copyright (c) 2020

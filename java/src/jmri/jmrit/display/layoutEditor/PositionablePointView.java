@@ -1841,69 +1841,71 @@ public class PositionablePointView extends LayoutTrackView {
      */
     @Override
     protected List<LayoutConnectivity> getLayoutConnectivity() {
-        List<LayoutConnectivity> results = new ArrayList<>();
-        LayoutConnectivity lc = null;
-        LayoutBlock blk1 = null, blk2 = null;
-        TrackSegment ts1 = getConnect1();
-        Point2D p1, p2;
-
-        if (getType() == PointType.ANCHOR) {
-            TrackSegment ts2 = getConnect2();
-            if ((ts1 != null) && (ts2 != null)) {
-                blk1 = ts1.getLayoutBlock();
-                blk2 = ts2.getLayoutBlock();
-                if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
-                    // this is a block boundary, create a LayoutConnectivity
-                    log.debug("Block boundary (''{}''<->''{}'') found at {}", blk1, blk2, this);
-                    lc = new LayoutConnectivity(blk1, blk2);
-                    // determine direction from block 1 to block 2
-                    if (ts1.getConnect1() == positionablePoint) {
-                        p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
-                    } else {
-                        p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
-                    }
-                    if (ts2.getConnect1() == positionablePoint) {
-                        p2 = layoutEditor.getCoords(ts2.getConnect2(), ts2.getType2());
-                    } else {
-                        p2 = layoutEditor.getCoords(ts2.getConnect1(), ts2.getType1());
-                    }
-                    lc.setDirection(Path.computeDirection(p1, p2));
-                    // save Connections
-                    lc.setConnections(ts1, ts2, HitPointType.TRACK, positionablePoint);
-                    results.add(lc);
-                }
-            }
-        } else if (getType() == PointType.EDGE_CONNECTOR) {
-            TrackSegment ts2 = null;
-            if (getLinkedPoint() != null) {
-                ts2 = getLinkedPoint().getConnect1();
-            }
-            if ((ts1 != null) && (ts2 != null)) {
-                blk1 = ts1.getLayoutBlock();
-                blk2 = ts2.getLayoutBlock();
-                if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
-                    // this is a block boundary, create a LayoutConnectivity
-                    log.debug("Block boundary (''{}''<->''{}'') found at {}", blk1, blk2, this);
-                    lc = new LayoutConnectivity(blk1, blk2);
-
-                    // determine direction from block 1 to block 2
-                    if (ts1.getConnect1() == positionablePoint) {
-                        p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
-                    } else {
-                        p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
-                    }
-
-                    //Need to find a way to compute the direction for this for a split over the panel
-                    //In this instance work out the direction of the first track relative to the positionable poin.
-                    lc.setDirection(Path.computeDirection(p1, getCoordsCenter()));
-                    // save Connections
-                    lc.setConnections(ts1, ts2, HitPointType.TRACK, positionablePoint);
-                    results.add(lc);
-                }
-            }
-        }
-        return results;
-    }   // getLayoutConnectivity()
+        return positionablePoint.getLayoutConnectivity();
+    }
+//         List<LayoutConnectivity> results = new ArrayList<>();
+//         LayoutConnectivity lc = null;
+//         LayoutBlock blk1 = null, blk2 = null;
+//         TrackSegment ts1 = getConnect1();
+//         Point2D p1, p2;
+// 
+//         if (getType() == PointType.ANCHOR) {
+//             TrackSegment ts2 = getConnect2();
+//             if ((ts1 != null) && (ts2 != null)) {
+//                 blk1 = ts1.getLayoutBlock();
+//                 blk2 = ts2.getLayoutBlock();
+//                 if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
+//                     // this is a block boundary, create a LayoutConnectivity
+//                     log.debug("Block boundary (''{}''<->''{}'') found at {}", blk1, blk2, this);
+//                     lc = new LayoutConnectivity(blk1, blk2);
+//                     // determine direction from block 1 to block 2
+//                     if (ts1.getConnect1() == positionablePoint) {
+//                         p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
+//                     } else {
+//                         p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
+//                     }
+//                     if (ts2.getConnect1() == positionablePoint) {
+//                         p2 = layoutEditor.getCoords(ts2.getConnect2(), ts2.getType2());
+//                     } else {
+//                         p2 = layoutEditor.getCoords(ts2.getConnect1(), ts2.getType1());
+//                     }
+//                     lc.setDirection(Path.computeDirection(p1, p2));
+//                     // save Connections
+//                     lc.setConnections(ts1, ts2, HitPointType.TRACK, positionablePoint);
+//                     results.add(lc);
+//                 }
+//             }
+//         } else if (getType() == PointType.EDGE_CONNECTOR) {
+//             TrackSegment ts2 = null;
+//             if (getLinkedPoint() != null) {
+//                 ts2 = getLinkedPoint().getConnect1();
+//             }
+//             if ((ts1 != null) && (ts2 != null)) {
+//                 blk1 = ts1.getLayoutBlock();
+//                 blk2 = ts2.getLayoutBlock();
+//                 if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
+//                     // this is a block boundary, create a LayoutConnectivity
+//                     log.debug("Block boundary (''{}''<->''{}'') found at {}", blk1, blk2, this);
+//                     lc = new LayoutConnectivity(blk1, blk2);
+// 
+//                     // determine direction from block 1 to block 2
+//                     if (ts1.getConnect1() == positionablePoint) {
+//                         p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
+//                     } else {
+//                         p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
+//                     }
+// 
+//                     //Need to find a way to compute the direction for this for a split over the panel
+//                     //In this instance work out the direction of the first track relative to the positionable poin.
+//                     lc.setDirection(Path.computeDirection(p1, getCoordsCenter()));
+//                     // save Connections
+//                     lc.setConnections(ts1, ts2, HitPointType.TRACK, positionablePoint);
+//                     results.add(lc);
+//                 }
+//             }
+//         }
+//         return results;
+//     }   // getLayoutConnectivity()
 
     /**
      * {@inheritDoc}

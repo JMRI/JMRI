@@ -1775,6 +1775,10 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+     //
+     // This uses a getCoords() call, and having that at this level
+     // has to be temporary
+     //
     @Override
     protected List<LayoutConnectivity> getLayoutConnectivity() {
         List<LayoutConnectivity> results = new ArrayList<>();

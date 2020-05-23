@@ -62,7 +62,7 @@ import jmri.util.swing.*;
  * @author Dave Duchamp Copyright: (c) 2004-2007
  * @author George Warner Copyright: (c) 2017-2019
  */
-final public class LayoutEditor extends PanelEditor implements MouseWheelListener {
+final public class LayoutEditor extends PanelEditor implements MouseWheelListener, LayoutModels {
 
 
     // Operational instance variables - not saved to disk
@@ -2751,7 +2751,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
-     * Check the dirty state
+     * Check the dirty state.
      *
      * @return true if panel has changed
      */
@@ -3247,7 +3247,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
-     * Get the coordinates for the connection type of the specified LayoutTrack.
+     * Get the coordinates for the connection type of the specified LayoutTrack
+     * or subtype.
      * <p>
      * This uses the current LayoutEditor object to map
      * a LayoutTrack (no coordinates) object to _a_ specific
@@ -3264,7 +3265,23 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         assert trk != null;
         assert trk instanceof LayoutTrack;
         
-        return getLayoutTrackView(trk).getCoordsForConnectionType(connectionType);
+        return getCoords(getLayoutTrackView(trk), connectionType);
+    }
+
+    /**
+     * Get the coordinates for the connection type of the specified LayoutTrackView
+     * or subtype.
+     *
+     * @param layoutTrack    the object (Layout track subclass)
+     * @param connectionType the type of connection
+     * @return the coordinates for the connection type of the specified object
+     */
+    @Nonnull
+    public Point2D getCoords(@Nonnull LayoutTrackView trkv, HitPointType connectionType) {
+        assert trkv != null;
+        assert trkv instanceof LayoutTrackView;
+        
+        return trkv.getCoordsForConnectionType(connectionType);
     }
 
     @Override
@@ -7566,14 +7583,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     return getLayoutTracksOfClass(PositionablePoint);
     }
      */
-    private @Nonnull
+    public @Nonnull
     Stream<LayoutTrack> getLayoutTracksOfClass(Class<? extends LayoutTrack> layoutTrackClass) {
         return getLayoutTracks().stream()
                 .filter(layoutTrackClass::isInstance)
                 .map(layoutTrackClass::cast);
     }
 
-    private @Nonnull
+    public @Nonnull
     Stream<LayoutTrackView> getLayoutTrackViewsOfClass(Class<? extends LayoutTrackView> layoutTrackViewClass) {
         return getLayoutTrackViews().stream()
                 .filter(layoutTrackViewClass::isInstance)
@@ -7591,6 +7608,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     List<PositionablePoint> getPositionablePoints() {
         return getLayoutTracksOfClass(PositionablePoint.class)
                 .map(PositionablePoint.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public @Nonnull
+    List<LayoutSlipView> getLayoutSlipViews() {
+        return getLayoutTrackViewsOfClass(LayoutSlipView.class)
+                .map(LayoutSlipView.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -7616,7 +7640,15 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     public @Nonnull
-    List<LayoutTurnout> getLayoutTurnouts() {
+    List<LayoutTurnoutView> getLayoutTurnoutViews() { // this specifically does not include slips
+        return getLayoutTrackViews().stream() // next line excludes LayoutSlips
+                .filter((o) -> (!(o instanceof LayoutSlipView) && (o instanceof LayoutTurnoutView)))
+                .map(LayoutTurnoutView.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public @Nonnull
+    List<LayoutTurnout> getLayoutTurnouts() { // this specifically does not include slips
         return getLayoutTracks().stream() // next line excludes LayoutSlips
                 .filter((o) -> (!(o instanceof LayoutSlip) && (o instanceof LayoutTurnout)))
                 .map(LayoutTurnout.class::cast)
@@ -7653,6 +7685,22 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Nonnull
     final public List<LayoutTrack> getLayoutTracks() {
         return Collections.unmodifiableList(layoutTrackList);
+    }
+
+    public @Nonnull
+    List<LayoutTurnoutView> getLayoutTurnoutAndSlipViews() {
+        return getLayoutTrackViewsOfClass(LayoutTurnoutView.class
+        )
+                .map(LayoutTurnoutView.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public @Nonnull
+    List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
+        return getLayoutTracksOfClass(LayoutTurnout.class
+        )
+                .map(LayoutTurnout.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
@@ -7788,14 +7836,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
      
     public @Nonnull
-    List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
-        return getLayoutTracksOfClass(LayoutTurnout.class
-        )
-                .map(LayoutTurnout.class::cast)
-                .collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    public @Nonnull
     List<LayoutShape> getLayoutShapes() {
         return layoutShapes;
     }
@@ -7859,13 +7899,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 }
             }
         } else if (nb instanceof Turnout) {
-            for (LayoutTurnout lt : getLayoutTurnoutsAndSlips()) {
-                if (lt.getTurnout().equals(nb)) {
+            for (LayoutTurnoutView ltv : getLayoutTurnoutAndSlipViews()) {
+                if (ltv.getTurnout().equals(nb)) {
                     if (menu != Editor.VIEWPOPUPONLY) {
-                        lt.addEditPopUpMenu(item);
+                        ltv.addEditPopUpMenu(item);
                     }
                     if (menu != Editor.EDITPOPUPONLY) {
-                        lt.addViewPopUpMenu(item);
+                        ltv.addViewPopUpMenu(item);
                     }
                 }
             }

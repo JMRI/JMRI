@@ -26,8 +26,6 @@ import jmri.util.*;
  *          <li>Sensors
  *          <li>Turnout controls
  *      </ul>
- *   <li>
- *   <li>
  * </ul>
  *
  * @author Dave Duchamp Copyright (C) 2009
@@ -36,7 +34,8 @@ import jmri.util.*;
  */
 abstract public class LayoutTrack {
 
-    final protected LayoutEditor layoutEditor;
+     // final protected LayoutModels layoutEditor;  // preferred
+    final protected LayoutEditor layoutEditor; // temporarily
 
     /**
      * Constructor method.
@@ -44,7 +43,8 @@ abstract public class LayoutTrack {
      * @param c 2D point.
      * @param layoutEditor main layout editor.
      */
-    public LayoutTrack(@Nonnull String ident, @Nonnull LayoutEditor layoutEditor) {
+    // public LayoutTrack(@Nonnull String ident, @Nonnull LayoutModels layoutEditor) { // preferred
+    public LayoutTrack(@Nonnull String ident, @Nonnull LayoutEditor layoutEditor) { // temporary
         this.ident = ident;
         this.layoutEditor = layoutEditor;
     }
@@ -75,7 +75,7 @@ abstract public class LayoutTrack {
      * @return the center coordinates
      */
     final public Point2D getCoordsCenter() {
-        log.error("getCoordsCenter should have called in view instead of object (temporary)",
+        log.debug("getCoordsCenter should have called in view instead of object (temporary)",
                 jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
         return layoutEditor.getLayoutTrackView(this).getCoordsCenter();
     }
@@ -108,10 +108,10 @@ abstract public class LayoutTrack {
      *
      * @return the layout editor's toolbar panel
      */
-    @Nonnull
-    final public LayoutEditorToolBarPanel getLayoutEditorToolBarPanel() {
-        throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-    }
+//     @Nonnull
+//     final public LayoutEditorToolBarPanel getLayoutEditorToolBarPanel() {
+//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
+//     }
 
     abstract public boolean isMainline();
 
@@ -138,9 +138,9 @@ abstract public class LayoutTrack {
      *
      * @param g2 the graphics context
      */
-    final protected void drawTurnoutControls(Graphics2D g2) {
-        throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-    }
+//     final protected void drawTurnoutControls(Graphics2D g2) {
+//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
+//     }
 
     /**
      * Get the hidden state of the track element.
@@ -148,7 +148,7 @@ abstract public class LayoutTrack {
      * @return true if hidden; false otherwise
      */
     final public boolean isHidden() {
-        log.error("isHidden should have called in view instead of object (temporary)",
+        log.info("isHidden should have called in view instead of object (temporary)",
                 jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
         return layoutEditor.getLayoutTrackView(this).isHidden();
     }
@@ -192,16 +192,8 @@ abstract public class LayoutTrack {
      * @param typeKey  The object type such as Turnout, Level Crossing, etc.
      */
     final public void displayRemoveWarningDialog(List<String> itemList, String typeKey) {
-        itemList.sort(null);
-        StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel", // NOI18N
-                Bundle.getMessage("DeleteTrackItem", Bundle.getMessage(typeKey))));  // NOI18N
-        for (String item : itemList) {
-            msg.append("\n    " + item);  // NOI18N
-        }
-        javax.swing.JOptionPane.showMessageDialog(layoutEditor,
-                msg.toString(),
-                Bundle.getMessage("WarningTitle"), // NOI18N
-                javax.swing.JOptionPane.WARNING_MESSAGE);
+        log.error("displayRemoveWarningDialog should have been called in view instead of object (temporary)");
+        layoutEditor.getLayoutTrackView(this).displayRemoveWarningDialog(itemList, typeKey);
     }
 
     /**
@@ -230,10 +222,10 @@ abstract public class LayoutTrack {
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
-    final public void translateCoords(double xFactor, double yFactor) {
-        log.error("translateCoords should have been called in view instead of object (temporary)");
-        layoutEditor.getLayoutTrackView(this).translateCoords(xFactor, yFactor);
-    }
+//     final public void translateCoords(double xFactor, double yFactor) {
+//         log.error("translateCoords should have been called in view instead of object (temporary)");
+//         layoutEditor.getLayoutTrackView(this).translateCoords(xFactor, yFactor);
+//     }
 
     /**
      * rotate this LayoutTrack's coordinates by angleDEG's
@@ -262,9 +254,9 @@ abstract public class LayoutTrack {
     }
 
     // optional useRectangles & requireUnconnected parameters default to false
-    final protected HitPointType findHitPointType(@Nonnull Point2D p) {
-        throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-    }
+//     final protected HitPointType findHitPointType(@Nonnull Point2D p) {
+//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
+//     }
 
     // optional requireUnconnected parameter defaults to false
     final protected HitPointType findHitPointType(@Nonnull Point2D p, boolean useRectangles) {
@@ -278,11 +270,11 @@ abstract public class LayoutTrack {
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
-    final public Point2D getCoordsForConnectionType(HitPointType connectionType) {
-        log.error("getCoordsForConnectionType should have called in view instead of object (temporary)",
-                jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
-        return layoutEditor.getLayoutTrackView(this).getCoordsForConnectionType(connectionType);
-    }
+//     final public Point2D getCoordsForConnectionType(HitPointType connectionType) {
+//         log.error("getCoordsForConnectionType should have called in view instead of object (temporary)",
+//                 jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
+//         return layoutEditor.getLayoutTrackView(this).getCoordsForConnectionType(connectionType);
+//     }
 
     /**
      * @return the bounds of this track
@@ -311,11 +303,11 @@ abstract public class LayoutTrack {
      * @param where to show the popup
      * @return the popup menu for this layout track
      */
-    @Nonnull
-    final protected JPopupMenu showPopup(Point2D where) {
-        log.error("LayoutTrack.showPopup(P2D) should have been called through View");
-        return layoutEditor.getLayoutTrackView(this).showPopup(where);
-    }
+//     @Nonnull
+//     final protected JPopupMenu showPopup(Point2D where) {
+//         log.error("LayoutTrack.showPopup(P2D) should have been called through View");
+//         return layoutEditor.getLayoutTrackView(this).showPopup(where);
+//     }
 
     /**
      * show the popup menu for this layout track

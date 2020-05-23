@@ -796,7 +796,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         layoutBlock.setOccupancySensorName("ISOccupancy1");
         Assert.assertEquals("Occupied when sensor active", layoutBlock.getOccupancy(), LayoutBlock.OCCUPIED);
 
-        ltRH.setLayoutBlock(layoutBlock);
+        ltRHv.setLayoutBlock(layoutBlock);
 
         // occupied, occ. active disabled
         ltRH.setDisableWhenOccupied(false);

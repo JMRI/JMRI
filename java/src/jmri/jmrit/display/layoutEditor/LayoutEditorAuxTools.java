@@ -29,14 +29,14 @@ final public class LayoutEditorAuxTools {
     // constants
 
     // operational instance variables
-    final private LayoutEditor layoutEditor;
-    final private List<LayoutConnectivity> cList = new ArrayList<>(); //LayoutConnectivity list
+    final private LayoutModels models;
+    final private List<LayoutConnectivity> cList = new ArrayList<>(); // LayoutConnectivity list
     private boolean blockConnectivityChanged = false;  // true if block connectivity may have changed
     private boolean initialized = false;
 
     // constructor method
-    public LayoutEditorAuxTools(LayoutEditor thePanel) {
-        layoutEditor = thePanel;
+    public LayoutEditorAuxTools(LayoutModels theModels) {
+        models = theModels;
     }
 
     // register a change in block connectivity that may require an update of connectivity list
@@ -96,11 +96,11 @@ final public class LayoutEditorAuxTools {
         cList.clear(); 
         List<LayoutConnectivity> lcs = null;
 
-        for (LayoutTrack lt : layoutEditor.getLayoutTracks()) {
-            if ((lt instanceof PositionablePoint)
-                    || (lt instanceof TrackSegment)
-                    || (lt instanceof LayoutTurnout)) { // <== includes LayoutSlips
-                lcs = lt.getLayoutConnectivity();
+        for (LayoutTrackView ltv : models.getLayoutTrackViews()) {
+            if ((ltv instanceof PositionablePointView)    // effectively, skip LevelXing and LayoutTurntable - why?
+                    || (ltv instanceof TrackSegmentView)
+                    || (ltv instanceof LayoutTurnoutView)) { // <== includes Wye. LayoutSlips, XOvers
+                lcs = ltv.getLayoutConnectivity();
                 cList.addAll(lcs); // append to list
             }
         }
@@ -119,7 +119,7 @@ final public class LayoutEditorAuxTools {
         List<LayoutConnectivity> lcs = null;
 
         // Check for block boundaries at positionable points.
-        for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
+        for (PositionablePoint p : models.getPositionablePoints()) {
             lcs = p.getLayoutConnectivity();
             for (LayoutConnectivity lc : lcs) {
                 // add to list, if not already present
@@ -128,7 +128,7 @@ final public class LayoutEditorAuxTools {
         }
 
         // Check for block boundaries at layout turnouts and level crossings
-        for (TrackSegment ts : layoutEditor.getTrackSegments()) {
+        for (TrackSegment ts : models.getTrackSegments()) {
             lcs = ts.getLayoutConnectivity();
             for (LayoutConnectivity lc : lcs) {
                 // add to list, if not already present
@@ -137,7 +137,7 @@ final public class LayoutEditorAuxTools {
         }
 
         // check for block boundaries internal to crossover turnouts
-        for (LayoutTurnout lt : layoutEditor.getLayoutTurnouts()) {
+        for (LayoutTurnout lt : models.getLayoutTurnouts()) {
             lcs = lt.getLayoutConnectivity();
             for (LayoutConnectivity lc : lcs) {
                 // add to list, if not already present
@@ -146,7 +146,7 @@ final public class LayoutEditorAuxTools {
         }
 
         // check for block boundaries internal to slips
-        for (LayoutSlip ls : layoutEditor.getLayoutSlips()) {
+        for (LayoutSlip ls : models.getLayoutSlips()) {
             lcs = ls.getLayoutConnectivity();
             for (LayoutConnectivity lc : lcs) {
                 // add to list, if not already present
