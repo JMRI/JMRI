@@ -675,6 +675,8 @@
                     <maxmemory>512m</maxmemory>
                     <overview>${basedir}/java/src/jmri/overview.html</overview>
                     <sourcepath>${basedir}/java/src:${project.build.directory}/generated-sources/javacc:${project.build.directory}/generated-sources/jjtree</sourcepath>
+                    <!-- do not document the generated parser packages -->
+                    <excludePackageNames>*.simpleserver.parser:*.srcp.parser</excludePackageNames>
                     <show>package</show>
                     <!-- change from default 100 warnings; keep number synced with ant javadoc target -->
                     <additionalJOption>-breakiterator -Xmaxwarns 100</additionalJOption><!-- 100 is default, here so we can easily change it -->
@@ -751,7 +753,7 @@
                         <link>https://commons.apache.org/proper/commons-lang/javadocs/api-release/</link>
                         <link>https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/</link>
                         <link>https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/</link>
-                        <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link>
+                        <!-- <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link> -->
                         <link>https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/</link>
                         <link>https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/</link>
                     </links>

@@ -10,8 +10,9 @@ import jmri.jmrix.SystemConnectionMemo;
  * {@link jmri.jmrix.SystemConnectionMemo}.
  *
  * @author Randall Wood (c) 2016
+ * @param <M> the supported subclass of SystemConnectionMemo
  */
-public interface SystemConnectionAction {
+public interface SystemConnectionAction<M extends SystemConnectionMemo> {
 
     /**
      * Get the {@link jmri.jmrix.SystemConnectionMemo} this action is bound to.
@@ -19,7 +20,7 @@ public interface SystemConnectionAction {
      * @return the SystemConnectionMemo or null if not bound.
      */
     @CheckForNull
-    public SystemConnectionMemo getSystemConnectionMemo();
+    public M getSystemConnectionMemo();
 
     /**
      * Set the {@link jmri.jmrix.SystemConnectionMemo} this action is bound to.
@@ -30,7 +31,7 @@ public interface SystemConnectionAction {
      * @param memo the SystemConnectionMemo
      * @throws IllegalArgumentException if the SystemConnectionMemo is invalid
      */
-    public void setSystemConnectionMemo(@Nonnull SystemConnectionMemo memo) throws IllegalArgumentException;
+    public void setSystemConnectionMemo(@Nonnull M memo);
 
     /**
      * Get a list of {@link jmri.jmrix.SystemConnectionMemo} subclasses that the

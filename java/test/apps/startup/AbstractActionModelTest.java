@@ -15,17 +15,6 @@ import org.junit.Test;
  */
 public class AbstractActionModelTest {
     
-    public AbstractActionModelTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
