@@ -91,6 +91,12 @@ LayoutTurnout & LayoutTurnoutView setTrackSegmentBlock(..) is a bad split implem
  
 ---
 
+Started to switch to LayoutModels from LayoutEditor
+ - [ ] Change the LayoutTrack ctor and member value, then flush out needed routines to add
+ - [ ] The change the tests to no longer use LayoutEditor, hence being faster (and no longer check headless)
+ 
+---
+
 Concerned over e.g.  `getConnect2() == myTrk` as code transitions LayoutTrack -> LayoutTrackView. 
  = [ ] Change to .equals()
  - [ ] Provide an equals that will take either for now. i.e. View.equals(Trk) compares the internal track, as does Trk.equals(View)
