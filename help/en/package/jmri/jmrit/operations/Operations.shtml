@@ -2879,10 +2879,10 @@
     loads are only routed to spurs with schedules demanding the car's custom load. When the program finds a car with a
     custom load but without a final destination, it will search all spurs for a schedule that is demanding that car's
     type and load, and if found will route the car there. If all spurs are full and the option "Hold cars with custom
-    loads when spurs are full" is selected for any spur demanding that car's custom load, the program will only move the
-    car when one of the spurs can accept a new car, i.e. the spur is no longer full. If however the option "Hold cars
-    with custom loads when spurs are full" isn't selected for all of the spur/schedules demanding the car's custom load,
-    the program will attempt to move the car to another location, which can be staging.</p>
+    loads when spurs are full" is selected for any spur with an alternate track demanding that car's custom load, the
+    program will only move the car when one of the spurs can accept a new car, i.e. the spur is no longer full. If
+    however the option "Hold cars with custom loads when spurs are full" isn't selected for all of the spur/schedules
+    demanding the car's custom load, the program will attempt to move the car to another location, which can be staging.</p>
 
    <p>
     You can have the program ignore the "Hold cars with custom loads when spurs are full" feature
