@@ -8857,10 +8857,8 @@ final public class LayoutEditorTools {
         return new Point(offsetx, offsety);
     }
 
-    /**
-     * come back to this as its a bit tight to the rail on SM110 need re
-     * checking
-     */
+     // Come back to this as its a bit tight to the rail on SM110 need re
+     // checking
     Point northEastToSouthWest(Point2D p, PositionableIcon l, int oldWidth, int oldHeight, double angleDEG, boolean right, double fromPoint) {
         angleDEG = angleDEG - 180;
         if (angleDEG < 45) {
@@ -11078,6 +11076,7 @@ final public class LayoutEditorTools {
      * LayoutTurnout and LayoutSlip classes.
      *
      * @since 4.11.2
+     * @param <T>        The specific type, a subtype of LayoutTurnout
      * @param trackItem  The turnout or slip that is being modified.
      * @param newSensor  The sensor that is being added.
      * @param currSensor The sensor that might already be there, otherwise null.

@@ -355,7 +355,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Set event logging
+     * Set event logging.
+     * @param port Serial port to configure
      */
     protected void setPortEventLogging(SerialPort port) {
         // arrange to notify later

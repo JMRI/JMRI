@@ -197,7 +197,8 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
             log.error("failed to convert layoutslip center  attribute");
         }
 
-        LayoutSlip.TurnoutType type = tTypeEnumMap.inputFromAttribute(element.getAttribute("slipType"));
+        LayoutSlip.TurnoutType type =
+                tTypeEnumMap.inputFromAttribute(element.getAttribute("slipType"));
 
         // create the new LayoutSlip
         LayoutSlip l; 

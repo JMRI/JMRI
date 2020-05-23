@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.util.NamedBeanComparator;
 
+import jmri.util.startup.StartupActionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -120,6 +121,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
     
     public void setProtocol(String protocol) {
+        StartupActionFactory old = getActionFactory();
         if (null != protocol) {
             _protocol = protocol;
             switch (protocol) {
@@ -140,8 +142,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                     break;
             }
         }
-        // make sure appropriate actions in preferences
-        addToActionList();
+        firePropertyChange("actionFactory", old, getActionFactory());
     }
 
     /**

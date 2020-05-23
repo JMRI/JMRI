@@ -1,5 +1,6 @@
 package apps.startup;
 
+import jmri.util.startup.StartupModel;
 import apps.CreateButtonModel;
 import org.openide.util.lookup.ServiceProvider;
 

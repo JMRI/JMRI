@@ -52,7 +52,7 @@ public class CbusBasicNodeWithMgrsCommandStationTest {
         t.setCsNum(0); // default CS
         t.setStatResponseFlagsAccurate(true);
         
-        pwr.setPower(jmri.PowerManager.ON);
+        pwr.setPower(PowerManager.ON);
         
         t.setCsFlags(0b00000000);
         assertThat(pwr.getPower()).isEqualTo(PowerManager.OFF);

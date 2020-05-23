@@ -1466,6 +1466,7 @@ public class PositionablePoint extends LayoutTrack {
 
     /**
      * "active" means that the object is still displayed, and should be stored.
+     * @return true if active
      */
     protected boolean isActive() {
         return active;

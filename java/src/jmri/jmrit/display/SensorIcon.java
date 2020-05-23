@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map.Entry;
@@ -227,6 +228,11 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         _state2nameMap.put(Sensor.INCONSISTENT, "BeanStateInconsistent");
         _state2nameMap.put(Sensor.ACTIVE, "SensorStateActive");
         _state2nameMap.put(Sensor.INACTIVE, "SensorStateInactive");
+    }
+
+    @Override
+    public Collection<String> getStateNameCollection() {
+        return _state2nameMap.values();
     }
 
     /**

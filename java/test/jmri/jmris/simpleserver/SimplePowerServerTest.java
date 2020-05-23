@@ -53,7 +53,7 @@ public class SimplePowerServerTest extends jmri.jmris.AbstractPowerServerTestBas
     // test sending a status string.
     @Test
     public void testSendStatusString() throws Exception {
-        ((SimplePowerServer)ps).sendStatus("Hello World\n");
+        ((SimplePowerServer) ps).sendStatus("Hello World\n");
         assertThat(sb.toString()).withFailMessage("send status string").isEqualTo("Hello World\n");
     }
 
@@ -76,9 +76,9 @@ public class SimplePowerServerTest extends jmri.jmris.AbstractPowerServerTestBas
     // test parsing an ON status message.
     @Test
     public void testParseOnStatus() throws Exception {
-         ps.parseStatus("POWER ON\n");
-         assertThat(jmri.PowerManager.ON).withFailMessage("Parse On Status Check").isEqualTo(jmri.InstanceManager
-                        .getDefault(jmri.PowerManager.class).getPower());
+        ps.parseStatus("POWER ON\n");
+        assertThat(jmri.PowerManager.ON).withFailMessage("Parse On Status Check").isEqualTo(jmri.InstanceManager
+                .getDefault(jmri.PowerManager.class).getPower());
         assertThat(sb.toString()).withFailMessage("status as a result of parsing on").isEqualTo("POWER ON\n");
     }
 
@@ -87,7 +87,7 @@ public class SimplePowerServerTest extends jmri.jmris.AbstractPowerServerTestBas
     public void testParseOffStatus() throws Exception {
         ps.parseStatus("POWER OFF\n");
         assertThat(jmri.PowerManager.OFF).withFailMessage("Parse OFF Status Check").isEqualTo(jmri.InstanceManager
-                        .getDefault(jmri.PowerManager.class).getPower());
+                .getDefault(jmri.PowerManager.class).getPower());
         assertThat(sb.toString()).withFailMessage("status as a result of parsing off").isEqualTo("POWER OFF\n");
     }
 
@@ -103,18 +103,17 @@ public class SimplePowerServerTest extends jmri.jmris.AbstractPowerServerTestBas
      * {@inheritDoc}
      */
     @Override
-    public void checkPowerOnSent(){
-             assertThat(sb.toString()).withFailMessage("status as a result of on property change").isEqualTo("POWER ON\n");
+    public void checkPowerOnSent() {
+        assertThat(sb.toString()).withFailMessage("status as a result of on property change").isEqualTo("POWER ON\n");
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void checkPowerOffSent(){
-            assertThat(sb.toString()).withFailMessage("status as a result of off property change").isEqualTo("POWER OFF\n");
+    public void checkPowerOffSent() {
+        assertThat(sb.toString()).isEqualTo("POWER OFF\n");
     }
-
 
     /**
      * {@inheritDoc}

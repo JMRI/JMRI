@@ -133,6 +133,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
 
     /**
      * Internal routine to handle timer starts and restarts.
+     * @param delay Milliseconds to wait
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
@@ -229,7 +230,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
 
     /**
      * Create a well-formed DCC packet from a String.
-     *
+     * @param s Content for packet
      * @return the packet, with contents filled-in
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
