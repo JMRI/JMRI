@@ -49,11 +49,13 @@ public class Station {
 
     /**
      * Provide access to CodeLine to which this Station is attached.
+     * @return Codeline reference for this Station
      */
     CodeLine getCodeLine() { return codeline; }
     
     /**
      * Provide access this Station's name
+     * @return Human-readable name
      */
     String getName() { return name; }
     

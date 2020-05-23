@@ -74,11 +74,7 @@ public class BlockValueFile extends XmlFile {
                     // blocks with values to be occupied
                     boolean allPoweredUp = true;
                     for (PowerManager pm : jmri.InstanceManager.getList(PowerManager.class)) {
-                        try {
-                            if (pm.getPower() != jmri.PowerManager.ON) {
-                                allPoweredUp = false;
-                            }
-                        } catch (JmriException e) {
+                        if (pm.getPower() != jmri.PowerManager.ON) {
                             allPoweredUp = false;
                         }
                     }

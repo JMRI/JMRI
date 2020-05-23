@@ -438,6 +438,18 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         instance.updateFunction(31, false);
         Assert.assertFalse(instance.getFunction(31));
     }
+    
+    @Test
+    @Override
+    public void testTotalFunctions() {
+        Assert.assertEquals("Total Functions", 32, instance.getFunctions().length);
+    }
+    
+    @Test
+    @Override
+    public void testTotalFunctionsMomentary() {
+        Assert.assertEquals("Total Momentary Functions", 32, instance.getFunctionsMomentary().length);
+    }
 
     @Test
     @Override
@@ -473,6 +485,40 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         instance.getFunction(32);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get function: 32");
         
+    }
+    
+    @Test
+    @Override
+    public void testOutOfRangeUpdateFunctionMomentary(){
+        
+        instance.updateFunctionMomentary(-1, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update momentary function number: -1");
+        
+        instance.updateFunctionMomentary(32, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update momentary function number: 32");
+        
+    }
+    
+    @Test
+    @Override
+    public void testOutOfRangeSetFunctionMomentary(){
+        
+        instance.setFunctionMomentary(-1, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set momentary function number: -1");
+        
+        instance.setFunctionMomentary(32, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set momentary function number: 32");
+        
+    }
+    
+    @Test
+    @Override
+    public void testOutOfRangeGetFunctionMomentary(){
+        instance.getFunctionMomentary(-1);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get momentary function: -1");
+        
+        instance.getFunctionMomentary(32);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get momentary function: 32");
     }
     
     

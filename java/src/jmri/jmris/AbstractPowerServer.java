@@ -44,7 +44,7 @@ abstract public class AbstractPowerServer implements PropertyChangeListener {
                 }
                 return false;
             } else {
-                p.addPropertyChangeListener(this);
+                p.addPropertyChangeListener(PowerManager.POWER, this);
             }
         }
         return true;
@@ -82,12 +82,8 @@ abstract public class AbstractPowerServer implements PropertyChangeListener {
     public void propertyChange(java.beans.PropertyChangeEvent ev) {
         try {
             sendStatus(p.getPower());
-        } catch (JmriException ex) {
-            try {
-                sendErrorStatus();
-            } catch (IOException ie) {
-            }
-        } catch (IOException ie2) {
+        } catch (IOException ie) {
+            // silently ignore
         }
     }
 

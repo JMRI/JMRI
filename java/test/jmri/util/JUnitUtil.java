@@ -743,6 +743,9 @@ public class JUnitUtil {
     }
 
     public static void deregisterBlockManagerShutdownTask() {
+        if (! InstanceManager.isInitialized(ShutDownManager.class)) return;
+        if (! InstanceManager.isInitialized(BlockManager.class)) return;
+        
         InstanceManager
                 .getDefault(ShutDownManager.class)
                 .deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);

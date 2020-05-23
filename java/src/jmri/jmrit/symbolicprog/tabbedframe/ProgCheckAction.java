@@ -235,6 +235,10 @@ public class ProgCheckAction extends AbstractAction {
 
     /**
      * Ask SAX to read and verify a file
+     * @param file XML-formatted input file
+     * @return root element if successful
+     * @throws org.jdom2.JDOMException if file can't be parsed
+     * @throws java.io.IOException  if problems reading file
      */
     static Element readFile(File file) throws org.jdom2.JDOMException, java.io.IOException {
         XmlFile xf = new XmlFile() {
