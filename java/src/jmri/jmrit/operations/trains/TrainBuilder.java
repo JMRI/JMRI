@@ -182,8 +182,8 @@ public class TrainBuilder extends TrainCommon {
         showCarsNotRoutable(); // list cars that couldn't be routed
 
         //done building
-        _train.setBuilt(true);
         _train.setCurrentLocation(_train.getTrainDepartsRouteLocation());
+        _train.setBuilt(true);
         _train.moveTrainIcon(_train.getTrainDepartsRouteLocation()); // create and place train icon
         
         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTime"), new Object[]{
