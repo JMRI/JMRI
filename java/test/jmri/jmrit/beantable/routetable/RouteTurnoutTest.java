@@ -65,6 +65,8 @@ class RouteTurnoutTest {
         assertThat(rt.getSetToState()).isEqualTo("Set Thrown");
         rt.setSetToState("Set Closed");
         assertThat(rt.getSetToState()).isEqualTo("Set Closed");
+        rt.setSetToState("Set Toggle");
+        assertThat(rt.getSetToState()).isEqualTo("Set Toggle");
     }
 
 }
