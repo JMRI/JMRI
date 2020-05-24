@@ -37,10 +37,10 @@
       to JMRI services.</p>
 
       <p>The servlet lives in the <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">
+      "https://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">
       jmri.web.servlet.xmlio</a> package, and provides web access
       to the <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">
+      "https://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">
       JMRI XML I/O package</a>. By default, the JMRI Web Server
       will send any URL that starts with <code>/xmlio</code> to
       this servlet. It will list all known elements of a specified
@@ -136,7 +136,7 @@
       <h2>Request Format</h2>
 
       <p>The XML schema is defined in the <a href=
-      "http://jmri.org/xml/schema/xmlio.xsd">xmlio.xsd schema
+      "https://jmri.org/xml/schema/xmlio.xsd">xmlio.xsd schema
       document</a>.</p>
 
       <p>There is also an attribute-based syntax available (see

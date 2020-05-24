@@ -27,7 +27,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.Locale;
-import javax.help.SwingHelpUtilities;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
@@ -685,7 +684,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         JMenu helpMenu = HelpUtil.makeHelpMenu(mainWindowHelpID(), true);
 
         // tell help to use default browser for external types
-        SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
+        HelpUtil.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
         // use as main help menu
         menuBar.add(helpMenu);

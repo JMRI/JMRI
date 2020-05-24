@@ -58,7 +58,7 @@
 
       <p>JMRI &eacute;crit tous les fichiers de sch&eacute;ma de
       r&eacute;f&eacute;rence en utilisant des URL comme
-      "http://jmri.org/xml/schema/layout.xsd". Lors de la lecture
+      "https://jmri.org/xml/schema/layout.xsd". Lors de la lecture
       par le programme ce sera automatiquement g&eacute;r&eacute;
       correctement par un r&eacute;solveur personnalis&eacute;.
       Lors de la lecture par exemple par un navigateur web, le
