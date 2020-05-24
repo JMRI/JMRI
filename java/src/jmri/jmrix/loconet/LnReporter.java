@@ -144,7 +144,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
                 entrySet.remove(idTag);
             }
         }
-        log.debug("Tag: " + idTag);
+        log.debug("Tag: {}", idTag);
         notify(idTag);
         setState(enter ? loco : -1);
     }
@@ -167,6 +167,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
 
     /**
      * Handle LISSY message
+     * @param l Message from which to extract LISSY content
      */
     void lissyReport(LocoNetMessage l) {
         int loco = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
@@ -178,11 +179,11 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
         // get loco address
         IdTag idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag(""+loco);
         if(north) {
-           idTag.setProperty("seen","seen northbound");
+           idTag.setProperty("seen", "seen northbound");
         } else {
-           idTag.setProperty("seen","seen southbound");
+           idTag.setProperty("seen", "seen southbound");
         }
-        log.debug("Tag: " + idTag);
+        log.debug("Tag: {}", idTag);
         notify(idTag);
         setState(loco);
     }

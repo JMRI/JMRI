@@ -115,7 +115,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     }
 
     private EcosPreferences p;
-    private ShutDownTask ecosLocoShutDownTask;
+    ShutDownTask ecosLocoShutDownTask;
     private EcosTrafficController tc;
 
     public EcosLocoAddress provideEcosLoco(String EcosObject, int DCCAddress) {
@@ -286,6 +286,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
      * Forget a NamedBean Object created outside the manager.
      * <p>
      * The non-system-specific RouteManager uses this method.
+     * @param s Ecos Loco Address to de-register.
      */
     public void deregister(EcosLocoAddress s) {
         s.removePropertyChangeListener(this);
@@ -401,23 +402,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
             dialog.setVisible(true);
         }
         return true;
-    }
-
-    private java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    @Override
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
     }
 
     /**
@@ -663,7 +647,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
         }
         if (line.contains("cv")) {
             String cv = EcosReply.getContentDetails(line, "cv");
-            cv = cv.replaceAll("\\s","");  //remove all white spaces, as 4.1.0 version removed the space after the ,
+            cv = cv.replaceAll("\\s", "");  //remove all white spaces, as 4.1.0 version removed the space after the ,
             int cvnum = Integer.parseInt(cv.substring(0, cv.indexOf(",")));
             int cvval = Integer.parseInt(cv.substring(cv.indexOf(",") + 1, cv.length()));
             tmploco.setCV(cvnum, cvval);

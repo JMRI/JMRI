@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of UserMessagePreferencesPane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class UserMessagePreferencesPaneTest {
 
@@ -27,5 +27,8 @@ public class UserMessagePreferencesPaneTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
+    }
 }

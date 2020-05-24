@@ -9,9 +9,9 @@ import org.junit.Test;
 /**
  * RfidSensorTest.java
  *
- * Description:	tests for the jmri.jmrix.rfid.RfidSensor class
+ * Test for the jmri.jmrix.rfid.RfidSensor class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class RfidSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -33,7 +33,6 @@ public class RfidSensorTest extends jmri.implementation.AbstractSensorTestBase {
        Assert.assertNotNull("exists", s);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

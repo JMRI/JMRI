@@ -6,12 +6,11 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
-import org.mockito.Mockito;
 
 /**
  * Unit tests for the DefaultCabSignal 
  *
- * @author Paul Bender Copyright (C) 2019	
+ * @author Paul Bender Copyright (C) 2019
  */
 public class DefaultCabSignalTest {
 
@@ -50,7 +49,6 @@ public class DefaultCabSignalTest {
         acs.dispose(); // verify no exceptions
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -66,6 +64,7 @@ public class DefaultCabSignalTest {
     public void tearDown() {
         cs.dispose(); // verify no exceptions
         cs = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -58,7 +58,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public TrainsTableModel() {
         super();
         trainManager.addPropertyChangeListener(this);
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
         updateList();
     }
 
@@ -407,7 +407,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 return;
             }
             // use a thread to allow table updates during build
-            build = new Thread(new Runnable() {
+            build = jmri.util.ThreadingUtil.newThread(new Runnable() {
                 @Override
                 public void run() {
                     train.build();
@@ -484,7 +484,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 train.terminate();
             }
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR)) {
-            log.debug("Enable conductor for train (" + train.getName() + ")");
+            log.debug("Enable conductor for train ({})", train.getName());
             launchConductor(train);
         }
     }
@@ -576,7 +576,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             tef.dispose();
         }
         trainManager.removePropertyChangeListener(this);
-        Setup.removePropertyChangeListener(this);
+        Setup.getDefault().removePropertyChangeListener(this);
         removePropertyChangeTrains();
     }
 

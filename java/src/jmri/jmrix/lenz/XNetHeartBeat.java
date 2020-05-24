@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  * of time, so any outgoing message should restart
  * the timer.
  *
- * @author	Paul Bender Copyright (C) 2019 
+ * @author Paul Bender Copyright (C) 2019 
  */
 public class XNetHeartBeat implements XNetListener {
 

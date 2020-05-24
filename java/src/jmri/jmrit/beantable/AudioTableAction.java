@@ -349,7 +349,11 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
         @Override
         public String getValue(String systemName) {
             Object m = InstanceManager.getDefault(jmri.AudioManager.class).getBySystemName(systemName);
-            return (m != null) ? m.toString() : "";
+            if (subType == Audio.SOURCE) {
+                return (m != null) ? ((jmri.jmrit.audio.AudioSource) m).getDebugString() : "";
+            } else {
+                return (m != null) ? m.toString() : "";
+            }
         }
 
         @Override
@@ -373,7 +377,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
                 case EDITCOL:
                     return Bundle.getMessage("ButtonEdit");
                 default:
-                    log.error("internal state inconsistent with table requst for " + row + " " + col);
+                    log.error("internal state inconsistent with table requst for {} {}", row, col);
                     return null;
             }
         }

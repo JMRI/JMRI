@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Implementation of XnTcpAdapter that eases
  * checking whether data was forwarded or not
  * 
- * @author	Bob Jacobsen Copyright (C) 2006, 2015
+ * @author Bob Jacobsen Copyright (C) 2006, 2015
  */
 class XnTcpPortControllerScaffold extends XnTcpAdapter {
 

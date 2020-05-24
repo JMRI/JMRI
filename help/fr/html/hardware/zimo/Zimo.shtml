@@ -24,7 +24,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
   <!--#include virtual="../SidebarUp" -->
   <div id="mainContent">
@@ -98,7 +98,7 @@
           <p><a href=
           "http://www.mrsonline.net/html/zimo.html">Agence Zimo
           Nord Am&eacute;ricaine</a></p>
-          <!--#include virtual="/footer" -->
+          <!--#include virtual="/Footer.shtml" -->
         </li>
       </ol>
     </div>

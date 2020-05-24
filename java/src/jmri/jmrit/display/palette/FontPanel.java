@@ -32,32 +32,19 @@ public class FontPanel extends JPanel implements ItemListener {
     public static final int JUST = 3;
     public static final int FACE = 4;
 
-    private AJComboBox _fontFaceBox;
-    private AJComboBox _fontSizeBox;
-    private AJComboBox _fontStyleBox;
-    private AJComboBox _fontJustBox;
+    private AJComboBox<Font> _fontFaceBox;
+    private AJComboBox<String> _fontSizeBox;
+    private AJComboBox<String> _fontStyleBox;
+    private AJComboBox<String> _fontJustBox;
 
     PositionablePopupUtil _util;
     ActionListener _callBack;
 
-    static class AJSpinner extends JSpinner {
-        int _which;
-
-        AJSpinner(SpinnerModel model, int which) {
-            super(model);
-            _which = which;
-        }
-    }
-
     @SuppressWarnings("unchecked")
-    static class AJComboBox extends JComboBox /*<T> - can't get this to work*/ {
+    static class AJComboBox<T> extends JComboBox<T> {
         int _which;
 
-        AJComboBox(Font[] items, int which) {
-            super(items);
-            _which = which;
-        }
-        AJComboBox(String[] items, int which) {
+        AJComboBox(T[] items, int which) {
             super(items);
             _which = which;
         }
@@ -69,7 +56,7 @@ public class FontPanel extends JPanel implements ItemListener {
         makeFontPanels();
     }
 
-    private JPanel makeBoxPanel(String caption, JComboBox<Class<?>> box) {
+    private JPanel makeBoxPanel(String caption, JComboBox<?> box) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel(Bundle.getMessage(caption)));
@@ -85,7 +72,7 @@ public class FontPanel extends JPanel implements ItemListener {
 
         Font defaultFont = _util.getFont();
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        String fontFamilyNames[] = ge.getAvailableFontFamilyNames();
+        String[] fontFamilyNames = ge.getAvailableFontFamilyNames();
         Font[] fonts = new Font[fontFamilyNames.length];
         int k = 0;
         for (String fontFamilyName : fontFamilyNames) {
@@ -96,16 +83,16 @@ public class FontPanel extends JPanel implements ItemListener {
                 }
             };
         }
-        _fontFaceBox = new AJComboBox(fonts, FACE);
+        _fontFaceBox = new AJComboBox<Font>(fonts, FACE);
         fontPanel.add(makeBoxPanel("EditFont", _fontFaceBox)); // NOI18N
 
-        _fontSizeBox = new AJComboBox(FONTSIZE, SIZE);
+        _fontSizeBox = new AJComboBox<String>(FONTSIZE, SIZE);
         fontPanel.add(makeBoxPanel("FontSize", _fontSizeBox)); // NOI18N
 
-        _fontStyleBox = new AJComboBox(STYLES, STYLE);
+        _fontStyleBox = new AJComboBox<String>(STYLES, STYLE);
         fontPanel.add(makeBoxPanel("FontStyle", _fontStyleBox)); // NOI18N
 
-        _fontJustBox = new AJComboBox(JUSTIFICATION, JUST);
+        _fontJustBox = new AJComboBox<String>(JUSTIFICATION, JUST);
         fontPanel.add(makeBoxPanel("Justification", _fontJustBox)); // NOI18N
         this.add(fontPanel);
     }
@@ -125,17 +112,14 @@ public class FontPanel extends JPanel implements ItemListener {
             case PositionablePopupUtil.LEFT:
                 row = 0;
                 break;
-            case PositionablePopupUtil.RIGHT:
-                row = 2;
-                break;
             case PositionablePopupUtil.CENTRE:
                 row = 1;
                 break;
+            case PositionablePopupUtil.RIGHT:
             default:
                 row = 2;
         }
         _fontJustBox.setSelectedIndex(row);
-
         _callBack.actionPerformed(null);
     }
 
@@ -145,7 +129,7 @@ public class FontPanel extends JPanel implements ItemListener {
         switch (comboBox._which) {
             case SIZE:
                 String size = (String) comboBox.getSelectedItem();
-                _util.setFontSize(Float.valueOf(size));
+                _util.setFontSize(Float.parseFloat(size));
                 break;
             case STYLE:
                 int style = 0;

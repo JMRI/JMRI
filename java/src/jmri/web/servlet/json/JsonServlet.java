@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
-import jmri.jmris.json.JsonServerPreferences;
+import jmri.server.json.JsonServerPreferences;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonRequest;
@@ -518,7 +518,7 @@ public class JsonServlet extends WebSocketServlet {
         if (path.length > 1 && VERSIONS.stream().anyMatch(v -> v.equals(path[1]))) {
             version = path[1];
         }
-        return new JsonRequest(request.getLocale(), version, id);
+        return new JsonRequest(request.getLocale(), version, request.getMethod().toLowerCase(), id);
     }
 
     /**

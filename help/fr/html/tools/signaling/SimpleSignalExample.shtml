@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -304,7 +304,7 @@ infos sur comment faire, consultez la
 <p>Retour &#224; la <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">page d'aide Logique Signal Simple</a>.
 <p>Situ&#233; &#224; fr\html\tools\signaling\</p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 </div>
 </div>
 </body>

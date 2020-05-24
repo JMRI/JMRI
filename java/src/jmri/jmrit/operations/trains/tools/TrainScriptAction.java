@@ -2,7 +2,9 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
 import jmri.jmrit.operations.trains.TrainEditFrame;
 
 /**
@@ -13,12 +15,12 @@ import jmri.jmrit.operations.trains.TrainEditFrame;
  */
 public class TrainScriptAction extends AbstractAction {
 
-    public TrainScriptAction(String s, TrainEditFrame frame) {
-        super(s);
-        this.frame = frame;
+    public TrainScriptAction(TrainEditFrame frame) {
+        super(Bundle.getMessage("MenuItemScripts"));
+        _frame = frame;
     }
 
-    TrainEditFrame frame; // the parent frame that is launching the TrainScriptFrame.
+    TrainEditFrame _frame; // the parent frame that is launching the TrainScriptFrame.
 
     TrainScriptFrame f = null;
 
@@ -29,8 +31,8 @@ public class TrainScriptAction extends AbstractAction {
             f.dispose();
         }
         f = new TrainScriptFrame();
-        f.setLocation(frame.getLocation());
-        f.initComponents(frame);
+        f.setLocation(_frame.getLocation());
+        f.initComponents(_frame);
         f.setExtendedState(Frame.NORMAL);
     }
 }

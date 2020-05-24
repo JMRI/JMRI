@@ -18,7 +18,7 @@ import jmri.util.JmriJFrame;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PrintTrainManifestIfSelectedActionTest extends OperationsTestCase {
 
@@ -101,7 +101,7 @@ public class PrintTrainManifestIfSelectedActionTest extends OperationsTestCase {
         JUnitUtil.dispose(printPreviewFrame);
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintTrainManifestIfSelectedActionTest.class);

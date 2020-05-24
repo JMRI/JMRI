@@ -12,7 +12,7 @@ import jmri.util.JUnitOperationsUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TerminateTrainActionTest extends OperationsTestCase {
 
@@ -65,7 +65,7 @@ public class TerminateTrainActionTest extends OperationsTestCase {
         Assert.assertFalse(automationItem.isActionSuccessful());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TerminateTrainActionTest.class);

@@ -3,7 +3,7 @@ package jmri.jmrix.can.cbus;
 /**
  * CbusConstants.java
  *
- * Description: Constants to represent CBUS protocol
+ * Constants to represent CBUS protocol
  *
  * @author Andrew Crosland Copyright (C) 2008
  */
@@ -183,6 +183,26 @@ public final class CbusConstants {
     public static final int CBUS_EXTC6 = 0xFF;
 
     /**
+     * Extended opcodes, currently only used by the bootloader
+     * <p>
+     * These are all responses from the bootloader
+     */
+    public static final int CBUS_EXT_BOOT_ERROR = 0x00;
+    public static final int CBUS_EXT_BOOT_OK = 0x01;
+    public static final int CBUS_EXT_BOOTC = 0x02;
+    
+    /**
+     * Bootloader commands
+     * 
+     * These are used in the data payload of bootloader control frames.
+     */
+    public static final int CBUS_BOOT_NOP = 0x00;
+    public static final int CBUS_BOOT_RESET = 0x01;
+    public static final int CBUS_BOOT_INIT = 0x02;
+    public static final int CBUS_BOOT_CHECK = 0x03;
+    public static final int CBUS_BOOT_TEST = 0x04;
+   
+    /**
      * Programming modes
      */
     public static final int CBUS_PROG_DIRECT_BYTE = 0;
@@ -283,6 +303,12 @@ public final class CbusConstants {
     public static final int CBUS_F26 = 0x20;
     public static final int CBUS_F27 = 0x40;
     public static final int CBUS_F28 = 0x80;
+    
+    public static final int[] CBUS_FUNCTION_BITS = new int[]{ CBUS_F0,
+        CBUS_F1, CBUS_F2, CBUS_F3, CBUS_F4, CBUS_F5, CBUS_F6, CBUS_F7,
+        CBUS_F8, CBUS_F9, CBUS_F10, CBUS_F11, CBUS_F12, CBUS_F13, CBUS_F14,
+        CBUS_F15, CBUS_F16, CBUS_F17, CBUS_F18, CBUS_F19, CBUS_F20, CBUS_F21,
+        CBUS_F22, CBUS_F23, CBUS_F24, CBUS_F25, CBUS_F26, CBUS_F27, CBUS_F28 };
 
     /**
      * Throttle modes

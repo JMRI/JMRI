@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
@@ -70,7 +70,7 @@
       r&eacute;pertoires de scripts</a> dans le <a href=
       "http://jmri.org/download">T&eacute;l&eacute;chargements
       JMRI</a> .</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

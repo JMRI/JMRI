@@ -11,14 +11,14 @@ import org.junit.Test;
 /**
  * Test simple functioning of ManageLocationsAction
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ManageLocationsActionTest {
 
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ManageLocationsAction action = new ManageLocationsAction("Test VSD Manage Locations Action","");
+        ManageLocationsAction action = new ManageLocationsAction("Test VSD Manage Locations Action");
         Assert.assertNotNull("exists", action);
     }
 

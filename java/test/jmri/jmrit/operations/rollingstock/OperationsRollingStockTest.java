@@ -10,7 +10,6 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.JUnitOperationsUtil;
 
 /**
  * Tests for the Operations Car class Last manually cross-checked on
@@ -22,7 +21,7 @@ import jmri.util.JUnitOperationsUtil;
  * Note: Car: XML read/write is tested in OperationsEnginesTest and
  * OperationsCarsTest
  *
- * @author	Bob Coleman Copyright (C) 2009
+ * @author Bob Coleman Copyright (C) 2009
  *
  */
 public class OperationsRollingStockTest extends OperationsTestCase {
@@ -89,7 +88,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
 
         jmri.util.JUnitAppender.assertErrorMessage("Tag 12345 Not Found");
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // test creation
@@ -131,7 +130,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         Assert.assertEquals("Car Rfid", "TESTRFID", rs1.getRfid());
         Assert.assertEquals("Car Moves", 5, rs1.getMoves());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // test Car weight and weighttons

@@ -42,18 +42,18 @@ public class LocationsTableFrameTest extends OperationsTestCase {
         // should be 5 rows
         Assert.assertEquals("number of rows", 5, f.locationsModel.getRowCount());
         // default is sort by name
-        Assert.assertEquals("1st loc", "Test Loc A", f.locationsModel.getValueAt(0, LocationsTableModel.NAMECOLUMN));
-        Assert.assertEquals("2nd loc", "Test Loc B", f.locationsModel.getValueAt(1, LocationsTableModel.NAMECOLUMN));
-        Assert.assertEquals("3rd loc", "Test Loc C", f.locationsModel.getValueAt(2, LocationsTableModel.NAMECOLUMN));
-        Assert.assertEquals("4th loc", "Test Loc D", f.locationsModel.getValueAt(3, LocationsTableModel.NAMECOLUMN));
-        Assert.assertEquals("5th loc", "Test Loc E", f.locationsModel.getValueAt(4, LocationsTableModel.NAMECOLUMN));
+        Assert.assertEquals("1st loc", "Test Loc A", f.locationsModel.getValueAt(0, LocationsTableModel.NAME_COLUMN));
+        Assert.assertEquals("2nd loc", "Test Loc B", f.locationsModel.getValueAt(1, LocationsTableModel.NAME_COLUMN));
+        Assert.assertEquals("3rd loc", "Test Loc C", f.locationsModel.getValueAt(2, LocationsTableModel.NAME_COLUMN));
+        Assert.assertEquals("4th loc", "Test Loc D", f.locationsModel.getValueAt(3, LocationsTableModel.NAME_COLUMN));
+        Assert.assertEquals("5th loc", "Test Loc E", f.locationsModel.getValueAt(4, LocationsTableModel.NAME_COLUMN));
 
         // check location lengths
-        Assert.assertEquals("1st loc length", 1005, f.locationsModel.getValueAt(0, LocationsTableModel.LENGTHCOLUMN));
-        Assert.assertEquals("2nd loc length", 1004, f.locationsModel.getValueAt(1, LocationsTableModel.LENGTHCOLUMN));
-        Assert.assertEquals("3rd loc length", 1003, f.locationsModel.getValueAt(2, LocationsTableModel.LENGTHCOLUMN));
-        Assert.assertEquals("4th loc length", 1002, f.locationsModel.getValueAt(3, LocationsTableModel.LENGTHCOLUMN));
-        Assert.assertEquals("5th loc length", 1001, f.locationsModel.getValueAt(4, LocationsTableModel.LENGTHCOLUMN));
+        Assert.assertEquals("1st loc length", 1005, f.locationsModel.getValueAt(0, LocationsTableModel.LENGTH_COLUMN));
+        Assert.assertEquals("2nd loc length", 1004, f.locationsModel.getValueAt(1, LocationsTableModel.LENGTH_COLUMN));
+        Assert.assertEquals("3rd loc length", 1003, f.locationsModel.getValueAt(2, LocationsTableModel.LENGTH_COLUMN));
+        Assert.assertEquals("4th loc length", 1002, f.locationsModel.getValueAt(3, LocationsTableModel.LENGTH_COLUMN));
+        Assert.assertEquals("5th loc length", 1001, f.locationsModel.getValueAt(4, LocationsTableModel.LENGTH_COLUMN));
 
         // close windows
         JFrameOperator jfof = new JFrameOperator(f);
@@ -69,7 +69,7 @@ public class LocationsTableFrameTest extends OperationsTestCase {
         LocationsTableFrame f = new LocationsTableFrame();
 
         // create edit location frame
-        f.locationsModel.setValueAt(null, 2, LocationsTableModel.EDITCOLUMN);
+        f.locationsModel.setValueAt(null, 2, LocationsTableModel.EDIT_COLUMN);
 
         // confirm location edit frame creation
         JUnitUtil.waitFor(() -> {
@@ -95,7 +95,7 @@ public class LocationsTableFrameTest extends OperationsTestCase {
         LocationsTableFrame f = new LocationsTableFrame();
 
         // create edit location frame
-        f.locationsModel.setValueAt(null, 2, LocationsTableModel.EDITCOLUMN);
+        f.locationsModel.setValueAt(null, 2, LocationsTableModel.EDIT_COLUMN);
 
         // create add location frame by clicking add button
         f.addButton.doClick();

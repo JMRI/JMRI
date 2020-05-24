@@ -71,7 +71,7 @@ public class CircuitBuilder {
     private JMenu _todoMenu;   // error checking items
 
     // map OBlock to List of icons (track, portal, signal that represent it
-    private HashMap<OBlock, ArrayList<Positionable>> _circuitMap = new HashMap<>();
+    private final HashMap<OBlock, ArrayList<Positionable>> _circuitMap = new HashMap<>();
 
     // list of track icons not belonging to an OBlock
     private final ArrayList<Positionable> _darkTrack = new ArrayList<>();
@@ -107,7 +107,7 @@ public class CircuitBuilder {
     private final ArrayList<PositionableIcon> _unattachedMastIcon = new ArrayList<>();
 
     // map SignalMasts and SignalHeads to the Portal where it is configured
-    private HashMap<NamedBean, Portal> _signalMap = new HashMap<>();
+    private final HashMap<NamedBean, Portal> _signalMap = new HashMap<>();
 
     private boolean _hasIndicatorTrackIcons;
     private boolean _hasPortalIcons;
@@ -121,10 +121,8 @@ public class CircuitBuilder {
     // "Editing Frames" - Called from menu in Main Frame
     private EditFrame _editFrame;
 
-    private final JTextField _sysNameBox = new JTextField();
-    private final JTextField _userNameBox = new JTextField();
     private OBlock _currentBlock;
-     private JDialog _dialog;
+    private JDialog _dialog;
     protected ControlPanelEditor _editor;
 
     public final static Color _editGroupColor = new Color(100, 200, 255);
@@ -175,9 +173,7 @@ public class CircuitBuilder {
     private void makeNoOBlockMenu() {
         JMenuItem circuitItem = new JMenuItem(Bundle.getMessage("newCircuitItem"));
         _circuitMenu.add(circuitItem);
-        circuitItem.addActionListener((ActionEvent event) -> {
-            newCircuit();
-        });
+        circuitItem.addActionListener((ActionEvent event) -> newCircuit());
         _circuitMenu.add(new JMenuItem(Bundle.getMessage("noCircuitsItem")));
         JMenuItem helpItem = new JMenuItem(Bundle.getMessage("AboutCircuitBuilder"));
         HelpUtil.getGlobalHelpBroker().enableHelpOnButton(helpItem, "package.jmri.jmrit.display.CircuitBuilder", null);
@@ -258,10 +254,8 @@ public class CircuitBuilder {
             editCircuitError(sysName);
         };
         if (_bareBlock.size() > 0) {
-            for (int i = 0; i < _bareBlock.size(); i++) {
-                OBlock block = _bareBlock.get(i);
-                JMenuItem mi = new JMenuItem(java.text.MessageFormat.format(
-                        Bundle.getMessage("OpenCircuitItem"), block.getDisplayName()));
+            for (OBlock block : _bareBlock) {
+                JMenuItem mi = new JMenuItem(java.text.MessageFormat.format(Bundle.getMessage("OpenCircuitItem"), block.getDisplayName()));
                 mi.setActionCommand(block.getSystemName());
                 mi.addActionListener(editCircuitAction);
                 blockNeeds.add(mi);
@@ -273,10 +267,8 @@ public class CircuitBuilder {
 
         blockNeeds = new JMenu(Bundle.getMessage("blocksNeedConversionItem"));
         if (_convertBlock.size() > 0) {
-            for (int i = 0; i < _convertBlock.size(); i++) {
-                OBlock block = _convertBlock.get(i);
-                JMenuItem mi = new JMenuItem(java.text.MessageFormat.format(
-                        Bundle.getMessage("OpenCircuitItem"), block.getDisplayName()));
+            for (OBlock block : _convertBlock) {
+                JMenuItem mi = new JMenuItem(java.text.MessageFormat.format(Bundle.getMessage("OpenCircuitItem"), block.getDisplayName()));
                 mi.setActionCommand(block.getSystemName());
                 mi.addActionListener(editCircuitAction);
                 blockNeeds.add(mi);
@@ -292,8 +284,8 @@ public class CircuitBuilder {
                 if (editingOK()) {
                     hidePortalIcons();
                     ArrayList<Positionable> group = new ArrayList<>();
-                    for (int i = 0; i < _unconvertedTrack.size(); i++) {
-                        group.add(_unconvertedTrack.get(i));
+                    for (Positionable positionable : _unconvertedTrack) {
+                        group.add(positionable);
                     }
                     _editor.setSelectionGroup(group);
                 }
@@ -309,8 +301,8 @@ public class CircuitBuilder {
                 if (editingOK()) {
                     hidePortalIcons();
                     ArrayList<Positionable> group = new ArrayList<>();
-                    for (int i = 0; i < _darkTrack.size(); i++) {
-                        group.add(_darkTrack.get(i));
+                    for (Positionable positionable : _darkTrack) {
+                        group.add(positionable);
                     }
                     _editor.setSelectionGroup(group);
                 }
@@ -365,15 +357,11 @@ public class CircuitBuilder {
                 OBlock toBlock = portal.getToBlock();
                 if (fromBlock != null) {
                     JMenuItem mi = new JMenuItem(Bundle.getMessage("OpenPortalTitle", fromBlock.getDisplayName()));
-                    mi.addActionListener((ActionEvent event) -> {
-                        editPortalError(fromBlock, portal, icon);
-                    });
+                    mi.addActionListener((ActionEvent event) -> editPortalError(fromBlock, portal, icon));
                     blockNeeds.add(mi);
                 } else if (toBlock != null) {
                     JMenuItem mi = new JMenuItem(Bundle.getMessage("OpenPortalTitle", toBlock.getDisplayName()));
-                    mi.addActionListener((ActionEvent event) -> {
-                        editPortalError(toBlock, portal, icon);
-                    });
+                    mi.addActionListener((ActionEvent event) -> editPortalError(toBlock, portal, icon));
                     blockNeeds.add(mi);
                 }
             }
@@ -391,8 +379,7 @@ public class CircuitBuilder {
             iconNeeds.addActionListener((ActionEvent event) -> {
                 if (editingOK()) {
                     ArrayList<Positionable> group = new ArrayList<>();
-                    for (int i = 0; i < _misplacedPortalIcon.size(); i++) {
-                        PortalIcon pi = _misplacedPortalIcon.get(i);
+                    for (PortalIcon pi : _misplacedPortalIcon) {
                         group.add(pi);
                         pi.setStatus(PortalIcon.VISIBLE);
                     }
@@ -413,8 +400,7 @@ public class CircuitBuilder {
             iconNeeds.addActionListener((ActionEvent event) -> {
                 if (editingOK()) {
                     ArrayList<Positionable> group = new ArrayList<>();
-                    for (int i = 0; i < _unattachedMastIcon.size(); i++) {
-                        PositionableIcon pi = _unattachedMastIcon.get(i);
+                    for (PositionableIcon pi : _unattachedMastIcon) {
                         group.add(pi);
                     }
                     _editor.setSelectionGroup(group);
@@ -435,8 +421,7 @@ public class CircuitBuilder {
             editPortalError(portalName);
             };
         if (_noPortalIcon.size() > 0) {
-            for (int i = 0; i < _noPortalIcon.size(); i++) {
-                Portal portal = _noPortalIcon.get(i);
+            for (Portal portal : _noPortalIcon) {
                 JMenuItem mi = new JMenuItem(portal.toString());
                 mi.setActionCommand(portal.getName());
                 mi.addActionListener(editPortalAction);
@@ -450,23 +435,13 @@ public class CircuitBuilder {
         JMenuItem pError = new JMenuItem(Bundle.getMessage("CheckPortalPaths"));
         _todoMenu.add(pError);      // #10
         pError.addActionListener((ActionEvent event) -> {
-            errorCheck();
+            if (WarrantTableAction.getDefault().errorCheck()) {
+                JOptionPane.showMessageDialog(_editFrame,
+                        Bundle.getMessage("blocksEtcOK"), Bundle.getMessage("ButtonOK"),
+                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
         });
 
-    }
-
-    private void errorCheck() {
-        WarrantTableAction.initPathPortalCheck();
-        OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-        SortedSet<OBlock> oblocks = manager.getNamedBeanSet();
-        for (OBlock block : oblocks) {
-            WarrantTableAction.checkPathPortals(block);
-        }
-        if (!WarrantTableAction.showPathPortalErrors()) {
-            JOptionPane.showMessageDialog(_editFrame,
-                    Bundle.getMessage("blocksEtcOK"), Bundle.getMessage("ButtonOK"),
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        }
     }
 
     // used for testing only
@@ -480,15 +455,8 @@ public class CircuitBuilder {
     protected void newCircuit() {
         if (editingOK()) {
             _blockTable.clearSelection();
-            addCircuitDialog();
-            if (_currentBlock != null) {
-                _editor.setSelectionGroup(makeSelectionGroup(_currentBlock, false));
-                _editor.disableMenus();
-                TargetPane targetPane = (TargetPane) _editor.getTargetPanel();
-                targetPane.setSelectGroupColor(_editGroupColor);
-                targetPane.setHighlightColor(_highlightColor);
-                _editFrame = new EditCircuitFrame(Bundle.getMessage("newCircuitItem"), this, _currentBlock);
-            }
+            setUpEditCircuit();
+            _editFrame = new EditCircuitFrame(Bundle.getMessage("newCircuitItem"), this, null);
         }
     }
 
@@ -498,16 +466,19 @@ public class CircuitBuilder {
                 editCircuitDialog(title);
             }
             if (_currentBlock != null) {
-                _editor.setSelectionGroup(makeSelectionGroup(_currentBlock, false));
-                _editor.disableMenus();
-                TargetPane targetPane = (TargetPane) _editor.getTargetPanel();
-                targetPane.setSelectGroupColor(_editGroupColor);
-                targetPane.setHighlightColor(_highlightColor);
+                setUpEditCircuit();
                 _editFrame = new EditCircuitFrame(Bundle.getMessage("OpenCircuitItem"), this, _currentBlock);
             } else if (!fromMenu) {
                 selectPrompt();
             }
         }
+    }
+    private void setUpEditCircuit() {
+        _editor.setSelectionGroup(makeSelectionGroup(_currentBlock, false));
+        _editor.disableMenus();
+        TargetPane targetPane = (TargetPane) _editor.getTargetPanel();
+        targetPane.setSelectGroupColor(_editGroupColor);
+        targetPane.setHighlightColor(_highlightColor);
     }
 
     protected void editCircuitError(String sysName) {
@@ -634,7 +605,6 @@ public class CircuitBuilder {
         }
     }
     
-    // for testing only
     protected void setCurrentBlock(OBlock b) {
         _currentBlock = b;
     }
@@ -678,33 +648,6 @@ public class CircuitBuilder {
     }
 
     /**
-     * Create a new OBlock. Used by New to set up _editCircuitFrame.
-     * Sets _currentBlock to created new OBlock.
-     */
-    private void addCircuitDialog() {
-        _dialog = new JDialog(_editor, Bundle.getMessage("TitleCircuitDialog"), true);
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout(10, 10));
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-
-        mainPanel.add(Box.createVerticalStrut(STRUT_SIZE));
-        JPanel p = new JPanel();
-        p.add(new JLabel(Bundle.getMessage("createOBlock")));
-        mainPanel.add(p);
-
-        mainPanel.add(Box.createVerticalStrut(STRUT_SIZE));
-        mainPanel.add(makeSystemNamePanel());
-        mainPanel.add(Box.createVerticalStrut(STRUT_SIZE));
-        mainPanel.add(makeDoneButtonPanel(true));
-        panel.add(mainPanel);
-        _dialog.getContentPane().add(panel);
-        _dialog.setLocation(_editor.getLocation().x + 100, _editor.getLocation().y + 100);
-        _dialog.pack();
-        _dialog.setVisible(true);
-    }
-
-    /**
      * Edit existing OBlock. Used by edit to set up _editCircuitFrame.
      * Sets _currentBlock to chosen OBlock or null if none selected.
      */
@@ -723,7 +666,7 @@ public class CircuitBuilder {
 
         mainPanel.add(new JScrollPane(_blockTable));
         mainPanel.add(Box.createVerticalStrut(STRUT_SIZE));
-        mainPanel.add(makeDoneButtonPanel(false));
+        mainPanel.add(makeDoneButtonPanel());
         panel.add(mainPanel);
         _dialog.getContentPane().add(panel);
         _dialog.setLocation(_editor.getLocation().x + 100, _editor.getLocation().y + 100);
@@ -731,107 +674,25 @@ public class CircuitBuilder {
         _dialog.setVisible(true);
     }
 
-    private JPanel makeSystemNamePanel() {
-        _sysNameBox.setText("");
-        _userNameBox.setText("");
-        JPanel namePanel = new JPanel();
-        namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.Y_AXIS));
-        JPanel p = new JPanel();
-        p.setLayout(new java.awt.GridBagLayout());
-        java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.anchor = java.awt.GridBagConstraints.EAST;
-        p.add(new JLabel(Bundle.getMessage("ColumnSystemName")), c);
-        c.gridy = 1;
-        p.add(new JLabel(Bundle.getMessage("ColumnUserName")), c);
-        c.gridx = 1;
-        c.gridy = 0;
-        c.anchor = java.awt.GridBagConstraints.WEST;
-        c.weightx = 1.0;
-        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
-        p.add(_sysNameBox, c);
-        c.gridy = 1;
-        p.add(_userNameBox, c);
-        namePanel.add(p);
-        return namePanel;
-    }
-
-    private JPanel makeDoneButtonPanel(boolean add) {
+    private JPanel makeDoneButtonPanel() {
         JPanel buttonPanel = new JPanel();
         JPanel panel0 = new JPanel();
         panel0.setLayout(new FlowLayout());
         JButton doneButton;
-        if (add) {
-            doneButton = new JButton(Bundle.getMessage("ButtonAddCircuit"));
-            doneButton.addActionListener((ActionEvent a) -> {
-                if (doAddAction()) {
-                    _dialog.dispose();
-                }
-            });
-        } else {
-            doneButton = new JButton(Bundle.getMessage("ButtonOpenCircuit"));
-            doneButton.addActionListener((ActionEvent a) -> {
-                if (doOpenAction()) {
-                    _dialog.dispose();
-                }
-            });
-        }
+        doneButton = new JButton(Bundle.getMessage("ButtonOpenCircuit"));
+        doneButton.addActionListener((ActionEvent a) -> {
+            if (doOpenAction()) {
+                _dialog.dispose();
+            }
+        });
         panel0.add(doneButton);
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelButton.addActionListener((ActionEvent a) -> {
-            _sysNameBox.setText("");
-            _currentBlock = null;
-            _dialog.dispose();
-        });
+        cancelButton.addActionListener((ActionEvent a) -> _dialog.dispose());
         panel0.add(cancelButton);
         buttonPanel.add(panel0);
         buttonPanel.setMaximumSize(new Dimension(300, buttonPanel.getPreferredSize().height));
         return buttonPanel;
-    }
-
-    private boolean doAddAction() {
-        boolean retOK = false;
-        String sysname = _sysNameBox.getText();
-        if (sysname != null && sysname.length() > 1) {
-            String uname = _userNameBox.getText();
-            if (uname != null && uname.trim().length() == 0) {
-                uname = null;
-            }
-            _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).createNewOBlock(sysname, uname);
-            if (_currentBlock != null) {
-                OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-                int num = manager.getObjectCount();
-                if (num == 2) {
-                    _editor.makeWarrantMenu(true, false);
-                }
-                num = Math.min(num,  20) + 5;
-                _blockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(300, _blockTable.getRowHeight() * num));
-               retOK = true;
-            } else {
-                int result = JOptionPane.showConfirmDialog(_editor, java.text.MessageFormat.format(
-                        Bundle.getMessage("blockExists"), sysname, uname),
-                        Bundle.getMessage("AskTitle"), JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
-                if (result == JOptionPane.YES_OPTION) {
-                    _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getByUserName(uname);
-                    if (_currentBlock == null) {
-                        _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getBySystemName(sysname);
-                    }
-                    if (_currentBlock != null) {
-                        retOK = true;
-                    }
-                }
-            }
-        }
-        if (!retOK) {
-            JOptionPane.showMessageDialog(_editor, Bundle.getMessage("sysnameOBlock"),
-                    Bundle.getMessage("NeedDataTitle"), JOptionPane.INFORMATION_MESSAGE);
-        }
-        return retOK;
     }
 
     private boolean doOpenAction() {
@@ -841,23 +702,20 @@ public class CircuitBuilder {
             _currentBlock = _oblockModel.getBeanAt(row);
             return true;
         }
+        _currentBlock = null;
         selectPrompt();
         return false;
     }
     private void selectPrompt() {
         JOptionPane.showMessageDialog(_editor, Bundle.getMessage("selectOBlock"),
                 Bundle.getMessage("NeedDataTitle"), JOptionPane.INFORMATION_MESSAGE);
-        _currentBlock = null;
     }
 
     /*
      * ************************ end setup frames *****************************
      */
     private void setPortalsPositionable(OBlock block, boolean set) {
-        List<Positionable> circuitIcons = getCircuitIcons(block);
-        Iterator<Positionable> iter = circuitIcons.iterator();
-        while (iter.hasNext()) {
-            Positionable p = iter.next();
+        for (Positionable p : getCircuitIcons(block)) {
             if (p instanceof PortalIcon) {
                 p.setPositionable(set);
             }
@@ -880,7 +738,7 @@ public class CircuitBuilder {
         List<Positionable> selections = _editor.getSelectionGroup();
         List<Positionable> icons = getCircuitIcons(block);
         icons.clear();
-        if (!selections.isEmpty()) {
+        if (selections != null && !selections.isEmpty()) {
             NamedBeanHandle<OBlock> handle = 
                     InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(block.getSystemName(), block);
              for (Positionable pos : selections) {
@@ -929,9 +787,7 @@ public class CircuitBuilder {
         ArrayList<Positionable> removeList = new ArrayList<>();
         PortalManager portalMgr = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
 
-        Iterator<Positionable> it = _editor.getContents().iterator();
-        while (it.hasNext()) {
-            Positionable pos = it.next();
+        for (Positionable pos : _editor.getContents()) {
             if (pos instanceof IndicatorTrack) {
                 _hasIndicatorTrackIcons = true;
                 OBlock block = ((IndicatorTrack) pos).getOccBlock();
@@ -954,7 +810,7 @@ public class CircuitBuilder {
                 }
             } else if (pos instanceof SignalMastIcon) {
                 _hasMastIcons = true;
-                SignalMastIcon sIcon = (SignalMastIcon)pos;
+                SignalMastIcon sIcon = (SignalMastIcon) pos;
                 NamedBean mast = sIcon.getSignalMast();
                 if (mast == null) {
                     log.error("No SignalMast for SignalMastIcon called \"{}\".", sIcon.getNameString());
@@ -965,8 +821,8 @@ public class CircuitBuilder {
                     _unattachedMastIcon.add(sIcon);
                 }
             } else if (pos instanceof SignalHeadIcon) {
-                _hasMastIcons =true;
-                SignalHeadIcon sIcon = (SignalHeadIcon)pos;
+                _hasMastIcons = true;
+                SignalHeadIcon sIcon = (SignalHeadIcon) pos;
                 NamedBean mast = sIcon.getSignalHead();
                 if (mast == null) {
                     log.error("No SignalHead for SignalHeadIcon called \"{}\".", sIcon.getNameString());
@@ -982,9 +838,8 @@ public class CircuitBuilder {
                 }
             }
         }
-        Iterator<Positionable> its = removeList.iterator();
-        while (its.hasNext()) {
-            its.next().remove();
+        for (Positionable positionable : removeList) {
+            positionable.remove();
         }
 
         _bareBlock.clear();         // blocks with no track icons
@@ -1028,17 +883,15 @@ public class CircuitBuilder {
 
             List<Positionable> icons = getCircuitIcons(block);
             if (log.isDebugEnabled()) {
-                log.debug("checkCircuits: block " + block.getDisplayName()
-                        + " has " + icons.size() + " icons.");
+                log.debug("checkCircuits: block {} has {} icons.", block.getDisplayName(), icons.size());
             }
             if (icons.isEmpty()) {
                 _bareBlock.add(block);
             } else {
                 boolean hasTrackIcon = false;
                 boolean iconNeedsConversion = false;
-                for (int k = 0; k < icons.size(); k++) {
-                    Positionable pos = icons.get(k);
-                    if (!(pos instanceof PortalIcon) && !(pos instanceof SignalMastIcon) && !(pos instanceof SignalHeadIcon) ) {
+                for (Positionable pos : icons) {
+                    if (!(pos instanceof PortalIcon) && !(pos instanceof SignalMastIcon) && !(pos instanceof SignalHeadIcon)) {
                         hasTrackIcon = true;
                         if (!(pos instanceof IndicatorTrack)) {
                             iconNeedsConversion = true;
@@ -1110,10 +963,9 @@ public class CircuitBuilder {
         }
         Rectangle rect = new Rectangle();
         Rectangle iconRect = icon.getBounds(new Rectangle());
-        for (int i = 0; i < list.size(); i++) {
-            Positionable comp = list.get(i);
+        for (Positionable comp : list) {
             if (CircuitBuilder.isTrack(comp)) {
-                rect = list.get(i).getBounds(rect);
+                rect = comp.getBounds(rect);
                 if (iconRect.intersects(rect)) {
                     return true;
                 }
@@ -1126,32 +978,17 @@ public class CircuitBuilder {
     @Nonnull
     protected ArrayList<Positionable> getCircuitIcons(OBlock block) {
         // return empty array when block == null
-        ArrayList<Positionable> array = _circuitMap.get(block);
-        if (array == null) {
-            array = new ArrayList<Positionable>();
-            _circuitMap.put(block, array);
-        }
-        return array;
+        return _circuitMap.computeIfAbsent(block, k -> new ArrayList<>());
     }
 
     @Nonnull 
     protected List<PortalIcon> getPortalIconMap(@Nonnull Portal portal) {
-        ArrayList<PortalIcon> array = _portalIconMap.get(portal);
-        if (array == null) {
-            array = new ArrayList<PortalIcon>();
-            _portalIconMap.put(portal, array);
-        }
-        return array;
+        return _portalIconMap.computeIfAbsent(portal, k -> new ArrayList<>());
     }
 
     @Nonnull 
     protected List<PositionableIcon> getSignalIconMap(@Nonnull NamedBean mast) {
-        ArrayList<PositionableIcon> array = _signalIconMap.get(mast);
-        if (array == null) {
-            array = new ArrayList<PositionableIcon>();
-            _signalIconMap.put(mast, array);
-        }
-        return array;
+        return _signalIconMap.computeIfAbsent(mast, k -> new ArrayList<>());
     }
 
     protected Portal getSignalPortal(@Nonnull NamedBean mast) {
@@ -1176,8 +1013,6 @@ public class CircuitBuilder {
         for (Positionable pos : list) {
             if (pos instanceof IndicatorTrack) {
                 ((IndicatorTrack) pos).setOccBlockHandle(null);
-/*            } else if (pos instanceof PortalIcon) {
-                pos.remove();*/
             }
             _darkTrack.add(pos);
         }
@@ -1188,22 +1023,29 @@ public class CircuitBuilder {
     }
 
     protected String checkForPortals(@Nonnull OBlock block, String key) {
+        StringBuffer sb = new StringBuffer();
         List<Portal> portals = block.getPortals();
         if (portals.isEmpty()) {
-            return Bundle.getMessage("needPortal", block.getDisplayName(), Bundle.getMessage(key));
+            sb.append(Bundle.getMessage("needPortal", block.getDisplayName(), Bundle.getMessage(key)));
         } else {
             for (Portal portal : portals) {
                 if (portal.getToBlock() == null || portal.getFromBlock() == null) {
-                    return  Bundle.getMessage("portalNeedsBlock", portal.getName());
+                    if (sb.length() > 0) {
+                        sb.append("\n");
+                    }
+                    sb.append(Bundle.getMessage("portalNeedsBlock", portal.getName()));
                 }
             }
             for (Portal portal : portals) {
+                if (sb.length() > 0) {
+                    sb.append("\n");
+                }
                 if (!block.equals(portal.getToBlock()) && !block.equals(portal.getFromBlock())) {
-                    return Bundle.getMessage("portalNotInCircuit", portal.getName(), block.getDisplayName());
+                    sb.append(Bundle.getMessage("portalNotInCircuit", portal.getName(), block.getDisplayName()));
                 }
             }
         }
-        return null;
+        return sb.toString();
     }
 
     /**
@@ -1213,18 +1055,28 @@ public class CircuitBuilder {
      * @return true if at least one PortalIcon found
      */
     protected String checkForPortalIcons(@Nonnull OBlock block, String key) {
+        StringBuffer sb = new StringBuffer();
         List<Portal> portals = block.getPortals();
         for (Portal portal : portals) {
             List<PortalIcon> iconMap = getPortalIconMap(portal);
             if (iconMap.isEmpty()) {
-                return Bundle.getMessage("noPortalIcon", portal.getName(), Bundle.getMessage(key));
+                if (sb.length() > 0) {
+                    sb.append("\n");
+                }
+                sb.append(Bundle.getMessage("noPortalIcon", portal.getName(), Bundle.getMessage(key)));
             } else {
                 for (PortalIcon icon : iconMap) {
                     Portal p = icon.getPortal();
                     if (p == null) {
                         deletePortalIcon(icon);
                     } else if (_editFrame instanceof EditPortalFrame) {
-                        return ((EditPortalFrame)_editFrame).checkPortalIconForUpdate(icon, false);
+                        String msg = ((EditPortalFrame)_editFrame).checkPortalIconForUpdate(icon, false);
+                        if (msg != null) {
+                            if (sb.length() > 0) {
+                                sb.append("\n");
+                            }
+                            sb.append(msg);
+                        }
                     } 
                 }
             }
@@ -1240,16 +1092,19 @@ public class CircuitBuilder {
             }
         }
         if (!ok) {
-            return Bundle.getMessage("needPortalIcons", block.getDisplayName(), Bundle.getMessage(key));
+            if (sb.length() > 0) {
+                sb.append("\n");
+            }
+            sb.append(Bundle.getMessage("needPortalIcons", block.getDisplayName(), Bundle.getMessage(key)));
         }
-        return null;
+        return sb.toString();
     }
 
     protected String checkForTrackIcons(@Nonnull OBlock block, String key) {
-        String msg = null;
+        StringBuilder sb = new StringBuilder();
         List<Positionable> list = getCircuitIcons(block);
         if (list.isEmpty()) {
-            msg = Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage(key));
+            sb.append(Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage(key)));
         } else {
             boolean ok = true;
             for (Positionable p : list) {
@@ -1260,18 +1115,17 @@ public class CircuitBuilder {
                 }
             }
             if (!ok) {
-                StringBuilder sb = new StringBuilder(Bundle.getMessage("cantSaveIcon", block.getDisplayName()));
+                sb.append(Bundle.getMessage("cantSaveIcon", block.getDisplayName()));
                 sb.append("\n");
                 sb.append(Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage(key)));
-                msg = sb.toString();
             }
         }
-        return msg;
+        return  sb.toString();
     }
 
     protected void deletePortalIcon(PortalIcon icon) {
         if (log.isDebugEnabled()) {
-            log.debug("deletePortalIcon: " + icon.getName());
+            log.debug("deletePortalIcon: {}", icon.getName());
         }
         Portal portal = icon.getPortal();
         if (portal != null) {
@@ -1304,15 +1158,8 @@ public class CircuitBuilder {
                 PositionableLabel pos = (PositionableLabel) p;
                 if (CircuitBuilder.isUnconvertedTrack(pos)) {
                     _editor.highlight(pos);
-                    int result = JOptionPane.showConfirmDialog(_editFrame, Bundle.getMessage("notIndicatorIcon"),
-                             Bundle.getMessage("incompleteCircuit"), JOptionPane.YES_NO_OPTION,
-                             JOptionPane.QUESTION_MESSAGE);
-                    if (result == JOptionPane.YES_OPTION) {
-                         convertIcon(pos, block);
-                    } else {
-                         msg = Bundle.getMessage("cantSaveIcon", block.getDisplayName(), Bundle.getMessage(key));
-                         _editor.highlight(null);
-                    }
+                    new ConvertDialog(this, pos, block);
+                    _editor.highlight(null);
                 }
             }
         }
@@ -1323,16 +1170,6 @@ public class CircuitBuilder {
         } else {
             return true;
         }
-    }
-
-    /**
-     * Converts icon to IndicatorTrack
-     */
-    private void convertIcon(PositionableLabel pos, OBlock block) {
-        _editor.toFront();
-        _editor.repaint();
-        new ConvertDialog(this, pos, block);
-        _editor.repaint();
     }
 
 
@@ -1394,7 +1231,7 @@ public class CircuitBuilder {
                 if (icon != null) {
                     String fileName = icon.getURL();
                     if (log.isDebugEnabled()) {
-                        log.debug("isUnconvertedTrack Test: url= " + fileName);
+                        log.debug("isUnconvertedTrack Test: url= {}", fileName);
                     }
                     // getURL() returns Unix separatorChar= "/" even on windows
                     // so don't use java.io.File.separatorChar
@@ -1562,6 +1399,7 @@ public class CircuitBuilder {
                     while (iter.hasNext()) {
                         Positionable pos = iter.next();
                         if (((String) select).equals(pos.getNameString())) {
+                            _editor.highlight(pos);
                             return pos;
                         }
                     }
@@ -1664,7 +1502,7 @@ public class CircuitBuilder {
 
         ButtonGroup _buttonGroup = new ButtonGroup();
         int _which = 0;
-        OBlock selectedBlock = null;
+        JRadioButton _newCircuitButton = makeButton("newCircuitItem", NONE);
         
         CBFrame(String title) {
             super(false, false);
@@ -1682,14 +1520,13 @@ public class CircuitBuilder {
             panel0.setLayout(new BoxLayout(panel0, BoxLayout.X_AXIS));
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            JRadioButton b = makeButton("newCircuitItem", NONE);
-            panel.add(b);
+            panel.add(_newCircuitButton);
             panel.add(makeButton("editCircuitItem", OBLOCK));
             panel.add(makeButton("editPortalsItem", PORTAL));
             panel.add(makeButton("editCircuitPathsItem", OPATH));
             panel.add(makeButton("editDirectionItem", ARROW));
             panel.add(makeButton("editSignalItem", SIGNAL));
-            b.setSelected(true);
+            _newCircuitButton.setSelected(true);
             panel0.add(panel);
 
             panel = new JPanel();
@@ -1704,7 +1541,7 @@ public class CircuitBuilder {
             JButton button = new JButton(Bundle.getMessage("ButtonOpen"));
             button.addActionListener((ActionEvent event) -> {
                 if (editingOK()) {
-                    _currentBlock = selectedBlock;
+                    setCurrentBlock();
                     if (_which == NONE) {
                         newCircuit();
                     } else if (_which == OBLOCK) {
@@ -1735,27 +1572,27 @@ public class CircuitBuilder {
             setContentPane(contentPane);
             _blockTable.clearSelection();
             pack();
-            setLocation(jmri.util.PlaceWindow.nextTo(_editor, null, this));
+            InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_editor, null, this);
             setVisible(true);
         }
 
         @Override
         public void valueChanged(ListSelectionEvent e) {
-//            doOpenAction();
+            setCurrentBlock();
+        }
+        private void setCurrentBlock() {
             int row = _blockTable.getSelectedRow();
             if (row >= 0) {
                 row = _blockTable.convertRowIndexToModel(row);
-                selectedBlock = _oblockModel.getBeanAt(row);
+                _currentBlock = _oblockModel.getBeanAt(row);
             } else {
-                selectedBlock = null;
+                _currentBlock = null;
             }
         }
 
         JRadioButton makeButton(String title, int which) {
             JRadioButton button = new JRadioButton(Bundle.getMessage(title));
-            button.addActionListener((ActionEvent event) -> {
-                _which = which;
-            });
+            button.addActionListener((ActionEvent event) -> _which = which);
             _buttonGroup.add(button);
             return button;
         }

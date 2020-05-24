@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * not be the very next message after a query is sent, due to slot manager
  * traffic. Add Pi-SPROG version decoding.
  *
- * @author	Andrew Crosland Copyright (C) 2012, 2016
+ * @author Andrew Crosland Copyright (C) 2012, 2016
  */
 public class SprogVersionQuery implements SprogListener {
 
@@ -43,7 +43,7 @@ public class SprogVersionQuery implements SprogListener {
 
     public SprogVersionQuery(SprogSystemConnectionMemo memo) {
         if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
+            log.debug("setting instance: {}", this);
         }
         _memo = memo;
         tc = _memo.getSprogTrafficController();
@@ -88,7 +88,7 @@ public class SprogVersionQuery implements SprogListener {
     synchronized public void requestVersion(SprogVersionListener l) {
         SprogMessage m;
         if (log.isDebugEnabled()) {
-            log.debug("SprogVersion requested by " + l.toString());
+            log.debug("SprogVersion requested by {}", l.toString());
         }
         if (state == QueryState.DONE) {
             // Reply immediately
@@ -169,7 +169,7 @@ public class SprogVersionQuery implements SprogListener {
                     String[] splits = replyString.split("\n");
                     splits = splits[1].split(" ");
                     int index = 1;
-                    log.debug("Elements in version reply: " + splits.length);
+                    log.debug("Elements in version reply: {}", splits.length);
                     log.debug("First element: <{}>", splits[0]);
                     if (splits[0].contains("Pi-SPROG")) {
                         log.debug("Found a Pi-SPROG {}", splits[index]);
@@ -304,7 +304,7 @@ public class SprogVersionQuery implements SprogListener {
     }
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts.
+     * Internal routine to handle timer starts and restarts.
      * 
      * @param delay timer delay
      */

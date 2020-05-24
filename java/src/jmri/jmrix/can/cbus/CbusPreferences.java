@@ -3,6 +3,7 @@ package jmri.jmrix.can.cbus;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import jmri.beans.PreferencesBean;
+import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 
@@ -26,6 +27,9 @@ public class CbusPreferences extends PreferencesBean {
     private boolean searchForNodesBackupXmlOnStartup = false;
     private boolean _saveRestoreEventTable = true;
     private int minimumNumBackupsToKeep = 10;
+    private int bootWriteDelay = CbusNode.BOOT_PROG_TIMEOUT_FAST;
+    private boolean _isGlobalProgrammerAvailable = true;
+    private boolean _isAddressedModePossible = true;
     
     public CbusPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
@@ -47,8 +51,15 @@ public class CbusPreferences extends PreferencesBean {
             "searchForNodesBackupXmlOnStartup",this.getSearchForNodesBackupXmlOnStartup() );
         this.minimumNumBackupsToKeep = sharedPreferences.getInt(
             "minimumNumBackupsToKeep",this.getMinimumNumBackupsToKeep() );
+        this.bootWriteDelay = sharedPreferences.getInt(
+            "bootWriteDelay",this.getBootWriteDelay() );
         this._saveRestoreEventTable = sharedPreferences.getBoolean(
             "saveRestoreEventTable",this.getSaveRestoreEventTable() );
+
+        this._isGlobalProgrammerAvailable = sharedPreferences.getBoolean(
+            "globalprogrammer", this.isGlobalProgrammerAvailable() );
+        this._isAddressedModePossible = sharedPreferences.getBoolean(
+            "addressedprogrammer", this.isAddressedModePossible() );
     }
 
     public void savePreferences() {
@@ -65,7 +76,11 @@ public class CbusPreferences extends PreferencesBean {
         
         sharedPreferences.putBoolean("searchForNodesBackupXmlOnStartup", this.getSearchForNodesBackupXmlOnStartup() );
         sharedPreferences.putInt("minimumNumBackupsToKeep", this.getMinimumNumBackupsToKeep() );
+        sharedPreferences.putInt("bootWriteDelay", this.getBootWriteDelay() );
         sharedPreferences.putBoolean("saveRestoreEventTable", this.getSaveRestoreEventTable() );
+
+        sharedPreferences.putBoolean("globalprogrammer", this.isGlobalProgrammerAvailable() );
+        sharedPreferences.putBoolean("addressedprogrammer", this.isAddressedModePossible() );
         
         try {
             sharedPreferences.sync();
@@ -235,6 +250,67 @@ public class CbusPreferences extends PreferencesBean {
     public void setMinimumNumBackupsToKeep( int newVal ){
         minimumNumBackupsToKeep = newVal;
         savePreferences();
+    }
+    
+    /**
+     * Get delay between bootloader data writes
+     * @return delay, in ms, defaults to CbusNode.BOOT_PROG_TIMEOUT_FAST
+     */
+    public int getBootWriteDelay(){
+        return bootWriteDelay;
+    }
+    
+    /**
+     * Set delay between bootloader data writes
+     * @param newVal the delay in ms
+     */
+    public void setBootWriteDelay( int newVal ){
+        bootWriteDelay = newVal;
+        savePreferences();
+    }
+    
+    /**
+     * Get the global programmer state
+     * @return global programmer state
+     */
+    public boolean isGlobalProgrammerAvailable() {
+        return _isGlobalProgrammerAvailable;
+    }
+    
+    /**
+     * Get the addressed programmer state
+     * @return addressed programmer state
+     */
+    public boolean isAddressedModePossible() {
+        return _isAddressedModePossible;
+    }
+    
+    /**
+     * Set global (service mode) programmer availability
+     * @param state true if available
+     */
+    public void setGlobalProgrammerAvailable(boolean state) {
+        _isGlobalProgrammerAvailable = state;
+        savePreferences();
+    }
+    
+    /**
+     * Set global (service mode) programmer availability
+     * @param state true if available
+     */
+    public void setAddressedModePossible(boolean state) {
+        _isAddressedModePossible = state;
+        savePreferences();
+    }
+    
+    /**
+     * Set the programmer type
+     * @param global true if global (service mode) programmer is available
+     * @param addressed thru if addressed (ops mode) programmer is available
+     */
+    public void setProgrammersAvailable(boolean global, boolean addressed) {
+        setGlobalProgrammerAvailable(global);
+        setAddressedModePossible(addressed);
     }
     
     private final static Logger log = LoggerFactory.getLogger(CbusPreferences.class);

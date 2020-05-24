@@ -25,7 +25,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -132,7 +132,7 @@
       Vous pouvez &eacute;galement jeter un oeil &agrave;
       Jynstruments pour le bouton de fonction avanc&eacute;e.<br>
       <br>
-    </div><!--#include virtual="/Footer" -->
+    </div><!--#include virtual="/Footer.shtml" -->
   </div>
 </body>
 </html>

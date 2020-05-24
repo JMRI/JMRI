@@ -76,12 +76,13 @@
             There are four levels of information, a coarse measure to ensure
             that prerequisites are present during a load:
         <UL>
-            <LI>Pref
-            <LI>Config
-            <LI>Tool
-            <LI>User
+            <LI>Pref - program-level preferences
+            <LI>Config - NamedBeanManagers
+            <LI>Tool - not used
+            <LI>User - panels
         </UL>
-        
+            The level is specified via the call used when registering
+            with the {@link jmri.ConfigureManager}.
         <P>
             Additionally, the {@link jmri.Manager} class has a 
             {@link jmri.Manager#getXMLOrder} method that 

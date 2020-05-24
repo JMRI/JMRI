@@ -12,10 +12,10 @@ import org.junit.Test;
 /**
  * IEEE802154TrafficControllerTest.java
  *
- * Description:	tests for the jmri.jmrix.ieee802154.IEEE802154TrafficController
+ * Test for the jmri.jmrix.ieee802154.IEEE802154TrafficController
  * class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class IEEE802154TrafficControllerTest extends jmri.jmrix.AbstractMRNodeTrafficControllerTest {
 
@@ -151,7 +151,6 @@ public class IEEE802154TrafficControllerTest extends jmri.jmrix.AbstractMRNodeTr
         Assert.assertNotNull("node not found", n);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

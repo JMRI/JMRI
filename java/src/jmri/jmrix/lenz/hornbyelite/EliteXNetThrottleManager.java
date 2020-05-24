@@ -15,6 +15,7 @@ public class EliteXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManage
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public EliteXNetThrottleManager(XNetSystemConnectionMemo memo) {
         super(memo);
@@ -37,6 +38,6 @@ public class EliteXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManage
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EliteXNetThrottleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(EliteXNetThrottleManager.class);
 
 }

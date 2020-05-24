@@ -50,9 +50,9 @@ public class AutomatTableFrame extends jmri.util.JmriJFrame {
 
     @Override
     public void dispose() {
-	if(dataModel!=null){
-           dataModel.dispose();
-	}
+        if (dataModel != null) {
+            dataModel.dispose();
+        }
         dataModel = null;
         dataTable = null;
         dataScroll = null;

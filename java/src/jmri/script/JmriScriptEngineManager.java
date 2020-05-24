@@ -44,7 +44,6 @@ import jmri.SignalMastManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.util.FileUtil;
 import jmri.util.FileUtilSupport;
@@ -136,7 +135,6 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         bindings.put("shutdown", InstanceManager.getNullableDefault(ShutDownManager.class));
         bindings.put("layoutblocks", InstanceManager.getNullableDefault(LayoutBlockManager.class));
         bindings.put("warrants", InstanceManager.getNullableDefault(WarrantManager.class));
-        bindings.put("entryExitPairs", InstanceManager.getNullableDefault(EntryExitPairs.class));
         bindings.put("CLOSED", Turnout.CLOSED);
         bindings.put("THROWN", Turnout.THROWN);
         bindings.put("CABLOCKOUT", Turnout.CABLOCKOUT);
@@ -572,7 +570,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
                 FileUtil.getProgramPath());
         Properties properties;
         properties = new Properties(System.getProperties());
-        properties.setProperty("python.console.encoding", "UTF-8"); // NOI18N
+        properties.setProperty("python.console.encoding", StandardCharsets.UTF_8.name()); // NOI18N
         properties.setProperty("python.cachedir", FileUtil
                 .getAbsoluteFilename(properties.getProperty("python.cachedir", "settings:jython/cache"))); // NOI18N
         boolean execJython = false;

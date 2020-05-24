@@ -1,13 +1,14 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
  * Test simple functioning of MultiSensorIconFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class MultiSensorIconFrameTest extends jmri.util.JmriJFrameTestBase {
         
@@ -32,6 +33,7 @@ public class MultiSensorIconFrameTest extends jmri.util.JmriJFrameTestBase {
            JUnitUtil.dispose(e);
         }
         e = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 

@@ -1,9 +1,11 @@
 package jmri.jmrit.operations.setup;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Swing action to create and register a OperationsSetupFrame object.
@@ -13,12 +15,8 @@ import javax.swing.AbstractAction;
  */
 public class OperationsSetupAction extends AbstractAction {
 
-    public OperationsSetupAction(String s) {
-        super(s);
-    }
-
     public OperationsSetupAction() {
-        this(Bundle.getMessage("MenuSetup")); // NOI18N
+        super(Bundle.getMessage("MenuSetup")); // NOI18N
     }
 
     static OperationsSetupFrame operationsSetupFrame = null;

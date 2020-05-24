@@ -8,7 +8,7 @@ import org.junit.*;
 /**
  * Unit test for LocoNet Cab Signals
  *
- * @author Paul Bender Copyright (C) 2019	
+ * @author Paul Bender Copyright (C) 2019
  */
 public class LnCabSignalTest extends jmri.implementation.DefaultCabSignalTest {
 
@@ -38,7 +38,6 @@ public class LnCabSignalTest extends jmri.implementation.DefaultCabSignalTest {
         acs.dispose(); // verify no exceptions
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -49,7 +48,7 @@ public class LnCabSignalTest extends jmri.implementation.DefaultCabSignalTest {
         InstanceManager.setDefault(jmri.BlockManager.class,new jmri.BlockManager());
         JUnitUtil.initLayoutBlockManager();
 
-	    // prepare an interface
+        // prepare an interface
         memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
         lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
@@ -61,6 +60,7 @@ public class LnCabSignalTest extends jmri.implementation.DefaultCabSignalTest {
     public void tearDown() {
         cs.dispose(); // verify no exceptions
         cs = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

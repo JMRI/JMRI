@@ -117,18 +117,18 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
 
     @Override
     public boolean test7(int value) {
-        log.error("unexpected step 7 reached with value: " + value);
+        log.error("unexpected step 7 reached with value: {}", value);
         return true;
     }
 
     @Override
     public boolean test8(int value) {
-        log.error("unexpected step 8 reached with value: " + value);
+        log.error("unexpected step 8 reached with value: {}", value);
         return true;
     }
     @Override
     public boolean test9(int value) {
-        log.error("unexpected step 9 reached with value: " + value);
+        log.error("unexpected step 9 reached with value: {}", value);
         return true;
     }
 
@@ -138,7 +138,7 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
         if (s.equals("Done")) {
             done(address);
         } else if (log.isDebugEnabled()) {
-            log.debug("received status: " + s);
+            log.debug("received status: {}", s);
         }
     }
 

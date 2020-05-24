@@ -61,6 +61,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Provide access to the TrafficController for this particular connection.
+     * @return traffic controller, one is provided if null.
      */
     public DCCppTrafficController getDCCppTrafficController() {
         if (xt == null) {
@@ -85,8 +86,9 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Provides access to the Programmer for this particular connection. NOTE:
-     * Programmer defaults to null
+     * Provides access to the Programmer for this particular connection.
+     * NOTE: Programmer defaults to null
+     * @return programmer manager.
      */
     public DCCppProgrammerManager getProgrammerManager() {
         return programmerManager;
@@ -188,8 +190,10 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public void setCommandStation(@Nonnull CommandStation c) {
         commandStation = c;
-        ((DCCppCommandStation) c).setTrafficController(xt);
-        ((DCCppCommandStation) c).setSystemConnectionMemo(this);
+        if ( c instanceof DCCppCommandStation ) {
+            ((DCCppCommandStation) c).setTrafficController(xt);
+            ((DCCppCommandStation) c).setSystemConnectionMemo(this);
+        }
     }
 
     private CommandStation commandStation = null;

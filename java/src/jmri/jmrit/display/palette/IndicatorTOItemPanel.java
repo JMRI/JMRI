@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -44,8 +43,8 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
     private DetectionPanel _detectPanel;
     protected HashMap<String, HashMap<String, NamedIcon>> _iconGroupsMap;
 
-    public IndicatorTOItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<Turnout> model, Editor editor) {
-        super(parentFrame, type, family, model, editor);
+    public IndicatorTOItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<Turnout> model) {
+        super(parentFrame, type, family, model);
     }
 
     /**
@@ -58,7 +57,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         if (!_initialized) {
             _update = false;
             _suppressDragging = false;
-            add(initTablePanel(_model, _editor)); // top of Panel
+            add(initTablePanel(_model)); // top of Panel
             _detectPanel = new DetectionPanel(this);
             add(_detectPanel);
             initIconFamiliesPanel();
@@ -67,6 +66,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
            _buttonPosition = 2;
            _initialized = true;
         }
+        hideIcons();
     }
 
     /**
@@ -89,9 +89,9 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
     public void initUpdate(ActionListener doneAction, HashMap<String, HashMap<String, NamedIcon>> iconMaps) {
         _iconGroupsMap = iconMaps;
         checkCurrentMaps(iconMaps); // is map in families?, does user want to add it? etc.
-        super.init(doneAction, null);
 //        _bottom1Panel.remove(_editIconsButton);
         _detectPanel = new DetectionPanel(this);
+        super.init(doneAction, null);
         add(_detectPanel, 1);
         add(_iconFamilyPanel, 2);
         _buttonPosition = 2;
@@ -106,14 +106,10 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         String family = null;
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> families
                 = ItemPalette.getLevel4FamilyMaps(_itemType);
-        Iterator<Entry<String, HashMap<String, HashMap<String, NamedIcon>>>> it = families.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, HashMap<String, HashMap<String, NamedIcon>>> entry = it.next();
+        for (Entry<String, HashMap<String, HashMap<String, NamedIcon>>> entry : families.entrySet()) {
             family = entry.getKey();
             log.debug("FamilyKey = {}", family);
-            Iterator<Entry<String, HashMap<String, NamedIcon>>> iter = entry.getValue().entrySet().iterator();
-            while (iter.hasNext()) {
-                Entry<String, HashMap<String, NamedIcon>> ent = iter.next();
+            for (Entry<String, HashMap<String, NamedIcon>> ent : entry.getValue().entrySet()) {
                 HashMap<String, NamedIcon> subFamily = iconMaps.get(ent.getKey());
                 if (!mapsAreEqual(ent.getValue(), subFamily)) {
                     family = null;
@@ -126,7 +122,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
             }
         }
         if (ItemPalette.getLevel4Family(_itemType, _family) != null) {
-            JOptionPane.showMessageDialog(_paletteFrame,
+            JOptionPane.showMessageDialog(_frame,
                     Bundle.getMessage("DuplicateFamilyName", _family, _itemType),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             // make sure name does not duplicate a known name
@@ -134,7 +130,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         }
         if (!_suppressNamePrompts) {
             if (_family == null || _family.trim().length() == 0) {
-                _family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("NoFamilyName"),
+                _family = JOptionPane.showInputDialog(_frame, Bundle.getMessage("NoFamilyName"),
                         Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE);
                 if (_family == null || _family.trim().length() == 0) {
                     // bail out
@@ -143,11 +139,11 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
                     return;
                 }
             }
-            int result = JOptionPane.showConfirmDialog(_paletteFrame,
+            int result = JOptionPane.showConfirmDialog(_frame,
                     Bundle.getMessage("UnkownFamilyName", _family), Bundle.getMessage("QuestionTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (result == JOptionPane.YES_OPTION) {
-                ItemPalette.addLevel4Family(_paletteFrame, _itemType, _family, iconMaps);
+                ItemPalette.addLevel4Family(_itemType, _family, iconMaps);
             } else if (result == JOptionPane.NO_OPTION) {
                 _suppressNamePrompts = true;
             }
@@ -158,8 +154,8 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
      * Get a handle in order to change visibility.
      */
     @Override
-    protected JPanel initTablePanel(PickListModel<Turnout> model, Editor editor) {
-        _tablePanel = super.initTablePanel(model, editor);
+    protected JPanel initTablePanel(PickListModel<Turnout> model) {
+        _tablePanel = super.initTablePanel(model);
         return _tablePanel;
     }
 
@@ -229,31 +225,26 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         c.gridheight = 1;
         c.gridy = -1;
 
-        Iterator<Entry<String, HashMap<String, NamedIcon>>> it = map.entrySet().iterator();
-        while (it.hasNext()) {
+        for (Entry<String, HashMap<String, NamedIcon>> stringHashMapEntry : map.entrySet()) {
             c.gridx = 0;
             c.gridy++;
 
-            Entry<String, HashMap<String, NamedIcon>> entry = it.next();
-            String stateName = entry.getKey();
+            String stateName = stringHashMapEntry.getKey();
             JPanel panel = new JPanel();
             panel.add(new JLabel(ItemPalette.convertText(stateName)));
             panel.setOpaque(false);
             gridbag.setConstraints(panel, c);
             _iconPanel.add(panel);
             c.gridx++;
-            HashMap<String, NamedIcon> iconMap = entry.getValue();
+            HashMap<String, NamedIcon> iconMap = stringHashMapEntry.getValue();
             ItemPanel.checkIconMap("Turnout", iconMap); // NOI18N
-            Iterator<Entry<String, NamedIcon>> iter = iconMap.entrySet().iterator();
-            while (iter.hasNext()) {
-                Entry<String, NamedIcon> ent = iter.next();
+            for (Entry<String, NamedIcon> ent : iconMap.entrySet()) {
                 String borderName = ItemPalette.convertText(ent.getKey());
                 NamedIcon icon = new NamedIcon(ent.getValue());    // make copy for possible reduction
                 icon.reduceTo(100, 100, 0.2);
                 panel = new JPanel();
                 panel.setOpaque(false);
-                panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
-                        borderName));
+                panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), borderName));
                 //if (log.isDebugEnabled()) log.debug("addIcons2Panel: "+borderName+" icon at ("
                 //                                    +c.gridx+","+c.gridy+") width= "+icon.getIconWidth()+
                 //                                    " height= "+icon.getIconHeight());
@@ -264,8 +255,8 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
                 }
                 image.setToolTipText(icon.getName());
                 panel.add(image);
-                int width = Math.max(85, panel.getPreferredSize().width);
-                panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
+                //                int width = Math.max(85, panel.getPreferredSize().width);
+                //                panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
                 gridbag.setConstraints(panel, c);
                 _iconPanel.add(panel);
                 c.gridx++;
@@ -290,7 +281,6 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
             panel.add(button);
             gridbag.setConstraints(panel, c);
             _iconPanel.add(panel);
-            //if (log.isDebugEnabled()) log.debug("addIcons2Panel: row "+c.gridy+" has "+iconMap.size()+" icons");
         }
     }
 
@@ -299,14 +289,11 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         _bottom1Panel = new JPanel();
         _bottom1Panel.setLayout(new FlowLayout());
         _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
-        _showIconsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                if (_iconPanel.isVisible()) {
-                    hideIcons();
-                } else {
-                    showIcons();
-                }
+        _showIconsButton.addActionListener(a -> {
+            if (_iconPanel.isVisible()) {
+                hideIcons();
+            } else {
+                showIcons();
             }
         });
         _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipShowIcons"));
@@ -320,18 +307,15 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
 
     @Override
     protected boolean newFamilyDialog() {
-        String family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("EnterFamilyName"),
+        String family = JOptionPane.showInputDialog(_frame, Bundle.getMessage("EnterFamilyName"),
                 Bundle.getMessage("createNewIconSet", _itemType), JOptionPane.QUESTION_MESSAGE);
         if (family == null || family.trim().length() == 0) {
             // bail out
             return false;
         }
-        Iterator<String> iter = ItemPalette.getLevel4FamilyMaps(_itemType).keySet().iterator();
-        while (iter.hasNext()) {
-            if (family.equals(iter.next())) {
-                JOptionPane.showMessageDialog(_paletteFrame,
-                        Bundle.getMessage("DuplicateFamilyName", family, _itemType),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+        for (String s : ItemPalette.getLevel4FamilyMaps(_itemType).keySet()) {
+            if (family.equals(s)) {
+                JOptionPane.showMessageDialog(_frame, Bundle.getMessage("DuplicateFamilyName", family, _itemType), Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return false;
             }
         }
@@ -370,12 +354,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
     protected void addCreateDeleteFamilyButtons() {
         super.addCreateDeleteFamilyButtons();
         JButton renameButton = new JButton(Bundle.getMessage("renameFamily"));
-        renameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                renameFamily();
-           }
-        });
+        renameButton.addActionListener(a -> renameFamily());
         _bottom1Panel.add(renameButton, 1);
     }
     /**
@@ -383,7 +362,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
      */
     @Override
     protected void deleteFamilySet() {
-        if (JOptionPane.showConfirmDialog(_paletteFrame, Bundle.getMessage("confirmDelete", _family),
+        if (JOptionPane.showConfirmDialog(_frame, Bundle.getMessage("confirmDelete", _family),
                 Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                 == JOptionPane.YES_OPTION) {
             ItemPalette.removeLevel4IconMap(_itemType, _family, null);
@@ -392,19 +371,16 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
             _tablePanel.setVisible(true);
             initIconFamiliesPanel();
             setFamily(_family);
- //           getIconMaps();
- //           updateFamiliesPanel();
- //           hideIcons();
         }
     }
 
     private void createNewFamily(String family) {
         log.debug("createNewFamily for {}. family = \"{}\"", _itemType, family);
         _iconGroupsMap = new HashMap<>();
-        for (int i = 0; i < STATUS_KEYS.length; i++) {
-            _iconGroupsMap.put(STATUS_KEYS[i], makeNewIconMap("Turnout")); // NOI18N
+        for (String statusKey : STATUS_KEYS) {
+            _iconGroupsMap.put(statusKey, makeNewIconMap("Turnout")); // NOI18N
         }
-        ItemPalette.addLevel4Family(_editor, _itemType, family, _iconGroupsMap);
+        ItemPalette.addLevel4Family(_itemType, family, _iconGroupsMap);
         _tablePanel.setVisible(true);
         initIconFamiliesPanel();
         setFamily(family);
@@ -415,19 +391,19 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
      * Action item to rename an icon family.
      */
     protected void renameFamily() {
-        String family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("EnterFamilyName"),
+        String family = JOptionPane.showInputDialog(_frame, Bundle.getMessage("EnterFamilyName"),
                 Bundle.getMessage("renameFamily"), JOptionPane.QUESTION_MESSAGE);
         if (family != null && family.trim().length() > 0) {
             ItemPalette.removeLevel4IconMap(_itemType, _family, null);
             _family = family;
-            ItemPalette.addLevel4Family(_editor, _itemType, family, _iconGroupsMap);
+            ItemPalette.addLevel4Family(_itemType, family, _iconGroupsMap);
             _tablePanel.setVisible(true);
             initIconFamiliesPanel();
             setFamily(family);
         }
     }
 
-   /**
+   /*
      * _iconGroupsMap holds edit changes when done is pressed.
      */
     protected void updateIconGroupsMap(String key, HashMap<String, NamedIcon> iconMap) {
@@ -455,14 +431,6 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         hideIcons();
         setFamilyButton();
     }
-/*
-    @Override
-    protected void updateFamiliesPanel() {
-        super.updateFamiliesPanel();
-        if (!_suppressDragging) {
-            makeDragIconPanel(1);
-        }
-    }*/
 
     private void openStatusEditDialog(String key) {
         if (log.isDebugEnabled()) {
@@ -557,7 +525,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
             }
 
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
-                IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_editor);
+                IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_frame.getEditor());
 
                 t.setOccBlock(_detectPanel.getOccBlock());
                 t.setOccSensor(_detectPanel.getOccSensor());
@@ -565,13 +533,9 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
                 t.setTurnout(bean.getSystemName());
                 t.setFamily(_family);
 
-                Iterator<Entry<String, HashMap<String, NamedIcon>>> it = iconMap.entrySet().iterator();
-                while (it.hasNext()) {
-                    Entry<String, HashMap<String, NamedIcon>> entry = it.next();
+                for (Entry<String, HashMap<String, NamedIcon>> entry : iconMap.entrySet()) {
                     String status = entry.getKey();
-                    Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
-                    while (iter.hasNext()) {
-                        Entry<String, NamedIcon> ent = iter.next();
+                    for (Entry<String, NamedIcon> ent : entry.getValue().entrySet()) {
                         t.setIcon(status, ent.getKey(), new NamedIcon(ent.getValue()));
                     }
                 }

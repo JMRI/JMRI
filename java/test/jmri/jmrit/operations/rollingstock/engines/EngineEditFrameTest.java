@@ -28,7 +28,7 @@ import jmri.util.swing.JemmyUtil;
 /**
  * Tests for the Operations EngineEditFrame class
  *
- * @author	Dan Boudreau Copyright (C) 2010
+ * @author Dan Boudreau Copyright (C) 2010
  *
  */
 public class EngineEditFrameTest extends OperationsTestCase {
@@ -146,7 +146,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertNotNull(cManager.getByRoadAndNumber("PC", "123"));
 
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -190,7 +190,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("engine id", "SP54321", engine.getId());
 
         Assert.assertFalse("window closed", f.isVisible());
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -220,7 +220,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("engineCanNotUpdate"), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -450,7 +450,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("track", testSpur, engine.getTrack());
 
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
 
@@ -501,7 +501,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("Blocking order", Engine.B_UNIT_BLOCKING, e6.getBlocking());
 
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
@@ -544,7 +544,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("number of Engines", 3, cManager.getNumEntries());
 
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -608,7 +608,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(InstanceManager.getDefault(CarRoads.class).containsName("TEST_ROAD"));
 
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -675,7 +675,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(InstanceManager.getDefault(EngineModels.class).containsName("TEST_MODEL"));
 
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -739,7 +739,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(InstanceManager.getDefault(EngineTypes.class).containsName("TEST_TYPE"));
 
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -803,7 +803,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(InstanceManager.getDefault(EngineLengths.class).containsName("1234"));
 
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -867,7 +867,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(InstanceManager.getDefault(CarOwners.class).containsName("TEST_OWNER"));
 
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -889,6 +889,6 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("consist name", "TEST_CONSIST", e1.getConsistName());
 
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 }

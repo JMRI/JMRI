@@ -32,7 +32,7 @@ import org.junit.Test;
 public class JsonRosterSocketServiceTest {
 
     private JsonMockConnection connection = null;
-    private Locale locale = Locale.ENGLISH;
+    private final Locale locale = Locale.ENGLISH;
 
     @Before
     public void setUp() throws Exception {
@@ -87,8 +87,13 @@ public class JsonRosterSocketServiceTest {
 
         // list the groups in a JSON message for assertions
         this.connection.sendMessage(null, 0);
-        instance.onMessage(JsonRoster.ROSTER_GROUPS, NullNode.getInstance(), JSON.GET, new JsonRequest(locale, JSON.V5, 0));
+        instance.onMessage(JsonRoster.ROSTER_GROUPS, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         JsonNode message = this.connection.getMessage();
+        if (this.connection.getMessages().size() !=1) { // error, but first log why
+            connection.getMessages().forEach((msg)->{
+                log.warn(" message {}", msg);
+            });
+        }
         Assert.assertEquals("Single message sent", 1, this.connection.getMessages().size());
         Assert.assertNotNull("Message was sent", message);
         Assert.assertTrue("Message is array", message.isArray());
@@ -192,10 +197,9 @@ public class JsonRosterSocketServiceTest {
     @Test
     public void testOnMessageDeleteRoster() throws IOException, JmriException {
         JsonNode data = this.connection.getObjectMapper().createObjectNode();
-        Locale locale = Locale.ENGLISH;
         JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
         try {
-            instance.onMessage(JsonRoster.ROSTER, data, JSON.DELETE, new JsonRequest(locale, JSON.V5, 42));
+            instance.onMessage(JsonRoster.ROSTER, data, new JsonRequest(locale, JSON.V5, JSON.DELETE, 42));
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
@@ -211,10 +215,9 @@ public class JsonRosterSocketServiceTest {
     @Test
     public void testOnMessagePostRoster() throws IOException, JmriException {
         JsonNode data = this.connection.getObjectMapper().createObjectNode().put(JSON.METHOD, JSON.POST);
-        Locale locale = Locale.ENGLISH;
         JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
         try {
-            instance.onMessage(JsonRoster.ROSTER, data, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
+            instance.onMessage(JsonRoster.ROSTER, data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_NOT_IMPLEMENTED, ex.getCode());
@@ -230,10 +233,9 @@ public class JsonRosterSocketServiceTest {
     @Test
     public void testOnMessagePutRoster() throws IOException, JmriException {
         JsonNode data = this.connection.getObjectMapper().createObjectNode().put(JSON.METHOD, JSON.PUT);
-        Locale locale = Locale.ENGLISH;
         JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
         try {
-            instance.onMessage(JsonRoster.ROSTER, data, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
+            instance.onMessage(JsonRoster.ROSTER, data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_NOT_IMPLEMENTED, ex.getCode());
@@ -253,7 +255,6 @@ public class JsonRosterSocketServiceTest {
     @Test
     public void testOnMessageGetRoster() throws IOException, JmriException, JsonException {
         JsonNode data = this.connection.getObjectMapper().createObjectNode();
-        Locale locale = Locale.ENGLISH;
         JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
         // assert we have not been listening
         Assert.assertEquals(0, Roster.getDefault().getPropertyChangeListeners().length);
@@ -261,7 +262,7 @@ public class JsonRosterSocketServiceTest {
             Assert.assertEquals(1, entry.getPropertyChangeListeners().length);
         });
         // onMessage should cause listening to start if it hasn't already
-        instance.onMessage(JsonRoster.ROSTER, data, JSON.GET, new JsonRequest(locale, JSON.V5, 0));
+        instance.onMessage(JsonRoster.ROSTER, data, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         JsonNode message = this.connection.getMessage();
         Assert.assertNotNull("Message was sent", message);
         Assert.assertEquals(Roster.getDefault().numEntries(), message.size());
@@ -285,10 +286,9 @@ public class JsonRosterSocketServiceTest {
     @Test
     public void testOnMessageInvalidRoster() throws IOException, JmriException, JsonException {
         JsonNode data = this.connection.getObjectMapper().createObjectNode();
-        Locale locale = Locale.ENGLISH;
         JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
         try {
-            instance.onMessage(JsonRoster.ROSTER, data, "Invalid", new JsonRequest(locale, JSON.V5, 42));
+            instance.onMessage(JsonRoster.ROSTER, data, new JsonRequest(locale, JSON.V5, "Invalid", 42));
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("Exception is coded for HTTP invalid method", 405, ex.getCode());
@@ -309,7 +309,6 @@ public class JsonRosterSocketServiceTest {
     @Test
     public void testOnList() throws IOException, JmriException, JsonException {
         JsonNode data = this.connection.getObjectMapper().createObjectNode();
-        Locale locale = Locale.ENGLISH;
         JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
         // assert we have not been listening
         Assert.assertEquals(0, Roster.getDefault().getPropertyChangeListeners().length);
@@ -317,7 +316,7 @@ public class JsonRosterSocketServiceTest {
             Assert.assertEquals(1, entry.getPropertyChangeListeners().length);
         });
         // onList should cause listening to start if it hasn't already
-        instance.onList(JsonRoster.ROSTER, data, new JsonRequest(locale, JSON.V5, 0));
+        instance.onList(JsonRoster.ROSTER, data, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         JsonNode message = this.connection.getMessage();
         Assert.assertNotNull(message);
         Assert.assertEquals(Roster.getDefault().numEntries(), message.size());
@@ -350,4 +349,5 @@ public class JsonRosterSocketServiceTest {
         });
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonRosterSocketServiceTest.class);
 }

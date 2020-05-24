@@ -94,7 +94,9 @@ public class OBlockManagerXml // extends XmlFile
 
                 List<Path> paths = block.getPaths();
                 for (Path op : paths) {
-                    elem.addContent(storePath((OPath) op));
+                    if ( op instanceof OPath ) {
+                        elem.addContent(storePath((OPath) op));
+                    }
                 }
                 List<Portal> portals = block.getPortals();
                 for (Portal po : portals) {
@@ -243,7 +245,7 @@ public class OBlockManagerXml // extends XmlFile
         // Build data structure for blocks to know with whom they share turnouts.
         // check whether any turnouts are shared between two blocks;
         for (OBlock oblock : _manager.getNamedBeanSet()) {
-            WarrantTableAction.checkSharedTurnouts(oblock);
+            WarrantTableAction.getDefault().checkSharedTurnouts(oblock);
         }
         return true;
     }

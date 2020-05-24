@@ -36,16 +36,16 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Light tl = l.newLight("XL21", "my name");
 
         if (log.isDebugEnabled()) {
-            log.debug("received light value " + tl);
+            log.debug("received light value {}", tl);
         }
         Assert.assertTrue(null != (XNetLight) tl);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("XL21"));
+            log.debug("by system name: {}", l.getBySystemName("XL21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
+            log.debug("by user name:   {}", l.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != l.getBySystemName("XL21"));
@@ -76,7 +76,6 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
 
     // from here down is testing infrastructure
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -91,7 +90,7 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
     @After
     public void tearDown() {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

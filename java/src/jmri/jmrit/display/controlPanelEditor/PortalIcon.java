@@ -80,7 +80,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
 
     protected void setIcon(String name, NamedIcon ic) {
         if (log.isDebugEnabled()) {
-            log.debug("Icon " + getPortal().getName() + " put icon key= \"" + name + "\" icon= " + ic);
+            log.debug("Icon {} put icon key= \"{}\" icon= {}", getPortal().getName(), name, ic);
         }
         NamedIcon icon = cloneIcon(ic, this);
         icon.scale(getScale(), this);
@@ -90,14 +90,14 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
 
     public void setArrowOrientatuon(boolean set) {
         if (log.isDebugEnabled()) {
-            log.debug("Icon " + getPortal().getName() + " setArrowOrientatuon regular=" + set + " from " + _regular);
+            log.debug("Icon {} setArrowOrientatuon regular={} from {}", getPortal().getName(), set, _regular);
         }
         _regular = set;
     }
 
     public void setHideArrows(boolean set) {
         if (log.isDebugEnabled()) {
-            log.debug("Icon " + getPortal().getName() + " setHideArrows hide=" + set + " from " + _hide);
+            log.debug("Icon {} setHideArrows hide={} from {}", getPortal().getName(), set, _hide);
         }
         _hide = set;
     }

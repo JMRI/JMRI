@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
@@ -9,10 +10,10 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.*;
+import jmri.beans.VetoableChangeSupport;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
-import jmri.util.com.dictiography.collections.IndexedTreeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,31 +34,20 @@ import org.slf4j.LoggerFactory;
  * @param <E> the supported type of NamedBean
  * @author Bob Jacobsen Copyright (C) 2003, 2010, 2018
  */
-abstract public class AbstractProxyManager<E extends NamedBean> implements ProxyManager<E>, ProvidingManager<E>, Manager.ManagerDataListener<E> {
+@SuppressWarnings("deprecation")
+abstract public class AbstractProxyManager<E extends NamedBean> extends VetoableChangeSupport implements ProxyManager<E>, ProvidingManager<E>, PropertyChangeListener, Manager.ManagerDataListener<E> {
 
     /**
-     * Number of managers available through getManager(i) and getManagerList(),
-     * including the Internal manager
-     *
-     * @return the number of managers.
+     * List of names of bound properties requested to be listened to by
+     * PropertyChangeListeners.
      */
-    protected int nMgrs() {
-        // make sure internal present
-        initInternal();
-        return mgrs.size();
-    }
-
-    protected Manager<E> getMgr(int index) {
-        // make sure internal present
-        initInternal();
-
-        if (index < mgrs.size()) {
-            return mgrs.exact(index);
-        } else {
-            throw new IllegalArgumentException("illegal index " + index); // NOI18N
-        }
-    }
-
+    private final List<String> boundPropertyNames = new ArrayList<>();
+    /**
+     * List of names of bound properties requested to be listened to by
+     * VetoableChangeListeners.
+     */
+    private final List<String> vetoablePropertyNames = new ArrayList<>();
+    
     /**
      * {@inheritDoc}
      */
@@ -77,12 +67,12 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
         initInternal();
 
         ArrayList<Manager<E>> retval = new ArrayList<>();
-        if (defaultManager != null) { retval.add(defaultManager); }
-        for (Manager<E> manager : mgrs) {
-            if (manager != defaultManager && manager != internalManager) {
-                retval.add(manager);
-            }
+        if (defaultManager != null) {
+            retval.add(defaultManager);
         }
+        mgrs.stream()
+                .filter(manager -> manager != defaultManager && manager != internalManager)
+                .forEachOrdered(retval::add);
         if (internalManager != null && internalManager != defaultManager) {
             retval.add(internalManager);
         }
@@ -107,6 +97,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("deprecation")
     public void addManager(@Nonnull Manager<E> m) {
         Objects.requireNonNull(m, "Can only add non-null manager");
         // check for already present
@@ -121,23 +112,15 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
 
         if (defaultManager == null) defaultManager = m;  // 1st one is default
 
-        propertyVetoListenerList.stream().forEach((l) -> {
-            m.addVetoableChangeListener(l);
-        });
-        propertyListenerList.stream().forEach((l) -> {
-            m.addPropertyChangeListener(l);
-        });
-        namedPropertyVetoListenerMap.entrySet().forEach((e) -> {
-            e.getValue().forEach((l) -> {
-                m.addVetoableChangeListener(e.getKey(), l);
-            });
-        });
-        namedPropertyListenerMap.entrySet().forEach((e) -> {
-            e.getValue().forEach((l) -> {
-                m.addPropertyChangeListener(e.getKey(), l);
-            });
-        });
-
+        Arrays.stream(getPropertyChangeListeners()).forEach(l -> m.addPropertyChangeListener(l));
+        Arrays.stream(getVetoableChangeListeners()).forEach(l -> m.addVetoableChangeListener(l));
+        boundPropertyNames
+                .forEach(n -> Arrays.stream(getPropertyChangeListeners(n))
+                .forEach(l -> m.addPropertyChangeListener(n, l)));
+        vetoablePropertyNames
+                .forEach(n -> Arrays.stream(getVetoableChangeListeners(n))
+                .forEach(l -> m.addVetoableChangeListener(n, l)));
+        m.addPropertyChangeListener("beans", this);
         m.addDataListener(this);
         recomputeNamedBeanSet();
         log.debug("added manager {}", m.getClass());
@@ -151,10 +134,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
         return internalManager;
     }
 
-    private final IndexedTreeSet<Manager<E>> mgrs = new IndexedTreeSet<>(new Comparator<Manager<E>>(){
-        @Override
-        public int compare(Manager<E> e1, Manager<E> e2) { return e1.getSystemPrefix().compareTo(e2.getSystemPrefix()); }
-    });
+    private final Set<Manager<E>> mgrs = new TreeSet<>((Manager<E> e1, Manager<E> e2) -> e1.getSystemPrefix().compareTo(e2.getSystemPrefix()));
     private Manager<E> internalManager = null;
     protected Manager<E> defaultManager = null;
 
@@ -195,37 +175,35 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
             return t;
         }
         // Doesn't exist. If the systemName was specified, find that system
-        int index = matchTentative(name);
-        if (index >= 0) {
-            return makeBean(index, name, null);
+        Manager<E> manager = getManager(name);
+        if (manager != null) {
+            return makeBean(manager, name, null);
         }
         log.debug("provideNamedBean did not find manager for name {}, defer to default", name); // NOI18N
-        return makeBean(mgrs.entryIndex(getDefaultManager()), getDefaultManager().makeSystemName(name), null);
+        return makeBean(getDefaultManager(), getDefaultManager().makeSystemName(name), null);
     }
 
     /**
      * Defer creation of the proper type to the subclass.
      *
-     * @param index      the manager to invoke
+     * @param manager    the manager to invoke
      * @param systemName the system name
      * @param userName   the user name
      * @return a bean
      */
-    abstract protected E makeBean(int index, String systemName, String userName);
+    abstract protected E makeBean(Manager<E> manager, String systemName, String userName);
 
     /** {@inheritDoc} */
     @Override
     @CheckReturnValue
     @CheckForNull
     public E getBySystemName(@Nonnull String systemName) {
-        // System names can be matched to managers by system and type at front of name
-        int index = matchTentative(systemName);
-        if (index >= 0) {
-            Manager<E> m = getMgr(index);
-            return m.getBySystemName(systemName);
+        Manager<E> m = getManager(systemName);
+        if (m == null) {
+            log.debug("getBySystemName did not find manager from name {}, defer to default manager", systemName);
+            m = getDefaultManager();
         }
-        log.debug("getBySystemName did not find manager from name {}, defer to default manager", systemName); // NOI18N
-        return getDefaultManager().getBySystemName(systemName);
+        return m.getBySystemName(systemName);
     }
 
     /** {@inheritDoc} */
@@ -252,10 +230,9 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     @Override
     @Nonnull
     public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
-        int i = matchTentative(systemName);
-        Manager manager = getDefaultManager();
-        if (i >= 0) {
-            manager = getMgr(i);
+        Manager manager = getManager(systemName);
+        if (manager == null) {
+            manager = getDefaultManager();
         }
         return manager.validateSystemNameFormat(systemName, locale);
     }
@@ -269,11 +246,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      */
     @Override
     public NameValidity validSystemNameFormat(@Nonnull String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return getMgr(i).validSystemNameFormat(systemName);
-        }
-        return NameValidity.INVALID;
+        Manager m = getManager(systemName);
+        return m == null ? NameValidity.INVALID : m.validSystemNameFormat(systemName);
     }
 
     /**
@@ -311,22 +285,20 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
         initInternal();
 
         // if the systemName is specified, find that system
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return makeBean(i, systemName, userName);
+        Manager<E> m = getManager(systemName);
+        if (m != null) {
+            return makeBean(m, systemName, userName);
         }
 
         // did not find a manager, allow it to default to the primary
         log.debug("Did not find manager for system name {}, delegate to primary", systemName); // NOI18N
-        return makeBean(mgrs.entryIndex(getDefaultManager()), systemName, userName);
+        return makeBean(getDefaultManager(), systemName, userName);
     }
 
     /** {@inheritDoc} */
     @Override
     public void dispose() {
-        for (Manager<E> m : mgrs) {
-            m.dispose();
-        }
+        mgrs.forEach(m -> m.dispose());
         mgrs.clear();
         if (internalManager != null) {
             internalManager.dispose(); // don't make if not made yet
@@ -334,37 +306,38 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     }
 
     /**
-     * Find the index of a matching manager.
-     *
-     * @param  systemName the system name to find a manager for
-     * @return the index of the matching manager, or -1 if there is no match,
-     *         which is not considered an error
+     * Get the manager for the given system name.
+     * 
+     * @param systemName the given name 
+     * @return the requested manager or null if there is no matching manager
      */
-    protected int matchTentative(String systemName) {
-        for (Manager<E> m : mgrs) {
-            if (systemName.startsWith(m.getSystemPrefix() + m.typeLetter())) {
-                return mgrs.entryIndex(m);
+    @CheckForNull
+    protected Manager<E> getManager(@Nonnull String systemName) {
+        // make sure internal present
+        initInternal();
+        for (Manager<E> m : getManagerList()) {
+            if (systemName.startsWith(m.getSystemNamePrefix())) {
+                return m;
             }
         }
-        return -1;
+        return null;
     }
 
     /**
-     * Find the index of a matching manager. Throws IllegalArgumentException if
-     * there is no match, here considered to be an error that must be reported.
+     * Get the manager for the given system name or the default manager if there
+     * is no matching manager.
      *
-     * @param systemName the system name to find a manager for
-     * @return the index of the matching manager
+     * @param systemName the given name
+     * @return the requested manager or the default manager if there is no
+     *         matching manager
      */
-    protected int match(String systemName) {
-        // make sure internal present
-        initInternal();
-
-        int index = matchTentative(systemName);
-        if (index < 0) {
-            throw new IllegalArgumentException("System name " + systemName + " failed to match"); // NOI18N
+    @Nonnull
+    protected Manager<E> getManagerOrDefault(@Nonnull String systemName) {
+        Manager<E> manager = getManager(systemName);
+        if (manager == null) {
+            manager = getDefaultManager();
         }
-        return index;
+        return manager;
     }
 
     /**
@@ -421,11 +394,9 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     /** {@inheritDoc} */
     @Override
     public void deleteBean(@Nonnull E s, @Nonnull String property) throws PropertyVetoException {
-        String systemName = s.getSystemName();
-        try {
-            getMgr(match(systemName)).deleteBean(s, property);
-        } catch (PropertyVetoException e) {
-            throw e;
+        Manager<E> m = getManager(s.getSystemName());
+        if (m != null) {
+            m.deleteBean(s, property);
         }
     }
 
@@ -436,8 +407,10 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      */
     @Override
     public void register(@Nonnull E s) {
-        String systemName = s.getSystemName();
-        getMgr(match(systemName)).register(s);
+        Manager<E> m = getManager(s.getSystemName());
+        if (m != null) {
+            m.register(s);
+        }
     }
 
     /**
@@ -449,8 +422,10 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      */
     @Override
     public void deregister(@Nonnull E s) {
-        String systemName = s.getSystemName();
-        getMgr(match(systemName)).deregister(s);
+        Manager<E> m = getManager(s.getSystemName());
+        if (m != null) {
+            m.deregister(s);
+        }
     }
 
     /** {@inheritDoc} */
@@ -458,162 +433,89 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     @Override
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
-        for (Manager<E> m : mgrs) {
-            l.addAll(m.getKnownBeanProperties());
-        }
+        mgrs.forEach(m -> l.addAll(m.getKnownBeanProperties()));
         return l;
     }
 
     /** {@inheritDoc} */
     @Override
+    @OverridingMethodsMustInvokeSuper
     public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-        if (!propertyListenerList.contains(l)) {
-            propertyListenerList.add(l);
-        }
-        for (Manager<E> m : mgrs) {
-            m.addPropertyChangeListener(l);
-        }
+        super.addPropertyChangeListener(l);
+        mgrs.forEach(m -> m.addPropertyChangeListener(l));
     }
 
     /** {@inheritDoc} */
     @Override
+    @OverridingMethodsMustInvokeSuper
     public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-        if (propertyListenerList.contains(l)) {
-            propertyListenerList.remove(l);
-        }
-        for (Manager<E> m : mgrs) {
-            m.removePropertyChangeListener(l);
-        }
+        super.removePropertyChangeListener(l);
+        mgrs.forEach(m -> m.removePropertyChangeListener(l));
     }
 
     /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        if (!namedPropertyListenerMap.containsKey(propertyName)) {
-            namedPropertyListenerMap.put(propertyName, new ArrayList<>());
-        }
-        if (!namedPropertyListenerMap.get(propertyName).contains(listener)) {
-            namedPropertyListenerMap.get(propertyName).add(listener);
-        }
-        for (Manager<E> m : mgrs) {
-            m.addPropertyChangeListener(propertyName, listener);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public PropertyChangeListener[] getPropertyChangeListeners() {
-        ArrayList<PropertyChangeListener> listeners = new ArrayList<>(propertyListenerList);
-        for (ArrayList<PropertyChangeListener> list : namedPropertyListenerMap.values()) {
-            listeners.addAll(list);
-        }
-        return listeners.toArray(new PropertyChangeListener[listeners.size()]);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
-    @OverridingMethodsMustInvokeSuper
-    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
-        if (!namedPropertyListenerMap.containsKey(propertyName)) {
-            namedPropertyListenerMap.put(propertyName, new ArrayList<>());
-        }
-        ArrayList<PropertyChangeListener> listeners = namedPropertyListenerMap.get(propertyName);
-        return listeners.toArray(new PropertyChangeListener[listeners.size()]);
+        super.addPropertyChangeListener(propertyName, listener);
+        boundPropertyNames.add(propertyName);
+        mgrs.forEach(m -> m.addPropertyChangeListener(propertyName, listener));
     }
 
     /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        if (!namedPropertyListenerMap.containsKey(propertyName)) {
-            namedPropertyListenerMap.put(propertyName, new ArrayList<>());
-        }
-        namedPropertyListenerMap.get(propertyName).remove(listener);
-        for (Manager<E> m : mgrs) {
-            m.removePropertyChangeListener(propertyName, listener);
-        }
+        super.removePropertyChangeListener(propertyName, listener);
+        mgrs.forEach(m -> m.removePropertyChangeListener(propertyName, listener));
     }
 
     /** {@inheritDoc} */
     @Override
+    @OverridingMethodsMustInvokeSuper
     public synchronized void addVetoableChangeListener(VetoableChangeListener l) {
-        if (!propertyVetoListenerList.contains(l)) {
-            propertyVetoListenerList.add(l);
-        }
-        for (Manager<E> m : mgrs) {
-            m.addVetoableChangeListener(l);
-        }
+        super.addVetoableChangeListener(l);
+        mgrs.forEach(m -> m.addVetoableChangeListener(l));
     }
 
     /** {@inheritDoc} */
     @Override
+    @OverridingMethodsMustInvokeSuper
     public synchronized void removeVetoableChangeListener(VetoableChangeListener l) {
-        if (propertyVetoListenerList.contains(l)) {
-            propertyVetoListenerList.remove(l);
-        }
-        for (Manager<E> m : mgrs) {
-            m.removeVetoableChangeListener(l);
-        }
+        super.removeVetoableChangeListener(l);
+        mgrs.forEach(m -> m.removeVetoableChangeListener(l));
     }
 
     /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public void addVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
-        if (!namedPropertyVetoListenerMap.containsKey(propertyName)) {
-            namedPropertyVetoListenerMap.put(propertyName, new ArrayList<>());
-        }
-        if (!namedPropertyVetoListenerMap.get(propertyName).contains(listener)) {
-            namedPropertyVetoListenerMap.get(propertyName).add(listener);
-        }
-        for (Manager<E> m : mgrs) {
-            m.addVetoableChangeListener(propertyName, listener);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public VetoableChangeListener[] getVetoableChangeListeners() {
-        ArrayList<VetoableChangeListener> listeners = new ArrayList<>(propertyVetoListenerList);
-        for (ArrayList<VetoableChangeListener> list : namedPropertyVetoListenerMap.values()) {
-            listeners.addAll(list);
-        }
-        return listeners.toArray(new VetoableChangeListener[listeners.size()]);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public VetoableChangeListener[] getVetoableChangeListeners(String propertyName) {
-        if (!namedPropertyVetoListenerMap.containsKey(propertyName)) {
-            namedPropertyVetoListenerMap.put(propertyName, new ArrayList<>());
-        }
-        ArrayList<VetoableChangeListener> listeners = namedPropertyVetoListenerMap.get(propertyName);
-        return listeners.toArray(new VetoableChangeListener[listeners.size()]);
+        super.addVetoableChangeListener(propertyName, listener);
+        vetoablePropertyNames.add(propertyName);
+        mgrs.forEach(m -> m.addVetoableChangeListener(propertyName, listener));
     }
 
     /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public void removeVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
-        if (!namedPropertyVetoListenerMap.containsKey(propertyName)) {
-            namedPropertyVetoListenerMap.put(propertyName, new ArrayList<>());
-        }
-        namedPropertyVetoListenerMap.get(propertyName).remove(listener);
-        for (Manager<E> m : mgrs) {
-            m.removeVetoableChangeListener(propertyName, listener);
-        }
+        super.removeVetoableChangeListener(propertyName, listener);
+        mgrs.forEach(m -> m.removeVetoableChangeListener(propertyName, listener));
     }
 
-    ArrayList<PropertyChangeListener> propertyListenerList = new ArrayList<>();
-    HashMap<String, ArrayList<PropertyChangeListener>> namedPropertyListenerMap = new HashMap<>();
-    ArrayList<VetoableChangeListener> propertyVetoListenerList = new ArrayList<>();
-    HashMap<String, ArrayList<VetoableChangeListener>> namedPropertyVetoListenerMap = new HashMap<>();
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        PropertyChangeEvent event = e;
+        if (event.getPropertyName().equals("beans")) {
+            recomputeNamedBeanSet();
+        }
+        event.setPropagationId(this);
+        firePropertyChange(event);
+    }
+    
     /**
      * {@inheritDoc}
      *
@@ -653,8 +555,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     }
 
     /**
-     * @return A system name from a user input, typically a number, from the
-     *         primary system.
+     * {@inheritDoc}
      */
     @Override
     @Nonnull
@@ -666,9 +567,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     @CheckReturnValue
     @Override
     public int getObjectCount() {
-        int count = 0;
-        for (Manager<E> m : mgrs) { count += m.getObjectCount(); }
-        return count;
+        return mgrs.stream().map(m -> m.getObjectCount()).reduce(0, Integer::sum);
     }
 
     /** {@inheritDoc} */
@@ -679,7 +578,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
         // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameList"); // used by configureXML
         List<E> list = getNamedBeanList();
         ArrayList<String> retval = new ArrayList<>(list.size());
-        for (E e : list) retval.add(e.getSystemName());
+        list.forEach(e -> retval.add(e.getSystemName()));
         return Collections.unmodifiableList(retval);
     }
 
@@ -691,18 +590,15 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
         // jmri.util.Log4JUtil.deprecationWarning(log, "getNamedBeanList"); // used by getSystemNameList
         // by doing this in order by manager and from each managers ordered sets, its finally in order
         ArrayList<E> tl = new ArrayList<>();
-        for (Manager<E> m : mgrs) {
-            tl.addAll(m.getNamedBeanSet());
-        }
+        mgrs.forEach(m -> tl.addAll(m.getNamedBeanSet()));
         return Collections.unmodifiableList(tl);
     }
 
     private TreeSet<E> namedBeanSet = null;
     protected void recomputeNamedBeanSet() {
-        if (namedBeanSet == null) return; // only maintain if requested
-        namedBeanSet.clear();
-        for (Manager<E> m : mgrs) {
-            namedBeanSet.addAll(m.getNamedBeanSet());
+        if (namedBeanSet != null) { // only maintain if requested
+            namedBeanSet.clear();
+            mgrs.forEach(m -> namedBeanSet.addAll(m.getNamedBeanSet()));
         }
     }
 
@@ -719,16 +615,19 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated
     public void addDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.add(e);
     }
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated
     public void removeDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.remove(e);
     }
 
+    @SuppressWarnings("deprecation")
     final List<ManagerDataListener<E>> listeners = new ArrayList<>();
 
     /**
@@ -737,6 +636,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      * managers.
      */
     @Override
+    @Deprecated
     public void contentsChanged(Manager.ManagerDataEvent<E> e) {
     }
 
@@ -746,6 +646,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      * managers.
      */
     @Override
+    @Deprecated
+    @SuppressWarnings("deprecation")
     public void intervalAdded(AbstractProxyManager.ManagerDataEvent<E> e) {
         if (namedBeanSet != null && e.getIndex0() == e.getIndex1()) {
             // just one element added, and we have the object reference
@@ -762,11 +664,9 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
             offset += m.getObjectCount();
         }
 
-        ManagerDataEvent<E> eOut = new ManagerDataEvent<E>(this, Manager.ManagerDataEvent.INTERVAL_ADDED, e.getIndex0()+offset, e.getIndex1()+offset, e.getChangedBean());
+        ManagerDataEvent<E> eOut = new ManagerDataEvent<>(this, Manager.ManagerDataEvent.INTERVAL_ADDED, e.getIndex0()+offset, e.getIndex1()+offset, e.getChangedBean());
 
-        for (ManagerDataListener<E> m : listeners) {
-            m.intervalAdded(eOut);
-        }
+        listeners.forEach(m -> m.intervalAdded(eOut));
     }
 
     /**
@@ -775,6 +675,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      * managers.
      */
     @Override
+    @Deprecated
+    @SuppressWarnings("deprecation")
     public void intervalRemoved(AbstractProxyManager.ManagerDataEvent<E> e) {
         recomputeNamedBeanSet();
 
@@ -786,23 +688,21 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
             offset += m.getObjectCount();
         }
 
-        ManagerDataEvent<E> eOut = new ManagerDataEvent<E>(this, Manager.ManagerDataEvent.INTERVAL_REMOVED, e.getIndex0()+offset, e.getIndex1()+offset, e.getChangedBean());
+        ManagerDataEvent<E> eOut = new ManagerDataEvent<>(this, Manager.ManagerDataEvent.INTERVAL_REMOVED, e.getIndex0()+offset, e.getIndex1()+offset, e.getChangedBean());
 
-        for (ManagerDataListener<E> m : listeners) {
-            m.intervalRemoved(eOut);
-        }
+        listeners.forEach(m -> m.intervalRemoved(eOut));
     }
 
     private boolean muted = false;
     /** {@inheritDoc} */
     @Override
+    @Deprecated
+    @SuppressWarnings("deprecation")
     public void setDataListenerMute(boolean m) {
         if (muted && !m) {
             // send a total update, as we haven't kept track of specifics
-            ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount()-1, null);
-            for (ManagerDataListener<E> listener : listeners) {
-                listener.contentsChanged(e);
-            }
+            ManagerDataEvent<E> e = new ManagerDataEvent<>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount()-1, null);
+            listeners.forEach((listener) -> listener.contentsChanged(e));
         }
         this.muted = m;
     }

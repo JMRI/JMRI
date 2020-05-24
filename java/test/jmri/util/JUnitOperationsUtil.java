@@ -1,6 +1,7 @@
 package jmri.util;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.ResourceBundle; // for access operations keys directly.
 
@@ -391,8 +392,10 @@ public class JUnitOperationsUtil {
         route.addLocation(chelmsford);
         RouteLocation rlC = route.addLocation(chelmsford); // enter 2nd time for train reversal
         rlC.setTrainDirection(RouteLocation.SOUTH);
+        rlC.setTrainIconX(126);
         RouteLocation rlB = route.addLocation(boston);
         rlB.setTrainDirection(RouteLocation.SOUTH);
+        rlB.setTrainIconX(26);
         RouteLocation rlA = route.addLocation(acton);
         rlA.setTrainDirection(RouteLocation.SOUTH);
         rlA.setPickUpAllowed(false); // don't include cars at destination
@@ -655,10 +658,8 @@ public class JUnitOperationsUtil {
     public static BufferedReader getBufferedReader(File file) {
         BufferedReader in = null;
         try {
-            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")); // NOI18N
+            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)); // NOI18N
         } catch (FileNotFoundException e) {
-
-        } catch (UnsupportedEncodingException e) {
 
         }
         Assert.assertNotNull(in);
@@ -670,6 +671,7 @@ public class JUnitOperationsUtil {
         Assert.assertTrue(InstanceManager.containsDefault(ShutDownManager.class));
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         List<ShutDownTask> list = sm.tasks();
+        // only one operations shut down task, the other can be NCE shutdown
         Assert.assertTrue("Two shut down tasks max", list.size() < 3);
         ShutDownTask operationShutdownTask = null;
         for (ShutDownTask task : list) {
@@ -680,22 +682,6 @@ public class JUnitOperationsUtil {
         }
         Assert.assertNotNull(operationShutdownTask);
         sm.deregister(operationShutdownTask);
-    }
-    
-    public static void checkIdTagsShutDownTask() {
-        // remove the Id tags shut down tasks
-        Assert.assertTrue(InstanceManager.containsDefault(ShutDownManager.class));
-        ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
-        List<ShutDownTask> list = sm.tasks();
-        Assert.assertTrue("One shut down tasks max", list.size() < 2);
-        ShutDownTask idTagsShutdownTask = null;
-        for (ShutDownTask task : list) {
-            if (task.getName().equals("Writing IdTags")) {
-                idTagsShutdownTask = task;
-            }
-        }
-        Assert.assertNotNull(idTagsShutdownTask);
-        sm.deregister(idTagsShutdownTask);
     }
     
     /**

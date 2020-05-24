@@ -121,13 +121,13 @@ public class ImportEnginesTest extends OperationsTestCase {
         // confirm import successful
         Assert.assertEquals("engines", 4, emanager.getNumEntries());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     @Test
     public void testImportEnginesWithLocations() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+//        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
         JUnitOperationsUtil.initOperationsData();
@@ -187,6 +187,10 @@ public class ImportEnginesTest extends OperationsTestCase {
         };
         mb.setName("Test Import Engines"); // NOI18N
         mb.start();
+        
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for dialog");
 
         // dialog windows should now open asking to add 2 models
         JemmyUtil.pressDialogButton(Bundle.getMessage("engineAddModel"), Bundle.getMessage("ButtonYes"));
@@ -241,7 +245,7 @@ public class ImportEnginesTest extends OperationsTestCase {
         // confirm import successful
         Assert.assertEquals("engines", 4, emanager.getNumEntries());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ImportEnginesTest.class);

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Use an object of this type as a XNetTrafficController in tests.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
  */
 public class XNetInterfaceScaffold extends XNetTrafficController {
 

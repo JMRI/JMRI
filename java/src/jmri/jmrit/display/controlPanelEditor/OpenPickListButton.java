@@ -12,7 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
 import jmri.NamedBean;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickSinglePanel;
@@ -21,10 +20,11 @@ import jmri.jmrit.picker.PickSinglePanel;
  *
  * @author Pete Cressman Copyright: Copyright (c) 2019
  *
+ * @param <T> type of NamedBean in PickList 
  */
 public class OpenPickListButton<T extends NamedBean> {
 
-    private JPanel _buttonPanel;
+    private final JPanel _buttonPanel;
     private JFrame _pickFrame;
     private JButton _openPicklistButton;
     String[] _blurbLines;
@@ -79,7 +79,7 @@ public class OpenPickListButton<T extends NamedBean> {
         JPanel panel = new JPanel();
         panel.add(blurb);
         content.add(panel);
-        PickSinglePanel<T> pickPanel = new PickSinglePanel<T>(_model);
+        PickSinglePanel<T> pickPanel = new PickSinglePanel<>(_model);
         content.add(pickPanel);
         content.setToolTipText(Bundle.getMessage("ToolTipPickLists"));
         pickPanel.setToolTipText(Bundle.getMessage("ToolTipPickLists"));
@@ -92,7 +92,7 @@ public class OpenPickListButton<T extends NamedBean> {
                 closePickList();
             }
         });
-        _pickFrame.setLocation(jmri.util.PlaceWindow. nextTo(_parent, null, _pickFrame));
+        jmri.InstanceManager.getDefault(jmri.util.PlaceWindow.class). nextTo(_parent, null, _pickFrame);
         _pickFrame.toFront();
         _pickFrame.setVisible(true);
         _pickFrame.pack();

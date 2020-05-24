@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LnPr2ThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
@@ -21,7 +21,6 @@ public class LnPr2ThrottleManagerTest extends jmri.managers.AbstractThrottleMana
                  ((LnPr2ThrottleManager)tm).getActiveAddress());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

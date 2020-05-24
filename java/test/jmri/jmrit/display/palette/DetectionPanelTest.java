@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -25,14 +26,13 @@ public class DetectionPanelTest {
             ip = ItemPalette.getDefault("Test ItemPalette", es);
             ip.pack();
         });
-        TextItemPanel tip = new TextItemPanel(ip, "test", es);
+        TextItemPanel tip = new TextItemPanel(ip, "test");
         DetectionPanel t = new DetectionPanel(tip);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(ip);
         JUnitUtil.dispose(es);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -42,6 +42,7 @@ public class DetectionPanelTest {
     @After
     public void tearDown() {
         ip = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -1,0 +1,14 @@
+<!-- Sidebar local part for XPressNet files -->
+
+<dt><h3 style="padding-left: 1em;"><a href="index.shtml">XPressNet</a></h3></dt>
+		<dd>
+		    <ul>
+                    <li><a href="XNetAddressing.shtml">XPressNet Addressing</a>
+                    <li><a href="LI101Configurationtool.shtml">LI101 Config</a>
+                    <li><a href="LZV100Configurationtool.shtml">LZV100 Config</a>
+                    <li><a href="XNetSystemInformationtool.shtml">System Information</a>
+                    <li><a href="CreateXNetLogFile.shtml">XPressNet Log</a>
+                    </ul>
+                </dd>
+    
+    <!-- /SidebarHardwareLocalPart.shtml -->

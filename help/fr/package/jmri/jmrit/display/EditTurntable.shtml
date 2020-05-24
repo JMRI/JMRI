@@ -24,7 +24,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -129,7 +129,7 @@
       diminu&eacute; le rayon de retour &agrave; sa derni&egrave;re
       valeur, ajouter des segments voie. Les segments de voie
       seront align&eacute;s assez pr&eacute;cis&eacute;ment avec le
-      centre du pont.</p><!--#include virtual="/Footer" -->
+      centre du pont.</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

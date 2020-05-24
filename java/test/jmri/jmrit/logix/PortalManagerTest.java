@@ -19,7 +19,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PortalManagerTest {
 
@@ -130,7 +130,6 @@ public class PortalManagerTest {
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -85,19 +85,20 @@ public class BlockContentsIconTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-	    if(!GraphicsEnvironment.isHeadless()){
+        if (!GraphicsEnvironment.isHeadless()) {
             jmri.Block block = jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
             to = new BlockContentsIcon("test", new LayoutEditor());
             to.setBlock(new jmri.NamedBeanHandle<>("IB1", block));
-	    }
+        }
     }
 
     @After
     public void tearDown() throws Exception {
-	if(to!=null) {
-           JUnitUtil.dispose(to.getEditor());
-	}
-	to = null;
-        JUnitUtil.tearDown();
+        if(to!=null) {
+            JUnitUtil.dispose(to.getEditor());
+     }
+     to = null;
+     JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+     JUnitUtil.tearDown();
     }
 }

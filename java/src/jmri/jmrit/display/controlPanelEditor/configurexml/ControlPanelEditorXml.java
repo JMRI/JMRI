@@ -12,7 +12,7 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
@@ -88,7 +88,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
                         panel.addContent(e);
                     }
                 } catch (RuntimeException e) {
-                    log.error("Error storing panel element: {}", e.getMessage(), e);
+                    log.error("Error storing panel element", e);
                 }
             }
         }
@@ -148,13 +148,13 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             name = shared.getAttribute("name").getValue();
         }
         // confirm that panel hasn't already been loaded
-        if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
+        if (InstanceManager.getDefault(EditorManager.class).contains(name)) {
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             result = false;
         }
 
         // If available, override location and size with machine dependent values
-        if (!InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
+        if (!InstanceManager.getDefault(jmri.util.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
             jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
             if (prefsMgr != null) {
                 String windowFrameRef = "jmri.jmrit.display.controlPanelEditor.ControlPanelEditor:" + name;
@@ -175,7 +175,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
         ControlPanelEditor panel = new ControlPanelEditor(name);
         panel.getTargetFrame().setVisible(false);   // save painting until last
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
+        InstanceManager.getDefault(EditorManager.class).add(panel);
 
         // Load editor option flags. This has to be done before the content
         // items are loaded, to preserve the individual item settings
@@ -282,12 +282,12 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             } catch (ClassNotFoundException | InstantiationException
                     | jmri.configurexml.JmriConfigureXmlException | IllegalAccessException
                     | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
-                log.error("Exception while loading {}: {}", panelItem.getName(), e.getMessage(), e);
+                log.error("Exception while loading {}", panelItem.getName(), e);
                 result = false;
             }
         }
         if (icons != null) {
-            HashMap<String, NamedIcon> portalIconMap = new HashMap<String, NamedIcon>();
+            HashMap<String, NamedIcon> portalIconMap = new HashMap<>();
             portalIconMap.put(PortalIcon.VISIBLE, loadIcon("visible", icons, panel));
             portalIconMap.put(PortalIcon.PATH, loadIcon("path_edit", icons, panel));
             portalIconMap.put(PortalIcon.HIDDEN, loadIcon("hidden", icons, panel));

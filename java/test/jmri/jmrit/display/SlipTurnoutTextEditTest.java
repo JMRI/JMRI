@@ -1,13 +1,14 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
  * Test simple functioning of SlipTurnoutTextEdit
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SlipTurnoutTextEditTest extends jmri.util.JmriJFrameTestBase {
 
@@ -38,6 +39,7 @@ public class SlipTurnoutTextEditTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 

@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LnClockControlTest {
 
@@ -35,6 +35,7 @@ public class LnClockControlTest {
         LnClockControl t = new LnClockControl(slotmanager, lnis, null);
  
         Assert.assertNotNull("exists",t);
+        slotmanager.dispose();
     }
 
     @Test

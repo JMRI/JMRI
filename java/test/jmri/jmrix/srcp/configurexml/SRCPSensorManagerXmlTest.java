@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * SRCPSensorManagerXmlTest.java
  *
- * Description: tests for the SRCPSensorManagerXml class
+ * Test for the SRCPSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class SRCPSensorManagerXmlTest {
       Assert.assertNotNull("SRCPSensorManagerXml constructor",new SRCPSensorManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -13,13 +13,12 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 
 /**
  * Tests for the Operations EnginesSetFrame class
  *
- * @author	Dan Boudreau Copyright (C) 2010
+ * @author Dan Boudreau Copyright (C) 2010
  *
  */
 public class EngineSetFrameTest extends OperationsTestCase {
@@ -35,7 +34,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
         Engine e3 = cManager.getByRoadAndNumber("AA", "3");
         f.loadEngine(e3);
         JUnitUtil.dispose(f);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     private void loadEngines() {

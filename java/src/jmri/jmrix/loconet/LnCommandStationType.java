@@ -35,7 +35,7 @@ public enum LnCommandStationType {
     //  enum value(name, canRead, progEndOp, ThrottleManager, SlotManager, supportsIdle, supportsMultimeter
     COMMAND_STATION_DCS100("DCS100 (Chief)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
-            ProgDepowersTrack.TRACK_TURNEDOFF_BY_PROGRAMMING,
+            ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
             "LnThrottleManager", "SlotManager",  // NOI18N
             IdleSupport.SUPPORTS_OPC_IDLE,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
@@ -49,14 +49,14 @@ public enum LnCommandStationType {
             LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION),
     COMMAND_STATION_DCS210("DCS210 (Evolution Command Station)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
-            ProgDepowersTrack.TRACK_TURNEDOFF_BY_PROGRAMMING,
+            ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
             "LnThrottleManager", "SlotManager",  // NOI18N
             IdleSupport.SUPPORTS_OPC_IDLE,
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION),
     COMMAND_STATION_DCS200("DCS200",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
-            ProgDepowersTrack.TRACK_TURNEDOFF_BY_PROGRAMMING,
+            ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
             "LnThrottleManager", "SlotManager",  // NOI18N
             IdleSupport.SUPPORTS_OPC_IDLE,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
@@ -84,7 +84,7 @@ public enum LnCommandStationType {
             LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION),
     COMMAND_STATION_DB150("DB150 (Empire Builder)", // NOI18N
             ReadsFromServiceModeTrack.NO_SVC_MODE_READS,
-            ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
+            ProgDepowersTrack.TRACK_TURNEDOFF_BY_PROGRAMMING,
             "LnThrottleManager", "SlotManager",  // NOI18N
             IdleSupport.SUPPORTS_OPC_IDLE,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
@@ -93,7 +93,7 @@ public enum LnCommandStationType {
     // the following command stations are assumed to not support "OPC_IDLE"
     COMMAND_STATION_LBPS("LocoBuffer (PS)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
-            ProgDepowersTrack.TRACK_TURNEDOFF_BY_PROGRAMMING,
+            ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
             "LnThrottleManager", "SlotManager",  // NOI18N
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
@@ -130,14 +130,14 @@ public enum LnCommandStationType {
             LocoResetSupport.NO_LOCO_RESET_SUPPORT),
     COMMAND_STATION_PR2_ALONE("PR2 standalone programmer",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
-            ProgDepowersTrack.TRACK_TURNEDOFF_BY_PROGRAMMING,
+            ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
             "LnThrottleManager", "SlotManager",  // NOI18N
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT),
     COMMAND_STATION_STANDALONE("Stand-alone LocoNet",  // NOI18N
             ReadsFromServiceModeTrack.NO_SVC_MODE_READS,
-            ProgDepowersTrack.TRACK_TURNEDOFF_BY_PROGRAMMING,
+            ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
             "LnThrottleManager", "SlotManager",  // NOI18N
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,

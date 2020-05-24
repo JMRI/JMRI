@@ -12,7 +12,7 @@ import jmri.util.JUnitOperationsUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MoveTrainActionTest extends OperationsTestCase {
 
@@ -60,7 +60,7 @@ public class MoveTrainActionTest extends OperationsTestCase {
         Assert.assertFalse(train1.isTrainEnRoute());
         Assert.assertFalse(automationItem.isActionSuccessful());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -92,7 +92,7 @@ public class MoveTrainActionTest extends OperationsTestCase {
         Assert.assertTrue(automationItem.isActionSuccessful());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -121,7 +121,7 @@ public class MoveTrainActionTest extends OperationsTestCase {
         Assert.assertTrue(automationItem.isActionSuccessful());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(MoveTrainActionTest.class);

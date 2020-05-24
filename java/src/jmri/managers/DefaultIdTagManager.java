@@ -67,33 +67,36 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
             readIdTagDetails();
             loading = false;
             dirty = false;
-
-            // Create shutdown task to save
-            log.debug("Register ShutDown task");
-            if (this.shutDownTask == null) {
-                this.shutDownTask = new jmri.implementation.AbstractShutDownTask("Writing IdTags") { // NOI18N
-                    @Override
-                    public boolean execute() {
-                        // Save IdTag details prior to exit, if necessary
-                        log.debug("Start writing IdTag details...");
-                        try {
-                            writeIdTagDetails();
-                        } catch (java.io.IOException ioe) {
-                            log.error("Exception writing IdTags: {}", (Object) ioe);
-                        }
-
-                        // continue shutdown
-                        return true;
-                    }
-                };
-                InstanceManager.getDefault(ShutDownManager.class).register(this.shutDownTask);
-            }
+            initShutdownTask();
             initialised = true;
         }
     }
 
+    protected void initShutdownTask(){
+        // Create shutdown task to save
+        log.debug("Register ShutDown task");
+        if (this.shutDownTask == null) {
+            this.shutDownTask = new jmri.implementation.AbstractShutDownTask("Writing IdTags") { // NOI18N
+                @Override
+                public boolean execute() {
+                    // Save IdTag details prior to exit, if necessary
+                    log.debug("Start writing IdTag details...");
+                    try {
+                        writeIdTagDetails();
+                    } catch (java.io.IOException ioe) {
+                        log.error("Exception writing IdTags: {}", (Object) ioe);
+                    }
+
+                    // continue shutdown
+                    return true;
+                }
+            };
+            InstanceManager.getDefault(ShutDownManager.class).register(this.shutDownTask);
+        }
+    }
+
     /**
-     * {@inheritDoc} 
+     * {@inheritDoc}
      * Don't want to store this information
      */
     @Override
@@ -110,14 +113,14 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public IdTag provide(@Nonnull String name) throws IllegalArgumentException {
+    public IdTag provide(@Nonnull String name) {
         return provideIdTag(name);
     }
 
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public IdTag provideIdTag(@Nonnull String name) throws IllegalArgumentException {
+    public IdTag provideIdTag(@Nonnull String name) {
         if (!initialised && !loading) {
             init();
         }
@@ -254,7 +257,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
     public void writeIdTagDetails() throws java.io.IOException {
         if (this.dirty) {
-            new DefaultIdTagManagerXml(this,"IdTags.xml").store();  //NOI18N
+            new DefaultIdTagManagerXml(this,"IdTags.xml").store();  // NOI18N
             this.dirty = false;
             log.debug("...done writing IdTag details");
         }
@@ -262,7 +265,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
     public void readIdTagDetails() {
         log.debug("reading idTag Details");
-        new DefaultIdTagManagerXml(this,"IdTags.xml").load();  //NOI18N
+        new DefaultIdTagManagerXml(this,"IdTags.xml").load();  // NOI18N
         this.dirty = false;
         log.debug("...done reading IdTag details");
     }
@@ -352,7 +355,9 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     /** {@inheritDoc} */
     @Override
     public void dispose() {
-        InstanceManager.getDefault(ShutDownManager.class).deregister(this.shutDownTask);
+        if(this.shutDownTask!=null) {
+            InstanceManager.getDefault(ShutDownManager.class).deregister(this.shutDownTask);
+        }
         super.dispose();
     }
 

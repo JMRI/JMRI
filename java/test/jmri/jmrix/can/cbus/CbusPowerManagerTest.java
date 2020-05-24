@@ -111,14 +111,19 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         r.setRtr(false);
         pwr.reply(r);
         Assert.assertEquals("on", PowerManager.ON, p.getPower());
+        Assert.assertEquals(0, controller.outbound.size());
         
     }
     
-    CanSystemConnectionMemo memo;
-    CbusPowerManager pwr;
-    TrafficControllerScaffold controller;
+    @Test
+    public void checkName() {
+        Assert.assertNotNull(pwr.getUserName());
+    }
     
-    // The minimal setup for log4J
+    private CanSystemConnectionMemo memo;
+    private CbusPowerManager pwr;
+    private TrafficControllerScaffold controller;
+    
     @Before
     @Override
     public void setUp() {
@@ -138,10 +143,11 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         } catch (jmri.JmriException ex) {}
         
         memo.dispose();
+        controller.terminateThreads();
         pwr = null;
         memo = null;
         controller = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        
         JUnitUtil.tearDown();
 
         

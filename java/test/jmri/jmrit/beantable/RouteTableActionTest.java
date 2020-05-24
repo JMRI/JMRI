@@ -17,7 +17,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 /**
  * Tests for the jmri.jmrit.beantable.RouteTableAction class
  *
- * @author	Bob Jacobsen Copyright 2004, 2007
+ * @author Bob Jacobsen Copyright 2004, 2007
  */
 public class RouteTableActionTest extends AbstractTableActionBase<Route> {
 
@@ -155,7 +155,6 @@ public class RouteTableActionTest extends AbstractTableActionBase<Route> {
     }
 
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

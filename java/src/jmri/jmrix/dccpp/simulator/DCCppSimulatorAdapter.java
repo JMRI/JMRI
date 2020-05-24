@@ -18,6 +18,7 @@ import jmri.jmrix.dccpp.DCCppPacketizer;
 import jmri.jmrix.dccpp.DCCppReply;
 import jmri.jmrix.dccpp.DCCppSimulatorPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
+import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,10 +56,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     public DCCppSimulatorAdapter() {
         setPort(Bundle.getMessage("None"));
         try {
-            PipedOutputStream tempPipeI = new PipedOutputStream();
+            PipedOutputStream tempPipeI = new ImmediatePipedOutputStream();
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
-            PipedOutputStream tempPipeO = new PipedOutputStream();
+            PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
@@ -124,7 +125,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         // packets.startThreads();
         this.getSystemConnectionMemo().setDCCppTrafficController(packets);
 
-        sourceThread = new Thread(this);
+        sourceThread = jmri.util.ThreadingUtil.newThread(this);
         sourceThread.start();
 
         new DCCppInitializationManager(this.getSystemConnectionMemo());
@@ -590,6 +591,9 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
+     * @param istream source of data
+     * @return next available byte, when available
+     * @throws IOException from underlying operation
      *
      */
     protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {

@@ -30,11 +30,11 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Metadata;
-import jmri.jmris.json.JsonServerPreferences;
+import jmri.server.json.JsonServerPreferences;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
@@ -203,7 +203,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public JsonNode getHello(Locale locale, int heartbeat, int id) {
-        return getHello(heartbeat, new JsonRequest(locale, JSON.V5, id));
+        return getHello(heartbeat, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -238,7 +238,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @throws JsonException if name is not a recognized metadata element.
      */
     public JsonNode getMetadata(Locale locale, String name, int id) throws JsonException {
-        return getMetadata(name, new JsonRequest(locale, JSON.V5, id));
+        return getMetadata(name, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -271,7 +271,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public ArrayNode getMetadata(Locale locale, int id) throws JsonException {
-        return getMetadata(new JsonRequest(locale, JSON.V5, id));
+        return getMetadata(new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -310,7 +310,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public JsonNode getNetworkService(Locale locale, String name, int id) throws JsonException {
-        return getNetworkService(name, new JsonRequest(locale, JSON.V5, id));
+        return getNetworkService(name, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     private JsonNode getNetworkService(ZeroConfService service, int id) {
@@ -344,7 +344,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @return the JSON networkServices message.
      */
     public ArrayNode getNetworkServices(Locale locale, int id) {
-        return getNetworkServices(new JsonRequest(locale, JSON.V5, id));
+        return getNetworkServices(new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -376,7 +376,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public JsonNode getNode(Locale locale, int id) {
-        return getNode(new JsonRequest(locale, JSON.V5, id));
+        return getNode(new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -435,16 +435,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         ArrayNode root = mapper.createArrayNode();
         // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor,
         // SwitchboardEditor)
-        // list ControlPanelEditors
-        Editor.getEditors(ControlPanelEditor.class).stream()
-                .map(editor -> this.getPanel(editor, format, id))
-                .filter(Objects::nonNull).forEach(root::add);
-        // list LayoutEditors and PanelEditors
-        Editor.getEditors(PanelEditor.class).stream()
-                .map(editor -> this.getPanel(editor, format, id))
-                .filter(Objects::nonNull).forEach(root::add);
-        // list SwitchboardEditors
-        Editor.getEditors(SwitchboardEditor.class).stream()
+        InstanceManager.getDefault(EditorManager.class).getAll().stream()
                 .map(editor -> this.getPanel(editor, format, id))
                 .filter(Objects::nonNull).forEach(root::add);
         return root;
@@ -478,7 +469,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public JsonNode getRailroad(Locale locale, int id) {
-        return getRailroad(new JsonRequest(locale, JSON.V5, id));
+        return getRailroad(new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -516,7 +507,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public JsonNode getSystemConnection(Locale locale, String name, int id) throws JsonException {
-        return getSystemConnection(name, new JsonRequest(locale, JSON.V5, id));
+        return getSystemConnection(name, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -579,7 +570,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public ArrayNode getSystemConnections(Locale locale, int id) {
-        return getSystemConnections(new JsonRequest(locale, JSON.V5, id));
+        return getSystemConnections(new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -640,7 +631,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public JsonNode getConfigProfile(Locale locale, String name, int id) throws JsonException {
-        return getConfigProfile(name, new JsonRequest(locale, JSON.V5, id));
+        return getConfigProfile(name, new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -671,7 +662,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public ArrayNode getConfigProfiles(Locale locale, int id) {
-        return getConfigProfiles(new JsonRequest(locale, JSON.V5, id));
+        return getConfigProfiles(new JsonRequest(locale, JSON.V5, JSON.GET, id));
     }
 
     /**
@@ -730,7 +721,6 @@ public class JsonUtilHttpService extends JsonHttpService {
                 case JsonException.ERROR:
                 case JSON.LIST:
                 case JSON.PONG:
-                case JSON.VERSION:
                     if (server) {
                         return doSchema(type, server,
                                 this.mapper.readTree(this.getClass().getClassLoader()
@@ -756,6 +746,7 @@ public class JsonUtilHttpService extends JsonHttpService {
                 case JSON.METADATA:
                 case JSON.NODE:
                 case JSON.RAILROAD:
+                case JSON.VERSION:
                     return doSchema(type,
                             server,
                             RESOURCE_PATH + type + "-server.json",

@@ -462,7 +462,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
                 setColor(COLOR_DIFF);
                 break;
             default:
-                log.error("Inconsistent state: " + _state);
+                log.error("Inconsistent state: {}", _state);
         }
         if (_state != state || _state == UNKNOWN) {
             prop.firePropertyChange("State", Integer.valueOf(_state), Integer.valueOf(state));
@@ -494,7 +494,8 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("setToRead(" + state + ") with overrides " + getInfoOnly() + "," + getWriteOnly() + "," + !getAvailable() + " sets " + newState);
+            // avoid method calls unless debugging
+            log.debug("setToRead({}) with overrides {},{},{} sets {}", state, getInfoOnly(), getWriteOnly(), !getAvailable(), newState);
         }
         _cvMap.get(getCvNum()).setToRead(newState);
     }
@@ -533,7 +534,8 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("setToRead(" + state + ") with overrides " + getInfoOnly() + "," + getReadOnly() + "," + !getAvailable() + " sets " + newState);
+            // avoid method calls unless debugging
+            log.debug("setToRead({}) with overrides {},{},{} sets {}", state, getInfoOnly(), getWriteOnly(), !getAvailable(), newState);
         }
         _cvMap.get(getCvNum()).setToWrite(newState);
     }

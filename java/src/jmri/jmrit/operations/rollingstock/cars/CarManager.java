@@ -38,18 +38,6 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     }
 
     /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized CarManager instance() {
-        return InstanceManager.getDefault(CarManager.class);
-    }
-
-    /**
      * Finds an existing Car or creates a new Car if needed requires car's road
      * and number
      *
@@ -417,8 +405,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         // now place cabooses, cars with FRED, and passenger cars at the rear of the train
         List<Car> out = new ArrayList<>();
         int lastCarsIndex = 0; // incremented each time a car is added to the end of the list
-        for (Car rs : byDestination) {
-            Car car = rs;
+        for (Car car : byDestination) {
             if (car.getKernel() != null && !car.isLead()) {
                 continue; // not the lead car, skip for now.
             }
@@ -426,6 +413,9 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
                 // sort order based on train direction when serving track, low to high if West or North bound trains
                 if (car.getDestinationTrack() != null && car.getDestinationTrack().getBlockingOrder() > 0) {
                     for (int j = 0; j < out.size(); j++) {
+                        if (out.get(j).getDestinationTrack() == null) {
+                            continue;
+                        }
                         if (car.getRouteDestination() != null
                                 && (car.getRouteDestination().getTrainDirectionString().equals(RouteLocation.WEST_DIR)
                                 || car.getRouteDestination().getTrainDirectionString()

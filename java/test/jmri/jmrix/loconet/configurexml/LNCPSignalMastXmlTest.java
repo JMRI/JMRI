@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * LNCPSignalMastXmlTest.java
  *
- * Description: tests for the LNCPSignalMastXml class
+ * Test for the LNCPSignalMastXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class LNCPSignalMastXmlTest {
       Assert.assertNotNull("LNCPSignalMastXml constructor",new LNCPSignalMastXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

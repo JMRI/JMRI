@@ -7,9 +7,9 @@ import org.junit.Before;
 /**
  * EcosSensorManagerTest.java
  *
- * Description:	tests for the EcosSensorManager class
+ * Test for the EcosSensorManager class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class EcosSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -20,7 +20,6 @@ public class EcosSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     EcosTrafficController tc = null;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * Implementation of a TurnoutManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2010
+ * @author Bob Jacobsen Copyright (C) 2003, 2010
  */
 public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implements TurnoutManager {
 
@@ -27,7 +27,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     /**
-     * Revise superclass behavior: support TurnoutOperations
+     * {@inheritDoc}
      */
     @Override
     public void addManager(@Nonnull Manager<Turnout> m) {
@@ -46,8 +46,8 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     @Override
-    protected Turnout makeBean(int i, String systemName, String userName) {
-        return ((TurnoutManager) getMgr(i)).newTurnout(systemName, userName);
+    protected Turnout makeBean(Manager<Turnout> manager, String systemName, String userName) {
+        return ((TurnoutManager) manager).newTurnout(systemName, userName);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     @Override
     @Nonnull
     public String getClosedText() {
-        return ((TurnoutManager) getMgr(0)).getClosedText();
+        return ((TurnoutManager) getDefaultManager()).getClosedText();
     }
 
     /**
@@ -121,7 +121,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     @Override
     @Nonnull
     public String getThrownText() {
-        return ((TurnoutManager) getMgr(0)).getThrownText();
+        return ((TurnoutManager) getDefaultManager()).getThrownText();
     }
 
     /**
@@ -137,11 +137,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      */
     @Override
     public int askNumControlBits(@Nonnull String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((TurnoutManager) getMgr(i)).askNumControlBits(systemName);
-        }
-        return ((TurnoutManager) getMgr(0)).askNumControlBits(systemName);
+        return ((TurnoutManager) getManagerOrDefault(systemName)).askNumControlBits(systemName);
     }
 
     /**
@@ -156,50 +152,31 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      */
     @Override
     public int askControlType(@Nonnull String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((TurnoutManager) getMgr(i)).askControlType(systemName);
-        }
-        return ((TurnoutManager) getMgr(0)).askControlType(systemName);
+        return ((TurnoutManager) getManagerOrDefault(systemName)).askControlType(systemName);
     }
 
     @Override
     public boolean isControlTypeSupported(@Nonnull String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((TurnoutManager) getMgr(i)).isControlTypeSupported(systemName);
-        }
-        return ((TurnoutManager) getMgr(0)).isControlTypeSupported(systemName);
+        return ((TurnoutManager) getManagerOrDefault(systemName)).isControlTypeSupported(systemName);
     }
 
     @Override
     public boolean isNumControlBitsSupported(@Nonnull String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((TurnoutManager) getMgr(i)).isNumControlBitsSupported(systemName);
-        }
-        return ((TurnoutManager) getMgr(0)).isNumControlBitsSupported(systemName);
+        return ((TurnoutManager) getManagerOrDefault(systemName)).isNumControlBitsSupported(systemName);
     }
 
     /** {@inheritDoc} */
     @Override
     @Nonnull
     public String[] getValidOperationTypes() {
-        List<String> typeList = new LinkedList<String>();
-        for (int i = 0; i < nMgrs(); ++i) {
-            String[] thisTypes = ((TurnoutManager) getMgr(i)).getValidOperationTypes();
-            typeList.addAll(Arrays.asList(thisTypes));
-        }
+        List<String> typeList = new LinkedList<>();
+        getManagerList().forEach(m -> typeList.addAll(Arrays.asList(((TurnoutManager) m).getValidOperationTypes())));
         return TurnoutOperationManager.concatenateTypeLists(typeList.toArray(new String[0]));
     }
 
     @Override
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((TurnoutManager) getMgr(i)).allowMultipleAdditions(systemName);
-        }
-        return ((TurnoutManager) getMgr(0)).allowMultipleAdditions(systemName);
+        return ((TurnoutManager) getManagerOrDefault(systemName)).allowMultipleAdditions(systemName);
     }
 
     @Override
@@ -214,9 +191,9 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
 
     @Override
     public void setDefaultClosedSpeed(@Nonnull String speed) throws jmri.JmriException {
-        for (int i = 0; i < nMgrs(); i++) {
+        for (Manager<Turnout> m : getManagerList()) {
             try {
-                ((TurnoutManager) getMgr(i)).setDefaultClosedSpeed(speed);
+                ((TurnoutManager) m).setDefaultClosedSpeed(speed);
             } catch (jmri.JmriException ex) {
                 log.error(ex.toString());
                 throw ex;
@@ -226,9 +203,9 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
 
     @Override
     public void setDefaultThrownSpeed(@Nonnull String speed) throws jmri.JmriException {
-        for (int i = 0; i < nMgrs(); i++) {
+        for (Manager<Turnout> m : getManagerList()) {
             try {
-                ((TurnoutManager) getMgr(i)).setDefaultThrownSpeed(speed);
+                ((TurnoutManager) m).setDefaultThrownSpeed(speed);
             } catch (jmri.JmriException ex) {
                 log.error(ex.toString());
                 throw ex;
@@ -238,12 +215,12 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
 
     @Override
     public String getDefaultThrownSpeed() {
-        return ((TurnoutManager) getMgr(0)).getDefaultThrownSpeed();
+        return ((TurnoutManager) getDefaultManager()).getDefaultThrownSpeed();
     }
 
     @Override
     public String getDefaultClosedSpeed() {
-        return ((TurnoutManager) getMgr(0)).getDefaultClosedSpeed();
+        return ((TurnoutManager) getDefaultManager()).getDefaultClosedSpeed();
     }
 
     /**

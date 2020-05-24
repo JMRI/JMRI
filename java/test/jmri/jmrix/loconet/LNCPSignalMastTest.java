@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LNCPSignalMastTest {
 
@@ -25,6 +25,7 @@ public class LNCPSignalMastTest {
         jmri.InstanceManager.store(lnis, jmri.jmrix.loconet.LnTrafficController.class);
         SlotManager s = new SlotManager(lnis);
         jmri.InstanceManager.store(s, jmri.CommandStation.class);
+        s.dispose();
     }
 
     @After

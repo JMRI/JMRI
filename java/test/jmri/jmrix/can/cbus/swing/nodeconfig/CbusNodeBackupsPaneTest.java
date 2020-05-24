@@ -1,68 +1,110 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
-import java.awt.GraphicsEnvironment;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.nio.file.Path;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.JmriJFrame;
+import jmri.util.swing.JemmyUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+import org.netbeans.jemmy.operators.*;
 
 /**
- * Test simple functioning of CbusNodeEventTablePane
+ * Test simple functioning of CbusNodeBackupsPane
  *
- * @author	Paul Bender Copyright (C) 2016
- * @author	Steve Young Copyright (C) 2019
+ * @author Paul Bender Copyright (C) 2016
+ * @author Steve Young Copyright (C) 2019
  */
 public class CbusNodeBackupsPaneTest {
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
-        
-        CbusNodeTableDataModel nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
-        jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
-        CbusNode nodeWithEventToEdit = nodeModel.provideNodeByNodeNum(256);
-        // set node to 3 node vars , param6
-        nodeWithEventToEdit.setParameters(new int[]{8,1,2,3,4,5,3,7,8});
-        
-        Assert.assertNotNull("exists",nodeWithEventToEdit);
-        
-        CbusNodeBackupsPane t = new CbusNodeBackupsPane(null);
-        
 
+        t = new CbusNodeBackupsPane(null);
         
-        Assert.assertNotNull("exists",t);
-
-        t.initComponents();
-        
-        t.setNode(nodeWithEventToEdit);
+        assertThat(t).isNotNull();
+        assertThat(nodeToEdit).isNotNull();
         
     }
     
-    private CanSystemConnectionMemo memo;
-    private TrafficControllerScaffold tcis;
+    @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    public void testTableData() {
 
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
+        nodeToEdit.getNodeBackupManager().doLoad();
         
+        t = new CbusNodeBackupsPane(null);
+        t.initComponents();
+        
+        t.setNode(nodeToEdit);
+        
+        // check pane has loaded something
+        JmriJFrame f = new JmriJFrame();
+        f.add(t);
+        f.setTitle("CBUS Node Backups Pane");
+        f.pack();
+        f.setVisible(true);
+        
+        JFrameOperator frame = new JFrameOperator(f);
+
+        JTableOperator tbl = new JTableOperator(new JFrameOperator(f), 0);
+        
+        assertEquals(0, nodeToEdit.getNodeBackupManager().getBackups().size(),"0 entry in node xml");
+        
+        assertThat(tbl.getRowCount()).withFailMessage("No Rows at Startup").isEqualTo(0);
+        assertThat(tbl.getColumnCount()).withFailMessage("column count").isEqualTo(5);
+        
+        JemmyUtil.pressButton(frame,("Create New Backup"));
+        
+        assertEquals(1, nodeToEdit.getNodeBackupManager().getBackups().size(),"1 entry in node xml");
+        
+        f.dispose();
+        t.dispose();
+        // JemmyUtil.pressButton(frame,("Pause Test"));
+    
+    }
+    
+    private CbusNodeBackupsPane t;
+    
+    private CbusNodeTableDataModel nodeModel;
+    private CbusNode nodeToEdit;
+    private CanSystemConnectionMemo memo;
+    // private TrafficControllerScaffold tcis;
+    
+    @TempDir 
+    protected Path tempDir;
+    
+    @BeforeEach
+    public void setUp() throws java.io.IOException {
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(tempDir.toFile()));
         memo = new CanSystemConnectionMemo();
-        tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
+        
+        nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
+        jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
+        nodeToEdit = nodeModel.provideNodeByNodeNum(256);
+        // set node to 3 node vars , param6
+        nodeToEdit.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,5,3,7,8});
+        
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        nodeModel.dispose();
+        nodeToEdit.dispose();
+        memo.dispose();
         memo = null;
-        tcis = null;
-        
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+       
         JUnitUtil.tearDown();
 
     }

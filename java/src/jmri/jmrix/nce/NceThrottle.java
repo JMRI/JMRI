@@ -38,35 +38,7 @@ public class NceThrottle extends AbstractThrottle {
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
         this.speedSetting = 0;
-        this.f0 = false;
-        this.f1 = false;
-        this.f2 = false;
-        this.f3 = false;
-        this.f4 = false;
-        this.f5 = false;
-        this.f6 = false;
-        this.f7 = false;
-        this.f8 = false;
-        this.f9 = false;
-        this.f10 = false;
-        this.f11 = false;
-        this.f12 = false;
-        this.f13 = false;
-        this.f14 = false;
-        this.f15 = false;
-        this.f16 = false;
-        this.f17 = false;
-        this.f18 = false;
-        this.f19 = false;
-        this.f20 = false;
-        this.f21 = false;
-        this.f22 = false;
-        this.f23 = false;
-        this.f24 = false;
-        this.f25 = false;
-        this.f26 = false;
-        this.f27 = false;
-        this.f28 = false;
+        // Functions default to false
         this.address = address;
         this.isForward = true;
 
@@ -98,11 +70,11 @@ public class NceThrottle extends AbstractThrottle {
             }
 
             int data = 0x00
-                    | (f0 ? 0x10 : 0)
-                    | (f1 ? 0x01 : 0)
-                    | (f2 ? 0x02 : 0)
-                    | (f3 ? 0x04 : 0)
-                    | (f4 ? 0x08 : 0);
+                    | (getFunction(0) ? 0x10 : 0)
+                    | (getFunction(1) ? 0x01 : 0)
+                    | (getFunction(2) ? 0x02 : 0)
+                    | (getFunction(3) ? 0x04 : 0)
+                    | (getFunction(4) ? 0x08 : 0);
 
             byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
                     NceBinaryCommand.LOCO_CMD_FG1, (byte) data);
@@ -135,10 +107,10 @@ public class NceThrottle extends AbstractThrottle {
             }
 
             int data = 0x00
-                    | (f8 ? 0x08 : 0)
-                    | (f7 ? 0x04 : 0)
-                    | (f6 ? 0x02 : 0)
-                    | (f5 ? 0x01 : 0);
+                    | (getFunction(8) ? 0x08 : 0)
+                    | (getFunction(7) ? 0x04 : 0)
+                    | (getFunction(6) ? 0x02 : 0)
+                    | (getFunction(5) ? 0x01 : 0);
 
             byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
                     NceBinaryCommand.LOCO_CMD_FG2, (byte) data);
@@ -171,10 +143,10 @@ public class NceThrottle extends AbstractThrottle {
             }
 
             int data = 0x00
-                    | (f12 ? 0x08 : 0)
-                    | (f11 ? 0x04 : 0)
-                    | (f10 ? 0x02 : 0)
-                    | (f9 ? 0x01 : 0);
+                    | (getFunction(12) ? 0x08 : 0)
+                    | (getFunction(11) ? 0x04 : 0)
+                    | (getFunction(10) ? 0x02 : 0)
+                    | (getFunction(9) ? 0x01 : 0);
 
             byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
                     NceBinaryCommand.LOCO_CMD_FG3, (byte) data);
@@ -208,14 +180,14 @@ public class NceThrottle extends AbstractThrottle {
             }
 
             int data = 0x00
-                    | (f20 ? 0x80 : 0)
-                    | (f19 ? 0x40 : 0)
-                    | (f18 ? 0x20 : 0)
-                    | (f17 ? 0x10 : 0)
-                    | (f16 ? 0x08 : 0)
-                    | (f15 ? 0x04 : 0)
-                    | (f14 ? 0x02 : 0)
-                    | (f13 ? 0x01 : 0);
+                    | (getFunction(20) ? 0x80 : 0)
+                    | (getFunction(19) ? 0x40 : 0)
+                    | (getFunction(18) ? 0x20 : 0)
+                    | (getFunction(17) ? 0x10 : 0)
+                    | (getFunction(16) ? 0x08 : 0)
+                    | (getFunction(15) ? 0x04 : 0)
+                    | (getFunction(14) ? 0x02 : 0)
+                    | (getFunction(13) ? 0x01 : 0);
 
             byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
                     NceBinaryCommand.LOCO_CMD_FG4, (byte) data);
@@ -248,14 +220,14 @@ public class NceThrottle extends AbstractThrottle {
             }
 
             int data = 0x00
-                    | (f28 ? 0x80 : 0)
-                    | (f27 ? 0x40 : 0)
-                    | (f26 ? 0x20 : 0)
-                    | (f25 ? 0x10 : 0)
-                    | (f24 ? 0x08 : 0)
-                    | (f23 ? 0x04 : 0)
-                    | (f22 ? 0x02 : 0)
-                    | (f21 ? 0x01 : 0);
+                    | (getFunction(28) ? 0x80 : 0)
+                    | (getFunction(27) ? 0x40 : 0)
+                    | (getFunction(26) ? 0x20 : 0)
+                    | (getFunction(25) ? 0x10 : 0)
+                    | (getFunction(24) ? 0x08 : 0)
+                    | (getFunction(23) ? 0x04 : 0)
+                    | (getFunction(22) ? 0x02 : 0)
+                    | (getFunction(21) ? 0x01 : 0);
 
             byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
                     NceBinaryCommand.LOCO_CMD_FG5, (byte) data);
@@ -273,7 +245,7 @@ public class NceThrottle extends AbstractThrottle {
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Set the speed and direction.
      * <p>
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
@@ -284,7 +256,7 @@ public class NceThrottle extends AbstractThrottle {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         if (log.isDebugEnabled()) {
-            log.debug("setSpeedSetting= " + speed);
+            log.debug("setSpeedSetting= {}", speed);
         }
 
         // The NCE USB doesn't support the NMRA packet format
@@ -376,9 +348,7 @@ public class NceThrottle extends AbstractThrottle {
             tc.sendNceMessage(m, null);
 
         }
-        if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
-        }
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
     }
 
@@ -387,12 +357,8 @@ public class NceThrottle extends AbstractThrottle {
         boolean old = isForward;
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
-        if (log.isDebugEnabled()) {
-            log.debug("setIsForward= " + forward);
-        }
-        if (old != isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, isForward);
-        }
+        log.debug("setIsForward= {}", forward);
+        firePropertyChange(ISFORWARD, old, isForward);
     }
 
     @Override

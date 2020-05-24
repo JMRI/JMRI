@@ -10,7 +10,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SignallingPanelTest {
 
@@ -68,7 +68,6 @@ public class SignallingPanelTest {
         JUnitUtil.dispose(jf);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -79,6 +78,7 @@ public class SignallingPanelTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -43,7 +43,6 @@ public class LnMultiMeterTest {
     @After
     public void tearDown() {
         memo.dispose();
-        slotmanager.dispose();
         lnis.dispose();
         JUnitUtil.tearDown();
     }

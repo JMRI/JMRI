@@ -17,7 +17,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -388,7 +388,7 @@
           <li>The <a href="SignalMastLogicTable.shtml">Signal Mast Logic Table</a> help page.</li>
           <li>The <a href="AddEditSignalingLogic.shtml">Adding/Editing Signal Mast Logic</a> help page.</li>
       </ul>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -5,11 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 import org.slf4j.Logger;
@@ -100,7 +96,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         if (_location != null) {
             _location.addPropertyChangeListener(this);
         }
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
         initTable();
         table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
@@ -322,18 +318,15 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                 return getRestrictions(track);
             case LOAD_COLUMN:
                 return getModifiedString(track.getLoadNames().length, track.getLoadOption().equals(Track.ALL_LOADS),
-                        track
-                                .getLoadOption().equals(Track.INCLUDE_LOADS)) +
-                        (track.isSpur() && track.isHoldCarsWithCustomLoadsEnabled() ? " H"
-                                : "");
+                        track.getLoadOption().equals(Track.INCLUDE_LOADS)) +
+                        (track.isSpur() && track.isHoldCarsWithCustomLoadsEnabled() ? " H" : "");
             case SHIP_COLUMN:
                 return getModifiedString(track.getShipLoadNames().length,
                         track.getShipLoadOption().equals(Track.ALL_LOADS), track.getShipLoadOption().equals(
                                 Track.INCLUDE_LOADS));
             case ROAD_COLUMN:
                 return getModifiedString(track.getRoadNames().length, track.getRoadOption().equals(Track.ALL_ROADS),
-                        track
-                                .getRoadOption().equals(Track.INCLUDE_ROADS));
+                        track.getRoadOption().equals(Track.INCLUDE_ROADS));
             case DESTINATION_COLUMN: {
                 int size = track.getDestinationListSize();
                 if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
@@ -479,7 +472,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         if (tef != null) {
             tef.dispose();
         }
-        Setup.removePropertyChangeListener(this);
+        Setup.getDefault().removePropertyChangeListener(this);
         tracksList.clear();
         fireTableDataChanged();
     }

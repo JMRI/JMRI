@@ -128,6 +128,29 @@ public class SplitVariableValue extends VariableValue
     /**
      * Subclasses can override this to pick up constructor-specific attributes
      * and perform other actions before cvList has been built.
+     * 
+     * @param name name.
+     * @param comment comment.
+     * @param cvName cv name.
+     * @param readOnly true for read only, else false.
+     * @param infoOnly true for info only, else false.
+     * @param writeOnly true for write only, else false.
+     * @param opsOnly true for ops only, else false.
+     * @param cvNum cv number.
+     * @param mask cv mask.
+     * @param minVal minimum value.
+     * @param maxVal maximum value.
+     * @param v hashmap of string and cv value.
+     * @param status status.
+     * @param stdname std name.
+     * @param pSecondCV second cv.
+     * @param pFactor factor.
+     * @param pOffset offset.
+     * @param uppermask upper mask.
+     * @param extra1 extra 1.
+     * @param extra2 extra 2.
+     * @param extra3 extra 3.
+     * @param extra4 extra 4.
      */
     public void stepOneActions(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
@@ -636,6 +659,8 @@ public class SplitVariableValue extends VariableValue
 
     /**
      * Assigns a priority value to a given state.
+     * @param state State to be converted to a priority value
+     * @return Priority value from state, with UNKNOWN numerically highest
      */
     @SuppressFBWarnings(value = {"SF_SWITCH_NO_DEFAULT", "SF_SWITCH_FALLTHROUGH"}, justification = "Intentional fallthrough to produce correct value")
     int priorityValue(int state) {

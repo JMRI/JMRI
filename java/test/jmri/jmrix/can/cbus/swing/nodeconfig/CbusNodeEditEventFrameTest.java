@@ -3,10 +3,10 @@ package jmri.jmrix.can.cbus.swing.nodeconfig;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -33,10 +33,10 @@ public class CbusNodeEditEventFrameTest {
         CbusNode nodeWithEventToEdit = nodeModel.provideNodeByNodeNum(256);
 
         // short event 7 on node 256, no index, 4 ev vars
-        CbusNodeEvent eventToEdit = new CbusNodeEvent(0,7,256,-1,4);
-        nodeWithEventToEdit.addNewEvent(eventToEdit);
+        CbusNodeEvent eventToEdit = new CbusNodeEvent(memo,0,7,256,-1,4);
+        nodeWithEventToEdit.getNodeEventManager().addNewEvent(eventToEdit);
         
-        t.initComponents(memo,nodeWithEventToEdit.getNodeEventByArrayID(0)); // memo, event to edit
+        t.initComponents(memo,nodeWithEventToEdit.getNodeEventManager().getNodeEventByArrayID(0)); // memo, event to edit
         
         Assert.assertEquals("title","Edit Event EN:7 on Node 256",t.getTitle());
         Assert.assertFalse("node / event select spinners not dirty",t.spinnersDirty() );
@@ -50,8 +50,6 @@ public class CbusNodeEditEventFrameTest {
         Assert.assertFalse(getEditButtonEnabled(jfo));
         Assert.assertTrue(getDeleteButtonEnabled(jfo));
         
-        jfo = null;
-        eventToEdit = null;
         
     }
     
@@ -83,7 +81,7 @@ public class CbusNodeEditEventFrameTest {
         
             nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
             jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
-            
+            jmri.InstanceManager.store(new CbusPreferences(),CbusPreferences.class );
             mainpane = new NodeConfigToolPane();
             mainpane.initComponents(memo);
             t = new CbusNodeEditEventFrame(mainpane);
@@ -104,7 +102,7 @@ public class CbusNodeEditEventFrameTest {
         nodeModel = null;
         memo = null;
         tcis = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeEditEventFrameTest.class);

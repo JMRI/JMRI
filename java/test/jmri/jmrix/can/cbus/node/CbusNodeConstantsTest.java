@@ -61,6 +61,11 @@ public class CbusNodeConstantsTest {
     public void testgetReservedModule() {
         Assert.assertTrue("getReservedModule 260",CbusNodeConstants.getReservedModule(260).isEmpty() );
         Assert.assertEquals("getModuleTypeExtra 70 4","Reserved, used by all CABS",CbusNodeConstants.getReservedModule(65535));
+        Assert.assertTrue("getReservedModule 99",CbusNodeConstants.getReservedModule(99).isEmpty() );
+        Assert.assertEquals("getReservedModule 100",Bundle.getMessage("NdNumReserveFixed"),CbusNodeConstants.getReservedModule(100));
+        Assert.assertEquals("getReservedModule 125",Bundle.getMessage("NdNumReserveFixed"),CbusNodeConstants.getReservedModule(100));        
+        
+        
     }    
     
     @Test
@@ -85,7 +90,6 @@ public class CbusNodeConstantsTest {
             CbusNodeConstants.lookupByName("COMPLETEDWITHERROR"));
     }
     
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

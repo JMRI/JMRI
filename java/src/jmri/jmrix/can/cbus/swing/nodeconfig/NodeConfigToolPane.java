@@ -6,16 +6,20 @@ import java.awt.datatransfer.Transferable;
 import java.awt.Dimension;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.event.*;
+import jmri.InstanceManager;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusAddress;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusPreferences;
+import jmri.jmrix.can.cbus.CbusSend;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
@@ -33,26 +37,22 @@ import org.slf4j.LoggerFactory;
  *
  * @since 2.99.2
  */
-public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
+public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements PropertyChangeListener{
 
-    private CanSystemConnectionMemo _memo;
     public CbusNodeTableDataModel nodeModel;
     public JTable nodeTable;
     private CbusPreferences preferences;
     
     protected CbusNodeTablePane nodeTablePane;
-    public CbusNodeEventVarPane nodeEventPane;
-    private CbusNodeInfoPane nodeinfoPane;
-    private CbusNodeUserCommentsPane commentsPane;
-    private CbusNodeEditNVarPane nodevarPane;
-    private CbusNodeSetupPane setupPane;
     private CbusNodeRestoreFcuFrame fcuFrame;
     private CbusNodeEditEventFrame _editEventFrame;
-    private CbusNodeBackupsPane _backupPane;
+    // private CbusNodeBackupsPane _backupPane;
     
     private JScrollPane eventScroll;
     private JSplitPane split;
-    private JTabbedPane tabbedPane;
+    protected JTabbedPane tabbedPane;
+    
+    private ArrayList<CbusNodeConfigTab> tabbedPanes;
     
     private int _selectedNode;
     private jmri.util.swing.BusyDialog busy_dialog;
@@ -81,20 +81,18 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
-        try {
-            nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
-        } catch (NullPointerException e) {
-            log.error("Unable to get Node Table from Instance Manager");
+        nodeModel=InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
+        if (nodeModel == null) {
+            ThreadingUtil.runOnLayout(() -> {
+            nodeModel = new CbusNodeTableDataModel(memo, 5, CbusNodeTableDataModel.MAX_COLUMN);
+            InstanceManager.store(nodeModel, CbusNodeTableDataModel.class);
+            nodeModel.startup();
+            });
         }
         
-        _memo = memo;
         _selectedNode = -1;
-        
-        try {
-            preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
-        } catch (NullPointerException e) {
-            log.warn("Unable to get CBUS Preferences from Instance Manager");
-        }
+
+        preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
         init();
         
     }
@@ -106,6 +104,19 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         super();
     }
 
+    protected final ArrayList<CbusNodeConfigTab> getTabs() {
+        if (tabbedPanes==null) {
+            tabbedPanes = new ArrayList<>(6);
+            tabbedPanes.add( new CbusNodeInfoPane(this));
+            tabbedPanes.add( new CbusNodeUserCommentsPane(this));
+            tabbedPanes.add( new CbusNodeEditNVarPane(this));
+            tabbedPanes.add( new CbusNodeEventVarPane(this));
+            tabbedPanes.add( new CbusNodeSetupPane(this));
+            tabbedPanes.add( new CbusNodeBackupsPane(this));
+        }
+        return new ArrayList<>(this.tabbedPanes);
+    }
+    
     /**
      * Initialise the NodeConfigToolPane
      */
@@ -140,35 +151,13 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         mainNodePane.setLayout(new BorderLayout());
         mainNodePane.add(eventScroll);
         
-        nodeEventPane = new CbusNodeEventVarPane(this);
-        nodeEventPane.initComponents(memo);
-        
-        nodeinfoPane = new CbusNodeInfoPane();
-        
-        setupPane = new CbusNodeSetupPane(this);
-        
-        commentsPane = new CbusNodeUserCommentsPane(this);
-        commentsPane.initComponents();
-        
-        nodevarPane = new CbusNodeEditNVarPane(this);
-        nodevarPane.initComponents(memo);
-        
-        _backupPane = new CbusNodeBackupsPane(this);
-        
         tabbedPane = new JTabbedPane();
         
-        tabbedPane.addTab(("Node Info"), nodeinfoPane);
-        tabbedPane.addTab(("Node Comments"),commentsPane);
-        tabbedPane.addTab(("Node Variables"), nodevarPane);
-        tabbedPane.addTab(("Node Events"), nodeEventPane);
-        tabbedPane.addTab(("Node Setup"),setupPane);
-        tabbedPane.addTab(("Node Backups"),_backupPane);
+        tabbedPane.setEnabled(false);
         
-        tabbedPane.setEnabledAt(1,false);
-        tabbedPane.setEnabledAt(2,false);
-        tabbedPane.setEnabledAt(3,false);
-        tabbedPane.setEnabledAt(4,false);
-        tabbedPane.setEnabledAt(5,false);
+        getTabs().forEach((pn) -> {
+            tabbedPane.addTab(pn.getTitle(),pn);
+        });
         
         Dimension minimumSize = new Dimension(40, 40);
         mainNodePane.setMinimumSize(minimumSize);
@@ -195,15 +184,14 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             }
         });
         
+        userViewChanged();
+        
         tabbedPane.setTransferHandler(new TransferHandler());
         nodeTable.setTransferHandler(new TransferHandler());
         
         revalidate();
        
     }
-    
-    private boolean showingCommentDialogue=false;
-    private boolean showingNvsChangedDialogue = false;
     
     private final JFrame topFrame = (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
     
@@ -234,11 +222,13 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         int rowBefore = nodeTable.getSelectedRow()-1;
         int rowAfter = nodeTable.getSelectedRow()+1;
         if ( sel > -1 ) {
+            tabbedPane.setEnabled(true);
             
-            sel = nodeTable.convertRowIndexToModel(sel);
-            _selectedNode = (int) nodeTable.getModel().getValueAt(sel, CbusNodeTableDataModel.NODE_NUMBER_COLUMN);
+            
+            _selectedNode = (int) nodeTable.getModel().getValueAt(nodeTable.convertRowIndexToModel(sel), CbusNodeTableDataModel.NODE_NUMBER_COLUMN);
             
             int tabindex = tabbedPane.getSelectedIndex();
+            
             int nodeBefore = -1;
             int nodeAfter = -1;
             
@@ -250,98 +240,31 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             }
             
             log.debug("node {} selected tab index {} , node before {} node after {}", _selectedNode , tabindex, nodeBefore,nodeAfter );                
-            
-            tabbedPane.setEnabledAt(1,true);
-            tabbedPane.setEnabledAt(2,true);
-            tabbedPane.setEnabledAt(3,true);
-            tabbedPane.setEnabledAt(4,true);
-            tabbedPane.setEnabledAt(5,true);
-            
-            if (commentsPane.areCommentsDirty() && !showingCommentDialogue) {
-                showingCommentDialogue=true;
-                tabbedPane.setSelectedIndex(1);
-                int selectedValue = JOptionPane.showOptionDialog(this.getParent(),
-                        Bundle.getMessage("CommentsEditUnsaved"),
-                        Bundle.getMessage("WarningTitle") + commentsPane.getNodeString(),
-                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                        new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")},
-                        Bundle.getMessage("ButtonNo")); // default choice = No
-                if (selectedValue == 1) {
-                    // log.info("no save");
-                    commentsPane.restoreComments();
-                    showingCommentDialogue=false;
-                    tabbedPane.setSelectedIndex(tabindex);
-                }
-                if (selectedValue == 0) {
-                    commentsPane.saveComments();
-                    showingCommentDialogue=false;
-                    tabbedPane.setSelectedIndex(tabindex);
+
+            boolean veto = false;
+            for (CbusNodeConfigTab tab : getTabs()) {
+                if ( tab.getActiveDialog() || tab.getVetoBeingChanged()) {
+                    veto = true;
+                    break; // or return obj
                 }
             }
             
-            if (showingNvsChangedDialogue){
+            if (veto){
                 return;
             }
             
-            if (nodevarPane.areNvsDirty() && !showingNvsChangedDialogue) {
-                
-                CbusNode oldNode = nodevarPane.getNode();
-                int oldRow = nodeTable.convertRowIndexToView(nodeModel.getNodeRowFromNodeNum(oldNode.getNodeNumber()));
-                
-                showingNvsChangedDialogue=true;
-                nodeTable.getSelectionModel().setSelectionInterval(oldRow,oldRow);
-                tabbedPane.setSelectedIndex(2);
-                
-                int selectedValue = JOptionPane.showOptionDialog(this.getParent(),
-                        "<html>" + Bundle.getMessage("NvsEditUnsaved",oldNode.toString()) + 
-                        "<br>" + Bundle.getMessage("ContinueEditQuestion")+"</html>",
-                        Bundle.getMessage("WarningTitle"),
-                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                        new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")},
-                        Bundle.getMessage("ButtonNo")); // default choice = No
-                if (selectedValue == 1) {
-                    // log.info("no save");
-                    nodevarPane.resetNVs();
-                    showingNvsChangedDialogue=false;
-                    nodeTable.setRowSelectionInterval(sel,sel);
-                    tabbedPane.setSelectedIndex(tabindex);
-                }
-                if (selectedValue == 0) {
-                    showingNvsChangedDialogue=false;
-                }
-            }
+            tabbedPane.setSelectedIndex(tabindex);
+            nodeTable.setRowSelectionInterval(sel,sel);
             
             // this also starts urgent fetch loop if not currently looping
-            nodeModel.setUrgentFetch(tabindex,_selectedNode,nodeBefore,nodeAfter);
+            nodeModel.setUrgentFetch(_selectedNode,nodeBefore,nodeAfter);
             
-            if ( tabindex == 0 ){ // parameters
-                nodeinfoPane.initComponents( nodeModel.getNodeByNodeNum(_selectedNode) );
-            }
-            if ( tabindex == 1 ) { // comments pane
-                commentsPane.setNode( nodeModel.getNodeByNodeNum(_selectedNode) );
-            }
-            if ( tabindex == 2 ){ // NV's
-                nodevarPane.setNode( nodeModel.getNodeByNodeNum(_selectedNode) );
-            }
-            if ( tabindex == 3 ){ // events
-                nodeEventPane.setNode( nodeModel.getNodeByNodeNum(_selectedNode) );
-            }
-            if ( tabindex == 4 ) { // Network setup
-                setupPane.initComponents(_selectedNode);
-            }
-            if ( tabindex == 5 ) { // Node Backups
-                _backupPane.setNode(nodeModel.getNodeByNodeNum(_selectedNode));
-            }
+            getTabs().get(tabindex).setNode( nodeModel.getNodeByNodeNum(_selectedNode) );
+            
         }
         else {
-            log.debug("selected node -1");
-            tabbedPane.setEnabledAt(1,false);
-            tabbedPane.setEnabledAt(2,false);
-            tabbedPane.setEnabledAt(3,false);
-            tabbedPane.setEnabledAt(4,false);
-            tabbedPane.setEnabledAt(5,false);
-            nodeinfoPane.initComponents(null);
-            tabbedPane.setSelectedIndex(0);
+            tabbedPane.setEnabled(false);
+            
         }
     }
     
@@ -488,7 +411,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         
         ActionListener teachNodeFcu = ae -> {
             fcuFrame = new CbusNodeRestoreFcuFrame(this);
-            fcuFrame.initComponents(_memo);
+            fcuFrame.initComponents(memo);
         };
         
         teachNodeFromFcuFile.addActionListener(teachNodeFcu);
@@ -505,7 +428,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         searchForNodesMenuItem.addActionListener(updatenodes);
         
         ActionListener systemReset = ae -> {
-            nodeModel.sendSystemReset();
+            new CbusSend(memo).aRST();
             // flash something to user so they know that something has happened
             busy_dialog = new jmri.util.swing.BusyDialog(topFrame, "System Reset", false);
             busy_dialog.start();
@@ -620,6 +543,11 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
      */
     @Override
     public void dispose() {
+        
+        if (_toNode!=null){
+            _toNode.removePropertyChangeListener(this);
+        }
+        
       //  nodeTable = null;
       //  eventScroll = null;
         super.dispose();
@@ -698,18 +626,18 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         
         CanMessage m = ( new CbusAddress(validatedAddr) ).makeMessage(0x12);
         
-        CbusNodeEvent newev = new CbusNodeEvent(
+        CbusNodeEvent newev = new CbusNodeEvent( memo,
             CbusMessage.getNodeNumber(m), 
             CbusMessage.getEvent(m), 
             _selectedNode, 
             -1, 
-            _node.getParameter(5)
+            _node.getNodeParamManager().getParameter(5)
             );
-        java.util.Arrays.fill(newev._evVarArr,0);
+        java.util.Arrays.fill(newev.getEvVarArray(),0);
         
         log.debug("dragged nodeevent {} ",newev);
         ThreadingUtil.runOnGUI( () -> {
-            getEditEvFrame().initComponents(_memo,newev);
+            getEditEvFrame().initComponents(memo,newev);
         });
         return true;
     }
@@ -740,6 +668,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
     private boolean _teachEvents;
     private CbusNode _fromNode;
     private CbusNode _toNode;
+    private JFrame _frame;
     
     /**
      * Show a Confirm before Save Dialogue Box then start teach process for Node
@@ -764,46 +693,63 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         if ( frame == null ){
             frame = topFrame;
         }
+        _frame = frame;
         
         StringBuilder buf = new StringBuilder();
-        buf.append("<html> ");
-        buf.append( ("Please Confirm Write ") );
-        buf.append( ("to <br>") );
-        buf.append ( _toNode.toString() );
-        buf.append("<hr>");
+        buf.append("<html> ")
+        .append( ("Please Confirm Write ") )
+        .append( ("to <br>") )
+        .append ( _toNode.toString() )
+        .append("<hr>");
         
         if ( teachNVs ){
             
             // Bundle.getMessage("NVConfirmWrite",nodeName)
-            buf.append("Teaching ");
-            buf.append(_toNode.getNvDifference(_fromNode));
-            buf.append(" of ").append(_fromNode.getTotalNVs()).append(" NV's<br>");
+            buf.append("Teaching ")
+            .append(_toNode.getNodeNvManager().getNvDifference(_fromNode))
+            .append(" of ").append(_fromNode.getNodeNvManager().getTotalNVs()).append(" NV's<br>");
         }
         if ( _clearEvents ){
-            buf.append("Clearing ").append(Math.max( 0,_toNode.getTotalNodeEvents() )).append(" Events<br>");
+            buf.append("Clearing ").append(Math.max( 0,_toNode.getNodeEventManager().getTotalNodeEvents() )).append(" Events<br>");
         } 
         if ( _teachEvents ){
-            buf.append("Teaching ").append(Math.max( 0,_fromNode.getTotalNodeEvents() )).append(" Events<br>");
+            buf.append("Teaching ").append(Math.max( 0,_fromNode.getNodeEventManager().getTotalNodeEvents() )).append(" Events<br>");
         }         
         buf.append("</html>");
         
-        int response = JOptionPane.showConfirmDialog(null,
+        int response = JOptionPane.showConfirmDialog(frame,
                 ( buf.toString() ),
                 ( ("Please Confirm Write to Node")),
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
         if ( response == JOptionPane.OK_OPTION ) {
+            _toNode.addPropertyChangeListener(this);
             busy_dialog = new jmri.util.swing.BusyDialog(frame, "Write NVs "+_fromNode.toString(), false);
             busy_dialog.start();
             // update main node name from fcu name
             _toNode.setNameIfNoName( _fromNode.getUserName() );
             // request the local nv model pass the nv update request to the CbusNode
             if ( teachNVs ){
-                _toNode.sendNvsToNode( _fromNode.getNvArray(),this);
+                _toNode.getNodeNvManager().sendNvsToNode( _fromNode.getNodeNvManager().getNvArray());
             }
             else {
                 nVTeachComplete(0);
             }
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent ev){
+        if (ev.getPropertyName().equals("TEACHNVCOMPLETE")) {
+            jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
+                nVTeachComplete((Integer) ev.getNewValue());
+            });
+        }
+        else if (ev.getPropertyName().equals("ADDALLEVCOMPLETE")) {
+            jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
+                teachEventsComplete((Integer) ev.getNewValue());
+            });
         }
     }
     
@@ -812,13 +758,12 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
      * Starts check to see if clear events
      * @param numErrors number of errors writing NVs
      */
-    public void nVTeachComplete(int numErrors){
+    private void nVTeachComplete(int numErrors){
         if ( numErrors > 0 ) {
-            JOptionPane.showMessageDialog(null, 
+            JOptionPane.showMessageDialog(_frame, 
                 Bundle.getMessage("NVSetFailTitle",numErrors), Bundle.getMessage("WarningTitle"),
                 JOptionPane.ERROR_MESSAGE);
         }
-        
         
         if ( _clearEvents ){
         
@@ -834,12 +779,12 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             ThreadingUtil.runOnLayoutDelayed( () -> {
                 // node exit learn mode
                 _toNode.send.nodeExitLearnEvMode( _toNode.getNodeNumber() ); // no response expected
-            }, CbusNode.SINGLE_MESSAGE_TIMEOUT_TIME );
+            }, jmri.jmrix.can.cbus.node.CbusNodeTimerManager.SINGLE_MESSAGE_TIMEOUT_TIME );
             ThreadingUtil.runOnGUIDelayed( () -> {
                 
                 clearEventsComplete();
             
-            }, ( CbusNode.SINGLE_MESSAGE_TIMEOUT_TIME + 150 ) );
+            }, ( jmri.jmrix.can.cbus.node.CbusNodeTimerManager.SINGLE_MESSAGE_TIMEOUT_TIME + 150 ) );
         }
         else {
             clearEventsComplete();
@@ -850,10 +795,16 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
      * When clear Events completed ( in nvTeachComplete )
      * starts process for teaching events to Node
      */
-    public void clearEventsComplete() {
-        if ( _teachEvents ){
+    private void clearEventsComplete() {
+        ArrayList<CbusNodeEvent> arL = _fromNode.getNodeEventManager().getEventArray();
+        if ( _teachEvents){
+            if (arL==null){
+                log.error("No Event Array on Node {}",_fromNode);
+                teachEventsComplete(1);
+                return;
+            }
             busy_dialog.setTitle("Teach Events");
-            _toNode.sendNewEvSToNode( _fromNode.getEventArray(), null, this);
+            _toNode.getNodeEventManager().sendNewEvSToNode( arL );
         }
         else {
             teachEventsComplete(0);
@@ -864,18 +815,25 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
      * Notification from CbusNode Event Teach is complete
      * @param numErrors number of errors writing events
      */
-    public void teachEventsComplete( int numErrors ) {
+    private void teachEventsComplete( int numErrors ) {
+        _toNode.removePropertyChangeListener(this);
         busy_dialog.finish();
         busy_dialog = null;
         if (numErrors != 0 ) {
-            JOptionPane.showMessageDialog(null, 
+            JOptionPane.showMessageDialog(_frame, 
             Bundle.getMessage("NdEvVarWriteError"), Bundle.getMessage("WarningTitle"),
             JOptionPane.ERROR_MESSAGE);
         }
+        _frame = null;
+        _toNode = null;
     }
     
+    /**
+     * Get the Default Instance Node Model
+     * @return Default Instance Node Model
+     */
     protected CbusNodeTableDataModel getNodeModel(){
-        return nodeModel;
+        return InstanceManager.getDefault(CbusNodeTableDataModel.class);
     }
     
     /**
@@ -884,7 +842,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
-    public Default() {
+        public Default() {
             super(Bundle.getMessage("MenuItemNodeConfig"),
             new jmri.util.swing.sdi.JmriJFrameInterface(),
             NodeConfigToolPane.class.getName(),

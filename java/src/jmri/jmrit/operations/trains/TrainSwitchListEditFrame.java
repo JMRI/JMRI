@@ -173,13 +173,12 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
         addComboBoxAction(switchListPageComboBox);
 
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(
-                new SetupExcelProgramSwitchListFrameAction(Bundle.getMessage("MenuItemSetupExcelProgramSwitchList")));
+        toolMenu.add(new SetupExcelProgramSwitchListFrameAction());
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
 
@@ -281,7 +280,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             if (printerName == null || printerName.equals(TrainPrintUtilities.getDefaultPrinterName())) {
                 location.setDefaultPrinterName(Location.NONE);
             } else {
-                log.debug("Location " + location.getName() + " has selected printer " + printerName);
+                log.debug("Location {} has selected printer {}", location.getName(), printerName);
                 location.setDefaultPrinterName(printerName);
             }
         }
@@ -545,7 +544,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
     public void locationCheckBoxActionPerformed(ActionEvent ae) {
         JCheckBox b = (JCheckBox) ae.getSource();
-        log.debug("checkbox change " + b.getName());
+        log.debug("checkbox change {}", b.getName());
         Location l = locationManager.getLocationByName(b.getName());
         l.setSwitchListEnabled(b.isSelected());
         // enable the save button whenever a checkbox is changed
@@ -563,7 +562,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
     public void commentButtonActionPerformed(ActionEvent ae) {
         JButton b = (JButton) ae.getSource();
-        log.debug("button action " + b.getName());
+        log.debug("button action {}", b.getName());
         Location l = locationManager.getLocationByName(b.getName());
         new TrainSwitchListCommentFrame(l);
     }
@@ -577,7 +576,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     @Override
     public void dispose() {
         locationManager.removePropertyChangeListener(this);
-        Setup.removePropertyChangeListener(this);
+        Setup.getDefault().removePropertyChangeListener(this);
         for (Location location : locationManager.getLocationsByNameList()) {
             location.removePropertyChangeListener(this);
         }

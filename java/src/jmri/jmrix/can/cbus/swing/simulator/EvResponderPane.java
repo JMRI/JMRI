@@ -1,6 +1,5 @@
 package jmri.jmrix.can.cbus.swing.simulator;
 
-import javax.swing.BoxLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -78,8 +77,9 @@ public class EvResponderPane extends JPanel {
         renderer.setTooltips(tooltips);
     
         _spinner = new JSpinner(new SpinnerNumberModel(_evr.getNode(), -1, 65535, 1));
-        JComponent comp = _spinner.getEditor();
-        JFormattedTextField field = (JFormattedTextField) comp.getComponent(0);
+        JSpinner.NumberEditor editor = new JSpinner.NumberEditor(_spinner, "#");
+        _spinner.setEditor(editor);
+        JFormattedTextField field = (JFormattedTextField) editor.getComponent(0);
         DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
         formatter.setCommitsOnValidEdit(true);
         _spinner.addChangeListener((ChangeEvent e) -> {

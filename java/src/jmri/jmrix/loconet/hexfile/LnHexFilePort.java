@@ -46,6 +46,10 @@ public class LnHexFilePort extends LnPortController implements Runnable {
         } catch (java.io.IOException e) {
             log.error("init (pipe): Exception: {}", e.toString());
         }
+        options.put("MaxSlots", // NOI18N
+                new Option(Bundle.getMessage("MaxSlots")
+                        + ":", // NOI18N
+                        new String[] {"5","10","21","120","400"}));
         options.put("SensorDefaultState", // NOI18N
                 new Option(Bundle.getMessage("DefaultSensorState")
                         + ":", // NOI18N
@@ -118,7 +122,7 @@ public class LnHexFilePort extends LnPortController implements Runnable {
                 String s;
                 while ((s = currFile.readLine()) != null) {
                     // this loop reads one line per turn
-                    // ErrLog.msg(ErrLog.debugging,"LnHexFilePort","run","string=<"+s+">");
+                    // ErrLog.msg(ErrLog.debugging, "LnHexFilePort", "run", "string=<" + s + ">");
                     int len = s.length();
                     for (int i = 0; i < len; i += 3) {
                         // parse as hex into integer, then convert to byte

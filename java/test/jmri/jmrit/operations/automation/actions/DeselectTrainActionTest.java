@@ -12,7 +12,7 @@ import jmri.util.JUnitOperationsUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DeselectTrainActionTest extends OperationsTestCase {
 
@@ -60,7 +60,7 @@ public class DeselectTrainActionTest extends OperationsTestCase {
         Assert.assertFalse(train1.isBuildEnabled());
         Assert.assertTrue(automationItem.isActionSuccessful());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DeselectTrainActionTest.class);

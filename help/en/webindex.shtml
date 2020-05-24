@@ -1726,7 +1726,7 @@
 
  
 <li>
-<a href="package/jmri/jmrit/beantable/SectionTable.shtml">Section </a>
+<a href="html/tools/Sections.shtml">Section </a>
 <ul>
   
 <li>
@@ -2121,6 +2121,12 @@
 
   
 <li>
+<a href="package/jmri/jmrit/beantable/ViewSpecialActions.shtml">Transit Actions </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="package/jmri/jmrit/beantable/TransitTable.shtml">Transit Table </a>
 <ul></ul>
 </li>
@@ -2128,12 +2134,6 @@
  
 </ul>
 </li>
- 
-<li>
-<a href="package/jmri/jmrit/beantable/TransitTable.shtml">Transit Table </a>
-<ul></ul>
-</li>
-
  
 <li>
 <a href="package/jmri/jmrit/display/TranslateSelection.shtml">Translate (Move) Selection (Panels) </a>
@@ -2230,6 +2230,12 @@
  
 <li>
 <a href="html/web/index.shtml">Web Access to JMRI </a>
+<ul></ul>
+</li>
+
+ 
+<li>
+<a href="package/jmri/jmrit/whereused/WhereUsed.shtml">Where Used </a>
 <ul></ul>
 </li>
 

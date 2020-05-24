@@ -49,6 +49,8 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.swing.NamedBeanComboBox;
 import jmri.swing.RowSorterUtil;
+import jmri.util.AlphanumComparator;
+import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -153,6 +155,9 @@ public class SignallingPanel extends JmriPanel {
         destMastBox = new NamedBeanComboBox<>(smm, destMast, DisplayOptions.DISPLAYNAME);
         destMastBox.setMaximumSize(destMastBox.getPreferredSize());
 
+        JComboBoxUtil.setupComboBoxMaxRows(sourceMastBox);
+        JComboBoxUtil.setupComboBoxMaxRows(destMastBox);
+
         // directly add sub-panes onto JFrame's content pane to allow resizing (2018)
         Container contentPane = frame.getContentPane();
 
@@ -184,7 +189,7 @@ public class SignallingPanel extends JmriPanel {
                 if (useLayoutEditor.isSelected()) {
                     try {
                         boolean valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedItem(),
-                                destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.MASTTOMAST);
+                                destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.Routing.MASTTOMAST);
                         if (!valid) {
                             JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));
                         }
@@ -240,7 +245,7 @@ public class SignallingPanel extends JmriPanel {
                         }
                         try {
                             valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedItem(),
-                                    destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.MASTTOMAST);
+                                    destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.Routing.MASTTOMAST);
                             if (!valid) {
                                 JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));
                             }
@@ -428,6 +433,8 @@ public class SignallingPanel extends JmriPanel {
         TableRowSorter<BlockModel> manualBlockSorter = new TableRowSorter<>(_blockModel);
         // configure row height for comboBox
         manualBlockTable.setRowHeight(sizer.getPreferredSize().height - 2); // row height has to be greater than for plain tables
+        manualBlockSorter.setComparator(BlockModel.SNAME_COLUMN, new jmri.util.AlphanumComparator());
+        manualBlockSorter.setComparator(BlockModel.UNAME_COLUMN, new jmri.util.AlphanumComparator());
         RowSorterUtil.setSortOrder(manualBlockSorter, BlockModel.SNAME_COLUMN, SortOrder.ASCENDING);
         _blockModel.configStateColumn(manualBlockTable); // create static comboBox in State column
         manualBlockTable.setRowSorter(manualBlockSorter);
@@ -446,7 +453,6 @@ public class SignallingPanel extends JmriPanel {
                 getColumn(BlockModel.SNAME_COLUMN);
         sNameColumnC.setResizable(true);
         sNameColumnC.setMinWidth(75);
-        sNameColumnC.setMaxWidth(95);
 
         TableColumn stateColumnC = _manualBlockColumnModel.
                 getColumn(BlockModel.STATE_COLUMN);
@@ -476,6 +482,8 @@ public class SignallingPanel extends JmriPanel {
         _autoBlockModel = new AutoBlockModel();
         JTable autoBlockTable = new JTable(_autoBlockModel);
         TableRowSorter<AutoBlockModel> autoBlockSorter = new TableRowSorter<>(_autoBlockModel);
+        autoBlockSorter.setComparator(AutoBlockModel.SNAME_COLUMN, new jmri.util.AlphanumComparator());
+        autoBlockSorter.setComparator(AutoBlockModel.UNAME_COLUMN, new jmri.util.AlphanumComparator());
         RowSorterUtil.setSortOrder(autoBlockSorter, AutoBlockModel.SNAME_COLUMN, SortOrder.ASCENDING);
         autoBlockTable.setRowSorter(autoBlockSorter);
         autoBlockTable.setRowSelectionAllowed(false);
@@ -486,7 +494,6 @@ public class SignallingPanel extends JmriPanel {
                 getColumn(AutoBlockModel.SNAME_COLUMN);
         sNameColumnA.setResizable(true);
         sNameColumnA.setMinWidth(75);
-        sNameColumnA.setMaxWidth(95);
 
         TableColumn stateColumnA = _autoBlockColumnModel.
                 getColumn(AutoBlockModel.STATE_COLUMN);
@@ -553,6 +560,8 @@ public class SignallingPanel extends JmriPanel {
         TableRowSorter<TurnoutModel> manualTurnoutSorter = new TableRowSorter<>(_turnoutModel);
         // configure row height for comboBox
         manualTurnoutTable.setRowHeight(sizer.getPreferredSize().height - 2); // row height has to be greater than for plain tables
+        manualTurnoutSorter.setComparator(TurnoutModel.SNAME_COLUMN, new AlphanumComparator());
+        manualTurnoutSorter.setComparator(TurnoutModel.UNAME_COLUMN, new AlphanumComparator());
         RowSorterUtil.setSortOrder(manualTurnoutSorter, TurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
         _turnoutModel.configStateColumn(manualTurnoutTable); // create static comboBox in State column
         manualTurnoutTable.setRowSorter(manualTurnoutSorter);
@@ -571,7 +580,6 @@ public class SignallingPanel extends JmriPanel {
                 getColumn(TurnoutModel.SNAME_COLUMN);
         sNameColumnC.setResizable(true);
         sNameColumnC.setMinWidth(75);
-        sNameColumnC.setMaxWidth(95);
 
         TableColumn stateColumnC = _manualTurnoutColumnModel.
                 getColumn(TurnoutModel.STATE_COLUMN);
@@ -602,6 +610,8 @@ public class SignallingPanel extends JmriPanel {
         _autoTurnoutModel = new AutoTurnoutModel();
         JTable autoTurnoutTable = new JTable(_autoTurnoutModel);
         TableRowSorter<AutoTurnoutModel> autoTurnoutSorter = new TableRowSorter<>(_autoTurnoutModel);
+        autoTurnoutSorter.setComparator(AutoTurnoutModel.SNAME_COLUMN, new AlphanumComparator());
+        autoTurnoutSorter.setComparator(AutoTurnoutModel.UNAME_COLUMN, new AlphanumComparator());
         RowSorterUtil.setSortOrder(autoTurnoutSorter, AutoTurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
         autoTurnoutTable.setRowSorter(autoTurnoutSorter);
         autoTurnoutTable.setRowSelectionAllowed(false);
@@ -612,7 +622,6 @@ public class SignallingPanel extends JmriPanel {
                 getColumn(AutoTurnoutModel.SNAME_COLUMN);
         sNameColumnA.setResizable(true);
         sNameColumnA.setMinWidth(75);
-        sNameColumnA.setMaxWidth(95);
 
         TableColumn stateColumnA = _autoTurnoutColumnModel.
                 getColumn(AutoTurnoutModel.STATE_COLUMN);
@@ -665,6 +674,8 @@ public class SignallingPanel extends JmriPanel {
         TableRowSorter<SensorModel> manualSensorSorter = new TableRowSorter<>(_sensorModel);
         // configure row height for comboBox
         manualSensorTable.setRowHeight(sizer.getPreferredSize().height - 2); // row height has to be greater than for plain tables
+        manualSensorSorter.setComparator(SensorModel.SNAME_COLUMN, new AlphanumComparator());
+        manualSensorSorter.setComparator(SensorModel.UNAME_COLUMN, new AlphanumComparator());
         RowSorterUtil.setSortOrder(manualSensorSorter, SensorModel.SNAME_COLUMN, SortOrder.ASCENDING);
         _sensorModel.configStateColumn(manualSensorTable); // create static comboBox in State column
         manualSensorTable.setRowSorter(manualSensorSorter);
@@ -683,7 +694,6 @@ public class SignallingPanel extends JmriPanel {
                 getColumn(SensorModel.SNAME_COLUMN);
         sNameColumnC.setResizable(true);
         sNameColumnC.setMinWidth(75);
-        sNameColumnC.setMaxWidth(95);
 
         TableColumn stateColumnC = _manualSensorColumnModel.
                 getColumn(SensorModel.STATE_COLUMN);
@@ -733,13 +743,16 @@ public class SignallingPanel extends JmriPanel {
         p2xm.add(p21c);
 
         _signalMastModel = new SignalMastModel();
-        TableRowSorter<SignalMastModel> sorter = new TableRowSorter<>(_signalMastModel);
+        TableRowSorter<SignalMastModel> manualMastSorter = new TableRowSorter<>(_signalMastModel);
         JTable manualSignalMastTable = new JTable(_signalMastModel);
         // configure (extra) row height for comboBox
         manualSignalMastTable.setRowHeight(sizer.getPreferredSize().height - 2);
         // row height has to be greater than plain tables to properly show comboBox shape, but tightened a bit over preferred
         _signalMastModel.configStateColumn(manualSignalMastTable); // create mast (row) specific comboBox in Aspect column
-        manualSignalMastTable.setRowSorter(sorter);
+        manualMastSorter.setComparator(SignalMastModel.SNAME_COLUMN, new jmri.util.AlphanumComparator());
+        manualMastSorter.setComparator(SignalMastModel.UNAME_COLUMN, new jmri.util.AlphanumComparator());
+        RowSorterUtil.setSortOrder(manualMastSorter, SignalMastModel.SNAME_COLUMN, SortOrder.ASCENDING);
+        manualSignalMastTable.setRowSorter(manualMastSorter);
         manualSignalMastTable.setRowSelectionAllowed(false);
         manualSignalMastTable.setPreferredScrollableViewportSize(TABLESIZEPREFERRED);
 
@@ -753,7 +766,6 @@ public class SignallingPanel extends JmriPanel {
                 getColumn(SignalMastModel.SNAME_COLUMN);
         sNameColumnC.setResizable(true);
         sNameColumnC.setMinWidth(75);
-        sNameColumnC.setMaxWidth(95);
 
         TableColumn stateColumnC = _manualSignalMastColumnModel.
                 getColumn(SensorModel.STATE_COLUMN);
@@ -782,6 +794,8 @@ public class SignallingPanel extends JmriPanel {
         _autoSignalMastModel = new AutoMastModel();
         JTable autoMastTable = new JTable(_autoSignalMastModel);
         TableRowSorter<AutoMastModel> autoMastSorter = new TableRowSorter<>(_autoSignalMastModel);
+        autoMastSorter.setComparator(AutoMastModel.SNAME_COLUMN, new jmri.util.AlphanumComparator());
+        autoMastSorter.setComparator(AutoMastModel.UNAME_COLUMN, new jmri.util.AlphanumComparator());
         RowSorterUtil.setSortOrder(autoMastSorter, AutoMastModel.SNAME_COLUMN, SortOrder.ASCENDING);
         autoMastTable.setRowSorter(autoMastSorter);
         autoMastTable.setRowSelectionAllowed(false);
@@ -792,7 +806,6 @@ public class SignallingPanel extends JmriPanel {
                 getColumn(AutoMastModel.SNAME_COLUMN);
         sNameColumnA.setResizable(true);
         sNameColumnA.setMinWidth(75);
-        sNameColumnA.setMaxWidth(95);
 
         TableColumn stateColumnA = _autoMastColumnModel.
                 getColumn(AutoMastModel.STATE_COLUMN);
@@ -843,7 +856,7 @@ public class SignallingPanel extends JmriPanel {
             boolean valid;
             try {
                 valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMast,
-                        destMast, LayoutBlockConnectivityTools.MASTTOMAST);
+                        destMast, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
                 if (!valid) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));
                     return;
@@ -2087,9 +2100,12 @@ public class SignallingPanel extends JmriPanel {
             Vector<String> comboaspects = boxMap.get(this.getValueAt(row, SNAME_COLUMN));
             if (comboaspects == null) {
                 // create a new one with correct aspects
-                comboaspects = InstanceManager.getDefault(jmri.SignalMastManager.class)
-                        .getSignalMast((String) this.getValueAt(row, SNAME_COLUMN)).getValidAspects();
-                boxMap.put(this.getValueAt(row, SNAME_COLUMN), comboaspects); // and store it
+                SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class)
+                    .getSignalMast((String) this.getValueAt(row, SNAME_COLUMN));
+                if (mast!=null) {
+                    comboaspects = mast.getValidAspects();
+                    boxMap.put(this.getValueAt(row, SNAME_COLUMN), comboaspects); // and store it
+                }
             }
             return comboaspects;
         }

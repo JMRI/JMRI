@@ -18,7 +18,6 @@ public class EntryExitPairsXmlTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
     @BeforeClass
     static public void setUp() {
         JUnitUtil.setUp();

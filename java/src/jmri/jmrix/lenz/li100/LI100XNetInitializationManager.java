@@ -136,6 +136,6 @@ public class LI100XNetInitializationManager extends AbstractXNetInitializationMa
         log.debug("XpressNet Initialization Complete");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LI100XNetInitializationManager.class);
+    private static final Logger log = LoggerFactory.getLogger(LI100XNetInitializationManager.class);
 
 }

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * DCCppLightManagerXmlTest.java
  *
- * Description: tests for the DCCppLightManagerXml class
+ * Test for the DCCppLightManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class DCCppLightManagerXmlTest {
       Assert.assertNotNull("DCCppLightManagerXml constructor",new DCCppLightManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -50,7 +50,7 @@ import org.slf4j.LoggerFactory;
 public class LoadAndStoreTestBase {
 
     // allows code reuse when building the parameter collection in getFiles()
-    private final File file;
+    protected final File file;
 
     public enum SaveType {
         All, Config, Prefs, User, UserPrefs
@@ -179,6 +179,33 @@ public class LoadAndStoreTestBase {
                 }
             }
 
+            // Screen size will vary when written out
+            if (!match) {
+                if (line1.contains("  <LayoutEditor")) {
+                    // if either line contains a windowheight attribute
+                    String windowheight_regexe = "( windowheight=\"[^\"]*\")";
+                    String[] splits1 = line1.split(windowheight_regexe);
+                    if (splits1.length == 2) {  // (yes) remove it
+                        line1 = splits1[0] + splits1[1];
+                    }
+                    String[] splits2 = line2.split(windowheight_regexe);
+                    if (splits2.length == 2) {  // (yes) remove it
+                        line2 = splits2[0] + splits2[1];
+                    }
+                    // if either line contains a windowheight attribute
+                    String windowwidth_regexe = "( windowwidth=\"[^\"]*\")";
+                    splits1 = line1.split(windowwidth_regexe);
+                    if (splits1.length == 2) {  // (yes) remove it
+                        line1 = splits1[0] + splits1[1];
+                    }
+                    splits2 = line2.split(windowwidth_regexe);
+                    if (splits2.length == 2) {  // (yes) remove it
+                        line2 = splits2[0] + splits2[1];
+                    }
+                }
+            }
+            
+            // Time will vary when written out
             if (!match) {
                 String memory_value = "<memory value";
                 if (line1.contains(memory_value) && line2.contains(memory_value)) {
@@ -188,6 +215,8 @@ public class LoadAndStoreTestBase {
                     }
                 }
             }
+            
+            // Dates can vary when written out
             String date_string = "<date>";
             if (!match && line1.contains(date_string) && line2.contains(date_string)) {
                 match = true;
@@ -205,12 +234,13 @@ public class LoadAndStoreTestBase {
                     line2 = splits2[0] + splits2[1];
                 }
             }
+            
             if (!match && !line1.equals(line2)) {
                 log.error("match failed in LoadAndStoreTest:");
                 log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
                 log.error("    file2:line {}: \"{}\"", lineNumber2, line2);
-                log.error("  comparing file1:\"" + inFile1.getPath() + "\"");
-                log.error("         to file2:\"" + inFile2.getPath() + "\"");
+                log.error("  comparing file1:\"{}\"", inFile1.getPath());
+                log.error("         to file2:\"{}\"", inFile2.getPath());
                 Assert.assertEquals(line1, line2);
             }
             line1 = next1;
@@ -292,11 +322,20 @@ public class LoadAndStoreTestBase {
         }
         log.debug("   Chose comparison file {}", compFile.getCanonicalPath());
 
+        postLoadProcessing();
+        
         File outFile = storeFile(this.file, this.saveType);
         checkFile(compFile, outFile);
         
         JUnitAppender.suppressErrorMessage("systemName is already registered: ");
     }
+    
+    /**
+     * If anything, i.e. typically a delay,
+     * is needed after loading the file,
+     * it can be added by override here.
+     */
+    protected void postLoadProcessing(){}
 
     @Before
     public void setUp() {
@@ -318,6 +357,6 @@ public class LoadAndStoreTestBase {
         System.setProperty("jmri.test.no-dialogs", "false");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LoadAndStoreTest.class);
+    private final static Logger log = LoggerFactory.getLogger(LoadAndStoreTestBase.class);
 
 }

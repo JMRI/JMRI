@@ -17,7 +17,7 @@ import jmri.util.swing.JemmyUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LocationCopyFrameTest  extends OperationsTestCase {
 
@@ -66,7 +66,7 @@ public class LocationCopyFrameTest  extends OperationsTestCase {
         Assert.assertNotNull("exists", loc);
 
         JUnitUtil.dispose(t);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LocationCopyFrameTest.class);

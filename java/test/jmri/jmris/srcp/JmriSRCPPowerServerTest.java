@@ -1,10 +1,18 @@
 package jmri.jmris.srcp;
 
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.PowerManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.beans.PropertyChangeEvent;
+import java.io.OutputStream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -15,25 +23,42 @@ import org.junit.Test;
 public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestBase {
         
     private StringBuilder sb = null;
+    private PowerManager powerManager;
 
     // test parsing an ON status message.
     @Test
     public void testParseOnStatus() throws Exception {
         ps.parseStatus("1234 SET 0 POWER ON\n");
-        Assert.assertEquals("Parse On Status Check",jmri.InstanceManager
-                      .getDefault(jmri.PowerManager.class).getPower(),
-                      jmri.PowerManager.ON);
-        Assert.assertTrue("status as a result of parsing on", sb.toString().endsWith("100 INFO 0 POWER ON\n\r"));
+        Mockito.verify(powerManager).setPower(PowerManager.ON);
+        Mockito.when(powerManager.getPower()).thenReturn(PowerManager.ON);
+        ps.propertyChange(new PropertyChangeEvent(powerManager,"Power",PowerManager.OFF,PowerManager.ON));
+        assertThat(sb.toString()).withFailMessage("status as a result of parsing on").endsWith("100 INFO 0 POWER ON\n\r");
     }
 
     // test parsing an OFF status message.
     @Test
     public void testParseOffStatus() throws Exception {
         ps.parseStatus("1234 SET 0 POWER OFF\n");
-        Assert.assertEquals("Parse OFF Status Check",jmri.InstanceManager
-                      .getDefault(jmri.PowerManager.class).getPower(),
-                      jmri.PowerManager.OFF);
-        Assert.assertTrue("status as a result of parsing off", sb.toString().endsWith("100 INFO 0 POWER OFF\n\r"));
+        Mockito.verify(powerManager).setPower(PowerManager.OFF);
+        Mockito.when(powerManager.getPower()).thenReturn(PowerManager.OFF);
+        ps.propertyChange(new PropertyChangeEvent(powerManager,"Power",PowerManager.ON,PowerManager.OFF));
+        assertThat(sb.toString()).withFailMessage("status as a result of parsing off").endsWith("100 INFO 0 POWER OFF\n\r");
+    }
+
+    @Override
+    @Test
+    public void testPropertyChangeOnStatus() {
+        Mockito.when(powerManager.getPower()).thenReturn(PowerManager.ON);
+        ps.propertyChange(new PropertyChangeEvent(powerManager, "Power", PowerManager.OFF, PowerManager.ON));
+        assertThat(sb.toString()).withFailMessage("status as a result of property change on").endsWith("100 INFO 0 POWER ON\n\r");
+    }
+
+    @Override
+    @Test
+    public void testPropertyChangeOffStatus()  {
+        Mockito.when(powerManager.getPower()).thenReturn(PowerManager.OFF);
+        ps.propertyChange(new PropertyChangeEvent(powerManager, "Power", PowerManager.ON, PowerManager.OFF));
+        assertThat(sb.toString()).withFailMessage("status as a result of property change off").endsWith("100 INFO 0 POWER OFF\n\r");
     }
 
     /**
@@ -41,7 +66,7 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
      */
     @Override
     public void checkPowerOnSent(){
-            Assert.assertTrue("status as a result of on property change", sb.toString().endsWith("100 INFO 0 POWER ON\n\r"));
+            assertThat(sb.toString()).withFailMessage("status as a result of on property change").endsWith("100 INFO 0 POWER ON\n\r");
     }
 
     /**
@@ -49,7 +74,7 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
      */
     @Override
     public void checkPowerOffSent(){
-            Assert.assertTrue("status as a result of off property change", sb.toString().endsWith("100 INFO 0 POWER OFF\n\r"));
+        assertThat(sb.toString()).withFailMessage("status as a result of off property change").endsWith("100 INFO 0 POWER OFF\n\r");
     }
 
     /**
@@ -57,7 +82,7 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
      */
     @Override
     public void checkErrorStatusSent() {
-        Assert.assertTrue("sendErrorStatus check", sb.toString().endsWith("499 ERROR unspecified error\n\r"));
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").endsWith("499 ERROR unspecified error\n\r");
     }
 
     /**
@@ -65,31 +90,31 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
      */
     @Override
     public void checkUnknownStatusSent() {
-        Assert.assertTrue("send Unknown Status check", sb.toString().endsWith("411 ERROR unknown value\n\r"));
+        assertThat(sb.toString()).withFailMessage("send Unknown Status check").endsWith("411 ERROR unknown value\n\r");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
-        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDebugPowerManager();
+        JUnitUtil.setUpLoggingAndCommonProperties();
+        powerManager = Mockito.mock(PowerManager.class);
+        InstanceManager.setDefault(PowerManager.class,powerManager);
         sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
+        OutputStream output = new OutputStream() {
             @Override
-            public void write(int b) throws java.io.IOException {
+            public void write(int b) {
                 sb.append((char) b);
             }
-        });
+        };
         ps = new JmriSRCPPowerServer(output);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         ps.dispose();
         ps = null;
         sb = null;
+        powerManager = null;
         JUnitUtil.tearDown();
     }
 

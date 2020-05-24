@@ -1,11 +1,15 @@
 package jmri.jmrit.ctc.ctcserialdata;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.io.IOException;
+import java.io.StringReader;
 import java.lang.reflect.Field;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import javax.swing.ButtonGroup;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
 
 /**
  *
@@ -13,15 +17,18 @@ import javax.swing.ButtonGroup;
  */
 
 public class ProjectsCommonSubs {
-    static final public String CSV_SEPARATOR = ","; // NOI18N
-    static final public String SSV_SEPARATOR = ";"; // NOI18N
+    static final public char SSV_SEPARATOR = ';';
     
-    static public ArrayList<String> getArrayListFromCSV(String csvString) { return helper1(csvString, CSV_SEPARATOR);}
+    static public ArrayList<String> getArrayListFromCSV(String csvString) { return helper1(csvString, CSVFormat.DEFAULT.getDelimiter());}
     static public ArrayList<String> getArrayListFromSSV(String ssvString) { return helper1(ssvString, SSV_SEPARATOR); }
-//  IMHO "split" should return an array size of 0 if passed "".  One can argue that.  Here I compensate for that situation:
-    static private ArrayList<String> helper1(String ssvString, String separator) {
-        if (ssvString.isEmpty()) return new ArrayList<>();  // Return list with 0 elements as it should be!
-        return new ArrayList<String>(Arrays.asList(ssvString.split(separator)));
+    static private ArrayList<String> helper1(String ssvString, char separator) {
+        ArrayList<String> list = new ArrayList<>();
+        try (CSVParser parser = new CSVParser(new StringReader(ssvString), CSVFormat.DEFAULT.withQuote(null).withDelimiter(separator))) {
+            parser.getRecords().forEach(record -> record.forEach(item -> list.add(item)));
+        } catch (IOException ex) {
+            log.error("Unable to parse {}", ssvString, ex);
+        }
+        return list;
     }
 
 //  Returns an ArrayList guaranteed to have exactly "returnArrayListSize" entries,
@@ -38,21 +45,16 @@ public class ProjectsCommonSubs {
         return returnValue;
     }
 
-    static public String constructCSVStringFromArrayList(ArrayList<String> stringArrayList) { return constructSeparatorStringFromArray(stringArrayList, CSV_SEPARATOR); }
+    static public String constructCSVStringFromArrayList(ArrayList<String> stringArrayList) { return constructSeparatorStringFromArray(stringArrayList, CSVFormat.DEFAULT.getDelimiter()); }
     static public String constructSSVStringFromArrayList(ArrayList<String> stringArrayList) { return constructSeparatorStringFromArray(stringArrayList, ProjectsCommonSubs.SSV_SEPARATOR); }
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "I don't want to introduce bugs, CPU no big deal here.")
-    static private String constructSeparatorStringFromArray(ArrayList<String> stringArrayList, String separator) {
-        String returnString = "";
-        if (stringArrayList.size() > 0) { // Safety:
-            returnString = stringArrayList.get(0);
-            if (returnString == null) returnString = "";        // Safety
-            for (int index = 1; index < stringArrayList.size(); index++) {
-                String gottenString = stringArrayList.get(index);
-                if (gottenString == null) gottenString = "";    // Safety
-                returnString += separator + gottenString;
-            }
+    static private String constructSeparatorStringFromArray(ArrayList<String> list, char separator) {
+        try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT.withQuote(null).withDelimiter(separator))) {
+            printer.printRecord(list);
+            return printer.getOut().toString();
+        } catch (IOException ex) {
+            log.error("Unable to create list", ex); 
+            return "";
         }
-        return returnString;
     }
     
     public static String removeFileExtension(String filename) {
@@ -60,13 +62,16 @@ public class ProjectsCommonSubs {
         return lastIndexOf >= 1 ? filename.substring(0, lastIndexOf) : filename;  
     }
 
-//  Regarding "SuppressFBWarn":    
-//  Nothing I can find says it returns "null" in any of these lines.
-//  So either Java's documentation is wrong, or SpotBugs is wrong.  I'll let
-//  someone in the future deal with this, since it should never happen:    
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Nothing is documented as returning null")
     public static String getFilenameOnly(String path) {
-        return Paths.get(path).getFileName().toString(); 
+        // Paths.get(path) can return null per the Paths documentation
+        Path file = Paths.get(path);
+        if (file != null){
+            Object fileName = file.getFileName();
+            if (fileName!=null) {
+                return fileName.toString();
+            }
+        }
+        return "";
     }
 
     public static String addExtensionIfMissing(String path, String missingExtension) {
@@ -103,11 +108,13 @@ public class ProjectsCommonSubs {
         ArrayList <Field> stringFields = new ArrayList<>();
         for (Field field : fields) {
             if (field.getType() == String.class) {
-                if (field.getName().indexOf(partialVariableName) != -1) {
+                if (field.getName().contains(partialVariableName)) {
                     stringFields.add(field);
                 }
             }
         }
         return stringFields;
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProjectsCommonSubs.class);
 }

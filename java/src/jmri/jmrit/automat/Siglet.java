@@ -81,7 +81,7 @@ abstract public class Siglet {
         setOutput();
 
         // run one cycle at start
-        thread = new Thread(() -> {
+        thread = jmri.util.ThreadingUtil.newThread(() -> {
             while (true) {
                 try {
                     PropertyChangeEvent pe = pq.take();

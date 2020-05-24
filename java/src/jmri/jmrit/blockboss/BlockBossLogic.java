@@ -9,6 +9,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanUsageReport;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
@@ -768,7 +769,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
                 doFacing();
                 break;
             default:
-                log.error(Bundle.getMessage("UnexpectedMode") + mode + "_Signal_" + getDrivenSignal());
+                log.error("{}{}_Signal_{}", Bundle.getMessage("UnexpectedMode"), mode, getDrivenSignal());
         }
     }
 
@@ -1151,7 +1152,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     // has to add itself to the configuration manager, but only once.
     // We do that the first time an instance is created and added to the active list
     private static volatile boolean addedToConfig = false;
-    
+
     // The list of existing instances. When the first is added,
     // the configuration connection is made.
     static List<BlockBossLogic> bblList = Collections.synchronizedList(
@@ -1193,7 +1194,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
                         justification="enforced dynamically, too hard to prove statically")
     public static BlockBossLogic getStoppedObject(String signal) {
-        // As a static requirement, the signal head must exist, but 
+        // As a static requirement, the signal head must exist, but
         // we can't express that statically.  We test it dynamically.
         SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signal);
         java.util.Objects.requireNonNull(sh, "signal head must exist");
@@ -1434,7 +1435,63 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         }
         bblList.clear();
     }
-    
+
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        SignalHead head = driveSignal.getBean();
+        if (bean != null) {
+            if (watchSensor1 != null && bean.equals(getDrivenSignalNamedBean().getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSignal", head));  // NOI18N
+            }
+            if (watchSensor1 != null && bean.equals(watchSensor1.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensor1", head));  // NOI18N
+            }
+            if (watchSensor2 != null && bean.equals(watchSensor2.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensor2", head));  // NOI18N
+            }
+            if (watchSensor3 != null && bean.equals(watchSensor3.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensor3", head));  // NOI18N
+            }
+            if (watchSensor4 != null && bean.equals(watchSensor4.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensor4", head));  // NOI18N
+            }
+            if (watchSensor5 != null && bean.equals(watchSensor5.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensor5", head));  // NOI18N
+            }
+            if (watchTurnout != null && bean.equals(watchTurnout.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLTurnout", head));  // NOI18N
+            }
+            if (watchedSignal1 != null && bean.equals(watchedSignal1.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSignal1", head));  // NOI18N
+            }
+            if (watchedSignal1Alt != null && bean.equals(watchedSignal1Alt.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSignal1Alt", head));  // NOI18N
+            }
+            if (watchedSignal2 != null && bean.equals(watchedSignal2.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSignal2", head));  // NOI18N
+            }
+            if (watchedSignal2Alt != null && bean.equals(watchedSignal2Alt.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSignal2Alt", head));  // NOI18N
+            }
+            if (watchedSensor1 != null && bean.equals(watchedSensor1.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensorWatched1", head));  // NOI18N
+            }
+            if (watchedSensor1Alt != null && bean.equals(watchedSensor1Alt.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensorWatched1Alt", head));  // NOI18N
+            }
+            if (watchedSensor2 != null && bean.equals(watchedSensor2.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensorWatched2", head));  // NOI18N
+            }
+            if (watchedSensor2Alt != null && bean.equals(watchedSensor2Alt.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensorWatched2Alt", head));  // NOI18N
+            }
+            if (approachSensor1 != null && bean.equals(approachSensor1.getBean())) {
+                report.add(new NamedBeanUsageReport("SSLSensorApproach", head));  // NOI18N
+            }
+        }
+        return report;
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockBossLogic.class);
 
 }

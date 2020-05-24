@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div id="mBody">
   <!--#include virtual="Sidebar" -->
 	<div id="mainContent">
@@ -118,7 +118,7 @@ Red&#233;marrer JMRI et v&#233;rifiez vos param&#232;tres de connection.
 
 </dl>
     
-		<!--#include virtual="/Footer" -->
+		<!--#include virtual="/Footer.shtml" -->
 		</div>
 	</div>
 </body>

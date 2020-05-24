@@ -1,11 +1,12 @@
 package jmri.jmrix.can.cbus.swing.simulator;
 
-import javax.swing.BoxLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import javax.swing.*;
+import jmri.jmrix.can.cbus.node.CbusNodeCanListener;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
+import jmri.jmrix.can.cbus.simulator.CbusSimCanListener;
 import jmri.util.swing.ComboBoxToolTipRenderer;
 
 import org.slf4j.Logger;
@@ -52,12 +53,12 @@ public class NdPane extends JPanel {
         tooltips = new ArrayList<>();
         String getSelected="";
         
-        for (int i = 0; i < CbusDummyNode.ndTypes.size(); i++) {
-            int intoption = CbusDummyNode.ndTypes.get(i);
+        for (int i = 0; i < CbusDummyNode.getNodeTypes().size(); i++) {
+            int intoption = CbusDummyNode.getNodeTypes().get(i);
             String option = CbusNodeConstants.getModuleType(165,intoption);
             _selectNd.addItem(option);
             tooltips.add(CbusNodeConstants.getModuleTypeExtra(165,intoption));
-            if ( intoption == _node.getParameter(3) ){ // module type
+            if ( intoption == _node.getNodeParamManager().getParameter(3) ){ // module type
                 getSelected = option;
             }
         }
@@ -66,8 +67,8 @@ public class NdPane extends JPanel {
         _selectNd.addActionListener ((ActionEvent e) -> {
             String chosen = (String)_selectNd.getSelectedItem();
             
-            for (int i = 0; i < CbusDummyNode.ndTypes.size(); i++) {
-                int intoption = CbusDummyNode.ndTypes.get(i);
+            for (int i = 0; i < CbusDummyNode.getNodeTypes().size(); i++) {
+                int intoption = CbusDummyNode.getNodeTypes().get(i);
                 String option = CbusNodeConstants.getModuleType(165,intoption);
                 if (option.equals(chosen)) {
                     log.debug("chosen {} {}",i,chosen);
@@ -78,10 +79,9 @@ public class NdPane extends JPanel {
         });
 
         renderer.setTooltips(tooltips);
-        
+
         _resetNd = new JButton("FLiM");
         
-        DirectionPane dp = new DirectionPane(_node);
         
         JPanel topPane = new JPanel();
         
@@ -94,8 +94,11 @@ public class NdPane extends JPanel {
         setBorder(BorderFactory.createEtchedBorder());
         
         add(topPane);
-        add(dp);
-        
+        CbusNodeCanListener cbncl = _node.getCanListener();
+        if ( cbncl instanceof CbusSimCanListener ) {
+            CbusSimCanListener cbcl = (CbusSimCanListener) cbncl ;
+            add( new DirectionPane( cbcl));
+        }
         _resetNd.addActionListener ((ActionEvent e) -> {
             _node.flimButton();
         });
@@ -104,7 +107,7 @@ public class NdPane extends JPanel {
     }
     
     private void updateNode(){
-        if ( _node.getParameter(3)>0 ) { // module type set
+        if ( _node.getNodeParamManager().getParameter(3)>0 ) { // module type set
             _resetNd.setEnabled(true); 
         } else {
             _resetNd.setEnabled(false); 
@@ -117,6 +120,6 @@ public class NdPane extends JPanel {
         updateNode();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(SimulatorPane.class);
+    private final static Logger log = LoggerFactory.getLogger(NdPane.class);
     
 }

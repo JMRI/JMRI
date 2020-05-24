@@ -16,7 +16,7 @@ import org.junit.Before;
 /**
  * Test the ProxyLightManager.
  *
- * @author	Bob Jacobsen 2003, 2006, 2008
+ * @author Bob Jacobsen 2003, 2006, 2008
  */
 public class ProxyLightManagerTest {
 
@@ -24,7 +24,7 @@ public class ProxyLightManagerTest {
         return "JL" + i;
     }
 
-    protected LightManager l = null;	// holds objects under test
+    protected LightManager l = null; // holds objects under test
 
     static protected boolean listenerResult = false;
 

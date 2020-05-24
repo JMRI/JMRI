@@ -121,7 +121,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 
@@ -258,6 +258,6 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         return Bundle.getMessage("AddInputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetSensorManager.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetSensorManager.class);
 
 }

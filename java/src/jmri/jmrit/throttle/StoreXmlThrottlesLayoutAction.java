@@ -95,14 +95,14 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
                         .setTextMode(Format.TextMode.PRESERVE));
                 fmt.output(doc, o);
             } catch (IOException ex) {
-                log.warn("Exception in storing throttle xml: " + ex);
+                log.warn("Exception in storing throttle xml: {}", ex);
             } finally {
                 o.close();
             }
         } catch (FileNotFoundException ex) {
-            log.warn("Exception in storing throttle xml: " + ex);
+            log.warn("Exception in storing throttle xml: {}", ex);
         } catch (IOException ex) {
-            log.warn("Exception in storing throttle xml: " + ex);
+            log.warn("Exception in storing throttle xml: {}", ex);
         }
     }
 

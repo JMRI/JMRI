@@ -31,7 +31,6 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.CarEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -117,7 +116,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     public RollingStockEditFrame(String title) {
         super(title);
-        //instanceManager = InstanceManger.getInstance();
+        //InstanceManager = InstanceManger.getInstance();
     }
 
     abstract protected RollingStockAttribute getTypeManager();
@@ -473,7 +472,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         if (locationBox.getSelectedItem() == null) {
             trackLocationBox.removeAllItems();
         } else {
-            log.debug("Update tracks for location: " + locationBox.getSelectedItem());
+            log.debug("Update tracks for location: {}", locationBox.getSelectedItem());
             Location loc = ((Location) locationBox.getSelectedItem());
             loc.updateComboBox(trackLocationBox, _rs, autoTrackCheckBox.isSelected(), false);
             if (_rs != null && _rs.getLocation() == loc) {
@@ -672,5 +671,5 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarEditFrame.class);
+    private final static Logger log = LoggerFactory.getLogger(RollingStockEditFrame.class);
 }

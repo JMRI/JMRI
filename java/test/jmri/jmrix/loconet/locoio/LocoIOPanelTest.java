@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOPanel class.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  */
 public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
 
@@ -94,7 +94,6 @@ public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
         jmri.util.JUnitAppender.suppressWarnMessage("Address must be [1..126], was 308");
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

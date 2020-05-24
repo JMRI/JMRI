@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-    "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -50,6 +49,8 @@
             <p>The settings directory is where JMRI retains preferences that are not stored within a single profile, and which are only used on a single computer. An example of a preference in the Settings Directory are the preferences for how a JMRI application selects the Profile to use.</p>
             <p>The settings directory is per user account on a single computer.</p>
 
+            <p>There's more information on the <a href="https:ProfileFileStructure.shtml">Profile File Structure page</a>.
+            
             <h1 id="preference-formats">Preference Formats</h1>
             <p>Preferences within a JMRI application may be stored as XML elements or as Java Preferences.</p>
             <h2 id="xml-elements">XML Elements</h2>

@@ -44,6 +44,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.Audio;
 import jmri.Conditional;
 import jmri.Conditional.Operator;
@@ -933,6 +934,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             if (refList != null) {
                 for (String ref : refList) {
                     Conditional cRef = _conditionalManager.getBySystemName(ref);
+                    if (cRef==null){
+                        log.error("Conditional :{}: not found while updating username",ref);
+                        continue;
+                    }
                     List<ConditionalVariable> varList = cRef.getCopyOfStateVariables();
                     int idx = 0;
                     for (ConditionalVariable var : varList) {
@@ -4172,17 +4177,13 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 sndFileChooser = new JFileChooser(System.getProperty("user.dir") // NOI18N
                         + java.io.File.separator + "resources" // NOI18N
                         + java.io.File.separator + "sounds");  // NOI18N
-                jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("wav sound files");  // NOI18N
-                filt.addExtension("wav");  // NOI18N
-                sndFileChooser.setFileFilter(filt);
+                sndFileChooser.setFileFilter(new FileNameExtensionFilter("wav sound files", "wav")); // NOI18N
             }
             currentChooser = sndFileChooser;
         } else if (actionType == Conditional.Action.RUN_SCRIPT) {
             if (scriptFileChooser == null) {
                 scriptFileChooser = new JFileChooser(FileUtil.getScriptsPath());
-                jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");  // NOI18N
-                filt.addExtension("py");
-                scriptFileChooser.setFileFilter(filt);
+                scriptFileChooser.setFileFilter(new FileNameExtensionFilter("Python script file", "py")); // NOI18N
             }
             currentChooser = scriptFileChooser;
         } else {

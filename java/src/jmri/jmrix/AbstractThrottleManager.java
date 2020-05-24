@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Vector;
 import javax.annotation.Nonnull;
 import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
@@ -272,13 +271,16 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     }
 
     /**
-     * Request a throttle, given a decoder address. When the decoder address is
+     * Request a throttle, given a decoder address.
+     * <p>
+     * When the decoder address is 
      * located, the ThrottleListener gets a callback via the
      * ThrottleListener.notifyThrottleFound method.
      *
      * @param la LocoAddress of the decoder desired.
      * @param l  The ThrottleListener awaiting notification of a found throttle.
      * @param re A BasicRosterEntry can be passed, this is attached to a throttle after creation.
+     * @param canHandleDecisions true if theThrottleListener can make a steal or share decision, else false.
      * @return True if the request will continue, false if the request will not
      *         be made. False may be returned if a the throttle is already in
      *         use.
@@ -831,8 +833,8 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             log.debug("Address {} still has active users",t.getLocoAddress());
             return false;
         }
-        if (t.getListeners().size() > 0) {
-            log.debug("Throttle {} still has active propertyChangeListeners registered to the throttle",t.getLocoAddress());
+        if (t.getPropertyChangeListeners().length > 0) {
+            log.debug("Throttle {} still has {} active propertyChangeListeners registered to the throttle",t.getLocoAddress(), t.getPropertyChangeListeners().length);
             return false;
         }
         if (addressThrottles.containsKey(la)) {
@@ -857,6 +859,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * <p>
      * Managers still need to advise listeners that the session has 
      * been cancelled and actually dispose of the throttle
+     * @param la address release
      */
     protected void forceDisposeThrottle(LocoAddress la) {
         log.debug("force dispose address {}",la);
@@ -918,6 +921,8 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
     /**
      * Release a Throttle from a ThrottleListener.
+     * @param la address release
+     * @param l listening object
      * @return True if throttle still has listeners or a positive use count, else False.
      */
     protected boolean addressReleased(LocoAddress la, ThrottleListener l) {
@@ -950,6 +955,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * specific implementations can override this function to get updates
      *
      * @param la the Loco Address which has been updated
+     * @param numUsers current number of users
      */
     protected void updateNumUsers( LocoAddress la, int numUsers ){
         log.debug("Throttle {} now has {} users",la,numUsers);
@@ -976,68 +982,11 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             } else if (item.equals(Throttle.SPEEDSTEPMODE)) {
                 return t.getSpeedStepMode();
             }
-        } else if (item.equals(Throttle.F0)) {
-            return t.getF0();
-        } else if (item.startsWith(Throttle.F1)) {
-            if (item.equals(Throttle.F1)) {
-                return t.getF1();
-            } else if (item.equals(Throttle.F10)) {
-                return t.getF10();
-            } else if (item.equals(Throttle.F11)) {
-                return t.getF11();
-            } else if (item.equals(Throttle.F12)) {
-                return t.getF12();
-            } else if (item.equals(Throttle.F13)) {
-                return t.getF13();
-            } else if (item.equals(Throttle.F14)) {
-                return t.getF14();
-            } else if (item.equals(Throttle.F15)) {
-                return t.getF15();
-            } else if (item.equals(Throttle.F16)) {
-                return t.getF16();
-            } else if (item.equals(Throttle.F17)) {
-                return t.getF17();
-            } else if (item.equals(Throttle.F18)) {
-                return t.getF18();
-            } else if (item.equals(Throttle.F19)) {
-                return t.getF19();
+        }
+        for ( int i = 0; i< t.getFunctions().length; i++ ) {
+            if (item.equals(Throttle.getFunctionString(i))) {
+                return t.getFunction(i);
             }
-        } else if (item.startsWith(Throttle.F2)) {
-            if (item.equals(Throttle.F2)) {
-                return t.getF2();
-            } else if (item.equals(Throttle.F20)) {
-                return t.getF20();
-            } else if (item.equals(Throttle.F21)) {
-                return t.getF21();
-            } else if (item.equals(Throttle.F22)) {
-                return t.getF22();
-            } else if (item.equals(Throttle.F23)) {
-                return t.getF23();
-            } else if (item.equals(Throttle.F24)) {
-                return t.getF24();
-            } else if (item.equals(Throttle.F25)) {
-                return t.getF25();
-            } else if (item.equals(Throttle.F26)) {
-                return t.getF26();
-            } else if (item.equals(Throttle.F27)) {
-                return t.getF27();
-            } else if (item.equals(Throttle.F28)) {
-                return t.getF28();
-            }
-        } else if (item.equals(Throttle.F3)) {
-            return t.getF3();
-        } else if (item.equals(Throttle.F4)) {
-            return t.getF4();
-        } else if (item.equals(Throttle.F5)) {
-            return t.getF5();
-        } else if (item.equals(Throttle.F6)) {
-            return t.getF6();
-        } else if (item.equals(Throttle.F7)) {
-            return t.getF7();
-        } else if (item.equals(Throttle.F8)) {
-            return t.getF8();
-        } else if (item.equals(Throttle.F9)) {
-            return t.getF9();
         }
         return null;
     }
@@ -1138,10 +1087,10 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             }
             //This handles moving the listeners from the old throttle to the new one
             LocoAddress la = this.throttle.getLocoAddress();
-            Vector<PropertyChangeListener> v = old.getListeners();
-            for (PropertyChangeListener prop : v) {
+            PropertyChangeEvent e = new PropertyChangeEvent(this, "throttleAssignmentChanged", null, la); // NOI18N
+            for (PropertyChangeListener prop : old.getPropertyChangeListeners()) {
                 this.throttle.addPropertyChangeListener(prop);
-                prop.propertyChange(new PropertyChangeEvent(this, "throttleAssignmentChanged", null, la));
+                prop.propertyChange(e);
             }
         }
 

@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author	Bob Jacobsen Copyright 2018
+ * @author Bob Jacobsen Copyright 2018
  */
 public class SignalHeadSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 

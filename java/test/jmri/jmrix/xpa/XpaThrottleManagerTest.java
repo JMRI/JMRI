@@ -7,13 +7,12 @@ import org.junit.Before;
 /**
  * XpaThrottleManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.xpa.XpaThrottleManager class
+ * Test for the jmri.jmrix.xpa.XpaThrottleManager class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class XpaThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

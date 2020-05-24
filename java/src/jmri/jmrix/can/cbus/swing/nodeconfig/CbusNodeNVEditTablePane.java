@@ -14,7 +14,6 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
-import jmri.jmrix.can.CanSystemConnectionMemo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,30 +29,35 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     private final CbusNodeNVTableDataModel nodeNVModel;
     private int largerFont;
-    private JTable nodeNvTable;
+    private final JTable nodeNvTable;
+    private JScrollPane eventVarScroll;
+    private JPanel pane1;
 
     protected CbusNodeNVEditTablePane( CbusNodeNVTableDataModel nVModel ) {
         super();
         nodeNVModel = nVModel;
         nodeNvTable = new JTable(nodeNVModel);
-    }
-
-    @Override
-    public void initComponents(CanSystemConnectionMemo memo) {
-        super.initComponents(memo);
         
     }
     
     protected void setNode(CbusNode node ) {
         
+        if (pane1==null){
+            initTable();
+        }
+        
         CbusNode nodeOfInterest = node;
-       // mainpane = pane;
-        nodeNvTable = null;
-        nodeNvTable = new JTable(nodeNVModel);
-        
         nodeNVModel.setNode( nodeOfInterest );
+        pane1.setVisible(!(node == null));
+    }
+    
+    private void initTable(){
         
+        pane1 = new JPanel();
+    
         TableColumnModel tableModel = nodeNvTable.getColumnModel();
+        
+        nodeNvTable.createDefaultColumnsFromModel();
         
         nodeNvTable.setRowSelectionAllowed(true);
         nodeNvTable.setColumnSelectionAllowed(false);
@@ -88,25 +92,30 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
             tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN).setWidth(0);
         }
         
-        JTextField f = new JTextField();
-        largerFont = f.getFont().getSize()+2;
+        largerFont = new JTextField().getFont().getSize()+2;
         
         setLayout(new BorderLayout() );
         
-        // scroller for main table
-        JScrollPane eventScroll = new JScrollPane(nodeNvTable);
-
-        add(eventScroll);
+        pane1.setLayout(new BorderLayout());
         
+        // scroller for main table
+        eventVarScroll = new JScrollPane(nodeNvTable);
+
+        pane1.add(eventVarScroll);
+        
+        add(pane1);
+        pane1.setVisible(true);
+        
+        nodeNvTable.setAutoCreateColumnsFromModel( false );
+        
+        add(eventVarScroll);
+    
     }
     
     private boolean _editable = true;
     
     protected void setNonEditable() {
-        
         _editable = false;
-        // nodeNVModel.setUnEditable();
-        
     }
     
     public static final Color WHITE_GREEN = new Color(0xf5,0xf5,0xf5);
@@ -138,10 +147,25 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
                 String string;
                 if(arg1 != null){
                     string = arg1.toString();
+                    try {
+                        if (Integer.parseInt(string)<0){
+                            string="";
+                        }
+                    } catch (NumberFormatException ex) {
+                    }
+                    
                     f.setText(string.toUpperCase());
                 } else {
                     f.setText("");
                 }
+                
+                if (( tablecol == CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN
+                    || tablecol == CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN)
+                    && ( oldval == newval ) ){
+                    f.setText("");
+                }
+                
+                
                 if (isSelected) {
                     if ( oldval != newval ) {
                         f.setBackground( Color.orange );
@@ -210,15 +234,15 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
     protected static class SpinnerRenderer extends JSpinner implements TableCellRenderer {
         
         public SpinnerRenderer() {
-            setOpaque(true);
-            setBorder(null);
         }
    
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
-            
-            setModel(new SpinnerNumberModel( (int) value, -1, 255, 1) );
+            setModel(new SpinnerNumberModel( (int) value, -1, 255, 1));
+            setEnabled((int)value >-1);
+            this.setOpaque(true);
+            this.setBorder(null);
             return this;
         }
     }

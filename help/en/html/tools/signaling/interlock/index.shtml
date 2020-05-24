@@ -22,9 +22,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
+    <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>Entry Exit and Interlocking</h1>
@@ -309,7 +309,7 @@
       <p><img src="images/blockrouting.png" width="542" height=
       "460"></p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -8,20 +8,20 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class WarrantTableActionTest {
+    WarrantTableAction wta;
 
     @Test
     public void testCTor() {
-        WarrantTableAction t = new WarrantTableAction("Test");
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", wta);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        wta = WarrantTableAction.getDefault();
     }
 
     @After

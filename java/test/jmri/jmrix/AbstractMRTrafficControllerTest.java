@@ -82,8 +82,7 @@ public class AbstractMRTrafficControllerTest {
 
     @After
     public void tearDown(){
-        tc = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tc.terminateThreads();
         JUnitUtil.tearDown();
  
     }

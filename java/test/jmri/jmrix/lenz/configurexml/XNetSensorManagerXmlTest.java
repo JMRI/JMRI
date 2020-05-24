@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * XNetSensorManagerXmlTest.java
  *
- * Description: tests for the XNetSensorManagerXml class
+ * Test for the XNetSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class XNetSensorManagerXmlTest {
       Assert.assertNotNull("XNetSensorManagerXml constructor",new XNetSensorManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

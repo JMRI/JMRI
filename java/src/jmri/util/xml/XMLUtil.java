@@ -213,7 +213,7 @@ public final class XMLUtil extends Object {
         DOMImplementation impl = getDOMImplementation();
 
         if ((doctypePublicID != null) && (doctypeSystemID == null)) {
-            throw new IllegalArgumentException("System ID cannot be null if public ID specified. "); //NOI18N
+            throw new IllegalArgumentException("System ID cannot be null if public ID specified. "); // NOI18N
         }
 
         DocumentType dtd = null;
@@ -247,7 +247,7 @@ public final class XMLUtil extends Object {
         } catch (ParserConfigurationException ex) {
             throw new DOMException(
                     DOMException.NOT_SUPPORTED_ERR, "Cannot create parser satisfying configuration parameters"
-            ); //NOI18N
+            ); // NOI18N
         } catch (RuntimeException e) {
             // E.g. #36578, IllegalArgumentException. Try to recover gracefully.
             throw (DOMException) new DOMException(DOMException.NOT_SUPPORTED_ERR, e.toString()).initCause(e);
@@ -380,7 +380,7 @@ public final class XMLUtil extends Object {
         try {
             builder = factory.newDocumentBuilder();
         } catch (ParserConfigurationException ex) {
-            throw new SAXException("Cannot create parser satisfying configuration parameters", ex); //NOI18N
+            throw new SAXException("Cannot create parser satisfying configuration parameters", ex); // NOI18N
         }
 
         if (errorHandler != null) {
@@ -496,7 +496,7 @@ public final class XMLUtil extends Object {
             if (cdataQNames.size() > 0) {
                 StringBuilder cdataSections = new StringBuilder();
                 for (String s : cdataQNames) {
-                    cdataSections.append(s).append(' '); //NOI18N
+                    cdataSections.append(s).append(' '); // NOI18N
                 }
                 t.setOutputProperty(OutputKeys.CDATA_SECTION_ELEMENTS, cdataSections.toString());
             }
@@ -517,7 +517,7 @@ public final class XMLUtil extends Object {
             if (parent != null) {
                 String uri = parent.getNamespaceURI();
                 if (uri != null) {
-                    cdataQNames.add("{" + uri + "}" + parent.getNodeName()); //NOI18N
+                    cdataQNames.add("{" + uri + "}" + parent.getNodeName()); // NOI18N
                 } else {
                     cdataQNames.add(parent.getNodeName());
                 }
@@ -875,7 +875,7 @@ public final class XMLUtil extends Object {
         try {
             builder = factory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
-            throw new IOException("Cannot create parser satisfying configuration parameters: " + e, e); //NOI18N
+            throw new IOException("Cannot create parser satisfying configuration parameters: " + e, e); // NOI18N
         }
 
         DocumentType doctype = null;

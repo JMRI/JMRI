@@ -20,9 +20,7 @@ public class CbusNodeFromBackupTest {
         
         CbusNodeFromBackup t = new CbusNodeFromBackup(null,256);
         Assert.assertNotNull("exists",t);
-        
         t.dispose();
-        t = null;
         
     }
     
@@ -36,22 +34,21 @@ public class CbusNodeFromBackupTest {
         Assert.assertNotNull("exists",t);
         Assert.assertTrue("Backup No Params",t.getBackupResult() == BackupType.COMPLETEDWITHERROR);
         
-        existingNode.setParameters(new int[]{8,1,2,3,4,5,6,7,8});
+        existingNode.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,5,6,7,8});
         t = new CbusNodeFromBackup(existingNode,new Date());
         Assert.assertTrue("Backup No NVs",t.getBackupResult() == BackupType.COMPLETEDWITHERROR);
         
-        existingNode.setNVs(new int[]{6,1,2,3,4,5,6});
+        existingNode.getNodeNvManager().setNVs(new int[]{6,1,2,3,4,5,6});
         t = new CbusNodeFromBackup(existingNode,new Date());
         Assert.assertTrue("Backup No EVs",t.getBackupResult() == BackupType.COMPLETEDWITHERROR);
         
-        existingNode.resetNodeEvents();
+        existingNode.getNodeEventManager().resetNodeEventsToZero();
         t = new CbusNodeFromBackup(existingNode,new Date());
         Assert.assertTrue("Backup No EVs",t.getBackupResult() == BackupType.COMPLETE);
         Assert.assertNotNull("Backup Time Set by Constructor",t.getBackupTimeStamp());
         
         existingNode.dispose();
         t.dispose();
-        t = null;
     }
     
     @Test
@@ -71,7 +68,6 @@ public class CbusNodeFromBackupTest {
         Assert.assertEquals("Comment set","My Comment 123",t.getBackupComment());
         
         t.dispose();
-        t = null;
     }
     
     @Test
@@ -80,17 +76,18 @@ public class CbusNodeFromBackupTest {
         CbusNodeFromBackup t = new CbusNodeFromBackup(null,258);
         
         // set node to 5 ev vars per event, para 5, 6NV's, param 6
-        t.setParameters(new int[]{8,1,2,3,4,5,6,7,8});
+        t.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,5,6,7,8});
         t.addBupEvent(0,1,"01020304FF");
         
-        Assert.assertNull("Random event not found",t.getNodeEvent(123,123));
-        Assert.assertNotNull("Event Found",t.getNodeEvent(0,1));
-        Assert.assertEquals("Event 0,1 Ev Var 1",1,t.getNodeEvent(0,1).getEvVar(1));
-        Assert.assertEquals("Event 0,1 Ev Var 2",2,t.getNodeEvent(0,1).getEvVar(2));
-        Assert.assertEquals("Event 0,1 Ev Var 5",255,t.getNodeEvent(0,1).getEvVar(5));
+        Assert.assertNull("Random event not found",t.getNodeEventManager().getNodeEvent(123,123));
+        
+        CbusNodeEvent ndEv = t.getNodeEventManager().getNodeEvent(0,1);
+        Assert.assertNotNull("Event Found",ndEv);
+        Assert.assertEquals("Event 0,1 Ev Var 1",1,ndEv.getEvVar(1));
+        Assert.assertEquals("Event 0,1 Ev Var 2",2,ndEv.getEvVar(2));
+        Assert.assertEquals("Event 0,1 Ev Var 5",255,ndEv.getEvVar(5));
         
         t.dispose();
-        t = null;
     }
     
     @Test
@@ -111,23 +108,23 @@ public class CbusNodeFromBackupTest {
         Assert.assertFalse("Node hash 258 / 259",t.hashCode()==tt.hashCode());
         t.setNodeNumber(259);
         
-        t.setParameters(new int[]{8,1,2,3,4,5,6,7,8});
+        t.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,5,6,7,8});
         Assert.assertFalse("No Params eq",t.equals(tt));
         Assert.assertFalse("No params hash",t.hashCode()==tt.hashCode());
-        tt.setParameters(new int[]{8,1,2,3,4,5,6,7,9});
+        tt.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,5,6,7,9});
         Assert.assertFalse("diff Params eq",t.equals(tt));
         Assert.assertFalse("diff params hash",t.hashCode()==tt.hashCode());
-        tt.setParameter(8,8);
+        tt.getNodeParamManager().setParameter(8,8);
         Assert.assertTrue("Same params eq",t.equals(tt));
         Assert.assertTrue("Same params hash",tt.hashCode()==t.hashCode());
         
-        t.setNVs(new int[]{6,1,2,3,4,5,6});
+        t.getNodeNvManager().setNVs(new int[]{6,1,2,3,4,5,6});
         Assert.assertFalse("No nv eq",t.equals(tt));
         Assert.assertFalse("No nv hash",t.hashCode()==tt.hashCode());
-        tt.setNVs(new int[]{6,1,2,3,4,5,7});
+        tt.getNodeNvManager().setNVs(new int[]{6,1,2,3,4,5,7});
         Assert.assertFalse("diff nv eq",t.equals(tt));
         Assert.assertFalse("diff nv hash",t.hashCode()==tt.hashCode());
-        tt.setNV(6,6);
+        tt.getNodeNvManager().setNV(6,6);
         Assert.assertTrue("Same nv eq",t.equals(tt));
         Assert.assertTrue("Same nv hash",tt.hashCode()==t.hashCode());
         
@@ -137,7 +134,10 @@ public class CbusNodeFromBackupTest {
         tt.addBupEvent(0,1,"01020304FE");
         Assert.assertFalse("diff ev eq",t.equals(tt));
         Assert.assertFalse("diff ev hash",t.hashCode()==tt.hashCode());
-        tt.getNodeEvent(0,1).setEvVar(5,255);
+        
+        CbusNodeEvent ndEv = tt.getNodeEventManager().getNodeEvent(0,1);
+        Assert.assertNotNull(ndEv);
+        ndEv.setEvVar(5,255);
         Assert.assertTrue("Same ev eq",t.equals(tt));
         Assert.assertTrue("Same ev hash",tt.hashCode()==t.hashCode());
         
@@ -177,31 +177,21 @@ public class CbusNodeFromBackupTest {
         
         CbusNodeFromBackup t = new CbusNodeFromBackup(memo,1234);
         
+        jmri.jmrix.can.CanReply r = new jmri.jmrix.can.CanReply(0x12);
+        r.setNumDataElements(1);
+        r.setElement(0,17);
+        t.getCanListener().reply(r);
+        t.getCanListener().message(new jmri.jmrix.can.CanMessage(r));
+        
         Assert.assertEquals("default getNodeInLearnMode ",false,t.getNodeInLearnMode() );
         
-        // frame to set node into learn
-        jmri.jmrix.can.CanReply r = new jmri.jmrix.can.CanReply();
-        r.setHeader(tcis.getCanid());
-        r.setNumDataElements(3);
-        r.setElement(0, jmri.jmrix.can.cbus.CbusConstants.CBUS_NNLRN); 
-        r.setElement(1, 0x04);
-        r.setElement(2, 0xd2);
-        t.reply(r);
-        Assert.assertEquals("does not respond to reply",false,t.getNodeInLearnMode() );
+        Assert.assertTrue("No Traffic Controler",(t.getCanListener() instanceof CbusNodeFromBackup.DoNothingCanListener));
         
-        // frame to set node into learn
-        jmri.jmrix.can.CanMessage m = new jmri.jmrix.can.CanMessage( tcis.getCanid() );
-        m.setNumDataElements(3);
-        m.setElement(0, jmri.jmrix.can.cbus.CbusConstants.CBUS_NNLRN); 
-        m.setElement(1, 0x04);
-        m.setElement(2, 0xd2);
-        t.message(m);
-        Assert.assertEquals("does not respond to message",false,t.getNodeInLearnMode() );
+        tcis.terminateThreads();
+        memo.dispose();
+        
     }
     
-    
-
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -209,7 +199,6 @@ public class CbusNodeFromBackupTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

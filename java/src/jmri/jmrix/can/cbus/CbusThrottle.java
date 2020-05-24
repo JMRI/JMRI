@@ -5,7 +5,6 @@ import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.Throttle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,11 +35,9 @@ public class CbusThrottle extends AbstractThrottle {
     public CbusThrottle(CanSystemConnectionMemo memo, LocoAddress address, int handle) {
         super(memo);
         log.debug("creating new CbusThrottle address {} handle {}",address,handle);
-        DccLocoAddress castaddress=null;
-        try {
-            castaddress = (DccLocoAddress) address;
-        } catch(java.lang.ClassCastException cce){
+        if (!( address instanceof DccLocoAddress )  ){
             log.error("{} is not a DccLocoAddress",address);
+            return;
         }
         log.debug("Throttle created");
         cs = (CbusCommandStation) adapterMemo.get(jmri.CommandStation.class);
@@ -50,40 +47,8 @@ public class CbusThrottle extends AbstractThrottle {
 
         // cache settings
         this.speedSetting = 0;
-        this.f0 = false;
-        this.f1 = false;
-        this.f2 = false;
-        this.f3 = false;
-        this.f4 = false;
-        this.f5 = false;
-        this.f6 = false;
-        this.f7 = false;
-        this.f8 = false;
-        this.f8 = false;
-        this.f9 = false;
-        this.f10 = false;
-        this.f11 = false;
-        this.f12 = false;
-
-        // extended values
-        this.f13 = false;
-        this.f14 = false;
-        this.f15 = false;
-        this.f16 = false;
-        this.f17 = false;
-        this.f18 = false;
-        this.f19 = false;
-        this.f20 = false;
-        this.f21 = false;
-        this.f22 = false;
-        this.f23 = false;
-        this.f24 = false;
-        this.f25 = false;
-        this.f26 = false;
-        this.f27 = false;
-        this.f28 = false;
-
-        this.dccAddress = castaddress;
+        // Functions 0-28 default to false
+        this.dccAddress = (DccLocoAddress) address;
         this.isForward = true;
 
 //        switch(slot.decoderType())
@@ -117,9 +82,9 @@ public class CbusThrottle extends AbstractThrottle {
         log.debug("Setting throttle initial values");
         updateSpeedSetting( speed & 0x7f );
         updateIsForward ( (speed & 0x80) == 0x80 );
-        updateFunctionGroup1(f0f4);
-        updateFunctionGroup2(f5f8);
-        updateFunctionGroup3(f9f12);
+        updateFunctionGroup(1,f0f4);
+        updateFunctionGroup(2,f5f8);
+        updateFunctionGroup(3,f9f12);
     }
 
     /**
@@ -172,12 +137,7 @@ public class CbusThrottle extends AbstractThrottle {
      */
     @Override
     protected void sendFunctionGroup1() {
-        int new_fn = ((getF0() ? CbusConstants.CBUS_F0 : 0)
-                | (getF1() ? CbusConstants.CBUS_F1 : 0)
-                | (getF2() ? CbusConstants.CBUS_F2 : 0)
-                | (getF3() ? CbusConstants.CBUS_F3 : 0)
-                | (getF4() ? CbusConstants.CBUS_F4 : 0));
-        cs.setFunctions(1, _handle, new_fn);
+        sendFunctionGroup(1);
     }
 
     /**
@@ -185,11 +145,7 @@ public class CbusThrottle extends AbstractThrottle {
      */
     @Override
     protected void sendFunctionGroup2() {
-        int new_fn = ((getF5() ? CbusConstants.CBUS_F5 : 0)
-                | (getF6() ? CbusConstants.CBUS_F6 : 0)
-                | (getF7() ? CbusConstants.CBUS_F7 : 0)
-                | (getF8() ? CbusConstants.CBUS_F8 : 0));
-        cs.setFunctions(2, _handle, new_fn);
+        sendFunctionGroup(2);
     }
 
     /**
@@ -197,11 +153,7 @@ public class CbusThrottle extends AbstractThrottle {
      */
     @Override
     protected void sendFunctionGroup3() {
-        int new_fn = ((getF9() ? CbusConstants.CBUS_F9 : 0)
-                | (getF10() ? CbusConstants.CBUS_F10 : 0)
-                | (getF11() ? CbusConstants.CBUS_F11 : 0)
-                | (getF12() ? CbusConstants.CBUS_F12 : 0));
-        cs.setFunctions(3, _handle, new_fn);
+        sendFunctionGroup(3);
     }
 
     /**
@@ -210,15 +162,7 @@ public class CbusThrottle extends AbstractThrottle {
      */
     @Override
     protected void sendFunctionGroup4() {
-        int new_fn = ((getF13() ? CbusConstants.CBUS_F13 : 0)
-                | (getF14() ? CbusConstants.CBUS_F14 : 0)
-                | (getF15() ? CbusConstants.CBUS_F15 : 0)
-                | (getF16() ? CbusConstants.CBUS_F16 : 0)
-                | (getF17() ? CbusConstants.CBUS_F17 : 0)
-                | (getF18() ? CbusConstants.CBUS_F18 : 0)
-                | (getF19() ? CbusConstants.CBUS_F19 : 0)
-                | (getF20() ? CbusConstants.CBUS_F20 : 0));
-        cs.setFunctions(4, _handle, new_fn);
+        sendFunctionGroup(4);
     }
 
     /**
@@ -227,272 +171,24 @@ public class CbusThrottle extends AbstractThrottle {
      */
     @Override
     protected void sendFunctionGroup5() {
-        int new_fn = ((getF21() ? CbusConstants.CBUS_F21 : 0)
-                | (getF22() ? CbusConstants.CBUS_F22 : 0)
-                | (getF23() ? CbusConstants.CBUS_F23 : 0)
-                | (getF24() ? CbusConstants.CBUS_F24 : 0)
-                | (getF25() ? CbusConstants.CBUS_F25 : 0)
-                | (getF26() ? CbusConstants.CBUS_F26 : 0)
-                | (getF27() ? CbusConstants.CBUS_F27 : 0)
-                | (getF28() ? CbusConstants.CBUS_F28 : 0));
-        cs.setFunctions(5, _handle, new_fn);
+        sendFunctionGroup(5);
+    }
+    
+    protected void sendFunctionGroup(int group) {
+        int totVal = 0;
+        for ( int i=0; i<=28; i++ ){
+            if (FUNCTION_GROUPS[i]==group && getFunction(i)){
+                totVal = totVal + CbusConstants.CBUS_FUNCTION_BITS[i];
+            }
+        }
+        cs.setFunctions(group, _handle, totVal);
     }
 
-    /**
-     * Update the state of locomotive functions F0, F1, F2, F3, F4 in response
-     * to a message from the hardware
-     * @param fns int value Fn 0-4
-     */
-    protected void updateFunctionGroup1(int fns) {
-        updateFunction( 0, (fns & CbusConstants.CBUS_F0) == CbusConstants.CBUS_F0 );
-        updateFunction( 1, (fns & CbusConstants.CBUS_F1) == CbusConstants.CBUS_F1);
-        updateFunction( 2, (fns & CbusConstants.CBUS_F2) == CbusConstants.CBUS_F2);
-        updateFunction( 3, (fns & CbusConstants.CBUS_F3) == CbusConstants.CBUS_F3);
-        updateFunction( 4, (fns & CbusConstants.CBUS_F4) == CbusConstants.CBUS_F4);
-    }
-
-    /**
-     * Update the state of locomotive functions F5, F6, F7, F8 in response to a
-     * message from the hardware
-     * @param fns int value Fn 5-8
-     */
-    protected void updateFunctionGroup2(int fns) {
-        updateFunction( 5, (fns & CbusConstants.CBUS_F5) == CbusConstants.CBUS_F5);
-        updateFunction( 6, (fns & CbusConstants.CBUS_F6) == CbusConstants.CBUS_F6);
-        updateFunction( 7, (fns & CbusConstants.CBUS_F7) == CbusConstants.CBUS_F7);
-        updateFunction( 8, (fns & CbusConstants.CBUS_F8) == CbusConstants.CBUS_F8);
-    }
-
-    /**
-     * Update the state of locomotive functions F9, F10, F11, F12 in response to
-     * a message from the hardware
-     * @param fns int value Fn 9-12
-     */
-    protected void updateFunctionGroup3(int fns) {
-        updateFunction( 9, (fns & CbusConstants.CBUS_F9) == CbusConstants.CBUS_F9);
-        updateFunction( 10, (fns & CbusConstants.CBUS_F10) == CbusConstants.CBUS_F10);
-        updateFunction( 11, (fns & CbusConstants.CBUS_F11) == CbusConstants.CBUS_F11);
-        updateFunction( 12, (fns & CbusConstants.CBUS_F12) == CbusConstants.CBUS_F12);
-    }
-
-    /**
-     * Update the state of locomotive functions F13, F14, F15, F16, F17, F18,
-     * F19, F20 in response to a message from the hardware
-     * @param fns int value Fn 13-20
-     */
-    protected void updateFunctionGroup4(int fns) {
-        
-        updateFunction( 13 , ((fns & CbusConstants.CBUS_F13) == CbusConstants.CBUS_F13));
-        updateFunction( 14 , ((fns & CbusConstants.CBUS_F14) == CbusConstants.CBUS_F14));
-        updateFunction( 15 , ((fns & CbusConstants.CBUS_F15) == CbusConstants.CBUS_F15));
-        updateFunction( 16 , ((fns & CbusConstants.CBUS_F16) == CbusConstants.CBUS_F16));
-        updateFunction( 17 , ((fns & CbusConstants.CBUS_F17) == CbusConstants.CBUS_F17));
-        updateFunction( 18 , ((fns & CbusConstants.CBUS_F18) == CbusConstants.CBUS_F18));
-        updateFunction( 19 , ((fns & CbusConstants.CBUS_F19) == CbusConstants.CBUS_F19));
-        updateFunction( 20 , ((fns & CbusConstants.CBUS_F20) == CbusConstants.CBUS_F20));
-    }
-
-    /**
-     * Update the state of locomotive functions F21, F22, F23, F24, F25, F26,
-     * F27, F28 in response to a message from the hardware
-     * @param fns int value Fn 21-28
-     */
-    protected void updateFunctionGroup5(int fns) {
-        updateFunction( 21 , ((fns & CbusConstants.CBUS_F21) == CbusConstants.CBUS_F21));
-        updateFunction( 22 , ((fns & CbusConstants.CBUS_F22) == CbusConstants.CBUS_F22));
-        updateFunction( 23 , ((fns & CbusConstants.CBUS_F23) == CbusConstants.CBUS_F23));
-        updateFunction( 24 , ((fns & CbusConstants.CBUS_F24) == CbusConstants.CBUS_F24));
-        updateFunction( 25 , ((fns & CbusConstants.CBUS_F25) == CbusConstants.CBUS_F25));
-        updateFunction( 26 , ((fns & CbusConstants.CBUS_F26) == CbusConstants.CBUS_F26));
-        updateFunction( 27 , ((fns & CbusConstants.CBUS_F27) == CbusConstants.CBUS_F27));
-        updateFunction( 28 , ((fns & CbusConstants.CBUS_F28) == CbusConstants.CBUS_F28));
-    }
-
-    /**
-     * Update the state of a single function in response to a message from the
-     * hardware
-     * @param fn Function Number 0-28
-     * @param state On - True, Off - False
-     */
-    protected void updateFunction(int fn, boolean state) {
-        switch (fn) {
-            case 0:
-                if ( this.f0 != state ){
-                    this.f0 = state;
-                    notifyPropertyChangeListener(Throttle.F0, !state, state);
-                }
-                break;
-            case 1:
-                if ( this.f1 != state ){
-                    this.f1 = state;
-                    notifyPropertyChangeListener(Throttle.F1, !state, state);
-                }
-                break;
-            case 2:
-                if ( this.f2 != state ){
-                    this.f2 = state;
-                    notifyPropertyChangeListener(Throttle.F2, !state, state);
-                }
-                break;
-            case 3:
-                if ( this.f3 != state ){
-                    this.f3 = state;
-                    notifyPropertyChangeListener(Throttle.F3, !state, state);
-                }
-                break;
-            case 4:
-                if ( this.f4 != state ){
-                    this.f4 = state;
-                    notifyPropertyChangeListener(Throttle.F4, !state, state);
-                }
-                break;
-            case 5:
-                if ( this.f5 != state ){
-                    this.f5 = state;
-                    notifyPropertyChangeListener(Throttle.F5, !state, state);
-                }
-                break;
-            case 6:
-                if ( this.f6 != state ){
-                    this.f6 = state;
-                    notifyPropertyChangeListener(Throttle.F6, !state, state);
-                }
-                break;
-            case 7:
-                if ( this.f7 != state ){
-                    this.f7 = state;
-                    notifyPropertyChangeListener(Throttle.F7, !state, state);
-                }
-                break;
-            case 8:
-                if ( this.f8 != state ){
-                    this.f8 = state;
-                    notifyPropertyChangeListener(Throttle.F8, !state, state);
-                }
-                break;
-            case 9:
-                if ( this.f9 != state ){
-                    this.f9 = state;
-                    notifyPropertyChangeListener(Throttle.F9, !state, state);
-                }
-                break;
-            case 10:
-                if ( this.f10 != state ){
-                    this.f10 = state;
-                    notifyPropertyChangeListener(Throttle.F10, !state, state);
-                }
-                break;
-            case 11:
-                if ( this.f11 != state ){
-                    this.f11 = state;
-                    notifyPropertyChangeListener(Throttle.F11, !state, state);
-                }
-                break;
-            case 12:
-                if ( this.f12 != state ){
-                    this.f12 = state;
-                    notifyPropertyChangeListener(Throttle.F12, !state, state);
-                }
-                break;
-            case 13:
-                if ( this.f13 != state ){
-                    this.f13 = state;
-                    notifyPropertyChangeListener(Throttle.F13, !state, state);
-                }
-                break;
-            case 14:
-                if ( this.f14 != state ){
-                    this.f14 = state;
-                    notifyPropertyChangeListener(Throttle.F14, !state, state);
-                }
-                break;
-            case 15:
-                if ( this.f15 != state ){
-                    this.f15 = state;
-                    notifyPropertyChangeListener(Throttle.F15, !state, state);
-                }
-                break;
-            case 16:
-                if ( this.f16 != state ){
-                    this.f16 = state;
-                    notifyPropertyChangeListener(Throttle.F16, !state, state);
-                }
-                break;
-            case 17:
-                if ( this.f17 != state ){
-                    this.f17 = state;
-                    notifyPropertyChangeListener(Throttle.F17, !state, state);
-                }
-                break;
-            case 18:
-                if ( this.f18 != state ){
-                    this.f18 = state;
-                    notifyPropertyChangeListener(Throttle.F18, !state, state);
-                }
-                break;
-            case 19:
-                if ( this.f19 != state ){
-                    this.f19 = state;
-                    notifyPropertyChangeListener(Throttle.F19, !state, state);
-                }
-                break;
-            case 20:
-                if ( this.f20 != state ){
-                    this.f20 = state;
-                    notifyPropertyChangeListener(Throttle.F20, !state, state);
-                }
-                break;
-            case 21:
-                if ( this.f21 != state ){
-                    this.f21 = state;
-                    notifyPropertyChangeListener(Throttle.F21, !state, state);
-                }
-                break;
-            case 22:
-                if ( this.f22 != state ){
-                    this.f22 = state;
-                    notifyPropertyChangeListener(Throttle.F22, !state, state);
-                }
-                break;
-            case 23:
-                if ( this.f23 != state ){
-                    this.f23 = state;
-                    notifyPropertyChangeListener(Throttle.F23, !state, state);
-                }
-                break;
-            case 24:
-                if ( this.f24 != state ){
-                    this.f24 = state;
-                    notifyPropertyChangeListener(Throttle.F24, !state, state);
-                }
-                break;
-            case 25:
-                if ( this.f25 != state ){
-                    this.f25 = state;
-                    notifyPropertyChangeListener(Throttle.F25, !state, state);
-                }
-                break;
-            case 26:
-                if ( this.f26 != state ){
-                    this.f26 = state;
-                    notifyPropertyChangeListener(Throttle.F26, !state, state);
-                }
-                break;
-            case 27:
-                if ( this.f27 != state ){
-                    this.f27 = state;
-                    notifyPropertyChangeListener(Throttle.F27, !state, state);
-                }
-                break;
-            case 28:
-                if ( this.f28 != state ){
-                    this.f28 = state;
-                    notifyPropertyChangeListener(Throttle.F28, !state, state);
-                }
-                break;
-            default:
-                log.warn("Unhandled function number: {}", fn);
-                break;
+    protected void updateFunctionGroup(int group, int fns) {
+        for ( int i=0; i<=28; i++ ){
+            if (FUNCTION_GROUPS[i]==group){
+                updateFunction( i, (fns & CbusConstants.CBUS_FUNCTION_BITS[i]) == CbusConstants.CBUS_FUNCTION_BITS[i] );
+            }
         }
     }
 
@@ -521,7 +217,7 @@ public class CbusThrottle extends AbstractThrottle {
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
             sendToLayout();
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
+            firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
             record(this.speedSetting); // float
         }
     }
@@ -568,7 +264,7 @@ public class CbusThrottle extends AbstractThrottle {
         }
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
-            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
+            firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
             record(this.speedSetting); // float
         }
     }
@@ -584,22 +280,18 @@ public class CbusThrottle extends AbstractThrottle {
         this.isForward = forward;
         if (old != this.isForward) {
             sendToLayout();
-            notifyPropertyChangeListener(ISFORWARD, old, isForward);
+            firePropertyChange(ISFORWARD, old, isForward);
         }
     }
-
+    
     /**
      * Update the throttles direction without sending to hardware.Used to
      * support CBUS sharing by taking direction received <b>from</b> the
      * hardware in an OPC_DSPD message.
      * @param forward True if Forward, else False
      */
-    protected void updateIsForward(boolean forward) {
-        boolean old = isForward;
-        isForward = forward;
-        if (old != isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, isForward);
-        }
+    protected void updateIsForward(boolean forward){
+        super.setIsForward(forward);
     }
 
     /**
@@ -642,7 +334,7 @@ public class CbusThrottle extends AbstractThrottle {
      */
     protected void setStolen(boolean isStolen){
         if (isStolen != _isStolen){
-            notifyPropertyChangeListener("IsAvailable", isStolen, _isStolen); // PCL is opposite of local boolean
+            firePropertyChange("IsAvailable", isStolen, _isStolen); // PCL is opposite of local boolean
             _isStolen = isStolen;
         }
         if (isStolen){ // stop keep-alive messages
@@ -721,7 +413,7 @@ public class CbusThrottle extends AbstractThrottle {
         
     }
 
-    javax.swing.Timer mRefreshTimer = null;
+    private javax.swing.Timer mRefreshTimer;
 
     // CBUS command stations expect DSPD per sesison every 4s
     protected final void startRefresh() {

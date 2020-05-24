@@ -29,7 +29,7 @@ public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {
     @Override
     public void sendEasyDccMessage(EasyDccMessage m, EasyDccListener reply) {
         if (log.isDebugEnabled()) {
-            log.debug("sendEasyDccMessage [" + m + "]");
+            log.debug("sendEasyDccMessage [{}]", m);
         }
         // save a copy
         outbound.addElement(m);
@@ -48,7 +48,7 @@ public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {
     protected void sendTestMessage(EasyDccMessage m) {
         // forward a test message to Listeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
+            log.debug("sendTestMessage    [{}]", m);
         }
         notifyMessage(m, null);
         return;
@@ -60,7 +60,7 @@ public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {
     protected void sendTestMessage(EasyDccMessage m, EasyDccListener l) {
         // forward a test message to EasyDccListeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
+            log.debug("sendTestMessage    [{}]", m);
         }
         notifyMessage(m, l);
         return;

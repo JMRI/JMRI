@@ -133,9 +133,21 @@ public class CbusEventHighlighterTest {
         Assert.assertTrue("does highlight event 1", (t.highlight(r)));         
     }
     
+    @Test
+    public void testSetGet(){
+    
+        t.setNnEnable(true);
+        Assert.assertTrue("nn enable true",t.getNnEnable());
+        t.setNnEnable(false);
+        Assert.assertFalse("nn enable false",t.getNnEnable());
+    
+        t.setEv(12345);
+        Assert.assertTrue("set get ev",t.getEv()==12345);
+        
+    }
+    
     
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

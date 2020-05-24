@@ -2,10 +2,7 @@ package jmri.jmrit.display.palette;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -92,9 +89,9 @@ public class IconDialog extends ItemDialog {
         catalog.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         ImagePanel panel = catalog.getPreviewPanel();
         if (!_parent.isUpdate()) {
-            panel.setImage(_parent._backgrounds[_parent.getParentFrame().getPreviewBg()]);
+            panel.setImage(_parent._frame.getPreviewBackground());
         } else {
-            panel.setImage(_parent._backgrounds[0]);   //update always should be the panel background
+            panel.setImage(_parent._frame.getBackground(0));   //update always should be the panel background
         }
         return catalog;
     }
@@ -127,7 +124,7 @@ public class IconDialog extends ItemDialog {
             ItemPalette.removeIconMap(_type, _family);
             return _parent.addFamily(_type, _family, _iconMap);
         } else if (!_parent.isUnstoredMap()) {
-            JOptionPane.showMessageDialog(_parent._paletteFrame,
+            JOptionPane.showMessageDialog(_parent._frame,
                     Bundle.getMessage("DuplicateFamilyName", _family, _type),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
@@ -178,32 +175,19 @@ public class IconDialog extends ItemDialog {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         JButton doneButton = new JButton(Bundle.getMessage(text));
-        doneButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                if (doDoneAction()) {
-                    dispose();
-                }
+        doneButton.addActionListener(a -> {
+            if (doDoneAction()) {
+                dispose();
             }
         });
         panel.add(doneButton);
 
         JButton renameButton = new JButton(Bundle.getMessage("renameFamily"));
-        renameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                renameFamily();
-            }
-        });
+        renameButton.addActionListener(a -> renameFamily());
         panel.add(renameButton);
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                dispose();
-            }
-        });
+        cancelButton.addActionListener(a -> dispose());
         panel.add(cancelButton);
         buttonPanel.add(panel);
     }
@@ -212,9 +196,9 @@ public class IconDialog extends ItemDialog {
         iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
         if (!_parent.isUpdate()) {
-            iconPanel.setImage(_parent._backgrounds[_parent.getParentFrame().getPreviewBg()]);
+            iconPanel.setImage(_parent._frame.getPreviewBackground());
         } else {
-            iconPanel.setImage(_parent._backgrounds[0]);   //update always should be the panel background
+            iconPanel.setImage(_parent._frame.getBackground(0));   //update always should be the panel background
         }
         log.debug("iconMap size = {}", _iconMap.size());
         _parent.addIconsToPanel(iconMap, iconPanel, true);
@@ -224,9 +208,7 @@ public class IconDialog extends ItemDialog {
         HashMap<String, NamedIcon> clone = null;
         if (map != null) {
             clone = new HashMap<>();
-            Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
+            for (Entry<String, NamedIcon> entry : map.entrySet()) {
                 clone.put(entry.getKey(), new NamedIcon(entry.getValue()));
             }
         }

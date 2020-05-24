@@ -8,7 +8,7 @@ import org.junit.Before;
 /**
  * JUnit tests for the SerialReply class.
  *
- * @author	Bob Jacobsen Copyright 2003, 2008
+ * @author Bob Jacobsen Copyright 2003, 2008
  */
 public class SerialReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 

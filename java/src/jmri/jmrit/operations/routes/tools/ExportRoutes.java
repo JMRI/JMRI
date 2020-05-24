@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.routes.tools;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 
 import javax.swing.JOptionPane;
@@ -14,21 +15,28 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 /**
  * Export Routes to CSV file
  */
 public class ExportRoutes extends XmlFile {
 
-    static final String ESC = "\""; // escape character NOI18N
-    private String del = ","; // delimiter
-
     public ExportRoutes() {
-
+        // nothing to do
     }
 
+    /**
+     * Sets the delimiter for the CSV export. Does nothing, left in place to
+     * avoid API breakage during deprecation period.
+     *
+     * @param delimiter ignored
+     * @deprecated since 4.19.4 without replacement
+     */
+    @Deprecated
     public void setDeliminter(String delimiter) {
-        del = delimiter;
+        // nothing to do
     }
 
     public void writeOperationsRoutesFile() {
@@ -48,8 +56,8 @@ public class ExportRoutes extends XmlFile {
                 }
             }
             writeFile(defaultOperationsFilename());
-        } catch (Exception e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete: " + e);
+        } catch (IOException e) {
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}", e);
         }
     }
 
@@ -62,63 +70,38 @@ public class ExportRoutes extends XmlFile {
         }
 
         int count = 0;
-        try (PrintWriter fileOut = new PrintWriter(
-                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), true)) {
+        try (CSVPrinter fileOut = new CSVPrinter(
+                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),
+                CSVFormat.DEFAULT)) {
 
             loadHeader(fileOut);
 
             for (Route route : InstanceManager.getDefault(RouteManager.class).getRoutesByNameList()) {
                 count++;
-                String line = route.getName() +
-                        del +
-                        del +
-                        del +
-                        del +
-                        del +
-                        del +
-                        del +
-                        del +
-                        del +
-                        del +
-                        del +
-                        del +
-                        del +
-                        ESC +
-                        route.getComment() +
-                        ESC;
-                fileOut.println(line);
+                fileOut.printRecord(route.getName(),
+                        "", // NOI18N
+                        "", // NOI18N
+                        "", // NOI18N
+                        "", // NOI18N
+                        "", // NOI18N
+                        "", // NOI18N
+                        route.getComment());
                 for (RouteLocation rl : route.getLocationsBySequenceList()) {
-                    line = del +
-                            rl.getLocation().getName() +
-                            del +
-                            rl.getTrainDirectionString() +
-                            del +
-                            rl.getMaxCarMoves() +
-                            del +
-                            rl.getRandomControl() +
-                            del +
-                            (rl.isPickUpAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no")) +
-                            del +
-                            (rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no")) +
-                            del +
-                            rl.getWait() +
-                            del +
-                            rl.getFormatedDepartureTime() +
-                            del +
-                            rl.getMaxTrainLength() +
-                            del +
-                            rl.getGrade() +
-                            del +
-                            rl.getTrainIconX() +
-                            del +
-                            rl.getTrainIconY() +
-                            del +
-                            ESC +
-                            rl.getComment().replace("\n", "<LF>") +
-                            ESC +
-                            del +
-                            rl.getCommentTextColor();
-                    fileOut.println(line);
+                    fileOut.printRecord("", // NOI18N
+                            rl.getLocation().getName(),
+                            rl.getTrainDirectionString(),
+                            rl.getMaxCarMoves(),
+                            rl.getRandomControl(),
+                            rl.isPickUpAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
+                            rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
+                            rl.getWait(),
+                            rl.getFormatedDepartureTime(),
+                            rl.getMaxTrainLength(),
+                            rl.getGrade(),
+                            rl.getTrainIconX(),
+                            rl.getTrainIconY(),
+                            rl.getComment().replace("\n", "<LF>"),
+                            rl.getCommentTextColor());
                 }
             }
 
@@ -130,52 +113,34 @@ public class ExportRoutes extends XmlFile {
             fileOut.flush();
             fileOut.close();
         } catch (IOException e) {
-            log.error("Can not open export Routes CSV file: " + file.getName());
+            log.error("Can not open export Routes CSV file: {}", file.getName());
             JOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ExportedRoutesToFile"),
                             new Object[]{0, defaultOperationsFilename()}),
                     Bundle.getMessage("ExportFailed"), JOptionPane.ERROR_MESSAGE);
-            return;
         }
     }
 
-    private void loadHeader(PrintWriter fileOut) {
-        String line = Bundle.getMessage(
-                "Route") +
-                " " +
-                Bundle.getMessage("Name") +
-                del +
-                Bundle.getMessage("Location") +
-                del +
-                Bundle.getMessage("TrainDirection") +
-                del +
-                Bundle.getMessage("Moves") +
-                del +
-                Bundle.getMessage("Random") +
-                del +
-                Bundle.getMessage("Pickups") +
-                del +
-                Bundle.getMessage("Drops") +
-                del +
-                Bundle.getMessage("Wait") +
-                del +
-                Bundle.getMessage("DepartTime") +
-                del +
-                Bundle.getMessage("MaxLength") +
-                del +
-                Bundle.getMessage("Grade") +
-                del +
-                Bundle.getMessage("X") +
-                del +
-                Bundle.getMessage("Y") +
-                del +
-                Bundle.getMessage("Comment") +
-                del +
-                Bundle.getMessage("Comment") +
-                " " +
-                Bundle.getMessage("TextColor");
-        fileOut.println(line);
-
+    private void loadHeader(CSVPrinter fileOut) throws IOException {
+        fileOut.printRecord(Bundle.getMessage("Route"),
+                " ",
+                Bundle.getMessage("Name"),
+                Bundle.getMessage("Location"),
+                Bundle.getMessage("TrainDirection"),
+                Bundle.getMessage("Moves"),
+                Bundle.getMessage("Random"),
+                Bundle.getMessage("Pickups"),
+                Bundle.getMessage("Drops"),
+                Bundle.getMessage("Wait"),
+                Bundle.getMessage("DepartTime"),
+                Bundle.getMessage("MaxLength"),
+                Bundle.getMessage("Grade"),
+                Bundle.getMessage("X"),
+                Bundle.getMessage("Y"),
+                Bundle.getMessage("Comment"),
+                Bundle.getMessage("Comment"),
+                " ",
+                Bundle.getMessage("TextColor"));
     }
 
     public File getExportFile() {
@@ -184,10 +149,10 @@ public class ExportRoutes extends XmlFile {
 
     // Operation files always use the same directory
     public static String defaultOperationsFilename() {
-        return OperationsSetupXml.getFileLocation() +
-                OperationsSetupXml.getOperationsDirectoryName() +
-                File.separator +
-                getOperationsFileName();
+        return OperationsSetupXml.getFileLocation()
+                + OperationsSetupXml.getOperationsDirectoryName()
+                + File.separator
+                + getOperationsFileName();
     }
 
     public static void setOperationsFileName(String name) {

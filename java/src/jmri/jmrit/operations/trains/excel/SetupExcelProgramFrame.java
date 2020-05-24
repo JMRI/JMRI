@@ -4,13 +4,10 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.io.File;
 import java.util.ResourceBundle;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsManager;
@@ -88,17 +85,13 @@ public class SetupExcelProgramFrame extends OperationsFrame {
      *
      */
     protected File selectFile(String directoryName) {
-        JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("ExcelProgramFiles"), "xls", "xlsm"); // NOI18N
-        fc.setCurrentDirectory(InstanceManager.getDefault(OperationsManager.class).getFile(directoryName));
+        JFileChooser fc = new JFileChooser(InstanceManager.getDefault(OperationsManager.class).getFile(directoryName));
+        fc.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("ExcelProgramFiles"), "xls", "xlsm")); // NOI18N
         fc.setDialogTitle(Bundle.getMessage("FindDesiredExcelFile"));
-        // when reusing the chooser, make sure new files are included
-        fc.rescanCurrentDirectory();
         int retVal = fc.showOpenDialog(null);
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            // Run the script from it's filename
-            return file;
+            return fc.getSelectedFile();
         }
         return null;
     }

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * RevHistoryXmlTest.java
  *
- * Description: tests for the RevHistoryXml class
+ * Test for the RevHistoryXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class RevHistoryXmlTest {
       Assert.assertNotNull("RevHistoryXml constructor",new RevHistoryXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

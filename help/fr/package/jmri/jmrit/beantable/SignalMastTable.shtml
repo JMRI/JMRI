@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -58,7 +58,7 @@
       montrer les signaux sur vos panneaux, s'il vous pla&icirc;t
       voir les <a href=
       "../../../../html/apps/PanelPro/Panels.shtml">pages
-      Panneaux</a>.</p><!--#include virtual="/Footer" -->
+      Panneaux</a>.</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

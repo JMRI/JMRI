@@ -63,7 +63,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
     /**
      * Allows device to decide how to handle consisting. Just selection or
-     * selection and Make {@literal &} Break. .size() indicates how many
+     * selection and Make and Break. .size() indicates how many
      * consists are being sent so the device can wait before displaying them
      */
     public void sendConsistListType() {
@@ -74,7 +74,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
         int numConsists = manager.getConsistList().size();  //number of JMRI consists found
         if (log.isDebugEnabled()) {
-            log.debug(numConsists + " consists found.");
+            log.debug("{} consists found.", numConsists);
         }
 
         if (isConsistAllowed) {  //  Allow Make & Break consists
@@ -261,7 +261,7 @@ public class ConsistController extends AbstractController implements ProgListene
             if (consist.isAddressAllowed(stringToDcc(locoData.get(0)))) {
                 consist.add(stringToDcc(locoData.get(0)), Boolean.valueOf(locoData.get(1)));
                 if (log.isDebugEnabled()) {
-                    log.debug("add loco: " + locoData.get(0) + ", to consist: " + headerData.get(1));
+                    log.debug("add loco: {}, to consist: {}", locoData.get(0), headerData.get(1));
                 }
             }
 
@@ -300,7 +300,7 @@ public class ConsistController extends AbstractController implements ProgListene
             if (consist.contains(loco)) {
                 consist.remove(loco);
                 if (log.isDebugEnabled()) {
-                    log.debug("Remove loco: " + loco + ", from consist: " + headerData.get(1));
+                    log.debug("Remove loco: {}, from consist: {}", loco, headerData.get(1));
                 }
             }
         } catch (NullPointerException e) {

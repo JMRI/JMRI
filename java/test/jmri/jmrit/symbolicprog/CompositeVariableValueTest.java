@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Test CompositeVariableValue class.
  *
- * @author	Bob Jacobsen Copyright 2006, 2015
+ * @author Bob Jacobsen Copyright 2006, 2015
  */
 public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
 
@@ -44,7 +44,7 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
 
     @Override
     void setReadOnlyValue(VariableValue var, String val) {
-        ((CompositeVariableValue) var).setValue(Integer.valueOf(val).intValue());
+        ((CompositeVariableValue) var).setValue(Integer.valueOf(val));
     }
 
     @Override
@@ -103,31 +103,31 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
     @Override
     @Test
     public void testVariableValueRead() {
-    }	// due to multi-cv nature
+    } // due to multi-cv nature
 
     @Override
     @Test
     public void testVariableValueStates() {
-    }	// due to multi-cv nature
+    } // due to multi-cv nature
 
     @Override
     @Test
     public void testVariableValueStateColor() {
-    }	// due to multi-cv nature
+    } // due to multi-cv nature
 
     @Override
     @Test
     public void testVariableRepStateColor() {
-    }	// due to multi-cv nature
+    } // due to multi-cv nature
 
     @Test
     public void testVariableValueRepStateColor() {
-    }	// due to multi-cv nature
+    } // due to multi-cv nature
 
     @Override
     @Test
     public void testVariableVarChangeColorRep() {
-    }	// due to multi-cv nature
+    } // due to multi-cv nature
 
     @Override
     @Test
@@ -351,7 +351,6 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
 
     private final static Logger log = LoggerFactory.getLogger(CompositeVariableValueTest.class);
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

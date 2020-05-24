@@ -22,21 +22,23 @@ public class NetworkTreePaneTest {
         Assert.assertNotNull("Pane object non-null", p);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
 
         memo  = new jmri.jmrix.openlcb.OlcbSystemConnectionMemo();
-        TestTrafficController tc = new TestTrafficController();
+        tc = new TestTrafficController();
         memo.setTrafficController(tc);
     }
 
     @After
     public void tearDown() {
+        memo.dispose();
+        memo = null;
+        tc.terminateThreads();
+        tc = null;
         jmri.util.JUnitUtil.resetWindows(false, false);
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

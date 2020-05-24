@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -140,7 +140,7 @@ sur comment d&#233;finir ce code manuellement
       <p>En r&eacute;alit&eacute; ce n'est pas aussi difficile
       qu'il y para&icirc;t.</p>
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

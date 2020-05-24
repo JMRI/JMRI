@@ -8,8 +8,10 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.jmrix.can.ConfigurationManager.SubProtocol;
 import jmri.util.NamedBeanComparator;
 
+import jmri.util.startup.StartupActionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,16 +36,36 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         storeCanMemotoInstance();
     }
     
+    // Allow for default systemPrefix other than "M"
+    public CanSystemConnectionMemo(String prefix) {
+        super(prefix, DEFAULT_USERNAME);
+        super.register(); // registers general type
+        storeCanMemotoInstance();
+    }
+
     protected final void storeCanMemotoInstance() {
         InstanceManager.store(this, CanSystemConnectionMemo.class); // also register as specific type
     }
 
+    protected String _protocol = ConfigurationManager.MERGCBUS;
+    protected SubProtocol _subProtocol = SubProtocol.CBUS;
+    
+    jmri.jmrix.swing.ComponentFactory cf = null;
+
     protected TrafficController tm;
 
+    /**
+     * Set Connection Traffic Controller
+     * @param tm System Connection Traffic Controller
+     */
     public void setTrafficController(TrafficController tm) {
         this.tm = tm;
     }
-
+    
+    /**
+     * Get Connection Traffic Controller
+     * @return System Connection Traffic Controller
+     */
     public TrafficController getTrafficController() {
         return tm;
     }
@@ -96,9 +118,16 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return super.get(T);
     }
 
+    public String getProtocol() {
+        return _protocol;
+    }
+    
     public void setProtocol(String protocol) {
+        StartupActionFactory old = getActionFactory();
         if (null != protocol) {
+            _protocol = protocol;
             switch (protocol) {
+                case ConfigurationManager.SPROGCBUS:
                 case ConfigurationManager.MERGCBUS:
                     manager = new jmri.jmrix.can.cbus.CbusConfigurationManager(this);
                     break;
@@ -115,8 +144,17 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                     break;
             }
         }
-        // make sure appropriate actions in preferences
-        addToActionList();
+        firePropertyChange("actionFactory", old, getActionFactory());
+    }
+
+    public SubProtocol getSubProtocol() {
+        return _subProtocol;
+    }
+    
+    public void setSubProtocol(SubProtocol sp) {
+        if (null != sp) {
+            _subProtocol = sp;
+        }
     }
 
     /**

@@ -11,8 +11,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import jmri.Block;
 import jmri.BlockManager;
@@ -52,6 +50,7 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
     @After
     @Override
     public void tearDown() throws Exception {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 
@@ -64,7 +63,7 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
         Reporter reporter1 = InstanceManager.getDefault(ReporterManager.class).provide("IR1");
         JsonNode result;
         // test block with defaults
-        result = service.doGet(JsonBlock.BLOCK, "IB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
+        result = service.doGet(JsonBlock.BLOCK, "IB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertEquals(JsonBlock.BLOCK, result.path(JSON.TYPE).asText());
         assertEquals("IB1", result.path(JSON.DATA).path(JSON.NAME).asText());
@@ -79,25 +78,25 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
         JUnitUtil.waitFor(() -> {
             return block1.getState() == Block.OCCUPIED;
         }, "Block to become occupied");
-        result = service.doGet(JsonBlock.BLOCK, "IB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
+        result = service.doGet(JsonBlock.BLOCK, "IB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertEquals(JSON.ACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
         assertEquals("value is not empty", result.path(JSON.DATA).path(JSON.VALUE).asText());
         // change block state
         block1.setState(Block.UNOCCUPIED);
-        result = service.doGet(JsonBlock.BLOCK, "IB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
+        result = service.doGet(JsonBlock.BLOCK, "IB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
         // add a sensor and reporter to the block
         block1.setSensor(sensor1.getSystemName());
         block1.setReporter(reporter1);
-        result = service.doGet(JsonBlock.BLOCK, "IB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
+        result = service.doGet(JsonBlock.BLOCK, "IB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertEquals(sensor1.getSystemName(), result.path(JSON.DATA).path(JsonSensor.SENSOR).asText());
         assertEquals(reporter1.getSystemName(), result.path(JSON.DATA).path(JsonReporter.REPORTER).asText());
         try {
             // add an invalid block by using a turnout name instead of a block name
             assertNull(manager.getBlock("IT1"));
-            service.doGet(JsonBlock.BLOCK, "IT1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
+            service.doGet(JsonBlock.BLOCK, "IT1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(404, ex.getCode());
@@ -110,26 +109,26 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
         Block block1 = manager.provideBlock("IB1");
         // set off
         JsonNode message = mapper.createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, JSON.INACTIVE);
-        JsonNode result = service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, 0));
+        JsonNode result = service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertEquals(Block.UNOCCUPIED, block1.getState());
         validate(result);
         assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
         // set on
         message = mapper.createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, JSON.ACTIVE);
-        result = service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, 0));
+        result = service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertEquals(Block.OCCUPIED, block1.getState());
         validate(result);
         assertEquals(JSON.ACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
         // set unknown - remains on
         message = mapper.createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, JSON.UNKNOWN);
-        result = service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, 0));
+        result = service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertEquals(Block.OCCUPIED, block1.getState());
         validate(result);
         assertEquals(JSON.ACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
         // set invalid state
         message = mapper.createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, 42); // Invalid value
         try {
-            service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, 0));
+            service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(400, ex.getCode());
@@ -138,52 +137,52 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
         // set value
         message = mapper.createObjectNode().put(JSON.NAME, "IB1").put(JSON.VALUE, "some value");
         assertNull("Null block value", block1.getValue());
-        service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, 0));
+        service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertEquals("Non-null block value", "some value", block1.getValue());
         // set null value
         message = mapper.createObjectNode().put(JSON.NAME, "IB1").putNull(JSON.VALUE);
         assertNotNull("Non-null block value", block1.getValue());
-        service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, 0));
+        service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertNull("Null block value", block1.getValue());
         // set non-existing sensor
         message = mapper.createObjectNode().put(JSON.NAME, "IB1").put(JsonSensor.SENSOR, "IS1");
         assertNull("No sensor", block1.getSensor());
         try {
-            service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, 0));
+            service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals("404 Not Found", 404, ex.getCode());
         }
         // set existing sensor
         Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
-        service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, 0));
+        service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertEquals("Block has sensor", sensor1, block1.getSensor());
         // set null sensor
         message = mapper.createObjectNode().put(JSON.NAME, "IB1").putNull(JsonSensor.SENSOR);
-        service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, 0));
+        service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertNull("Block has no sensor", block1.getSensor());
         // set non-existing reporter
         message = mapper.createObjectNode().put(JSON.NAME, "IB1").put(JsonReporter.REPORTER, "IR1");
         assertNull("No reporter", block1.getReporter());
         try {
-            service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, 0));
+            service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals("404 Not Found", 404, ex.getCode());
         }
         // set existing reporter
         Reporter reporter1 = InstanceManager.getDefault(ReporterManager.class).provide("IR1");
-        service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, 0));
+        service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertEquals("Block has reporter", reporter1, block1.getReporter());
         // set null reporter
         message = mapper.createObjectNode().put(JSON.NAME, "IB1").putNull(JsonReporter.REPORTER);
-        service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, 0));
+        service.doPost(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertNull("No reporter", block1.getReporter());
         try {
             // add an invalid block by using a turnout name instead of a block name
             assertNull(manager.getBlock("IT1"));
             message = mapper.createObjectNode().put(JSON.NAME, "II1").put(JSON.STATE, Block.UNOCCUPIED);
-            service.doPost(JsonBlock.BLOCK, "IT1", message, new JsonRequest(locale, JSON.V5, 0));
+            service.doPost(JsonBlock.BLOCK, "IT1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(404, ex.getCode());
@@ -196,14 +195,14 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
         // add a block
         assertNull(manager.getBlock("IB1"));
         JsonNode message = mapper.createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, Block.UNOCCUPIED);
-        JsonNode result = service.doPut(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, 0));
+        JsonNode result = service.doPut(JsonBlock.BLOCK, "IB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertNotNull(manager.getBlock("IB1"));
         try {
             // add an invalid block by using a turnout name instead of a block name
             assertNull(manager.getBlock("IT1"));
             message = mapper.createObjectNode().put(JSON.NAME, "II1").put(JSON.STATE, Block.UNOCCUPIED);
-            service.doPut(JsonBlock.BLOCK, "", message, new JsonRequest(locale, JSON.V5, 0)); // use an empty name to trigger exception
+            service.doPut(JsonBlock.BLOCK, "", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0)); // use an empty name to trigger exception
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(400, ex.getCode());
@@ -218,7 +217,7 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
         // delete non-existent bean
         try {
             assumeNotNull(service); // protect against JUnit tests in Eclipse that test this class directly
-            service.doDelete(service.getType(), "non-existant", message, new JsonRequest(locale, JSON.V5, 42));
+            service.doDelete(service.getType(), "non-existant", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals("Code is HTTP NOT FOUND", 404, ex.getCode());
@@ -228,20 +227,16 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
         manager.createNewBlock("IB1", null);
         // delete existing bean (no named listener)
         assertNotNull(manager.getBySystemName("IB1"));
-        service.doDelete(service.getType(), "IB1", message, new JsonRequest(locale, JSON.V5, 42));
+        service.doDelete(service.getType(), "IB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertNull(manager.getBySystemName("IB1"));
         Block block = manager.createNewBlock("IB1", null);
         assertNotNull(block);
-        block.addPropertyChangeListener(new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                // do nothing
-            }
+        block.addPropertyChangeListener(evt -> {
+            // do nothing
         }, "IB1", "Test Listener");
         // delete existing bean (with named listener)
         try {
-            service.doDelete(service.getType(), "IB1", message, new JsonRequest(locale, JSON.V5, 42));
+            service.doDelete(service.getType(), "IB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(409, ex.getCode());
@@ -251,11 +246,11 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
         }
         assertNotNull(manager.getBySystemName("IB1"));
         // will throw if prior catch failed
-        service.doDelete(service.getType(), "IB1", message, new JsonRequest(locale, JSON.V5, 0));
+        service.doDelete(service.getType(), "IB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertNull(manager.getBySystemName("IB1"));
         try {
             // deleting again should throw an exception
-            service.doDelete(service.getType(), "IB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
+            service.doDelete(service.getType(), "IB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals(404, ex.getCode());
@@ -270,7 +265,7 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
     public void testDoGetList() throws Exception {
         InstanceManager.getDefault(BlockManager.class).createNewBlock("test");
         JsonBlockHttpService instance = new JsonBlockHttpService(mapper);
-        JsonNode result = instance.doGetList(JsonBlock.BLOCK, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 0));
+        JsonNode result = instance.doGetList(JsonBlock.BLOCK, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertEquals(1, result.size());
         validate(result);
     }
@@ -280,6 +275,7 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
      *
      * @throws jmri.server.json.JsonException if something goes wrong
      */
+    @Override
     @Test
     public void testDoSchema() throws JsonException {
         testDoSchema(JsonBlock.BLOCK, JsonBlock.BLOCKS);

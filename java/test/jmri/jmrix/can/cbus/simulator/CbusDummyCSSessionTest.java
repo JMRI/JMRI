@@ -23,11 +23,7 @@ public class CbusDummyCSSessionTest {
     
     @Test
     public void testFullSession() {
-
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tc = new TrafficControllerScaffold();
-        memo.setTrafficController(tc);
-
+        
         CbusDummyCS cs = new CbusDummyCS(memo);
         cs.setDelay(0);
         CbusDummyCSSession t = new CbusDummyCSSession(cs,1,1234,true);
@@ -52,18 +48,28 @@ public class CbusDummyCSSessionTest {
         
         t.dispose();
         cs.dispose();
-    }   
+    }
+    
+    private TrafficControllerScaffold tc;
+    private CanSystemConnectionMemo memo;
     
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        
+        memo = new CanSystemConnectionMemo();
+        tc = new TrafficControllerScaffold();
+        memo.setTrafficController(tc);
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        
+        tc.terminateThreads();
+        memo.dispose();
+        tc = null;
+        memo = null;
         JUnitUtil.tearDown();
 
     }

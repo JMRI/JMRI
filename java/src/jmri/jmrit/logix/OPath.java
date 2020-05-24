@@ -1,7 +1,6 @@
 package jmri.jmrit.logix;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -10,6 +9,7 @@ import jmri.BeanSetting;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Turnout;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +57,7 @@ public class OPath extends jmri.Path {
      * @param exit     Portal where path exits
      * @param settings array of turnout settings of the path
      */
-    public OPath(String name, OBlock owner, Portal entry, Portal exit, ArrayList<BeanSetting> settings) {
+    public OPath(String name, OBlock owner, Portal entry, Portal exit, List<BeanSetting> settings) {
         super(owner, 0, 0);
         _name = name;
         _fromPortal = entry;
@@ -160,7 +160,7 @@ public class OPath extends jmri.Path {
                 _timer.start();
                 _timerActive = true;
             } else {
-                log.warn("timer already active for delayed turnout action on path {}", toString());
+                log.warn("timer already active for delayed turnout action on path {}", this);
             }
         } else {
             fireTurnouts(getSettings(), set, lockState, lock);
@@ -199,6 +199,7 @@ public class OPath extends jmri.Path {
         boolean lock;
 
         public TimeTurnout() {
+            // no actions required to construct
         }
 
         void setList(List<BeanSetting> l) {
@@ -323,21 +324,25 @@ public class OPath extends jmri.Path {
         }
         Iterator<BeanSetting> iter = settings.iterator();
         Iterator<BeanSetting> it = getSettings().iterator();
+        boolean found = false;
         while (iter.hasNext()) {
             BeanSetting beanSetting = iter.next();
             while (it.hasNext()) {
+                found = false;
                 BeanSetting bs = it.next();
-                if (!bs.getBeanName().equals(beanSetting.getBeanName())) {
-                    return false;
+                if (bs.getBean().getSystemName().equals(beanSetting.getBean().getSystemName())
+                        && bs.getSetting() == beanSetting.getSetting()) {
+                    found = true;
+                    break;
                 }
-                if (bs.getSetting() != beanSetting.getSetting()) {
-                    return false;
-                }
+            }
+            if (!found) {
+                return false;
             }
         }
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OPath.class);
+    private static final Logger log = LoggerFactory.getLogger(OPath.class);
 
 }

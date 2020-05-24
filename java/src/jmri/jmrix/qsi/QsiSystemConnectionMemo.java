@@ -15,8 +15,8 @@ import jmri.util.NamedBeanComparator;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Kevin Dickerson Copyright (C) 2012
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Kevin Dickerson Copyright (C) 2012
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -42,6 +42,7 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return the QSI traffic controller.
      */
     public QsiTrafficController getQsiTrafficController() {
         return st;
@@ -53,7 +54,8 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private QsiTrafficController st;
 
     /**
-     * Provide a menu with all items attached to this system connection
+     * Provide a menu with all items attached to this system connection.
+     * @return new QSIMenu.
      */
     public javax.swing.JMenu getMenu() {
         return new QSIMenu("QSI",this);

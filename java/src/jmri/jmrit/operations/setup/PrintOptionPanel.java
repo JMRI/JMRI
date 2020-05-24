@@ -1,33 +1,24 @@
 package jmri.jmrit.operations.setup;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JColorChooser;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+
+import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.FileUtil;
 import jmri.util.swing.FontComboUtil;
 import jmri.util.swing.SplitButtonColorChooserPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of manifest and switch list print options
@@ -37,6 +28,9 @@ import org.slf4j.LoggerFactory;
 public class PrintOptionPanel extends OperationsPreferencesPanel {
 
     private static final Logger log = LoggerFactory.getLogger(PrintOptionPanel.class);
+    
+    private String ADD = "+";
+    private String DELETE = "-";
 
     // labels
     JLabel logoURL = new JLabel("");
@@ -46,22 +40,22 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     JButton addLogoButton = new JButton(Bundle.getMessage("AddLogo"));
     JButton removeLogoButton = new JButton(Bundle.getMessage("RemoveLogo"));
 
-    JButton addEngPickupComboboxButton = new JButton("+");
-    JButton deleteEngPickupComboboxButton = new JButton("-");
-    JButton addEngDropComboboxButton = new JButton("+");
-    JButton deleteEngDropComboboxButton = new JButton("-");
-    JButton addCarPickupComboboxButton = new JButton("+");
-    JButton deleteCarPickupComboboxButton = new JButton("-");
-    JButton addCarDropComboboxButton = new JButton("+");
-    JButton deleteCarDropComboboxButton = new JButton("-");
-    JButton addLocalComboboxButton = new JButton("+");
-    JButton deleteLocalComboboxButton = new JButton("-");
-    JButton addSwitchListPickupComboboxButton = new JButton("+");
-    JButton deleteSwitchListPickupComboboxButton = new JButton("-");
-    JButton addSwitchListDropComboboxButton = new JButton("+");
-    JButton deleteSwitchListDropComboboxButton = new JButton("-");
-    JButton addSwitchListLocalComboboxButton = new JButton("+");
-    JButton deleteSwitchListLocalComboboxButton = new JButton("-");
+    JButton addEngPickupComboboxButton = new JButton(ADD);
+    JButton deleteEngPickupComboboxButton = new JButton(DELETE);
+    JButton addEngDropComboboxButton = new JButton(ADD);
+    JButton deleteEngDropComboboxButton = new JButton(DELETE);
+    JButton addCarPickupComboboxButton = new JButton(ADD);
+    JButton deleteCarPickupComboboxButton = new JButton(DELETE);
+    JButton addCarDropComboboxButton = new JButton(ADD);
+    JButton deleteCarDropComboboxButton = new JButton(DELETE);
+    JButton addLocalComboboxButton = new JButton(ADD);
+    JButton deleteLocalComboboxButton = new JButton(DELETE);
+    JButton addSwitchListPickupComboboxButton = new JButton(ADD);
+    JButton deleteSwitchListPickupComboboxButton = new JButton(DELETE);
+    JButton addSwitchListDropComboboxButton = new JButton(ADD);
+    JButton deleteSwitchListDropComboboxButton = new JButton(DELETE);
+    JButton addSwitchListLocalComboboxButton = new JButton(ADD);
+    JButton deleteSwitchListLocalComboboxButton = new JButton(DELETE);
 
     // check boxes
     JCheckBox tabFormatCheckBox = new JCheckBox(Bundle.getMessage("TabFormat"));
@@ -563,8 +557,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             int retVal = fc.showOpenDialog(null);
             // handle selection or cancel
             if (retVal == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
-                return file;
+                return fc.getSelectedFile();
             }
         }
         return null;

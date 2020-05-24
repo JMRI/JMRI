@@ -125,7 +125,6 @@ public class GridConnectReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("num elements", 0, r.getNumDataElements());
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -135,7 +134,7 @@ public class GridConnectReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	m = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 }

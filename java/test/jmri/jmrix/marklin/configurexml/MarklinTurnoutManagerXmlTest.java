@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * MarklinTurnoutManagerXmlTest.java
  *
- * Description: tests for the MarklinTurnoutManagerXml class
+ * Test for the MarklinTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class MarklinTurnoutManagerXmlTest {
       Assert.assertNotNull("MarklinTurnoutManagerXml constructor",new MarklinTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -202,7 +202,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 
@@ -237,6 +237,6 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SystemInfoFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(SystemInfoFrame.class);
 
 }

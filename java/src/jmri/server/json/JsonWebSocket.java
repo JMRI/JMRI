@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 import jmri.InstanceManager;
 import jmri.implementation.QuietShutDownTask;
-import jmri.jmris.json.JsonServerPreferences;
 import org.eclipse.jetty.io.EofException;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.StatusCode;
@@ -33,13 +32,15 @@ public class JsonWebSocket {
         log.debug("Opening connection");
         try {
             this.connection = new JsonConnection(sn);
-            sn.setIdleTimeout((long) (InstanceManager.getDefault(JsonServerPreferences.class).getHeartbeatInterval() * 1.1));
+            sn.setIdleTimeout(
+                    (long) (InstanceManager.getDefault(JsonServerPreferences.class).getHeartbeatInterval() * 1.1));
             this.handler = new JsonClientHandler(this.connection);
             this.shutDownTask = new QuietShutDownTask("Close open web socket") { // NOI18N
                 @Override
                 public boolean execute() {
                     try {
-                        JsonWebSocket.this.getConnection().sendMessage(JsonWebSocket.this.getConnection().getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE), 0);
+                        getConnection().sendMessage(
+                                getConnection().getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE), 0);
                     } catch (IOException e) {
                         log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
                     }
@@ -74,7 +75,7 @@ public class JsonWebSocket {
                 this.onClose(StatusCode.ABNORMAL, thrwbl.getMessage());
             }
         } else {
-            log.error("Unanticipated error {}", thrwbl.getMessage(), thrwbl);
+            log.error("Unanticipated error", thrwbl);
         }
     }
 
@@ -83,10 +84,10 @@ public class JsonWebSocket {
         try {
             this.handler.onMessage(string);
         } catch (IOException e) {
-            if(!e.getMessage().equals("Will not send message on non-open session")) {
-               // This exception did not occured because the connection is
-               // either closing or already closed, so log it.
-               log.error("Error on WebSocket message:\n{}", e.getMessage());
+            if (!e.getMessage().equals("Will not send message on non-open session")) {
+                // This exception was thrown for some reason other than the
+                // connection is closing or is already closed, so log it.
+                log.error("Error on WebSocket message:\n{}", e.getMessage());
             }
             this.connection.getSession().close();
             InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);

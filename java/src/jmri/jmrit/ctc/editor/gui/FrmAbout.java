@@ -11,8 +11,10 @@ public class FrmAbout extends javax.swing.JFrame {
 
     private static final String FORM_PROPERTIES = "dlgAbout";
     private final AwtWindowProperties _mAwtWindowProperties;
+    
     /**
-     * Creates new form dlgAbout
+     * Creates new form dlgAbout.
+     * @param awtWindowProperties window properties.
      */
     public FrmAbout(AwtWindowProperties awtWindowProperties) {
         super();
@@ -52,6 +54,7 @@ public class FrmAbout extends javax.swing.JFrame {
 
         _mOK.setText(Bundle.getMessage("ButtonOK"));
         _mOK.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mOKActionPerformed(evt);
             }

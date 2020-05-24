@@ -58,16 +58,12 @@ public class DrawPolygon extends DrawFrame {
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.add(Box.createHorizontalGlue());
         JButton addButton = new JButton(Bundle.getMessage("ButtonAddVertex"));
-        addButton.addActionListener((ActionEvent a) -> {
-            addVertex(false);
-        });
+        addButton.addActionListener((ActionEvent a) -> addVertex(false));
         p.add(addButton);
         p.add(Box.createHorizontalGlue());
 
         JButton deleteButton = new JButton(Bundle.getMessage("ButtonDeleteVertex"));
-        deleteButton.addActionListener((ActionEvent a) -> {
-            deleteVertex();
-        });
+        deleteButton.addActionListener((ActionEvent a) -> deleteVertex());
         p.add(deleteButton);
         p.add(Box.createHorizontalGlue());
         panel.add(p);
@@ -111,8 +107,8 @@ public class DrawPolygon extends DrawFrame {
         _curX = x;
         _curY = y;
         Point anchorPt = new Point(x, y);
-        for (int i = 0; i < _vertices.size(); i++) {
-            if (near(_vertices.get(i), anchorPt)) {
+        for (Point vertex : _vertices) {
+            if (near(vertex, anchorPt)) {
                 _curX = x;
                 _curY = y;
                 return;

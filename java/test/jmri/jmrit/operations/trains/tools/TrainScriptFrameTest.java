@@ -16,7 +16,7 @@ import jmri.util.JUnitUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TrainScriptFrameTest extends OperationsTestCase {
 
@@ -37,7 +37,7 @@ public class TrainScriptFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(tef);
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainScriptFrameTest.class);

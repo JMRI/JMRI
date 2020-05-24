@@ -43,7 +43,7 @@ public class ManageLocationsAction extends AbstractAction {
     private HashMap<String, PhysicalLocation> opsMap;
     private ListeningSpot listenerLoc;
 
-    public ManageLocationsAction(String s, String a) {
+    public ManageLocationsAction(String s) {
         super(s);
     }
 

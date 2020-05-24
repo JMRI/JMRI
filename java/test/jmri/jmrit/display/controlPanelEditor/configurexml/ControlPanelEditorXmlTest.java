@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * ControlPanelEditorXmlTest.java
  *
- * Description: tests for the ControlPanelEditorXml class
+ * Test for the ControlPanelEditorXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class ControlPanelEditorXmlTest {
       Assert.assertNotNull("ControlPanelEditorXml constructor",new ControlPanelEditorXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

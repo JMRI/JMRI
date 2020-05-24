@@ -12,11 +12,13 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import jmri.InstanceManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.swing.SystemConnectionAction;
 import jmri.util.ConnectionNameFromSystemName;
+import jmri.util.startup.StartupModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,9 +28,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
-abstract public class AbstractActionModelFactory implements StartupModelFactory {
+public abstract class AbstractActionModelFactory implements StartupModelFactory {
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractActionModelFactory.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractActionModelFactory.class);
 
     @Override
     public String getDescription() {
@@ -42,7 +44,7 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
 
     /**
      * Get the message text for the dialog created in
-     * {@link #editModel(apps.startup.StartupModel, java.awt.Component)}.
+     * {@link #editModel(StartupModel, java.awt.Component)}.
      *
      * @return the message text
      */
@@ -75,16 +77,12 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
                 Optional<StartupActionsManager> manager = InstanceManager.getOptionalDefault(StartupActionsManager.class);
                 if (!name.equals(model.getName())) {
                     model.setName(name);
-                    manager.ifPresent(sam -> {
-                        sam.setRestartRequired();
-                    });
+                    manager.ifPresent(StartupActionsManager::setRestartRequired);
                 }
-                if (((userName.isEmpty() && connections.getSelectedItem() != null))
+                if ((userName.isEmpty() && connections.getSelectedItem() != null)
                         || !userName.equals(connections.getSelectedItem())) {
                     ((AbstractActionModel) model).setSystemPrefix(ConnectionNameFromSystemName.getPrefixFromName((String) connections.getSelectedItem()));
-                    manager.ifPresent(sam -> {
-                        sam.setRestartRequired();
-                    });
+                    manager.ifPresent(StartupActionsManager::setRestartRequired);
                 }
             }
         }
@@ -96,7 +94,7 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
     }
 
     private JPanel getDialogMessage(JList<String> actions, JComboBox<String> connections) {
-        JLabel connectionsLabel = new JLabel(Bundle.getMessage("AbstractActionModelFactory.getDialogMessage.connectionsLabel", JLabel.LEADING)); // NOI18N
+        JLabel connectionsLabel = new JLabel(Bundle.getMessage("AbstractActionModelFactory.getDialogMessage.connectionsLabel", SwingConstants.LEADING)); // NOI18N
         actions.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             if (!e.getValueIsAdjusting()) {
                 connections.removeAllItems();
@@ -108,16 +106,15 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
                     if (className != null && StartupActionModelUtil.getDefault().isSystemConnectionAction(className)) {
                         try {
                             Action action = (Action) Class.forName(className).getDeclaredConstructor().newInstance();
-                            if (SystemConnectionAction.class.isAssignableFrom(action.getClass())) {
-                                ((SystemConnectionAction) action).getSystemConnectionMemoClasses().stream().forEach((clazz) -> {
-                                    InstanceManager.getList(SystemConnectionMemo.class).stream().forEach((memo) -> {
-                                        if (clazz.isAssignableFrom(memo.getClass())) {
-                                            connections.addItem(memo.getUserName());
-                                            connections.setEnabled(true);
-                                            connectionsLabel.setEnabled(true);
-                                        }
-                                    });
-                                });
+                            if (action instanceof SystemConnectionAction) {
+                                ((SystemConnectionAction<?>) action).getSystemConnectionMemoClasses().forEach(clazz
+                                        -> InstanceManager.getList(SystemConnectionMemo.class).stream()
+                                                .filter(memo -> clazz.isAssignableFrom(memo.getClass()))
+                                                .forEach(memo -> {
+                                                    connections.addItem(memo.getUserName());
+                                                    connections.setEnabled(true);
+                                                    connectionsLabel.setEnabled(true);
+                                                }));
                             }
                         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ex) {
                             log.error("Unable to create Action", ex);
@@ -130,7 +127,7 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
         connectionsLabel.setEnabled(false);
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        panel.add(new JLabel(this.getEditModelMessage(), JLabel.LEADING));
+        panel.add(new JLabel(this.getEditModelMessage(), SwingConstants.LEADING));
         panel.add(new JScrollPane(actions));
         panel.add(connectionsLabel);
         panel.add(connections);

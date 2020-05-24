@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import jmri.InstanceManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
@@ -59,7 +60,7 @@ public class ColorDialog extends JDialog implements ChangeListener {
          * 
          * @param client Window holding the component
          * @param t target whose color may be changed
-         * @param type whicd attribute is being changed
+         * @param type which attribute is being changed
          * @param ca callback to tell client the component's color was changed. 
          * May be null if client doesen't care.
          */
@@ -76,7 +77,7 @@ public class ColorDialog extends JDialog implements ChangeListener {
                     _saveUtil = p.getPopupUtility();
                     p.remove();
                 }
-           } else {
+            } else {
                 _util = null;
             }
             _saveOpaque = t.isOpaque();
@@ -134,6 +135,7 @@ public class ColorDialog extends JDialog implements ChangeListener {
             _chooser = JmriColorChooser.extendColorChooser(new JColorChooser(_saveColor));
             _chooser.getSelectionModel().addChangeListener(this);
             _chooser.setPreviewPanel(new JPanel());
+            JmriColorChooser.suppressAddRecentColor(true);
             panel.add(_chooser);
             panel.add(Box.createVerticalStrut(STRUT));
 
@@ -146,12 +148,10 @@ public class ColorDialog extends JDialog implements ChangeListener {
                     cancel();
                 }
             });
-            
-            
             setContentPane(panel);
-            setLocation(jmri.util.PlaceWindow.nextTo(client, t, this));
 
             pack();
+            InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(client, t, this);
             setVisible(true);
         }
 
@@ -198,26 +198,28 @@ public class ColorDialog extends JDialog implements ChangeListener {
             panel.setLayout(new FlowLayout());
             JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
             doneButton.addActionListener((ActionEvent event) -> {
-                    log.debug("Done button: color= {}", _chooser.getColor());
-                    if (_colorAction != null) {
-                        _colorAction.actionPerformed(null);
-                    }
-                    if (_util != null) {
-                        _util.setSuppressRecentColor(false);
-                    }
-                    JmriColorChooser.addRecentColor(_chooser.getColor());
-                    dispose();
+                done();
             });
             panel.add(doneButton);
 
             JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-            cancelButton.addActionListener((ActionEvent event) -> {
-                    cancel();
-                });
+            cancelButton.addActionListener((ActionEvent event) -> cancel());
 
             panel.add(cancelButton);
-
             return panel;
+        }
+
+        void done() {
+            log.debug("Done button: color= {}", _chooser.getColor());
+            if (_colorAction != null) {
+                _colorAction.actionPerformed(null);
+            }
+            if (_util != null) {
+                _util.setSuppressRecentColor(false);
+            }
+            JmriColorChooser.suppressAddRecentColor(false);
+            JmriColorChooser.addRecentColor(_chooser.getColor());
+            dispose();
         }
 
         void cancel() {
@@ -234,6 +236,7 @@ public class ColorDialog extends JDialog implements ChangeListener {
             }
             _target.setOpaque(_saveOpaque);
             log.debug("Cancel: color= {}", _saveColor);
+            JmriColorChooser.suppressAddRecentColor(false);
             dispose();
         }
 

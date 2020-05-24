@@ -11,9 +11,9 @@ import org.junit.Test;
 /**
  * XNetPowerManagerTest.java
  * <p>
- * Description:	tests for the jmri.jmrix.lenz.XNetPowerManager class
+ * Test for the jmri.jmrix.lenz.XNetPowerManager class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 
@@ -257,13 +257,8 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
 
     @Test
     public void testAddAndRemoveListener() {
-        listener = new java.beans.PropertyChangeListener() {
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent event) {
-                propertyChangeCount = propertyChangeCount + 1;
-            }
-        };
-        pm.addPropertyChangeListener(listener);
+        listener = e -> propertyChangeCount++;
+        pm.addPropertyChangeListener(PowerManager.POWER, listener);
         Assert.assertEquals("PropertyChangeCount", 0, propertyChangeCount);
         // trigger a property change, and make sure the count changes too.
         sendOnReply();
@@ -280,7 +275,6 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
         Assert.assertTrue(p.implementsIdle());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -293,7 +287,7 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     @After
     public void tearDown() {
         p = pm = null;
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the jmri.jmris.json package
+ * Tests for the jmri.server.json package
  *
  * @author Paul Bender
  */
@@ -26,11 +26,10 @@ public class JsonServerTest {
         Assert.assertNotNull(a);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

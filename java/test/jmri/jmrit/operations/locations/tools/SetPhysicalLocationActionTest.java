@@ -18,14 +18,14 @@ import jmri.util.swing.JemmyUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SetPhysicalLocationActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
         Location l = new Location("Test id", "Test Name");
-        SetPhysicalLocationAction t = new SetPhysicalLocationAction("Test",l);
+        SetPhysicalLocationAction t = new SetPhysicalLocationAction(l);
         Assert.assertNotNull("exists",t);
     }
     
@@ -35,14 +35,14 @@ public class SetPhysicalLocationActionTest extends OperationsTestCase {
         JUnitOperationsUtil.initOperationsData();
         Location ni = InstanceManager.getDefault(LocationManager.class).getLocationByName("North Industries");
         Assert.assertNotNull("exists", ni);
-        SetPhysicalLocationAction spla = new SetPhysicalLocationAction("Test", ni);
+        SetPhysicalLocationAction spla = new SetPhysicalLocationAction(ni);
         Assert.assertNotNull("exists", spla);
         spla.actionPerformed(new ActionEvent("Test Action", 0, null));
         // confirm window exists
         JmriJFrame plf = JmriJFrame.getFrame(Bundle.getMessage("MenuSetPhysicalLocation"));
         Assert.assertNotNull("exists", plf);
         JUnitUtil.dispose(plf);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -51,7 +51,7 @@ public class SetPhysicalLocationActionTest extends OperationsTestCase {
         JUnitOperationsUtil.initOperationsData();
         Location ni = InstanceManager.getDefault(LocationManager.class).getLocationByName("North Industries");
         Assert.assertNotNull("exists", ni);
-        SetPhysicalLocationAction spla = new SetPhysicalLocationAction("Test", ni);
+        SetPhysicalLocationAction spla = new SetPhysicalLocationAction(ni);
         Assert.assertNotNull("exists", spla);
         spla.actionPerformed(new ActionEvent("Test Action", 0, null));
         // confirm window exists
@@ -70,7 +70,7 @@ public class SetPhysicalLocationActionTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(splf.closeButton);
         
         JUnitUtil.dispose(plf);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
         //log.debug("test done");
     }
 

@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
       <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -84,6 +84,7 @@
             <li><a href="Details.shtml#c6">CAN Simulation</a></li>
             </ul>
         </li>
+        <li><a href="CbusFastClock.shtml">MERG CBUS Fast Clock</a></li>
         <li><a href="../index.shtml">JMRI CAN Support</a></li>
         <li><a href="../scripting.shtml">JMRI Scripting for CAN frames ( jython )</a></li>
         </ul>
@@ -715,7 +716,7 @@
         <p>Apologies to anyone missed out or inaccuracies, let us know and I'll gladly edit the page! - SY</p>
         </div>
     
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

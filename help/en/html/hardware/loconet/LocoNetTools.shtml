@@ -24,7 +24,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -43,7 +43,8 @@
       <h2>JMRI LocoNet Tools</h2>Access to the LocoNet Tools is
       from the <strong>LocoNet</strong> menu that appears when JMRI
       is <a href="Digitrax.shtml#Setup">connected to a
-      LocoNet&reg;</a>.
+      LocoNet&reg;</a>-based DCC system, or to a <a href="StandaloneLocoNet.shtml">
+          Standalone LocoNet</a>.
 
       <p>In the table below, each tool name is a link to a
       tool-specific help page.</p>
@@ -155,7 +156,7 @@
 
           <td></td>
 
-          <td>BDL16, BDL162, BDL168</td>
+          <td>BDL16, BDL162, BDL168<BR>(See <a href="#TableNote1">Note 1</a>)</td>
         </tr>
 
         <tr align="center">
@@ -173,7 +174,8 @@
 
           <td></td>
 
-          <td>DS64</td>
+          <td>DS64<br>(See <a href="#TableNote1">Note 1</a> and <a href="#TableNote2">
+                  Note 2</a>)</td>
         </tr>
 
         <tr align="center">
@@ -191,7 +193,7 @@
 
           <td></td>
 
-          <td>PM4, PM42</td>
+          <td>PM4, PM42<BR>(See <a href="#TableNote1">Note 1</a>)</td>
         </tr>
 
         <tr align="center">
@@ -209,7 +211,7 @@
 
           <td></td>
 
-          <td>SE8C</td>
+          <td>SE8C<BR>(See <a href="#TableNote1">Note 1</a>)</td>
         </tr>
 
         <tr align="center">
@@ -245,11 +247,14 @@
 
           <td rowspan="2"></td>
 
-          <td>DB150, DCS100, DCS50, DCS51</td>
+          <td>DB150, DCS100, DCS200 DCS50, DCS51<BR>(See <a href="#TableNote1">
+                  Note 1</a> and <a href="#TableNote3">Note 3</a>)</td>
         </tr>
         <tr align="center">
-          <td>Limited support for DCS240, DCS210, and DCS52</td>
-            
+            <td>Limited support for DCS240, DCS210, and DCS52<BR>(See <a
+                    href="#TableNote1">Note 1</a>,  <a href="#TableNote3">
+                    Note 3</a> and <a href="#TableNote4">Note 4</a>)</td>
+
         </tr>
 
         <tr align="center">
@@ -274,7 +279,7 @@
         <tr align="center">
           <td><a href=
           "../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">
-          Configure Duplex Group</a></td>
+                  Configure Duplex Group</a></td>
 
           <td>(limited)</td>
 
@@ -286,7 +291,8 @@
 
           <td></td>
 
-          <td>UR92(Duplex), UR92CE(Duplex)</td>
+          <td>UR92(Duplex), UR92CE(Duplex), some aspects of LNWI<BR>(See <a
+                  href="#TableNote5">Note 5</a>)</td>
         </tr>
 
         <tr align="center">
@@ -359,7 +365,7 @@
           <td></td>
 
           <td>LocoNet hardware which supports Firmware
-          upgrades</td>
+              upgrades<br>(See <a href="#TableNote3">Note 6</a>)</td>
         </tr>
 
         <tr align="center">
@@ -379,12 +385,55 @@
 
           <td>Digitrax Mobile Sound Decoders</td>
         </tr>
+        <tr><td colspan='7'><strong>Notes</strong></td>
+        <tr><td><a name="TableNote1" id="TableNote1">Note 1</a></td><td colspan="6">
+                The JMRI Roster allows users to configure these devices in
+                approximately the same way as the standalone tool.  The Roster method
+                has the advantage that the user may save the each individual device's
+                settings to a unique file on the computer's storage media, and later
+                read from the computer's storage media for restoring the individual
+                device's saved settings.</td></tr>
+
+        <tr><td><a name="TableNote2" id="TableNote2">Note 2</a></td><td colspan="6">
+                The JMRI Roster mechanism does not allow configuration of the
+                turnout numbers which control the DS64 output, and cannot access
+                in any way the DS64 "Routes".</td></tr>
+
+        <tr><td><a name="TableNote3" id="TableNote3">Note 3</a></td><td colspan="6">
+                Configuring these devices is only possible when the device is
+                acting as the command station.  The specific LocoNet mechanism
+                used by both the Roster mechanisms and by the "Command Station
+                Configuration" tool cannot perform configuration operations on these
+                devices when they are acting in "booster" mode.</td></tr>
+
+        <tr><td><a name="TableNote4" id="TableNote4">Note 4</a></td><td colspan="6">
+                The Roster mechanism can access the various known OpSw settings
+                for these command stations where the "Configure Command Station" tool
+                can only access those OpSw settings which were implemented in
+                previous command stations.  The Roster mechanism is strongly
+                preferred for these command station models.</td></tr>
+
+        <tr><td><a name="TableNote5" id="TableNote5">Note 5</a></td><td colspan="6">
+                Using this tool can have an effect on both the Duplex radio
+                settings (if one or more UR92 is present on LocoNet) <strong>and</strong>
+                the some aspects of LNWI configuration (if one or more LNWI is
+                present on LocoNet).  See the <a href="../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#LNWISideEffects">
+                Duplex Group Configuration Tool</a> help page discussion of its
+                influence on the LNWI settings for more information.</td></tr>
+
+        <tr><td><a name="TableNote6" id="TableNote6">Note 6</a></td><td colspan="6">
+                The Firmware Download tool can only update those devices which
+                use firmware which is provided in the original firmware format.
+                Newer Digitrax devices use a different firmware format and require
+                a different firmware update methodology which is not currently
+                supported in JMRI.</td></tr>
+
       </table>
 
       <p>LocoNet&reg; is a registered trademark of <a href=
       "http://www.digitrax.com">Digitrax, Inc.</a></p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

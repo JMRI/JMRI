@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * SerialLightManagerXmlTest.java
  *
- * Description: tests for the SerialLightManagerXml class
+ * Test for the SerialLightManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class SerialLightManagerXmlTest {
       Assert.assertNotNull("SerialLightManagerXml constructor",new SerialLightManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

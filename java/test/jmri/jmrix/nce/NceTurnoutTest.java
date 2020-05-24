@@ -2,14 +2,12 @@ package jmri.jmrix.nce;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnoutTestBase;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.nce.NceTurnout class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class NceTurnoutTest extends AbstractTurnoutTestBase {
 
@@ -18,11 +16,19 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
     @Before
     @Override
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        super.setUp();
         // prepare an interface
         tcis = new NceTrafficControlScaffold();
 
         t = new NceTurnout(tcis, "NT", 4);
+    }
+
+    @After
+    @Override
+    public void tearDown() {
+        // prepare an interface
+        if (tcis !=null ) tcis.terminateThreads();
+        super.tearDown();
     }
 
     @Override
@@ -41,7 +47,8 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
 
     @Test
     public void testCanLockModes() {
-        // prepare an interface
+        // prepare an interface, dropping old one
+        if (tcis !=null ) tcis.terminateThreads();
         tcis = new NceTrafficControlScaffold() {
             @Override
             public int getUsbSystem() { return NceTrafficController.USB_SYSTEM_NONE; }

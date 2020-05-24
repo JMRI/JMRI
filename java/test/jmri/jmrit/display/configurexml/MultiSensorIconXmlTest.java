@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * MultiSensorIconXmlTest.java
  *
- * Description: tests for the MultiSensorIconXml class
+ * Test for the MultiSensorIconXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class MultiSensorIconXmlTest {
       Assert.assertNotNull("MultiSensorIconXml constructor",new MultiSensorIconXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

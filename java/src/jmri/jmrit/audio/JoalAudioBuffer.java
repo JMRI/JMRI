@@ -141,15 +141,6 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         return dataStorageBuffer;
     }
 
-    @Override
-    public String toString() {
-        if (this.getState() != STATE_LOADED) {
-            return "Empty buffer";
-        } else {
-            return this.getURL() + " (" + parseFormat() + ", " + this.freq[0] + " Hz)";
-        }
-    }
-
     /**
      * Internal method to return a string representation of the audio format
      *
@@ -278,10 +269,10 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         // All done
         this.setState(STATE_LOADED);
         if (log.isDebugEnabled()) {
-            log.debug("Loaded buffer: " + this.getSystemName());
-            log.debug(" from file: " + this.getURL());
-            log.debug(" format: " + parseFormat() + ", " + freq[0] + " Hz");
-            log.debug(" length: " + size[0]);
+            log.debug("Loaded buffer: {}", this.getSystemName());
+            log.debug(" from file: {}", this.getURL());
+            log.debug(" format: {}, {} Hz", parseFormat(), freq[0]);
+            log.debug(" length: {}", size[0]);
         }
         return true;
     }

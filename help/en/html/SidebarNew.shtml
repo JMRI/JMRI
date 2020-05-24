@@ -1,5 +1,5 @@
 <!-- SidebarNew.shtml -->
-<!-- THIS VERSION OF SIDEBAR FOR EXPERIMENTING WITH NEW FORMATS.  LINK TO BE DISTRIBUTED ON JMRI-DEVELOPERS FOR REVIEW @jerryg 01/17/2020 -->
+<!-- THIS VERSION OF SIDEBAR FOR EXPERIMENTING WITH NEW FORMATS.  LINK TO BE DISTRIBUTED ON JMRI-DEVELOPERS FOR REVIEW @jerryg2003 01/27/2020 -->
 <!-- This is the common sidebar definition for Help system pages -->
 	<hr class="hide">
 	
@@ -7,15 +7,15 @@
         <div style="text-align: center">JMRI&reg; is...</div>
         <dl>
 
-            <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
+            <!--#include virtual="/help/en/parts/SidebarApplicationsNew.shtml" -->
 
             <!--#include virtual="/help/en/parts/SidebarToolsNew.shtml" -->
 
             <!--#include virtual="/help/en/parts/SidebarLayoutAutomationNew.shtml" -->
 	    
-	    <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
+	    <!--#include virtual="/help/en/parts/SidebarSupportedHardwareNew.shtml" -->    
 
-	    <!--#include virtual="/help/en/parts/SidebarInstall.shtml" -->    
+	    <!--#include virtual="/help/en/parts/SidebarInstallNew.shtml" -->    
 
 
          </dl>

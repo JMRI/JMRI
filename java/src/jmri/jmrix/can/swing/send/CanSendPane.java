@@ -163,7 +163,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         try {
-            CanMessage m = createPacket(packetTextField.getText().replaceAll("\\s",""));
+            CanMessage m = createPacket(packetTextField.getText().replaceAll("\\s", ""));
             if (cbusPriorityCheckbox.isSelected()) {
                 CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             }
@@ -174,9 +174,9 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
                 CanReply mr = new CanReply(m);
                 tc.sendCanReply(mr, null);
             }
-        } catch (StringIndexOutOfBoundsException | NumberFormatException ex) {
+        } catch (StringIndexOutOfBoundsException | IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, 
-            (Bundle.getMessage("NoMakeFrame")), Bundle.getMessage("WarningTitle"),
+            (Bundle.getMessage("NoMakeFrame",ex.getMessage())), Bundle.getMessage("WarningTitle"),
                 JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -186,7 +186,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
     javax.swing.Timer timer = null;
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts
+     * Internal routine to handle timer starts and restarts
      * @param delay in ms
      */
     protected void restartTimer(int delay) {
@@ -277,7 +277,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
             
             try {
                 // make the packet
-                CanMessage m = createPacket(mPacketField[mNextSequenceElement].getText().replaceAll("\\s",""));
+                CanMessage m = createPacket(mPacketField[mNextSequenceElement].getText().replaceAll("\\s", ""));
                 if (cbusPriorityCheckbox.isSelected()) {
                     CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
                 }
@@ -291,9 +291,9 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
                     tc.sendCanReply(mr, null);
                 }
                 startSequenceDelay();
-            } catch (StringIndexOutOfBoundsException | NumberFormatException ex) {
+            } catch (StringIndexOutOfBoundsException | IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(null, 
-                (Bundle.getMessage("NoMakeFrame")), Bundle.getMessage("WarningTitle"),
+                (Bundle.getMessage("NoMakeFrame", ex.getMessage())), Bundle.getMessage("WarningTitle"),
                     JOptionPane.ERROR_MESSAGE);
                 mRunButton.setSelected(false);
                 mRunButton.setText(Bundle.getMessage("ButtonStart"));
@@ -308,7 +308,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
     /**
      * Create a well-formed message from a String. String is expected to be space
      * seperated hex bytes or CbusAddress, e.g.: 12 34 56 or +n4e1
-     *
+     * @param s Input information
      * @return The packet, with contents filled-in
      */
     CanMessage createPacket(String s) {

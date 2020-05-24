@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * EcosReporterManagerXmlTest.java
  *
- * Description: tests for the EcosReporterManagerXml class
+ * Test for the EcosReporterManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class EcosReporterManagerXmlTest {
       Assert.assertNotNull("EcosReporterManagerXml constructor",new EcosReporterManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

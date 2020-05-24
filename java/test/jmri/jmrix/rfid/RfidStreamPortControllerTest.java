@@ -15,9 +15,9 @@ import org.junit.Test;
 /**
  * RfidStreamPortControllerTest.java
  *
- * Description:	tests for the jmri.jmrix.rfid.RfidStreamPortController class
+ * Test for the jmri.jmrix.rfid.RfidStreamPortController class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class RfidStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTestBase {
 
@@ -26,7 +26,6 @@ public class RfidStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortC
         Assert.assertNotNull("exists", apc);
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

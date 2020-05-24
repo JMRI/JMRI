@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.TrackEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -36,16 +35,14 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
     // major buttons
     JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
-    private TrackEditFrame _tef;
     protected Track _track;
 
-    public IgnoreUsedTrackFrame(TrackEditFrame tef) {
+    public IgnoreUsedTrackFrame(Track track) {
         super();
 
         setTitle(Bundle.getMessage("MenuItemPlannedPickups"));
 
-        _tef = tef;
-        _track = _tef._track;
+        _track = track;
         if (_track == null) {
             log.debug("track is null!");
             return;

@@ -27,7 +27,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
 
     public NceOpsModeProgrammer(NceTrafficController tc, int pAddress, boolean pLongAddr) {
         super(tc);
-        log.debug("NCE ops mode programmer " + pAddress + " " + pLongAddr);
+        log.debug("NCE ops mode programmer {} {}", pAddress, pLongAddr);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
         setMode(ProgrammingMode.OPSBYTEMODE);
@@ -42,7 +42,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
     public synchronized void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("write CV=" + CV + " val=" + val);
+            log.debug("write CV={} val={}", CV, val);
         }
         NceMessage msg;
         // USB can't send a NMRA packet, must use new ops mode command
@@ -88,7 +88,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
     public synchronized void readCV(String CVname, ProgListener p) throws ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("read CV=" + CV);
+            log.debug("read CV={}", CV);
         }
         log.error("readCV not available in this protocol");
         throw new ProgrammerException();
@@ -119,7 +119,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         try {
             wait(200);
         } catch (InterruptedException e) {
-            log.debug("unexpected exception " + e);
+            log.debug("unexpected exception {}", e);
         }
         super.notifyProgListenerEnd(value, status);
     }

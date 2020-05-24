@@ -6,11 +6,10 @@ import org.junit.Before;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TabbedPreferencesTest extends jmri.util.swing.JmriPanelTest {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -27,6 +26,7 @@ public class TabbedPreferencesTest extends jmri.util.swing.JmriPanelTest {
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

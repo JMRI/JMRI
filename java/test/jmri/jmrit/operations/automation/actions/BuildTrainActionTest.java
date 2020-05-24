@@ -16,7 +16,7 @@ import jmri.util.swing.JemmyUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class BuildTrainActionTest extends OperationsTestCase {
 
@@ -68,7 +68,7 @@ public class BuildTrainActionTest extends OperationsTestCase {
         Assert.assertFalse(automationItem.isActionSuccessful());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -129,7 +129,7 @@ public class BuildTrainActionTest extends OperationsTestCase {
         Assert.assertFalse(automationItem.isActionSuccessful());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(BuildTrainActionTest.class);

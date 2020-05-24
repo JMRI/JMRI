@@ -58,6 +58,7 @@ public class TransitManagerXmlTest {
 
    @After
    public void tearDown(){
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
    }
 

@@ -13,9 +13,9 @@ import org.junit.Test;
 /**
  * Test the ProxyReporterManager
  *
- * @author	Bob Jacobsen 2003, 2006, 2008
- * @author	Mark Underwood 2012
- * @author	Paul Bender 2016
+ * @author Bob Jacobsen 2003, 2006, 2008
+ * @author Mark Underwood 2012
+ * @author Paul Bender 2016
  */
 public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
 
@@ -90,7 +90,6 @@ public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
     }
 
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

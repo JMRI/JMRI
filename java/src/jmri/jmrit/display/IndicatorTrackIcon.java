@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 import javax.swing.JPopupMenu;
@@ -233,9 +232,8 @@ public class IndicatorTrackIcon extends PositionableIcon
     @Override
     public int maxHeight() {
         int max = 0;
-        Iterator<NamedIcon> iter = _iconMap.values().iterator();
-        while (iter.hasNext()) {
-            max = Math.max(iter.next().getIconHeight(), max);
+        for (NamedIcon namedIcon : _iconMap.values()) {
+            max = Math.max(namedIcon.getIconHeight(), max);
         }
         return max;
     }
@@ -243,9 +241,8 @@ public class IndicatorTrackIcon extends PositionableIcon
     @Override
     public int maxWidth() {
         int max = 0;
-        Iterator<NamedIcon> iter = _iconMap.values().iterator();
-        while (iter.hasNext()) {
-            max = Math.max(iter.next().getIconWidth(), max);
+        for (NamedIcon namedIcon : _iconMap.values()) {
+            max = Math.max(namedIcon.getIconWidth(), max);
         }
         return max;
     }
@@ -350,14 +347,9 @@ public class IndicatorTrackIcon extends PositionableIcon
     protected void editItem() {
         _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"),
                 Bundle.getMessage("IndicatorTrack")));
-        _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _iconFamily, _editor);
+        _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _iconFamily);
 
-        ActionListener updateAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                updateItem();
-            }
-        };
+        ActionListener updateAction = a -> updateItem();
         // duplicate _iconMap map with unscaled and unrotated icons
         HashMap<String, NamedIcon> map = new HashMap<>();
 

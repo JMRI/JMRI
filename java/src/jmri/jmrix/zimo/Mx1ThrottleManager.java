@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * MRC implementation of a ThrottleManager.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  *
  */
 public class Mx1ThrottleManager extends AbstractThrottleManager {
@@ -35,7 +35,7 @@ public class Mx1ThrottleManager extends AbstractThrottleManager {
         if (a instanceof DccLocoAddress ) {
             //We do interact
             DccLocoAddress address = (DccLocoAddress) a;
-            log.debug("new Mx1Throttle for " + address); //IN18N
+            log.debug("new Mx1Throttle for {}", address); // NOI18N
             notifyThrottleKnown(new Mx1Throttle((Mx1SystemConnectionMemo) adapterMemo, address), address);
         }
         else {

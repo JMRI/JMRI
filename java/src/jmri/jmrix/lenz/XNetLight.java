@@ -181,7 +181,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 
@@ -191,7 +191,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
     private synchronized void sendOffMessage() {
         // We need to tell the turnout to shut off the output.
         if (log.isDebugEnabled()) {
-            log.debug("Sending off message for light " + mAddress + " commanded state= " + mState);
+            log.debug("Sending off message for light {} commanded state= {}", mAddress, mState);
         }
         XNetMessage msg = XNetMessage.getTurnoutCommandMsg(mAddress,
                 mState == ON,
@@ -203,6 +203,6 @@ public class XNetLight extends AbstractLight implements XNetListener {
         internalState = OFFSENT;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetLight.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetLight.class);
 
 }

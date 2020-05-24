@@ -2,8 +2,6 @@ package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.display.DisplayFrame;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -14,7 +12,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MultiSensorItemPanelTest {
 
@@ -23,13 +21,11 @@ public class MultiSensorItemPanelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel<jmri.Sensor> tableModel = PickListModel.sensorPickModelInstance();
         DisplayFrame df = new DisplayFrame("MultiSensor Item Panel Test");
-        Editor editor = new EditorScaffold();
-        MultiSensorItemPanel t = new MultiSensorItemPanel(df,"IS01","",tableModel,editor);
+        MultiSensorItemPanel t = new MultiSensorItemPanel(df,"IS01","",tableModel);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(df);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

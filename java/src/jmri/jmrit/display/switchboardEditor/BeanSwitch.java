@@ -46,10 +46,10 @@ import org.slf4j.LoggerFactory;
  */
 public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListener, ActionListener {
 
-    private JButton beanButton;
+    private final JButton beanButton;
     //private final boolean connected = false;
-    private int _shape;
-    private String _label;
+    private final int _shape;
+    private final String _label;
     private String _uname = "unconnected";
     protected String switchLabel;
     protected String switchTooltip;
@@ -61,25 +61,24 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     protected String stateThrown = Bundle.getMessage("StateThrownShort");
 
     // the associated Bean object
-    private NamedBean _bname;
+    private final NamedBean _bname;
     private NamedBeanHandle<?> namedBean = null; // could be Turnout, Sensor or Light
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     private IconSwitch beanIcon;
     private IconSwitch beanKey;
     private IconSwitch beanSymbol;
-    private String beanManuPrefix;
-    private char beanTypeChar;
-    private float dim = 100f; // to dim unconnected symbols
-    private SwitchboardEditor _editor;
+    private final char beanTypeChar;
+    private final SwitchboardEditor _editor;
 
     /**
-     * Ctor
+     * Ctor.
      *
-     * @param index       DCC address
-     * @param bean        layout object to connect to
-     * @param switchName  descriptive name corresponding with system name to
-     *                    display in switch tooltip, i.e. LT1
-     * @param shapeChoice Button, Icon (static) or Drawing (vector graphics)
+     * @param index       DCC address.
+     * @param bean        layout object to connect to.
+     * @param switchName  descriptive name corresponding with system name to.
+     *                    display in switch tooltip, i.e. LT1.
+     * @param shapeChoice Button, Icon (static) or Drawing (vector graphics).
+     * @param editor      main switchboard editor.
      */
     public BeanSwitch(int index, NamedBean bean, String switchName, int shapeChoice, SwitchboardEditor editor) {
         _label = switchName;
@@ -102,7 +101,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         } else {
             _shape = 0;
         }
-        beanManuPrefix = _editor.getSwitchManu(); // connection/manufacturer i.e. M for MERG
+        String beanManuPrefix = _editor.getSwitchManu(); // connection/manufacturer i.e. M for MERG
         beanTypeChar = _label.charAt(beanManuPrefix.length()); // bean type, i.e. L, usually at char(1)
         // check for space char which might be caused by connection name > 2 chars and/or space in name
         if (beanTypeChar != 'T' && beanTypeChar != 'S' && beanTypeChar != 'L') { // add if more bean types are supported
@@ -242,6 +241,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         // connect to object or dim switch
         if (bean == null) {
             if (!_editor.hideUnconnected()) {
+                // to dim unconnected symbols
+                float dim = 100f;
                 switch (_shape) {
                     case 0:
                         beanButton.setEnabled(false);
@@ -591,7 +592,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      * (un)connected bean. Derived from
      * {@link jmri.jmrit.display.switchboardEditor.SwitchboardEditor#showPopUp(Positionable, MouseEvent)}
      *
-     * @param e the event
+     * @param e unused.
+     * @return true when pop up displayed.
      */
     public boolean showPopUp(MouseEvent e) {
         if (switchPopup != null) {
@@ -624,9 +626,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             } else {
                 // show option to attach a new bean
                 switchPopup.add(connectNewMenu);
-                connectNewMenu.addActionListener((java.awt.event.ActionEvent e1) -> {
-                    connectNew(_label);
-                });
+                connectNewMenu.addActionListener((java.awt.event.ActionEvent e1) -> connectNew(_label));
             }
         }
         // display the popup
@@ -641,9 +641,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     void addEditUserName(JPopupMenu popup) {
         editItem = new javax.swing.JMenuItem(Bundle.getMessage("EditNameTitle", "..."));
         popup.add(editItem);
-        editItem.addActionListener((java.awt.event.ActionEvent e) -> {
-            renameBean();
-        });
+        editItem.addActionListener((java.awt.event.ActionEvent e) -> renameBean());
     }
 
     javax.swing.JCheckBoxMenuItem invertItem = null;
@@ -652,9 +650,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         invertItem = new javax.swing.JCheckBoxMenuItem(Bundle.getMessage("MenuInvertItem", _label));
         invertItem.setSelected(getInverted());
         popup.add(invertItem);
-        invertItem.addActionListener((java.awt.event.ActionEvent e) -> {
-            setBeanInverted(invertItem.isSelected());
-        });
+        invertItem.addActionListener((java.awt.event.ActionEvent e) -> setBeanInverted(invertItem.isSelected()));
     }
 
     /**
@@ -699,7 +695,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             }
             if (nb != null) {
                 log.error("User name is not unique {}", newUserName);
-                String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + newUserName)});
+                String msg = Bundle.getMessage("WarningUserName", newUserName);
                 JOptionPane.showMessageDialog(null, msg,
                         Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -712,7 +708,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 if (!nbhm.inUse(_label, _bname)) {
                     return; // no problem, so stop
                 }
-                String msg = Bundle.getMessage("UpdateToUserName", new Object[]{_editor.getSwitchTypeName(), newUserName, _label});
+                String msg = Bundle.getMessage("UpdateToUserName", _editor.getSwitchTypeName(), newUserName, _label);
                 int optionPane = JOptionPane.showConfirmDialog(null,
                         msg, Bundle.getMessage("UpdateToUserNameTitle"),
                         JOptionPane.YES_NO_OPTION);
@@ -747,6 +743,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 
     /**
      * Invert attached object on the layout, if supported by its connection.
+     * @param set new inverted state, true for inverted, false for normal.
      */
     public void setBeanInverted(boolean set) {
         switch (beanTypeChar) {
@@ -754,16 +751,12 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 if (getTurnout().canInvert()) { // if supported
                     this.setInverted(set);
                     getTurnout().setInverted(set);
-                } else {
-                    // show error message?
                 }
                 break;
             case 'S':
                 if (getSensor().canInvert()) { // if supported
                     this.setInverted(set);
                     getSensor().setInverted(set);
-                } else {
-                    // show error message?
                 }
                 break;
             case 'L':
@@ -842,6 +835,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     /**
      * Create new bean and connect it to this switch. Use type letter from
      * switch label (S, T or L).
+     * @param systemName system name of bean.
      */
     protected void connectNew(String systemName) {
         log.debug("Request new bean");
@@ -853,12 +847,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             addFrame.addHelpMenu("package.jmri.jmrit.display.switchboardEditor.SwitchboardEditor", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
-            ActionListener okListener = (ActionEvent ev) -> {
-                okAddPressed(ev);
-            };
-            ActionListener cancelListener = (ActionEvent ev) -> {
-                cancelAddPressed(ev);
-            };
+            ActionListener okListener = this::okAddPressed;
+            ActionListener cancelListener = this::cancelAddPressed;
             AddNewDevicePanel switchConnect = new AddNewDevicePanel(sysName, userName, "ButtonOK", okListener, cancelListener);
             switchConnect.setSystemNameFieldIneditable(); // prevent user interference with switch label
             switchConnect.setOK(); // activate OK button on Add new device pane
@@ -952,8 +942,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(addFrame,
                 java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorSwitchAddFailed"),
-                        new Object[]{sysName}),
+                        Bundle.getMessage("ErrorSwitchAddFailed"), sysName),
                 Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
@@ -978,7 +967,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         private String tag = "tag";
         private int labelX = 16;
         private int labelY = 53;
-        private float ropScale = 1f;
         private float ropOffset = 0f;
         private RescaleOp rop;
 
@@ -1001,6 +989,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 
         public void setOpacity(float offset) {
             ropOffset = offset;
+            float ropScale = 1f;
             rop = new RescaleOp(ropScale, ropOffset, null);
         }
 

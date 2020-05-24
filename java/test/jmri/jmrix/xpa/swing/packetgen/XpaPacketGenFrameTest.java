@@ -11,7 +11,6 @@ public class XpaPacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private jmri.jmrix.xpa.XpaSystemConnectionMemo memo = null;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -19,15 +18,15 @@ public class XpaPacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
 
         memo = new jmri.jmrix.xpa.XpaSystemConnectionMemo();
         jmri.InstanceManager.setDefault(jmri.jmrix.xpa.XpaSystemConnectionMemo.class,memo);
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new XpaPacketGenFrame(memo);
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new XpaPacketGenFrame(memo);
+        }
     }
 
     @After
     @Override
     public void tearDown() {
-	    memo = null;
+        memo = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }

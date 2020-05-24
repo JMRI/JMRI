@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of AnalogClock2Display
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class AnalogClock2DisplayTest extends PositionableJComponentTest {
 

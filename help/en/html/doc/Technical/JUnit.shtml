@@ -81,14 +81,14 @@
             <li><a href="#tempFileCreation">Temporary File Creation
             in Tests</a></li>
 
-            <li><a href="#J4rules">JUnit4 Rules</a></li>
+            <li><a href="#J4rules">JUnit Rules</a></li>
             <li style="list-style: none">
                 <ul>
                 <li><a href="#TimeoutRule">Timeout rule</a></li>
                 <li><a href="#RetryRule">RetryRule</a></li>
                 </ul>
             </li>
-            <li><a href="#control">Controlling JUnit4 Tests</a></li>
+            <li><a href="#control">Controlling JUnit Tests</a></li>
 
           </ul>
         </li>
@@ -112,7 +112,6 @@
 
         <li><a href="#issues">Issues</a></li>
 
-        <li><a href="#junit4">Migrating to JUnit4</a></li>
       </ul>
 
       <a name="Introduction" id="Introduction"></a> JUnit is a
@@ -126,12 +125,9 @@
 
       <p>For more information on JUnit, see <a href=
       "http://www.junit.org">the JUnit home page</a>. 
-      We now use JUnit version 4 (JUnit4), although
+      We now use JUnit version 5 (JUnit5), although
       a lot of JMRI code originally had tests
-      written in the previous version, JUnit3.
-      For instructions on how to convert existing JUnit3
-      tests to JUnit4, see the 
-      "<a href="#junit4">Migrating to JUnit4</a>" section below.
+      written in the previous versions, JUnit3 and Junit4.
       <p>
       A very
       interesting example of test-based development is available
@@ -169,12 +165,12 @@
 </pre>
     The first line compiles all the test code, and the second
     runs a specific test or test suite.<br>
-    (Hint: How to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
+    (See also how to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
 
     <h3><a name="testingvars" id="testingvars">Optional Checks</a></h3>
     There are a number of 
     run-time optional checks
-    that can be turned on by setting environmental variables.
+    that can be turned on by setting properties.
     We periodically run them to check on how the overall test
     system is working, but they're too time intensive
     to leave on all the time.
@@ -209,7 +205,7 @@
 
     <h3><a name="testcontrols" id="testcontrols">Controlling Test Operation</a></h3>
     There are a number of 
-    environmental variables that can be used to modify standard behaviour
+    properties that can be used to modify standard behaviour
     in ways that make testing easier.
       <dl>
         <dt>jmri.demo</dt>
@@ -238,12 +234,22 @@
             because they behave intermittently when run as part of the main test sequence.  
             The <code>scripts/run_flagged_tests_separately</code> file
             runs these test classes separately.</dd>
-        <dt>jmri.skipschematests</dt>
-            <dd>If true, JUnit tests will skip checking the schema of all the test XML files.</dd>
         <dt>jmri.util.JUnitUtil.printSetUpTearDownNames</dt>
-            <dd>If true, JUnit tests will print out each JUnitUtil.setUp() and JUnitUtil.teardown() call.
+            <dd>If true, JUnit tests will print to stderr each JUnitUtil.setUp() call
+                and when checkSetUpTearDownSequence is true will also print to stderr each JUnitUtil.teardown()
+                call.
                 This can be useful if i.e. the CI tests are hanging, and you can't figure out which
                 test class is the problem.</dd>
+        <dt>jmri.util.junit.PrintingTestListener.verbose</dt>
+            <dd>Prints detailed lists of each test completed, failed and ignored to stdout.
+                It's a lot of output, but can help track down when an obscure message was
+                emitted or exception happened. It also can be used to see the order in 
+                which tests are being run.</dd>
+        <dt>jmri.util.junit.PrintingTestListener.quiet</dt>
+            <dd>Reduces the information printed during a normmal JUnit run to 
+                dots (.) for passed tests, F for failed ones, A for aborted ones
+                (assumptions not met) and I for @Ignored ones. This is followed
+                by a one-line summary, then more detail on failures.</dd>
 
      </dl>
     
@@ -361,14 +367,7 @@
       doesn't exist, see the section below about writing tests for
       a new class)
 
-      <p>If the test suite has not been converted to JUnit4 yet,
-      one or more test methods can be added to the class using the
-      JUnit conventions. Basically, each method needs a name that
-      starts with "test", e.g. "testFirst", and has to have a
-      "public void" signature. JUnit will handle everything after
-      that.</p>
-
-      <p>If the test suite has been converted to JUnit4, the JUnit4
+      <p>The JUnit
       conventions require that the test be preceeded by the
       "<code>@Test</code>" annotation:
 <pre style="font-family: monospace;">
@@ -377,9 +376,6 @@
         ...
     }
 </pre>
-
-      <p>See the section on <a href="#junit4">JUnit4 Migration</a> for
-      more information on JUnit4.</p>
 
       <p>In general, test methods should be small, testing just one
       piece of the classes operation. That's why they're called
@@ -437,7 +433,7 @@
      as above.
      
      <p>In addition, the tearDown() method should set all member variable 
-            references to null.  This is because JUnit4 keeps the test class
+            references to null.  This is because JUnit keeps the test class
             objects around until <em>all</em> the tests are complete, so any
             memory you allocate in one class can't be garbage collected until all 
             the tests are done.  Setting the references to null allows the objects
@@ -450,61 +446,22 @@
 
      <p>
      You may also choose to copy an existing test file and make
-     modifications to suite the needs of your new class. Please
-     make sure you're copying a file in the new JUnit4 format,
-     with the @Test statements, to keep us from having to update
-     your new file later.
+     modifications to suite the needs of your new class. 
      </p>
-
-     <p>
-     After the test class is created it needs to be added to the
-     package test for the package.  In the case of our example,
-     that should be the file <code>test/jmri/jmrix/foo/PackageTest.java</code>
-     </p>
-
-     <p>
-     "<code>FooTest.class</code>" needs to be added to the list test classes in the <code>@Suite.SuiteClasses</code> annotation that appears before the beginning of the PackageTest class.</p>
 
       <h3><a name="Write4NewPackage" id="Write4NewPackage">Writing
       Tests for a New Package</a></h3>
 
-      <p>To write a tests for a new package, in addition to <a href="#write4NewClass">writing tests for each class</a>, you need to create a "<code>PackageTest.java</code> file that calls your new tests.  For our example, we will create the file "<code>test/jmri/jmrix/foo/PackageTest.java</code>" and call the tests in "<code>test/jmri/jmrix/foo/FooTest.java</code>".</p>
-
-      The following would be minimal contents for the <code>test/jmri/jmrix/foo/PackageTest.java</code> file:
-
-<pre style="font-family: monospace;">
-    package jmri.jmrix.foo;
-
-    import org.junit.runner.RunWith;
-    import org.junit.runners.Suite;
-
-    /**
-     * tests for the jmri.jmrix.foo package
-     *
-     * @author Your Name Copyright (C) 2016
-     */
-    @RunWith(Suite.class)
-    @Suite.SuiteClasses({
-       FooTest.class
-    })
-    public class PackageTest{
-    }
-</pre>
-
-     <p>
-     You may also choose to copy an existing test file and make
-     modifications to suite the needs of your new class.
-
-     <p>
-     After the PackageTest class is created it needs to be added to the
-     PackageTest for the enclosing package.  In the case of our example,
-     the enclosing package test would be the file <code>java/test/jmri/jmrix/PackageTest.java</code>
-     </p>
-
-     <p>
-     "<code>jmri.jmrix.foo.PackageTest.class</code>" needs to be added to the list test classes in the <code>@RunWithSuite</code> annotation that appears before the beginning of the enclosing PackageTest class.</p>
-
-
+        To write tests for an entirely new package, create a 
+        director in the jmri/tests tree that's in the analogous
+        place to your new code directory.  For example, if you're
+        creating java/src/jmri/jmrit/foo, create a
+        java/test/jmri/jmrit/foo directory and place your 
+        *Test classes there.
+        
+        <p>
+        JMRI used to use "PackageList" files in each directory,
+        but with the migration to JUnit5 it no longer does.
 
       <h2><a name="keyMetaphors" id="keyMetaphors">Key Test
       Metaphors</a></h2>
@@ -661,7 +618,7 @@
     JUnitUtil.tearDown();
 </pre>
 
-      <h4>Working with a Timebase</h4>
+      <h4>Working with a ShutDownManager</h4>
       
       During testing, your code might need a ShutDownManager.  There
       are several points to consider:
@@ -850,8 +807,8 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       problems.
       
       <p>
-        If you need a temporary file or directory, and your test
-        uses JUnit4, you can use a Rule to create a file or directory
+        If you need a temporary file or directory, 
+        you can use a Rule to create a file or directory
         before each test runs.
 <pre style="font-family: monospace;">
     import org.junit.Rule;
@@ -871,24 +828,24 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
 </pre>
 
     
-      JUnit4 will make sure the file or folder is removed afterwards regardless of whether the 
+      JUnit will make sure the file or folder is removed afterwards regardless of whether the 
       test succeeds or fails. For more information on this, see the 
       <a href="http://junit.org/junit4/javadoc/latest/org/junit/rules/TemporaryFolder.html">Javadoc for TemporaryFolder</a>.
 
       <h3>
       <a name="J4rules" id="J4rules">JUnit Rules</a></h3>
       
-      JUNit4 added the concept of 
+      JUnit4 added the concept of 
       "<a href="https://github.com/junit-team/junit4/wiki/rules">Rules</a>" 
       that can modify the execution of tests. They work at the class or test
-      level to modify the context JUnit4 uses for running the classes tests.
+      level to modify the context JUnit uses for running the classes tests.
       Generally, you start by creating one:
 <pre style="font-family: monospace;">
     @Rule
     public final TemporaryFolder tempFolder = new TemporaryFolder();
 </pre>   
       <p>
-      Some standard JUnit4 rules you might find useful:
+      Some standard JUnit rules you might find useful:
       <ul>
       <li><a href="https://github.com/junit-team/junit4/wiki/rules#temporaryfolder-rule">TemporaryFolder</a>
         - work with temporary files and folders, ensuring
@@ -921,7 +878,7 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       For a bit more info, see the
       <a href=
         "https://github.com/junit-team/junit4/wiki/Timeout-for-tests">
-        JUnit4 Timeouts for Tests page</a>.
+        JUnit Timeouts for Tests page</a>.
       
       <h4>
       <a name="RetryRule" id="RetryRule">RetryRule - run test several times</a></h4>
@@ -944,10 +901,10 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
     @Rule
     public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 </pre>   
-      to your test class.  This will modify how JUnit4 
+      to your test class.  This will modify how JUnit
       handles errors during all of the tests in that class.
 
-    <h3><a id="control" name="control"></a>Tools for Controlling JUnit4 tests</h3>
+    <h3><a id="control" name="control"></a>Tools for Controlling JUnit tests</h3>
       <ul>
 
         <li><a href=
@@ -1187,7 +1144,7 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
             proceeding.  We're not sure what the best value is; see
             <a href="https://github.com/JMRI/JMRI/issues/5321">JMRI Issue #5321</a>
             and 
-            <a> href="https://netbeans.org/bugzilla/show_bug.cgi?id=36665">NetBeans bug tracker 36665</a>
+            <a href="https://netbeans.org/bugzilla/show_bug.cgi?id=36665">NetBeans bug tracker 36665</a>
             for some background discussion. Briefly, since things like 
             flashing cursors fire Swing events,
             the queue doesn't stay idle forever once the primary work is done.
@@ -1246,170 +1203,6 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       JUnit uses those properties to decide how to handle loading
       and reloading of classes.</p>
 
-      <h2><a name="junit4" id="junit4">Migrating to
-      JUnit4</a></h2>
-      
-      JUnit4 is a significant upgrade of the JUnit
-      tool from our previous JUnit3 standard. 
-      It brings new capabilities, but also changes how
-      tests are structured. As of this writing (Fall 2018), we're
-      committed to migrating all our tests to JUnit4, though the 
-      work is being done on a time-available basis (i.e. slowly).
-
-      <p>The rest of this section discusses some aspects of moving
-      to and using JUnit4.</p>
-
-      <p><a href=
-      "https://github.com/JMRI/JMRI/blob/master/java/test/jmri/server/json/roster/JsonRosterHttpServiceTest.java">
-      Example of JUnit4 test</a> and <a href=
-      "https://github.com/JMRI/JMRI/blob/master/java/test/jmri/server/json/roster/PackageTest.java">
-      corresponding PackageTest.java file</a>; note lack of main()
-      procedure and other previously-present boilerplate code. These files
-      are the result of this <a href=
-      "https://github.com/JMRI/JMRI/pull/1725/files#diff-3">commit
-      that migrated a test package to JUnit4</a></p>
-
-      <p><a href=
-      "https://github.com/JMRI/JMRI/blob/master/java/test/jmri/jmrix/cmri/PackageTest.java">
-      Example of JUnit4 tests with a <code>main()</code>
-      procedure</a></p>
-
-      <p>A possible set of steps for conversion:</p>
-
-      <ol>
-        <li>Change the imports. Typically, these can be
-        removed:<br>
-<pre style="font-family: monospace;">
-import junit.framework.Assert;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
-</pre><br>
-          and you'll typically need<br>
-<pre style="font-family: monospace;">
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-</pre><br>
-        </li>
-
-        <li>The test class no longer inherits from TestCase, so
-        replace <code>public class MyClassTest extends
-        TestCase</code> with <code>public class
-        MyClassTest</code>.</li>
-
-        <li>Mark test methods with the "<code>@Test</code>"
-        annotation:
-<pre style="font-family: monospace;">
-    @Test
-    public void testSomething() {
-        ...
-    }
-
-</pre>
-        </li>
-
-        <li>If you have bare <code>assert</code> calls, like
-<pre style="font-family: monospace;">
-    assertEquals(k, ind);
-</pre>
-    change them to the JUnit4 form:
-<pre style="font-family: monospace;">
-    Assert.assertEquals(k, ind);
-</pre>
-        </li>
-        
-        <li>More of our Test classes have a "from here down is
-        testing infrastructure" comment, followed by setup code.
-        Some of that can be removed. First, remove the class
-        constructor, e.g.
-<pre style="font-family: monospace;">
-    public MyClassTest(String s) {
-           super(s);
-    }
-</pre>
-        </li>
-
-        <li>Next, remove the main method if there is one, e.g.:
-<pre style="font-family: monospace;">
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", MyClassTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-</pre>
-        </li>
-
-        <li>Annotate the <code>setUp()</code> and
-        <code>tearDown()</code> methods. Note: They have to be
-        "public" methods, not "protected" or "private". They should
-        end up looking like (plus your own content, of course):
-<pre style="font-family: monospace;">
-    @Before
-    public void setUp() {
-          jmri.util.JUnitUtil.setUp();
-    }
-
-    @After
-    public void tearDown() {
-          jmri.util.JUnitUtil.tearDown();
-    }
-</pre>
-        <p><a name="super">Make sure no more references to the <code>super.</code></a>
-        method remain in either setUp() or tearDown().
-        Just remove those lines.
-        <p>A note on nesting:  If you have @Before and/or @After in both
-        a class and one its superclasses, they will be reliably invoked in 
-        the useful way:  First the @Before of the super class, then
-        the @Before of your class, then the test, then the @After of your class,
-        and finally the @After of the superclass.
-        <p>In rare cases, you might want to use <code>@BeforeClass</code>
-            and <code>@AfterClass</code> methods to wrap the entire
-            test class.  These have to be <code>static</code>
-            and are invoked around (i.e. before and after) anything else
-            in the test class. This can be used to e.g. wrap
-            static initializers in the class under test.
-        </li>
-
-        <li>Finally, replace the test suite definition. JUnit3 was
-        normally used with "run everything in this class
-        automatically" by having a method that looked like this:
-<pre style="font-family: monospace;">
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(Z21MessageTest.class);
-        return suite;
-    }
-</pre><br>
-          If that's what you've got, just remove the whole block.<br>
-          If you've got more logic in the suite() routine,
-          ask for help on the jmri-developers list. An example of
-          the result of migrating a more complex case:
-<pre style="font-family: monospace;">
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   CMRISystemConnectionMemoTest.class,
-   jmri.jmrix.cmri.serial.PackageTest.class})
-</pre>
-        </li>
-
-      <li>
-      In the <code>PackageTest.java</code> for this test package,
-          under <em>Test suite()</em>, replace the line<br>
-          <code>suite.addTest(MyClassTest.suite());</code> by<br>
-          <code>suite.addTest(new junit.framework.JUnit4TestAdapter(MyClassTest.class));
-          </code><br>
-          leaving the order of tests unchanged to prevent possible side effects.
-      </li>
-
-        <li>Run the tests and check that all your tests were
-        successfully included and run.</li>
-      </ol>
-
-      <p>That's it! You've successfully migrated to native
-      JUnit4.</p>
 
         <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

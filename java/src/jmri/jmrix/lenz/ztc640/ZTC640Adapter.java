@@ -9,7 +9,6 @@ import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
-import jmri.util.SerialUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -71,19 +70,11 @@ public class ZTC640Adapter extends XNetSerialPortController {
             // report status?
             if (log.isInfoEnabled()) {
                 // report now
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud with"
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows " // NOI18N
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
+                log.debug(" port flow control shows {}", activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"); // NOI18N
 
                 // log events
                 setPortEventLogging(activeSerialPort);
@@ -111,8 +102,6 @@ public class ZTC640Adapter extends XNetSerialPortController {
         XNetTrafficController packets = new ZTC640XNetPacketizer(new LenzCommandStation());
         packets.connectPort(this);
 
-        // start operation
-        // packets.startThreads();
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
         new XNetInitializationManager(this.getSystemConnectionMemo());
     }
@@ -148,25 +137,22 @@ public class ZTC640Adapter extends XNetSerialPortController {
 
     /**
      * Local method to do specific configuration.
+     * @throws UnsupportedCommOperationException if the underlying port can't comply with the settings
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
-        SerialUtil.setSerialPortParams(activeSerialPort, baud,
+        activeSerialPort.setSerialPortParams(baud,
                 SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1,
                 SerialPort.PARITY_NONE);
 
-        // find and configure flow control
         int flow = 0; // default, but also default for getOptionState(option1Name)
         if (!getOptionState(option1Name).equals(validOption1[0])) {
             flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         }
 
         configureLeadsAndFlowControl(activeSerialPort, flow);
-
-        /* if (getOptionState(option2Name).equals(validOption2[0]))
-         setCheckBuffer(true);*/
     }
 
     /**
@@ -196,19 +182,8 @@ public class ZTC640Adapter extends XNetSerialPortController {
     // meanings are assigned to these above, so make sure the order is consistent
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNoRecomm"), Bundle.getMessage("FlowOptionHw")};
 
-    private boolean opened = false;
     InputStream serialStream = null;
 
-    @Deprecated
-    static public ZTC640Adapter instance() {
-        if (mInstance == null) {
-            mInstance = new ZTC640Adapter();
-        }
-        return mInstance;
-    }
-
-    static volatile ZTC640Adapter mInstance = null;
-
-    private final static Logger log = LoggerFactory.getLogger(ZTC640Adapter.class);
+    private static final Logger log = LoggerFactory.getLogger(ZTC640Adapter.class);
 
 }

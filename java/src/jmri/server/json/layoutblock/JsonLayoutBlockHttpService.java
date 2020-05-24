@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.Color;
 import java.util.List;
@@ -51,6 +52,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
     }
 
     @Override
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "check here for null is complexity for a situation that should not be possible")
     public JsonNode doGet(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
         return doGet(InstanceManager.getDefault(LayoutBlockManager.class).getBySystemName(name), name, type, request);
     }
@@ -197,6 +199,22 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
                         request.id);
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
+        }
+    }
+
+    @Override
+    public LayoutBlock getNamedBean(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        try {
+            if (!data.isEmpty() && !data.isNull()) {
+                if (JSON.PUT.equals(request.method)) {
+                    doPut(type, name, data, request);
+                } else if (JSON.POST.equals(request.method)) {
+                    doPost(type, name, data, request);
+                }
+            }
+            return InstanceManager.getDefault(LayoutBlockManager.class).getBySystemName(name);
+        } catch (IllegalArgumentException ex) {
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, "ErrorInvalidSystemName", name, type), request.id);
         }
     }
 }

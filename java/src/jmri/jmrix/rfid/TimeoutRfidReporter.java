@@ -26,7 +26,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matthew Harris Copyright (C) 2014
  * @since 3.9.2
+ * @deprecated since 4.19.4.  Use jmri.implementation.decorators.TimeoutReporter as a replacement.
  */
+@Deprecated
 public class TimeoutRfidReporter extends RfidReporter {
 
     /**
@@ -65,7 +67,7 @@ public class TimeoutRfidReporter extends RfidReporter {
 
     private void cleanUpTimeout() {
         if (logDebug) {
-            log.debug("Cleanup timeout thread for " + mSystemName);
+            log.debug("Cleanup timeout thread for {}", mSystemName);
         }
         timeoutThread = null;
     }
@@ -88,7 +90,7 @@ public class TimeoutRfidReporter extends RfidReporter {
             }
             TimeoutRfidReporter.super.notify(null);
             if (logDebug) {
-                log.debug("Timeout-" + mSystemName);
+                log.debug("Timeout-{}", mSystemName);
             }
             cleanUpTimeout();
         }

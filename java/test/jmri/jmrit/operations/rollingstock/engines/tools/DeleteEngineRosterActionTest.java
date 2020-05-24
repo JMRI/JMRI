@@ -22,14 +22,14 @@ public class DeleteEngineRosterActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        DeleteEngineRosterAction t = new DeleteEngineRosterAction("Test Action");
+        DeleteEngineRosterAction t = new DeleteEngineRosterAction();
         Assert.assertNotNull("exists", t);
     }
 
     @Test
     public void testDelete() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        DeleteEngineRosterAction deleteRosterAction = new DeleteEngineRosterAction("Test Action");
+        DeleteEngineRosterAction deleteRosterAction = new DeleteEngineRosterAction();
         Assert.assertNotNull("exists", deleteRosterAction);
 
         JUnitOperationsUtil.initOperationsData();
@@ -58,7 +58,7 @@ public class DeleteEngineRosterActionTest extends OperationsTestCase {
 
         Assert.assertEquals("Number of engines", 0, InstanceManager.getDefault(EngineManager.class).getNumEntries());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DeleteEngineRosterActionTest.class);

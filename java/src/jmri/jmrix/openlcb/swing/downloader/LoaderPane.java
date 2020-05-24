@@ -75,13 +75,16 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         p = new JPanel();
         p.setLayout(new FlowLayout());
         p.add(new JLabel("Address Space: "));
-        p.add(spaceField = new JTextField("" + 0xEF));
+
+        spaceField = new JTextField("" + 0xEF);
+        p.add(spaceField);
         selectorPane.add(p);
         spaceField.setToolTipText("The decimal number of the address space, e.g. 239");
 
         p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(lockNode = new JCheckBox("Lock Node"));
+        lockNode = new JCheckBox("Lock Node");
+        p.add(lockNode);
         selectorPane.add(p);
 
         // Verify not an option
@@ -131,7 +134,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         setOperationAborted(false);
         abortButton.setEnabled(false);
         abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
-        Integer ispace = Integer.valueOf(spaceField.getText());
+        int ispace = Integer.parseInt(spaceField.getText());
         long addr = 0;
         loaderClient.doLoad(nid, destNodeID(), ispace, addr, fdata, new LoaderStatusReporter() {
             @Override
@@ -161,15 +164,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     }
 
     void updateGUI(final int value) {
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                if (log.isDebugEnabled()) {
-                    log.debug("updateGUI with " + value);
-                }
-                // update progress bar
-                bar.setValue(value);
-            }
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            log.debug("updateGUI with {}",value);
+            // update progress bar
+            bar.setValue(value);
         });
     }
 
@@ -194,8 +192,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         File file = new File(filename);
         try (FileInputStream fis = new FileInputStream(file)) {
 
-            log.info("Total file size to read (in bytes) : "
-                    + fis.available());
+            log.info("Total file size to read (in bytes) : {}",fis.available());
             fdata = new byte[fis.available()];
             int i = 0;
             int content;
@@ -230,7 +227,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     /**
      * Nested class to create one of these using old-style defaults
      */
-    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
+    public static class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
         public Default() {
             super("Openlcb Firmware Download",
@@ -240,5 +237,5 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LoaderPane.class);
+    private static final Logger log = LoggerFactory.getLogger(LoaderPane.class);
 }

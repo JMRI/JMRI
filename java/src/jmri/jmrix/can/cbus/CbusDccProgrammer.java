@@ -33,9 +33,9 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<>();
-        ret.add(ProgrammingMode.PAGEMODE);
         ret.add(ProgrammingMode.DIRECTBITMODE);
         ret.add(ProgrammingMode.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
         ret.add(ProgrammingMode.REGISTERMODE);
         return ret;
     }
@@ -147,6 +147,12 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
                 //controller().sendCanMessage(CbusMessage.getExitProgMode(), this);
                 stopTimer();
                 notifyProgListenerEnd(-1, jmri.ProgListener.NoLocoDetected);
+            } else if ((m.getElement(0) == CbusConstants.CBUS_SSTAT)
+                && (m.getElement(2) == CbusConstants.SSTAT_OVLD)) {
+                log.warn("Programming overload {}", m);
+                // Overload. Fail back to end of programming
+                stopTimer();
+                notifyProgListenerEnd(-1, jmri.ProgListener.ProgrammingShort);
             } else {
                 // see why waiting
                 if (_progRead && (m.getElement(0) == CbusConstants.CBUS_PCVS)) {

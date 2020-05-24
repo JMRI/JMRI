@@ -81,8 +81,7 @@ public class PrintSwitchListActionTest extends OperationsTestCase {
         Location northIndustries = lmanager.getLocationByName("North Industries");
         
         // confirm print preview window is showing
-        ResourceBundle rb = ResourceBundle
-                .getBundle("jmri.util.UtilBundle");
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.util.UtilBundle");
         JmriJFrame printPreviewFrame =
                 JmriJFrame.getFrame(rb.getString("PrintPreviewTitle") + " " + northEndStaging.getName());
         Assert.assertNotNull("exists", printPreviewFrame);
@@ -99,7 +98,7 @@ public class PrintSwitchListActionTest extends OperationsTestCase {
         JUnitUtil.dispose(printPreviewFrame);
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintSwitchListActionTest.class);

@@ -33,7 +33,7 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
     public NullAudioBuffer(String systemName) {
         super(systemName);
         if (log.isDebugEnabled()) {
-            log.debug("New NullAudioBuffer: " + systemName);
+            log.debug("New NullAudioBuffer: {}", systemName);
         }
     }
 
@@ -46,16 +46,7 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
     public NullAudioBuffer(String systemName, String userName) {
         super(systemName, userName);
         if (log.isDebugEnabled()) {
-            log.debug("New NullAudioBuffer: " + userName + " (" + systemName + ")");
-        }
-    }
-
-    @Override
-    public String toString() {
-        if (this.getState() != STATE_LOADED) {
-            return "Empty buffer";
-        } else {
-            return this.getURL() + " (" + parseFormat() + ", " + "?? Hz)";
+            log.debug("New NullAudioBuffer: {} ({})", userName, systemName);
         }
     }
 
@@ -104,19 +95,10 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
         return 0;
     }
 
-    /**
-     * Internal method to return a string representation of the audio format
-     *
-     * @return string representation
-     */
-    private String parseFormat() {
-        return "unknown format";
-    }
-
     @Override
     protected void cleanup() {
         if (log.isDebugEnabled()) {
-            log.debug("Cleanup NullAudioBuffer (" + this.getSystemName() + ")");
+            log.debug("Cleanup NullAudioBuffer ({})", this.getSystemName());
         }
         this.dispose();
     }

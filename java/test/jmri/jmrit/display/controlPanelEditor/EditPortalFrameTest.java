@@ -26,6 +26,7 @@ public class EditPortalFrameTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor("EditPortalFrameTest");
         frame.makeCircuitMenu(true);
@@ -46,7 +47,6 @@ public class EditPortalFrameTest {
         JUnitUtil.dispose(portalFrame);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -56,6 +56,7 @@ public class EditPortalFrameTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();  // only needed intermittently; better to find and remove, but that would require lots o' refactoring
         JUnitUtil.tearDown();
     }
 

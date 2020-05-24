@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.SignalMastLogic class
  *
- * @author	Egbert Broerse Copyright 2017
+ * @author Egbert Broerse Copyright 2017
  */
 public class SignalMastLogicTest {
 
@@ -119,7 +119,6 @@ public class SignalMastLogicTest {
         sml.dispose();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

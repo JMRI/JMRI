@@ -40,6 +40,9 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
         boolean turnoutControl = p.isTurnoutControlled();
         // include attributes
         element.setAttribute("ident", p.getId());
+        if (!p.getBlockName().isEmpty()) {
+            element.setAttribute("blockname", p.getBlockName());
+        }
         element.setAttribute("radius", "" + p.getRadius());
         Point2D coords = p.getCoordsCenter();
         element.setAttribute("xcen", "" + coords.getX());
@@ -107,6 +110,12 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
         LayoutTurntable l = new LayoutTurntable(name, new Point2D.Double(x, y), p);
         l.setRadius(radius);
 
+        // get remaining attribute
+        Attribute a = element.getAttribute("blockname");
+        if (a != null) {
+            l.tLayoutBlockName = a.getValue();
+        }
+
         try {
             l.setTurnoutControlled(element.getAttribute("turnoutControlled").getBooleanValue());
         } catch (DataConversionException e1) {
@@ -117,36 +126,35 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
         // load ray tracks
         List<Element> rayTrackList = element.getChildren("raytrack");
         if (rayTrackList.size() > 0) {
-            for (int i = 0; i < rayTrackList.size(); i++) {
+            for (Element value : rayTrackList) {
                 double angle = 0.0;
                 int index = 0;
-                Element relem = rayTrackList.get(i);
                 try {
-                    angle = (relem.getAttribute("angle")).getFloatValue();
-                    index = (relem.getAttribute("index")).getIntValue();
-                } catch (org.jdom2.DataConversionException e) {
+                    angle = (value.getAttribute("angle")).getFloatValue();
+                    index = (value.getAttribute("index")).getIntValue();
+                } catch (DataConversionException e) {
                     log.error("failed to convert ray track angle or index attributes");
                 }
                 String connectName = "";
-                Attribute a = relem.getAttribute("connectname");
+                a = value.getAttribute("connectname");
                 if (a != null) {
                     connectName = a.getValue();
                 }
                 l.addRayTrack(angle, index, connectName);
-                if (l.isTurnoutControlled() && relem.getAttribute("turnout") != null) {
-                    if (relem.getAttribute("turnoutstate").getValue().equals("thrown")) {
-                        l.setRayTurnout(index, relem.getAttribute("turnout").getValue(), Turnout.THROWN);
+                if (l.isTurnoutControlled() && value.getAttribute("turnout") != null) {
+                    if (value.getAttribute("turnoutstate").getValue().equals("thrown")) {
+                        l.setRayTurnout(index, value.getAttribute("turnout").getValue(), Turnout.THROWN);
                     } else {
-                        l.setRayTurnout(index, relem.getAttribute("turnout").getValue(), Turnout.CLOSED);
+                        l.setRayTurnout(index, value.getAttribute("turnout").getValue(), Turnout.CLOSED);
                     }
                     try {
-                        l.setRayDisabled(index, relem.getAttribute("disabled").getBooleanValue());
+                        l.setRayDisabled(index, value.getAttribute("disabled").getBooleanValue());
                     } catch (DataConversionException e1) {
                         log.warn("unable to convert layout turnout disabled attribute");
                     } catch (NullPointerException e) {  // considered normal if the attribute is not present
                     }
                     try {
-                        l.setRayDisabledWhenOccupied(index, relem.getAttribute("disableWhenOccupied").getBooleanValue());
+                        l.setRayDisabledWhenOccupied(index, value.getAttribute("disableWhenOccupied").getBooleanValue());
                     } catch (DataConversionException e1) {
                         log.warn("unable to convert layout turnout disableWhenOccupied attribute");
                     } catch (NullPointerException e) {  // considered normal if the attribute is not present
@@ -154,8 +162,8 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
                 }
             }
         }
-        p.getLayoutTracks().add(l);
+        p.addLayoutTrack(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurntableXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntableXml.class);
 }

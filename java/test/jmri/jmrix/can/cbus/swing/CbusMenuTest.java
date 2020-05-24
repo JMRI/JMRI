@@ -1,18 +1,18 @@
 package jmri.jmrix.can.cbus.swing;
 
-import java.awt.GraphicsEnvironment;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test simple functioning of CbusMenu
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CbusMenuTest {
 
@@ -21,13 +21,13 @@ public class CbusMenuTest {
     private CanSystemConnectionMemo m = null;
  
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
         CbusMenu action = new CbusMenu(m);
-        Assert.assertNotNull("exists", action);
+        assertThat(action).isNotNull();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // tc = new TestTrafficController();
@@ -36,7 +36,7 @@ public class CbusMenuTest {
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() { 
         JUnitUtil.tearDown();
         // tc = null;

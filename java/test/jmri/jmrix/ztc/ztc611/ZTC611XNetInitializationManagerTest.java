@@ -12,7 +12,7 @@ import org.junit.Assert;
 /**
  * ZTC611XNetInitializationManagerTest.java
  *
- * Description: tests for the
+ * Test for the
  * jmri.jmrix.ztc.ztc611.ZTC611XNetInitializationManager class
  *
  * @author Paul Bender

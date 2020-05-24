@@ -2,6 +2,7 @@ package jmri;
 
 import edu.umd.cs.findbugs.annotations.OverrideMustInvoke;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.*;
 import javax.annotation.CheckForNull;
@@ -179,7 +180,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      *                                      messages in the default locale
      */
     @Nonnull
-    public default String validateSystemNameFormat(@Nonnull String name) throws BadSystemNameException {
+    public default String validateSystemNameFormat(@Nonnull String name) {
         return Manager.this.validateSystemNameFormat(name, Locale.getDefault());
     }
 
@@ -207,7 +208,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @throws BadSystemNameException if provided name is an invalid format
      */
     @Nonnull
-    public default String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) throws BadSystemNameException {
+    public default String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return validateSystemNamePrefix(name, locale);
     }
 
@@ -227,7 +228,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @throws BadSystemNameException if provided name is an invalid format
      */
     @Nonnull
-    public default String validateSystemNamePrefix(@Nonnull String name, @Nonnull Locale locale) throws BadSystemNameException {
+    public default String validateSystemNamePrefix(@Nonnull String name, @Nonnull Locale locale) {
         String prefix = getSystemNamePrefix();
         if (name.equals(prefix)) {
             throw new NamedBean.BadSystemNameException(locale, "InvalidSystemNameMatchesPrefix", name);
@@ -284,7 +285,8 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
         name = validateTrimmedSystemNameFormat(name, locale);
         String prefix = getSystemNamePrefix();
         String suffix = name.substring(prefix.length());
-        if (!suffix.equals(suffix.toUpperCase())) {
+        String upper = suffix.toUpperCase();
+        if (!suffix.equals(upper)) {
             throw new NamedBean.BadSystemNameException(locale, "InvalidSystemNameNotUpperCase", name, prefix);
         }
         return name;
@@ -500,7 +502,8 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
         return getByUserName(userName);
     }
 
-    // needed for deprecationWarning call above
+    // needed for deprecationWarning calls above, remove with them
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_LOGGER_SHOULD_BE_PRIVATE",justification="Private not available in interface; just needed for deprecation")
     static final org.slf4j.Logger deprecatedManagerLogger = org.slf4j.LoggerFactory.getLogger(Manager.class);
 
     /**
@@ -541,43 +544,9 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @return list of known properties, or empty list if there are none
      */
     @Nonnull
-    default public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
+    public default List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         return new LinkedList<>();
     }
-
-    /**
-     * At a minimum, subclasses must notify of changes to the list of available
-     * NamedBeans; they may have other properties that will also notify.
-     *
-     * @param l the listener
-     */
-    @Override
-    public void addPropertyChangeListener(@CheckForNull PropertyChangeListener l);
-
-    /**
-     * At a minimum, subclasses must notify of changes to the list of available
-     * NamedBeans; they may have other properties that will also notify.
-     *
-     * @param l the listener
-     */
-    @Override
-    public void removePropertyChangeListener(@CheckForNull PropertyChangeListener l);
-
-    /**
-     * Add a VetoableChangeListener to the listener list.
-     *
-     * @param l the listener
-     */
-    @Override
-    public void addVetoableChangeListener(@CheckForNull VetoableChangeListener l);
-
-    /**
-     * Remove a VetoableChangeListener to the listener list.
-     *
-     * @param l the listener
-     */
-    @Override
-    public void removeVetoableChangeListener(@CheckForNull VetoableChangeListener l);
 
     /**
      * Method for a UI to delete a bean.
@@ -599,7 +568,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      *                                          delete to be aborted (see
      *                                          above)
      */
-    public void deleteBean(@Nonnull E n, @Nonnull String property) throws java.beans.PropertyVetoException;
+    public void deleteBean(@Nonnull E n, @Nonnull String property) throws PropertyVetoException;
 
     /**
      * Remember a NamedBean Object created outside the manager.
@@ -708,7 +677,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      *         standard normalized form
      */
     @CheckReturnValue
-    static public int getSystemPrefixLength(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+    public static int getSystemPrefixLength(@Nonnull String inputName) {
         if (inputName.isEmpty()) {
             throw new NamedBean.BadSystemNameException();
         }
@@ -738,8 +707,8 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      *         form
      */
     @CheckReturnValue
-    static public @Nonnull
-    String getSystemPrefix(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+    @Nonnull
+    public static String getSystemPrefix(@Nonnull String inputName) {
         return inputName.substring(0, getSystemPrefixLength(inputName));
     }
 
@@ -757,14 +726,27 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * items from the list of NamedBeans.
      *
      * @param e the data listener to add
+     * @deprecated since 4.19.7; use
+     *             {@link #addPropertyChangeListener(String, PropertyChangeListener)}
+     *             or {@link #addPropertyChangeListener(PropertyChangeListener)}
+     *             instead, listening for changes to the
+     *             {@code beans} property
      */
+    @Deprecated
     public void addDataListener(ManagerDataListener<E> e);
 
     /**
      * Unregister a previously-added {@link ManagerDataListener}.
      *
      * @param e the data listener to remove
+     * @deprecated since 4.19.7; use
+     *             {@link #removePropertyChangeListener(String, PropertyChangeListener)}
+     *             or
+     *             {@link #removePropertyChangeListener(PropertyChangeListener)}
+     *             instead
+     * @see #addDataListener(ManagerDataListener)
      */
+    @Deprecated
     public void removeDataListener(ManagerDataListener<E> e);
 
     /**
@@ -776,7 +758,9 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * the sense that the manager must do a cumulative notification when done.
      *
      * @param muted true if notifications should be suppressed; false otherwise
+     * @deprecated since 4.19.7 without direct replacement
      */
+    @Deprecated
     public default void setDataListenerMute(boolean muted) {
     }
 
@@ -786,7 +770,9 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      *
      * @param <E> the type to support listening for
      * @since JMRI 4.11.4
+     * @deprecated since 4.19.7 without direct replacement
      */
+    @Deprecated
     interface ManagerDataListener<E extends NamedBean> {
 
         /**
@@ -822,28 +808,30 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      *
      * @param <E> the type to support in the event
      * @since JMRI 4.11.4
+     * @deprecated since 4.19.7 without direct replacement
      */
+    @Deprecated
     @javax.annotation.concurrent.Immutable
     public final class ManagerDataEvent<E extends NamedBean> extends java.util.EventObject {
 
         /**
          * Equal to {@link javax.swing.event.ListDataEvent#CONTENTS_CHANGED}
          */
-        final static public int CONTENTS_CHANGED = 0;
+        public static final int CONTENTS_CHANGED = 0;
         /**
          * Equal to {@link javax.swing.event.ListDataEvent#INTERVAL_ADDED}
          */
-        final static public int INTERVAL_ADDED = 1;
+        public static final int INTERVAL_ADDED = 1;
         /**
          * Equal to {@link javax.swing.event.ListDataEvent#INTERVAL_REMOVED}
          */
-        final static public int INTERVAL_REMOVED = 2;
+        public static final int INTERVAL_REMOVED = 2;
 
-        final private int type;
-        final private int index0;
-        final private int index1;
-        final private E changedBean; // used when just one bean is added or removed as an efficiency measure
-        final private Manager<E> source;
+        private final int type;
+        private final int index0;
+        private final int index1;
+        private final transient E changedBean; // used when just one bean is added or removed as an efficiency measure
+        private final transient Manager<E> source;
 
         /**
          * Create a <code>ListDataEvent</code> object.

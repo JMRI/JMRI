@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import javax.annotation.Nonnull;
+import jmri.Manager;
 import jmri.Reporter;
 import jmri.ReporterManager;
 
@@ -8,7 +9,7 @@ import jmri.ReporterManager;
  * Implementation of a ReporterManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2010
+ * @author Bob Jacobsen Copyright (C) 2003, 2010
  */
 public class ProxyReporterManager extends AbstractProxyManager<Reporter> implements ReporterManager {
 
@@ -37,8 +38,8 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     }
 
     @Override
-    protected Reporter makeBean(int i, String systemName, String userName) {
-        return ((ReporterManager) getMgr(i)).newReporter(systemName, userName);
+    protected Reporter makeBean(Manager<Reporter> manager, String systemName, String userName) {
+        return ((ReporterManager) manager).newReporter(systemName, userName);
     }
 
     @Override
@@ -100,11 +101,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
 
     @Override
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((ReporterManager) getMgr(i)).allowMultipleAdditions(systemName);
-        }
-        return ((ReporterManager) getMgr(0)).allowMultipleAdditions(systemName);
+        return ((ReporterManager) getManagerOrDefault(systemName)).allowMultipleAdditions(systemName);
     }
 
     @Override

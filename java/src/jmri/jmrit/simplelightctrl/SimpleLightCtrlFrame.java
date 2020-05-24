@@ -281,7 +281,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
             // and set commanded state to ON
             light.setState(Light.OFF);
         } catch (Exception ex) {
-            log.error(Bundle.getMessage("ErrorTitle") + ex.toString());
+            log.error("{}{}", Bundle.getMessage("ErrorTitle"), ex.toString());
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
         }
     }
@@ -295,7 +295,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
             // and set commanded state to ON
             light.setState(Light.ON);
         } catch (Exception ex) {
-            log.error(Bundle.getMessage("ErrorTitle") + ex.toString());
+            log.error("{}{}", Bundle.getMessage("ErrorTitle"), ex.toString());
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
         }
     }
@@ -310,7 +310,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
             // and set commanded state to DIM
             light.setTargetIntensity(Double.parseDouble(intensityTextField.getText().trim()) / 100);
         } catch (NumberFormatException ex) {
-            log.error(Bundle.getMessage("LightErrorIntensityButtonException") + ex.toString());
+            log.error("{}{}", Bundle.getMessage("LightErrorIntensityButtonException"), ex.toString());
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
         }
     }
@@ -325,6 +325,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
 
     /**
      * Handle changes for intensity, rate, etc.
+     * @param e unused.
      */
     public void applyButtonActionPerformed(ActionEvent e) {
         if (to1.getSelectedItem() == null) {
@@ -348,7 +349,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
             updateLightStatusFields(false);
 
         } catch (NumberFormatException ex) {
-            log.error(Bundle.getMessage("ErrorTitle") + ex.toString());
+            log.error("{}{}", Bundle.getMessage("ErrorTitle"), ex.toString());
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
         }
     }

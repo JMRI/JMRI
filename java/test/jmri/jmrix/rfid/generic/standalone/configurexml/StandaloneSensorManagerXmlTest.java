@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * StandaloneSensorManagerXmlTest.java
  *
- * Description: tests for the StandaloneSensorManagerXml class
+ * Test for the StandaloneSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class StandaloneSensorManagerXmlTest {
       Assert.assertNotNull("StandaloneSensorManagerXml constructor",new StandaloneSensorManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

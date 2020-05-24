@@ -30,22 +30,13 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
     private PortalIcon _icon;
     private JRadioButton _toButton;
     private JRadioButton _fromButton;
-    private JRadioButton _noButton;
 
     private PortalList _portalList;
 
     public EditPortalDirection(String title, CircuitBuilder parent, OBlock block) {
         super(title, parent, block);
+        checkCircuitIcons("DirectionArrow");
         pack();
-        String msg = _parent.checkForPortals(block, "DirectionArrow");
-        if (msg == null) {
-            msg = _parent.checkForPortalIcons(block, "DirectionArrow");
-        }
-        if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg,
-                    Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
-            _canEdit = false;
-        }
     }
 
     private JPanel makeArrowPanel() {
@@ -68,7 +59,7 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
         group.add(_fromButton);
         panel.add(_fromButton);
 
-        _noButton = new JRadioButton(Bundle.getMessage("noIcon"), _parent._editor.getPortalIcon(PortalIcon.HIDDEN));
+        JRadioButton _noButton = new JRadioButton(Bundle.getMessage("noIcon"), _parent._editor.getPortalIcon(PortalIcon.HIDDEN));
         _noButton.setVerticalTextPosition(AbstractButton.CENTER);
         _noButton.setHorizontalTextPosition(AbstractButton.CENTER);
         _noButton.setActionCommand(PortalIcon.HIDDEN);
@@ -169,8 +160,6 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
             _icon.setArrowOrientatuon(false);
             _icon.setHideArrows(false);
         } else if (PortalIcon.HIDDEN.equals(e.getActionCommand())) {
-//         _icon.setIcon(PortalIcon.TO_ARROW, _parent._editor.getPortalIcon(PortalIcon.HIDDEN));      
-//         _icon.setArrowOrientatuon(true);
             _icon.setHideArrows(true);
             _icon.setStatus(PortalIcon.HIDDEN);
             return;
@@ -208,14 +197,20 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
 
     @Override
     protected void closingEvent(boolean close) {
+        StringBuffer sb = new StringBuffer();
         String msg = _parent.checkForPortals(_homeBlock, "BlockPaths");
-        if (msg == null) {
-            msg = _parent.checkForPortalIcons(_homeBlock, "DirectionArrow");
-        }
-        if (msg != null) {
+        if (msg.length() > 0) {
+            sb.append(msg);
+            sb.append("\n");
             close = true;
         }
-        closingEvent(close, msg);
+        msg = _parent.checkForPortalIcons(_homeBlock, "DirectionArrow");
+        if (msg.length() > 0) {
+            sb.append(msg);
+            sb.append("\n");
+            close = true;
+        }
+        closingEvent(close, sb.toString());
     }
 
 }

@@ -13,7 +13,7 @@ import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 /**
  * Test simple functioning of NodeConfigAction
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class NodeConfigActionTest {
 

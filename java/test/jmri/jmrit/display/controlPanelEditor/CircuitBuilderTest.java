@@ -27,8 +27,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Test simple functioning of the CircuitBuilder class.
  *
- * @author  Paul Bender Copyright (C) 2017 
- * @author  Pete Cressman Copyright (C) 2019 
+ * @author  Paul Bender Copyright (C) 2017
+ * @author  Pete Cressman Copyright (C) 2019
  */
 public class CircuitBuilderTest {
 
@@ -41,6 +41,7 @@ public class CircuitBuilderTest {
         ControlPanelEditor f = new ControlPanelEditor();
         CircuitBuilder builder = new CircuitBuilder(f);
         Assert.assertNotNull("exists", builder);
+        f.dispose();
         JUnitUtil.dispose(f);
     }
 
@@ -50,10 +51,10 @@ public class CircuitBuilderTest {
 
         OBlock ob3 = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB3");
         cb.setCurrentBlock(ob3);
-        
+
         cb.editCircuit("editCircuitItem", false);
         Assert.assertNotNull("exists", cb.getEditFrame());
-/*        
+/*
         cb.editCircuit("editCircuitItem", true);
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("editCircuitItem"));
         JTableOperator table = new JTableOperator(jdo);
@@ -71,7 +72,7 @@ public class CircuitBuilderTest {
         getCPEandCB();
 
         cb.editCircuitError("OB1");
-        
+
         JFrameOperator nfo = new JFrameOperator(cb.getEditFrame());
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonDone"));
     }
@@ -82,9 +83,9 @@ public class CircuitBuilderTest {
 
         OBlock ob3 = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB2");
         cb.setCurrentBlock(ob3);
-        
+
         cb.editPortals("editPortalsItem", false);
-        
+
         JFrameOperator nfo = new JFrameOperator(cb.getEditFrame());
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonDone"));
     }
@@ -95,9 +96,9 @@ public class CircuitBuilderTest {
 
         OBlock ob3 = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB3");
         cb.setCurrentBlock(ob3);
-        
+
         cb.editCircuitPaths("editCircuitPathsItem", false);
-        
+
         JFrameOperator nfo = new JFrameOperator(cb.getEditFrame());
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonDone"));
     }
@@ -108,9 +109,9 @@ public class CircuitBuilderTest {
 
         OBlock ob3 = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB5");
         cb.setCurrentBlock(ob3);
-        
+
         cb.editPortalDirection("editDirectionItem", false);
-        
+
         JFrameOperator nfo = new JFrameOperator(cb.getEditFrame());
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonDone"));
     }
@@ -121,9 +122,9 @@ public class CircuitBuilderTest {
 
         OBlock ob3 = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB4");
         cb.setCurrentBlock(ob3);
-        
+
         cb.editSignalFrame("editSignalItem", false);
-        
+
         JFrameOperator nfo = new JFrameOperator(cb.getEditFrame());
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonDone"));
     }
@@ -131,9 +132,16 @@ public class CircuitBuilderTest {
     @Test
     public void testEditPortalError() {
         getCPEandCB();
+/*
+        new Thread(() -> {
+            JFrameOperator jfo = new JFrameOperator("Edit \"WestSiding\" Portals");
+            JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("incompleteCircuit"));
+            JButtonOperator jbo = new JButtonOperator(jdo, "OK");
+            jbo.push();
+        }).start();*/
 
         cb.editPortalError("EastExit-EastJunction");
-        
+
         JFrameOperator nfo = new JFrameOperator(cb.getEditFrame());
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonDone"));
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
@@ -146,8 +154,15 @@ public class CircuitBuilderTest {
 
         OBlock block = InstanceManager.getDefault(OBlockManager.class).getByUserName("WestSiding");
         Portal portal = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class).getPortal("Crapolla");
+        new Thread(() -> {
+            JFrameOperator jfo = new JFrameOperator("Edit \"WestSiding\" Portals");
+            JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("incompleteCircuit"));
+            JButtonOperator jbo = new JButtonOperator(jdo, "OK");
+            jbo.push();
+        }).start();
+
         cb.editPortalError(block, portal, null);
-        
+
         JFrameOperator nfo = new JFrameOperator(cb.getEditFrame());
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonDone"));
     }
@@ -157,7 +172,7 @@ public class CircuitBuilderTest {
     public void testNoBlock() {
         getCPEandCB();
         cb.editCircuitPaths("editCircuitPathsItem", false);
-        
+
 //        JFrameOperator frame = new JFrameOperator(cb.getEditFrame());
 //        JDialogOperator jdo = new JDialogOperator(frame, Bundle.getMessage("NeedDataTitle"));
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("NeedDataTitle"));
@@ -193,6 +208,7 @@ public class CircuitBuilderTest {
         if (cpe != null) {
             cpe.dispose();
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
     private final static Logger log = LoggerFactory.getLogger(CircuitBuilderTest.class);

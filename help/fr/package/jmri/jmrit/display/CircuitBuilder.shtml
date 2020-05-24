@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -135,11 +135,11 @@ toutes les ic&#244;nes de voie qui sont utilis&#233;es pour afficher le circuit 
 supprim&#233;. Enfin, les ic&#244;nes de voie du circuit peuvent &#234;tre am&#233;lior&#233;es pour les ic&#244;nes indicatrice de Voie.
 <p>
  1. Dans ce mode, les clics de souris sur une ic&#244;ne de la voie dans le cadre de la fen&#234;tre de base permet de basculer la s&#233;lection de la voie.
- S&#233;lectionnez les ic&#244;nes que vous voulez utiliser pour afficher le circuit de voie (&#224; savoir OCanton). Les ic&#244;nes pour un circuit de voie doivent &#234;tre contiguës.
+ S&#233;lectionnez les ic&#244;nes que vous voulez utiliser pour afficher le circuit de voie (&#224; savoir OCanton). Les ic&#244;nes pour un circuit de voie doivent &#234;tre contigu&#235;s.
  Les ic&#244;nes qui affichent le circuit sont surlign&#233;s en bleu. La s&#233;lection des autres types d'ic&#244;nes
  n'a aucun effet. En outre, des &#233;l&#233;ments du panneau ne peuvent pas &#234;tre tir&#233;s et repositionn&#233;s.
 </p>
-   
+
 <h4>Bo&#238;te de Dialogue mode Edition Circuit </h4>
 <p>
  2. Lorsque vous ajoutez ou modifiez un circuit, la fen&#234;tre de dialogue a des champs de texte pour le nom du capteur qui d&#233;tecte
@@ -168,7 +168,7 @@ supprim&#233;. Enfin, les ic&#244;nes de voie du circuit peuvent &#234;tre am&#2
 </p>
 Vous pouvez quitter des cantons <b>aveugles</b> (pas de d&#233;tection d'occupation) avec ic&#244;nes de Voie non converties.
 Il y a un compromis ici sur l'apparence.
-  
+
 <h3> Portails</h3>
 <p>
  1. Depuis le menu <b>Ajouter/Modifier Circuits</b>, s&#233;lectionnez l'&#233;l&#233;ment de menu <b>Modifier Circuit Portails</b>.
@@ -251,7 +251,7 @@ Il y a un compromis ici sur l'apparence.
  Pour supprimer un chemin, le s&#233;lectionner dans la liste et appuyez sur le bouton <b>Supprimer le Chemin</b>
 </ol>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
      </div>
    </div>
 </body>

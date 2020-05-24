@@ -68,19 +68,6 @@ public class EngineModels extends RollingStockAttribute {
     public EngineModels() {
     }
 
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     *             {@link jmri.InstanceManager#getDefault(java.lang.Class)}
-     *             instead
-     */
-    @Deprecated
-    public static synchronized EngineModels instance() {
-        return InstanceManager.getDefault(EngineModels.class);
-    }
-
     @Override
     protected String getDefaultNames() {
         return MODELS;
@@ -171,16 +158,7 @@ public class EngineModels extends RollingStockAttribute {
                 models.length != lengths.length ||
                 models.length != types.length ||
                 models.length != weights.length) {
-            log.error("Defaults do not have the right number of items, " +
-                    "models=" +
-                    models.length +
-                    " hps=" +
-                    hps.length +
-                    " lengths=" +
-                    lengths.length // NOI18N
-                    +
-                    " types=" +
-                    types.length); // NOI18N
+            log.error("Defaults do not have the right number of items, models={} hps={} lengths={} types={}", models.length, hps.length, lengths.length, types.length); // NOI18N
             return;
         }
 

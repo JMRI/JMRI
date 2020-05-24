@@ -6,11 +6,10 @@ import org.junit.Before;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PM4PanelTest extends jmri.util.swing.JmriPanelTest {
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

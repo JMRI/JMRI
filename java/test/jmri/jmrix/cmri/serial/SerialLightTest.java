@@ -14,7 +14,7 @@ import jmri.util.NamedBeanComparator;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SerialLightTest {
 
@@ -91,7 +91,6 @@ public class SerialLightTest {
         Assert.assertEquals("CL3B4", it.next().getSystemName());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

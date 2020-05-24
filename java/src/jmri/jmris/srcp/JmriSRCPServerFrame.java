@@ -7,6 +7,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
+import jmri.InstanceManager;
 import jmri.jmris.JmriServer;
 
 /**
@@ -15,6 +16,7 @@ import jmri.jmris.JmriServer;
  * @author Paul Bender Copyright (C) 2009
  */
 public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
+
 
     public JmriSRCPServerFrame() {
         this("Jmri SRCP Server Starter");
@@ -35,32 +37,16 @@ public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
         pack();
 
         // install start button handler
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                startSRCPServer();
-            }
-        }
-        );
+        startButton.addActionListener(a -> startSRCPServer());
 
         // install stop button handler
-        stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                stopSRCPServer();
-            }
-        }
-        );
+        stopButton.addActionListener(a -> stopSRCPServer());
 
         // install close button handler
-        closeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                setVisible(false);
-                dispose();
-            }
-        }
-        );
+        closeButton.addActionListener(a -> {
+            setVisible(false);
+            dispose();
+        });
 
     }
 
@@ -81,11 +67,11 @@ public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
     }
 
     public void startSRCPServer() {
-        jmri.InstanceManager.getDefault(JmriServer.class).start();
+        InstanceManager.getDefault(JmriServer.class).start();
     }
 
     public void stopSRCPServer() {
-        jmri.InstanceManager.getDefault(JmriServer.class).stop();
+        InstanceManager.getDefault(JmriServer.class).stop();
     }
 
 }

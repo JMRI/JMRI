@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 /**
  * EcosInterfaceScaffold.java
  *
- * Description:	Test scaffold implementation of EcosInterface
+ * Test scaffold implementation of EcosInterface
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
   *
  * Use an object of this type as a EcosTrafficController in tests
  */
@@ -32,7 +32,7 @@ public class EcosInterfaceScaffold extends EcosTrafficController {
     @Override
     public void sendEcosMessage(EcosMessage m, EcosListener replyTo) {
         if (log.isDebugEnabled()) {
-            log.debug("sendEcosMessage [" + m + "]");
+            log.debug("sendEcosMessage [{}]", m);
         }
         // save a copy
         outbound.addElement(m);
@@ -45,7 +45,7 @@ public class EcosInterfaceScaffold extends EcosTrafficController {
     public void sendTestMessage(EcosReply m) {
         // forward a test message to EcosListeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
+            log.debug("sendTestMessage    [{}]", m);
         }
         notifyReply(m, null);
         return;

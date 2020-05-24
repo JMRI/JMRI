@@ -2,7 +2,9 @@ package jmri.jmrit.entryexit;
 
 import java.awt.GraphicsEnvironment;
 import java.util.HashMap;
+
 import jmri.InstanceManager;
+import jmri.MemoryManager;
 import jmri.SensorManager;
 import jmri.TurnoutManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -13,6 +15,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.netbeans.jemmy.operators.*;
 
 /**
  *
@@ -85,6 +88,34 @@ public class DestinationPointsTest {
         Assert.assertEquals("test state active", 2, state);  // NOI18N
     }
 
+    @Test
+    public void testNoCurrentRoute() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        DestinationPoints dp = tools.getDestinationPoint(sm.getSensor("NX-AE"),  // NOI18N
+                sm.getSensor("NX-AW-Side"), panels.get("Alpha"), eep);  // NOI18N
+        Assert.assertNotNull("test state", dp);
+
+        // Setup memory variable
+        InstanceManager.getDefault(MemoryManager.class).provideMemory("testMemory");
+        eep.setMemoryOption("IMtestMemory");
+
+        Thread routeError = createModalDialogOperatorThread(Bundle.getMessage("RouteNotClear"), Bundle.getMessage("ButtonNo"), "routeError");  // NOI18N
+        dp.handleNoCurrentRoute(false, "Allocation Error");
+        JUnitUtil.waitFor(()->{return !(routeError.isAlive());}, "routeError finished");
+    }
+
+    Thread createModalDialogOperatorThread(String dialogTitle, String buttonText, String threadName) {
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(dialogTitle);
+            JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
+            jbo.pushNoBlock();
+        });
+        t.setName(dialogTitle + " Close Dialog Thread: " + threadName);  // NOI18N
+        t.start();
+        return t;
+    }
+
     @BeforeClass
     public static void setUp() throws Exception {
         JUnitUtil.setUp();
@@ -102,13 +133,14 @@ public class DestinationPointsTest {
     @AfterClass
     public static void tearDown() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
-        JUnitUtil.tearDown();
         tm = null;
         sm = null;
         lbm = null;
         eep = null;
         panels = null;
         tools = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 
 //     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DestinationPointsTest.class);

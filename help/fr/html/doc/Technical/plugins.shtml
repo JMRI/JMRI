@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -131,7 +131,7 @@ articles, ajouter des boutons sur le panneau principal, etc
       est un exemple encore plus avanc&eacute;s qui modifie
       l'apparence des &eacute;l&eacute;ments sur les &eacute;crans
       du panneau.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

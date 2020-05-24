@@ -9,7 +9,7 @@ import org.junit.Before;
 /**
  * Tests for the jmri.jmrix.grapevine.SerialLight class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SerialLightTest extends AbstractLightTestBase {
 

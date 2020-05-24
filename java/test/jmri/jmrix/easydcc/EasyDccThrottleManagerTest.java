@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class EasyDccThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
@@ -21,7 +21,6 @@ public class EasyDccThrottleManagerTest extends jmri.managers.AbstractThrottleMa
         Assert.assertNotNull("exists",tm);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

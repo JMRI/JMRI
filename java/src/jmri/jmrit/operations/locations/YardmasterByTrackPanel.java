@@ -364,13 +364,13 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                     text = TrainSwitchListText.getStringHoldCar().split("\\{")[0] + s.trim();
                 } else {
                     text = MessageFormat.format(TrainSwitchListText.getStringHoldCar(),
-                            new Object[]{TrainCommon.padAndTruncateString(car.getRoadName(), InstanceManager.getDefault(CarRoads.class).getMaxNameLength()),
-                                    TrainCommon.padAndTruncateString(TrainCommon.splitString(car.getNumber()), Control.max_len_string_print_road_number),
-                                    TrainCommon.padAndTruncateString(car.getTypeName().split("-")[0], InstanceManager.getDefault(CarTypes.class).getMaxNameLength()),
-                                    TrainCommon.padAndTruncateString(car.getLength() + TrainCommon.LENGTHABV, Control.max_len_string_length_name),
-                                    TrainCommon.padAndTruncateString(car.getLoadName(), InstanceManager.getDefault(CarLoads.class).getMaxNameLength()),
-                                    TrainCommon.padAndTruncateString(_track.getName(), InstanceManager.getDefault(LocationManager.class).getMaxTrackNameLength()),
-                                    TrainCommon.padAndTruncateString(car.getColor(), InstanceManager.getDefault(CarColors.class).getMaxNameLength())});
+                            new Object[]{TrainCommon.padAndTruncateIfNeeded(car.getRoadName(), InstanceManager.getDefault(CarRoads.class).getMaxNameLength()),
+                                    TrainCommon.padAndTruncateIfNeeded(TrainCommon.splitString(car.getNumber()), Control.max_len_string_print_road_number),
+                                    TrainCommon.padAndTruncateIfNeeded(car.getTypeName().split(TrainCommon.HYPHEN)[0], InstanceManager.getDefault(CarTypes.class).getMaxNameLength()),
+                                    TrainCommon.padAndTruncateIfNeeded(car.getLength() + Setup.getLengthUnitAbv(), Control.max_len_string_length_name),
+                                    TrainCommon.padAndTruncateIfNeeded(car.getLoadName(), InstanceManager.getDefault(CarLoads.class).getMaxNameLength()),
+                                    TrainCommon.padAndTruncateIfNeeded(_track.getName(), InstanceManager.getDefault(LocationManager.class).getMaxTrackNameLength()),
+                                    TrainCommon.padAndTruncateIfNeeded(car.getColor(), InstanceManager.getDefault(CarColors.class).getMaxNameLength())});
 
                 }
                 JCheckBox checkBox = new JCheckBox(text);

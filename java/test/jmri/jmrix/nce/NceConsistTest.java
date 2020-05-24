@@ -10,9 +10,9 @@ import org.junit.*;
 /**
  * NceConsistTest.java
  *
- * Description:	tests for the jmri.jmrix.nce.NceConsist class
+ * Test for the jmri.jmrix.nce.NceConsist class
  *
- * @author	Paul Bender Copyright (C) 2016,2017
+ * @author Paul Bender Copyright (C) 2016,2017
  */
 
 public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase {
@@ -88,7 +88,6 @@ public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase 
     public void checkAddRemoveWithRosterUpdateAdvanced(){
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

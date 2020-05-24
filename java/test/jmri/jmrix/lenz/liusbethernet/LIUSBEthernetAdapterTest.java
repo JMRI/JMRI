@@ -9,10 +9,10 @@ import org.junit.Assert;
 /**
  * LIUSBEthernetAdapterTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.liusbethernet.LIUSBEthernetAdapter
+ * Test for the jmri.jmrix.lenz.liusbethernet.LIUSBEthernetAdapter
  * class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LIUSBEthernetAdapterTest {
 

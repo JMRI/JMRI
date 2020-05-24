@@ -1,10 +1,10 @@
 package jmri.jmris;
 
-import java.io.IOException;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Base set of tests for decendents of the jmri.jmris.AbstractSignalMastServer class
@@ -17,27 +17,27 @@ public class AbstractSignalMastServerTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull(sms);
+        assertThat(sms).isNotNull();
     }
 
-    @Before
+    @BeforeEach
     public void setUp(){
        jmri.util.JUnitUtil.setUp();
        sms = new AbstractSignalMastServer(){
           @Override
-          public void sendStatus(String signalMast, String Status) throws IOException {
+          public void sendStatus(String signalMast, String Status) {
           }
           @Override
-          public void sendErrorStatus(String route) throws IOException {
+          public void sendErrorStatus(String route) {
           }
           @Override
-          public void parseStatus(String statusString) throws IOException {
+          public void parseStatus(String statusString) {
           }
 
        };
     }
 
-    @After
+    @AfterEach
     public void tearDown(){
        jmri.util.JUnitUtil.tearDown();
     }

@@ -6,7 +6,7 @@ package jmri.jmrix.pricom.pockettester;
  * <p>
  * For more info on the product, see http://www.pricom.com
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
  */
 public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataListener {
 
@@ -44,7 +44,9 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataLis
 
     /**
      * Start filtering input to include only lines that start with a specific
-     * string. A null input passes all.
+     * string.
+     * A null input passes all.
+     * @param s string to filter, can be null.
      */
     public void setFilter(String s) {
         filter = s;

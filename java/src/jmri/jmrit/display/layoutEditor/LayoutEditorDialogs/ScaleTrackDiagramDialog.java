@@ -34,14 +34,14 @@ public class ScaleTrackDiagramDialog {
     |*  translate track diagram info *|
     \*===============================*/
     //operational variables for scale/translate track diagram pane
-    private transient JmriJFrame scaleTrackDiagramFrame = null;
+    private JmriJFrame scaleTrackDiagramFrame = null;
     private boolean scaleTrackDiagramOpen = false;
-    private transient JTextField xFactorField = new JTextField(6);
-    private transient JTextField yFactorField = new JTextField(6);
-    private transient JTextField xTranslateField = new JTextField(6);
-    private transient JTextField yTranslateField = new JTextField(6);
-    private transient JButton scaleTrackDiagramDone;
-    private transient JButton scaleTrackDiagramCancel;
+    private final JTextField xFactorField = new JTextField(6);
+    private final JTextField yFactorField = new JTextField(6);
+    private final JTextField xTranslateField = new JTextField(6);
+    private final JTextField yTranslateField = new JTextField(6);
+    private JButton scaleTrackDiagramDone;
+    private JButton scaleTrackDiagramCancel;
 
     //display dialog for scaling the track diagram
     @InvokeOnGuiThread
@@ -117,15 +117,11 @@ public class ScaleTrackDiagramDialog {
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
             panel5.add(scaleTrackDiagramDone = new JButton(Bundle.getMessage("ScaleTranslate")));
-            scaleTrackDiagramDone.addActionListener((ActionEvent event) -> {
-                scaleTrackDiagramDonePressed(event);
-            });
+            scaleTrackDiagramDone.addActionListener(this::scaleTrackDiagramDonePressed);
             scaleTrackDiagramDone.setToolTipText(Bundle.getMessage("ScaleTranslateHint"));
 
             panel5.add(scaleTrackDiagramCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            scaleTrackDiagramCancel.addActionListener((ActionEvent event) -> {
-                scaleTrackDiagramCancelPressed(event);
-            });
+            scaleTrackDiagramCancel.addActionListener(this::scaleTrackDiagramCancelPressed);
             scaleTrackDiagramCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel5);
 
@@ -248,6 +244,6 @@ public class ScaleTrackDiagramDialog {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(
             ScaleTrackDiagramDialog.class);
 }

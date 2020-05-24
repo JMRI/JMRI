@@ -19,7 +19,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -29,7 +29,7 @@
       <p><b>Notice</b> <i>inControl</i> is no longer supported. Use
       <a href=
       "/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">WebThrottle</a>
-      instead.</p><!--#include virtual="/Footer" -->
+      instead.</p><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

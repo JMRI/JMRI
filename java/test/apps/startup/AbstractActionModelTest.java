@@ -11,20 +11,9 @@ import org.junit.Test;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class AbstractActionModelTest {
-    
-    public AbstractActionModelTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
     
     @Before
     public void setUp() {

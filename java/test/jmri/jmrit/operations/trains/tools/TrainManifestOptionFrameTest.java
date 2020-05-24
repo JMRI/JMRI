@@ -17,7 +17,7 @@ import jmri.util.swing.JemmyUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TrainManifestOptionFrameTest extends OperationsTestCase {
 
@@ -52,7 +52,7 @@ public class TrainManifestOptionFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(trainEditFrame);
         Assert.assertFalse(t.isShowing());
         
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainManifestOptionFrameTest.class);

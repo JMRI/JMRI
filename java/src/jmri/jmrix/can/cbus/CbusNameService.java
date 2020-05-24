@@ -1,8 +1,10 @@
 package jmri.jmrix.can.cbus;
 
+import java.util.HashSet;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.eventtable.CbusEventBeanData;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 
@@ -97,23 +99,33 @@ public class CbusNameService {
         return "";
     }
     
+    /**
+     * Get the Sensor Turnout and Light user names associated with event on
+     * @param nn Node Number
+     * @param en Event Number
+     * @param state Event State, either on or off
+     * @return Sensor Turnout and Light Beans associated with the CBUS Event.
+     * @see jmri.NamedBean
+     */
+    @Nonnull
+    public CbusEventBeanData getJmriBeans(int nn, int en, @Nonnull CbusEvent.EvState state){
+        CbusEventTableDataModel evMod = getEventModel();
+        if (evMod!=null) {
+            return evMod.getEventBeans(nn,en,state);
+        } else {
+            return new CbusEventBeanData( new HashSet<>(), new HashSet<>());
+        }
+    }
+    
     @CheckForNull
     private CbusNodeTableDataModel getNodeModel(){
         log.debug("memo: {}",_memo);
-        // if (_memo!=null) {
-        //     return _memo.get(CbusNodeTableDataModel.class);
-        // } else {
-            return jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
-        // }
+        return jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
     }
     
     @CheckForNull
     private CbusEventTableDataModel getEventModel(){
-        // if (_memo!=null) {
-        //     return _memo.get(CbusEventTableDataModel.class);
-        // } else {
-            return jmri.InstanceManager.getNullableDefault(CbusEventTableDataModel.class);
-        // }
+        return jmri.InstanceManager.getNullableDefault(CbusEventTableDataModel.class);
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusNameService.class);

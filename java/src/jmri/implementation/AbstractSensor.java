@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor {
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractSensor.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractSensor.class);
 
     // ctor takes a system-name string for initialization
     public AbstractSensor(String systemName) {
@@ -102,32 +102,27 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      */
     protected void sensorDebounce() {
         final int lastKnownState = _knownState;
-        r = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    long sensorDebounceTimer = sensorDebounceGoingInActive;
-                    if (_rawState == ACTIVE) {
-                        sensorDebounceTimer = sensorDebounceGoingActive;
-                    }
-                    Thread.sleep(sensorDebounceTimer);
-                    restartcount = 0;
-                    _knownState = _rawState;
-
-                    javax.swing.SwingUtilities.invokeAndWait(
-                            () -> {
-                                firePropertyChange("KnownState", lastKnownState, _knownState);
-                            }
-                    );
-                } catch (InterruptedException ex) {
-                    restartcount++;
-                } catch (java.lang.reflect.InvocationTargetException ex) {
-                    log.error("failed to start debounced Sensor update for \"{}\" due to {}", getDisplayName(), ex.getCause());
+        r = () -> {
+            try {
+                long sensorDebounceTimer = sensorDebounceGoingInActive;
+                if (_rawState == ACTIVE) {
+                    sensorDebounceTimer = sensorDebounceGoingActive;
                 }
+                Thread.sleep(sensorDebounceTimer);
+                restartcount = 0;
+                _knownState = _rawState;
+
+                javax.swing.SwingUtilities.invokeAndWait(
+                        () -> firePropertyChange("KnownState", lastKnownState, _knownState)
+                );
+            } catch (InterruptedException ex) {
+                restartcount++;
+            } catch (java.lang.reflect.InvocationTargetException ex) {
+                log.error("failed to start debounced Sensor update for \"{}\" due to {}", getDisplayName(), ex.getCause());
             }
         };
 
-        thr = new Thread(r);
+        thr = jmri.util.ThreadingUtil.newThread(r);
         thr.start();
     }
 
@@ -248,7 +243,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      * optimization.
      */
     @Override
-    final public boolean getInverted() {
+    public final boolean getInverted() {
         return _inverted;
     }
 

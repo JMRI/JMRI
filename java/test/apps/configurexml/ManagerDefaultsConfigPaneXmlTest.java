@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * ManagerDefaultsConfigPaneXmlTest.java
  *
- * Description: tests for the ManagerDefaultsConfigPaneXml class
+ * Test for the ManagerDefaultsConfigPaneXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class ManagerDefaultsConfigPaneXmlTest {
       Assert.assertNotNull("ManagerDefaultsConfigPaneXml constructor",new ManagerDefaultsConfigPaneXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

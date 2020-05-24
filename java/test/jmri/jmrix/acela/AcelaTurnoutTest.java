@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the {@link jmri.jmrix.acela.AcelaTurnout} class.
  *
- * @author	Bob Coleman
+ * @author Bob Coleman
  */
 public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
@@ -22,19 +22,16 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 
     @Override
     public void checkClosedMsgSent() {
-
-//        Assert.assertEquals("closed message","52 05 88 00",
-//                tcis.outbound.elementAt(tcis.outbound.size()-1).toString());
-//	Assert.assertTrue("closed message sent", tcis.outbound.size()>0);
-
+//        Assert.assertEquals("closed message", "52 05 88 00",
+//                tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+//        Assert.assertTrue("closed message sent", tcis.outbound.size() > 0);
     }
 
     @Override
     public void checkThrownMsgSent() {
-
-//        Assert.assertEquals("thrown message","52 05 89 00",
-//                tcis.outbound.elementAt(tcis.outbound.size()-1).toString());
-//	Assert.assertTrue("thrown message sent", tcis.outbound.size()>0);
+//        Assert.assertEquals("thrown message", "52 05 89 00",
+//                tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+//        Assert.assertTrue("thrown message sent", tcis.outbound.size() > 0);
     }
 
     @Test
@@ -67,7 +64,7 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         try {
             t.setCommandedState(jmri.Turnout.CLOSED);
         } catch (Exception e) {
-            log.error("TO exception: " + e);
+            log.error("TO exception: {}", e);
         }
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 
@@ -84,7 +81,6 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 
     AcelaNode a0, a1, a2, a3;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

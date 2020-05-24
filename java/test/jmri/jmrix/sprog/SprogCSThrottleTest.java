@@ -363,13 +363,10 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        // prepare an interface
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
 
         m = new SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
         stcs = new SprogTrafficControlScaffold(m);
@@ -383,9 +380,12 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @After
     @Override
     public void tearDown() {
-        m.getSlotThread().interrupt();
-        stcs.dispose();
-        JUnitUtil.tearDown();
+        try {
+            m.getSlotThread().interrupt();
+            stcs.dispose();
+        } finally {
+            JUnitUtil.tearDown();
+        }
     }
 
 }

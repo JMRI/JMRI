@@ -5,7 +5,6 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JTextField;
 
 import jmri.jmrit.display.EditorFrameOperator;
-import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -21,7 +20,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 /**
  * Test simple functioning of enterReporterDialog
  *
- * @author	George Warner Copyright (C) 2019
+ * @author George Warner Copyright (C) 2019
  */
 public class EnterReporterDialogTest {
 
@@ -59,6 +58,7 @@ public class EnterReporterDialogTest {
             layoutEditor = null;
             enterReporterDialog = null;
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

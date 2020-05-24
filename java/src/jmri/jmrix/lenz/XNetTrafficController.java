@@ -324,6 +324,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     /**
      * Return an XNetFeedbackMessageCache object associated with this traffic
      * controller.
+     * @return the feedback message cache. One is provided if null.
      */
     public XNetFeedbackMessageCache getFeedbackMessageCache() {
         if (_FeedbackCache == null) {
@@ -339,6 +340,6 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
        return ((XNetPortController)controller).hasTimeSlot();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetTrafficController.class);
 
 }

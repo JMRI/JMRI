@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * SensorIconXmlTest.java
  *
- * Description: tests for the SensorIconXml class
+ * Test for the SensorIconXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class SensorIconXmlTest {
       Assert.assertNotNull("SensorIconXml constructor",new SensorIconXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

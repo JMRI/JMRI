@@ -10,9 +10,9 @@ import org.junit.*;
 /**
  * LZ100InternalFrameTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.swing.lz100.LZ100InternalFrame class
+ * Test for the jmri.jmrix.lenz.swing.lz100.LZ100InternalFrame class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LZ100InternalFrameTest {
 
@@ -26,7 +26,6 @@ public class LZ100InternalFrameTest {
         Assert.assertNotNull(f);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -34,7 +33,7 @@ public class LZ100InternalFrameTest {
 
     @After
     public void tearDown() {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

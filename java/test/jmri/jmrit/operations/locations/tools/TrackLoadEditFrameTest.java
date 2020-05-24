@@ -17,7 +17,7 @@ import jmri.util.swing.JemmyUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TrackLoadEditFrameTest extends OperationsTestCase {
 
@@ -37,7 +37,7 @@ public class TrackLoadEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(t.isVisible());
         
         JUnitUtil.dispose(t);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
     
     @Test
@@ -75,7 +75,7 @@ public class TrackLoadEditFrameTest extends OperationsTestCase {
         Assert.assertFalse(track.acceptsLoadName("E"));
         
         JUnitUtil.dispose(tlef);
-        JUnitOperationsUtil.checkIdTagsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrackLoadEditFrameTest.class);

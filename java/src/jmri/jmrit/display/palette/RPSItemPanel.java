@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
 
 public class RPSItemPanel extends FamilyItemPanel {
 
-    public RPSItemPanel(DisplayFrame parentFrame, String type, String family, Editor editor) {
-        super(parentFrame, type, family, editor);
+    public RPSItemPanel(DisplayFrame parentFrame, String type, String family) {
+        super(parentFrame, type, family);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class RPSItemPanel extends FamilyItemPanel {
                 log.debug("IconDragJLabel.getTransferData");
             }
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
-                RpsPositionIcon r = new RpsPositionIcon(_editor);
+                RpsPositionIcon r = new RpsPositionIcon(_frame.getEditor());
                 r.setActiveIcon(new NamedIcon(iconMap.get("active")));
                 r.setErrorIcon(new NamedIcon(iconMap.get("error")));
                 r.setSize(r.getPreferredSize().width, r.getPreferredSize().height);

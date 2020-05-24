@@ -46,7 +46,6 @@ public class CbusSimulatorTest {
         
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -55,8 +54,8 @@ public class CbusSimulatorTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         t.dispose();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusSimulatorTest.class);

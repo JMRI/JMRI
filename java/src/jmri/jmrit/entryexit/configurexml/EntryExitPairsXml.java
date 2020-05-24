@@ -47,8 +47,26 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             return null;    //return element;   // <== don't store empty (unused) element
         }
 
-        element.addContent(new Element("cleardown").addContent("" + p.getClearDownOption()));  // NOI18N
-        element.addContent(new Element("overlap").addContent("" + p.getOverlapOption()));  // NOI18N
+        int clearDown = p.getClearDownOption();
+        if (clearDown > 0) {
+            element.addContent(new Element("cleardown").addContent("" + clearDown));  // NOI18N
+        }
+
+        int overLap = p.getOverlapOption();
+        if (overLap > 0) {
+            element.addContent(new Element("overlap").addContent("" + overLap));  // NOI18N
+        }
+
+        int memoryClearDelay = p.getMemoryClearDelay();
+        if (memoryClearDelay > 0) {
+            element.addContent(new Element("memorycleardelay").addContent("" + memoryClearDelay));  // NOI18N
+        }
+
+        String memoryName = p.getMemoryOption();
+        if (!memoryName.isEmpty()) {
+            element.addContent(new Element("memoryname").addContent(memoryName));  // NOI18N
+        }
+
         if (p.getDispatcherIntegration()) {
             element.addContent(new Element("dispatcherintegration").addContent("yes"));  // NOI18N
         }
@@ -157,19 +175,20 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
     public boolean load(Element shared, Element perNode) {
         // create the objects
         EntryExitPairs eep = InstanceManager.getDefault(EntryExitPairs.class);
+        String nodeText;
 
-        try {
-            String clearoption = shared.getChild("cleardown").getText();  // NOI18N
-            eep.setClearDownOption(Integer.parseInt(clearoption));
-        } catch (java.lang.NullPointerException e) {
-            //Considered normal if it doesn't exist
-        }
-        try {
-            String overlapoption = shared.getChild("overlap").getText();  // NOI18N
-            eep.setOverlapOption(Integer.parseInt(overlapoption));
-        } catch (java.lang.NullPointerException e) {
-            //Considered normal if it doesn't exist
-        }
+        nodeText = shared.getChildText("cleardown");
+        if (nodeText != null) eep.setClearDownOption(Integer.parseInt(nodeText));
+
+        nodeText = shared.getChildText("overlap");
+        if (nodeText != null) eep.setOverlapOption(Integer.parseInt(nodeText));
+
+        nodeText = shared.getChildText("memorycleardelay");
+        if (nodeText != null) eep.setMemoryClearDelay(Integer.parseInt(nodeText));
+
+        nodeText = shared.getChildText("memoryname");
+        if (nodeText != null) eep.setMemoryOption(nodeText);
+
         // get attributes
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         List<Object> loadedPanel;

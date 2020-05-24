@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of CbusEventRequestTablePane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CbusEventRequestTablePaneTest {
 
@@ -37,8 +37,6 @@ public class CbusEventRequestTablePaneTest {
         
     }
     
-    
-
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -48,13 +46,13 @@ public class CbusEventRequestTablePaneTest {
     }
 
     @After
-    public void tearDown() { 
+    public void tearDown() {
+        memo.dispose();
+        tcis.terminateThreads();
         memo = null;
         tcis = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
         
     }
-
 
 }
