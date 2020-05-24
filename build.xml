@@ -182,6 +182,8 @@
         <pathelement location="${libdir}/jinputvalidator-0.8.0.jar"/>
         <pathelement location="${libdir}/jsplitbutton-1.3.1.jar"/>
         <pathelement location="${libdir}/thumbnailator-0.4.8.jar"/>
+        <pathelement location="${libdir}/org-openide-util-lookup-RELEASE113.jar"/>
+        <pathelement location="${libdir}/org-openide-util-RELEASE113.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
@@ -219,8 +221,6 @@
         <pathelement location="${libdir}/jcip-annotations-1.0.jar"/>
         <pathelement location="${libdir}/jsr305.jar"/>
         <pathelement location="${libdir}/spotbugs-annotations.jar"/>
-        <!-- ServiceProvider annotations -->
-        <pathelement location="${libdir}/org-openide-util-lookup-RELEASE113.jar"/>
     </path>
 
     <!-- path to run regular executables -->
@@ -279,7 +279,8 @@
     <macrodef name="quiet">
         <element name="body" implicit="yes"/>
         <sequential>
-            <script language="javascript" >
+            <!--
+            <script language="javascript" manager="javax"><![CDATA[
                 // to see type of 1st logger, uncomment the following
                 //echo = JMRI.createTask("echo");
                 //echo.setMessage(Object.prototype.toString.call(project.getBuildListeners().firstElement()));
@@ -289,14 +290,17 @@
                 if (Object.prototype.toString.call(project.getBuildListeners().firstElement()) == "[object org.apache.tools.ant.DefaultLogger]") {
                     project.getBuildListeners().firstElement().setMessageOutputLevel(0);
                 }
-            </script>
+            ]]></script>
+            -->
             <body/>
-            <script language="javascript" >
+            <!--
+            <script language="javascript" manager="javax"><![CDATA[
                 // TODO: restore last log level instead of going to fixed value "2"
                 if (Object.prototype.toString.call(project.getBuildListeners().firstElement()) == "[object org.apache.tools.ant.DefaultLogger]") {
                     project.getBuildListeners().firstElement().setMessageOutputLevel(2);
                 }
-            </script>
+            ]]></script>
+            -->
         </sequential>
     </macrodef>
 
