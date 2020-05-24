@@ -2,9 +2,7 @@ package jmri.jmrix.loconet.pr3;
 
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.ShutDownTask;
 import jmri.ThrottleManager;
-import jmri.implementation.QuietShutDownTask;
 import jmri.jmrix.loconet.LnPowerManager;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -62,7 +60,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
     final static int MS100MODE = 0x01;
 
     int mode = PR3MODE;
-    private ShutDownTask restoreToLocoNetInterfaceModeTask;
+    private Runnable restoreToLocoNetInterfaceModeTask;
 
     /**
      * Configure the subset of LocoNet managers valid for the PR3 in PR2 mode.
@@ -84,26 +82,21 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         // LocoNet Interface mode at shutdown
         // Finally, create and register a shutdown task to ensure clean exit
         if (restoreToLocoNetInterfaceModeTask == null) {
-            restoreToLocoNetInterfaceModeTask = new QuietShutDownTask("Restore PR3 to LocoNet Interface Mode") {    // NOI18N
-                @Override
-                public boolean execute() {
-
-                    if (mode == PR3MODE) {
-                        // try to change from "standalone programmer" to "LocoNet interface" mode
-                        LnTrafficController tc;
-                        tc = getLnTrafficController();
-                        if (tc != null) {
-                            LocoNetMessage msg = new LocoNetMessage(6);
-                            msg.setOpCode(0xD3);
-                            msg.setElement(1, 0x10);
-                            msg.setElement(2, 0);  // set MS100, no power
-                            msg.setElement(3, 0);
-                            msg.setElement(4, 0);
-                            tc.sendLocoNetMessage(msg);
-                            log.info("Configuring PR3 for 'LocoNet Interface' mode"); // NOI18N
-                        }
+            restoreToLocoNetInterfaceModeTask = () -> {
+                if (mode == PR3MODE) {
+                    // try to change from "standalone programmer" to "LocoNet interface" mode
+                    LnTrafficController tc;
+                    tc = getLnTrafficController();
+                    if (tc != null) {
+                        LocoNetMessage msg = new LocoNetMessage(6);
+                        msg.setOpCode(0xD3);
+                        msg.setElement(1, 0x10);
+                        msg.setElement(2, 0);  // set MS100, no power
+                        msg.setElement(3, 0);
+                        msg.setElement(4, 0);
+                        tc.sendLocoNetMessage(msg);
+                        log.info("Configuring PR3 for 'LocoNet Interface' mode"); // NOI18N
                     }
-                    return true;
                 }
             };
             InstanceManager.getDefault(jmri.ShutDownManager.class).register(restoreToLocoNetInterfaceModeTask);

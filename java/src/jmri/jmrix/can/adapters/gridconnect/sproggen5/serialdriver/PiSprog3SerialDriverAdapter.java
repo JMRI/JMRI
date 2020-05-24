@@ -17,12 +17,10 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Andrew Crosland 2019
  */
-public class CanisbSerialDriverAdapter extends GcSerialDriverAdapter {
+public class PiSprog3SerialDriverAdapter extends GcSerialDriverAdapter {
 
-    public CanisbSerialDriverAdapter() {
+    public PiSprog3SerialDriverAdapter() {
         super("S");
-        option2Name = "CANID";
-        options.put(option2Name, new Option(Bundle.getMessage("JMRICANID"), new String[]{"127", "126", "125", "124", "123", "122", "121", "120"}));
     }
 
     /**
@@ -33,9 +31,10 @@ public class CanisbSerialDriverAdapter extends GcSerialDriverAdapter {
     public void configure() {
 
         // Register the CAN traffic controller being used for this connection
+        // This connection has no actual CAN interface so set a fixed CAN ID
         TrafficController tc = new MergTrafficController();
         try {
-            tc.setCanId(Integer.parseInt(getOptionState(option2Name)));
+            tc.setCanId(127);
         } catch (Exception e) {
             log.error("Cannot parse CAN ID - check your preference settings {}", e);
             log.error("Now using default CAN ID");
@@ -53,7 +52,7 @@ public class CanisbSerialDriverAdapter extends GcSerialDriverAdapter {
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
         this.getSystemConnectionMemo().configureManagers();
         
-        this.getSystemConnectionMemo().setSubProtocol(ConfigurationManager.SubProtocol.CBUS);
+        this.getSystemConnectionMemo().setSubProtocol(ConfigurationManager.SubProtocol.NONE);
     }
 
     /**
@@ -61,7 +60,7 @@ public class CanisbSerialDriverAdapter extends GcSerialDriverAdapter {
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{Bundle.getMessage("Baud460800")};
+        return new String[]{Bundle.getMessage("Baud115200")};
     }
 
     /**
@@ -69,7 +68,7 @@ public class CanisbSerialDriverAdapter extends GcSerialDriverAdapter {
      */
     @Override
     public int[] validBaudNumbers() {
-        return new int[]{460800};
+        return new int[]{115200};
     }
 
     @Override
@@ -77,6 +76,6 @@ public class CanisbSerialDriverAdapter extends GcSerialDriverAdapter {
         return 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CanisbSerialDriverAdapter.class);
+    private final static Logger log = LoggerFactory.getLogger(PiSprog3SerialDriverAdapter.class);
 
 }

@@ -75,6 +75,7 @@
 (function ($) {
     $.extend({
         JMRI: function (url, bindings) {
+            var log = new Logger();
             var jmri = new Object();
             if (typeof (url) === 'string') {
                 jmri.url = url;
@@ -420,9 +421,7 @@
                         jmri.getTurnout(name);
                         break;
                     default:
-                        if (window.console) {
-                            console.log("WARN-unknown type of " + type + " encountered by jquery.jmri.js in getObject().");
-                        }
+                        log.warn("WARN-unknown type of " + type + " encountered by jquery.jmri.js in getObject().");
 
                 }
             };
@@ -465,9 +464,7 @@
                         jmri.setTurnout(name, state, 'post');
                         break;
                     default:
-                        if (window.console) {
-                            console.log("WARN-unknown type of " + type + " encountered by jquery.jmri.js in setObject().");
-                        }
+                        log.log("WARN-unknown type of " + type + " encountered by jquery.jmri.js in setObject().");
                 }
             };
             jmri.getPower = function () {
@@ -721,12 +718,10 @@
             jmri.serialNumber = (Math.random().toString(16) + "000000000").substr(2, 8);
             jmri.logWithDateTimeStamp = false;
             jmri.log = function (message) {
-                if (window.console) {
-                    if (jmri.logWithDateTimeStamp) {
-                        window.console.log(new Date().toJSON() + " " + jmri.serialNumber + " " + message);
-                    } else {
-                        window.console.log(jmri.serialNumber + " " + message);
-                    }
+                if (jmri.logWithDateTimeStamp) {
+                    log.log(new Date().toJSON() + " " + jmri.serialNumber + " " + message);
+                } else {
+                    log.log(jmri.serialNumber + " " + message);
                 }
             };
             // Heartbeat
@@ -955,7 +950,7 @@
                                 if (h) {
                                     h.call(this, o);
                                 } else if (!o.type) {
-                                    jmri.log("ERROR: missing type property in " + o);
+                                    log.error("ERROR: missing type property in " + o);
                                 } else if (!h) {
                                     jmri.log("Ignoring JSON type ", o.type);
                                 }
@@ -965,7 +960,7 @@
                             if (h) {
                                 h.call(this, m);
                             } else if (!m.type) {
-                                jmri.log("ERROR: missing type property in " + m);
+                                log.error("ERROR: missing type property in " + m);
                             } else if (!h) {
                                 jmri.log("Ignoring JSON type ", m.type);
                             }

@@ -10,7 +10,6 @@ import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.ShutDownTask;
-import jmri.implementation.QuietShutDownTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,18 +32,12 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         jmri.InstanceManager.store(this, Dcc4PcSensorManager.class);
         this.boardManager = new Dcc4PcBoardManager(tc, this);
         // Finally, create and register a shutdown task to ensure clean exit
-        this.pollShutDownTask = new QuietShutDownTask("DCC4PC Board Poll Shutdown") {
-            @Override
-            public boolean execute() {
-                stopPolling();
-                return true;
-            }
-        };
+        this.pollShutDownTask = this::stopPolling;
         startPolling();
     }
 
     Dcc4PcReporterManager reportManager;
-    ShutDownTask pollShutDownTask;
+    Runnable pollShutDownTask;
     Dcc4PcBoardManager boardManager;
 
     Dcc4PcTrafficController tc;

@@ -1181,9 +1181,8 @@
 
         <li>Randall Wood, who updated the fast clock support,
         improved the XMLIO support with some fixed memory
-        variables, migrated us to Git and GitHub, and build our
-        Travis (Linux/Mac) and Appveyor (Windows) continuous
-        integration &amp; test support. <a name="X" id="X"></a>
+        variables, migrated us to Git and GitHub, and built our
+        continuous integration &amp; test support. <a name="X" id="X"></a>
         <a name="Y" id="Y"></a></li>
 
         <li>Mike Yawn, who provided the instructions for building

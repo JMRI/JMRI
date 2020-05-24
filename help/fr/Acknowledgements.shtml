@@ -524,8 +524,8 @@
 			<li>Jim Wolters, who updated the MRC Sound Brilliance 1812 decoder definition.
 			<li>Randall Wood, who updated the fast clock support, improved
 				the XMLIO support with some fixed memory variables,
-				migrated us to Git and GitHub, and build our Travis (Linux/Mac) and
-				Appveyor (Windows) continuous integration &amp; test support.
+				migrated us to Git and GitHub, and built our
+				continuous integration &amp; test support.
 				<a name="X"></a>
 				<a name="Y"></a>
 			<li>Mike Yawn, who provided the instructions for building under Eclipse
