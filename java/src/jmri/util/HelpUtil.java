@@ -211,6 +211,12 @@ public class HelpUtil {
         };
     }
 
+    /**
+     * Set the default content viewer UI.
+     *
+     * @param ui full class name of the content viewer UI
+     * @see SwingHelpUtilities#setContentViewerUI(java.lang.String)
+     */
     public static void setContentViewerUI(String ui) {
         SwingHelpUtilities.setContentViewerUI(ui);
     }
