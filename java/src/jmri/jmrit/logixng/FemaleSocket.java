@@ -75,6 +75,7 @@ public interface FemaleSocket extends Base {
     /**
      * Get an example of a system name for an object that can be connected to
      * this socket.
+     * @return the system name
      */
     public String getExampleSystemName();
     

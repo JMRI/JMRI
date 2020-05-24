@@ -65,6 +65,7 @@ public interface FemaleGenericExpressionSocket
      * its child expression has been true and false a number of times.
      * 
      * @return the result of the evaluation
+     * @throws jmri.JmriException when an exception occurs
      */
     public boolean evaluateBoolean() throws Exception;
     
@@ -76,6 +77,8 @@ public interface FemaleGenericExpressionSocket
      * @return the result of the evaluation. The male socket that holds this
      * expression throws an exception if this value is a Double.NaN or an
      * infinite number.
+     * 
+     * @throws jmri.JmriException when an exception occurs
      */
     public double evaluateDouble() throws Exception;
     
@@ -85,8 +88,9 @@ public interface FemaleGenericExpressionSocket
      * The return value of the evaluation is converted to a String if necessary.
      * 
      * @return the result of the evaluation
+     * @throws jmri.JmriException when an exception occurs
      */
-    public String evaluateString() throws Exception;
+    public String evaluateString() throws JmriException;
     
     /**
      * Evaluate this expression.

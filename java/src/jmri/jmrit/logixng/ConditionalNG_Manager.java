@@ -51,9 +51,13 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      * @return null if no match found
      */
     public ConditionalNG getConditionalNG(String name);
-
+    
+    /** {@inheritDoc} */
+    @Override
     public ConditionalNG getByUserName(String name);
-
+    
+    /** {@inheritDoc} */
+    @Override
     public ConditionalNG getBySystemName(String name);
     
     /**
@@ -104,11 +108,13 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
     
     /**
      * Register a FemaleSocketFactory.
+     * @param factory the factory
      */
     public void registerFemaleSocketFactory(FemaleSocketFactory factory);
     
     /**
      * Register a FemaleSocketFactory.
+     * @return list of factories
      */
     public List<FemaleSocketFactory> getFemaleSocketFactories();
     

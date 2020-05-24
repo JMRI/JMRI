@@ -38,6 +38,7 @@ public class LogHeader {
     
     /**
      * Set the encoding of this log.
+     * @param encoding the encoding
      */
     public void setEncoding(Encodings encoding) {
         _encoding = encoding;
@@ -45,6 +46,7 @@ public class LogHeader {
     
     /**
      * Get the encoding of this log.
+     * @return the encoding
      */
     public Encodings getEncoding() {
         return _encoding;
@@ -60,6 +62,7 @@ public class LogHeader {
     
     /**
      * Get the name of this log.
+     * @return the name
      */
     public String getName() {
         return _name;

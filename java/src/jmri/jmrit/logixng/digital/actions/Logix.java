@@ -3,7 +3,6 @@ package jmri.jmrit.logixng.digital.actions;
 import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
@@ -70,8 +69,9 @@ public class Logix extends AbstractDigitalAction
         return false;
     }
     
+    /** {@inheritDoc} */
     @Override
-    public void evaluateOnly() throws Exception {
+    public void evaluateOnly() throws JmriException {
         _lastExpressionResult = _expressionSocket.evaluate();
     }
     
@@ -81,7 +81,8 @@ public class Logix extends AbstractDigitalAction
         _lastExpressionResult = _expressionSocket.evaluate();
         _actionSocket.execute(_lastExpressionResult);
     }
-
+    
+    /** {@inheritDoc} */
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
@@ -96,12 +97,14 @@ public class Logix extends AbstractDigitalAction
                         String.format("index has invalid value: %d", index));
         }
     }
-
+    
+    /** {@inheritDoc} */
     @Override
     public int getChildCount() {
         return 2;
     }
-
+    
+    /** {@inheritDoc} */
     @Override
     public void connected(FemaleSocket socket) {
         if (socket == _expressionSocket) {
@@ -112,7 +115,8 @@ public class Logix extends AbstractDigitalAction
             throw new IllegalArgumentException("unkown socket");
         }
     }
-
+    
+    /** {@inheritDoc} */
     @Override
     public void disconnected(FemaleSocket socket) {
         if (socket == _expressionSocket) {
@@ -123,43 +127,51 @@ public class Logix extends AbstractDigitalAction
             throw new IllegalArgumentException("unkown socket");
         }
     }
-
+    
+    /** {@inheritDoc} */
     @Override
     public String getShortDescription(Locale locale) {
         return Bundle.getMessage(locale, "IfThenElse_Short");
     }
-
+    
+    /** {@inheritDoc} */
     @Override
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "Logix_Long",
                 _expressionSocket.getName(),
                 _actionSocket.getName());
     }
-
+    
+    /** {@inheritDoc} */
     public FemaleDigitalExpressionSocket getIfExpressionSocket() {
         return _expressionSocket;
     }
-
+    
+    /** {@inheritDoc} */
     public String getExpressionSocketSystemName() {
         return _expressionSocketSystemName;
     }
-
+    
+    /** {@inheritDoc} */
     public void setExpressionSocketSystemName(String systemName) {
         _expressionSocketSystemName = systemName;
     }
-
+    
+    /** {@inheritDoc} */
     public FemaleDigitalBooleanActionSocket getActionSocket() {
         return _actionSocket;
     }
-
+    
+    /** {@inheritDoc} */
     public String getActionSocketSystemName() {
         return _actionSocketSystemName;
     }
-
+    
+    /** {@inheritDoc} */
     public void setActionSocketSystemName(String systemName) {
         _actionSocketSystemName = systemName;
     }
-
+    
     /** {@inheritDoc} */
     @Override
     public void setup() {
@@ -226,7 +238,7 @@ public class Logix extends AbstractDigitalAction
     @Override
     public void disposeMe() {
     }
-
+    
     private final static Logger log = LoggerFactory.getLogger(Logix.class);
 
 }

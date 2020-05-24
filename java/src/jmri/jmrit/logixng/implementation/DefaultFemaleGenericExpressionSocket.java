@@ -870,7 +870,7 @@ public class DefaultFemaleGenericExpressionSocket
         
         /** {@inheritDoc} */
         @Override
-        public String evaluateString() throws Exception {
+        public String evaluateString() throws JmriException {
             return DefaultFemaleGenericExpressionSocket.this.evaluateString();
         }
         

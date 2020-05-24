@@ -58,6 +58,7 @@ public interface NamedTableManager extends Manager<NamedTable> {
      * @param sys the system name of the new table
      * @param user the user name of the new table or null if no user name
      * @return the loaded table
+     * @throws java.io.IOException in case of an exception
      */
     public NamedTable loadTableFromCSV(
             @Nonnull File file,
@@ -72,9 +73,13 @@ public interface NamedTableManager extends Manager<NamedTable> {
      * @return null if no match found
      */
     public NamedTable getNamedTable(String name);
-
+    
+    /** {@inheritDoc} */
+    @Override
     public NamedTable getByUserName(String name);
-
+    
+    /** {@inheritDoc} */
+    @Override
     public NamedTable getBySystemName(String name);
     
     /**

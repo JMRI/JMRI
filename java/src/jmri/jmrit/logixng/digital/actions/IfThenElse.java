@@ -105,7 +105,7 @@ public class IfThenElse extends AbstractDigitalAction
     }
     
     @Override
-    public void evaluateOnly() throws Exception {
+    public void evaluateOnly() throws JmriException {
         _lastExpressionResult = _ifExpressionSocket.evaluate();
     }
     

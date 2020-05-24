@@ -84,6 +84,7 @@ public class OnChange extends AbstractDigitalBooleanAction
 
     /**
      * Get the type.
+     * @return the type
      */
     public ChangeType getWhichChange() {
         return _whichChange;
@@ -91,6 +92,7 @@ public class OnChange extends AbstractDigitalBooleanAction
     
     /**
      * Set the type.
+     * @param whichChange the type
      */
     public void setType(ChangeType whichChange) {
         _whichChange = whichChange;

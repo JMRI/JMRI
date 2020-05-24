@@ -51,9 +51,13 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @return null if no match found
      */
     public LogixNG getLogixNG(String name);
-
+    
+    /** {@inheritDoc} */
+    @Override
     public LogixNG getByUserName(String name);
-
+    
+    /** {@inheritDoc} */
+    @Override
     public LogixNG getBySystemName(String name);
     
     /**
@@ -102,11 +106,13 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
     
     /**
      * Register a FemaleSocketFactory.
+     * @param factory the factory
      */
     public void registerFemaleSocketFactory(FemaleSocketFactory factory);
     
     /**
      * Register a FemaleSocketFactory.
+     * @return list of factories
      */
     public List<FemaleSocketFactory> getFemaleSocketFactories();
     

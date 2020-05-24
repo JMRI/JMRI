@@ -111,13 +111,13 @@ public final class ConditionalNGEditor extends JmriJFrame {
     /**
      * Maintain a list of listeners -- normally only one.
      */
-    private List<LogixNGEventListener> listenerList = new ArrayList<>();
+    private final List<LogixNGEventListener> listenerList = new ArrayList<>();
     
     /**
      * This contains a list of commands to be processed by the listener
      * recipient.
      */
-    public HashMap<String, String> logixNGData = new HashMap<>();
+    final HashMap<String, String> logixNGData = new HashMap<>();
     
     ConditionalNGEditor() {
         _conditionalNG = null;
@@ -301,6 +301,7 @@ public final class ConditionalNGEditor extends JmriJFrame {
      * Respond to the Add menu choice in the popup menu.
      *
      * @param femaleSocket the female socket
+     * @param path the path to the item the user has clicked on
      */
     protected void addPressed(FemaleSocket femaleSocket, TreePath path) {
         
@@ -433,6 +434,7 @@ public final class ConditionalNGEditor extends JmriJFrame {
      *
      * @param femaleSocket the female socket
      * @param swingConfiguratorInterface the swing configurator used to configure the new class
+     * @param path the path to the item the user has clicked on
      */
     protected void createAddFrame(FemaleSocket femaleSocket, TreePath path,
             SwingConfiguratorInterface swingConfiguratorInterface) {
@@ -493,6 +495,7 @@ public final class ConditionalNGEditor extends JmriJFrame {
      * Respond to the Edit menu choice in the popup menu.
      *
      * @param femaleSocket the female socket
+     * @param path the path to the item the user has clicked on
      */
     protected void editPressed(FemaleSocket femaleSocket, TreePath path) {
         // possible change

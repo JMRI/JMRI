@@ -40,12 +40,21 @@ public class Formula extends AbstractAnalogExpression implements FemaleSocketLis
     
     /**
      * Create a new instance of Formula with system name and user name.
+     * @param sys the system name
+     * @param user the user name
      */
     public Formula(@Nonnull String sys, @CheckForNull String user) {
         super(sys, user);
         init();
     }
 
+    /**
+     * Create a new instance of Formula with system name and user name.
+     * @param sys the system name
+     * @param user the user name
+     * @param expressionSystemNames a list of system names for the expressions
+     * this formula uses
+     */
     public Formula(@Nonnull String sys, @CheckForNull String user,
             List<Map.Entry<String, String>> expressionSystemNames) {
         super(sys, user);

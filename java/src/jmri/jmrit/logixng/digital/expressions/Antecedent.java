@@ -39,12 +39,21 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
     
     /**
      * Create a new instance of Antecedent with system name and user name.
+     * @param sys the system name
+     * @param user the user name
      */
     public Antecedent(@Nonnull String sys, @CheckForNull String user) {
         super(sys, user);
         init();
     }
 
+    /**
+     * Create a new instance of Antecedent with system name and user name.
+     * @param sys the system name
+     * @param user the user name
+     * @param expressionSystemNames a list of system names for the expressions
+     * this antecedent uses
+     */
     public Antecedent(@Nonnull String sys, @CheckForNull String user,
             List<Map.Entry<String, String>> expressionSystemNames)
             throws BadUserNameException, BadSystemNameException {
@@ -258,6 +267,7 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
      * @param ant the antecedent string description
      * @param expressionEntryList arraylist of existing ExpressionEntries
      * @return error message string if not well formed
+     * @throws jmri.JmriException when an exception occurs
      */
     public String validateAntecedent(String ant, List<ExpressionEntry> expressionEntryList) throws JmriException {
         char[] ch = ant.toCharArray();

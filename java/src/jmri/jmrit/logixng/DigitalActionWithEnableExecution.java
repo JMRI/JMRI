@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng;
 
+import jmri.JmriException;
+
 /**
  * A LogixNG DigitalAction that supports EnableExecution.
  * 
@@ -33,7 +35,8 @@ public interface DigitalActionWithEnableExecution {
      * Evaluate the action without execution.
      * <p>
      * Note that enable execution for LogixNG is the equivalent of enable for Logix.
+     * @throws jmri.JmriException when an exception occurs
      */
-    void evaluateOnly() throws Exception;
+    void evaluateOnly() throws JmriException;
     
 }
