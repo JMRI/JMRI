@@ -1967,6 +1967,7 @@
         </xs:simpleType>
       </xs:attribute>
 
+      <xs:attribute name="degrees" type="xs:float"></xs:attribute>
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
 
        <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
