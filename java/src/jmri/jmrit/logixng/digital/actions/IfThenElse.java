@@ -156,6 +156,7 @@ public class IfThenElse extends AbstractDigitalAction
 */
     /**
      * Get the type.
+     * @return the type
      */
     public Type getType() {
         return _type;
@@ -163,6 +164,7 @@ public class IfThenElse extends AbstractDigitalAction
     
     /**
      * Set the type.
+     * @param type the type
      */
     public void setType(Type type) {
         _type = type;

@@ -77,6 +77,7 @@ public class ActionTimer extends AbstractDigitalAction
 
     /**
      * Get the type.
+     * @return the delay
      */
     public long getDelay() {
         return _delay;
@@ -84,6 +85,7 @@ public class ActionTimer extends AbstractDigitalAction
     
     /**
      * Set the type.
+     * @param delay the delay
      */
     public void setDelay(long delay) {
         _delay = delay;
