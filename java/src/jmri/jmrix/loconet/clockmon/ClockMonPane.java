@@ -245,8 +245,10 @@ public class ClockMonPane extends LnPanel implements SlotListener {
     private LnClockControl loconetClock = null;
 
     /**
-     * Nested class to create one of these using old-style defaults
+     * Nested class to create one of these using old-style defaults.
+     * @deprecated since 4.19.7; use {@link ClockMonPaneAction} instead
      */
+    @Deprecated
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
 
         public Default() {

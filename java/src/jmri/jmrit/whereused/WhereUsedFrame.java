@@ -142,6 +142,8 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
      * <p>
      * The selected object is passed to the appropriate detail class which returns a populated textarea.
      * The textarea is formatted and inserted into a scrollable panel.
+     * @param type Indicated type of item being examined
+     * @param bean The bean being examined
      */
     void buildWhereUsedListing(ItemType type, NamedBean bean) {
         switch (type) {

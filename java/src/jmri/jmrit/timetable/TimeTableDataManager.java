@@ -464,6 +464,7 @@ public class TimeTableDataManager {
      * Update the stops for all of the trains for this layout.
      * Invoked by updates to fast clock speed, metric, scale and station distances.
      * @param layoutId The id for the layout that has been updated.
+     * @param updateStops True for update
      */
     void calculateLayoutTrains(int layoutId, boolean updateStops) {
         if (_lockCalculate) return;
@@ -475,6 +476,7 @@ public class TimeTableDataManager {
     /**
      * Update the stop times for all of the trains that use this schedule.
      * @param scheduleId The id for the schedule that has been updated.
+     * @param updateStops True for update
      */
     void calculateScheduleTrains(int scheduleId, boolean updateStops) {
         if (_lockCalculate) return;

@@ -225,8 +225,10 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
     JButton updateButton = new JButton(Bundle.getMessage("ButtonTextUpdate"));
 
     /**
-     * Nested class to create one of these tools using old-style defaults
+     * Nested class to create one of these tools using old-style defaults.
+     * @deprecated since 4.19.7; use {@link LocoStatsPanelAction} instead
      */
+    @Deprecated
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
 
         public Default() {

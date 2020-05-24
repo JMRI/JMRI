@@ -103,7 +103,7 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
     @Override
     @After
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        lnis.getSystemConnectionMemo().getXNetTrafficController().terminateThreads();
         JUnitUtil.tearDown();
     }
 

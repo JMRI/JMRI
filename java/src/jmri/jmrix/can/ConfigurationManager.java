@@ -21,6 +21,11 @@ abstract public class ConfigurationManager {
     final public static String RAWCAN = "Raw CAN"; // TODO I18N
     final public static String TEST = "Test - do not use";
 
+    public enum SubProtocol {
+        NONE,
+        CBUS
+    }
+    
     private static String[] options = new String[]{SPROGCBUS, MERGCBUS, OPENLCB, RAWCAN, TEST};
 
     /**

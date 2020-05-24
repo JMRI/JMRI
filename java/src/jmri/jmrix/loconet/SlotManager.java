@@ -1567,6 +1567,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     /**
      * Continue the sequence of reading all slots.
+     * @param toSlot index of the next slot to read
+     * @param interval wait time before operation, milliseconds
      */
     synchronized protected void readNextSlot(int toSlot, int interval) {
         // send info request

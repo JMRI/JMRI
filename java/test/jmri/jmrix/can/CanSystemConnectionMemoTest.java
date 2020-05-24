@@ -1,5 +1,6 @@
 package jmri.jmrix.can;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,14 +11,14 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class CanSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class CanSystemConnectionMemoTest extends SystemConnectionMemoTestBase<CanSystemConnectionMemo> {
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       // without knowing which system is connected via can, there is no
-       // way to provide a consist manager.
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        // without knowing which system is connected via can, there is no
+        // way to provide a consist manager.
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
     @Override
@@ -34,5 +35,4 @@ public class CanSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CanSystemConnectionMemoTest.class);
-
 }

@@ -1,7 +1,13 @@
 package jmri.jmrix.tams.swing;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.Icon;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.swing.SystemConnectionAction;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
+import jmri.util.swing.JmriNamedPaneAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
 
@@ -12,7 +18,7 @@ import jmri.util.swing.WindowInterface;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
-public class TamsNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
+public class TamsNamedPaneAction extends JmriNamedPaneAction implements SystemConnectionAction<TamsSystemConnectionMemo> {
 
     /**
      * Enhanced constructor for placing the pane in various GUIs.
@@ -50,6 +56,21 @@ public class TamsNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
         ((TamsPanelInterface) p).initComponents(memo);
         return p;
+    }
+
+    @Override
+    public TamsSystemConnectionMemo getSystemConnectionMemo() {
+        return memo;
+    }
+
+    @Override
+    public void setSystemConnectionMemo(TamsSystemConnectionMemo memo) {
+        this.memo = memo;
+    }
+
+    @Override
+    public Set<Class<? extends SystemConnectionMemo>> getSystemConnectionMemoClasses() {
+        return new HashSet<>(Arrays.asList(TamsSystemConnectionMemo.class));
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TamsNamedPaneAction.class);
