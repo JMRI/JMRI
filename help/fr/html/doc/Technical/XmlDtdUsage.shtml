@@ -70,7 +70,7 @@
         <li>JMRI 1.9.2 et les versions ult&eacute;rieures offrent
         une proc&eacute;dure de recherche plus puissante en
         utilisant les classe DTD <a href=
-        "http://jmri.org/JavaDoc/doc/jmri/util/JmriLocalEntityResolver.html">
+        "https://jmri.org/JavaDoc/doc/jmri/util/JmriLocalEntityResolver.html">
           jmri.util.JmriLocalEntityResolver</a> Il analyse les
           r&eacute;f&eacute;rences dans le DOCTYPE et les manipule
           de plusieurs fa&ccedil;ons:
