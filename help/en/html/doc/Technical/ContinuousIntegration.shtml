@@ -133,8 +133,7 @@
         compiler warning checks, make sure Javadocs build cleanly,
         etc.</li>
 
-        <li>Run the JUnit tests on a Windows machine, as a parallel
-        check to AppVeyor.</li>
+        <li>Run the JUnit tests on a Windows machine.</li>
       </ul>
 
       <p>These checks are defined by files in the
@@ -176,42 +175,11 @@
       etc.</p>
 
       <ul>
-        <li><a href="#appveyor">AppVeyor</a></li>
-        
         <li><a href="#coveralls">Coveralls</a></li>
 
         <li><a href="#codeclimate">CodeClimate</a></li>
       </ul>
-      
-
-      <a name="appveyor" id="appveyor"></a>
-      <h3>AppVeyor CI</h3>
-      We use <a href=
-      "http://www.appveyor.com">AppVeyor CI</a> to do
-      integration/test builds on Windows for every pull into our
-      main <a href="http://github.com/JMRI">GitHub</a>
-      repositories.
-
-      <p>AppVeyor will build any branch that contains a
-      appveyor.yml file. The build history for the main JMRI
-      repository is at <a href=
-      "https://ci.appveyor.com/project/JMRI/jmri">https://ci.appveyor.com/project/JMRI/jmri</a>.</p>
-
-      <p>AppVeyor normally runs the property-files checks (for
-      duplicate targets and other errors), followed by building the
-      code and running the "AllTest" test routine. A screen buffer
-      (not a real screen) is used for all the GUI tests.</p>
-
-      <p>Although it is possible to enable AppVeyor to build
-      commits to your own fork of the JMRI repositories, it's a bit
-      complicated to do it within the AppVeyor security model.</p>
-
-      <p>AppVeyor is controlled by the appveyor.yml file. Much of
-      the work is done by Maven via the "mvn --quiet test -P
-      appveyor --batch-mode" command. <a name="actions" id=
-      "actions"></a></p>
-
-      
+            
       <a name="coveralls" id="coveralls"></a>
       <h3>Coveralls</h3>The <a href=
       "https://coveralls.io/github/JMRI">Coveralls check</a> does a
