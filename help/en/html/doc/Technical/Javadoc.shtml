@@ -242,15 +242,15 @@ should include explanatory text:
 
       <p>Our Ant Javadoc processing makes basic UML class diagrams
       automatically. For an example, see the <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/Sensor.html">Sensor
+      "https://jmri.org/JavaDoc/doc/jmri/Sensor.html">Sensor
       interface Javadoc</a>, then click the "Show UML Class Diagram
       link" to see the <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/Sensor.png">class diagram
+      "https://jmri.org/JavaDoc/doc/jmri/Sensor.png">class diagram
       embedded in it</a>. For a more complex example see <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.html">
       ProgModeSelector class Javadoc</a> then click the "Show UML
       Class Diagram link" to see the <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.png">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.png">
       class diagram embedded in it</a>.</p>
 
       <p>You can also define custom UML diagrams using <a href=
@@ -260,7 +260,7 @@ should include explanatory text:
       "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/lenz/XNetProgrammer.java#L32">
       java/src/jmri/jmrix/lenz/XNetProgrammer.java</a> file. The
       resulting diagrams are visible in the <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/lenz/XNetProgrammer.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/lenz/XNetProgrammer.html">
       Javadoc output</a>.
       <p>PlantUml can also be used for standalone diagrams, c.f.
       <a href="SystemStructure.shtml">the connection sequence diagram</a>.

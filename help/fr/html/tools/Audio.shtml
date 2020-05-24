@@ -185,14 +185,14 @@
       <h3>Utilisation d'objets avec des scripts audio</h3>Vous
       pouvez manipuler directement les objets audio avec des
       scripts. Il y a un <a href=
-      "http://jmri.org/jython/AudioExample.py">exemple de
+      "https://jmri.org/jython/AudioExample.py">exemple de
       script</a> dans la distribution, ainsi que la documentation
       pour les classes <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioBuffer.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioBuffer.html">
       Tampon Audio</a>, <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioSource.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioSource.html">
       Source Audio</a> et <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioListener.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioListener.html">
       Auditeur Audio</a> qui contr&ocirc;lent le traitement audio.
 
       <h3>D&eacute;tails techniques</h3>Le trame JMRI audio

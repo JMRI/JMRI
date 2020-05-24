@@ -4399,7 +4399,7 @@
    will bring up a new window with several script options.
 
    <p>
-    Included in the <a href="http://jmri.org/jython/operations">jython directory</a> are several
+    Included in the <a href="https://jmri.org/jython/operations">jython directory</a> are several
     examples of operation oriented scripts. These scripts were included in the JMRI download and can
     be found in the jmri-&gt;jython-&gt;operations directory.
    </p>
@@ -5582,7 +5582,7 @@
    <a name="OperationsWebAccess" id="OperationsWebAccess"></a>
    <h2>Operations Web Access</h2>
    You can also access some of the OperationPro&trade; windows from a browser. For more information
-   see <a href="http://jmri.org/help/en/html/web/">JMRI Web Access</a>.
+   see <a href="https://jmri.org/help/en/html/web/">JMRI Web Access</a>.
 
    <p>
     <img src="images/WebConductor.png">

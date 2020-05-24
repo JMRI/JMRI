@@ -48,7 +48,7 @@ peuvent &#234;tre atteints via SRCP. Il y a aussi la structure initiale pour les
 
 <a name="limitations"></a><h2>Limitations</h2>
 <p>
-La structure SRCP a &#233;t&#233; introduite dans <a href="http://jmri.org/releasenotes/jmri2.1.6.shtml">JMRI v2.1.6</a>durant l'&#233;t&#233; 2008.
+La structure SRCP a &#233;t&#233; introduite dans <a href="https://jmri.org/releasenotes/jmri2.1.6.shtml">JMRI v2.1.6</a>durant l'&#233;t&#233; 2008.
 La premi&#232;re version avait plusieurs limitations;
 <ul>
 <li>Il ne supportait le "mode exploitation" pour configurer les d&#233;codeurs, ex: configuration des CVs.
