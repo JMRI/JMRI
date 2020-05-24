@@ -2050,11 +2050,11 @@ function $drawTrackSegment($widget) {
     var $ep1, $ep2;
     [$ep1, $ep2] = $getEndPoints$($widget);
     if (typeof $ep1 === "undefined") {
-    		log.warning("can't draw tracksegment " + $widget.ident + ": connect1: " + $widget.connect1name + "." + $widget.type1 + " undefined.");
+    		log.warn("can't draw tracksegment " + $widget.ident + ": connect1: " + $widget.connect1name + "." + $widget.type1 + " undefined.");
         return;
     }
     if (typeof $ep2 === "undefined") {
-    		log.warning("can't draw tracksegment " + $widget.ident + ": connect2: " + $widget.connect2name + "." + $widget.type2 + " undefined.");
+    		log.warn("can't draw tracksegment " + $widget.ident + ": connect2: " + $widget.connect2name + "." + $widget.type2 + " undefined.");
     	return;
     }
 
