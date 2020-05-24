@@ -142,32 +142,26 @@ public class Logix extends AbstractDigitalAction
                 _actionSocket.getName());
     }
     
-    /** {@inheritDoc} */
     public FemaleDigitalExpressionSocket getIfExpressionSocket() {
         return _expressionSocket;
     }
     
-    /** {@inheritDoc} */
     public String getExpressionSocketSystemName() {
         return _expressionSocketSystemName;
     }
     
-    /** {@inheritDoc} */
     public void setExpressionSocketSystemName(String systemName) {
         _expressionSocketSystemName = systemName;
     }
     
-    /** {@inheritDoc} */
     public FemaleDigitalBooleanActionSocket getActionSocket() {
         return _actionSocket;
     }
     
-    /** {@inheritDoc} */
     public String getActionSocketSystemName() {
         return _actionSocketSystemName;
     }
     
-    /** {@inheritDoc} */
     public void setActionSocketSystemName(String systemName) {
         _actionSocketSystemName = systemName;
     }
