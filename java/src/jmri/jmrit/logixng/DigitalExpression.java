@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng;
 
+import jmri.JmriException;
+
 /**
  * DigitalExpressionBean is used in LogixNG to answer a question that can give
  * the answers 'true' or 'false'.
@@ -18,9 +20,9 @@ public interface DigitalExpression extends Base {
      * Evaluate this expression.
      * 
      * @return the result of the evaluation
-     * @throws java.lang.Exception if an exception occurs
+     * @throws JmriException when an exception occurs
      */
-    public boolean evaluate() throws Exception;
+    public boolean evaluate() throws JmriException;
     
     /**
      * Reset the evaluation.

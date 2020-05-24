@@ -104,7 +104,7 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
     /**
      * Get the value of the AnalogExpressionBean.
      */
-    private double internalEvaluate() throws Exception {
+    private double internalEvaluate() throws JmriException {
         double result = _expression.evaluate();
         
         if (Double.isNaN(result)) {
@@ -121,7 +121,7 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
 
     /** {@inheritDoc} */
     @Override
-    public double evaluate() throws Exception {
+    public double evaluate() throws JmriException {
         if (! _enabled) {
             return 0.0;
         }
@@ -133,7 +133,7 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
         
         try {
             return internalEvaluate();
-        } catch (Exception e) {
+        } catch (JmriException | RuntimeException e) {
             switch (_errorHandlingType) {
                 case SHOW_DIALOG_BOX:
                     // We don't show a dialog box yet so fall thrue.

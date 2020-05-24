@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng;
 
+import jmri.JmriException;
+
 /**
  * A LogixNG male StringExpressionBean socket.
  */
@@ -14,6 +16,6 @@ public interface MaleStringExpressionSocket
      * IllegalArgumentException before checking if an error has occured.
      */
     @Override
-    public String evaluate() throws Exception;
+    public String evaluate() throws JmriException;
     
 }

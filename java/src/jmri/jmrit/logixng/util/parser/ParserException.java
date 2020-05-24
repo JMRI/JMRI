@@ -1,11 +1,13 @@
 package jmri.jmrit.logixng.util.parser;
 
+import jmri.JmriException;
+
 /**
  * The parent of all parser exceptions.
  * 
  * @author Daniel Bergqvist 2019
  */
-public class ParserException extends Exception {
+public class ParserException extends JmriException {
 
     /**
      * Creates a new instance of <code>ParserException</code> without detail message.

@@ -1,6 +1,9 @@
 package jmri.jmrit.logixng.implementation;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.prefs.Preferences;
+import jmri.JmriException;
 import jmri.beans.PreferencesBean;
 import jmri.jmrit.logixng.PluginManager;
 import jmri.profile.ProfileManager;
@@ -41,7 +44,8 @@ public final class LogixNGPreferences extends PreferencesBean {
             try {
                 String jarFileName = "F:\\Projekt\\Java\\GitHub\\JMRI_LogixNGPlugins\\dist\\JMRI_LogixNGPlugins.jar";
                 _pluginManager.addJarFile(jarFileName);
-            } catch (Exception e) {
+            } catch (IOException | ClassNotFoundException |
+                    InstantiationException | IllegalAccessException e) {
                 // This needs to be handled in a better way.
                 e.printStackTrace();
             }

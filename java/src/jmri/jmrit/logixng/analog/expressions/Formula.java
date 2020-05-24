@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
@@ -78,7 +79,7 @@ public class Formula extends AbstractAnalogExpression implements FemaleSocketLis
     
     /** {@inheritDoc} */
     @Override
-    public double evaluate() throws Exception {
+    public double evaluate() throws JmriException {
         
         if (_formula.isEmpty()) {
             return 0.0;

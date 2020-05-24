@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.util.parser.expressionnode;
 
+import jmri.JmriException;
 import jmri.jmrit.logixng.util.parser.CalculateException;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.parser.TokenType;
@@ -44,7 +45,7 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
     }
     
     @Override
-    public Object calculate() throws Exception {
+    public Object calculate() throws JmriException {
         
         Object rightValue = _rightSide.calculate();
         if (!(rightValue instanceof Boolean)) {

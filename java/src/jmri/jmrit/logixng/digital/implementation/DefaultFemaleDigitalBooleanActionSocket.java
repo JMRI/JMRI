@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocketListener;
@@ -31,7 +32,7 @@ public final class DefaultFemaleDigitalBooleanActionSocket
     }
     
     @Override
-    public void execute(boolean hasChangedToTrue) throws Exception {
+    public void execute(boolean hasChangedToTrue) throws JmriException {
         if (isConnected()) {
             ((MaleDigitalBooleanAction)getConnectedSocket())
                     .execute(hasChangedToTrue);

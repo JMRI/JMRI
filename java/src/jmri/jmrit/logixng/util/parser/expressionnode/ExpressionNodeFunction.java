@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
+import jmri.JmriException;
 import jmri.jmrit.logixng.util.parser.Function;
 import jmri.jmrit.logixng.util.parser.FunctionFactory;
 import jmri.jmrit.logixng.util.parser.FunctionNotExistsException;
@@ -49,7 +50,7 @@ public class ExpressionNodeFunction implements ExpressionNode {
     }
     
     @Override
-    public Object calculate() throws Exception {
+    public Object calculate() throws JmriException {
         return _function.calculate(_parameterList);
     }
     

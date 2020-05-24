@@ -64,7 +64,7 @@ public class PluginManager {
         private final List<ClassDefinition> classList = new ArrayList<>();
         
         public JarFile(String name)
-                throws FileNotFoundException, IOException, ClassNotFoundException,
+                throws IOException, ClassNotFoundException,
                 InstantiationException, IllegalAccessException {
             _filename = name;
             
@@ -187,11 +187,14 @@ public class PluginManager {
 //    }
     
     /**
-     * Init the plugin manager.
-     * This needs to be after the preferences has been read.
+     * Init the plugin manager.This needs to be after the preferences has been read.
      * 
      * @param filename the filename of the jar file
      * @return the JarFile object
+     * @throws java.io.FileNotFoundException if file is not found
+     * @throws java.lang.ClassNotFoundException if class is not found
+     * @throws java.lang.InstantiationException if class cannot be instantiated
+     * @throws java.lang.IllegalAccessException if illegal access
      */
     public JarFile addJarFile(String filename)
                 throws FileNotFoundException, IOException, ClassNotFoundException,

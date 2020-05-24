@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.digital.expressions;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.Memory;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
@@ -56,7 +57,7 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() throws Exception {
+    public boolean evaluate() throws JmriException {
         if (_childExpression.evaluate() && !_childLastState) {
             _childLastState = true;
             return true;

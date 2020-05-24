@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -43,7 +44,7 @@ public final class DefaultFemaleDigitalActionSocket
     }
     
     @Override
-    public void execute() throws Exception {
+    public void execute() throws JmriException {
         if (isConnected()) {
             ((MaleDigitalActionSocket)getConnectedSocket()).execute();
         }

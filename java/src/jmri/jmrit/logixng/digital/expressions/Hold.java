@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.Locale;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
@@ -56,7 +57,7 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() throws Exception {
+    public boolean evaluate() throws JmriException {
         if (_isActive) {
             _isActive = _holdExpressionSocket.evaluate();
         } else {

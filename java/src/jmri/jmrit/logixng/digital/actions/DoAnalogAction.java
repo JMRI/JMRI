@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.actions;
 
 import java.util.Locale;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Base;
@@ -52,7 +53,7 @@ public class DoAnalogAction
     
     /** {@inheritDoc} */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws JmriException {
         double result = _analogExpressionSocket.evaluate();
         
         _analogActionSocket.setValue(result);

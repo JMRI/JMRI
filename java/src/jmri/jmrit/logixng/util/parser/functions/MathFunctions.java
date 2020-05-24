@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.util.parser.functions;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import jmri.JmriException;
 import jmri.jmrit.logixng.util.parser.CalculateException;
 import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.Function;
@@ -39,7 +40,7 @@ public class MathFunctions implements FunctionFactory {
         }
 
         @Override
-        public Object calculate(List<ExpressionNode> parameterList) throws Exception {
+        public Object calculate(List<ExpressionNode> parameterList) throws JmriException {
             if (parameterList.size() != 1) {
                 throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
             }
@@ -56,7 +57,7 @@ public class MathFunctions implements FunctionFactory {
         }
 
         @Override
-        public Object calculate(List<ExpressionNode> parameterList) throws Exception {
+        public Object calculate(List<ExpressionNode> parameterList) throws JmriException {
             if (parameterList.size() != 1) {
                 throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
             }
@@ -87,7 +88,7 @@ public class MathFunctions implements FunctionFactory {
         }
 
         @Override
-        public Object calculate(List<ExpressionNode> parameterList) throws Exception {
+        public Object calculate(List<ExpressionNode> parameterList) throws JmriException {
             if (parameterList.size() == 1) {
                 double param = TypeConversionUtil.convertToDouble(parameterList.get(0).calculate(), false);
                 return Math.sin(param);

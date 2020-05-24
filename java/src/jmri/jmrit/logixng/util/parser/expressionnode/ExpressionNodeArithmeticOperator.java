@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.util.parser.expressionnode;
 
+import jmri.JmriException;
 import jmri.jmrit.logixng.util.parser.CalculateException;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.parser.TokenType;
@@ -140,7 +141,7 @@ public class ExpressionNodeArithmeticOperator implements ExpressionNode {
     
     
     @Override
-    public Object calculate() throws Exception {
+    public Object calculate() throws JmriException {
         
         Object left = _leftSide.calculate();
         Object right = _rightSide.calculate();

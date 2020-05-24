@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.digital.implementation;
 
 import java.util.Locale;
+import jmri.JmriException;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.digital.expressions.AbstractDigitalExpression;
 import jmri.jmrit.logixng.FemaleSocket;
@@ -40,7 +41,7 @@ public class DigitalExpressionPluginAdapter extends AbstractDigitalExpression {
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() throws Exception {
+    public boolean evaluate() throws JmriException {
         return _pluginExpression.evaluate();
     }
     

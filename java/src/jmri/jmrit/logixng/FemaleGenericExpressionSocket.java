@@ -4,6 +4,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.concurrent.atomic.AtomicBoolean;
+import jmri.JmriException;
 
 /**
  *
@@ -99,9 +100,10 @@ public interface FemaleGenericExpressionSocket
      * 
      * @return the result of the evaluation. This is of the same class as
      * parentValue.
+     * @throws JmriException when an exception occurs
      */
     @CheckForNull
-    public Object evaluateGeneric() throws Exception;
+    public Object evaluateGeneric() throws JmriException;
     
     /**
      * Reset the evaluation.

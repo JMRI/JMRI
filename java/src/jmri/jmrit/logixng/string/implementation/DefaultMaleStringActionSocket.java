@@ -106,7 +106,7 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
     /**
      * Set a string value.
      */
-    public void setValue(String value) throws Exception {
+    public void setValue(String value) throws JmriException {
         if (! _enabled) {
             return;
         }
@@ -118,7 +118,7 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
         
         try {
             _action.setValue(value);
-        } catch (Exception e) {
+        } catch (JmriException | RuntimeException e) {
             switch (_errorHandlingType) {
                 case SHOW_DIALOG_BOX:
                     // We don't show a dialog box yet so fall thrue.

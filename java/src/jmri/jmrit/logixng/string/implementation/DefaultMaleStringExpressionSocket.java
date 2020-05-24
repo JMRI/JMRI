@@ -103,7 +103,7 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
     
     /** {@inheritDoc} */
     @Override
-    public String evaluate() throws Exception {
+    public String evaluate() throws JmriException {
         if (! _enabled) {
             return "";
         }
@@ -115,7 +115,7 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
         
         try {
             return _expression.evaluate();
-        } catch (Exception e) {
+        } catch (JmriException | RuntimeException e) {
             switch (_errorHandlingType) {
                 case SHOW_DIALOG_BOX:
                     // We don't show a dialog box yet so fall thrue.

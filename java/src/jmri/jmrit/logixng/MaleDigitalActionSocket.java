@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng;
 
+import jmri.JmriException;
+
 /**
  * A LogixNG male DigitalActionBean socket.
  */
@@ -14,6 +16,6 @@ public interface MaleDigitalActionSocket
      * IllegalArgumentException before checking if an error has occured.
      */
     @Override
-    public void execute() throws Exception;
+    public void execute() throws JmriException;
     
 }

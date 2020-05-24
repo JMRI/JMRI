@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.util.parser.expressionnode;
 
 import java.util.Map;
+import jmri.JmriException;
 import jmri.jmrit.logixng.util.parser.IdentifierNotExistsException;
 import jmri.jmrit.logixng.util.parser.Token;
 import jmri.jmrit.logixng.util.parser.Variable;
@@ -27,7 +28,7 @@ public class ExpressionNodeIdentifier implements ExpressionNode {
     }
     
     @Override
-    public Object calculate() throws Exception {
+    public Object calculate() throws JmriException {
         return _variable.getValue();
     }
     

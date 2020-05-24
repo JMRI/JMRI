@@ -103,7 +103,7 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
     
     /** {@inheritDoc} */
     @Override
-    public void execute(boolean hasChangedToTrue) throws Exception {
+    public void execute(boolean hasChangedToTrue) throws JmriException {
         if (! _enabled) {
             return;
         }
@@ -115,7 +115,7 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
         
         try {
             _action.execute(hasChangedToTrue);
-        } catch (Exception e) {
+        } catch (JmriException | RuntimeException e) {
             switch (_errorHandlingType) {
                 case SHOW_DIALOG_BOX:
                     // We don't show a dialog box yet so fall thrue.

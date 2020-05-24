@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng;
 
+import jmri.JmriException;
+
 /**
  * String expression is used in LogixNG to answer a question that can give
  * a string value as result.
@@ -12,8 +14,9 @@ public interface StringExpression extends Base {
      * Evaluate this expression.
      * 
      * @return the result of the evaluation
+     * @throws JmriException when an exception occurs
      */
-    public String evaluate() throws Exception;
+    public String evaluate() throws JmriException;
     
     /**
      * Reset the evaluation.

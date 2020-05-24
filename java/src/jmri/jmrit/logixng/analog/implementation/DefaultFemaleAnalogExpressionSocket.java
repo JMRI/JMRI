@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
@@ -31,7 +32,7 @@ public class DefaultFemaleAnalogExpressionSocket extends AbstractFemaleSocket
     
     /** {@inheritDoc} */
     @Override
-    public double evaluate() throws Exception {
+    public double evaluate() throws JmriException {
         if (isConnected()) {
             return ((MaleAnalogExpressionSocket)getConnectedSocket()).evaluate();
         } else {

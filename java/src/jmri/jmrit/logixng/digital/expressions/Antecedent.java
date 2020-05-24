@@ -72,7 +72,7 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() throws Exception {
+    public boolean evaluate() throws JmriException {
         
         if (_antecedent.isEmpty()) {
             return false;
@@ -181,7 +181,7 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
         return _antecedent;
     }
 
-    public final void setAntecedent(String antecedent) throws Exception {
+    public final void setAntecedent(String antecedent) throws JmriException {
 //        String result = validateAntecedent(antecedent, _expressionEntries);
 //        if (result != null) System.out.format("DANIEL: Exception: %s%n", result);
 //        if (result != null) throw new IllegalArgumentException(result);
@@ -259,7 +259,7 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
      * @param expressionEntryList arraylist of existing ExpressionEntries
      * @return error message string if not well formed
      */
-    public String validateAntecedent(String ant, List<ExpressionEntry> expressionEntryList) throws Exception {
+    public String validateAntecedent(String ant, List<ExpressionEntry> expressionEntryList) throws JmriException {
         char[] ch = ant.toCharArray();
         int n = 0;
         for (int j = 0; j < ch.length; j++) {
@@ -323,7 +323,7 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
      * @throws jmri.JmriException if unable to compute the logic
      */
     DataPair parseCalculate(String s, List<ExpressionEntry> expressionEntryList)
-            throws Exception {
+            throws JmriException {
 
         // for simplicity, we force the string to upper case before scanning
         s = s.toUpperCase();

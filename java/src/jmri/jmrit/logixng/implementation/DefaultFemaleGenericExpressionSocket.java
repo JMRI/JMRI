@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
@@ -211,7 +212,7 @@ public class DefaultFemaleGenericExpressionSocket
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluateBoolean() throws Exception {
+    public boolean evaluateBoolean() throws JmriException {
         if (isConnected()) {
             if (_currentSocketType == SocketType.DIGITAL) {
                 return ((MaleDigitalExpressionSocket)getConnectedSocket()).evaluate();
@@ -224,7 +225,7 @@ public class DefaultFemaleGenericExpressionSocket
     }
 
     @Override
-    public double evaluateDouble() throws Exception {
+    public double evaluateDouble() throws JmriException {
         if (isConnected()) {
             if (_currentSocketType == SocketType.ANALOG) {
                 return ((MaleAnalogExpressionSocket)getConnectedSocket()).evaluate();
@@ -237,7 +238,7 @@ public class DefaultFemaleGenericExpressionSocket
     }
 
     @Override
-    public String evaluateString() throws Exception {
+    public String evaluateString() throws JmriException {
         if (isConnected()) {
             if (_currentSocketType == SocketType.STRING) {
                 return ((MaleStringExpressionSocket)getConnectedSocket()).evaluate();
@@ -251,7 +252,7 @@ public class DefaultFemaleGenericExpressionSocket
 
     @Override
     @CheckForNull
-    public Object evaluateGeneric() throws Exception {
+    public Object evaluateGeneric() throws JmriException {
         if (isConnected()) {
             switch (_currentSocketType) {
                 case DIGITAL:
@@ -482,7 +483,7 @@ public class DefaultFemaleGenericExpressionSocket
         
         /** {@inheritDoc} */
         @Override
-        public double evaluate() throws Exception {
+        public double evaluate() throws JmriException {
             return DefaultFemaleGenericExpressionSocket.this.evaluateDouble();
         }
 
@@ -600,7 +601,7 @@ public class DefaultFemaleGenericExpressionSocket
         
         /** {@inheritDoc} */
         @Override
-        public boolean evaluate() throws Exception {
+        public boolean evaluate() throws JmriException {
             return DefaultFemaleGenericExpressionSocket.this.evaluateBoolean();
         }
 
@@ -718,7 +719,7 @@ public class DefaultFemaleGenericExpressionSocket
         
         /** {@inheritDoc} */
         @Override
-        public String evaluate() throws Exception {
+        public String evaluate() throws JmriException {
             return DefaultFemaleGenericExpressionSocket.this.evaluateString();
         }
 
@@ -875,7 +876,7 @@ public class DefaultFemaleGenericExpressionSocket
         
         /** {@inheritDoc} */
         @Override
-        public Object evaluateGeneric() throws Exception {
+        public Object evaluateGeneric() throws JmriException {
             return DefaultFemaleGenericExpressionSocket.this.evaluateGeneric();
         }
 

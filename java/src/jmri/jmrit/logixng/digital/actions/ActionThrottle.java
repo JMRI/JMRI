@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.digital.actions;
 import java.util.Locale;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.LocoAddress;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
@@ -76,7 +77,7 @@ public class ActionThrottle extends AbstractDigitalAction
     
     /** {@inheritDoc} */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws JmriException {
         
         int currentLocoAddress = -1;
         int newLocoAddress = -1;

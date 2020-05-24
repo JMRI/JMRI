@@ -8,6 +8,7 @@ import javax.script.Bindings;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Category;
@@ -104,7 +105,7 @@ public class ExpressionScript extends AbstractDigitalExpression {
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() throws Exception {
+    public boolean evaluate() throws JmriException {
         if (_scriptClass != null) {
             return _scriptClass.evaluate();
         } else {

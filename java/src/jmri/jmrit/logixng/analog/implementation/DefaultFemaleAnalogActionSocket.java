@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.AnalogActionManager;
@@ -38,7 +39,7 @@ public final class DefaultFemaleAnalogActionSocket
 
     /** {@inheritDoc} */
     @Override
-    public void setValue(double value) throws Exception {
+    public void setValue(double value) throws JmriException {
         if (isConnected()) {
             ((MaleAnalogActionSocket)getConnectedSocket()).setValue(value);
         }

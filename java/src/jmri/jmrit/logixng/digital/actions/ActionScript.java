@@ -7,6 +7,7 @@ import javax.script.Bindings;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Category;
@@ -103,7 +104,7 @@ public class ActionScript extends AbstractDigitalAction {
 
     /** {@inheritDoc} */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws JmriException {
         if (_scriptClass != null) _scriptClass.execute();
     }
 

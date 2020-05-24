@@ -104,7 +104,7 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() throws Exception {
+    public boolean evaluate() throws JmriException {
         if (! _enabled) {
             return false;
         }
@@ -117,7 +117,7 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
         
         try {
             lastEvaluationResult = _expression.evaluate();
-        } catch (Exception e) {
+        } catch (JmriException | RuntimeException e) {
             switch (_errorHandlingType) {
                 case SHOW_DIALOG_BOX:
                     // We don't show a dialog box yet so fall thrue.

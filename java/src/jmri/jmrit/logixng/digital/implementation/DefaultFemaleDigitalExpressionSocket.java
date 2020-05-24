@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.DigitalExpressionManager;
@@ -31,7 +32,7 @@ public class DefaultFemaleDigitalExpressionSocket extends AbstractFemaleSocket
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() throws Exception {
+    public boolean evaluate() throws JmriException {
         if (isConnected()) {
             return ((MaleDigitalExpressionSocket)getConnectedSocket())
                     .evaluate();

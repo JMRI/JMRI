@@ -109,7 +109,7 @@ public class DefaultMaleDigitalActionSocket extends AbstractMaleSocket implement
     
     /** {@inheritDoc} */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws JmriException {
         if (! _enabled) {
             return;
         }
@@ -121,7 +121,7 @@ public class DefaultMaleDigitalActionSocket extends AbstractMaleSocket implement
         
         try {
             _action.execute();
-        } catch (Exception e) {
+        } catch (JmriException | RuntimeException e) {
             switch (_errorHandlingType) {
                 case SHOW_DIALOG_BOX:
                     // We don't show a dialog box yet so fall thrue.

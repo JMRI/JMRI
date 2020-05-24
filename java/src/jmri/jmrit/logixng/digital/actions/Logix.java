@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.actions;
 
 import java.util.Locale;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
@@ -76,7 +77,7 @@ public class Logix extends AbstractDigitalAction
     
     /** {@inheritDoc} */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws JmriException {
         _lastExpressionResult = _expressionSocket.evaluate();
         _actionSocket.execute(_lastExpressionResult);
     }

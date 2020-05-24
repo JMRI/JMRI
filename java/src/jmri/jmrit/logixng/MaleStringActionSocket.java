@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng;
 
 import javax.annotation.Nonnull;
+import jmri.JmriException;
 
 /**
  * A LogixNG male StringActionBean socket.
@@ -16,6 +17,6 @@ public interface MaleStringActionSocket
      * IllegalArgumentException before checking if an error has occured.
      */
     @Override
-    public void setValue(@Nonnull String value) throws Exception;
+    public void setValue(@Nonnull String value) throws JmriException;
     
 }

@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng;
 
+import jmri.JmriException;
+
 /**
  * A LogixNG male AnalogActionBean socket.
  */
@@ -14,6 +16,6 @@ public interface MaleAnalogActionSocket
      * IllegalArgumentException before checking if an error has occured.
      */
     @Override
-    public void setValue(double value) throws Exception;
+    public void setValue(double value) throws JmriException;
 
 }

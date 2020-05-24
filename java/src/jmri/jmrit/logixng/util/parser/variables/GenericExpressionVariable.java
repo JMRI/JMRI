@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.util.parser.variables;
 
+import jmri.JmriException;
 import jmri.jmrit.logixng.FemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.util.parser.Variable;
 
@@ -20,7 +21,7 @@ public class GenericExpressionVariable implements Variable {
     }
 
     @Override
-    public Object getValue() throws Exception {
+    public Object getValue() throws JmriException {
         return _socket.evaluateGeneric();
     }
 

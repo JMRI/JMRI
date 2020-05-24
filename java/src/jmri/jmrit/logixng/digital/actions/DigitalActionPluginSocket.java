@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.digital.actions;
 import java.util.Locale;
 import java.util.Objects;
 import javax.annotation.Nonnull;
+import jmri.JmriException;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.DigitalActionPlugin;
@@ -33,7 +34,7 @@ public class DigitalActionPluginSocket extends AbstractDigitalAction {
     }
 
     @Override
-    public void execute() throws Exception {
+    public void execute() throws JmriException {
         _actionPlugin.execute();
     }
 

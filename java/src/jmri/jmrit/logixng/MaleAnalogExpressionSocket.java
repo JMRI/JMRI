@@ -2,6 +2,7 @@ package jmri.jmrit.logixng;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nonnull;
+import jmri.JmriException;
 
 /**
  * A LogixNG male AnalogExpressionBean socket.
@@ -19,8 +20,11 @@ public interface MaleAnalogExpressionSocket
      * If the socket is not enabled, the method returns the value 0.0f.
      * <P>
      * If an error occurs and are handled, the method returns the value 0.0f.
+     * @throws JmriException when an exception occurs
+     * @throws IllegalArgumentException if the result a Double.NaN, negative
+     * infinity or positive infinity
      */
     @Override
-    public double evaluate() throws Exception;
+    public double evaluate() throws JmriException;
 
 }

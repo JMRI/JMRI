@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.boolean_actions;
 
 import java.util.Locale;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
@@ -56,7 +57,7 @@ public class OnChange extends AbstractDigitalBooleanAction
     
     /** {@inheritDoc} */
     @Override
-    public void execute(boolean hasChangedToTrue) throws Exception {
+    public void execute(boolean hasChangedToTrue) throws JmriException {
         if (_actionSocket.isConnected()) {
             switch (_whichChange) {
                 case CHANGE_TO_TRUE:

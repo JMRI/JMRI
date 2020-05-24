@@ -136,7 +136,7 @@ public class DefaultConditionalNG extends AbstractBase
 //                        _femaleActionSocket.execute();
                         try {
                             _femaleActionSocket.execute();
-                        } catch (Exception e) {
+                        } catch (JmriException | RuntimeException e) {
                             switch (_errorHandlingType) {
                                 case LOG_ERROR_ONCE:
                                     Log4JUtil.warnOnce(log, "female socket {} thrown an exception: {}", _femaleActionSocket.toString(), e);
