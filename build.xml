@@ -1606,7 +1606,7 @@
             <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
             <arg line="-n '.*IT.*'" />
             <arg line="--reports-dir ${testreport}" />
-            <jvmarg value="-Xmx1536m"/>
+            <jvmarg value="-Xmx3000m"/> <!-- needs to cover ArchUnit test run under coverage -->
             <jvmarg value="${jacocoagent}"/>
             <jvmarg line="${jvm.args}"/>
         </java>
