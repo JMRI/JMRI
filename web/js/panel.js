@@ -110,7 +110,7 @@ function $logProperties(obj) {
 				$propList += ($propName + "='" + obj[$propName] + "', ");
 			}
 		}
-		jmri.log("$logProperties(obj): " + $propList + ".");
+		log.log("$logProperties(obj): " + $propList + ".");
 	}
 }
 
@@ -128,13 +128,13 @@ function isDefined(x) {
 
 class Decoration {
     constructor($widget) {
-        //jmri.log("Decoration.constructor(...)");
+        //log.log("Decoration.constructor(...)");
         $logProperties(this.$widget);
         this.$widget = $widget;
     }
     getEndPoints() {
         [this.ep1, this.ep2] = $getEndPoints(this.$widget);
-        //jmri.log("ep1 = {" + this.ep1[0] + "," + this.ep1[1] + "}, ep2 = {" + this.ep2[0] + "," + this.ep2[1] + "}");
+        //log.log("ep1 = {" + this.ep1[0] + "," + this.ep1[1] + "}, ep2 = {" + this.ep2[0] + "," + this.ep2[1] + "}");
     }
     getAngles() {
         var $widget = this.$widget;
@@ -148,7 +148,7 @@ class Decoration {
             this.startAngleRAD = (Math.PI / 2) - $computeAngleRAD2(this.ep2, this.ep1);
             this.stopAngleRAD = this.startAngleRAD;
         }
-        //jmri.log("startAngleDEG: " + $toDegrees(this.startAngleRAD) + ", stopAngleDEG: " + $toDegrees(this.stopAngleRAD) + ".");
+        //log.log("startAngleDEG: " + $toDegrees(this.startAngleRAD) + ", stopAngleDEG: " + $toDegrees(this.stopAngleRAD) + ".");
     }
     getBezierAngles() {
         var $widget = this.$widget;
@@ -185,15 +185,15 @@ class Decoration {
     getArcAngles() {
         var startAngleRAD, stopAngleRAD;
         if (this.ep1[0] < this.ep2[0]) {
-            if (this.ep1[1] < this.ep2[1]) {    //jmri.log("#### QUAD ONE ####");
+            if (this.ep1[1] < this.ep2[1]) {    //log.log("#### QUAD ONE ####");
                 startAngleRAD = 0; stopAngleRAD = Math.PI / 2;
-            } else {                            //jmri.log("#### QUAD TWO ####");
+            } else {                            //log.log("#### QUAD TWO ####");
                 startAngleRAD = -Math.PI / 2; stopAngleRAD = 0;
             }
         } else {
-            if (this.ep1[1] < this.ep2[1]) {    //jmri.log("#### QUAD THREE ####");
+            if (this.ep1[1] < this.ep2[1]) {    //log.log("#### QUAD THREE ####");
                 startAngleRAD = Math.PI / 2; stopAngleRAD = Math.PI;
-            } else {                            //jmri.log("#### QUAD FOUR ####");
+            } else {                            //log.log("#### QUAD FOUR ####");
                 startAngleRAD = Math.PI; stopAngleRAD = -Math.PI / 2;
             }
         }
@@ -209,17 +209,17 @@ class Decoration {
         var x, y;
         if (rw < 0) {
             rw = -rw;
-            if (rh < 0) {                   //jmri.log("**** QUAD ONE ****");
+            if (rh < 0) {                   //log.log("**** QUAD ONE ****");
                 x = tp1[0]; y = tp2[1];
                 rh = -rh;
-            } else {                        //jmri.log("**** QUAD TWO ****");
+            } else {                        //log.log("**** QUAD TWO ****");
                 x = tp2[0]; y = tp1[1];
             }
         } else {
-            if (rh < 0) {                   //jmri.log("**** QUAD THREE ****");
+            if (rh < 0) {                   //log.log("**** QUAD THREE ****");
                 x = tp2[0]; y = tp1[1];
                 rh = -rh;
-            } else {                        //jmri.log("**** QUAD FOUR ****");
+            } else {                        //log.log("**** QUAD FOUR ****");
                 x = tp1[0]; y = tp2[1];
             }
         }
@@ -238,7 +238,7 @@ class ArrowDecoration extends Decoration {
         this.linewidth = Number($arrow.attr('linewidth'));
         this.length = Number($arrow.attr('length'));
         this.gap = Number($arrow.attr('gap'));
-        //jmri.log("arrow: {end:" + this.end + ", dir: " + this.direction + "}");
+        //log.log("arrow: {end:" + this.end + ", dir: " + this.direction + "}");
     }
     draw() {
         super.draw();
@@ -1428,12 +1428,12 @@ function processPanelXML($returnedData, $success, $xhr) {
 
                 case "drawn" :
                     if (jmri_logging) {
-                        jmri.log("case drawn " + $widget.widgetType);
+                        log.log("case drawn " + $widget.widgetType);
                         $logProperties($widget);
                     }
                     switch ($widget.widgetType) {
                         case "positionablepoint" :
-                            //jmri.log("#### Positionable Point ####");
+                            //log.log("#### Positionable Point ####");
                             //just store these points in persistent variable for use when drawing tracksegments and layoutturnouts
                             //End bumpers and Connectors use wrong type, so always store as .POS_POINT
                             $gPts[$widget.ident + ".POS_POINT"] = $widget;
@@ -1443,9 +1443,9 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget["blockcolor"] = $widget.trackcolor; //init blockcolor to trackcolor
                             //store these blocks in a persistent var
                             $gBlks[$widget.systemName] = $widget;
-                            //jmri.log("layoutblock:");
+                            //log.log("layoutblock:");
                             $logProperties($widget);
-                            //jmri.log("block[" + $widget.systemName + "].blockcolor: '" + $widget.trackcolor + "'.")
+                            //log.log("block[" + $widget.systemName + "].blockcolor: '" + $widget.trackcolor + "'.")
                             jmri.getLayoutBlock($widget.systemName);
                             break;
                         case "layoutturnout" :
@@ -1517,7 +1517,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['stateA'] = UNKNOWN;
                             $widget['stateB'] = UNKNOWN;
 
-                            //jmri.log("tA: " + $widget.turnout + ", tB: " + $widget.turnoutB);
+                            //log.log("tA: " + $widget.turnout + ", tB: " + $widget.turnoutB);
 
                             $widget['turnoutA_AC'] = Number($(this).find('states').find('A-C').find('turnout').text());
                             $widget['turnoutA_AD'] = Number($(this).find('states').find('A-D').find('turnout').text());
@@ -1636,7 +1636,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             whereUsed[$widget.turnoutB][whereUsed[$widget.turnoutB].length] = $widget.id + "l";
                             break;
                         case "tracksegment" :
-                            //jmri.log("#### Track Segment ####");
+                            //log.log("#### Track Segment ####");
                             //set widget occupancy sensor from block to speed affected changes later
                             if (typeof $gBlks[$widget.blockname] !== "undefined") {
                                 $widget['occupancysensor'] = $gBlks[$widget.blockname].occupancysensor;
@@ -1721,7 +1721,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 jmri.getSensor($widget["occupancysensorBD"]);
                             break;
                         case "layoutturntable" :
-                            //jmri.log("#### Layout Turntable ####");
+                            //log.log("#### Layout Turntable ####");
                             $widget['id'] = $widget.ident;
                             $widget['name'] = $widget.ident;
                             $widget['safeName'] = $safeName($widget.name); //add a html-safe version of name
@@ -1793,7 +1793,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $("#panel-area").css({"background-color": "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ")"});
                             break;
                         case "layoutShape" :
-                            //jmri.log("#### Layout Shape ####");
+                            //log.log("#### Layout Shape ####");
                             //store this widget in persistent array, with ident as key
                             $widget['id'] = $widget.ident;
                             $gWidgets[$widget.id] = $widget;
@@ -1804,7 +1804,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $drawLayoutShape($widget);
                             break;
                         default:
-                            jmri.log("unknown $widget.widgetType: " + $widget.widgetType + ".");
+                            log.log("unknown $widget.widgetType: " + $widget.widgetType + ".");
                             break;
                     }
                     break;
@@ -1876,7 +1876,7 @@ function $store_occupancysensor(id, sensor) {
 
 //perform regular click-handling, bound to click event for clickable, non-momentary widgets, except for multisensor and linkinglabel.
 function $handleClick(e) {
-    if (jmri_logging) jmri.log("$handleClick()");
+    if (jmri_logging) log.log("$handleClick()");
 
     e.stopPropagation();
     e.preventDefault(); //prevent double-firing (touch + click)
@@ -1896,7 +1896,7 @@ function $handleClick(e) {
             } else if (this.id.endsWith("r")) {
                 $widget["side"] = "right";
             }
-            if (jmri_logging) jmri.log("\nlayoutSlip-side:" + $widget.side);
+            if (jmri_logging) log.log("\nlayoutSlip-side:" + $widget.side);
 
             // convert current slip state to current turnout states
             var $oldStateA, $oldStateB;
@@ -1906,7 +1906,7 @@ function $handleClick(e) {
             var $newState = getNextSlipState($widget);
 
             if (jmri_logging) {
-                jmri.log("$handleClick:layoutSlip: change state from " +
+                log.log("$handleClick:layoutSlip: change state from " +
                     slipStateToString($widget.state) + " to " + slipStateToString($newState) + ".");
             }
 
@@ -1922,7 +1922,7 @@ function $handleClick(e) {
             }
             //jmri_logging = false;
         } else {
-            jmri.log("$handleClick(e): unknown slip widget " + this.id);
+            log.log("$handleClick(e): unknown slip widget " + this.id);
             $logProperties(this);
         }   // special case for layoutSlips
     } else if (this.className.startsWith('layoutturntable ')) {
@@ -1938,7 +1938,7 @@ function $handleClick(e) {
                     var turnout = item.attributes.turnout.value;
                     var state = item.attributes.turnoutstate.value;
                     var $newState = (state == 'thrown') ? THROWN : CLOSED;
-                    //jmri.log("sendElementChange(" + $widget.jsonType + ", " + turnout + ", " + $newState + ")");
+                    //log.log("sendElementChange(" + $widget.jsonType + ", " + turnout + ", " + $newState + ")");
                     sendElementChange($widget.jsonType, turnout, $newState);
                 }
             }
@@ -1969,7 +1969,7 @@ function $handleMultiClick(e) {
     var $widget = $gWidgets[this.id];
     var clickX = (e.offsetX || e.pageX - $(e.target).offset().left); //get click position on the widget
     var clickY = (e.offsetY || e.pageY - $(e.target).offset().top );
-    jmri.log("handleMultiClick X,Y on WxH: " + clickX + "," + clickY + " on " + this.width + "x" + this.height);
+    log.log("handleMultiClick X,Y on WxH: " + clickX + "," + clickY + " on " + this.width + "x" + this.height);
 
     //increment or decrement based on where the click occurred on image
     var missed = true; //flag if click x,y outside image bounds, indicates we didn't get good values
@@ -2050,11 +2050,11 @@ function $drawTrackSegment($widget) {
     var $ep1, $ep2;
     [$ep1, $ep2] = $getEndPoints$($widget);
     if (typeof $ep1 === "undefined") {
-    		log.error("ERROR: can't draw tracksegment " + $widget.ident + ": connect1: " + $widget.connect1name + "." + $widget.type1 + " undefined.");
+    		log.warning("can't draw tracksegment " + $widget.ident + ": connect1: " + $widget.connect1name + "." + $widget.type1 + " undefined.");
         return;
     }
     if (typeof $ep2 === "undefined") {
-    		log.error("ERROR: can't draw tracksegment " + $widget.ident + ": connect2: " + $widget.connect2name + "." + $widget.type2 + " undefined.");
+    		log.warning("can't draw tracksegment " + $widget.ident + ": connect2: " + $widget.connect2name + "." + $widget.type2 + " undefined.");
     	return;
     }
 
@@ -2150,23 +2150,23 @@ function $drawTrackSegmentArc($widget) {
     var startAngleRAD, stopAngleRAD;
     if (rw < 0) {
         rw = -rw;
-        if (rh < 0) {                       //jmri.log("**** QUAD ONE ****");
+        if (rh < 0) {                       //log.log("**** QUAD ONE ****");
             x = ep1x; y = ep2y;
             rh = -rh;
             startAngleRAD = Math.PI / 2;
             stopAngleRAD = Math.PI;
-        } else {                            //jmri.log("**** QUAD TWO ****");
+        } else {                            //log.log("**** QUAD TWO ****");
             x = ep2x; y = ep1y;
             startAngleRAD = 0;
             stopAngleRAD = Math.PI / 2;
         }
     } else {
-        if (rh < 0) {                       //jmri.log("**** QUAD THREE ****");
+        if (rh < 0) {                       //log.log("**** QUAD THREE ****");
             x = ep2x; y = ep1y;
             rh = -rh;
             startAngleRAD = Math.PI;
             stopAngleRAD = -Math.PI / 2;
-        } else {                            //jmri.log("**** QUAD FOUR ****");
+        } else {                            //log.log("**** QUAD FOUR ****");
             x = ep1x; y = ep2y;
             startAngleRAD = -Math.PI / 2;
             stopAngleRAD = 0;
@@ -2296,7 +2296,7 @@ function $drawTurntable($widget) {
         if (isDefined(item.attributes.turnout)) {
             // var turnout = item.attributes.turnout.value;
             // var state = item.attributes.turnoutstate.value;
-            // jmri.log("$drawTurntable ray # " + i + " turnout: '" + turnout + "', state: " + state);
+            // log.log("$drawTurntable ray # " + i + " turnout: '" + turnout + "', state: " + state);
             //draw the turnout control circle
             $drawCircle($t.x, $t.y, $cr, $gPanel.turnoutcirclecolor, 1);
         }
@@ -2613,7 +2613,7 @@ function $drawSlip($widget) {
         return;
     }
     if (jmri_logging) {
-        jmri.log("$drawSlip(" + $widget.id + "): state: " + $widget.state);
+        log.log("$drawSlip(" + $widget.id + "): state: " + $widget.state);
     }
 
     var $mainWidth = $gPanel.mainlinetrackwidth;
@@ -3145,13 +3145,13 @@ function $drawBezier(points, $color, $width, displacement) {
         $gCtx.stroke();
     } catch (e) {
         if (jmri_logging) {
-            jmri.log("$plotBezier exception: " + e);
+            log.log("$plotBezier exception: " + e);
             var vDebug = "";
             for (var prop in e) {
                vDebug += "      ["+ prop+ "]: '"+ e[prop]+ "'\n";
             }
             vDebug += "toString(): " + " value: [" + e.toString() + "]";
-            jmri.log(vDebug);
+            log.log(vDebug);
         }
     }
 
@@ -3227,7 +3227,7 @@ function $plotBezier(points, depth, displacement) {
 }
 
 function $point_log(prefix, p) {
-    jmri.log(prefix + ": {" + p[0] + ", " + p[1] + "}");
+    log.log(prefix + ": {" + p[0] + ", " + p[1] + "}");
 }
 
 function $getPoint(name) {
@@ -3488,7 +3488,7 @@ var $setWidgetState = function($id, $newState, data) {
         // does it have "l" or "r" suffix?
         if ($id.endsWith("l") || $id.endsWith("r")) {   // (yes!)
             if (jmri_logging) {
-                jmri.log("\n#### INFO: clicked slip " + $id + " to state " + $newState);
+                log.log("\n#### INFO: clicked slip " + $id + " to state " + $newState);
             }
 
             // remove suffix
@@ -3503,7 +3503,7 @@ var $setWidgetState = function($id, $newState, data) {
             [$stateA, $stateB] = [$widget.stateA, $widget.stateB];
             $widget.state = getSlipStateForTurnoutStates($widget, $stateA, $stateB);
             if (jmri_logging) {
-                jmri.log("#### 3360 Slip " + $widget.name +
+                log.log("#### 3360 Slip " + $widget.name +
                     " before: " + slipStateToString($widget.state) +
                     ", stateA: " + turnoutStateToString($stateA) +
                     ", stateB: " + turnoutStateToString($stateB));
@@ -3513,7 +3513,7 @@ var $setWidgetState = function($id, $newState, data) {
             if ($id.endsWith("r")) {
                 if ($stateA != $newState) {
                     if (jmri_logging) {
-                        jmri.log("#### 3370 Changed r slip " + $widget.name +
+                        log.log("#### 3370 Changed r slip " + $widget.name +
                             " $stateA from " + turnoutStateToString($stateA) +
                             " to " + turnoutStateToString($newState));
                     }
@@ -3523,7 +3523,7 @@ var $setWidgetState = function($id, $newState, data) {
             } else if ($id.endsWith("l")) {
                 if ($stateB != $newState) {
                     if (jmri_logging) {
-                        jmri.log("#### 3379 Changed l slip " + $widget.name +
+                        log.log("#### 3379 Changed l slip " + $widget.name +
                             " $stateB from " + turnoutStateToString($stateB) +
                             " to " + turnoutStateToString($newState));
                     }
@@ -3535,7 +3535,7 @@ var $setWidgetState = function($id, $newState, data) {
             // turn turnout states back into slip state
             $newState = getSlipStateForTurnoutStates($widget, $stateA, $stateB);
             if (jmri_logging) {
-                jmri.log("#### 3390 Slip " + $widget.name +
+                log.log("#### 3390 Slip " + $widget.name +
                     " after: " + slipStateToString($newState) +
                     ", stateA: " + turnoutStateToString($stateA) +
                     ", stateB: " + turnoutStateToString($stateB));
@@ -3543,7 +3543,7 @@ var $setWidgetState = function($id, $newState, data) {
 
             if ($widget.state != $newState) {
                if (jmri_logging) {
-                   jmri.log("#### 3398 Changing slip " + $widget.name + " from " + slipStateToString($widget.state) +
+                   log.log("#### 3398 Changing slip " + $widget.name + " from " + slipStateToString($widget.state) +
                        " to " + slipStateToString($newState));
                }
             }
@@ -3552,7 +3552,7 @@ var $setWidgetState = function($id, $newState, data) {
             // set $id to slip id
             $id = slipID;
         } else if ($id.startsWith("TUR")) {
-            //jmri.log("$setWidgetState(" + $id + ", " + $newState + ", " + data + ")");
+            //log.log("$setWidgetState(" + $id + ", " + $newState + ", " + data + ")");
             $logProperties(data);
 
             var turntableID = $id.split(".")[0];
@@ -3564,13 +3564,13 @@ var $setWidgetState = function($id, $newState, data) {
             return;
         } else {
             if (jmri_logging) {
-            	jmri.log("$setWidgetState unknown $id: '" + $id + "'.");
+            	log.log("$setWidgetState unknown $id: '" + $id + "'.");
             }
             return;
         }
     } else if ($widget.widgetType == 'layoutSlip') {
         if (jmri_logging) {
-            jmri.log("#### $setWidgetState(slip " + $id + ", " + slipStateToString($newState) +
+            log.log("#### $setWidgetState(slip " + $id + ", " + slipStateToString($newState) +
                 "); (was " + slipStateToString($widget.state) + ")");
         }
         // JMRI doesn't send slip states… it sends slip turnout states…
@@ -3580,7 +3580,7 @@ var $setWidgetState = function($id, $newState, data) {
 
     if ($widget.state !== $newState) {  //don't bother if already this value
         if (jmri_logging) {
-            jmri.log("JMRI changed " + $id + " (" + $widget.jsonType + " " + $widget.name + ") from state '" + $widget.state + "' to '" + $newState + "'.");
+            log.log("JMRI changed " + $id + " (" + $widget.jsonType + " " + $widget.name + ") from state '" + $widget.state + "' to '" + $newState + "'.");
         }
         $widget.state = $newState;
 
@@ -3626,7 +3626,7 @@ var $setWidgetState = function($id, $newState, data) {
         }
         $gWidgets[$id].state = $newState;  //update the persistent widget to the new state
 //    } else {
-//        jmri.log("NOT setting " + $id + " for " + $widget.jsonType + " " + $widget.name + " --> " + $newState);
+//        log.log("NOT setting " + $id + " for " + $widget.jsonType + " " + $widget.name + " --> " + $newState);
     }
 };
 
@@ -3650,7 +3650,7 @@ var $safeName = function($name) {
 
 //send request for state change
 var sendElementChange = function(type, name, state) {
-    //jmri.log("Sending JMRI " + type + " '" + name + "' state '" + state + "'.");
+    //log.log("Sending JMRI " + type + " '" + name + "' state '" + state + "'.");
     jmri.setObject(type, name, state);
 };
 
@@ -3661,12 +3661,12 @@ $(document).ajaxError(function(event, xhr, opt, exception) {
         $('div#messageText').text($msg);
         $("#activity-alert").addClass("show").removeClass("hidden");
         $('dvi#workingMessage').position({within: "window"});
-        jmri.log($msg);
+        log.log($msg);
         return;
     }
     if (xhr.statusText == "timeout") {
         var $msg = "AJAX timeout " + opt.url + ", status= " + xhr.status + " " + xhr.statusText + " resending list....";
-        jmri.log($msg);
+        log.log($msg);
         // TODO: need to recover somehow
     }
 });
@@ -3725,7 +3725,7 @@ var $getNextState = function($widget) {
                             $nextState = s; //last one was the current, so this one must be next
                         if (s == $widget.state)
                             $currentState = s;
-//                      jmri.log('key: '+k+" first="+$firstState+" current="+$currentState+" next="+$nextState);
+//                      log.log('key: '+k+" first="+$firstState+" current="+$currentState+" next="+$nextState);
                     }
                 }
                 if (typeof $nextState === "undefined")
@@ -3749,7 +3749,7 @@ var $getNextState = function($widget) {
                         $nextState = s; //last one was the current, so this one must be next
                     if (s == $widget.state)
                         $currentState = s;
-//                  jmri.log('key: ' + k + " first=" + $firstState);
+//                  log.log('key: ' + k + " first=" + $firstState);
                 }
             };
             if (typeof $nextState === "undefined")
@@ -3854,16 +3854,16 @@ var $getWidgetFamily = function($widget, $element) {
             return "drawn";
             break;
     }
-    jmri.log("unknown widget type of '" + $widget.widgetType +"'");
+    log.log("unknown widget type of '" + $widget.widgetType +"'");
     return; //unrecognized widget returns undefined
 };
 
 //redraw all "drawn" elements for given block (called after color change)
 function $redrawBlock(blockName) {
-    //jmri.log("redrawing all tracks for block " + blockName);
+    //log.log("redrawing all tracks for block " + blockName);
     //loop thru widgets, if block matches, redraw widget by proper method
     jQuery.each($gWidgets, function($id, $widget) {
-        ///jmri.log("  $id: " + $id);
+        ///log.log("  $id: " + $id);
         $logProperties($widget);
         if (($widget.blockname == blockName)
         || ($widget.blocknameac == blockName)
@@ -3933,21 +3933,21 @@ var $drawAllIconWidgets = function() {
 function updateWidgets(name, state, data) {
 	//update all widgets based on the element that changed, using systemname
     if (whereUsed[name]) {
-        if (jmri_logging) jmri.log("updateWidgets(" + name + ", " + state + ", data);");
+        if (jmri_logging) log.log("updateWidgets(" + name + ", " + state + ", data);");
         $.each(whereUsed[name], function(index, widgetId) {
             $setWidgetState(widgetId, state, data);
         });
 //    } else {
-//      jmri.log("system name " + name + " not found, can't set state to " + state);
+//      log.log("system name " + name + " not found, can't set state to " + state);
     }
     //update all widgets based on the element that changed, using username
     if (whereUsed[data.userName]) {
-        if (jmri_logging) jmri.log("updateWidgets(" + data.userName + ", " + state + ", data);");
+        if (jmri_logging) log.log("updateWidgets(" + data.userName + ", " + state + ", data);");
         $.each(whereUsed[data.userName], function(index, widgetId) {
             $setWidgetState(widgetId, state, data);
         });
 //    } else {
-//      jmri.log("userName " + name + " not found, can't set state to " + state);
+//      log.log("userName " + name + " not found, can't set state to " + state);
     }
 }
 
@@ -3964,7 +3964,7 @@ function updateOccupancy(sensorName, state, data) {
 
 function updateOccupancySub(sensorName, state) {
     if (occupancyNames[sensorName]) {
-        //jmri.log("setting occupancies for sensor " + sensorName + " to " + state);
+        //log.log("setting occupancies for sensor " + sensorName + " to " + state);
         $.each(occupancyNames[sensorName], function(index, widgetId) {
             $widget = $gWidgets[widgetId];
 
@@ -3997,7 +3997,7 @@ function updateBlockSensorState(blockName, sensorName, sensorState) {
     if (isDefined(blockName)) {
         var $blk = $gBlks[blockName];
         if (isDefined($blk)) {
-//             jmri.log("blockName: " + blockName
+//             log.log("blockName: " + blockName
 //                 + ", sensorName: " + sensorName
 //                 + ", sensorState: " + sensorState);
 //             $logProperties($blk);
@@ -4010,7 +4010,7 @@ function updateBlockSensorState(blockName, sensorName, sensorState) {
 }
 
 function setBlockColor(blockName, newColor) {
-    //jmri.log("setBlockColor(" + blockName + ", " + newColor + ");");
+    //log.log("setBlockColor(" + blockName + ", " + newColor + ");");
     var $blk = $gBlks[blockName];
     if (isDefined($blk)) {
         $gBlks[blockName].blockcolor = newColor;
@@ -4104,7 +4104,7 @@ $(document).ready(function() {
             didReconnect: function() {
                 // if a reconnect is triggered, reload the page - it is the
                 // simplest method to refresh every object in the panel
-                jmri.log("Reloading at reconnect");
+                log.log("Reloading at reconnect");
                 location.reload(false);
             },
             light: function(name, state, data) {
@@ -4298,9 +4298,9 @@ function getSlipStateForTurnoutStates(slipWidget, stateA, stateB) {
 function getNextSlipState(slipWidget) {
     var result = UNKNOWN;
 
-    // jmri.log("****************************");
-    // jmri.log("slipWidget.side:" + slipWidget.side);
-    // jmri.log("  slipWidget.state:" + slipWidget.state);
+    // log.log("****************************");
+    // log.log("slipWidget.side:" + slipWidget.side);
+    // log.log("  slipWidget.state:" + slipWidget.state);
     switch (slipWidget.side) {
         case 'left': {
             switch (slipWidget.state) {
@@ -4347,11 +4347,11 @@ function getNextSlipState(slipWidget) {
             break;
         }
         default: {
-            jmri.log("getNextSlipState($widget): unknown $widget.side: " + slipWidget.side);
+            log.log("getNextSlipState($widget): unknown $widget.side: " + slipWidget.side);
             break;
         }
     }   // switch (slipWidget.side)
-    //jmri.log("  result:" + result);
+    //log.log("  result:" + result);
     return result;
 }   // function getNextSlipState(slipWidget)
 
