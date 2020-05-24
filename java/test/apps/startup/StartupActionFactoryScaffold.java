@@ -11,11 +11,6 @@ import org.openide.util.lookup.ServiceProvider;
  * This class will be removed when apps.startup.StartupActionFactory
  * and apps.startup.AbstractStartupActionFactory is removed.
  * 
- * Important:
- * When this class is removed, the string "String" in
- * apps.startup.Bundle.properties should be removed. That string is needed
- * for the AbstractActionModelTest test.
- * 
  * @author Daniel Bergqvist Copyright (C) 2020
  */
 @SuppressWarnings("deprecation")
@@ -27,7 +22,7 @@ public class StartupActionFactoryScaffold extends AbstractStartupActionFactory {
         if (!clazz.equals(String.class)) {
             throw new IllegalArgumentException();
         }
-        return Bundle.getMessage(locale, "String"); // NOI18N
+        return "String"; // NOI18N
     }
 
     @Override
