@@ -750,23 +750,11 @@ public class TrackSegment extends LayoutTrack {
         boolean isValid = (getConnect1() != null) && (getConnect2() != null);
 
         if (isValid && isCircle()) {
-            //if these have been defined...
-            if (isValid) {
-                calculateTrackSegmentAngle();
-                Arc2D arc = new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN);
-                result = arc.getBounds2D();
-            }
+            calculateTrackSegmentAngle();
+            Arc2D arc = new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN);
+            result = arc.getBounds2D();
         } else if (isValid && isBezier()) {
-            //if these have been defined...
-            if (isValid) {
-                result = MathUtil.getBezierBounds(getBezierPoints());
-            } else {
-                //otherwise fake it with just the control points
-                result = MathUtil.setOrigin(result, bezierControlPoints.get(0));
-                for (int idx = 1; idx < bezierControlPoints.size(); idx++) {
-                    result.add(bezierControlPoints.get(idx));
-                }
-            }
+            result = MathUtil.getBezierBounds(getBezierPoints());
         } else {
             if (getConnect1() != null) {
                 result.add(LayoutEditor.getCoords(getConnect1(), getType1()));
