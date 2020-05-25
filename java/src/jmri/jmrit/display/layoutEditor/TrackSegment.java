@@ -745,11 +745,20 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public Rectangle2D getBounds() {
-        Rectangle2D result = MathUtil.zeroRectangle2D;
+        Rectangle2D result = MathUtil.setOrigin(MathUtil.zeroRectangle2D, getCoordsCenter());
 
-        if (isBezier()) {
+        boolean isValid = (getConnect1() != null) && (getConnect2() != null);
+
+        if (isValid && isCircle()) {
             //if these have been defined...
-            if ((getConnect1() != null) && (getConnect2() != null)) {
+            if (isValid) {
+                calculateTrackSegmentAngle();
+                Arc2D arc = new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN);
+                result = arc.getBounds2D();
+            }
+        } else if (isValid && isBezier()) {
+            //if these have been defined...
+            if (isValid) {
                 result = MathUtil.getBezierBounds(getBezierPoints());
             } else {
                 //otherwise fake it with just the control points
@@ -759,16 +768,12 @@ public class TrackSegment extends LayoutTrack {
                 }
             }
         } else {
-            Point2D ep1 = getCoordsCenter(), ep2 = getCoordsCenter();
             if (getConnect1() != null) {
-                ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
+                result.add(LayoutEditor.getCoords(getConnect1(), getType1()));
             }
             if (getConnect2() != null) {
-                ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
+                result.add(LayoutEditor.getCoords(getConnect2(), getType2()));
             }
-
-            result = MathUtil.setOrigin(result, ep1);
-            result.add(ep2);
         }
         setCoordsCenter(MathUtil.midPoint(result));
         return result;
@@ -2100,17 +2105,10 @@ public class TrackSegment extends LayoutTrack {
                 result = MathUtil.add(getCoordsCenter(), delta);
             } else if (isBezier()) {
                 // compute result Bezier point for (t == 0.5);
-                // copy all the control points (including end points) into an array
-                int len = bezierControlPoints.size() + 2;
-                Point2D[] points = new Point2D[len];
-                points[0] = ep1;
-                for (int idx = 1; idx < len - 1; idx++) {
-                    points[idx] = bezierControlPoints.get(idx - 1);
-                }
-                points[len - 1] = ep2;
+                Point2D[] points = getBezierPoints();
 
                 // calculate midpoints of all points (len - 1 order times)
-                for (int idx = len - 1; idx > 0; idx--) {
+                for (int idx = points.length - 1; idx > 0; idx--) {
                     for (int jdx = 0; jdx < idx; jdx++) {
                         points[jdx] = MathUtil.midPoint(points[jdx], points[jdx + 1]);
                     }
@@ -2122,7 +2120,7 @@ public class TrackSegment extends LayoutTrack {
             super.setCoordsCenter(result);
         }
         return result;
-    }
+    }   // getCentreSeg
 
     public void setCentreSeg(Point2D p) {
         super.setCoordsCenter(p);
