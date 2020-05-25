@@ -8,8 +8,10 @@ import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,15 +26,20 @@ class RouteExportToLogixTest {
     private ConditionalManager cm;
     private RouteManager rm;
     private Logix l;
+    private Map<String,Conditional> conditionalMap;
 
     @BeforeEach
     void setUp() {
         JUnitUtil.setUpLoggingAndCommonProperties();
-        lm = Mockito.mock(LogixManager.class);
-        Mockito.when(lm.getSystemNamePrefix()).thenReturn("IL");
-        Mockito.when(lm.createNewLogix(Mockito.anyString(),Mockito.anyString())).thenAnswer(i -> l = new DefaultLogix(i.getArgument(0),i.getArgument(1)));
+        conditionalMap = new HashMap<>();
         cm = Mockito.mock(ConditionalManager.class);
-        Mockito.when(cm.createNewConditional(Mockito.anyString(),Mockito.anyString())).thenAnswer(i -> new DefaultConditional(i.getArgument(0),i.getArgument(1)));
+        Mockito.when(cm.typeLetter()).thenReturn('X');
+        Mockito.when(cm.createNewConditional(Mockito.anyString(),Mockito.anyString())).thenAnswer(i -> generateConditional(i.getArgument(0),i.getArgument(1)));
+        Mockito.when(cm.getBySystemName(Mockito.anyString())).thenAnswer(i -> conditionalMap.get(i.getArgument(0)));
+        lm = Mockito.mock(LogixManager.class);
+        Mockito.when(lm.getSystemNamePrefix()).thenReturn("IX");
+        Mockito.when(lm.typeLetter()).thenReturn('X');
+        Mockito.when(lm.createNewLogix(Mockito.anyString(),Mockito.anyString())).thenAnswer(i -> l = new DefaultLogix(i.getArgument(0),i.getArgument(1),cm));
         rm = Mockito.mock(RouteManager.class);
     }
 
@@ -47,6 +54,12 @@ class RouteExportToLogixTest {
         }
         l = null;
         JUnitUtil.tearDown();
+    }
+
+    private Conditional generateConditional(String systemName,String userName){
+        conditionalMap.putIfAbsent(systemName,new DefaultConditional(systemName,userName));
+        l.addConditional(systemName,conditionalMap.get(systemName));
+        return conditionalMap.get(systemName);
     }
 
     private Turnout createMockTurnout(String systemName, String userName){
@@ -103,7 +116,7 @@ class RouteExportToLogixTest {
         Mockito.when(rm.getBySystemName(Mockito.anyString())).thenReturn(r);
         Mockito.when(rm.getByUserName(Mockito.anyString())).thenReturn(r);
         new RouteExportToLogix("IO12345",rm,lm,cm).export();
-        Mockito.verify(lm).createNewLogix("IL:RTX:IO12345","Hello World");
+        Mockito.verify(lm).createNewLogix("IX:RTX:IO12345","Hello World");
         Mockito.verify(rm).deleteRoute(r);
     }
 
@@ -122,7 +135,7 @@ class RouteExportToLogixTest {
         Mockito.when(rm.getByUserName(Mockito.anyString())).thenReturn(r);
         new RouteExportToLogix("IO12345",rm,lm,cm).export();
         Mockito.verify(cm).createNewConditional(Mockito.anyString(),Mockito.anyString());
-        Mockito.verify(lm).createNewLogix("IL:RTX:IO12345","Hello World");
+        Mockito.verify(lm).createNewLogix("IX:RTX:IO12345","Hello World");
         Mockito.verify(rm).deleteRoute(r);
         assertThat(l).isNotNull();
     }

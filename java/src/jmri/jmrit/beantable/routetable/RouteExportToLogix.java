@@ -280,7 +280,6 @@ public class RouteExportToLogix {
      * @return number of conditionals after the creation
      * @throws IllegalArgumentException if "user input no good"
      */
-    // why are the controls being passed, and not their selections?
     private int makeSensorConditional(Sensor selectedSensor, int sensorMode, int numConds, boolean onChange, ArrayList<ConditionalAction> actionList, ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
         ConditionalVariable cVar = makeCtrlSensorVar(selectedSensor, sensorMode, false, onChange);
         if (cVar != null) {
@@ -324,8 +323,8 @@ public class RouteExportToLogix {
      * @return number of conditionals after the creation
      * @throws IllegalArgumentException if "user input no good"
      */
-    // why are the controls being passed, and not their selections?
-    private int makeTurnoutConditional(Turnout turnout, int state, int numConds, boolean onChange, ArrayList<ConditionalAction> actionList, ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
+    private int makeTurnoutConditional(Turnout turnout, int state, int numConds, boolean onChange, ArrayList<ConditionalAction> actionList,
+                                       ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
         ConditionalVariable cVar = makeCtrlTurnoutVar(turnout,state, false, onChange);
         if (cVar != null) {
             ArrayList<ConditionalVariable> varList = new ArrayList<>();
