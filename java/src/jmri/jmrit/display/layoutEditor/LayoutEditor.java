@@ -212,7 +212,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private  List<SignalMastIcon> signalMastList = new ArrayList<>();            // Signal Mast Icons
 
     public final LayoutEditorViewContext gContext = new LayoutEditorViewContext(); // public for now, as things work access changes
-    
+
     @Nonnull
     public List<SensorIcon> getSensorList() {
         return sensorList;
@@ -2704,7 +2704,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         lt.addRay(270.0);
         setDirty();
 
-        unionToPanelBounds(lt.getBounds());
     }
 
     /**
@@ -4763,11 +4762,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         // create object
         PositionablePoint o = new PositionablePoint(name,
-                PositionablePoint.PointType.ANCHOR, this);
+                                    PositionablePoint.PointType.ANCHOR, this);
         PositionablePointView pv = new PositionablePointView(o,currentPoint, this);
         addLayoutTrack(o, pv);
         
-        unionToPanelBounds(o.getBounds());
         setDirty();
 
         return o;
@@ -4786,7 +4784,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         PositionablePointView pv = new PositionablePointView(o, currentPoint, this);
         addLayoutTrack(o, pv);
 
-        unionToPanelBounds(o.getBounds());
         setDirty();
     }
 
@@ -4803,7 +4800,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         PositionablePointView pv = new PositionablePointView(o, currentPoint, this);
         addLayoutTrack(o, pv);
         
-        unionToPanelBounds(o.getBounds());
         setDirty();
     }
 
@@ -4824,7 +4820,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 this
             );
         addLayoutTrack(newTrack, tsv);
-        unionToPanelBounds(tsv.getBounds());
+
         setDirty();
 
         // link to connected objects
@@ -4870,8 +4866,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         LevelXing o = new LevelXing(name, this);
         LevelXingView ov = new LevelXingView(o, currentPoint, this);
         addLayoutTrack(o, ov);
-        
-        unionToPanelBounds(o.getBounds());
         
         setDirty();
 
@@ -4929,8 +4923,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         String name = finder.uniqueName("SL", ++numLayoutSlips);
 
         // create object
-        LayoutSlip o; 
+        LayoutSlip o;
         LayoutSlipView ov;
+
         switch(type) {
             case DOUBLE_SLIP :
                 LayoutDoubleSlip lds = new LayoutDoubleSlip(name, this);
@@ -4948,7 +4943,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
 
         addLayoutTrack(o, ov);
-        unionToPanelBounds(ov.getBounds());
+
         setDirty();
 
         // check on layout block
@@ -5039,8 +5034,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         String name = finder.uniqueName("TO", ++numLayoutTurnouts);
 
         // create object - check all types, although not clear all actually reach here
-        LayoutTurnout o; 
+        LayoutTurnout o;
         LayoutTurnoutView ov; 
+
         switch(type) {
 
             case RH_TURNOUT :
@@ -5093,7 +5089,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
         
         addLayoutTrack(o, ov);
-        unionToPanelBounds(ov.getBounds());
+
         setDirty();
 
         // check on layout block
@@ -5318,12 +5314,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
                                 fromPointType.turntableTrackIndex() );
                     } else {
-                        log.warn("setLink found expected toObject type {} with fromPointType {} fromObject type {}", 
+                        log.warn("setLink found expected toObject type {} with fromPointType {} fromObject type {}",
                                     toObject.getClass(), fromPointType, fromObject.getClass(), new Exception("traceback") );
                     }
                 } else {
-                    log.warn("setLink found expected fromObject type {} with fromPointType {} toObject type {}", 
-                                fromObject.getClass(), fromPointType, toObject.getClass(), new Exception("traceback") );                    
+                    log.warn("setLink found expected fromObject type {} with fromPointType {} toObject type {}",
+                                fromObject.getClass(), fromPointType, toObject.getClass(), new Exception("traceback") );
                 }
                 break;
             }
@@ -7194,7 +7190,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void setLayoutName(@Nonnull String name) {
         layoutName = name;
     }
-    
+
     /**
      * Should only be invoked on the GUI (Swing) thread.
      * @param state true to show the help bar, else false.
@@ -7780,11 +7776,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     final public void addLayoutTrack(@Nonnull LayoutTrack trk, @Nonnull LayoutTrackView v) {
         log.trace("addLayoutTrack {}", trk);
         if (layoutTrackList.contains(trk)) log.warn("LayoutTrack {} already being maintained", trk.getName());
-        layoutTrackList.add(trk);
         
+        layoutTrackList.add(trk);
         layoutTrackViewList.add(v);
         trkToView.put(trk, v);
         viewToTrk.put(v, trk);
+        
+        unionToPanelBounds(v.getBounds()); // temporary - this should probably _not_ be in the topological part
     }
 
     /**
@@ -7805,7 +7803,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         log.trace("removeLayoutTrackAndRedraw absent {}", trk);
         return false;
     }
-    
+
     /**
      * If item present, delete from the list of LayoutTracks
      * and force a dirty redraw.
@@ -7819,7 +7817,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         trkToView.remove(trk);
         viewToTrk.remove(v);
     }
-    
+
     /**
      * Clear the list of layout tracks. Not intended for general use.
      *
@@ -7830,7 +7828,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         trkToView.clear();
         viewToTrk.clear();
     }
-     
+
     public @Nonnull
     List<LayoutShape> getLayoutShapes() {
         return layoutShapes;

@@ -1137,6 +1137,10 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return connectD;
     }
 
+    /**
+     * @return null if no turnout set
+     */
+    @CheckForNull
     public Turnout getTurnout() {
         if (namedTurnout == null) {
             // set physical turnout if possible and needed

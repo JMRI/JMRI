@@ -830,9 +830,9 @@ public class LayoutTurntableView extends LayoutTrackView {
         return active;
     }
 
-    public class RayTrackVisuals {
+    public static class RayTrackVisuals {
 
-        RayTrack track;
+        public final RayTrack track;
         
         // persistant instance variables
         private double rayAngle = 0.0;
@@ -855,6 +855,9 @@ public class LayoutTurntableView extends LayoutTrackView {
             rayAngle = MathUtil.wrapPM360(an);
         }
 
+        public RayTrackVisuals(RayTrack track) {
+            this.track = track;
+        }
     }
 
     /**

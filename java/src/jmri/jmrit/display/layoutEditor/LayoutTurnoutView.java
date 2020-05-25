@@ -609,7 +609,10 @@ public class LayoutTurnoutView extends LayoutTrackView {
         return turnout.getConnectD();
     }
 
-    @Nonnull  // temporary?  Might want to run all calls through this class; but this is getModel equiv
+    /**
+     * @return null if no turnout set
+     */
+    @CheckForNull  // temporary?  Might want to run all calls through this class; but this is getModel equiv
     public Turnout getTurnout() {
         return turnout.getTurnout();
     }
