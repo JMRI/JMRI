@@ -1,15 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static java.lang.Float.POSITIVE_INFINITY;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.*;
 import javax.annotation.*;
-import javax.swing.*;
 import jmri.*;
-import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
-import jmri.jmrit.signalling.SignallingGuiTools;
-import jmri.util.MathUtil;
 
 /**
  * A specialization of {@link LayoutTurnout}

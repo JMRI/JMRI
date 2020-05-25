@@ -1,25 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static java.lang.Float.POSITIVE_INFINITY;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.text.MessageFormat;
-import java.util.*;
 import javax.annotation.*;
-import javax.swing.*;
 import jmri.*;
-import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
-import jmri.jmrit.signalling.SignallingGuiTools;
-import jmri.util.MathUtil;
-import org.slf4j.*;
 
 /**
  * A LayoutTurnout corresponds to a turnout on the layout. A LayoutTurnout is an

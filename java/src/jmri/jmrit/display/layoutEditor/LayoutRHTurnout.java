@@ -1,12 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.*;
 import javax.annotation.*;
-import javax.swing.*;
-import jmri.*;
-import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
-import jmri.jmrit.signalling.SignallingGuiTools;
 
 
 /**

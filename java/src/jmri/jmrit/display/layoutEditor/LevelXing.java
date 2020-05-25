@@ -1,22 +1,14 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static java.lang.Float.POSITIVE_INFINITY;
-import static java.lang.Math.PI;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 // import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.event.*;  // temporary until MouseEvent no longer required
 import java.awt.geom.*;
 import java.text.MessageFormat;
 import java.util.*;
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.swing.*;  // temporary until JPopUp no longer required
 import jmri.*;
-import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.jmrit.signalling.SignallingGuiTools;
-import jmri.util.MathUtil;
 
 /**
  * A LevelXing is two track segment on a layout that cross at an angle.

@@ -1,15 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static java.lang.Float.POSITIVE_INFINITY;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.awt.geom.GeneralPath;
-import java.util.*;
 import javax.annotation.*;
-import jmri.*;
-import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
-import jmri.jmrit.signalling.SignallingGuiTools;
-import jmri.util.MathUtil;
 
 /**
  * A LayoutXOver corresponds to a crossover (connection between parallel tracks) on the layout. 

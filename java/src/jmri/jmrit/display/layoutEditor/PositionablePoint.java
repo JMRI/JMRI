@@ -1,13 +1,10 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.text.MessageFormat;
 import java.util.*;
 import javax.annotation.*;
@@ -15,7 +12,6 @@ import javax.swing.*;
 import jmri.*;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.signalling.SignallingGuiTools;
-import jmri.util.*;
 import jmri.util.swing.*;
 
 

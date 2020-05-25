@@ -1,23 +1,12 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static java.lang.Float.POSITIVE_INFINITY;
-
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.beans.*;
 import java.text.MessageFormat;
 import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.swing.*;
 import jmri.*;
 import jmri.util.MathUtil;
 

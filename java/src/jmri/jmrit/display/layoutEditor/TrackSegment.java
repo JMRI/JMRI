@@ -3,19 +3,14 @@ package jmri.jmrit.display.layoutEditor;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.*;
 import java.util.*;
-import java.util.function.*;
 import javax.annotation.*;
 import jmri.*;
 import jmri.util.*;
 
 // temporary - these need to go
 import jmri.util.swing.JmriColorChooser;
-import javax.swing.*;
 import java.awt.geom.*;
-import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Graphics2D;
-import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 
 /**
  * TrackSegment is a segment of track on a layout linking two nodes of the

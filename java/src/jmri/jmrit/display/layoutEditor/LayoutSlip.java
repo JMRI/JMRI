@@ -1,17 +1,11 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.event.*;
-import java.awt.geom.*;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.Map.Entry;
 import javax.annotation.*;
 import javax.swing.*;
 import jmri.*;
-import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
-import jmri.util.MathUtil;
 
 /**
  * A LayoutSlip is a crossing of two straight tracks designed in such a way as
