@@ -38,7 +38,7 @@ et fournir des exemples des meilleures pratiques actuelles.
 <a id="namedbeans" name="namedbeans"></a><h2>Noms, NamedBeans, et les gestionnaires</h2>
 
 Le concept "NameBean" est la base de JMRI.
-Un <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
+Un <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
 est un objet de base qui repr&#233;sente quelque chose, typiquement quelque chose 
 comme un Capteur ou un Aiguillage.
 <ul>
@@ -50,11 +50,11 @@ Voir la  <a href="Names.shtml">page sur les Noms</a> pour en savoir davantage.
 </ul>
 Fonctionnellement, toutes les classes d'objets du syst&#232;me ( Capteur, Aiguillage,... ) et
 leurs mise en oeuvre sp&#233;cifiques ( LnSensor,  XNetTurnout, ...), h&#233;rite de la classe de base
-<a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>.
+<a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>.
 <p>
 Pour obtenir l'acc&#232;s &#224; un objet sp&#233;cifique (un NamedBean d'un type sp&#233;cifique avec un nom sp&#233;cifique ), vous faites 
 des demandes &#224; un gestionnaire: vous demandez un
-<a href="http://jmri.org/JavaDoc/doc/jmri/TurnoutManager.html">TurnoutManager</a> pour un Aiguillage sp&#233;cifique
+<a href="https://jmri.org/JavaDoc/doc/jmri/TurnoutManager.html">TurnoutManager</a> pour un Aiguillage sp&#233;cifique
 &#224; votre tour, vous
 <a href="IntroStructure.shtml">acc&#233;dez aux gestionnaires &#224; travers l'InstanceManager commun</a>.
 
@@ -63,7 +63,7 @@ Un utilisateur peut vouloir r&#233;&#233;f&#233;rencer un NamedBean via un nom u
 changer le NetBean sp&#233;cifique auquel le nom utilisateur se r&#233;f&#232;re. "Yard East Turnout" peut &#234;tre 
 "LT12" &#224; un point et plus tardpeut changer en "CT5". Pour g&#233;rer ceci,
 votre code utilise les objets
-<a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>
+<a href="https://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>
 pour g&#233;rer les r&#233;f&#233;rences pour NamedBeans. Ils automatisent le processus de renommage.
 
 <h2>Organisation du Code</h2>
