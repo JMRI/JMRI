@@ -763,7 +763,7 @@ public class TrackSegment extends LayoutTrack {
                 result.add(LayoutEditor.getCoords(getConnect2(), getType2()));
             }
         }
-        setCoordsCenter(MathUtil.midPoint(result));
+        super.setCoordsCenter(MathUtil.midPoint(result));
         return result;
     }
 
