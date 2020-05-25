@@ -31,7 +31,6 @@ public class StartupActionFactoryScaffoldTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
