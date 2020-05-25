@@ -226,7 +226,7 @@ public final class MathUtil {
     }
 
     /**
-     * Ddivide a point by two scalars.
+     * Divide a point by two scalars.
      *
      * @param p the point
      * @param x the X scalar
@@ -1312,6 +1312,16 @@ public final class MathUtil {
      */
     public static double fillBezier(Graphics2D g2, @Nonnull Point2D p[]) {
         return plotBezier(g2, p, 0.0, true);
+    }
+
+    /**
+     * computer the bounds of a Bezier curve.
+     *
+     * @param p the control points
+     * @return the bounds of the Bezier curve
+     */
+    public static Rectangle2D getBezierBounds(@Nonnull Point2D p[]) {
+        return getBezierPath(p).getBounds2D();
     }
 
     /**

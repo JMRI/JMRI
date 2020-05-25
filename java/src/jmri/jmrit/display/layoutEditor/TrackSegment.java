@@ -119,7 +119,7 @@ public class TrackSegment extends LayoutTrack {
         setHidden(hide);
 
         setupDefaultBumperSizes(layoutEditor);
-        
+
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
     }
 
@@ -191,7 +191,7 @@ public class TrackSegment extends LayoutTrack {
      *
      * @param oldTrack the old track connection.
      * @param newTrack the new track connection.
-     * @param newType the hit point type.
+     * @param newType  the hit point type.
      * @return true if successful.
      */
     public boolean replaceTrackConnection(@CheckForNull LayoutTrack oldTrack, @CheckForNull LayoutTrack newTrack, HitPointType newType) {
@@ -416,6 +416,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * Determine if we need to redraw a curved piece of track. Saves having to
      * recalculate the circle details each time.
+     *
      * @return true if needs redraw, else false.
      */
     public boolean trackNeedsRedraw() {
@@ -744,19 +745,32 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public Rectangle2D getBounds() {
-        Rectangle2D result;
+        Rectangle2D result = MathUtil.zeroRectangle2D;
 
-        Point2D ep1 = getCoordsCenter(), ep2 = getCoordsCenter();
-        if (getConnect1() != null) {
-            ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
+        if (isBezier()) {
+            //if these have been defined...
+            if ((getConnect1() != null) && (getConnect2() != null)) {
+                result = MathUtil.getBezierBounds(getBezierPoints());
+            } else {
+                //otherwise fake it with just the control points
+                result = MathUtil.setOrigin(result, bezierControlPoints.get(0));
+                for (int idx = 1; idx < bezierControlPoints.size(); idx++) {
+                    result.add(bezierControlPoints.get(idx));
+                }
+            }
+        } else {
+            Point2D ep1 = getCoordsCenter(), ep2 = getCoordsCenter();
+            if (getConnect1() != null) {
+                ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
+            }
+            if (getConnect2() != null) {
+                ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
+            }
+
+            result = MathUtil.setOrigin(result, ep1);
+            result.add(ep2);
         }
-        if (getConnect2() != null) {
-            ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
-        }
-
-        result = new Rectangle2D.Double(ep1.getX(), ep1.getY(), 0, 0);
-        result.add(ep2);
-
+        setCoordsCenter(MathUtil.midPoint(result));
         return result;
     }
 
@@ -963,7 +977,7 @@ public class TrackSegment extends LayoutTrack {
                     setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
                     setArrowStyle(n);
                 });
-                jcbmi.setSelected(arrowStyle == i);            
+                jcbmi.setSelected(arrowStyle == i);
             }
 
             if (hasEC1 && hasEC2) {
@@ -1746,7 +1760,8 @@ public class TrackSegment extends LayoutTrack {
 
     /**
      * Display popup menu for information and editing.
-     * @param e mouse event, for co-ordinates of popup.
+     *
+     * @param e            mouse event, for co-ordinates of popup.
      * @param hitPointType the hit point type.
      */
     protected void showBezierPopUp(MouseEvent e, HitPointType hitPointType) {
@@ -1905,6 +1920,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * Get state. "active" means that the object is still displayed, and should
      * be stored.
+     *
      * @return true if still displayed, else false.
      */
     public boolean isActive() {
@@ -1928,13 +1944,14 @@ public class TrackSegment extends LayoutTrack {
     /**
      * Method used by LayoutEditor.
      * <p>
-     * If the argument is 
+     * If the argument is
      * <ul>
      * <li>HIDECONALL then set HIDECONALL
      * <li>SHOWCON reset HIDECONALL is set, other wise set SHOWCON
      * <li>HIDECON or otherwise set HIDECON
      * </ul>
      * Then always redraw the LayoutEditor panel and set it dirty.
+     *
      * @param hide HIDECONALL, SHOWCON, HIDECON.
      */
     public void hideConstructionLines(int hide) {
@@ -1961,9 +1978,9 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * The following are used only as a local store after a circle or arc
-     * has been calculated. This prevents the need to recalculate the values
-     * each time a re-draw is required.
+     * The following are used only as a local store after a circle or arc has
+     * been calculated. This prevents the need to recalculate the values each
+     * time a re-draw is required.
      */
     private Point2D pt1;
     private Point2D pt2;
@@ -2176,8 +2193,9 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Called when the user changes the angle dynamically in edit mode
-     * by dragging the centre of the circle.
+     * Called when the user changes the angle dynamically in edit mode by
+     * dragging the centre of the circle.
+     *
      * @param x new width.
      * @param y new height.
      */
@@ -2993,13 +3011,13 @@ public class TrackSegment extends LayoutTrack {
     /*======================*\
     |* decoration accessors *|
     \*======================*/
-    
     // Although the superclass LayoutTrack stores decorators in a Map,
     // here we store them in specific variables like arrowStyle, bridgeSideRight, etc.
-    // We convert to and from the map during the getDecorations, setDecorations 
+    // We convert to and from the map during the getDecorations, setDecorations
     // and hasDecorations calls.
-    
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean hasDecorations() {
         return ((arrowStyle > 0)
@@ -3008,7 +3026,9 @@ public class TrackSegment extends LayoutTrack {
                 || (tunnelSideLeft || tunnelSideRight));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Map<String, String> getDecorations() {
         if (decorations == null) {
@@ -3126,9 +3146,11 @@ public class TrackSegment extends LayoutTrack {
             decorations.put("tunnel", String.join(";", tunnelValues));
         }   // if (tunnelSideLeft || tunnelSideRight)
         return decorations;
-    } 
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setDecorations(Map<String, String> decorations) {
         Color defaultTrackColor = layoutEditor.getDefaultTrackColorColor();
@@ -3360,22 +3382,22 @@ public class TrackSegment extends LayoutTrack {
         } // if (decorathions != null)
     }   // setDirections
 
-    /** 
-     * Arrow decoration accessor.
-     * The 0 (none) and 1 through 5 arrow decorations are keyed to 
-     * files like program:resources/icons/decorations/ArrowStyle1.png
-     * et al.
+    /**
+     * Arrow decoration accessor. The 0 (none) and 1 through 5 arrow decorations
+     * are keyed to files like
+     * program:resources/icons/decorations/ArrowStyle1.png et al.
+     *
      * @return arrow style, 0 is none.
      */
     public int getArrowStyle() {
         return arrowStyle;
     }
 
-    /** 
-     * Set the arrow decoration.
-     * The 0 (none) and 1 through 5 arrow decorations are keyed to 
-     * files like program:resources/icons/decorations/ArrowStyle1.png
-     * et al.
+    /**
+     * Set the arrow decoration. The 0 (none) and 1 through 5 arrow decorations
+     * are keyed to files like
+     * program:resources/icons/decorations/ArrowStyle1.png et al.
+     *
      * @param newVal the arrow style index, 0 is none.
      */
     public void setArrowStyle(int newVal) {
