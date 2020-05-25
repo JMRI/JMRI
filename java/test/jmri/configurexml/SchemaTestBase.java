@@ -141,6 +141,7 @@ public class SchemaTestBase {
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() throws Exception {
         XmlFile.setDefaultValidate(this.validate);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

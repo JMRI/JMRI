@@ -292,22 +292,14 @@ public class OperationsPanel extends JPanel {
                     @Override
                     public boolean checkPromptNeeded() {
                         if (Setup.isAutoSaveEnabled()) {
-                            storeValues();
                             return true;
                         }
                         return !OperationsXml.areFilesDirty();
                     }
 
                     @Override
-                    public boolean doPrompt() {
+                    public void run() {
                         storeValues();
-                        return true;
-                    }
-
-                    @Override
-                    public boolean doClose() {
-                        storeValues();
-                        return true;
                     }
                 });
     }

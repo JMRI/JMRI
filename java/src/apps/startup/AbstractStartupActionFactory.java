@@ -9,7 +9,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * {@link jmri.util.startup.AbstractStartupActionFactory} instead
  */
 @Deprecated
+@SuppressWarnings("deprecation")
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Deprecated by refactoring; retaining unchanged until removal")
-public abstract class AbstractStartupActionFactory extends jmri.util.startup.AbstractStartupActionFactory {
+public abstract class AbstractStartupActionFactory extends jmri.util.startup.AbstractStartupActionFactory implements StartupActionFactory {
 
 }

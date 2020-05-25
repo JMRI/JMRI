@@ -131,8 +131,8 @@ The workflow we use:
    included into JMRI.
 
 <li>Then a Pull Request, PR, is created, some automatic tools, for example Travis and
-   AppVeyor, will start to compile the code and run a big number of tests against it.
-   Most, but not all, of these tools must succed for the maintainers to be able to
+   Code Climate, will start to compile the code and run a big number of tests against it.
+   Most, but not all, of these tools must succeed for the maintainers to be able to
    merge your work into JMRI.
 
 <li>Once the automatic tools are finished, the maintainers will look at the Pull Request

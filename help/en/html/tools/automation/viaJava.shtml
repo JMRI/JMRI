@@ -58,7 +58,7 @@
           automation for your layout using JMRI.</p>
 
           <p>The key class is <a href=
-          "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">
+          "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">
           AbstractAutomaton</a>, which provides threading support
           to simplify custom automation code.</p>
 

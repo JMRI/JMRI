@@ -3059,9 +3059,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             } catch (IOException ex) {
                 log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
             }
-            if (Setup.isGenerateCsvManifestEnabled()) {
-                new TrainCsvManifest(this);
-            }
+            new TrainCsvManifest(this);
         }
         File file = InstanceManager.getDefault(TrainManagerXml.class).getTrainManifestFile(getName());
         if (!file.exists()) {
@@ -3137,9 +3135,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             } catch (IOException ex) {
                 log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
             }
-            if (Setup.isGenerateCsvManifestEnabled()) {
-                new TrainCsvManifest(this);
-            }
+            new TrainCsvManifest(this);
         }
         File file = InstanceManager.getDefault(TrainManagerXml.class).getTrainCsvManifestFile(getName());
         if (!file.exists()) {

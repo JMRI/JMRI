@@ -106,7 +106,7 @@
             You can use
             <a href="../../tools/scripting/index.shtml">scripting</a>
             to install a new 
-            <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttContentParser.html">jmri.jmrix.mqtt.MqttContentParser</a>
+            <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttContentParser.html">jmri.jmrix.mqtt.MqttContentParser</a>
             object to code and decode the content of messages.
             See the 
             <a href="/jython/SetMqttParser.py">jython/SetMqttParser.py</a>
@@ -118,9 +118,9 @@
             Note that you can call
             <code>setParser(...)</code>
             on the
-            <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttTurnoutManager.html">jmri.jmrix.mqtt.MqttTurnoutManager</a>
+            <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttTurnoutManager.html">jmri.jmrix.mqtt.MqttTurnoutManager</a>
             or on an individual
-            <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttTurnout.html">jmri.jmrix.mqtt.MqttTurnout</a>
+            <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttTurnout.html">jmri.jmrix.mqtt.MqttTurnout</a>
             object.  If you call it on an individual 
             MqttTurnout, that's the only one that's affected.
             If you call it on the MqttTurnoutManager
