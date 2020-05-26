@@ -96,6 +96,9 @@ public class TrackSegment extends LayoutTrack {
         angle = 0.0D;
         circle = false;
         bezier = false;
+
+        getBounds();    //this forces recalculation of midpoint
+
         setupDefaultBumperSizes(layoutEditor);
 
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
@@ -117,6 +120,8 @@ public class TrackSegment extends LayoutTrack {
         mainline = main;
         dashed = dash;
         setHidden(hide);
+
+        getBounds();    //this forces recalculation of midpoint
 
         setupDefaultBumperSizes(layoutEditor);
 
@@ -747,23 +752,19 @@ public class TrackSegment extends LayoutTrack {
     public Rectangle2D getBounds() {
         Rectangle2D result = MathUtil.setOrigin(MathUtil.zeroRectangle2D, getCoordsCenter());
 
-        boolean isValid = (getConnect1() != null) && (getConnect2() != null);
-
-        if (isValid && isCircle()) {
-            calculateTrackSegmentAngle();
-            Arc2D arc = new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN);
-            result = arc.getBounds2D();
-        } else if (isValid && isBezier()) {
-            result = MathUtil.getBezierBounds(getBezierPoints());
-        } else {
-            if (getConnect1() != null) {
-                result.add(LayoutEditor.getCoords(getConnect1(), getType1()));
-            }
-            if (getConnect2() != null) {
+        if ((getConnect1() != null) && (getConnect2() != null)) {
+            if (isCircle()) {
+                calculateTrackSegmentAngle();
+                Arc2D arc = new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN);
+                result = arc.getBounds2D();
+            } else if (isBezier()) {
+                result = MathUtil.getBezierBounds(getBezierPoints());
+            } else {
+                result = MathUtil.setOrigin(MathUtil.zeroRectangle2D, LayoutEditor.getCoords(getConnect1(), getType1()));
                 result.add(LayoutEditor.getCoords(getConnect2(), getType2()));
             }
+            super.setCoordsCenter(MathUtil.midPoint(result));
         }
-        super.setCoordsCenter(MathUtil.midPoint(result));
         return result;
     }
 
