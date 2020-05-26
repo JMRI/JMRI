@@ -188,4 +188,36 @@ class RouteExportToLogixTest {
         assertThat(a.get(0).getDeviceName()).isEqualTo("Sensor");
         assertThat(a.get(0).getActionData()).isEqualTo(Sensor.ACTIVE);
     }
+
+    @Test
+    void whenRouteWithOneTurnoutAndRouteSensorIsExported_ThenALogixIsCreatedWithAConditionalAction_AndTheRouteIsDeleted() {
+        Route r = Mockito.mock(Route.class);
+        Mockito.when(r.getSystemName()).thenReturn("IO12345");
+        Mockito.when(r.getUserName()).thenReturn("Hello World");
+        Mockito.when(r.getDisplayName()).thenReturn("Hello World");
+        Turnout t = createMockTurnout("IT1","Turnout");
+        addOutputTurnoutToRoute(t,r,Turnout.THROWN,0);
+        Sensor s = createMockSensor("IS1","Sensor");
+        addRouteSensorToRoute(s,r,Route.ONACTIVE,0);
+        Mockito.when(rm.getBySystemName(Mockito.anyString())).thenReturn(r);
+        Mockito.when(rm.getByUserName(Mockito.anyString())).thenReturn(r);
+        new RouteExportToLogix("IO12345",rm,lm,cm).export();
+        Mockito.verify(cm).createNewConditional(Mockito.anyString(),Mockito.anyString());
+        Mockito.verify(lm).createNewLogix("IX:RTX:IO12345","Hello World");
+        Mockito.verify(rm).deleteRoute(r);
+        assertThat(l).isNotNull();
+        assertThat(l.getNumConditionals()).isEqualTo(1);
+        assertThat(l.getConditionalByNumberOrder(0)).isNotNull();
+        Conditional c = l.getConditional(l.getConditionalByNumberOrder(0));
+        assertThat(c.getLogicType()).isEqualTo(Conditional.AntecedentOperator.ALL_AND);
+        assertThat(c.getTriggerOnChange()).isTrue();
+        assertThat(c.getCopyOfStateVariables()).isNotEmpty().hasSize(1);
+        List<ConditionalVariable> sv = c.getCopyOfStateVariables();
+        assertThat(sv.get(0).getNamedBean().getName()).isEqualTo(s.getDisplayName());
+        assertThat(sv.get(0).getState()).isEqualTo(Sensor.ACTIVE);
+        assertThat(c.getCopyOfActions()).isNotEmpty().hasSize(1);
+        List<ConditionalAction> a = c.getCopyOfActions();
+        assertThat(a.get(0).getDeviceName()).isEqualTo("Turnout");
+        assertThat(a.get(0).getActionData()).isEqualTo(Turnout.THROWN);
+    }
 }
