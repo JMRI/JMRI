@@ -61,7 +61,7 @@ public class WarrantTableAction extends AbstractAction {
     private WarrantFrame _openFrame;
     private NXFrame _nxFrame;
     private boolean _logging = false;
-    private ShutDownTask _shutDownTask = null;
+    private Runnable _shutDownTask = null;
 
     private WarrantTableAction(String menuOption) {
         super(Bundle.getMessage(menuOption));
@@ -146,14 +146,9 @@ public class WarrantTableAction extends AbstractAction {
                     return;
                 }
                 _logging = true;
-                _shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
-                        null, null, null) {
-                    @Override
-                    public boolean checkPromptNeeded() {
-                        OpSessionLog.close();
-                        _logging = false;
-                        return true;
-                    }
+                _shutDownTask = () -> {
+                    OpSessionLog.close();
+                    _logging = false;
                 };
                 jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
                 updateWarrantMenu();

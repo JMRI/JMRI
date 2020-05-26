@@ -673,7 +673,9 @@ public class LoaderPane extends javax.swing.JPanel {
 
     /**
      * Get output data length from 1st message
-     * @return buffer Message from which length is to be extracted
+     * 
+     * @param buffer Message from which length is to be extracted
+     * @return length of the buffer
      */
     int getDataSize(byte[] buffer) {
         if (buffer[4] == 44) {

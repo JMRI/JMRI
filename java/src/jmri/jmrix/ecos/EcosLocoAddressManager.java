@@ -17,7 +17,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.*;
-import jmri.implementation.QuietShutDownTask;
+import jmri.implementation.AbstractShutDownTask;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.ecos.utilities.EcosLocoToRoster;
@@ -115,7 +115,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     }
 
     private EcosPreferences p;
-    private ShutDownTask ecosLocoShutDownTask;
+    ShutDownTask ecosLocoShutDownTask;
     private EcosTrafficController tc;
 
     public EcosLocoAddress provideEcosLoco(String EcosObject, int DCCAddress) {
@@ -220,26 +220,34 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
 
         try {
 
-           Roster.getDefault().addPropertyChangeListener(this);
+            Roster.getDefault().addPropertyChangeListener(this);
 
-           EcosMessage m = new EcosMessage("request(10, view)");
-           tc.sendWaitMessage(m, this);
+            EcosMessage m = new EcosMessage("request(10, view)");
+            tc.sendWaitMessage(m, this);
 
-           /*m = new EcosMessage("queryObjects(10)");
+            /*m = new EcosMessage("queryObjects(10)");
            tc.sendWaitMessage(m, this);*/
-           m = new EcosMessage("queryObjects(10, addr, name, protocol)");
-           tc.sendEcosMessage(m, this);
+            m = new EcosMessage("queryObjects(10, addr, name, protocol)");
+            tc.sendEcosMessage(m, this);
 
-           if (ecosLocoShutDownTask == null) {
-               ecosLocoShutDownTask = new QuietShutDownTask("Ecos Loco Database Shutdown") {
-                   @Override
-                   public boolean execute() {
-                       return shutdownDispose();
-                   }
-               };
-           }
-           jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosLocoShutDownTask);
-        } catch(java.lang.NullPointerException npe) {
+            if (ecosLocoShutDownTask == null) {
+                // TODO: I cannot tell what actually syncs the ECoS with the Roster
+                // or what in this ShutDownTask triggers a sync
+                ecosLocoShutDownTask = new AbstractShutDownTask("Ecos Loco Database Shutdown") {
+
+                    @Override
+                    public Boolean call() {
+                        return shutdownDispose();
+                    }
+
+                    @Override
+                    public void run() {
+                        disposefinal();
+                    }
+                };
+            }
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosLocoShutDownTask);
+        } catch (java.lang.NullPointerException npe) {
             log.debug("Delayed initialization of EcosLocoAddressManager failed, no roster information available");
         }
     }
@@ -379,7 +387,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
                     if (remember.isSelected()) {
                         p.setAdhocLocoFromEcos(0x01);
                     }
-                    disposefinal();
                     dialog.dispose();
                 }
             });

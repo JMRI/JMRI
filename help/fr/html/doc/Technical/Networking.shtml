@@ -143,21 +143,21 @@
 
       <ul>
         <li>Int&eacute;gr&eacute; <a href="../../web/index.shtml">un miniserveur Web</a> (<a href=
-        "http://jmri.org/JavaDoc/doc/jmri/web/miniserver/package-summary.html">code</a>)
+        "https://jmri.org/JavaDoc/doc/jmri/web/miniserver/package-summary.html">code</a>)
 
           <p>C'est annonc&eacute; sur Bonjour/Zeroconf comme un
           service &laquo;_http._tcp.local.". En particulier, il
           contient les <a href=
-          "http://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">
+          "https://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">
           support JMRI XMLIO</a>, qui permet aux navigateurs web
           (avec ou sans AJAX) de surveiller et de contr&ocirc;ler
           un r&eacute;seau ferr&eacute; en acc&eacute;dant &agrave;
           un <a href=
-          "http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">
+          "https://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">
           Servlet JMRI XMLIO</a> Il comprend &eacute;galement des
           installations pour l'affichage et en cliquant sur
           n'importe quoi <a href=
-          "http://jmri.org/JavaDoc/doc/jmri/web/servlet/frameimage/package-summary.html">
+          "https://jmri.org/JavaDoc/doc/jmri/web/servlet/frameimage/package-summary.html">
           d'ouvrir la fen&ecirc;tre JMRI</a>.</p>
         </li>
 
@@ -167,7 +167,7 @@
         "../../../package/jmri/jmrit/withrottle/UserInterface.shtml">
           r&eacute;gulateur &agrave; distance</a> tels que l'iPhone
           ou Android. (<a href=
-          "http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">code</a>)
+          "https://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">code</a>)
           ( <a href="http://withrottle.com">site web du produit
           WiThrottle</a>) ( <a href=
           "../../../package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">

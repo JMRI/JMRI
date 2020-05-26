@@ -9,8 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
-import jmri.ShutDownTask;
-import jmri.implementation.QuietShutDownTask;
 import jmri.server.json.JSON;
 import jmri.server.web.spi.WebServerConfiguration;
 import jmri.util.FileUtil;
@@ -59,7 +57,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
     private final Server server;
     private ZeroConfService zeroConfService = null;
     private WebServerPreferences preferences = null;
-    private ShutDownTask shutDownTask = null;
+    private Runnable shutDownTask = null;
     private final HashMap<String, Registration> registeredUrls = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(WebServer.class);
 
@@ -352,7 +350,16 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
     @Override
     public void lifeCycleStarting(LifeCycle lc) {
-        shutDownTask = new ServerShutDownTask(this);
+        shutDownTask = () -> {
+            try {
+                server.stop();
+            } catch (Exception ex) {
+                // Error without stack trace
+                log.warn("Error shutting down WebServer: {}", ex);
+                // Full stack trace
+                log.debug("Details follow: ", ex);
+            }
+        };
         InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
         log.info("Starting Web Server on port {}", preferences.getPort());
     }
@@ -451,45 +458,6 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
             } catch (Exception ex) {
                 log.error("Exception starting Web Server", ex);
             }
-        }
-    }
-
-    private static class ServerShutDownTask extends QuietShutDownTask {
-
-        private final WebServer server;
-        private boolean isComplete = false;
-
-        public ServerShutDownTask(WebServer server) {
-            super("Stop Web Server"); // NOI18N
-            this.server = server;
-        }
-
-        @Override
-        public boolean execute() {
-            Thread t = new Thread(() -> {
-                try {
-                    server.stop();
-                } catch (Exception ex) {
-                    // Error without stack trace
-                    log.warn("Error shutting down WebServer: {}", ex);
-                    // Full stack trace
-                    log.debug("Details follow: ", ex);
-                }
-                this.isComplete = true;
-            });
-            t.setName("ServerShutDownTask");
-            t.start();
-            return true;
-        }
-
-        @Override
-        public boolean isParallel() {
-            return true;
-        }
-
-        @Override
-        public boolean isComplete() {
-            return this.isComplete;
         }
     }
 }

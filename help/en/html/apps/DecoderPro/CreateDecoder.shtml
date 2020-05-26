@@ -73,7 +73,7 @@
           <p>If you're modifying a decoder definition, it is best to
           start with the most recent version, which can always be
           found here on the JMRI web site at <a href=
-          "http://jmri.org/xml/decoders/">http://jmri.org/xml/decoders/</a>.
+          "https://jmri.org/xml/decoders/">https://jmri.org/xml/decoders/</a>.
           That way, it won't be hard to merge your changes with
           ones that might have come before. Please don't do any
           more reformatting than you have to. If you change the
@@ -341,7 +341,7 @@
             parts as decimal digits, or even base 3 or 5.
             That's a bit more technical, it's rarely needed, but 
             if you do need it see the 
-            <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/symbolicprog/VariableValue.html">javadoc for more details</a>.
+            <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/symbolicprog/VariableValue.html">javadoc for more details</a>.
 
             <li><dfn>default</dfn> - The default value for this
             variable. This is used for a new decoder, or when you
@@ -458,7 +458,7 @@
           tested, and often include tooltip text, translations 
           and other nice features.  See the existing 
           decoder definitions for 
-          <a href="http://jmri.org/xml/decoders/nmra">examples</a>.  
+          <a href="https://jmri.org/xml/decoders/nmra">examples</a>.  
           Some key ones:</p>
 
               <ul>
@@ -486,7 +486,7 @@
                 </ul>
          
          <p>You can also use fragment files to include (hence simplify)
-         <a href="http://jmri.org/xml/decoders/parts">common sets of enum choices</a>.</p> 
+         <a href="https://jmri.org/xml/decoders/parts">common sets of enum choices</a>.</p> 
         </dd>
         <dt class="left">Checking for syntax errors</dt>
 

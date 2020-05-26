@@ -45,6 +45,7 @@ public class DccConsistTest extends AbstractConsistTestBase {
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
         c = null;
     }

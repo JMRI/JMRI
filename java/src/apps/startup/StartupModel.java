@@ -1,64 +1,14 @@
 package apps.startup;
 
-import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
-import jmri.JmriException;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
- * Startup object models all need to implement this interface. This allows the
- * {@link apps.StartupActionsManager} to handle lists of different model
- * classes.
  *
- * @author Randall Wood (C) 2015
+ * @author Randall Wood Copyright 2020
+ * @deprecated since 4.19.6; use {@link jmri.util.startup.StartupModel} instead
  */
-public interface StartupModel {
-
-    /**
-     * Return the name of of the model or its controlled object.
-     *
-     * @return the name, an empty string, or null
-     */
-    @CheckForNull
-    public String getName();
-
-    /**
-     * Set the name of the model.
-     *
-     * @param name the name, an empty string, or null
-     */
-    public void setName(@CheckForNull String name);
-
-    /**
-     * Test is model is a valid model. Invalid models will not be shown or saved
-     * by {@link apps.startup.StartupActionsPreferencesPanel}.
-     *
-     * @return true if valid; false otherwise
-     */
-    public boolean isValid();
-
-    /**
-     * Perform the startup action.
-     *
-     * @throws jmri.JmriException if there is an exception thrown initializing
-     *                            the startup item
-     */
-    public void performAction() throws JmriException;
-
-    /**
-     * Get the exceptions thrown by the startup model.
-     *
-     * @return the list of exceptions thrown during startup in order or an empty
-     *         list if no exceptions were thrown
-     */
-    @Nonnull
-    public List<Exception> getExceptions();
-
-    /**
-     * Add an exception to the list of exceptions thrown when loading the model
-     * or performing the action.
-     *
-     * @param exception the exception to retain with the model
-     */
-    public void addException(@Nonnull Exception exception);
+@Deprecated
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_INTERFACE", justification = "Deprecated by refactoring; retaining unchanged until removal")
+public interface StartupModel extends jmri.util.startup.StartupModel {
+    
 }

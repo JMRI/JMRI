@@ -231,17 +231,8 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
         deviceList.clear();
     }
 
-    private jmri.implementation.AbstractShutDownTask task = null;
-
     private void setShutDownTask() {
-        task = new jmri.implementation.AbstractShutDownTask("WiThrottle Server ShutdownTask") {
-            @Override
-            public boolean execute() {
-                disableServer();
-                return true;
-            }
-        };
-        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(task);
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(this::disableServer);
     }
 
     @Override

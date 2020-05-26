@@ -2,7 +2,7 @@ package apps.startup.configurexml;
 
 import apps.StartupActionsManager;
 import apps.startup.ScriptButtonModel;
-import apps.startup.StartupModel;
+import jmri.util.startup.StartupModel;
 import java.io.FileNotFoundException;
 import java.util.Locale;
 import jmri.InstanceManager;

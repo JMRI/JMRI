@@ -67,6 +67,7 @@ public class RfidSensor extends AbstractSensor
     /**
      * Notify parameter listeners that a device has left the region covered by
      * this sensor
+     * @param id number of region being left
      */
     void notifyLeaving(Integer id) {
         firePropertyChange("Leaving", null, id);
@@ -75,6 +76,7 @@ public class RfidSensor extends AbstractSensor
     /**
      * Notify parameter listeners that a device has entered the region covered
      * by this sensor
+     * @param id number of arrived-in region
      */
     void notifyArriving(Integer id) {
         firePropertyChange("Arriving", null, id);

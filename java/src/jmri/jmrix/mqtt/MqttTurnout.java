@@ -16,6 +16,9 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
 
     /**
      * Requires, but does not check, that the system name and topic be consistent
+     * @param ma Adapter to reference for connection
+     * @param systemName System name of turnout
+     * @param topic MQTT topic being used
      */
     MqttTurnout(MqttAdapter ma, String systemName, String topic) {
         super(systemName);

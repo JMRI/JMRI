@@ -50,7 +50,6 @@ cache:
 
 os:
   - linux
-#  - osx # temporarilly disabled -- its more complex than originally anticipated to do conditional matrixes based on PR/push differentiation
 
 dist: bionic
 
@@ -72,9 +71,6 @@ jobs:
   - name: Headless Tests
     os: linux
     env: HEADLESS=true STATIC=false
-  - name: Static Analysis
-    os: linux
-    env: HEADLESS=true STATIC=true
   - name: Intermittently Failing GUI Tests
     os: linux
     env: HEADLESS=false SKIPINTERMITTENT=false STATIC=true

@@ -239,6 +239,8 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
 
     /**
      * Internal method to notify of the final result.
+     * @param value Value transferred, particularly if a read operation
+     * @param status Status of completed operation
      */
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) {

@@ -1,7 +1,11 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li></li>
+          <li>A number of hardware-specific actions now require the system
+          connection be associated with them when used as a startup action.
+          In many cases, these actions will continue to "just work", but it is
+          recommended that actions be verified to be associated with the
+          correct connection in the Startup Actions Preferences.</li>
         </ul>
 
 	    <h4>Anyma DMX512</h4>
@@ -481,6 +485,9 @@
                 This is in addition to left arrow and right arrow, which 
                 move from one throttle to the next if you have more than one open.
                 Please note that this act when the key is released.
+            </li>
+            <li>
+                Chris Why fixed a bug in the speed-profiling support.
             </li>
             
         </ul>

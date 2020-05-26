@@ -72,11 +72,12 @@
         <a href="https://travis-ci.org/JMRI/JMRI">Travis:</a></td><td>
 		<a href='https://travis-ci.org/JMRI/JMRI'><img src='https://travis-ci.org/JMRI/JMRI.svg?branch=master' title="Travis`"></a>
 
-        <a href="https://ci.appveyor.com/project/JMRI/jmri/branch/master">AppVeyor:</a>
-		<a href='https://ci.appveyor.com/project/JMRI/jmri/branch/master'><img src='https://ci.appveyor.com/api/projects/status/lmdrtxjxf62xym0p/branch/master?svg=true' title="AppVeyor`"></a>
-
         <a href="https://coveralls.io/github/JMRI/JMRI?branch=master">Coveralls:</a>
 		<a href='https://coveralls.io/github/JMRI/JMRI?branch=master'><img src='https://coveralls.io/repos/github/JMRI/JMRI/badge.svg?branch=master' title="Coveralls`"></a>
+        </td></tr>
+        <tr><td>
+            <a href="https://github.com/JMRI/JMRI/actions?query=workflow%3A%22Windows+CI+Tests%22"><img src="https://github.com/JMRI/JMRI/workflows/Windows%20CI%20Tests/badge.svg" title="Windows CI Tests"></a>
+            <a href="https://github.com/JMRI/JMRI/actions?query=workflow%3A%22Static+Analysis%22"><img src="https://github.com/JMRI/JMRI/workflows/Static%20Analysis/badge.svg" title="Static Analysis"></a>
         </td></tr>
 
 		</table>
