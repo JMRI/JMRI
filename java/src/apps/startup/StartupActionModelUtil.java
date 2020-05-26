@@ -169,6 +169,7 @@ public class StartupActionModelUtil extends Bean implements Disposable {
         this.firePropertyChange("length", null, null);
     }
 
+    @SuppressWarnings("deprecation") // StartupActionFactory in apps.startup has been deprecated
     private void prepareActionsHashMap() {
         if (this.actions == null) {
             this.actions = new HashMap<>();
@@ -183,7 +184,6 @@ public class StartupActionModelUtil extends Bean implements Disposable {
                     log.error("Did not find class \"{}\"", key);
                 }
             });
-            @SuppressWarnings("deprecation")
             ServiceLoader<apps.startup.StartupActionFactory> asLoader = ServiceLoader.load(apps.startup.StartupActionFactory.class);
             asLoader.forEach(factory -> addActions(factory));
             asLoader.reload(); // allow factories to be garbage collected
