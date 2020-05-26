@@ -242,19 +242,32 @@ public class TrackSegmentTest extends LayoutTrackTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
 
-            Assert.assertEquals("trackSegment.getBounds(LINE)", new Rectangle2D.Double(10.0, 20.0, 10.0, 13.0), trackSegment.getBounds());
+            Rectangle2D expected = new Rectangle2D.Double(10.0, 20.0, 10.0, 13.0);
+            Rectangle2D actual = MathUtil.granulize(trackSegment.getBounds(), 0.1); //round to the nearest 1/10th of a pixel
+            Assert.assertEquals("trackSegment.getBounds(LINE)", expected, actual);
 
             trackSegment.setArc(true);
-            Assert.assertEquals("trackSegment.getBounds(ARC)", new Rectangle2D.Double(10.0, 20.0, 10.0, 13.0), trackSegment.getBounds());
+            expected = new Rectangle2D.Double(10.0, 20.0, 10.0, 13.0);
+            actual = MathUtil.granulize(trackSegment.getBounds(), 0.1); //round to the nearest 1/10th of a pixel
+            Assert.assertEquals("trackSegment.getBounds(ARC)", expected, actual);
 
             trackSegment.setCircle(true);
-            Assert.assertEquals("trackSegment.getBounds(CIRCLE)", new Rectangle2D.Double(9.999999999999996, 19.999999999999996, 10.097413504743205, 13.000000000000004), trackSegment.getBounds());
+            expected = new Rectangle2D.Double(10.0, 20.0, 10.100000000000001, 13.0);
+            actual = MathUtil.granulize(trackSegment.getBounds(), 0.1); //round to the nearest 1/10th of a pixel
+            Assert.assertEquals("trackSegment.getBounds(CIRCLE)", expected, actual);
 
             trackSegment.setBezier(true);
-            Assert.assertEquals("trackSegment.getBounds(BEZIER)", new Rectangle2D.Double(10.0, 20.0, 10.0, 13.0), trackSegment.getBounds());
+            trackSegment.setBezierControlPoint(new Point2D.Double(5.5, 15.5), 0);
+            trackSegment.setBezierControlPoint(new Point2D.Double(25.5, 38.5), 1);
+
+            expected = new Rectangle2D.Double(9.3, 19.400000000000002, 11.600000000000001, 14.4);
+            actual = MathUtil.granulize(trackSegment.getBounds(), 0.1); //round to the nearest 1/10th of a pixel
+            Assert.assertEquals("trackSegment.getBounds(BEZIER)", expected, actual);
 
             trackSegment.setBezier(false);
-            Assert.assertEquals("trackSegment.getBounds(LINE)", new Rectangle2D.Double(10.0, 20.0, 10.0, 13.0), trackSegment.getBounds());
+            expected = new Rectangle2D.Double(10.0, 20.0, 10.0, 13.0);
+            actual = MathUtil.granulize(trackSegment.getBounds(), 0.1); //round to the nearest 1/10th of a pixel
+            Assert.assertEquals("trackSegment.getBounds(LINE)", expected, actual);
         }
     }
 
