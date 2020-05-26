@@ -127,10 +127,10 @@ public abstract class AbstractActionModel implements StartupModel {
             }
             jmri.util.ThreadingUtil.runOnLayout(() -> {
                 try {
-                 this.performAction(action);
+                    this.performAction(action);
                 } catch (JmriException ex) {
                     log.error("Error while performing startup action for class: {}", className, ex);
-               }
+                }
             });
         } catch (ClassNotFoundException ex) {
             log.error("Could not find specified class: {}", className);
