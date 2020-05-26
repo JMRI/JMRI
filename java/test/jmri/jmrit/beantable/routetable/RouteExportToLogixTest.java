@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,6 +53,8 @@ class RouteExportToLogixTest {
             l.deActivateLogix();
             l.dispose();
         }
+        conditionalMap.clear();
+        conditionalMap = null;
         l = null;
         JUnitUtil.tearDown();
     }
@@ -99,6 +102,7 @@ class RouteExportToLogixTest {
         Mockito.when(r.getOutputTurnoutState(index)).thenReturn(turnoutMode);
         String systemName = t.getSystemName();
         Mockito.when(r.getOutputTurnoutSetState(systemName)).thenReturn(turnoutMode);
+        Mockito.when(r.getNumOutputTurnouts()).thenReturn(index+1);
     }
 
     private void addOutputSensorToRoute(Sensor s,Route r,int turnoutMode,int index){
@@ -108,6 +112,7 @@ class RouteExportToLogixTest {
         Mockito.when(r.getOutputSensorState(index)).thenReturn(turnoutMode);
         String systemName = s.getSystemName();
         Mockito.when(r.getOutputSensorSetState(systemName)).thenReturn(turnoutMode);
+        Mockito.when(r.getNumOutputSensors()).thenReturn(index+1);
     }
 
     @Test
@@ -127,10 +132,8 @@ class RouteExportToLogixTest {
         Mockito.when(r.getUserName()).thenReturn("Hello World");
         Mockito.when(r.getDisplayName()).thenReturn("Hello World");
         Turnout t = createMockTurnout("IT1","Turnout");
-        Turnout t1 = createMockTurnout("IT2","Turnout2");
         addOutputTurnoutToRoute(t,r,Turnout.THROWN,0);
         addControlTurnoutToRoute(t,r,Turnout.CLOSED);
-        Sensor s = createMockSensor("IS1","Sensor");
         Mockito.when(rm.getBySystemName(Mockito.anyString())).thenReturn(r);
         Mockito.when(rm.getByUserName(Mockito.anyString())).thenReturn(r);
         new RouteExportToLogix("IO12345",rm,lm,cm).export();
@@ -138,5 +141,18 @@ class RouteExportToLogixTest {
         Mockito.verify(lm).createNewLogix("IX:RTX:IO12345","Hello World");
         Mockito.verify(rm).deleteRoute(r);
         assertThat(l).isNotNull();
+        assertThat(l.getNumConditionals()).isEqualTo(1);
+        assertThat(l.getConditionalByNumberOrder(0)).isNotNull();
+        Conditional c = l.getConditional(l.getConditionalByNumberOrder(0));
+        assertThat(c.getLogicType()).isEqualTo(Conditional.AntecedentOperator.ALL_AND);
+        assertThat(c.getTriggerOnChange()).isTrue();
+        assertThat(c.getCopyOfStateVariables()).isNotEmpty().hasSize(1);
+        List<ConditionalVariable> sv = c.getCopyOfStateVariables();
+        assertThat(sv.get(0).getNamedBean().getName()).isEqualTo(t.getDisplayName());
+        assertThat(sv.get(0).getState()).isEqualTo(Turnout.CLOSED);
+        assertThat(c.getCopyOfActions()).isNotEmpty().hasSize(1);
+        List<ConditionalAction> a = c.getCopyOfActions();
+        assertThat(a.get(0).getDeviceName()).isEqualTo("Turnout");
+        assertThat(a.get(0).getActionData()).isEqualTo(Turnout.THROWN);
     }
 }

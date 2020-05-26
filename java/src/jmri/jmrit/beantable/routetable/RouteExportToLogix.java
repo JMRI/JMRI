@@ -252,6 +252,8 @@ public class RouteExportToLogix {
                     Conditional.Action.SET_TURNOUT, route.getOutputTurnout(i).getDisplayName(),
                     route.getOutputTurnoutState(i), ""));
         }
+        log.debug("sensor actions {} turnout actions {} resulting Action List size {}",
+                route.getNumOutputSensors(),route.getNumOutputTurnouts(),actionList.size());
         return actionList;
     }
 
