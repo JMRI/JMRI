@@ -153,7 +153,7 @@ public class DefaultConditional extends AbstractNamedBean
      */
     @Override
     @Nonnull
-    public ArrayList<ConditionalVariable> getCopyOfStateVariables() {
+    public List<ConditionalVariable> getCopyOfStateVariables() {
         ArrayList<ConditionalVariable> variableList = new ArrayList<>();
         for (int i = 0; i < _variableList.size(); i++) {
             ConditionalVariable variable = _variableList.get(i);
@@ -195,7 +195,7 @@ public class DefaultConditional extends AbstractNamedBean
      */
     @Override
     @Nonnull
-    public ArrayList<ConditionalAction> getCopyOfActions() {
+    public List<ConditionalAction> getCopyOfActions() {
         ArrayList<ConditionalAction> actionList = new ArrayList<>();
         for (int i = 0; i < _actionList.size(); i++) {
             ConditionalAction action = _actionList.get(i);
