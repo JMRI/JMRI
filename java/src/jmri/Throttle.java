@@ -163,7 +163,7 @@ public interface Throttle extends PropertyChangeProvider {
     
     /**
      * Get the current speed setting, expressed as a value {@literal 0.0 -> 1.0.} 
-     * This property is bound to the {@link SPEEDSETTING} name.
+     * This property is bound to the {@link #SPEEDSETTING} name.
      *
      * @return the speed as a {@literal 0.0 -> 1.0.}  fraction of maximum possible speed or -1 for emergency stop.
      */
@@ -172,7 +172,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set the desired speed setting, expressed as a value {@literal 0.0 -> 1.0.} Negative means
      * emergency stop. 
-     * This property is bound to the {@link SPEEDSETTING} name.
+     * This property is bound to the {@link #SPEEDSETTING} name.
      *
      * @param speed the speed as a {@literal 0.0 -> 1.0.} fraction of maximum possible speed or -1 for emergency stop.
      */
