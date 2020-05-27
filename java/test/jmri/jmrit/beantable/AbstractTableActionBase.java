@@ -38,7 +38,7 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
      * constructed, but defer that to later.
      */
     @Test
-    public void testDeferredCreation() {
+    public final void testDeferredCreation() {
         assertThat(a.m).isNull();
         assertThat(a.f).isNull();
     }

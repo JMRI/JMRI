@@ -26,7 +26,7 @@ public abstract class AbstractTableTabActionBase {
      * when constructed, but defer that to later.
      */
     @Test
-    public void testDeferredCreation() {
+    public final void testDeferredCreation() {
         assertThat(a.m).isNull();
         assertThat(a.f).isNull();
         assertThat(a.dataPanel).isNull();
