@@ -30,11 +30,11 @@
 <a name="install"></a><h3>Installation</h3>
 <p>Des instructions compl&#232;tes pour l'installation de JMRI sur diffrentes plateforme peuvent &#234;tre trouv&#233;es ici:</p>
 	<ul>
-	<li><a href="http://jmri.org/install/WindowsNew.shtml">Windows</a></li>
-	<li><a href="http://jmri.org/install/MacOSX.shtml">Mac OS X</a></li>
-	<li><a href="http://jmri.org/install/Linux.shtml">Linux</a>
+	<li><a href="https://jmri.org/install/WindowsNew.shtml">Windows</a></li>
+	<li><a href="https://jmri.org/install/MacOSX.shtml">Mac OS X</a></li>
+	<li><a href="https://jmri.org/install/Linux.shtml">Linux</a>
 	    <ul>
-	    <li><a href="http://jmri.org/install/Raspbian.shtml">RasPi</a>
+	    <li><a href="https://jmri.org/install/Raspbian.shtml">RasPi</a>
 	    </ul></li>
 	</ul>
 <p>JMRI&reg; n&#233;cessite au pr&#233;alable l'installation de Java:
@@ -67,9 +67,9 @@ ouvrir le programme de la mani&#232;re habituelle pour votre syst&#232;me. Windo
 	</ul>
 <a name="debug"></a><h2>R&#233;soudre les Probl&#232;mes</h2>
 	<ul>
-  	<li><a href="http://jmri.org/install/Debug.shtml">D&#233;bogage d'une installation</a></li>
+  	<li><a href="https://jmri.org/install/Debug.shtml">D&#233;bogage d'une installation</a></li>
   	<li><a href="../setup/Errors.shtml">Codes Erreurs</a></li>
-	<li><a href="http://jmri.org/install/WindowsNew.shtml#installtest">InstallTest</a> (Windows seulement)</li>
+	<li><a href="https://jmri.org/install/WindowsNew.shtml#installtest">InstallTest</a> (Windows seulement)</li>
 	<li><a href="Faq.shtml">Questions Fr&#233;quemment Pos&#233;es</a></li>
 	</ul>
 <!--#include virtual="/Footer.shtml" -->

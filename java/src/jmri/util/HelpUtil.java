@@ -8,6 +8,7 @@ import java.util.Locale;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
 import javax.help.HelpSetException;
+import javax.help.SwingHelpUtilities;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
@@ -208,6 +209,16 @@ public class HelpUtil {
                 globalHelpBroker.setDisplayed(true);
             }
         };
+    }
+
+    /**
+     * Set the default content viewer UI.
+     *
+     * @param ui full class name of the content viewer UI
+     * @see SwingHelpUtilities#setContentViewerUI(java.lang.String)
+     */
+    public static void setContentViewerUI(String ui) {
+        SwingHelpUtilities.setContentViewerUI(ui);
     }
 
     static HelpSet globalHelpSet;

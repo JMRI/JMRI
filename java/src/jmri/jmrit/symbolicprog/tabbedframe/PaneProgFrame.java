@@ -123,9 +123,8 @@ abstract public class PaneProgFrame extends JmriJFrame
 
                 @Override
                 public boolean doPrompt() {
-                    // storeFile false if failed, abort shutdown
-                    boolean result = storeFile();
-                    return result;
+                    // storeFile returns false if failed, so abort shutdown
+                    return storeFile();
                 }
             };
         }

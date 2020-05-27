@@ -66,24 +66,6 @@ Vous pouvez emp&#234;cher un Travis CI de s'ex&#233;cuter apr&#232;s un e soumis
 incluant  &quot;[ci skip]&quot; ( incluant les crochets mais pas les guillemets ) 
 n'importe o&#249; dans le message de soumission si on le d&#233;sire.
 
-<h2>AppVeyor CI</h2>
-
-Nous utilisons
-<a href="http://www.appveyor.com">AppVeyor CI</a>
-pour faire l'int&#233;gration/test construits sur Windows pour chaque ajout dans nos 
-r&#233;pertoires <a href="http://github.com/JMRI">GitHub</a>
-<p>
-AppVeyor normalement construit chaque branche qui contient un fichier .AppVeyor.yml.
-L'historique de construction pour le r&#233;f&#233;rentiel principal JMRI est &#224; 
-<a href="https://ci.appveyor.com/project/JMRI/jmri">https://ci.appveyor.com/project/JMRI/jmri</a>.
-<p>
-AppVeyor ex&#233;cute normalement les contr&#244;les propri&#233;t&#233;-fichiers ( pour les cibles dupliqu&#233;es et autres erreurs ),
-suivi par la construction du code et l'ex&#233;cution des routines de test "AllTest". Un tampon d'&#233;cran ( pas un vrai &#233;cran )
-est utilis&#233;pour tous les tests GUI.  
-<p>
-Bien qu'il soit possible de permettre &#224; AppVeyor de construire des soumissions pour votre propre fourche sur les 
-r&#233;f&#233;rentiels JMRI, c'est un peu plus compliqu&#233; de le faire au sein du mod&#232;le de s&#233;curit&#233; de AppVeyor.
-
 <h2><a id="jenkins">Jenkins</a></h2>
 JMRI utilise la machine d'int&#233;gration continue
 <a href="http://jenkins-ci.org/">Jenkins</a>

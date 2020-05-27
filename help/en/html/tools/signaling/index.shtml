@@ -615,11 +615,11 @@ signals.getSignalHead("IH1").setAppearance(YELLOW)
       code your own signal logic into the program; see the <a href=
       "../automation/viaJava.shtml">Automation page</a>. The
       <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">"Siglet"
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">"Siglet"
       class</a> and it's kin are meant to make it easy to write
       complex custom signal logic; a variant of these was used by
       Nick Kulp's for signaling automation on his <a href=
-      "http://jmri.org/community/examples/Panels-Cornwall/CornwallRunning.html">
+      "https://jmri.org/community/examples/Panels-Cornwall/CornwallRunning.html">
       Cornwall Railroad</a>.
 
       <p>Although Automation Classes require writing code instead
