@@ -56,6 +56,9 @@ public class LocoIOData extends PropertyChangeSupport
 
     /**
      * Create a new instance of LocoIOData.
+     * @param unitAddr unit address.
+     * @param unitSubAddr unit SubAddress.
+     * @param tc system connection traffic controller.
      */
     public LocoIOData(int unitAddr, int unitSubAddr, LnTrafficController tc) {
         timeoutcounter = 0;
@@ -102,6 +105,8 @@ public class LocoIOData extends PropertyChangeSupport
      * The subAddress is in the range of 0x01 .. 0x7E
      * <br>
      * (0x7F is reserved)
+     * @param unit unit address.
+     * @param unitSub unit subAddress.
      */
     public synchronized void setUnitAddress(int unit, int unitSub) {
         setUnitAddress(unit);
@@ -137,6 +142,10 @@ public class LocoIOData extends PropertyChangeSupport
      *
      * If possibe add/support the additional config options for HDL boards
      * </pre>
+     * @param portRefresh port refresh value, bit 0.
+     * @param altCodePBs alternated code PBs, bit 1.
+     * @param isServo servo port, bit 3.
+     * @param blinkRate blink rate, bits 4-7.
      */
     public void setUnitConfig(int portRefresh, int altCodePBs, int isServo, int blinkRate) {
         int newsv0 = ((portRefresh & 0x01)) |   // bit 0
@@ -219,6 +228,7 @@ public class LocoIOData extends PropertyChangeSupport
      *
      * @param channel integer value of the addresses in use for this row
      *                (0 = invalid)
+     * @param value channel value.
      */
     public void setAddr(int channel, int value) {
         addr[channel] = value & 0x7FF;
@@ -409,15 +419,10 @@ public class LocoIOData extends PropertyChangeSupport
                             // type = 0 for cv, 1 for value1, 2 for value2
                             // We can't update the mode until we have all three values
                             // Sequence (from state machine below) is V2, V1, Mode
-                            log.debug("... updating port " + channel // NOI18N
-                                    + " SV" + type // NOI18N
-                                    + "(" // NOI18N
-                                    + (type == 1 ? "value1" // NOI18N
-                                            : type == 2 ? "value2" // NOI18N
-                                                    : type == 0 ? "mode" // NOI18N
-                                                            : "unknown") // NOI18N
-                                    + ") = 0x" // NOI18N
-                                    + Integer.toHexString(data));
+                            log.debug("... updating port {} SV{}({}) = 0x{}", channel, type, type == 1 ? "value1" // NOI18N
+                                    : type == 2 ? "value2" // NOI18N
+                                    : type == 0 ? "mode" // NOI18N
+                                    : "unknown", Integer.toHexString(data));
                             if (type == 2) {            // v2
                                 setV2(channel, data);
                                 setMode(channel, "<none>"); // NOI18N
@@ -436,11 +441,7 @@ public class LocoIOData extends PropertyChangeSupport
                                     setMode(channel, lim.getFullMode());
                                     setAddr(channel, validmodes.valuesToAddress(lim.getOpCode(), getSV(channel), getV1(channel), getV2(channel)));
                                 }
-                                log.debug("... decoded address (" // NOI18N
-                                        + "cv=" + Integer.toHexString(getSV(channel)) + " " // NOI18N
-                                        + "v1=" + Integer.toHexString(getV1(channel)) + " " // NOI18N
-                                        + "v2=" + Integer.toHexString(getV2(channel)) + ") " // NOI18N
-                                        + "is " + getAddr(channel) + "(0x" + Integer.toHexString(getAddr(channel)) + ")"); // NOI18N
+                                log.debug("... decoded address (cv={} v1={} v2={}) is {}(0x{})", Integer.toHexString(getSV(channel)), Integer.toHexString(getV1(channel)), Integer.toHexString(getV2(channel)), getAddr(channel), Integer.toHexString(getAddr(channel))); // NOI18N
                             } else {
                                 log.warn("OPC_PEER_XFR: Type ({}) is not {0,1,2} for channel {}", type, channel); // NOI18N
                             }
@@ -680,7 +681,8 @@ public class LocoIOData extends PropertyChangeSupport
     }
 
     /**
-     * Internal routine to handle timer starts and restarts.
+     * Internal routine to handle timer starts and restarts.    
+     * @param delay Milliseconds to wait
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
@@ -699,7 +701,9 @@ public class LocoIOData extends PropertyChangeSupport
 
     /**
      * Read an SV from a given LocoIO device.
-     *
+     * @param locoIOAddress primary board address
+     * @param locoIOSubAddress subaddress within board
+     * @param cv CV number to access
      */
     void sendReadCommand(int locoIOAddress, int locoIOSubAddress, int cv) {
         // remember current op is read
@@ -713,7 +717,10 @@ public class LocoIOData extends PropertyChangeSupport
 
     /**
      * Write an SV to a given LocoIO device.
-     *
+     * @param locoIOAddress primary board address
+     * @param locoIOSubAddress subaddress within board
+     * @param cv CV number to access
+     * @param data value to be written
      */
     void sendWriteCommand(int locoIOAddress, int locoIOSubAddress, int cv, int data) {
         // remember current op is write

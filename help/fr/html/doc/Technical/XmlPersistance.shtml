@@ -160,9 +160,9 @@
       <p>Notez que dans certains cas, il y a une relation
       d'h&eacute;ritage entre la persistance des classes qui peut
       aider. Par exemple, la classe LocoNet <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/configurexml/LnSensorManagerXml.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/configurexml/LnSensorManagerXml.html">
       LnSensorManagerXml</a> h&eacute;rite de <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/configurexml/AbstractTurnoutManagerConfigXML.html">
+      "https://jmri.org/JavaDoc/doc/jmri/configurexml/AbstractTurnoutManagerConfigXML.html">
       jmri.configurexml.AbstractSensorManagerConfigXML</a> , qui
       fait presque tout le travail d'enregistrement et de
       chargement des capteurs.</p>
@@ -183,7 +183,7 @@
       dont le contenu est alors d&eacute;fini par un fichier de
       sch&eacute;ma. Ces fichiers sont conserv&eacute;s dans le
       r&eacute;pertoire <a href=
-      "http://jmri.org/xml/schema">xml/schema</a>.</p>
+      "https://jmri.org/xml/schema">xml/schema</a>.</p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

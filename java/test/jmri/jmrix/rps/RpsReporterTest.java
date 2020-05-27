@@ -5,16 +5,15 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class RpsReporterTest extends jmri.implementation.AbstractReporterTestBase {
 
     @Override
-    protected Object generateObjectToReport(){
+    protected Object generateObjectToReport() {
         return "3";
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -25,10 +24,9 @@ public class RpsReporterTest extends jmri.implementation.AbstractReporterTestBas
     @After
     @Override
     public void tearDown() {
-	    r = null;
+        r = null;
         JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(RpsReporterTest.class);
-
 }

@@ -133,7 +133,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
 
         List<Element> layoutblockList = layoutblocks.getChildren("layoutblock");
         if (log.isDebugEnabled()) {
-            log.debug("Found {} layoutblocks" + layoutblockList.size());
+            log.debug("Found {} layoutblocks", layoutblockList.size());
         }
 
         for (Element e : layoutblockList) {
@@ -228,5 +228,5 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManagerXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlockManagerXml.class);
 }

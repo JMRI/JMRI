@@ -351,7 +351,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             return null;
         }
         if (reg > 8) {
-            log.error("register number too large: " + reg);
+            log.error("register number too large: {}", reg);
         }
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             NceMessage m = new NceMessage(2);
@@ -383,7 +383,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             return null;
         }
         if (reg > 8) {
-            log.error("register number too large: " + reg);
+            log.error("register number too large: {}", reg);
         }
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             NceMessage m = new NceMessage(3);
@@ -418,7 +418,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             return null;
         }
         if (tc.getCommandOptions() < NceTrafficController.OPTION_2006) {
-            log.error("getReadDirectCV with option " + tc.getCommandOptions());
+            log.error("getReadDirectCV with option {}", tc.getCommandOptions());
             return null;
         }
         NceMessage m = new NceMessage(3);
@@ -441,7 +441,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             return null;
         }
         if (tc.getCommandOptions() < NceTrafficController.OPTION_2006) {
-            log.error("getWriteDirectCV with option " + tc.getCommandOptions());
+            log.error("getWriteDirectCV with option {}", tc.getCommandOptions());
         }
         NceMessage m = new NceMessage(4);
         m.setBinary(true);
@@ -463,16 +463,12 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     public static NceMessage sendPacketMessage(NceTrafficController tc, byte[] bytes, int retries) {
         // this command isn't supported by the NCE USB
         if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
-            log.error("attempt to send unsupported sendPacketMessage to NCE USB cmd: 0x" +
-                    Integer.toHexString(SENDn_BYTES_CMD + bytes.length));
+            log.error("attempt to send unsupported sendPacketMessage to NCE USB cmd: 0x{}", Integer.toHexString(SENDn_BYTES_CMD + bytes.length));
             return null;
         }
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_1999) {
             if (bytes.length < 3 || bytes.length > 6) {
-                log.error("Send of NCE track packet too short or long:" +
-                        Integer.toString(bytes.length) +
-                        " packet:" +
-                        Arrays.toString(bytes));
+                log.error("Send of NCE track packet too short or long:{} packet:{}", Integer.toString(bytes.length), Arrays.toString(bytes));
             }
             NceMessage m = new NceMessage(2 + bytes.length);
             m.setBinary(true);
@@ -512,7 +508,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             log.error("Attempt to send NCE command to EPROM built before 2004");
         }
         if (bytes.length < 1 || bytes.length > 20) {
-            log.error("NCE command message length error:" + bytes.length);
+            log.error("NCE command message length error:{}", bytes.length);
         }
         NceMessage m = new NceMessage(bytes.length);
         m.setBinary(true);
@@ -529,7 +525,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             log.error("Attempt to send NCE command to EPROM built before 2004");
         }
         if (bytes.length < 1 || bytes.length > 20) {
-            log.error("NCE command message length error:" + bytes.length);
+            log.error("NCE command message length error:{}", bytes.length);
         }
 
         NceMessage m = new NceMessage(bytes.length);
@@ -551,10 +547,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         }
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_1999) {
             if (bytes.length < 3 || bytes.length > 6) {
-                log.error("Queue of NCE track packet too long:" +
-                        Integer.toString(bytes.length) +
-                        " packet :" +
-                        Arrays.toString(bytes));
+                log.error("Queue of NCE track packet too long:{} packet :{}", Integer.toString(bytes.length), Arrays.toString(bytes));
             }
             NceMessage m = new NceMessage(1 + bytes.length);
             m.setBinary(true);
@@ -617,7 +610,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
      * {@inheritDoc}
      */
     @Override
-    public String toMonitorString(){
-	    return nceMon.displayMessage(this);
+    public String toMonitorString() {
+        return nceMon.displayMessage(this);
     }
 }

@@ -19,6 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.tools.TrainsByCarTypeFrame;
 
@@ -181,7 +182,6 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         }
         String[] item = {itemName};
         if (_comboboxName.equals(TYPE)) {
-            item = itemName.split("-");
             // can't have the " & " as part of the type name
             if (itemName.contains(CarLoad.SPLIT_CHAR)) {
                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carNameNoAndChar"),
@@ -189,6 +189,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
                         JOptionPane.ERROR_MESSAGE);
                 return false;
             }
+            item = itemName.split(TrainCommon.HYPHEN);
         }
         if (item[0].length() > Control.max_len_string_attibute) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carAttribute"),
@@ -431,13 +432,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
             if (_comboboxName.equals(ROAD)) {
                 for (RollingStock rs : InstanceManager.getDefault(EngineManager.class).getList()) {
                     if (rs.getRoadName().equals(item)) {
-                        log.info("Engine (" +
-                                rs.getRoadName() +
-                                " " +
-                                rs.getNumber() +
-                                ") has assigned road name (" +
-                                item +
-                                ")"); // NOI18N
+                        log.info("Engine ({} {}) has assigned road name ({})", rs.getRoadName(), rs.getNumber(), item); // NOI18N
                         return;
                     }
                 }

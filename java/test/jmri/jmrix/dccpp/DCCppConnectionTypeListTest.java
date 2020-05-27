@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * DCCppConnectionTypeListTest.java
  *
- * Description: tests for the jmri.jmrix.dccpp.DCCppConnectionTypeList class
+ * Test for the jmri.jmrix.dccpp.DCCppConnectionTypeList class
  *
  * @author Paul Bender
  * @author Mark Underwood

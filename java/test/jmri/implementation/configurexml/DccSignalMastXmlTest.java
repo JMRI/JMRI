@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * DccSignalMastXmlTest.java
  *
- * Description: tests for the DccSignalMastXml class
+ * Test for the DccSignalMastXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class DccSignalMastXmlTest {
       Assert.assertNotNull("DccSignalMastXml constructor",new DccSignalMastXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

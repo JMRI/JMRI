@@ -7,9 +7,9 @@ import org.junit.*;
 /**
  * OlcbProgrammerTest.java
  *
- * Description:	tests for the jmri.jmrix.openlcb.OlcbProgrammer class
+ * Test for the jmri.jmrix.openlcb.OlcbProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -35,7 +35,6 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 programmer.getMode());        
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

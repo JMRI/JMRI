@@ -54,7 +54,7 @@
 
       <p>The <strong>config.xml</strong> file can be created or edited using a
        standard text editor or a
-        <a href="http://jmri.org/help/en/html/doc/Technical/XmlEditors.shtml">
+        <a href="https://jmri.org/help/en/html/doc/Technical/XmlEditors.shtml">
         XML editor</a>.
       </p>
       <p>A value in XML is described as a <strong>tag</strong>, e.g.
@@ -183,6 +183,41 @@
       <p>Example:</p>
       <pre>
       &lt;engine-gain&gt;0.6&lt;/engine-gain&gt;
+      </pre>
+
+      <h5>Top Speed Reverse</h5>
+
+      <p>Description:<br>
+      There are steam locomotives where the maximum speed differs between
+      forward and reverse, e.g. the German BR 38 (P8).<br>
+      You can declare a maximum speed for reverse for engine type steam1.<br>
+      Optional. Must be declared in the tag
+      <strong>sound name="ENGINE"</strong> right after top-speed.<br>
+      Default value: value from "top-speed"<br>
+      <em>Since JMRI 4.13.5</em></p>
+
+      <p>Example:</p>
+      <pre>
+      &lt;top-speed-reverse&gt;31&lt;/top-speed-reverse&gt;
+      </pre>
+
+      <h5>Sleep Interval</h5>
+
+      <p>Description:<br>
+      Depending on the speed of the computer hardware, the timing of the loop-player
+      (sleep-interval) can be adjusted.<br>
+      E.g. I use 40 for my new computer and 55 for my Raspberry Pi 3 B+.
+      This may help to avoid sound-restarts.<br>
+      You can declare a sleep-interval for engine type diesel3 and steam1.<br>
+      The value must be in the range of 38 and 55. The unit is milliseconds.<br>
+      Optional. Must be declared in the tag
+      <strong>sound name="ENGINE"</strong> before decel-trigger-rpms.<br>
+      Default value: 50<br>
+      <em>Since JMRI 4.19.4</em></p>
+
+      <p>Example:</p>
+      <pre>
+      &lt;sleep-interval&gt;40&lt;/sleep-interval&gt;
       </pre>
 
       <h5><a name="xy">Create XY coordinates output in console for a VSDecoder</a></h5>

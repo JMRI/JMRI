@@ -52,7 +52,7 @@ public class CbusBasicNodeWithMgrsCommandStationTest {
         t.setCsNum(0); // default CS
         t.setStatResponseFlagsAccurate(true);
         
-        pwr.setPower(jmri.PowerManager.ON);
+        pwr.setPower(PowerManager.ON);
         
         t.setCsFlags(0b00000000);
         assertThat(pwr.getPower()).isEqualTo(PowerManager.OFF);
@@ -68,7 +68,6 @@ public class CbusBasicNodeWithMgrsCommandStationTest {
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
     
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

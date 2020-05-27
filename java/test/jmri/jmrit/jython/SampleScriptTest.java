@@ -3,9 +3,7 @@ package jmri.jmrit.jython;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
 import jmri.util.JUnitUtil;
 
 import org.junit.*;
@@ -17,8 +15,8 @@ import org.junit.runners.Parameterized.Parameters;
 /**
  * Invokes Python-language scripts in jython/tests
  *
- * @author	Bob Jacobsen Copyright 2016
- * @author	Paul Bender Copyright (C) 2017
+ * @author Bob Jacobsen Copyright 2016
+ * @author Paul Bender Copyright (C) 2017
  * @since JMRI 4.3.6
  */
 @RunWith(Parameterized.class)

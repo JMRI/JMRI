@@ -10,7 +10,7 @@ import org.junit.rules.Timeout;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class UsbNodeTest {
 
@@ -23,7 +23,6 @@ public class UsbNodeTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

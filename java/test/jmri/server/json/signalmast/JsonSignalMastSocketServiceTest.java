@@ -122,7 +122,6 @@ public class JsonSignalMastSocketServiceTest {
     }
 
     // from here down is testing infrastructure
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();

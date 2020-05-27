@@ -20,7 +20,7 @@ import org.junit.Test;
  */
 public class SoundBiteTest {
 
-    private ShutDownTask damsdt;
+    private Runnable damsdt;
 
     @Test
     public void testStateConstants() {

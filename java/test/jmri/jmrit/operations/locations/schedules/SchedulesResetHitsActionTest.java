@@ -7,7 +7,7 @@ import jmri.jmrit.operations.OperationsTestCase;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SchedulesResetHitsActionTest extends OperationsTestCase {
 

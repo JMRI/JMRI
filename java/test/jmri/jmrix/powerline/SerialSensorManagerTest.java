@@ -13,7 +13,7 @@ import org.junit.*;
 /**
  * JUnit tests for the SerialSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008 Converted to multiple
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008 Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
  * @author Paul Bender Copyright (C) 2016

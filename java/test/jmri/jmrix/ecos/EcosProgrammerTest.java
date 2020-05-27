@@ -9,7 +9,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class EcosProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -35,7 +35,6 @@ public class EcosProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 programmer.getMode());        
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

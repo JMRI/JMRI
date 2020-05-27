@@ -8,7 +8,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.util.AlphanumComparator class.
  *
- * @author	Paul Bender Copyright 2016
+ * @author Paul Bender Copyright 2016
  */
 public class CVNameComparatorTest extends jmri.util.AlphanumComparatorTest {
 

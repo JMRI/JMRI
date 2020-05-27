@@ -680,6 +680,9 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
      * 
      * This is a common implementation for C/MRI Lights, Sensors and Turnouts
      * of the comparison method.
+     * @param suffix1 suffix to compare.
+     * @param suffix2 suffix to compare.
+     * @return CMRI comparison of suffixes.
      */
     @CheckReturnValue
     public static int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2) {

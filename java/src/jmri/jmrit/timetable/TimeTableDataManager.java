@@ -118,9 +118,11 @@ public class TimeTableDataManager {
     }
 
     /**
-     * Add a new station
+     * Add a new station.
      * Create a SegmentStation instance.
      * Add it to the SegmentStation list.
+     * @param id map id.
+     * @param newStation the new station.
      */
     public void addStation(int id, Station newStation) {
         _stationMap.put(id, newStation);
@@ -144,7 +146,7 @@ public class TimeTableDataManager {
 
     /**
      * Delete the layout if there are no train types, segments or schedules.
-     * param id The layout id.
+     * @param id The layout id.
      * @throws IllegalArgumentException LAYOUT_HAS_CHILDREN
      */
     public void deleteLayout(int id) {
@@ -158,7 +160,7 @@ public class TimeTableDataManager {
 
     /**
      * Delete the train type if there are no train references.
-     * param id The train type id.
+     * @param id The train type id.
      * @throws IllegalArgumentException TYPE_HAS_REFERENCE
      */
     public void deleteTrainType(int id) {
@@ -170,7 +172,7 @@ public class TimeTableDataManager {
 
     /**
      * Delete the segment if it has no stations.
-     * param id The segment id.
+     * @param id The segment id.
      * @throws IllegalArgumentException SEGMENT_HAS_CHILDREN
      */
     public void deleteSegment(int id) {
@@ -182,7 +184,7 @@ public class TimeTableDataManager {
 
     /**
      * Delete the station if there are no stop references.
-     * param id The station id.
+     * @param id The station id.
      * @throws IllegalArgumentException STATION_HAS_REFERENCE
      */
     public void deleteStation(int id) {
@@ -206,7 +208,7 @@ public class TimeTableDataManager {
 
     /**
      * Delete the schedule if it has no trains.
-     * param id The schedule id.
+     * @param id The schedule id.
      * @throws IllegalArgumentException SCHEDULE_HAS_CHILDREN
      */
     public void deleteSchedule(int id) {
@@ -218,7 +220,7 @@ public class TimeTableDataManager {
 
     /**
      * Delete the train if it has no stops.
-     * param id The train id.
+     * @param id The train id.
      * @throws IllegalArgumentException TRAIN_HAS_CHILDREN
      */
     public void deleteTrain(int id) {
@@ -230,7 +232,7 @@ public class TimeTableDataManager {
 
     /**
      * Delete the stop and update train schedule.
-     * param id The stop id.
+     * @param id The stop id.
      */
     public void deleteStop(int id) {
         int trainId = getStop(id).getTrainId();
@@ -462,6 +464,7 @@ public class TimeTableDataManager {
      * Update the stops for all of the trains for this layout.
      * Invoked by updates to fast clock speed, metric, scale and station distances.
      * @param layoutId The id for the layout that has been updated.
+     * @param updateStops True for update
      */
     void calculateLayoutTrains(int layoutId, boolean updateStops) {
         if (_lockCalculate) return;
@@ -473,6 +476,7 @@ public class TimeTableDataManager {
     /**
      * Update the stop times for all of the trains that use this schedule.
      * @param scheduleId The id for the schedule that has been updated.
+     * @param updateStops True for update
      */
     void calculateScheduleTrains(int scheduleId, boolean updateStops) {
         if (_lockCalculate) return;

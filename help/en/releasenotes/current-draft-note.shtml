@@ -1,7 +1,11 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li></li>
+          <li>A number of hardware-specific actions now require the system
+          connection be associated with them when used as a startup action.
+          In many cases, these actions will continue to "just work", but it is
+          recommended that actions be verified to be associated with the
+          correct connection in the Startup Actions Preferences.</li>
         </ul>
 
 	    <h4>Anyma DMX512</h4>
@@ -66,8 +70,7 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Support for <a href="https://www.jmri.org/help/en/html/hardware/can/cbus/CbusFastClock.shtml"
-                >CBUS Fast Clock</a> messaging.</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
@@ -450,7 +453,7 @@
 
 	    <h4>Cab Signals</h4>
             <ul>
-                <li></li>
+                <li>Better set row height in table.</li>
             </ul>
 
     	<h4>Simple Signal Logic</h4>
@@ -472,7 +475,21 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Added key shortcuts to the throttle window. Hold the shift
+                down, press and release key
+            <ul>
+                <li>A to switch to the "Address" section
+                <li>F to switch to the "Functions" section
+                <li>C to switch to the "Control" section which sets speed
+            </ul>
+                This is in addition to left arrow and right arrow, which 
+                move from one throttle to the next if you have more than one open.
+                Please note that this act when the key is released.
+            </li>
+            <li>
+                Chris Why fixed a bug in the speed-profiling support.
+            </li>
+            
         </ul>
 
     <h3>Timetable</h3>
@@ -514,7 +531,7 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Documentation updated regarding "VSD headless mode", "steam1 top speed reverse" and "sleep interval".</li>
         </ul>
 
     <h3>Miscellaneous</h3>

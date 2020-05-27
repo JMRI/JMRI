@@ -21,6 +21,11 @@ abstract public class ConfigurationManager {
     final public static String RAWCAN = "Raw CAN"; // TODO I18N
     final public static String TEST = "Test - do not use";
 
+    public enum SubProtocol {
+        NONE,
+        CBUS
+    }
+    
     private static String[] options = new String[]{SPROGCBUS, MERGCBUS, OPENLCB, RAWCAN, TEST};
 
     /**
@@ -68,7 +73,9 @@ abstract public class ConfigurationManager {
     abstract public void configureManagers();
 
     /**
-     * Tells which managers this class provides.
+     * Get which managers this class provides.
+     * @param type class to query.
+     * @return true if provided, else false.
      */
     abstract public boolean provides(Class<?> type);
 

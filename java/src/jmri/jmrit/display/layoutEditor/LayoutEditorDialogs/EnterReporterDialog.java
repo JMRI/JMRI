@@ -135,8 +135,8 @@ public class EnterReporterDialog {
             return;
         }
 
-        if ((xx <= 0) || (xx > layoutEditor.getLayoutWidth())) {
-            log.error("invalid x: " + xx + ", LayoutWidth: " + layoutEditor.getLayoutWidth());
+        if ((xx <= 0) || (xx > layoutEditor.gContext.getLayoutWidth())) {
+            log.error("invalid x: {}, LayoutWidth: {}", xx, layoutEditor.gContext.getLayoutWidth());
             JOptionPane.showMessageDialog(enterReporterFrame,
                     MessageFormat.format(Bundle.getMessage("Error2a"), String.format(" %s ", xx)),
                     Bundle.getMessage("ErrorTitle"),
@@ -156,8 +156,8 @@ public class EnterReporterDialog {
             return;
         }
 
-        if ((yy <= 0) || (yy > layoutEditor.getLayoutHeight())) {
-            log.error("invalid y: " + yy + ", LayoutWidth: " + layoutEditor.getLayoutHeight());
+        if ((yy <= 0) || (yy > layoutEditor.gContext.getLayoutHeight())) {
+            log.error("invalid y: {}, LayoutWidth: {}", yy, layoutEditor.gContext.getLayoutHeight());
             JOptionPane.showMessageDialog(enterReporterFrame,
                     MessageFormat.format(Bundle.getMessage("Error2a"), String.format(" %s ", yy)),
                     Bundle.getMessage("ErrorTitle"),
@@ -222,6 +222,6 @@ public class EnterReporterDialog {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(
             EnterReporterDialog.class);
 }

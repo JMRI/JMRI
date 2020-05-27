@@ -38,7 +38,6 @@ public class LIUSBEthernetXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketi
         Assert.assertEquals("remaining ", 0, p.tostream.available());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

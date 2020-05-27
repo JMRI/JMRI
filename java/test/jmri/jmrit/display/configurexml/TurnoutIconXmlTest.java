@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * TurnoutIconXmlTest.java
  *
- * Description: tests for the TurnoutIconXml class
+ * Test for the TurnoutIconXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class TurnoutIconXmlTest {
       Assert.assertNotNull("TurnoutIconXml constructor",new TurnoutIconXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

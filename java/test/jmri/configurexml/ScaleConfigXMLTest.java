@@ -21,7 +21,6 @@ public class ScaleConfigXMLTest {
         Assert.assertTrue("load worked", loadResult);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

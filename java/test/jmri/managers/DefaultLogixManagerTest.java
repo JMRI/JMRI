@@ -1,6 +1,5 @@
 package jmri.managers;
 
-import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -10,13 +9,12 @@ import org.junit.Test;
 
 import jmri.Logix;
 import jmri.LogixManager;
-import jmri.ShutDownManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
  * Tests for the jmri.managers.DefaultLogixManager class.
  *
- * @author	Bob Jacobsen Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2015
  */
 public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixManager,jmri.Logix> {
 

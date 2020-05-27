@@ -13,7 +13,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -209,7 +209,6 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup3() {
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

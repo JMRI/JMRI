@@ -5,7 +5,6 @@ import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
-import jmri.Throttle;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
@@ -20,9 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
-    /**
-     * Constructor.
-     */
+    
     String objectNumber;
     int ecosretry = 0;
     private EcosLocoAddress objEcosLoco;
@@ -34,8 +31,14 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
     private boolean _hadControl = false;
     private boolean _control = true;
 
+    /** 
+     * Create a new EcosDccThrottle.
+     * @param address Throttle Address
+     * @param memo System Connection
+     * @param control sets _control flag which NEEDS CLARIFICATION.
+     */
     public EcosDccThrottle(DccLocoAddress address, EcosSystemConnectionMemo memo, boolean control) {
-        super(memo);
+        super(memo,32);
         super.speedStepMode = SpeedStepMode.NMRA_DCC_128;
         p = memo.getPreferenceManager();
         tc = memo.getTrafficController();
@@ -43,15 +46,14 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         //The script will go through and read the values from the Ecos
 
         this.speedSetting = 0;
-        // Functions 0-28 default to false
-
+        // Functions 0-31 default to false
         this.address = address;
         this.isForward = true;
         this._control = control;
 
         ecosretry = 0;
 
-        log.debug("EcosDccThrottle constructor " + address);
+        log.debug("EcosDccThrottle constructor {}", address);
 
         //We go on a hunt to find an object with the dccaddress sent by our controller.
         if (address.getNumber() < EcosLocoAddress.MFX_DCCAddressOffset) {
@@ -112,158 +114,17 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         return ((lSpeed) / 126.f);
     }
     
-    private void setF(int Fn, boolean val){
-        updateFunction(Fn,val);
+    /** 
+     * {@inheritDoc} 
+     */
+    @Override
+    public void setFunction(int functionNum, boolean newState){
+        updateFunction(functionNum,newState);
         if (_haveControl) {
             EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[" + 
-                String.valueOf(Fn) + ", " + (getFunction(Fn) ? 1 : 0) + "])");
+                String.valueOf(functionNum) + ", " + (newState ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
-    }
-
-    @Override
-    public void setF0(boolean f0) {
-        setF(0,f0);
-    }
-
-    @Override
-    public void setF1(boolean f1) {
-        setF(1,f1);
-    }
-
-    @Override
-    public void setF2(boolean f2) {
-        setF(2,f2);
-    }
-
-    @Override
-    public void setF3(boolean f3) {
-        setF(3,f3);
-    }
-
-    @Override
-    public void setF4(boolean f4) {
-        setF(4,f4);
-    }
-
-    @Override
-    public void setF5(boolean f5) {
-        setF(5,f5);
-    }
-
-    @Override
-    public void setF6(boolean f6) {
-        setF(6,f6);
-    }
-
-    @Override
-    public void setF7(boolean f7) {
-        setF(7,f7);
-    }
-
-    @Override
-    public void setF8(boolean f8) {
-        setF(8,f8);
-    }
-
-    @Override
-    public void setF9(boolean f9) {
-        setF(9,f9);
-    }
-
-    @Override
-    public void setF10(boolean f10) {
-        setF(10,f10);
-    }
-
-    @Override
-    public void setF11(boolean f11) {
-        setF(11,f11);
-    }
-
-    @Override
-    public void setF12(boolean f12) {
-        setF(12,f12);
-    }
-
-    @Override
-    public void setF13(boolean f13) {
-        setF(13,f13);
-    }
-
-    @Override
-    public void setF14(boolean f14) {
-        setF(14,f14);
-    }
-
-    @Override
-    public void setF15(boolean f15) {
-        setF(15,f15);
-    }
-
-    @Override
-    public void setF16(boolean f16) {
-        setF(16,f16);
-    }
-
-    @Override
-    public void setF17(boolean f17) {
-        setF(17,f17);
-    }
-
-    @Override
-    public void setF18(boolean f18) {
-        setF(18,f18);
-    }
-
-    @Override
-    public void setF19(boolean f19) {
-        setF(19,f19);
-    }
-
-    @Override
-    public void setF20(boolean f20) {
-        setF(20,f20);
-    }
-
-    @Override
-    public void setF21(boolean f21) {
-        setF(21,f21);
-    }
-
-    @Override
-    public void setF22(boolean f22) {
-        setF(22,f22);
-    }
-
-    @Override
-    public void setF23(boolean f23) {
-        setF(23,f23);
-    }
-
-    @Override
-    public void setF24(boolean f24) {
-        setF(24,f24);
-    }
-
-    @Override
-    public void setF25(boolean f25) {
-        setF(25,f25);
-    }
-
-    @Override
-    public void setF26(boolean f26) {
-        setF(26,f26);
-    }
-
-    @Override
-    public void setF27(boolean f27) {
-        setF(27,f27);
-    }
-
-    @Override
-    public void setF28(boolean f28) {
-        setF(28,f28);
     }
 
     /**
@@ -306,7 +167,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
             tc.sendEcosMessage(m, this);
 
         }
-        //record(speed);
+        record(speed);
     }
 
     long lastSpeedMessageTime = 0L;
@@ -315,6 +176,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
     int speedMessageSent = 0;
 
+    /** 
+     * {@inheritDoc} 
+     */
     @Override
     public void setIsForward(boolean forward) {
         if (!_haveControl) {
@@ -339,11 +203,17 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
     private DccLocoAddress address;
 
+    /** 
+     * {@inheritDoc} 
+     */
     @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
 
+    /** 
+     * {@inheritDoc} 
+     */
     @Override
     protected void throttleDispose() {
         String message = "release(" + this.objectNumber + ", control)";
@@ -354,6 +224,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         finishRecord();
     }
 
+    /** 
+     * {@inheritDoc} 
+     */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     @Override
     public void reply(EcosReply m) {
@@ -466,10 +339,10 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
                 }
             } else if (replyType.equals("release")) {
-                log.debug("Released " + this.objectNumber + " from the Ecos");
+                log.debug("Released {} from the Ecos", this.objectNumber);
                 _haveControl = false;
             } else if (replyType.equals("request")) {
-                log.debug("We have control over " + this.objectNumber + " from the Ecos");
+                log.debug("We have control over {} from the Ecos", this.objectNumber);
                 ecosretry = 0;
                 if (_control) {
                     _haveControl = true;
@@ -498,7 +371,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
              */
             retryControl();
         } else if (resultCode == 15) {
-            log.info("Loco can not be accessed via the Ecos Object Id " + this.objectNumber);
+            log.info("Loco can not be accessed via the Ecos Object Id {}", this.objectNumber);
             try {
                 javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("UnknownLocoDialog", this.address),
                         Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
@@ -507,14 +380,16 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
             }
             jmri.InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
         } else {
-            log.debug("Last Message resulted in an END code we do not understand " + resultCode);
+            log.debug("Last Message resulted in an END code we do not understand {}", resultCode);
         }
     }
 
+    /** 
+     * Messages ignored.
+     * {@inheritDoc} 
+     */
     @Override
     public void message(EcosMessage m) {
-        //System.out.println("Ecos message - "+ m);
-        // messages are ignored
     }
 
     public void forceControl() {
@@ -559,7 +434,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
             String message = "request(" + this.objectNumber + ", view, control)";
             EcosMessage ms = new EcosMessage(message);
             tc.sendEcosMessage(ms, this);
-            log.error("We have no control over the ecos object " + this.objectNumber + " Retrying Attempt " + ecosretry);
+            log.error("We have no control over the ecos object {} Retrying Attempt {}", this.objectNumber, ecosretry);
         } else if (ecosretry == 3) {
             ecosretry++;
             int val = 0;
@@ -580,7 +455,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                 String message = "request(" + this.objectNumber + ", view, control, force)";
                 EcosMessage ms = new EcosMessage(message);
                 tc.sendEcosMessage(ms, this);
-                log.error("We have no control over the ecos object " + this.objectNumber + "Trying a forced control");
+                log.error("We have no control over the ecos object {}Trying a forced control", this.objectNumber);
             } else {
                 if (_hadControl) {
                     firePropertyChange("LostControl", 0, 0);

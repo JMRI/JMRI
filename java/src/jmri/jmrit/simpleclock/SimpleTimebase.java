@@ -61,7 +61,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             clockSensor.setKnownState(Sensor.ACTIVE);
             clockSensor.addPropertyChangeListener(this::clockSensorChanged);
         } catch (jmri.JmriException e) {
-            log.warn("Exception setting ISCLOCKRUNNING sensor ACTIVE: " + e);
+            log.warn("Exception setting ISCLOCKRUNNING sensor ACTIVE: {}", e);
         }
         // initialize rate factor-containing memory
         if (jmri.InstanceManager.getNullableDefault(jmri.MemoryManager.class) != null) {
@@ -167,7 +167,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 try {
                     clockSensor.setKnownState(Sensor.ACTIVE);
                 } catch (jmri.JmriException e) {
-                    log.warn("Exception setting ISClockRunning sensor ACTIVE: " + e);
+                    log.warn("Exception setting ISClockRunning sensor ACTIVE: {}", e);
                 }
             }
         } else if (!run && pauseTime == null) {
@@ -184,7 +184,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 try {
                     clockSensor.setKnownState(Sensor.INACTIVE);
                 } catch (jmri.JmriException e) {
-                    log.warn("Exception setting ISClockRunning sensor INACTIVE: " + e);
+                    log.warn("Exception setting ISClockRunning sensor INACTIVE: {}", e);
                 }
             }
         }
@@ -206,7 +206,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     @Override
     public void setRate(double factor) throws TimebaseRateException {
         if (factor < MINIMUM_RATE || factor > MAXIMUM_RATE) {
-            log.error("rate of " + factor + " is out of reasonable range");
+            log.error("rate of {} is out of reasonable range", factor);
             throw new TimebaseRateException();
         }
         if (internalMaster && (!notInitialized)) {
@@ -243,7 +243,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         // this call is used when user changes fast clock rate either in Setup Fast Clock or via a ClockControl
         // implementation
         if (factor < MINIMUM_RATE || factor > MAXIMUM_RATE) {
-            log.error("rate of " + factor + " is out of reasonable range");
+            log.error("rate of {} is out of reasonable range", factor);
             throw new TimebaseRateException();
         }
         double oldFactor = hardwareFactor;
@@ -548,7 +548,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 p.setVisible(true);
                 break;
             default:
-                log.debug("initializeClock() called with invalid startClockOption: " + startClockOption);
+                log.debug("initializeClock() called with invalid startClockOption: {}", startClockOption);
         }
     }
 
@@ -679,6 +679,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      * <p>
      * Listeners will be notified if the hours or minutes changed 
      * since the last time.
+     * @param e Event which triggered this
      */
     void handleAlarm(ActionEvent e) {
         // on first pass, set up the timer to call this routine
@@ -719,7 +720,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                java.util.ResourceBundle.getBundle("jmri.jmrit.simpleclock.SimpleClockBundle")
                     .getString("TimeStorageFormat"));
             } catch (java.lang.IllegalArgumentException e) {
-                log.info("Dropping back to default time format due to exception " + e);
+                log.info("Dropping back to default time format due to exception {}", e);
                 timeStorageFormat = new java.text.SimpleDateFormat("h:mm a");
             }
         }

@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the {@link jmri.jmrix.lenz.hornbyelite.EliteXNetTurnout} class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
-public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
+public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
 
     @Override
     public void checkClosedMsgSent() {
@@ -36,7 +36,7 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
         try {
             t.setCommandedState(jmri.Turnout.CLOSED);
         } catch (Exception e) {
-            log.error("TO exception: " + e);
+            log.error("TO exception: {}", e);
         }
 
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
@@ -66,8 +66,8 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
             return t.getFeedbackMode() == Turnout.MONITORING;
         }, "Feedback mode set");
 
-	    listenStatus = Turnout.UNKNOWN;
-	    t.addPropertyChangeListener(new Listen());
+        listenStatus = Turnout.UNKNOWN;
+        t.addPropertyChangeListener(new Listen());
 
         // notify the object that somebody else changed it...
         XNetReply m = new XNetReply("42 05 04 43"); // set CLOSED
@@ -75,19 +75,18 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
         jmri.util.JUnitUtil.waitFor(() -> {
             return listenStatus != Turnout.UNKNOWN;
         }, "Turnout state changed");
-        Assert.assertEquals("state after CLOSED message",Turnout.CLOSED,t.getKnownState());
+        Assert.assertEquals("state after CLOSED message", Turnout.CLOSED, t.getKnownState());
 
-	    listenStatus = Turnout.UNKNOWN;
+        listenStatus = Turnout.UNKNOWN;
 
         m = new XNetReply("42 05 08 4F"); // set THROWN
         ((EliteXNetTurnout) t).message(m);
         jmri.util.JUnitUtil.waitFor(() -> {
             return listenStatus != Turnout.UNKNOWN;
         }, "Turnout state changed");
-        Assert.assertEquals("state after THROWN message",Turnout.THROWN,t.getKnownState());
+        Assert.assertEquals("state after THROWN message", Turnout.THROWN, t.getKnownState());
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -104,7 +103,7 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
     @Override
     @After
     public void tearDown() {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        lnis.getSystemConnectionMemo().getXNetTrafficController().terminateThreads();
         JUnitUtil.tearDown();
     }
 

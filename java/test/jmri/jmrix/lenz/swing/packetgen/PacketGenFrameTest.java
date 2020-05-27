@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.jmrix.lenz.packetgen.PacketGenFrame class
  *
- * @author	Bob Jacobsen Copyright (c) 2001, 2002
+ * @author Bob Jacobsen Copyright (c) 2001, 2002
  */
 public class PacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
 

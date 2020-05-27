@@ -271,7 +271,7 @@ public class NceConsistRosterEntry {
      */
     public NceConsistRosterEntry(org.jdom2.Element e) {
         if (log.isDebugEnabled()) {
-            log.debug("ctor from element " + e);
+            log.debug("ctor from element {}", e);
         }
         org.jdom2.Attribute a;
         if ((a = e.getAttribute("id")) != null) {
@@ -578,7 +578,7 @@ public class NceConsistRosterEntry {
             }
             w.write(newLine, 0, 1);
         } catch (IOException e) {
-            log.error("Error printing ConsistRosterEntry: " + e);
+            log.error("Error printing ConsistRosterEntry: {}", e);
         }
     }
 
@@ -613,12 +613,12 @@ public class NceConsistRosterEntry {
                 //Piece too long to fit. Extract a piece the size of the textSpace
                 //and check for farthest right space for word wrapping.
                 if (log.isDebugEnabled()) {
-                    log.debug("token: /" + commentToken + "/");
+                    log.debug("token: /{}/", commentToken);
                 }
                 while (startIndex < commentToken.length()) {
                     String tokenPiece = commentToken.substring(startIndex, startIndex + textSpace);
                     if (log.isDebugEnabled()) {
-                        log.debug("loop: /" + tokenPiece + "/ " + tokenPiece.lastIndexOf(" "));
+                        log.debug("loop: /{}/ {}", tokenPiece, tokenPiece.lastIndexOf(" "));
                     }
                     if (tokenPiece.lastIndexOf(" ") == -1) {
                         //If no spaces, put the whole piece in the vector and add a line feed, then
@@ -631,7 +631,7 @@ public class NceConsistRosterEntry {
                         //last space and put in the vector as well as a line feed
                         endIndex = tokenPiece.lastIndexOf(" ") + 1;
                         if (log.isDebugEnabled()) {
-                            log.debug("/" + tokenPiece + "/ " + startIndex + " " + endIndex);
+                            log.debug("/{}/ {} {}", tokenPiece, startIndex, endIndex);
                         }
                         textVector.addElement(tokenPiece.substring(0, endIndex));
                         textVector.addElement(newLine);

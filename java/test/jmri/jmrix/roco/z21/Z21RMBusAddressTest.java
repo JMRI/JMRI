@@ -14,7 +14,7 @@ import static org.assertj.core.api.ThrowableAssert.catchThrowable;
 import static org.assertj.core.api.Assertions.assertThat;
 /**
  *
- * @author Paul Bender Copyright (C) 2019	
+ * @author Paul Bender Copyright (C) 2019
  */
 public class Z21RMBusAddressTest {
 
@@ -66,7 +66,6 @@ public class Z21RMBusAddressTest {
         JUnitAppender.assertWarnMessage("Z21 RM Bus hardware address out of range in system name ZS999");
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

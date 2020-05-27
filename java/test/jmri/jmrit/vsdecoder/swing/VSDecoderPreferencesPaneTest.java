@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of VSDecoderPreferencesPane
  *
- * @author	Paul Bender Copyright (C) 2015,2016
+ * @author Paul Bender Copyright (C) 2015,2016
  */
 public class VSDecoderPreferencesPaneTest {
 

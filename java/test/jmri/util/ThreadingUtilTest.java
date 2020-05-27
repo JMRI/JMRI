@@ -5,7 +5,7 @@ import org.junit.*;
 /**
  * Tests for ThreadingUtil class
  *
- * @author	Bob Jacobsen Copyright 2015, 2020
+ * @author Bob Jacobsen Copyright 2015, 2020
  */
 public class ThreadingUtilTest {
 
@@ -195,7 +195,6 @@ public class ThreadingUtilTest {
         Assert.assertFalse(ThreadingUtil.isThreadWaiting(Thread.currentThread()));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();

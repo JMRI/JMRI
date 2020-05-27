@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Tests for PhysicalBell class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class PhysicalBellTest {
 
@@ -30,7 +30,6 @@ public class PhysicalBellTest {
     
     Turnout layoutTurnout;
     
-    // The minimal setup for log4J
     @org.junit.Before
     public void setUp() {
         JUnitUtil.setUp();

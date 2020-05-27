@@ -7,7 +7,7 @@ import org.junit.Before;
 /**
  * Test simple functioning of DCCppMonPane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class DCCppMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 

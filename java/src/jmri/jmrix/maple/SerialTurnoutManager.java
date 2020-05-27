@@ -64,7 +64,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         // does system name correspond to configured hardware
         if (!SerialAddress.validSystemNameConfig(sName, 'T', getMemo())) {
             // system name does not correspond to configured hardware
-            log.warn("Turnout '" + sName + "' refers to an unconfigured output bit.");
+            log.warn("Turnout '{}' refers to an unconfigured output bit.", sName);
             javax.swing.JOptionPane.showMessageDialog(null, "WARNING - The Turnout just added, "
                     + sName + ", refers to an unconfigured output bit.", "Configuration Warning",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
@@ -79,6 +79,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     /**
      * Public method to notify user of Turnout creation error.
+     * @param conflict string of the turnout which is in conflict.
+     * @param bitNum the bit number in conflict.
      */
     public void notifyTurnoutCreationError(String conflict, int bitNum) {
         javax.swing.JOptionPane.showMessageDialog(null, "ERROR - The output bit, "
@@ -189,10 +191,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 //       javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
 // }
 
-    @Deprecated
-    static public SerialTurnoutManager instance() {
-        return null;
-    }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 

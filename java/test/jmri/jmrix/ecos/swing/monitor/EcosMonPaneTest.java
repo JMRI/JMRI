@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 /**
  * Test simple functioning of EcosMonPane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class EcosMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 

@@ -72,7 +72,7 @@ public class EngineRosterMenu extends JMenu {
             case ENTRYMENU:
                 break;
             default:
-                log.error("RosterMenu constructed without a valid menuType parameter: " + pMenuType);
+                log.error("RosterMenu constructed without a valid menuType parameter: {}", pMenuType);
         }
     }
 

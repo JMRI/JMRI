@@ -334,7 +334,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                                 l.setBezierControlPoint(new Point2D.Double(x, y), index);
                             }
                         } else {
-                            log.error("Track segment Bezier two controlpoint elements not found. (found " + elementList.size() + ")");
+                            log.error("Track segment Bezier two controlpoint elements not found. (found {})", elementList.size());
                         }
                     } else {
                         log.error("Track segment Bezier controlpoint elements not found.");
@@ -618,26 +618,10 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             l.tLayoutBlockName = a.getValue();
         }
 
-        p.getLayoutTracks().add(l);
+        p.addLayoutTrack(l);
     }
 
-    // create the maps programmatically
-    static final EnumIO<HitPointType> htpMap;
+    static final EnumIO<HitPointType> htpMap = new EnumIoNamesNumbers<>(HitPointType.class);
     
-    static {
-        // from map is names and numbers
-        HashMap<String, HitPointType> fromMap = new HashMap<>();
-        // to map is names
-        HashMap<HitPointType, String> toMap = new HashMap<>();
-
-        for (HitPointType h : HitPointType.values()) {
-            fromMap.put(h.toString(), h);
-            fromMap.put(""+h.ordinal(), h);  // tests insure equality
-            toMap.put(h, h.toString());
-        }
-        
-        htpMap = new EnumIoMapped<>(HitPointType.class, fromMap, toMap);
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(TrackSegmentXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegmentXml.class);
 }

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AbstractAutomatonTest {
 
@@ -247,7 +247,6 @@ public class AbstractAutomatonTest {
         jmri.util.JUnitAppender.assertWarnMessage("Precheck ignored because of mismatch in bean 0");
     }
     
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();        JUnitUtil.initInternalSensorManager();

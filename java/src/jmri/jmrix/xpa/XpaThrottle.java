@@ -33,9 +33,7 @@ public class XpaThrottle extends AbstractThrottle {
         // Functions default to false
         this.speedvalue = 0;
         tc = t;
-        if (log.isDebugEnabled()) {
-            log.debug("XpaThrottle constructor called for address " + address);
-        }
+        log.debug("XpaThrottle constructor called for address {}", address);
     }
 
     /**
@@ -77,7 +75,9 @@ public class XpaThrottle extends AbstractThrottle {
         this.speedvalue = value;
     }
 
-    // Direction
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void setIsForward(boolean forward) {
         super.setIsForward(forward);
@@ -90,96 +90,52 @@ public class XpaThrottle extends AbstractThrottle {
         tc.sendXpaMessage(m, null);
     }
     
-    private void setF(int func, boolean value){
-        if (getFunction(func)!=value){
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void setFunction(int func, boolean value){
+        if ( func>=0 && func<13 && getFunction(func)!=value){
             updateFunction(func,value);    
             tc.sendXpaMessage(XpaMessage.getFunctionMsg(address, 0), null);
         }
+        else {
+            super.setFunction(func,value);
+        }
     }
 
-    // functions 
-    @Override
-    public void setF0(boolean f0) {
-        setF(0,f0);
-    }
-
-    @Override
-    public void setF1(boolean f1) {
-        setF(1,f1);
-    }
-
-    @Override
-    public void setF2(boolean f2) {
-        setF(2,f2);
-    }
-
-    @Override
-    public void setF3(boolean f3) {
-        setF(3,f3);
-    }
-
-    @Override
-    public void setF4(boolean f4) {
-        setF(4,f4);
-    }
-
-    @Override
-    public void setF5(boolean f5) {
-        setF(5,f5);
-    }
-
-    @Override
-    public void setF6(boolean f6) {
-        setF(6,f6);
-    }
-
-    @Override
-    public void setF7(boolean f7) {
-        setF(7,f7);
-    }
-
-    @Override
-    public void setF8(boolean f8) {
-        setF(8,f8);
-    }
-
-    @Override
-    public void setF9(boolean f9) {
-        setF(9,f9);
-    }
-
-    @Override
-    public void setF10(boolean f10) {
-        setF(10,f10);
-    }
-
-    @Override
-    public void setF11(boolean f11) {
-        setF(11,f11);
-    }
-
-    @Override
-    public void setF12(boolean f12) {
-        setF(12,f12);
-    }
-
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void sendFunctionGroup1() {
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void sendFunctionGroup2() {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void sendFunctionGroup3() {
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public LocoAddress getLocoAddress() {
         return new DccLocoAddress(address, XpaThrottleManager.isLongAddress(address));
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     protected void throttleDispose() {
         finishRecord();

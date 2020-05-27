@@ -7,10 +7,10 @@ import org.junit.Before;
 /**
  * JMRIClientReporterManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientReporterManager
+ * Test for the jmri.jmrix.jmriclient.JMRIClientReporterManager
  * class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class JMRIClientReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
@@ -20,7 +20,6 @@ public class JMRIClientReporterManagerTest extends jmri.managers.AbstractReporte
     }
 
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

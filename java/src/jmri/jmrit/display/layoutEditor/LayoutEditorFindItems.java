@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author George Warner Copyright (c) 2017-2018
  */
-public class LayoutEditorFindItems {
+final public class LayoutEditorFindItems {
 
     private final LayoutEditor layoutEditor;
 
@@ -60,7 +60,7 @@ public class LayoutEditorFindItems {
 
     public PositionablePoint findPositionableLinkPoint(LayoutBlock blk1) {
         for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
-            if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {
+            if (p.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
                 if ((p.getConnect1() != null && p.getConnect1().getLayoutBlock() == blk1)
                         || (p.getConnect2() != null && p.getConnect2().getLayoutBlock() == blk1)) {
                     return p;
@@ -72,6 +72,8 @@ public class LayoutEditorFindItems {
 
     /**
      * Returns an array list of track segments matching the block name.
+     * @param name block name.
+     * @return array of segments, may be null.
      */
     public ArrayList<TrackSegment> findTrackSegmentByBlock(String name) {
         if (name.isEmpty()) {
@@ -555,7 +557,7 @@ public class LayoutEditorFindItems {
                     return findLayoutTurntableByName(name);
                 }
         }
-        log.error("did not find Object '" + name + "' of type " + type);
+        log.error("did not find Object '{}' of type {}", name, type);
         return null;
     }
 
@@ -629,5 +631,5 @@ public class LayoutEditorFindItems {
         return uniqueName(inPrefix, 1);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorFindItems.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorFindItems.class);
 }

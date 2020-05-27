@@ -1,5 +1,6 @@
 package apps.startup;
 
+import jmri.util.startup.StartupModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,6 +9,7 @@ import javax.annotation.CheckForNull;
 import javax.swing.Action;
 import jmri.JmriException;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.jmrix.swing.SystemConnectionAction;
 import jmri.util.ConnectionNameFromSystemName;
 import org.slf4j.Logger;
@@ -17,17 +19,17 @@ import org.slf4j.LoggerFactory;
  * Provide services for invoking actions during configuration and startup.
  * <p>
  * The action classes and corresponding human-readable names are provided by
- * {@link apps.startup.StartupActionFactory} instances.
+ * {@link jmri.util.startup.StartupActionFactory} instances.
  *
  * @author Bob Jacobsen Copyright 2003, 2007, 2014
- * @see apps.startup.AbstractActionModelFactory
+ * @see AbstractActionModelFactory
  */
 public abstract class AbstractActionModel implements StartupModel {
 
     private String systemPrefix = ""; // NOI18N
     private String className = ""; // NOI18N
     private final List<Exception> exceptions = new ArrayList<>();
-    private final static Logger log = LoggerFactory.getLogger(AbstractActionModel.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractActionModel.class);
 
     public String getClassName() {
         return this.className;
@@ -68,7 +70,7 @@ public abstract class AbstractActionModel implements StartupModel {
     }
 
     public boolean isSystemConnectionAction() {
-        String name = this.getName();
+        String name = this.getClassName();
         if (name != null) {
             return StartupActionModelUtil.getDefault().isSystemConnectionAction(name);
         }
@@ -81,6 +83,9 @@ public abstract class AbstractActionModel implements StartupModel {
             try {
                 // don't need return value, just want to know if exception is triggered
                 Class.forName(className);
+                if (isSystemConnectionAction()) {
+                    return SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForSystemPrefix(systemPrefix) != null;
+                }
                 return true;
             } catch (ClassNotFoundException ex) {
                 return false;
@@ -106,6 +111,7 @@ public abstract class AbstractActionModel implements StartupModel {
         return Bundle.getMessage("AbstractActionModel.InvalidAction", super.toString());
     }
 
+    @SuppressWarnings("unchecked") // parametized cast of action cannot be checked
     @Override
     public void performAction() throws JmriException {
         log.debug("Invoke Action from {}", className);
@@ -114,17 +120,17 @@ public abstract class AbstractActionModel implements StartupModel {
             if (SystemConnectionAction.class.isAssignableFrom(action.getClass())) {
                 SystemConnectionMemo memo = ConnectionNameFromSystemName.getSystemConnectionMemoFromSystemPrefix(this.getSystemPrefix());
                 if (memo != null) {
-                    ((SystemConnectionAction) action).setSystemConnectionMemo(memo);
+                    ((SystemConnectionAction<SystemConnectionMemo>) action).setSystemConnectionMemo(memo);
                 } else {
                     log.warn("Connection \"{}\" does not exist and cannot be assigned to action {}\nThis warning can be silenced by configuring the connection associated with the startup action.", this.getSystemPrefix(), className);
                 }
             }
             jmri.util.ThreadingUtil.runOnLayout(() -> {
                 try {
-                 this.performAction(action);
+                    this.performAction(action);
                 } catch (JmriException ex) {
                     log.error("Error while performing startup action for class: {}", className, ex);
-               }
+                }
             });
         } catch (ClassNotFoundException ex) {
             log.error("Could not find specified class: {}", className);

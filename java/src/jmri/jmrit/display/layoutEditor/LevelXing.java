@@ -90,11 +90,18 @@ public class LevelXing extends LayoutTrack {
         POINTA, POINTB, POINTC, POINTD
     }
 
+    // temporary reference to the Editor that will eventually be part of View
+    private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor editor;
+
     /**
-     * Constructor method
+     * Constructor method.
+     * @param id ID string.
+     * @param c the point location.
+     * @param layoutEditor the main layout editor.
      */
     public LevelXing(String id, Point2D c, LayoutEditor layoutEditor) {
         super(id, c, layoutEditor);
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor(layoutEditor);
     }
 
     // this should only be used for debugging
@@ -199,6 +206,7 @@ public class LevelXing extends LayoutTrack {
         return null;
     }
 
+    @Nonnull
     public String getSignalAName() {
         if (signalAHeadNamed != null) {
             return signalAHeadNamed.getName();
@@ -220,6 +228,7 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
+    @Nonnull
     public String getSignalBName() {
         if (signalBHeadNamed != null) {
             return signalBHeadNamed.getName();
@@ -241,6 +250,7 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
+    @Nonnull
     public String getSignalCName() {
         if (signalCHeadNamed != null) {
             return signalCHeadNamed.getName();
@@ -262,6 +272,7 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
+    @Nonnull
     public String getSignalDName() {
         if (signalDHeadNamed != null) {
             return signalDHeadNamed.getName();
@@ -584,7 +595,7 @@ public class LevelXing extends LayoutTrack {
                 break;
         }
         String errstring = MessageFormat.format("{0}.getConnection({1}); invalid connection type", getName(), connectionType); //I18IN
-        log.error(errstring);
+        log.error("will throw {}", errstring);
         throw new jmri.JmriException(errstring);
     }
 
@@ -596,7 +607,7 @@ public class LevelXing extends LayoutTrack {
         if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); invalid type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type);
-            log.error(errString);
+            log.error("will throw {}", errString);
             throw new jmri.JmriException(errString);
         }
         switch (connectionType) {
@@ -615,7 +626,7 @@ public class LevelXing extends LayoutTrack {
             default:
                 String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); invalid connection type",
                         getName(), connectionType, (o == null) ? "null" : o.getName(), type);
-                log.error(errString);
+                log.error("will throw {}", errString);
                 throw new jmri.JmriException(errString);
         }
     }
@@ -677,19 +688,19 @@ public class LevelXing extends LayoutTrack {
     }
 
     public Point2D getCoordsA() {
-        return MathUtil.add(center, dispA);
+        return MathUtil.add(getCoordsCenter(), dispA);
     }
 
     public Point2D getCoordsB() {
-        return MathUtil.add(center, dispB);
+        return MathUtil.add(getCoordsCenter(), dispB);
     }
 
     public Point2D getCoordsC() {
-        return MathUtil.subtract(center, dispA);
+        return MathUtil.subtract(getCoordsCenter(), dispA);
     }
 
     public Point2D getCoordsD() {
-        return MathUtil.subtract(center, dispB);
+        return MathUtil.subtract(getCoordsCenter(), dispB);
     }
 
     /**
@@ -700,7 +711,7 @@ public class LevelXing extends LayoutTrack {
      */
     @Override
     public Point2D getCoordsForConnectionType(HitPointType connectionType) {
-        Point2D result = center;
+        Point2D result = getCoordsCenter();
         switch (connectionType) {
             case LEVEL_XING_CENTER:
                 break;
@@ -740,6 +751,7 @@ public class LevelXing extends LayoutTrack {
 
     /**
      * Add Layout Blocks.
+     * @param newLayoutBlock the layout block to add.
      */
     @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
     public void setLayoutBlockAC(LayoutBlock newLayoutBlock) {
@@ -867,19 +879,19 @@ public class LevelXing extends LayoutTrack {
     * Modify coordinates methods.
      */
     public void setCoordsA(Point2D p) {
-        dispA = MathUtil.subtract(p, center);
+        dispA = MathUtil.subtract(p, getCoordsCenter());
     }
 
     public void setCoordsB(Point2D p) {
-        dispB = MathUtil.subtract(p, center);
+        dispB = MathUtil.subtract(p, getCoordsCenter());
     }
 
     public void setCoordsC(Point2D p) {
-        dispA = MathUtil.subtract(center, p);
+        dispA = MathUtil.subtract(getCoordsCenter(), p);
     }
 
     public void setCoordsD(Point2D p) {
-        dispB = MathUtil.subtract(center, p);
+        dispB = MathUtil.subtract(getCoordsCenter(), p);
     }
 
     /**
@@ -888,7 +900,7 @@ public class LevelXing extends LayoutTrack {
     @Override
     public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
+        super.setCoordsCenter(MathUtil.granulize(MathUtil.multiply(getCoordsCenter(), factor), 1.0));
         dispA = MathUtil.granulize(MathUtil.multiply(dispA, factor), 1.0);
         dispB = MathUtil.granulize(MathUtil.multiply(dispB, factor), 1.0);
     }
@@ -899,7 +911,7 @@ public class LevelXing extends LayoutTrack {
     @Override
     public void translateCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        center = MathUtil.add(center, factor);
+        super.setCoordsCenter(MathUtil.add(getCoordsCenter(), factor));
     }
 
     /**
@@ -913,11 +925,11 @@ public class LevelXing extends LayoutTrack {
         double cosineRot = Math.cos(rotRAD);
 
         // rotate displacements around origin {0, 0}
-        Point2D center_temp = center;
-        center = MathUtil.zeroPoint2D;
+        Point2D center_temp = getCoordsCenter();
+        super.setCoordsCenter(MathUtil.zeroPoint2D);
         dispA = rotatePoint(dispA, sineRot, cosineRot);
         dispB = rotatePoint(dispB, sineRot, cosineRot);
-        center = center_temp;
+        super.setCoordsCenter(center_temp);
 
     }
 
@@ -1028,7 +1040,7 @@ public class LevelXing extends LayoutTrack {
                     lb.incrementUse();
                 }
             } else {
-                log.error("{}.setObjects(); bad blockname AC ''{}''", tLayoutBlockNameAC);
+                log.error("LevelXing.setObjects(); bad blockname AC ''{}''", tLayoutBlockNameAC);
                 namedLayoutBlockAC = null;
             }
             tLayoutBlockNameAC = null; //release this memory
@@ -1219,14 +1231,14 @@ public class LevelXing extends LayoutTrack {
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
             JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
-            hiddenCheckBoxMenuItem.setSelected(hidden);
+            hiddenCheckBoxMenuItem.setSelected(isHidden());
             popup.add(hiddenCheckBoxMenuItem);
             hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setHidden(hiddenCheckBoxMenuItem.isSelected()));
 
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    layoutEditor.getLayoutTrackEditors().editLevelXing(LevelXing.this);
+                    editor.editLayoutTrack(LevelXing.this);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
@@ -1409,7 +1421,9 @@ public class LevelXing extends LayoutTrack {
     boolean active = true;
 
     /**
+     * Get if active.
      * "active" means that the object is still displayed, and should be stored.
+     * @return true if still displayed, else false.
      */
     public boolean isActive() {
         return active;
@@ -1486,6 +1500,14 @@ public class LevelXing extends LayoutTrack {
             popup.add(mi);
         }
     }
+
+    /**
+     * Draw track decorations.
+     * 
+     * This type of track has none, so this method is empty.
+     */
+    @Override
+    protected void drawDecorations(Graphics2D g2) {}
 
     /**
      * Draw this level crossing.
@@ -1826,5 +1848,5 @@ public class LevelXing extends LayoutTrack {
         setLayoutBlockBD(layoutBlock);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LevelXing.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LevelXing.class);
 }

@@ -14,7 +14,7 @@ import jmri.jmrix.rps.RpsSystemConnectionMemo;
  * <p>
  * Note that we only allow one of these right now.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 public class AlignTableAction extends AbstractAction {
 
@@ -40,7 +40,7 @@ public class AlignTableAction extends AbstractAction {
             try {
                 f.initComponents();
             } catch (Exception ex) {
-                log.error("Exception: " + ex.toString());
+                log.error("Exception: {}", ex.toString());
             }
             f.setLocation(100, 30);
         }

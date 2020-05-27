@@ -212,7 +212,7 @@ There are XSLT transforms that can insert default language elements
 into the files.  They still have English content, but 
 it's perhaps easier to just translate English text than to 
 edit in new XML elements, make sure the structure is correct, etc.
-For more information, see the <a href="http://jmri.org:/xml/XSLT/I18N">xml/XSLT/I18N file</a>
+For more information, see the <a href="https://jmri.org:/xml/XSLT/I18N">xml/XSLT/I18N file</a>
 or ask on the jmri-developers list.
 
 <a id="help"></a><h3>Translating Help files</h3>
@@ -261,7 +261,7 @@ Cross-package references, e.g. between <code>jmri.jmrit</code> and <code>jmri.jm
 and existing ones are being removed.
 <p>
 Access is via a Bundle class local to each package.  A typical one is
-<code><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html">jmri.jmrit.Bundle</a></code>.
+<code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html">jmri.jmrit.Bundle</a></code>.
 It provides two key methods you use to access (translated) resource
 strings:<br>
 <code>

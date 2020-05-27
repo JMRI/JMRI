@@ -8,7 +8,7 @@ import org.junit.*;
 /**
  * test class for AbstractSensor 
  *
- * @author	Bob Jacobsen 2016 from AbstractLightTestBase (which was called AbstractLightTest at the time)
+ * @author Bob Jacobsen 2016 from AbstractLightTestBase (which was called AbstractLightTest at the time)
  * @author      Paul Bender Copyright (C) 2018
 */
 public class AbstractSensorTest extends AbstractSensorTestBase {
@@ -52,8 +52,8 @@ public class AbstractSensorTest extends AbstractSensorTestBase {
     @Override
     @After
     public void tearDown() {
-	    t.dispose();
-	    t = null;
+        t.dispose();
+        t = null;
         JUnitUtil.tearDown();
     }
 

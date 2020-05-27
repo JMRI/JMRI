@@ -51,6 +51,7 @@ public class DirectSystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * Get the traffic controller instance associated with this connection memo.
+     * @return traffic controller, provided if null.
      */
     public TrafficController getTrafficController(){
         if (tc == null) {
@@ -74,6 +75,7 @@ public class DirectSystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * Get the ThrottleManager instance associated with this connection memo.
+     * @return throttle manager, provided if null.
      */
     public ThrottleManager getThrottleManager(){
         if (tm == null) {

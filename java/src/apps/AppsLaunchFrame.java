@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.util.EventObject;
-import javax.help.SwingHelpUtilities;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
@@ -185,7 +184,7 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
     }
 
     protected void panelMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(InstanceManager.getDefault(PanelMenu.class));
+        menuBar.add(new PanelMenu());
     }
 
     /**
@@ -268,7 +267,7 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
         JMenu helpMenu = HelpUtil.makeHelpMenu(containedPane.windowHelpID(), true);
 
         // tell help to use default browser for external types
-        SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
+        HelpUtil.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
         // use as main help menu
         menuBar.add(helpMenu);

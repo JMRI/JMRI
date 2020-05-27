@@ -126,19 +126,20 @@ public class ThreadingUtil {
     }
 
     /**
-     * Run some GUI-specific code before returning a value
+     * Run some GUI-specific code before returning a value.
      * <p>
      * Typical uses:
      * <p>
      * {@code
-     * ThreadingUtil.runOnGUI(() -> {
-     *     mine.setVisible();
+     * Boolean retval = ThreadingUtil.runOnGUIwithReturn(() -> {
+     *     return mine.isVisible();
      * });
      * }
      * <p>
      * If an InterruptedException is encountered, it'll be deferred to the next
      * blocking call via Thread.currentThread().interrupt()
      * 
+     * @param <E> generic
      * @param ta What to run, usually as a lambda expression
      * @return the value returned by ta
      */
@@ -195,7 +196,7 @@ public class ThreadingUtil {
      * Typical uses:
      * <p>
      * {@code 
-     * ThreadingUtil.runOnGUIEventually( ()->{ 
+     * ThreadingUtil.runOnGUIDelayed( ()->{ 
      *  mine.setVisible(); 
      * }, 1000);
      * }
@@ -226,13 +227,18 @@ public class ThreadingUtil {
 
     /**
      * Create a new thread in the JMRI group
+     * @param runner Runnable.
+     * @return new Thread.
      */
     static public Thread newThread(Runnable runner) {
         return new Thread(getJmriThreadGroup(), runner);
     }
     
     /**
-     * Create a new thread in the JMRI group
+     * Create a new thread in the JMRI group.
+     * @param runner Thread runnable.
+     * @param name Thread name.
+     * @return New Thread.
      */
     static public Thread newThread(Runnable runner, String name) {
         return new Thread(getJmriThreadGroup(), runner, name);
@@ -240,8 +246,9 @@ public class ThreadingUtil {
     
     /**
      * Get the JMRI default thread group.
-     * This should be passed to as the first argument to the {@link Thread} constructor
-     * so we can track JMRI-created threads.
+     * This should be passed to as the first argument to the {@link Thread} 
+     * constructor so we can track JMRI-created threads.
+     * @return JMRI default thread group.
      */
     static public ThreadGroup getJmriThreadGroup() {
         // we access this dynamically instead of keeping it in a static

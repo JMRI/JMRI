@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus.swing;
 
 import javax.swing.JMenu;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.ConfigurationManager;
 import jmri.jmrix.can.swing.CanNamedPaneAction;
 
 /**
@@ -12,6 +13,8 @@ import jmri.jmrix.can.swing.CanNamedPaneAction;
  */
 public class SprogCbusMenu extends JMenu {
 
+    Item[] panelItems;
+    
     public SprogCbusMenu(CanSystemConnectionMemo memo) {
         super();
 
@@ -22,7 +25,11 @@ public class SprogCbusMenu extends JMenu {
         }
 
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
-
+        
+        if (memo != null) {
+            panelItems = createPanelItems(memo);
+        }
+        
         for (Item item : panelItems) {
             if (item == null) {
                 add(new javax.swing.JSeparator());
@@ -30,15 +37,41 @@ public class SprogCbusMenu extends JMenu {
                 add(new CanNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo));
             }
         }
+        
+        // Not a CanNamedPane
+        add(new javax.swing.JSeparator());
+        add(new jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusModeSwitcherAction(Bundle.getMessage("MenuItemSPROGModeSwitcher"), memo));
+        // Added tools that can normally only be found in PanelPro tools menu so that they are available from DP3
+        add(new javax.swing.JSeparator());
+        add(new jmri.jmrit.ampmeter.AmpMeterAction(Bundle.getMessage("MenuItemAmpMeter")));
+        add(new jmri.jmrit.voltmeter.VoltMeterAction(Bundle.getMessage("MenuItemVoltMeter")));
+
     }
 
-    Item[] panelItems = new Item[]{
-        new Item("MenuItemSPROGConsole", "jmri.jmrix.can.cbus.swing.console.CbusConsolePane"),
-        new Item("MenuItemSPROGNodeConfig", "jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane"),
-        new Item("MenuItemSPROGCbusSlotMonitor", "jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorPane"),
-        new Item("MenuItemSPROGBootloader", "jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane")
-    };
-
+    private Item[] createPanelItems(CanSystemConnectionMemo memo) {
+        if (memo.getSubProtocol().equals(ConfigurationManager.SubProtocol.CBUS)) {
+            return new Item[]{
+                new Item("MenuItemConsole", "jmri.jmrix.can.cbus.swing.console.CbusConsolePane"),
+                new Item("MenuItemSendFrame", "jmri.jmrix.can.swing.send.CanSendPane"),
+                new Item("MenuItemEventCapture", "jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane"),
+                new Item("MenuItemEventTable", "jmri.jmrix.can.cbus.swing.eventtable.CbusEventTablePane"),
+                new Item("MenuItemNodeConfig", "jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane"),
+                new Item("MenuItemCbusSlotMonitor", "jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorPane"),
+                new Item("MenuItemEvRequestMon", "jmri.jmrix.can.cbus.swing.eventrequestmonitor.CbusEventRequestTablePane"),
+                new Item("MenuItemNetworkSim", "jmri.jmrix.can.cbus.swing.simulator.SimulatorPane"),
+                new Item("MenuItemBootloader", "jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane")
+            };
+        } else {
+            return new Item[]{
+                new Item("MenuItemSPROGConsole", "jmri.jmrix.can.cbus.swing.console.CbusConsolePane"),
+                new Item("MenuItemSendFrame", "jmri.jmrix.can.swing.send.CanSendPane"),
+                new Item("MenuItemSPROGNodeConfig", "jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane"),
+                new Item("MenuItemSPROGCbusSlotMonitor", "jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorPane"),
+                new Item("MenuItemSPROGBootloader", "jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane")
+            };
+        }
+    }
+    
     static class Item {
 
         Item(String name, String load) {

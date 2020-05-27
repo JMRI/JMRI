@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * EcosSensorManagerXmlTest.java
  *
- * Description: tests for the EcosSensorManagerXml class
+ * Test for the EcosSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class EcosSensorManagerXmlTest {
       Assert.assertNotNull("EcosSensorManagerXml constructor",new EcosSensorManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

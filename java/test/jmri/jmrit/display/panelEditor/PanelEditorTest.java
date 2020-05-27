@@ -1,9 +1,6 @@
 package jmri.jmrit.display.panelEditor;
 
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
 
 import jmri.jmrit.display.AbstractEditorTestBase;
 import jmri.util.JUnitUtil;
@@ -33,7 +30,6 @@ public class PanelEditorTest extends AbstractEditorTestBase<PanelEditor> {
         Assert.assertNotNull("exists", e);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

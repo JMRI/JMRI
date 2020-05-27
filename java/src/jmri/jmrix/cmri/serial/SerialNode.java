@@ -127,18 +127,21 @@ public class SerialNode extends AbstractNode {
     protected boolean[] monitorPacketBits = new boolean[SerialFilterFrame.numMonPkts];
 
     /**
-     * Assumes a node address of 0, and a node type of SMINI If this constructor
+     * Assumes a node address of 0, and a node type of SMINI.
+     * If this constructor
      * is used, actual node address must be set using setNodeAddress, and actual
      * node type using 'setNodeType'
+     * @param tc system connection traffic controller.
      */
     public SerialNode(SerialTrafficController tc) {
         this(0, SMINI,tc);
     }
 
     /**
-     * Creates a new SerialNode and initialize default instance variables
-     * address - Address of node on CMRI serial bus (0-127) type - SMINI,
-     * USIC_SUSIC,
+     * Creates a new SerialNode and initialize default instance variables.
+     * @param address Address of node on CMRI serial bus (0-127).
+     * @param type Node type, e.g. SMINI or USIC_SUSIC.
+     * @param tc system connection traffic controller.
      */
     public SerialNode(int address, int type, SerialTrafficController tc) {
         // set address and type and check validity
@@ -192,12 +195,12 @@ public class SerialNode extends AbstractNode {
     public void setCardTypeLocation(int num, int value) {
         // Validate the input
         if ((num < 0) || (num >= MAXCARDLOCATIONBYTES)) {
-            log.error("setCardTypeLocation - invalid num (index) - " + num);
+            log.error("setCardTypeLocation - invalid num (index) - {}", num);
             return;
         }
         int val = value & 0xFF;
         if ((val != NO_CARD) && (val != INPUT_CARD) && (val != OUTPUT_CARD)) {
-            log.error("setCardTypeLocation - invalid value - " + val);
+            log.error("setCardTypeLocation - invalid value - {}", val);
             return;
         }
         // Set the card type
@@ -205,8 +208,9 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Set a single output bit. Note: state = 'true' for 0, 'false' for 1 bits
-     * are numbered from 1 (not 0)
+     * Set a single output bit.
+     * @param bitNumber bit number, bits are numbered from 1 (not 0).
+     * @param state true for 0, false for 1.
      */
     public void setOutputBit(int bitNumber, boolean state) {
         // locate in the outputArray
@@ -233,8 +237,9 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Get the current state of a single output bit. Note: returns 'true' for 0,
-     * 'false' for 1 bits are numbered from 1 (not 0)
+     * Get the current state of a single output bit.
+     * @param bitNumber bit number, bits are numbered from 1 (not 0).
+     * @return true for 0, false for 1. 
      */
     public boolean getOutputBit(int bitNumber) {
         // locate in the outputArray
@@ -267,8 +272,9 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Set state of Sensor polling. Used to disable polling for test purposes
-     * only.
+     * Set state of Sensor polling.
+     * Used to disable polling for test purposes only.
+     * @param flag true to set active flag, else false.
      */
     public void setSensorsActive(boolean flag) {
         hasActiveSensors = flag;
@@ -276,6 +282,7 @@ public class SerialNode extends AbstractNode {
 
     /**
      * Get number of input cards.
+     * @return number of input cards.
      */
     public int numInputCards() {
         int result = 0;
@@ -319,6 +326,7 @@ public class SerialNode extends AbstractNode {
 
     /**
      * Get number of output cards.
+     * @return number of output cards.
      */
     public int numOutputCards() {
         int result = 0;
@@ -363,15 +371,19 @@ public class SerialNode extends AbstractNode {
 
     /**
      * Get node type Current types are: SMINI, USIC_SUSIC,
+     * @return node type, e.g. USIC_SUSIC.
      */
     public int getNodeType() {
         return (nodeType);
     }
 
     /**
-     * Set node type Current types are: SMINI, USIC_SUSIC, For SMINI, also sets
-     * cardTypeLocation[] and bitsPerCard For USIC_SUSIC, also clears
-     * cardTypeLocation
+     * Set node type.
+     * <p>
+     * Current types are: SMINI, USIC_SUSIC
+     * For SMINI, also sets cardTypeLocation[] and bitsPerCard.
+     * For USIC_SUSIC, also clears cardTypeLocation.
+     * @param type node type, e.g. USIC_SUSIC.
      */
     public void setNodeType(int type) {
 
@@ -453,13 +465,15 @@ public class SerialNode extends AbstractNode {
           break;
             
 // here recognize other node types
-          default: log.error("Bad node type - "+Integer.toString(type) );
+          default:
+              log.error("Bad node type - {}", Integer.toString(type));
         }
 
     }
 
     /**
      * Get number of bits per card.
+     * @return number of bits per card.
      */
     public int getNumBitsPerCard() {
         return (bitsPerCard);
@@ -467,25 +481,30 @@ public class SerialNode extends AbstractNode {
 
     /**
      * Set number of bits per card.
+     * @param bits number of bits.
      */
     public void setNumBitsPerCard(int bits) {
         if ((bits == 24) || (bits == 32) || (bits == 16) || (bits == 8)) {
             bitsPerCard = bits;
         } else {
-            log.warn("unexpected number of bits per card: " + Integer.toString(bits));
+            log.warn("unexpected number of bits per card: {}", Integer.toString(bits));
             bitsPerCard = bits;
         }
     }
 
-     /**  
-     * return CMRInet options.  
+    /**  
+     * Get CMRInet options.
+     * @param optionbit option index.
+     * @return option value.
      */
     public int getCMRInetOpts(int optionbit) { return (cmrinetOptions[optionbit]); }
     public void setCMRInetOpts(int optionbit,int val) { cmrinetOptions[optionbit] = (byte)val; }
     public boolean isCMRInetBit(int optionbit) { return (cmrinetOptions[optionbit] == 1); }
-
-    /** 
-     * return cpNode Initialization options.  
+    
+    /**
+     * Get cpNode options.
+     * @param optionbit option index.
+     * @return option value.
      */
     public int getcpnodeOpts(int optionbit) { return (cpnodeOptions[optionbit]); }
     public void setcpnodeOpts(int optionbit,int val) { cpnodeOptions[optionbit] = (byte)val; }
@@ -493,12 +512,12 @@ public class SerialNode extends AbstractNode {
 
     /**
      * get and set specific option bits.
-     * 
+     * Network Option Bits
      */
     
-   /**
-     * Network Option Bits
-     * 
+    /**
+     * Get if Autopoll bit set.
+     * @return true if set, else false.
      */
     public boolean getOptNet_AUTOPOLL() { return (cmrinetOptions[optbitNet_AUTOPOLL] == 1); }
     public boolean getOptNet_USECMRIX() { return (cmrinetOptions[optbitNet_USECMRIX] == 1); }
@@ -516,8 +535,12 @@ public class SerialNode extends AbstractNode {
     public int getOptNet_byte1() {return cmrinetOptions[1];}
 
     /**
-     * Node Option Bits  
-     * 
+     * Node Option Bits.
+     */
+    
+    /**
+     * Get Node Option SENDEOT.
+     * @return true if SENDEOT, else false.
      */
     public boolean getOptNode_SENDEOT()  { return (cpnodeOptions[optbitNode_SENDEOT] == 1); }
     public boolean getOptNode_USECMRIX() { return (cpnodeOptions[optbitNode_USECMRIX] == 1); }
@@ -535,31 +558,35 @@ public class SerialNode extends AbstractNode {
     public int getOptNode_byte1() {return cpnodeOptions[1];}
     
     /**
-     * node description 
-     * 
+     * Get node description.
+     * @return node description.
      */
     public String getcmriNodeDesc() { return cmriNodeDesc; }
+    
     public void setcmriNodeDesc(String nodeDesc) { cmriNodeDesc = nodeDesc; }
     
     /**
-     * cpNode poll list position
-     * 
+     * Get cpNode poll list position.
+     * @return poll list position.
      */
     public int getPollListPosition() { return pollListPosition; }
+    
     public void setPollListPosition(int pos)  { pollListPosition = pos; }
 
     /**
-     * cpNode polling status
-     * 
+     * Get cpNode polling status.
+     * @return true if polling status flag set, else false.
      */
     public int getPollStatus() { return pollStatus; }
+    
     public void setPollStatus(int status) { pollStatus = status; }
 
     /**
-     * checking cpNode polling enabled state
-     * 
+     * Check cpNode polling enabled state.
+     * @return true if polling is enabled.
      */
     public boolean getPollingEnabled() { return (cmrinetOptions[optbitNet_AUTOPOLL] == 1); }
+    
     public void setPollingEnabled(boolean isEnabled)
     {  
       if(isEnabled)
@@ -569,27 +596,30 @@ public class SerialNode extends AbstractNode {
     }
    
    /**
-    * 
-    * Set/Get packet monitoring for the node 
+    * Get packet monitoring for the node .
+    * @return true if packet monitoring flag set true, else false.
     */
    public boolean getMonitorNodePackets()  { return monitorNodePackets; }
+   
    public void setMonitorNodePackets(boolean onoff) { monitorNodePackets = onoff; }
    
-   /**
-    * Set/Get the specific packet monitoring enable bit
-   */
-   public void setMonitorPacketBit(int pktTypeBit, boolean onoff)
-   { 
+    /**
+     * Set the specific packet monitoring enable bit.
+     * @param pktTypeBit index.
+     * @param onoff true enables, false disabled.
+     */
+    public void setMonitorPacketBit(int pktTypeBit, boolean onoff) { 
        monitorPacketBits[pktTypeBit] = onoff; 
-   }
+    }
    
    public boolean getMonitorPacketBit(int pktTypeBit)
    { 
        return monitorPacketBits[pktTypeBit]; 
    }
    
-        /**
-     * Check valid node address, must match value in dip switches (0 - 127)
+    /**
+     * Check valid node address, must match value in dip switches (0 - 127).
+     * {@inheritDoc}
      */
     @Override
     protected boolean checkNodeAddress(int address) {
@@ -598,20 +628,23 @@ public class SerialNode extends AbstractNode {
 
     /**
      * Get transmission delay.
+     * @return delay, ms.
      */
     public int getTransmissionDelay() {
         return (transmissionDelay);
     }
 
     /**
-     * Set transmission delay. delay - delay between bytes on receive (units of
-     * 10 microsec.) Note: two bytes are used, so range is 0-65,535. If delay is
-     * out of range, it is restricted to the allowable range
+     * Set transmission delay.
+     * <p>
+     * two bytes are used, so range is 0-65,535. If delay is
+     * out of range, it is restricted to the allowable range.
+     * @param delay - delay between bytes on receive (units of
+     * 10 microsec.)
      */
     public void setTransmissionDelay(int delay) {
         if ((delay < 0) || (delay > 65535)) {
-            log.warn("transmission delay out of 0-65535 range: "
-                    + Integer.toString(delay));
+            log.warn("transmission delay out of 0-65535 range: {}", Integer.toString(delay));
             if (delay < 0) {
                 delay = 0;
             }
@@ -623,22 +656,24 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Get pulse width. Used with pulsed turnout control.
+     * Get pulse width.
+     * Used with pulsed turnout control.
+     * @return pulse width, ms.
      */
     public int getPulseWidth() {
         return (pulseWidth);
     }
 
     /**
-     * Set pulse width. width - width of pulse used for pulse controlled turnout
+     * Set pulse width.
+     * @param width width of pulse used for pulse controlled turnout
      * control (millisec.) Note: Pulse width must be between 100 and 10000
      * milliseconds. If width is out of range, it is restricted to the allowable
      * range
      */
     public void setPulseWidth(int width) {
         if ((width < 100) || (width > 10000)) {
-            log.warn("pulse width out of 100 - 10000 range: "
-                    + Integer.toString(width));
+            log.warn("pulse width out of 100 - 10000 range: {}", Integer.toString(width));
             if (width < 100) {
                 width = 100;
             }
@@ -650,19 +685,22 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Set the type of one card. address - address recognized for this card by
+     * Set the type of one card. 
+     * 
+     * @param address address recognized for this card by
      * the node hardware. for USIC_SUSIC address set in card's dip switches (0 -
-     * 63) type - INPUT_CARD, OUTPUT_CARD, or NO_CARD
+     * 63) 
+     * @param type INPUT_CARD, OUTPUT_CARD, or NO_CARD
      */
     public void setCardTypeByAddress(int address, int type) {
         // validate address
         if ((address < 0) || (address > 63)) {
-            log.error("illegal card address: " + Integer.toString(address));
+            log.error("illegal card address: {}", Integer.toString(address));
             return;
         }
         // validate type
         if ((type != OUTPUT_CARD) && (type != INPUT_CARD) && (type != NO_CARD)) {
-            log.error("illegal card type: " + Integer.toString(type));
+            log.error("illegal card type: {}", Integer.toString(type));
             cardTypeLocation[address] = NO_CARD;
             return;
         }
@@ -678,9 +716,11 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Test for OUTPUT_CARD type. Returns true if card with 'cardNum' is an
-     * output card. Returns false if card is not an output card, or if 'cardNum'
-     * is out of range.
+     * Test for OUTPUT_CARD type. 
+     * 
+     * @param cardNum index number.
+     * @return true if card with 'cardNum' is an output card. false if card 
+     * is not an output card, or if 'cardNum' is out of range.
      */
     public boolean isOutputCard(int cardNum) {
         if (cardNum > 63) {
@@ -698,8 +738,10 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Test for INPUT_CARD type. Returns true if card with 'cardNum' is an input
-     * card. Returns false if card is not an input card, or if 'cardNum' is out
+     * Test for INPUT_CARD type.
+     * @param cardNum index number.
+     * @return true if card with 'cardNum' is an input card, 
+     *         false if card is not an input card, or if 'cardNum' is out
      * of range.
      */
     public boolean isInputCard(int cardNum) {
@@ -718,9 +760,13 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Get 'Output Card Index' Returns the index this output card would have in
-     * an array of output cards for this node. Can be used to locate this card's
+     * Get 'Output Card Index'.
+     * <p>
+     * Can be used to locate this card's
      * bytes in an output message. Array is ordered by increasing node address.
+     * @param cardNum index number.
+     * @return the index this output card would have in
+     * an array of output cards for this node. 
      */
     public int getOutputCardIndex(int cardNum) {
         if (nodeType == SMINI) {
@@ -745,9 +791,14 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Get 'Input Card Index' Returns the index this input card would have in an
-     * array of input cards for this node. Can be used to locate this card's
-     * bytes in an receive message. Array is ordered by increasing node address.
+     * Get 'Input Card Index'.
+     * <p>
+     * Can be used to locate this card's bytes in an receive message. 
+     * Array is ordered by increasing node address.
+     * @param cardNum index number.
+     * @return the index this input card would have in an
+     * array of input cards for this node. 
+     * 
      */
     public int getInputCardIndex(int cardNum) {
         if (nodeType == SMINI) {
@@ -772,9 +823,12 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Set location of SearchLightBits (SMINI only) bit - bitNumber of the low
-     * bit of an oscillating search light bit pair Notes: Bits are numbered from
-     * 0 Two bits are set by each call - bit and bit + 1. If either bit is
+     * Set location of SearchLightBits (SMINI only).
+     * @param bit - bitNumber of the low
+     * bit of an oscillating search light bit pair
+     * <p>
+     * Bits are numbered from 0.
+     * Two bits are set by each call - bit and bit + 1. If either bit is
      * already set, an error is logged and no bits are set.
      */
     public void set2LeadSearchLight(int bit) {
@@ -786,14 +840,12 @@ public class SerialNode extends AbstractNode {
         }
         // validate bit number range
         if ((bit < 0) || (bit > 46)) {
-            log.error("Invalid bit number when setting SMINI Searchlights bits: "
-                    + Integer.toString(bit));
+            log.error("Invalid bit number when setting SMINI Searchlights bits: {}", Integer.toString(bit));
             return;
         }
         // validate that bits are not already set
         if ((locSearchLightBits[bit] != 0) || (locSearchLightBits[bit + 1] != 0)) {
-            log.error("bit number for SMINI Searchlights bits already set: "
-                    + Integer.toString(bit));
+            log.error("bit number for SMINI Searchlights bits already set: {}", Integer.toString(bit));
             return;
         }
         // set the bits
@@ -803,8 +855,11 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Clear location of SearchLightBits (SMINI only) bit - bitNumber of the low
-     * bit of an oscillating search light bit pair Notes: Bits are numbered from
+     * Clear location of SearchLightBits (SMINI only).
+     * @param bit - bitNumber of the low
+     * bit of an oscillating search light bit pair 
+     * <p>
+     * Notes: Bits are numbered from
      * 0 Two bits are cleared by each call - bit and bit + 1. If either bit is
      * already clear, an error is logged and no bits are set.
      */
@@ -817,14 +872,12 @@ public class SerialNode extends AbstractNode {
         }
         // validate bit number range
         if ((bit < 0) || (bit > 46)) {
-            log.error("Invalid bit number when setting SMINI Searchlights bits: "
-                    + Integer.toString(bit));
+            log.error("Invalid bit number when setting SMINI Searchlights bits: {}", Integer.toString(bit));
             return;
         }
         // validate that bits are not already clear
         if ((locSearchLightBits[bit] != 1) || (locSearchLightBits[bit + 1] != 1)) {
-            log.error("bit number for SMINI Searchlights bits already clear: "
-                    + Integer.toString(bit));
+            log.error("bit number for SMINI Searchlights bits already clear: {}", Integer.toString(bit));
             return;
         }
         // set the bits
@@ -834,9 +887,9 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Query SearchLightBits by bit number (SMINI only) bit - bitNumber of the
-     * either bit of an oscillating search light bit pair Note: returns 'true'
-     * if bit is an oscillating SearchLightBit, otherwise 'false' is returned
+     * Query SearchLightBits by bit number (SMINI only).
+     * @param bit bitNumber of the either bit of an oscillating search light bit pair.
+     * @return true if bit is an oscillating SearchLightBit, otherwise false.
      */
     public boolean isSearchLightBit(int bit) {
         // check for SMINI
@@ -847,8 +900,7 @@ public class SerialNode extends AbstractNode {
         }
         // validate bit number range
         if ((bit < 0) || (bit > 47)) {
-            log.error("Invalid bit number in query of SMINI Searchlights bits: "
-                    + Integer.toString(bit));
+            log.error("Invalid bit number in query of SMINI Searchlights bits: {}", Integer.toString(bit));
             return (false);
         }
         if (locSearchLightBits[bit] == 1) {
@@ -1064,7 +1116,8 @@ public class SerialNode extends AbstractNode {
 
             break;
             
-            default:  log.error("Invalid node type ("+nodeType+") in SerialNode Init Message");
+            default:
+                log.error("Invalid node type ({}) in SerialNode Init Message", nodeType);
                 
         }            
         
@@ -1186,7 +1239,7 @@ public class SerialNode extends AbstractNode {
                 }
             }
         } catch (JmriException e) {
-            log.error("exception in markChanges: " + e);
+            log.error("exception in markChanges: {}", e);
         }
     }
 
@@ -1199,7 +1252,7 @@ public class SerialNode extends AbstractNode {
     public void registerSensor(Sensor s, int i) {
         // validate the sensor ordinal
         if ((i < 0) || (i > ((numInputCards() * bitsPerCard) - 1)) || (i > MAXSENSORS)) {
-            log.error("Unexpected sensor ordinal in registerSensor: " + Integer.toString(i + 1));
+            log.error("Unexpected sensor ordinal in registerSensor: {}", Integer.toString(i + 1));
             return;
         }
         hasActiveSensors = true;
@@ -1210,8 +1263,7 @@ public class SerialNode extends AbstractNode {
             }
         } else {
             // multiple registration of the same sensor
-            log.warn("multiple registration of same sensor: CS"
-                    + Integer.toString((getNodeAddress() * SerialSensorManager.SENSORSPERUA) + i + 1)); // TODO multichar prefix
+            log.warn("multiple registration of same sensor: CS{}", Integer.toString((getNodeAddress() * SerialSensorManager.SENSORSPERUA) + i + 1)); // TODO multichar prefix
         }
     }
 
@@ -1238,7 +1290,7 @@ public class SerialNode extends AbstractNode {
 
         // see how many polls missed
         if (log.isDebugEnabled()) {
-            log.warn("Timeout to poll for UA=" + getNodeAddress() + ": consecutive timeouts: " + timeout);
+            log.warn("Timeout to poll for UA={}: consecutive timeouts: {}", getNodeAddress(), timeout);
         }
 
         if (timeout > 5) { // enough, reinit
@@ -1256,7 +1308,7 @@ public class SerialNode extends AbstractNode {
                     try {
                         sensorArray[i].setKnownState(Sensor.UNKNOWN);
                     } catch (jmri.JmriException e) {
-                        log.error("unexpected exception setting sensor i=" + i + " on node " + getNodeAddress() + "e: " + e);
+                        log.error("unexpected exception setting sensor i={} on node {}e: {}", i, getNodeAddress(), e);
                     }
                 }
             }
@@ -1269,7 +1321,7 @@ public class SerialNode extends AbstractNode {
     @Override
     public void resetTimeout(AbstractMRMessage m) {
         if (timeout > 0) {
-            log.debug("Reset " + timeout + " timeout count");
+            log.debug("Reset {} timeout count", timeout);
         }
         timeout = 0;
     }

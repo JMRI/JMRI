@@ -6,7 +6,7 @@ import org.junit.*;
 /**
  * Tests for the StringIO class
  *
- * @author	Daniel Bergqvist Copyright (C) 2018
+ * @author Daniel Bergqvist Copyright (C) 2018
  */
 public class StringIOTest {
 

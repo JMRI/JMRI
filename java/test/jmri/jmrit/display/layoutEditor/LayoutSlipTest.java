@@ -2,10 +2,8 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.*;
-import jmri.BlockManager;
-import jmri.InstanceManager;
+
 import jmri.JmriException;
-import jmri.ShutDownManager;
 import jmri.util.*;
 import jmri.util.junit.annotations.*;
 import org.junit.*;
@@ -13,7 +11,7 @@ import org.junit.*;
 /**
  * Test simple functioning of LayoutSlip
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class LayoutSlipTest {
 
@@ -65,42 +63,6 @@ public class LayoutSlipTest {
 
         Assert.assertTrue("lts.getSlipType() is SINGLE_SLIP", lts.getSlipType() == LayoutTurnout.TurnoutType.SINGLE_SLIP);
         Assert.assertTrue("ltd.getSlipType() is DOUBLE_SLIP", ltd.getSlipType() == LayoutTurnout.TurnoutType.DOUBLE_SLIP);
-    }
-
-    @Test
-    public void testSetSlipType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
-        Assert.assertNotNull("LayoutSlip single not null", lts);
-        Assert.assertNotNull("LayoutSlip double not null", ltd);
-
-        lts.setSlipType(LayoutTurnout.TurnoutType.NONE); // invalid type
-        JUnitAppender.assertErrorMessage("single.setSlipType(NONE); invalid slip type");
-        ltd.setSlipType(LayoutTurnout.TurnoutType.NONE); // invalid type
-        JUnitAppender.assertErrorMessage("double.setSlipType(NONE); invalid slip type");
-
-        lts.setSlipType(LayoutTurnout.TurnoutType.DOUBLE_SLIP);
-        Assert.assertTrue("lts.getSlipType() is DOUBLE_SLIP", lts.getSlipType() == LayoutTurnout.TurnoutType.DOUBLE_SLIP);
-        ltd.setSlipType(LayoutTurnout.TurnoutType.SINGLE_SLIP);
-        Assert.assertTrue("ltd.getSlipType() is SINGLE_SLIP", ltd.getSlipType() == LayoutTurnout.TurnoutType.SINGLE_SLIP);
-    }
-
-    @Test
-    public void testSetTurnoutType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
-        Assert.assertNotNull("LayoutSlip single not null", lts);
-        Assert.assertNotNull("LayoutSlip double not null", ltd);
-
-        lts.setTurnoutType(LayoutTurnout.TurnoutType.NONE); // invalid type
-        JUnitAppender.assertErrorMessage("single.setSlipType(NONE); invalid slip type");
-        ltd.setTurnoutType(LayoutTurnout.TurnoutType.NONE); // invalid type
-        JUnitAppender.assertErrorMessage("double.setSlipType(NONE); invalid slip type");
-
-        lts.setTurnoutType(LayoutTurnout.TurnoutType.DOUBLE_SLIP);
-        Assert.assertTrue("lts.getSlipType() is DOUBLE_SLIP", lts.getSlipType() == LayoutTurnout.TurnoutType.DOUBLE_SLIP);
-        ltd.setTurnoutType(LayoutTurnout.TurnoutType.SINGLE_SLIP);
-        Assert.assertTrue("ltd.getSlipType() is SINGLE_SLIP", ltd.getSlipType() == LayoutTurnout.TurnoutType.SINGLE_SLIP);
     }
 
     @Test
@@ -158,14 +120,14 @@ public class LayoutSlipTest {
             Assert.assertNull("lts.getConnectionType(NONE) is null", lts.getConnection(HitPointType.NONE));
             Assert.fail("lts.getConnectionType(NONE): No exception thrown");
         } catch (jmri.JmriException e) {
-            JUnitAppender.assertErrorMessage("single.getConnection(NONE); Invalid Connection Type");
+            JUnitAppender.assertErrorMessage("will throw single.getConnection(NONE); Invalid Connection Type");
         }
         try {
             // this should throw up (NONE is not a valid connection type)
             Assert.assertNull("ltd.getConnectionType(NONE) is null", ltd.getConnection(HitPointType.NONE));
             Assert.fail("ltd.getConnectionType(NONE): No exception thrown");
         } catch (jmri.JmriException e) {
-            JUnitAppender.assertErrorMessage("double.getConnection(NONE); Invalid Connection Type");
+            JUnitAppender.assertErrorMessage("will throw double.getConnection(NONE); Invalid Connection Type");
         } // OK
     }
 
@@ -561,7 +523,7 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on lts.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("single.getConnection(NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw single.getConnection(NONE); Invalid Connection Type");
 
         try {
             // test Invalid Connection Type
@@ -570,7 +532,7 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on ltd.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("double.getConnection(NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw double.getConnection(NONE); Invalid Connection Type");
     }
 
     @Test
@@ -623,7 +585,7 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on lts.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("single.setConnection(NONE, null, NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw single.setConnection(NONE, null, NONE); Invalid Connection Type");
 
         try {
             // test Invalid Connection Type
@@ -631,7 +593,7 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on ltd.setConnection(Invalid Connection Type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("double.setConnection(NONE, null, NONE); Invalid Connection Type");
+        JUnitAppender.assertErrorMessage("will throw double.setConnection(NONE, null, NONE); Invalid Connection Type");
 
         try {
             // test invalid object type
@@ -639,14 +601,14 @@ public class LayoutSlipTest {
             Assert.fail("No exception thrown on lts.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("single.setConnection(SLIP_A, null, POS_POINT); Invalid type");
+        JUnitAppender.assertErrorMessage("will throw single.setConnection(SLIP_A, null, POS_POINT); Invalid type");
         try {
             // test invalid object type
             ltd.setConnection(HitPointType.SLIP_B, null, HitPointType.POS_POINT);
             Assert.fail("No exception thrown on ltd.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
-        JUnitAppender.assertErrorMessage("double.setConnection(SLIP_B, null, POS_POINT); Invalid type");
+        JUnitAppender.assertErrorMessage("will throw double.setConnection(SLIP_B, null, POS_POINT); Invalid type");
 
         try {
             // test valid types
@@ -722,8 +684,8 @@ public class LayoutSlipTest {
     public void setUp() {
         jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            lts = new LayoutSlip("single", new Point2D.Double(50.0, 100.0), +45.0, layoutEditor, LayoutTurnout.TurnoutType.SINGLE_SLIP);
-            ltd = new LayoutSlip("double", new Point2D.Double(100.0, 50.0), -45.0, layoutEditor, LayoutTurnout.TurnoutType.DOUBLE_SLIP);
+            lts = new LayoutSingleSlip("single", new Point2D.Double(50.0, 100.0), +45.0, layoutEditor);
+            ltd = new LayoutDoubleSlip("double", new Point2D.Double(100.0, 50.0), -45.0, layoutEditor);
         }
     }
 
@@ -740,5 +702,5 @@ public class LayoutSlipTest {
             ltd = null;
         }
     }
-    //private final static Logger log = LoggerFactory.getLogger(LayoutSlipTest.class);
+    //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipTest.class);
 }

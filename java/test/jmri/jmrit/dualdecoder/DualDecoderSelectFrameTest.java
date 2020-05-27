@@ -15,9 +15,9 @@ public class DualDecoderSelectFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new DualDecoderSelectFrame();
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new DualDecoderSelectFrame();
+        }
     }
 
     @After
@@ -27,5 +27,4 @@ public class DualDecoderSelectFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DualDecoderSelectFrameTest.class);
-
 }

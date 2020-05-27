@@ -358,9 +358,9 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static void setAutoSaveEnabled(boolean enabled) {
         getDefault().autoSave = enabled;
         if (enabled) {
-            new AutoSave().start();
+            AutoSave.start();
         } else {
-            new AutoSave().stop();
+            AutoSave.stop();
         }
     }
 
@@ -2945,7 +2945,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     @Override
     public void dispose() {
-        new AutoSave().stop();
+        AutoSave.stop();
     }
 
 }

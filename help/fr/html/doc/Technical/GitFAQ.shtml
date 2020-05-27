@@ -405,24 +405,16 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 	<p>
 	vous pouvez ajouter ceci &#225; vos r&#233;pertoires afin que chaque "push" soit automatiquement test&#233;
 	<p>
-	Les deux services de test CI sont appel&#233;s "Travis" et "Appveyor":
+	Les deux services de test CI sont appel&#233;s "Travis CI" et "GitHub":
 	<ul>
 	<li>Travis fonctionne sur Linux. il fait d'abord un contr&#244;le des mauvaises fins de ligne (voir
 	    <a href="#lineends">plus loin ).</a>
 	    puis ex&#233;cute le jeu complet de tests JUnits, y compris les op&#233;rations de tests d'&#233;cran.
-	<li>Appveyor fonctionne sur Windows; Il saute les tests de fin de ligne, ce n'est pas fiable sur Windows.
-	    Pour un gain de temps, il saute beaucoup de de tests de formats XML
-	    ( Travis les couvres de toute fa&#231;on ).
 	</ul>
 	Pour ajouter ceux-ci &#225; votre r&#233;pertore personnel:
 	<ul>
 	<li>Pour Travis aller &#225;
 	    <a href="https://travis-ci.org">la page web Travis</a>
-	    et "Inscrivez vous". Utilisez votre compte GitHub et Email.
-	    &#193; la fin du processus, il vous sera demand&#233; vos r&#233;pertoires GitHub
-	    &#225; surveiller; vous pouvez s&#233;lectionner &#225; la fois le "JMRI" et fourches "du site".
-	<li>pour Appveyor, aller sur la
-	    <a href="https://www.appveyor.com">page webAppveyor</a>
 	    et "Inscrivez vous". Utilisez votre compte GitHub et Email.
 	    &#193; la fin du processus, il vous sera demand&#233; vos r&#233;pertoires GitHub
 	    &#225; surveiller; vous pouvez s&#233;lectionner &#225; la fois le "JMRI" et fourches "du site".

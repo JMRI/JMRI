@@ -85,7 +85,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     public void setSignalMast(String pName) {
         SignalMast mMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(pName);
         if (mMast == null) {
-            log.warn("did not find a SignalMast named " + pName);
+            log.warn("did not find a SignalMast named {}", pName);
         } else {
             setSignalMast(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, mMast));
         }
@@ -114,9 +114,9 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         String s = getSignalMast().getAppearanceMap().getImageLink(aspect, useIconSet);
         if (s.equals("")) {
             if (aspect.startsWith("$")) {
-                log.debug("No icon found for specific appearance " + aspect);
+                log.debug("No icon found for specific appearance {}", aspect);
             } else {
-                log.error("No icon found for appearance " + aspect);
+                log.error("No icon found for appearance {}", aspect);
             }
             return true;
         } else {
@@ -449,7 +449,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                 getSignalMast().setHeld(!getSignalMast().getHeld());
                 return;
             default:
-                log.error("Click in mode " + clickMode);
+                log.error("Click in mode {}", clickMode);
         }
     }
 
@@ -492,9 +492,9 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         updateSize();
         if (log.isDebugEnabled()) { // Avoid signal lookup unless needed
             if (getSignalMast() == null) {
-                log.debug("Display state " + state + ", disconnected");
+                log.debug("Display state {}, disconnected", state);
             } else {
-                log.debug("Display state " + state + " for " + getSignalMast().getSystemName());
+                log.debug("Display state {} for {}", state, getSignalMast().getSystemName());
             }
         }
         if (isText()) {

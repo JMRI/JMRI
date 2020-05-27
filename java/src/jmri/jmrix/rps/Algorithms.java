@@ -7,7 +7,7 @@ import javax.vecmath.Point3d;
  *
  * Provide central access to the RPS algorithms.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class Algorithms implements Constants {
 
@@ -26,7 +26,12 @@ public class Algorithms implements Constants {
     }
 
     /**
-     * Create proper Calculator instance
+     * Create proper Calculator instance.
+     * @param points the points array.
+     * @param vs algorithm getVSound.
+     * @param offset algorithm offset.
+     * @param name algorithm name.
+     * @return the calculator.
      */
     public static Calculator newCalculator(Point3d[] points, double vs, int offset, String name) {
         if (name.equals(names[0])) {

@@ -158,16 +158,7 @@ public class EngineModels extends RollingStockAttribute {
                 models.length != lengths.length ||
                 models.length != types.length ||
                 models.length != weights.length) {
-            log.error("Defaults do not have the right number of items, " +
-                    "models=" +
-                    models.length +
-                    " hps=" +
-                    hps.length +
-                    " lengths=" +
-                    lengths.length // NOI18N
-                    +
-                    " types=" +
-                    types.length); // NOI18N
+            log.error("Defaults do not have the right number of items, models={} hps={} lengths={} types={}", models.length, hps.length, lengths.length, types.length); // NOI18N
             return;
         }
 

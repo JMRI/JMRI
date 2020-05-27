@@ -93,8 +93,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
     /**
      * Create an DCCppMessage from an DCCppReply.
+     * Not used.  Really, not even possible.  Consider removing.
+     * @param message existing reply to replicate.
      */
-    // NOTE: Not used.  Really, not even possible.  Consider removing.
     public DCCppMessage(DCCppReply message) {
         super(message.getNumDataElements());
         setBinary(false);
@@ -106,15 +107,17 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
-     * Create a DCCppMessage from a String containing bytes. Since DCCppMessages
-     * are text, there is no Hex-to-byte conversion
+     * Create a DCCppMessage from a String containing bytes.
+     * <p>
+     * Since DCCppMessages are text, there is no Hex-to-byte conversion.
      * <p>
      * NOTE 15-Feb-17: un-Deprecating this function so that it can be used in
-     * the DCCppOverTCP server/client interface. Messages shouldn't be parsed,
-     * they are already in DCC++ format, so we need the string constructor to
-     * generate a DCCppMessage from the incoming byte stream
+     * the DCCppOverTCP server/client interface. 
+     * Messages shouldn't be parsed, they are already in DCC++ format,
+     * so we need the string constructor to generate a DCCppMessage from 
+     * the incoming byte stream.
+     * @param s message in string form.
      */
-    //@Deprecated
     public DCCppMessage(String s) {
         setBinary(false);
         setRetries(_nRetries);
@@ -619,7 +622,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     @Override
     public void setOpCode(int i) {
         if (i > 0xFF || i < 0) {
-            log.error("Opcode invalid: " + i);
+            log.error("Opcode invalid: {}", i);
         }
         opcode = (char) (i & 0xFF);
         myMessage.setCharAt(0, opcode);
@@ -1516,13 +1519,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * control code.  These are used in multiple places within the code,
      * so they appear here.
      */
+    
     /**
-     * Stationary Decoder Message
-     * <p>
-     * Format: {@code <a ADDRESS SUBADDRESS ACTIVATE>}
-     * <p>
-     * ADDRESS: the primary address of the decoder (0-511) SUBADDRESS: the
-     * subaddress of the decoder (0-3) ACTIVATE: 1=on (set), 0=off (clear)
+     * Stationary Decoder Message.
      * <p>
      * Note that many decoders and controllers combine the ADDRESS and
      * SUBADDRESS into a single number, N, from 1 through a max of 2044, where
@@ -1534,7 +1533,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * {@code ADDRESS = INT((N - 1) / 4) + 1}
      *    {@code SUBADDRESS = (N - 1) % 4}
      * <p>
-     * returns: NONE
+     * @param address the primary address of the decoder (0-511).
+     * @param subaddress the subaddress of the decoder (0-3).
+     * @param activate true on, false off.
+     * @return accessory decoder message.
      */
     public static DCCppMessage makeAccessoryDecoderMsg(int address, int subaddress, boolean activate) {
         // Sanity check inputs
@@ -1571,25 +1573,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
-     * Predefined Turnout Control Message
+     * Predefined Turnout Control Message.
      * <p>
-     * Format: {@code <T ID THROW>}
-     * <p>
-     * ID: the numeric ID (0-32767) of the turnout to control THROW: 0
-     * (unthrown) or 1 (thrown)
-     * <p>
-     * returns:{@code <H ID THROW>}
-     * <p>
-     * ADD: {@code <T ID ADDRESS SUBADDRESS>} ID: the numeric ID (0-32767) of
-     * the turnout to control ADDRESS: Decoder address (0-511) SUBADDRESS:
-     * Decoder subaddress (0-3) RETURNS: {@code <O>} on success, {@code <X>} on
-     * failure
-     * <p>
-     * DELETE: {@code <T ID>} ID: the numeric ID (0-32767) of the turnout to
-     * control RETURNS: {@code <O>} on success, {@code <X>} on failure
-     * <p>
-     * LIST: {@code <T>} RETURNS: {@code <H ID ADDRESS SUBADDRESS THROW>} for
-     * each defined turnout or {@code <X>} if no turnouts defined.
+     * @param id the numeric ID (0-32767) of the turnout to control.
+     * @param thrown true thrown, false closed.
+     * @return message to set turnout.
      */
     public static DCCppMessage makeTurnoutCommandMsg(int id, boolean thrown) {
         // Sanity check inputs
@@ -1698,17 +1686,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
-     * Create/Delete/Query Sensor
+     * Create/Delete/Query Sensor.
      * <p>
-     * ADD: {@code <S ID PIN PULLUP>} ID (0-32767) PIN: Arduino Pin # of sensor
-     * PULLUP: TRUE if use internal pullup for PIN, FALSE if don't. RETURNS:
-     * {@code <O>} on success, {@code <X>} on failure
-     * <p>
-     * DELETE: {@code <S ID>} RETURNS: {@code <O>} on success, {@code <X>} on
-     * failure
-     * <p>
-     * LIST: {@code <S>} RETURNS: {@code <Q ID PIN PULLUP>} for each defined
      * sensor, or {@code <X>} if no sensors defined.
+     * @param id pin pullup (0-32767).
+     * @param pin Arduino pin index of sensor.
+     * @param pullup true if use internal pullup for PIN, false if not.
+     * @return message to create the sensor.
      */
     public static DCCppMessage makeSensorAddMsg(int id, int pin, int pullup) {
         // Sanity check inputs
@@ -1746,11 +1730,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
-     * Query All Sensors States
+     * Query All Sensors States.
      * <p>
-     * Format: {@code <Q>}
-     * <p>
-     * returns status messages containing the status of each connected sensor.
+     * @return message to query all sensor states.
      */
     public static DCCppMessage makeQuerySensorStatesMsg() {
         return (new DCCppMessage(DCCppConstants.QUERY_SENSOR_STATES_CMD, DCCppConstants.QUERY_SENSOR_STATES_REGEX));
@@ -1778,6 +1760,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * returns: {@code <r CALLBACKNUM|CALLBACKSUB|CV Value)} where VALUE is a
      * number from 0-255 as read from the requested CV, or -1 if verificaiton
      * read fails
+     * @param cv CV index, 1-1024.
+     * @param val new CV value, 0-255.
+     * @return message to write Direct CV.
      */
     public static DCCppMessage makeWriteDirectCVMsg(int cv, int val) {
         return (makeWriteDirectCVMsg(cv, val, 0, DCCppConstants.PROG_WRITE_CV_BYTE));
@@ -1834,6 +1819,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * returns: {@code <r CALLBACKNUM|CALLBACKSUB|CV BIT VALUE)} where VALUE is
      * a number from 0-1 as read from the requested CV bit, or -1 if
      * verificaiton read fails
+     * @param cv CV index, 1-1024.
+     * @param bit bit index, 0-7
+     * @param val bit value, 0-1.
+     * @return message to write driect CV bit.
      */
     public static DCCppMessage makeBitWriteDirectCVMsg(int cv, int bit, int val) {
         return (makeBitWriteDirectCVMsg(cv, bit, val, 0, DCCppConstants.PROG_WRITE_CV_BIT));
@@ -1869,7 +1858,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
-     * Read Direct CV Byte from Programming Track
+     * Read Direct CV Byte from Programming Track.
      * <p>
      * Format: {@code <R CV CALLBACKNUM CALLBACKSUB>}
      * <p>
@@ -1890,6 +1879,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * returns: {@code <r CALLBACKNUM|CALLBACKSUB|CV VALUE>} where VALUE is a
      * number from 0-255 as read from the requested CV, or -1 if read could not
      * be verified
+     * @param cv CV index.
+     * @return message to send read direct CV.
      */
     public static DCCppMessage makeReadDirectCVMsg(int cv) {
         return (makeReadDirectCVMsg(cv, 0, DCCppConstants.PROG_READ_CV));
@@ -1923,15 +1914,16 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * <p>
      * Format: {@code <w CAB CV VALUE>}
      * <p>
-     * writes, without any verification, a Configuration Variable to the decoder
-     * of an engine on the main operations track
+     * Writes, without any verification, a Configuration Variable to the decoder
+     * of an engine on the main operations track.
      * <p>
-     * CAB: the short (1-127) or long (128-10293) address of the engine decoder
-     * CV: the number of the Configuration Variable memory location in the
-     * decoder to write to (1-1024) VALUE: the value to be written to the
-     * Configuration Variable memory location (0-255)
-     * <p>
-     * returns: NONE
+     * @param address the short (1-127) or long (128-10293) address of the 
+     *                  engine decoder.
+     * @param cv the number of the Configuration Variable memory location in the
+     *                  decoder to write to (1-1024).
+     * @param val the value to be written to the
+     *                  Configuration Variable memory location (0-255).
+     * @return message to Write CV in Ops Mode.
      */
     public static DCCppMessage makeWriteOpsModeCVMsg(int address, int cv, int val) {
         // Sanity check inputs
@@ -1957,7 +1949,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
-     * Write Direct CV Bit to Main Track
+     * Write Direct CV Bit to Main Track.
      * <p>
      * Format: {@code <b CAB CV BIT VALUE>}
      * <p>
@@ -1966,11 +1958,16 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * <p>
      * CAB: the short (1-127) or long (128-10293) address of the engine decoder
      * CV: the number of the Configuration Variable memory location in the
-     * decoder to write to (1-1024) BIT: the bit number of the Configurarion
-     * Variable regsiter to write (0-7) VALUE: the value of the bit to be
+     * decoder to write to (1-1024) BIT: the bit number of the Configuration
+     * Variable register to write (0-7) VALUE: the value of the bit to be
      * written (0-1)
      * <p>
      * returns: NONE
+     * @param address loco cab address.
+     * @param cv CV index, 1-1024.
+     * @param bit bit index, 0-7.
+     * @param val bit value, 0 or 1.
+     * @return message to write direct CV bit to main track.
      */
     public static DCCppMessage makeBitWriteOpsModeCVMsg(int address, int cv, int bit, int val) {
         // Sanity Check Inputs
@@ -1998,11 +1995,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
-     * Set Track Power ON or OFFf
+     * Set Track Power ON or OFF.
      * <p>
      * Format: {@code <1> (ON) or <0> (OFF)}
      * <p>
-     * Returns {@code <p1> (ON) or <p0> (OFF)}
+     * @return message to send track power on or off.
+     * @param on true on, false off.
      */
     public static DCCppMessage makeSetTrackPowerMsg(boolean on) {
         return (new DCCppMessage((on ? DCCppConstants.TRACK_POWER_ON : DCCppConstants.TRACK_POWER_OFF),
@@ -2024,7 +2022,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * <p>
      * reads current being drawn on main operations track
      * <p>
-     * returns: {@code <a CURRENT>} where CURRENT = 0-1024, based on
+     * @return {@code <a CURRENT>} where CURRENT = 0-1024, based on
      * exponentially-smoothed weighting scheme
      */
     public static DCCppMessage makeReadTrackCurrentMsg() {
@@ -2042,7 +2040,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * connectivity and update any GUI to reflect actual throttle and turn-out
      * settings
      * <p>
-     * returns: series of status messages that can be read by an interface to
+     * @return series of status messages that can be read by an interface to
      * determine status of DCC++ Base Station and important settings
      */
     public static DCCppMessage makeCSStatusMsg() {
@@ -2057,18 +2055,20 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * returns number of slots NOTE: this is not implemented in older versions
      * which then do not return anything at all
      * <p>
-     * returns: status message with to get number of slots
+     * @return status message with to get number of slots.
      */
     public static DCCppMessage makeCSMaxNumSlotsMsg() {
         return (new DCCppMessage(DCCppConstants.READ_CS_MAXNUMSLOTS, DCCppConstants.READ_CS_MAXNUMSLOTS_REGEX));
     }
 
     /**
-     * Generate an emergency stop for the specified address
-     *
-     * @param address is the locomotive address
-     *
+     * Generate an emergency stop for the specified address.
+     * <p>
      * Note: This just sends a THROTTLE command with speed = -1
+     * 
+     * @param register Register Number for the loco assigned address.
+     * @param address is the locomotive address.
+     * @return message to send e stop to the specified address.
      */
     public static DCCppMessage makeAddressedEmergencyStop(int register, int address) {
         // Sanity check inputs
@@ -2108,7 +2108,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * when speed=0 or speed=-1 only effects directionality of cab lighting for
      * a stopped train
      *
-     * returns: {@code <T REGISTER SPEED DIRECTION>}
+     * @return {@code <T REGISTER SPEED DIRECTION>}
      *
      */
     public static DCCppMessage makeSpeedAndDirectionMsg(int register, int address, float speed, boolean isForward) {
@@ -2180,6 +2180,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * @param f2      is true if f2 is on, false if f2 is off
      * @param f3      is true if f3 is on, false if f3 is off
      * @param f4      is true if f4 is on, false if f4 is off
+     * @return message to set function group 1.
      */
     public static DCCppMessage makeFunctionGroup1OpsMsg(int address,
             boolean f0,
@@ -2216,6 +2217,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * @param f2      is true if f2 is momentary
      * @param f3      is true if f3 is momentary
      * @param f4      is true if f4 is momentary
+     * @return message to set momentary function group 1.
      */
     public static DCCppMessage makeFunctionGroup1SetMomMsg(int address,
             boolean f0,
@@ -2253,6 +2255,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * @param f6      is true if f6 is on, false if f6 is off
      * @param f7      is true if f7 is on, false if f7 is off
      * @param f8      is true if f8 is on, false if f8 is off
+     * @return message to set function group 2.
      */
     public static DCCppMessage makeFunctionGroup2OpsMsg(int address,
             boolean f5,
@@ -2289,6 +2292,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * @param f6      is true if f6 is momentary
      * @param f7      is true if f7 is momentary
      * @param f8      is true if f8 is momentary
+     * @return message to set momentary function group 2.
      */
     public static DCCppMessage makeFunctionGroup2SetMomMsg(int address,
             boolean f5,
@@ -2324,6 +2328,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * @param f10     is true if f10 is on, false if f10 is off
      * @param f11     is true if f11 is on, false if f11 is off
      * @param f12     is true if f12 is on, false if f12 is off
+     * @return message to set function group 3.
      */
     public static DCCppMessage makeFunctionGroup3OpsMsg(int address,
             boolean f9,
@@ -2359,6 +2364,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * @param f10     is true if f10 is momentary
      * @param f11     is true if f11 is momentary
      * @param f12     is true if f12 is momentary
+     * @return message to set momentary function group 3.
      */
     public static DCCppMessage makeFunctionGroup3SetMomMsg(int address,
             boolean f9,
@@ -2398,6 +2404,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * @param f18     is true if f18 is on, false if f18 is off
      * @param f19     is true if f19 is on, false if f19 is off
      * @param f20     is true if f20 is on, false if f20 is off
+     * @return message to set function group 4.
      */
     public static DCCppMessage makeFunctionGroup4OpsMsg(int address,
             boolean f13,
@@ -2446,6 +2453,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * @param f18     is true if f18 is Momentary
      * @param f19     is true if f19 is Momentary
      * @param f20     is true if f20 is Momentary
+     * @return message to set momentary function group 4.
      */
     public static DCCppMessage makeFunctionGroup4SetMomMsg(int address,
             boolean f13,
@@ -2495,6 +2503,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * @param f26     is true if f26 is on, false if f26 is off
      * @param f27     is true if f27 is on, false if f27 is off
      * @param f28     is true if f28 is on, false if f28 is off
+     * @return message to set function group 5.
      */
     public static DCCppMessage makeFunctionGroup5OpsMsg(int address,
             boolean f21,
@@ -2544,6 +2553,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * @param f26     is true if f26 is momentary
      * @param f27     is true if f27 is momentary
      * @param f28     is true if f28 is momentary
+     * @return message to set momentary function group 5.
      */
     public static DCCppMessage makeFunctionGroup5SetMomMsg(int address,
             boolean f21,

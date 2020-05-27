@@ -12,7 +12,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.jmrix.internal.InternalTurnoutManager class.
  *
- * @author	Bob Jacobsen Copyright 2016
+ * @author Bob Jacobsen Copyright 2016
  */
 public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -152,7 +152,6 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
     }
     
     // from here down is testing infrastructure
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

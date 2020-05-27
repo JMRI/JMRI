@@ -16,7 +16,6 @@ abstract public class AbstractXmlAdapterTestBase {
         Assert.assertNotNull(xmlAdapter);
     }
 
-    // The minimal setup for log4J
     @Before
     abstract public void setUp();
 

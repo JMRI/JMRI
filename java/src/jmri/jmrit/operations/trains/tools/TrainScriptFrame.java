@@ -337,7 +337,7 @@ public class TrainScriptFrame extends OperationsFrame {
     public void buttonActionRemoveBuildScript(java.awt.event.ActionEvent ae) {
         if (_train != null) {
             JButton rbutton = (JButton) ae.getSource();
-            log.debug("remove build script button activated " + rbutton.getName());
+            log.debug("remove build script button activated {}", rbutton.getName());
             _train.deleteBuildScript(rbutton.getName());
             updateBuildScriptPanel();
             pack();
@@ -347,7 +347,7 @@ public class TrainScriptFrame extends OperationsFrame {
     public void buttonActionRemoveAfterBuildScript(java.awt.event.ActionEvent ae) {
         if (_train != null) {
             JButton rbutton = (JButton) ae.getSource();
-            log.debug("remove after build script button activated " + rbutton.getName());
+            log.debug("remove after build script button activated {}", rbutton.getName());
             _train.deleteAfterBuildScript(rbutton.getName());
             updateAfterBuildScriptPanel();
             pack();
@@ -357,7 +357,7 @@ public class TrainScriptFrame extends OperationsFrame {
     public void buttonActionRemoveMoveScript(java.awt.event.ActionEvent ae) {
         if (_train != null) {
             JButton rbutton = (JButton) ae.getSource();
-            log.debug("remove move script button activated " + rbutton.getName());
+            log.debug("remove move script button activated {}", rbutton.getName());
             _train.deleteMoveScript(rbutton.getName());
             updateMoveScriptPanel();
             pack();
@@ -367,7 +367,7 @@ public class TrainScriptFrame extends OperationsFrame {
     public void buttonActionRemoveTerminationScript(java.awt.event.ActionEvent ae) {
         if (_train != null) {
             JButton rbutton = (JButton) ae.getSource();
-            log.debug("remove termination script button activated " + rbutton.getName());
+            log.debug("remove termination script button activated {}", rbutton.getName());
             _train.deleteTerminationScript(rbutton.getName());
             updateTerminationScriptPanel();
             pack();

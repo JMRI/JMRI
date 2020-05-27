@@ -231,7 +231,7 @@ public class DecoderFile extends XmlFile {
         } else if (_element.getAttributeValue("show").equals("maybe")) {
             return Showable.MAYBE;
         } else {
-            log.error("unexpected value for show attribute: " + _element.getAttributeValue("show"));
+            log.error("unexpected value for show attribute: {}", _element.getAttributeValue("show"));
             return Showable.YES; // default again
         }
     }
@@ -309,7 +309,7 @@ public class DecoderFile extends XmlFile {
         // if there are any include clauses, then it has to match
         if (!include.equals("") && !(isInList(productID, include) || isInList(modelID, include) || isInList(familyID, include))) {
             if (log.isTraceEnabled()) {
-                log.trace("include not in list of OK values: /" + include + "/ /" + productID + "/ /" + modelID + "/");
+                log.trace("include not in list of OK values: /{}/ /{}/ /{}/", include, productID, modelID);
             }
             return false;
         }
@@ -323,7 +323,7 @@ public class DecoderFile extends XmlFile {
         // if there are any exclude clauses, then it cannot match
         if (!exclude.equals("") && (isInList(productID, exclude) || isInList(modelID, exclude) || isInList(familyID, exclude))) {
             if (log.isTraceEnabled()) {
-                log.trace("exclude match: /" + exclude + "/ /" + productID + "/ /" + modelID + "/");
+                log.trace("exclude match: /{}/ /{}/ /{}/", exclude, productID, modelID);
             }
             return false;
         }
@@ -397,8 +397,7 @@ public class DecoderFile extends XmlFile {
                     continue;
                 }
             } catch (NumberFormatException | DataConversionException ex) {
-                log.warn("Problem parsing minFn or minOut in decoder file, variable "
-                        + e.getAttribute("item") + " exception: " + ex);
+                log.warn("Problem parsing minFn or minOut in decoder file, variable {} exception: {}", e.getAttribute("item"), ex);
             }
             // load each row
             variableModel.setRow(nextCvStoreIndex++, e, _element == null ? null : this);
@@ -424,8 +423,7 @@ public class DecoderFile extends XmlFile {
                     continue;
                 }
             } catch (DataConversionException ex) {
-                log.warn("Problem parsing minFn or minOut in decoder file, variable "
-                        + e.getAttribute("item") + " exception: " + ex);
+                log.warn("Problem parsing minFn or minOut in decoder file, variable {} exception: {}", e.getAttribute("item"), ex);
             }
             // load each row
             variableModel.setConstant(e);

@@ -42,7 +42,7 @@
       <h1>JMRI: WiThrottle Protocol</h1>
 
       <p>This page describes the protocol provided by the <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">
       jmri.jmrit.withrottle</a> package for controlling trains,
       turnouts, and more through JMRI via a TCP/IP socket.</p>
 
@@ -407,7 +407,7 @@ PW12080
 
       <p>indicates that the web server port is set to 12080.</p>
 
-      <h2>Property Change Notification</h2>
+      <h2><a name="propertychangenotification"></a>Property Change Notification</h2>
 
       <p>There are cases where property changes in JMRI cause a
       message to be sent. These messages are not a response to a
@@ -428,10 +428,10 @@ MTAL341&lt;;&gt;F10
       <p>Here is a list of property notifications that can be sent</p>
 
       <ul>
-        <li>Function state changed</li>
-        <li>Speed</li>
-        <li>Direction</li>
-        <li>Speed step mode</li>
+        <li>Function state changed (Fnn)</li>
+        <li>Speed (Vnnnn)</li>
+        <li>Direction (Rn)</li>
+        <li>Speed step mode (sn)</li>
       </ul>
 
       <h2>Commands</h2>
@@ -911,6 +911,30 @@ MTA*&lt;;&gt;V30
       </table>
 
     <p><b>Note:</b> Steal requires JMRI 4.10 or later</p>
+
+      <h3>'q' Query Speed or Direction</h3>
+      <p>Used to request the current values of speed (V) or direction (R)</p>
+      <table class="data">
+        <tr>
+          <td>qR</td>
+          <td>Query current direction</td>
+        </tr>
+        <tr>
+          <td>qV</td>
+          <td>Query current speed</td>
+        </tr>
+      </table>
+	<p>Example requesting current speed and direction for all locos on throttle '0':
+      <pre class="code">
+M0A*&lt;;&gt;qV
+M0A*&lt;;&gt;qR
+</pre>
+	<p>The server responds with the Property Change Notification as described <a href="#propertychangenotification">[here]</a>. 
+	Example responses for address 3(S) on throttle '0':
+      <pre class="code">
+M0AS3&lt;;&gt;V25
+M0AS3&lt;;&gt;R1
+</pre>
 
     <h2>Consist Controller Commands</h2>
 

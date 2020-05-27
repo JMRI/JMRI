@@ -54,7 +54,6 @@ public class NceConsistManagerTest extends jmri.implementation.AbstractConsistMa
        JUnitAppender.suppressErrorMessage("Time out reading NCE command station consist memory");
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

@@ -15,7 +15,7 @@ import org.junit.*;
 /**
  * tests for the Jmri package LnPr2PowerManager
  *
- * @author	Bob Jacobsen Copyright 2001
+ * @author Bob Jacobsen Copyright 2001
  */
 public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
 
@@ -144,11 +144,7 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
     public void testImplementsIdle() {
         if (p.implementsIdle()) {
             hearIdle();
-            try {
-                Assert.assertEquals("power state", PowerManager.IDLE, p.getPower());
-            } catch (JmriException e) {
-                Assert.fail("JmriJException occured invoking p.getPower()");
-            }
+            Assert.assertEquals("power state", PowerManager.IDLE, p.getPower());
         }
     }
 

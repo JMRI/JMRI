@@ -20,7 +20,7 @@ public class TieTableModel extends AbstractTableModel {
 
     public static final int USERNAME_COLUMN = 0;
     public static final int ID_COLUMN = 1;
-    String[] columnName = new String[]{"User Name", "ID"};
+    final String[] columnName = new String[]{"User Name", "ID"};
 
     @Override
     public String getColumnName(int c) {
@@ -57,7 +57,7 @@ public class TieTableModel extends AbstractTableModel {
         // nothing is stored here
     }
 
-    String[][] dummy = {{"Set Lower Staging Track 1", "11094"}, // row then column
+    final String[][] dummy = {{"Set Lower Staging Track 1", "11094"}, // row then column
     {"Set Lower Staging Track 2", "11095"},
     {"Set Lower Staging Track 3", "11096"},
     {"Set Lower Staging Track 4", "11097"},
@@ -73,7 +73,7 @@ public class TieTableModel extends AbstractTableModel {
      * @param w hard copy writer connection
      * @param colWidth array of column widths
      */
-    public void printTable(HardcopyWriter w, int colWidth[]) {
+    public void printTable(HardcopyWriter w, int[] colWidth) {
         // determine the column sizes - proportionately sized, with space between for lines
         int[] columnSize = new int[4];
         int charPerLine = w.getCharactersPerLine();
@@ -131,7 +131,7 @@ public class TieTableModel extends AbstractTableModel {
         w.close();
     }
 
-    protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
+    protected void printColumns(HardcopyWriter w, String[] columnStrings, int[] columnSize) {
         StringBuilder columnString = new StringBuilder();
         StringBuilder lineString = new StringBuilder();
         String[] spaces = new String[4];
@@ -155,9 +155,9 @@ public class TieTableModel extends AbstractTableModel {
                     // this column string will not fit on one line
                     boolean noWord = true;
                     for (int k = columnSize[i]; k >= 1; k--) {
-                        if (columnStrings[i].substring(k - 1, k).equals(" ")
-                                || columnStrings[i].substring(k - 1, k).equals("-")
-                                || columnStrings[i].substring(k - 1, k).equals("_")) {
+                        if (columnStrings[i].startsWith(" ", k - 1)
+                                || columnStrings[i].startsWith("-", k - 1)
+                                || columnStrings[i].startsWith("_", k - 1)) {
                             columnString = new StringBuilder(columnStrings[i].substring(0, k));
                             columnString.append(spaces[i].substring(columnStrings[i].substring(0, k).length()));
 
@@ -196,7 +196,7 @@ public class TieTableModel extends AbstractTableModel {
                 w.write("\n");
                 lineString = new StringBuilder();
             } catch (IOException e) {
-                log.warn("error during printing: " + e);
+                log.warn("error during printing: {}", e);
             }
         }
     }

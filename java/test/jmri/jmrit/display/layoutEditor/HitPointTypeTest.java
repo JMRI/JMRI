@@ -1,19 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.Color;
-import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
-import java.io.File;
-import jmri.*;
-import jmri.jmrit.display.*;
 import jmri.util.*;
-import jmri.util.junit.rules.*;
-import jmri.util.swing.JemmyUtil;
 import org.junit.*;
 import org.junit.Test;
-import org.junit.rules.Timeout;
-import org.netbeans.jemmy.*;
-import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
  * Test simple functioning of HitPointType.
@@ -329,5 +318,5 @@ public class HitPointTypeTest {
         Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_63.getValue() == 113", HitPointType.TURNTABLE_RAY_63.ordinal(), 113);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(HitPointTypeTest.class.getName());
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HitPointTypeTest.class.getName());
 }

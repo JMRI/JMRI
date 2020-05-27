@@ -128,6 +128,29 @@ public class SplitVariableValue extends VariableValue
     /**
      * Subclasses can override this to pick up constructor-specific attributes
      * and perform other actions before cvList has been built.
+     *
+     * @param name      name.
+     * @param comment   comment.
+     * @param cvName    cv name.
+     * @param readOnly  true for read only, else false.
+     * @param infoOnly  true for info only, else false.
+     * @param writeOnly true for write only, else false.
+     * @param opsOnly   true for ops only, else false.
+     * @param cvNum     cv number.
+     * @param mask      cv mask.
+     * @param minVal    minimum value.
+     * @param maxVal    maximum value.
+     * @param v         hashmap of string and cv value.
+     * @param status    status.
+     * @param stdname   std name.
+     * @param pSecondCV second cv.
+     * @param pFactor   factor.
+     * @param pOffset   offset.
+     * @param uppermask upper mask.
+     * @param extra1    extra 1.
+     * @param extra2    extra 2.
+     * @param extra3    extra 3.
+     * @param extra4    extra 4.
      */
     public void stepOneActions(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
@@ -260,7 +283,7 @@ public class SplitVariableValue extends VariableValue
         return "Split value";
     }
 
-    String oldContents = "";
+    String oldContents = "0";
 
     long getValueFromText(String s) {
         return (Long.parseUnsignedLong(s));
@@ -328,7 +351,12 @@ public class SplitVariableValue extends VariableValue
     void exitField() {
         // there may be a lost focus event left in the queue when disposed so protect
         if (_textField != null && !oldContents.equals(_textField.getText())) {
-            long newFieldVal = getValueFromText(_textField.getText());
+            long newFieldVal = 0;
+            try {
+                newFieldVal = getValueFromText(_textField.getText());
+            } catch (NumberFormatException e) {
+                _textField.setText(oldContents);
+            }
             log.debug("_minVal={};_maxVal={};newFieldVal={}",
                     Long.toUnsignedString(_minVal), Long.toUnsignedString(_maxVal), Long.toUnsignedString(newFieldVal));
             if (Long.compareUnsigned(newFieldVal, _minVal) < 0 || Long.compareUnsigned(newFieldVal, _maxVal) > 0) {
@@ -380,21 +408,14 @@ public class SplitVariableValue extends VariableValue
      * ActionListener implementations
      */
     /**
-     * Contains numeric-value specific code.
-     * <br><br>
-     * invokes {@link #updatedTextField updatedTextField()}
-     * <br><br>
-     * firePropertyChange for "Value" with new contents of _textField
+     * Invokes {@link #exitField exitField()}.
      *
      * @param e the action event
      */
     @Override
     public void actionPerformed(ActionEvent e) {
         log.debug("Variable='{}'; actionPerformed", _name);
-        long newVal = (getValueFromText(_textField.getText()) - mOffset) / mFactor;
-        log.debug("Enter updatedTextField from actionPerformed");
-        updatedTextField();
-        prop.firePropertyChange("Value", null, newVal);
+        exitField();
     }
 
     /**
@@ -488,7 +509,7 @@ public class SplitVariableValue extends VariableValue
             actionPerformed(null);
         }
         // PENDING: the code used to fire value * mFactor + mOffset, which is a text representation;
-        // but 'oldValue' was converted back using mOffset / mFactor making those two (new / old) 
+        // but 'oldValue' was converted back using mOffset / mFactor making those two (new / old)
         // using different scales. Probably a bug, but it has been there from well before
         // the extended spltVal. Because of the risk of breaking existing
         // behaviour somewhere, deferring correction until at least the next test release.
@@ -636,6 +657,9 @@ public class SplitVariableValue extends VariableValue
 
     /**
      * Assigns a priority value to a given state.
+     *
+     * @param state State to be converted to a priority value
+     * @return Priority value from state, with UNKNOWN numerically highest
      */
     @SuppressFBWarnings(value = {"SF_SWITCH_NO_DEFAULT", "SF_SWITCH_FALLTHROUGH"}, justification = "Intentional fallthrough to produce correct value")
     int priorityValue(int state) {

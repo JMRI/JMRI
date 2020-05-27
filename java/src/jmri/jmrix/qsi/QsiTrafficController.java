@@ -19,7 +19,7 @@ import purejavacomm.SerialPort;
  * handled automatically, and are not included in the QsiMessage and QsiReply
  * content.
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 
@@ -57,6 +57,8 @@ public class QsiTrafficController implements QsiInterface, Runnable {
 
     /**
      * Forward a QsiMessage to all registered QsiInterface listeners.
+     * @param m message to forward.
+     * @param notMe Listener to hear the returned status
      */
     @SuppressWarnings("unchecked")
     protected void notifyMessage(QsiMessage m, QsiListener notMe) {
@@ -74,7 +76,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
                 try {
                     client.message(m);
                 } catch (Exception e) {
-                    log.warn("notify: During dispatch to " + client + "\nException " + e);
+                    log.warn("notify: During dispatch to {}\nException {}", client, e);
                 }
             }
         }
@@ -139,7 +141,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
                     client.reply(r);
                 }
             } catch (Exception e) {
-                log.warn("notify: During dispatch to " + client + "\nException " + e);
+                log.warn("notify: During dispatch to {}\nException {}", client, e);
             }
         }
 
@@ -205,7 +207,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
                 log.warn("sendMessage: no connection established");
             }
         } catch (Exception e) {
-            log.warn("sendMessage: Exception: " + e.toString());
+            log.warn("sendMessage: Exception: {}", e.toString());
         }
     }
 
@@ -214,6 +216,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
 
     /**
      * Make connection to existing PortController object.
+     * @param p the QSI port controller.
      */
     public void connectPort(QsiPortController p) {
         istream = p.getInputStream();
@@ -225,8 +228,9 @@ public class QsiTrafficController implements QsiInterface, Runnable {
     }
 
     /**
-     * Break connection to existing QsiPortController object. Once broken,
-     * attempts to send via "message" member will fail.
+     * Break connection to existing QsiPortController object.
+     * Once broken, attempts to send via "message" member will fail.
+     * @param p the QSI port controller.
      */
     public void disconnectPort(QsiPortController p) {
         istream = null;
@@ -253,7 +257,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
             try {
                 handleOneIncomingReply();
             } catch (java.io.IOException e) {
-                log.warn("run: Exception: " + e.toString());
+                log.warn("run: Exception: {}", e.toString());
             }
         }
     }

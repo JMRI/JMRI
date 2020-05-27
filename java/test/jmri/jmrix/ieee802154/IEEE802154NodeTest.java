@@ -11,10 +11,10 @@ import org.junit.Test;
 /**
  * IEEE802154NodeTest.java
  *
- * Description:	tests for the jmri.jmrix.ieee802154.IEEE802154Node
+ * Test for the jmri.jmrix.ieee802154.IEEE802154Node
  * class
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class IEEE802154NodeTest{
 
@@ -68,7 +68,6 @@ public class IEEE802154NodeTest{
         }
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

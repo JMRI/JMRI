@@ -7,7 +7,7 @@ import org.junit.Before;
 /**
  * Test simple functioning of MarklinMonPane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class MarklinMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 

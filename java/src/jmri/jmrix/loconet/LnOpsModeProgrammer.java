@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet;
 
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;

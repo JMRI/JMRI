@@ -1,9 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.GraphicsEnvironment;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
 
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
@@ -29,6 +26,14 @@ public class EditCircuitPathsTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        new ControlPanelEditor("EditCircuitPathsTest");
+    }
+
+    @Test
+    public void testBasicOps() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        
         ControlPanelEditor frame = new ControlPanelEditor("EditCircuitPathsTest");
         frame.makeCircuitMenu(true);
         CircuitBuilder cb = frame.getCircuitBuilder();
@@ -49,7 +54,6 @@ public class EditCircuitPathsTest {
         JUnitUtil.dispose(pFrame);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * JUnit tests for the SerialSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008
  * @author Paul Bender Copyright (C) 2016
  */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
@@ -96,7 +96,6 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         l = new SerialSensorManager(memo);
     }
 
-    // The minimal setup for log4J
     @After
     public void tearDown() {
         l.dispose();

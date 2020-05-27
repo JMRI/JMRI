@@ -1254,7 +1254,6 @@ public class SlotManagerTest {
         }
     }
 
-    // The minimal setup for log4J
     LocoNetInterfaceScaffold lnis;
     SlotManager slotmanager;
     int status;

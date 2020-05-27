@@ -8,7 +8,7 @@ import org.junit.*;
  * 
  * This should be run with and without the -ea (or -enableassertions) runtime option for complete coverage
  *
- * @author	Bob Jacobsen Copyright 2018
+ * @author Bob Jacobsen Copyright 2018
  */
 
 
@@ -23,7 +23,7 @@ public class AssertTest {
     @Test
     public void assertDisplay() {
         // show the assert status
-        log.info("AssertTest: assert are "+(assertsEnabled ? "enabled" : "disabled"));
+        log.info("AssertTest: assert are {}", assertsEnabled ? "enabled" : "disabled");
         System.err.println("AssertTest: asserts are "+(assertsEnabled ? "enabled" : "disabled"));
     }
 

@@ -120,14 +120,14 @@ articles, ajouter des boutons sur le panneau principal, etc
       <p>Les scripts peuvent localiser et acc&eacute;der &agrave;
       n'importe quelle fen&ecirc;tre ouverte, par exemple.
       L'exemple de script <a href=
-      "http://jmri.org/jython/AddButton.py">AddButton.py</a> est un
+      "https://jmri.org/jython/AddButton.py">AddButton.py</a> est un
       exemple de l'ajout d'un bouton de script sur la fen&ecirc;tre
       principale. Le <a href=
-      "http://jmri.org/jython/DisableOpsMode.py">DisableOpsMode.py</a>
+      "https://jmri.org/jython/DisableOpsMode.py">DisableOpsMode.py</a>
       montre un exemple de script pour comment faire pour modifier
       la fen&ecirc;tre principale et supprimer le bouton de
       programmation voie principale. L'exemple de script <a href=
-      "http://jmri.org/jython/ReporterFontControl.py">ReporterFontControl.py</a>
+      "https://jmri.org/jython/ReporterFontControl.py">ReporterFontControl.py</a>
       est un exemple encore plus avanc&eacute;s qui modifie
       l'apparence des &eacute;l&eacute;ments sur les &eacute;crans
       du panneau.</p>

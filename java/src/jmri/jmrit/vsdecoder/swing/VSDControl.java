@@ -9,10 +9,8 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -155,7 +153,8 @@ public class VSDControl extends JPanel {
     }
 
     /**
-     * Initialize the GUI components
+     * Initialize the GUI components.
+     * @param title future title, not yet coded..
      */
     protected void initComponents(String title) {
         // Create the border.
@@ -214,6 +213,7 @@ public class VSDControl extends JPanel {
 
     /**
      * Add buttons for the selected Profile's defined sounds
+     * @param elist list of sounds to make buttons from.
      */
     public void addSoundButtons(ArrayList<SoundEvent> elist) {
         soundsPanel.removeAll();
@@ -238,7 +238,8 @@ public class VSDControl extends JPanel {
     }
 
     /**
-     * Handle "Option" button presses
+     * Handle "Option" button presses.
+     * @param e unused.
      */
     protected void optionButtonPressed(ActionEvent e) {
         log.debug("({}) Option Button Pressed", address);
@@ -253,7 +254,8 @@ public class VSDControl extends JPanel {
     }
 
     /**
-     * Handle "Delete" button presses
+     * Handle "Delete" button presses.
+     * @param e unused.
      */
     protected void deleteButtonPressed(ActionEvent e) {
         log.debug("({}) Delete Button Pressed", address);
@@ -261,7 +263,8 @@ public class VSDControl extends JPanel {
     }
 
     /**
-     * Callback for the Option Dialog
+     * Callback for the Option Dialog.
+     * @param event the event to get new value from.
      */
     protected void optionsDialogPropertyChange(PropertyChangeEvent event) {
         log.debug("internal options dialog handler");
@@ -272,6 +275,9 @@ public class VSDControl extends JPanel {
 
     /**
      * Fire a property change from this object
+     * @param id prop ID.
+     * @param oldProp old prop.
+     * @param newProp new prop.
      * @deprecated since 4.19.5; use {@link #firePropertyChange(java.lang.String, java.lang.Object, java.lang.Object)} directly
      */
     // NOTE: should this be public???

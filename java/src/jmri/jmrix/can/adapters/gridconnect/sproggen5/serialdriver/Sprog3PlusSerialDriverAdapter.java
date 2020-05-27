@@ -1,5 +1,6 @@
 package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver;
 
+import jmri.jmrix.can.ConfigurationManager;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
@@ -19,7 +20,6 @@ import org.slf4j.LoggerFactory;
 public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
 
     public Sprog3PlusSerialDriverAdapter() {
-//        super("S", GridconnectProtocol.SPROGGEN5);
         super("S");
     }
 
@@ -36,7 +36,7 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
         try {
             tc.setCanId(127);
         } catch (Exception e) {
-            log.error("Cannot parse CAN ID - check your preference settings " + e);
+            log.error("Cannot parse CAN ID - check your preference settings {}", e);
             log.error("Now using default CAN ID");
         }
 
@@ -51,6 +51,8 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
         // do central protocol-specific configuration    
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
         this.getSystemConnectionMemo().configureManagers();
+        
+        this.getSystemConnectionMemo().setSubProtocol(ConfigurationManager.SubProtocol.NONE);
     }
 
     /**

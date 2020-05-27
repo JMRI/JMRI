@@ -88,7 +88,7 @@ public class BlockContentsIconXml extends PositionableLabelXml {
             ed = (Editor) o;
             l = new BlockContentsIcon("", ed);
         } else {
-            log.error("Unrecognizable class - " + o.getClass().getName());
+            log.error("Unrecognizable class - {}", o.getClass().getName());
             return;
         }
 
@@ -108,7 +108,7 @@ public class BlockContentsIconXml extends PositionableLabelXml {
         if (m != null) {
             l.setBlock(name);
         } else {
-            log.error("Block named '" + attr.getValue() + "' not found.");
+            log.error("Block named '{}' not found.", attr.getValue());
             ed.loadFailed();
         }
 
@@ -128,7 +128,7 @@ public class BlockContentsIconXml extends PositionableLabelXml {
             if (icon == null) {
                 icon = ed.loadFailed("Memory " + name, iconName);
                 if (icon == null) {
-                    log.info("Memory \"" + name + "\" icon removed for url= " + iconName);
+                    log.info("Memory \"{}\" icon removed for url= {}", name, iconName);
                 }
             }
             if (icon != null) {

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * RfidSensorManagerXmlTest.java
  *
- * Description: tests for the RfidSensorManagerXml class
+ * Test for the RfidSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class RfidSensorManagerXmlTest {
       Assert.assertNotNull("RfidSensorManagerXml constructor",new RfidSensorManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

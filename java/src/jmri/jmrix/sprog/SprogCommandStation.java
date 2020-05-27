@@ -297,13 +297,19 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     /**
-     * Handle speed changes from throttle. As well as updating an existing slot,
+     * Handle speed changes from throttle.
+     * <p>
+     * As well as updating an existing slot,
      * or creating a new on where necessary, the speed command is added to the
-     * queue of packets to be sent immediately. This ensures minimum latency
+     * queue of packets to be sent immediately.This ensures minimum latency
      * between the user adjusting the throttle and a loco responding, rather
      * than possibly waiting for a complete traversal of all slots before the
      * new speed is actually sent to the hardware.
      *
+     * @param mode speed step mode.
+     * @param address loco address.
+     * @param spd speed to send.
+     * @param isForward true if forward, else false.
      */
     public void setSpeed(jmri.SpeedStepMode mode, DccLocoAddress address, int spd, boolean isForward) {
         SprogSlot s = this.findAddressSpeedPacket(address);
@@ -559,13 +565,9 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
-        log.debug("propertyChange " + evt.getPropertyName() + " = " + evt.getNewValue());
-        if (evt.getPropertyName().equals("Power")) {
-            try {
-                powerState = powerMgr.getPower();
-            } catch (JmriException ex) {
-                log.error("Exception getting power state {}", ex);
-            }
+        log.debug("propertyChange {} = {}", evt.getPropertyName(), evt.getNewValue());
+        if (evt.getPropertyName().equals(PowerManager.POWER)) {
+            powerState = powerMgr.getPower();
             powerChanged = true;
         }
     }

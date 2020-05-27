@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Test simple functioning of ControllerFilterFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ControllerFilterFrameTest extends jmri.util.JmriJFrameTestBase {
 

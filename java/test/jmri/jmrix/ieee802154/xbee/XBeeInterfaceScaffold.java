@@ -70,7 +70,7 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
     @Override
     public void sendXBeeMessage(XBeeMessage m, XBeeListener replyTo) {
         if (log.isDebugEnabled()) {
-            log.debug("sendXBeeMessage [" + m + "]");
+            log.debug("sendXBeeMessage [{}]", m);
         }
         // save a copy
         outbound.add(m);

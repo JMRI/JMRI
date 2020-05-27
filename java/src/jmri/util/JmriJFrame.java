@@ -32,6 +32,7 @@ import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
 import jmri.beans.BeanInterface;
 import jmri.beans.BeanUtil;
+import jmri.implementation.AbstractShutDownTask;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
@@ -737,6 +738,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * The returned list is a copy made at the time of the call, so it can be
      * manipulated as needed by the caller.
      *
+     * @param <T> generic JmriJframe.
      * @param type The Class the list should be limited to.
      * @return An ArrayList of Frames.
      */
@@ -956,14 +958,18 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     public void componentShown(java.awt.event.ComponentEvent e) {
     }
 
-    private transient jmri.implementation.AbstractShutDownTask task = null;
+    private transient AbstractShutDownTask task = null;
 
     protected void setShutDownTask() {
-        task = new jmri.implementation.AbstractShutDownTask(getTitle()) {
+        task = new AbstractShutDownTask(getTitle()) {
             @Override
-            public boolean execute() {
+            public Boolean call() {
                 handleModified();
-                return true;
+                return Boolean.TRUE;
+            }
+
+            @Override
+            public void run() {
             }
         };
         InstanceManager.getDefault(ShutDownManager.class).register(task);

@@ -15,7 +15,7 @@ import jmri.util.JmriJFrame;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SetTrainIconRouteActionTest extends OperationsTestCase {
     

@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * PositionableShapeXmlTest.java
  * <p>
- * Description: tests for the PositionableShapeXml class
+ * Test for the PositionableShapeXml class
  *
  * @author Paul Bender Copyright (C) 2016
  */
@@ -26,7 +26,6 @@ public class PositionableShapeXmlTest {
         });
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

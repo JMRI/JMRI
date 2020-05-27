@@ -64,7 +64,7 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());
+            log.error("init (pipe): Exception: {}", e.toString());
         }
         opened = true;
         return null; // indicates OK return
@@ -90,7 +90,7 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
      */
     public boolean okToSend() {
         if (checkBuffer) {
-            log.debug("Buffer Empty: " + outputBufferEmpty);
+            log.debug("Buffer Empty: {}", outputBufferEmpty);
             return (outputBufferEmpty);
         } else {
             log.debug("No Flow Control or Buffer Check");
@@ -265,7 +265,7 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
 
         SerialReply reply = new SerialReply();
         char command = msg.toString().charAt(0);
-        log.debug("Message type = " + command);
+        log.debug("Message type = {}", command);
         switch (command) {
 
             default:

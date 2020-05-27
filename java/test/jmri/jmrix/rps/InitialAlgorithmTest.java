@@ -12,7 +12,7 @@ import org.junit.Test;
  *
  * The default transmitter location for the 7, 13, 13, 13 readings is (0,0,12)
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  */
 public class InitialAlgorithmTest {
 
