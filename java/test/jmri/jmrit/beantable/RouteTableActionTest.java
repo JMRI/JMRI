@@ -70,7 +70,7 @@ public class RouteTableActionTest extends AbstractTableActionBase<Route> {
         JLabelOperator userLabel = new JLabelOperator(addFrame,Bundle.getMessage("LabelUserName"));
         new JTextFieldOperator((JTextField) userLabel.getLabelFor()).setText("Route 105");  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
-        new JButtonOperator(addFrame, Bundle.getMessage("ButtonCancel")).push();  // NOI18N
+        //new JButtonOperator(addFrame, Bundle.getMessage("ButtonCancel")).push();  // NOI18N
 
 
         Route chk105 = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getRoute("Route 105");  // NOI18N
@@ -100,7 +100,7 @@ public class RouteTableActionTest extends AbstractTableActionBase<Route> {
         
         //press create button to create a Route, then close the create window
         jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
-        jf.requestClose();
+        //jf.requestClose();
         new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         // press "Edit" button, which is the last column (no heading), to open the Edit Route window

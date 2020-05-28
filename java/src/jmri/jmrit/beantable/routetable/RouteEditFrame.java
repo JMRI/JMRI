@@ -5,6 +5,10 @@ import jmri.Route;
 import jmri.Sensor;
 import jmri.Turnout;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
 /**
  * Edit frame for the Route Table.
  *
@@ -53,10 +57,9 @@ public class RouteEditFrame extends AbstractRouteAddEditFrame {
         }
         // Route was found, make its system name not changeable
         curRoute = g;
-        _autoSystemName.setVisible(false);
-        fixedSystemName.setText(sName);
-        fixedSystemName.setVisible(true);
-        _systemName.setVisible(false);
+        _systemName.setVisible(true);
+        _systemName.setText(sName);
+        _systemName.setEnabled(false);
         nameLabel.setEnabled(true);
         _autoSystemName.setVisible(false);
         // deactivate this Route
@@ -139,20 +142,84 @@ public class RouteEditFrame extends AbstractRouteAddEditFrame {
         timeDelay.setValue(g.getRouteCommandDelay());
         // begin with showing all Turnouts
         // set up buttons and notes
-        status1.setText(updateInst);
-        status2.setText(cancelInst);
+        status1.setText(Bundle.getMessage("RouteAddStatusInitial3", Bundle.getMessage("ButtonUpdate")));
+        status2.setText(Bundle.getMessage("RouteAddStatusInitial4", Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit"))));
         status2.setVisible(true);
+        setTitle(Bundle.getMessage("TitleEditRoute"));
+        editMode = true;
+    }
+
+    protected JPanel getButtonPanel() {
+        final JButton cancelEditButton = new JButton(Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit"))); // I18N for word sequence "Cancel Edit"
+        final JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete") + " " + Bundle.getMessage("BeanNameRoute")); // I18N "Delete Route"
+        final JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
+        final JButton exportButton = new JButton(Bundle.getMessage("ButtonExport"));
+        // add Buttons panel
+        JPanel pb = new JPanel();
+        pb.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        // CancelEdit button
+        pb.add(cancelEditButton);
+        cancelEditButton.addActionListener(this::cancelPressed);
+        cancelEditButton.setToolTipText(Bundle.getMessage("TooltipCancelRoute"));
+        // Delete Route button
+        pb.add(deleteButton);
+        deleteButton.addActionListener(this::deletePressed);
+        deleteButton.setToolTipText(Bundle.getMessage("TooltipDeleteRoute"));
+        // Update Route button
+        pb.add(updateButton);
+        updateButton.addActionListener((ActionEvent e1) -> updatePressed(false));
+        updateButton.setToolTipText(Bundle.getMessage("TooltipUpdateRoute"));
+        // Export button
+        pb.add(exportButton);
+        exportButton.addActionListener(this::exportButtonPressed);
+        exportButton.setToolTipText(Bundle.getMessage("TooltipExportRoute"));
+
+        // Show the initial buttons, and hide the others
         deleteButton.setVisible(true);
-        cancelButton.setVisible(false);
         cancelEditButton.setVisible(true);
         updateButton.setVisible(true);
         exportButton.setVisible(true);
-        editButton.setVisible(false);
-        createButton.setVisible(false);
-        fixedSystemName.setVisible(true);
-        _systemName.setVisible(false);
-        setTitle(Bundle.getMessage("TitleEditRoute"));
-        editMode = true;
+        return pb;
+    }
+
+    /**
+     * Respond to the export button
+     *
+     * @param e the action event
+     */
+    private void exportButtonPressed(ActionEvent e){
+        new RouteExportToLogix(_systemName.getText()).export();
+        status1.setText(Bundle.getMessage("BeanNameRoute")
+                + "\"" + _systemName.getText() + "\" " +
+                Bundle.getMessage("RouteAddStatusExported") + " ("
+                + get_includedTurnoutList().size() +
+                Bundle.getMessage("Turnouts") + ", " +
+                get_includedSensorList().size() + " " + Bundle.getMessage("Sensors") + ")");
+        finishUpdate();
+        closeFrame();
+    }
+
+    /**
+     * Respond to the CancelEdit button.
+     *
+     * @param e the action event
+     */
+    private void cancelPressed(ActionEvent e) {
+        cancelEdit();
+    }
+
+    /**
+     * Respond to the Delete button.
+     *
+     * @param e the action event
+     */
+    private void deletePressed(ActionEvent e) {
+        // route is already deactivated, just delete it
+        routeManager.deleteRoute(curRoute);
+
+        curRoute = null;
+        finishUpdate();
+        closeFrame();
     }
 
 }

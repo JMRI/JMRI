@@ -59,15 +59,11 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         return "package.jmri.jmrit.beantable.RouteTable";
     }
 
-    private JmriJFrame addFrame;
 
     @Override
     protected void addPressed(ActionEvent e) {
 
-        // Set up window
-        if (addFrame == null) {
-            addFrame = new RouteAddFrame();
-        }
+        final JmriJFrame addFrame = new RouteAddFrame();
         // display the window
         addFrame.setVisible(true);
     }
