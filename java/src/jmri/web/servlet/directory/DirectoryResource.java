@@ -91,6 +91,12 @@ public class DirectoryResource extends PathResource {
         );
     }
 
+    @Override
+    public boolean equals(Object other) {
+        // spotbugs errors if equals is not overridden, so override and call super
+        return super.equals(other);
+    }
+
     /*
      * Originally copied from private static method of org.eclipse.jetty.util.resource.Resource
      */
