@@ -97,6 +97,12 @@ public class DirectoryResource extends PathResource {
         return super.equals(other);
     }
 
+    @Override
+    public int hashCode() {
+        // spotbugs errors if equals is present, but not hashCode, so override and call super
+        return super.hashCode();
+    }
+
     /*
      * Originally copied from private static method of org.eclipse.jetty.util.resource.Resource
      */
