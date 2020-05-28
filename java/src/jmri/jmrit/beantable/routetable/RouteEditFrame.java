@@ -149,6 +149,7 @@ public class RouteEditFrame extends AbstractRouteAddEditFrame {
         editMode = true;
     }
 
+    @Override
     protected JPanel getButtonPanel() {
         final JButton cancelEditButton = new JButton(Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit"))); // I18N for word sequence "Cancel Edit"
         final JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete") + " " + Bundle.getMessage("BeanNameRoute")); // I18N "Delete Route"
