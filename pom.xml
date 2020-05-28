@@ -17,7 +17,7 @@
         but if multiple dependencies are linked, use a property for single
         dependency source) -->
         <cucumber.version>4.3.1</cucumber.version>
-        <jetty.version>9.4.26.v20200117</jetty.version>
+        <jetty.version>9.4.28.v20200408</jetty.version>
         <!-- this is a custom version, see lib/README.md -->
         <jemmy.version>22-00c9f753cd0a</jemmy.version>
         <slf4j.version>1.7.25</slf4j.version>
