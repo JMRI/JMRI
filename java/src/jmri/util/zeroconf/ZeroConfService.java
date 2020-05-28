@@ -34,8 +34,8 @@ import jmri.InstanceManager;
  * name in the TXT record with the key "node".
  * <p>
  * All ZeroConfServices are automatically stopped when the JMRI application
- * shuts down. Use {@link #allServices() } to get a collection of all published
- * ZeroConfService objects.
+ * shuts down. Use {@link ZeroConfServiceManager#allServices()} to get a
+ * collection of all published ZeroConfService objects.
  * <hr>
  * This file is part of JMRI.
  * <p>
