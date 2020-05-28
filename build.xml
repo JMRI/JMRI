@@ -1878,10 +1878,10 @@
                  package="yes"
                  use="true"
                  failonerror="true"
-                 failonwarning="true"
+                 failonwarning="false" 
                  source="8"
                  windowtitle="JMRI API"
-            >
+            > <!-- failonwarning="false"  because always warns on cyclic redundancy with JDK11 -->
 
             <packageset dir="${source}" defaultexcludes="yes">
                 <include name="jmri/**"/>
