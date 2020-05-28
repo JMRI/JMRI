@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.19.6ish+jake+20200509T2152Z+Re3432bbf31 on Sat May 09 14:53:47 PDT 2020-->
-  <decoderIndex version="1004">
+  <!--Written by JMRI version 4.19.7ish+jake+20200528T2057Z+R9befb5cf12 on Thu May 28 13:59:48 PDT 2020-->
+  <decoderIndex version="1006">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -35381,20 +35381,20 @@
         </model>
       </family>
       <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2064.xml">
-        <model model="ATL2064" lowVersionID="10" highVersionID="11" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0" connector="Wires/NEM652" numOuts="9" numFns="13" productID="ModelA1">
-          <output name="1" label="Pad A">
+        <model model="ATL2064" lowVersionID="10" highVersionID="12" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0" connector="Wires/NEM652" numOuts="9" numFns="13" productID="ATL2064">
+          <output name="1" label="Output A">
             <label xml:lang="de">Ausgang A</label>
             <label xml:lang="nl">Uitgang A</label>
           </output>
-          <output name="2" label="Pad B">
+          <output name="2" label="Output B">
             <label xml:lang="de">Ausgang B</label>
             <label xml:lang="nl">Uitgang B</label>
           </output>
-          <output name="3" label="Pad C">
+          <output name="3" label="Output C">
             <label xml:lang="de">Ausgang C</label>
             <label xml:lang="nl">Uitgang C</label>
           </output>
-          <output name="4" label="Pad D">
+          <output name="4" label="Output D">
             <label xml:lang="de">Ausgang D</label>
             <label xml:lang="nl">Uitgang D</label>
           </output>
@@ -35420,20 +35420,20 @@
           </output>
           <size length="24" width="10" height="4.5" units="mm" />
         </model>
-        <model model="ATL2064-12" lowVersionID="12" highVersionID="12" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0" connector="Wires/NEM652" numOuts="9" numFns="13" productID="ModelB1">
-          <output name="1" label="Pad A">
+        <model model="ATL2064-12" lowVersionID="12" highVersionID="12" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0" connector="Wires/NEM652" numOuts="9" numFns="13" productID="ATL2064-12">
+          <output name="1" label="Output A">
             <label xml:lang="de">Ausgang A</label>
             <label xml:lang="nl">Uitgang A</label>
           </output>
-          <output name="2" label="Pad B">
+          <output name="2" label="Output B">
             <label xml:lang="de">Ausgang B</label>
             <label xml:lang="nl">Uitgang B</label>
           </output>
-          <output name="3" label="Pad C">
+          <output name="3" label="Output C">
             <label xml:lang="de">Ausgang C</label>
             <label xml:lang="nl">Uitgang C</label>
           </output>
-          <output name="4" label="Pad D">
+          <output name="4" label="Output D">
             <label xml:lang="de">Ausgang D</label>
             <label xml:lang="nl">Uitgang D</label>
           </output>
