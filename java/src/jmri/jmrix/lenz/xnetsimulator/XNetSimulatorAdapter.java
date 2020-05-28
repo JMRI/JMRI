@@ -529,6 +529,9 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
+     * @param istream the input data source
+     * @return the next byte, waiting for it to become available
+     * @throws java.io.IOException from the underlying operations
      */
     protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
         byte[] rcvBuffer = new byte[1];

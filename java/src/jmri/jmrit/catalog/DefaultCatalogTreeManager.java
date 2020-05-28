@@ -244,9 +244,8 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
                     }
 
                     @Override
-                    public boolean doPrompt() {
+                    public void didPrompt() {
                         storeImageIndex();
-                        return true;
                     }
                 };
                 sdm.register(_shutDownTask);

@@ -1,5 +1,6 @@
 package jmri.jmrix.internal;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
@@ -8,7 +9,7 @@ import org.junit.Before;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class InternalSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class InternalSystemConnectionMemoTest extends SystemConnectionMemoTestBase<InternalSystemConnectionMemo> {
 
     @Before
     @Override

@@ -17,7 +17,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.EventObject;
-import javax.help.SwingHelpUtilities;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -134,7 +133,7 @@ public abstract class Apps3 extends AppsBase {
         HelpUtil.initOK();
 
         // tell help to use default browser for external types
-        SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
+        HelpUtil.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
         // help items are set in the various Tree/Menu/Toolbar constructors
     }

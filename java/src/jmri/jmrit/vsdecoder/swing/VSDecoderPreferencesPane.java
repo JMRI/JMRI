@@ -61,6 +61,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
 
     /**
      * Creates new form VSDecoderPreferencesPane
+     * @param tp Preferences information
      */
     public VSDecoderPreferencesPane(VSDecoderPreferences tp) {
         initComponents();

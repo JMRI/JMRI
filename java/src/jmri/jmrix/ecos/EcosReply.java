@@ -98,6 +98,7 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Is this EcosReply actually an independent {@code <EVENT} message?
+     * @return true if it is an independent message
      */
     boolean isEvent() {
         if (getNumDataElements() < 8) {

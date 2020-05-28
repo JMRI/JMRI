@@ -90,7 +90,7 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
      */
     public PowerManager getPowerManager() {
         if (powerManager == null) {
-            powerManager = new XpaPowerManager(getXpaTrafficController());
+            powerManager = new XpaPowerManager(this);
         }
         return powerManager;
 

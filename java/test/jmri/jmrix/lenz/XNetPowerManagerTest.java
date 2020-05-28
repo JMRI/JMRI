@@ -257,13 +257,8 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
 
     @Test
     public void testAddAndRemoveListener() {
-        listener = new java.beans.PropertyChangeListener() {
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent event) {
-                propertyChangeCount = propertyChangeCount + 1;
-            }
-        };
-        pm.addPropertyChangeListener(listener);
+        listener = e -> propertyChangeCount++;
+        pm.addPropertyChangeListener(PowerManager.POWER, listener);
         Assert.assertEquals("PropertyChangeCount", 0, propertyChangeCount);
         // trigger a property change, and make sure the count changes too.
         sendOnReply();

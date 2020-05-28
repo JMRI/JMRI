@@ -238,12 +238,8 @@ public class SplitTextVariableValue extends SplitVariableValue {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("Variable={}; actionPerformed", _name);
-        }
-        byte[] newVal = getBytesFromText(_textField.getText());
-        updatedTextField();
-        prop.firePropertyChange("Value", null, newVal);
+        log.debug("Variable={}; actionPerformed", _name);
+        exitField();
     }
 
     @Override

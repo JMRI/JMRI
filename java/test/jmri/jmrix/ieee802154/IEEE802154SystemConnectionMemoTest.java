@@ -1,5 +1,6 @@
 package jmri.jmrix.ieee802154;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -8,18 +9,17 @@ import org.junit.Test;
 
 /**
  * IEEE802154SystemConnectionMemoTest.java
- *
- * Test for the
- * jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo class
+ * <p>
+ * Test for the jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo class
  *
  * @author Paul Bender
  */
-public class IEEE802154SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class IEEE802154SystemConnectionMemoTest extends SystemConnectionMemoTestBase<IEEE802154SystemConnectionMemo> {
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
     @Override

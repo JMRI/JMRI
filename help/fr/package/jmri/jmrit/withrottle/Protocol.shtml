@@ -29,7 +29,7 @@
       <h1>JMRI:Protocole de Communications R&eacute;gulateur
       WiFi</h1>Cette page d&eacute;crit le protocole fournit par le
       paquet <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">
       jmri.jmrit.withrottle</a> pour contr&ocirc;ler un train
       &agrave; travers JMRI via un lien TCP/IP.
 

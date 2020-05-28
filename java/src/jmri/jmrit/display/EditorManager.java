@@ -84,7 +84,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
     @Nonnull
     public <T extends Editor> SortedSet<T> getAll(@Nonnull Class<T> type) {
         return set.stream()
-                .filter(e -> e.getClass().isAssignableFrom(type))
+                .filter(e -> type.isAssignableFrom(e.getClass()))
                 .map(type::cast)
                 .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Editor::getTitle))));
     }

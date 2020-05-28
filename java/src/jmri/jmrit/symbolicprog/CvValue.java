@@ -161,6 +161,8 @@ public class CvValue extends AbstractValue implements ProgListener {
 
     /**
      * Intended for debugging only, don't translate
+     * @param state State to translate to text
+     * @return Text (human readable) representaton of state
      */
     String stateToString(int state) {
         switch (state) {

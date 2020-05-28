@@ -36,12 +36,12 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
     
     @Override
     protected void sendIdleReply() {
-        return;
+        // do nothing
     }
 
     @Override
     protected void hearIdle() {
-        return;
+        // do nothing
     }
 
     @Override

@@ -1,5 +1,6 @@
 package apps.startup;
 
+import jmri.util.startup.StartupModel;
 import apps.StartupActionsManager;
 import java.awt.Component;
 import java.io.IOException;

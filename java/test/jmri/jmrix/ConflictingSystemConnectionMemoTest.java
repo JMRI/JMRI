@@ -15,7 +15,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright 2017
  * @author Randall Wood Copyright 2019
  */
-public class ConflictingSystemConnectionMemoTest extends SystemConnectionMemoTestBase {
+public class ConflictingSystemConnectionMemoTest extends SystemConnectionMemoTestBase<ConflictingSystemConnectionMemo> {
 
     @Override
     @Test

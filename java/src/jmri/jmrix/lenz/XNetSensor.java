@@ -39,6 +39,8 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 
     /**
      * Common initialization for all constructors.
+     * @param id System ID
+     * @param prefix System name prefix
      */
     private void init(String id, String prefix) {
         // store address
@@ -90,6 +92,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
      * a feedback message at initialization without changing the state of the
      * sensor with respect to whether or not a feedback request was sent. This
      * is used only when the sensor is created by on layout feedback.
+     * @param l Reply message
      */
     synchronized void initmessage(XNetReply l) {
         boolean oldState = statusRequested;
@@ -98,11 +101,12 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     }
 
     /**
-     * implementing classes will typically have a function/listener to get
+     * Implementing classes will typically have a function/listener to get
      * updates from the layout, which will then call public void
      * firePropertyChange(String propertyName, Object oldValue, Object newValue)
      * _once_ if anything has changed state (or set the commanded state
      * directly)
+     * @param l Reply message
      */
     @Override
     public synchronized void message(XNetReply l) {
@@ -128,6 +132,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 
     /**
      * Listen for the messages to the LI100/LI101.
+     * @param l message to process
      */
     @Override
     public void message(XNetMessage l) {
@@ -135,6 +140,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 
     /**
      * Handle a timeout notification.
+     * @param msg The message that timed out
      */
     @Override
     public void notifyTimeout(XNetMessage msg) {
@@ -150,6 +156,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 
     /**
      * Package protected routine to get the Sensor Number.
+     * @return current Sensor address number
      */
     int getNumber() {
         return address;
@@ -157,6 +164,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 
     /**
      * Package protected routine to get the Sensor Base Address.
+     * @return the Sensor base address
      */
     int getBaseAddress() {
         return baseaddress;
@@ -164,6 +172,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 
     /**
      * Package protected routine to get the Sensor Nibble.
+     * @return contents of sensor nibble
      */
     int getNibble() {
         return nibble;

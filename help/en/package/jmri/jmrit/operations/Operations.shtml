@@ -204,7 +204,11 @@
       <li><a href="#TrackTools">Track Tools</a>
 
        <ul>
-        <li><a href="#LoadOptions">Load Options</a></li>
+        <li><a href="#LoadOptions">Load Options</a>
+
+         <ul>
+          <li><a href="#SpurOption">Hold cars with custom loads when spurs are full</a></li>
+         </ul></li>
 
         <li><a href="#RoadOptions">Road Options</a></li>
 
@@ -2870,16 +2874,15 @@
    <a name="SpurOption" id="SpurOption"></a>
    <h5>Spur Option</h5>
 
-   <p>Spurs have the option "Hold cars with custom loads when spurs are full" and this option is
-    used to restrict car movement. When this option is selected, cars with custom loads are only
-    routed to spurs with schedules demanding the car's custom load. When the program finds a car
-    with a custom load but without a final destination, it will search all spurs for a schedule that
-    is demanding that car's type and load, and if found will route the car there. If all spurs are
-    full and the option "Hold cars with custom loads when spurs are full" is selected for any spur
-    demanding that car's custom load, the program will only move the car when one of the spurs can
-    accept a new car, i.e. the spur is no longer full. If however the option "Hold cars with custom
-    loads when spurs are full" isn't selected for all of the spur/schedules demanding the car's
-    custom load, the program will attempt to move the car to another location, which can be staging.</p>
+   <p>In the "Edit Track Load Options" window spurs have the additional option "Hold cars with custom loads when
+    spurs are full" and this option is used to restrict car movement. When this option is selected, cars with custom
+    loads are only routed to spurs with schedules demanding the car's custom load. When the program finds a car with a
+    custom load but without a final destination, it will search all spurs for a schedule that is demanding that car's
+    type and load, and if found will route the car there. If all spurs are full and the option "Hold cars with custom
+    loads when spurs are full" is selected for any spur with an alternate track demanding that car's custom load, the
+    program will only move the car when one of the spurs can accept a new car, i.e. the spur is no longer full. If
+    however the option "Hold cars with custom loads when spurs are full" isn't selected for all of the spur/schedules
+    demanding the car's custom load, the program will attempt to move the car to another location, which can be staging.</p>
 
    <p>
     You can have the program ignore the "Hold cars with custom loads when spurs are full" feature
@@ -2965,10 +2968,10 @@
    </p>
 
    <p>Adding an alternate track will normally increase the number of cars that the program routes to a spur /
-    schedule. The program refers to these cars as "inbound" to the spur/industry. For a car to be "inbound" is has to be
-    transported by trains that don't directly service the spur/industry. The maximum number of inbound cars to a spur
-    with an alternate track is determined by the length of the spur and the alternate track. So if the spur could hold 6
-    cars, and the alternate track 5, then the program would allow a maximum of 11 cars to be sent to the spur.</p>
+    schedule. The train build report refers to routed cars as "inbound" to the spur/industry. The maximum number of
+    inbound cars to a spur with an alternate track is determined by the length of the spur and the alternate track. So
+    if the spur could hold 6 cars, and the alternate track 5, then the program would allow a maximum of 11 cars to be
+    sent to the spur.</p>
 
    <p>
     You can see all "inbound" cars by using the sort by "FD" or <a href="#FinalDestination">Final Destination</a> in the
@@ -4396,7 +4399,7 @@
    will bring up a new window with several script options.
 
    <p>
-    Included in the <a href="http://jmri.org/jython/operations">jython directory</a> are several
+    Included in the <a href="https://jmri.org/jython/operations">jython directory</a> are several
     examples of operation oriented scripts. These scripts were included in the JMRI download and can
     be found in the jmri-&gt;jython-&gt;operations directory.
    </p>
@@ -5579,7 +5582,7 @@
    <a name="OperationsWebAccess" id="OperationsWebAccess"></a>
    <h2>Operations Web Access</h2>
    You can also access some of the OperationPro&trade; windows from a browser. For more information
-   see <a href="http://jmri.org/help/en/html/web/">JMRI Web Access</a>.
+   see <a href="https://jmri.org/help/en/html/web/">JMRI Web Access</a>.
 
    <p>
     <img src="images/WebConductor.png">

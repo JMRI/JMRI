@@ -271,6 +271,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
 
         /**
          * Constructs the thread
+         * @param sm SensorManager to use
+         * @param tc TrafficController to use
          */
         public LnSensorUpdateThread(LnSensorManager sm, LnTrafficController tc) {
             this.sm = sm;
