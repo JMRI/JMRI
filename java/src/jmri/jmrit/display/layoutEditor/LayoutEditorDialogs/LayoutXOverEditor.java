@@ -47,7 +47,7 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
      */
     @Override
     public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
-        log.trace("XOver editors are an extension of superclass LayoutTrackEditor");
+        log.trace("LayoutXOverEditor.editLayoutTrack({}) of a {}", layoutTrack, layoutTrack.getClass());
         super.editLayoutTrack(layoutTrack);
     }
     

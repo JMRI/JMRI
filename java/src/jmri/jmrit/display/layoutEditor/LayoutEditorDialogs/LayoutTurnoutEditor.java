@@ -81,6 +81,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
      */
     @Override
     public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
+        log.trace("LayoutTurnoutEditor.editLayoutTrack({}) of a {}", layoutTrack, layoutTrack.getClass());
         if ( layoutTrack instanceof LayoutTurnout ) {
             this.layoutTurnout = (LayoutTurnout) layoutTrack;
         } else {
