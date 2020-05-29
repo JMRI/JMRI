@@ -33,7 +33,11 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
     protected XNetTrafficController tc = null;
 
     /**
-     * Constructor for a new instance
+     * Constructor for a new instance.
+     * 
+     * @param row (unused)
+     * @param column (unused)
+     * @param memo Provides access to rest of XNet system connection objects
      */
     StackMonDataModel(int row, int column, jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         tc = memo.getXNetTrafficController();

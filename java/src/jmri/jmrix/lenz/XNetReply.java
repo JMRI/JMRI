@@ -1174,7 +1174,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * @param element1 contains the speed step mode designation and
      * availability information
      * @param element2 contains the data byte including the step mode and
-     * availability information 
+     * availability information
+     * @return readable version of message
      */
     protected String parseSpeedAndDirection(int element1, int element2) {
         String text = "";
@@ -1248,6 +1249,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      *
      * @param element3 contains the data byte including F0,F1,F2,F3,F4
      * @param element4 contains F12,F11,F10,F9,F8,F7,F6,F5
+     * @return readable version of message
      */
     protected String parseFunctionStatus(int element3, int element4) {
         String text = "";
@@ -1324,6 +1326,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      *
      * @param element3 contains F20,F19,F18,F17,F16,F15,F14,F13
      * @param element4 contains F28,F27,F26,F25,F24,F23,F22,F21
+     * @return readable version of message
      */
     protected String parseFunctionHighStatus(int element3, int element4) {
         String text = "";
@@ -1414,6 +1417,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      *
      * @param element3 contains the data byte including F0,F1,F2,F3,F4
      * @param element4 contains F12,F11,F10,F9,F8,F7,F6,F5
+     * @return readable version of message
      */
     protected String parseFunctionMomentaryStatus(int element3, int element4) {
         String text = "";
@@ -1490,6 +1494,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      *
      * @param element3 contains F20,F19,F18,F17,F16,F15,F14,F13
      * @param element4 contains F28,F27,F26,F25,F24,F23,F22,F21
+     * @return readable version of message
      */
     protected String parseFunctionHighMomentaryStatus(int element3, int element4) {
         String text = "";

@@ -22,6 +22,7 @@
 
 //----------------------------------------- Global vars
 
+var log = new Logger();
 var $debug = true;
 var $vScrollbarWidth;
 var $showScrollBar = false;
@@ -330,8 +331,8 @@ $(document).ready(function() {
 var startJMRI = function() {
 	$jmri = $.JMRI({
 		//*** Callback Functions available in '$jmri' object
-		toSend: function(data) {$debug && window.console && console.log(new Date() + ' - ' + document.title + '\n' + 'JSONtoSend: ' + data);},	//Nothing to do
-		fullData: function(data) {$debug && window.console && console.log(new Date() + ' - ' + document.title + '\n' + 'JSONreceived: ' + data);},	//Nothing to do
+		toSend: function(data) {$debug && log.log(new Date() + ' - ' + document.title + '\n' + 'JSONtoSend: ' + data);},	//Nothing to do
+		fullData: function(data) {$debug && log.log(new Date() + ' - ' + document.title + '\n' + 'JSONreceived: ' + data);},	//Nothing to do
                 error: function (code, message) {
                     if (code === 0)
                         jmriLostComm(message);

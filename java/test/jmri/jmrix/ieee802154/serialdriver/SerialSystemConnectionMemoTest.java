@@ -1,5 +1,6 @@
 package jmri.jmrix.ieee802154.serialdriver;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,7 +13,7 @@ import org.junit.Test;
  *
  * @author Paul Bender
  */
-public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class SerialSystemConnectionMemoTest extends SystemConnectionMemoTestBase<SerialSystemConnectionMemo> {
 
     @Override
     @Test

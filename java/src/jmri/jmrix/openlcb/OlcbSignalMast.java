@@ -338,6 +338,8 @@ public class OlcbSignalMast extends AbstractSignalMast {
         /**
          * Internal method to determine the EventState for a reply
          * to an Identify* method
+         * @param event Method returns the underlying state for this EventID
+         * @return State corresponding to the given EventID
          */
         EventState getEventIDState(EventID event) {
             T value = eventToState.get(event);

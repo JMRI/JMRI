@@ -115,7 +115,9 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
 
     /**
      * Nested class to create one of these using old-style defaults.
+     * @deprecated since 4.19.7; use {@link LocoMonPaneAction} instead
      */
+    @Deprecated
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
 
         public Default() {

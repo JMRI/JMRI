@@ -322,6 +322,7 @@ public class SpjFile {
      *
      * @param i    index of the specific header
      * @param name filename
+     * @throws IOException based on underlying activity
      */
     void writeSubFile(int i, String name) throws IOException {
         File outfile = new File(name);
@@ -484,6 +485,7 @@ public class SpjFile {
 
         /**
          * Data record associated with this header is being being repositioned.
+         * @param newRecordStart identify the new start record
          */
         void updateStart(int newRecordStart) {
             //int oldRecordStart = getRecordStart();
@@ -691,7 +693,7 @@ public class SpjFile {
     class FirstHeader extends Header {
 
         /**
-         * Number of headers, including the initial system header.
+         * @return number of headers, including the initial system header.
          */
         int numHeaders() {
             return (dataStart / 128);

@@ -297,6 +297,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             int maxi = 0; // the number of function buttons defined for this entry
             for (int i = 0; i < FunctionPanel.NUM_FUNCTION_BUTTONS; i++) {
                 functionButton[i].setIdentity(i); // full reset of function
+                functionButton[i].setThrottle(mThrottle);
                 functionButton[i].setState(mThrottle.getFunction(i)); // reset button state
                 if (rosterEntry != null) { // from here, update button text with roster data
                     String text = rosterEntry.getFunctionLabel(i);

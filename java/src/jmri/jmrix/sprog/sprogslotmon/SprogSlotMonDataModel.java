@@ -366,6 +366,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
      * time.
      *
      * @param row Row number in the displayed table
+     * @return Matching slot number
      */
     protected int slotNum(int row) {
         // ??? Can't this just return row ???

@@ -24,13 +24,10 @@ public class CbusEventTableShutdownTask extends AbstractShutDownTask {
     }
 
     /**
-    * Checks preferences, saving Table contents if necessary
-    *
-    * @return true as the shutdown should continue
+    * Checks preferences, saving Table contents if necessary.
     */
     @Override
-    public boolean execute() {
+    public void run() {
         _model.dispose();
-        return true;
     }
 }

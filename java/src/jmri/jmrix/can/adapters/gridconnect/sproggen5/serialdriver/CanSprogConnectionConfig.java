@@ -45,7 +45,7 @@ public class CanSprogConnectionConfig extends jmri.jmrix.can.adapters.Connection
     @Override
     protected void setInstance() {
         if (adapter == null) {
-            adapter = new CanisbSerialDriverAdapter();
+            adapter = new CanSprogSerialDriverAdapter();
         }
     }
 

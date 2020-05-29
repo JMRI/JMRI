@@ -1,5 +1,7 @@
 package jmri.jmrit.beantable;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
@@ -18,6 +20,18 @@ public abstract class AbstractTableTabActionBase {
 
     protected AbstractTableTabAction a = null;
     protected String helpTarget = "index"; // index is default value specified in AbstractTableTabAction.
+
+    /**
+     * Test that AbstractTableTabAction subclasses do not create Swing objects
+     * when constructed, but defer that to later.
+     */
+    @Test
+    public final void testDeferredCreation() {
+        assertThat(a.m).isNull();
+        assertThat(a.f).isNull();
+        assertThat(a.dataPanel).isNull();
+        assertThat(a.dataTabs).isNull();
+    }
 
     @Test
     @Ignore("test causes an NPE while executing a.actionPerformed")

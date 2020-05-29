@@ -162,27 +162,32 @@ public interface Throttle extends PropertyChangeProvider {
     public abstract boolean[] getFunctionsMomentary();
     
     /**
-     * Speed - expressed as a value {@literal 0.0 -> 1.0.} Negative means
-     * emergency stop. This is an bound property.
+     * Get the current speed setting, expressed as a value {@literal 0.0 -> 1.0.} 
+     * This property is bound to the {@link #SPEEDSETTING} name.
      *
-     * @return the speed as a percentage of maximum possible speed
+     * @return the speed as a {@literal 0.0 -> 1.0.}  fraction of maximum possible speed or -1 for emergency stop.
      */
     public float getSpeedSetting();
 
     /**
-     * Set the speed.
+     * Set the desired speed setting, expressed as a value {@literal 0.0 -> 1.0.} Negative means
+     * emergency stop. 
+     * This property is bound to the {@link #SPEEDSETTING} name.
      *
-     * @param speed a number from 0.0 to 1.0
+     * @param speed the speed as a {@literal 0.0 -> 1.0.} fraction of maximum possible speed or -1 for emergency stop.
      */
     public void setSpeedSetting(float speed);
 
     /**
-     * Set the speed - on systems which normally suppress the sending of a
+     * Set the desired speed, expressed as a value {@literal 0.0 -> 1.0.}, 
+     * with extra control over the messages to the layout. Negative means
+     * emergency stop. 
+     * On systems which normally suppress the sending of a
      * message if the new speed won't (appear to JMRI to) make any difference,
      * the two extra options allow the calling method to insist the message is
      * sent under some circumstances.
      *
-     * @param speed                 a number from 0.0 to 1.0
+     * @param speed the speed as a {@literal 0.0 -> 1.0.} fraction of maximum possible speed or -1 for emergency stop.
      * @param allowDuplicates       if true, don't suppress messages that should
      *                              have no effect
      * @param allowDuplicatesOnStop if true, and the new speed is idle or estop,
@@ -194,7 +199,7 @@ public interface Throttle extends PropertyChangeProvider {
      * Set the speed, and on systems which normally suppress the sending of a
      * message make sure the message gets sent.
      *
-     * @param speed a number from 0.0 to 1.0
+     * @param speed the speed as a {@literal 0.0 -> 1.0.} fraction of maximum possible speed or -1 for emergency stop.
      */
     public void setSpeedSettingAgain(float speed);
 

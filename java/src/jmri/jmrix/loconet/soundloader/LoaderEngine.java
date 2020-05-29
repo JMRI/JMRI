@@ -151,6 +151,8 @@ public class LoaderEngine {
      * Delay to prevent too much data being sent down.
      *
      * Works with the controller to ensure that too much data doesn't back up.
+     * @param m Throttle message to send
+     * @throws DelayException if too much time elapsed before send possible
      */
     void throttleOutbound(LocoNetMessage m) throws DelayException {
         protectedWait(50);  // minimum wait to clear
@@ -194,6 +196,10 @@ public class LoaderEngine {
      * nextWavTransfer() until it says it's complete.
      *
      * @param type Either TYPE_SDF or TYPE_WAV for the data type
+     * @param handle Handle number for the following data
+     * @param name Name of the transfer
+     * @param contents Data to download
+     * @return Prepared message 
      */
     LocoNetMessage initTransfer(int type, int handle, String name, byte[] contents) {
         transferType = type;
@@ -279,8 +285,10 @@ public class LoaderEngine {
     /**
      * Get a message to start the download of data
      *
+     * @param type Either TYPE_SDF or TYPE_WAV for the data type
      * @param handle Handle number for the following data
      * @param length Total length of the WAV data to load
+     * @return Prepared message 
      */
     LocoNetMessage getStartDataMessage(int type, int handle, int length) {
         int pagecount = length / SENDPAGESIZE;
@@ -302,8 +310,10 @@ public class LoaderEngine {
     /**
      * Get a message to tell the PR2 to store length bytes of data (following)
      *
+     * @param type Either TYPE_SDF or TYPE_WAV for the data type
      * @param handle   Handle number for the following data
      * @param contents Data to download
+     * @return Prepared message 
      */
     LocoNetMessage getSendDataMessage(int type, int handle, byte[] contents) {
 
@@ -327,6 +337,7 @@ public class LoaderEngine {
 
     /**
      * Get a message to erase the non-volatile sound memory
+     * @return Prepared message 
      */
     LocoNetMessage getEraseMessage() {
         LocoNetMessage m = new LocoNetMessage(new int[]{0xD3, 0x02, 0x01, 0x7F, 0x00, 0x50});
@@ -336,6 +347,7 @@ public class LoaderEngine {
 
     /**
      * Get a message to initialize the load sequence
+     * @return Prepared message 
      */
     LocoNetMessage getInitMessage() {
         LocoNetMessage m = new LocoNetMessage(new int[]{0xD3, 0x01, 0x00, 0x00, 0x00, 0x2D});
@@ -345,6 +357,7 @@ public class LoaderEngine {
 
     /**
      * Get a message to exit the download process
+     * @return Prepared message 
      */
     LocoNetMessage getExitMessage() {
         LocoNetMessage m = new LocoNetMessage(new int[]{0xD3, 0x00, 0x00, 0x00, 0x00, 0x2C});

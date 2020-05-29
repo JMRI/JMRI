@@ -51,14 +51,14 @@
         <dt><a href="https://github.com/JMRI/JMRI/blob/master/help">help/</a></dt>
             <dd>The <a href="Help.shtml">in-program help files</a></dd>
         <dt><a href="https://github.com/JMRI/JMRI/blob/master/jython">jython/</a></dt>
-            <dd>Various <a href="http://jmri.org/jython">sample</a> and 
-                <a href="http://jmri.org/jython/test">test</a> scripts.</dd>
+            <dd>Various <a href="https://jmri.org/jython">sample</a> and 
+                <a href="https://jmri.org/jython/test">test</a> scripts.</dd>
         <dt><a href="https://github.com/JMRI/JMRI/blob/master/lib">lib/</a></dt>
             <dd>Jar files and linkable libraries that JMRI relies on.</dd>
         <dt><a href="https://github.com/JMRI/JMRI/blob/master/resources">resources/</a></dt>
             <dd>Image and sound resources used by the library, and available for 
             user selection.  These can be 
-            <a href="http://jmri.org/resources">directly browsed</a>.</dd>
+            <a href="https://jmri.org/resources">directly browsed</a>.</dd>
         <dt><a href="https://github.com/JMRI/JMRI/blob/master/web">web/</a></dt>
             <dd>Files for JMRI's built-in web servers</dd>
         <dt><a href="https://github.com/JMRI/JMRI/blob/master/xml">xml/</a></dt>
@@ -248,7 +248,7 @@
       <a href="Names.shtml">is available on a separate page</a>.</p>
 
       <p>The 
-      <a href="http://jmri.org/JavaDoc/doc/jmri/InstanceManager.html">"InstanceManager"</a>
+      <a href="https://jmri.org/JavaDoc/doc/jmri/InstanceManager.html">"InstanceManager"</a>
       as a key central point for this navigation.
         <ul>
             <li>It provides access to key objects, particularly the Managers
@@ -256,16 +256,16 @@
             <li>It automatically handles creation of many parts of JMRI via
                 several mechanisms:
                 <ul>
-                  <li><a href="http://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoDefault.html">InstanceManagerAutoDefault</a></li>
-                  <li><a href="http://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a></li>
+                  <li><a href="https://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoDefault.html">InstanceManagerAutoDefault</a></li>
+                  <li><a href="https://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a></li>
                 </ul>
                 and, when needed, provides for their
-                    <a href="http://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoInitialize.html">post-creation initialization</a>.
+                    <a href="https://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoInitialize.html">post-creation initialization</a>.
             </li>
             <li>It 
-                <a href="http://jmri.org/JavaDoc/doc/jmri/InstanceManager.html#dispose-jmri.Disposable-">disposes</a> 
+                <a href="https://jmri.org/JavaDoc/doc/jmri/InstanceManager.html#dispose-jmri.Disposable-">disposes</a> 
                 of 
-                <a href="http://jmri.org/JavaDoc/doc/jmri/Disposable.html">suitable objects</a>
+                <a href="https://jmri.org/JavaDoc/doc/jmri/Disposable.html">suitable objects</a>
                 at the end of their lifespan when the InstanceManager (or a particular collection in it)
                 is cleared.</li>
         </ul>
