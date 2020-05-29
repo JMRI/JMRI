@@ -602,19 +602,19 @@
     <variable CV="139" default="128" item="ESU V4 Function Settings Smoke Unit Slider 3" include="ESU LokSound V4.0,LokSound Select L">
         <decVal/>
         <label>Temperature Trim</label>
-        <label xml:lang="de">            Temperaturregelung            </label>
+        <label xml:lang="de">Temperaturregelung</label>
         <label xml:lang="ca">Ajust de temperatura</label>
     </variable>
     <variable CV="140" default="120" tooltip="Unit is 5 seconds" item="ESU V4 Function Settings Smoke Unit Slider 1" include="ESU LokSound V4.0,LokSound Select L">
         <decVal/>
-        <label>Smoke Unit Automatic Power Off Time</label>
-        <label xml:lang="de"> automatische Abschaltung Rauchentwickler </label>
+        <label>Automatic Power Off Time</label>
+        <label xml:lang="de">automatische Abschaltung</label>
         <tooltip xml:lang="de">die Einheit sind 5 sec</tooltip>
-        <label xml:lang="ca">TEmps apagat del fumigen</label>
+        <label xml:lang="ca">Temps apagat del fumigen</label>
     </variable>
     <variable CV="144" default="150" tooltip="Unit is degrees Celsius" item="ESU V4 Function Settings Smoke Unit Slider 4" include="ESU LokSound V4.0,LokSound Select L">
         <decVal/>
-        <label>Preheating Temperature for Secondary Smoke Unit</label>
+        <label>Preheat Temp. for Secondary Unit</label>
         <label xml:lang="de">Vorwärmtemperatur für Sekundärraucheinheit</label>
         <tooltip xml:lang="de">die Einheit ist Grad Celsius</tooltip>
         <label xml:lang="ca">Temperatra de preescalfat de segon fumigen</label>
