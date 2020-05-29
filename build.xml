@@ -144,17 +144,17 @@
         <pathelement location="${libdir}/jackson-core-2.10.0.jar"/>
         <pathelement location="${libdir}/jackson-annotations-2.10.0.jar"/>
         <pathelement location="${libdir}/jackson-databind-2.10.0.jar"/>
-        <pathelement location="${libdir}/jetty-http-9.4.26.v20200117.jar"/>
-        <pathelement location="${libdir}/jetty-security-9.4.26.v20200117.jar"/>
-        <pathelement location="${libdir}/jetty-server-9.4.26.v20200117.jar"/>
-        <pathelement location="${libdir}/jetty-servlet-9.4.26.v20200117.jar"/>
-        <pathelement location="${libdir}/jetty-util-9.4.26.v20200117.jar"/>
-        <pathelement location="${libdir}/jetty-io-9.4.26.v20200117.jar"/>
-        <pathelement location="${libdir}/websocket-api-9.4.26.v20200117.jar"/>
-        <pathelement location="${libdir}/websocket-client-9.4.26.v20200117.jar"/>
-        <pathelement location="${libdir}/websocket-common-9.4.26.v20200117.jar"/>
-        <pathelement location="${libdir}/websocket-server-9.4.26.v20200117.jar"/>
-        <pathelement location="${libdir}/websocket-servlet-9.4.26.v20200117.jar"/>
+        <pathelement location="${libdir}/jetty-http-9.4.28.v20200408.jar"/>
+        <pathelement location="${libdir}/jetty-io-9.4.28.v20200408.jar"/>
+        <pathelement location="${libdir}/jetty-security-9.4.28.v20200408.jar"/>
+        <pathelement location="${libdir}/jetty-server-9.4.28.v20200408.jar"/>
+        <pathelement location="${libdir}/jetty-servlet-9.4.28.v20200408.jar"/>
+        <pathelement location="${libdir}/jetty-util-9.4.28.v20200408.jar"/>
+        <pathelement location="${libdir}/websocket-api-9.4.28.v20200408.jar"/>
+        <pathelement location="${libdir}/websocket-client-9.4.28.v20200408.jar"/>
+        <pathelement location="${libdir}/websocket-common-9.4.28.v20200408.jar"/>
+        <pathelement location="${libdir}/websocket-server-9.4.28.v20200408.jar"/>
+        <pathelement location="${libdir}/websocket-servlet-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/slf4j-api-1.7.25.jar"/>
         <pathelement location="${libdir}/slf4j-log4j12-1.7.25.jar"/>
         <pathelement location="${libdir}/jul-to-slf4j-1.7.25.jar"/>
@@ -1878,10 +1878,10 @@
                  package="yes"
                  use="true"
                  failonerror="true"
-                 failonwarning="true"
+                 failonwarning="false" 
                  source="8"
                  windowtitle="JMRI API"
-            >
+            > <!-- failonwarning="false"  because always warns on cyclic redundancy with JDK11 -->
 
             <packageset dir="${source}" defaultexcludes="yes">
                 <include name="jmri/**"/>

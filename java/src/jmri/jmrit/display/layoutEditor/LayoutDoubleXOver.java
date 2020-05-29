@@ -124,6 +124,8 @@ public class LayoutDoubleXOver extends LayoutXOver {
             double xFactor, double yFactor,
             @Nonnull LayoutEditor layoutEditor) {
         this(id, c, rot, xFactor, yFactor, layoutEditor, 1);
+
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutDoubleXOverEditor(layoutEditor);
     }
 
     /**
@@ -139,6 +141,8 @@ public class LayoutDoubleXOver extends LayoutXOver {
     public LayoutDoubleXOver(@Nonnull String id, @Nonnull Point2D c, double rot,
             double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
         super(id, TurnoutType.DOUBLE_XOVER, c, rot, xFactor, yFactor, layoutEditor, 1);
+
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutDoubleXOverEditor(layoutEditor);
     }
     
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleXOver.class);

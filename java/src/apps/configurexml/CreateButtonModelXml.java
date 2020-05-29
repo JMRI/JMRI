@@ -87,6 +87,7 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
                         | NoSuchMethodException
                         | SecurityException ex) {
                     // ignore to allow manager to handle later
+                    log.warn("While trying to do {}, encountered exception", className, ex);
                 }
             }
         });
