@@ -1,14 +1,11 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.geom.Point2D;
+import java.awt.geom.*;
 
-import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.*;
+
+import org.junit.*;
 
 /**
  * Test simple functioning of TrackSegmentView
@@ -69,6 +66,41 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
         
             Assert.assertEquals("segmentView.getDirectionRAD()", 4.056693354143153, segmentView.getDirectionRAD(), tolerance);
             Assert.assertEquals("segmentView.getDirectionDEG()", 232.4314079711725, segmentView.getDirectionDEG(), tolerance);
+        }
+    }
+
+    // Part of May 29 merge (Is this temporary?)
+    @Test
+    public void test_getBounds() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+
+            Rectangle2D expected = new Rectangle2D.Double(10.0, 20.0, 10.0, 13.0);
+            Rectangle2D actual = MathUtil.granulize(segmentView.getBounds(), 0.1); //round to the nearest 1/10th of a pixel
+            Assert.assertEquals("segmentView.getBounds(LINE)", expected, actual);
+
+            segmentView.setArc(true);
+            expected = new Rectangle2D.Double(10.0, 20.0, 10.0, 13.0);
+            actual = MathUtil.granulize(segmentView.getBounds(), 0.1); //round to the nearest 1/10th of a pixel
+            Assert.assertEquals("segmentView.getBounds(ARC)", expected, actual);
+
+            segmentView.setCircle(true);
+            expected = new Rectangle2D.Double(10.0, 20.0, 10.100000000000001, 13.0);
+            actual = MathUtil.granulize(segmentView.getBounds(), 0.1); //round to the nearest 1/10th of a pixel
+            Assert.assertEquals("segmentView.getBounds(CIRCLE)", expected, actual);
+
+            segmentView.setBezier(true);
+            segmentView.setBezierControlPoint(new Point2D.Double(5.5, 15.5), 0);
+            segmentView.setBezierControlPoint(new Point2D.Double(25.5, 38.5), 1);
+
+            expected = new Rectangle2D.Double(9.3, 19.400000000000002, 11.600000000000001, 14.4);
+            actual = MathUtil.granulize(segmentView.getBounds(), 0.1); //round to the nearest 1/10th of a pixel
+            Assert.assertEquals("segmentView.getBounds(BEZIER)", expected, actual);
+
+            segmentView.setBezier(false);
+            expected = new Rectangle2D.Double(10.0, 20.0, 10.0, 13.0);
+            actual = MathUtil.granulize(segmentView.getBounds(), 0.1); //round to the nearest 1/10th of a pixel
+            Assert.assertEquals("segmentView.getBounds(LINE)", expected, actual);
         }
     }
 

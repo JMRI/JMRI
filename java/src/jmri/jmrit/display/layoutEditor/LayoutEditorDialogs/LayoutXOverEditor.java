@@ -47,7 +47,7 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
      */
     @Override
     public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView) {
-        log.debug("XOver editors are an extension of superclass LayoutTrackEditor");
+        log.trace("LayoutXOverEditor.editLayoutTrack({}) of a {}", layoutTrackView, layoutTrackView.getClass());
         super.editLayoutTrack(layoutTrackView);
     }
     
@@ -132,6 +132,12 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
             editLayoutTurnout2ndTurnoutComboBox.setSelectedItem(null);
         }
         editLayoutTurnoutNeedRedraw = true;
+    }
+
+    // set the continuing route Turnout State
+    @Override
+    protected void setContinuingRouteTurnoutState() {
+        // this had content in LayoutTurnoutEditor superclass, which we don't want to do here.
     }
 
     @Override

@@ -34,6 +34,8 @@ public class LayoutLHTurnoutView extends LayoutTurnoutView {
         super(turnout, c, rot, xFactor, yFactor, layoutEditor);
         
         // this.turnout = turnout;
+
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutLHTurnoutEditor(layoutEditor);
     }
         
     // final private LayoutLHTurnout turnout;

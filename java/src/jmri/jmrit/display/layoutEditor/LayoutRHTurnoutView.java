@@ -27,6 +27,8 @@ public class LayoutRHTurnoutView extends LayoutTurnoutView {
         super(turnout, c, rot, xFactor, yFactor, layoutEditor);
         
         // this.turnout = turnout;
+
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutRHTurnoutEditor(layoutEditor);
     }
         
     // final private LayoutRHTurnout turnout;

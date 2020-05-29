@@ -28,6 +28,8 @@ public class LayoutDoubleSlipView extends LayoutSlipView {
     public LayoutDoubleSlipView(@Nonnull LayoutDoubleSlip slip, Point2D c, double rot, @Nonnull LayoutEditor layoutEditor) {
         super(slip, c, rot, layoutEditor);
         // this.slip = slip;
+
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutDoubleSlipEditor(layoutEditor);
     }
         
     // final private LayoutDoubleSlip slip;

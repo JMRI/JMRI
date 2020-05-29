@@ -12,7 +12,7 @@ It's in no particular order, items are removed as done, so please don't consider
  - LE-move-content-MVC-2-draws - pause point, (appears to) draw test layouts properly (tagged as LE-MVC-2 M-V)
  - LE-move-content-MVC-working-on-3 (tagged as LE-MVC-3)
  - LE-move-content-MVC-working-on-4 (tagged as LE-MVC-4)
- - LE-move-content-MVC-working-on-5
+ - LE-move-content-MVC-working-on-5 - #8584, #8591, #8609 merged
  
 ----
 
@@ -31,7 +31,7 @@ It's in no particular order, items are removed as done, so please don't consider
 - [X] mainline in geometry classes (inc base clases, *Xml)
 - [ ] hidden in View
     =========> Referenced from various "Tools" calculations that don't use View, so isHidden() proxied for now
-- [x] flip in View
+- [X] flip in View
 - [ ] center in View
 - [ ] Decorations only in View
     - [ ] arrowstyle only in View
@@ -40,10 +40,12 @@ It's in no particular order, items are removed as done, so please don't consider
     - [X] tunnel only in View
     - [ ] bumpers only in View
 
-- [x] create popup et al (inc member vars) in view
+- [X] create popup et al (inc member vars) in view
 - [ ] Turnout state in connectivity
 - [ ] Block and connectivity checks to, well, connectivity
 
+- [ ] The ``*View` classes load a reference to a new `*Editor` in ctor; this needs to be shared or deferred
+ 
 Go through and confirm individually:
 
  - Remove topology variables from View

@@ -28,6 +28,8 @@ public class LayoutXOverView extends LayoutTurnoutView {
             @Nonnull LayoutEditor layoutEditor) {
         super(xover, c, rot, xFactor, yFactor, layoutEditor);
         // this.xover = xover;
+
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutXOverEditor(layoutEditor);
     }
         
     // final private LayoutXOver xover;

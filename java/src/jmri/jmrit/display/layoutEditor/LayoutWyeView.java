@@ -33,6 +33,8 @@ public class LayoutWyeView extends LayoutTurnoutView {
             @Nonnull LayoutEditor layoutEditor) {
         super(wye, c, rot, xFactor, yFactor, layoutEditor);
         // this.wye = wye;
+
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutWyeEditor(layoutEditor);
     }
         
     // final private LayoutWye wye;

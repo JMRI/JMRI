@@ -33,6 +33,8 @@ public class LayoutLHXOverView extends LayoutXOverView {
             @Nonnull LayoutEditor layoutEditor) {
         super(xover, c, rot, xFactor, yFactor, layoutEditor);
        // this.xover = xover;
+
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutLHXOverEditor(layoutEditor);
     }
 
     // final private LayoutLHXOver xover;

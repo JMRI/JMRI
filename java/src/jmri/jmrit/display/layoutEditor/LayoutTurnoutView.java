@@ -282,7 +282,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
     private final boolean useBlockSpeed = false;
     
     // temporary reference to the Editor that will eventually be part of View
-    private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor editor;
+    protected jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor editor;
 
     final private LayoutTurnout turnout;
     
