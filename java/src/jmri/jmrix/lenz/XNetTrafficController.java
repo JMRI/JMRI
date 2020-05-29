@@ -102,18 +102,18 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
                 ((XNetListener) client).message((XNetReply) m);
             } else if ((mask & XNetInterface.COMMINFO)
                     == XNetInterface.COMMINFO
-                    && (((XNetReply) m).getElement(0)
+                    && (m.getElement(0)
                     == XNetConstants.LI_MESSAGE_RESPONSE_HEADER)) {
                 ((XNetListener) client).message((XNetReply) m);
             } else if ((mask & XNetInterface.CS_INFO)
                     == XNetInterface.CS_INFO
-                    && (((XNetReply) m).getElement(0)
+                    && (m.getElement(0)
                     == XNetConstants.CS_INFO
-                    || ((XNetReply) m).getElement(0)
+                    || m.getElement(0)
                     == XNetConstants.CS_SERVICE_MODE_RESPONSE
-                    || ((XNetReply) m).getElement(0)
+                    || m.getElement(0)
                     == XNetConstants.CS_REQUEST_RESPONSE
-                    || ((XNetReply) m).getElement(0)
+                    || m.getElement(0)
                     == XNetConstants.BC_EMERGENCY_STOP)) {
                 ((XNetListener) client).message((XNetReply) m);
             } else if ((mask & XNetInterface.FEEDBACK)
@@ -131,9 +131,9 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
                 ((XNetListener) client).message((XNetReply) m);
             } else if ((mask & XNetInterface.INTERFACE)
                     == XNetInterface.INTERFACE
-                    && (((XNetReply) m).getElement(0)
+                    && (m.getElement(0)
                     == XNetConstants.LI_VERSION_RESPONSE
-                    || ((XNetReply) m).getElement(0)
+                    || m.getElement(0)
                     == XNetConstants.LI101_REQUEST)) {
                 ((XNetListener) client).message((XNetReply) m);
             }
@@ -237,7 +237,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
 
     @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
-        int len = (((XNetReply) msg).getElement(0) & 0x0f) + 2;  // opCode+Nbytes+ECC
+        int len = (msg.getElement(0) & 0x0f) + 2;  // opCode+Nbytes+ECC
         log.debug("Message Length {} Current Size {}", len, msg.getNumDataElements());
         return msg.getNumDataElements() >= len;
     }

@@ -123,8 +123,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     @GuardedBy("this")
     protected int _mClosed = jmri.Turnout.CLOSED;
 
-    protected String _prefix = "X"; // default
-    protected XNetTrafficController tc = null;
+    protected String _prefix; // default
+    protected XNetTrafficController tc;
 
     public XNetTurnout(String prefix, int pNumber, XNetTrafficController controller) {  // a human-readable turnout number must be specified!
         super(prefix + "T" + pNumber);
@@ -594,7 +594,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      */
     private static class XNetTurnoutStateListener implements java.beans.PropertyChangeListener {
 
-        XNetTurnout _turnout = null;
+        XNetTurnout _turnout;
 
         XNetTurnoutStateListener(XNetTurnout turnout) {
             _turnout = turnout;
@@ -620,8 +620,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                     // Check to see if this is a change in the status
                     // triggered by a device on the layout, or a change in
                     // status we triggered.
-                    int oldKnownState = ((Integer) event.getOldValue()).intValue();
-                    int curKnownState = ((Integer) event.getNewValue()).intValue();
+                    int oldKnownState = (Integer) event.getOldValue();
+                    int curKnownState = (Integer) event.getNewValue();
                     log.debug("propertyChange KnownState - old value {} new value {}", oldKnownState, curKnownState);
                     if (curKnownState != INCONSISTENT
                             && _turnout.getCommandedState() == oldKnownState) {
@@ -651,7 +651,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     // data members
     protected int mNumber;   // XpressNet turnout number
-    XNetTurnoutStateListener _stateListener;  // Internal class object
+    final XNetTurnoutStateListener _stateListener;  // Internal class object
 
     // A queue to hold outstanding messages
     @GuardedBy("this")
@@ -662,7 +662,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      */
     protected synchronized void sendQueuedMessage() {
 
-        RequestMessage msg = null;
+        RequestMessage msg;
         // check to see if the queue has a message in it, and if it does,
         // remove the first message
         msg = requestList.poll();
@@ -703,9 +703,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      */
     protected static class RequestMessage {
 
-        private int state;
-        private XNetMessage msg;
-        private XNetListener listener;
+        private final int state;
+        private final XNetMessage msg;
+        private final XNetListener listener;
 
         RequestMessage(XNetMessage m, int s, XNetListener listener) {
             state = s;

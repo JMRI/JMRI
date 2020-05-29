@@ -25,7 +25,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         tc.addXNetListener(XNetInterface.FEEDBACK, this);
     }
 
-    protected XNetTrafficController tc = null;
+    protected XNetTrafficController tc;
 
     /**
      * {@inheritDoc}

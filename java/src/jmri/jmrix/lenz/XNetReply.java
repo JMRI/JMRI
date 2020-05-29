@@ -240,8 +240,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             int messagetype = this.getFeedbackMessageType();
             if (messagetype == 2) {
                 // This is a feedback encoder message
-                int address = (a1 & 0xff);
-                return (address);
+                return ((a1 & 0xff));
             } else {
                 return -1;
             }
@@ -280,8 +279,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             int messagetype = this.getFeedbackMessageType(startByte);
             if (messagetype == 2) {
                 // This is a feedback encoder message
-                int address = (a1 & 0xff);
-                return (address);
+                return ((a1 & 0xff));
             } else {
                 return -1;
             }
@@ -1179,7 +1177,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      */
     protected String parseSpeedAndDirection(int element1, int element2) {
         String text = "";
-        int speedVal = 0;
+        int speedVal;
         if ((element2 & 0x80) == 0x80) {
             text += Bundle.getMessage("Forward") + ",";
         } else {

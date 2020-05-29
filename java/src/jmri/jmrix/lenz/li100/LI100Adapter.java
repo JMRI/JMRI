@@ -185,8 +185,8 @@ public class LI100Adapter extends XNetSerialPortController {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
-    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600")};
-    protected int[] validSpeedValues = new int[]{9600};
+    protected final String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600")};
+    protected final int[] validSpeedValues = new int[]{9600};
 
     @Override
     public int defaultBaudIndex() {
@@ -194,7 +194,7 @@ public class LI100Adapter extends XNetSerialPortController {
     }
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
+    protected final String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
 
     private boolean opened = false;
     InputStream serialStream = null;

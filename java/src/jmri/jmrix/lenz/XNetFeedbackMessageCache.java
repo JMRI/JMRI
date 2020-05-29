@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetFeedbackMessageCache implements XNetListener {
 
-    protected XNetTrafficController tc = null;
+    protected XNetTrafficController tc;
 
     private final XNetReply[] messageCache = new XNetReply[512]; // an to hold each of the 512 possible
     // reply messages for the turnouts.

@@ -172,8 +172,8 @@ public class LIUSBAdapter extends XNetSerialPortController {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
-    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud57600")};
-    protected int[] validSpeedValues = new int[]{57600};
+    protected final String[] validSpeeds = new String[]{Bundle.getMessage("Baud57600")};
+    protected final int[] validSpeedValues = new int[]{57600};
 
     @Override
     public int defaultBaudIndex() {
@@ -181,7 +181,7 @@ public class LIUSBAdapter extends XNetSerialPortController {
     }
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm23150")
+    protected final String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm23150")
             , Bundle.getMessage("FlowOptionNoReq23151")};
 
     private boolean opened = false;

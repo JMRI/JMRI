@@ -177,10 +177,10 @@ public class EliteAdapter extends XNetSerialPortController {
     /**
      * validOption1 controls flow control option.
      */
-    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"),
+    protected final String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"),
             Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud38400"),
             Bundle.getMessage("Baud57600"), Bundle.getMessage("Baud115200")};
-    protected int[] validSpeedValues = new int[]{9600, 19200, 38400, 57600, 115200};
+    protected final int[] validSpeedValues = new int[]{9600, 19200, 38400, 57600, 115200};
 
     @Override
     public int defaultBaudIndex() {
@@ -188,7 +188,7 @@ public class EliteAdapter extends XNetSerialPortController {
     }
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNo"), Bundle.getMessage("FlowOptionHw")};
+    protected final String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNo"), Bundle.getMessage("FlowOptionHw")};
 
     InputStream serialStream = null;
 

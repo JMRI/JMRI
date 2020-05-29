@@ -55,7 +55,7 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
         log.debug("Created XNetSystemConnectionMemo");
     }
 
-    jmri.jmrix.swing.ComponentFactory cf = null;
+    jmri.jmrix.swing.ComponentFactory cf;
 
     /**
      * Provide access to the TrafficController for this particular connection.
