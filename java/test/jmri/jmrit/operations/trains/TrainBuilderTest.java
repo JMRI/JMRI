@@ -7204,18 +7204,18 @@ public class TrainBuilderTest extends OperationsTestCase {
         // now use planned pickups for one track 50%
         westfordYard1.setIgnoreUsedLengthPercentage(50);
 
-        // should only be able to swap two cars
+        // should be able to swap five cars (counter intuitive)
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train status", train1.isBuilt());
 
         // confirm train assignment based on car moves
-        Assert.assertEquals("car's train", train1, c1.getTrain());
-        Assert.assertEquals("car's train", null, c2.getTrain());
-        Assert.assertEquals("car's train", train1, c3.getTrain());
-        Assert.assertEquals("car's train", null, c4.getTrain());
-        Assert.assertEquals("car's train", null, c5.getTrain());
-        Assert.assertEquals("car's train", null, c6.getTrain());
+        Assert.assertEquals("car's train c1", train1, c1.getTrain());
+        Assert.assertEquals("car's train c2", train1, c2.getTrain());
+        Assert.assertEquals("car's train c3", train1, c3.getTrain());
+        Assert.assertEquals("car's train c4", train1, c4.getTrain());
+        Assert.assertEquals("car's train c5", train1, c5.getTrain());
+        Assert.assertEquals("car's train c6", null, c6.getTrain());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }

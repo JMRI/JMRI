@@ -1596,7 +1596,7 @@ public class Track extends PropertyChangeSupport {
         int available = getLength() -
                 (getUsedLength() * (100 - getIgnoreUsedLengthPercentage()) / 100 +
                         getReserved());
-        // could be less
+        // could be less if track is overloaded
         int available3 = getLength() + (getLength() * getIgnoreUsedLengthPercentage() / 100) - getUsedLength() - getReserved();
         if (available3 < available) {
             available = available3;
