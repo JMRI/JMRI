@@ -73,6 +73,7 @@
 			<li><a href="Help.shtml">Providing Help using JavaHelp</a></li>
 			<li><a href="WebSite.shtml">The JMRI Web Site</a></li>
             <li><a href="webupdate/UpdatingDocs.shtml">Updating JMRI Web and Help</a></li>
+            <li><a href="Help.shtml#hwhelp.shtml">Creating Help for New Hardware</a></li>
 			<li><a href="Javadoc.shtml">Program Documentation Using Javadoc</a></li>
 			</ul>
 		</dd>
