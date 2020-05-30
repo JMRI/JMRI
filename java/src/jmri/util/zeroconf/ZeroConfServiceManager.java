@@ -26,6 +26,7 @@ import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.ShutDownManager;
 import jmri.profile.ProfileManager;
+import jmri.util.SystemType;
 import jmri.util.node.NodeIdentity;
 import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
@@ -371,6 +372,9 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
             } catch (SocketException ex) {
                 log.error("Unable to get network interfaces.", ex);
             }
+            if (!SystemType.isMacOSX()) {
+                JmmDNS.Factory.getInstance().addNetworkTopologyListener(networkListener);
+            }
             InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
         }
         return new HashMap<>(JMDNS_SERVICES);
@@ -546,8 +550,10 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
 
     private static void dispose(ZeroConfServiceManager manager) {
         Date start = new Date();
-        JmmDNS.Factory.getInstance().removeNetworkTopologyListener(manager.networkListener);
-        log.debug("Removed network topology listener in {} milliseconds", new Date().getTime() - start.getTime());
+        if (!SystemType.isMacOSX()) {
+            JmmDNS.Factory.getInstance().removeNetworkTopologyListener(manager.networkListener);
+            log.debug("Removed network topology listener in {} milliseconds", new Date().getTime() - start.getTime());
+        }
         start = new Date();
         log.debug("Starting to stop services...");
         manager.stopAll(true);

@@ -100,6 +100,8 @@ public class LayoutWye extends LayoutTurnout {
     public LayoutWye(@Nonnull String id, @Nonnull Point2D c, double rot,
             double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
         super(id, TurnoutType.WYE_TURNOUT, c, rot, xFactor, yFactor, layoutEditor, 1);
+
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutWyeEditor(layoutEditor);
     }
     
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutWye.class);
