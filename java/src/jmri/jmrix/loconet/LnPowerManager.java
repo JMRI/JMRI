@@ -166,13 +166,30 @@ public class LnPowerManager extends AbstractPowerManager<LocoNetSystemConnection
         @Override
         public void run() {
             // wait a little bit to allow PowerManager to be initialized
+            log.trace("LnTrackStatusUpdateThread start check loop");
+            for (int i = 1; i <=10; i++) {
+                if (tc.status()) break; // TrafficController is reporting ready
+                
+                log.trace("LnTrackStatusUpdateThread waiting {} time", i);
+                // else wait, then try again
+                try {
+                    // Delay 500 mSec to allow init of traffic controller, listeners.
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); // retain if needed later
+                    return; // and stop work
+                }
+            }
+
             try {
-                // Delay 500 mSec to allow init of traffic controller, listeners.
-                Thread.sleep(500);
+                // Delay just a bit more, just in case.  Yes, this shouldn't be needed...
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
                 return; // and stop work
             }
+            
+            log.trace("LnTrackStatusUpdateThread sending request");
             LocoNetMessage msg = new LocoNetMessage(4);
             msg.setOpCode(LnConstants.OPC_RQ_SL_DATA);
             msg.setElement(1, 0);
