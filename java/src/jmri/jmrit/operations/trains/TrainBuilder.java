@@ -1146,10 +1146,11 @@ public class TrainBuilder extends TrainCommon {
             if (engine.getConsist() == null) {
                 // TODO Would be nice if blocking order was only set once for B unit engines.
                 // today a B unit is associated with a model
-                if (engine.isBunit())
+                if (engine.isBunit()) {
                     engine.setBlocking(Engine.B_UNIT_BLOCKING);
-                else
+                } else {
                     engine.setBlocking(Engine.DEFAULT_BLOCKING_ORDER);
+                }
                 // single engine, but does the train require a consist?
                 if (numberOfEngines > 1) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeEngineSingle"),
@@ -1217,7 +1218,7 @@ public class TrainBuilder extends TrainCommon {
                         }
                     }
                     // list the engines found
-                } else
+                } else {
                     for (Engine engine : singleLocos) {
                         if (engine.isBunit()) {
                             addLine(_buildReport, FIVE,
@@ -1225,6 +1226,7 @@ public class TrainBuilder extends TrainCommon {
                                             engine.toString(), engine.getLocationName(), engine.getTrackName()}));
                         }
                     }
+                }
             }
         }
         if (!foundLoco) {
@@ -4278,10 +4280,11 @@ public class TrainBuilder extends TrainCommon {
                         }
                     }
                     // code check
-                } else
+                } else {
                     throw new BuildFailedException(MessageFormat.format(
                             Bundle.getMessage("buildCarDestinationStaging"), new Object[]{car.toString(),
                                     car.getDestinationName(), car.getDestinationTrackName()}));
+                }
             }
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCanNotDropCar"), new Object[]{
                     car.toString(), car.getDestinationName(), rld.getId(), locCount}));
@@ -4508,22 +4511,14 @@ public class TrainBuilder extends TrainCommon {
                     }
                     // report if track has planned pickups
                     if (testTrack.getIgnoreUsedLengthPercentage() > 0) {
-                        // calculate the available space
-                        int available = testTrack.getLength() -
-                                (testTrack.getUsedLength() * (100 - testTrack.getIgnoreUsedLengthPercentage()) / 100 +
-                                        testTrack.getReserved());
-                        // could be less based on track length
-                        int available2 = testTrack.getLength() - testTrack.getReservedLengthDrops();
-                        if (available2 < available) {
-                            available = available2;
-                        }
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                 .getMessage("buildTrackHasPlannedPickups"),
                                 new Object[]{testTrack.getName(),
                                         testTrack.getIgnoreUsedLengthPercentage(), testTrack.getLength(),
                                         Setup.getLengthUnit().toLowerCase(), testTrack.getUsedLength(),
                                         testTrack.getReserved(), testTrack.getReservedLengthDrops(),
-                                        testTrack.getReservedLengthDrops() - testTrack.getReserved(), available}));
+                                        testTrack.getReservedLengthDrops() - testTrack.getReserved(), 
+                                        testTrack.getAvailableTrackSpace()}));
                     }
                     String status = car.testDestination(testDestination, testTrack);
                     // Can be a caboose or car with FRED with a custom load

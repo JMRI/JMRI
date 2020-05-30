@@ -1551,7 +1551,7 @@ public class Track extends PropertyChangeSupport {
             if (checkPlannedPickUps(length)) {
                 return OKAY;
             }
-            // Note that a lot of the code checks for track length being an issue, therefore it has to be the last
+            // Note that much of the code checks for track length being an issue, therefore it has to be the last
             // check.
             // Is rolling stock too long for this track?
             if ((getLength() < length && getPool() == null) ||
@@ -1561,45 +1561,52 @@ public class Track extends PropertyChangeSupport {
             }
             log.debug("Rolling stock ({}) not accepted at location ({}, {}) no room!", rs.toString(), getLocation()
                     .getName(), getName()); // NOI18N
-            // calculate the available space
-            int available = getLength() -
-                    (getUsedLength() * (100 - getIgnoreUsedLengthPercentage()) / 100 +
-                            getReserved());
-            // could be less
-            int available3 = getLength() + (getLength() * getIgnoreUsedLengthPercentage() / 100) - getUsedLength() - getReserved();
-            if (available3 < available) {
-                available = available3;
-            }
-            // could be less based on track length
-            int available2 = getLength() - getReservedLengthDrops();
-            if (available2 < available) {
-                available = available2;
-            }
+  
             return MessageFormat.format(Bundle.getMessage("lengthIssue"), new Object[]{LENGTH, length,
-                    Setup.getLengthUnit().toLowerCase(), available});
+                    Setup.getLengthUnit().toLowerCase(), getAvailableTrackSpace()});
         }
         return OKAY;
     }
-
+    
     /**
-     *
+     * Performs two checks, number of new set outs shouldn't exceed the track
+     * length. The second check protects against overloading, the total number
+     * of cars shouldn't exceed the track length plus the number of cars to
+     * ignore.
+     * 
+     * @param length rolling stock length
      * @return true if the program should ignore some percentage of the car's
      *         length currently consuming track space.
      */
     private boolean checkPlannedPickUps(int length) {
-        if (getIgnoreUsedLengthPercentage() > 0) {
-            // two checks, number of new set outs shouldn't exceed the track length. The second check protects against
-            // overloading, the total number of cars shouldn't exceed the track length plus the number of cars to
-            // ignore.
-            if (getUsedLength() * (100 - getIgnoreUsedLengthPercentage()) / 100 +
-                    getReservedLengthDrops() +
-                    length <= getLength() &&
-                    getUsedLength() + getReserved() + length <= getLength() +
-                            (getLength() * getIgnoreUsedLengthPercentage() / 100)) {
-                return true;
-            }
+        if (getIgnoreUsedLengthPercentage() > 0 && getAvailableTrackSpace() >= length) {
+            return true;
         }
         return false;
+    }
+    
+    /**
+     * Available track space. Adjusted when a track is using the planned pickups
+     * feature
+     * 
+     * @return available track space
+     */
+    public int getAvailableTrackSpace() {
+        // calculate the available space
+        int available = getLength() -
+                (getUsedLength() * (100 - getIgnoreUsedLengthPercentage()) / 100 +
+                        getReserved());
+        // could be less
+        int available3 = getLength() + (getLength() * getIgnoreUsedLengthPercentage() / 100) - getUsedLength() - getReserved();
+        if (available3 < available) {
+            available = available3;
+        }
+        // could be less based on track length
+        int available2 = getLength() - getReservedLengthDrops();
+        if (available2 < available) {
+            available = available2;
+        }
+        return available;
     }
 
     public int getReservedLengthDrops() {
