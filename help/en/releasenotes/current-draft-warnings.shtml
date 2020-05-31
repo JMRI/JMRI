@@ -1,7 +1,5 @@
 
     <!-- contains new warnings for the release under development -->
-    <li>A number of hardware-specific actions now require the system
-        connection be associated with them when used as a startup action.
-        In many cases, these actions will continue to "just work", but it is
-        recommended that actions be verified to be associated with the
-        correct connection in the Startup Actions Preferences.</li>
+    <li>
+        None yet
+    </li>

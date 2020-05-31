@@ -192,7 +192,8 @@ public class XNetSimulatorAdapterTest {
     @Test
     public void testGenerateAccOperRequestReply(){
         XNetReply r = getReplyForMessage(new XNetMessage("52 01 80 D3"));
-        Assert.assertEquals("Accessory Decoder Info Reply",new XNetReply("42 01 10 53"),r);
+        // this is an OFF message, which is responded to by OK.
+        Assert.assertEquals("Accessory Decoder Info Reply",new XNetReply("01 04 05"),r);
     }
 
     @Test

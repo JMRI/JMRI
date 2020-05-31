@@ -336,14 +336,39 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Fri May 15 09:43:36 PDT 2020</date>
+      <date>Tue May 26 16:16:46 PDT 2020</date>
       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest-4-19-6.xml</filename>
+      <filehistory>
+        <operation>
+          <type>Load OK</type>
+          <date>Tue Apr 28 12:56:01 PDT 2020</date>
+          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest-4-19-6.xml</filename>
+          <filehistory>
+            <operation>
+              <type>Load OK</type>
+              <date>Sun Apr 26 15:57:57 PDT 2020</date>
+              <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest.xml</filename>
+              <filehistory />
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Sun Apr 26 15:57:57 PDT 2020</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Tue Apr 28 12:56:01 PDT 2020</date>
+          <filename />
+        </operation>
+      </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Fri May 15 09:43:43 PDT 2020</date>
+      <date>Tue May 26 16:16:51 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.7ish+jake+20200515T1642Z+Rdec10019ba on Fri May 15 09:43:43 PDT 2020-->
+  <!--Written by JMRI version 4.19.7ish+jake+20200526T2211Z+R86df4f27ba on Tue May 26 16:16:51 PDT 2020-->
 </layout-config>
